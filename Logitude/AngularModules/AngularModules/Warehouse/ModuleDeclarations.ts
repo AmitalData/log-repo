@@ -1,4 +1,4 @@
-
+﻿
 
 import {NewWarehouseEntryComponent} from './Components/NewWarehouseEntryComponent';
 import {NewWarehouseReleaseComponent} from './Components/NewWarehouseReleaseComponent';
@@ -28,7 +28,7 @@ import {WarehouseEntryPackagesTabComponent} from './Components/EditTabs/Packages
 import {WarehouseReleaseFiltersMenuComponent} from './Components/FiltersMenu/WarehouseReleaseFiltersMenuComponent';
 
 import {WarehouseReleasePackagesDetailsComponent} from './Components/WarehouseReleasePackagesDetailsComponent';
-import { NewFullWarehouseReleaseComponent } from './Components/NewEntity/NewFullWarehouseReleaseComponent';
+
 
 export const Components =
     [
@@ -55,7 +55,6 @@ export const Components =
         WarehouseReleaseFiltersMenuComponent,
         WarehouseConnectionsTabComponent,
         WarehouseReleasePackagesDetailsComponent,
-        NewFullWarehouseReleaseComponent,
     ];
 
 export class ModuleDeclarations {
@@ -87,8 +86,9 @@ export class ModuleDeclarations {
             case "WarehouseEntryPackagesTabComponent": { myResult = WarehouseEntryPackagesTabComponent; break; } 
             case "WarehouseReleaseFiltersMenuComponent": { myResult = WarehouseReleaseFiltersMenuComponent; break; }
             case "WarehouseConnectionsTabComponent": { myResult = WarehouseConnectionsTabComponent; break; }
-            case "WarehouseReleasePackagesDetailsComponent": { myResult = WarehouseReleasePackagesDetailsComponent; break; } 
-            case "NewFullWarehouseReleaseComponent": { myResult = NewFullWarehouseReleaseComponent; break; }
+            case "WarehouseReleasePackagesDetailsComponent": { myResult = WarehouseReleasePackagesDetailsComponent; break; }
+
+                
       
         }
 

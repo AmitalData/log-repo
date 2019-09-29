@@ -252,25 +252,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         cheque.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                         var myChequeUpdateService = new ARPaymentChequeUpdateService(MyContext, new Dictionary<string, IContext>(), depositPM.Tenant);
                         myChequeUpdateService.Update(cheque, true);
-                        UpdateBankDepositLineStatus(item, cheque);
-                      
                     }
                 }
             }
         }
-        private void UpdateBankDepositLineStatus(BankDepositLinePM depositLine, ARPaymentChequePM cheque)
-        {
-            ContactPM contact = GetLoggedContact(depositLine.Tenant);
-            bool showLocals = !contact.DontShowLocal;
-
-            ARPaymentChequeStatusQueryService paymentChequeStatusQueryService = new ARPaymentChequeStatusQueryService(cheque.Tenant);
-            ARPaymentChequeStatusPM status = paymentChequeStatusQueryService.GetSingle(cheque.StatusCode, true, false);
-            depositLine.ChequeStatusName = showLocals ? status.LocalName : status.EnglishName;
-            depositLine.ChequeStatusCode = cheque.StatusCode;
-
-        }
-
-
         void CreateDebitJournalLines(BankDepositPM entityPM, int LineNumber, CashBookPM cashBook, JournalPM newJournal)
         {
             IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);

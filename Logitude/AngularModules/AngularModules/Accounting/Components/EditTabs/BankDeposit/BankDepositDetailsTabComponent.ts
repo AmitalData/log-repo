@@ -651,8 +651,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
             depositLine.Bank = cashbookLine.Bank;
             depositLine.Branch = cashbookLine.Branch;
             depositLine.ARPaymentNumber = cashbookLine.ARPaymentNumber;
-            //depositLine.ChequeStatusCode = cashbookLine.ARPChequeStatusCode;
-            //depositLine.ChequeStatusName = cashbookLine.ARPChequeStatusName;
+            depositLine.ChequeStatusName = cashbookLine.ARPChequeStatusName;
             depositLine.ChequeNumber = cashbookLine.ChequeNumber;
             depositLine.Currency = cashbookLine.Currency;
             depositLine.ARPaymentId = cashbookLine.ARPaymentId;

@@ -119,22 +119,6 @@ namespace Logitude.WarehouseLib.Data.EntityPOCOs
 	    public string ChargeableWeightUnitCode { get; set; }
         [Column("ConnectedTo")]
 	    public string ConnectedTo { get; set; }
-        [ForeignKey("FromPort")]
-        [Column("FromPortId")]
-	    public string FromPortId { get; set; }
-	      
-        public virtual Port FromPort { get; set; }
-        [ForeignKey("ToPort")]
-        [Column("ToPortId")]
-	    public string ToPortId { get; set; }
-	      
-        public virtual Port ToPort { get; set; }
-        [Column("CustomerAddressId")]
-	    public string CustomerAddressId { get; set; }
-        [Column("TotalVolumetricWeight")]
-	    public decimal TotalVolumetricWeight { get; set; }
-        [Column("Ratio")]
-	    public double? Ratio { get; set; }
     }
 }
 	 

@@ -3,72 +3,68 @@ import { FieldsHelper } from '../../../Helpers/FieldsHelper';
 import { ShipmentHelper } from '../ShipmentHelper';
 
 export class HouseShipment {
-    private Helper: FieldsHelper;
-    private ShipmentModes: ShipmentHelper;
+  private Helper: FieldsHelper;
+  private ShipmentModes: ShipmentHelper;
 
-    constructor() {
-        this.Helper = new FieldsHelper();
-        this.ShipmentModes = new ShipmentHelper();
-    }
-
-
-    public CreateHouseShipment(ReferenceNumber: string, ShipmentLevelCode: string, Direction: any, TransportMode: any, ShipmentType: any) {
-        var AWBToggle = this.Helper.WaitByIdAndClick('NEWSHIP');
-        this.Helper.WaitByIdAndClick('NEWHOUSE');
-        this.ShipmentModes.SelectDicrctionTransportMode(Direction, TransportMode, ShipmentType);
-
-        this.FillHouseShipmentFields(ReferenceNumber, Direction, TransportMode);
-        this.Helper.WaitByIdAndClick('ShipmentCreatebtn');
-    }
+  constructor() {
+    this.Helper = new FieldsHelper();
+    this.ShipmentModes = new ShipmentHelper();
+  }
 
 
-    FillHouseShipmentFields(ShipperRef: string, Direction: string, TransportMode: string) {
+  public CreateHouseShipment(ReferenceNumber: string, ShipmentLevelCode: string, Direction: any, TransportMode: any, ShipmentType: any) {
+    var AWBToggle = this.Helper.WaitByIdAndClick('NEWSHIP');
+    this.Helper.WaitByIdAndClick('NEWHOUSE');
+    this.ShipmentModes.SelectDicrctionTransportMode(Direction, TransportMode, ShipmentType);
 
-        if (Direction == 'Domestic' && TransportMode == 'I') {
-            this.Helper.WaitByIdAndFill('Shipment_ShipperId', 'TestShipper');
-            this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Shipment_ShipperId', 'TestShipper');
+    this.FillHouseShipmentFields(ReferenceNumber, Direction, TransportMode);
+    this.Helper.WaitByIdAndClick('ShipmentCreatebtn');
+  } 
 
-            this.Helper.WaitByIdAndFill('Shipment_ShipperReference1', ShipperRef);// test random number randomWholeNum
 
-            this.Helper.WaitByIdAndFill('Shipment_ConsigneeId', 'TestShipper');
-            this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Shipment_ConsigneeId', 'TestShipper');
+  FillHouseShipmentFields(ShipperRef: string, Direction: string, TransportMode: string) {
+
+    if (Direction == 'Domestic' && TransportMode == 'I') {
+      this.Helper.WaitByIdAndFill('Shipment_ShipperId', 'TestShipper');
+      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Shipment_ShipperId', 'TestShipper');
+
+      this.Helper.WaitByIdAndFill('Shipment_ShipperReference1', ShipperRef);// test random number randomWholeNum
+
+      this.Helper.WaitByIdAndFill('Shipment_ConsigneeId', 'TestShipper');
+      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Shipment_ConsigneeId', 'TestShipper');
+    } else {
+      this.Helper.WaitByIdAndFill('Shipment_ShipperId', 'TestShipper');
+      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Shipment_ShipperId', 'TestShipper');
+
+      this.Helper.WaitByIdAndFill('Shipment_ShipperReference1', ShipperRef);// test random number randomWholeNum
+
+      this.Helper.WaitByIdAndFill('Shipment_ConsigneeId', 'TestConsignee');
+      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Shipment_ConsigneeId', 'TestConsignee');
+
+      if (ShipperRef != 'CreatedFromMaster') {
+        if (Direction == 'Domestic' && TransportMode != 'I') {
+          this.Helper.WaitByIdAndFill('Shipment_MainCarriageFromPortId', 'MIA');
+          this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Shipment_MainCarriageFromPortId', 'MIA');
+
+          this.Helper.WaitByIdAndFill('Shipment_MainCarriageToPortId', 'MIA');
+          this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Shipment_MainCarriageToPortId', 'MIA');
         } else {
-            this.Helper.WaitByIdAndFill('Shipment_ShipperId', 'TestShipper');
-            this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Shipment_ShipperId', 'TestShipper');
+          this.Helper.WaitByIdAndFill('Shipment_MainCarriageFromPortId', 'eze');
+          this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Shipment_MainCarriageFromPortId', 'eze');
 
-            this.Helper.WaitByIdAndFill('Shipment_ShipperReference1', ShipperRef);// test random number randomWholeNum
-
-            this.Helper.WaitByIdAndFill('Shipment_ConsigneeId', 'TestConsignee');
-            this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Shipment_ConsigneeId', 'TestConsignee');
-
-            if (ShipperRef != 'CreatedFromMaster') {
-                if (Direction == 'Domestic' && TransportMode != 'I') {
-                    this.Helper.WaitByIdAndFill('Shipment_MainCarriageFromPortId', 'MIA');
-                    this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Shipment_MainCarriageFromPortId', 'MIA');
-
-                    this.Helper.WaitByIdAndFill('Shipment_DescriptionOfGoods', 'Protractor testing - Create New House ... ');
-
-                    this.Helper.WaitByIdAndFill('Shipment_MainCarriageToPortId', 'MIA');
-                    this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Shipment_MainCarriageToPortId', 'MIA');
-                } else {
-                    this.Helper.WaitByIdAndFill('Shipment_MainCarriageFromPortId', 'eze');
-                    this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Shipment_MainCarriageFromPortId', 'eze');
-
-                    this.Helper.WaitByIdAndFill('Shipment_DescriptionOfGoods', 'Protractor testing - Create New House ... ');
-
-                    this.Helper.WaitByIdAndFill('Shipment_MainCarriageToPortId', 'mvd');
-                    this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Shipment_MainCarriageToPortId', 'mvd');
-                }
-            }
-
+          this.Helper.WaitByIdAndFill('Shipment_MainCarriageToPortId', 'mvd');
+          this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Shipment_MainCarriageToPortId', 'mvd');
         }
-        this.Helper.WaitByIdAndFill('Shipment_IncotermId', 'LDE');
-        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Shipment_IncotermId', 'LDE');
+      }
 
-        // this.Helper.WaitByIdAndFill('Shipment_MoveTypeId', 'TestMoveType');
-        // this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-        // this.Helper.WaitByIdAndFill('Shipment_DescriptionOfGoods', 'Protractor testing - Create New House ... ');
     }
+    this.Helper.WaitByIdAndFill('Shipment_IncotermId', 'LDE');
+    this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Shipment_IncotermId', 'LDE');
+
+    // this.Helper.WaitByIdAndFill('Shipment_MoveTypeId', 'TestMoveType');
+    // this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+    // this.Helper.WaitByIdAndFill('Shipment_DescriptionOfGoods', 'Protractor testing - Create New House ... ');
+  }
 }
 
 

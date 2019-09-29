@@ -24,7 +24,7 @@ export class NewShipper {
     }
 
     SearchShippertTab() {
-       
+        browser.sleep(1000);
         this.helper.WaitByIdAndFill('null_Search', "Shipper");
         this.helper.WaitByIdAndClick('MaintenanceItemMTCL');
 

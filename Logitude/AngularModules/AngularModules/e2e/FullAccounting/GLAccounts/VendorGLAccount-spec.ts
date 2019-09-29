@@ -6,7 +6,7 @@ import { GeneralFunctions } from '../../Helpers/GeneralFunctions';
 import { NewVendor } from "./NewVendorGLaccount";
 
 
-describe('Vendor GLAccount Module', function () {
+describe('ARInvoice Module', function () {
   var Helper = new GeneralFunctions();
   var F = new FieldsHelper();
   browser.driver.manage().window().maximize();

@@ -95,8 +95,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                         paymentChequePM.JournalNumber = journal.JournalNumber;
                     }
-
-
                 }
                 else
                 {
@@ -136,7 +134,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 ChangeSetOp = ChangeSetOperation.Insert,
                 Reference1 = paymentPM != null ? paymentPM.PaymentNo : null,
                 Reference2 = entityPM.ChequeNumber,
-                Notes = entityPM.PaymentChequeLines.First().Notes
+
 
             };
             JournalLinePM journalLine2 = new JournalLinePM()
@@ -153,7 +151,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 ChangeSetOp = ChangeSetOperation.Insert,
                 Reference1 = paymentPM != null ? paymentPM.PaymentNo : null,
                 Reference2 = entityPM.ChequeNumber,
-                Notes = entityPM.PaymentChequeLines.First().Notes
 
 
             };
@@ -203,10 +200,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             else
             {
-                if (entityPM.ChequeNumber == null)
-                {
-                    entityPM.ChequeNumber = bankAccount.ChequeCounter.ToString();
-                }
+                entityPM.ChequeNumber = bankAccount.ChequeCounter.ToString();
                 entityPM.UniqueField = entityPM.ChequeNumber;
 
                 BankAccountUpdateService bankAccountUpdateService = new BankAccountUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
