@@ -167,7 +167,14 @@ exports.config = {
             jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/E2ETeamMohammad/screenshots' }).getJasmine2Reporter());
             jasmine.getEnv().addReporter(junitReporterMohammad);
 
-        } else {
+        }
+        else if (browser.params.Team == "test") {
+            jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
+            jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/E2ETeamMohammad/test' }).getJasmine2Reporter());
+            jasmine.getEnv().addReporter(junitReporterMohammad);
+
+        }
+        else {
             jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
             jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/e2eTracking/screenshots' }).getJasmine2Reporter());
         }
