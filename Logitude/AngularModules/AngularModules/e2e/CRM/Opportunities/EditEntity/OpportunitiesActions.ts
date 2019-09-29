@@ -40,12 +40,16 @@ export class OpportunityActions {
       
     }
     Copy(){
+    this.Helper.WaitByIdAndClick('MenuButtons');
     this.Helper.WaitByIdAndClick('Opportunity.B.Copy');
     this.Helper.WaitByIdAndClick('Ok-AddOpportunity');
     this.Helper.WaitBusyIndicator();
+    
     }
-    Cancel(){
-     this.Helper.WaitByIdAndClick('Opportunity.B.Cancel');
+    Cancel(MenuButtonsId: string){
+      
+      this.Helper.WaitByIdAndClick(MenuButtonsId);
+     this.Helper.WaitByIdAndClick('Opportunity.B.Cancel_1');
      this.Helper.WaitByIdAndClick('ConfirmWindow_Yes_0');
      this.Helper.WaitBusyIndicator();
     }
