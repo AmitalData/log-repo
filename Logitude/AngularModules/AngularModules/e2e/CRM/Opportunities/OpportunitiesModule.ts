@@ -32,7 +32,7 @@ export class OpportunityModule {
 
         this.addOpportunity.CreateNewOpportunity('Opportunity # ' + OpportunityNo);
         this.Generator.QuickSearchTextBox('Opportunity_Search', 'Opportunity # ' + OpportunityNo);
-        //this.editMainTab.EditMainTab('Opportunity # ' + OpportunityNo);
+        this.editMainTab.EditMainTab('Opportunity # ' + OpportunityNo);
         this.editGeneralTab.EditGeneralTab('Opportunity # ' + OpportunityNo);
         this.OpportunityActions.CloseAsWon();
         this.OpportunityActions.ReOpen('Opportunity_StageId_1');
@@ -44,10 +44,10 @@ export class OpportunityModule {
     
 
     }
-    QuickSearchBox(searchFeildId: string, searchByRef: string) {
-        this.Helper.WaitByIdAndFill(searchFeildId, searchByRef);
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.LogitudeQuickSearchItem', 0);
-    }
+    // QuickSearchBox(searchFeildId: string, searchByRef: string) {
+    //     this.Helper.WaitByIdAndFill(searchFeildId, searchByRef);
+    //     this.Helper.WaitByCssAndClick_FromTagInsideList('.LogitudeQuickSearchItem', 0);
+    // }
 
 
 }
