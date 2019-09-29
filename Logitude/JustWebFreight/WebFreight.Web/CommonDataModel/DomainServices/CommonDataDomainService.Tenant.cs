@@ -202,11 +202,17 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 CacheManager.CacheWrapper.Invalidate(entityName);
             }
 
+            if (CacheManager.CacheWrapper.Get(datetimeoffset) != null)
+            {
+                CacheManager.CacheWrapper.Invalidate(datetimeoffset);
+            }
+
+
             if (CacheManager.CacheWrapper.Get(entityPmName) != null)
             {
                 CacheManager.CacheWrapper.Invalidate(entityPmName);
             }
-                     
+
             if (!string.IsNullOrEmpty(currentTenant.CurrencyId))
             {
                 CommonDataDomainService service = new CommonDataDomainService();
