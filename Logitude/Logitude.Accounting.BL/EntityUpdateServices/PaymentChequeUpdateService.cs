@@ -134,7 +134,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 ChangeSetOp = ChangeSetOperation.Insert,
                 Reference1 = paymentPM != null ? paymentPM.PaymentNo : null,
                 Reference2 = entityPM.ChequeNumber,
-
+                Notes = entityPM.PaymentChequeLines.First().Notes
 
             };
             JournalLinePM journalLine2 = new JournalLinePM()
@@ -151,6 +151,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 ChangeSetOp = ChangeSetOperation.Insert,
                 Reference1 = paymentPM != null ? paymentPM.PaymentNo : null,
                 Reference2 = entityPM.ChequeNumber,
+                Notes = entityPM.PaymentChequeLines.First().Notes
 
 
             };

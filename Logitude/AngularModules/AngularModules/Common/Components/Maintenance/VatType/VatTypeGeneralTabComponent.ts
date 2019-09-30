@@ -24,11 +24,14 @@ export class VatTypeGeneralTabComponent extends BaseComponent implements OnDestr
     public ObjectTableName: string = "VatType";
     public ItemsSource: MultiPercentageItem[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
+    IsAccountingActivated: boolean = false;
     constructor(public args: EntityArgs) {
         super();
 
         this.EntityPM = args.EntityPM;
-
+        if (SessionLocator.TenantPM.AccountingActivated) {
+            this.IsAccountingActivated = true;
+        }
         if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
             this.IsNewEntity = true;
             this.NewEntityPercentageDate = DateTool.GetCurrentDateAsUtc();
