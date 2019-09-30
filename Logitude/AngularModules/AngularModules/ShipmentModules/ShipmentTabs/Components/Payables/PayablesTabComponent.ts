@@ -1265,9 +1265,9 @@ export class ShipmentPayableItem extends BaseComponent {
                 isOpenAmountEnabled = false;
             }            
 
-            if (AppTool.IsNullOrEmpty(this.TariffId)) {
-                isOpenAmountEnabled = false;
-            }
+            //if (AppTool.IsNullOrEmpty(this.TariffId)) {
+            //    isOpenAmountEnabled = false;
+            //}
 
             if (isLineAttachted) {
                 isEditingEnabled = false;
