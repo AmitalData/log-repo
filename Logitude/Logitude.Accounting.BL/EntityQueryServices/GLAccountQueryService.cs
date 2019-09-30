@@ -1122,7 +1122,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return msg;
         }
 
-        private List<CardList> GetConnectedCards(string accountId, int tenant)
+        public List<CardList> GetConnectedCards(string accountId, int tenant)
         {
             CardQuery cardQuery = new CardQuery(tenant);
             List<CardList> connectCards = cardQuery.GetCardPMsByGLAccountId(accountId, tenant);
@@ -1141,6 +1141,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             CardPM cardPM = query.GetSinglePM(cardId, tenant);
             return cardPM;
         }
+
     }
     public class GLAccountCurrencyBalance
     {

@@ -45,7 +45,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string From { get; set; }
         public string ReplyTo { get; set; }
         public string CC { get; set; }
-
+        public string BCC { get; set; }
 
         //public bool IsDuplex { get; set; }
         [ForeignKey("LastUpdatedByUserId")]

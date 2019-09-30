@@ -18,7 +18,7 @@ export class NewPhoneCall {
 
   }
   FillPhoneCallFields(phoneCallNo: string) {
-    if (phoneCallNo != 'Created from appointment') {
+    if (phoneCallNo != 'Created from Opportunity') {
       this.Helper.WaitByIdAndFill('Activity_CustomerId', 'Customer Activity');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
     }

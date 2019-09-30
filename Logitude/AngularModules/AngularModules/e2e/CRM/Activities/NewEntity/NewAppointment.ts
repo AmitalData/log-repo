@@ -14,7 +14,6 @@ export class NewAppointment {
     this.Helper.WaitByIdAndClick('NEWAPPOINTMENT');
 
     this.FillAppointmentFields(AppointmentNo);
-
   }
   FillAppointmentFields(AppointmentNo: string) {
     this.Helper.WaitByIdAndFill('Activity_Subject', 'Create  ' + AppointmentNo + ' : Protractor ..');
@@ -29,10 +28,10 @@ export class NewAppointment {
     this.Helper.WaitByIdAndFill('Activity_OwnerId', 'Protractor user');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-    if(AppointmentNo!='Created from appointment ...'){
-      this.Helper.WaitByIdAndFill('Activity_CustomerId', 'Customer Activity');
-      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);  
-    }
+    // if (AppointmentNo != 'Created from Opportunity') {
+    //   this.Helper.WaitByIdAndFill('Activity_CustomerId', 'Customer Activity');
+    //   this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+    // }
     this.Helper.WaitByIdAndFill('Activity_Description', AppointmentNo);
     this.Helper.WaitByIdAndClick('Ok-AddActivity');
     this.Helper.WaitBusyIndicator();
