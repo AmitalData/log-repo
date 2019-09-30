@@ -551,7 +551,6 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
 
                  GLAccountId = aGL.Id,
-                 IsMultiCurrency = aGL.IsMultiCurrency,
                  GLAccountName = aGL.LocalName,
                  GLAccountNumber= aGL.DisplayNumber,
                  ChartOfAccountId = aGL.ChartOfAccountsId,

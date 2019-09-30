@@ -649,7 +649,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 taxReportPM.OtherInputsTaxAmount = inputLines.Where(d => d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit && d.IsEquipment == false).Sum(d => d.VatAmount);
                 taxReportPM.EquipmentInputsTaxAmount = inputLines.Where(d => d.IsEquipment == true).Sum(d => d.VatAmount);
                 taxReportPM.InputLinesCount = inputLines.Where(d => d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit).Count();
-
+            
                 taxReportPM.AmountForPayRefund = taxReportPM.OutputTaxAmount - (taxReportPM.OtherInputsTaxAmount + taxReportPM.EquipmentInputsTaxAmount);
                 if (taxReportPM.AmountForPayRefund == null) taxReportPM.AmountForPayRefund = 0;
 

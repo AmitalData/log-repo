@@ -33,7 +33,6 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
 {
     public partial class CommonDataDomainService
     {
-        LogBoxTenantSettingRepository LBtenantRepository;
         [RequiresAuthentication]
         [Query(IsDefault = true)]
         public IQueryable<Tenant> GetTenants()
@@ -75,7 +74,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             tenant.Id = CodeCounter.GetNumber("Tenant", 0);
             Tenant newTenant = new Tenant();
             newTenant.Id = tenant.Id;
-          
+
             TenantMapping.MapEntity(tenant, newTenant, true);
 
             if (newTenant.PasswordPolicyCode == null)
@@ -86,17 +85,6 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
 
             tenantRepository.Add(newTenant);
             string database = GetConnectionString(tenant.Id);
-
-            LBtenantRepository = new LogBoxTenantSettingRepository(objectContext);
-            LogBoxTenantSetting newLBTenant = new LogBoxTenantSetting();
-            newLBTenant.Id = tenant.Id;
-            newLBTenant.IsDocumentsArchive = tenant.IsDocumentsArchive;
-            newLBTenant.CustomerTenantShareImportFile = tenant.CustomerTenantShareImportFile;
-            newLBTenant.LogBoxAdminUserId = tenant.LogBoxAdminUserId;
-            newLBTenant.DocumentShareAsDefault = tenant.DocumentShareAsDefault;
-            newLBTenant.StockTypeCode = tenant.StockTypeCode;
-            newLBTenant.AutoArchiveOnInvoice = tenant.AutoArchiveOnInvoice;
-            LBtenantRepository.SubmitChanges();
 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())//TransactionFactory.GetNewTransaction())
             {
@@ -309,30 +297,15 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             }
             
             TenantMapping.MapEntity(currentTenant, entity, false);
-           
+
             if (entity.PasswordPolicyCode == null)
             {
                 PasswordPolicy policy = passwordPolicyRepository.GetSinglePasswordPolicy("MEDU");
                 entity.PasswordPolicyCode = policy.Code;
             }
 
-            LBtenantRepository = new LogBoxTenantSettingRepository(objectContext);
-
-            LogBoxTenantSetting LBentitysetting = LBtenantRepository.GetSingleLBTenant(currentTenant.Id);
-          
-            LBentitysetting.IsDocumentsArchive = currentTenant.IsDocumentsArchive;
-            LBentitysetting.CustomerTenantShareImportFile = currentTenant.CustomerTenantShareImportFile;
-            LBentitysetting.LogBoxAdminUserId = currentTenant.LogBoxAdminUserId;
-            LBentitysetting.DocumentShareAsDefault = currentTenant.DocumentShareAsDefault;
-            LBentitysetting.StockTypeCode = currentTenant.StockTypeCode;
-            LBentitysetting.AutoArchiveOnInvoice = currentTenant.AutoArchiveOnInvoice;
-
             tenantRepository.Update(entity);
             tenantRepository.SubmitChanges();
-
-            LBtenantRepository.Update(LBentitysetting);
-            LBtenantRepository.SubmitChanges();
-
             using (TransactionScope scop = TransactionFactory.GetNewTransaction())//TransactionFactory.GetNewTransaction())
             {
                 GlobalTenantRepository globalTenantRep = new GlobalTenantRepository();
@@ -356,10 +329,6 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             tenantRepository = new TenantRepository(tenant.Id);
             Tenant entity = TenantRepository.GetSingleTenant(tenant.Id, false);
             tenantRepository.Remove(entity);
-
-            LBtenantRepository = new LogBoxTenantSettingRepository(tenant.Id);
-            LogBoxTenantSetting LBentitysetting = LBtenantRepository.GetSingleLBTenant(tenant.Id);
-            LBtenantRepository.Remove(LBentitysetting);
         }
 
         [Query(HasSideEffects = true)]

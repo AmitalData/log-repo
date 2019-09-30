@@ -182,9 +182,7 @@ namespace CommunicationWorkerRole
                                     CustomerTenantAccessRequestQuery customerTenantAccessRequestQuery = new CustomerTenantAccessRequestQuery(tenant);
                                     var customerTenantAccessRequest = customerTenantAccessRequestQuery.GetSinglePM(RequestId, tenant);
                                     TenantQuery tenantQuery = new TenantQuery(tenant);
-                                    LogBoxTenantSettingQuery LBtenantQuery = new LogBoxTenantSettingQuery(tenant);
                                     var Tenant = tenantQuery.GetSinglePMByCustomerId(tenant);
-                                    var LbTenant = LBtenantQuery.GetSinglePM(tenant);
                                     HybridPartnerRepository hybridPartnerRepository = new HybridPartnerRepository(commoncontext);
                                     HybridPartner Partner = hybridPartnerRepository.GetSingleHybridPartner(customerTenantAccessRequest.ForwarderId);
                                     CustomerQuery customerQuery = new CustomerQuery(tenant);
@@ -201,7 +199,7 @@ namespace CommunicationWorkerRole
                                         ContactMobile = Tenant.CustomerMobile,
                                         ContactPhone = Tenant.CustomerPhone,
                                         IsPrivateLabelCustomer = false,
-                                        StockTypeCode = LbTenant.StockTypeCode,
+                                        StockTypeCode = Tenant.StockTypeCode,
                                     };
                                     GlobalTenant Globaltenant = null;
                                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())//TransactionFactory.GetNewTransaction())

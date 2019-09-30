@@ -356,7 +356,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                         var HOME = 36;
                         var CTRL = 17;
                         var BACKSPACE = 8;
-
+                     
                         var which = logLoveReturnWhich(keyboardEvent);
 
                         if (which == TABKEY || which == ENTERKEY || which == DOWNKEY || which == UPKEY
@@ -364,7 +364,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                             return;
                         }
 
-
+                       
 
 
                         if (this.SearchTextNgModel != undefined) {
@@ -564,7 +564,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         }
         if (this.LookUpTableName == 'Port' || this.LookUpTableName == 'Carrier') {
             this.IsAllDataVisible = true;
-            this.DropDownHeight = 280;
+            this.DropDownHeight = 276;
             this.MyDropDownHeight = { 'height': '105px' }
             this.DisplayHeader = false;
             if (this.LookUpTableName == 'Port') {
@@ -1199,57 +1199,29 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     var lis = input.getElementsByTagName("li");
                     lis[0].classList.add("highlighted");
                 }
-                else if (this.IsAllDataVisible) {
-                    if (this.ZeroItemsSource && this.ZeroItemsSource.length > 0) {
-                        var input = document.getElementById(this.AllDataListId);
-                        var lis = input.getElementsByTagName("li");
-                        lis[0].classList.add("highlighted");
-                    }
-                }
 
             }
             else {
                 if (active[0].nextElementSibling) {
                     active[0].nextElementSibling.classList.add("highlighted");
                     active[0].classList.remove("highlighted");
+
+
                     active[0].scrollIntoView(false);
-                }
-                else if (this.IsAllDataVisible) {
-                    if (this.ZeroItemsSource && this.ZeroItemsSource.length > 0) {
-                        var input = document.getElementById(this.AllDataListId);
-                        active[0].classList.remove("highlighted");
-                        var lis = input.getElementsByTagName("li");
-                        lis[0].classList.add("highlighted");
-                    }
                 }
             }
         }
         else {
             var active = document.getElementsByClassName("highlighted");
             if (active[0]) {
-                // if (this.ItemsSource && this.ItemsSource.length > 0) {
-                if (active[0].previousElementSibling) {
-                    active[0].previousElementSibling.classList.add("highlighted");
-                    active = document.getElementsByClassName("highlighted");
-                    active[1].classList.remove("highlighted");
-                    active[0].scrollIntoView(false);
-                }
-                else if (this.IsAllDataVisible) {
-                    if (this.ItemsSource && this.ItemsSource.length > 0) {
-                        var input = document.getElementById(this.MyDataListId);
-                        active[0].classList.remove("highlighted");
-                        var lis = input.getElementsByTagName("li");
-                        lis[lis.length - 1].classList.add("highlighted");
+                if (this.ItemsSource && this.ItemsSource.length > 0) {
+                    if (active[0].previousElementSibling) {
+                        active[0].previousElementSibling.classList.add("highlighted");
+                        active = document.getElementsByClassName("highlighted");
+                        active[1].classList.remove("highlighted");
+                        active[0].scrollIntoView(false);
                     }
                 }
-                // }
-                // else if(this.IsAllDataVisible){
-                //     if (this.ZeroItemsSource && this.ZeroItemsSource.length > 0) {
-                //         var input = document.getElementById(this.AllDataListId);
-                //         var lis = input.getElementsByTagName("li");
-                //         lis[0].classList.add("highlighted");
-                //     }
-                // }
             }
         }
     }
@@ -1275,15 +1247,72 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             this.tabkeyDown = true;
 
             if (this.IsOpen) {
-                this.FocusOnSelect = false;
-                this.SelectHighlightedItem();
+                var active = document.getElementsByClassName("highlighted");
+                if (active[0]) {
+                    var input = document.getElementById(this.MyDataListId);
+                    var lis = input.getElementsByTagName("li");
+                    for (var i = 0; i < lis.length; i++) {
+
+                        if (lis[i].className.search("highlighted") > -1) {
+                            this.FocusOnSelect = false;
+                            lis[i].classList.remove("highlighted");
+                            lis[i].click();
+                        }
+                    }
+
+                }
+                else {
+                    var selected = document.getElementsByClassName("liItemSelected");
+                    if (selected[0]) {
+                        var input = document.getElementById(this.MyDataListId);
+                        var lis = input.getElementsByTagName("li");
+                        for (var i = 0; i < lis.length; i++) {
+
+                            if (lis[i].className.search("liItemSelected") > -1) {
+                                this.FocusOnSelect = false;
+                                lis[i].classList.remove("liItemSelected");
+                                lis[i].click();
+                            }
+                        }
+                    }
+                }
+
+            }
+            if (this.IsOpen) {
                 this.ToggleOpenDropDown();
             }
+            //this.OnBlurEvent.emit("");
         }
 
         if ($event.keyCode == ENTERKEY) {
             if (this.IsOpen) {
-                this.SelectHighlightedItem();
+                var active = document.getElementsByClassName("highlighted");
+                if (active[0]) {
+                    var input = document.getElementById(this.MyDataListId);
+                    var lis = input.getElementsByTagName("li");
+                    for (var i = 0; i < lis.length; i++) {
+
+                        if (lis[i].className.search("highlighted") > -1) {
+                            lis[i].classList.remove("highlighted");
+                            lis[i].click();
+                        }
+                    }
+
+                }
+                else {
+                    var selected = document.getElementsByClassName("liItemSelected");
+                    if (selected[0]) {
+                        var input = document.getElementById(this.MyDataListId);
+                        var lis = input.getElementsByTagName("li");
+                        for (var i = 0; i < lis.length; i++) {
+
+                            if (lis[i].className.search("liItemSelected") > -1) {
+                                lis[i].classList.remove("liItemSelected");
+                                lis[i].click();
+                            }
+                        }
+                    }
+                }
             }
             else {
                 this.KeyDownEvent.emit(13)
@@ -1301,12 +1330,14 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             else {
                 var selected = document.getElementsByClassName("liItemSelected");
                 if (selected[0]) {
-                    if (this.ItemsSource && this.ItemsSource.length > 0) {
-                        this.RemoveSelectedAddHighlighted(this.MyDataListId);
-                    }
-                    else if (this.ZeroItemsSource && this.ZeroItemsSource.length > 0) {
-                        this.RemoveSelectedAddHighlighted(this.AllDataListId);
+                    var input = document.getElementById(this.MyDataListId);
+                    var lis = input.getElementsByTagName("li");
+                    for (var i = 0; i < lis.length; i++) {
 
+                        if (lis[i].className.search("liItemSelected") > -1) {
+                            lis[i].classList.remove("liItemSelected");
+                            lis[i].classList.add("highlighted");
+                        }
                     }
                 }
                 this.NavigateListItems(true);
@@ -1340,69 +1371,6 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         //}
     }
 
-    RemoveSelectedAddHighlighted(dropDownId: string) {
-        var myDataDropDown = document.getElementById(dropDownId);
-        var lis = myDataDropDown.getElementsByTagName("li");
-        for (var i = 0; i < lis.length; i++) {
-
-            if (lis[i].className.search("liItemSelected") > -1) {
-                lis[i].classList.remove("liItemSelected");
-                lis[i].classList.add("highlighted");
-            }
-        }
-    }
-
-    ClickOnHighlightedItemReturnStatus(dropDownListId: string) {
-        var input = document.getElementById(dropDownListId);
-        var lis = input.getElementsByTagName("li");
-        var selectedItemFound: boolean = false;
-        for (var i = 0; i < lis.length; i++) {
-
-            if (lis[i].className.search("highlighted") > -1) {
-                selectedItemFound = true;
-                lis[i].classList.remove("highlighted");
-                lis[i].click();
-            }
-        }
-        return selectedItemFound;
-    }
-
-    ClickOnSelectedItemReturnStatus(dropDownListId: string) {
-        var input = document.getElementById(dropDownListId);
-        var lis = input.getElementsByTagName("li");
-        var selectedItemFound: boolean = false;
-        for (var i = 0; i < lis.length; i++) {
-
-            if (lis[i].className.search("liItemSelected") > -1) {
-                selectedItemFound = true;
-                lis[i].classList.remove("liItemSelected");
-                lis[i].click();
-            }
-        }
-        return selectedItemFound;
-    }
-
-    SelectHighlightedItem() {
-        var selectedItemFound: boolean = false;
-        var active = document.getElementsByClassName("highlighted");
-        if (active[0]) {
-            selectedItemFound = this.ClickOnHighlightedItemReturnStatus(this.MyDataListId);
-            if (!selectedItemFound) {
-                selectedItemFound = this.ClickOnHighlightedItemReturnStatus(this.AllDataListId);
-            }
-
-        }
-        else {
-            var selected = document.getElementsByClassName("liItemSelected");
-            if (selected[0]) {
-                selectedItemFound = this.ClickOnSelectedItemReturnStatus(this.MyDataListId);
-            }
-            if (!selectedItemFound) {
-                selectedItemFound = this.ClickOnSelectedItemReturnStatus(this.AllDataListId);
-            }
-        }
-    }
-
     OnLiMouseOver($event) {
         var active = document.getElementsByClassName("highlighted");
         if (active[0]) {
@@ -1420,72 +1388,37 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         $event.target.classList.remove("highlighted");
     }
     SelectedItemKey: any;
-    SelectedZeroItemKey: any;
     KeyPropertyPath: any;
-    HighlightSelectedValue() {
+    HighlightSelectedValue(items: any[]) {
         this.SelectedItemKey = null;
-        //this.SelectedZeroItemKey=null;
         if (this.SearchTextNgModel != null && this.SearchTextNgModel != undefined && this.SearchTextNgModel != "") {
 
-            if (this.ItemsSource && this.ItemsSource.length > 0) {
-                var oldItems = this.ItemsSource;
+            var oldItems = items;
 
-                var item = this.ItemsSource.filter(d => d[this.LookUp1] != null && d[this.LookUp1].toLowerCase() === this.SearchTextNgModel.toLowerCase())[0];
-                if (!item && this.LookUp2) {
-                    var item = this.ItemsSource.filter(d => d[this.LookUp2] != null && d[this.LookUp2].toLowerCase() === this.SearchTextNgModel.toLowerCase())[0];
-                }
-                if (!item) {
-                    var item = this.ItemsSource.filter(d => d[this.DisplayMemberPath] != null && d[this.DisplayMemberPath].toLowerCase() === this.SearchTextNgModel.toLowerCase())[0];
-                }
-                if (item) {
-                    this.ItemsSource = [];
-                    this.ItemsSource.push(item);
-                    var index = oldItems.indexOf(item);
-                    oldItems.splice(index, 1);
-                    oldItems.forEach((itm) => {
-                        this.ItemsSource.push(itm);
-                    });
-
-                    //var index = items.indexOf(item);
-                    //var temp = items[0];
-                    //items[0] = item;
-                    //items[index] = temp;
-                    this.SelectedItemKey = item[this.KeyPropertyPath];
-                }
-                else if (this.ItemsSource.length > 0) {
-                    this.SelectedItemKey = this.ItemsSource[0][this.KeyPropertyPath];
-                }
+            var item = items.filter(d => d[this.LookUp1] != null && d[this.LookUp1].toLowerCase() === this.SearchTextNgModel.toLowerCase())[0];
+            if (!item && this.LookUp2) {
+                var item = items.filter(d => d[this.LookUp2] != null && d[this.LookUp2].toLowerCase() === this.SearchTextNgModel.toLowerCase())[0];
             }
-            else if (this.ZeroItemsSource && this.ZeroItemsSource.length > 0) {
-                if (this.ZeroItemsSource.length > 0) {
-                    var oldItems = this.ZeroItemsSource;
+            if (!item) {
+                var item = items.filter(d => d[this.DisplayMemberPath] != null && d[this.DisplayMemberPath].toLowerCase() === this.SearchTextNgModel.toLowerCase())[0];
+            }
+            if (item) {
+                this.ItemsSource = [];
+                this.ItemsSource.push(item);
+                var index = oldItems.indexOf(item);
+                oldItems.splice(index, 1);
+                oldItems.forEach((itm) => {
+                    this.ItemsSource.push(itm);
+                });
 
-                    var item = this.ZeroItemsSource.filter(d => d[this.LookUp1] != null && d[this.LookUp1].toLowerCase() === this.SearchTextNgModel.toLowerCase())[0];
-                    if (!item && this.LookUp2) {
-                        var item = this.ZeroItemsSource.filter(d => d[this.LookUp2] != null && d[this.LookUp2].toLowerCase() === this.SearchTextNgModel.toLowerCase())[0];
-                    }
-                    if (!item) {
-                        var item = this.ZeroItemsSource.filter(d => d[this.DisplayMemberPath] != null && d[this.DisplayMemberPath].toLowerCase() === this.SearchTextNgModel.toLowerCase())[0];
-                    }
-                    if (item) {
-                        this.ZeroItemsSource = [];
-                        this.ZeroItemsSource.push(item);
-                        var index = oldItems.indexOf(item);
-                        oldItems.splice(index, 1);
-                        oldItems.forEach((itm) => {
-                            this.ZeroItemsSource.push(itm);
-                        });
-
-                        //var index = items.indexOf(item);
-                        //var temp = items[0];
-                        //items[0] = item;
-                        //items[index] = temp;
-                        this.SelectedItemKey = item[this.KeyPropertyPath];
-                    }
-                    else if (this.ZeroItemsSource.length > 0) {
-                        this.SelectedItemKey = this.ZeroItemsSource[0][this.KeyPropertyPath];
-                    }
-                }
+                //var index = items.indexOf(item);
+                //var temp = items[0];
+                //items[0] = item;
+                //items[index] = temp;
+                this.SelectedItemKey = item[this.KeyPropertyPath];
+            }
+            else if (items.length > 0) {
+                this.SelectedItemKey = items[0][this.KeyPropertyPath];
             }
         }
     }
@@ -1634,7 +1567,6 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                         this.CalculateWidths(resp.Result);
                         this.ZeroItemsSourceCount = resp.Result.length;
                         this.ZeroItemsSource = resp.Result;
-
                     }
                     else {
                         this.CalculateWidths(resp);
@@ -1642,7 +1574,6 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                         this.ZeroItemsSource = resp;
 
                     }
-                    this.HighlightSelectedValue();
                 })
             });
         }
@@ -2893,7 +2824,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                         this.LovMessage = null;
                     }
                     this.ItemsSourceStatic = this.ItemsSource;
-                    this.HighlightSelectedValue();
+                    this.HighlightSelectedValue(this.ItemsSource);
                     this.isLoading = false;
                 }
             });
@@ -3008,7 +2939,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                         this.LovMessage = null;
                     }
                     this.ItemsSourceStatic = this.ItemsSource;
-                    this.HighlightSelectedValue();
+                    this.HighlightSelectedValue(this.ItemsSource);
 
                     //turn loading flag off
                     this.isLoading = false;
@@ -3046,7 +2977,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     this.LovMessage = null;
                 }
                 this.ItemsSourceStatic = this.ItemsSource;
-                this.HighlightSelectedValue();
+                this.HighlightSelectedValue(this.ItemsSource);
                 this.isLoading = false;
             });
         });

@@ -5,7 +5,7 @@ import { FieldsHelper } from '../../Helpers/FieldsHelper';
 import { GeneralFunctions } from '../../Helpers/GeneralFunctions';
 
 
-describe('ARPayment Module', function () {
+describe('ARInvoice Module', function () {
   var Helper = new GeneralFunctions();
   var F = new FieldsHelper();
   browser.driver.manage().window().maximize();

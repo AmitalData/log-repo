@@ -83,7 +83,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.RegulatedAgentRegimeActivated = entityPM.RegulatedAgentRegimeActivated;
             poco.CustomerId = entityPM.CustomerId;
             poco.IsCustomerTenantShare = entityPM.IsCustomerTenantShare;
-  
+            poco.CustomerTenantShareImportFile = entityPM.CustomerTenantShareImportFile;
             poco.CustomerTenantShareExportFile = entityPM.CustomerTenantShareExportFile;
             poco.AllowAgentInCustomersLOV = entityPM.AllowAgentInCustomersLOV;
             poco.IsPotentialTelRequired = entityPM.IsPotentialTelRequired;
@@ -92,8 +92,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.VatFormatCountryId = entityPM.VatFormatCountryId;
             poco.IsNumeric = entityPM.IsNumeric;
             poco.VatSize = entityPM.VatSize;
-      
-     
+            poco.LogBoxAdminUserId = entityPM.LogBoxAdminUserId;
+            poco.IsDocumentsArchive = entityPM.IsDocumentsArchive;
             poco.IsWebAccessActivated = entityPM.IsWebAccessActivated;
             poco.IsCorrespondenceRightToLeftEnabled = entityPM.IsCorrespondenceRightToLeftEnabled;
             poco.IsNotesRightToLeftEnabled = entityPM.IsNotesRightToLeftEnabled;
@@ -106,12 +106,12 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.ExportQuotationsToIntegratedSystem = entityPM.ExportQuotationsToIntegratedSystem;
             poco.FMCNumber = entityPM.FMCNumber;
             poco.TenantVATManagement = entityPM.TenantVATManagement;
-          
+            poco.DocumentShareAsDefault = entityPM.DocumentShareAsDefault;
             poco.TemperatureUnitCode = entityPM.TemperatureUnitCode;
             poco.NumberFormatCode = entityPM.NumberFormatCode;
             poco.DefaultSLAId = entityPM.DefaultSLAId;
-         
-       
+            poco.StockTypeCode = entityPM.StockTypeCode;
+            poco.AutoArchiveOnInvoice = entityPM.AutoArchiveOnInvoice;
             poco.EcommerceSupportEmail = entityPM.EcommerceSupportEmail;
             poco.CBSA = entityPM.CBSA;
             poco.CAAT = entityPM.CAAT;

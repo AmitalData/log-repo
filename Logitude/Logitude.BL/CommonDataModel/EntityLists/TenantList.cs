@@ -78,11 +78,11 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public bool AllowEAWBMoreThanTenPackages { get; set; }
         public string RegulatedAgentNumber { get; set; }
         public bool RegulatedAgentRegimeActivated { get; set; }
-  
+        public bool IsDocumentsArchive { get; set; }
         public string CustomerId { get; set; }
         public string CustomerName { get; set; }
         public bool IsCustomerTenantShare { get; set; }
-     
+        public bool CustomerTenantShareImportFile { get; set; }
         public bool CustomerTenantShareExportFile { get; set; }
         public bool AllowAgentInCustomersLOV { get; set; }
         public bool IsCorrespondenceRightToLeftEnabled { get; set; }

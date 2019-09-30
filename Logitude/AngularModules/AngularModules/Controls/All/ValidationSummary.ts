@@ -1,4 +1,4 @@
-import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
+﻿import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {AppTool} from '../../Infrastructure/Tools';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTranslator';
@@ -24,13 +24,13 @@ import {ObjectsLocator} from '../../Infrastructure/Locators/ObjectsLocator';
 
                             <td style="position: relative; vertical-align:top; padding-top: 2px; padding-bottom: 2px;" >
 
-                                <div *ngIf="isSingleError"  class="SingleError" id="{{'ValidationSummaryText' | IdGeneratorPipe}}" [ngStyle]="LayoutDirection == 'rtl' ? {'padding-right': '25px'} : {'padding-left': '25px'}"><img [className]="LayoutDirection == 'rtl' ? 'RightCenter' : 'LeftCenter'" src="./Images/ValidationError.png" />{{ItemsSource[0]}}</div>
+                                <div *ngIf="isSingleError" class="SingleError" [ngStyle]="LayoutDirection == 'rtl' ? {'padding-right': '25px'} : {'padding-left': '25px'}"><img [className]="LayoutDirection == 'rtl' ? 'RightCenter' : 'LeftCenter'" src="./Images/ValidationError.png" />{{ItemsSource[0]}}</div>
 
                                 <ul *ngIf="!isSingleError">
                                     <li class="ValidationItem" [ngStyle]="{width: ItemWidth}" *ngFor="let item of ItemsSource" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'">
                                         <img [className]="LayoutDirection == 'rtl' ? 'RightCenter' : 'LeftCenter'" src="./Images/ValidationError.png" />
                                         <span [className]="LayoutDirection == 'rtl' ? 'RightCenter' : 'LeftCenter'" [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'"
-                                               id="{{'ValidationSummaryText' | IdGeneratorPipe}}" [ngStyle]="LayoutDirection == 'rtl' ? {'margin-right': '20px'} : {'margin-left': '20px'}">{{item}}</span>
+                                                [ngStyle]="LayoutDirection == 'rtl' ? {'margin-right': '20px'} : {'margin-left': '20px'}">{{item}}</span>
                                     </li>
                                 </ul>
                             </td>

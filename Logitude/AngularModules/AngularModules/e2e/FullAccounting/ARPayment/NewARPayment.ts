@@ -1,7 +1,6 @@
 import { FieldsHelper } from '../../Helpers/FieldsHelper';
 import { GeneralFunctions } from '../../Helpers/GeneralFunctions';
-
-import { browser, by, element, WebDriver, protractor, $ } from 'protractor';
+import { browser, by, element } from 'protractor';
 
 
 
@@ -19,8 +18,6 @@ export class NewARPayment {
         browser.ignoreSynchronization = true;
         this.Helper.WaitByIdAndClick('NewARPayment');
         this.Helper.WaitBusyIndicator();
-        this.Helper.ItemsVisibility('ARPayment_BillToId');
-        this.Helper.ItemsPresent('ARPayment_BillToId');
         this.Helper.WaitByIdAndFill('ARPayment_BillToId', BillToName);
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
         this.Helper.WaitBusyIndicator();
@@ -38,14 +35,11 @@ export class NewARPayment {
         this.Helper.WaitBusyIndicator();
         this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndFill('ARPayment_BranchId', 'Main Office');
-        this.Helper.WaitBusyIndicator();
         this.Helper.WaitByCssAndClick_SelectItemFromList('.DropDownList', 0);
         this.Helper.WaitBusyIndicator();
-       // this.Helper.ItemsVisibility('row0');
+        this.Helper.ItemsVisibility('row0');
 //        this.Helper.WaitWindowClosed();
-        var ec = protractor.ExpectedConditions;
-        browser.wait(ec.invisibilityOf(element(by.id("ARPaymentSpinner"))), 100000);
-        this.Helper.WaitBusyIndicator();
+
         this.Helper.WaitByIdAndClick('ARPayment.B.Approve');
         this.Helper.WaitBusyIndicator();
       //  browser.sleep(6000);
