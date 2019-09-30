@@ -27,13 +27,13 @@ export class EditOpportunityMainTab {
     EditMainTabFeilds(opportunityDesc: string) {
         this.Helper.WaitByIdAndFill('Opportunity_NumberOfShipments', '25');
         this.Helper.WaitByIdAndClick('AddPhoneCall');
-        this.newPhoneCall.FillPhoneCallFields('Created from appointment');
+        this.newPhoneCall.FillPhoneCallFields('Created from Opportunity');
 
         this.Helper.WaitByIdAndClick('AddTask');
-        this.newTask.FillTaskFields('Created from appointment ...');
+        this.newTask.FillTaskFields('Created from Opportunity');
 
         this.Helper.WaitByIdAndClick('AddAppointment');
-        this.newAppointment.FillAppointmentFields('Created from appointment ...');
+        this.newAppointment.FillAppointmentFields('Created from Opportunity');
 
         this.Helper.WaitByIdAndClick('AddQuote');
         this.opportunityActions.AddQuoteFromOpportunity();
