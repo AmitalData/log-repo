@@ -1,9 +1,9 @@
 import { browser, by, element, WebDriver, protractor } from 'protractor';
 import { FieldsHelper } from '../../Helpers/FieldsHelper';
 import { NewOpportunity } from './NewEntity/NewOpportunity';
-import {EditOpportunityMainTab  } from './EditEntity/EditOpportunityMainTab';
-import {EditOpportunityGeneralTab} from './EditEntity/EditOpportunityGeneralTab';
-import {OpportunityActions} from './EditEntity/OpportunitiesActions';
+import { EditOpportunityMainTab } from './EditEntity/EditOpportunityMainTab';
+import { EditOpportunityGeneralTab } from './EditEntity/EditOpportunityGeneralTab';
+import { OpportunityActions } from './EditEntity/OpportunitiesActions';
 import { GeneralFunctions } from '../../Helpers/GeneralFunctions';
 export class OpportunityModule {
     private Helper: FieldsHelper;
@@ -29,8 +29,9 @@ export class OpportunityModule {
 
         this.editMainTab.EditMainTab('Opportunity # ' + OpportunityNo);
         this.editGeneralTab.EditGeneralTab('Opportunity # ' + OpportunityNo);
-
-       this.OpportunityActions.OpportunityActions();
+        
+        this.OpportunityActions.SaveOpportunity()
+        this.OpportunityActions.OpportunityActions();
     }
 }
 
