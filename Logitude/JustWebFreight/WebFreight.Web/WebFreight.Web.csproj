@@ -4354,6 +4354,7 @@
     <Content Include="WcfApi\CustomerAdditionalServiceDWWcfService.svc" />
     <Content Include="WcfApi\CustomerCompetitorDWWcfService.svc" />
     <Content Include="WcfApi\CustomerDWWcfService.svc" />
+    <Content Include="WcfApi\DeclarationApprovalRequestWcfService.svc" />
     <Content Include="WcfApi\DepositionRequestWcfService.svc" />
     <Content Include="WcfApi\DocumentInWcfService.svc" />
     <Content Include="WcfApi\DocumentsMetaDataTypeWcfService.svc" />
@@ -5833,6 +5834,9 @@
     <Compile Include="WcfApi\CustomerDWWcfService.svc.cs">
       <DependentUpon>CustomerDWWcfService.svc</DependentUpon>
     </Compile>
+    <Compile Include="WcfApi\DeclarationApprovalRequestWcfService.svc.cs">
+      <DependentUpon>DeclarationApprovalRequestWcfService.svc</DependentUpon>
+    </Compile>
     <Compile Include="WcfApi\DepositionRequestWcfService.svc.cs">
       <DependentUpon>DepositionRequestWcfService.svc</DependentUpon>
     </Compile>
@@ -5882,6 +5886,7 @@
     <Compile Include="WcfApi\ICustomerAdditionalServiceDWWcfService.cs" />
     <Compile Include="WcfApi\ICustomerCompetitorDWWcfService.cs" />
     <Compile Include="WcfApi\ICustomerDWWcfService.cs" />
+    <Compile Include="WcfApi\IDeclarationApprovalRequestWcfService.cs" />
     <Compile Include="WcfApi\IDepositionRequestWcfService.cs" />
     <Compile Include="WcfApi\IDocumentInWcfService.cs" />
     <Compile Include="WcfApi\IDocumentsMetaDataTypeWcfService.cs" />
