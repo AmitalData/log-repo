@@ -138,7 +138,7 @@ namespace WebFreight.Web.ShipmentPackageModel
             shipments = shipments.Where(d => d.IsCancelled == false);
 
             foreach (ShipmentJoinPackageList shipment in shipments)
-            {
+            {                
                 ShipmentPickUpDelivery myLastDelivery = (from d in shipmentCotnext.ShipmentPickUpDeliveries
                                                          where d.ShipmentId == shipment.ShipmentId && d.PickUpDeliveryTypeCode == "DELV"
                                                          select d).OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
@@ -389,6 +389,28 @@ namespace WebFreight.Web.ShipmentPackageModel
                     if (myDelivery != null)
                     {
                         provider.ATADoor = myDelivery.ATA;
+                    }
+                }
+
+                else if (shipment.ContainerNumber != null)
+                {
+                    List<ShipmentPickUpDelivery> allDeliveries = (from d in shipmentCotnext.ShipmentPickUpDeliveries
+                                                                  where d.ShipmentId == shipment.ShipmentId
+                                                                  && d.PickUpDeliveryTypeCode == "DELV"
+                                                                  select d).ToList();
+
+                    foreach (ShipmentPickUpDelivery myDelivery in allDeliveries)
+                    {
+                        bool hasContainer = (from d in shipmentCotnext.ShipmentPickUpDeliveryPackages
+                                             where d.ShipmentPickUpDeliveryId == myDelivery.Id
+                                             && d.ContainerNumber == shipment.ContainerNumber
+                                             select d).Any();
+
+                        if (hasContainer)
+                        {
+                            provider.ATADoor = myDelivery.ATA;
+                            break;
+                        }
                     }
                 }
 
