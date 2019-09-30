@@ -20,6 +20,11 @@ namespace Logitude.BL.GlobalModel.Tools.Validating
     {
         public static void Validate(TenantManagementPM entityPM, TenantManagement entityPOCO, bool isNewEntity, TenantManagementRepository entityRepository)
         {
+            if (string.IsNullOrEmpty(entityPM.PackageCode))
+            {
+                throw new ApplicationException("Main Package field is required");
+            }
+
             ValidateCCSParameter(entityPM, entityRepository);
             ValidateNumberOfUsers(entityPM);
             ValidateConnectedAirline(entityPM, entityRepository);
