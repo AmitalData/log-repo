@@ -881,7 +881,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                             else if (myVatType != null)
                             {
-                                itemVAT.ExternalVATCard = myVatType.ExternalVATCard;
+                                itemVAT.ExternalVATCard = myVatType.ReceivablesExternalId;
                             }
                         }
 
@@ -1505,7 +1505,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     }
                                     else
                                     {
-                                        newItem.ExternalVatCard = lineVatType.ExternalVATCard;
+                                        newItem.ExternalVatCard = lineVatType.ReceivablesExternalId;
                                     }
                                 }
 
@@ -1551,7 +1551,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                         }
                                         else if (vatType != null)
                                         {
-                                            newItem.ExternalVatCard = vatType.ExternalVATCard;
+                                            newItem.ExternalVatCard = vatType.ReceivablesExternalId;
                                         }
                                     }
 

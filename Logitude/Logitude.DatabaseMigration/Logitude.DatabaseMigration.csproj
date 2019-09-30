@@ -1670,6 +1670,10 @@
     <Compile Include="Migrations\201911211215537_objectfield_fieldcode_unique.Designer.cs">
       <DependentUpon>201911211215537_objectfield_fieldcode_unique.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909301350305_VatType_New_Fields.cs" />
+    <Compile Include="Migrations\201909301350305_VatType_New_Fields.Designer.cs">
+      <DependentUpon>201909301350305_VatType_New_Fields.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2863,6 +2867,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911211215537_objectfield_fieldcode_unique.resx">
       <DependentUpon>201911211215537_objectfield_fieldcode_unique.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909301350305_VatType_New_Fields.resx">
+      <DependentUpon>201909301350305_VatType_New_Fields.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

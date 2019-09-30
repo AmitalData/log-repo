@@ -322,9 +322,9 @@ export class AccountingTab_QuickBooksOnline extends BaseComponent implements OnD
     FillDataIfOtherExternalFromApi() {
 
         if (this.ObjectTableName == "VatType") {
-            if (this.EntityPM.ExternalVATCard != null && this.EntityPM.ExternalVATCard != "") {
+            if (this.EntityPM.ReceivablesExternalId != null && this.EntityPM.ReceivablesExternalId != "") {
                 this.ExistRecordOtherExternalFromAPi = true;
-                this.GlobalDomainService.GetQuickBooksOnlineVatTypesById(this.EntityPM.ExternalVATCard).subscribe(result => {
+                this.GlobalDomainService.GetQuickBooksOnlineVatTypesById(this.EntityPM.ReceivablesExternalId).subscribe(result => {
                     if (result.Result != null && result.Result.length > 0) {
                         this.TextBoxText = result.Result[0].nameField;
                         this.Loading = true;
@@ -715,7 +715,7 @@ export class AccountingTab_QuickBooksOnline extends BaseComponent implements OnD
                     else if (this.OtherEntities) {
                         switch (this.ObjectTableName) {
                             case "VatType": {
-                                this.EntityPM.ExternalVATCard = this.Item.idField;
+                                this.EntityPM.ReceivablesExternalId = this.Item.idField;
                                 this.TextBoxText = this.Item.nameField;
                                 break;
                             }
