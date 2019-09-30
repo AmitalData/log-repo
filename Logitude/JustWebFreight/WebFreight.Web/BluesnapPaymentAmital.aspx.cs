@@ -62,7 +62,7 @@ namespace WebFreight.Web
                 From = "Bluesnap",
                 Id = IdCounter.GetNumber("AnalyzeQueue", 0),
                 MessageBody = messageBytes,
-                Status = "W",
+                Status = "D",
                 Retries = 0,
                 ConnectedToEntity = false,
                 ConnectedToTenant = true,
