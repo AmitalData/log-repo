@@ -198,10 +198,8 @@ namespace CommunicationWorkerRole
 
                                             //}
                                             TenantRepository TenantRep = new TenantRepository(tenant);
-                                            LogBoxTenantSettingRepository LBTenantRep = new LogBoxTenantSettingRepository(tenant);
                                             var MainTenant = TenantRep.GetSingleTenant(tenant);
-                                            var LBTenant = LBTenantRep.GetSingleLBTenant(tenant);
-                                            Contact LogBoxUser = contactRepository.GetSingleContact(LBTenant.LogBoxAdminUserId, tenant);
+                                            Contact LogBoxUser = contactRepository.GetSingleContact(MainTenant.LogBoxAdminUserId, tenant);
                                             var domain = "@logbox.co.il";
                                             if (!string.IsNullOrEmpty(LogBoxUser.Email))
                                             {

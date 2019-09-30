@@ -436,6 +436,10 @@ namespace Logitude.BL.InvoiceModel.Tools
                 throw new ApplicationException("Company Vat Number is required");
             }
 
+            if (entityPM.InvoiceDate == null)
+            {
+                throw new ApplicationException("Invoice Date is required");
+            }
 
             //if (string.IsNullOrEmpty(billToCard.VatNumber))
             //{
@@ -530,9 +534,10 @@ namespace Logitude.BL.InvoiceModel.Tools
             comprobante.Version = "3.3";
             comprobante.Folio = folio;
             DateTime currentDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
-            comprobante.Fecha = entityPM.InvoiceDate != null ? entityPM.InvoiceDate.Value : currentDateTime;
+           // var invoiceDate = entityPM.InvoiceDate.Value.ToUniversalTime();
+            comprobante.Fecha = entityPM.InvoiceDate.Value;//entityPM.InvoiceDate != null ? entityPM.InvoiceDate.Value : currentDateTime;c
             comprobante.Fecha = new DateTime(comprobante.Fecha.Year, comprobante.Fecha.Month, comprobante.Fecha.Day, currentDateTime.Hour, currentDateTime.Minute, currentDateTime.Second);
-
+            //comprobante.Fecha = comprobante.Fecha.ToUniversalTime();
             //comprobante.formaDePago = "una sola exhibición";
 
             comprobante.FormaPago = satPaymentMethod.Code;
@@ -1958,7 +1963,7 @@ namespace Logitude.BL.InvoiceModel.Tools
             TimeSpan time = new TimeSpan(12, 00, 00);
             DateTime resultdate = pagoItem.FechaPago.Date + time;
             pagoItem.FechaPago = resultdate;
-            if (entityPM.FechaPago != null && FeatureToggleHelper.HasFeatureToggle("FPG", tenant))
+            if (entityPM.FechaPago != null)// && FeatureToggleHelper.HasFeatureToggle("FPG", tenant))
             {
                 pagoItem.FechaPago = entityPM.FechaPago.Value;
             }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Simplog.Data.InfrastructureModel;
+using Simplog.Server.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.SqlClient;
@@ -37,8 +39,8 @@ namespace WarehouseDataService.Helper
             {
                 try
                 {
-                    DWBuildTime dwBuildTime = !ApplicationInfo.IsStartBuildingDataWarehouse ? GetDWBuildInfoTime() : new DWBuildTime();
-                    if (ApplicationInfo.IsStartBuildingDataWarehouse)
+                    DWBuildTime dwBuildTime = !ApplicationInfo.RunDataWarehouseImmediately ? GetDWBuildInfoTime() : new DWBuildTime();
+                    if (ApplicationInfo.RunDataWarehouseImmediately)
                     {
                         dwBuildTime.IsBuildNow = true;
                         warehouseServiceHelper.UpdateDWNextRunTime(sourceConnectionString, DateTime.Now);
@@ -59,7 +61,7 @@ namespace WarehouseDataService.Helper
                         StartBuildWarehouseData();
                         dwBuildTime.DWNextRunTime = warehouseServiceHelper.CalculateDWNextRunTime(DateTime.Now);
                         warehouseServiceHelper.UpdateDWNextRunTime(sourceConnectionString, dwBuildTime.DWNextRunTime);
-                        ApplicationInfo.IsStartBuildingDataWarehouse = false;
+                        ApplicationInfo.RunDataWarehouseImmediately = false;
                     }
                     else Thread.Sleep(new TimeSpan(0, 5, 0));
                 }
@@ -107,7 +109,7 @@ namespace WarehouseDataService.Helper
             {
                 try
                 {
-                    if (!ApplicationInfo.IsStartBuildingDataWarehouse)
+                    if (!ApplicationInfo.RunDataWarehouseImmediately)
                     {
                         if (!warehouseServiceHelper.CheckIsUpgradingSystem(sourceConnectionString))
                         {

@@ -300,13 +300,6 @@ BEGIN
 			end
 		END
 
-		-- Compute OpenReceivablesLines
-		BEGIN
-			declare @OpenReceivablesLines as int
-			set @OpenReceivablesLines = (select count(*) from ShipmentReceivables where ShipmentId = @ShipmentId and ShipmentReceivableLineStatusCode <> 'ACCT')
-			set @OpenReceivablesLines = isnull(@OpenReceivablesLines,0)			
-		END
-
 		-- Update Shipment
 		BEGIN
 			Update Shipments
@@ -324,8 +317,7 @@ BEGIN
 			ShipmentPayableStatusCode = @ShipmentPayableStatusCode,
 			ShipmentReceivableStatusCode = @ShipmentReceivableStatusCode,
 			ARInvoiceIssued = @ARInvoiceIssued,
-			CreditNoteIssued = @CreditNoteIssued,
-			OpenReceivablesLines = @OpenReceivablesLines
+			CreditNoteIssued = @CreditNoteIssued
 			Where Id = @ShipmentId AND Tenant = @Tenant
 		END
 END

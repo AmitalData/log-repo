@@ -378,7 +378,7 @@ export class GLAccountTaxLine extends BaseComponent {
           this.entity.ChangeSetOp = "Update";
    
           this.parent.BuildGLAccountTaxWithholdingLinesList();
-        //  this.CurrentSession.CurrentEditComponent.SaveChanges();
+       //   this.CurrentSession.CurrentEditComponent.SaveChanges();
         
         }
 

@@ -1491,7 +1491,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.Origin = shipment.Origin;
             shipmentPM.AgentComputed = shipment.AgentComputed;
             shipmentPM.ComputedShipmentNumber = shipment.ComputedShipmentNumber;
-            shipmentPM.OpenReceivablesLines = shipment.OpenReceivablesLines;
 
             if (!string.IsNullOrEmpty(shipmentPM.UpdatedByUserId))
             {
@@ -11005,7 +11004,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                CarrierLastStatusCode = f.CarrierLastStatusCode,
                                ShipmentViewId = f.Id,
                                Id = f.Id,
-                               Tenant =f.Tenant,
                                Shipper = f.Shipper,
                                Consignee = f.Consignee,
                                DirectionId = f.DirectionId,
@@ -11146,7 +11144,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                CarrierNumber = f.CarrierNumber,
                                AgentId = f.AgentId,
                                AgentComputed = f.AgentComputed,
-                               // ComputedShipmentNumber = f.ComputedShipmentNumber,
+                              // ComputedShipmentNumber = f.ComputedShipmentNumber,
                                ARInvoiceIssued = f.ARInvoiceIssued,
                                CreditNoteIssued = f.CreditNoteIssued,
                                CustomFileNumber = f.CustomFileNumber,
@@ -11309,9 +11307,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                To = f.To,
                                Origin = f.Origin,
                                ARInvoices = f.ARInvoices,
-                               OpenReceivablesLines = f.OpenReceivablesLines,
                            };
-
             return myResult;
         }
 
@@ -11653,7 +11649,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     To = f.To,
                     Origin = f.Origin,
                     ARInvoices = f.ARInvoices,
-                    OpenReceivablesLines = f.OpenReceivablesLines,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
@@ -11909,7 +11904,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ARInvoices = f.ARInvoices,
                     Notes = f.Notes,
                     EstimatedFinalArrivalDate = f.EstimatedFinalArrivalDate,
-                    OpenReceivablesLines = f.OpenReceivablesLines,
+
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();

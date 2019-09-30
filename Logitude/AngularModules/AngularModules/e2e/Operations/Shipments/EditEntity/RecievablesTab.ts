@@ -34,7 +34,7 @@ export class ReceivablesTabComponent {
             // expect(element(by.id('ReceivableAmount')).getAttribute('textContent')).toBe(this.amount1 + this.amount2);
             // this.AddARInvoice();
         }
-        else if (ShipmentLevelCode == 'M') {
+        else if (shipmentType == 'M') {
             // this.Helper.WaitByIdAndFill('Shipment_EstimateProfitInSelectedCurrency', '44');
 
             this.AddReceivables('A', '5', '10', 'USD');

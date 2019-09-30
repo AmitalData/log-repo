@@ -54,7 +54,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             TaskScheduler.MonthlyDay = 0;
 
 
-
         }
     }
 }

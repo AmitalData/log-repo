@@ -131,7 +131,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
-			      				    IsTabsHidden =  true,
+			      				    IsTabsHidden =  false,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -573,7 +573,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
@@ -3529,7 +3529,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   Feature TariffFeature_UPDATESURCHARGES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATESURCHARGES", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TariffObjectTable.Id, Tenant = 0, NameTextCodeCode = "Tariff.Features.UPDATESURCHARGES", NameTextCodeDefaultText = @"Update Surcharges" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature TariffFeature_UPDATEMISSINGPORTS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATEMISSINGPORTS", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TariffObjectTable.Id, Tenant = 0, NameTextCodeCode = "Tariff.Features.UPDATEMISSINGPORTS", NameTextCodeDefaultText = @" Update Missing Ports " }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature TariffFeature_UPDATEMISSINGPORTS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATEMISSINGPORTS", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TariffObjectTable.Id, Tenant = 0, NameTextCodeCode = "Tariff.Features.UPDATEMISSINGPORTS", NameTextCodeDefaultText = @"Update Missing Ports" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
    
 	    

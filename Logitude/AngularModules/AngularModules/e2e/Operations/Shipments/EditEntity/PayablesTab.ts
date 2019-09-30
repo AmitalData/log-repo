@@ -15,7 +15,7 @@ export class PayablesTabComponent {
     public PayablesTab(shipperRef1: string, ShipmentType: string) {
         this.Helper.WaitEditComponentBusyIndicator();
         this.Helper.WaitByIdAndClick('Shipment.TH.Payables');
-        this.Helper.WaitEditComponentBusyIndicator();
+        this.Helper.WaitBusyIndicator();
         // this.Helper.WaitEditComponentBusyIndicator();
 
         this.Helper.ItemsVisibility('ATDSPayable-payable');

@@ -563,8 +563,8 @@ namespace WebFreight.Web.Helpers
             ///////////////////////////////////////////////////////////
 
             DWQueryBuilderHelper QBHelper = new DWQueryBuilderHelper(tenant);
-            SqlCommandClass sqlCommandClass = QBHelper.GetQuerySQL(bIReportXMLData.DWQueryData);
-            DataTable dataTable = QBHelper.GetDWQueryData(sqlCommandClass);
+            string MySqlString = QBHelper.GetQuerySQL(bIReportXMLData.DWQueryData);
+            DataTable dataTable = QBHelper.GetDWQueryData(MySqlString);
 
             var bITabularViewSettings = LogitudeXmlSerializer.DeserializeObject<BITabularViewSettings>(biReportEntityPM.AGGridOptionsXML);
 
