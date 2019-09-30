@@ -973,6 +973,7 @@
     <Content Include="App_Code\WarehouseDataController.cs" />
     <Content Include="App_Code\ActivityMobileLogController.cs" />
     <Content Include="App_Code\ResetPasswordController.cs" />
+    <Content Include="App_Code\DeclarationApprovalRequestController.cs" />
     <Compile Include="AtlasRegistrationPage.aspx.cs">
       <DependentUpon>AtlasRegistrationPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
