@@ -18,6 +18,9 @@ export class DocumentTypeTemplateViewModel {
     ReplyTo: string = "";
     TemplateSubject: string = "";
     TemplateCc: string = "";
+    TemplateBcc: string = "";
+
+    
     public Id: string;
     public  Tenant: number;
     public  TemplateBody: string;

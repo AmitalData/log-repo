@@ -46,7 +46,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
     IsShowFromInputBox: boolean;
     IsShowReplyToInputBox: boolean;
     IsShowCCInputBox: boolean;
-	
+    IsShowBCCInputBox: boolean;
 
     IsShowUploadAndDownloadButtons: boolean = false;
     HtmlTemplateEditor: string;
@@ -70,8 +70,12 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
     SubjectId: string;
     FromId: string;
     ReplyToId: string;
-	CCId:string;
-	CC:string;
+    CCId: string;
+    BCCId: string;
+
+    CC: string;
+    BCC: string;
+    
     Mode: string = "Preview";
     ObjectType: string = "PM";
     public TemplatePMLists: any[];
@@ -174,8 +178,9 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
         this.SubjectId = Guid.newGuid();
         this.FromId = Guid.newGuid();
         this.ReplyToId = Guid.newGuid();
-		this.CCId = Guid.newGuid();
-		
+        this.CCId = Guid.newGuid();
+        this.BCCId = Guid.newGuid();
+        
 
         this.IsShowButtonSaveAs = true;
         this.froalaEditorSetting.IsDisableEdit = false;
@@ -443,8 +448,8 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
             this.Subject = !AppTool.IsNullOrEmpty(this.template.Subject) ? this.template.Subject : "";   
             this.From = !AppTool.IsNullOrEmpty(this.template.From) ? this.template.From : ""; 
             this.ReplyTo = !AppTool.IsNullOrEmpty(this.template.ReplyTo) ? this.template.ReplyTo : ""; 
-            this.CC = !AppTool.IsNullOrEmpty(this.template.CC) ? this.template.CC:"" ;
-
+            this.CC = !AppTool.IsNullOrEmpty(this.template.CC) ? this.template.CC : "";
+            this.BCC = !AppTool.IsNullOrEmpty(this.template.CC) ? this.template.BCC : "";
             if (this.From) {
                 this.IsShowFromInputBox = true;
                 this.froalaEditorSetting.Height -= 30;
@@ -461,6 +466,14 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
                 this.froalaEditorSetting.Height -= 30;
 
             }
+
+            if (this.BCC) {
+                this.IsShowBCCInputBox = true;
+                this.froalaEditorSetting.Height -= 30;
+
+            }
+
+            
         }
     }
 
@@ -582,6 +595,13 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
     }
 
 
+     AddBCCLinkClick() {
+         this.IsShowBCCInputBox = true;
+         this.froalaEditorSetting.Height -= 30;
+         this.ReloadFroalaEditor();
+     }
+
+
     AddReplyToLinkClick() {
 
         this.IsShowReplyToInputBox = true;
@@ -629,10 +649,22 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
                     return;
                 }
 
+
+                if (!this.CheckIsValidEmails(this.BCC)) {
+
+                    this.ShowMessage("Some of Bcc e-mails are Invalid", "Logitude Message");
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    return;
+                }
+
+
+
+
                 this.template.Subject = this.Subject;
                 this.template.From = this.From;
                 this.template.ReplyTo = this.ReplyTo;
                 this.template.CC = this.CC;
+                this.template.BCC = this.BCC;
 
                 if (this.PageType == "ReportTemplate") {
 
@@ -806,13 +838,13 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
                     this.ReplyTo = $event;
                 }
                 else if (type == "CC") {
-
-                    if (this.CC && $event ) {
-                        this.CC +=";";
-                    }
+                    if (this.CC && $event) this.CC += ";";
                     this.CC += $event;
                 }
-
+                else if (type == "BCC") {
+                    if (this.BCC && $event) this.BCC += ";";
+                    this.BCC += $event;
+                }
                 else if (type == "FroalaEditor") {
                     this.froalaEditorSetting.froalaEditorComponent.InSertHtml($event);
                     this.ReloadFroalaEditor();

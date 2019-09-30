@@ -44,5 +44,6 @@ export class DocumentTypeTemplateList {
 		TemplateTechnologyCode: string;
 		CC: string;
 		CountryName: string;
+		BCC: string;
 	
 }
