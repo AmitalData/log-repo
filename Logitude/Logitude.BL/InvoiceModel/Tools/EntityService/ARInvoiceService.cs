@@ -1944,34 +1944,42 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             string myResult = "DRFT";
 
-            switch (entityPM.StatusCode)
+            if (entityPM.IsConstituentInvoice)
             {
-                case "NT":
-                case "CN":
-                    {
-                        if (this.isNewEntity)
+                myResult = "ACCT";
+            }
+
+            else
+            {
+                switch (entityPM.StatusCode)
+                {
+                    case "NT":
+                    case "CN":
                         {
-                            //myResult = "OAMT";
-                            myResult = "ACCT";
+                            if (this.isNewEntity)
+                            {
+                                //myResult = "OAMT";
+                                myResult = "ACCT";
+                            }
+
+                            break;
                         }
 
-                        break;
-                    }
+                    case "AD":
+                    case "PD":
+                    case "PP":
+                        {
+                            myResult = "ACCT";
+                            break;
+                        }
 
-                case "AD":
-                case "PD":
-                case "PP":
-                    {
-                        myResult = "ACCT";
-                        break;
-                    }
-                
-                case "VD":
-                case "LL":
-                    {
-                        myResult = "OAMT";
-                        break;
-                    }
+                    case "VD":
+                    case "LL":
+                        {
+                            myResult = "OAMT";
+                            break;
+                        }
+                }
             }
 
             return myResult;
