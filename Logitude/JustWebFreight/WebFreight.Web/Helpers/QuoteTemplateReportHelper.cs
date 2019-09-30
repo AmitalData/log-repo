@@ -39,6 +39,7 @@ using Logitude.Server.Tools.Counters;
 using Logitude.BL.QuoteModel.Tools.EntityService;
 using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityLists;
+using System.Text.RegularExpressions;
 
 namespace Logitude.BL.Helpers
 {
@@ -3385,7 +3386,7 @@ namespace Logitude.BL.Helpers
             }
         }
 
-        private  string GetUnitPricePackagesValue(QuoteTemplateBuildArges quoteTemplateBuildArges, QuoteSaleChargePM chargePM, bool included)
+        private string GetUnitPricePackagesValue(QuoteTemplateBuildArges quoteTemplateBuildArges, QuoteSaleChargePM chargePM, bool included)
         {
             string saleUnitPriceValues = "";
             QuotePM quotePM = quoteTemplateBuildArges.QuotePM;
@@ -3401,12 +3402,13 @@ namespace Logitude.BL.Helpers
                     int i = 1;
                     foreach (var item in priceBreaksArrays)
                     {
-                        if (i > 1) priceBreaks += "&nbsp;";
-                        priceBreaks += ((item + " " + quotePM.SaleCurrencyCode) + "<br>");
+                        var priceBreak = FormatPriceBreaksWithTwoDecimalDigits(item);
+                        if (i > 1 || quoteTemplateBuildArges.QuoteTemplateSettingPM.RightToLeft) priceBreaks += "&nbsp;";
+                        priceBreaks += ((priceBreak + " " + quotePM.SaleCurrencyCode) + "<br>");
                         i += 1;
                     }
-
                     saleUnitPriceValues = priceBreaks;
+
                 }
             }
             else
@@ -3425,6 +3427,28 @@ namespace Logitude.BL.Helpers
 
             return saleUnitPriceValues;
         }
+
+
+
+        private string FormatPriceBreaksWithTwoDecimalDigits(string priceBreak)
+        {
+            string priceBreakFormatted = priceBreak;
+            if (!string.IsNullOrEmpty(priceBreak) && priceBreak.Contains(":"))
+            {
+                string priceBreakPartDigitNumber = priceBreak.Split(':')[1];
+                if (!string.IsNullOrEmpty(priceBreakPartDigitNumber))
+                {
+                    string stringDigitNumber = Regex.Replace(priceBreakPartDigitNumber, @"\D", "");
+                    if (!string.IsNullOrEmpty(stringDigitNumber))
+                    {
+                        string priceBreakPartDigitNumberFormated = priceBreakPartDigitNumber.Replace(stringDigitNumber, Double.Parse(stringDigitNumber).ToString("N"));
+                        priceBreakFormatted = priceBreakFormatted.Replace(priceBreakPartDigitNumber, priceBreakPartDigitNumberFormated);
+                    }
+                }
+            }
+            return priceBreakFormatted;
+        }
+
 
         private static string GetChargeCurrencyCode(QuotePM quotePM, QuoteSaleChargePM chargePM)
         {
