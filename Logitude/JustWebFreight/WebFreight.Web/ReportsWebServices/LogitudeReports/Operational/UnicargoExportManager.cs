@@ -75,7 +75,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
             {
                 Shipments = new List<UnicargoExport>()
             };
-
+            
             List<Shipment> shipments = shipmentsContext.Shipments.Where(p => p.Tenant == tenant && p.IsOperationalClosed == false && p.IsAccountingClosed == false && p.IsCancelled == false).ToList();
             Dictionary<string, string> incoterms = commonDataContext.Incoterms.Where(p => p.Tenant == tenant).ToDictionary(a => a.Id, b => b.Name);
             List<string> shipmentdelevriesIds = shipments.Select(d => d.Id).ToList();
@@ -119,7 +119,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 #region  General Section
                 Shipment.House = item.House;
                 Shipment.FileNumber = item.ShipmentNumber;
-                
+         
                 if (!string.IsNullOrEmpty(item.IncotermId))
                 {
                     Shipment.Incoterms = incoterms.ContainsKey(item.IncotermId) ? incoterms[item.IncotermId] != null ? incoterms[item.IncotermId] : null : null;
@@ -633,6 +633,17 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                         }
 
                     }
+
+                    else if (!string.IsNullOrEmpty(MasterData.MainCarriageToPartnerId) && item.TransportModeId == "I" && item.DirectionId == "D")
+                    {
+                        Card card = cardRepository.GetSingleCardByIdAndTenant(MasterData.MainCarriageToPartnerId, tenant, true);
+                        if (card != null)
+                        {
+                            Shipment.ToPortCountryCode = card.CountryCode;
+                        }
+                    }
+
+
            
 
 
@@ -809,6 +820,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
                                 }
 
+                            }
+
+                            else if (!string.IsNullOrEmpty(MasterData.MainCarriageToPartnerId) && item.TransportModeId == "I" && item.DirectionId == "D")
+                            {
+                                Card card = cardRepository.GetSingleCardByIdAndTenant(MasterData.MainCarriageToPartnerId, tenant, true);
+                                if (card != null)
+                                {
+                                    Shipment.ToPortCountryCode = card.CountryCode;
+                                }
                             }
 
 
