@@ -412,16 +412,21 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
         private void CalculateCategoryTotals(WorkDaysPerGategoryData item)
         {
             var listOfCategoryInnerProjects = this.iQueryable_AllProjects.Where(d => d.ProjectNumber.StartsWith(item.ProjectNumber + "-") || d.ProjectNumber == item.ProjectNumber);
-            var daysOfListCategoryInnerProjects = from EmployeeTimes in iQueryable_AllEmployeeTimes
+            var daysOfListCategoryInnerProjects = (from EmployeeTimes in iQueryable_AllEmployeeTimes
                                                   join Projects in listOfCategoryInnerProjects on EmployeeTimes.ProjectId equals Projects.Id
                                                   where EmployeeTimes.ProjectId != null && EmployeeTimes.ProjectId != ""
                                                   select new
                                                   {
                                                       TotalMinutes = EmployeeTimes.FullDuration,
-                                                  };
+                                                  }).ToList();
 
             itemRecord.TotalDaysWithoutIncludingInner = this.GetDaysFormatFromMinutes(item.TotalMinutes);
-            itemRecord.TotalDaysIncludingInnerDouble = daysOfListCategoryInnerProjects.Sum(s => s.TotalMinutes);
+
+            if (daysOfListCategoryInnerProjects != null)
+            {
+                itemRecord.TotalDaysIncludingInnerDouble = daysOfListCategoryInnerProjects.Sum(s => s.TotalMinutes);
+            }
+
             itemRecord.TotalDaysIncludingInner = this.GetDaysFormatFromMinutes(itemRecord.TotalDaysIncludingInnerDouble);
 
             var isCategoryFirstRow = iWorkDaysPerGategoryDataList.Where(a => a.CategoryId == item.CategoryId && a.TotalGategoryDays != null).FirstOrDefault();
