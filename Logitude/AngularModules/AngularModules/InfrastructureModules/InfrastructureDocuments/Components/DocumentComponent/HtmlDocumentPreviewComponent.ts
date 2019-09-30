@@ -449,7 +449,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
             this.From = !AppTool.IsNullOrEmpty(this.template.From) ? this.template.From : ""; 
             this.ReplyTo = !AppTool.IsNullOrEmpty(this.template.ReplyTo) ? this.template.ReplyTo : ""; 
             this.CC = !AppTool.IsNullOrEmpty(this.template.CC) ? this.template.CC : "";
-            this.BCC = !AppTool.IsNullOrEmpty(this.template.CC) ? this.template.BCC : "";
+            this.BCC = !AppTool.IsNullOrEmpty(this.template.BCC) ? this.template.BCC : "";
             if (this.From) {
                 this.IsShowFromInputBox = true;
                 this.froalaEditorSetting.Height -= 30;
