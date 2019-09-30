@@ -38,7 +38,7 @@ namespace CommunicationWorkerRole
                         }
                         else
                         {
-                            Thread.Sleep(500);
+                            Thread.Sleep(3000);
                         }
                     }
 

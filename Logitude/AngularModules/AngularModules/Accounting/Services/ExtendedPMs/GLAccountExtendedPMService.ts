@@ -74,6 +74,28 @@ export class GLAccountExtendedPMService {
 
     }
 
+    GetConnectedCardsForGLAccount(accountId: string)
+    {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
+        return Observable.defer(() =>
+        {
+            var api = ServiceHelper.GetLogitudeURL() + 'api/GLAccounts';
+            return this._http.get(api + '/GetConnectedCardsForGLAccount?accountId=' + accountId, {
+                headers: authHeader
+            }).map(response =>
+            {
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+
+                serviceResponse.Result = response.json();
+
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+
+    }
+
 
     MapJsonToEntityPM(jsonPM: any) {
 
