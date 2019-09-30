@@ -31,6 +31,7 @@ using Logitude.Server.Tools;
 using System.Drawing;
 using System.Xml;
 using System.Text;
+using System.Web;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -176,7 +177,7 @@ namespace WebFreight.Web.ReportsWebServices
                     //payment number
                     paymentDataProvider.PaymentNo = currentPayment.PaymentNo != null ? currentPayment.PaymentNo : "";
 
-                  
+                    Contact loggedContact = GetLoggedContact(currentPayment.Tenant);
 
                     if (billToCard != null)
                     {
@@ -189,7 +190,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                         if (address != null)
                         {
-                            if (address.IsLocalLanguage)
+                            if (!loggedContact.DontShowLocalLabels)
                             {
                                 if (!string.IsNullOrEmpty(billToCard.LocalName))
                                 {
@@ -458,7 +459,14 @@ namespace WebFreight.Web.ReportsWebServices
 
             return paymentDataProvider;
         }
+        private Contact GetLoggedContact(int tenant)
+        {
 
+            string email = HttpContext.Current.User.Identity.Name;
+            ContactRepository contactRepository = new ContactRepository(tenant);
+            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
+            return loggedContact;
+        }
         private void PrintTotalAmountInEnglishAndSpanish(PaymentDataProvider paymentDataProvider, string paymentCurrencyLocalName)
         {
             NumbersConverterToWords numbersConverterToWords = new NumbersConverterToWords();

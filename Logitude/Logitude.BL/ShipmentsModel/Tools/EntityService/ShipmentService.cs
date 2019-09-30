@@ -1000,18 +1000,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             entityPM.IncotermCode = myIncotermCode;
             entityPM.IncotermName = myIncotermName;
 
-            entityPM.StatusName = null;
-            entityPM.StatusWeight = 0;
-            if (entityPoco.StatusId != null)
-            {
-                EntityStatus iEntityStatus = EntityStatusRepository.GetSingleEntityStatus(entityPoco.StatusId, entityPoco.Tenant, true);
-                if (iEntityStatus != null)
-                {
-                    entityPM.StatusName = iEntityStatus.Name;
-                    entityPM.StatusWeight = iEntityStatus.StatusWeight;
-                }
-            }
-
             string myShipmentType = "";
             if (entityPoco.ShipmentTypeId != null)
             {
@@ -1038,7 +1026,56 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             entityPM.FHLStatusName = entityPoco.FHLStatus != null ? entityPoco.FHLStatus.Name : null;
             entityPM.FWBStatusName = entityPoco.ShipmentMasterData != null ? (entityPoco.ShipmentMasterData.FWBStatus != null ? entityPoco.ShipmentMasterData.FWBStatus.Name : null) : null;
+
+            this.GetForeignFields_Status();
         }
+        private void GetForeignFields_Status()
+        {
+            entityPM.StatusName = null;
+            entityPM.StatusLocation = null;
+
+            if (entityPoco.ShipmentLevelCode == "H" && entityPoco.MasterShipmentDataId != null)
+            {
+                var iConsoleStatus = (from d in objectContext.ShipmentMasterDatas
+                                      where d.Id == entityPoco.MasterShipmentDataId
+                                      select new
+                                      {
+                                          StatusId = d.StatusId,
+                                          StatusLocation = d.StatusLocation,
+                                      }).FirstOrDefault();
+
+                if (iConsoleStatus != null)
+                {
+                    string statusName = null;
+                    string iHighestStatusId = EntityStatusHelper.GetHighestStatusId(entityPoco.StatusId, iConsoleStatus.StatusId, entityPoco.Tenant, ref statusName);
+                    entityPM.StatusName = statusName;
+
+                    if (iHighestStatusId == entityPoco.StatusId)
+                    {
+                        entityPM.StatusLocation = entityPoco.StatusLocation;
+                    }
+
+                    else
+                    {
+                        entityPM.StatusLocation = iConsoleStatus.StatusLocation;
+                    }
+                }
+            }
+
+            else
+            {
+                if (entityPoco.StatusId != null)
+                {
+                    EntityStatus iEntityStatus = EntityStatusRepository.GetSingleEntityStatus(entityPoco.StatusId, entityPoco.Tenant, true);
+                    if (iEntityStatus != null)
+                    {
+                        entityPM.StatusName = iEntityStatus.Name;
+                        entityPM.StatusLocation = entityPoco.StatusLocation;
+                    }
+                }
+            }
+        }
+
         private void BuildActivityLog()
         {
             ObjectTableRepository objecttableRepository = new ObjectTableRepository(entityPoco.Tenant);

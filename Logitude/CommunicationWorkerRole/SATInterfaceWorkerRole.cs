@@ -524,30 +524,34 @@ namespace CommunicationWorkerRole
                         Simplog.Data.InvoiceModel.EntityPOCOs.ARPayment payment = arpaymentRep.GetSingleARPayment(waitingCommLog.EntityId);
                         if (payment != null)
                         {
-                            if (transError != payment.TransmissionError || payment.SATTransferStatusCode != "TE")
-                            {
-                                payment.SATTransferStatusCode = "TE";
-                                payment.TransmissionError = transError;
-                                arpaymentRep.Update(payment);
-                                arpaymentRep.SubmitChanges();
-                            }
+                            //if (transError != payment.TransmissionError || payment.SATTransferStatusCode != "TE")
+                            //{
+                            //    payment.SATTransferStatusCode = "TE";
+                            //    payment.TransmissionError = transError;
+                            //    arpaymentRep.Update(payment);
+                            //    arpaymentRep.SubmitChanges();
+                            //}
+
+                            HandlePaymentError(waitingCommLog, arpaymentRep, communicationLogRep, transError);
                         }
                     }
                     else
                     {
                         Simplog.Data.InvoiceModel.EntityPOCOs.ARInvoice invoice = arinvoiceRep.GetSingleInvoice(waitingCommLog.EntityId);
-                        if (transError != invoice.TransmissionError || invoice.SATTransferStatusCode != "TE")
-                        {
-                            invoice.SATTransferStatusCode = "TE";
-                            invoice.TransmissionError = transError;
+                        //if (transError != invoice.TransmissionError || invoice.SATTransferStatusCode != "TE")
+                        //{
+                        //    invoice.SATTransferStatusCode = "TE";
+                        //    invoice.TransmissionError = transError;
 
-                            arinvoiceRep.Update(invoice);
-                            arinvoiceRep.SubmitChanges();
-                        }
+                        //    arinvoiceRep.Update(invoice);
+                        //    arinvoiceRep.SubmitChanges();
+                        //}
+
+                        HandleInvoiceError(waitingCommLog, arinvoiceRep, communicationLogRep, transError, invoice);
                     }
 
 
-                    throw new Exception("Failed," + transError);
+                    //throw new Exception("Failed," + transError);
 				}
 
 			}
@@ -619,12 +623,12 @@ namespace CommunicationWorkerRole
 					}
 					else
 					{
-						HandlePaymentError(waitingCommLog, arpaymentRep, transError);
+						HandlePaymentError(waitingCommLog, arpaymentRep, communicationLogRep, transError);
 					}
 				}
 				else
 				{
-					HandlePaymentError(waitingCommLog, arpaymentRep, transError);
+					HandlePaymentError(waitingCommLog, arpaymentRep, communicationLogRep, transError);
 				}
 			}
 			else
@@ -702,13 +706,13 @@ namespace CommunicationWorkerRole
 					}
 					else
 					{
-						HandleInvoiceError(waitingCommLog, arinvoiceRep, transError, invoice);
+						HandleInvoiceError(waitingCommLog, arinvoiceRep, communicationLogRep, transError, invoice);
 
 					}
 				}
 				else
 				{
-					HandleInvoiceError(waitingCommLog, arinvoiceRep, transError, invoice);
+					HandleInvoiceError(waitingCommLog, arinvoiceRep, communicationLogRep, transError, invoice);
 				}
 
 			}
@@ -730,29 +734,31 @@ namespace CommunicationWorkerRole
 			return transError;
 		}
 
-		private void HandlePaymentError(CommunicationLog waitingCommLog, Simplog.Data.InvoiceModel.Repositories.ARPaymentRepository arpaymentRep, string transError)
-		{
-			if (waitingCommLog.Retries == 4)
-			{
-				Simplog.Data.InvoiceModel.EntityPOCOs.ARPayment payment = arpaymentRep.GetSingleARPayment(waitingCommLog.EntityId);
-				if (payment != null)
-				{
-					if (transError != payment.TransmissionError || payment.SATTransferStatusCode != "TE")
-					{
-						payment.SATTransferStatusCode = "TE";
-						payment.TransmissionError = transError;
-						arpaymentRep.Update(payment);
-						arpaymentRep.SubmitChanges();
-					}
-				}
-			}
-			throw new Exception("Failed," + transError);
-		}
+		private void HandlePaymentError(CommunicationLog waitingCommLog, Simplog.Data.InvoiceModel.Repositories.ARPaymentRepository arpaymentRep, CommunicationLogRepository communicationLogRep, string transError)
+        {
+            //if (waitingCommLog.Retries == 4)
+            //{
+                Simplog.Data.InvoiceModel.EntityPOCOs.ARPayment payment = arpaymentRep.GetSingleARPayment(waitingCommLog.EntityId);
+                if (payment != null)
+                {
+                    if (transError != payment.TransmissionError || payment.SATTransferStatusCode != "TE")
+                    {
+                        payment.SATTransferStatusCode = "TE";
+                        payment.TransmissionError = transError;
+                        arpaymentRep.Update(payment);
+                        arpaymentRep.SubmitChanges();
+                    }
+                }
+           // }
 
-		private void HandleInvoiceError(CommunicationLog waitingCommLog, Simplog.Data.InvoiceModel.Repositories.ARInvoiceRepository arinvoiceRep, string transError, Simplog.Data.InvoiceModel.EntityPOCOs.ARInvoice invoice)
+            SaveCommunicationLogAsFailed(waitingCommLog, communicationLogRep, transError);
+
+        }
+
+        private void HandleInvoiceError(CommunicationLog waitingCommLog, Simplog.Data.InvoiceModel.Repositories.ARInvoiceRepository arinvoiceRep, CommunicationLogRepository communicationLogRep, string transError, Simplog.Data.InvoiceModel.EntityPOCOs.ARInvoice invoice)
 		{
-			if (waitingCommLog.Retries == 4)
-			{
+			//if (waitingCommLog.Retries == 4)
+			//{
 				if (transError != invoice.TransmissionError || invoice.SATTransferStatusCode != "TE")
 				{
 					invoice.SATTransferStatusCode = "TE";
@@ -761,14 +767,30 @@ namespace CommunicationWorkerRole
 					arinvoiceRep.Update(invoice);
 					arinvoiceRep.SubmitChanges();
 				}
-			}
+			//}
 
-			throw new Exception("Failed," + transError);
-		}
-		#endregion
+            SaveCommunicationLogAsFailed(waitingCommLog, communicationLogRep, transError);
+        }
 
-		#region CreateSATDocument
-		private void CreateSATDocument(Simplog.Data.InvoiceModel.EntityPOCOs.ARInvoice invoice, byte[] fileData, bool checkIfExists = false)
+        private void SaveCommunicationLogAsFailed(CommunicationLog waitingCommLog, CommunicationLogRepository communicationLogRep, string transError)
+        {
+            string exceptionMessage = "Failed," + transError;
+            waitingCommLog.CommunicationStatusTypeCode = "F";
+            waitingCommLog.ExceptionMessage = StringHelper.TruncateLongString(exceptionMessage, 7000);
+            waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
+
+            if (context != null)
+            {
+                communicationLogRep.Update(waitingCommLog);
+                communicationLogRep.SubmitChanges();
+            }
+
+            queueservice.Complete();
+        }
+        #endregion
+
+        #region CreateSATDocument
+        private void CreateSATDocument(Simplog.Data.InvoiceModel.EntityPOCOs.ARInvoice invoice, byte[] fileData, bool checkIfExists = false)
 		{
 
 			int tenant = invoice.Tenant;

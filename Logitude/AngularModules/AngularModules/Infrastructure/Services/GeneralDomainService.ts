@@ -1,4 +1,4 @@
-﻿import {Injectable, Output, EventEmitter} from '@angular/core';
+import {Injectable, Output, EventEmitter} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 import {ServiceHelper} from '../Utilities/ServiceHelper';
@@ -383,6 +383,26 @@ export class GeneralDomainService {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = entity;
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
+
+
+    GetObjectFieldModificationForLoggedTenant() {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetObjectFieldModificationForLoggedTenant';
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var listJason = response.json();
+                
+
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = listJason;
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
         });
