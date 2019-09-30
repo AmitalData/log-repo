@@ -293,6 +293,11 @@ export class APInvoicePM {
     public set BranchId(newValue: string) { if (this.branchId != newValue) { this.branchId = newValue; this.MarkAsDirty("BranchId"); } }
        
 	 
+    private branchName: string;
+    public get BranchName() { return this.branchName; }
+    public set BranchName(newValue: string) { if (this.branchName != newValue) { this.branchName = newValue; this.MarkAsDirty("BranchName"); } }
+       
+	 
     private connectedEntityReferences: string;
     public get ConnectedEntityReferences() { return this.connectedEntityReferences; }
     public set ConnectedEntityReferences(newValue: string) { if (this.connectedEntityReferences != newValue) { this.connectedEntityReferences = newValue; this.MarkAsDirty("ConnectedEntityReferences"); } }

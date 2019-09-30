@@ -72,6 +72,7 @@ export class ARInvoiceList {
 		UpdateDate: Date;
 		UpdatedByUserId: string;
 		BranchId: string;
+		BranchName: string;
 		IsPrinted: boolean;
 		PaymentTermExternalId: string;
 		IsConstituentInvoice: boolean;

@@ -46,6 +46,7 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public DateTime? UpdateDate { get; set; }
         public string UpdatedByUserId { get; set; }
         public string BranchId { get; set; }
+        public string BranchName { get; set; }
         public string CreditCardTypeId { get; set; }
         public string TransferStatusCode { get; set; }
         public string TransferError { get; set; }
@@ -58,7 +59,6 @@ namespace Logitude.BL.InvoiceModel.EntityLists
       //  public string PaymentMethodId { get; set; }
         public string AccountingPaymentMethodId { get; set; }
         public string BankAccountId { get; set; }
-        public string BranchName { get; set; }
         public DateTime? FirstApproveDate { get; set; }
 
     }

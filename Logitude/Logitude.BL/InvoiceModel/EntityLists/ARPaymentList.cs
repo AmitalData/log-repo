@@ -17,6 +17,7 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string LocalCurrencyCode { get; set; }
         public double? AmountInLocalCurrency { get; set; }
         public string BranchId { get; set; }
+        public string BranchName { get; set; }
         public string BillToId { get; set; }
         public string ARAccountId { get; set; }
         public string StatusCode { get; set; }
@@ -77,7 +78,6 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string CertPago { get; set; }
         public string CadPago { get; set; }
         public string SelloPago { get; set; }
-        public string BranchName { get; set; }
         public DateTime? SATApprovalDate { get; set; }
 
         public DateTime? ApprovedDate { get; set; }
