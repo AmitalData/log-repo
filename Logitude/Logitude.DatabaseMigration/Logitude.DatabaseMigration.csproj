@@ -1521,6 +1521,10 @@
     <Compile Include="Migrations\201909291246046_AbedAddDWHBuildStatusTable.Designer.cs">
       <DependentUpon>201909291246046_AbedAddDWHBuildStatusTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909300620491_AbedAddBCCFieldToDocumentTypeTemplate.cs" />
+    <Compile Include="Migrations\201909300620491_AbedAddBCCFieldToDocumentTypeTemplate.Designer.cs">
+      <DependentUpon>201909300620491_AbedAddBCCFieldToDocumentTypeTemplate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2603,6 +2607,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909291246046_AbedAddDWHBuildStatusTable.resx">
       <DependentUpon>201909291246046_AbedAddDWHBuildStatusTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909300620491_AbedAddBCCFieldToDocumentTypeTemplate.resx">
+      <DependentUpon>201909300620491_AbedAddBCCFieldToDocumentTypeTemplate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
