@@ -2443,6 +2443,7 @@
     <Compile Include="ShipmentsModel\EntityPMs\AWBChargesCodePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\AWBCustomsInformationPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\AWBInformationPM.cs" />
+    <Compile Include="ShipmentsModel\EntityPMs\DeclarationApprovalRequestPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\MessagingStockPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\AWBOCIPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\AWBSpecialHandlingCodePM.cs" />
