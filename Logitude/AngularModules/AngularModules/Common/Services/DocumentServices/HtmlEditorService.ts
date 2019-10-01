@@ -19,13 +19,13 @@ export class HtmlEditorService {
     }
 
 
-    getEditorHtmlData(docOutId: string, entityId: string, objecttableId: string, childEntityId: string, childEntityObjectTableId: string, tenant: number, userId: string, theIsSendMail: boolean, documentTemplateId: string, subject: string, mode: string = null, from: string = null, replyTo:string=null,cc:string=null) {
+    getEditorHtmlData(docOutId: string, entityId: string, objecttableId: string, childEntityId: string, childEntityObjectTableId: string, tenant: number, userId: string, theIsSendMail: boolean, documentTemplateId: string, subject: string, mode: string = null, from: string = null, replyTo: string = null, cc: string = null, bcc:string =null) {
 
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
 
-        return this._http.get(this._apiUrl + '?docOutId=' + docOutId + '&entityId=' + entityId + '&objecttableId=' + objecttableId + '&childEntityId=' + childEntityId + '&childEntityObjectTableId=' + childEntityObjectTableId + '&tenant=' + tenant + '&userId=' + userId + '&theIsSendMail=' + theIsSendMail + '&documentTemplateId=' + documentTemplateId + '&subject=' + subject + "&mode=" + mode + "&from=" + from + "&replyTo=" + replyTo + "&cc=" + cc
+        return this._http.get(this._apiUrl + '?docOutId=' + docOutId + '&entityId=' + entityId + '&objecttableId=' + objecttableId + '&childEntityId=' + childEntityId + '&childEntityObjectTableId=' + childEntityObjectTableId + '&tenant=' + tenant + '&userId=' + userId + '&theIsSendMail=' + theIsSendMail + '&documentTemplateId=' + documentTemplateId + '&subject=' + subject + "&mode=" + mode + "&from=" + from + "&replyTo=" + replyTo + "&cc=" + cc + "&bcc=" + bcc
             , {
                 headers: authHeader,
 

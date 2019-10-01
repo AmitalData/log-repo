@@ -19,11 +19,15 @@ export class OpportunityActions {
     this.Copy();
     this.Cancel("MenuButtons_1");
   }
+  SaveOpportunity(){
+    this.Helper.WaitByIdAndClick('Opportunity-Save');
+    this.Helper.WaitEditComponentBusyIndicator();
+  }
   CloseAsWon() {
     this.Helper.WaitByIdAndClick('Opportunity.B.CloseAsWon');
     this.Helper.WaitByIdAndFill('Opportunity_ClosingDescription', 'Closed As Won');
     this.Helper.WaitByIdAndClick('Ok-CloseAsWon');
-    this.Helper.WaitBusyIndicator();
+    this.Helper.WaitEditComponentBusyIndicator();
   }
   CloseAsLost() {
     this.Helper.WaitByIdAndClick('Opportunity.B.CloseAsLost');
@@ -31,7 +35,7 @@ export class OpportunityActions {
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
     this.Helper.WaitByIdAndFill('Opportunity_ClosingDescription', 'Close As Lost');
     this.Helper.WaitByIdAndClick('Ok-CloseAsWon');
-    this.Helper.WaitBusyIndicator();
+    this.Helper.WaitEditComponentBusyIndicator();
   }
   ReOpen(StageId: string) {
     this.Helper.WaitByIdAndClick('MenuButtons');
@@ -39,14 +43,14 @@ export class OpportunityActions {
     this.Helper.WaitByIdAndFill(StageId, 'qua');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
     this.Helper.WaitByIdAndClick('OK-ReOpen');
-    this.Helper.WaitBusyIndicator();
+    this.Helper.WaitEditComponentBusyIndicator();
 
   }
   Copy() {
     this.Helper.WaitByIdAndClick('MenuButtons');
     this.Helper.WaitByIdAndClick('Opportunity.B.Copy');
     this.Helper.WaitByIdAndClick('Ok-AddOpportunity');
-    this.Helper.WaitBusyIndicator();
+    this.Helper.WaitEditComponentBusyIndicator();
 
   }
   Cancel(MenuButtonsId: string) {
@@ -54,7 +58,7 @@ export class OpportunityActions {
     this.Helper.WaitByIdAndClick(MenuButtonsId);
     this.Helper.WaitByIdAndClick('Opportunity.B.Cancel_1');
     this.Helper.WaitByIdAndClick('ConfirmWindow_Yes_0');
-    this.Helper.WaitBusyIndicator();
+    this.Helper.WaitEditComponentBusyIndicator();
   }
   AddQuoteFromOpportunity() {
     this.quoteHelper.SelectDicrctionTransportMode('Export', 'A', '');

@@ -59,7 +59,7 @@ namespace WebFreight.Web.WebServices
         string from = "";
         string replyTo = "";
         string cc = "";
-
+        string bcc = "";
 
         [WebMethod]
         public byte[] GetQuoteTemplatePdfReport(string quoteId, string quoteTemplateId, string userId, int tenant)
@@ -177,7 +177,7 @@ namespace WebFreight.Web.WebServices
             ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("Quote", tenant, true);
 
             HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
-            bodyHtmlString = htmlEditorHelper.ResolveHtmlData("", objectTable.Id, template.CreatedByUserId, tenant, bodyHtmlString, ref subject, ref from, ref replyTo,ref cc, quotePM);
+            bodyHtmlString = htmlEditorHelper.ResolveHtmlData("", objectTable.Id, template.CreatedByUserId, tenant, bodyHtmlString, ref subject, ref from, ref replyTo,ref cc, ref bcc, quotePM);
 
             return helper.HtmlToPdf(bodyHtmlString, setting);
         }

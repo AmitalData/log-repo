@@ -58,6 +58,7 @@ namespace Logitude.BL.Helpers
         string from = "";
         string replyTo = "";
         string cc = "";
+        string bcc = ""; 
         public byte[] BuildQuoteTemplatePdfReport(string quoteId, string quoteTemplateId, string userId, int tenant, List<QuoteTemplateSectionPM> templateSections, int? userTenant = null, QuotePM quotePM = null)
         {
 
@@ -355,7 +356,7 @@ namespace Logitude.BL.Helpers
                     objectTable = objectTabelRepository.GetObjectTableByName("Quote", tenant, true);
                 }
 
-                htmlString = htmlEditorHelper.ResolveHtmlData("", objectTable.Id, userId, tenant, htmlString, ref subject, ref from, ref cc, ref replyTo, quotePM);
+                htmlString = htmlEditorHelper.ResolveHtmlData("", objectTable.Id, userId, tenant, htmlString, ref subject, ref from, ref replyTo , ref cc, ref bcc, quotePM);
             }
             return htmlString;
         }

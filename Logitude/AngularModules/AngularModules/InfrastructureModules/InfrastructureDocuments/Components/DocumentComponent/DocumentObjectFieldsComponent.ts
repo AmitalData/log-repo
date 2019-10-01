@@ -74,7 +74,7 @@ export class DocumentObjectFieldsComponent implements OnInit {
         this.HideSystemDataTab = args.HideSystemDataTab;
 
      if (AppTool.IsNullOrEmpty(this.ObjectTypeField)) {
-         if (this.InSertDataFieldType == "From" || this.InSertDataFieldType == "ReplyTo" || this.InSertDataFieldType == "CC") this.ObjectTypeField = "Emails"; 
+         if (this.InSertDataFieldType == "From" || this.InSertDataFieldType == "ReplyTo" || this.InSertDataFieldType == "CC" || this.InSertDataFieldType == "BCC") this.ObjectTypeField = "Emails"; 
         } 
           
 
