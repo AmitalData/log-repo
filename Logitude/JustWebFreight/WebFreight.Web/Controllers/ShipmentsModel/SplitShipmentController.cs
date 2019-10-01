@@ -900,8 +900,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             PackagePM.VolumetricWeight = myResult;
         }
 
-
-
         private void CopyRoutingDelivery(ShipmentPM oldShipmentPM, ShipmentPM newShipmentPM, string DeliveryId, int SplitIndex)
         {
             ShipmentDeliveryPM oldDeliveryPM = oldShipmentPM.ShipmentDeliveries.Where(d => d.Id == DeliveryId).FirstOrDefault();
@@ -1016,6 +1014,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 {
                     entityPM.TEU = null;
                     entityPM.NumberOfPackages = null;
+                    entityPM.NumberOfContainers = null;
                     entityPM.Volume = null;
                     entityPM.GrossWeight = null;
                     entityPM.VolumetricWeight = null;
@@ -1028,7 +1027,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 else
                 {
                     entityPM.TEU = list.Sum(s => s.TEU);
-                    entityPM.NumberOfPackages = list.Sum(s => s.Quantity);
                     entityPM.Volume = MethodHelper.Round(list.Sum(s => s.Volume), 3);
                     entityPM.VolumetricWeight = MethodHelper.Round(list.Sum(s => s.VolumetricWeight), 3);
 
@@ -1040,6 +1038,18 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                     if (!entityPM.ChargeableWeightEdited)
                     {
                         entityPM.ChargeableWeight = this.CalculateChargeableWeight(entityPM.GrossWeight, entityPM.VolumetricWeight, entityPM.GrossWeightUnitCode, entityPM.ChargeableWeightUnitCode, entityPM.DirectionId, entityPM.TransportModeId);
+                    }
+
+                    bool isLCLShipment = IsLCLShipment(entityPM);
+
+                    if (isLCLShipment)
+                    {
+                        entityPM.NumberOfPackages = list.Sum(s => s.Quantity);
+                    }
+
+                    else
+                    {
+                        entityPM.NumberOfContainers = list.Sum(s => s.Quantity);
                     }
                 }
             }
