@@ -1164,22 +1164,7 @@ namespace WebFreight.Web.Helpers
                 }
             }
 
-
-            if (!string.IsNullOrEmpty(bcc))
-            {
-                if (bcc.Contains("[") && bcc.Contains("]"))
-                {
-                    HtmlDocument doc = new HtmlDocument();
-                    HtmlNode bccNode = doc.CreateElement(bcc);
-                    bccNode.InnerHtml = bcc;
-                    GetHtmlNodeValue(bccNode, bcc, entity, entityObjectFields, tablesDic, systemEntity, systemEntityObjectFields, signatureNodeList, tenant, generalService, ticketHeaderNode, ticketFooterNode);
-                    bcc = bccNode.InnerHtml;
-                }
-            }
-
-
-
-
+            bcc = ResolveBCCVariableField(bcc, new HtmlEditorArgs { Tenant = tenant, SystemEntity = systemEntity, SystemEntityObjectFields = systemEntityObjectFields, SignatureNodeList = signatureNodeList, TicketHeaderNode = ticketHeaderNode, TicketFooterNode = ticketFooterNode, TablesDic = tablesDic });
 
             if (signatureNodeList.Count() != 0)
             {
@@ -1395,6 +1380,24 @@ namespace WebFreight.Web.Helpers
                 var sw = new StringWriter();
                 document.Save(sw);
                 result = sw.ToString();
+            }
+
+            return result;
+        }
+
+        private string ResolveBCCVariableField( string bcc, HtmlEditorArgs htmlEditorArgs)
+        {
+            string result = bcc;
+            if (!string.IsNullOrEmpty(bcc))
+            {
+                if (bcc.Contains("[") && bcc.Contains("]"))
+                {
+                    HtmlDocument doc = new HtmlDocument();
+                    HtmlNode bccNode = doc.CreateElement(bcc);
+                    bccNode.InnerHtml = bcc;
+                    GetHtmlNodeValue(bccNode, bcc, entity, entityObjectFields, htmlEditorArgs.TablesDic, htmlEditorArgs.SystemEntity, htmlEditorArgs.SystemEntityObjectFields, htmlEditorArgs.SignatureNodeList, htmlEditorArgs.Tenant, generalService, htmlEditorArgs.TicketHeaderNode, htmlEditorArgs.TicketFooterNode);
+                    result = bccNode.InnerHtml;
+                }
             }
 
             return result;
@@ -6961,6 +6964,18 @@ namespace WebFreight.Web.Helpers
 
 
 
+
+    }
+
+    public class HtmlEditorArgs
+    {
+        public int Tenant { get; set; }
+        public SystemDataPM SystemEntity { get; set; }
+        public List<ObjectField> SystemEntityObjectFields { get; set; }
+        public List<HtmlNode> SignatureNodeList { get; set; }
+        public List<HtmlNode> TicketHeaderNode { get; set; }
+        public List<HtmlNode> TicketFooterNode { get; set; }
+        public Dictionary<HtmlNode, HtmlNode> TablesDic { get; set; }
 
     }
 }
