@@ -101,8 +101,9 @@ export class EmailNotificationsSettingsComponent extends BaseComponent{
     ToEmail: string;
     IsCloseSendToContact: boolean = false;
     PartnersObslist: EntityPartner[] = [];
+    SelectedEmailAlertSettingDataViewModel: EmailAlertSettingDataViewModel;
     ShowSendToEmail(item) {
-
+        this.SelectedEmailAlertSettingDataViewModel = item;
         //this.PartnersObslist.push(new EntityPartner("All", "1", false))
         this.IsCloseSendToContact = false;
         this.OnCloseSendToContactsEvent.subscribe(($event: any) => {
@@ -110,21 +111,21 @@ export class EmailNotificationsSettingsComponent extends BaseComponent{
                 this.IsCloseSendToContact = true;
 
                 this.ToEmail = "";
-               
-                
+
+
                 if ($event.ToEmailLists && $event.ToEmailLists.length > 0) {
                     $event.ToEmailLists.forEach((item) => {
                         this.ToEmail += item + ";";
 
                     });
 
-                    item.To = this.ToEmail;
+                    if (this.SelectedEmailAlertSettingDataViewModel) {
+                        this.SelectedEmailAlertSettingDataViewModel.To = this.ToEmail;
+                    }
                 }
-                else
-                    item.To = null;
-
-               
-
+                else if (this.SelectedEmailAlertSettingDataViewModel) {
+                    this.SelectedEmailAlertSettingDataViewModel.To = null;
+                }
             }
         });
         var windowArgs: any = {};
@@ -145,7 +146,7 @@ export class EmailNotificationsSettingsComponent extends BaseComponent{
         logWindow.WindowArgs = windowArgs;
         logWindow.Show("./InfrastructureModules/InfrastructureDocuments/Components/SendMessageContacts/SendToContactsComponent");
         logWindow.WindowClosed.subscribe(($event: any) => {
-            
+
         });
 
 

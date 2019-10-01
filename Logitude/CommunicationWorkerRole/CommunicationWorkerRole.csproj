@@ -350,6 +350,7 @@
     <Compile Include="CommunicationLogWorkerRole.cs" />
     <Compile Include="ContactUnseenEntityWorkerRole.cs" />
     <Compile Include="CustomerActualDataWorkerRole.cs" />
+    <Compile Include="DeclarationApprovalRequestWorkerRole.cs" />
     <Compile Include="DocumentFilingBackupBatchQueueWR.cs" />
     <Compile Include="DocumentFilingBackupQueueBuilderWR.cs" />
     <Compile Include="DocumentFilingBackupWR.cs" />
