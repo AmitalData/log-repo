@@ -417,12 +417,6 @@
                                                                                     <td>
                                                                                         <table>
                                                                                             <tr>
-
-                                                                                                <td style="width: 57px;">
-                                                                                                    <div *ngIf="IsGeneratePayablesVisible">
-                                                                                                        <button class="Button" (click)="GeneratePayablesClicked(item)">Choose</button>
-                                                                                                    </div>
-                                                                                                </td>
                                                                                                 <td style="width:100px;max-width:165px;font-size:x-large;font-weight:bold">
                                                                                                     <span style="font-size:x-large;font-weight:bold;color:#0e276d;float:right">
                                                                                                         {{item.WholePrice | NumbersPipe:'N2'}} {{item.CurrencyCode}}
@@ -430,8 +424,7 @@
                                                                                                 </td>
                                                                                             </tr>
 
-                                                                                            <tr>
-                                                                                                <td></td>
+                                                                                            <tr>     
                                                                                                 <td style="width:200px">
                                                                                                     <table>
                                                                                                         <tr>
@@ -447,6 +440,18 @@
                                                                                                             </td>
                                                                                                         </tr>
                                                                                                     </table>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </td>
+
+                                                                                    <td *ngIf="IsGeneratePayablesVisible" style="width:100px;float:right;">
+                                                                                        <table>
+                                                                                            <tr>
+                                                                                                <td>
+                                                                                                    <div>
+                                                                                                        <button class="Button"  style="height:60px;width:100px;font-size:14px;font-weight:bold; border: 1px solid" (click)="GeneratePayablesClicked(item)">Choose</button>
+                                                                                                    </div>
                                                                                                 </td>
                                                                                             </tr>
                                                                                         </table>
