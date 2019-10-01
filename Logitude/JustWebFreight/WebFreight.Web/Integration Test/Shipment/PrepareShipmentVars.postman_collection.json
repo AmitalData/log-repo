@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "15172ef7-370c-4c0c-84f5-d449d66dee8c",
+		"_postman_id": "477150ed-eeb9-4a4a-9d84-e3be621ffa77",
 		"name": "PrepareShipmentVars",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -61,29 +61,21 @@
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "application/json"
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"Email\":\"{{Email}}\",\"Password\":\"{{Password}}\",\"IsUser\":true,\"GetToken\":true,\"ClientType\":\"Web\",\"Tenant\":\"{{Tenant}}\",\"GetInvalidDocumentToken\":true}\n"
-				},
-				"url": {
-					"raw": "{{LogitudeURL}}/api/authentication?tenant={{Tenant}}",
-					"host": [
-						"{{LogitudeURL}}"
-					],
-					"path": [
-						"api",
-						"authentication"
-					],
-					"query": [
-						{
-							"key": "tenant",
-							"value": "{{Tenant}}"
+					"raw": "{\"Email\":\"{{Email}}\",\"Password\":\"{{Password}}\",\"IsUser\":true,\"GetToken\":true,\"ClientType\":\"Web\",\"Tenant\":\"{{Tenant}}\",\"GetInvalidDocumentToken\":true}\n",
+					"options": {
+						"raw": {
+							"language": "json"
 						}
-					]
-				}
+					}
+				},
+				"url": "{{LogitudeURL}}/api/authentication"
 			},
 			"response": []
 		},
@@ -3232,6 +3224,17 @@
 							"    var idexist = idvalue !== null;",
 							"    pm.expect(idexist);",
 							"    pm.environment.set(\"CountryIdGB\",idvalue);",
+							"    ",
+							"    ",
+							"    var idvalue2 = pm.response.json().Result[0].Code;",
+							"    var idexist2 = idvalue2 !== null;",
+							"    pm.expect(idexist2);",
+							"    pm.environment.set(\"CountryCodeGB\",idvalue2);",
+							"    ",
+							"    var idvalue3 = pm.response.json().Result[0].EnglishName;",
+							"    var idexist3 = idvalue3 !== null;",
+							"    pm.expect(idexist3);",
+							"    pm.environment.set(\"CountryNameGB\",idvalue3);",
 							"    ",
 							"    // if (idexist)  {",
 							"    // postman.setNextRequest(\"GetCountryIdUS\"); ",
