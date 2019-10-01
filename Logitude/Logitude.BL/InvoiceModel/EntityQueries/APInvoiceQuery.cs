@@ -140,6 +140,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         IsGeneralInvoice = a.IsGeneralInvoice,
                         ExternalAccountingEntityId = a.ExternalAccountingEntityId,
                         FirstApproveDate = a.FirstApproveDate,
+                        BranchName = a.Branch == null ? null : a.Branch.EnglishName,
                     });
         }
 
