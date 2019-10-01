@@ -35,7 +35,6 @@ SELECT         dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNum
                          dbo.ShipmentMasterDatas.ManifestReason, dbo.ShipmentMasterDatas.ManifestStatusCode, dbo.ShipmentMasterDatas.AirlinePrefix, dbo.Shipments.OperationalCloseDate, dbo.Shipments.AccountingCloseDate,
 						 dbo.MoveTypes.MoveTypeEnglishName AS MoveTypeName,
 						 dbo.Shipments.ARInvoices,
-						 dbo.Shipments.OpenReceivablesLines,
 
 						 dbo.Shipments.ContainerLastStatusDate,
 						 dbo.Shipments.Notify1Reference,

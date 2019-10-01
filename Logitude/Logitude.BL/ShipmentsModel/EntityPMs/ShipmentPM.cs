@@ -2359,7 +2359,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool PackagesDeleted { get; set; }
         public string MasterCreatedFromHouseId { get; set; }
         public bool IsDeletingAllPayables { get; set; }
-        public int OpenReceivablesLines { get; set; }
 
     }
 }

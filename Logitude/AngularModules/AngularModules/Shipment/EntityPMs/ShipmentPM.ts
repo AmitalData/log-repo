@@ -4264,10 +4264,6 @@ export class ShipmentPM {
     public get IsDeletingAllPayables() { return this.isDeletingAllPayables; }
     public set IsDeletingAllPayables(newValue: boolean) { if (this.isDeletingAllPayables != newValue) { this.isDeletingAllPayables = newValue; this.MarkAsDirty("IsDeletingAllPayables"); } }
 
-    private openReceivablesLines: number;
-    public get OpenReceivablesLines() { return this.openReceivablesLines; }
-    public set OpenReceivablesLines(newValue: number) { if (this.openReceivablesLines != newValue) { this.openReceivablesLines = newValue; this.MarkAsDirty("OpenReceivablesLines"); } }
-
     public OldEntityPM: ShipmentPM;
 
     private aWBOCIPMs: AWBOCIPM[];
