@@ -373,6 +373,10 @@
     <Compile Include="Migrations\201909151127227_AbedAddLastIncrementalDWUpdateDateToSettings.Designer.cs">
       <DependentUpon>201909151127227_AbedAddLastIncrementalDWUpdateDateToSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909291254383_AbeddeleteDWFieldsFromSetting.cs" />
+    <Compile Include="Migrations\201909291254383_AbeddeleteDWFieldsFromSetting.Designer.cs">
+      <DependentUpon>201909291254383_AbeddeleteDWFieldsFromSetting.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
@@ -508,6 +512,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909151127227_AbedAddLastIncrementalDWUpdateDateToSettings.resx">
       <DependentUpon>201909151127227_AbedAddLastIncrementalDWUpdateDateToSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909291254383_AbeddeleteDWFieldsFromSetting.resx">
+      <DependentUpon>201909291254383_AbeddeleteDWFieldsFromSetting.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

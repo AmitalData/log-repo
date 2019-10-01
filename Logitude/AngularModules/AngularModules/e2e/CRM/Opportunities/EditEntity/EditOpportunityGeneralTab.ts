@@ -14,9 +14,6 @@ export class EditOpportunityGeneralTab {
     public EditGeneralTab(opportunityDesc: string) {
         this.Helper.WaitByIdAndClick('Opportunity.TH.General');
         this.EditGeneralTabFeilds(opportunityDesc);
-        this.Helper.WaitByIdAndClick('Opportunity-Save');
-        this.Helper.WaitBusyIndicator();
-        
     }
     EditGeneralTabFeilds(opportunityDesc: string) {
         this.Helper.WaitByIdAndFill('Opportunity_LeadSourceId','Advertisement');
@@ -25,13 +22,8 @@ export class EditOpportunityGeneralTab {
         this.Helper.WaitByIdAndFill('Opportunity_LeadDescription','Lead Details');
 
         this.Helper.WaitByIdAndFill('Opportunity_LeadPartnerId', 'TestShipper');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-        
-
-        
-
+        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);        
     }
-
 }
 
 

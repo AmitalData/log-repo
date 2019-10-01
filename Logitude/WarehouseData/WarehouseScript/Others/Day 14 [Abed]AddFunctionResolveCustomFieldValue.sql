@@ -43,7 +43,15 @@ begin SET @MyValueOut =  CAST(@FieldValue AS bit);   end
 end
 
 
-ELSE if(@DataTypeCode = ''Integer'' or @DataTypeCode = ''UnsInteger'') begin SET @MyValueOut =  CAST(@FieldValue AS int); end
+ELSE if(@DataTypeCode = ''Integer'' or @DataTypeCode = ''UnsInteger'') begin 
+if CHARINDEX(''.'',@FieldValue) > 0
+begin
+ --set @FieldValue =( SELECT value  FROM STRING_SPLIT(@FieldValue, ''.'')  WHERE RTRIM(value) LIKE ''+'');
+ set @FieldValue = dbo.SplitString(@FieldValue,''.'', 1) 
+end
+SET @MyValueOut =  CAST(@FieldValue AS int); 
+
+end
 
 ELSE if(@DataTypeCode = ''Decimal'' or @DataTypeCode = ''UnsDecimal'') 
 begin 

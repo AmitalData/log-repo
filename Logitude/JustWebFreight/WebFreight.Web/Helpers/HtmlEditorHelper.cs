@@ -667,7 +667,7 @@ namespace WebFreight.Web.Helpers
         }
 
 
-        public string GetEditorHtmlData(string docOutId, string entityId, string objectTableId, string childEntityId, string childEntityObjectTableId, int tenant, string userId, bool theIsSendMail, string documentTemplateId, ref string subject, ref string from, ref string replyTo, ref string cc, string mode = null, DocumentTypeTemplate template = null)
+        public string GetEditorHtmlData(string docOutId, string entityId, string objectTableId, string childEntityId, string childEntityObjectTableId, int tenant, string userId, bool theIsSendMail, string documentTemplateId, ref string subject, ref string from, ref string replyTo, ref string cc, ref string bcc, string mode = null, DocumentTypeTemplate template = null)
         {
             ICommonDataContext context = CommonDataContext.GetContext(tenant);
             System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
@@ -866,10 +866,10 @@ namespace WebFreight.Web.Helpers
                 var htmlString = htmlheaderString + htmlBodyString + htmlfooterString;
 
                 var result = htmlString;
-                bool isHaveDataVariable = CheckIfTemplateHaveDataVariable(subject, from, replyTo, cc, htmlString);
+                bool isHaveDataVariable = CheckIfTemplateHaveDataVariable(subject, from, replyTo, cc, bcc, htmlString);
                 if (isHaveDataVariable)
                 {
-                    result = ResolveHtmlData(entityId, objectTableId, userId, tenant, htmlString, ref subject, ref from, ref replyTo, ref cc, null, childEntityId, childEntityObjectTableId);
+                    result = ResolveHtmlData(entityId, objectTableId, userId, tenant, htmlString, ref subject, ref from, ref replyTo, ref cc,ref bcc, null, childEntityId, childEntityObjectTableId);
                 }
 
                 return result;
@@ -881,7 +881,7 @@ namespace WebFreight.Web.Helpers
             else return null;
 
         }
-        private bool CheckIfTemplateHaveDataVariable(string subject, string from, string replyTo, string cc, string htmlString)
+        private bool CheckIfTemplateHaveDataVariable(string subject, string from, string replyTo, string cc,string bcc, string htmlString)
         {
             bool result = false;
             if (!string.IsNullOrEmpty(subject))
@@ -902,6 +902,11 @@ namespace WebFreight.Web.Helpers
                 if (cc.Contains("[") && cc.Contains("]")) { return true; }
             }
 
+            if (!string.IsNullOrEmpty(bcc))
+            {
+                if (bcc.Contains("[") && bcc.Contains("]")) { return true; }
+            }
+
             if (!string.IsNullOrEmpty(htmlString))
             {
                 if (htmlString.Contains("[") && htmlString.Contains("]")) { return true; }
@@ -910,7 +915,7 @@ namespace WebFreight.Web.Helpers
             return result;
 
         }
-        public string ResolveHtmlData(string entityId, string objectTableId, string userId, int tenant, string htmlString, ref string subject, ref string from, ref string replyTo, ref string cc, object customEntity, string childEntityId = null, string childEntityObjectTableId = null)
+        public string ResolveHtmlData(string entityId, string objectTableId, string userId, int tenant, string htmlString, ref string subject, ref string from, ref string replyTo, ref string cc, ref string bcc, object customEntity, string childEntityId = null, string childEntityObjectTableId = null)
         {
 
             if (CurrentTenant == null)
@@ -1158,6 +1163,21 @@ namespace WebFreight.Web.Helpers
                     cc = ccNode.InnerHtml;
                 }
             }
+
+
+            if (!string.IsNullOrEmpty(bcc))
+            {
+                if (bcc.Contains("[") && bcc.Contains("]"))
+                {
+                    HtmlDocument doc = new HtmlDocument();
+                    HtmlNode bccNode = doc.CreateElement(bcc);
+                    bccNode.InnerHtml = bcc;
+                    GetHtmlNodeValue(bccNode, bcc, entity, entityObjectFields, tablesDic, systemEntity, systemEntityObjectFields, signatureNodeList, tenant, generalService, ticketHeaderNode, ticketFooterNode);
+                    bcc = bccNode.InnerHtml;
+                }
+            }
+
+
 
 
 
@@ -6788,13 +6808,15 @@ namespace WebFreight.Web.Helpers
                     string from = template.From;
                     string replyTo = template.ReplyTo;
                     string cc = template.CC;
-                    result.HtmlTemplate = htmlEditorHelper.GetEditorHtmlData("", "", objectTableId, "", "", tenant, template.LastUpdatedByUserId, true, template.Id, ref subject, ref from, ref replyTo, ref cc);
+                    string bcc = template.BCC;
+                    result.HtmlTemplate = htmlEditorHelper.GetEditorHtmlData("", "", objectTableId, "", "", tenant, template.LastUpdatedByUserId, true, template.Id, ref subject, ref from, ref replyTo, ref cc,ref bcc);
                     result.HtmlTemplate = htmlEditorHelper.GetLogoHtmlString(result.HtmlTemplate);
 
 
                     result.From = from;
                     result.ReplyTo = replyTo;
                     result.Subject = subject;
+
                 }
 
                 scope.Complete();

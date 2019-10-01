@@ -216,6 +216,9 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<CheckDigitControlAlgorithm> CheckDigitControlAlgorithms { get; set; }
         IDbSet<CardContactProduct> CardContactProducts { get; set; }
         IDbSet<LogBoxTenantSetting> LogBoxTenantSettings { get; set; }
+        IDbSet<DWHBuildStatus> DWHBuildStatus { get; set; }
+
+
         void SetAsModified(object entity);
         void DetectChanges();
         int SaveChanges();
