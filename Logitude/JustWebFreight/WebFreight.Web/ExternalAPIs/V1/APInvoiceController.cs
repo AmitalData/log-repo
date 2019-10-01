@@ -242,34 +242,27 @@ namespace WebFreight.Web.ExternalAPIs.V1
         }
         public HttpResponseMessage GetCancel(string externalId)
         {
-                try
+            try
+            {
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
-                    using (TransactionScope scope = TransactionFactory.GetTransaction())
-                    {
-                       AuthenticationToken authToken = GetAuthenticationToken();                     
-                        int tenant = authToken.Tenant;
-                        SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-                        APInvoiceQueryService Service = new APInvoiceQueryService(tenant);
-                        APInvoice apinvoice = Service.GetSingleInvoiceByExternalEntityId(externalId, tenant);
-                        APInvoicePM apinvoicePM = null;
-                        APInvoiceQueryService apinvoiceQuery = new APInvoiceQueryService(tenant);
-                        if (apinvoice != null)
-                        {
-                        apinvoicePM = apinvoiceQuery.APInvoiceDataMappingAndValidatin(apinvoice, tenant);
-                        apinvoicePM = SetAPInvoicePMVoided(apinvoicePM);
-                        
-                        }
+                    AuthenticationToken authToken = GetAuthenticationToken();
+                    int tenant = authToken.Tenant;
+                    SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+                    APInvoiceQueryService Service = new APInvoiceQueryService(tenant);
+                    APInvoice apinvoice = Service.GetSingleInvoiceByExternalEntityId(externalId, tenant);
+                    APInvoicePM apinvoicePM = MapAPInvoiceToAPInvoicePM(apinvoice, tenant);
                     SubmitChanges(apinvoicePM);
-                     scope.Complete();
-                    return CreateResponse(null, "apinvoice has been voided"); 
-                    }
+                    scope.Complete();
+                    return CreateResponse(null, "apinvoice has been voided");
                 }
-
-                catch (Exception ex)
-                {
+            }
+            catch (Exception ex)
+            {
                 return CreateResponse(ex, null);
-                }
+            }
         }
+
         private APInvoicePM SetAPInvoicePMVoided(APInvoicePM apinvoicePM)
         {
           
@@ -304,6 +297,19 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
 
             }
+        }
+
+        private APInvoicePM MapAPInvoiceToAPInvoicePM(APInvoice invoice, int tenant)
+        {
+            APInvoicePM apinvoicePM = null;
+            APInvoiceQueryService apinvoiceQuery = new APInvoiceQueryService(tenant);
+            if (invoice != null)
+            {
+                apinvoicePM = apinvoiceQuery.APInvoiceDataMappingAndValidatin(invoice, tenant);
+                apinvoicePM = SetAPInvoicePMVoided(apinvoicePM);
+
+            }
+            return apinvoicePM;
         }
     }
 }
