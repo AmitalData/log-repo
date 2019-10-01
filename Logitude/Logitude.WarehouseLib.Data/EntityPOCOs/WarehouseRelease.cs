@@ -151,8 +151,11 @@ namespace Logitude.WarehouseLib.Data.EntityPOCOs
 	    public string ToAddressZipCode { get; set; }
         [Column("ToAddressCity")]
 	    public string ToAddressCity { get; set; }
+        [ForeignKey("ToAddressCountry")]
         [Column("ToAddressCountryId")]
 	    public string ToAddressCountryId { get; set; }
+	      
+        public virtual Country ToAddressCountry { get; set; }
     }
 }
 	 

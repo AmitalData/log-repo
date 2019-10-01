@@ -129,6 +129,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -1383,20 +1384,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
 			   ObjectTable OccasionObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Occasion" && d.Tenant == 0).FirstOrDefault();  
                  
-			   TextCode OccasionGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Occasion.TH.General", DefaultText = "General",LocalDefaultText = "General", ObjectTableId = OccasionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature OccasionGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Occasion.Tab.General", ObjectTableId = OccasionObjectTable.Id, Tenant = 0, NameTextCodeCode = "OccasionFeatures.OCGN", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode OccasionMainTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Occasion.TH.Main", DefaultText = "Main",LocalDefaultText = "Main", ObjectTableId = OccasionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature OccasionMainFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Occasion.Tab.Main", ObjectTableId = OccasionObjectTable.Id, Tenant = 0, NameTextCodeCode = "OccasionFeatures.OCMN", NameTextCodeDefaultText = "Main", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
-			   TextCode OccasionEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Occasion.TH.Events", DefaultText = "Events",LocalDefaultText = "Events", ObjectTableId = OccasionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature OccasionEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Occasion.Tab.Events", ObjectTableId = OccasionObjectTable.Id, Tenant = 0, NameTextCodeCode = "OccasionFeatures.OCEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode OccasionGeneralTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Occasion.TH.General", DefaultText = "General",LocalDefaultText = "General", ObjectTableId = OccasionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature OccasionGeneralFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Occasion.Tab.General", ObjectTableId = OccasionObjectTable.Id, Tenant = 0, NameTextCodeCode = "OccasionFeatures.OCGN", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+ 
+                 
+			   TextCode OccasionEventsTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Occasion.TH.Events", DefaultText = "Events",LocalDefaultText = "Events", ObjectTableId = OccasionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature OccasionEventsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Occasion.Tab.Events", ObjectTableId = OccasionObjectTable.Id, Tenant = 0, NameTextCodeCode = "OccasionFeatures.OCEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "OCGN",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMOccasion/Components/EditTabs/OccasionGeneralTabComponent", FeatureId = OccasionGeneralFeature_TH0.Id, ControlPath = "./CRMModules/CRMOccasion/Components/EditTabs/OccasionGeneralTabComponent", ObjectTableId = OccasionObjectTable.Id, TabNameTextCodeId = OccasionGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "OCMN",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMOccasion/Components/EditTabs/OccasionMainTabComponent", FeatureId = OccasionMainFeature_TH0.Id, ControlPath = "./CRMModules/CRMOccasion/Components/EditTabs/OccasionMainTabComponent", ObjectTableId = OccasionObjectTable.Id, TabNameTextCodeId = OccasionMainTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "OCEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = OccasionEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = OccasionObjectTable.Id, TabNameTextCodeId = OccasionEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "OCGN",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMOccasion/Components/EditTabs/OccasionGeneralTabComponent", FeatureId = OccasionGeneralFeature_TH1.Id, ControlPath = "./CRMModules/CRMOccasion/Components/EditTabs/OccasionGeneralTabComponent", ObjectTableId = OccasionObjectTable.Id, TabNameTextCodeId = OccasionGeneralTextCode_TH1.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "OCEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = OccasionEventsFeature_TH2.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = OccasionObjectTable.Id, TabNameTextCodeId = OccasionEventsTextCode_TH2.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -1404,10 +1411,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable OccasionObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Occasion" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature OccasionFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = OccasionObjectTable.Id, Tenant = 0, NameTextCodeCode = "Occasion.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature OccasionFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = OccasionObjectTable.Id, Tenant = 0, NameTextCodeCode = "Occasion.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature OccasionFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = OccasionObjectTable.Id, Tenant = 0, NameTextCodeCode = "Occasion.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature OccasionFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = OccasionObjectTable.Id, Tenant = 0, NameTextCodeCode = "Occasion.Features.PackageFeature", NameTextCodeDefaultText = "Occasion Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature OccasionFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = OccasionObjectTable.Id, Tenant = 0, NameTextCodeCode = "Occasion.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature OccasionFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = OccasionObjectTable.Id, Tenant = 0, NameTextCodeCode = "Occasion.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature OccasionFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = OccasionObjectTable.Id, Tenant = 0, NameTextCodeCode = "Occasion.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature OccasionFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = OccasionObjectTable.Id, Tenant = 0, NameTextCodeCode = "Occasion.Features.PackageFeature", NameTextCodeDefaultText = "Occasion Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
 	    
 		}
 

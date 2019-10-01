@@ -45,11 +45,9 @@ namespace WarehouseDataService.Helper
 
         public bool GetFieldValueFromDBByTableNameAndFieldName(string fieldName, string tableName,string connectionString)
         {
-            string connection = connectionString.Replace("Main", "Global");
-
             bool result = false;
             
-            SqlConnection con = new SqlConnection(connection);
+            SqlConnection con = new SqlConnection(connectionString);
 
             SqlCommand com = new SqlCommand(
 "select " + fieldName + " " +
@@ -61,8 +59,14 @@ namespace WarehouseDataService.Helper
 
                 using (SqlDataReader reader = com.ExecuteReader())
                 {
-                    reader.Read();
-                    result = (bool)(reader[fieldName]);
+                    if (reader.Read())
+                    {
+                        if (reader[fieldName] != null)
+                        {
+                            result = (bool)(reader[fieldName]);
+                        }
+
+                    }
                 }
             }
             finally
@@ -74,16 +78,13 @@ namespace WarehouseDataService.Helper
 
         public DateTime? GetDWNextRunTime(string connectionString)
         {
-
-            string connection = connectionString.Replace("Main", "Global");
-
             DateTime? result = null;
 
-            SqlConnection con = new SqlConnection(connection);
+            SqlConnection con = new SqlConnection(connectionString);
 
             SqlCommand com = new SqlCommand(
 "select DWNextRunTime " +
-"FROM dbo.Settings" + " ;", con);
+"FROM dbo.DWHBuildStatus" + " ;", con);
 
             try
             {
@@ -109,10 +110,9 @@ namespace WarehouseDataService.Helper
 
         public void UpdateDWNextRunTime(string connectionString, DateTime? datetime)
         {
-            string connection = connectionString.Replace("Main", "Global");
-            using (SqlConnection cn = new SqlConnection(connection))
+            using (SqlConnection cn = new SqlConnection(connectionString))
             {
-                SqlCommand sqlCommand = new SqlCommand("update  dbo.Settings set DWNextRunTime= '" + datetime + "' ;", cn);
+                SqlCommand sqlCommand = new SqlCommand("update  DWHBuildStatus set DWNextRunTime= '" + datetime + "' ;", cn);
                 sqlCommand.CommandTimeout = (int)timeOut;
                 cn.Open();
                 sqlCommand.ExecuteNonQuery();
@@ -122,11 +122,10 @@ namespace WarehouseDataService.Helper
         }
 
 
-        public void UpdateWarehouseFieldSettings(string fieldName, bool value, string connectionString)
+        public void UpdateDWHBuildStatus(string fieldName, bool value, string connectionString)
         {
-            string connection = connectionString.Replace("Main", "Global");
-            string sql = "update  dbo.Settings set " + fieldName + "= " + (value ? 1 : 0) + " ";
-            RunScript(sql, connection);
+            string sql = "update  dbo.DWHBuildStatus set " + fieldName + "= " + (value ? 1 : 0) + " ";
+            RunScript(sql, connectionString);
         }
 
 
@@ -150,9 +149,8 @@ namespace WarehouseDataService.Helper
 
         public void UpdateLastIncrementalDWUpdateDate(string sourceConnectionString)
         {
-            string connection = sourceConnectionString.Replace("Main", "Global");
-            string sql = "update  dbo.Settings set LastIncrementalDWUpdateDate = "+ "'" + DateTime.Now + "'";
-            RunScript(sql, connection);
+            string sql = "update  dbo.DWHBuildStatus set LastIncrementalDWUpdateDate = " + "'" + DateTime.Now + "'";
+            RunScript(sql, sourceConnectionString);
         }
 
         public string BuildConnectionString(string dbSourceConnection)
@@ -250,7 +248,8 @@ namespace WarehouseDataService.Helper
 
         public bool CheckIsUpgradingSystem(string sourceConnectionString)
         {
-            return GetFieldValueFromDBByTableNameAndFieldName("IsUpgrading", "GlobalDBs", sourceConnectionString);
+            string connection = sourceConnectionString.Replace("Main", "Global");
+            return GetFieldValueFromDBByTableNameAndFieldName("IsUpgrading", "GlobalDBs", connection);
 
         }
 

@@ -55,7 +55,7 @@ export class NewFullWarehouseReleaseComponent extends BaseComponent implements O
     public CardDependencyProperty1IsList: boolean = false;
     public DataContext = this;
     public LabelColumnWidth: number = 117;
-    WarehouseReleasePackagesLists: WarehouseReleasePackagePM[] = [];
+    public WarehouseReleasePackagesLists: WarehouseReleasePackagePM[] = [];
     public ValidationErrorsList: string[];
 
     warehouseReleasePM: WarehouseReleasePM = new WarehouseReleasePM();
@@ -850,14 +850,7 @@ export class NewFullWarehouseReleaseComponent extends BaseComponent implements O
             this.warehouseReleasePM.FromPortId = null;
             this.warehouseReleasePM.ToPortId = null;
         }
-        //else {
-        //    this.warehouseReleasePM.FromAddressId = null;
-        //    this.warehouseReleasePM.ToAddressId = null;
-        //    //this.warehouseReleasePM.FromPartnerId = null;
-        //    //this.warehouseReleasePM.ToPartnerId = null;
-
-
-        //}
+  
 
         if (!this.IsInlandDomestic) {
             if (AppTool.IsNullOrEmpty(this.warehouseReleasePM.FromPortId)) {

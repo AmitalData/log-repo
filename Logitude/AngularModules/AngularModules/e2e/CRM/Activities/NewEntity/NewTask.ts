@@ -36,6 +36,10 @@ export class NewTask {
 
     this.Helper.WaitByIdAndFill('date_Activity_DueDate', '3');
     this.Helper.WaitByIdAndFill('time_Activity_DueDate', '17');
+
+    this.Helper.WaitByIdAndClick('Ok-AddActivity');
+    this.Helper.WaitBusyIndicator();
+    this.Helper.WaitWindowClosed();
   }
 }
 
