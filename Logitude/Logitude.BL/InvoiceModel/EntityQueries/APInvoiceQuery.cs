@@ -200,7 +200,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     List<ShipmentDataView> myShipments = shipmentRepository.GetShipmentsFromIdList(shipmentsIds, tenant);
 
                     foreach (ShipmentDataView item in myShipments)
-                    {
+                    {                        
                         string myLongMaster = EntityFieldsHelper.GetLongMasterField(item);
 
                         APInvoiceMultipleShipmentPM entityShipment = new APInvoiceMultipleShipmentPM()
@@ -216,6 +216,14 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             MainCarriageCarrierName = item.MainCarriageCarrierName,
                             PartnerType = item.ShipmentLevelCode == "C" ? "Agent" : "Customer",
                             PartnerName = item.ShipmentLevelCode == "C" ? item.AgentName : item.CustomerName,
+                            OperationalDate=item.OperationalDate,
+                            MainCarriageOrigin=item.ShipmentLevelCode=="H"?item.FromPortCode:item.MainCarriageFromPortCode,
+                            MainCarriageFinalDestination=item.ShipmentLevelCode == "H"?item.ToPortCode:item.MainCarriageToPortCode,
+                            ChargeableWeight=item.ChargeableWeight,
+                            TotalReceivables=item.AccountedReceivablesInProfitCurrency,
+                            Profit= item.ProfitInProfitCurrency,
+                            
+
                         };
 
                         APInvoiceEntityPM myEntity = entityPM.InvoiceEntities.Where(d => d.EntityId == item.Id).FirstOrDefault();
