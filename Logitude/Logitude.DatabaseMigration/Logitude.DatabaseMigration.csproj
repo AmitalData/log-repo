@@ -1481,6 +1481,10 @@
     <Compile Include="Migrations\201909150859476_PaymentChequeLocalNameMigration.Designer.cs">
       <DependentUpon>201909150859476_PaymentChequeLocalNameMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909301617282_addNotInvoicedReceivablesAmount.cs" />
+    <Compile Include="Migrations\201909301617282_addNotInvoicedReceivablesAmount.Designer.cs">
+      <DependentUpon>201909301617282_addNotInvoicedReceivablesAmount.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2533,6 +2537,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909150859476_PaymentChequeLocalNameMigration.resx">
       <DependentUpon>201909150859476_PaymentChequeLocalNameMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909301617282_addNotInvoicedReceivablesAmount.resx">
+      <DependentUpon>201909301617282_addNotInvoicedReceivablesAmount.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
