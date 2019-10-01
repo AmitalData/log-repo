@@ -100,7 +100,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
         }
 
         this.textValue = newValue;
-        //this.textValue = this.FormatTextValueNumbers(newValue);
+        this.textValue = this.FormatTextValueNumbers(newValue);
         if (this.IsPasted) {
             this.IsPasted = false;
             switch (this.InputType && this.InputType.toLowerCase()) {
@@ -442,7 +442,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                         if (result != null || which == 13 || key == '-') {
                             var applyTextValue = true;
                             this.ngzone.run(() => {
-                                if ((which == 9 || which == 13) && this.AllowPercentage) {
+                                if ((which == 9 || which == 13) && (this.AllowPercentage||SessionLocator.TenantPM.NumberFormatCode=="DC")) {
                                     applyTextValue = false;
                                 }
                                 if (applyTextValue) {
@@ -1756,19 +1756,30 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
         }, 100);
     }
 
-    FormatTextValueNumbers(textValue: string) {
+    FormatTextValueNumbers(textValue: string) {//60,5 ---- 60.5   1.111-----1,111
         var formattedTxt = textValue;
+        var textnumber=Number(textValue);
+        if(this.DataContext[this.ObjectFieldName]==textnumber &&SessionLocator.TenantPM.NumberFormatCode == "DC"){
+        
         if (this.InputType!="text"&&this.InputType!="ntext") {
             if (!AppTool.IsNullOrEmpty(this.TextValue)) {
-                var value = Number(this.TextValue);
-                var textval = value + "";
-
-                if (textval.indexOf('.') > -1) {
-                    var textparts = textval.split('.');
+                if (this.TextValue.indexOf('.') > -1) {
+                    var textparts = this.TextValue.split('.');
                     formattedTxt = textparts[0] + this.decimalSeparator + textparts[1];
                 }
+                // var text=this.RemoveThousandsSeparator(this.TextValue)
+                // text= this.ReplaceDecimalSeparatorWithADot(text);
+                
+                // var value = Number(this.TextValue);
+                // var textval = value + "";
+
+                // if (textval.indexOf('.') > -1) {
+                //     var textparts = textval.split('.');
+                //     formattedTxt = textparts[0] + this.decimalSeparator + textparts[1];
+                // }
             }
         }
+    }
         return formattedTxt;
     }
 
