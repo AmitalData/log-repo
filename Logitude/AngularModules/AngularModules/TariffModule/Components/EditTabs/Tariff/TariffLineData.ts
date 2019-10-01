@@ -990,41 +990,18 @@ export class AirSurchargeTariffLineData extends BaseComponent {
             this.UIProperties.SetEnabled("IsToAllOtherPorts", this.ObjectTableName, AppTool.IsNullOrEmpty(this.DestinationPortId));
         }
     }
-
-    public IsSurcharge1MinPriceEditEnabled: boolean = false;
-    public IsSurcharge2MinPriceEditEnabled: boolean = false;
-    public IsSurcharge3MinPriceEditEnabled: boolean = false;
-    public IsSurcharge4MinPriceEditEnabled: boolean = false;
-    public IsSurcharge5MinPriceEditEnabled: boolean = false;
-    public IsSurcharge6MinPriceEditEnabled: boolean = false;
-    public IsSurcharge7MinPriceEditEnabled: boolean = false;
-    public IsSurcharge8MinPriceEditEnabled: boolean = false;
-    public IsSurcharge9MinPriceEditEnabled: boolean = false;
-    public IsSurcharge10MinPriceEditEnabled: boolean = false;
+    
     private SetUIProperties_MinPrices() {
-        if (this.IsEditEnabled) {
-            this.IsSurcharge1MinPriceEditEnabled = !this.IsMeasurmentFixed(1);
-            this.IsSurcharge2MinPriceEditEnabled = !this.IsMeasurmentFixed(2);
-            this.IsSurcharge3MinPriceEditEnabled = !this.IsMeasurmentFixed(3);
-            this.IsSurcharge4MinPriceEditEnabled = !this.IsMeasurmentFixed(4);
-            this.IsSurcharge5MinPriceEditEnabled = !this.IsMeasurmentFixed(5);
-            this.IsSurcharge6MinPriceEditEnabled = !this.IsMeasurmentFixed(6);
-            this.IsSurcharge7MinPriceEditEnabled = !this.IsMeasurmentFixed(7);
-            this.IsSurcharge8MinPriceEditEnabled = !this.IsMeasurmentFixed(8);
-            this.IsSurcharge9MinPriceEditEnabled = !this.IsMeasurmentFixed(9);
-            this.IsSurcharge10MinPriceEditEnabled = !this.IsMeasurmentFixed(10);
-
-            this.UIProperties.SetEnabled("Surcharge1MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(1));
-            this.UIProperties.SetEnabled("Surcharge2MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(2));
-            this.UIProperties.SetEnabled("Surcharge3MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(3));
-            this.UIProperties.SetEnabled("Surcharge4MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(4));
-            this.UIProperties.SetEnabled("Surcharge5MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(5));
-            this.UIProperties.SetEnabled("Surcharge6MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(6));
-            this.UIProperties.SetEnabled("Surcharge7MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(7));
-            this.UIProperties.SetEnabled("Surcharge8MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(8));
-            this.UIProperties.SetEnabled("Surcharge9MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(9));
-            this.UIProperties.SetEnabled("Surcharge10MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(10));
-        }
+        this.UIProperties.SetVisibility("Surcharge1MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(1));
+        this.UIProperties.SetVisibility("Surcharge2MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(2));
+        this.UIProperties.SetVisibility("Surcharge3MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(3));
+        this.UIProperties.SetVisibility("Surcharge4MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(4));
+        this.UIProperties.SetVisibility("Surcharge5MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(5));
+        this.UIProperties.SetVisibility("Surcharge6MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(6));
+        this.UIProperties.SetVisibility("Surcharge7MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(7));
+        this.UIProperties.SetVisibility("Surcharge8MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(8));
+        this.UIProperties.SetVisibility("Surcharge9MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(9));
+        this.UIProperties.SetVisibility("Surcharge10MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(10));
     }
     private IsMeasurmentFixed(index: number): boolean {
         var isFixed: boolean = false;
