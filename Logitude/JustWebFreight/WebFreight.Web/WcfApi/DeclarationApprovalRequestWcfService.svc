@@ -1,1 +1,1 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="WebFreight.Web.WcfApi.DepositionRequestWcfService" CodeBehind="DeclarationApprovalRequestWcfService.svc.cs" %>
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="WebFreight.Web.WcfApi.DeclarationApprovalRequestWcfService" CodeBehind="DeclarationApprovalRequestWcfService.svc.cs" %>

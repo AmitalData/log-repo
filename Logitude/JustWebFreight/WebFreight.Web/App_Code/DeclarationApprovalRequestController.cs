@@ -6,6 +6,8 @@ using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Newtonsoft.Json;
@@ -13,6 +15,7 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.ShipmentsModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -90,27 +93,25 @@ namespace WebFreight.Web.App_Code
                 try
                 {
                     SecurityUtility.AuthenticationOnTenant(ApprovalRequest.Tenant);
-                    ////HybridPartnerQuery hybridPartnerQuery = new HybridPartnerQuery(ApprovalRequest.Tenant);
-                    ////var hybridPartner = hybridPartnerQuery.GetSinglePMByPartnerTenant(ApprovalRequest.Tenant);
-                    ////CustomerTenantAccessRequestQuery customerTenantAccessRequestQuery = new CustomerTenantAccessRequestQuery(entityAM.CustomerTenant);
-                    ////var customerTenantAccessRequest = customerTenantAccessRequestQuery.GetSinglePMByCustomerTenantAndPartnerTenant(hybridPartner.Id, entityAM.CustomerTenant);
-                    ////customerTenantAccessRequest.RequestStatus = "A";
-
-
-                    //var msg = "Start Sending Response To Importer Tenant " + DateTime.Now;
-                    //APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, LogPM.Status, 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(customerTenantAccessRequest), null, null, "");
-                    //ICommonDataContext objectContext = CommonDataContext.GetContext(customerTenantAccessRequest.Tenant);
-
-                    //var SystemUser = "system@tenant" + customerTenantAccessRequest.Tenant + ".com";
-                    //CustomerTenantAccessRequestService service = new CustomerTenantAccessRequestService(objectContext, customerTenantAccessRequest.Tenant);
-                    //service.Update(customerTenantAccessRequest);
-                    //var ResponseData = JsonConvert.SerializeObject(customerTenantAccessRequest.Id);
-                    //var Donemsg = "Response Sent To Importer Tenant Successfully " + DateTime.Now;
-                    //APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, null, null, "");
-                    //IWebFreightContext webfreightcontext = WebFreightContext.GetContext(customerTenantAccessRequest.Tenant);
-                    //TableLastUpdateClass.UpdateTableHistory(customerTenantAccessRequest.Tenant, "CustomerTenantAccessRequest", webfreightcontext);
-                    return Request.CreateResponse(HttpStatusCode.OK, "OK");
-
+                    ShipmentQuery ShipmentQuery = new ShipmentQuery(ApprovalRequest.Tenant);
+                    var LogBoxShipment = ShipmentQuery.GetSinglePMByForwarderShipmentNumber(ApprovalRequest.ShipmentNumber, ApprovalRequest.Tenant);
+                    if (LogBoxShipment != null)
+                    {
+                        LogBoxShipment.IsImporterApprovalRequired = true;
+                        LogBoxShipment.DeclarationXMLData = ApprovalRequest.DeclarationXmlData;
+                        string systemEmail = "system@tenant" + ApprovalRequest.Tenant + ".com";
+                        IShipmentsContext objectContext = ShipmentsContext.GetContext(ApprovalRequest.Tenant);
+                        ShipmentService shipmentService = new ShipmentService(objectContext, LogBoxShipment, systemEmail);
+                        shipmentService.Update();
+                        return Request.CreateResponse(HttpStatusCode.OK, "VDK");
+                    }
+                    else
+                    {
+                        APIException Responce = new APIException();
+                        Responce.ErrorType = "Invalid Shipment";
+                        Responce.ErrorMessage = "can't find Shipment with Forwarder Number " + ApprovalRequest.ShipmentNumber;
+                        return Request.CreateResponse(HttpStatusCode.BadRequest, Responce);
+                    }
                 }
                 catch (Exception ex)
                 {

@@ -9,16 +9,20 @@ using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.QueueService;
+using Logitude.Server.Tools.StorageService;
 using Logitude.SystemLogs;
+using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Server.Infrastructure.Azure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -113,7 +117,7 @@ namespace CommunicationWorkerRole
                         {
                             string Id = response.MessageValues["Id"].ToString();
                             int.TryParse(response.MessageValues["Tenant"], out tenant);
-                            int.TryParse(response.MessageValues["ImporterTenant"], out ImporterTenant); 
+                            int.TryParse(response.MessageValues["ImporterTenant"], out ImporterTenant);
                             string CorrelationId = response.MessageValues["CorrelationId"].ToString();
                             IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
                             ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
@@ -171,7 +175,7 @@ namespace CommunicationWorkerRole
                                     client.DefaultRequestHeaders.Add("CorrelationId", CorrelationId);
                                     ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
                                     ShipmentQuery ShipmentQuery = new ShipmentQuery(tenant);
-                                    ShipmentPM ShipmentPm = ShipmentQuery.GetSinglePM(Id,tenant);
+                                    ShipmentPM ShipmentPm = ShipmentQuery.GetSinglePM(Id, tenant);
                                     DeclarationApprovalRequestPM ApprovalRequestPM = new DeclarationApprovalRequestPM()
                                     {
                                         Tenant = ImporterTenant,
@@ -189,11 +193,12 @@ namespace CommunicationWorkerRole
                                     var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
                                     var result = await client.PutAsync(URI + "DeclarationApprovalRequest", content);
                                     if (result.StatusCode == System.Net.HttpStatusCode.OK)
-                                    { 
+                                    {
                                         // VDK Logic
-                                        var ResponseData = result.Content.ReadAsStringAsync().Result;
-                                        var Donemsg = "Declaration Approval Request Sent To Importer Successfully " + DateTime.Now;
-                                        APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, ResponseData, null, "");
+                                        AddVDKExternalTaskQueue(ApprovalRequestPM, tenant);
+                                        //var ResponseData = result.Content.ReadAsStringAsync().Result;
+                                        var Donemsg = "Declaration Approval Request Sent To Importer Successfully, Start Sending VDK to Unif. " + DateTime.Now;
+                                        APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, "VDK", null, "");
                                     }
                                     else //if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
                                     {
@@ -276,8 +281,120 @@ namespace CommunicationWorkerRole
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Declaration Approval Request worker role start", null, null);
                 Thread.Sleep(10000);
             }
-           
+
         }
+
+        private void AddVDKExternalTaskQueue(DeclarationApprovalRequestPM approvalRequestPM, int tenant)
+        {
+            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+            CommunicationLogRepository communicationLogRepository = new CommunicationLogRepository(commonContext);
+            DocumentRepository documentrepository = new DocumentRepository(commonContext);
+            ObjectTableRepository objecttableRep = new ObjectTableRepository(tenant);
+            ObjectTable objectTable = null;
+
+            objectTable = objecttableRep.GetObjectTableByName("Shipment", 0, true);
+
+            List<QueueTask> tasks = new List<QueueTask>();
+            tasks.Add(new QueueTask()
+            {
+                Action = "StatusUpdate",
+                Parameters = new List<Logitude.Server.Tools.Parameter>() {
+                new Logitude.Server.Tools.Parameter { Name = "ShipmentNumber", Value = approvalRequestPM.ShipmentNumber},
+                new Logitude.Server.Tools.Parameter { Name = "Code", Value = "VDK"},
+                new Logitude.Server.Tools.Parameter { Name = "Date", Value = TenantServerConfigration.GetCurrentDateTime(tenant).ToShortDateString()},
+                new Logitude.Server.Tools.Parameter { Name = "Time", Value = TenantServerConfigration.GetCurrentDateTime(tenant).ToShortTimeString()},
+                new Logitude.Server.Tools.Parameter { Name = "Remarks", Value = "Approval Task Received"}
+                }
+            });
+            var ByteData = LogitudeXmlSerializer.SerializeObject(tasks);
+            Document document = new Document()
+            {
+                CreateDate = DateTime.Now,
+                Extension = "xml",
+                FileSize = ByteData.Length,
+                Tenant = Convert.ToInt32(tenant),
+                Id = IdCounter.GetNumber("Document", tenant),
+                HasFile = true,
+                Folder = "ExternalTasksQueue",
+            };
+            documentrepository.Add(document);
+            documentrepository.SubmitChanges();
+            var commLog = new CommunicationLog()
+            {
+                Id = IdCounter.GetNumber("CommunicationLog", tenant),
+                LastStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                InOut = "O",
+                //EntityId = OceanInsightsRequest.Id,
+                ObjectTableId = (objectTable != null && !string.IsNullOrEmpty(objectTable.Id)) ? objectTable.Id : null,
+                Subject = "Approval Task Received",
+                Tenant = tenant,
+                CommunicationLogTypeCode = "Q",
+                CommunicationStatusTypeCode = "W",
+                CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                DocumentId = document.Id,
+                CreateDateUTC = DateTime.UtcNow,
+                LastStatusDateUTC = DateTime.UtcNow,
+                QueueName = "externaltasksqueue" + tenant + 1,
+                Priority = 1,
+                EntityReference = approvalRequestPM.ShipmentNumber
+
+            };
+
+            communicationLogRepository.Add(commLog);
+            communicationLogRepository.SubmitChanges();
+            string filename = document.Id + "." + document.Extension;
+            string filePath = "tenant" + commLog.Tenant + "/" + StorageAcountDetails.GetBlobNameByLocation(filename, document.Folder);
+            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            BlobFileInfo fileInfo = new BlobFileInfo()
+            {
+                FileName = document.Id,
+                FolderName = document.Folder,
+                Extension = document.Extension,
+                Tenant = tenant,
+                FileSize = ByteData.Length,
+
+            };
+
+            storageservice.Write(ByteData, fileInfo);
+
+            if (!string.IsNullOrEmpty(commLog.QueueName))
+            {
+                try
+                {
+                    Communications.UpdateCommunicationLogStatus(commLog.Id, tenant, null, commLog.CommunicationStatusTypeCode, "Before adding message to queue ImporterApprovalReceived " + DateTime.Now.ToString(), null);
+                    SendCommunicationLogMessageToQueue(commLog.QueueName, commLog.Id, tenant);
+                    Communications.UpdateCommunicationLogStatus(commLog.Id, tenant, null, commLog.CommunicationStatusTypeCode, "after adding message to queue  ImporterApprovalReceived " + DateTime.Now.ToString(), null);
+
+                }
+                catch (Exception ex)
+                {
+                    string errorMessage = ex.Message;
+
+                    if (!string.IsNullOrEmpty(ex.StackTrace))
+                    {
+                        errorMessage += Environment.NewLine + ex.StackTrace;
+                    }
+
+                    Communications.UpdateCommunicationLogStatus(commLog.Id, tenant, null, commLog.CommunicationStatusTypeCode, "Exception occured while adding message to queue ImporterApprovalReceived " + DateTime.Now.ToString(), errorMessage);
+                }
+            }
+        }
+
+        private void SendCommunicationLogMessageToQueue(string queueName, string communicationLogId, int tenant)
+        {
+            try
+            {
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue(queueName, 0);
+                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } });
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "SendCommunicationLogMessageToQueue Approval Request", null, null);
+            }
+        }
+
         private void ConnectClient()
         {
             try

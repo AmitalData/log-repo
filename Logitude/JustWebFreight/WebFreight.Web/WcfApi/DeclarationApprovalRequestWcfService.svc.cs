@@ -39,11 +39,12 @@ namespace WebFreight.Web.WcfApi
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(declarationApprovalRequestPM.Tenant);
 
                 if (declarationApprovalRequestPM != null)
                 {
-                    string ShipmentAdditionalDataId = UpdateShipmentAdditionalDataFromIncomingApprovalRequest(declarationApprovalRequestPM, authToken.Tenant);
-                    int ImporterTenant = GetImporterTenantByShipmentNumber(authToken.Tenant, declarationApprovalRequestPM.ShipmentNumber);
+                    string ShipmentAdditionalDataId = UpdateShipmentAdditionalDataFromIncomingApprovalRequest(declarationApprovalRequestPM, declarationApprovalRequestPM.Tenant);
+                    int ImporterTenant = GetImporterTenantByShipmentNumber(declarationApprovalRequestPM.Tenant, declarationApprovalRequestPM.ShipmentNumber);
                     AddQueueToSendApprovalRequestToLogBox(ShipmentAdditionalDataId, declarationApprovalRequestPM.Tenant, ImporterTenant);
                 }
 
@@ -81,17 +82,20 @@ namespace WebFreight.Web.WcfApi
             string ShipmentId = ShipmentQuery.GetShipmentIdByShipmentNumber(declarationApprovalRequestPM.ShipmentNumber, tenant);
             //int? ImporterTenant = ShipmentQuery.GetCustomerTenantByShipmentNumber(declarationApprovalRequestPM.ShipmentNumber, tenant);
 
+            if (!string.IsNullOrEmpty(ShipmentId))
+            {
+                ShipmentAdditionalCloudDataRepository ShipmentAdditionalDataRepository = new ShipmentAdditionalCloudDataRepository(tenant);
+                ShipmentAdditionalCloudData ShipmentAdditionalData = ShipmentAdditionalDataRepository.GetSingleShipmentAdditionalCloudData(ShipmentId, tenant);
+                ShipmentAdditionalData.DeclarationXmlData = declarationApprovalRequestPM.DeclarationXmlData;
+                ShipmentAdditionalData.IsImporterApprovalRequried = true;
 
-            ShipmentAdditionalCloudDataRepository ShipmentAdditionalDataRepository = new ShipmentAdditionalCloudDataRepository(tenant);
-            ShipmentAdditionalCloudData ShipmentAdditionalData = ShipmentAdditionalDataRepository.GetSingleShipmentAdditionalCloudData(ShipmentId, tenant);
-            ShipmentAdditionalData.DeclarationXmlData = declarationApprovalRequestPM.DeclarationXmlData;
-            ShipmentAdditionalData.IsImporterApprovalRequried = true;
 
+                ShipmentAdditionalDataRepository.Update(ShipmentAdditionalData);
+                ShipmentAdditionalDataRepository.SubmitChanges();
+            }
+          
 
-            ShipmentAdditionalDataRepository.Update(ShipmentAdditionalData);
-            ShipmentAdditionalDataRepository.SubmitChanges();
-
-            return ShipmentAdditionalData.Id;
+            return ShipmentId;
 
         }
 
