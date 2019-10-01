@@ -1054,6 +1054,27 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 }
             }
         }
+
+        private bool IsLCLShipment(ShipmentPM entityPM)
+        {
+            if (entityPM.TransportModeId == "A")
+            {
+                return true;
+            }
+
+            else if (entityPM.TransportModeId == "O" && entityPM.ShipmentTypeId == "LCLD")
+            {
+                return true;
+            }
+
+            else if (entityPM.TransportModeId == "I" && entityPM.ShipmentTypeId == "LTL")
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         private double? CalculateChargeableWeight(object grossWeight, object volumetricWeight, string grossWeightUnitCode, string chargeableWeightUnitCode, string directionId, string transportModeId)
         {
             double? myGrossWeight = null;
