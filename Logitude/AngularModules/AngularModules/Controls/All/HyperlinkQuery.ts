@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, ChangeDetectionStrategy, ElementRef} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy, ElementRef} from '@angular/core';
 import {AppTool} from '../../Infrastructure/Tools';
 
 @Component({
@@ -8,7 +8,7 @@ import {AppTool} from '../../Infrastructure/Tools';
 
     template:
     `    
-        <button class="HyperlinkQueryButtonControl" [disabled]="!IsEnabled" tabindex="-1">            
+        <button id="{{'ReportID' | IdGeneratorPipe}}" class="HyperlinkQueryButtonControl" [disabled]="!IsEnabled" tabindex="-1">            
             {{Text}}
 
             <span style="pointer-events: none;">            
