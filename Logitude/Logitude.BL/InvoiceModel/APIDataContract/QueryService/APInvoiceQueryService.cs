@@ -29,7 +29,8 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             {
 
 
-                var temp = query.GetSinglePM(null, tenant, number);
+                //var temp = query.GetSinglePM(null, tenant, number);
+                var temp = query.GetSinglePMByNumber(number,tenant);
                 if (temp == null)
                     throw new ApplicationException("APInvoice with number " + number + " doesn't exist");
 
