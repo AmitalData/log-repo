@@ -1257,7 +1257,7 @@
                     change: onChange,
                     filter: "contains",
                     suggest: false,
-
+                    focus:true,
 
                     // template:
                     //     '<dd>${ CompanyName }</dd>'
@@ -1275,18 +1275,19 @@
                 });
 
 
-
-
-
-
-
                 disableForm(false);
 
                 $("#loginForm").hide();
                 $("#comboForm").show();
-
                 $("#busyIndicator").hide();
                 $("#loginBusyindicator").hide();
+
+
+              $("#cmbTenants").kendoComboBox();
+               var combobox = $("#cmbTenants").data("kendoComboBox");
+               combobox.focus();
+
+
                 //$("#busyIndicator").hide();
             }
 
