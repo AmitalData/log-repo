@@ -97,8 +97,23 @@ export class DWQueryBuilderComponent extends BaseComponent {
         }
     }
     private CurrentSession = SessionLocator.SelectedSession;
+
+
+    HeightFilterArea: number;
+    HeightPreviewArea: number;
     constructor(private CD: ChangeDetectorRef) {
         super();
+    
+        var heightScreen = 548;
+
+        this.HeightFilterArea = window.innerHeight / 2.86;
+        this.HeightPreviewArea = heightScreen - this.HeightFilterArea; 
+
+
+        console.log("AbedHeightX", this.HeightFilterArea);
+        console.log("AbedHeighty", this.HeightPreviewArea);
+
+
         this._DWObjectTablePMService = new DWObjectTablePMService();
         this._DWQueryPMService = new DWQueryPMService();
         this._DWObjectFieldPMService = new DWObjectFieldExtendedPMService();
