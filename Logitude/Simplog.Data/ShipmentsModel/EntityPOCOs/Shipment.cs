@@ -781,8 +781,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public bool HasContainerException { get; set; }
         public string ARInvoices { get; set; }
 
-
-
-
+        public double? NotInvoicedReceivablesAmount { get; set; }
     }
 }

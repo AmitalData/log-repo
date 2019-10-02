@@ -85,6 +85,10 @@ export class ShipmentPM {
     public get CarrierTransportDocumentNumber() { return this.carrierTransportDocumentNumber; }
     public set CarrierTransportDocumentNumber(newValue: string) { if (this.carrierTransportDocumentNumber != newValue) { this.carrierTransportDocumentNumber = newValue; this.MarkAsDirty("CarrierTransportDocumentNumber"); } }
 
+    private notInvoicedReceivablesAmount: number;
+    public get NotInvoicedReceivablesAmount() { return this.notInvoicedReceivablesAmount; }
+    public set NotInvoicedReceivablesAmount(newValue: number) { if (this.notInvoicedReceivablesAmount != newValue) { this.notInvoicedReceivablesAmount = newValue; this.MarkAsDirty("NotInvoicedReceivablesAmount"); } }
+
 
     private openReceivablesInLocalCurrency: number;
     public get OpenReceivablesInLocalCurrency() { return this.openReceivablesInLocalCurrency; }
