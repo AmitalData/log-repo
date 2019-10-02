@@ -63,11 +63,11 @@ export class OpportunityActions {
   AddQuoteFromOpportunity() {
     this.quoteHelper.SelectDicrctionTransportMode('Export', 'A', '');
 
-    this.Helper.WaitByIdAndFill('Quote_FromPortId', 'eze');
-    this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Quote_FromPortId', 'eze');
+    this.Helper.WaitByIdAndFill('Quote_FromPortId', 'GCI');
+    this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Quote_FromPortId', 'GCI');
 
-    this.Helper.WaitByIdAndFill('Quote_ToPortId', 'eze');
-    this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Quote_ToPortId', 'eze');
+    this.Helper.WaitByIdAndFill('Quote_ToPortId', 'GCI');
+    this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Quote_ToPortId', 'GCI');
 
     this.Helper.WaitByIdAndClick('CreateQuote');
     this.Helper.WaitBusyIndicator();
