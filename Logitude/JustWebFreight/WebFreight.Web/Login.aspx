@@ -1257,7 +1257,7 @@
                     change: onChange,
                     filter: "contains",
                     suggest: false,
-
+                    focus:true,
 
                     // template:
                     //     '<dd>${ CompanyName }</dd>'
@@ -1275,18 +1275,19 @@
                 });
 
 
-
-
-
-
-
                 disableForm(false);
 
                 $("#loginForm").hide();
                 $("#comboForm").show();
-
                 $("#busyIndicator").hide();
                 $("#loginBusyindicator").hide();
+
+
+              $("#cmbTenants").kendoComboBox();
+               var combobox = $("#cmbTenants").data("kendoComboBox");
+               combobox.focus();
+
+
                 //$("#busyIndicator").hide();
             }
 
@@ -1575,7 +1576,7 @@
         LoginToAngular = function (userdata) {
             var isTenantAllowed = false;
             var Tenant = userdata.CurrentTenant;
-            if (Tenant == 42 || Tenant == 1232 || Tenant == 1586 || Tenant == 1637 || Tenant == 1638) {
+            if (Tenant == 42 || Tenant == 1232 || Tenant == 1586 || Tenant == 1637 || Tenant == 1638 || Tenant == 341 ) {
                 isTenantAllowed = true;
             }
 
