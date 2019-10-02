@@ -51,9 +51,7 @@ export class AddEditTariffLineComponent  {
     get Surcharge8PriceText() { return this.EntityPM.Surcharge8PriceText; }
     get Surcharge9PriceText() { return this.EntityPM.Surcharge9PriceText; }
     get Surcharge10PriceText() { return this.EntityPM.Surcharge10PriceText; }
-
-
-
+    
     CancelButtonClicked() {
         this.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
@@ -77,11 +75,15 @@ export class AddEditTariffLineComponent  {
 
         else if (this.TariffType == "ASC") {
             if (AppTool.IsNullOrEmpty(this.DataContext.DestinationPortId) && !this.DataContext.IsToAllOtherPorts) {
-                errors.push("To port or To All Other Ports is required");
+                errors.push("To port or To All Other Ports is Required");
             }
 
             if (AppTool.IsNullOrEmpty(this.DataContext.OriginPortId) && !this.DataContext.IsFromAllOtherPorts) {
-                errors.push("From port or From All Other Ports is required");
+                errors.push("From port or From All Other Ports is Required");
+            }
+
+            if (AppTool.IsNullOrEmpty(this.DataContext.CurrencyId)) {
+                errors.push("Currency Field is Required");
             }
         }       
 

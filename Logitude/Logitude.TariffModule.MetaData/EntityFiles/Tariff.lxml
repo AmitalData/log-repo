@@ -137,7 +137,9 @@
     </MenuButton>
   </MenuButtons>
   <DataContracts />
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode Code="&quot;Tariff.O.DefaultCurrency&quot;" DefaultText="&quot;Default Currency&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature Code="&quot;TARRIFAPPROVEVERSION&quot;" FeatureTypeCode="&quot;ACT&quot;" FeatureTextCodeCode="&quot;Tariff.Features.TARRIFAPPROVEVERSION&quot;" FeatureDefaultText="&quot;Approve Version&quot;" IsPackagable="false" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
     <Feature Code="&quot;UPDATESURCHARGES&quot;" FeatureTypeCode="&quot;ACT&quot;" FeatureTextCodeCode="&quot;Tariff.Features.UPDATESURCHARGES&quot;" FeatureDefaultText="&quot;Update Surcharges&quot;" IsPackagable="false" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />

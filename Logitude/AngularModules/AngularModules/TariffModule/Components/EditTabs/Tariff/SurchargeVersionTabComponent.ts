@@ -520,6 +520,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         itemPM.Tenant = SessionLocator.Tenant;
         itemPM.Version = this.CurrentVersion.Version;
         itemPM.Index = 0;
+        itemPM.CurrencyId = this.EntityPM.CurrencyId;
 
         var Version: TariffVersionPM = this.EntityPM.TariffVersions.filter(p => p.Version == itemPM.Version)[0];
         if (Version) {

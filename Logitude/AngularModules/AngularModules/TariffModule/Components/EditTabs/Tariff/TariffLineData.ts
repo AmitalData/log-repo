@@ -965,6 +965,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         this.SetUIProperties_From();
         this.SetUIProperties_To();
         this.SetUIProperties_MinPrices();
+        this.SetUIProperties_Currency();
     }
     private SetUIProperties_From() {
         if (this.IsFromAllOtherPorts) {
@@ -990,7 +991,15 @@ export class AirSurchargeTariffLineData extends BaseComponent {
             this.UIProperties.SetEnabled("IsToAllOtherPorts", this.ObjectTableName, AppTool.IsNullOrEmpty(this.DestinationPortId));
         }
     }
-    
+    private SetUIProperties_Currency() {
+        var isCurrencyRequired: boolean = false;
+
+        if (AppTool.IsNullOrEmpty(this.CurrencyId)) {
+            isCurrencyRequired = true;
+        }
+
+        this.UIProperties.SetRequired("CurrencyId", this.ObjectTableName, isCurrencyRequired);
+    }
     private SetUIProperties_MinPrices() {
         this.UIProperties.SetVisibility("Surcharge1MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(1));
         this.UIProperties.SetVisibility("Surcharge2MinPrice", this.ObjectTableName, !this.IsMeasurmentFixed(2));
@@ -1341,6 +1350,8 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     set CurrencyId(value: string) {
         if (this.EntityPM.CurrencyId != value) {
             this.EntityPM.CurrencyId = value;
+
+            this.SetUIProperties_Currency();
         }
     }
 
