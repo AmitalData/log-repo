@@ -37,6 +37,7 @@ namespace Logitude.CRM.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.TypeName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.OwnerName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.OccasionStatusName);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.IndustryName);
 
             if (!string.IsNullOrEmpty(entityPOCO.OccasionTypeId))
             {
@@ -49,6 +50,15 @@ namespace Logitude.CRM.BL.EntityDataMappings
                 }
             }
 
+            if (!string.IsNullOrEmpty(entityPOCO.IndustryId))
+            {
+                IndustryRepository iRepository = new IndustryRepository(entityPOCO.Tenant);
+                Industry iEntity = iRepository.GetSingleIndustry(entityPOCO.IndustryId, entityPOCO.Tenant);
+                if (iEntity != null)
+                {
+                    entityPM.IndustryName = iEntity.Name;
+                }
+            }
 
             if (!string.IsNullOrEmpty(entityPOCO.OwnerId))
             {

@@ -1052,14 +1052,14 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                    }).FirstOrDefault();
         }
 
-        public void ConnectCardToGLAccount(string accountId, string cardId,bool skipConnectedCardsValidation, int tenant)
+        public void ConnectCardToGLAccount(CardGLAccountConnectionArgs args)
         {
-            CardPM cardPM = GetCardById(cardId, tenant);
+            CardPM cardPM = GetCardById(args.CardId, args.Tenant);
 
-            if (!skipConnectedCardsValidation)
-                CheckConnectCards(accountId, cardId, tenant);
+            if (!args.SkipConnectedCardsValidation)
+                CheckConnectCards(args.AccountId, args.CardId, args.Tenant);
 
-            cardPM.GLAccountId = accountId;
+            cardPM.GLAccountId = args.AccountId;
             SubmitCard(cardPM);
 
 
@@ -1122,7 +1122,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return msg;
         }
 
-        private List<CardList> GetConnectedCards(string accountId, int tenant)
+        public List<CardList> GetConnectedCards(string accountId, int tenant)
         {
             CardQuery cardQuery = new CardQuery(tenant);
             List<CardList> connectCards = cardQuery.GetCardPMsByGLAccountId(accountId, tenant);
@@ -1141,6 +1141,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             CardPM cardPM = query.GetSinglePM(cardId, tenant);
             return cardPM;
         }
+
     }
     public class GLAccountCurrencyBalance
     {
@@ -1149,6 +1150,14 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public string CurrencyId { get; set; }
         public string AccountId { get; set; }
         //public string LocalName { get; set; }
+    }
+
+    public class CardGLAccountConnectionArgs
+    {
+        public string AccountId { get; set; }
+        public string CardId { get; set; }
+        public int Tenant { get; set; }
+        public bool SkipConnectedCardsValidation { get; set; }
     }
 
     public interface IGLAccountQueryService

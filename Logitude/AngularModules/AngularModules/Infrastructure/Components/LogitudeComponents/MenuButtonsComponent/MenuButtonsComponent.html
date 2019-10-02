@@ -57,30 +57,31 @@
         <td *ngFor="let button of MenuButtons; let buttonIndex = index">
 
             <!--<button *ngIf="button.MenuButtonType=='button'" type="button" (click)="OnClick(button)"
-                    [disabled]="button.IsDisabled" [class]="button.Style? button.Style:'Button'"
-                    [style.width.px]="button.Width"
-                    style="margin: 0px 2px;">
-               {{button.LabelTextCodeCode | TextCodeTranslationPipe}}
-            </button>-->
+            [disabled]="button.IsDisabled" [class]="button.Style? button.Style:'Button'"
+            [style.width.px]="button.Width"
+            style="margin: 0px 2px;">
+       {{button.LabelTextCodeCode | TextCodeTranslationPipe}}
+    </button>-->
+            <!--id="{{ button.LabelTextCodeCode | IdGeneratorPipe}}"-->
+
             <div [style.width.px]="button.MenuButtonType == 'menuitem' ? 0 : button.Width" [style.opacity]="button.IsDisabled?'0.5':'1'" [style.pointer-events]="button.IsDisabled?'none':'all'" *ngIf="button.MenuButtonType=='control' && !button.IsHidden">
-                <MenuButtonsComponentLoader  [EntityPM]="EntityPM" [ObjectTable]="ObjectTable" [MenuButton]="button" *ngIf="button.MenuButtonType=='control' && !button.IsHidden"></MenuButtonsComponentLoader>
+                <MenuButtonsComponentLoader [EntityPM]="EntityPM" [ObjectTable]="ObjectTable" [MenuButton]="button" *ngIf="button.MenuButtonType=='control' && !button.IsHidden"></MenuButtonsComponentLoader>
             </div>
-            <button  *ngIf="button.MenuButtonType=='button' && !button.IsHidden"
+            <button *ngIf="button.MenuButtonType=='button' && !button.IsHidden"
                     type="button"
-                    id="{{ button.LabelTextCodeCode | IdGeneratorPipe}}"
+                    [attr.id]="button.LabelTextCodeCode | IdGeneratorPipe"
                     (click)="OnClick(button)"
                     [class]="button.Style == 'RedButtonStyle' ? 'RedButton' : (button.Style == 'ApproveButtonStyle' ? 'GreenButton' : 'Button')"
                     [class.RedButton]="(button.EventCode=='JournalSaveAsDraft' && EntityPM.IsDirty) || (button.Style == 'RedButtonStyle')"
                     [disabled]="button.IsDisabled"
                     [style.width.px]="button.Width"
                     style="margin: 0px 2px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"
-                    [attr.title]="button.LabelTextCodeCode | TextCodeTranslationPipe"
-                    >
+                    [attr.title]="button.LabelTextCodeCode | TextCodeTranslationPipe">
                 {{button.DisplayText}}
             </button>
 
-            <div  [style.opacity]="IsDisableMenuOther && button.LabelTextCodeCode == 'Quote.B.Actions' ?'0.5':'1'" [style.pointer-events]="IsDisableMenuOther && button.LabelTextCodeCode == 'Quote.B.Actions'?'none':'all'"   *ngIf="button.MenuButtonType=='dropdownbutton' && !button.IsHidden" style="margin: 0px 2px;">
-                <div id="{{ 'MenuButtons' | IdGeneratorPipe}}" tabindex="0" class="ToggleButton"  [style.width.px]="ToggleButtonWidth">
+            <div [style.opacity]="IsDisableMenuOther && button.LabelTextCodeCode == 'Quote.B.Actions' ?'0.5':'1'" [style.pointer-events]="IsDisableMenuOther && button.LabelTextCodeCode == 'Quote.B.Actions'?'none':'all'" *ngIf="button.MenuButtonType=='dropdownbutton' && !button.IsHidden" style="margin: 0px 2px;">
+                <div id="{{ 'MenuButtons' | IdGeneratorPipe}}" tabindex="0" class="ToggleButton" [style.width.px]="ToggleButtonWidth">
                     <!--<label>{{button.LabelTextCodeCode | TextCodeTranslationPipe}}</label>-->
                     <table>
                         <tr>
@@ -97,7 +98,7 @@
                             </td>
 
                             <td style="width: 10px;">
-                                <img class="LeftCenter" src="Images/ToggleIcon.png" [ngStyle]="LayoutDirection == 'rtl' ? {'left': '3px','right':'initial'} : {'right': '3px'}"/>
+                                <img class="LeftCenter" src="Images/ToggleIcon.png" [ngStyle]="LayoutDirection == 'rtl' ? {'left': '3px','right':'initial'} : {'right': '3px'}" />
                             </td>
                         </tr>
                     </table>

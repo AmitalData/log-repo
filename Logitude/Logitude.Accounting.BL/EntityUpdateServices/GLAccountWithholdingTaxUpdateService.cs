@@ -89,25 +89,25 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void Trace(GLAccountWithholdingTaxPM entityPM, GLAccountWithholdingTax entityPOCO, string changesXml)
         {
-            
+            if(entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update) { 
             PropertyInfo[] pmProperties = EntityPM.GetType().GetProperties();
             PropertyInfo[] pocoProperties = EntityPOCO.GetType().GetProperties();
-            foreach (PropertyInfo property in pmProperties)
-            {
-                PropertyInfo pmProperty = pmProperties.Where(d => d.Name == property.Name).FirstOrDefault();//[0];
-                PropertyInfo pocoProperty = pocoProperties.Where(d => d.Name == property.Name).FirstOrDefault();//[0];
-                if (pmProperty != null && pocoProperty != null)
+                foreach (PropertyInfo property in pmProperties)
                 {
-                    var pmPropertyValue = pmProperty.GetValue(EntityPM, null);
-                    var pocoPropertyValue =  pocoProperty.GetValue(EntityPOCO, null);
-                    if (!pocoPropertyValue.Equals(pmPropertyValue))
+                    PropertyInfo pmProperty = pmProperties.Where(d => d.Name == property.Name).FirstOrDefault();//[0];
+                    PropertyInfo pocoProperty = pocoProperties.Where(d => d.Name == property.Name).FirstOrDefault();//[0];
+                    if (pmProperty != null && pocoProperty != null )
                     {
-                        CreateTraceEvent(pmProperty, pocoProperty);
+                        var pmPropertyValue = pmProperty.GetValue(EntityPM, null);
+                        var pocoPropertyValue = pocoProperty.GetValue(EntityPOCO, null);
+                        if (!pocoPropertyValue.Equals(pmPropertyValue))
+                        {
+                            CreateTraceEvent(pmProperty, pocoProperty);
+                        }
+
                     }
 
                 }
-
-
 
             }
 

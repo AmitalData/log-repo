@@ -1489,10 +1489,6 @@
     <Compile Include="Migrations\201909150859476_PaymentChequeLocalNameMigration.Designer.cs">
       <DependentUpon>201909150859476_PaymentChequeLocalNameMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201909150859476_PaymentChequeLocalNameMigration.cs" />
-    <Compile Include="Migrations\201909150859476_PaymentChequeLocalNameMigration.Designer.cs">
-      <DependentUpon>201909150859476_PaymentChequeLocalNameMigration.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201909151332019_AddOpenReceivablesLinesField.cs" />
     <Compile Include="Migrations\201909151332019_AddOpenReceivablesLinesField.Designer.cs">
       <DependentUpon>201909151332019_AddOpenReceivablesLinesField.cs</DependentUpon>
@@ -1512,6 +1508,26 @@
     <Compile Include="Migrations\201909250807022_ReconcileExternalPageLineIdNullable.cs" />
     <Compile Include="Migrations\201909250807022_ReconcileExternalPageLineIdNullable.Designer.cs">
       <DependentUpon>201909250807022_ReconcileExternalPageLineIdNullable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909260744531_AbedAddToPortFieldsToWarehouseRelease.cs" />
+    <Compile Include="Migrations\201909260744531_AbedAddToPortFieldsToWarehouseRelease.Designer.cs">
+      <DependentUpon>201909260744531_AbedAddToPortFieldsToWarehouseRelease.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909290617489_AbedAddToAddressCountryToWarehouseRelease.cs" />
+    <Compile Include="Migrations\201909290617489_AbedAddToAddressCountryToWarehouseRelease.Designer.cs">
+      <DependentUpon>201909290617489_AbedAddToAddressCountryToWarehouseRelease.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909291246046_AbedAddDWHBuildStatusTable.cs" />
+    <Compile Include="Migrations\201909291246046_AbedAddDWHBuildStatusTable.Designer.cs">
+      <DependentUpon>201909291246046_AbedAddDWHBuildStatusTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909300620491_AbedAddBCCFieldToDocumentTypeTemplate.cs" />
+    <Compile Include="Migrations\201909300620491_AbedAddBCCFieldToDocumentTypeTemplate.Designer.cs">
+      <DependentUpon>201909300620491_AbedAddBCCFieldToDocumentTypeTemplate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910010723488_RemoveOpenReceivablesLines.cs" />
+    <Compile Include="Migrations\201910010723488_RemoveOpenReceivablesLines.Designer.cs">
+      <DependentUpon>201910010723488_RemoveOpenReceivablesLines.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
@@ -2586,6 +2602,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909250807022_ReconcileExternalPageLineIdNullable.resx">
       <DependentUpon>201909250807022_ReconcileExternalPageLineIdNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909260744531_AbedAddToPortFieldsToWarehouseRelease.resx">
+      <DependentUpon>201909260744531_AbedAddToPortFieldsToWarehouseRelease.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909290617489_AbedAddToAddressCountryToWarehouseRelease.resx">
+      <DependentUpon>201909290617489_AbedAddToAddressCountryToWarehouseRelease.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909291246046_AbedAddDWHBuildStatusTable.resx">
+      <DependentUpon>201909291246046_AbedAddDWHBuildStatusTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909300620491_AbedAddBCCFieldToDocumentTypeTemplate.resx">
+      <DependentUpon>201909300620491_AbedAddBCCFieldToDocumentTypeTemplate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910010723488_RemoveOpenReceivablesLines.resx">
+      <DependentUpon>201910010723488_RemoveOpenReceivablesLines.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

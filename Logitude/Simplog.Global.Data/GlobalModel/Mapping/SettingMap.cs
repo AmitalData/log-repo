@@ -118,13 +118,11 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.SignAppVersion).HasColumnName("SignAppVersion");
             this.Property(t => t.DocumentFilingEmailDomain).HasColumnName("DocumentFilingEmailDomain");
             this.Property(t => t.ReportsRunUsingWR).HasColumnName("ReportsRunUsingWR");
-            this.Property(t => t.DWNextRunTime).HasColumnName("DWNextRunTime");
             this.Property(t => t.CPUIntensiveWebServicesURL).HasColumnName("CPUIntensiveWebServicesURL");
             this.Property(t => t.ChampProdAPIURL).HasColumnName("ChampProdAPIURL");
             this.Property(t => t.ChampProdAPIPassword).HasColumnName("ChampProdAPIPassword");
             this.Property(t => t.ChampTestAPIPassword).HasColumnName("ChampTestAPIPassword");
             this.Property(t => t.ChampTestAPIURL).HasColumnName("ChampTestAPIURL");
-            this.Property(t => t.LastIncrementalDWUpdateDate).HasColumnName("LastIncrementalDWUpdateDate");
 
 
             
@@ -152,8 +150,6 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.INTTRAProdFTPHost).HasColumnName("INTTRAProdFTPHost");
             this.Property(t => t.INTTRATestFTPHost).HasColumnName("INTTRATestFTPHost");
             this.Property(t => t.OceanInsightsToken).HasColumnName("OceanInsightsToken");
-            this.Property(t => t.IsFullBuildDWRunning).HasColumnName("IsFullBuildDWRunning");
-            this.Property(t => t.IsIncrementalDWRunning).HasColumnName("IsIncrementalDWRunning");
             this.Property(t => t.EmailSendingQuota).HasColumnName("EmailSendingQuota");
             this.Property(t => t.ReleaseNotesURL).HasColumnName("ReleaseNotesURL");
         }

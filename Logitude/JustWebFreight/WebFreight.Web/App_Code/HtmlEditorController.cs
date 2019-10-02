@@ -26,7 +26,7 @@ namespace WebFreight.Web.App_Code
     public class HtmlEditorController : ApiController
     {
 
-        public HttpResponseMessage GetEditorHtmlData(string docOutId, string entityId, string objectTableId, string childEntityId, string childEntityObjectTableId, int tenant, string userId, bool theIsSendMail, string documentTemplateId, string subject , string Mode=null ,string from = null, string replyTo = null, string cc = null)
+        public HttpResponseMessage GetEditorHtmlData(string docOutId, string entityId, string objectTableId, string childEntityId, string childEntityObjectTableId, int tenant, string userId, bool theIsSendMail, string documentTemplateId, string subject , string Mode=null ,string from = null, string replyTo = null, string cc = null,string bcc = null)
         {
             try
             {
@@ -41,7 +41,7 @@ namespace WebFreight.Web.App_Code
 
                 HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
 
-            string htmlstring = htmlEditorHelper.GetEditorHtmlData(docOutId, entityId, objectTableId, childEntityId, childEntityObjectTableId, tenant, userId, theIsSendMail, documentTemplateId, ref subject, ref from, ref replyTo,ref cc, Mode);
+            string htmlstring = htmlEditorHelper.GetEditorHtmlData(docOutId, entityId, objectTableId, childEntityId, childEntityObjectTableId, tenant, userId, theIsSendMail, documentTemplateId, ref subject, ref from, ref replyTo,ref cc,ref bcc, Mode);
             SendHtmlFilter reslutFilter = new SendHtmlFilter();
 
             if (!string.IsNullOrEmpty(htmlstring) && Mode == "Edit")
@@ -89,8 +89,9 @@ namespace WebFreight.Web.App_Code
             reslutFilter.From = from;
             reslutFilter.ReplyTo =replyTo;
             reslutFilter.Cc = cc;
+            reslutFilter.Bcc = bcc;
 
-            return Request.CreateResponse(HttpStatusCode.OK, reslutFilter);
+                return Request.CreateResponse(HttpStatusCode.OK, reslutFilter);
             }
 
             catch (Exception ex)

@@ -17,14 +17,14 @@ import {WarehouseEntryPackagePM} from '../../Warehouse/EntityPMs/WarehouseEntryP
 import { WarehouseEntryPM } from '../../Warehouse/EntityPMs/WarehouseEntryPM';
 import { WarehouseReleasePM } from '../../Warehouse/EntityPMs/WarehouseReleasePM';
 import { WarehouseEntryPMService } from '../../Warehouse/Services/StandardPMs/WarehouseEntryPMService';
-import { WarehouseReleasePMService } from '../../Warehouse/Services/StandardPMs/WarehouseReleasePMService';
+import { WarehouseReleasePMExtendedService } from '../../Warehouse/Services/ExtendedPMs/WarehouseReleasePMExtendedService';
 import {EventTypeClass, EventTypeArgs} from '../../Infrastructure/DataContracts/EventTypeArgs';
 import {ClassLevelValidator} from '../../Infrastructure/Validators/ClassLevelValidator';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 export class WarehouseHelper {
     validator: ClassLevelValidator;
     public _warehouseEntryPMService: WarehouseEntryPMService;
-    public _warehouseReleasePMService: WarehouseReleasePMService;
+    public _warehouseReleasePMExtendedService: WarehouseReleasePMExtendedService;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
       
@@ -280,7 +280,7 @@ export class WarehouseHelper {
 
         if (entityPM != null && viewModel != null) {
             viewModel.ValidationErrorsList = [];
-
+            entityPM.ToTypeCode = "PORT";
             if (this.validator == null) {
                 this.validator = new ClassLevelValidator();
             }
@@ -295,8 +295,29 @@ export class WarehouseHelper {
 
             entityPM.WarehouseReleasePackages = entityPM.WarehouseReleasePackages.filter(d => d.Quantity > 0);
 
+     
             if (entityPM.WarehouseReleasePackages.length == 0) {
-                viewModel.ValidationErrorsList.push("You should at least add one package");
+
+                viewModel.ValidationErrorsList.push("You should at least choose one package");
+            }
+            else {
+                if (entityPM.ActualReleaseDate != null) {
+                    var releasePackagesLists = viewModel.WarehouseReleasePackagesLists.filter(d => d.ActualReleaseDate != null);
+                    var isValidReleasePackages: boolean = true;
+                    if (releasePackagesLists.length > 0) {
+                        releasePackagesLists.forEach((item) => {
+                            if (DateTool.IsDateBigger(item.ActualReleaseDate, entityPM.ActualReleaseDate)) {
+                                isValidReleasePackages = false;
+                                return;
+                            }
+                        });
+
+                        if (!isValidReleasePackages) {
+                            viewModel.ValidationErrorsList.push("Actual Release Date must be greater or equal to Actual Entry Date.");
+                        }
+
+                    }
+                }
             }
 
 
@@ -306,48 +327,56 @@ export class WarehouseHelper {
                 viewModel.ValidationErrorsList.push(DateTool.ActualDateMessage.replace("Field", "Actual Release Date"));
             }
 
+            if (viewModel.ValidationErrorsList.length == 0) {
+                var message = "Can't set Field to future date";
+                var todayDateTime = DateTool.GetCurrentDateTimeAsUtc();
+
+                if (entityPM.ActualReleaseDate) {
+                    if (entityPM.ActualReleaseDate.valueOf() > todayDateTime.valueOf()) {
+                        viewModel.ValidationErrorsList.push(message.replace("Field", "Actual Release Date"));
+                    }
+                }
+            }
+
+
 
             if (viewModel.ValidationErrorsList.length == 0) {
-
-
-                //if (entityPM.WarehouseReleasePackages.length > 0 && entityPM.ConnectedToShipment) {
-                //    entityPM.WarehouseReleasePackages.forEach((item) => {
-                //        item.IsConnectedToShipment = true;
-                //    });
-                //}
-
-
+                
                 this.CurrentSession.StartBusyIndicatorSaving();
 
-                if (this._warehouseReleasePMService == null) this._warehouseReleasePMService = new WarehouseReleasePMService();
+                if (this._warehouseReleasePMExtendedService == null) this._warehouseReleasePMExtendedService = new WarehouseReleasePMExtendedService();
                 if (entityPM.ActualReleaseDate) entityPM.StatusCode = "RELE";
 
-                this._warehouseReleasePMService.insert(entityPM).subscribe(res => {
+                this._warehouseReleasePMExtendedService.Insert(entityPM).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
+
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
                     if (!pmResponse.HasError) {
                         ServiceLocator.SendTotangoUserActivity("Cross Docs", "Create Release");
-
                         entityPM = pmResponse.Result;
+                        this.CurrentSession.FireEvent("CrossDockReleases");
                         var myResult = pmResponse.Result;
                         if (myResult) {
-                            if (viewModel.IsFromShipment && !viewModel.IsNotSetWarehouseIdForWarehouseLegShipment) {
+                            if (viewModel.IsFromShipment) {
+                              
                                 this.SetShipmentWarehouseLeg(viewModel.ShipmentPM, entityPM, "Release");
                             }
-                            this.CurrentSession.StopBusyIndicator();
                             this.CurrentSession.CurrentWindow.Close("Refresh");
                         }
-                        else this.CurrentSession.StopBusyIndicator();
                     } else {
                         pmResponse.ErrorsArray.forEach((item) => {
                             viewModel.ValidationErrorsList.push(item);
                         });
 
-                        this.CurrentSession.StopBusyIndicator();
+
                     }
 
+                    this.CurrentSession.StopBusyIndicator();
 
                 });
+
+
 
             }
         }

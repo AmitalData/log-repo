@@ -1113,6 +1113,144 @@ namespace Logitude.WarehouseLib.BL.EntityPMs
 			
 		 }
 	   }
+	  private string toTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ToTypeCode  
+	   {
+	    
+	     get
+		{
+		   return toTypeCode;
+		 }
+		 set
+		 {
+		   if(toTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToTypeCode",OldValue=toTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   toTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string toPartnerCardId ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ToPartnerCardId  
+	   {
+	    
+	     get
+		{
+		   return toPartnerCardId;
+		 }
+		 set
+		 {
+		   if(toPartnerCardId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToPartnerCardId",OldValue=toPartnerCardId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   toPartnerCardId=value;
+		   }
+			
+		 }
+	   }
+	  private string toAddressId ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ToAddressId  
+	   {
+	    
+	     get
+		{
+		   return toAddressId;
+		 }
+		 set
+		 {
+		   if(toAddressId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToAddressId",OldValue=toAddressId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   toAddressId=value;
+		   }
+			
+		 }
+	   }
+	  private string toAddressZipCode ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ToAddressZipCode  
+	   {
+	    
+	     get
+		{
+		   return toAddressZipCode;
+		 }
+		 set
+		 {
+		   if(toAddressZipCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToAddressZipCode",OldValue=toAddressZipCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   toAddressZipCode=value;
+		   }
+			
+		 }
+	   }
+	  private string toAddressCity ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ToAddressCity  
+	   {
+	    
+	     get
+		{
+		   return toAddressCity;
+		 }
+		 set
+		 {
+		   if(toAddressCity != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToAddressCity",OldValue=toAddressCity,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   toAddressCity=value;
+		   }
+			
+		 }
+	   }
+	  private string toAddressCountryId ;
+	  	  
+       
+	   [CustomValidation(typeof(WarehouseValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ToAddressCountryId  
+	   {
+	    
+	     get
+		{
+		   return toAddressCountryId;
+		 }
+		 set
+		 {
+		   if(toAddressCountryId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToAddressCountryId",OldValue=toAddressCountryId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   toAddressCountryId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

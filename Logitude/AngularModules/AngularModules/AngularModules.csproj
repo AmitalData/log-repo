@@ -151,6 +151,7 @@
     <Content Include="CRMModules\CRMInboundEmail\Components\EditTabs\ViewInboundLineBodyComponent.html" />
     <Content Include="CRMModules\CRMInboundEmail\Components\NewEntity\NewInboundEmailComponent.html" />
     <Content Include="CRMModules\CRMOccasion\Components\EditTabs\OccasionGeneralTabComponent.html" />
+    <Content Include="CRMModules\CRMOccasion\Components\EditTabs\OccasionMainTabComponent.html" />
     <Content Include="CRMModules\CRMOccasion\Components\NewEntity\NewOccasionComponent.html" />
     <Content Include="CRMModules\CRMOpportunity\Components\EditTabs\EditProductComponent.html" />
     <Content Include="CRMModules\CRMOpportunity\Components\EditTabs\OpportunityDocsInTabComponent.html" />
@@ -565,6 +566,7 @@
     <TypeScriptCompile Include="CRMModules\CRMInboundEmail\Components\EditTabs\ViewInboundLineBodyComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMInboundEmail\Components\NewEntity\NewInboundEmailComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMOccasion\Components\EditTabs\OccasionGeneralTabComponent.ts" />
+    <TypeScriptCompile Include="CRMModules\CRMOccasion\Components\EditTabs\OccasionMainTabComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMOccasion\Components\NewEntity\NewOccasionComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMOccasion\ModuleCRMOccasion.ts" />
     <TypeScriptCompile Include="CRMModules\CRMOccasion\ModuleDeclarations.ts" />
@@ -853,8 +855,12 @@
     <TypeScriptCompile Include="e2e\CRM\Activities\NewEntity\NewTask.ts" />
     <TypeScriptCompile Include="e2e\CRM\CRMModule-spec.ts" />
     <TypeScriptCompile Include="e2e\CRM\CRMModule.ts" />
-    <TypeScriptCompile Include="e2e\CRM\Opportunities\NewOpportunity.ts" />
+    <TypeScriptCompile Include="e2e\CRM\Opportunities\EditEntity\EditOpportunityGeneralTab.ts" />
+    <TypeScriptCompile Include="e2e\CRM\Opportunities\EditEntity\EditOpportunityMainTab.ts" />
+    <TypeScriptCompile Include="e2e\CRM\Opportunities\EditEntity\OpportunitiesActions.ts" />
+    <TypeScriptCompile Include="e2e\CRM\Opportunities\NewEntity\NewOpportunity.ts" />
     <Content Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\ListTemplates\SchedulerDateListTemplate.html" />
+    <TypeScriptCompile Include="e2e\CRM\Opportunities\OpportunitiesModule.ts" />
     <TypeScriptCompile Include="e2e\CRM\Quotes\EditEntity\ChargesTab.ts" />
     <TypeScriptCompile Include="e2e\CRM\Quotes\EditEntity\DetailsTab.ts" />
     <TypeScriptCompile Include="e2e\CRM\Quotes\EditEntity\EditQuoteTabs.e2e-spec.ts" />
@@ -2266,6 +2272,7 @@
     <Content Include="Warehouse\Components\EditTabs\PartnersTab\AddEditPartnerComponent.html" />
     <Content Include="Warehouse\Components\EditTabs\PartnersTab\WarehouseEntryPartnersTabComponent.html" />
     <Content Include="Warehouse\Components\EditTabs\RoutingsTab\WarehouseEntryRoutingsTabComponent.html" />
+    <Content Include="Warehouse\Components\EditTabs\RoutingsTab\WarehouseReleaseRoutingsTabComponent.html" />
     <Content Include="Warehouse\Components\FiltersMenu\WarehouseEntryFiltersMenuComponent.html" />
     <Content Include="Warehouse\Components\FiltersMenu\WarehouseReleaseFiltersMenuComponent.html" />
     <Content Include="Warehouse\Components\NewEntity\NewFullWarehouseEntryComponent.html" />
@@ -6717,6 +6724,7 @@
     <TypeScriptCompile Include="Warehouse\Components\EditTabs\PartnersTab\AddEditPartnerComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\EditTabs\PartnersTab\WarehouseEntryPartnersTabComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\EditTabs\RoutingsTab\WarehouseEntryRoutingsTabComponent.ts" />
+    <TypeScriptCompile Include="Warehouse\Components\EditTabs\RoutingsTab\WarehouseReleaseRoutingsTabComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\EditWarehouseEntryComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\EditWarehouseReleaseComponent.ts" />
     <TypeScriptCompile Include="Warehouse\Components\FiltersMenu\WarehouseEntryFiltersMenuComponent.ts" />
