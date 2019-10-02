@@ -942,7 +942,7 @@
 
                 var isTenantAllowed = false;
                 var Tenant = userdata.CurrentTenant;
-                if (Tenant == 42 || Tenant == 1232 || Tenant == 1586 || Tenant == 1637 || Tenant == 1638) {
+                if (Tenant == 42 || Tenant == 1232 || Tenant == 1586 || Tenant == 1637 || Tenant == 1638 || Tenant == 341) {
                     isTenantAllowed = true;
                 }
 
