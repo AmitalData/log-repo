@@ -892,8 +892,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     declarationConsignmentPackage.DeclarationId = Consignment.DeclarationId;
                     declarationConsignmentPackage.LineNumber = count;
                     declarationConsignmentPackage.Tenant = Consignment.Tenant;
-
-                    declarationConsignmentPackage.PackageMeasureQualifierCode = "2";
+                    if (Consignment.ConsignmentInternalTransitions != null && Consignment.ConsignmentInternalTransitions.Count > 0)
+                    {
+                        declarationConsignmentPackage.PackageMeasureQualifierCode = "3";
+                    }
+                    else
+                    {
+                        declarationConsignmentPackage.PackageMeasureQualifierCode = "2";
+                    }
                     declarationConsignmentPackage.PackageTypeCode = package.PackingType;
                     if (quntity > 0)
                     {
@@ -929,8 +935,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 declarationConsignmentPackage.DeclarationId = Consignment.DeclarationId;
                 declarationConsignmentPackage.LineNumber = count;
                 declarationConsignmentPackage.Tenant = Consignment.Tenant;
-
-                declarationConsignmentPackage.PackageMeasureQualifierCode = "2";
+                if (Consignment.ConsignmentInternalTransitions != null && Consignment.ConsignmentInternalTransitions.Count > 0)
+                {
+                    declarationConsignmentPackage.PackageMeasureQualifierCode = "3";
+                }
+                else
+                {
+                    declarationConsignmentPackage.PackageMeasureQualifierCode = "2";
+                }
                 declarationConsignmentPackage.PackageTypeCode = lastPackage.PackingType;
                 if (quntity > 0)
                 {
