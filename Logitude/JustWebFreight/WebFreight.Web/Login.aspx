@@ -1257,7 +1257,6 @@
                     change: onChange,
                     filter: "contains",
                     suggest: false,
-                    focus:true,
 
                     // template:
                     //     '<dd>${ CompanyName }</dd>'
@@ -1283,7 +1282,7 @@
                 $("#loginBusyindicator").hide();
 
 
-              $("#cmbTenants").kendoComboBox();
+              //$("#cmbTenants").kendoComboBox();
                var combobox = $("#cmbTenants").data("kendoComboBox");
                combobox.focus();
 

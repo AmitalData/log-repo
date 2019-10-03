@@ -24,7 +24,9 @@ export class ReportSearch {
     //  this.Helper.waitByCss('#ViewATREReportbtn');
     this.Helper.WaitByIdAndClick("BI");
     this.Helper.WaitByIdAndClick("Report")
-    this.Helper.WaitByCssAndClick_FromTagInsideList('.HyperlinkQueryButtonControl', 0);
+   // this.Helper.WaitByCssAndClick_FromTagInsideList('.HyperlinkQueryButtonControl', 0);
+    this.Helper.ItemsVisibility('ReportID')
+    this.Helper.WaitByIdAndClick('ReportID')
 
   }
 }
