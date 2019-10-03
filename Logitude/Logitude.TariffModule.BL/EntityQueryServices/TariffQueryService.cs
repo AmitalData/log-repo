@@ -507,12 +507,13 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                                                     string CurrencyId = ChargesfilteredLines.CurrencyId != null ? ChargesfilteredLines.CurrencyId : CurrentSurcharge.CurrencyId;
                                                     var LinePrice = CalculateLocalAmount(CurrentSurchargePriceCalculation.Value, currencyId, CurrencyId, tenant);
 
+                                                    decimal? minPriceSurcharge = null;
                                                     if (valueofSurchargeMin != null)
                                                     {
                                                         decimal minimumPrice = (decimal)valueofSurchargeMin;
-                                                        var minPrice = CalculateLocalAmount(minimumPrice, currencyId, CurrencyId, tenant);
-                                                        if (minPrice > LinePrice)
-                                                            LinePrice = minPrice;
+                                                        minPriceSurcharge = CalculateLocalAmount(minimumPrice, currencyId, CurrencyId, tenant);
+                                                        if (minPriceSurcharge > LinePrice)
+                                                            LinePrice = minPriceSurcharge.Value;
                                                     }
 
                                                     SurchargeItem.Price = LinePrice;
@@ -524,6 +525,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                                                     SurchargeItem.VersionId = ChargesfilteredLines.Version + "";
                                                     SurchargeItem.SellerId = CurrentSurcharge.SellerId;
                                                     SurchargeItem.SellerName= airline.Card != null ? airline.Card.EnglishName : "";
+                                                    SurchargeItem.MinPrice = minPriceSurcharge;
                                                     tariffsSummary.Surcharges.Add(SurchargeItem);
                                                 }
                                             }
@@ -558,7 +560,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                     tariffsSummary.UnitOfMesurmentId = airChrageType.MeasurementId;
                     tariffsSummary.UnitOfMesurmentCode = UsedMeasurements.Where(p => p.Id == airChrageType.MeasurementId).Select(p => p.Code).FirstOrDefault();
                     tariffsSummary.SellerId = result.SellerId;
-
+                    tariffsSummary.MinPrice = minprice;
                     byte[] filedata = DownloadFile(airline.ImageDetailId, "jpg", tenant, "images");
                     string resultImage = "";
                     if (filedata != null)

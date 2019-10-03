@@ -30,5 +30,6 @@ namespace Logitude.TariffModule.BL.DataContracts
         public string UnitOfMesurmentId { get; set; }
         public List<SurchargeSummary> Surcharges { get; set; }
         public string SellerId { get;  set; }
+        public decimal? MinPrice { get; set; }
     }
 }

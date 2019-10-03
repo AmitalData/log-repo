@@ -524,7 +524,11 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 }
                 else {
                     this.CurrentSession.StartBusyIndicatorLoading();
-                    this.AssignTariffPayablesToShipment();
+                   // this.AssignTariffPayablesToShipment();
+
+                    this.FatherComponent.OnEntityDataGenerated();
+                    this.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.CloseCurrentWindow();
                 }
             }
         } 
@@ -581,8 +585,11 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 var profitCurrencyExchangeRate = this.Generator.GetCurrencyRate(this.ShipmentPM.ProfitCurrencyId);
                 var expectedAmountProfit = expectedAmountLocal / profitCurrencyExchangeRate;
 
-                shipmentPayable.UnitPrice = newRecord.ActualPrice != null ? AppTool.Round(newRecord.ActualPrice / nweQuantity, 3) : null;
-                shipmentPayable.Quantity = AppTool.Round(nweQuantity, 3);
+                if (nweQuantity != null) {
+                    shipmentPayable.UnitPrice = newRecord.ActualPrice != null ? AppTool.Round(newRecord.ActualPrice / nweQuantity, 3) : null;
+                    shipmentPayable.Quantity = AppTool.Round(nweQuantity, 3);
+                }
+
                 shipmentPayable.ExpectedAmount = AppTool.Round(expectedAmount, 2);
                 shipmentPayable.ExpectedAmountLocal = AppTool.Round(expectedAmountLocal, 2);
                 shipmentPayable.ExpectedAmountInProfitCurrency = AppTool.Round(expectedAmountProfit, 2);
@@ -604,7 +611,16 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 shipmentPayable.Notes = notes;
                 shipmentPayable.VendorId = newRecord.SellerId;
                 shipmentPayable.VendorName = newRecord.SellerName;
-                this.TariffPayables.push(shipmentPayable);
+                this.ShipmentPM.AddPayable(shipmentPayable);
+
+                var payableItem = new ShipmentPayableItem(shipmentPayable, this.FatherComponent, false);
+                this.FatherComponent.ItemsSource.Insert(payableItem);
+
+                payableItem.ChargesTypeId = shipmentPayable.ChargesTypeId;
+                payableItem.MeasurementId = shipmentPayable.MeasurementId;
+                payableItem.CurrencyId = shipmentPayable.CurrencyId;
+                payableItem.UnitPrice = shipmentPayable.UnitPrice;
+                payableItem.MinAmount = newRecord.MinPrice;
             }
         });
     }
@@ -648,11 +664,11 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             case "BTEU": { myQuantity = this.ShipmentPM.TEU; break; }
             case "FIXD": { myQuantity = 1; break; }
             case "PRVL": { myQuantity = this.ShipmentPM.ValueOfGoods; break; }
-            case "PRFR": { myQuantity = ArrayTool.Sum(this.TariffPayables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentPayableParentId)), "ExpectedAmount"); break; }
+            case "PRFR": { myQuantity = ArrayTool.Sum(this.ShipmentPM.ShipmentPayables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentPayableParentId)), "ExpectedAmount"); break; }
             case "GWTN": { myQuantity = this.GrossWeightPerTon; break; }
             case "CWKG": { myQuantity = this.ChargeableWeightInKG; break; }
             case "GWKG": { myQuantity = this.GrossWeightInKG; break; }
-            case "QTY": { myQuantity = this.ShipmentPM.NumberOfPackages; break; }
+            case "QTY": { myQuantity = this.ShipmentPM.NumberOfPackages != null ? this.ShipmentPM.NumberOfPackages: null; break; }
             case "VCBM": { myQuantity = this.VolumeInCBM; break; }
             default: { break; }
         }

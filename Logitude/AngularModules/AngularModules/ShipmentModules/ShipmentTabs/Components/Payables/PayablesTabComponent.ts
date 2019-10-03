@@ -1422,7 +1422,7 @@ export class ShipmentPayableItem extends BaseComponent {
 
         if (culculatedAmount != null) {
             if (this.MinAmount != null) {
-                if (culculatedAmount < this.MinAmount) {
+                if (culculatedAmount <= this.MinAmount) {
                     isVisible = true;
                 }
             }

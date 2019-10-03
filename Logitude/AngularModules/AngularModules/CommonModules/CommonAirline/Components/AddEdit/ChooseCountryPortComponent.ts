@@ -81,6 +81,8 @@ export class ChooseCountryPortComponent extends BaseComponent {
         var filters = new ApiQueryFilters();
         filters.addAdditionalFilter("TransportModeId", "A", null, null, "Equals", false, true, false, "Text");
         filters.addAdditionalFilter("CountryId", this.CountryId, null, null, "Equals", false, true, false, "Text");
+        filters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "boolean");
+
         filters.GetAll = true;
         var service = new PortListService();
         service.getByFilters(filters).subscribe((response: ServiceResponse) => {
