@@ -1318,10 +1318,8 @@ export class AirSurchargeTariffLineData extends BaseComponent {
             this.DestinationPortCode = null;
         }
     }
-
-
+    
     currency: CurrencyPM;
-
     get Currency() { return this.currency; }
     set Currency(value: CurrencyPM) {
         if (this.currency != value) {
@@ -1342,8 +1340,7 @@ export class AirSurchargeTariffLineData extends BaseComponent {
             this.EntityPM.CurrencyCode = value;
         }
     }
-
-
+    
     get CurrencyId() {
         return this.EntityPM.CurrencyId;
     }
