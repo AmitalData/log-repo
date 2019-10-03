@@ -18,8 +18,8 @@ import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTr
                     <td>
                         <div style="height:30px;">
                             <button class="Button" (click)="EditButtonClicked()" style="width:40px;float: right;margin:2px;margin-top: 4px;">Edit</button>
-                            <button class="Button" (click)="RemoveTasksButtonClicked()" style="width:80px;float: right;margin:2px;margin-top: 4px;">Remove Tasks</button>
-                            <button *ngIf="ShowButtons == true" class="Button" (click)="ApproveButtonClicked()" style="width:110px;float: right;margin:2px;margin-top: 4px;">Declaration Approval</button>
+                            <button class="Button" (click)="RemoveTasksButtonClicked()" style="width:85px;float: right;margin:2px;margin-top: 4px;">Remove Tasks</button>
+                            <button *ngIf="ShowButtons == true" class="Button" (click)="ApproveButtonClicked()" style="width:115px;float: right;margin:2px;margin-top: 4px;">Declaration Approval</button>
                             <button class="RedButton" *ngIf="ShowRenewButtons == true"  (click)="RenewButtonClicked()" style="width:45px;float: right;margin:2px;margin-top: 4px;">Renew</button> 
                         </div>
                     </td>
