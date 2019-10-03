@@ -1529,6 +1529,10 @@
     <Compile Include="Migrations\201910010723488_RemoveOpenReceivablesLines.Designer.cs">
       <DependentUpon>201910010723488_RemoveOpenReceivablesLines.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910021422593_AbedAddIsShowAmountLocalCurrencyToSharedLogisticsSetting.cs" />
+    <Compile Include="Migrations\201910021422593_AbedAddIsShowAmountLocalCurrencyToSharedLogisticsSetting.Designer.cs">
+      <DependentUpon>201910021422593_AbedAddIsShowAmountLocalCurrencyToSharedLogisticsSetting.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2617,6 +2621,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910010723488_RemoveOpenReceivablesLines.resx">
       <DependentUpon>201910010723488_RemoveOpenReceivablesLines.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910021422593_AbedAddIsShowAmountLocalCurrencyToSharedLogisticsSetting.resx">
+      <DependentUpon>201910021422593_AbedAddIsShowAmountLocalCurrencyToSharedLogisticsSetting.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
