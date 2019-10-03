@@ -177,7 +177,22 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 }
                 );
 
-           
+            var q1stConsignments =
+                (from a in context.Consignments
+                 group a by a.DeclarationId into gConsignments
+                 select gConsignments.Take(1))
+                     .SelectMany(r => r);
+
+
+            bool isCourierEnv = context.CustomsSettings.FirstOrDefault(r => r.Tenant == 1).CompanyType =="B" ;
+            if (!isCourierEnv)
+            {
+                //qMyJoin = (from rec in context.CourierDeclarations.Where(r => r.DeclarationId == "-1")select new MyDecJoin());
+                qMyJoin = Enumerable.Empty<MyDecJoin>().AsQueryable();
+                //q1stConsignments = context.Consignments.Where(r => r.DeclarationId == "-1");
+                q1stConsignments = Enumerable.Empty<Consignment>().AsQueryable();
+            }
+            
 
             IQueryable<DeclarationList> query = (from a in iQueryable.Include("DeclarationOffice").Include("AutonomyRegionType").Include("CustomerCard").Include("EntitleImporterCountry").Include("ImporterEntitlementType").Include("ImporterPassCountry").Include("ProcedureCurrent").Include("TransferImporterCountry").Include("Department").Include("DeclarationStatusType")
                                                  //.Include("CreatedByUser.Contact")
@@ -187,6 +202,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                               on a.Id equals recJoin.DeclarationId
                                                               into qrecJoin
                                                  from myJoin in qrecJoin.DefaultIfEmpty()
+
+
+                                                 join recConsignment in q1stConsignments
+                                                 on a.Id equals recConsignment.DeclarationId into qjoinConsignments
+                                                 from myJoinConsignment in qjoinConsignments.DefaultIfEmpty()
 
                                                  select new DeclarationList()
                                                  {
@@ -310,7 +330,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      CourierPendingReasonList = myJoin != null ? myJoin.CourierPendingReasonList : null,
                                                      MAWB = myJoin != null ? myJoin.MAWB : null,
                                                      IsCourierMissingClassification = myJoin != null ? myJoin.IsCourierMissingClassification : false,
-                                                     CargoDescription = "",
+                                                     CargoDescription = myJoinConsignment!=null ? myJoinConsignment.CargoDescription :"",
                                                  });
 
 
