@@ -1129,6 +1129,7 @@
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\DepositionRequestComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\LogBoxPackagesComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\ECommercePaymentRequestMobileComponent.html" />
+    <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\LogBoxApprovePaymentComponent.html" />
     <Content Include="ShipmentModules\ShipmentPackages\Components\Packages\AddEditPackageHarmonizeComponent.html" />
     <Content Include="ShipmentModules\ShipmentPackages\Components\Packages\DownloadPackagesFileComponent.html" />
     <Content Include="ShipmentModules\ShipmentRouting\Components\Routings\AddEditPackageHarmonizeComponent.html" />
@@ -3589,6 +3590,7 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\DepositionRequestComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\LogBoxPackagesComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\ECommercePaymentRequestMobileComponent.ts" />
+    <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\LogBoxApprovePaymentComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentPackages\Components\Packages\AddEditPackageHarmonizeComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentPackages\Components\Packages\DownloadPackagesFileComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentRouting\Components\Routings\AddEditPackageHarmonizeComponent.ts" />
@@ -7422,6 +7424,14 @@
     <Folder Include="Dashboard\Components\Graphs\" />
     <Folder Include="e2e\CRM\Customers\" />
     <Folder Include="e2e\LogBox\Documents\" />
+    <Folder Include="e2e\Testing Scenarios\Master\Smoke Testing Common\" />
+    <Folder Include="e2e\Testing Scenarios\Master\Team Ayman\" />
+    <Folder Include="e2e\Testing Scenarios\Master\Team Islam\" />
+    <Folder Include="e2e\Testing Scenarios\Master\Team Mohammad\" />
+    <Folder Include="e2e\Testing Scenarios\Production\Smoke Testing Common\" />
+    <Folder Include="e2e\Testing Scenarios\Production\Team Ayman\" />
+    <Folder Include="e2e\Testing Scenarios\Production\Team Islam\" />
+    <Folder Include="e2e\Testing Scenarios\Production\Team Mohammad\" />
     <Folder Include="InfrastructureModules\InfrastructureAutomation\Components\" />
     <Folder Include="InfrastructureModules\InfrastructureStimulsoft\Components\" />
     <Folder Include="Logitude\Components\Customization\" />

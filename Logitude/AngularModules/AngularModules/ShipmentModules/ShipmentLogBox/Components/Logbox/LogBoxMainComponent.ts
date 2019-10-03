@@ -416,7 +416,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                     FieldName: 'RemoveTasksButtonListTemplate',
                     DataTypeCode: 'String',
                     Display: '',
-                    Styles: { width: '200px' },
+                    Styles: { width: '300px' },
                     HtmlListComponentName: 'RemoveTasksButtonListTemplate',
                     HtmlListComponentUrl: './Shipment/Components/ListTemplates/RemoveTasksButtonListTemplate',
                     IsCustomTemplate: true,
@@ -425,18 +425,19 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 });
             }
         }
-       
-        this.columns.push({
-            FieldName: this.SearchFilter ? this.SearchFilter : '',
-            DataTypeCode: 'String',
-            Display: '',
-            Styles: { width: '40px' },
-            HtmlListComponentName: 'DocumentSearchResultListTemplate',
-            HtmlListComponentUrl: './Shipment/Components/ListTemplates/DocumentSearchResultListTemplate',
-            IsCustomTemplate: true,
-            EnableHoverVisibility: true,
-            ServerSideSortable: false
-        });
+        if (this.RequestedDocsLable != "Action Required") {
+            this.columns.push({
+                FieldName: this.SearchFilter ? this.SearchFilter : '',
+                DataTypeCode: 'String',
+                Display: '',
+                Styles: { width: '40px' },
+                HtmlListComponentName: 'DocumentSearchResultListTemplate',
+                HtmlListComponentUrl: './Shipment/Components/ListTemplates/DocumentSearchResultListTemplate',
+                IsCustomTemplate: true,
+                EnableHoverVisibility: true,
+                ServerSideSortable: false
+            });
+        }
         this.CustomColumnsReady.emit(this.columns);
     }
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
