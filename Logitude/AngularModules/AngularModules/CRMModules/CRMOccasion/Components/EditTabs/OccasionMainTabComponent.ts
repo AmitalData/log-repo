@@ -47,6 +47,7 @@ export class OccasionMainTabComponent extends BaseComponent {
         logWindow.Show("./CRMModules/CRMOccasion/Components/AddEdit/AddEditOccasionContactComponent");
         logWindow.WindowClosed.subscribe(($event: any) => {
 
+        });
     }
 
     // Search
