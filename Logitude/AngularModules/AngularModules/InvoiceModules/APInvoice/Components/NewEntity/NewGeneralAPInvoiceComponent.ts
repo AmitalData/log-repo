@@ -30,6 +30,7 @@ import {InvoiceTotalsClass} from '../../../../Invoice/Args';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {GLAccountPMService} from '../../../../Accounting/Services/StandardPMs/GLAccountPMService';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 
 @Component({
     moduleId: module.id,
@@ -650,7 +651,7 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
                 invoiceDomainService.ValidateAPInvoiceFullAccounting(this.EntityPM.InvoiceCurrencyId, this.EntityPM.VendorId, this.EntityPM.AccountingDate).subscribe((response: ServiceResponse) => {
                     if (response != null) {
                         if (!response.HasError) {
-                            this.CompleteSubmission(errors);
+                            this.ValidateInvoiceDate(errors);
                         }
                         else {
                             this.ValidationErrorsList = response.ErrorsArray;
@@ -660,13 +661,47 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
             }
         }
     }
-    CompleteSubmission(errors) {
+    CompleteSubmission() {
+        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
+
+        this.InitializeProfitCurrency();
+        this.CurrentSession.CloseCurrentWindowEmit("Ok");
+    }
+
+    private ValidateInvoiceDate(errors) {
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
-            this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
-            this.InitializeProfitCurrency();
-            this.CurrentSession.CloseCurrentWindowEmit("Ok");
+            var invoiceDomainService: InvoiceDomainService = new InvoiceDomainService();
+            invoiceDomainService.ValidateInvoiceDate(this.EntityPM.InvoiceDate).subscribe((response: ServiceResponse) => {
+                if (response != null) {
+                    if (!response.HasError ) {
+                       if(response.Result != null){
+                        this.ShowConfirmWindow(response.Result);
+                        }
+                      else{
+                       this.CompleteSubmission();
+                           }
+                    }
+                    else {
+                     this.ValidationErrorsList = response.ErrorsArray;
+                    }
+                }
+            });
         }
+    }
+
+    private ShowConfirmWindow(warningMessage: string) {
+
+        let confirmWindow = new ConfirmWindow();
+        confirmWindow.ShowWarningImage = true;
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.CompleteSubmission();
+              
+            }
+        });
+        confirmWindow.Show(warningMessage);
+
     }
 
     private InitializeProfitCurrency() {

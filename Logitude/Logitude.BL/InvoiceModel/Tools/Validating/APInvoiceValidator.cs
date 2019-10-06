@@ -293,6 +293,27 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 }
             }
         }
+
+        public static string ValidateFullAccountingInvoiceDate(DateTime? invoiceDate, int tenant)
+        {
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+            Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
+            if (tenantPOCO != null && tenantPOCO.AccountingActivated)
+            {
+                var user = GetLoggedContact(tenant);
+                bool useLocal = !(GetLoggedContact(tenant).DontShowLocal);
+                DateTime date = DateTime.Now.AddDays(-180);
+                DateTime last180days = new DateTime(date.Year, date.Month, 1);
+                if (invoiceDate < last180days)
+                {
+                    return TranslateTextsClass.Translate("Accounting.General.O.InvoiceDateValidation", tenant, useLocal);
+                }
+                else return null;
+            }
+            else return null;
+        }
+
+
         private static GLAccountPM getGLAccount(string vendorId, int tenant)
         {
             GLAccountPM glaAccount = null;
@@ -313,12 +334,12 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             {
                 return OverrideGetLoggedContactFunc(tenant);
             }
-            ContactPM loggedContact = new ContactQuery(tenant).GetContactByEmailOnly(
+            ContactPM loggedContact = new ContactQuery(tenant).GetSingleByEmail(
                 AuthenticationUtil.ResolveUserIdentityName(tenant)
                 , tenant);
             if (loggedContact == null)
             {
-                loggedContact = new ContactQuery(tenant).GetContactByEmailOnly("system@tenant" + tenant + ".com", tenant);
+                loggedContact = new ContactQuery(tenant).GetSingleByEmail("system@tenant" + tenant + ".com", tenant);
             }
             loggedContact = loggedContact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM() {  };
             return loggedContact;
