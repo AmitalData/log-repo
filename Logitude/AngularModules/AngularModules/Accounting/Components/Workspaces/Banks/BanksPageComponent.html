@@ -95,7 +95,7 @@
                                                                     </tr>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" *ngIf="AllBankDepositsVisibility" (click)="ViewDepositQuery('AllBankDeposits')"> {{'Accounting.General.Q.AllDeposits' | TextCodeTranslationPipe}} </p>
+                                                                            <p id="{{'DepositsQuery' | IdGeneratorPipe}}" class="QueryLink" *ngIf="AllBankDepositsVisibility" (click)="ViewDepositQuery('AllBankDeposits')"> {{'Accounting.General.Q.AllDeposits' | TextCodeTranslationPipe}} </p>
                                                                         </td>
                                                                     </tr>
 
@@ -134,7 +134,7 @@
                                                                     </tr>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" (click)="ViewCashbookQuery('CashBooks')"> {{'Accounting.General.O.AllCashbook' | TextCodeTranslationPipe}} ({{cashBookSummary.AllCashbookCount}})</p>
+                                                                            <p id="{{'cashbookQuery' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewCashbookQuery('CashBooks')"> {{'Accounting.General.O.AllCashbook' | TextCodeTranslationPipe}} ({{cashBookSummary.AllCashbookCount}})</p>
                                                                         </td>
                                                                     </tr>
 
