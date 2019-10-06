@@ -13,6 +13,7 @@ using Logitude.CustomsMessaging.ResponseServices;
 using Logitude.CustomsMessaging.Testers.Messages;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -231,8 +232,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public void //JustDoIt(string DocumentsFilingId, int tenant)
             JustDoIt(object documentsFilingPM)
         {
+            DateTime stopLogAt = new DateTime(2020, 01, 01);
             DeclarationPM declarationPM;
             Debug.WriteLine("CreateUD2LTService");
+            string jsonPM="";
             try
             {
 
@@ -244,12 +247,15 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 _DocumentsFilingPM = documentsFilingPM as DocumentsFilingPM;
                 if (_DocumentsFilingPM == null)
                 {
+                    LogitudeSettings.HandleLogMe("_DocumentsFilingPM == null", false, "CreateUD2LTService", stopLogAt);
                     Debug.WriteLine("_DocumentsFilingPM == null");
                     return;
                 }
+                jsonPM = Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(_DocumentsFilingPM);
                 int tenant = _DocumentsFilingPM.Tenant;
                 if (!IsConnected2Declaration())
                 {
+                    LogitudeSettings.HandleLogMe("!IsConnected2Decalaration()"+ jsonPM, false, "CreateUD2LTService", stopLogAt);
                     Debug.WriteLine("!IsConnected2Decalaration()");
                     return;
                 }
@@ -257,16 +263,18 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 bool shouldCreateDCAComm = false;
                 var decQS = new DeclarationQueryService(tenant);
                 declarationPM = decQS.GetSingle(this._DocumentsFilingPM.EntityId, false, false);
-
+                jsonPM = Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(declarationPM);
                 if (declarationPM.PaymentDate.HasValue)
                 {
                     shouldCreateDCAComm = false;
+                    LogitudeSettings.HandleLogMe("declarationPM.PaymentDate.HasValue" + jsonPM, false, "CreateUD2LTService", stopLogAt);
                     Debug.WriteLine("Declaration has already been payed");
                     return;
                 }
                 if (/*CourierENV() */ declarationPM.IsCourierDeclaration)
                 {
                     Debug.WriteLine("CourierENV");
+                    
                     shouldCreateDCAComm = true;
                 }
                 else
@@ -290,12 +298,14 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 }
                 if (!shouldCreateDCAComm)
                 {
+                    LogitudeSettings.HandleLogMe("!shouldCreateDCAComm" + jsonPM, false, "CreateUD2LTService", stopLogAt);
                     Debug.WriteLine("!shouldCreateDCAComm");
                     return;
                 }
 
                 if (TicketalreadyExistforthisDocument())
                 {
+                    LogitudeSettings.HandleLogMe("TicketalreadyExistforthisDocument()" + jsonPM, false, "CreateUD2LTService", stopLogAt);
                     Debug.WriteLine("TicketalreadyExistforthisDocument");
                     return;
 
@@ -316,7 +326,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                             var myCustomsDocumentPointerPMListforDec = myCustomsDocumentPointerPMList.Where(o => o.ParentEntityCode == "Declaration" && o.ParentEntityId == declarationPM.Id);
                             if (myCustomsDocumentPointerPMListforDec != null && myCustomsDocumentPointerPMListforDec.Count() > 0)
                             {
-                                
+                                LogitudeSettings.HandleLogMe("Ticket already Exist for this Document" + jsonPM, false, "CreateUD2LTService", stopLogAt);
                                 Debug.WriteLine("Ticket already Exist for this Document");
                                 return;
 
@@ -334,9 +344,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 myDCAInUCBUD2LT_MsgMessagingService.CreateCRS(tenant, loggingUserId,_DocumentsFilingPM);
 
             }
-            catch (Exception)
+            catch (Exception E)
             {
 
+                LogitudeSettings.HandleLogMe(E.ToString() + jsonPM, true, "CreateUD2LTService", stopLogAt);
                 throw;
             }
             finally
