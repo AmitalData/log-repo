@@ -30,7 +30,6 @@ import {CustomerTenantAccessListService} from './Services/StandardLists/Customer
 import {AirlineMessagingRuleListService} from './Services/StandardLists/AirlineMessagingRuleListService';
 import {CustomsShipperListService} from './Services/StandardLists/CustomsShipperListService';
 
-//import {CustomerAdditionalServiceListService} from './Services/StandardLists/CustomerAdditionalServiceListService';
 import {CustomerListService} from './Services/StandardLists/CustomerListService';
 //import {CustomerProductActualDataListService} from './Services/StandardLists/CustomerProductActualDataListService';
 //import {CustomerProductListService} from './Services/StandardLists/CustomerProductListService';

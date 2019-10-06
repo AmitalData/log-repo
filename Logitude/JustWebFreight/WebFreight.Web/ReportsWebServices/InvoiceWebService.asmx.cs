@@ -2511,7 +2511,9 @@ namespace WebFreight.Web.ReportsWebServices
                 List<Currency> allCurrencies = (from d in commonContext.Currencies where d.Tenant == tenant select d).ToList();
                 List<Measurement> allMeasurements = (from d in commonContext.Measurements where d.Tenant == tenant select d).ToList();
                 List<ChargesType> allChargesTypes = (from d in commonContext.ChargesTypes where d.Tenant == tenant select d).ToList();
+                Contact loggedContact = GetLoggedContact(entityPOCO.Tenant);
                 invoiceDataProvider.AccountDisplayNumber = GetGLAccountDisplayNumberByBillToId(entityPOCO);
+                Contact loggedcontact = GetLoggedContact(entityPOCO.Tenant);
                 #region Tenant Properties
                 Tenant myTenant = (from a in commonContext.Tenants where a.Id == tenant select a).FirstOrDefault();
                 if (myTenant != null)
@@ -2706,7 +2708,7 @@ namespace WebFreight.Web.ReportsWebServices
                             {
                                 invoiceDataProvider.BillToAddress_NoName = DataProviders.General.GetAddress(billToAddress);
 
-                                if (billToAddress.IsLocalLanguage && !string.IsNullOrEmpty(invoiceDataProvider.BillTo_LocalName))
+                                if (!loggedcontact.DontShowLocalLabels && !string.IsNullOrEmpty(invoiceDataProvider.BillTo_LocalName))
                                 {
                                     invoiceDataProvider.BillToAddress = invoiceDataProvider.BillTo_LocalName + Environment.NewLine + DataProviders.General.GetAddress(billToAddress);
                                     invoiceDataProvider.BillToAddressDescription = billToAddress.Description;
@@ -3720,6 +3722,15 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
             return invoiceDataProvider;
+        }
+
+        private Contact GetLoggedContact(int tenant)
+        {
+
+            string email = HttpContext.Current.User.Identity.Name;
+            ContactRepository contactRepository = new ContactRepository(tenant);
+            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
+            return loggedContact;
         }
 
         private void GenerateTotalVATs(InvoiceDataProvider invoiceDataProvider, List<ARInvoiceTotalVAT> totalVats, ICommonDataContext commonContext, string invoiceTypeCode)

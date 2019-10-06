@@ -55,7 +55,7 @@ export class NewFullWarehouseReleaseComponent extends BaseComponent implements O
     public CardDependencyProperty1IsList: boolean = false;
     public DataContext = this;
     public LabelColumnWidth: number = 117;
-    WarehouseReleasePackagesLists: WarehouseReleasePackagePM[] = [];
+    public WarehouseReleasePackagesLists: WarehouseReleasePackagePM[] = [];
     public ValidationErrorsList: string[];
 
     warehouseReleasePM: WarehouseReleasePM = new WarehouseReleasePM();
@@ -142,7 +142,12 @@ export class NewFullWarehouseReleaseComponent extends BaseComponent implements O
     }
 
 
- 
+    ShipmentValueChange(shipment: any) {
+        this.warehouseReleasePM.ShipmentNumber = null;
+        if (shipment) {
+            this.warehouseReleasePM.ShipmentNumber = shipment.ShipmentNumber;
+        }
+    }
 
 
 
@@ -164,7 +169,8 @@ export class NewFullWarehouseReleaseComponent extends BaseComponent implements O
             this.IsInlandDomestic = this.TransportModeId == "I" && this.DirectionId == "D" ? true : false;
             this.FromPortId = null;
             this.ToPortId = null;
-
+           
+            this.ShipmentTypeId = null;
             this.OnFiltersChanged();
             this.BuildShipmentTypes();
         }
@@ -410,6 +416,17 @@ export class NewFullWarehouseReleaseComponent extends BaseComponent implements O
     }
 
 
+    //private isAddShipperButtonDisabled: boolean = false;
+    //get IsAddShipperButtonDisabled() {
+    //    if (!this.IsScreenEnabled) {
+    //        this.isAddShipperButtonDisabled = true;
+    //    } else this.isAddShipperButtonDisabled = false;
+
+    //    return this.isAddShipperButtonDisabled;
+
+
+    //}
+
     get QuantityLabel() {
         var quantityLabel: string = "";
         if (this.IsLCLEntity) {
@@ -650,8 +667,8 @@ export class NewFullWarehouseReleaseComponent extends BaseComponent implements O
         this.UIProperties.SetEnabled("ShipmentId", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetRequired("FromPortId", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetRequired("ToPortId", this.ObjectTableName, isScreenEnabled);
-        this.UIProperties.SetRequired("CustomerId", this.ObjectTableName, isScreenEnabled);
-        this.UIProperties.SetRequired("WarehouseId", this.ObjectTableName, isScreenEnabled);
+        //this.UIProperties.SetRequired("CustomerId", this.ObjectTableName, isScreenEnabled);
+        //this.UIProperties.SetRequired("WarehouseId", this.ObjectTableName, isScreenEnabled);
     }
 
     FillMorePackagesDetails() {
@@ -684,17 +701,17 @@ export class NewFullWarehouseReleaseComponent extends BaseComponent implements O
 
     SetUIProperties() {
         this.SetUIProperties_Port();
-        var isWarehouseIdRequired: boolean = false;
-        var isCustomerIdRequired: boolean = false;
-        if (AppTool.IsNullOrEmpty(this.WarehouseId)) {
-            isWarehouseIdRequired = true;
-        }
-        if (AppTool.IsNullOrEmpty(this.CustomerId)) {
-            isCustomerIdRequired = true;
+        //var isWarehouseIdRequired: boolean = false;
+        //var isCustomerIdRequired: boolean = false;
+        //if (AppTool.IsNullOrEmpty(this.WarehouseId)) {
+        //    isWarehouseIdRequired = true;
+        //}
+        //if (AppTool.IsNullOrEmpty(this.CustomerId)) {
+        //    isCustomerIdRequired = true;
 
-        }
-        this.UIProperties.SetRequired("WarehouseId", this.ObjectTableName, isWarehouseIdRequired);
-        this.UIProperties.SetRequired("CustomerId", this.ObjectTableName, isCustomerIdRequired);
+        //}
+        //this.UIProperties.SetRequired("WarehouseId", this.ObjectTableName, isWarehouseIdRequired);
+        //this.UIProperties.SetRequired("CustomerId", this.ObjectTableName, isCustomerIdRequired);
     }
     
 
@@ -730,6 +747,7 @@ export class NewFullWarehouseReleaseComponent extends BaseComponent implements O
     }
     // Add|Edit Partner
     AddCustomerClicked() {
+
         var args = new NewEntityArgs();
         var logeWindow = new LogitudeWindow();
         logeWindow.Width = 960;
@@ -832,14 +850,7 @@ export class NewFullWarehouseReleaseComponent extends BaseComponent implements O
             this.warehouseReleasePM.FromPortId = null;
             this.warehouseReleasePM.ToPortId = null;
         }
-        //else {
-        //    this.warehouseReleasePM.FromAddressId = null;
-        //    this.warehouseReleasePM.ToAddressId = null;
-        //    //this.warehouseReleasePM.FromPartnerId = null;
-        //    //this.warehouseReleasePM.ToPartnerId = null;
-
-
-        //}
+  
 
         if (!this.IsInlandDomestic) {
             if (AppTool.IsNullOrEmpty(this.warehouseReleasePM.FromPortId)) {

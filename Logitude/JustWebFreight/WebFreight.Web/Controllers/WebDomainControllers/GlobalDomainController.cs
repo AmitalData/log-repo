@@ -360,7 +360,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                                                 InActive = a.BatchServicesDefinitionMods.InActive,
                                                                 NumberOfThreads = a.BatchServicesDefinitionMods.NumberOfThreads,
                                                                 Parameter1 = a.Parameter1,
-                                                                Parameter2 = a.Parameter2
+                                                                Parameter2 = a.Parameter2,
+                                                                QueueDefinitionCode = a.QueueDefinitionCode
                                                             });
             string connectionString = TenantServerConfigration.GetDbConnection(0);
             var FaildDataTable = new DataTable();
@@ -407,8 +408,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                     foreach (BatchServicesLog Log in Logs)
                     {
-                        var FaildQueueMessage = FaildQueueMessageCounts.Where(a => a.QueueMessageCode == Log.RelatedQueueMessage).FirstOrDefault();
-                        var WaitingQueueMessage = WaitingQueueMessageCounts.Where(a => a.QueueMessageCode == Log.RelatedQueueMessage).FirstOrDefault();
+                        var FaildQueueMessage = FaildQueueMessageCounts.Where(a => a.QueueMessageCode == item.QueueDefinitionCode).FirstOrDefault();
+                        var WaitingQueueMessage = WaitingQueueMessageCounts.Where(a => a.QueueMessageCode == item.QueueDefinitionCode).FirstOrDefault();
                         item.CPU = Log.CPU;
                         DoneItemsInFiveMinutes += Log.DoneItemsInFiveMinutes;
                         DoneItemsInOneHour += Log.DoneItemsInOneHour;

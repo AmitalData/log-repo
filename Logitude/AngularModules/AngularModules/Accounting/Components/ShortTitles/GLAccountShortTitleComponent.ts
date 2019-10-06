@@ -1,3 +1,4 @@
+import { GLAccountExtendedPMService } from './../../Services/ExtendedPMs/GLAccountExtendedPMService';
 import {Component} from '@angular/core';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {GLAccountPM} from '../../EntityPMs/GLAccountPM';
@@ -9,10 +10,11 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 import { GLAccountPMService } from '../../Services/StandardPMs/GLAccountPMService';
+import { CardList } from '../../../Common/EntityLists/CardList';
 @Component({
     moduleId: module.id,
     templateUrl: "./GLAccountShortTitleComponent.html",
-}) 
+})
 
 
 
@@ -24,6 +26,8 @@ export class GLAccountShortTitleComponent {
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     GLAccountPMService: GLAccountPMService = new GLAccountPMService();
+    _GLAccountExtendedPMService: GLAccountExtendedPMService = new GLAccountExtendedPMService();
+
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = this.entityArgs.EntityPM;
 
@@ -32,6 +36,11 @@ export class GLAccountShortTitleComponent {
         if (this.EntityPM != null) {
         }
         this.Listen();
+
+        this.SetObjectTableNameAndTabCode();
+
+        console.log("[GLAccountShortTitleComponent]");
+
     }
 
     private Listen() {
@@ -39,75 +48,74 @@ export class GLAccountShortTitleComponent {
             this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                    
+
                 }
             });
 
             this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                    
+
                 }
             });
         }
     }
+    ObjectTableName: string;
+    SelectedTabCode: string;
 
-    OpenVendorScreen() {
-
-      
-
-
-        if (AppTool.IsNullOrEmpty(this.EntityPM.CustomerGLAccountId)) {
-            this.OpenVendorScreenForNotSplittedGLAccount();
-        }
-        else {
-           
-            this.OpenVendorScreenForSplittedGLAccount();
-           
-        }
+    OpenCardScreen()
+    {
+        var accountId = this.EntityPM.CustomerGLAccountId || this.EntityPM.Id; // if GLAccount is splitted, (EntityPM.CustomerGLAccountId) is filled
+        this.GetConnectedCards(accountId).then((connectedCards: CardList[]) => {
+            var firstConnectedCard = connectedCards[0];
+            this.OpenCard(firstConnectedCard.Id);
+        });
     }
 
-    OpenVendorScreenForNotSplittedGLAccount() {
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.CardId)) {
+    private OpenCard(connectedCardId: string)
+    {
+        if (!AppTool.IsNullOrEmpty(connectedCardId)) {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-                .then(cmpRef => {
+                .then(cmpRef =>
+                {
                     cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({ EntityId: this.EntityPM.CardId, ObjectTableName: 'Vendor' });
-                    cmpRef.instance.BackCompleted.subscribe(bk => {
+                    cmpRef.instance.Run({ EntityId: connectedCardId, ObjectTableName: this.ObjectTableName, SelectedTabCode: this.SelectedTabCode });
+                    cmpRef.instance.BackCompleted.subscribe(bk =>
+                    {
                     });
                 });
         }
+    }
 
+    private SetObjectTableNameAndTabCode() {
 
-
+        if (this.EntityPM.AccountTypeCode == "3") {
+            this.ObjectTableName = "Vendor";
+            this.SelectedTabCode = null;
+        }
+        else if (this.EntityPM.AccountTypeCode == "2") {
+            this.ObjectTableName = "Customer";
+            this.SelectedTabCode = "CLOV";
+        }
 
     }
 
-    OpenVendorScreenForSplittedGLAccount() {
+    GetConnectedCards(accountId: string)
+    {
 
-        this.CurrentSession.StartBusyIndicatorLoading();
-        this.GLAccountPMService.get(this.EntityPM.CustomerGLAccountId).subscribe((myResponse: ServiceResponse) => {
-
-            if (myResponse) {
-                if (!myResponse.HasError) {
-                    var ParentAccount = myResponse.Result;
-                    if (!AppTool.IsNullOrEmpty(ParentAccount)) {
-                        if (!AppTool.IsNullOrEmpty(ParentAccount.CardId)) {
-                            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-                                .then(cmpRef => {
-                                    this.CurrentSession.StopBusyIndicator();
-                                    cmpRef.instance.ComponentRef = cmpRef;
-                                    cmpRef.instance.Run({ EntityId: ParentAccount.CardId, ObjectTableName: 'Vendor' });
-                                    cmpRef.instance.BackCompleted.subscribe(bk => {
-                                    });
-                                });
-                        }
-                    }
-                }
-            }
-
+        return new Promise(resolve =>
+        {
+            this.CurrentSession.StartBusyIndicatorLoading();
+            this._GLAccountExtendedPMService.GetConnectedCardsForGLAccount(accountId)
+                .subscribe((myResponse: ServiceResponse) =>
+                {
+                    this.CurrentSession.StopBusyIndicator();
+                    var connectedCards = myResponse.Result;
+                    if (connectedCards)
+                        resolve(connectedCards);
+                });
         });
-
-
     }
+
+
 }

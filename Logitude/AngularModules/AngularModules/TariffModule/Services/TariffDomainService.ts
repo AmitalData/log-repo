@@ -281,6 +281,21 @@ export class TariffDomainService {
         });
     }
 
+    GetAllVersionsWithLinesForTariff(tariffId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        var url = this._apiUrl + '/GetAllVersionsWithLinesForTariff?tariffId=' + tariffId  
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = allLists;
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+    
+
     PostUpdateSurcharge(filter: UpdateSurchargeArgs) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());

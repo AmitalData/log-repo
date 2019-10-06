@@ -39,14 +39,19 @@
     </QueryColumns>
     <QueryFilters />
   </Query>
-  <Screen Name="&quot;OccasionHeaderScreen&quot;" ObjectTableName="&quot;Occasion&quot;" NumberOfColumns="4" NumberOfRows="1" IsReadOnly="true" IsHeaderScreen="true">
+  <Screen Name="&quot;OccasionHeaderScreen&quot;" ObjectTableName="&quot;Occasion&quot;" NumberOfColumns="4" NumberOfRows="2" IsReadOnly="true" IsHeaderScreen="true">
     <ScreenFields>
-      <ScreenField Column="0" Row="0" ObjectFieldName="&quot;Name&quot;" ScreenName="OccasionHeaderScreen" />
-      <ScreenField Column="1" Row="0" ObjectFieldName="&quot;TypeName&quot;" ScreenName="OccasionHeaderScreen" />
-      <ScreenField Column="2" Row="0" ObjectFieldName="&quot;OccasionStatusName&quot;" ScreenName="OccasionHeaderScreen" />
-      <ScreenField Column="3" Row="0" ObjectFieldName="&quot;OwnerName&quot;" ScreenName="OccasionHeaderScreen" />
+      <ScreenField Column="0" Row="0" ObjectFieldName="&quot;TypeName&quot;" ScreenName="OccasionHeaderScreen" />
+      <ScreenField Column="0" Row="1" ObjectFieldName="&quot;Location&quot;" ScreenName="OccasionHeaderScreen" />
+      <ScreenField Column="1" Row="0" ObjectFieldName="&quot;IndustryName&quot;" ScreenName="OccasionHeaderScreen" />
+      <ScreenField Column="1" Row="1" ObjectFieldName="&quot;OwnerId&quot;" ScreenName="OccasionHeaderScreen" />
+      <ScreenField Column="2" Row="0" ObjectFieldName="&quot;StartDateTime&quot;" ScreenName="OccasionHeaderScreen" />
+      <ScreenField Column="2" Row="1" ObjectFieldName="&quot;EndDateTime&quot;" ScreenName="OccasionHeaderScreen" />
+      <ScreenField Column="3" Row="0" ObjectFieldName="&quot;Goal&quot;" ScreenName="OccasionHeaderScreen" />
+      <ScreenField Column="3" Row="1" ObjectFieldName="&quot;OccasionStatusName&quot;" ScreenName="OccasionHeaderScreen" />
     </ScreenFields>
   </Screen>
+  <Tab TabName="&quot;Main&quot;" TabLocalName="&quot;Main&quot;" ObjectTableName="&quot;Occasion&quot;" Code="&quot;OCMN&quot;" ControlPath="&quot;./CRMModules/CRMOccasion/Components/EditTabs/OccasionMainTabComponent&quot;" TextCode="&quot;Occasion.TH.Main&quot;" IsPackagable="true" IndexOrder="0" HtmlComponentURL="&quot;./CRMModules/CRMOccasion/Components/EditTabs/OccasionMainTabComponent&quot;" IsSpellChecked="false" HasGeneralFeature="false" />
   <Tab TabName="&quot;General&quot;" TabLocalName="&quot;General&quot;" ObjectTableName="&quot;Occasion&quot;" Code="&quot;OCGN&quot;" ControlPath="&quot;./CRMModules/CRMOccasion/Components/EditTabs/OccasionGeneralTabComponent&quot;" TextCode="&quot;Occasion.TH.General&quot;" IsPackagable="true" IndexOrder="0" HtmlComponentURL="&quot;./CRMModules/CRMOccasion/Components/EditTabs/OccasionGeneralTabComponent&quot;" HtmlComponentName="&quot;&quot;" IsSpellChecked="false" HasGeneralFeature="false" />
   <Tab TabName="&quot;Events&quot;" TabLocalName="&quot;Events&quot;" ObjectTableName="&quot;Occasion&quot;" Code="&quot;OCEV&quot;" ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;" TextCode="&quot;Occasion.TH.Events&quot;" IsPackagable="true" IndexOrder="1" IsSpellChecked="false" HasGeneralFeature="false" />
   <EventTypes>

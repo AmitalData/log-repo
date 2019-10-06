@@ -59,7 +59,15 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         ConnectedTo, 
 	         FromPortId, 
 	         ToPortId, 
-	         CustomerAddressId,
+	         CustomerAddressId, 
+	         TotalVolumetricWeight, 
+	         Ratio, 
+	         ToTypeCode, 
+	         ToPartnerCardId, 
+	         ToAddressId, 
+	         ToAddressZipCode, 
+	         ToAddressCity, 
+	         ToAddressCountryId,
 	      }
 
 
@@ -109,7 +117,15 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         ConnectedTo, 
 	         FromPortId, 
 	         ToPortId, 
-	         CustomerAddressId,
+	         CustomerAddressId, 
+	         TotalVolumetricWeight, 
+	         Ratio, 
+	         ToTypeCode, 
+	         ToPartnerCardId, 
+	         ToAddressId, 
+	         ToAddressZipCode, 
+	         ToAddressCity, 
+	         ToAddressCountryId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -301,6 +317,46 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomerAddressId))
             {
 				entityPOCO.CustomerAddressId = entityPM.CustomerAddressId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TotalVolumetricWeight))
+            {
+				entityPOCO.TotalVolumetricWeight = entityPM.TotalVolumetricWeight;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Ratio))
+            {
+				entityPOCO.Ratio = entityPM.Ratio;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToTypeCode))
+            {
+				entityPOCO.ToTypeCode = entityPM.ToTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToPartnerCardId))
+            {
+				entityPOCO.ToPartnerCardId = entityPM.ToPartnerCardId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToAddressId))
+            {
+				entityPOCO.ToAddressId = entityPM.ToAddressId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToAddressZipCode))
+            {
+				entityPOCO.ToAddressZipCode = entityPM.ToAddressZipCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToAddressCity))
+            {
+				entityPOCO.ToAddressCity = entityPM.ToAddressCity;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToAddressCountryId))
+            {
+				entityPOCO.ToAddressCountryId = entityPM.ToAddressCountryId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -499,6 +555,46 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 					entityPM.CustomerAddressId = entityPOCO.CustomerAddressId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TotalVolumetricWeight))
+            {
+					entityPM.TotalVolumetricWeight = entityPOCO.TotalVolumetricWeight;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Ratio))
+            {
+					entityPM.Ratio = entityPOCO.Ratio;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ToTypeCode))
+            {
+					entityPM.ToTypeCode = entityPOCO.ToTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ToPartnerCardId))
+            {
+					entityPM.ToPartnerCardId = entityPOCO.ToPartnerCardId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ToAddressId))
+            {
+					entityPM.ToAddressId = entityPOCO.ToAddressId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ToAddressZipCode))
+            {
+					entityPM.ToAddressZipCode = entityPOCO.ToAddressZipCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ToAddressCity))
+            {
+					entityPM.ToAddressCity = entityPOCO.ToAddressCity;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ToAddressCountryId))
+            {
+					entityPM.ToAddressCountryId = entityPOCO.ToAddressCountryId;
+            }
+
 		}
 
 		public void PMToOldPM(WarehouseReleasePM entityPM, WarehouseReleasePM oldEntityPM)
@@ -690,6 +786,46 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
                 oldEntityPM.CustomerAddressId = entityPM.CustomerAddressId;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TotalVolumetricWeight))
+            {
+                oldEntityPM.TotalVolumetricWeight = entityPM.TotalVolumetricWeight;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Ratio))
+            {
+                oldEntityPM.Ratio = entityPM.Ratio;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToTypeCode))
+            {
+                oldEntityPM.ToTypeCode = entityPM.ToTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToPartnerCardId))
+            {
+                oldEntityPM.ToPartnerCardId = entityPM.ToPartnerCardId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToAddressId))
+            {
+                oldEntityPM.ToAddressId = entityPM.ToAddressId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToAddressZipCode))
+            {
+                oldEntityPM.ToAddressZipCode = entityPM.ToAddressZipCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToAddressCity))
+            {
+                oldEntityPM.ToAddressCity = entityPM.ToAddressCity;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToAddressCountryId))
+            {
+                oldEntityPM.ToAddressCountryId = entityPM.ToAddressCountryId;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(WarehouseReleasePM entityPM)
@@ -706,6 +842,10 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
             {
                 entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ToAddressCity)) //T4 find type == nText 
+            {
+                entityPM.ToAddressCity = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ToAddressCity));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

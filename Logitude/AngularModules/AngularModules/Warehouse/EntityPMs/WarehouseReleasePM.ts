@@ -279,6 +279,46 @@ export class WarehouseReleasePM {
     public set CustomerAddressId(newValue: string) { if (this.customerAddressId != newValue) { this.customerAddressId = newValue; this.MarkAsDirty("CustomerAddressId"); } }
        
 	 
+    private totalVolumetricWeight: number;
+    public get TotalVolumetricWeight() { return this.totalVolumetricWeight; }
+    public set TotalVolumetricWeight(newValue: number) { if (this.totalVolumetricWeight != newValue) { this.totalVolumetricWeight = newValue; this.MarkAsDirty("TotalVolumetricWeight"); } }
+       
+	 
+    private ratio: number;
+    public get Ratio() { return this.ratio; }
+    public set Ratio(newValue: number) { if (this.ratio != newValue) { this.ratio = newValue; this.MarkAsDirty("Ratio"); } }
+       
+	 
+    private toTypeCode: string;
+    public get ToTypeCode() { return this.toTypeCode; }
+    public set ToTypeCode(newValue: string) { if (this.toTypeCode != newValue) { this.toTypeCode = newValue; this.MarkAsDirty("ToTypeCode"); } }
+       
+	 
+    private toPartnerCardId: string;
+    public get ToPartnerCardId() { return this.toPartnerCardId; }
+    public set ToPartnerCardId(newValue: string) { if (this.toPartnerCardId != newValue) { this.toPartnerCardId = newValue; this.MarkAsDirty("ToPartnerCardId"); } }
+       
+	 
+    private toAddressId: string;
+    public get ToAddressId() { return this.toAddressId; }
+    public set ToAddressId(newValue: string) { if (this.toAddressId != newValue) { this.toAddressId = newValue; this.MarkAsDirty("ToAddressId"); } }
+       
+	 
+    private toAddressZipCode: string;
+    public get ToAddressZipCode() { return this.toAddressZipCode; }
+    public set ToAddressZipCode(newValue: string) { if (this.toAddressZipCode != newValue) { this.toAddressZipCode = newValue; this.MarkAsDirty("ToAddressZipCode"); } }
+       
+	 
+    private toAddressCity: string;
+    public get ToAddressCity() { return this.toAddressCity; }
+    public set ToAddressCity(newValue: string) { if (this.toAddressCity != newValue) { this.toAddressCity = newValue; this.MarkAsDirty("ToAddressCity"); } }
+       
+	 
+    private toAddressCountryId: string;
+    public get ToAddressCountryId() { return this.toAddressCountryId; }
+    public set ToAddressCountryId(newValue: string) { if (this.toAddressCountryId != newValue) { this.toAddressCountryId = newValue; this.MarkAsDirty("ToAddressCountryId"); } }
+       
+	 
 
     public OldEntityPM: WarehouseReleasePM;
 		

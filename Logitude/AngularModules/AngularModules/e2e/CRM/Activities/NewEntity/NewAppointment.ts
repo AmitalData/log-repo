@@ -5,27 +5,16 @@ import { createBreak } from 'typescript';
 export class NewAppointment {
   private Helper: FieldsHelper;
   private Generator: GeneralFunctions;
-
-
   constructor() {
     this.Helper = new FieldsHelper();
     this.Generator = new GeneralFunctions();
   }
-
-
   public CreateNewAppointment(AppointmentNo: string) {
-
     this.Helper.WaitByIdAndClick('NEWACTIVITY');
     this.Helper.WaitByIdAndClick('NEWAPPOINTMENT');
 
     this.FillAppointmentFields(AppointmentNo);
-    this.Helper.WaitByIdAndClick('Ok-AddActivity');
-    this.Helper.WaitBusyIndicator();
-    this.Helper.WaitWindowClosed();
   }
-
-
-
   FillAppointmentFields(AppointmentNo: string) {
     this.Helper.WaitByIdAndFill('Activity_Subject', 'Create  ' + AppointmentNo + ' : Protractor ..');
     this.Helper.WaitByIdAndFill('Activity_Location', 'Ramallah');
@@ -39,14 +28,15 @@ export class NewAppointment {
     this.Helper.WaitByIdAndFill('Activity_OwnerId', 'Protractor user');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-    this.Helper.WaitByIdAndFill('Activity_CustomerId', 'Customer Activity');
-    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-
+    // if (AppointmentNo != 'Created from Opportunity') {
+    //   this.Helper.WaitByIdAndFill('Activity_CustomerId', 'Customer Activity');
+    //   this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+    // }
     this.Helper.WaitByIdAndFill('Activity_Description', AppointmentNo);
-
-
+    this.Helper.WaitByIdAndClick('Ok-AddActivity');
+    this.Helper.WaitBusyIndicator();
+    this.Helper.WaitWindowClosed();
   }
-
 }
 
 

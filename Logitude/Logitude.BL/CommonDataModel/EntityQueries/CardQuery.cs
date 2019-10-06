@@ -1980,6 +1980,26 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return cardList;
         }
 
+        public List<CardList> GetCardPMsByGLAccountId(string glAccountId,int tenant)
+        {
+            IQueryable<CardList> cards = from a in repository.context.Cards
+                                         where a.Tenant == tenant && a.GLAccountId == glAccountId
+                                         select new CardList()
+                                         {
+                                             Id = a.Id,
+                                             Code = a.Code,
+                                             EnglishName = a.EnglishName,
+                                             LocalName = a.LocalName,
+                                             VatNumber = a.VatNumber,
+                                             CountryCode = a.CountryCode,
+                                             CountryName = a.CountryName,
+                                             CityName = a.CityName,
+                                             GLAccountId = a.GLAccountId,
+                                         };
+
+            return cards.ToList();
+        }
+
 
     }
 }

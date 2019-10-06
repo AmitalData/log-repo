@@ -16,7 +16,8 @@ import {ARInvoiceListService} from '../../../Services/StandardLists/ARInvoiceLis
 import {APInvoiceListService} from '../../../Services/StandardLists/APInvoiceListService';
 import {ARPaymentListService} from '../../../Services/StandardLists/ARPaymentListService';
 import {APPaymentListService} from '../../../Services/StandardLists/APPaymentListService';
-import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { InvoiceDomainService } from '../../../Services/InvoiceDomainService';
 
 @Component({
     moduleId: module.id,
@@ -349,6 +350,15 @@ export class NewTransferComponent extends BaseComponent {
         }
 
         this.ItemsSource = myResultList.sort(function (a, b) { return a.DateTicks == b.DateTicks ? 0 : a.DateTicks < b.DateTicks ? -1 : 1; });
+
+        if (this.CheckAllItemsAgain) {
+            this.ItemsSource.forEach(item => {
+                item.IsChecked = true;
+            });
+
+            this.CheckAllItemsAgain = false;
+        }
+
         this.IsFirstTimeLoading = false;
         this.OnLinesSelected();
     }
@@ -409,7 +419,23 @@ export class NewTransferComponent extends BaseComponent {
     CloseButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
+
+    private CheckAllItemsAgain: boolean = false;
+    MarkAsBlockedClicked(itemId: string) {
+        this.CurrentSession.StartBusyIndicatorSaving();
+
+        var invoiceService: InvoiceDomainService = new InvoiceDomainService();
+        invoiceService.MarkEntityAsBlocked(this.TransferTypeCode, itemId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.LoadData();
+                this.CheckAllItemsAgain = true;
+            }
+
+            this.CurrentSession.StopBusyIndicator();
+        });
+    }
 }
+
 export class NewTransferLine {
     constructor(private fatherComponent: NewTransferComponent) {
         if (fatherComponent.IsFirstTimeLoading) {
@@ -435,9 +461,5 @@ export class NewTransferLine {
             this.isChecked = value;
             this.fatherComponent.OnLinesSelected();            
         }
-    }
-
-    MarkAsBlockedClicked() {
-
     }
 }

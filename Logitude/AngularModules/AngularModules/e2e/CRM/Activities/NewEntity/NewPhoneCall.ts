@@ -5,27 +5,23 @@ export class NewPhoneCall {
   private Helper: FieldsHelper;
   private Generator: GeneralFunctions;
 
-
   constructor() {
     this.Helper = new FieldsHelper();
     this.Generator = new GeneralFunctions();
   }
-
   public CreateNewPhoneCall(phoneCallNo: string) {
     this.Helper.WaitByIdAndClick('NEWACTIVITY');
     this.Helper.WaitByIdAndClick('NEWPHONECALL');
 
     this.FillPhoneCallFields(phoneCallNo);
-    this.Helper.WaitByIdAndClick('Ok-AddActivity');
-    this.Helper.WaitBusyIndicator();
-    this.Helper.WaitWindowClosed();
+
 
   }
-
   FillPhoneCallFields(phoneCallNo: string) {
-    this.Helper.WaitByIdAndFill('Activity_CustomerId', 'Customer Activity');
-    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-
+    if (phoneCallNo != 'Created from Opportunity') {
+      this.Helper.WaitByIdAndFill('Activity_CustomerId', 'Customer Activity');
+      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+    }
     this.Helper.WaitByIdAndFill('Activity_CallWithId', 'Protractor Conatact');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
@@ -35,8 +31,11 @@ export class NewPhoneCall {
 
     this.Helper.WaitByIdAndFill('Activity_OwnerId', 'Protractor user');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-  }
 
+    this.Helper.WaitByIdAndClick('Ok-AddActivity');
+    this.Helper.WaitBusyIndicator();
+    this.Helper.WaitWindowClosed();
+  }
 }
 
 

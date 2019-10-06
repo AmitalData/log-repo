@@ -1118,6 +1118,58 @@ export class AppTool {
             return false;
         }
     }
+
+    public static ReplaceDecimalSeparatorWithADot(value: string,decimalSeparator:string) {
+        if (decimalSeparator != '.') {
+            value = value.split(decimalSeparator).join('.');
+        }
+        return value;
+    }
+
+    public static RemoveThousandsSeparator(value: string,thousandsSeparator:string) {
+        if ((value + "").indexOf(thousandsSeparator) > -1) {
+            value = value.split(thousandsSeparator).join('');
+        }
+        return value;
+    }
+
+    public static GetNumberFromText(numberText: string) {
+        var decimalSeparator:string;
+        var thousandsSeparator:string;
+        switch (SessionLocator.TenantPM.NumberFormatCode) {
+            case "CD": {
+                thousandsSeparator = ",";
+                decimalSeparator = ".";
+                break;
+            }
+
+            case "DC": {
+                thousandsSeparator = ".";
+                decimalSeparator = ",";
+                break;
+            }
+
+            case "AD": {
+                thousandsSeparator = "'";
+                decimalSeparator = ".";
+                break;
+            }
+
+            default:
+                {
+                    thousandsSeparator = ",";
+                    decimalSeparator = ".";
+                    break;
+                }
+        }
+        var numberValue = NaN;
+        if (!AppTool.IsNullOrEmpty(numberText)) {
+            numberText = this.RemoveThousandsSeparator(numberText,thousandsSeparator);
+            numberText = this.ReplaceDecimalSeparatorWithADot(numberText,decimalSeparator);
+            numberValue = Number(numberText);
+        }
+        return numberValue;
+    }
 }
 export class DateTool {
     public static ActualDateMessage = "Can't set Field to future date";

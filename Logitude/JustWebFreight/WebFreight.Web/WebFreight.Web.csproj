@@ -973,6 +973,7 @@
     <Content Include="App_Code\WarehouseDataController.cs" />
     <Content Include="App_Code\ActivityMobileLogController.cs" />
     <Content Include="App_Code\ResetPasswordController.cs" />
+    <Content Include="App_Code\DeclarationApprovalRequestController.cs" />
     <Compile Include="AtlasRegistrationPage.aspx.cs">
       <DependentUpon>AtlasRegistrationPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2280,6 +2281,7 @@
     <Compile Include="DataProviders\VehiclesDataProvider.Shared.cs" />
     <Compile Include="DataProviders\VDKDataProvider.Shared.cs" />
     <Compile Include="DataProviders\VendorChargesAnalysisDataProvider.cs" />
+    <Compile Include="DataProviders\WorkDaysPerCategoryDataProvider.cs" />
     <Compile Include="DataProviders\WorkHoursPerProjectDataProvider.cs" />
     <Compile Include="DropBoxAuth.aspx.cs">
       <DependentUpon>DropBoxAuth.aspx</DependentUpon>
@@ -4356,6 +4358,7 @@
     <Content Include="WcfApi\CustomerAdditionalServiceDWWcfService.svc" />
     <Content Include="WcfApi\CustomerCompetitorDWWcfService.svc" />
     <Content Include="WcfApi\CustomerDWWcfService.svc" />
+    <Content Include="WcfApi\DeclarationApprovalRequestWcfService.svc" />
     <Content Include="WcfApi\DepositionRequestWcfService.svc" />
     <Content Include="WcfApi\DocumentInWcfService.svc" />
     <Content Include="WcfApi\DocumentsMetaDataTypeWcfService.svc" />
@@ -5148,6 +5151,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ReportsWebServices\LogitudeReports\Operational\UnicargoExportManager.cs" />
+    <Compile Include="ReportsWebServices\LogitudeReports\TimeManagement\WorkPerDaysCategoryManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\VehiclesManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\AccountingLedgerManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\ArchivoExportadoManager.cs" />
@@ -5834,6 +5838,9 @@
     <Compile Include="WcfApi\CustomerDWWcfService.svc.cs">
       <DependentUpon>CustomerDWWcfService.svc</DependentUpon>
     </Compile>
+    <Compile Include="WcfApi\DeclarationApprovalRequestWcfService.svc.cs">
+      <DependentUpon>DeclarationApprovalRequestWcfService.svc</DependentUpon>
+    </Compile>
     <Compile Include="WcfApi\DepositionRequestWcfService.svc.cs">
       <DependentUpon>DepositionRequestWcfService.svc</DependentUpon>
     </Compile>
@@ -5883,6 +5890,7 @@
     <Compile Include="WcfApi\ICustomerAdditionalServiceDWWcfService.cs" />
     <Compile Include="WcfApi\ICustomerCompetitorDWWcfService.cs" />
     <Compile Include="WcfApi\ICustomerDWWcfService.cs" />
+    <Compile Include="WcfApi\IDeclarationApprovalRequestWcfService.cs" />
     <Compile Include="WcfApi\IDepositionRequestWcfService.cs" />
     <Compile Include="WcfApi\IDocumentInWcfService.cs" />
     <Compile Include="WcfApi\IDocumentsMetaDataTypeWcfService.cs" />

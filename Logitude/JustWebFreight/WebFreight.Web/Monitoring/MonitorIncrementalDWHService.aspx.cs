@@ -14,6 +14,7 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel;
 using System.Data.Entity.Core.Objects;
 using Simplog.Data.Helpers;
+using Simplog.Data.CommonDataModel.Repositories;
 
 namespace WebFreight.Web.Monitoring
 {
@@ -47,43 +48,56 @@ namespace WebFreight.Web.Monitoring
 
         private bool AnyFailedStatus()
         {
-
-            bool isFailed = false;
+            bool incrementalDWUpdateFailed = false;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
-                DateTime todayDateTime = DateTime.Now;
-
-                IGlobalContext globalContext = GlobalContext.GetContext();
-                MobileNotificationLogRepository myRepository = new MobileNotificationLogRepository(globalContext);
-
-
                 try
                 {
-
-                    isFailed = (from d in myRepository.context.Settings
-                                                 where d.LastIncrementalDWUpdateDate == null || (EntityFunctions.DiffMinutes(d.LastIncrementalDWUpdateDate, todayDateTime) > 5)
-                                                 select d).Any();
-                    
+                    incrementalDWUpdateFailed = CheckIfIncrementalDWUpdateFailed();
                 }
-
                 catch (Exception errorInfo)
                 {
                     ExceptionHandler.HandleException(errorInfo, DateTime.Now, 0, "", "MonitorIncrementalDWHService", "Bug in MonitorIncrementalDWHService Method : globaldbRep.All()", null);
                 }
-
-
-
                 scope.Complete();
             }
-
-            return isFailed;
-
-
+            return incrementalDWUpdateFailed;
         }
 
+        private static bool CheckIfIncrementalDWUpdateFailed()
+        {
+            DateTime todayDateTime = DateTime.Now;
+            ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
+            bool incrementalDWUpdateFailed = (from d in commonDataContext.DWHBuildStatus
+                             where (d.LastIncrementalDWUpdateDate == null || (EntityFunctions.DiffMinutes(d.LastIncrementalDWUpdateDate, todayDateTime) > 5)) && !d.IsFullBuildDWRunning
+                             select d).Any();
+          
+            if (incrementalDWUpdateFailed)
+            {
+                if (CheckIfSystemIsUpgrading()) incrementalDWUpdateFailed = false;
+            }
+            return incrementalDWUpdateFailed;
+        }
 
-
-
-
+        private static bool CheckIfSystemIsUpgrading()
+        {
+            IGlobalContext globalContext = GlobalContext.GetContext();
+            bool isUpgrading = false;
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                try
+                {
+                    isUpgrading = (from d in globalContext.GlobalDBs
+                                   where d.IsUpgrading
+                                   select d).Any();
+                }
+                catch (Exception errorInfo)
+                {
+                    ExceptionHandler.HandleException(errorInfo, DateTime.Now, 0, "", "MonitorIncrementalDWHService", "Bug in MonitorIncrementalDWHService Method : globaldbRep.All()", null);
+                }
+                scope.Complete();
+            }
+            return isUpgrading;
+        }
     }
 }

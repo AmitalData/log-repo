@@ -140,6 +140,11 @@ exports.config = {
             browser.params.Login.Email = "ahmadb@test.com";
             browser.params.Login.Password = "ahmed!A123";
         }
+        else if (browser.params.Env == "Pre_Cloud") {
+            browser.params.Link = "https://pre.amital.co.il/";
+            browser.params.Login.Email = "sgaumtomation@pre.com";
+            browser.params.Login.Password = "Sg0592463934!";
+        }
         else if (browser.params.Env == "test_1109") {
             browser.params.Link = "https://test.logitudeworld.com/test";
             browser.params.Login.Email = "sumaya@automation.com";
@@ -162,7 +167,14 @@ exports.config = {
             jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/E2ETeamMohammad/screenshots' }).getJasmine2Reporter());
             jasmine.getEnv().addReporter(junitReporterMohammad);
 
-        } else {
+        }
+        else if (browser.params.Team == "test") {
+            jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
+            jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/E2ETeamMohammad/test' }).getJasmine2Reporter());
+            jasmine.getEnv().addReporter(junitReporterMohammad);
+
+        }
+        else {
             jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
             jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/e2eTracking/screenshots' }).getJasmine2Reporter());
         }

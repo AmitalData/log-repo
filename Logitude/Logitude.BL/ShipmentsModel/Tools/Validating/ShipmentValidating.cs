@@ -60,11 +60,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
             ValidateShipmentBookingFields(entityPM, isNewEntity);
             ValidateCreditLimitSetting(entityPM, entityPoco, myCommonContext, loggedTenant, isNewEntity);
             ValidateConvertShipmentType(entityPM);
-            ValidateContainerNumbers(entityPM);
+           
             //ValidateMultiVatPercentages(entityPM, myCommonContext);
 
             if (!entityPM.IsHybrid)
             {
+                ValidateContainerNumbers(entityPM);
                 ValidateMasterTypeDueToTransportMode(entityPM);
                 ValidateMainCarriageCarrierDueToTransportMode(entityPM);
                 ValidatePartnerTypes(entityPM);
@@ -605,12 +606,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         {
             int tenant = entityPM.Tenant;
             string id = tenant.ToString();
-
             CreditLimitSetting mySettings = (from d in myCommonContext.CreditLimitSettings where d.Id == id select d).FirstOrDefault();
             if (mySettings != null)
             {
                 if (mySettings.IsCreditLimitEnabled)
                 {
+                    ValidateCreditLimitPartnersRestrictions(entityPM, entityPoco, mySettings, isNewEntity);
+
                     if (mySettings.ShipmentCreationBlock)
                     {
                         AgentRepository myAgentRepository = new AgentRepository(myCommonContext);
@@ -643,6 +645,139 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 }
             }
         }
+
+        private static void ValidateCreditLimitPartnersRestrictions(ShipmentPM entityPM, Shipment entityPoco, CreditLimitSetting mySettings, bool isNewEntity)
+        {
+            if (entityPM.CustomerId != null)
+            {
+                bool isValidating = false;
+
+                if (isNewEntity)
+                {
+                    isValidating = true;
+                }
+
+                else if (entityPM.CustomerId != entityPoco.CustomerId)
+                {
+                    isValidating = true;
+                }
+
+                if (isValidating)
+                {
+                    Card iCard = CardRepository.GetSingleCard(entityPM.CustomerId, entityPM.Tenant, true);
+
+                    if (iCard != null)
+                    {
+                        string errorText_Blocking = "Credit limit setting is blocking shipment for ";
+
+                        switch (iCard.PartnerTypeId)
+                        {
+                            case "CS":
+                                {
+                                    if (iCard.IsCustomer)
+                                    {
+                                        if (mySettings.CustomersShipmentsBlock)
+                                        {
+                                            throw new ApplicationException(errorText_Blocking + "Customers");
+                                        }
+                                    }
+
+                                    else
+                                    {
+                                        if (mySettings.ShipperConsigneeShipmentBlock)
+                                        {
+                                            throw new ApplicationException(errorText_Blocking + "Shippers and Consignees");
+                                        }
+                                    }
+
+                                    break;
+                                }
+
+                            case "AG":
+                                {
+                                    if (mySettings.AgentsShipmentsBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Agents");
+                                    }
+
+                                    break;
+                                }
+
+                            case "CG":
+                                {
+                                    if (mySettings.CustomsAgentsShipmentsBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Customs Agents");
+                                    }
+
+                                    break;
+                                }
+
+                            case "SG":
+                                {
+                                    if (mySettings.ShippingAgentsShipmentsBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Shipping Agents");
+                                    }
+
+                                    break;
+                                }
+
+                            case "AL":
+                                {
+                                    if (mySettings.AirlinesShipmentsBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Airlines");
+                                    }
+
+                                    break;
+                                }
+
+                            case "SL":
+                                {
+                                    if (mySettings.ShippingLinesShipmentsBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Shipping Lines");
+                                    }
+
+                                    break;
+                                }
+
+                            case "TR":
+                                {
+                                    if (mySettings.TruckersShipmentsBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Truckers");
+                                    }
+
+                                    break;
+                                }
+
+                            case "VD":
+                                {
+                                    if (mySettings.VendorsShipmentsBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Vendors");
+                                    }
+
+                                    break;
+                                }
+
+                            case "WH":
+                                {
+                                    if (mySettings.WarehousesShipmentsBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Warehouses");
+                                    }
+
+                                    break;
+                                }
+                        }
+                    }
+                }
+            }
+        }
+
         private static void ValidateCreditLimitPartner(int tenant, AgentRepository myAgentRepository, CustomerRepository myCustomerRepository, string myPartnerId, string mydbPartnerId, string myPartnerText, string localCurrencyCode, bool isNewEntity)
         {
             if (!string.IsNullOrEmpty(myPartnerId))

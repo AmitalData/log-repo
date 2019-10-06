@@ -14,13 +14,13 @@ export class NewUser {
     }
 
     QuickSearch() {
+
         this.helper.WaitBusyIndicator();
         this.helper.WaitByIdAndClick('General.MH.Maintenance');
         this.helper.waitByCss('#null_Search');
     }
 
     SearchUserTab() {
-        browser.sleep(1000)
         this.helper.WaitByIdAndFill('null_Search', "User");
         this.helper.WaitByIdAndClick('MaintenanceItemMTUS');
 
@@ -35,9 +35,9 @@ export class NewUser {
         //  this.helper.WaitByIdAndFill('', "Poland");
         this.helper.WaitByIdAndFill('User_EnglishName', this.UserName);
         this.helper.WaitByIdAndFill('User_DepartmentId', "Management");
-        this.helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+        this.helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'User_DepartmentId', "Management");
         this.helper.WaitByIdAndFill('User_BranchId', "main");
-        this.helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+        this.helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'User_BranchId', "main");
         this.helper.WaitByIdAndFill('User_Notes', "This is Test ")
         this.helper.WaitByIdAndClick('row11');
          this.helper.WaitByIdAndClick('CheckBox_0_0_LBL');

@@ -22,7 +22,7 @@ describe('ChartOfAccount Module',function (){
     browser.ignoreSynchronization = true;
     z.GoToMainMenu('General.MH.Maintenance');
     
-    var chartOfAccountNo = z.RandomNumAcc(); 
+      var chartOfAccountNo = z.RandomNumACCWithChars(); 
     c.CreateNewChartOFAccount(chartOfAccountNo, 'Customer');
     E.EditChartOfAccount(chartOfAccountNo);
   

@@ -1,5 +1,7 @@
 ﻿using Logitude.CRM.BL.EntityPMs;
+using Logitude.CRM.Data.EntityKeys;
 using Logitude.CRM.Data.EntityPOCOs;
+using Logitude.CRM.Data.Repsitories;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
@@ -52,7 +54,31 @@ namespace Logitude.CRM.BL.EntityUpdateServices
         {
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
             {
+                this.MapDummyFields(entityPM,entityPOCO);
+            }
+        }
 
+        private void MapDummyFields(OccasionPM entityPM, Occasion entityPOCO)
+        {
+            if (!string.IsNullOrEmpty(entityPM.IndustryId) && (entityPM.IndustryId != entityPOCO.IndustryId))
+            {
+                IndustryRepository iRepository = new IndustryRepository(entityPM.Tenant);
+                Industry iEntity = iRepository.GetSingleIndustry(entityPM.IndustryId, entityPM.Tenant);
+                if (iEntity != null)
+                {
+                    entityPM.IndustryName = iEntity.Name;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(entityPM.OccasionStatusId) && (entityPM.OccasionStatusId != entityPOCO.OccasionStatusId))
+            {
+                OccasionStatusRepository iRepository = new OccasionStatusRepository(entityPM.Tenant);
+                OccasionStatusKeys iKeys = new OccasionStatusKeys() { Code = entityPM.OccasionStatusId };
+                OccasionStatus iEntity = iRepository.GetSingle(iKeys);
+                if (iEntity != null)
+                {
+                    entityPM.OccasionStatusName = iEntity.Name;
+                }
             }
         }
 

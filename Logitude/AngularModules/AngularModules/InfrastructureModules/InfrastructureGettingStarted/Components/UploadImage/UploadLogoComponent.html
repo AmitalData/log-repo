@@ -128,7 +128,7 @@
 
                                     <td style="width: 57px;margin-left:10px">
                                         <button [class.HyperlinkDisabled]="DemoMessageVisibility" style="width: 57px;" class="Button" (click)="OpenUpLoadLogo()">Upload</button>
-                                        <input [attr.id]="LogoFileHtmlId" accept=".jpg,.jpeg,.JPG,.JPEG" type="file" [(ngModel)]="DataImage" (change)="UploadogoFile($event)" style="display:none" class="upload" />
+                                        <input [attr.id]="LogoFileHtmlId" accept=".jpg,.jpeg,.JPG,.JPEG" type="file"  (change)="UploadogoFile($event)" style="display:none" class="upload" />
                                     </td>
 
                                     <td *ngIf="ShowUploadVerySmallLogo" style="width: 10px;">
@@ -137,7 +137,7 @@
 
                                     <td *ngIf="ShowUploadVerySmallLogo" style="width: 120px;">
                                         <button [class.HyperlinkDisabled]="DemoMessageVisibility" style="width:120px;" class="Button" (click)="OpenUpLoadMobileLogo()">Upload Mobile Logo</button>
-                                        <input accept=".png,.PNG" [attr.id]="MobileLogoFileHtmlId" type="file" [(ngModel)]="DataImage" (change)="UploadMobileLogoFile($event)" style="display:none" class="upload" />
+                                        <input accept=".png,.PNG" [attr.id]="MobileLogoFileHtmlId" type="file"  (change)="UploadMobileLogoFile($event)" style="display:none" class="upload" />
                                     </td>
 
 
@@ -147,7 +147,7 @@
 
                                     <td *ngIf="ShowUploadSharedLogisLogo" style="width: 120px;">
                                         <button [class.HyperlinkDisabled]="DemoMessageVisibility" style="width:170px;" class="Button" (click)="OpenUpLoadSharedLogisticsLogo()">Upload Shared Logistics Logo</button>
-                                        <input accept=".png,.PNG" [attr.id]="SharedLogisticsLogoFileHtmlId" type="file" [(ngModel)]="DataImage" (change)="UploadSharedLogisticsLogoFile($event)" style="display:none" class="upload" />
+                                        <input accept=".png,.PNG" [attr.id]="SharedLogisticsLogoFileHtmlId" type="file"  (change)="UploadSharedLogisticsLogoFile($event)" style="display:none" class="upload" />
                                     </td>
 
                                     <td style="width:10px;">
@@ -208,7 +208,7 @@
 
                                                     <td>
                                                         <div style="background-color:#EDEDED;height:25px;color:black;border-top:2px solid #E4E3E1;border-bottom:0px solid gray;border-radius:0px">
-                                                            <p style="font-size:12px;margin-left:5px;margin-top:0px;color:#1B90CB;text-align:left;vertical-align:central">logo (300 pixles)</p>
+                                                            <p style="font-size:12px;margin-left:5px;margin-top:0px;color:#1B90CB;text-align:left;vertical-align:central">logo (300 pixels)</p>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -253,7 +253,7 @@
 
                                                                 <td>
                                                                     <div style="background-color:#EDEDED;height:25px;color:black;border-top:2px solid #E4E3E1;border-bottom:0px solid gray;border-radius:0px">
-                                                                        <p style="font-size:12px;margin-left:5px;margin-top:0px;color:#1B90CB;text-align:left;vertical-align:central">Small Logo (150 pixles)</p>
+                                                                        <p style="font-size:12px;margin-left:5px;margin-top:0px;color:#1B90CB;text-align:left;vertical-align:central">Small Logo (150 pixels)</p>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -304,7 +304,7 @@
 
                                                                 <td>
                                                                     <div style="background-color:#EDEDED;height:25px;color:black;border-top:2px solid #E4E3E1;border-bottom:0px solid gray;border-radius:0px">
-                                                                        <p style="font-size:12px;margin-left:5px;margin-top:0px;color:#1B90CB;text-align:left;vertical-align:central">Mobile Logo (65 pixles)</p>
+                                                                        <p style="font-size:12px;margin-left:5px;margin-top:0px;color:#1B90CB;text-align:left;vertical-align:central">Mobile Logo (65 pixels)</p>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -359,7 +359,7 @@
 
                                                                 <td>
                                                                     <div style="background-color:#EDEDED;height:25px;color:black;border-top:2px solid #E4E3E1;border-bottom:0px solid gray;border-radius:0px">
-                                                                        <p style="font-size:12px;margin-left:5px;margin-top:0px;color:#1B90CB;text-align:left;vertical-align:central">Shared Logistics Logo (65 pixles)</p>
+                                                                        <p style="font-size:12px;margin-left:5px;margin-top:0px;color:#1B90CB;text-align:left;vertical-align:central">Shared Logistics Logo (65 pixels)</p>
                                                                     </div>
                                                                 </td>
                                                             </tr>
