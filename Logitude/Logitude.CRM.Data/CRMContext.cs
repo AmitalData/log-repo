@@ -103,6 +103,8 @@ namespace Logitude.CRM.Data
 	
             modelBuilder.Configurations.Add(new OccasionMap());
 	
+            modelBuilder.Configurations.Add(new OccasionInviteeMap());
+	
             modelBuilder.Configurations.Add(new OccasionStatusMap());
 	
             modelBuilder.Configurations.Add(new OccasionTypeMap());
@@ -558,6 +560,12 @@ namespace Logitude.CRM.Data
 	 }
 	
 	 public IDbSet<Occasion> Occasions 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<OccasionInvitee> OccasionInvitees 
 	 {
 	      get; set;
 	 

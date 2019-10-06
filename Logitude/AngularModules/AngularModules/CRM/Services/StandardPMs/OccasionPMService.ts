@@ -19,6 +19,7 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 
 import {OccasionPM} from '../../EntityPMs/OccasionPM';
 
+import {OccasionInviteePM} from '../../EntityPMs/OccasionInviteePM';
 
 @Injectable()
 
@@ -209,12 +210,22 @@ export class OccasionPMService {
                  
             }
 			
+               this.MapOccasionInvitees(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
 		if (mapParent) {
                 entityPM.OldEntityPM = this.clone(entityPM);
-
+			   			   
+            entityPM.OldEntityPM.OccasionInvitees = [];
+            for (var item in entityPM.OccasionInvitees) {
+            var myOccasionInviteePM = entityPM.OccasionInvitees[item];
+            var newOccasionInviteePM: OccasionInviteePM = this.clone(myOccasionInviteePM);
+						
+							 
+            entityPM.OldEntityPM.OccasionInvitees.push(newOccasionInviteePM);
+            }
+			   
 		}
         else {
 
@@ -224,6 +235,96 @@ export class OccasionPMService {
         return entityPM;
     }
 
+    MapOccasionInvitees(entityPM: OccasionPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldOccasionInvitees: OccasionInviteePM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldOccasionInvitees = entityPM.OldEntityPM.OccasionInvitees;
+        }
+
+        entityPM.OccasionInvitees = new Array<OccasionInviteePM>();
+        for (var item in jsonPM.OccasionInvitees) {
+            var jItem = jsonPM.OccasionInvitees[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newOccasionInviteePM: OccasionInviteePM;
+	  
+            if (mapParent) {
+                newOccasionInviteePM = new OccasionInviteePM(entityPM);
+            }
+            else
+            {
+                newOccasionInviteePM = new OccasionInviteePM(null);
+            }
+                
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newOccasionInviteePM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newOccasionInviteePM.UniqueKey = Guid.newGuid();
+                newOccasionInviteePM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newOccasionInviteePM.OldEntityPM = this.clone(newOccasionInviteePM);
+
+				
+            }
+            else {
+                if (newOccasionInviteePM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newOccasionInviteePM.ChangeSetOp = "Update";
+                }
+                else {
+                        newOccasionInviteePM.ChangeSetOp = "Insert";
+                }
+ 
+                newOccasionInviteePM.OldEntityPM = null;
+                newOccasionInviteePM.EntityParentPM = null;
+            }
+			
+			 newOccasionInviteePM.IsDirty = false;
+            entityPM.OccasionInvitees.push(newOccasionInviteePM);
+        }
+        if (oldOccasionInvitees) {
+            
+            for (var itemKey in oldOccasionInvitees) {
+                if (entityPM.OccasionInvitees.filter(p=> p.UniqueKey === oldOccasionInvitees[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldOccasionInvitees[itemKey]) {
+                        //oldOccasionInvitees[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.OccasionInvitees.push(oldOccasionInvitees[itemKey]);
+						var oldItemJson = oldOccasionInvitees[itemKey];
+                        var deletedPM: OccasionInviteePM = new OccasionInviteePM(null);
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+                      
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.OccasionInvitees.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
 
 	  public clone(jsonPM: any) {
         var entityPM: any;
