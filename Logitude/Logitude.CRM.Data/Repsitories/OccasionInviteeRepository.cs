@@ -15,8 +15,9 @@ namespace Logitude.CRM.Data.Repsitories
    public partial class OccasionInviteeRepository:IRepository<OccasionInvitee>
    {        
 		public List<OccasionInvitee> GetMulti(EntityKeyFields entityKeys)
-        {            
-			throw new NotImplementedException();
+        {
+            OccasionInviteeKeys myEntityKeys = entityKeys as OccasionInviteeKeys;
+            return (from a in context.OccasionInvitees where a.OccasionId == myEntityKeys.Id select a).ToList();
         }
 
         public IQueryable<OccasionInvitee> GetOccasionInviteesByOccasion(string occasionId, int tenant)

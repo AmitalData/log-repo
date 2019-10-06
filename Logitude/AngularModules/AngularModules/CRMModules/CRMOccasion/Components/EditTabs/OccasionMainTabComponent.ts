@@ -7,6 +7,9 @@ import { ListComponentArgs } from '../../../../Infrastructure/Args';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { OccasionInviteePM } from '../../../../CRM/EntityPMs/OccasionInviteePM'; 
+import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
+
 
 @Component({
     selector: 'OccasionMainTabComponent',
@@ -23,7 +26,7 @@ export class OccasionMainTabComponent extends BaseComponent {
     public ObjectTableName = "Occasion";
     public _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
-    public OccasionLinesList = [];
+    public OccasionLinesList: OccasionLineClass[] = [];
 
     constructor(public entityArgs: EntityArgs) {
         super();
@@ -31,22 +34,35 @@ export class OccasionMainTabComponent extends BaseComponent {
         if (this.EntityPM) {
             this.EntityId = this.EntityPM.Id;
         }
-
+        this.LoadOccasionLinesData();
     }
 
-    LoadLinesData() {
-
-
+    LoadOccasionLinesData() {
+        this.OccasionLinesList = [];
+        this.EntityPM.OccasionInvitees.forEach(item => {
+            this.OccasionLinesList.push(new OccasionLineClass(item, this));
+        });
     }
 
     AddContactsClicked() {
         var logWindow = new LogitudeWindow();
         logWindow.IsFillScreen = true;
         logWindow.Title = "Add Contact";
-        //logWindow.DataContext = SelectedInternalDocument;        
+        logWindow.WindowArgs = this.EntityPM;        
         logWindow.Show("./CRMModules/CRMOccasion/Components/AddEdit/AddEditOccasionContactComponent");
         logWindow.WindowClosed.subscribe(($event: any) => {
+            this.LoadOccasionLinesData();
+        });
+    }
 
+    DeleteOccasionInviteeClicked(item: OccasionLineClass ) {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Show("Delete this invitee?");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.EntityPM.RemoveOccasionInvitee(item.EntityPM);
+                this.LoadOccasionLinesData();
+            }
         });
     }
 
@@ -54,9 +70,8 @@ export class OccasionMainTabComponent extends BaseComponent {
     private SearchText: string = "";
     SearchTextKeyUp(args: any) {
         this.SearchText = args;
-        this.LoadLinesData();
+        this.LoadOccasionLinesData();
     }
-
 
     // Statistics
     public NumberAllContacts: number = 0;
@@ -102,5 +117,63 @@ export class OccasionMainTabComponent extends BaseComponent {
                     cmpRef.instance.Run(listArgs);
                 });
         });
+    }
+}
+
+export class OccasionLineClass extends BaseComponent {
+
+    public EntityPM: OccasionInviteePM;
+
+    constructor(entityPM: OccasionInviteePM, public father: OccasionMainTabComponent) {
+        super();
+        this.EntityPM = entityPM; 
+    }
+
+    private isChecked: boolean;
+    get IsChecked() {
+        return this.isChecked;
+    }
+    set IsChecked(value: boolean) {
+        if (this.isChecked != value) {
+            this.isChecked = value;
+        }
+    }
+
+    get Notes() {
+        return this.EntityPM.Notes;
+    }
+    set Notes(value: string) {
+        if (this.EntityPM.Notes != value) {
+            this.EntityPM.Notes = value;
+        }
+    }
+
+    get OccasionName() {
+        return this.EntityPM.OccasionName;
+    }
+    set OccasionName(value: string) {
+        if (this.EntityPM.OccasionName != value) {
+            this.EntityPM.OccasionName = value;
+        }
+    }
+
+    get ContactName() {
+        return this.EntityPM.ContactName;
+    }
+    set ContactName(value: string) {
+        if (this.EntityPM.ContactName != value) {
+            this.EntityPM.ContactName = value;
+        }
+    }
+
+    public InviteeColor: string = "black";
+    public ParticipatedColor: string = "black";
+
+    MarkAsInvitedClicked() {
+
+    }
+
+    MarkAsParticipatedClicked() {
+
     }
 }

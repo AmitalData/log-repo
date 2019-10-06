@@ -11,6 +11,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using System;
 using System.Collections.Generic;
+using Simplog.Server.Infrastructure;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -56,6 +57,12 @@ namespace Logitude.CRM.BL.EntityUpdateServices
             {
                 this.MapDummyFields(entityPM,entityPOCO);
             }
+        }
+
+        protected override void UpdateComposition(OccasionPM entityPM)
+        {
+            OccasionInviteeUpdateService occasionInviteeUpdateService = new OccasionInviteeUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+            occasionInviteeUpdateService.UpdateMulti(entityPM.OccasionInvitees, entityPM.DeletedOccasionInvitees, entityPM, false);            
         }
 
         private void MapDummyFields(OccasionPM entityPM, Occasion entityPOCO)
