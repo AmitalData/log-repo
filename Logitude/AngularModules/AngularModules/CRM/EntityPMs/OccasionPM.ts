@@ -7,6 +7,7 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
+import {OccasionInviteePM} from './OccasionInviteePM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -134,7 +135,41 @@ export class OccasionPM {
     public set IndustryName(newValue: string) { if (this.industryName != newValue) { this.industryName = newValue; this.MarkAsDirty("IndustryName"); } }
        
 	 
+     
+	private occasionInvitees: OccasionInviteePM[];
+    get  OccasionInvitees() {
+        if (this.occasionInvitees == null) {
+            this.occasionInvitees = [];
+        }
 
+        return this.occasionInvitees;
+    }
+    set  OccasionInvitees(newValue: OccasionInviteePM[]) {
+        if (this.occasionInvitees != newValue) {
+            this.occasionInvitees = newValue;
+        }
+    }
+    public AddOccasionInvitee(item: OccasionInviteePM) {
+        if (item != null) {
+            var index = this. OccasionInvitees.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. OccasionInvitees.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveOccasionInvitee(item: OccasionInviteePM) {
+        if (item != null) {
+            var index = this. OccasionInvitees.indexOf(item);
+            if (index > -1) {
+                this. OccasionInvitees.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public OccasionInvitees: Array<OccasionInviteePM>= [];
+ 
     public OldEntityPM: OccasionPM;
 		
     public IsDirty: boolean;

@@ -205,7 +205,7 @@ export class WizardTabComponent {
             this.Helper.WaitByIdAndFill('Shipment_AWBAccountingInformation', 'Accounting information');
             this.Helper.WaitByIdAndFill('Shipment_AWBHandlingInformation', 'Handling information ');
             this.Helper.WaitByIdAndFill('Shipment_AWBComments', 'AWB Comment .. ');
-            // browser.driver.sleep(3000);
+
         }
         else if (LogitudeWizardType == 'M') {
             //Accounting Information
@@ -220,9 +220,7 @@ export class WizardTabComponent {
             this.Helper.WaitByIdAndFill('Master_AccountingInformation2', 'Accounting Information 2 ');
 
             this.Helper.WaitByIdAndClick('OkAdvanceBtn');
-            // browser.driver.sleep(2000);
             // this.Helper.WaitByIdAndFill('Master_AWBAccountingInformation', 'Accounting information - Master');
-            // browser.driver.sleep(2000);
 
             this.Helper.WaitByIdAndFill('Master_AWBHandlingInformation', 'Handling Information - Master');
 
@@ -286,10 +284,6 @@ export class WizardTabComponent {
 
             this.Helper.WaitByIdAndFill('Master_OtherParticipantInformationReference1', 'Participant Ref');
         }
-
-
-
-
     }
 }
 
