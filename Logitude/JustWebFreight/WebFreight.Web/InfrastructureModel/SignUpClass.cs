@@ -1075,6 +1075,7 @@ namespace WebFreight.Web.InfrastructureModel
                 {
                     Tenant = theTenant,
                     Id = theTenant.ToString(),
+                    IsShowAmountLocalCurrency = true,
                 };
 
                 theSharedLogisticsSettingRepository.Add(settings);
@@ -2153,7 +2154,7 @@ namespace WebFreight.Web.InfrastructureModel
             {
                 ObjectTableRule zeroRule = tenantZeroObjectTableRules.Where(d => d.Id == ruleField.ObjectTableRuleId).FirstOrDefault();
                 ObjectTableRule rule = currentTenantObjectTableRules.Where(r => r.RuleCode == zeroRule.RuleCode && r.Tenant == theTenant).FirstOrDefault();
-                ObjectFieldPM zeroObjectField = tenantZeroObjectFields.Where(d => d.Id == ruleField.ObjectFieldId).FirstOrDefault();
+                ObjectFieldPM zeroObjectField = null;//tenantZeroObjectFields.Where(d => d.Id == ruleField.ObjectFieldId).FirstOrDefault();
                 ObjectField objectField = currentTenantObjectFields.Where(d => d.ObjectTableId == rule.ObjectTableId && d.Tenant == theTenant && d.FieldName == zeroObjectField.FieldName).FirstOrDefault();
 
                 ObjectTableRuleField newRuleField = new ObjectTableRuleField()

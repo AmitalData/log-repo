@@ -123,12 +123,16 @@
                     LinesGridColumns.push({ title: "Amount", field: "Amount", width: 120, template: "<div class='k-numeric'>#= Amount #</div>" });
                     LinesGridColumns.push({ title: "VAT Type", field: "VATType", width: 130 });
 
-                    if (invoicePM.LocalCurrencyId != invoicePM.InvoiceCurrencyId) {
+                    if (invoicePM.LocalCurrencyId != invoicePM.InvoiceCurrencyId || invoicePM.IsShowAmountLocalCurrencyColumnInSharedLogistics == false) {
 
                         LinesGridColumns.push({ title: "Amount (" + invoicePM.InvoiceCurrencyCode + ")", field: "AmountInvoice", width: 120, template: "<div class='k-numeric'>#= AmountInvoice #</div>" });
                     }
 
-                    LinesGridColumns.push({ title: "Amount (" + invoicePM.LocalCurrencyCode + ")", field: "AmountLocal", width: 120, template: "<div class='k-numeric'>#= AmountLocal #</div>" });
+                    if (invoicePM.IsShowAmountLocalCurrencyColumnInSharedLogistics == true) {
+                        LinesGridColumns.push({ title: "Amount (" + invoicePM.LocalCurrencyCode + ")", field: "AmountLocal", width: 120, template: "<div class='k-numeric'>#= AmountLocal #</div>" });
+                    }
+
+  
 
                     $.each(invoicePM.InvoiceLines, function (index, item) {
 

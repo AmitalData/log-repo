@@ -526,7 +526,42 @@ namespace Logitude.CRM.BL.EntityPMs
 			
 		 }
 	   }
-   }
+
+	   private List<OccasionInviteePM> occasionInvitees;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("OccasionInviteeOccasion", "Id","OccasionId")]
+	   [DataMember]
+	   public virtual List<OccasionInviteePM> OccasionInvitees  
+	   {
+	        get
+             {
+                 if (occasionInvitees == null)
+                 {
+                     occasionInvitees = new List<OccasionInviteePM>();
+                 }
+                 return occasionInvitees;
+              }
+             set { occasionInvitees = value; }
+	    }
+		   
+	   private List<OccasionInviteePM>  deletedOccasionInvitees;
+	   public virtual List<OccasionInviteePM> DeletedOccasionInvitees  
+	   {
+	        get
+             {
+                 if ( deletedOccasionInvitees == null)
+                 {
+                      deletedOccasionInvitees = new List<OccasionInviteePM>();
+                 }
+                 return  deletedOccasionInvitees;
+              }
+             set {  deletedOccasionInvitees = value; }
+	    }
+	     }
    
 }
 	 
