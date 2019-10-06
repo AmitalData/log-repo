@@ -101,8 +101,11 @@ namespace Logitude.Server.Tools.FTP
 
 				/* Create an FTP Request */
 				string uploadFileName = remoteFile;
-				if (uploadAsTemp)
-					uploadFileName = "tmp_" + Guid.NewGuid() + ".tmp";
+                if (uploadAsTemp)
+                {
+                    uploadFileName = "tmp_" + uploadFileName + ".tmp";
+                    DeleteFileIfExists(uploadFileName, folder);
+                }
 				string url = host + (!string.IsNullOrEmpty(folder) ? ("/" + folder) : "") + "/" + uploadFileName;
 				ftpRequest = (FtpWebRequest)FtpWebRequest.Create(url);
 				/* Log in to the FTP Server with the User Name and Password Provided */
@@ -146,28 +149,22 @@ namespace Logitude.Server.Tools.FTP
 				//ftpResponse.Close();
 
 				if (uploadAsTemp)
-				{
-					bool fileExists = CheckIfFileExists(remoteFile, folder);
-					//if (!fileExists || (fileExists && deleteIfExists))
-					//{
-					if (fileExists)
-					{
-						this.Delete(remoteFile, folder);
-					}
+                {
+                    DeleteFileIfExists(remoteFile, folder);
 
-					string currentFileNameAndPath = (!string.IsNullOrEmpty(folder) ? ("/" + folder) : "") + "/" + uploadFileName;
-					this.Rename(currentFileNameAndPath, remoteFile);
-					// }
-					////ftpRequest = (FtpWebRequest)WebRequest.Create(host + "/" + currentFileNameAndPath);
-					//ftpRequest.Method = WebRequestMethods.Ftp.Rename;
-					///* Rename the File */
-					//ftpRequest.RenameTo = remoteFile;
-					///* Establish Return Communication with the FTP Server */
-					//ftpResponse = (FtpWebResponse)ftpRequest.GetResponse();
-					///* Resource Cleanup */
-				}
+                    string currentFileNameAndPath = (!string.IsNullOrEmpty(folder) ? ("/" + folder) : "") + "/" + uploadFileName;
+                    this.Rename(currentFileNameAndPath, remoteFile);
+                    // }
+                    ////ftpRequest = (FtpWebRequest)WebRequest.Create(host + "/" + currentFileNameAndPath);
+                    //ftpRequest.Method = WebRequestMethods.Ftp.Rename;
+                    ///* Rename the File */
+                    //ftpRequest.RenameTo = remoteFile;
+                    ///* Establish Return Communication with the FTP Server */
+                    //ftpResponse = (FtpWebResponse)ftpRequest.GetResponse();
+                    ///* Resource Cleanup */
+                }
 
-				p_message = "File '" + remoteFile + "' was successfully uploaded to '" + (host + (!string.IsNullOrEmpty(folder) ? ("/" + folder) : ""));
+                p_message = "File '" + remoteFile + "' was successfully uploaded to '" + (host + (!string.IsNullOrEmpty(folder) ? ("/" + folder) : ""));
 
 				//else
 				//{
@@ -204,8 +201,18 @@ namespace Logitude.Server.Tools.FTP
 			return true;
 		}
 
-		/* Delete File */
-		public void Delete(string deleteFile, string folder = null)
+        private void DeleteFileIfExists(string remoteFile, string folder)
+        {
+            bool fileExists = CheckIfFileExists(remoteFile, folder);
+            
+            if (fileExists)
+            {
+                this.Delete(remoteFile, folder);
+            }
+        }
+
+        /* Delete File */
+        public void Delete(string deleteFile, string folder = null)
 		{
 
 			/* Create an FTP Request */
@@ -365,8 +372,8 @@ namespace Logitude.Server.Tools.FTP
 			try
 			{
 				ftpResponse = (FtpWebResponse)ftpRequest.GetResponse();
-				/* Establish Return Communication with the FTP Server */
-				ftpStream.Close();
+                /* Establish Return Communication with the FTP Server */
+                 
 				ftpResponse.Close();
 				ftpRequest = null;
 

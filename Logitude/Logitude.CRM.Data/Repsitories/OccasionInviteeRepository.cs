@@ -13,15 +13,19 @@ using Simplog.Server.Infrastructure;
 namespace Logitude.CRM.Data.Repsitories
 {
    public partial class OccasionInviteeRepository:IRepository<OccasionInvitee>
-   {
-        
+   {        
 		public List<OccasionInvitee> GetMulti(EntityKeyFields entityKeys)
         {
-            
-			throw new NotImplementedException();
+            OccasionKeys myEntityKeys = entityKeys as OccasionKeys;
+            return (from a in context.OccasionInvitees where a.OccasionId == myEntityKeys.Id select a).ToList();
         }
 
-   }
-
+        public IQueryable<OccasionInvitee> GetOccasionInviteesByOccasion(string occasionId, int tenant)
+        {
+            return from a in context.OccasionInvitees
+                   where a.OccasionId == occasionId && a.Tenant == tenant
+                   select a;
+        }
+    }
 }
    
