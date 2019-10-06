@@ -16,7 +16,7 @@ namespace Logitude.CRM.Data.Repsitories
    {        
 		public List<OccasionInvitee> GetMulti(EntityKeyFields entityKeys)
         {
-            OccasionInviteeKeys myEntityKeys = entityKeys as OccasionInviteeKeys;
+            OccasionKeys myEntityKeys = entityKeys as OccasionKeys;
             return (from a in context.OccasionInvitees where a.OccasionId == myEntityKeys.Id select a).ToList();
         }
 

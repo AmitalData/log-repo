@@ -25,9 +25,9 @@ namespace Logitude.CRM.BL.EntityQueryServices
         public override void GetComposition(EntityKeyFields entityKeys, OccasionPM entityPM)
         {
             ICRMContext context = MainContext as ICRMContext;
-            OccasionKeys activityKeys = entityKeys as OccasionKeys;
+            OccasionKeys occasionKeys = entityKeys as OccasionKeys;
             OccasionInviteeQueryService queryService = new OccasionInviteeQueryService(context);
-            entityPM.OccasionInvitees = queryService.GetMulti(activityKeys, true);
+            entityPM.OccasionInvitees = queryService.GetMulti(occasionKeys, true);
         }
     }
 }
