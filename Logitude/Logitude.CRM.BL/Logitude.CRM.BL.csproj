@@ -315,6 +315,7 @@
     <Compile Include="EntityQueryServices\Generated\TicketStageQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TicketTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TimeUnitQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\OccasionQueryService.cs" />
     <Compile Include="EntityQueryServices\OpportunityAdditionalServiceQueryService.cs" />
     <Compile Include="EntityQueryServices\OpportunityProductLocationQueryService.cs" />
     <Compile Include="EntityQueryServices\OpportunityProductQueryService.cs" />
