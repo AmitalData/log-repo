@@ -8,6 +8,7 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { OccasionInviteePM } from '../../../../CRM/EntityPMs/OccasionInviteePM'; 
+import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 
 
 @Component({
@@ -50,7 +51,18 @@ export class OccasionMainTabComponent extends BaseComponent {
         logWindow.WindowArgs = this.EntityPM;        
         logWindow.Show("./CRMModules/CRMOccasion/Components/AddEdit/AddEditOccasionContactComponent");
         logWindow.WindowClosed.subscribe(($event: any) => {
+            this.LoadOccasionLinesData();
+        });
+    }
 
+    DeleteOccasionInviteeClicked(item: OccasionLineClass ) {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Show("Delete this invitee?");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.EntityPM.RemoveOccasionInvitee(item.EntityPM);
+                this.LoadOccasionLinesData();
+            }
         });
     }
 
@@ -60,7 +72,6 @@ export class OccasionMainTabComponent extends BaseComponent {
         this.SearchText = args;
         this.LoadOccasionLinesData();
     }
-
 
     // Statistics
     public NumberAllContacts: number = 0;
@@ -109,11 +120,60 @@ export class OccasionMainTabComponent extends BaseComponent {
     }
 }
 
-export class OccasionLineClass {
+export class OccasionLineClass extends BaseComponent {
 
-    public entityPM: OccasionInviteePM;
+    public EntityPM: OccasionInviteePM;
 
     constructor(entityPM: OccasionInviteePM, public father: OccasionMainTabComponent) {
+        super();
+        this.EntityPM = entityPM; 
+    }
+
+    private isChecked: boolean;
+    get IsChecked() {
+        return this.isChecked;
+    }
+    set IsChecked(value: boolean) {
+        if (this.isChecked != value) {
+            this.isChecked = value;
+        }
+    }
+
+    get Notes() {
+        return this.EntityPM.Notes;
+    }
+    set Notes(value: string) {
+        if (this.EntityPM.Notes != value) {
+            this.EntityPM.Notes = value;
+        }
+    }
+
+    get OccasionName() {
+        return this.EntityPM.OccasionName;
+    }
+    set OccasionName(value: string) {
+        if (this.EntityPM.OccasionName != value) {
+            this.EntityPM.OccasionName = value;
+        }
+    }
+
+    get ContactName() {
+        return this.EntityPM.ContactName;
+    }
+    set ContactName(value: string) {
+        if (this.EntityPM.ContactName != value) {
+            this.EntityPM.ContactName = value;
+        }
+    }
+
+    public InviteeColor: string = "black";
+    public ParticipatedColor: string = "black";
+
+    MarkAsInvitedClicked() {
+
+    }
+
+    MarkAsParticipatedClicked() {
 
     }
 }

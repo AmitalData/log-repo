@@ -213,12 +213,57 @@
                                                             <table>
 
                                                                 <tr>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
+
+                                                                    <td style="width: 20px;min-width:20px;max-width:20px" rowspan="2">
+                                                                        <div></div>
+                                                                    </td>
+
+                                                                    <td style="width: 50px;min-width:50px;max-width:50px" rowspan="2">
+                                                                        <LogCheckBox [ObjectFieldName]="'IsChecked'" [NoObjectField]="true" [Checked]="item.IsChecked" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                    </td>
+
+                                                                    <td style="width: 250px;min-width:250px;max-width:250px" rowspan="2">
+                                                                        <div style="width:auto;height:50%;color:black">{{item.ContactName}}</div>
+                                                                        <div style="width:120px; max-width:120px; color:#1B90CB" title="Contact" class="TextTrimming">{{item.ContactName}}</div>
+                                                                    </td>
+
+                                                                    <td style="width: 250px;min-width:250px;max-width:250px" rowspan="2">
+                                                                        <div style="width:auto;height:50%;color:black;font-size:14px;">{{item.OccasionName}}</div>
+                                                                        <div style="width:120px; max-width:120px; color:#1B90CB"  class="TextTrimming">{{item.OccasionName}}</div>
+                                                                    </td>
+
+                                                                    <td style="width: 200px;min-width:200px;max-width:200px" rowspan="2">
+                                                                        <div style="width:120px; max-width:120px;">
+                                                                            <span class="hyperlink" [class.HyperlinkDisabled]="!IsInviteeEnabled" (click)="item.MarkAsInvitedClicked()" style="font-size:14px" [ngStyle]="{color:item.InviteeColor}"> Mark As Invited </span>
+                                                                        </div>
+                                                                        <div style="width:200px; max-width:200px;" title="Customer" class="TextTrimming">
+                                                                            <span class="hyperlink" [class.HyperlinkDisabled]="!IsInviteeEnabled" (click)="item.MarkAsParticipatedClicked()" style="font-size:14px" [ngStyle]="{color:item.ParticipatedColor}"> Mark As Participated </span>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <td style="width:250px;min-width:250px;max-width:250px; position: relative;" rowspan="2">
+                                                                        <div class="FillParent">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td style="width:50px;min-width:50px;max-width:50px; ">
+                                                                                        Notes
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <LogTextBox [ObjectFieldName]="'Notes'" [Text]="item.Notes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <td style="width: 50px;min-width:50px;max-width:50px" rowspan="2">
+                                                                        <IconButton [Name]="'delete'" (click)="DeleteOccasionInviteeClicked(item)"></IconButton>
+                                                                    </td>
+
+                                                                    <td style="width: 5px;min-width:5px;max-width:5px" rowspan="2">
+                                                                        <div></div>
+                                                                    </td>
+
                                                                 </tr>
                                                             </table>
                                                         </div>
