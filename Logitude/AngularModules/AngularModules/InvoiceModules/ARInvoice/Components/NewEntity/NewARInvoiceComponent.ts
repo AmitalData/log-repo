@@ -32,6 +32,7 @@ import {UpdateCurrencyRateComponent} from '../../../../CommonModules/CommonOther
 import {VatTypePercentagePM} from '../../../../Common/EntityPMs/VatTypePercentagePM';
 import {InvoiceDomainService} from '../../../../Invoice/Services/InvoiceDomainService';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { error } from 'util';
 
 @Component({
     moduleId: module.id,
@@ -389,6 +390,7 @@ export class NewARInvoiceComponent extends BaseComponent {
         }
     }
 
+    private billToIsCustomer: boolean = false;
     get BillToId() { return this.EntityPM.BillToId; }
     set BillToId(newValue: string) {
         if (this.EntityPM.BillToId != newValue) {
@@ -402,6 +404,7 @@ export class NewARInvoiceComponent extends BaseComponent {
                 this.BillToAddressId = null;
                 this.SATPaymentMethodCode = null;
                 this.UsoCFDICode = null;
+                this.billToIsCustomer = false;
                 this.InvoiceCurrencyId = SessionLocator.TenantPM.CurrencyId;
                 this.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;        
                 this.IsConstituentInvoice = false;      
@@ -426,6 +429,7 @@ export class NewARInvoiceComponent extends BaseComponent {
                             this.VatTypeId = list.VatTypeId;
                             this.VatNumber = list.VatNumber;
                             this.BillToName = list.EnglishName;
+                            this.billToIsCustomer = list.IsCustomer;
 
                             if (this.EntityPM.ARInvoiceTypeCode != "CI" && this.EntityPM.ARInvoiceTypeCode != "CC") {
                                 this.IsConstituentInvoice = list.EnableConsolidationInvoices;
@@ -845,21 +849,25 @@ export class NewARInvoiceComponent extends BaseComponent {
             if (AppTool.IsNullOrEmpty(this.SATPaymentMethodCode)) {
                 errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.SATPaymentMethodCode")));
             }
-      }
-
-      if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
-        //if (AppTool.IsNullOrEmpty(this.SATPaymentMethodCode)) {
-        //  errors.push(msg.replace("%FieldName", "Forma Pago"));
-        //}
-
-        if (AppTool.IsNullOrEmpty(this.MetodoPagoCode)) {
-            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.MetodoPagoCode")));
         }
 
-        if (this.MetodoPagoCode == "PUE" && this.SATPaymentMethodCode == "99") {
-          errors.push("Since the metodo pago was set as PUE, you can't select Por definir (99). Please choose another value for the forma Pago.");
+        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
+            //if (AppTool.IsNullOrEmpty(this.SATPaymentMethodCode)) {
+            //  errors.push(msg.replace("%FieldName", "Forma Pago"));
+            //}
+
+            if (AppTool.IsNullOrEmpty(this.MetodoPagoCode)) {
+                errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.MetodoPagoCode")));
+            }
+
+            if (this.MetodoPagoCode == "PUE" && this.SATPaymentMethodCode == "99") {
+                errors.push("Since the metodo pago was set as PUE, you can't select Por definir (99). Please choose another value for the forma Pago.");
+            }
         }
-      }
+
+        if (errors.length == 0) {
+            this.ValidateCreditLimitPartnersRestrictions(errors);
+        }
 
         this.ValidationErrorsList = errors;
 
@@ -878,6 +886,101 @@ export class NewARInvoiceComponent extends BaseComponent {
             else {
                 this.OnEntityValid();
             }
+        }
+    }
+
+    ValidateCreditLimitPartnersRestrictions(errors: string[]) {
+        var errorText_Blocking: string = "Credit limit setting is blocking invoice for ";
+
+        switch (this.BillToPartnerTypeId) {
+            case "CS":
+                {
+                    if (this.billToIsCustomer) {
+                        if (ObjectsLocator.CreditLimitSettingPM.CustomersInvoicesBlock) {
+                            errors.push(errorText_Blocking + "Customers");
+                        }
+                    }
+
+                    else {
+                        if (ObjectsLocator.CreditLimitSettingPM.ShipperConsigneeInvoiceBlock) {
+                            errors.push(errorText_Blocking + "Shippers and Consignees");
+                        }
+                    }
+
+                    break;
+                }
+
+            case "AG":
+                {
+                    if (ObjectsLocator.CreditLimitSettingPM.AgentsInvoicesBlock) {
+                        errors.push(errorText_Blocking + "Agents");
+                    }
+
+                    break;
+                }
+
+            case "CG":
+                {
+                    if (ObjectsLocator.CreditLimitSettingPM.CustomsAgentsInvoicesBlock) {
+                        errors.push(errorText_Blocking + "Customs Agents");
+                    }
+
+                    break;
+                }
+
+            case "SG":
+                {
+                    if (ObjectsLocator.CreditLimitSettingPM.ShippingAgentsInvoicesBlock) {
+                        errors.push(errorText_Blocking + "Shipping Agents");
+                    }
+
+                    break;
+                }
+
+            case "AL":
+                {
+                    if (ObjectsLocator.CreditLimitSettingPM.AirlinesInvoicesBlock) {
+                        errors.push(errorText_Blocking + "Airlines");
+                    }
+
+                    break;
+                }
+
+            case "SL":
+                {
+                    if (ObjectsLocator.CreditLimitSettingPM.ShippingLinesInvoicesBlock) {
+                        errors.push(errorText_Blocking + "Shipping Lines");
+                    }
+
+                    break;
+                }
+
+            case "TR":
+                {
+                    if (ObjectsLocator.CreditLimitSettingPM.TruckersInvoicesBlock) {
+                        errors.push(errorText_Blocking + "Truckers");
+                    }
+
+                    break;
+                }
+
+            case "VD":
+                {
+                    if (ObjectsLocator.CreditLimitSettingPM.VendorsInvoicesBlock) {
+                        errors.push(errorText_Blocking + "Vendors");
+                    }
+
+                    break;
+                }
+
+            case "WH":
+                {
+                    if (ObjectsLocator.CreditLimitSettingPM.WarehousesInvoicesBlock) {
+                        errors.push(errorText_Blocking + "Warehouses");
+                    }
+
+                    break;
+                }
         }
     }
 
