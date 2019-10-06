@@ -19,6 +19,7 @@ export class AddEditOccasionContactComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     public SelectedItem: OccasionContactItem = null;
     public ValidationErrorsList: string[] = [];
+    public ObjectTableName: string = "Occasion";
     constructor() {
         super();
     }
