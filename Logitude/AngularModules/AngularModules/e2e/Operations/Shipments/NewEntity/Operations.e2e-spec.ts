@@ -1,19 +1,34 @@
 import { OperationsComp } from './Operations.po';
 import { browser, by, element } from 'protractor';
 import { LoginComp } from '../../../Login/Login.po';
+//import { GeneralFunctions } from '../../../Helpers/GeneralFunctions';
+import { EditTabsComponent } from '../EditEntity/EditShipmentTabs.po';
+
 
 describe('Operations Module', () => {
-  let page: OperationsComp = new OperationsComp();
-  // let login: LoginComp=new LoginComp();
-  let count: number = 0;
+    let page: OperationsComp = new OperationsComp();
+    let EditShipmentTabs: EditTabsComponent;
 
-  afterEach(() => {
-    // browser.switchTo().alert().accept();
-  })
+    var shipperRef1;
+    afterEach(() => {
+        // browser.switchTo().alert().accept();
 
-  it('Operations Success', function () {
-    browser.ignoreSynchronization = true;
-    page.DoOperations();
-  });
+    })
 
+    it('Create Shipment .. ', function () {
+        browser.ignoreSynchronization = true;
+        shipperRef1 = page.DoOperations();
+        console.log(shipperRef1);
+    });
+    it('Search For shipment ..', function () {
+        console.log('inside the search it : ' + shipperRef1);
+        browser.ignoreSynchronization = true;
+        page.SearchForShipment(shipperRef1);
+    });
+    it('Edit Shipment .. ', function () {
+        browser.ignoreSynchronization = true;
+        page.EditShipment(shipperRef1);
+        page.saveShip();
+
+    });
 });
