@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { OccasionPM } from '../../../../CRM/EntityPMs/OccasionPM';
-
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 
 @Component({
     selector: 'OccasionMainTabComponent',
@@ -22,14 +22,18 @@ export class OccasionMainTabComponent extends BaseComponent {
         this.EntityPM = this.entityArgs.EntityPM;
         if (this.EntityPM) {
             this.EntityId = this.EntityPM.Id;
-        }
-        
+        }        
     }
 
 
-    AddContacts() {
+    AddContactsClicked() {
+        var logWindow = new LogitudeWindow();
+        logWindow.IsFillScreen = true;
+        logWindow.Title = "Add Contact";
+        //logWindow.DataContext = SelectedInternalDocument;        
+        logWindow.Show("./CRMModules/CRMOccasion/Components/AddEdit/AddEditOccasionContactComponent");
+        logWindow.WindowClosed.subscribe(($event: any) => {
 
-
+        });
     }
-
 }
