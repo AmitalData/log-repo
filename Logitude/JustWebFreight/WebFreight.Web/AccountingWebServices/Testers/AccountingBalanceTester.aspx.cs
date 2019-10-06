@@ -45,6 +45,7 @@ using Logitude.Accounting.BL.CoreBL.FunctionalTests;
 using Logitude.Accounting.BL.CoreBL.Batch;
 using Logitude.Accounting.BL.CoreBL.ExternalReconcile;
 using Logitude.Accounting.BL.EntityUpdateServices;
+using Logitude.Accounting.BL.Validators;
 //using Logitude.Accounting.BL.CoreBL.ReverseEngineer;
 
 namespace WebFreight.Web.AccountingWebServices.Testers
@@ -98,8 +99,13 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             //s.ClearDB(1148);
             //var a = new ReconcileOpenAmountService();
             //var l = a.GetLedgerOpenAmountDiff(1106, 2019);
-
-
+            //externalPageLineId": "1 - 12487",
+            var accountingContext = AccountingContext.GetContext(1071);
+            IExternalReconcileDataProvider externalReconcileDataProvider = new ExternalReconcileDataProvider(accountingContext);
+            var a = new ExternalReconcileAdjustBankFeesService();
+            a.MustInit(externalReconcileDataProvider);
+            a.CreateJournalWithExtReconcile(1071, new List<string>() { "1-12487" }, "1-216674", "Notes ");
+            var aa = a.TheNewJournal;
             try
             {
 

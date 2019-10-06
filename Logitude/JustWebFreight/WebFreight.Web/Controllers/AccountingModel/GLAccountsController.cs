@@ -214,7 +214,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
                 GLAccountQueryService query = new GLAccountQueryService(MyContext);
-                query.ConnectCardToGLAccount(accountId, cardId, skipConnectedCardsValidation, authToken.Tenant);
+                CardGLAccountConnectionArgs args = new CardGLAccountConnectionArgs()
+                {
+                    AccountId = accountId,
+                    CardId = cardId,
+                    Tenant = authToken.Tenant,
+                    SkipConnectedCardsValidation = skipConnectedCardsValidation
+                };
+                query.ConnectCardToGLAccount(args);
 
                 return Request.CreateResponse(HttpStatusCode.OK, "ok");
             }

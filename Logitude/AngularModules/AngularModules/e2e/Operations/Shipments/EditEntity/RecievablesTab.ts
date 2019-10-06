@@ -9,8 +9,6 @@ export class ReceivablesTabComponent {
     constructor() {
         this.Helper = new FieldsHelper();
     }
-
-
     public RecievablesTab(ShipmentLevelCode: string, shipmentType: string) {
         this.Helper.WaitByIdAndClick('Shipment.TH.Receivables');
         this.Helper.WaitEditComponentBusyIndicator();
@@ -30,20 +28,17 @@ export class ReceivablesTabComponent {
                 this.amount1 = this.AddReceivables('Inland', '10', '10', 'USD');
                 this.amount2 = this.AddReceivables('Order', '10', '20', 'USD');
             }
-
             // expect(element(by.id('ReceivableAmount')).getAttribute('textContent')).toBe(this.amount1 + this.amount2);
             // this.AddARInvoice();
         }
         else if (ShipmentLevelCode == 'M') {
             // this.Helper.WaitByIdAndFill('Shipment_EstimateProfitInSelectedCurrency', '44');
-
             this.AddReceivables('A', '5', '10', 'USD');
-             //this.AddReceivables('Order', '10', '20');
+            //this.AddReceivables('Order', '10', '20');
             // InvoiceAmount = this.amount1 + this.amount2
             // this.AddARInvoice();
         }
     }
-
     AddReceivables(ChargeType: string, quantity: any, unitPrice: any, currency: any) {
         var amount: any = 0;
         var receivableCurrency = '';
@@ -60,28 +55,23 @@ export class ReceivablesTabComponent {
         this.Helper.WaitByIdAndClick('AddReceivable');
 
         this.Helper.WaitByIdAndFill('ShipmentReceivable_ChargesTypeId', ChargeType);
-        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'ShipmentReceivable_ChargesTypeId', ChargeType);
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'ShipmentReceivable_ChargesTypeId', ChargeType);
 
         this.Helper.WaitByIdAndFill('ShipmentReceivable_MeasurementId', 'Gross');
-        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'ShipmentReceivable_MeasurementId', 'Gross');
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'ShipmentReceivable_MeasurementId', 'Gross');
 
         this.Helper.WaitByIdAndFill('ShipmentReceivable_Quantity', quantity);
         this.Helper.WaitByIdAndFill('ShipmentReceivable_UnitPrice', unitPrice);
 
         this.Helper.WaitByIdAndFill('ShipmentReceivable_CurrencyId', currency);
-        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'ShipmentReceivable_CurrencyId', currency);
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'ShipmentReceivable_CurrencyId', currency);
 
         var EC = protractor.ExpectedConditions;
         // browser.wait(EC.elementToBeClickable(element(by.id('ShipmentReceivable_Rate'))), 20000).then(a => {
         //     // console.log('inside the Exchange Rate Feild ');
 
         // });
-
-
-        // browser.driver.sleep(5000);
         // this.Helper.WaitByIdAndFill('ShipmentReceivable_Notes', 'Note :' + receivableCurrency);
-
-        // browser.driver.sleep(6000);
         // this.Helper.WaitByIdAndFill('ShipmentReceivable_Notes', 'Add Receivable');
         var receivableAmount = '';
         var localAmount = '';
@@ -124,15 +114,9 @@ export class ReceivablesTabComponent {
         //     profitAmount = profAmount;
         //     console.log('ProfitAmount : ' + profitAmount);
         // });
-
-
-
         // expect(element(by.id('ShipmentReceivable_Notes')).getAttribute('value')).toBe('razan');
-
-
         this.Helper.WaitByIdAndClick('Ok-AddReceivableBtn');
         return lineAmount;
-
     }
 
     AddARInvoice() {
@@ -161,8 +145,6 @@ export class ReceivablesTabComponent {
         this.Helper.WaitByIdAndClick('ARInvoice.TH.ARPayments');
         // this.Helper.WaitBusyIndicator();
 
-
-
         this.Helper.WaitByIdAndClick('ARInvoice.B.SaveAsDraft');
         // this.Helper.WaitBusyIndicator();
         var EC = protractor.ExpectedConditions;
@@ -175,21 +157,12 @@ export class ReceivablesTabComponent {
         });
         // this.Helper.WaitByIdAndClick('ARInvoice.TH.General');
         // this.Helper.WaitByIdAndClick('ARInvoice_PrintNotes');
-
-        // browser.driver.sleep(4000);
         // this.Helper.WaitByIdAndClick('ARInvoice.B.Approve');
         // this.Helper.WaitBusyIndicator();
-
-
-
-        // browser.driver.sleep(4000);
 
         //  this.Helper.WaitByCssButtonClick('.Button','New Payment');
         //  this.Helper.WaitByIdAndFill('ARPayment_AmountInPaymentCurrency','3000');
 
         // this.Helper.WaitByIdAndClick('EditBackbutton_1');
-        browser.driver.sleep(5000);
-
     }
-
 }

@@ -19,7 +19,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
     public partial class ReconcileExternalPageListQueryService
     {
-	    private IQueryable<ReconcileExternalPageList> GetIqueryableList(IQueryable<ReconcileExternalPage> iQueryable)
+	    public IQueryable<ReconcileExternalPageList> GetIqueryableList(IQueryable<ReconcileExternalPage> iQueryable)
         {
 		IQueryable<ReconcileExternalPageList> query = (from a in iQueryable.Include("BankPageEntryType")
                                             select new ReconcileExternalPageList()

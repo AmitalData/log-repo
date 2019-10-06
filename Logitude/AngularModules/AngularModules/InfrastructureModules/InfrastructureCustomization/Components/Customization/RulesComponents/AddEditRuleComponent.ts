@@ -392,7 +392,9 @@ export class AddEditRuleComponent extends BaseComponent {
                 this.ValidationErrorsList.push("Trigger Field is required");
             }
         }
-
+        if (AppTool.IsNullOrEmpty(this.DataContext.TriggerTypeCode)) {
+            this.ValidationErrorsList.push("Trigger Type Field is required");
+        }
         if (this.ValidationErrorsList.length != 0) {
             return;
         }

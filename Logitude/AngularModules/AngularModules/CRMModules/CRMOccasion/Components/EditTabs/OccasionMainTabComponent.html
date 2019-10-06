@@ -4,11 +4,141 @@
 
         <!-- Header -->
         <tr class="TabTitleRow">
-            <td>{{'Occasion.TH.Main' | TextCodeTranslationPipe}}</td>
+            <td>
+                <table>
+                    <tr>
+                        <td>{{'Occasion.TH.Main' | TextCodeTranslationPipe}}</td>
+
+                        <td style="width:160px">
+                            <EntityFollowComponent [EntityId]="EntityId" [ObjectTableName]="'Occasion'"></EntityFollowComponent>
+                        </td>
+
+                        <td style="width:5px">
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <!-- Counts -->
+        <tr style="height:100px;">
+            <td>
+                <table>
+                    <tr>
+                        <td>
+                            <div class="MediaFill">
+                                <fieldset class="MediaFill GroupBox">
+                                    <legend>
+                                        <span>Contacts</span>
+                                    </legend>
+
+                                    <div style="top: 10px;">
+
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </td>
+
+                        <td style="width: 10px;">
+                            <div></div>
+                        </td>
+
+                        <td>
+                            <div class="MediaFill">
+                                <fieldset class="MediaFill GroupBox">
+                                    <legend>
+                                        <span>Customers</span>
+                                    </legend>
+
+                                    <div style="top: 10px;">
+
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </td>
+
+                        <td style="width: 430px;">
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
         </tr>
 
         <tr>
+            <td>
+                <table>
+                    <tr>
+                        <td>
+                            <table>
+                                <tr style="height:32px;">
+                                    <td></td>
+                                </tr>
+                                <tr style="height: 5px;">
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                                <tr class="SectionHeader" style="height:32px;">
+                                    <td>
+                                        <table>
+                                            <tr style="height:5px;">
+                                                <td colspan="3">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding-left:10px;float:left;vertical-align:central;width: 20px;">
+                                                    <LogCheckBox [ObjectFieldName]="'IsCheckedAllContacts'" [NoObjectField]="true" [Checked]="IsCheckedAllContacts" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                </td>
 
+                                                <td>
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="float:right;vertical-align:central;">
+                                                    <button class="Button" (click)="AddContactsClicked()">Add Contacts</button>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:5px;">
+                                                <td colspan="3">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                                <tr style="height: 5px;">
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="MediaFill">
+
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </td>
+
+                        <td style="width:10px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width:420px;">
+                            <div class="MediaFill">
+                                <SocialComponent [QueryName]="'Following'" [SubQueryName]="'All'" [IsEntityMode]="true" [ScreenCode]="'OCMN'"></SocialComponent>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
         </tr>
     </table>
 </div>
