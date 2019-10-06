@@ -844,25 +844,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {   
-
-		   ObjectTable OccasionInviteeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "OccasionInvitee" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> OccasionInviteeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "OccasionInvitee").ToList();
-		       
-	      
-
-	         Screen OccasionInviteeOccasionInviteeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "OccasionInvitee.HeaderScreen", Name = "OccasionInviteeHeaderScreen", ObjectTableId = OccasionInviteeObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
-      
-            ScreenField OccasionInviteeOccasionInviteeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = OccasionInviteeObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = OccasionInviteeOccasionInviteeHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField OccasionInviteeOccasionInviteeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = OccasionInviteeObjectFields.Where(d => d.FieldName == "TypeName").FirstOrDefault().Id, ScreenId = OccasionInviteeOccasionInviteeHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField OccasionInviteeOccasionInviteeHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = OccasionInviteeObjectFields.Where(d => d.FieldName == "OccasionInviteeStatusName").FirstOrDefault().Id, ScreenId = OccasionInviteeOccasionInviteeHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField OccasionInviteeOccasionInviteeHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = OccasionInviteeObjectFields.Where(d => d.FieldName == "OwnerName").FirstOrDefault().Id, ScreenId = OccasionInviteeOccasionInviteeHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
-		    OccasionInviteeObjectTable.HeaderScreenId = OccasionInviteeOccasionInviteeHeaderScreenScreen0.Id;
-	   		  
+	    {    
 
 	    }
 

@@ -6,6 +6,7 @@ import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQue
 import { ListComponentArgs } from '../../../../Infrastructure/Args';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 
 @Component({
     selector: 'OccasionMainTabComponent',
@@ -38,8 +39,13 @@ export class OccasionMainTabComponent extends BaseComponent {
 
     }
 
-    AddContacts() {
-
+    AddContactsClicked() {
+        var logWindow = new LogitudeWindow();
+        logWindow.IsFillScreen = true;
+        logWindow.Title = "Add Contact";
+        //logWindow.DataContext = SelectedInternalDocument;        
+        logWindow.Show("./CRMModules/CRMOccasion/Components/AddEdit/AddEditOccasionContactComponent");
+        logWindow.WindowClosed.subscribe(($event: any) => {
 
     }
 
@@ -96,5 +102,4 @@ export class OccasionMainTabComponent extends BaseComponent {
                 });
         });
     }
-
 }
