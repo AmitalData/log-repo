@@ -12,6 +12,7 @@ using Logitude.CRM.BL.EntityPMs;
 using Logitude.CRM.Data;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Logitude.CRM.Data.Repsitories;
 
 namespace Logitude.CRM.BL.EntityDataMappings
 {   
@@ -37,6 +38,20 @@ namespace Logitude.CRM.BL.EntityDataMappings
                 if (contact != null)
                 {
                     entityPM.ContactName = contact.EnglishName;
+                    entityPM.ContactEmail = contact.Email;
+                    entityPM.ContactMobile = contact.Mobile;
+                    entityPM.ContactTel = contact.BusinessPhone;
+                    entityPM.ContactPosition = contact.Position;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(entityPOCO.OccasionId))
+            {
+                OccasionRepository occasionRepository = new OccasionRepository(entityPOCO.Tenant);
+                Occasion occasion = occasionRepository.GetSingle(entityPOCO.OccasionId, entityPOCO.Tenant);
+                if (occasion != null)
+                {
+                    entityPM.OccasionName = occasion.Name;
                 }
             }
         }

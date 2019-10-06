@@ -55,7 +55,12 @@ namespace Logitude.CRM.BL.EntityDataMappings
 	         OccasionName, 
 	         ContactName, 
 	         Invited, 
-	         Participated,
+	         Participated, 
+	         ContactPhone, 
+	         ContactEmail, 
+	         ContactTel, 
+	         ContactPosition, 
+	         ContactMobile,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

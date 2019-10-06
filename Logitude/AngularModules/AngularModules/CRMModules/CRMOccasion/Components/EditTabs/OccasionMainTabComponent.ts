@@ -9,7 +9,7 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { OccasionInviteePM } from '../../../../CRM/EntityPMs/OccasionInviteePM'; 
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
-
+import { AppTool } from '../../../../Infrastructure/Tools';
 
 @Component({
     selector: 'OccasionMainTabComponent',
@@ -39,9 +39,17 @@ export class OccasionMainTabComponent extends BaseComponent {
 
     LoadOccasionLinesData() {
         this.OccasionLinesList = [];
+        var result = [];
         this.EntityPM.OccasionInvitees.forEach(item => {
-            this.OccasionLinesList.push(new OccasionLineClass(item, this));
+            result.push(new OccasionLineClass(item, this));
+           
         });
+
+        if (this.OccasionLinesList != null && !AppTool.IsNullOrEmpty(this.SearchText)) {
+            result = result.filter(d => d.SearchFields != null && d.SearchFields && d.SearchFields.toUpperCase().indexOf(this.SearchText.toUpperCase()) > -1);
+        }
+
+        this.OccasionLinesList = result;
     }
 
     AddContactsClicked() {
@@ -123,6 +131,8 @@ export class OccasionMainTabComponent extends BaseComponent {
 export class OccasionLineClass extends BaseComponent {
 
     public EntityPM: OccasionInviteePM;
+    public DataContext: OccasionLineClass = this;
+    public ObjectTableName = "OccasionInvitee";
 
     constructor(entityPM: OccasionInviteePM, public father: OccasionMainTabComponent) {
         super();
@@ -163,6 +173,43 @@ export class OccasionLineClass extends BaseComponent {
     set ContactName(value: string) {
         if (this.EntityPM.ContactName != value) {
             this.EntityPM.ContactName = value;
+        }
+    }
+
+    get ContactEmail() {
+        return this.EntityPM.ContactEmail;
+    }
+    set ContactEmail(value: string) {
+        if (this.EntityPM.ContactEmail != value) {
+            this.EntityPM.ContactEmail = value;
+        }
+    }
+
+    get ContactTel() {
+        return this.EntityPM.ContactTel;
+    }
+    set ContactTel(value: string) {
+        if (this.EntityPM.ContactTel != value) {
+            this.EntityPM.ContactTel = value;
+        }
+    }
+
+    get ContactMobile() {
+        return this.EntityPM.ContactMobile;
+    }
+
+    set ContactMobile(value: string) {
+        if (this.EntityPM.ContactMobile != value) {
+            this.EntityPM.ContactMobile = value;
+        }
+    }
+
+    get ContactPosition() {
+        return this.EntityPM.ContactPosition;
+    }
+    set ContactPosition(value: string) {
+        if (this.EntityPM.ContactPosition != value) {
+            this.EntityPM.ContactPosition = value;
         }
     }
 
