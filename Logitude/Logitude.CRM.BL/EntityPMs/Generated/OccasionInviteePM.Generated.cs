@@ -342,6 +342,52 @@ namespace Logitude.CRM.BL.EntityPMs
 			
 		 }
 	   }
+	  private bool invited ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool Invited  
+	   {
+	    
+	     get
+		{
+		   return invited;
+		 }
+		 set
+		 {
+		   if(invited != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Invited",OldValue=invited,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   invited=value;
+		   }
+			
+		 }
+	   }
+	  private bool participated ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool Participated  
+	   {
+	    
+	     get
+		{
+		   return participated;
+		 }
+		 set
+		 {
+		   if(participated != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Participated",OldValue=participated,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   participated=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

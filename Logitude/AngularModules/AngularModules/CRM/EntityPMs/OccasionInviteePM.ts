@@ -97,6 +97,16 @@ export class OccasionInviteePM {
     public set ContactName(newValue: string) { if (this.contactName != newValue) { this.contactName = newValue; this.MarkAsDirty("ContactName"); } }
        
 	 
+    private invited: boolean;
+    public get Invited() { return this.invited; }
+    public set Invited(newValue: boolean) { if (this.invited != newValue) { this.invited = newValue; this.MarkAsDirty("Invited"); } }
+       
+	 
+    private participated: boolean;
+    public get Participated() { return this.participated; }
+    public set Participated(newValue: boolean) { if (this.participated != newValue) { this.participated = newValue; this.MarkAsDirty("Participated"); } }
+       
+	 
 
     public OldEntityPM: OccasionInviteePM;
 	
