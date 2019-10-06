@@ -249,22 +249,26 @@
                                                                         <div class="FillParent" style="height:60px;">
                                                                             <table>
                                                                                 <tr>
-                                                                                    <td style="width:50px;min-width:50px;max-width:50px;vertical-align:top;color:#6E7172;">
+                                                                                    <td style="width:40px;min-width:40px;max-width:40px;vertical-align:top;color:#6E7172;">
                                                                                         Notes
                                                                                     </td>
                                                                                     <td>
-                                                                                        <LogTextBox [ObjectFieldName]="'Notes'" [Text]="item.Notes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                                                                        <LogTextBox [ObjectFieldName]="'Notes'" [Text]="item.Notes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [IsMultiline]="true"></LogTextBox>
                                                                                     </td>
                                                                                 </tr>
                                                                             </table>
                                                                         </div>
                                                                     </td>
 
-                                                                    <td style="width: 50px;min-width:50px;max-width:50px; vertical-align:top;" rowspan="2">
+                                                                    <td style="width: 5px;min-width:5px;max-width:5px;" rowspan="2">
+                                                                        <div></div>
+                                                                    </td>
+
+                                                                    <td style="width: 25px;min-width:25px;max-width:25px; vertical-align:top;" rowspan="2">
                                                                         <IconButton [Name]="'delete'" (click)="DeleteOccasionInviteeClicked(item)"></IconButton>
                                                                     </td>
 
-                                                                    <td style="width: 5px;min-width:5px;max-width:5px;float:" rowspan="2">
+                                                                    <td style="width: 5px;min-width:5px;max-width:5px;" rowspan="2">
                                                                         <div></div>
                                                                     </td>
                                                                 </tr>
