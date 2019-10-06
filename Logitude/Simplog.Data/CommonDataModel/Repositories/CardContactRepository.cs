@@ -152,5 +152,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             throw new System.NotImplementedException();
         }
+
+        public IQueryable<CardContact> GetCardsContactsForCustomerIds(List<string> customerIdsList, int tenant)
+        {
+            return (from d in context.CardContacts.Include("Contact").Include("Card.Customer")
+                    where d.Tenant == tenant && customerIdsList.Contains(d.CardId)
+                    select d);
+        }
     }
 }

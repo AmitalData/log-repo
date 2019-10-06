@@ -123,7 +123,7 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
                 this._documentsFilingExtendedPMService.getAllDocumentsFilingsByEntityIdAndObjectTable(this.EntityPm.Id, ObjectTable.Id, "I", SessionLocator.Tenant).subscribe(res => {
                     var Result = [];//DocumentTypeMetaDataExtendedService
 
-                    Result = res.Result.filter(a => a.IsDeleted == false);
+                    Result = res.Result.filter(a => a.IsDeleted == false && a.HasFile == true);
 
 
                     this.externalDocs = [];
@@ -138,7 +138,7 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
                    
                     this.externalDocs = DecForm.concat(Others);
                     var Ticket = this.externalDocs[0];
-                    if (Ticket.HasFile == true && Ticket.FileExtension.toLowerCase() == "pdf") {
+                    if (Ticket && Ticket.HasFile == true && Ticket.FileExtension.toLowerCase() == "pdf") {
                         this.IsPDF = true;
                         this.myCommonDomainService.GetFilingAttachPdfReport(Ticket.DocumentId).subscribe((response: ServiceResponse) => {
                             if (!response.HasError) {
