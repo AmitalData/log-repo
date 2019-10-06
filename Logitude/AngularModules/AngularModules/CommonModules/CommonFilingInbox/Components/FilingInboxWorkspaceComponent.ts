@@ -348,8 +348,10 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
             this.IsRefreshEnabled = false;
         }
         this.ItemsSource = [];
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.myCommonDomainService.GetFilingInboxes(this.filters, this.myUserId, this.IsShowDeletedEnabled).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
+               
                 var result: FilingInboxPM[] = response.Result;
 
                 if (result != null && !AppTool.IsNullOrEmpty(this.searchFields)) {
@@ -382,12 +384,15 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                 this.SetPagerButtonsStates();
                 this.IsVisible = true;
                 this.IsRefreshEnabled = true;
+                this.CurrentSession.StopBusyIndicator();
             }
             else {
 
                 if (response.ErrorsArray && response.ErrorsArray.length > 0) {
                     this.ShowMessage(response.ErrorsArray[0]);
                 }
+
+                this.CurrentSession.StopBusyIndicator();
             }
 
         });
@@ -428,7 +433,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
         this.totalPagesCount = value;
     }
 
-    private pageSize = 100;
+    private pageSize = 50;
     get PageSize() {
         return this.pageSize;
     }
@@ -642,7 +647,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
     PreviosButtonWork() {
         this.ClearConnectToFilter();
         this.PageIndex = this.PageIndex - 1;
-        this.QueryPageIndex = this.QueryPageIndex - 100;
+        this.QueryPageIndex = this.QueryPageIndex - 50;
         this.SetPagerButtonsStates();
         this.IsVisible = false;
         this.LoadAllData();
@@ -689,7 +694,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
     NextPageWork() {
         this.ClearConnectToFilter();
         this.PageIndex = this.PageIndex + 1;
-        this.QueryPageIndex = this.QueryPageIndex + 100;
+        this.QueryPageIndex = this.QueryPageIndex + 50;
         this.SetPagerButtonsStates();
         this.IsVisible = false;
         this.LoadAllData();
@@ -1718,7 +1723,7 @@ export class FilingInboxAttachment extends BaseComponent {
     SetHousesFilters() {
         this.HouseFilters = new ApiQueryFilters();
         this.HouseFilters.PageIndex = 0;
-        this.HouseFilters.PageSize = 100;
+        this.HouseFilters.PageSize = 50;
         if (!AppTool.IsNullOrEmpty(this.father.EntityId)) {
             this.HouseFilters.addAdditionalFilter("MasterShipmentDataId", this.father.EntityId, null, null, "Equals", false, false, false, "string");
         }
