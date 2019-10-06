@@ -47,7 +47,7 @@ export class OccasionMainTabComponent extends BaseComponent {
         var logWindow = new LogitudeWindow();
         logWindow.IsFillScreen = true;
         logWindow.Title = "Add Contact";
-        //logWindow.DataContext = SelectedInternalDocument;        
+        logWindow.WindowArgs = this.EntityPM;        
         logWindow.Show("./CRMModules/CRMOccasion/Components/AddEdit/AddEditOccasionContactComponent");
         logWindow.WindowClosed.subscribe(($event: any) => {
 

@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { OccasionPM } from '../../../../CRM/EntityPMs/OccasionPM';
+import { OccasionInviteePM } from '../../../../CRM/EntityPMs/OccasionInviteePM';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
-import { AppTool } from '../../../../Infrastructure/Tools';
+import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { CRMDomainService, OccasionContactArgs, OccasionContactSearchresult } from '../../../../CRM/Services/CRMDomainService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 
 @Component({
     selector: 'AddEditOccasionContactComponent',
@@ -23,7 +25,11 @@ export class AddEditOccasionContactComponent extends BaseComponent {
     constructor() {
         super();
     }
-    
+
+    SetWindowArgs(entityPM: OccasionPM) {
+        this.EntityPM = entityPM;
+    }
+
     private customerSizeId: string;
     get CustomerSizeId() { return this.customerSizeId; }
     set CustomerSizeId(value: string) {
@@ -77,24 +83,29 @@ export class AddEditOccasionContactComponent extends BaseComponent {
     private BuildItemsSource() {
         this.ItemsSource = [];
 
-        if (AppTool.IsNullOrEmpty(this.SearchText)) {
-            this.loadedContacts.forEach(item => {
-                var myResultItem = new OccasionContactItem(this);
-                myResultItem.ContactId = item.ContactId;
-                myResultItem.Email = item.Email;
-                myResultItem.Name = item.Name;
-                myResultItem.Company = item.Company;
-                myResultItem.Region = item.Region;
-                myResultItem.Industry = item.Industry;
-                myResultItem.Product = item.Product;
-                myResultItem.CustomerSize = item.CustomerSize;
-                this.ItemsSource.push(myResultItem);
-            });
+        var myList: OccasionContactSearchresult[] = [];
+        if (!AppTool.IsNullOrEmpty(this.SearchText)) {
+            myList = this.loadedContacts.filter(f => f.Email != null && f.Email.toLowerCase().startsWith(this.SearchText.toLowerCase())
+                || f.Name != null && f.Name.toLowerCase().startsWith(this.SearchText.toLowerCase())
+                || f.Company != null && f.Company.toLowerCase().startsWith(this.SearchText.toLowerCase()));
         }
 
         else {
-            
+            myList = this.loadedContacts;
         }
+
+        myList.forEach(item => {
+            var myResultItem = new OccasionContactItem(this);
+            myResultItem.ContactId = item.ContactId;
+            myResultItem.Email = item.Email;
+            myResultItem.Name = item.Name;
+            myResultItem.Company = item.Company;
+            myResultItem.Region = item.Region;
+            myResultItem.Industry = item.Industry;
+            myResultItem.Product = item.Product;
+            myResultItem.CustomerSize = item.CustomerSize;
+            this.ItemsSource.push(myResultItem);
+        });
     }
 
     private SearchText: string = null;
@@ -135,17 +146,36 @@ export class AddEditOccasionContactComponent extends BaseComponent {
     }
 
     OkButtonClicked() {
-        var errors: string[] = [];       
+        var errors: string[] = [];
 
         var selectedCount: number = this.ItemsSource.filter(f => f.IsChecked == true).length;
         if (selectedCount == 0) {
             errors.push("You must select 1 line at least");
         }
-        
+
         this.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
-            
+            this.ItemsSource.filter(f => f.IsChecked).forEach(item => {
+                var existContact: OccasionInviteePM = this.EntityPM.OccasionInvitees.filter(d => d.ContactId == item.ContactId)[0];
+
+                if (existContact == null) {
+                    var invitee = new OccasionInviteePM(this.EntityPM);
+                    invitee.Tenant = SessionLocator.Tenant;
+                    invitee.AddedByUserId = SessionInfo.LoggedUserId;
+                    invitee.AddedByUserName = SessionInfo.LoggedUserPM.EnglishName;
+                    invitee.AddedDate = DateTool.GetCurrentDateTimeAsUtc();
+                    invitee.ContactId = item.ContactId;
+                    invitee.ContactName = item.Name;
+                    invitee.OccasionId = this.EntityPM.Id;
+                    invitee.UpdatedByUserId = SessionInfo.LoggedUserId;
+                    invitee.UpdatedByUserName = SessionInfo.LoggedUserPM.EnglishName;
+                    invitee.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
+                    this.EntityPM.AddOccasionInvitee(invitee);
+                }
+            });
+
+            this.CurrentSession.CloseCurrentWindow();
         }
     }
 
