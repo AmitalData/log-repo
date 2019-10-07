@@ -8,7 +8,7 @@
         margin: 10px;
         border-color: #D1D1D1;
         overflow: hidden;
-        height:70px;
+        height: 70px;
     }
 </style>
 
@@ -137,6 +137,7 @@
                 <div></div>
             </td>
         </tr>
+
         <tr>
             <td>
                 <table>
@@ -150,10 +151,28 @@
                                                 <td style="width:300px; float:left;">
                                                     <SearchTextBox [ObjectTableName]="'OccasionInvitee'" (SearchTextChangeEvent)="SearchTextKeyUp($event)" [PlaceHolder]="'Search'"></SearchTextBox>
                                                 </td>
-                                                <td>
-                                                    <div></div>
+
+                                                <td style="float:right;">
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width:55px; font-size:11px; color : #6E7172;">
+                                                                <div>Filter by: </div>
+                                                            </td>
+
+                                                            <td style="width: 200px; vertical-align: middle;">
+                                                                <InvitedFilter (SelectedValueChanged)="SelectedInvitedFilter = $event"></InvitedFilter>
+                                                            </td>
+
+                                                            <td style="width: 3px;">
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td style="width: 250px; vertical-align: middle;">
+                                                                <ParticipatedFilter (SelectedValueChanged)="SelectedParticipatedFilter = $event"></ParticipatedFilter>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </td>
-                                                <td style="float:right;"></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -172,8 +191,27 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="padding-left:30px;float:left;vertical-align:central;width: 20px;">
+                                                <td style="width:30px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="float:left;vertical-align:central;width: 50px;">
                                                     <LogCheckBox [ObjectFieldName]="'IsCheckedAllContacts'" [NoObjectField]="true" [Checked]="IsCheckedAllContacts" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                </td>
+
+                                                <td style="width:5px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td style="float:left;vertical-align:central;width: 70px;">
+                                                    <div tabindex="0" class="ToggleButton">
+                                                        <label>Actions</label>
+                                                        <img src="./Images/ToggleIcon.png" />
+
+                                                        <div class="ToggleButtonMenu" style="right: -45px;">
+
+                                                        </div>
+                                                    </div>
                                                 </td>
 
                                                 <td>
@@ -211,64 +249,65 @@
                                                 <SectionBody>
                                                     <div>
                                                         <div class="borderlist" *ngFor="let item of OccasionLinesList">
-                                                            <table>
-
+                                                            <table style="table-layout: fixed;">
                                                                 <tr>
-
-                                                                    <td style="width: 20px;min-width:20px;max-width:20px" rowspan="2">
+                                                                    <td style="width: 20px;" rowspan="2">
                                                                         <div></div>
                                                                     </td>
 
-                                                                    <td style="width: 50px;min-width:50px;max-width:50px" rowspan="2">
+                                                                    <td style="width: 50px;" rowspan="2">
                                                                         <LogCheckBox [ObjectFieldName]="'IsChecked'" [NoObjectField]="true" [Checked]="item.IsChecked" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
                                                                     </td>
 
-                                                                    <td style="width: 250px;min-width:250px;max-width:250px" rowspan="2">
+                                                                    <td style="width: 200px;" rowspan="2">
                                                                         <div style="width:auto;height:50%;color:#1B90CB;">{{item.ContactName}}</div>
                                                                         <div style="color:#282E30;font-size:10px;text-align:left;" class="TextTrimming">Email: {{item.ContactEmail}}</div>
                                                                         <div style="color:#282E30;font-size:10px;text-align:left;" class="TextTrimming">Tel: {{item.ContactTel}}</div>
                                                                     </td>
 
-                                                                    <td style="width: 250px;min-width:250px;max-width:250px" rowspan="2">
+                                                                    <td style="width: 200px;" rowspan="2">
                                                                         <div style="width:auto;height:50%;color:#1B90CB;font-size:14px;">{{item.OccasionName}}</div>
                                                                         <div style="color:#282E30;font-size:10px;text-align:left;" class="TextTrimming">Mobile: {{item.ContactMobile}}</div>
                                                                         <div style="color:#282E30;font-size:10px;text-align:left;" class="TextTrimming">Position: {{item.ContactPosition}}</div>
                                                                     </td>
 
                                                                     <td rowspan="2">
-                                                                        <div style="width:120px; max-width:120px;">
-                                                                            <span class="hyperlink" [class.HyperlinkDisabled]="!IsInviteeEnabled" (click)="item.MarkAsInvitedClicked()" style="font-size:14px;text-decoration:none" [ngStyle]="{color:item.InviteeColor}"> Mark As Invited </span>
+                                                                        <div style="height:50%;">
+                                                                            <span *ngIf="item.Invited" class="hyperlink" (click)="item.Invited = false" style="color:#1B90CB;font-size:12px;text-decoration:none"> Invited </span>
+                                                                            <span *ngIf="!item.Invited" class="hyperlink" (click)="item.Invited = true" style="color:#282E30;font-size:12px;text-decoration:none"> Mark As Invited </span>
                                                                         </div>
-                                                                        <div style="width:200px; max-width:200px;" title="Customer" class="TextTrimming">
-                                                                            <span class="hyperlink" [class.HyperlinkDisabled]="!IsInviteeEnabled" (click)="item.MarkAsParticipatedClicked()" style="font-size:14px;text-decoration:none" [ngStyle]="{color:item.ParticipatedColor}"> Mark As Participated </span>
+                                                                        <div>
+                                                                            <span *ngIf="item.Participated" class="hyperlink" (click)="item.Participated = false" style="color:#1B90CB;font-size:12px;text-decoration:none"> Participated </span>
+                                                                            <span *ngIf="!item.Participated" class="hyperlink" (click)="item.Participated = true" style="color:#282E30;font-size:12px;text-decoration:none"> Mark As Participated </span>
                                                                         </div>
+                                                                        <div></div>
                                                                     </td>
 
 
-                                                                    <td style="width:250px;min-width:250px;max-width:250px; position: relative;" rowspan="2">
+                                                                    <td style="width:250px;" rowspan="2">
                                                                         <div class="FillParent" style="height:60px;">
                                                                             <table>
                                                                                 <tr>
-                                                                                    <td style="width:40px;min-width:40px;max-width:40px;vertical-align:top;color:#6E7172;">
+                                                                                    <td style="width:40px;vertical-align:top;color:#6E7172;">
                                                                                         Notes
                                                                                     </td>
                                                                                     <td>
-                                                                                        <LogTextBox [ObjectFieldName]="'Notes'" [Text]="item.Notes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [IsMultiline]="true"></LogTextBox>
+                                                                                        <LogTextBox [ObjectFieldName]="'Notes'" [Text]="item.Notes" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true" [IsMultiline]="true"></LogTextBox>
                                                                                     </td>
                                                                                 </tr>
                                                                             </table>
                                                                         </div>
                                                                     </td>
 
-                                                                    <td style="width: 5px;min-width:5px;max-width:5px;" rowspan="2">
+                                                                    <td style="width: 5px;" rowspan="2">
                                                                         <div></div>
                                                                     </td>
 
-                                                                    <td style="width: 25px;min-width:25px;max-width:25px; vertical-align:top;" rowspan="2">
+                                                                    <td style="width: 25px; vertical-align:top;" rowspan="2">
                                                                         <IconButton [Name]="'delete'" (click)="DeleteOccasionInviteeClicked(item)"></IconButton>
                                                                     </td>
 
-                                                                    <td style="width: 5px;min-width:5px;max-width:5px;" rowspan="2">
+                                                                    <td style="width: 5px;" rowspan="2">
                                                                         <div></div>
                                                                     </td>
                                                                 </tr>

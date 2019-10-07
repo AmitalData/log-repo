@@ -13,6 +13,8 @@ using Logitude.CRM.Data;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.CRM.Data.Repsitories;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure;
 
 namespace Logitude.CRM.BL.EntityDataMappings
 {   
@@ -27,6 +29,8 @@ namespace Logitude.CRM.BL.EntityDataMappings
             entityPOCO.Id = entityPM.Id;
             entityPOCO.Tenant = entityPM.Tenant;
             entityPOCO.OccasionId = entityPM.OccasionId;
+
+            BuildSearchFields(entityPM, entityPOCO);
         }
 
         public void CustomPOCOToPM(OccasionInviteePM entityPM, OccasionInvitee entityPOCO)
@@ -54,6 +58,34 @@ namespace Logitude.CRM.BL.EntityDataMappings
                     entityPM.OccasionName = occasion.Name;
                 }
             }
+        }
+
+        private void BuildSearchFields(OccasionInviteePM entityPM, OccasionInvitee entityPOCO)
+        {
+            string mySearchFields = "";
+
+            if (!string.IsNullOrEmpty(entityPOCO.ContactId))
+            {
+                ContactRepository contactRepository = new ContactRepository(entityPOCO.Tenant);
+                Contact contact = contactRepository.GetSingleContact(entityPOCO.ContactId, entityPOCO.Tenant);
+                if (contact != null)
+                {
+                    MethodHelper.AddToSearchFields(ref mySearchFields, contact.EnglishName);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(entityPOCO.OccasionId))
+            {
+                OccasionRepository occasionRepository = new OccasionRepository(entityPOCO.Tenant);
+                Occasion occasion = occasionRepository.GetSingle(entityPOCO.OccasionId, entityPOCO.Tenant);
+                if (occasion != null)
+                {
+                    MethodHelper.AddToSearchFields(ref mySearchFields, occasion.Name);
+                }
+            }
+
+            entityPM.SearchFields = mySearchFields;
+            entityPOCO.SearchFields = mySearchFields;
         }
     }
 }

@@ -30,6 +30,10 @@ export class OccasionList {
 	OwnerName: string;
 	OccasionStatusName: string;
 	IndustryName: string;
+	ParticipatedCustomers: number;
+	ParticipatedContacts: number;
+	InvitedCustomers: number;
+	InvitedContacts: number;
 	
 }
  

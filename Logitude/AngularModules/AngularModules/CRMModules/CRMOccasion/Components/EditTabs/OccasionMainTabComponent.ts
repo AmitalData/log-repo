@@ -10,6 +10,9 @@ import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { OccasionInviteePM } from '../../../../CRM/EntityPMs/OccasionInviteePM'; 
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { AppTool } from '../../../../Infrastructure/Tools';
+import { CRMDomainService } from '../../../../CRM/Services/CRMDomainService';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+
 
 @Component({
     selector: 'OccasionMainTabComponent',
@@ -21,7 +24,6 @@ export class OccasionMainTabComponent extends BaseComponent {
 
     public EntityPM: OccasionPM;
     public EntityId: string;
-    public IsCheckedAllContacts: false;
     public DataContext: OccasionMainTabComponent = this;
     public ObjectTableName = "Occasion";
     public _entityResourceService: EntityResourceService = new EntityResourceService();
@@ -35,35 +37,73 @@ export class OccasionMainTabComponent extends BaseComponent {
             this.EntityId = this.EntityPM.Id;
         }
         this.LoadOccasionLinesData();
+        this.Listen();
+    }
+
+    private Listen() {
+        if (this.CurrentSession.CurrentEditComponent != null) {
+
+            this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                if (isSaveSuccess) {
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.LoadOccasionLinesData();
+                }
+            });
+
+            this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                if (isLoadSuccess) {
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                }
+            });
+        }
     }
 
     LoadOccasionLinesData() {
         this.OccasionLinesList = [];
-        var result = [];
+        var result: OccasionLineClass[] = [];
         this.EntityPM.OccasionInvitees.forEach(item => {
             result.push(new OccasionLineClass(item, this));
-           
+
         });
 
         if (this.OccasionLinesList != null && !AppTool.IsNullOrEmpty(this.SearchText)) {
             result = result.filter(d => d.SearchFields != null && d.SearchFields && d.SearchFields.toUpperCase().indexOf(this.SearchText.toUpperCase()) > -1);
         }
 
+        if (!AppTool.IsNullOrEmpty(this.mySelectedParticipatedFilter) && this.mySelectedParticipatedFilter != "A") {
+            if (this.mySelectedParticipatedFilter == "PA") {
+                result = result.filter(a => a.Participated);
+            }
+            else {
+                result = result.filter(a => !a.Participated);
+            }
+        }
+
+        if (!AppTool.IsNullOrEmpty(this.mySelectedInvitedFilter) && this.mySelectedInvitedFilter != "A") {
+            if (this.mySelectedInvitedFilter == "IN") {
+                result = result.filter(a => a.Invited);
+            }
+            else {
+                result = result.filter(a => !a.Invited);
+            }
+        }
+
         this.OccasionLinesList = result;
+        this.LoadQueriesCounts();
     }
 
     AddContactsClicked() {
         var logWindow = new LogitudeWindow();
         logWindow.IsFillScreen = true;
         logWindow.Title = "Add Contact";
-        logWindow.WindowArgs = this.EntityPM;        
+        logWindow.WindowArgs = this.EntityPM;
         logWindow.Show("./CRMModules/CRMOccasion/Components/AddEdit/AddEditOccasionContactComponent");
         logWindow.WindowClosed.subscribe(($event: any) => {
             this.LoadOccasionLinesData();
         });
     }
 
-    DeleteOccasionInviteeClicked(item: OccasionLineClass ) {
+    DeleteOccasionInviteeClicked(item: OccasionLineClass) {
         var confirmWindow = new ConfirmWindow();
         confirmWindow.Show("Delete this invitee?");
         confirmWindow.WindowClosed.subscribe((event: any) => {
@@ -74,11 +114,41 @@ export class OccasionMainTabComponent extends BaseComponent {
         });
     }
 
+    public isCheckedAllContacts: boolean;
+    get IsCheckedAllContacts() { return this.isCheckedAllContacts; }
+    set IsCheckedAllContacts(value: boolean) {
+        if (this.isCheckedAllContacts != value) {
+            this.isCheckedAllContacts = value;
+            this.OccasionLinesList.forEach(item => {
+                item.IsChecked = value;
+            });
+        }
+    }
+
     // Search
     private SearchText: string = "";
     SearchTextKeyUp(args: any) {
         this.SearchText = args;
         this.LoadOccasionLinesData();
+    }
+
+    // Filters
+    private mySelectedInvitedFilter: string = "";
+    get SelectedInvitedFilter() { return this.mySelectedInvitedFilter; }
+    set SelectedInvitedFilter(newValue: string) {
+        if (this.mySelectedInvitedFilter != newValue) {
+            this.mySelectedInvitedFilter = newValue;
+            this.LoadOccasionLinesData();
+        }
+    }
+
+    private mySelectedParticipatedFilter: string = "";
+    get SelectedParticipatedFilter() { return this.mySelectedParticipatedFilter; }
+    set SelectedParticipatedFilter(newValue: string) {
+        if (this.mySelectedParticipatedFilter != newValue) {
+            this.mySelectedParticipatedFilter = newValue;
+            this.LoadOccasionLinesData();
+        }
     }
 
     // Statistics
@@ -126,6 +196,37 @@ export class OccasionMainTabComponent extends BaseComponent {
                 });
         });
     }
+
+    LoadQueriesCounts() {
+        this.NumberAllContacts = this.EntityPM.OccasionInvitees.length;
+        this.ComputeAllCustomersCount();
+
+        this.NumberInvitedContacts = this.EntityPM.InvitedContacts;
+        this.NumberOfParticipatedContacts = this.EntityPM.ParticipatedContacts;
+
+        this.NumberInvitedCustomers = this.EntityPM.InvitedCustomers;
+        this.NumberOfParticipatedCustomers = this.EntityPM.ParticipatedCustomers;
+    }
+
+
+    ComputeAllCustomersCount() {
+        var service = new CRMDomainService();
+        var contactsIds = "";
+
+        this.EntityPM.OccasionInvitees.forEach(item => {
+            contactsIds = contactsIds + item.ContactId + ",";
+        });
+
+        service.GetCountOfOccasionAllCustomers(contactsIds).subscribe(myResult => {
+            var mm: ServiceResponse = myResult;
+            if (!mm.HasError) {
+                this.NumberAllCustomers = myResult.Result;
+            }
+
+            this.CurrentSession.StopBusyIndicator();
+        });
+    }
+
 }
 
 export class OccasionLineClass extends BaseComponent {
@@ -213,14 +314,30 @@ export class OccasionLineClass extends BaseComponent {
         }
     }
 
-    public InviteeColor: string = "black";
-    public ParticipatedColor: string = "black";
-
-    MarkAsInvitedClicked() {
-
+    get SearchFields() {
+        return this.EntityPM.SearchFields;
+    }
+    set SearchFields(value: string) {
+        if (this.EntityPM.SearchFields != value) {
+            this.EntityPM.SearchFields = value;
+        }
     }
 
-    MarkAsParticipatedClicked() {
+    get Participated() {
+        return this.EntityPM.Participated;
+    }
+    set Participated(value: boolean) {
+        if (this.EntityPM.Participated != value) {
+            this.EntityPM.Participated = value;
+        }
+    }
 
+    get Invited() {
+        return this.EntityPM.Invited;
+    }
+    set Invited(value: boolean) {
+        if (this.EntityPM.Invited != value) {
+            this.EntityPM.Invited = value;
+        }
     }
 }

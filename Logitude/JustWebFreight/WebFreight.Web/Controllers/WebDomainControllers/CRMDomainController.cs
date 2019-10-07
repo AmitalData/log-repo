@@ -2286,6 +2286,35 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             return myResult;
         }
+
+
+        public HttpResponseMessage GetCountOfOccasionAllCustomers(String contactIds)
+        {
+            try
+            {
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    int tenant = authToken.Tenant;
+
+                    var myResult = 0;
+                    if (!string.IsNullOrEmpty(contactIds))
+                    {
+                        List<string> contactIds_Invited = contactIds.TrimEnd(',').Split(',').ToList();
+                        CardContactRepository cardContactRepository = new CardContactRepository(tenant);
+                        myResult = cardContactRepository.GetCardsContactsForContactIds_Count(contactIds_Invited, tenant);
+                    }
+ 
+                    scope.Complete();
+                    return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 
     public class MeetingSummary
