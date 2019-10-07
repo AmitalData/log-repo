@@ -1,69 +1,10 @@
 {
 	"info": {
-		"_postman_id": "aa5b5f84-4f47-470a-99fb-89986e7f4345",
+		"_postman_id": "f2581984-036b-41c0-9eb9-cc77fe4dc48d",
 		"name": "Opportunities",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
-		{
-			"name": "AuthSuccessfull",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "4920ea14-b99c-407f-9682-a626c98d1e74",
-						"exec": [
-							"pm.test(\"AuthSuccessfullOnTenant1\", function () {",
-							"    pm.response.to.have.status(200);",
-							"    ",
-							"   ",
-							"    var idvalue1 = (pm.response.json().Token);",
-							"    var idvalue2 = (pm.response.json().Tenant);",
-							"    var idvalue3 = (pm.response.json().UserId);",
-							"    var id1exist = idvalue1 !== null;",
-							"    var id2exist = idvalue2 !== null;",
-							"    var id3exist = idvalue3 !== null;",
-							"    pm.expect(id1exist);",
-							"    pm.expect(id2exist);",
-							"    pm.expect(id3exist);",
-							"    pm.globals.set(\"Token\",idvalue1);",
-							"    pm.globals.set(\"Tenant\",idvalue2);",
-							"    pm.globals.set(\"LoggedUserId\",idvalue3);",
-							"    ",
-							"    ",
-							"    tests[\"BodyCointainsTokenKey : \" + id1exist] = responseBody.has(id1exist);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "prerequest",
-					"script": {
-						"id": "80382ca3-511a-4d54-8c44-3148e0f553f8",
-						"exec": [
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\"Email\":\"lana123@test.com\",\"Password\":\"!L123456\",\"IsUser\":true,\"GetToken\":true,\"ClientType\":\"Web\"}"
-				},
-				"url": "{{LogitudeURL}}/api/authentication"
-			},
-			"response": []
-		},
 		{
 			"name": "Create Opportunity stage",
 			"request": {
@@ -327,7 +268,12 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"$id\": \"1\",\n \n  \"Tenant\": \"{{Tenant}}\",\n  \"OwnerId\": \"{{LoggedUserId}}\",\n  \"Subject\": \"Lana Opportunity\",\n  \"CustomerId\": \"{{ShipperIdTestShipperExport1}}\",\n \n  \"StageId\": \"{{GetOpportunityStageId}}\",\n  \"Probability\": 20,\n  \"CreateDate\": \"2019-08-25T06:01:22.3556342Z\",\n  \"CreatedByUserId\": \"{{LoggedUserId}}\",\n  \"UpdateDate\": \"2019-08-25T06:01:22.3556342Z\",\n  \"UpdatedByUserId\": \"{{LoggedUserId}}\",\n  \"RatingCode\": \"N\",\n  \"IsClosed\": false,\n  \n  \n  \"StageName\": \"Qualification\",\n\n  \"ValueField\": 0,\n\n  \"LastStageDate\": \"2019-08-25T06:01:22.3556342Z\",\n \n \n  \"BusinessUnitId\": \"1102\",\n\n  \"ConcurrencyGUID\": \"e0a845b7-6a3a-4660-9a59-bcda9e196925\",\n\n  \"OpportunityTypeId\": \"{{GetOpportunityTypeId}}\",\n\n  \"IsClosedLost\": false,\n \n  \"PostToFollowersAsWon\": false,\n\n  \"IsCopy\": false,\n\n  \"IsCustomerBlockedBusinessUnit\": false,\n  \n  \"ChangeSetOp\": 1\n  \n}"
+					"raw": "{\n \n  \"Tenant\": \"{{Tenant}}\",\n  \"OwnerId\": \"{{CreatedByUserId}}\",\n  \"Subject\": \"Automation Opportunity\",\n  \"CustomerId\": \"{{ShipperIdTestShipExport1}}\",\n\n  \"StageId\": \"{{GetOpportunityStageId}}\",\n  \"Probability\": 20,\n  \"CreateDate\": \"2019-10-01T08:17:14.6794568Z\",\n  \"CreatedByUserId\":\"{{CreatedByUserId}}\",\n  \"UpdateDate\": \"2019-10-01T08:17:14.6794568Z\",\n  \"UpdatedByUserId\":\"{{CreatedByUserId}}\",\n  \"RatingCode\": \"N\",\n  \"IsClosed\": false,\n \n  \"StageName\": \"Qualification\",\n\n  \"ValueField\": 0,\n \n  \"LastStageDate\": \"2019-10-01T08:17:14.6794568Z\",\n \n  \"StageDueDate\": \"2019-10-04T08:16:57.095Z\",\n  \"BusinessUnitId\": \"1\",\n \n  \"ConcurrencyGUID\": \"842c0e29-ed09-4ec5-9d19-d5e96062ef2c\",\n \n  \"IsCancelled\": false,\n\n  \"OpportunityTypeId\": \"{{GetOpportunityTypeId}}\",\n\n  \"IsClosedLost\": false,\n\n  \"PostToFollowersAsWon\": false,\n\n  \"IsCopy\": false,\n\n  \"IsCustomerBlockedBusinessUnit\": false,\n  \n  \"ChangeSetOp\": 1\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": "{{LogitudeURL}}/api/opportunities"
 			},
@@ -358,7 +304,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{LogitudeURL}}/api/opportunityviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=Lana%20Opportunity&GetCount=true&PageIndex=0&PageSize=23",
+					"raw": "{{LogitudeURL}}/api/opportunityviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=Automation Opportunity&GetCount=true&PageIndex=0&PageSize=23",
 					"host": [
 						"{{LogitudeURL}}"
 					],
@@ -386,7 +332,7 @@
 						},
 						{
 							"key": "Filter1Value",
-							"value": "Lana%20Opportunity"
+							"value": "Automation Opportunity"
 						},
 						{
 							"key": "GetCount",
@@ -432,11 +378,17 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"$id\": \"1\",\n  \"Id\": \"{{OpportunityId}}\",\n  \"Tenant\": \"{{Tenant}}\",\n  \"OwnerId\": \"{{LoggedUserId}}\",\n  \"Subject\": \"Lana Opportunity\",\n  \"CustomerId\": \"1-156345\",\n\n\"StageId\": \"{{GetOpportunityStageId}}\",\n  \"Probability\": 20,\n \"CreateDate\": \"2019-08-25T06:01:22.3556342Z\",\n  \"CreatedByUserId\": \"{{LoggedUserId}}\",\n  \"UpdateDate\": \"2019-08-25T06:01:24.3556342Z\",\n  \"UpdatedByUserId\": \"{{LoggedUserId}}\",\n  \"RatingCode\": \"N\",\n  \"IsClosed\": true,\n \n  \"SearchFields\": \"Lana Opportunity\",\n  \n  \"StageName\": \"Opportunity Stage\",\n  \"RatingName\": \"Neutral\",\n  \n  \"NumberOfShipments\": 11,\n\n  \"ValueField\": 1.65,\n \n  \"LastStageDate\": \"2019-08-25T06:16:56.143\",\n  \n  \"Field1\": {\n    \"$id\": \"2\",\n    \"Value\": null,\n    \"FieldName\": \"Field1\",\n    \"TableName\": \"Opportunity\"\n  },\n  \"Field2\": {\n    \"$id\": \"3\",\n    \"Value\": null,\n    \"FieldName\": \"Field2\",\n    \"TableName\": \"Opportunity\"\n  },\n  \"Field3\": {\n    \"$id\": \"4\",\n    \"Value\": null,\n    \"FieldName\": \"Field3\",\n    \"TableName\": \"Opportunity\"\n  },\n  \"Field4\": {\n    \"$id\": \"5\",\n    \"Value\": null,\n    \"FieldName\": \"Field4\",\n    \"TableName\": \"Opportunity\"\n  },\n  \"Field5\": {\n    \"$id\": \"6\",\n    \"Value\": null,\n    \"FieldName\": \"Field5\",\n    \"TableName\": \"Opportunity\"\n  },\n  \"Field6\": {\n    \"$id\": \"7\",\n    \"Value\": null,\n    \"FieldName\": \"Field6\",\n    \"TableName\": \"Opportunity\"\n  },\n  \"Field7\": {\n    \"$id\": \"8\",\n    \"Value\": null,\n    \"FieldName\": \"Field7\",\n    \"TableName\": \"Opportunity\"\n  },\n  \"Field8\": {\n    \"$id\": \"9\",\n    \"Value\": null,\n    \"FieldName\": \"Field8\",\n    \"TableName\": \"Opportunity\"\n  },\n  \"Field9\": {\n    \"$id\": \"10\",\n    \"Value\": null,\n    \"FieldName\": \"Field9\",\n    \"TableName\": \"Opportunity\"\n  },\n  \"Field10\": {\n    \"$id\": \"11\",\n    \"Value\": null,\n    \"FieldName\": \"Field10\",\n    \"TableName\": \"Opportunity\"\n  },\n\n \n  \"Notes\": \"Lana Update\",\n\n  \"BusinessUnitId\": \"1102\",\n  \"StageProbability\": 15,\n  \"RatingIndexOrder\": 2,\n\n \n\"ConcurrencyGUID\": \"{{OpportunityConcurrencyGuide}}\",\n\n  \"IsCancelled\": false,\n\n  \"OpportunityTypeId\": \"{{GetOpportunityTypeId}}\",\n  \n  \n  \"IsClosedLost\": false,\n  \n  \"PostToFollowersAsWon\": false,\n \n  \"IsCopy\": false,\n  \n  \"IsCustomerBlockedBusinessUnit\": false,\n \n  \"ChangeSetOp\": 2\n}"
+					"raw": "{\n  \"$id\": \"1\",\n  \"Id\": \"{{OpportunityId}}\",\n  \"Tenant\": \"{{Tenant}}\",\n  \"OwnerId\":  \"{{CreatedByUserId}}\",\n\"Subject\": \"Automation Opportunity\",\n  \"CustomerId\": \"{{ShipperIdTestShipExport1}}\",\n\n\"StageId\": \"{{GetOpportunityStageId}}\",\n  \"Probability\": 20,\n \"CreateDate\": \"2019-08-25T06:01:22.3556342Z\",\n  \"CreatedByUserId\": \"{{CreatedByUserId}}\",\n  \"UpdateDate\": \"2019-08-25T06:01:24.3556342Z\",\n  \"UpdatedByUserId\": \"{{CreatedByUserId}}\",\n  \"RatingCode\": \"N\",\n  \"IsClosed\": true,\n \n  \n  \"RatingName\": \"Neutral\",\n  \n  \"NumberOfShipments\": 11,\n\n  \"ValueField\": 1.65,\n \n  \"LastStageDate\": \"2019-08-25T06:16:56.143\",\n  \n  \"Field1\": {\n    \"$id\": \"2\",\n    \"Value\": null,\n    \"FieldName\": \"Field1\",\n    \"TableName\": \"Opportunity\"\n  },\n  \"Field2\": {\n    \"$id\": \"3\",\n    \"Value\": null,\n    \"FieldName\": \"Field2\",\n    \"TableName\": \"Opportunity\"\n  },\n  \"Field3\": {\n    \"$id\": \"4\",\n    \"Value\": null,\n    \"FieldName\": \"Field3\",\n    \"TableName\": \"Opportunity\"\n  },\n  \"Field4\": {\n    \"$id\": \"5\",\n    \"Value\": null,\n    \"FieldName\": \"Field4\",\n    \"TableName\": \"Opportunity\"\n  },\n  \"Field5\": {\n    \"$id\": \"6\",\n    \"Value\": null,\n    \"FieldName\": \"Field5\",\n    \"TableName\": \"Opportunity\"\n  },\n  \"Field6\": {\n    \"$id\": \"7\",\n    \"Value\": null,\n    \"FieldName\": \"Field6\",\n    \"TableName\": \"Opportunity\"\n  },\n  \"Field7\": {\n    \"$id\": \"8\",\n    \"Value\": null,\n    \"FieldName\": \"Field7\",\n    \"TableName\": \"Opportunity\"\n  },\n  \"Field8\": {\n    \"$id\": \"9\",\n    \"Value\": null,\n    \"FieldName\": \"Field8\",\n    \"TableName\": \"Opportunity\"\n  },\n  \"Field9\": {\n    \"$id\": \"10\",\n    \"Value\": null,\n    \"FieldName\": \"Field9\",\n    \"TableName\": \"Opportunity\"\n  },\n  \"Field10\": {\n    \"$id\": \"11\",\n    \"Value\": null,\n    \"FieldName\": \"Field10\",\n    \"TableName\": \"Opportunity\"\n  },\n\n \n  \"Notes\": \"Automation Updated this Opportunity\",\n\n  \"BusinessUnitId\": \"1102\",\n  \"StageProbability\": 15,\n  \"RatingIndexOrder\": 2,\n\n \n\"ConcurrencyGUID\": \"{{OpportunityConcurrencyGuide}}\",\n\n  \"IsCancelled\": false,\n\n  \"OpportunityTypeId\": \"{{GetOpportunityTypeId}}\",\n  \n  \n  \"IsClosedLost\": false,\n  \n  \"PostToFollowersAsWon\": false,\n \n  \"IsCopy\": false,\n  \n  \"IsCustomerBlockedBusinessUnit\": false,\n \n  \"ChangeSetOp\": 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": "{{LogitudeURL}}/api/opportunities"
 			},
 			"response": []
 		}
-	]
+	],
+	"protocolProfileBehavior": {}
 }
