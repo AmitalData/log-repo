@@ -126,6 +126,9 @@ export class AddEditOccasionContactComponent extends BaseComponent {
             myResultItem.Industry = item.Industry;
             myResultItem.Product = item.Product;
             myResultItem.CustomerSize = item.CustomerSize;
+            myResultItem.ContactMobile = item.ContactMobile;
+            myResultItem.ContactPhone = item.ContactPhone;
+            myResultItem.ContactPosition = item.ContactPosition;
             this.ItemsSource.push(myResultItem);
         });
 
@@ -201,6 +204,11 @@ export class AddEditOccasionContactComponent extends BaseComponent {
                     invitee.UpdatedByUserId = SessionInfo.LoggedUserId;
                     invitee.UpdatedByUserName = SessionInfo.LoggedUserPM.EnglishName;
                     invitee.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
+                    invitee.ContactEmail = item.Email;
+                    invitee.ContactMobile = item.ContactMobile;
+                    invitee.ContactPhone = item.ContactPhone;
+                    invitee.ContactPosition = item.ContactPosition;
+                    invitee.CustomerName = item.Company;
                     this.EntityPM.AddOccasionInvitee(invitee);
                 }
             });
@@ -228,6 +236,10 @@ export class OccasionContactItem {
     public Industry: string;
     public Product: string;
     public CustomerSize: string;
+
+    public ContactMobile: string;
+    public ContactPhone: string;
+    public ContactPosition: string;
 
     private isChecked: boolean = false;
     get IsChecked() { return this.isChecked; }

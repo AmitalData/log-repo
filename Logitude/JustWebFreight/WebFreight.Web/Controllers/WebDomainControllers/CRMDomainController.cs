@@ -2281,6 +2281,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     Industry = industryName,
                     Product = productsNames,
                     CustomerSize = customerSizeName,
+
+                    ContactMobile = cardContact.Contact == null ? null : cardContact.Contact.Mobile,
+                    ContactPhone = cardContact.Contact == null ? null : cardContact.Contact.Mobile,
+                    ContactPosition = cardContact.Contact == null ? null : cardContact.Contact.Mobile,
+
                 });
             }
 
@@ -2350,5 +2355,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public string Industry { get; set; }
         public string Product { get; set; }
         public string CustomerSize { get; set; }
+        public string ContactPhone { get; set; }
+        public string ContactPosition { get; set; }
+        public string ContactMobile { get; set; }
+
     }
 }

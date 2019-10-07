@@ -279,21 +279,25 @@ export class OccasionMainTabComponent extends BaseComponent {
             case "MAI":
                 {
                     this.MarkInvitees_Action(true);
+                    this.IsCheckedAllContacts = false;
                     break;
                 }
             case "MAP":
                 {
                     this.MarkParticipated_Action(true);
+                    this.IsCheckedAllContacts = false;
                     break;
                 }
             case "MAUI":
                 {
                     this.MarkInvitees_Action(false);
+                    this.IsCheckedAllContacts = false;
                     break;
                 }
             case "MAUP":
                 {
                     this.MarkParticipated_Action(false);
+                    this.IsCheckedAllContacts = false;
                     break;
                 }
             case "D":
@@ -302,7 +306,7 @@ export class OccasionMainTabComponent extends BaseComponent {
                     break;
                 }
         }
-        this.IsCheckedAllContacts = false;
+      
     }
 
     MarkInvitees_Action(isInvited) {
@@ -328,6 +332,7 @@ export class OccasionMainTabComponent extends BaseComponent {
                     this.EntityPM.RemoveOccasionInvitee(item.EntityPM);
                 });
                 this.LoadOccasionLinesData();
+                this.IsCheckedAllContacts = false;
             }
         });
     }
