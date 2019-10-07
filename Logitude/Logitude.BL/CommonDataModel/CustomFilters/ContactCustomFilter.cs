@@ -181,6 +181,7 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
                         string value = item.FieldValue as string;
                         if (!string.IsNullOrEmpty(value))
                         {
+                            value = value.TrimEnd(',');
                             var contactIds = value.Split(',');
                             if (contactIds.Count() > 0)
                             {

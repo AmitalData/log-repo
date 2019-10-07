@@ -236,6 +236,9 @@ export class OccasionMainTabComponent extends BaseComponent {
     }
 
     LoadAllContactsCount() {
+        this.AllContacts_Ids = "";
+        this.InviteesContacts_Ids = "";
+        this.ParticipatedContacts_Ids = "";
         this.NumberAllContacts = this.EntityPM.OccasionInvitees.length;
         this.NumberInvitedContacts = this.EntityPM.InvitedContacts;
         this.NumberOfParticipatedContacts = this.EntityPM.ParticipatedContacts;

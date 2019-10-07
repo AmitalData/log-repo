@@ -40,6 +40,7 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
                         string value = item.FieldValue as string;
                         if (!string.IsNullOrEmpty(value))
                         {
+                            value = value.TrimEnd(',');
                             var contactIds = value.Split(',');
                             CardContactRepository cardContactRepository = new CardContactRepository(tenant);
                             var customersId = cardContactRepository.GetCardsContactsForContactIds_Ids(contactIds.ToList(), tenant);
