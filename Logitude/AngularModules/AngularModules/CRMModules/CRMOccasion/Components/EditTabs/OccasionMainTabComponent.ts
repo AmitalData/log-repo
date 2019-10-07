@@ -418,6 +418,15 @@ export class OccasionLineClass extends BaseComponent {
         }
     }
 
+    get CustomerName() {
+        return this.EntityPM.CustomerName;
+    }
+    set CustomerName(value: string) {
+        if (this.EntityPM.CustomerName != value) {
+            this.EntityPM.CustomerName = value;
+        }
+    }
+ 
     get SearchFields() {
         return this.EntityPM.SearchFields;
     }

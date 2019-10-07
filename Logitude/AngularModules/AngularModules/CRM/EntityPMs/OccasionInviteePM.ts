@@ -132,6 +132,11 @@ export class OccasionInviteePM {
     public set ContactMobile(newValue: string) { if (this.contactMobile != newValue) { this.contactMobile = newValue; this.MarkAsDirty("ContactMobile"); } }
        
 	 
+    private customerName: string;
+    public get CustomerName() { return this.customerName; }
+    public set CustomerName(newValue: string) { if (this.customerName != newValue) { this.customerName = newValue; this.MarkAsDirty("CustomerName"); } }
+       
+	 
 
     public OldEntityPM: OccasionInviteePM;
 	
