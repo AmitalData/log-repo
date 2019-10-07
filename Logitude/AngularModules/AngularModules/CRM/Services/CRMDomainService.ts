@@ -1590,6 +1590,7 @@ export class OccasionContactSearchresult {
     public ContactMobile: string;
     public ContactPhone: string;
     public ContactPosition: string;
+    public ContactTel: string;
 
 }
 

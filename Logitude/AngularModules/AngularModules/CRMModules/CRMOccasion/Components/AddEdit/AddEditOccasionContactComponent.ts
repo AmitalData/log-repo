@@ -129,6 +129,7 @@ export class AddEditOccasionContactComponent extends BaseComponent {
             myResultItem.ContactMobile = item.ContactMobile;
             myResultItem.ContactPhone = item.ContactPhone;
             myResultItem.ContactPosition = item.ContactPosition;
+            myResultItem.ContactTel = item.ContactTel;
             this.ItemsSource.push(myResultItem);
         });
 
