@@ -391,6 +391,7 @@ export class NewARInvoiceComponent extends BaseComponent {
     }
 
     private billToIsCustomer: boolean = false;
+    private billToCorePartnerTypeId: string = null;
     get BillToId() { return this.EntityPM.BillToId; }
     set BillToId(newValue: string) {
         if (this.EntityPM.BillToId != newValue) {
@@ -405,6 +406,7 @@ export class NewARInvoiceComponent extends BaseComponent {
                 this.SATPaymentMethodCode = null;
                 this.UsoCFDICode = null;
                 this.billToIsCustomer = false;
+                this.billToCorePartnerTypeId = null;
                 this.InvoiceCurrencyId = SessionLocator.TenantPM.CurrencyId;
                 this.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;        
                 this.IsConstituentInvoice = false;      
@@ -430,6 +432,7 @@ export class NewARInvoiceComponent extends BaseComponent {
                             this.VatNumber = list.VatNumber;
                             this.BillToName = list.EnglishName;
                             this.billToIsCustomer = list.IsCustomer;
+                            this.billToCorePartnerTypeId = list.PartnerTypeId;
 
                             if (this.EntityPM.ARInvoiceTypeCode != "CI" && this.EntityPM.ARInvoiceTypeCode != "CC") {
                                 this.IsConstituentInvoice = list.EnableConsolidationInvoices;
@@ -892,7 +895,7 @@ export class NewARInvoiceComponent extends BaseComponent {
     ValidateCreditLimitPartnersRestrictions(errors: string[]) {
         var errorText_Blocking: string = "Credit limit setting is blocking invoice for ";
 
-        switch (this.BillToPartnerTypeId) {
+        switch (this.billToCorePartnerTypeId) {
             case "CS":
                 {
                     if (this.billToIsCustomer) {
