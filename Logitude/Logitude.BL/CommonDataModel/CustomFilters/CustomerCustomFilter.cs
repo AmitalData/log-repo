@@ -44,9 +44,10 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
                             var contactIds = value.Split(',');
                             CardContactRepository cardContactRepository = new CardContactRepository(tenant);
                             var customersId = cardContactRepository.GetCardsContactsForContactIds_Ids(contactIds.ToList(), tenant);
-                            if (customersId.Count() > 0)
+                            var customers = customersId.Split(',');
+                            if (customers.Count() > 0)
                             {
-                                queryableData = queryableData.Where(c => customersId.Contains(c.Id));
+                                queryableData = queryableData.Where(c => customers.Contains(c.Id));
                             }
                         }
                     }
