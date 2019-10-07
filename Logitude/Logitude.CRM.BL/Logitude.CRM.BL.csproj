@@ -315,6 +315,7 @@
     <Compile Include="EntityQueryServices\Generated\TicketStageQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TicketTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TimeUnitQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\OccasionQueryService.cs" />
     <Compile Include="EntityQueryServices\OpportunityAdditionalServiceQueryService.cs" />
     <Compile Include="EntityQueryServices\OpportunityProductLocationQueryService.cs" />
     <Compile Include="EntityQueryServices\OpportunityProductQueryService.cs" />
@@ -384,6 +385,7 @@
     <Compile Include="EntityUpdateServices\Generated\TicketTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TicketUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TimeUnitUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\OccasionInviteeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\OccasionTypeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\OccasionUpdateService.cs" />
     <Compile Include="EntityUpdateServices\OpportunityClosingReasonUpdateService.cs" />

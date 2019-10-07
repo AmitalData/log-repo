@@ -54,6 +54,14 @@ namespace Logitude.CRM.Data.EntityMapping
             this.Property(t => t.OccasionTypeId).HasColumnName("OccasionTypeId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.OccasionStatusId).HasColumnName("OccasionStatusId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.ParticipatedCustomers).HasColumnName("ParticipatedCustomers");
+
+            this.Property(t => t.ParticipatedContacts).HasColumnName("ParticipatedContacts");
+
+            this.Property(t => t.InvitedCustomers).HasColumnName("InvitedCustomers");
+
+            this.Property(t => t.InvitedContacts).HasColumnName("InvitedContacts");
         }
     }
 }

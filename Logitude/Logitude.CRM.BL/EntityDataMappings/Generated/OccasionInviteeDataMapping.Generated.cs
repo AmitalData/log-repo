@@ -31,7 +31,9 @@ namespace Logitude.CRM.BL.EntityDataMappings
 	         SearchFields, 
 	         Notes, 
 	         OccasionId, 
-	         ContactId,
+	         ContactId, 
+	         Invited, 
+	         Participated,
 	      }
 
 
@@ -51,7 +53,14 @@ namespace Logitude.CRM.BL.EntityDataMappings
 	         AddedByUserName, 
 	         UpdatedByUserName, 
 	         OccasionName, 
-	         ContactName,
+	         ContactName, 
+	         Invited, 
+	         Participated, 
+	         ContactPhone, 
+	         ContactEmail, 
+	         ContactTel, 
+	         ContactPosition, 
+	         ContactMobile,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -103,6 +112,16 @@ namespace Logitude.CRM.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContactId))
             {
 				entityPOCO.ContactId = entityPM.ContactId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Invited))
+            {
+				entityPOCO.Invited = entityPM.Invited;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Participated))
+            {
+				entityPOCO.Participated = entityPM.Participated;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -161,6 +180,16 @@ namespace Logitude.CRM.BL.EntityDataMappings
 					entityPM.ContactId = entityPOCO.ContactId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Invited))
+            {
+					entityPM.Invited = entityPOCO.Invited;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Participated))
+            {
+					entityPM.Participated = entityPOCO.Participated;
+            }
+
 		}
 
 		public void PMToOldPM(OccasionInviteePM entityPM, OccasionInviteePM oldEntityPM)
@@ -210,6 +239,16 @@ namespace Logitude.CRM.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContactId))
             {
                 oldEntityPM.ContactId = entityPM.ContactId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Invited))
+            {
+                oldEntityPM.Invited = entityPM.Invited;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Participated))
+            {
+                oldEntityPM.Participated = entityPM.Participated;
             }
 			
 		}

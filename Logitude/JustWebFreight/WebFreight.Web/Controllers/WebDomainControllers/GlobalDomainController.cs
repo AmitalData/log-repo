@@ -414,8 +414,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         DoneItemsInFiveMinutes += Log.DoneItemsInFiveMinutes;
                         DoneItemsInOneHour += Log.DoneItemsInOneHour;
                         DoneItemsInOneMinute += Log.DoneItemsInOneMinute;
-                        WaitingItems += WaitingQueueMessage != null ? WaitingQueueMessage.Count : 0;//Log.WaitingItems;
-                        FailedItems += FaildQueueMessage != null ? FaildQueueMessage.Count : 0;//Log.FailedItems;
+                        WaitingItems = WaitingQueueMessage != null ? WaitingQueueMessage.Count : 0;//Log.WaitingItems;
+                        FailedItems = FaildQueueMessage != null ? FaildQueueMessage.Count : 0;//Log.FailedItems;
                         NumberOfDoneItems += Log.NumberOfDoneItems != null ? (int)Log.NumberOfDoneItems : 0;
 
                         if (Log.LastActivity > LActivity && LActivity != null)

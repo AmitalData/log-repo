@@ -42,6 +42,20 @@ namespace Logitude.CRM.Data.EntityLists
        public string OccasionName  { get; set; }
        [DataMember]
        public string ContactName  { get; set; }
+       [DataMember]
+       public bool Invited  { get; set; }
+       [DataMember]
+       public bool Participated  { get; set; }
+       [DataMember]
+       public string ContactPhone  { get; set; }
+       [DataMember]
+       public string ContactEmail  { get; set; }
+       [DataMember]
+       public string ContactTel  { get; set; }
+       [DataMember]
+       public string ContactPosition  { get; set; }
+       [DataMember]
+       public string ContactMobile  { get; set; }
    }
 
 }

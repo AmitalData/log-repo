@@ -561,7 +561,99 @@ namespace Logitude.CRM.BL.EntityPMs
               }
              set {  deletedOccasionInvitees = value; }
 	    }
-	     }
+	  	  private int participatedCustomers ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int ParticipatedCustomers  
+	   {
+	    
+	     get
+		{
+		   return participatedCustomers;
+		 }
+		 set
+		 {
+		   if(participatedCustomers != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ParticipatedCustomers",OldValue=participatedCustomers,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   participatedCustomers=value;
+		   }
+			
+		 }
+	   }
+	  private int participatedContacts ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int ParticipatedContacts  
+	   {
+	    
+	     get
+		{
+		   return participatedContacts;
+		 }
+		 set
+		 {
+		   if(participatedContacts != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ParticipatedContacts",OldValue=participatedContacts,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   participatedContacts=value;
+		   }
+			
+		 }
+	   }
+	  private int invitedCustomers ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int InvitedCustomers  
+	   {
+	    
+	     get
+		{
+		   return invitedCustomers;
+		 }
+		 set
+		 {
+		   if(invitedCustomers != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InvitedCustomers",OldValue=invitedCustomers,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   invitedCustomers=value;
+		   }
+			
+		 }
+	   }
+	  private int invitedContacts ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int InvitedContacts  
+	   {
+	    
+	     get
+		{
+		   return invitedContacts;
+		 }
+		 set
+		 {
+		   if(invitedContacts != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InvitedContacts",OldValue=invitedContacts,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   invitedContacts=value;
+		   }
+			
+		 }
+	   }
+   }
    
 }
 	 

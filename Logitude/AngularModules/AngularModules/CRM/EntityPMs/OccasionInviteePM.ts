@@ -97,6 +97,41 @@ export class OccasionInviteePM {
     public set ContactName(newValue: string) { if (this.contactName != newValue) { this.contactName = newValue; this.MarkAsDirty("ContactName"); } }
        
 	 
+    private invited: boolean;
+    public get Invited() { return this.invited; }
+    public set Invited(newValue: boolean) { if (this.invited != newValue) { this.invited = newValue; this.MarkAsDirty("Invited"); } }
+       
+	 
+    private participated: boolean;
+    public get Participated() { return this.participated; }
+    public set Participated(newValue: boolean) { if (this.participated != newValue) { this.participated = newValue; this.MarkAsDirty("Participated"); } }
+       
+	 
+    private contactPhone: string;
+    public get ContactPhone() { return this.contactPhone; }
+    public set ContactPhone(newValue: string) { if (this.contactPhone != newValue) { this.contactPhone = newValue; this.MarkAsDirty("ContactPhone"); } }
+       
+	 
+    private contactEmail: string;
+    public get ContactEmail() { return this.contactEmail; }
+    public set ContactEmail(newValue: string) { if (this.contactEmail != newValue) { this.contactEmail = newValue; this.MarkAsDirty("ContactEmail"); } }
+       
+	 
+    private contactTel: string;
+    public get ContactTel() { return this.contactTel; }
+    public set ContactTel(newValue: string) { if (this.contactTel != newValue) { this.contactTel = newValue; this.MarkAsDirty("ContactTel"); } }
+       
+	 
+    private contactPosition: string;
+    public get ContactPosition() { return this.contactPosition; }
+    public set ContactPosition(newValue: string) { if (this.contactPosition != newValue) { this.contactPosition = newValue; this.MarkAsDirty("ContactPosition"); } }
+       
+	 
+    private contactMobile: string;
+    public get ContactMobile() { return this.contactMobile; }
+    public set ContactMobile(newValue: string) { if (this.contactMobile != newValue) { this.contactMobile = newValue; this.MarkAsDirty("ContactMobile"); } }
+       
+	 
 
     public OldEntityPM: OccasionInviteePM;
 	

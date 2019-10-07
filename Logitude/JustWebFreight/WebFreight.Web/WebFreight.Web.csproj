@@ -1243,13 +1243,11 @@
     <Compile Include="Controllers\CommonDataModel\Services\ExcelExportFeaturesController.cs" />
     <Compile Include="Controllers\CommonDataModel\Services\ExcelExportController.cs" />
     <Compile Include="Controllers\CRMModel\Extended\TicketExtendedController.cs" />
-    <Compile Include="Controllers\CRMModel\Generated\ListControllers\OccasionInviteeViewsController.Generated.cs" />
     <Compile Include="Controllers\CRMModel\Generated\ListControllers\OccasionStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\CRMModel\Generated\ListControllers\OccasionTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CRMModel\Generated\ListControllers\OccasionViewsController.Generated.cs" />
     <Compile Include="Controllers\CRMModel\Generated\ListControllers\SLALineViewsController.Generated.cs" />
     <Compile Include="Controllers\CRMModel\Generated\PMControllers\OccasionController.Generated.cs" />
-    <Compile Include="Controllers\CRMModel\Generated\PMControllers\OccasionInviteeController.Generated.cs" />
     <Compile Include="Controllers\CRMModel\Generated\PMControllers\OccasionTypeController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CourierMasterController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CourierPendingReasonController.cs" />
