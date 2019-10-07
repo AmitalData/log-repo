@@ -21,6 +21,8 @@ using Logitude.CustomsMessaging.Utils;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments;
 using Logitude.AmitalMessaging.Utils;
+using Logitude.Server.Tools.Utils;
+using System.Configuration;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -32,6 +34,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
         }
 
         public override void Update(DCAInUCBUD2LTWithResponseContentHeader customResponse, GenericRequestParams requestParams)
+        {
+            bool lockit = !string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings.Get("Singleton.CRS:2715/UDLT"));
+            string key = ProcessLockTableUtil.Instance.GetKey4DocumentsFilingId(customResponse.DocumentsFilingId, requestParams.Tenant);
+            
+            using (var processLockTableDisposable = DummyDisposable.GetProcessLockTableDisposable(lockit, key, "CRS:2715/UDLT"))
+            {
+                RealUpdate(customResponse, requestParams);
+            }
+        }
+
+
+        private void RealUpdate(DCAInUCBUD2LTWithResponseContentHeader customResponse, GenericRequestParams requestParams)
         {
             var mess = new StringBuilder();
             var context = CustomContext.GetContext(requestParams.Tenant);
@@ -48,7 +62,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                          Id =customResponse.DeclarationId , Tenant= requestParams.Tenant.ToString()
                      }
                  }
-                }  
+                }
             );
 
 
@@ -69,11 +83,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
   <Value>@UNIFREIGHT_USER_ID@</Value>
  </Entry>
 </ArrayOfEntry>";
-            moreParams=moreParams.Replace("@TENANT@", requestParams.Tenant.ToString());
+            moreParams = moreParams.Replace("@TENANT@", requestParams.Tenant.ToString());
             moreParams = moreParams.Replace("@UNIFREIGHT_USER_ID@", "AMITAL");
             string messageOut = "";
-            unifreightGenericService.ProccessGenericRequest(xml, ref moreParams,out messageOut);
-            
+            unifreightGenericService.ProccessGenericRequest(xml, ref moreParams, out messageOut);
+
 
             this.MyRequestSheetParam = this.MyRequestSheetParam ?? new RequestSheetParam();
             this.MyRequestSheetParam.RequestDescription = requestParams.RequestName;
@@ -81,6 +95,5 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData.Succeeded = (unifreightGenericService.MyGenericResponseObj.StatusType == AmitalMessaging.Infrastructure.GenericResponseObj.StatusEnum.Success);
         }
 
-      
     }
 }

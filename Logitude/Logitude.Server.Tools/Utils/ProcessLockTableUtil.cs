@@ -78,7 +78,13 @@ namespace Logitude.Server.Tools.Utils
 
             }
         }
+        public string GetKey4DocumentsFilingId(string DocumentsFilingId, int tenant)
+        {
+            string key = "DocFil:" + DocumentsFilingId + ",tenant:" +
+                       tenant.ToString();
+            return key;
 
+        }
         public string GetKey4Declaration(string declarationNumber, int tenant)
         {
             string key = "ResponseService,declarationNumber:" + declarationNumber + ",tenant:" +
@@ -117,6 +123,22 @@ namespace Logitude.Server.Tools.Utils
         public override string ToString()
         {
             return $"mykey:{this.MyKey},mylog:{this.MyLog},InsertAt:{this.InsertTime}";
+        }
+    }
+    public class DummyDisposable : IDisposable
+    {
+        public static IDisposable GetProcessLockTableDisposable(bool lockit, string key, string requestLog)
+        {
+            if (lockit)
+            {
+                return ProcessLockTableUtil.Instance.LockItAndGetReleaseToken(key, requestLog);
+            }
+            return new DummyDisposable();
+        }
+
+        public void Dispose()
+        {
+            
         }
     }
 }

@@ -172,8 +172,14 @@ namespace AmitalCustomsWindowsService
             listOfWorkerEntryPoint.Add(new SendWEBAPIMessage2MamanWR());
             listOfWorkerEntryPoint.Add(new FTPToAnalyzeQueueWR());
             listOfWorkerEntryPoint.Add(new CustomsAnalyzeQueueWR());
-            
 
+
+
+            if (!string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings.Get("Discard.DownloadDcaMessageSheetWR")))
+            {
+                BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName != "DownloadDcaMessageSheetWR").ToList();
+            }
+            
 
 
             foreach (var batchServicesDefinitionPM in BatchServicesDefinitions)
