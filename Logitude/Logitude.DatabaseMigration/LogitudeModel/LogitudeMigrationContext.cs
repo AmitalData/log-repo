@@ -3024,6 +3024,9 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<Occasion> Occasions { get; set; }
         public IDbSet<OccasionType> OccasionTypes { get; set; }
         public IDbSet<OccasionStatus> OccasionStatuses { get; set; }
+        public IDbSet<OccasionInvitee> OccasionInvitees { get; set; }
+
+        
         #endregion
 
         #region Social Context
@@ -3752,6 +3755,9 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new OccasionMap());
             modelBuilder.Configurations.Add(new OccasionStatusMap());
             modelBuilder.Configurations.Add(new OccasionTypeMap());
+            modelBuilder.Configurations.Add(new OccasionInviteeMap());
+
+            
             #endregion
 
             #region Booking

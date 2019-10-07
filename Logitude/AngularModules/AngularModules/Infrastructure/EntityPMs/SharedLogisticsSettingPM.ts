@@ -129,6 +129,11 @@ export class SharedLogisticsSettingPM {
     public set IsConsigneeShared(newValue: boolean) { if (this.isConsigneeShared != newValue) { this.isConsigneeShared = newValue; this.MarkAsDirty("IsConsigneeShared"); } }
        
 	 
+    private isShowAmountLocalCurrency: boolean;
+    public get IsShowAmountLocalCurrency() { return this.isShowAmountLocalCurrency; }
+    public set IsShowAmountLocalCurrency(newValue: boolean) { if (this.isShowAmountLocalCurrency != newValue) { this.isShowAmountLocalCurrency = newValue; this.MarkAsDirty("IsShowAmountLocalCurrency"); } }
+       
+	 
 
     public OldEntityPM: SharedLogisticsSettingPM;
 		

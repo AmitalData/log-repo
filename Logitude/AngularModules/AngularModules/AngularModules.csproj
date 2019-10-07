@@ -150,6 +150,7 @@
     <Content Include="CRMModules\CRMInboundEmail\Components\EditTabs\InboundEmailGeneralTabComponent.html" />
     <Content Include="CRMModules\CRMInboundEmail\Components\EditTabs\ViewInboundLineBodyComponent.html" />
     <Content Include="CRMModules\CRMInboundEmail\Components\NewEntity\NewInboundEmailComponent.html" />
+    <Content Include="CRMModules\CRMOccasion\Components\AddEdit\AddEditOccasionContactComponent.html" />
     <Content Include="CRMModules\CRMOccasion\Components\EditTabs\OccasionGeneralTabComponent.html" />
     <Content Include="CRMModules\CRMOccasion\Components\EditTabs\OccasionMainTabComponent.html" />
     <Content Include="CRMModules\CRMOccasion\Components\NewEntity\NewOccasionComponent.html" />
@@ -560,11 +561,14 @@
     <TypeScriptCompile Include="Common\Services\StandardPMs\CustomerDepositionPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CustomsShipperPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\LogBoxTenantSettingPMService.ts" />
+    <TypeScriptCompile Include="Controls\InvitedFilter.ts" />
+    <TypeScriptCompile Include="Controls\ParticipatedFilter.ts" />
     <TypeScriptCompile Include="Controls\Pipes\MinutesToTimePipe.ts" />
     <TypeScriptCompile Include="CRMModules\CRMEmployeeGroup\Components\NewEntity\NewEmployeeComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMInboundEmail\Components\EditTabs\InboundEmailGeneralTabComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMInboundEmail\Components\EditTabs\ViewInboundLineBodyComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMInboundEmail\Components\NewEntity\NewInboundEmailComponent.ts" />
+    <TypeScriptCompile Include="CRMModules\CRMOccasion\Components\AddEdit\AddEditOccasionContactComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMOccasion\Components\EditTabs\OccasionGeneralTabComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMOccasion\Components\EditTabs\OccasionMainTabComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMOccasion\Components\NewEntity\NewOccasionComponent.ts" />
@@ -606,10 +610,12 @@
     <TypeScriptCompile Include="CRMModules\CRMTickets\Components\NewEntity\NewTicketComponent.ts" />
     <TypeScriptCompile Include="Controls\Pipes\MinutesToTimePipe.ts" />
     <TypeScriptCompile Include="CRM\Components\Workspaces\OccasionWorkspaceComponent.ts" />
+    <TypeScriptCompile Include="CRM\EntityLists\OccasionInviteeList.ts" />
     <TypeScriptCompile Include="CRM\EntityLists\OccasionList.ts" />
     <TypeScriptCompile Include="CRM\EntityLists\OccasionStatusList.ts" />
     <TypeScriptCompile Include="CRM\EntityLists\OccasionTypeList.ts" />
     <TypeScriptCompile Include="CRM\EntityPMInitServices\OccasionTypePMInitService.ts" />
+    <TypeScriptCompile Include="CRM\EntityPMs\OccasionInviteePM.ts" />
     <TypeScriptCompile Include="CRM\EntityPMs\OccasionPM.ts" />
     <TypeScriptCompile Include="CRM\EntityPMs\OccasionStatusPM.ts" />
     <TypeScriptCompile Include="CRM\EntityPMs\OccasionTypePM.ts" />
@@ -1129,6 +1135,7 @@
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\DepositionRequestComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\LogBoxPackagesComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\ECommercePaymentRequestMobileComponent.html" />
+    <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\LogBoxApprovePaymentComponent.html" />
     <Content Include="ShipmentModules\ShipmentPackages\Components\Packages\AddEditPackageHarmonizeComponent.html" />
     <Content Include="ShipmentModules\ShipmentPackages\Components\Packages\DownloadPackagesFileComponent.html" />
     <Content Include="ShipmentModules\ShipmentRouting\Components\Routings\AddEditPackageHarmonizeComponent.html" />
@@ -3589,6 +3596,7 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\DepositionRequestComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\LogBoxPackagesComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\ECommercePaymentRequestMobileComponent.ts" />
+    <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\LogBoxApprovePaymentComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentPackages\Components\Packages\AddEditPackageHarmonizeComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentPackages\Components\Packages\DownloadPackagesFileComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentRouting\Components\Routings\AddEditPackageHarmonizeComponent.ts" />
@@ -6816,6 +6824,8 @@
     <Content Include="dist\out-tsc\Shipment\EntityPMs\ShipmentPickUpDeliveryPackagePM.js.map" />
     <Content Include="dist\out-tsc\Shipment\Services\StandardLists\ShipmentComputedFieldListService.js.map" />
     <Content Include="dist\out-tsc\Shipment\Services\StandardPMs\ShipmentComputedFieldPMService.js.map" />
+    <Content Include="e2e\Testing Scenarios\Master\Team Ayman\TeamAymanCases.bat" />
+    <Content Include="e2e\Testing Scenarios\Master\Team Islam\RunTestCases.bat" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Common\EntityLists\AddressList.ts" />
@@ -7422,6 +7432,12 @@
     <Folder Include="Dashboard\Components\Graphs\" />
     <Folder Include="e2e\CRM\Customers\" />
     <Folder Include="e2e\LogBox\Documents\" />
+    <Folder Include="e2e\Testing Scenarios\Master\Smoke Testing Common\" />
+    <Folder Include="e2e\Testing Scenarios\Master\Team Mohammad\" />
+    <Folder Include="e2e\Testing Scenarios\Production\Smoke Testing Common\" />
+    <Folder Include="e2e\Testing Scenarios\Production\Team Ayman\" />
+    <Folder Include="e2e\Testing Scenarios\Production\Team Islam\" />
+    <Folder Include="e2e\Testing Scenarios\Production\Team Mohammad\" />
     <Folder Include="InfrastructureModules\InfrastructureAutomation\Components\" />
     <Folder Include="InfrastructureModules\InfrastructureStimulsoft\Components\" />
     <Folder Include="Logitude\Components\Customization\" />

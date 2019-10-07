@@ -271,7 +271,12 @@
 
                     ChargesGridColumns.push({ title: "Description", field: "Description" });
                     ChargesGridColumns.push({ title: "Invoice Amount", field: "InvoiceAmount", template: "<div class='k-numeric'>#= InvoiceAmount #</div>" });
-                    ChargesGridColumns.push({ title: "Local Amount", field: "LocalAmount", template: "<div class='k-numeric'>#= LocalAmount #</div>" });
+
+                    if (result.IsShowAmountLocalCurrencyColumnInSharedLogistics == true){
+                        ChargesGridColumns.push({ title: "Local Amount", field: "LocalAmount", template: "<div class='k-numeric'>#= LocalAmount #</div>" });
+                    }
+
+                    
 
                     $.each(result.ARCharges, function (index, item) {
 

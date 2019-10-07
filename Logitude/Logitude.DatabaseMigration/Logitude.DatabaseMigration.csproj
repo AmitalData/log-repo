@@ -1529,6 +1529,22 @@
     <Compile Include="Migrations\201910010723488_RemoveOpenReceivablesLines.Designer.cs">
       <DependentUpon>201910010723488_RemoveOpenReceivablesLines.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910021422593_AbedAddIsShowAmountLocalCurrencyToSharedLogisticsSetting.cs" />
+    <Compile Include="Migrations\201910021422593_AbedAddIsShowAmountLocalCurrencyToSharedLogisticsSetting.Designer.cs">
+      <DependentUpon>201910021422593_AbedAddIsShowAmountLocalCurrencyToSharedLogisticsSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910060731551_Occaisions_Invitee_Khalid.cs" />
+    <Compile Include="Migrations\201910060731551_Occaisions_Invitee_Khalid.Designer.cs">
+      <DependentUpon>201910060731551_Occaisions_Invitee_Khalid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910061056415_OccasionInvitee_Participated_Invited_Columns_Khalid.cs" />
+    <Compile Include="Migrations\201910061056415_OccasionInvitee_Participated_Invited_Columns_Khalid.Designer.cs">
+      <DependentUpon>201910061056415_OccasionInvitee_Participated_Invited_Columns_Khalid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910062227078_AddOccasionCountsFields_Maheera.cs" />
+    <Compile Include="Migrations\201910062227078_AddOccasionCountsFields_Maheera.Designer.cs">
+      <DependentUpon>201910062227078_AddOccasionCountsFields_Maheera.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201910021307487_NewField_InReconcileProgress.cs" />
     <Compile Include="Migrations\201910021307487_NewField_InReconcileProgress.Designer.cs">
       <DependentUpon>201910021307487_NewField_InReconcileProgress.cs</DependentUpon>
@@ -2621,6 +2637,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910010723488_RemoveOpenReceivablesLines.resx">
       <DependentUpon>201910010723488_RemoveOpenReceivablesLines.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910021422593_AbedAddIsShowAmountLocalCurrencyToSharedLogisticsSetting.resx">
+      <DependentUpon>201910021422593_AbedAddIsShowAmountLocalCurrencyToSharedLogisticsSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910060731551_Occaisions_Invitee_Khalid.resx">
+      <DependentUpon>201910060731551_Occaisions_Invitee_Khalid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910061056415_OccasionInvitee_Participated_Invited_Columns_Khalid.resx">
+      <DependentUpon>201910061056415_OccasionInvitee_Participated_Invited_Columns_Khalid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910062227078_AddOccasionCountsFields_Maheera.resx">
+      <DependentUpon>201910062227078_AddOccasionCountsFields_Maheera.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910021307487_NewField_InReconcileProgress.resx">
       <DependentUpon>201910021307487_NewField_InReconcileProgress.cs</DependentUpon>
