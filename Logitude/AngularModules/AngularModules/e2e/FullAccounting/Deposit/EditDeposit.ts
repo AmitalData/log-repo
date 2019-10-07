@@ -12,15 +12,14 @@ export class EditDeposit {
 
     EditDeposit() {
        // browser.sleep(5000);
-        this.Helper.WaitByIdAndClick('PaymentChequesQuery');
+        this.Helper.WaitByIdAndClick('DepositsQuery');
+        
         this.Helper.WaitByIdAndClick('row0col0');
-        this.Helper.WaitByIdAndClick('PaymentCheque.TH.General');
-        this.Helper.WaitByIdAndFill('PaymentCheque_PayToName', 'updatednameby protractor');
-
-        this.Helper.ItemsVisibility('PaymentCheque.B.PaymentChequeSaveAsDraft');
-        this.Helper.ItemsPresent('PaymentCheque.B.PaymentChequeSaveAsDraft');    
-        this.Helper.WaitByIdAndClick('PaymentCheque.B.PaymentChequeSaveAsDraft');
-        this.Helper.WaitBusyIndicator();
+        this.Helper.ItemsVisibility('BankDeposit.TH.Details');
+        this.Helper.ItemsPresent('BankDeposit.TH.Details');
+        this.Helper.WaitByIdAndClick('BankDeposit.TH.Details');
+        
+       // this.Helper.WaitBusyIndicator();
       //  this.Helper.ItemsVisibility('NewButton_BankAccount');
 
 // browser.driver.sleep(5000)

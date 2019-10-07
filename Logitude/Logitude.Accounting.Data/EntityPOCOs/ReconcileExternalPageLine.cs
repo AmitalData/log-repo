@@ -48,6 +48,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public decimal CreditAmount { get; set; }
         [Column("InProgressExternalReconcile")]
 	    public bool InProgressExternalReconcile { get; set; }
+        [Column("InReconcileProgress")]
+	    public bool InReconcileProgress { get; set; }
     }
 }
 	 

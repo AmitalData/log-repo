@@ -212,7 +212,7 @@ exports.config = {
         CustomerGLAccount: 'e2e/FullAccounting/**/CustomerGLAccount-spec.ts',
         APInvoice: 'e2e/FullAccounting/APInvoice/**/APInvoice-spec.ts',
         RevGLAccount: 'e2e/FullAccounting/**/GlAccount-spec.ts',
-
+        CashDeposit: 'e2e/FullAccounting/**/Deposit/NewDposit-spec.ts',
         //*************Report********************
         Reports: 'e2e/Report/**/Report-spec.ts',
 

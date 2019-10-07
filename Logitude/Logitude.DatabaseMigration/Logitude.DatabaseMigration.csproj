@@ -1545,6 +1545,10 @@
     <Compile Include="Migrations\201910062227078_AddOccasionCountsFields_Maheera.Designer.cs">
       <DependentUpon>201910062227078_AddOccasionCountsFields_Maheera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910021307487_NewField_InReconcileProgress.cs" />
+    <Compile Include="Migrations\201910021307487_NewField_InReconcileProgress.Designer.cs">
+      <DependentUpon>201910021307487_NewField_InReconcileProgress.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2645,6 +2649,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910062227078_AddOccasionCountsFields_Maheera.resx">
       <DependentUpon>201910062227078_AddOccasionCountsFields_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910021307487_NewField_InReconcileProgress.resx">
+      <DependentUpon>201910021307487_NewField_InReconcileProgress.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
