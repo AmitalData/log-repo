@@ -7,6 +7,8 @@ import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { CRMDomainService, OccasionContactArgs, OccasionContactSearchresult } from '../../../../CRM/Services/CRMDomainService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
+import { ProductTypeListService } from '../../../../Common/Services/StandardLists/ProductTypeListService';
+import { ProductTypeList } from '../../../../Common/EntityLists/ProductTypeList';
 
 @Component({
     selector: 'AddEditOccasionContactComponent',
@@ -28,8 +30,25 @@ export class AddEditOccasionContactComponent extends BaseComponent {
 
     SetWindowArgs(entityPM: OccasionPM) {
         this.EntityPM = entityPM;
+
+        this.BuildProductTypesFilters();
     }
 
+    public ProductTypeComboList: ProductTypeItem[];
+    public SelectedProdustTypeFilter: any = "";
+    private BuildProductTypesFilters() {
+        this.ProductTypeComboList = [];
+
+        var proeductTypeListService: ProductTypeListService = new ProductTypeListService();
+        proeductTypeListService.getAllFromCache().subscribe((response: ServiceResponse) => {
+            var list: ProductTypeList[] = response.Result;
+
+            list.filter(d => !d.InActive).sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 }).forEach((item) => {
+                this.ProductTypeComboList.push(new ProductTypeItem(item));
+            });
+        });
+    }
+    
     private customerSizeId: string;
     get CustomerSizeId() { return this.customerSizeId; }
     set CustomerSizeId(value: string) {
@@ -124,13 +143,13 @@ export class AddEditOccasionContactComponent extends BaseComponent {
     private loadedContacts: OccasionContactSearchresult[];
     BrowseClicked() {
         this.CurrentSession.StartBusyIndicatorLoading();
-
+        
         var args: OccasionContactArgs = new OccasionContactArgs();
         args.CustomerSizeId = this.CustomerSizeId;
         args.RegionId = this.RegionId;
         args.IndustryId = this.IndustryId;
         args.OccasionId = this.OccasionId;
-        args.ProductTypes = "";
+        args.ProductTypes = this.SelectedProdustTypeFilter;
         args.AdditionalServices = "";
 
         var service = new CRMDomainService();
@@ -151,6 +170,12 @@ export class AddEditOccasionContactComponent extends BaseComponent {
         var selectedCount: number = this.ItemsSource.filter(f => f.IsChecked == true).length;
         if (selectedCount == 0) {
             errors.push("You must select 1 line at least");
+        }
+
+        if (!AppTool.IsNullOrEmpty(this.SelectedProdustTypeFilter)) {
+            if (this.ProductTypeComboList.filter(d => d.Checked).length == 0) {
+                errors.push("Please select product type");
+            }
         }
 
         this.ValidationErrorsList = errors;
@@ -207,4 +232,18 @@ export class OccasionContactItem {
             this.fatherComponent.OnLinesSelected();
         }
     }
+}
+
+export class ProductTypeItem {
+    public entityList: ProductTypeList;
+    constructor(entityList: ProductTypeList) {
+        this.entityList = entityList;
+    }
+
+    get Code() { return this.entityList.Code; }
+    get Name() { return this.entityList.Name; }
+
+    private checked: boolean;
+    public get Checked() { return this.checked; }
+    public set Checked(value: boolean) { this.checked = value; }
 }

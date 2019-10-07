@@ -7,7 +7,7 @@ import {ObjectsLocator} from '../Infrastructure/Locators/ObjectsLocator';
     selector: 'ComboBox',
     moduleId: module.id,
     templateUrl: './ComboBox.html',
-    inputs: ['ItemsSource', 'SelectedItem', 'Binding', 'IsDisabled', 'WaterMark', 'IsBlueBox', 'IsGreenButton', 'FocusOnMe', 'SelectedValue', 'SelectedValuePath', 'MaxHeight'],
+    inputs: ['ItemsSource', 'SelectedItem', 'Binding', 'IsDisabled', 'WaterMark', 'IsBlueBox', 'IsGreenButton', 'FocusOnMe', 'SelectedValue', 'SelectedValuePath', 'MxHeight', 'WithIcons'],
 })
 
 export class ComboBox implements OnInit, AfterViewInit, OnDestroy {
@@ -37,6 +37,7 @@ export class ComboBox implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
+    public WithIcons: boolean = false;
     public Binding: string = null;
     public ControlId: string = null;
     public DropdownId: string = null;
@@ -282,12 +283,18 @@ export class ComboBox implements OnInit, AfterViewInit, OnDestroy {
         var myDisplayText: string = null;
 
         if (this.SelectedItem != null) {
-            if (this.Binding == null) {
+            if (this.WithIcons) {
                 myDisplayText = this.SelectedItem;
             }
 
             else {
-                myDisplayText = this.SelectedItem[this.Binding];
+                if (this.Binding == null) {
+                    myDisplayText = this.SelectedItem;
+                }
+
+                else {
+                    myDisplayText = this.SelectedItem[this.Binding];
+                }
             }
         }
 
@@ -453,5 +460,42 @@ export class ComboBox implements OnInit, AfterViewInit, OnDestroy {
                 }
             }
         }
+    }
+
+    public CheckSource: Array<boolean>;
+    ClickItem(item: any, index: any) {
+        if (this.CheckSource == null) {
+            if (this.ItemsSource != null) {
+                this.CheckSource = new Array(this.ItemsSource.length);
+                for (var i = 0; i < this.CheckSource.length; i++)
+                    this.CheckSource[i] = false;
+            }
+        }
+
+        if (this.CheckSource[index] == false) {
+            this.CheckSource[index] = true;
+        }
+        else {
+            this.CheckSource[index] = false;
+        }
+
+        item.Checked = this.CheckSource[index];
+        
+        this.ItemsSource[index] = item;
+        this.Text = "";
+
+        for (var i = 0; i < this.ItemsSource.length; i++) {
+            if (this.ItemsSource[i].Checked) {
+                if (AppTool.IsNullOrEmpty(this.Text)) {
+                    this.Text = this.ItemsSource[i].Code;
+                }
+
+                else {
+                    this.Text = this.Text + ", " + this.ItemsSource[i].Code;
+                }
+            }
+        }
+
+        this.SelectedItemChanged.emit(this.Text);
     }
 }
