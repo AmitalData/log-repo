@@ -170,40 +170,40 @@ export class OccasionMainTabComponent extends BaseComponent {
                 {
                     objectTableName = "Contact";
                     queryCode = "Contacts";
-                    filterAgrs.addAdditionalFilter("Occasion_AllContacts", this.AllContacts_Ids, null, null, "Equals", true, false, false, "string");
+                    filterAgrs.addAdditionalFilter("Occasion_ContactsQuery", this.AllContacts_Ids, null, null, "Equals", true, false, false, "string");
                     break;
                 }
             case "InvitedContacts":
                 {
                     objectTableName = "Contact";
                     queryCode = "Contacts";
-                    filterAgrs.addAdditionalFilter("Occasion_InvitedContacts", this.InviteesContacts_Ids, null, null, "Equals", true, false, false, "string");
+                    filterAgrs.addAdditionalFilter("Occasion_ContactsQuery", this.InviteesContacts_Ids, null, null, "Equals", true, false, false, "string");
                     break;
                 }
             case "ParticipatedContacts":
                 {
-                    filterAgrs.addAdditionalFilter("Occasion_ParticipatedContacts", this.ParticipatedContacts_Ids, null, null, "Equals", true, false, false, "string");
+                    filterAgrs.addAdditionalFilter("Occasion_ContactsQuery", this.ParticipatedContacts_Ids, null, null, "Equals", true, false, false, "string");
                     objectTableName = "Contact";
                     queryCode = "Contacts";
                     break;
                 }
             case "AllCustomers":
                 {
-                    filterAgrs.addAdditionalFilter("Occasion_AllCustomers", null, null, null, "Equals", true, false, false, "string");
+                    filterAgrs.addAdditionalFilter("Occasion_CustomersQuery", this.AllContacts_Ids, null, null, "Equals", true, false, false, "string");
                     objectTableName = "Customer";
                     queryCode = "Customers";
                     break;
                 }
             case "InvitedCustomers":
                 {
-                    filterAgrs.addAdditionalFilter("Occasion_InvitedCustomers", null, null, null, "Equals", true, false, false, "string");
+                    filterAgrs.addAdditionalFilter("Occasion_CustomersQuery", this.InviteesContacts_Ids, null, null, "Equals", true, false, false, "string");
                     objectTableName = "Customer";
                     queryCode = "Customers";
                     break;
                 }
             case "ParticipatedCustomers":
                 {
-                    filterAgrs.addAdditionalFilter("Occasion_ParticipatedCustomers", null, null, null, "Equals", true, false, false, "string");
+                    filterAgrs.addAdditionalFilter("Occasion_CustomersQuery", this.ParticipatedContacts_Ids, null, null, "Equals", true, false, false, "string");
                     objectTableName = "Customer";
                     queryCode = "Customers";
                     break;
@@ -223,12 +223,9 @@ export class OccasionMainTabComponent extends BaseComponent {
         });
     }
 
-    private AllContacts_Ids = "";
-    private InviteesContacts_Ids = "";
-    private ParticipatedContacts_Ids = "";
-    private AllCustomers_Ids = "";
-    private InviteesCustomers_Ids = "";
-    private ParticipatedCustomers_Ids = "";
+    private AllContacts_Ids: string = "";
+    private InviteesContacts_Ids: string = "";
+    private ParticipatedContacts_Ids: string = "";
 
     LoadQueriesCounts() {
         this.LoadAllContactsCount();
@@ -246,7 +243,7 @@ export class OccasionMainTabComponent extends BaseComponent {
         this.EntityPM.OccasionInvitees.forEach(item => {
             this.AllContacts_Ids = this.AllContacts_Ids + item.ContactId + ",";
         });
-
+       
         this.EntityPM.OccasionInvitees.filter(a => a.Invited).forEach(item => {
             this.InviteesContacts_Ids = this.InviteesContacts_Ids + item.ContactId + ",";
         });
@@ -268,10 +265,8 @@ export class OccasionMainTabComponent extends BaseComponent {
             var mm: ServiceResponse = myResult;
             var list_AllCustomers = [];
             if (!mm.HasError) {
-                list_AllCustomers = myResult.Result;
-                this.NumberAllCustomers = list_AllCustomers.length;
+                this.NumberAllCustomers = myResult.Result;
             }
-
             this.CurrentSession.StopBusyIndicator();
         });
     }

@@ -35,12 +35,26 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
             {
                 if (item.IsCustom)
                 {
+                    if (item.FieldName == "Occasion_CustomersQuery")
+                    {
+                        string value = item.FieldValue as string;
+                        if (!string.IsNullOrEmpty(value))
+                        {
+                            var contactIds = value.Split(',');
+                            CardContactRepository cardContactRepository = new CardContactRepository(tenant);
+                            var customersId = cardContactRepository.GetCardsContactsForContactIds_Ids(contactIds.ToList(), tenant);
+                            if (customersId.Count() > 0)
+                            {
+                                queryableData = queryableData.Where(c => customersId.Contains(c.Id));
+                            }
+                        }
+                    }
+
                     if (item.FieldName == "MyCustomers")
                     {
                         string loggedUser = AuthenticationUtil.GetAuthenticatedUser();
                         ContactRepository contactRep = new ContactRepository(tenant);
                         Contact loggedContact = contactRep.GetSingleContactByEmail(loggedUser, tenant);
-
                         queryableData = queryableData.Where(d => d.SalesmanUserId == loggedContact.Id && d.IsCustomer == true && d.InActive == false);
                     }
 
