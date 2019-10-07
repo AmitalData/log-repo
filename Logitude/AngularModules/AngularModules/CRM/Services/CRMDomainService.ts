@@ -1510,6 +1510,24 @@ export class CRMDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
+
+    GetCountOfOccasionAllCustomers(contactIds: string) {
+
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        var url = this._apiUrl + '/GetCountOfOccasionAllCustomers?contactIds=' + contactIds;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var result = response.json();
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = result;
+                return serviceResponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
     MapOccasionContactSearchresult(jsonList: any) {
         var entityList: OccasionContactSearchresult;
         entityList = new OccasionContactSearchresult();

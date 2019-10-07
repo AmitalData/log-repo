@@ -30,7 +30,22 @@ export class NewDeposit{
         
         this.Helper.WaitByIdAndClick('CREATEDEPOSIT');
         this.Helper.WaitBusyIndicator();
-        this.Helper.WaitWindowClosed();
+       // this.Helper.WaitWindowClosed();
+        
+       this.Helper.WaitByIdAndClick('BankDeposit.TH.Details');
+       this.Helper.ItemsVisibility('BankDeposit_ForeignAmount');
+        this.Helper.ItemsPresent('BankDeposit_ForeignAmount');
+        this.Helper.WaitByIdAndFill('BankDeposit_ForeignAmount' , '1');
+
+        this.Helper.ItemsVisibility('BankDeposit.B.Approve');
+        this.Helper.ItemsPresent('BankDeposit.B.Approve');
+        this.Helper.WaitByIdAndClick('BankDeposit.B.Approve');
+        this.Helper.WaitEditComponentBusyIndicator();
+        
+        this.Helper.ItemsVisibility('EditBackbutton');
+        this.Helper.ItemsPresent('EditBackbutton');
+        this.Helper.WaitByIdAndClick('EditBackbutton');
+
 
 
 

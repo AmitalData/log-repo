@@ -51,6 +51,10 @@ namespace Logitude.CRM.Data.EntityPOCOs
 	    public string ContactId { get; set; }
 	      
         public virtual Contact Contact { get; set; }
+        [Column("Invited")]
+	    public bool Invited { get; set; }
+        [Column("Participated")]
+	    public bool Participated { get; set; }
     }
 }
 	 

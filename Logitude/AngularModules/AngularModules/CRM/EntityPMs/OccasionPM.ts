@@ -169,7 +169,27 @@ export class OccasionPM {
         }
     }
     //public OccasionInvitees: Array<OccasionInviteePM>= [];
- 
+     private participatedCustomers: number;
+    public get ParticipatedCustomers() { return this.participatedCustomers; }
+    public set ParticipatedCustomers(newValue: number) { if (this.participatedCustomers != newValue) { this.participatedCustomers = newValue; this.MarkAsDirty("ParticipatedCustomers"); } }
+       
+	 
+    private participatedContacts: number;
+    public get ParticipatedContacts() { return this.participatedContacts; }
+    public set ParticipatedContacts(newValue: number) { if (this.participatedContacts != newValue) { this.participatedContacts = newValue; this.MarkAsDirty("ParticipatedContacts"); } }
+       
+	 
+    private invitedCustomers: number;
+    public get InvitedCustomers() { return this.invitedCustomers; }
+    public set InvitedCustomers(newValue: number) { if (this.invitedCustomers != newValue) { this.invitedCustomers = newValue; this.MarkAsDirty("InvitedCustomers"); } }
+       
+	 
+    private invitedContacts: number;
+    public get InvitedContacts() { return this.invitedContacts; }
+    public set InvitedContacts(newValue: number) { if (this.invitedContacts != newValue) { this.invitedContacts = newValue; this.MarkAsDirty("InvitedContacts"); } }
+       
+	 
+
     public OldEntityPM: OccasionPM;
 		
     public IsDirty: boolean;

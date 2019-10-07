@@ -561,6 +561,8 @@
     <TypeScriptCompile Include="Common\Services\StandardPMs\CustomerDepositionPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CustomsShipperPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\LogBoxTenantSettingPMService.ts" />
+    <TypeScriptCompile Include="Controls\InvitedFilter.ts" />
+    <TypeScriptCompile Include="Controls\ParticipatedFilter.ts" />
     <TypeScriptCompile Include="Controls\Pipes\MinutesToTimePipe.ts" />
     <TypeScriptCompile Include="CRMModules\CRMEmployeeGroup\Components\NewEntity\NewEmployeeComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMInboundEmail\Components\EditTabs\InboundEmailGeneralTabComponent.ts" />
@@ -608,10 +610,12 @@
     <TypeScriptCompile Include="CRMModules\CRMTickets\Components\NewEntity\NewTicketComponent.ts" />
     <TypeScriptCompile Include="Controls\Pipes\MinutesToTimePipe.ts" />
     <TypeScriptCompile Include="CRM\Components\Workspaces\OccasionWorkspaceComponent.ts" />
+    <TypeScriptCompile Include="CRM\EntityLists\OccasionInviteeList.ts" />
     <TypeScriptCompile Include="CRM\EntityLists\OccasionList.ts" />
     <TypeScriptCompile Include="CRM\EntityLists\OccasionStatusList.ts" />
     <TypeScriptCompile Include="CRM\EntityLists\OccasionTypeList.ts" />
     <TypeScriptCompile Include="CRM\EntityPMInitServices\OccasionTypePMInitService.ts" />
+    <TypeScriptCompile Include="CRM\EntityPMs\OccasionInviteePM.ts" />
     <TypeScriptCompile Include="CRM\EntityPMs\OccasionPM.ts" />
     <TypeScriptCompile Include="CRM\EntityPMs\OccasionStatusPM.ts" />
     <TypeScriptCompile Include="CRM\EntityPMs\OccasionTypePM.ts" />

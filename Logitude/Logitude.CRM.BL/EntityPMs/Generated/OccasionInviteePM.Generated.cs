@@ -342,6 +342,167 @@ namespace Logitude.CRM.BL.EntityPMs
 			
 		 }
 	   }
+	  private bool invited ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool Invited  
+	   {
+	    
+	     get
+		{
+		   return invited;
+		 }
+		 set
+		 {
+		   if(invited != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Invited",OldValue=invited,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   invited=value;
+		   }
+			
+		 }
+	   }
+	  private bool participated ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool Participated  
+	   {
+	    
+	     get
+		{
+		   return participated;
+		 }
+		 set
+		 {
+		   if(participated != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Participated",OldValue=participated,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   participated=value;
+		   }
+			
+		 }
+	   }
+	  private string contactPhone ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContactPhone  
+	   {
+	    
+	     get
+		{
+		   return contactPhone;
+		 }
+		 set
+		 {
+		   if(contactPhone != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactPhone",OldValue=contactPhone,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   contactPhone=value;
+		   }
+			
+		 }
+	   }
+	  private string contactEmail ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContactEmail  
+	   {
+	    
+	     get
+		{
+		   return contactEmail;
+		 }
+		 set
+		 {
+		   if(contactEmail != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactEmail",OldValue=contactEmail,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   contactEmail=value;
+		   }
+			
+		 }
+	   }
+	  private string contactTel ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContactTel  
+	   {
+	    
+	     get
+		{
+		   return contactTel;
+		 }
+		 set
+		 {
+		   if(contactTel != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactTel",OldValue=contactTel,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   contactTel=value;
+		   }
+			
+		 }
+	   }
+	  private string contactPosition ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContactPosition  
+	   {
+	    
+	     get
+		{
+		   return contactPosition;
+		 }
+		 set
+		 {
+		   if(contactPosition != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactPosition",OldValue=contactPosition,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   contactPosition=value;
+		   }
+			
+		 }
+	   }
+	  private string contactMobile ;
+	  	  
+       
+	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContactMobile  
+	   {
+	    
+	     get
+		{
+		   return contactMobile;
+		 }
+		 set
+		 {
+		   if(contactMobile != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactMobile",OldValue=contactMobile,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   contactMobile=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
