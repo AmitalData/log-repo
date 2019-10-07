@@ -110,6 +110,25 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             }
         }
 
+        public ARPaymentPM MapAPPaymentChequeFieldsToARPayment(ARPayment payment , ARPaymentPM paymentPM)
+        {
+
+            if(payment.ARPaymentCheques.Count == 1)
+            {
+                ARPaymentCheque cheque = payment.ARPaymentCheques.First();
+
+                paymentPM.Bank = cheque.Bank;
+                paymentPM.Account = cheque.BankAccount;
+                paymentPM.BankBranch = cheque.BankBranch;
+                paymentPM.ValueDate = cheque.ValueDate;
+                paymentPM.ChequeOrPaymentRef = cheque.ChequeNumber;
+
+
+            }
+            return paymentPM;
+
+        }
+
         //public ARPaymentPM SetARPaymentInvoicesIds(ARPayment payment, ARPaymentPM paymentPM)
         //{
         //    if(payment.PaymentInvoices.Count >0)
@@ -123,7 +142,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
         //    }
         //}
 
-       
+
 
 
     }
