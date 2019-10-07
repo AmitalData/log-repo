@@ -2283,8 +2283,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     CustomerSize = customerSizeName,
 
                     ContactMobile = cardContact.Contact == null ? null : cardContact.Contact.Mobile,
-                    ContactPhone = cardContact.Contact == null ? null : cardContact.Contact.Mobile,
-                    ContactPosition = cardContact.Contact == null ? null : cardContact.Contact.Mobile,
+                    ContactPhone = cardContact.Contact == null ? null : cardContact.Contact.BusinessPhone,
+                    ContactPosition = cardContact.Contact == null ? null : cardContact.Contact.Position,
 
                 });
             }
