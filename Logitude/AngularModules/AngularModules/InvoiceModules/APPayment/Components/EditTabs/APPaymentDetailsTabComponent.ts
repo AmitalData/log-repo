@@ -771,12 +771,14 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 if (!myResponse.HasError) {
                     var gla: GLAccountList = myResponse.Result;
                     this.vendorGLAccount = gla;
-                    this.deductionFileNumber = gla ? gla.DeductionFileNumber :null;
+                    this.deductionFileNumber = gla ? gla.DeductionFileNumber : null;
+                    this.EntityPM.ExcludeFromDeductionReport = gla.ExcludeFromDeductionReport;
                 }
             });
         }else{
             this.vendorGLAccount = null;
             this.deductionFileNumber = null;
+            this.EntityPM.ExcludeFromDeductionReport = false;
         }
     }
 
