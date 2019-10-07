@@ -259,6 +259,11 @@ export class JournalPM {
             this.journalExternalReconciles = newValue;
         }
     }
+    private lineCreditAccountTypeCode: string;
+    public get LineCreditAccountTypeCode() { return this.lineCreditAccountTypeCode; }
+    public set LineCreditAccountTypeCode(newValue: string) { if (this.lineCreditAccountTypeCode != newValue) { this.lineCreditAccountTypeCode = newValue; this.MarkAsDirty("LineCreditAccountTypeCode"); } }
+       
+	 
 
     public OldEntityPM: JournalPM;
 		

@@ -274,17 +274,18 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
-                    JournalPM journal = journalPMs.Where(d => d.Id == a.JournalId).FirstOrDefault();
+                  JournalPM journal = journalPMs.Where(d => d.Id == a.JournalId).FirstOrDefault();
                     string CreditAccountId = null;
+                    string accountTypeCode = null;
+                    //if (journal.JournalLines.Count > 0)
+                    //{
+                    //    CreditAccountId = journal.JournalLines.FirstOrDefault().CreditAccountId;
+                    //    accountTypeCode = journal.JournalLines.FirstOrDefault().AccountTypeCode;
+                    //}
 
-                    if (journal.JournalLines.Count > 0)
-                    {
-                        CreditAccountId = journal.JournalLines.FirstOrDefault().CreditAccountId;
-                    }
 
 
-
-                    GLAccountPM account = gLAccountQueryService.GetSingle(CreditAccountId, false, false);
+                  //  GLAccountPM account = gLAccountQueryService.GetSingle(CreditAccountId, false, false);
 
 
 
@@ -293,7 +294,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         taxReportLine.LineTypeCode = "C";
                     }
 
-                    else if (journal.JournalLines.Count > 0 && CreditAccountId == setting.CustomsGLAccountId)
+                    else if ( journal.LineCreditAccountId == setting.CustomsGLAccountId)
                     {
 
                         taxReportLine.LineTypeCode = "R";
@@ -304,7 +305,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         taxReportLine.LineTypeCode = "P";
                     }
 
-                    else if (account != null && account.AccountTypeCode != "3")
+                    else if (journal.LineCreditAccountTypeCode != "3")
                     {
                         taxReportLine.LineTypeCode = "K";
                     }

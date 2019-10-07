@@ -426,21 +426,31 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             List<JournalPM> journalPMs = new List<JournalPM>();
             IQueryable<Journal> journalQuery = repository.GetByJournalsAccountingIds(ids, tenant);
 
-            IQueryable<JournalPM> journals = from a in journalQuery
+            IQueryable<JournalPM> journals = from a in context.Journals
+                                             join jl in context.JournalLines
+                                             on a.Id equals jl.JournalId
+                                           
+                                             into groupJoin
+                                          
+                                             from groupJoinData in groupJoin
+                                             where groupJoinData.Line ==1
                                              select new JournalPM()
                                              {
                                                  JournalNumber = a.JournalNumber,
                                                  AccountingDate = a.AccountingDate,
                                                  StatusName = a.JournalStatusType != null ? a.JournalStatusType.LocalName : null,
-                                                 Id = a.Id
 
+                                                 Id = a.Id,
+                                                 LineCreditAccountTypeCode = groupJoinData.CreditAccount != null ? groupJoinData.CreditAccount.AccountTypeCode : null,
+                                                 LineCreditAccountId = groupJoinData.CreditAccount != null ? groupJoinData.CreditAccount.Id : null,
+                                              
                                              };
             journalPMs = journals.ToList();
-            foreach (JournalPM journal in journalPMs)
-            {
+            //foreach (JournalPM journal in journalPMs)
+            //{
 
-                journal.JournalLines = GetJournalLines(journal, tenant);
-            }
+            //    journal.JournalLines = GetJournalLines(journal, tenant);
+            //}
             return journalPMs;
         }
 
