@@ -15,7 +15,7 @@
                         <div class="MediaFill">
                             <fieldset class="MediaFill GroupBox">
                                 <legend>
-                                    <span>Custoemr</span>
+                                    <span>Customer</span>
                                 </legend>
 
                                 <div style="top: 10px;">
@@ -217,7 +217,7 @@
                                                 <td style="width: 25px; min-width: 25px; max-width: 25px; padding:0 !important;">
                                                     <div class="MediaFill">
                                                         <div class="CenterCenter" style="width: 16px; height: 16px;">
-                                                            <CheckBox [IsChecked]="IsAllChecked" (Checked)="IsAllChecked = $event"></CheckBox>
+                                                            <CheckBox [IsChecked]="IsAllChecked" [IsEnabled]="ItemsSource.length > 0" (Checked)="IsAllChecked = $event"></CheckBox>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -313,7 +313,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!OkButtonIsEnabled">Ok</button>
                     </td>
                 </tr>
             </table>

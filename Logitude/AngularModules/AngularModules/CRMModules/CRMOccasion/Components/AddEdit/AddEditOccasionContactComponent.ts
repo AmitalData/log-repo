@@ -19,7 +19,7 @@ import { ProductTypeList } from '../../../../Common/EntityLists/ProductTypeList'
 export class AddEditOccasionContactComponent extends BaseComponent {
     public EntityPM: OccasionPM;    
     public DataContext: AddEditOccasionContactComponent = this;
-    public ItemsSource: OccasionContactItem[];
+    public ItemsSource: OccasionContactItem[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
     public SelectedItem: OccasionContactItem = null;
     public ValidationErrorsList: string[] = [];
@@ -95,8 +95,11 @@ export class AddEditOccasionContactComponent extends BaseComponent {
         }
     }
 
+    public OkButtonIsEnabled: boolean = false;
+    public SelectedCount: number = 0;
     public OnLinesSelected() {
-
+        this.SelectedCount = this.ItemsSource.filter(f => f.IsChecked == true).length;
+        this.OkButtonIsEnabled = this.SelectedCount > 0 ? true : false;
     }
 
     private BuildItemsSource() {
@@ -125,6 +128,8 @@ export class AddEditOccasionContactComponent extends BaseComponent {
             myResultItem.CustomerSize = item.CustomerSize;
             this.ItemsSource.push(myResultItem);
         });
+
+        this.OnLinesSelected();
     }
 
     private SearchText: string = null;
