@@ -47,9 +47,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                 {
                     entityPM.CreatedByUserId = loggedContact.Id;
                 }
-            }
-
-          
+            }       
         }
 
         protected override void OnUpdating(EntityPMs.OccasionPM entityPM, Occasion entityPOCO)

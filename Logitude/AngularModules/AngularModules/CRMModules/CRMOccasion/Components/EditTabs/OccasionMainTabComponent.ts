@@ -167,17 +167,43 @@ export class OccasionMainTabComponent extends BaseComponent {
 
         switch (arg) {
             case "AllContacts":
+                {
+                    objectTableName = "Contact";
+                    queryCode = "Contacts";
+                    filterAgrs.addAdditionalFilter("Occasion_AllContacts", this.AllContacts_Ids, null, null, "Equals", true, false, false, "string");
+                    break;
+                }
             case "InvitedContacts":
+                {
+                    objectTableName = "Contact";
+                    queryCode = "Contacts";
+                    filterAgrs.addAdditionalFilter("Occasion_InvitedContacts", this.InviteesContacts_Ids, null, null, "Equals", true, false, false, "string");
+                    break;
+                }
             case "ParticipatedContacts":
                 {
+                    filterAgrs.addAdditionalFilter("Occasion_ParticipatedContacts", this.ParticipatedContacts_Ids, null, null, "Equals", true, false, false, "string");
                     objectTableName = "Contact";
                     queryCode = "Contacts";
                     break;
                 }
-            case "AllContacts":
-            case "InvitedContacts":
-            case "ParticipatedContacts":
+            case "AllCustomers":
                 {
+                    filterAgrs.addAdditionalFilter("Occasion_AllCustomers", null, null, null, "Equals", true, false, false, "string");
+                    objectTableName = "Customer";
+                    queryCode = "Customers";
+                    break;
+                }
+            case "InvitedCustomers":
+                {
+                    filterAgrs.addAdditionalFilter("Occasion_InvitedCustomers", null, null, null, "Equals", true, false, false, "string");
+                    objectTableName = "Customer";
+                    queryCode = "Customers";
+                    break;
+                }
+            case "ParticipatedCustomers":
+                {
+                    filterAgrs.addAdditionalFilter("Occasion_ParticipatedCustomers", null, null, null, "Equals", true, false, false, "string");
                     objectTableName = "Customer";
                     queryCode = "Customers";
                     break;
@@ -197,19 +223,40 @@ export class OccasionMainTabComponent extends BaseComponent {
         });
     }
 
-    LoadQueriesCounts() {
-        this.NumberAllContacts = this.EntityPM.OccasionInvitees.length;
-        this.ComputeAllCustomersCount();
+    private AllContacts_Ids = "";
+    private InviteesContacts_Ids = "";
+    private ParticipatedContacts_Ids = "";
+    private AllCustomers_Ids = "";
+    private InviteesCustomers_Ids = "";
+    private ParticipatedCustomers_Ids = "";
 
-        this.NumberInvitedContacts = this.EntityPM.InvitedContacts;
-        this.NumberOfParticipatedContacts = this.EntityPM.ParticipatedContacts;
+    LoadQueriesCounts() {
+        this.LoadAllContactsCount();
+        this.LoadAllCustomersCount();
 
         this.NumberInvitedCustomers = this.EntityPM.InvitedCustomers;
         this.NumberOfParticipatedCustomers = this.EntityPM.ParticipatedCustomers;
     }
 
+    LoadAllContactsCount() {
+        this.NumberAllContacts = this.EntityPM.OccasionInvitees.length;
+        this.NumberInvitedContacts = this.EntityPM.InvitedContacts;
+        this.NumberOfParticipatedContacts = this.EntityPM.ParticipatedContacts;
 
-    ComputeAllCustomersCount() {
+        this.EntityPM.OccasionInvitees.forEach(item => {
+            this.AllContacts_Ids = this.AllContacts_Ids + item.ContactId + ",";
+        });
+
+        this.EntityPM.OccasionInvitees.filter(a => a.Invited).forEach(item => {
+            this.InviteesContacts_Ids = this.InviteesContacts_Ids + item.ContactId + ",";
+        });
+
+        this.EntityPM.OccasionInvitees.filter(a => a.Participated).forEach(item => {
+            this.ParticipatedContacts_Ids = this.ParticipatedContacts_Ids + item.ContactId + ",";
+        });
+    }
+
+    LoadAllCustomersCount() {
         var service = new CRMDomainService();
         var contactsIds = "";
 
@@ -219,8 +266,10 @@ export class OccasionMainTabComponent extends BaseComponent {
 
         service.GetCountOfOccasionAllCustomers(contactsIds).subscribe(myResult => {
             var mm: ServiceResponse = myResult;
+            var list_AllCustomers = [];
             if (!mm.HasError) {
-                this.NumberAllCustomers = myResult.Result;
+                list_AllCustomers = myResult.Result;
+                this.NumberAllCustomers = list_AllCustomers.length;
             }
 
             this.CurrentSession.StopBusyIndicator();
@@ -255,17 +304,18 @@ export class OccasionMainTabComponent extends BaseComponent {
                     break;
                 }
         }
+        this.IsCheckedAllContacts = false;
     }
 
     MarkInvitees_Action(isInvited) {
-        this.OccasionLinesList.forEach(item => {
+        this.OccasionLinesList.filter(a => a.IsChecked).forEach(item => {
             item.Invited = isInvited;
         });
         this.LoadOccasionLinesData();
     }
 
     MarkParticipated_Action(isParticipated) {
-        this.OccasionLinesList.forEach(item => {
+        this.OccasionLinesList.filter(a => a.IsChecked).forEach(item => {
             item.Participated = isParticipated;
         });
         this.LoadOccasionLinesData();
@@ -276,7 +326,7 @@ export class OccasionMainTabComponent extends BaseComponent {
         confirmWindow.Show("Delete all checked invitees?");
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
-                this.OccasionLinesList.forEach(item => {
+                this.OccasionLinesList.filter(a => a.IsChecked).forEach(item => {
                     this.EntityPM.RemoveOccasionInvitee(item.EntityPM);
                 });
                 this.LoadOccasionLinesData();
@@ -296,7 +346,7 @@ export class OccasionLineClass extends BaseComponent {
         this.EntityPM = entityPM; 
     }
 
-    private isChecked: boolean;
+    private isChecked: boolean = false;
     get IsChecked() {
         return this.isChecked;
     }

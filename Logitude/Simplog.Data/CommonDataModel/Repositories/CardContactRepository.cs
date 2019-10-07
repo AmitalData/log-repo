@@ -44,12 +44,19 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public int GetCardsContactsForContactIds_Count(List<string> contactIdsList, int tenant)
         {
             var cardsList = (from d in context.CardContacts.Include("Card.Customer")
-                         where d.Tenant == tenant && contactIdsList.Contains(d.ContactId)
-                         select d).GroupBy(a=>a.CardId).ToList();
+                             where d.Tenant == tenant && contactIdsList.Contains(d.ContactId)
+                             select d).GroupBy(a => a.CardId).ToList();
 
-            return cardsList != null ? cardsList.Count(): 0;
+            return cardsList != null ? cardsList.Count() : 0;
         }
 
+        public List<CardContact> GetCustomersForContactIds(List<string> contactIdsList, int tenant)
+        {
+            var cardsList = (from d in context.CardContacts.Include("Card.Customer")
+                         where d.Tenant == tenant && contactIdsList.Contains(d.ContactId)
+                         select d).ToList();
+            return cardsList;
+        }
 
         public List<CardContact> GetCardContactForContact(string contactId, int tenant)
         {
