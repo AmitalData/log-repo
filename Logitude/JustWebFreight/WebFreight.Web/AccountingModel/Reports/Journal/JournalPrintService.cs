@@ -124,6 +124,7 @@ namespace WebFreight.Web.AccountingModel.Reports.Journal
                     Reference1 = d.Reference1,
                     Reference2 = d.Reference2,
                     Reference3 = d.Reference3,
+                    Notes= d.Notes,
                 }).ToList();
 
                 journalDP.JournalLines = lines;
