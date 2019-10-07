@@ -191,21 +191,21 @@ export class OccasionMainTabComponent extends BaseComponent {
                 {
                     filterAgrs.addAdditionalFilter("Occasion_CustomersQuery", this.AllContacts_Ids, null, null, "Equals", true, false, false, "string");
                     objectTableName = "Customer";
-                    queryCode = "Customers";
+                    queryCode = "ShippersAndConsignees";
                     break;
                 }
             case "InvitedCustomers":
                 {
                     filterAgrs.addAdditionalFilter("Occasion_CustomersQuery", this.InviteesContacts_Ids, null, null, "Equals", true, false, false, "string");
                     objectTableName = "Customer";
-                    queryCode = "Customers";
+                    queryCode = "ShippersAndConsignees";
                     break;
                 }
             case "ParticipatedCustomers":
                 {
                     filterAgrs.addAdditionalFilter("Occasion_CustomersQuery", this.ParticipatedContacts_Ids, null, null, "Equals", true, false, false, "string");
                     objectTableName = "Customer";
-                    queryCode = "Customers";
+                    queryCode = "ShippersAndConsignees";
                     break;
                 }
         }
