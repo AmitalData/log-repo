@@ -1154,9 +1154,9 @@ namespace Logitude.BL.Helpers
             if (ShowSaleCurrencyColumnColumnPosition > 1)
             {
                 HtmlTemplate.Append("<td " + StyleTrGroupByTotal + "colspan=' " + (ShowSaleCurrencyColumnColumnPosition - 1).ToString() + "';" + ">"); HtmlTemplate.Append("<div " + groupByTotalStyle + " >" + "<div>"); HtmlTemplate.Append("</td>");
-            }
-
+    
             HtmlTemplate.Append("<td " + StyleTrGroupByTotal + ">");
+        }
 
             foreach (IGrouping<string, QuoteSaleChargePM> quoteSaleCharge in QuoteSaleChargeGroup)
             {
@@ -1189,9 +1189,10 @@ namespace Logitude.BL.Helpers
             }
 
             HtmlTemplate.Append("</td>");
-
-            HtmlTemplate.Append("<td " + StyleTrGroupByTotal + "colspan=' " + (TdCount - ShowSaleCurrencyColumnColumnPosition).ToString() + "';" + ">"); HtmlTemplate.Append("<div " + groupByTotalStyle + " >" + "<div>"); HtmlTemplate.Append("</td>");
-
+            if (TdCount != ShowSaleCurrencyColumnColumnPosition)
+            {
+                HtmlTemplate.Append("<td " + StyleTrGroupByTotal + "colspan=' " + (TdCount - ShowSaleCurrencyColumnColumnPosition).ToString() + "';" + ">"); HtmlTemplate.Append("<div " + groupByTotalStyle + " >" + "<div>"); HtmlTemplate.Append("</td>");
+            }
             HtmlTemplate.Append("</tr>");
         }
 
