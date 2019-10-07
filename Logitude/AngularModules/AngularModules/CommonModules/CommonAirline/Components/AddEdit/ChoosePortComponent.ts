@@ -62,10 +62,7 @@ export class ChoosePortComponent extends BaseComponent {
         else if (this.ParentClass.fatherComponent.ItemList.filter(d => d.Code == this.Port.Code).length > 0) {
             errors.push("Port with the same code already added");
         }
-        
-
-    
-
+ 
         this.ValidationErrorsList = errors;
         
         if (errors.length == 0) {

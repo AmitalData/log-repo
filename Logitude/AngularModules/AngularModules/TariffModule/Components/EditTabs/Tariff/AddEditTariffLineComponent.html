@@ -109,8 +109,7 @@
                                 </table>
                             </td>
                         </tr>
-
-
+                        
                         <!-- Currency -->
                         <tr class="FormFieldRow" *ngIf="TariffType == 'ASC'">
                             <td>
@@ -309,16 +308,16 @@
                                             <LogLabel [ObjectFieldName]="'Surcharge1Price'" [Text]="DataContext.FatherComponent.Surcharge1PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
-                                        <td style="width:220px;">
-                                            <LogTextBox [ObjectFieldName]="'Surcharge1Price'" [Text]="DataContext.Surcharge1Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        <td style="width:72px;">
+                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge1Price'" [Text]="DataContext.Surcharge1Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
 
-                                        <td style="width:100px;">
-                                            <LogLabel [ObjectFieldName]="'Surcharge1MinPrice'" [Text]="DataContext.FatherComponent.Surcharge1MinPriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        <td style="width:40px;">
+                                            <LogLabel [ObjectFieldName]="'Surcharge1MinPrice'" [Text]="'Min'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
-                                        <td style="width:220px;">
-                                            <LogTextBox [ObjectFieldName]="'Surcharge1MinPrice'" [Text]="DataContext.Surcharge1MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        <td style="width:72px;">
+                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge1MinPrice'" [Text]="DataContext.Surcharge1MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
 
                                         <td>
@@ -333,15 +332,15 @@
                                         </td>
 
                                         <td>
-                                            <LogTextBox [ObjectFieldName]="'Surcharge2Price'" [Text]="DataContext.Surcharge2Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge2Price'" [Text]="DataContext.Surcharge2Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
 
                                         <td>
-                                            <LogLabel [ObjectFieldName]="'Surcharge2MinPrice'" [Text]="DataContext.FatherComponent.Surcharge2MinPriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'Surcharge2MinPrice'" [Text]="'Min'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
-                                            <LogTextBox [ObjectFieldName]="'Surcharge2MinPrice'" [Text]="DataContext.Surcharge2MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge2MinPrice'" [Text]="DataContext.Surcharge2MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
 
                                         <td>
@@ -356,15 +355,15 @@
                                         </td>
 
                                         <td>
-                                            <LogTextBox [ObjectFieldName]="'Surcharge3Price'" [Text]="DataContext.Surcharge3Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge3Price'" [Text]="DataContext.Surcharge3Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
 
                                         <td>
-                                            <LogLabel [ObjectFieldName]="'Surcharge3MinPrice'" [Text]="DataContext.FatherComponent.Surcharge3MinPriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'Surcharge3MinPrice'" [Text]="'Min'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
-                                            <LogTextBox [ObjectFieldName]="'Surcharge3MinPrice'" [Text]="DataContext.Surcharge3MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge3MinPrice'" [Text]="DataContext.Surcharge3MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
 
                                         <td>
@@ -379,15 +378,15 @@
                                         </td>
 
                                         <td>
-                                            <LogTextBox [ObjectFieldName]="'Surcharge4Price'" [Text]="DataContext.Surcharge4Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge4Price'" [Text]="DataContext.Surcharge4Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
 
                                         <td>
-                                            <LogLabel [ObjectFieldName]="'Surcharge4MinPrice'" [Text]="DataContext.FatherComponent.Surcharge4MinPriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'Surcharge4MinPrice'" [Text]="'Min'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
-                                            <LogTextBox [ObjectFieldName]="'Surcharge4MinPrice'" [Text]="DataContext.Surcharge4MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge4MinPrice'" [Text]="DataContext.Surcharge4MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
 
                                         <td>
@@ -402,15 +401,15 @@
                                         </td>
 
                                         <td>
-                                            <LogTextBox [ObjectFieldName]="'Surcharge5Price'" [Text]="DataContext.Surcharge5Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge5Price'" [Text]="DataContext.Surcharge5Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
 
                                         <td>
-                                            <LogLabel [ObjectFieldName]="'Surcharge5MinPrice'" [Text]="DataContext.FatherComponent.Surcharge5MinPriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'Surcharge5MinPrice'" [Text]="'Min'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
-                                            <LogTextBox [ObjectFieldName]="'Surcharge5MinPrice'" [Text]="DataContext.Surcharge5MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge5MinPrice'" [Text]="DataContext.Surcharge5MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
 
                                         <td>
@@ -425,15 +424,15 @@
                                         </td>
 
                                         <td>
-                                            <LogTextBox [ObjectFieldName]="'Surcharge6Price'" [Text]="DataContext.Surcharge6Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge6Price'" [Text]="DataContext.Surcharge6Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
 
                                         <td>
-                                            <LogLabel [ObjectFieldName]="'Surcharge6MinPrice'" [Text]="DataContext.FatherComponent.Surcharge6MinPriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'Surcharge6MinPrice'" [Text]="'Min'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
-                                            <LogTextBox [ObjectFieldName]="'Surcharge6MinPrice'" [Text]="DataContext.Surcharge6MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge6MinPrice'" [Text]="DataContext.Surcharge6MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
 
                                         <td>
@@ -448,15 +447,15 @@
                                         </td>
 
                                         <td>
-                                            <LogTextBox [ObjectFieldName]="'Surcharge7Price'" [Text]="DataContext.Surcharge7Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge7Price'" [Text]="DataContext.Surcharge7Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
 
                                         <td>
-                                            <LogLabel [ObjectFieldName]="'Surcharge7MinPrice'" [Text]="DataContext.FatherComponent.Surcharge7MinPriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'Surcharge7MinPrice'" [Text]="'Min'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
-                                            <LogTextBox [ObjectFieldName]="'Surcharge7MinPrice'" [Text]="DataContext.Surcharge7MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge7MinPrice'" [Text]="DataContext.Surcharge7MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
 
                                         <td>
@@ -471,15 +470,15 @@
                                         </td>
 
                                         <td>
-                                            <LogTextBox [ObjectFieldName]="'Surcharge8Price'" [Text]="DataContext.Surcharge8Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge8Price'" [Text]="DataContext.Surcharge8Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
 
                                         <td>
-                                            <LogLabel [ObjectFieldName]="'Surcharge8MinPrice'" [Text]="DataContext.FatherComponent.Surcharge8MinPriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'Surcharge8MinPrice'" [Text]="'Min'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
-                                            <LogTextBox [ObjectFieldName]="'Surcharge8MinPrice'" [Text]="DataContext.Surcharge8MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge8MinPrice'" [Text]="DataContext.Surcharge8MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
 
                                         <td>
@@ -494,15 +493,15 @@
                                         </td>
 
                                         <td>
-                                            <LogTextBox [ObjectFieldName]="'Surcharge9Price'" [Text]="DataContext.Surcharge9Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge9Price'" [Text]="DataContext.Surcharge9Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
 
                                         <td>
-                                            <LogLabel [ObjectFieldName]="'Surcharge9MinPrice'" [Text]="DataContext.FatherComponent.Surcharge9MinPriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'Surcharge9MinPrice'" [Text]="'Min'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
-                                            <LogTextBox [ObjectFieldName]="'Surcharge9MinPrice'" [Text]="DataContext.Surcharge9MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge9MinPrice'" [Text]="DataContext.Surcharge9MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
 
                                         <td>
@@ -517,15 +516,15 @@
                                         </td>
 
                                         <td>
-                                            <LogTextBox [ObjectFieldName]="'Surcharge10Price'" [Text]="DataContext.Surcharge10Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge10Price'" [Text]="DataContext.Surcharge10Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
 
                                         <td>
-                                            <LogLabel [ObjectFieldName]="'Surcharge10MinPrice'" [Text]="DataContext.FatherComponent.Surcharge10MinPriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'Surcharge10MinPrice'" [Text]="'Min'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
-                                            <LogTextBox [ObjectFieldName]="'Surcharge10MinPrice'" [Text]="DataContext.Surcharge10MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge10MinPrice'" [Text]="DataContext.Surcharge10MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
 
                                         <td>

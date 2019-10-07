@@ -180,6 +180,7 @@ export class AddEditPayableComponent {
                     this.DataContext.TariffId = null;
                     this.DataContext.TariffNumber = null;
                     this.DataContext.IsNewEntity = false;
+                    this.EntityPM.PayablesDisconnectedFromTariff = true;
                     this.DataContext.SetUIProperties();
                     this.CurrentSession.CloseCurrentWindowEmit("OK");     
                 }

@@ -51,9 +51,7 @@ export class AddEditTariffLineComponent  {
     get Surcharge8PriceText() { return this.EntityPM.Surcharge8PriceText; }
     get Surcharge9PriceText() { return this.EntityPM.Surcharge9PriceText; }
     get Surcharge10PriceText() { return this.EntityPM.Surcharge10PriceText; }
-
-
-
+    
     CancelButtonClicked() {
         this.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
@@ -77,11 +75,15 @@ export class AddEditTariffLineComponent  {
 
         else if (this.TariffType == "ASC") {
             if (AppTool.IsNullOrEmpty(this.DataContext.DestinationPortId) && !this.DataContext.IsToAllOtherPorts) {
-                errors.push("To port or To All Other Ports is required");
+                errors.push("To port or To All Other Ports is Required");
             }
 
             if (AppTool.IsNullOrEmpty(this.DataContext.OriginPortId) && !this.DataContext.IsFromAllOtherPorts) {
-                errors.push("From port or From All Other Ports is required");
+                errors.push("From port or From All Other Ports is Required");
+            }
+
+            if (AppTool.IsNullOrEmpty(this.DataContext.CurrencyId)) {
+                errors.push("Currency Field is Required");
             }
         }       
 
@@ -136,12 +138,26 @@ export class AddEditTariffLineComponent  {
             this.myCloner.AddField('Surcharge7Price');
             this.myCloner.AddField('Surcharge8Price');
             this.myCloner.AddField('Surcharge9Price');
-            this.myCloner.AddField('Surcharge10Price'); 
+            this.myCloner.AddField('Surcharge10Price');
+
+            this.myCloner.AddField('Surcharge1MinPrice');
+            this.myCloner.AddField('Surcharge2MinPrice');
+            this.myCloner.AddField('Surcharge3MinPrice');
+            this.myCloner.AddField('Surcharge4MinPrice');
+            this.myCloner.AddField('Surcharge5MinPrice');
+            this.myCloner.AddField('Surcharge6MinPrice');
+            this.myCloner.AddField('Surcharge7MinPrice');
+            this.myCloner.AddField('Surcharge8MinPrice');
+            this.myCloner.AddField('Surcharge9MinPrice');
+            this.myCloner.AddField('Surcharge10MinPrice');
+
             this.myCloner.AddField('IsFromAllOtherPorts');
             this.myCloner.AddField('IsToAllOtherPorts');
             this.myCloner.AddField('Index');
             this.myCloner.AddField('OriginPortText');
             this.myCloner.AddField('DestinationPortText');
+            this.myCloner.AddField('CurrencyId');
+            this.myCloner.AddField('CurrencyCode');
         }
 
         this.myCloner.AddEntity(this.EntityPM);
