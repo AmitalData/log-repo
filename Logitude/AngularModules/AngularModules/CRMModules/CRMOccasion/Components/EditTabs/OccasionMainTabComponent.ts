@@ -227,6 +227,62 @@ export class OccasionMainTabComponent extends BaseComponent {
         });
     }
 
+    ActionsButtonClicked(args) {
+        switch (args) {
+            case "MAI":
+                {
+                    this.MarkInvitees_Action(true);
+                    break;
+                }
+            case "MAP":
+                {
+                    this.MarkParticipated_Action(true);
+                    break;
+                }
+            case "MAUI":
+                {
+                    this.MarkInvitees_Action(false);
+                    break;
+                }
+            case "MAUP":
+                {
+                    this.MarkParticipated_Action(false);
+                    break;
+                }
+            case "D":
+                {
+                    this.DeleteCheckedOccasionInvitee();
+                    break;
+                }
+        }
+    }
+
+    MarkInvitees_Action(isInvited) {
+        this.OccasionLinesList.forEach(item => {
+            item.Invited = isInvited;
+        });
+        this.LoadOccasionLinesData();
+    }
+
+    MarkParticipated_Action(isParticipated) {
+        this.OccasionLinesList.forEach(item => {
+            item.Participated = isParticipated;
+        });
+        this.LoadOccasionLinesData();
+    }
+
+    DeleteCheckedOccasionInvitee() {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Show("Delete all checked invitees?");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.OccasionLinesList.forEach(item => {
+                    this.EntityPM.RemoveOccasionInvitee(item.EntityPM);
+                });
+                this.LoadOccasionLinesData();
+            }
+        });
+    }
 }
 
 export class OccasionLineClass extends BaseComponent {

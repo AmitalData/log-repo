@@ -211,7 +211,14 @@
                                                                     <label>Actions</label>
                                                                     <img src="./Images/ToggleIcon.png" />
 
-                                                                    <div class="ToggleButtonMenu" style="right: -45px;">
+                                                                    <div class="ToggleButtonMenu" style="right: -45px;width:100px;">
+                                                                        <button (click)="ActionsButtonClicked('MAI')">Mark as invited</button>
+                                                                        <button (click)="ActionsButtonClicked('MAP')">Mark as participated</button>
+                                                                        <button (click)="ActionsButtonClicked('MAUI')">
+                                                                            Mark as uninvited
+                                                                        </button>
+                                                                        <button (click)="ActionsButtonClicked('MAUP')">Mark as not participated</button>
+                                                                        <button (click)="ActionsButtonClicked('D')">Delete</button>
 
                                                                     </div>
                                                                 </div>
