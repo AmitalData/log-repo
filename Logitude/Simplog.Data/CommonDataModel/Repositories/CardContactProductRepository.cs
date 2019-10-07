@@ -1,5 +1,6 @@
 ﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +37,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public IQueryable<CardContactProduct> GetProductsByCardContactIdd(string cardContactId, int tenant)
         {
-            return (from d in context.CardContactProducts
+            return (from d in context.CardContactProducts.Include("ProductType")
                     where d.Tenant == tenant && d.CardContactId == cardContactId
                     select d);
         }

@@ -179,8 +179,7 @@ export class CRMDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-
-
+    
     GetActivitiesChartData(code: string, ownerId: string, businessUnitId: string, chartCode: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -197,8 +196,7 @@ export class CRMDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-
-
+    
     GetQuotesChartDataCustom(FromDate: Date, ToDate: Date, ownerId: string, businessUnitId: string, chartCode: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -434,9 +432,6 @@ export class CRMDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-
-    
-
     
     GetRecentTickets(myOwnerId: string, myEmployeeId: string) {
         var authHeader = new Headers();
@@ -537,7 +532,6 @@ export class CRMDomainService {
         });
     }
  
-
     GetUsersByEmployeeGroupIds(employeeIds: string) {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
@@ -1302,8 +1296,7 @@ export class CRMDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-
-
+    
     GetQuotesGroupBySalesmanCustom(FromDate: Date, ToDate: Date, ownerId: string, businessUnitId: string, fieldCode: string, isTopTen: boolean) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -1351,8 +1344,7 @@ export class CRMDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-
-
+    
     GetActivitiesGroupBySalesmanCustom(FromDate: Date,ToDate:Date, ownerId: string, businessUnitId: string, fieldCode: string, isTopTen: boolean) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -1368,8 +1360,7 @@ export class CRMDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-
-
+    
     GetActivitiesGroupBySalesman(code: string, ownerId: string, businessUnitId: string, fieldCode: string, isTopTen: boolean) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -1417,8 +1408,7 @@ export class CRMDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-
-
+    
     GetUpdateCorrespondence(entityId: string, rightToLeft: boolean) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -1450,8 +1440,7 @@ export class CRMDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-
-
+    
     GetTicketOwnerPermission(ownerId: string, ownerName:string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -1496,6 +1485,61 @@ export class CRMDomainService {
         });
     }
 
+    BrowseOccasionContacts(filter: OccasionContactArgs) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        authHeader.append('Content-Type', 'application/json');
+
+        return Observable.defer(() => {
+            return this._http.post(this._apiUrl + "/PostBrowseOccasionContacts", JSON.stringify(filter), {
+                headers: authHeader,
+            }).map(response => {
+                var myJsonResult = response.json();
+
+                var myResult: OccasionContactSearchresult[] = [];
+
+                for (var key in myJsonResult) {
+                    var entity: OccasionContactSearchresult;
+                    entity = this.MapOccasionContactSearchresult(myJsonResult[key]);
+                    myResult.push(entity);
+                }
+
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myResult;
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
+    GetCountOfOccasionAllCustomers(contactIds: string) {
+
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        var url = this._apiUrl + '/GetCountOfOccasionAllCustomers?contactIds=' + contactIds;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var result = response.json();
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = result;
+                return serviceResponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
+    MapOccasionContactSearchresult(jsonList: any) {
+        var entityList: OccasionContactSearchresult;
+        entityList = new OccasionContactSearchresult();
+        var jsonListKeys = Object.keys(jsonList);
+
+        for (var key in jsonListKeys) {
+            var property = jsonListKeys[key];
+            entityList[property] = jsonList[property];
+        }
+
+        return entityList;
+    }
 }
 
 export class DailySpotlightClass {
@@ -1532,4 +1576,24 @@ export class CRMSummary {
 export class OccasionSummary {
     public Id: number;
     public AllOccasionsCount: number;
+}
+
+export class OccasionContactSearchresult {
+    public ContactId: string;
+    public Name: string;
+    public Email: string;
+    public Company: string;
+    public Region: string;
+    public Industry: string;
+    public Product: string;
+    public CustomerSize: string;
+}
+
+export class OccasionContactArgs {
+    public CustomerSizeId: string;
+    public RegionId: string;
+    public IndustryId: string;
+    public OccasionId: string;
+    public ProductTypes: string;
+    public AdditionalServices: string;
 }

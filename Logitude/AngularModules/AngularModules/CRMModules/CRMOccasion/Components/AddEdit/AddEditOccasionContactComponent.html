@@ -1,0 +1,322 @@
+
+
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr style="height:130px;">
+        <td>
+            <table>
+                <tr>
+                    <td style="width:330px;">
+                        <div class="MediaFill">
+                            <fieldset class="MediaFill GroupBox">
+                                <legend>
+                                    <span>Customer</span>
+                                </legend>
+
+                                <div style="top: 10px;">
+                                    <table>
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 100px;">
+                                                <LogLabel [NoObjectField]="true" [ObjectFieldName]="'CustomerSizeId'" [Text]="'Customer Size'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td style="width:200px;">
+                                                <LogLov [ObjectFieldName]="'CustomerSizeId'"
+                                                        [SelectedValue]="CustomerSizeId"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'CustomerSize'"
+                                                        [NoObjectField]="true">
+                                                </LogLov>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <td>
+                                                <LogLabel [NoObjectField]="true" [ObjectFieldName]="'RegionId'" [Text]="'Region'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td>
+                                                <LogLov [ObjectFieldName]="'RegionId'"
+                                                        [SelectedValue]="RegionId"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'Region'"
+                                                        [NoObjectField]="true">
+                                                </LogLov>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <td>
+                                                <LogLabel [NoObjectField]="true" [ObjectFieldName]="'IndustryId'" [Text]="'Industry'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td>
+                                                <LogLov [ObjectFieldName]="'IndustryId'"
+                                                        [SelectedValue]="IndustryId"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'Industry'"
+                                                        [NoObjectField]="true">
+                                                </LogLov>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </td>
+
+                    <td style="width: 10px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width:330px;">
+                        <div class="MediaFill">
+                            <fieldset class="MediaFill GroupBox">
+                                <legend>
+                                    <span>Contact</span>
+                                </legend>
+
+                                <div style="top: 10px;">
+                                    <table>
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 125px;">
+                                                <LogLabel [NoObjectField]="true" [ObjectFieldName]="'ProductTypeCode'" [Text]="'Product'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td style="width:164px;">
+                                                <ComboBox [WithIcons]="true" [ItemsSource]="ProductTypeComboList" [Binding]="'Name'" [SelectedItem]="SelectedProdustTypeFilter" (SelectedItemChanged)="SelectedProdustTypeFilter = $event"></ComboBox>
+                                            </td>
+
+                                            <td><div></div></td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 125px;">
+                                                <LogLabel [NoObjectField]="true" [ObjectFieldName]="'AdditionalServiceId'" [Text]="'Additional Service'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td  style="width:164px;"><div></div></td>
+
+                                            <td><div></div></td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </td>
+
+                    <td style="width: 10px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width:330px;">
+                        <div class="MediaFill">
+                            <fieldset class="MediaFill GroupBox">
+                                <legend>
+                                    <span>Occasion</span>
+                                </legend>
+
+                                <div style="top: 10px;">
+                                    <table>
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 100px;">
+                                                <LogLabel [NoObjectField]="true" [ObjectFieldName]="'OccasionId'" [Text]="'Occasion'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td style="width:200px;">
+                                                <LogLov [ObjectFieldName]="'OccasionId'"
+                                                        [SelectedValue]="OccasionId"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'Occasion'"
+                                                        [NoObjectField]="true">
+                                                </LogLov>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </td>
+
+                    <td style="width: 10px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width:70px;">
+                        <button (click)="BrowseClicked()" class="GreenButton" style="height:22px; vertical-align:top;">Browse</button>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height:1px;">
+        <td>
+            <table>
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 300px;">
+                        <SearchBox [ObjectTableName]="'Contact'" (TextChanged)="SearchMethod($event)"></SearchBox>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height:5px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div class="MediaFill">
+                <table>
+                    <tr>
+                        <td>
+                            <div class="MediaFill">
+                                <div class="SimpleGridView">
+                                    <div class="SimpleGridViewHeader">
+                                        <table>
+                                            <tr>
+                                                <td style="width: 25px; min-width: 25px; max-width: 25px; padding:0 !important;">
+                                                    <div class="MediaFill">
+                                                        <div class="CenterCenter" style="width: 16px; height: 16px;">
+                                                            <CheckBox [IsChecked]="IsAllChecked" [IsEnabled]="ItemsSource.length > 0" (Checked)="IsAllChecked = $event"></CheckBox>
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+                                                <td style="width: 150px; min-width: 150px; max-width: 150px;">Email</td>
+                                                <td style="width: 150px; min-width: 150px; max-width: 150px;">Name</td>
+                                                <td style="width: 200px; min-width: 200px; max-width: 200px;">Company</td>
+                                                <td style="width: 120px; min-width: 120px; max-width: 120px;">Region</td>
+                                                <td style="width: 120px; min-width: 120px; max-width: 120px;">Industry</td>
+                                                <td style="width: 200px; min-width: 200px; max-width: 200px;">Product</td>
+                                                <td style="width: 120px; min-width: 120px; max-width: 120px;">Customer Size</td>
+                                                <td class="LastChild">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                    <div class="SimpleGridViewBody">
+                                        <table>
+                                            <tr class="SimpleGridViewRow" *ngFor="let item of ItemsSource" [class.RowSelected]="item == SelectedItem" (click)="SelectedItem = item">
+                                                <td style="width: 25px; min-width: 25px; max-width: 25px; padding:0 !important;">
+                                                    <div class="MediaFill">
+                                                        <div class="CenterCenter" style="width: 16px; height: 16px; padding-left: 1px;">
+                                                            <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event"></CheckBox>
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+                                                <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px;">
+                                                    {{item.Email}}
+                                                </td>
+
+                                                <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px;">
+                                                    {{item.Name}}
+                                                </td>
+
+                                                <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px;">
+                                                    {{item.Company}}
+                                                </td>
+
+                                                <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px;">
+                                                    {{item.Region}}
+                                                </td>
+
+                                                <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px;">
+                                                    {{item.Industry}}
+                                                </td>
+
+                                                <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px;">
+                                                    {{item.Product}}
+                                                </td>
+
+                                                <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px;">
+                                                    {{item.CustomerSize}}
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan="9">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!OkButtonIsEnabled">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

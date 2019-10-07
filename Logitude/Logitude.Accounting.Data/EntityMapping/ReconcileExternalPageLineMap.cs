@@ -59,6 +59,8 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.CreditAmount).HasColumnName("CreditAmount").HasPrecision(15, 2);
 
             this.Property(t => t.InProgressExternalReconcile).HasColumnName("InProgressExternalReconcile");
+
+            this.Property(t => t.InReconcileProgress).HasColumnName("InReconcileProgress");
         }
     }
 }
