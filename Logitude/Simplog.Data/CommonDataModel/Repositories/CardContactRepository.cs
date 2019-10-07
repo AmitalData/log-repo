@@ -52,11 +52,13 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public string GetCardsContactsForContactIds_Ids(List<string> contactIdsList, int tenant)
         {
-            var ids = ""; 
-            var cardsList = (from d in context.CardContacts.Include("Card.Customer")
+            var ids = "";
+            List<string> cardsList = (from d in context.CardContacts.Include("Card.Customer")
                              where d.Tenant == tenant && contactIdsList.Contains(d.ContactId)
-                             select d).GroupBy(a => a.CardId).ToList();
-            if(cardsList!=null && cardsList.Count() > 0)
+                             select d).GroupBy(a => a.CardId)
+                            .Select(grp => grp.FirstOrDefault().CardId).ToList();
+
+            if(cardsList !=null && cardsList.Count() > 0)
             {
                 ids = string.Join(",", cardsList);
                 ids.TrimEnd(',');
