@@ -148,7 +148,7 @@ export class AddEditOccasionContactComponent extends BaseComponent {
         this.BuildItemsSource();
     }
 
-    private loadedContacts: OccasionContactSearchresult[];
+    private loadedContacts: OccasionContactSearchresult[] = [];
     BrowseClicked() {
         this.CurrentSession.StartBusyIndicatorLoading();
         

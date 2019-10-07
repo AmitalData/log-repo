@@ -2108,10 +2108,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 
                 if (!string.IsNullOrEmpty(args.OccasionId))
                 {
-                    List<string> inviteesIds = this.GetContactsIdsFromOccasion(args.OccasionId, authToken.Tenant);
-                    if (inviteesIds != null && inviteesIds.Count > 0)
+                    List<string> contactsIds = this.GetContactsIdsFromOccasion(args.OccasionId, authToken.Tenant);
+                    if (contactsIds != null)
                     {
-                        contacts = contacts.Where(d => inviteesIds.Contains(d.ContactId));
+                        contacts = contacts.Where(d => contactsIds.Contains(d.ContactId));
                     }
                 }
                 
@@ -2182,8 +2182,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             OccasionRepository occasionRepository = new OccasionRepository(cRMContext);
             OccasionInviteeRepository occasionInviteeRepository = new OccasionInviteeRepository(cRMContext);
             IQueryable<OccasionInvitee> occasionInvitees = occasionInviteeRepository.GetOccasionInviteesByOccasion(occasionId, tenant);
-            List<string> inviteesIds = occasionInvitees.Select(s => s.ContactId).ToList();
-            return inviteesIds;
+            List<string> contactsIds = occasionInvitees.Select(s => s.ContactId).ToList();
+            return contactsIds;
         }
         private List<string> GetProductsTypesCodes(string productTypes, ICommonDataContext commonDataContext, int tenant)
         {

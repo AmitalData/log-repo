@@ -38,6 +38,7 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
         public double? AmountInLocalCurrency { get; set; }
         public string PrintNotes { get; set; }
         public string AccountDisplayNumber { get; set; }
+        public DateTime? PrintDate { get; set; }
     }
 
     

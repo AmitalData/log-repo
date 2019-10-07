@@ -108,6 +108,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                        
                         ARPaymentService service = new ARPaymentService(MyContext, tenant);
                         entityPM = mappingService.SetARPaymentPMFields(entityPM);
+                        entityPM = mappingService.MapAPPaymentChequeFieldsToARPayment(entity, entityPM);
                         service.Create(entityPM);
                       
                        

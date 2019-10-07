@@ -7,7 +7,7 @@ import {ObjectsLocator} from '../Infrastructure/Locators/ObjectsLocator';
     selector: 'ComboBox',
     moduleId: module.id,
     templateUrl: './ComboBox.html',
-    inputs: ['ItemsSource', 'SelectedItem', 'Binding', 'IsDisabled', 'WaterMark', 'IsBlueBox', 'IsGreenButton', 'FocusOnMe', 'SelectedValue', 'SelectedValuePath', 'MxHeight', 'WithIcons'],
+    inputs: ['ItemsSource', 'SelectedItem', 'Binding', 'IsDisabled', 'WaterMark', 'IsBlueBox', 'IsGreenButton', 'FocusOnMe', 'SelectedValue', 'SelectedValuePath', 'MaxHeight', 'WithIcons'],
 })
 
 export class ComboBox implements OnInit, AfterViewInit, OnDestroy {

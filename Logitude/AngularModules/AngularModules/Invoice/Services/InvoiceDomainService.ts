@@ -217,6 +217,25 @@ export class InvoiceDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
+
+    ValidateInvoiceDate(invoiceDate: Date) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetValidateInvoiceDate?invoiceDateString=' + ServiceHelper.GetDateString(invoiceDate) , {
+                headers: authHeader
+            }).map(response => {
+                var result = response.json();
+                var myResponse: ServiceResponse;
+                myResponse = new ServiceResponse();
+                myResponse.Result = result;
+                return myResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+
+
+    }
+
     PostARPaymentChequeAndCashBook(entityPM: ARPaymentPM) {
         return Observable.defer(() => {
             var authHeader = new Headers();
