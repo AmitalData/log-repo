@@ -84,6 +84,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
     .ForEach(list100 =>
     {
         customResponse.ServerSplitDeclarationsList = list100;
+        customResponse.LoggingUserId = requestParams.LoggingUserId;
         //CreateDCAInUCB2715_MsgMessagingService(customResponse, requestParams);
         var CreateDCAInUCB2715_MsgMessagingService = new CRSUtil();
         CreateDCAInUCB2715_MsgMessagingService
