@@ -2285,6 +2285,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     ContactMobile = cardContact.Contact == null ? null : cardContact.Contact.Mobile,
                     ContactPhone = cardContact.Contact == null ? null : cardContact.Contact.BusinessPhone,
                     ContactPosition = cardContact.Contact == null ? null : cardContact.Contact.Position,
+                    ContactTel = cardContact.Contact == null ? null : cardContact.Contact.BusinessPhone,
+
 
                 });
             }
@@ -2358,6 +2360,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public string ContactPhone { get; set; }
         public string ContactPosition { get; set; }
         public string ContactMobile { get; set; }
+        public string ContactTel { get; set; }
+
+        
 
     }
 }

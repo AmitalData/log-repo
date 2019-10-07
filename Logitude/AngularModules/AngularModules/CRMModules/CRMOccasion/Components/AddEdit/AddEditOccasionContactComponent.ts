@@ -209,6 +209,8 @@ export class AddEditOccasionContactComponent extends BaseComponent {
                     invitee.ContactPhone = item.ContactPhone;
                     invitee.ContactPosition = item.ContactPosition;
                     invitee.CustomerName = item.Company;
+                    invitee.ContactTel = item.ContactTel;
+
                     this.EntityPM.AddOccasionInvitee(invitee);
                 }
             });
@@ -240,6 +242,7 @@ export class OccasionContactItem {
     public ContactMobile: string;
     public ContactPhone: string;
     public ContactPosition: string;
+    public ContactTel: string;
 
     private isChecked: boolean = false;
     get IsChecked() { return this.isChecked; }
