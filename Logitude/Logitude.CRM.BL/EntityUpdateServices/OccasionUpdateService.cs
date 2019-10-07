@@ -47,9 +47,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                 {
                     entityPM.CreatedByUserId = loggedContact.Id;
                 }
-            }
-
-          
+            }       
         }
 
         protected override void OnUpdating(EntityPMs.OccasionPM entityPM, Occasion entityPOCO)
@@ -129,8 +127,8 @@ namespace Logitude.CRM.BL.EntityUpdateServices
         {
             if (entityPM.OccasionInvitees != null && entityPM.OccasionInvitees.Count() > 0)
             {
-                var invitedList = entityPM.OccasionInvitees.Where(a => a.Invited);
-                var participatedList = entityPM.OccasionInvitees.Where(a => a.Participated);
+                var invitedList = entityPM.OccasionInvitees.Where(a=>a.ChangeSetOp != ChangeSetOperation.Delete).Where(a => a.Invited);
+                var participatedList = entityPM.OccasionInvitees.Where(a => a.ChangeSetOp != ChangeSetOperation.Delete).Where(a => a.Participated);
 
                 entityPM.InvitedContacts = invitedList != null ? invitedList.Count() : 0;
                 entityPM.ParticipatedContacts = participatedList != null ? participatedList.Count() : 0;
