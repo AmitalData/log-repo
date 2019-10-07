@@ -2193,12 +2193,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             if (productTypes.ToLower() == "all")
             {
-                ProductTypeRepository productTypeRepository = new ProductTypeRepository(commonDataContext);
-                IQueryable<ProductType> iQueryable = productTypeRepository.GetActiveProductTypes(tenant);
-                if (iQueryable.Count() > 0)
-                {
-                    myproductsTypesList = iQueryable.Select(s => s.Code).ToList();
-                }
+                //ProductTypeRepository productTypeRepository = new ProductTypeRepository(commonDataContext);
+                //IQueryable<ProductType> iQueryable = productTypeRepository.GetActiveProductTypes(tenant);
+                //if (iQueryable.Count() > 0)
+                //{
+                //    myproductsTypesList = iQueryable.Select(s => s.Code).ToList();
+                //}
             }
 
             else
