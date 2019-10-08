@@ -261,7 +261,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
         private static TenantPM GetTenantPM(int tenant)
         {
-            TenantQuery tenantQuery = new TenantQuery();
+            //TenantQuery tenantQuery = new TenantQuery();
             TenantPM tenantPM = TenantQuery.GetSingleTenantPM(tenant);
             return tenantPM;
         }
