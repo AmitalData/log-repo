@@ -13,6 +13,7 @@ import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 import {GeneralPrintHelper} from '../../../Infrastructure/Helpers/GeneralPrintHelper';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 
 export class APPaymentMenuButtonsHandler {
     public EntityPM: APPaymentPM;
@@ -22,6 +23,8 @@ export class APPaymentMenuButtonsHandler {
     private isCancelApproval: boolean;
     private isVoided: boolean;
     private isPrintRequested: boolean;
+    private CurrentSession = SessionLocator.SelectedSession;
+
     private isOerationInProgrees: boolean = false;
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
@@ -325,7 +328,7 @@ export class APPaymentMenuButtonsHandler {
 
         if (isValid) {
 
-         ///   if (this.EntityPM.)
+            if (this.EntityPM.ExcludeFromDeductionReport) { this.OpenEditPaymentChequeScreen();}
 
             this.EntityPM.SetVoided = false;
             this.EntityPM.SetApproved = true;
@@ -365,7 +368,22 @@ export class APPaymentMenuButtonsHandler {
             this.entityArgs.EditComponent.SaveChanges();
         }
     }
+    OpenEditPaymentChequeScreen() {
+      
+            this.CurrentSession.StartBusyIndicatorLoading();
+            var windowTitle = "New Deposit";
+            var windowTitle = TextCodeTranslator.Translate("Accounting.General.O.NewDeposit");
 
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 520;
+            logWindow.Height = 230;
+            logWindow.Title = windowTitle;
+            //logWindow.WindowArgs = windowArgs;
+           // logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
+        logWindow.Show('./InvoiceModules/Components/EditTabs/PaymentChequeDetailsComponent');
+            this.CurrentSession.StopBusyIndicator();
+
+        }
     // [Print]
     CurrentDocument: DocumentOutPM;
     objectTableName: string;
