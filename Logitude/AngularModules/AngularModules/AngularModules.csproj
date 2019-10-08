@@ -809,6 +809,9 @@
     <TypeScriptCompile Include="e2e\FullAccounting\GLAccounts\New\NewGLaccount.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\GLAccounts\CustomerGLAccount-spec.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\GLAccounts\VendorGLAccount-spec.ts" />
+    <TypeScriptCompile Include="e2e\FullAccounting\PaymentCheque\EditPaymentCheque.ts" />
+    <TypeScriptCompile Include="e2e\FullAccounting\PaymentCheque\NewPaymentCheque-spec.ts" />
+    <TypeScriptCompile Include="e2e\FullAccounting\PaymentCheque\NewPaymentCheque.ts" />
     <TypeScriptCompile Include="e2e\LogBox\Helpers\FieldsHelper.ts" />
     <TypeScriptCompile Include="e2e\LogBox\Helpers\GeneralFunctions.ts" />
     <TypeScriptCompile Include="e2e\LogBox\Shipments\CreateLogboxShipment.ts" />
