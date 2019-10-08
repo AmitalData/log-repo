@@ -18,6 +18,7 @@ using Logitude.BL.Security;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using System.Data.Entity;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.BL.QuoteModel
 {
