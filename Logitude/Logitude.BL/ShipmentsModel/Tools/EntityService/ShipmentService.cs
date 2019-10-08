@@ -1415,7 +1415,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     DocumentType CustomsInvoiceDocType = DocTypeReposioty.GetSingleDocumentTypeByCode("CINV", tenant);
                     DocumentType DeclerationDocType = DocTypeReposioty.GetSingleDocumentTypeByCode("DEC", tenant);
 
-                    string loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser();
+                    string loggedUserEmail = serviceContextUser;
+                    if (string.IsNullOrEmpty(serviceContextUser))
+                    {
+                        loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser();
+                    } 
                     UserRepository userRepository = new UserRepository(entityPM.Tenant);
                     User loggedUser = userRepository.GetSingleUserByCodeOrEmail(null, loggedUserEmail, entityPM.Tenant, true);
                     if (loggedUser == null)

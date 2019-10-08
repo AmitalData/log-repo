@@ -1,4 +1,24 @@
+<style type="text/css">
+      .SectionTitle > span {
+        font-size: 14px;
+        user-select: text;
+        -webkit-user-select: auto;
+    }
 
+    .SectionTitle td {
+        font-size: 14px;
+        user-select: text;
+    }
+
+    .SectionTitle {
+        height: 20px;
+        line-height: 20px;
+        font-size: 14px;
+        color: #1B90CB;
+        user-select: text;
+        -webkit-user-select: text;
+    }
+</style>
 <table *ngIf="IsVisible">
 
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
@@ -216,7 +236,8 @@
                                     </td>
                                 </tr>
 
-                                <tr>
+
+                                <tr style="height:5px;">
                                     <td>
                                         <div></div>
                                     </td>
@@ -370,7 +391,7 @@
 
                                 </tr>
 
-                                <tr>
+                                <tr style="height:5px;">
                                     <td colspan="7">
                                         <div></div>
                                     </td>
@@ -378,6 +399,35 @@
                             </table>
                         </td>
                     </tr>
+
+                    <tr>
+                        <td colspan="3">
+                            <!-- Additional Fields -->
+                            <div *ngIf="ShowAdditionalFieldsScreen">
+                                <div class="SectionTitle">{{'ARPayment.S.NewARPayment.AdditionalFields' | TextCodeTranslationPipe}}</div>
+
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <div>
+                                                <div class="LocationDirective" #Child></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="3">
+                            <div></div>
+                        </td>
+                    </tr>
+
+
                 </table>
             </ScrollViewer>
         </td>

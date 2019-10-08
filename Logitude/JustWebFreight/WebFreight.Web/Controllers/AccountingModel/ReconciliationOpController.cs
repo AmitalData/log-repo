@@ -250,7 +250,7 @@ tenant);
 
                 LedgerTransactionListQueryService transactionQuery = new LedgerTransactionListQueryService(AccountingContext.GetContext(tenant));
 
-                GenericCallBack callback = transactionQuery.GetReconciliationFilterCallBack(queryOperations, gLAccountId, tenant);
+                GenericCallBack callback = transactionQuery.GetReconciliationFilterCallBack(queryOperations, gLAccountId, tenant, true);
 
                 List<LedgerTransactionList> openReconciliation = transactionQuery.GetOpenReconciliationFilterList(queryOperations, callback, gLAccountId, tenant);
 
@@ -259,7 +259,7 @@ tenant);
                 ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = openReconciliation.Count;
+                    int count = callback.TotalRecord;
                     response.Count = count;
                 }
 
