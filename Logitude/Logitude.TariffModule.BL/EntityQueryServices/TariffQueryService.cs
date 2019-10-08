@@ -423,6 +423,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                         tariffsSummary.AllIn = string.Join(", ", AllInChargesNames);
                     }
                     Tariff CurrentSurcharge = SurchargeTariffList.Where(p => p.SellerId == result.SellerId).FirstOrDefault();
+                    AirlinePM airline = airlineQuery.GetSinglePM(result.SellerId, tenant);
                     if (CurrentSurcharge != null)
                     {
                         if (SurchargeTariffLinesFiltered.ContainsKey(CurrentSurcharge.Id))
@@ -506,12 +507,13 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                                                     string CurrencyId = ChargesfilteredLines.CurrencyId != null ? ChargesfilteredLines.CurrencyId : CurrentSurcharge.CurrencyId;
                                                     var LinePrice = CalculateLocalAmount(CurrentSurchargePriceCalculation.Value, currencyId, CurrencyId, tenant);
 
+                                                    decimal? minPriceSurcharge = null;
                                                     if (valueofSurchargeMin != null)
                                                     {
                                                         decimal minimumPrice = (decimal)valueofSurchargeMin;
-                                                        var minPrice = CalculateLocalAmount(minimumPrice, currencyId, CurrencyId, tenant);
-                                                        if (minPrice > LinePrice)
-                                                            LinePrice = minPrice;
+                                                        minPriceSurcharge = CalculateLocalAmount(minimumPrice, currencyId, CurrencyId, tenant);
+                                                        if (minPriceSurcharge > LinePrice)
+                                                            LinePrice = minPriceSurcharge.Value;
                                                     }
 
                                                     SurchargeItem.Price = LinePrice;
@@ -521,11 +523,11 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                                                     SurchargeItem.CurrencyId = CurrentSurcharge.CurrencyId;
                                                     SurchargeItem.TariffNumber = CurrentSurcharge.TariffNumber;
                                                     SurchargeItem.VersionId = ChargesfilteredLines.Version + "";
+                                                    SurchargeItem.SellerId = CurrentSurcharge.SellerId;
+                                                    SurchargeItem.SellerName= airline.Card != null ? airline.Card.EnglishName : "";
+                                                    SurchargeItem.MinPrice = minPriceSurcharge;
                                                     tariffsSummary.Surcharges.Add(SurchargeItem);
                                                 }
-
-
-
                                             }
                                         }
                                         else
@@ -542,8 +544,8 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                     }
 
 
-                    AirlinePM airline = airlineQuery.GetSinglePM(result.SellerId, tenant);
-                    tariffsSummary.Name = airline.Card != null ? airline.Card.EnglishName : "";
+                  
+                    tariffsSummary.SellerName = airline.Card != null ? airline.Card.EnglishName : "";
                     tariffsSummary.EffictiveDate = result.ExpirationDate;
                     tariffsSummary.Remarks = result.Notes;
                     var calculatedLocalAmount = item.Price != null ? CalculateLocalAmount((item.Price).Value, currencyId, result.CurrencyId, tenant): 0;
@@ -556,8 +558,9 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                     tariffsSummary.TotalSurcharge = Sum + "";
                     tariffsSummary.WholePrice = (decimal?)Sum + calculatedLocalAmount + "";
                     tariffsSummary.UnitOfMesurmentId = airChrageType.MeasurementId;
-                    tariffsSummary.UnitOfMesurmentCode = UsedMeasurements.Where(p => p.Id == airChrageType.MeasurementId).Select(p => p.Code).FirstOrDefault(); 
-
+                    tariffsSummary.UnitOfMesurmentCode = UsedMeasurements.Where(p => p.Id == airChrageType.MeasurementId).Select(p => p.Code).FirstOrDefault();
+                    tariffsSummary.SellerId = result.SellerId;
+                    tariffsSummary.MinPrice = minprice;
                     byte[] filedata = DownloadFile(airline.ImageDetailId, "jpg", tenant, "images");
                     string resultImage = "";
                     if (filedata != null)
