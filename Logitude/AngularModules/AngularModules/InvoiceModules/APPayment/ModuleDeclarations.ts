@@ -1,4 +1,4 @@
-﻿import {APPaymentDetailsTabComponent} from './Components/EditTabs/APPaymentDetailsTabComponent';
+import {APPaymentDetailsTabComponent} from './Components/EditTabs/APPaymentDetailsTabComponent';
 import {APPaymentDocsInTabComponent} from './Components/EditTabs/APPaymentDocsInTabComponent';
 import {APPaymentDocsOutTabComponent} from './Components/EditTabs/APPaymentDocsOutTabComponent';
 import {APPaymentTransferTabComponent} from './Components/EditTabs/APPaymentTransferTabComponent';

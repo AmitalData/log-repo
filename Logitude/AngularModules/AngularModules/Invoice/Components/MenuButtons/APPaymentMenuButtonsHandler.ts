@@ -339,9 +339,6 @@ export class APPaymentMenuButtonsHandler {
 
             }
 
-            this.entityArgs.EditComponent.SaveChanges();
-        }
-
         else {
             if (this.entityArgs.EditComponent.ValidationErrorsList == null) {
                 this.entityArgs.EditComponent.ValidationErrorsList = [];
