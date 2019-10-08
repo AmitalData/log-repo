@@ -1099,7 +1099,10 @@ on record.JournalId equals j.Id
         public int getRecoCount(string glAccountId)
         {
             return (from a in context.LedgerTransactions
-                    where a.AccountId == glAccountId && a.IsReconciled == false
+                    where 
+                    a.AccountId == glAccountId 
+                    && a.InReconcileProgress == false
+                    && a.IsReconciled == false
                     select a).Count();
         }
 
