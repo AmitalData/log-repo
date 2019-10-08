@@ -328,18 +328,8 @@ export class APPaymentMenuButtonsHandler {
 
         if (isValid) {
 
-            if (this.EntityPM.ExcludeFromDeductionReport) { this.OpenEditPaymentChequeScreen();}
+            this.OpenEditPaymentChequeScreen();
 
-            this.EntityPM.SetVoided = false;
-            this.EntityPM.SetApproved = true;
-            this.EntityPM.SetCancelApproval = false;
-
-            if (this.CurrentDocument != null) {
-                this.CurrentDocument.NeedsRebuild = true;
-
-            }
-
-            this.entityArgs.EditComponent.SaveChanges();
         }
 
         else {
@@ -378,12 +368,29 @@ export class APPaymentMenuButtonsHandler {
             logWindow.Width = 520;
             logWindow.Height = 230;
             logWindow.Title = windowTitle;
+        logWindow.ShowCloseButton = true;
             //logWindow.WindowArgs = windowArgs;
-           // logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
-        logWindow.Show('./InvoiceModules/Components/EditTabs/PaymentChequeDetailsComponent');
+        logWindow.WindowClosed.subscribe(($event: any) => this.ContinueSaving($event));
+        logWindow.Show('./InvoiceModules/APPayment/Components/EditTabs/PaymentChequeDetailsComponent');
             this.CurrentSession.StopBusyIndicator();
 
+    }
+
+    ContinueSaving(event:string) {
+        if (event && event != "Cancel") {
+
+            this.EntityPM.SetVoided = false;
+            this.EntityPM.SetApproved = true;
+            this.EntityPM.SetCancelApproval = false;
+
+            if (this.CurrentDocument != null) {
+                this.CurrentDocument.NeedsRebuild = true;
+
+            }
+
+            this.entityArgs.EditComponent.SaveChanges();
         }
+    }
     // [Print]
     CurrentDocument: DocumentOutPM;
     objectTableName: string;

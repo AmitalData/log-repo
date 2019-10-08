@@ -1,6 +1,6 @@
 
 
-<table *ngIf="visible">
+<table >
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td colspan="4">
             <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
@@ -89,7 +89,7 @@
                             </tr>
 
                             <!-- CurrencyId -->
-                            <tr *ngIf="false" [style.height.px]="50">
+                            <tr  [style.height.px]="50">
                                 <td colspan="2">
                                     <table>
 

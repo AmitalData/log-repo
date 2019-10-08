@@ -7,6 +7,7 @@ import { APPaymentInvoiceArgs } from './APPaymentDetailsTabComponent';
 import { APPaymentPM } from '../../../../Invoice/EntityPMs/APPaymentPM';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { PaymentChequePM } from '../../../../Accounting/EntityPMs/PaymentChequePM';
 
 
 @Component({
@@ -20,7 +21,7 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 export class PaymentChequeDetailsComponent extends BaseComponent{
 
 
-    public EntityPM: APPaymentPM = null;
+    public EntityPM: PaymentChequePM = null;
     public LocalCurrencyId: string;
     public DataContext = this;
     public ObjectTableName: string = "PaymentCheque";
