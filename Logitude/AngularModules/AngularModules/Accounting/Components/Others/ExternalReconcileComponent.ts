@@ -684,12 +684,15 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             filters.AdditionalFilters.push(amountFilter);
         }
 
+
         filters.PageSize = take;
         filters.PageIndex = skip + 1; // decremented 1 in the service
         filters.GetAll = true;
         filters.GetCount = true;
 
-        //filters.addAdditionalFilter("AccountingDate", true, null, null, "Between", false, false, false, "datetime");
+
+        if(!this.showInProgessLines)
+            filters.addAdditionalFilter("InReconcileProgress", false, null, null, "Equals", false, false, false, "boolean");
 
         return this.entityListService.getExternalReoncilioationsByFilter("ReconcileExternalPage", this.BankAccountPM.Id, filters);
     }
@@ -763,6 +766,19 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     AmountCheckBoxChecked: boolean = false;
     ReferenceCheckBoxChecked: boolean = false;
     ReferenceDateCheckBoxChecked: boolean = false;
+
+
+    private showInProgessLines : boolean = false;
+    public get ShowInProgessLines() : boolean {
+        return this.showInProgessLines;
+    }
+    public set ShowInProgessLines(v : boolean) {
+        this.showInProgessLines = v;
+
+        this.RefreshButtonClicked();
+
+    }
+
 
     AutoReco() {
         console.log("[AUTO RECO] ", this.AmountCheckBoxChecked, this.ReferenceCheckBoxChecked, this.ReferenceDateCheckBoxChecked);
