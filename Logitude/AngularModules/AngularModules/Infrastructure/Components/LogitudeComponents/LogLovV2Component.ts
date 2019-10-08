@@ -283,6 +283,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
     @Output() LostFocus: EventEmitter<any> = new EventEmitter();
     public LovMessage: string;
+    public AllDataLovMessage: string;
     @Input() HideEdit: boolean = false;
     @Input() HideAdd: boolean = false;
     @Input() QueryFilterItems: ApiQueryFilters;
@@ -1634,7 +1635,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                         this.CalculateWidths(resp.Result);
                         this.ZeroItemsSourceCount = resp.Result.length;
                         this.ZeroItemsSource = resp.Result;
-
+                        
                     }
                     else {
                         this.CalculateWidths(resp);
@@ -1642,11 +1643,23 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                         this.ZeroItemsSource = resp;
 
                     }
+                    this.ShowOrHideAllDataNoresultMessage();
                     this.HighlightSelectedValue();
                 })
             });
         }
 
+    }
+    
+    ShowOrHideAllDataNoresultMessage(){
+        if (this.IsAllDataVisible) {
+            if (this.ZeroItemsSourceCount == 0) {
+                this.AllDataLovMessage=TextCodeTranslator.Translate("General.O.NoMoreResult");
+            }
+            else {
+                this.AllDataLovMessage=null;
+            }
+        }
     }
 
     OnSearchInputBlur() {
@@ -2892,6 +2905,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     else {
                         this.LovMessage = null;
                     }
+                    
                     this.ItemsSourceStatic = this.ItemsSource;
                     this.HighlightSelectedValue();
                     this.isLoading = false;
@@ -3007,6 +3021,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     else {
                         this.LovMessage = null;
                     }
+                    
                     this.ItemsSourceStatic = this.ItemsSource;
                     this.HighlightSelectedValue();
 
@@ -3045,6 +3060,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 else {
                     this.LovMessage = null;
                 }
+               
                 this.ItemsSourceStatic = this.ItemsSource;
                 this.HighlightSelectedValue();
                 this.isLoading = false;
