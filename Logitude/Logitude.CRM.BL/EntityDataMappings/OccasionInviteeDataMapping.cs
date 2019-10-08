@@ -46,6 +46,7 @@ namespace Logitude.CRM.BL.EntityDataMappings
                     entityPM.ContactMobile = contact.Mobile;
                     entityPM.ContactTel = contact.BusinessPhone;
                     entityPM.ContactPosition = contact.Position;
+                    entityPM.CustomerName = contact.CompanyName;
                 }
             }
 

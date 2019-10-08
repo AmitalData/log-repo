@@ -34,7 +34,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         Id, 
 	         ReconcileRemarks, 
 	         CreditAmount, 
-	         InProgressExternalReconcile,
+	         InProgressExternalReconcile, 
+	         InReconcileProgress,
 	      }
 
 
@@ -56,7 +57,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ReconciliationNumber, 
 	         CreditAmount, 
 	         Amount, 
-	         InProgressExternalReconcile,
+	         InProgressExternalReconcile, 
+	         InReconcileProgress,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -123,6 +125,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InProgressExternalReconcile))
             {
 				entityPOCO.InProgressExternalReconcile = entityPM.InProgressExternalReconcile;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InReconcileProgress))
+            {
+				entityPOCO.InReconcileProgress = entityPM.InReconcileProgress;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -196,6 +203,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.InProgressExternalReconcile = entityPOCO.InProgressExternalReconcile;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InReconcileProgress))
+            {
+					entityPM.InReconcileProgress = entityPOCO.InReconcileProgress;
+            }
+
 		}
 
 		public void PMToOldPM(ReconcileExternalPageLinePM entityPM, ReconcileExternalPageLinePM oldEntityPM)
@@ -260,6 +272,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InProgressExternalReconcile))
             {
                 oldEntityPM.InProgressExternalReconcile = entityPM.InProgressExternalReconcile;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InReconcileProgress))
+            {
+                oldEntityPM.InReconcileProgress = entityPM.InReconcileProgress;
             }
 			
 		}

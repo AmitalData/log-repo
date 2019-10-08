@@ -7,6 +7,8 @@ import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { CRMDomainService, OccasionContactArgs, OccasionContactSearchresult } from '../../../../CRM/Services/CRMDomainService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
+import { ProductTypeListService } from '../../../../Common/Services/StandardLists/ProductTypeListService';
+import { ProductTypeList } from '../../../../Common/EntityLists/ProductTypeList';
 
 @Component({
     selector: 'AddEditOccasionContactComponent',
@@ -17,7 +19,7 @@ import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 export class AddEditOccasionContactComponent extends BaseComponent {
     public EntityPM: OccasionPM;    
     public DataContext: AddEditOccasionContactComponent = this;
-    public ItemsSource: OccasionContactItem[];
+    public ItemsSource: OccasionContactItem[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
     public SelectedItem: OccasionContactItem = null;
     public ValidationErrorsList: string[] = [];
@@ -28,8 +30,25 @@ export class AddEditOccasionContactComponent extends BaseComponent {
 
     SetWindowArgs(entityPM: OccasionPM) {
         this.EntityPM = entityPM;
+
+        this.BuildProductTypesFilters();
     }
 
+    public ProductTypeComboList: ProductTypeItem[];
+    public SelectedProdustTypeFilter: any = "";
+    private BuildProductTypesFilters() {
+        this.ProductTypeComboList = [];
+
+        var proeductTypeListService: ProductTypeListService = new ProductTypeListService();
+        proeductTypeListService.getAllFromCache().subscribe((response: ServiceResponse) => {
+            var list: ProductTypeList[] = response.Result;
+
+            list.filter(d => !d.InActive).sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 }).forEach((item) => {
+                this.ProductTypeComboList.push(new ProductTypeItem(item));
+            });
+        });
+    }
+    
     private customerSizeId: string;
     get CustomerSizeId() { return this.customerSizeId; }
     set CustomerSizeId(value: string) {
@@ -76,8 +95,11 @@ export class AddEditOccasionContactComponent extends BaseComponent {
         }
     }
 
+    public OkButtonIsEnabled: boolean = false;
+    public SelectedCount: number = 0;
     public OnLinesSelected() {
-
+        this.SelectedCount = this.ItemsSource.filter(f => f.IsChecked == true).length;
+        this.OkButtonIsEnabled = this.SelectedCount > 0 ? true : false;
     }
 
     private BuildItemsSource() {
@@ -104,8 +126,14 @@ export class AddEditOccasionContactComponent extends BaseComponent {
             myResultItem.Industry = item.Industry;
             myResultItem.Product = item.Product;
             myResultItem.CustomerSize = item.CustomerSize;
+            myResultItem.ContactMobile = item.ContactMobile;
+            myResultItem.ContactPhone = item.ContactPhone;
+            myResultItem.ContactPosition = item.ContactPosition;
+            myResultItem.ContactTel = item.ContactTel;
             this.ItemsSource.push(myResultItem);
         });
+
+        this.OnLinesSelected();
     }
 
     private SearchText: string = null;
@@ -121,16 +149,16 @@ export class AddEditOccasionContactComponent extends BaseComponent {
         this.BuildItemsSource();
     }
 
-    private loadedContacts: OccasionContactSearchresult[];
+    private loadedContacts: OccasionContactSearchresult[] = [];
     BrowseClicked() {
         this.CurrentSession.StartBusyIndicatorLoading();
-
+        
         var args: OccasionContactArgs = new OccasionContactArgs();
         args.CustomerSizeId = this.CustomerSizeId;
         args.RegionId = this.RegionId;
         args.IndustryId = this.IndustryId;
         args.OccasionId = this.OccasionId;
-        args.ProductTypes = "";
+        args.ProductTypes = this.SelectedProdustTypeFilter;
         args.AdditionalServices = "";
 
         var service = new CRMDomainService();
@@ -153,6 +181,12 @@ export class AddEditOccasionContactComponent extends BaseComponent {
             errors.push("You must select 1 line at least");
         }
 
+        if (!AppTool.IsNullOrEmpty(this.SelectedProdustTypeFilter)) {
+            if (this.ProductTypeComboList.filter(d => d.Checked).length == 0) {
+                errors.push("Please select product type");
+            }
+        }
+
         this.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
@@ -171,6 +205,13 @@ export class AddEditOccasionContactComponent extends BaseComponent {
                     invitee.UpdatedByUserId = SessionInfo.LoggedUserId;
                     invitee.UpdatedByUserName = SessionInfo.LoggedUserPM.EnglishName;
                     invitee.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
+                    invitee.ContactEmail = item.Email;
+                    invitee.ContactMobile = item.ContactMobile;
+                    invitee.ContactPhone = item.ContactPhone;
+                    invitee.ContactPosition = item.ContactPosition;
+                    invitee.CustomerName = item.Company;
+                    invitee.ContactTel = item.ContactTel;
+
                     this.EntityPM.AddOccasionInvitee(invitee);
                 }
             });
@@ -199,6 +240,11 @@ export class OccasionContactItem {
     public Product: string;
     public CustomerSize: string;
 
+    public ContactMobile: string;
+    public ContactPhone: string;
+    public ContactPosition: string;
+    public ContactTel: string;
+
     private isChecked: boolean = false;
     get IsChecked() { return this.isChecked; }
     set IsChecked(value: boolean) {
@@ -207,4 +253,18 @@ export class OccasionContactItem {
             this.fatherComponent.OnLinesSelected();
         }
     }
+}
+
+export class ProductTypeItem {
+    public entityList: ProductTypeList;
+    constructor(entityList: ProductTypeList) {
+        this.entityList = entityList;
+    }
+
+    get Code() { return this.entityList.Code; }
+    get Name() { return this.entityList.Name; }
+
+    private checked: boolean;
+    public get Checked() { return this.checked; }
+    public set Checked(value: boolean) { this.checked = value; }
 }

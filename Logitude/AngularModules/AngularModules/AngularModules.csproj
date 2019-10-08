@@ -895,6 +895,9 @@
     <TypeScriptCompile Include="e2e\FullAccounting\ChartOfAccount\ChartOfAccount-spec.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\ChartOfAccount\EditChartOfAccount.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\ChartOfAccount\NewChartOfAccount.ts" />
+    <TypeScriptCompile Include="e2e\FullAccounting\Deposit\EditDeposit.ts" />
+    <TypeScriptCompile Include="e2e\FullAccounting\Deposit\NewDeposit.ts" />
+    <TypeScriptCompile Include="e2e\FullAccounting\Deposit\NewDposit-spec.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\FullAccScenarios-spec.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\FullAccScenarios.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\GLAccounts\Edit\EditGLaccount.ts" />

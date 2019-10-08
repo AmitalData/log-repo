@@ -56,6 +56,8 @@ namespace Logitude.CRM.Data.EntityLists
        public string ContactPosition  { get; set; }
        [DataMember]
        public string ContactMobile  { get; set; }
+       [DataMember]
+       public string CustomerName  { get; set; }
    }
 
 }

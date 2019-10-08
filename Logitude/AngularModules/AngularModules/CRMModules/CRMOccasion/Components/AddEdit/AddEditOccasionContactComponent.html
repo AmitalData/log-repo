@@ -15,7 +15,7 @@
                         <div class="MediaFill">
                             <fieldset class="MediaFill GroupBox">
                                 <legend>
-                                    <span>Custoemr</span>
+                                    <span>Customer</span>
                                 </legend>
 
                                 <div style="top: 10px;">
@@ -87,19 +87,22 @@
                                 <div style="top: 10px;">
                                     <table>
                                         <tr class="FormFieldRow">
-                                            <td style="width: 100px;">
+                                            <td style="width: 125px;">
                                                 <LogLabel [NoObjectField]="true" [ObjectFieldName]="'ProductTypeCode'" [Text]="'Product'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             </td>
 
-                                            <td style="width:200px;"></td>
+                                            <td style="width:200px;">
+                                                <ComboBox [WithIcons]="true" [ItemsSource]="ProductTypeComboList" [Binding]="'Name'" [SelectedItem]="SelectedProdustTypeFilter" (SelectedItemChanged)="SelectedProdustTypeFilter = $event"></ComboBox>
+                                            </td>
                                         </tr>
 
                                         <tr class="FormFieldRow">
-                                            <td>
+                                            <td style="width: 125px;">
                                                 <LogLabel [NoObjectField]="true" [ObjectFieldName]="'AdditionalServiceId'" [Text]="'Additional Service'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             </td>
 
-                                            <td></td>
+                                            <td  style="width:200px;"><div></div></td>
+
                                         </tr>
 
                                         <tr class="FormFieldRow">
@@ -211,7 +214,7 @@
                                                 <td style="width: 25px; min-width: 25px; max-width: 25px; padding:0 !important;">
                                                     <div class="MediaFill">
                                                         <div class="CenterCenter" style="width: 16px; height: 16px;">
-                                                            <CheckBox [IsChecked]="IsAllChecked" (Checked)="IsAllChecked = $event"></CheckBox>
+                                                            <CheckBox [IsChecked]="IsAllChecked" [IsEnabled]="ItemsSource.length > 0" (Checked)="IsAllChecked = $event"></CheckBox>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -307,7 +310,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!OkButtonIsEnabled">Ok</button>
                     </td>
                 </tr>
             </table>

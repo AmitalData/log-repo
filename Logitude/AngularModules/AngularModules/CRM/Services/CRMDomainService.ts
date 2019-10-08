@@ -1587,6 +1587,11 @@ export class OccasionContactSearchresult {
     public Industry: string;
     public Product: string;
     public CustomerSize: string;
+    public ContactMobile: string;
+    public ContactPhone: string;
+    public ContactPosition: string;
+    public ContactTel: string;
+
 }
 
 export class OccasionContactArgs {

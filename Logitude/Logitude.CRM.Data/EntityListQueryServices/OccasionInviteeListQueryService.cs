@@ -42,11 +42,15 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                                          Notes = a.Notes,
 
                                                          OccasionId = a.OccasionId,
-
                                                          ContactId = a.ContactId,
                                                          ContactName = a.Contact != null ? a.Contact.EnglishName : "",
-
+                                                         CustomerName = a.Contact != null ? a.Contact.CompanyName : "",
                                                          OccasionName = a.Occasion != null ? a.Occasion.Name : "",
+                                                         ContactEmail = a.Contact != null ? a.Contact.Email : "",
+                                                         ContactMobile = a.Contact != null ? a.Contact.Mobile : "",
+                                                         ContactPhone = a.Contact != null ? a.Contact.BusinessPhone : "",
+                                                         ContactPosition = a.Contact != null ? a.Contact.Position : "",
+                                                         ContactTel  = a.Contact != null ? a.Contact.BusinessPhone : "",
                                                      });
             return query;
         }
