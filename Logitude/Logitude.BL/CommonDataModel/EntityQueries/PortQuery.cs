@@ -81,6 +81,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       CountryEC = a.Country.EC,
                                       StateId = a.StateId,
                                       CombinedCode = a.CombinedCode,
+                                     
                                       StateName = a.StateName,
                                   }).FirstOrDefault();
 
