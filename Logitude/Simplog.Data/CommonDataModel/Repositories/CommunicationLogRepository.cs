@@ -138,6 +138,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
             try
             {
                 entity.SearchFields = entity.BCC + "," + entity.CC + "," + entity.To + "," + entity.From + "," + entity.EntityReference + "," + entity.Subject;
+                entity.SearchFields = StringHelper.TruncateLongString(entity.SearchFields, 1000);
+                entity.ExceptionMessage = StringHelper.TruncateLongString(entity.ExceptionMessage, 4000);
+                entity.Logs = StringHelper.TruncateLongString(entity.Logs, 4000);
+                entity.EmailDeliveryError = StringHelper.TruncateLongString(entity.EmailDeliveryError, 4000);
+
                 context.CommunicationLogs.Attach(entity);
                
             }
