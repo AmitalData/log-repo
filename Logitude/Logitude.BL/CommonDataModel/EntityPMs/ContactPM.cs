@@ -210,5 +210,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public DateTime? CreateDate { get; set; }
+
+        [DataMember]
+        public bool IsUserAdditionalPackagesOnly { get; set; }
     }
 }
