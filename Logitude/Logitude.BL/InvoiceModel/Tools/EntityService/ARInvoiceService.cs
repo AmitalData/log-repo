@@ -2288,6 +2288,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         List<string> allInvoiceIds = entityPM.ConstituentInvoices.Select(s => s.Id).ToList();
                         List<ARInvoice> allInvoices = invoiceRepository.GetInvoicesListFromIdList(allInvoiceIds, tenant);
 
+                        this.ValidateConstituentInvoiceConnected(allInvoices);
+
                         foreach (ARInvoice myInvoice in allInvoices)
                         {
                             myInvoice.IsClosed = true;
@@ -2326,6 +2328,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                     List<string> allInvoiceIds = invoiceConstituentsChangeSet.Select(s => s.Id).ToList();
                     List<ARInvoice> allInvoices = invoiceRepository.GetInvoicesListFromIdList(allInvoiceIds, tenant);
+
+                    this.ValidateConstituentInvoiceConnected(allInvoices);
 
                     bool isConnectedInvoicesChanged = false;
                     
@@ -2434,6 +2438,18 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             myLineNumber += 1;
                         }
                     }
+                }
+            }
+        }
+
+        private void ValidateConstituentInvoiceConnected(List<ARInvoice> allInvoices)
+        {
+            if (allInvoices.Count > 0)
+            {
+                ARInvoice connectedConstituentInvoice = allInvoices.Where(d => d.StatusCode == "CN" && d.ConsolidationInvoiceId != this.entityPM.Id).FirstOrDefault();
+                if (connectedConstituentInvoice != null)
+                {
+                    throw new ApplicationException("Constituent Invoice: " + connectedConstituentInvoice.InvoiceNumber + " is connected to another Consolidation");
                 }
             }
         }

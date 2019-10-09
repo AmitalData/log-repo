@@ -109,6 +109,7 @@
     <Content Include="Booking\Components\BookingWizard\NoRemainingStockComponent.html" />
     <Content Include="CommonModules\CommonAgent\Components\NewEntity\NewAgentComponent.html" />
     <Content Include="CommonModules\CommonAirline\Components\AddEdit\AddEditAirlineAreaComponent.html" />
+    <Content Include="CommonModules\CommonAirline\Components\AddEdit\ChooseCountryPortComponent.html" />
     <Content Include="CommonModules\CommonAirline\Components\AddEdit\ChoosePortComponent.html" />
     <Content Include="CommonModules\CommonAirline\Components\EditTabs\AirlineDocsInTabComponent.html" />
     <Content Include="CommonModules\CommonAirline\Components\EditTabs\AirlineGeneralTabComponent.html" />
@@ -431,6 +432,7 @@
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\OpenFormatReportPMService.ts" />
     <TypeScriptCompile Include="Accounting\Validators\PaymentChequeValidator.ts" />
     <TypeScriptCompile Include="CommonModules\CommonAirline\Components\AddEdit\AddEditAirlineAreaComponent.ts" />
+    <TypeScriptCompile Include="CommonModules\CommonAirline\Components\AddEdit\ChooseCountryPortComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonAirline\Components\AddEdit\ChoosePortComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonAirline\Components\EditTabs\AirlineDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonAirline\Components\EditTabs\AirlineGeneralTabComponent.ts" />
@@ -796,9 +798,8 @@
     <TypeScriptCompile Include="e2e\FullAccounting\BankAccount\NewBankAccount.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\BankAccount\NewGLAccount.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\ChartOfAccount\ChartOfAccount-spec.ts" />
-    <TypeScriptCompile Include="e2e\FullAccounting\ChartOfAccount\ChartOFAccountModule.ts" />
-    <TypeScriptCompile Include="e2e\FullAccounting\ChartOfAccount\EditEntity\EditChartOfAccount.ts" />
-    <TypeScriptCompile Include="e2e\FullAccounting\ChartOfAccount\NewEntity\NewChartOfAccount.ts" />
+    <TypeScriptCompile Include="e2e\FullAccounting\ChartOfAccount\EditChartOfAccount.ts" />
+    <TypeScriptCompile Include="e2e\FullAccounting\ChartOfAccount\NewChartOfAccount.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\FullAccScenarios-spec.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\FullAccScenarios.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\GLAccounts\Edit\EditGLaccount.ts" />
@@ -808,6 +809,9 @@
     <TypeScriptCompile Include="e2e\FullAccounting\GLAccounts\New\NewGLaccount.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\GLAccounts\CustomerGLAccount-spec.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\GLAccounts\VendorGLAccount-spec.ts" />
+    <TypeScriptCompile Include="e2e\FullAccounting\PaymentCheque\EditPaymentCheque.ts" />
+    <TypeScriptCompile Include="e2e\FullAccounting\PaymentCheque\NewPaymentCheque-spec.ts" />
+    <TypeScriptCompile Include="e2e\FullAccounting\PaymentCheque\NewPaymentCheque.ts" />
     <TypeScriptCompile Include="e2e\LogBox\Helpers\FieldsHelper.ts" />
     <TypeScriptCompile Include="e2e\LogBox\Helpers\GeneralFunctions.ts" />
     <TypeScriptCompile Include="e2e\LogBox\Shipments\CreateLogboxShipment.ts" />
@@ -6717,6 +6721,8 @@
     <Content Include="dist\out-tsc\Shipment\EntityPMs\ShipmentPickUpDeliveryPackagePM.js.map" />
     <Content Include="dist\out-tsc\Shipment\Services\StandardLists\ShipmentComputedFieldListService.js.map" />
     <Content Include="dist\out-tsc\Shipment\Services\StandardPMs\ShipmentComputedFieldPMService.js.map" />
+    <Content Include="e2e\Testing Scenarios\Production\Team Ayman\ProtractorProdStaging.bat" />
+    <Content Include="e2e\Testing Scenarios\Production\Team Ayman\ProtractorProdFullCollection.bat" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Common\EntityLists\AddressList.ts" />
@@ -7324,7 +7330,6 @@
     <Folder Include="e2e\CRM\Customers\" />
     <Folder Include="e2e\LogBox\Documents\" />
     <Folder Include="e2e\Testing Scenarios\Production\Smoke Testing Common\" />
-    <Folder Include="e2e\Testing Scenarios\Production\Team Ayman\" />
     <Folder Include="e2e\Testing Scenarios\Production\Team Islam\" />
     <Folder Include="e2e\Testing Scenarios\Production\Team Mohammad\" />
     <Folder Include="InfrastructureModules\InfrastructureAutomation\Components\" />

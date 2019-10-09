@@ -19,9 +19,11 @@ export class ReportSearch {
   }
 
   UseSearchBox(searchFeildId: string, searchByRef: string) {
-    this.Helper.WaitByIdAndFill(searchFeildId, searchByRef);
-    this.Helper.WaitBusyIndicator();
-    this.Helper.WaitByCssAndClick_FromTagInsideList('.HyperlinkQueryButtonControl', 0);
+      this.Helper.WaitByIdAndFill(searchFeildId, searchByRef);
+      this.Helper.WaitByIdAndClick("BI");
+      this.Helper.WaitByIdAndClick("Report")
+      this.Helper.ItemsVisibility('ReportID')
+      this.Helper.WaitByIdAndClick('ReportID')
     
   }
 }

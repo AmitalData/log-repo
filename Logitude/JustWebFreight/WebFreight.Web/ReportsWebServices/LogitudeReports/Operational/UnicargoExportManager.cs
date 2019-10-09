@@ -246,7 +246,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 }
                 Shipment.CreateDate = item.CreateDateTime;
                 Shipment.ValueofGoods = item.ValueOfGoods;
-               // customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, item, Shipment);
+                customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, item, Shipment);
 
 
                 #endregion

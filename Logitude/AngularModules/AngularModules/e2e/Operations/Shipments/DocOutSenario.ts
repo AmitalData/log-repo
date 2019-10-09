@@ -24,11 +24,11 @@ export class DocOutSenario {
 
   }
 
-  public OpenDocOutTab() {
-   this.NewDirectShipment.DoOperations();
-  //this.docsOutTab.DocsOutTab();
-  //  this.helper.WaitBusyIndicator();
-
+   public OpenDocOutTab() {
+        var shipperRef;
+        shipperRef = this.NewDirectShipment.DoOperations();
+        this.NewDirectShipment.SearchForShipment(shipperRef);
+        this.NewDirectShipment.EditShipment(shipperRef);
   }
 
   public SuccessfullyPrintingDocument() {

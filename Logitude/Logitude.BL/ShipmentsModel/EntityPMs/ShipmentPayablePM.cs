@@ -201,5 +201,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public int TariffVersion { get; set; }
+
+        public bool PayablesDisconnectedFromTariff { get; set; }
     }
 }

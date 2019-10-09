@@ -129,7 +129,7 @@ export class JournalValidator
                 }
 
             }
-            if (cSum != dSum) {
+            if (cSum.toFixed(2) != dSum.toFixed(2)) {
                 errors.push(TextCodeTranslator.Translate("Accounting.General.O.TotalDebitMustEqualTotalCredit") + ": " + JournalValidator.Abs(dSum - cSum).toFixed(2)); //Total debit amount must be equal to total credit amount, There is a difference of
                 this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
             } else {

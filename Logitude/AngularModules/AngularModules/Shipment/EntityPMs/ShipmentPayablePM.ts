@@ -396,6 +396,11 @@ export class ShipmentPayablePM {
     public set TariffVersion(newValue: number) { if (this.tariffVersion != newValue) { this.tariffVersion = newValue; this.MarkAsDirty("TariffVersion"); } }
        
 	 
+    private payablesDisconnectedFromTariff: boolean;
+    public get PayablesDisconnectedFromTariff() { return this.payablesDisconnectedFromTariff; }
+    public set PayablesDisconnectedFromTariff(newValue: boolean) { if (this.payablesDisconnectedFromTariff != newValue) { this.payablesDisconnectedFromTariff = newValue; this.MarkAsDirty("PayablesDisconnectedFromTariff"); } }
+       
+	 
 
     public OldEntityPM: ShipmentPayablePM;
 	    
