@@ -149,6 +149,8 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
     Detach: boolean;
     isMouseOver: boolean = false;
     isExpanded: boolean = false;
+    private StaticPlaceHolder='';
+
 
     @Output() KeyUp = new EventEmitter();
     @Output() ValueChanged = new EventEmitter();
@@ -228,6 +230,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
 
     ngOnInit() {
 
+        this.StaticPlaceHolder=this.Placeholder;
         if (this.IsRatioBox == true) {
             this.DigitsAfterPoint = 1;
             this.InputDivStyle = {};
@@ -581,6 +584,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
         this.Detach = false;
         //this.DetectChanges();
         this.show = true;
+        this.Placeholder='';
         if (this.uiProperty.ValidValue) {
             this.timerToken = setTimeout(() => {
                 if (this.IsRatioBox) {
@@ -613,6 +617,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
     }
 
     onBlur() {
+        this.Placeholder=this.StaticPlaceHolder;
         this.timerToken = setTimeout(() => {
             this.ShowErrorPopup = false;
             if (this.uiProperty.ValidValue) {
