@@ -153,7 +153,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             if (entityPM.IsUser)
             {
-                NumberOfUsersService numberOfUsersService = new NumberOfUsersService(this.entityPM, this.Poco);                
+                NumberOfUsersService numberOfUsersService = new NumberOfUsersService(this.entityPM, this.Poco);
+                numberOfUsersService.Validate();
             }
 
             ContactMapping.MapEntity(entityPM, Poco, isNewEntity);
