@@ -198,6 +198,7 @@ namespace WebFreight.Web.ShipmentPackageModel
                 provider.BookingConfirmationNumber = shipment.BookingConfirmationNumber;
                 provider.Volume = shipment.Volume;
                 provider.ContainerVolume = shipment.PackageVolume;
+                provider.TotalNumberOfContainers = shipment.NumberOfContainers;
 
                 if (!string.IsNullOrEmpty(shipment.MainCarriageCarrierId))
                 {
@@ -466,6 +467,7 @@ namespace WebFreight.Web.ShipmentPackageModel
                 {
                     provider.DeliveryATD = myLastDelivery.ATD;
                     provider.DeliveryATA = myLastDelivery.ATA;
+                    provider.DeliveryETA = myLastDelivery.ETA;
 
                     switch (myLastDelivery.PickUpDeliveryToTypeCode)
                     {
