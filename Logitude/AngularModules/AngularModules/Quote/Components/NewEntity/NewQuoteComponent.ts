@@ -18,7 +18,6 @@ import {CardListService} from '../../../Common/Services/StandardLists/CardListSe
 import {AddressListService} from '../../../Common/Services/StandardLists/AddressListService';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {CitySelectionArgs} from '../../../Common/Args';
-import {Validator} from '../../../Infrastructure/Validators/Validator';
 import {NewEntityArgs} from '../../../Infrastructure/Args';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import {QuoteValidator} from '../../Validators/QuoteValidator';
@@ -193,14 +192,12 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
         }
 
         // Shipper
-        //this.UIProperties.SetEnabled("ShipperId", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("ShipperAddressId", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("ShipperContactId", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("ShipperReference1", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("ShipperReference2", this.ObjectTableName, isScreenEnabled);
 
         // Consignee
-        //this.UIProperties.SetEnabled("ConsigneeId", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("ConsigneeAddressId", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("ConsigneeContactId", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("ConsigneeReference1", this.ObjectTableName, isScreenEnabled);
@@ -293,45 +290,13 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
         this.SetUIProperties_AutomaticallyClosed();
         this.SetUIProperties_Dimentions();
     }
-    private SetUIProperties_Shipper() {
-        //var isFieldRequired: boolean = false;
-
-        //if (AppTool.IsNullOrEmpty(this.ShipperId)) {
-        //    if (this.IsShipperMyCustomer) {
-        //        isFieldRequired = true;
-        //    }
-
-        //    else if (this.DirectionId == "E" || this.DirectionId == "D" || this.DirectionId == "R" || this.DirectionId == null) {
-        //        isFieldRequired = true;
-        //    }
-        //}
-
-        //this.UIProperties.SetRequired("ShipperId", this.ObjectTableName, isFieldRequired);
-
+    private SetUIProperties_Shipper() {        
         var isShipperFieldsVisible = !AppTool.IsNullOrEmpty(this.ShipperId);        
         this.UIProperties.SetVisibility("ShipperContactId", this.ObjectTableName, isShipperFieldsVisible);
         this.UIProperties.SetVisibility("ShipperReference1", this.ObjectTableName, isShipperFieldsVisible);
         this.UIProperties.SetVisibility("ShipperReference2", this.ObjectTableName, isShipperFieldsVisible);
     }
     private SetUIProperties_Consignee() {
-        //var isFieldRequired: boolean = false;
-
-        //if (AppTool.IsNullOrEmpty(this.ConsigneeId)) {
-        //    if (this.IsConsigneeMyCustomer) {
-        //        isFieldRequired = true;
-        //    }
-
-        //    else if (this.EntityPM.DirectionId == "I") {
-        //        isFieldRequired = true;
-        //    }
-
-        //    else if (this.IsInlandDomestic) {
-        //        isFieldRequired = true;
-        //    }
-        //}
-        
-        //this.UIProperties.SetRequired("ConsigneeId", this.ObjectTableName, isFieldRequired);
-
         var isConsigneeFieldsVisible = !AppTool.IsNullOrEmpty(this.ConsigneeId);
         this.UIProperties.SetVisibility("ConsigneeContactId", this.ObjectTableName, isConsigneeFieldsVisible);
         this.UIProperties.SetVisibility("ConsigneeReference1", this.ObjectTableName, isConsigneeFieldsVisible);
@@ -385,17 +350,6 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
         else {
             this.UIProperties.SetRequired("ShipperId", this.ObjectTableName, false);
             this.UIProperties.SetRequired("ConsigneeId", this.ObjectTableName, false);
-
-            //if (this.EntityPM.DirectionId == "I") {
-            //    if (AppTool.IsNullOrEmpty(this.ConsigneeId)) {
-            //        this.UIProperties.SetRequired("ConsigneeId", this.ObjectTableName, true);
-            //    }
-            //}
-            //else {
-            //    if (AppTool.IsNullOrEmpty(this.ShipperId)) {
-            //        this.UIProperties.SetRequired("ShipperId", this.ObjectTableName, true);
-            //    }
-            //}
         }
     }
     private SetUIProperties_Containers() {
@@ -1027,6 +981,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
             this.GrossWeight = null;
             this.EntityPM.VolumetricWeight = null;
             this.ChargeableWeight = null;
+            this.NumberOfPackages = null;
         }
 
         this.SetUIProperties_Containers();
