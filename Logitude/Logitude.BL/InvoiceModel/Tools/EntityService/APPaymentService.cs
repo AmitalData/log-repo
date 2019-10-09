@@ -127,7 +127,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     {
                         SecurityUtility.CheckContactFeature("PaymentCheque", "NEW", entityPM.Tenant);
                          VendorGLAccount = GetGLAccountByCard(entityPM);
-                        CreatePaymentCheque(entityPM);
+                        paymentCheque= CreatePaymentCheque(entityPM);
                         SubmitPaymentCheque(paymentCheque);
                        
 
@@ -169,11 +169,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         }
 
 
-        private void CreatePaymentCheque(APPaymentPM entityPM)
+        private PaymentChequePM CreatePaymentCheque(APPaymentPM entityPM)
         {
             PaymentChequePM paymentCheque = MapPaymentChequePM(entityPM);
             PaymentChequeLinePM paymentChequeLine = MapPaymentChequeLinePM(entityPM);
             paymentCheque.PaymentChequeLines.Add(paymentChequeLine);
+            return paymentCheque;
         } 
 
         private PaymentChequePM MapPaymentChequePM(APPaymentPM payment)
