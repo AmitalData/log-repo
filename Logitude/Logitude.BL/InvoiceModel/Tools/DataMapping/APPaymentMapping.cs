@@ -65,6 +65,11 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.TransferStatusCode = entityPM.TransferStatusCode;
             entity.TaxDeductionLocalAmount = entityPM.TaxDeductionLocalAmount;
             entity.TaxDeductionPercentage = entityPM.TaxDeductionPercentage;
+            if (entityPM.SetApproved)
+            {
+                entityPM.ApprovedByUserId = loggedContact.Id;
+                entityPM.ApprovedDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+            }
             entity.ApprovedByUserId = entityPM.ApprovedByUserId;
             entity.ApprovedDateTime = entityPM.ApprovedDateTime;
             entity.BankAccountId = entityPM.BankAccountId;
