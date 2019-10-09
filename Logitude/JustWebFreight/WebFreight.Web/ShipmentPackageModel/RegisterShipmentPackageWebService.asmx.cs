@@ -198,6 +198,7 @@ namespace WebFreight.Web.ShipmentPackageModel
                 provider.BookingConfirmationNumber = shipment.BookingConfirmationNumber;
                 provider.Volume = shipment.Volume;
                 provider.ContainerVolume = shipment.PackageVolume;
+                provider.TotalNumberOfContainers = shipment.NumberOfContainers;
 
                 if (!string.IsNullOrEmpty(shipment.MainCarriageCarrierId))
                 {

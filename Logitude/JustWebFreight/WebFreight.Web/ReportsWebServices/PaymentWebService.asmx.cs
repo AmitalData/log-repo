@@ -455,6 +455,9 @@ namespace WebFreight.Web.ReportsWebServices
                 {
 					this.MapPaymentProfact33Fields(currentPayment, paymentDataProvider, tenantSettings, invoiceCotnext, billToCard);
                 }
+
+                paymentDataProvider.AmountInLocalCurrency =  currentPayment.AmountInLocalCurrency;
+
             }
 
             return paymentDataProvider;

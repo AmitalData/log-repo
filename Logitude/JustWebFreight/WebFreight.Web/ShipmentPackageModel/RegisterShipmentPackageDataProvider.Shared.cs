@@ -135,6 +135,8 @@ namespace WebFreight.Web.ShipmentPackageModel
             public double? ContainerVolume { get; set; }
             public string ShippingLineSCAC { get; set; }
             public string IncotermCode { get; set; }
+
+            public int? TotalNumberOfContainers { get; set; }
         }
     }
 }
