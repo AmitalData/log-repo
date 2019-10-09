@@ -517,7 +517,8 @@ namespace WebFreight.Web.ReportsWebServices
 			if (billToCard != null)
 			{
 				paymentDataProvider.SAT.SATForeignRFC = (billToCard.SATForeignRFC ?? null);
-			}
+                paymentDataProvider.ForeignRFC = (billToCard.SATForeignRFC ?? null);
+            }
 
 			if (!string.IsNullOrEmpty(currentPayment.SATXML))
             {

@@ -71,8 +71,9 @@ namespace WebFreight.Web.DataProviders
         public string IRSNumber { get; set; }
         public string BranchAddress { get; set; }
 		public string BillToCountryCode { get; set; }
+        public string ForeignRFC { get; set; }
 
-		public List<InvoicePayments> PaidInvoicesList { get; set; }     
+        public List<InvoicePayments> PaidInvoicesList { get; set; }     
 
         public class InvoicePayments
         {
