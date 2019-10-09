@@ -131,6 +131,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                                         && page.BankAccountId == bankAccountId
                                                                         && page.StatusCode == "2"  // 2- Approved
                                                                         && line.IsReconciled == false
+                                                                        //&& line.InReconcileProgress == false
                                                                   select line);
             return accountQuery;
         }

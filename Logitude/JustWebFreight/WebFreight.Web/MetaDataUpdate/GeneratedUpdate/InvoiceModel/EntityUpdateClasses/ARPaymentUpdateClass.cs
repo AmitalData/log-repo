@@ -131,6 +131,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    HasDocuments =  true,
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
+			      				    PrimaryKeyIsTenant =  false,
 			      				    SearchFields =  "ARPayment,ARPayments,Simplog.InvoiceLib.NewARPaymentCommand,Id,",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
@@ -5391,6 +5392,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "BillToLocalName",
+					  						OldFieldName =  "BillToLocalName",
 					  						ObjectTableName =  "ARPayment",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -5410,6 +5412,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "BillToLocalName",
 					  						ListPropertyPath =  "BillToLocalName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -5720,6 +5723,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
          	
 		    ARPaymentObjectTable.HeaderScreenId = ARPaymentHeaderScreenScreen2.Id;
 	   		  
+	      
+
+	         Screen ARPaymentNewARPaymentScreen3 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "NewARPayment", Name = "New AR Payment", ObjectTableId = ARPaymentObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = false }, screensRepository, tenantScreens);
+        
 
 	    }
 
@@ -6254,6 +6261,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
  		   TextCode ARPaymentTextCode_ARPaymentORefresh = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.O.Refresh", DefaultText = "Refresh",LocalDefaultText = @"רענן", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ARPaymentTextCode_ARPaymentONew = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.O.New", DefaultText = "New AR Payment",LocalDefaultText = @"קבלה חדשה", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentSNewARPaymentAdditionalFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.S.NewARPayment.AdditionalFields", DefaultText = "Additional Fields",LocalDefaultText = @"Additional Fields", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

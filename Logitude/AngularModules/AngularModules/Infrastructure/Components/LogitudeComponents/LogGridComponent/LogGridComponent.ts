@@ -17,6 +17,7 @@ declare var styleDisplay, itemStyling, itemWidth: any;
 import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
 import {ObjectsLocator} from '../../../Locators/ObjectsLocator';
 import {ServiceLocator} from '../../../Locators/ServiceLocator';
+import { filter } from 'rxjs/operators';
 
 @Component({
     moduleId: module.id,
@@ -713,6 +714,10 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
     }
 
     filterChanged(filters) {
+        var LogGridIdPostFex = this.LogGridId.replace('LogGridId_', '');
+        if (LogGridIdPostFex != filters.ListComponentPostFex) {
+            return;
+        }
         this.SearchFieldChanged = false;
         if (this.Filters == null) {
             this.Filters = new ApiQueryFilters();
