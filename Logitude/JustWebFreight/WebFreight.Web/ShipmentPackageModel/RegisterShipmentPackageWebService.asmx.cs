@@ -466,6 +466,7 @@ namespace WebFreight.Web.ShipmentPackageModel
                 {
                     provider.DeliveryATD = myLastDelivery.ATD;
                     provider.DeliveryATA = myLastDelivery.ATA;
+                    provider.DeliveryETA = myLastDelivery.ETA;
 
                     switch (myLastDelivery.PickUpDeliveryToTypeCode)
                     {
