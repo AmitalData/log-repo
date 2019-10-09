@@ -40,8 +40,8 @@ export class QuoteActions {
 
             var includeDelivery = element(by.id('Quote_CopyDeliveryIsChecked'));
             browser.executeScript("arguments[0].click();", includeDelivery.getWebElement());
-
-            // this.Helper.WaitByIdAndFill('textboxdiv_Quote_FromAddressCity_1', 'Ramallah');
+            
+            // this.Helper.WaitByIdAndFill('Quote_FromAddressCity_1', 'Ramallah');
             // this.Helper.WaitByIdAndFill('Quote_FromAddressCountryId_1', 'State Of Palestine');
             // this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
