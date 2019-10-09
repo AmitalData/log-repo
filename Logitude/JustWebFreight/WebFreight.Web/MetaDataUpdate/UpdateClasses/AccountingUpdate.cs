@@ -1905,6 +1905,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.False", DefaultText = "False", LocalDefaultText = "שקר", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.MoreData", DefaultText = "More Data", LocalDefaultText = "פרטים נוספים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.FieldMustBeNumeric", DefaultText = "The field , must be numeric", LocalDefaultText = "השדה , חייב להיות מספרי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.FillPayToName", DefaultText = "This vendor requires to fill in the pay to name", LocalDefaultText = "עבור ספק זה נדרש למלא את שם הספק בהמחאה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.InvoiceDateValidation", DefaultText = "Vendor invoice date typed, entered with old date (over 180 days back)", LocalDefaultText = "תאריך חשבונית הספק שהוקלדה,  הוקלדה עם תאריך ישן (למעלה מ- 180 יום אחורה)", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             #region MainMenu
 

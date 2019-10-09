@@ -383,6 +383,11 @@ export class APPaymentPM {
     public set ExcludeFromDeductionReport(newValue: boolean) { if (this.excludeFromDeductionReport != newValue) { this.excludeFromDeductionReport = newValue; this.MarkAsDirty("ExcludeFromDeductionReport"); } }
        
 	 
+    private vendorGLAccountId: string;
+    public get VendorGLAccountId() { return this.vendorGLAccountId; }
+    public set VendorGLAccountId(newValue: string) { if (this.vendorGLAccountId != newValue) { this.vendorGLAccountId = newValue; this.MarkAsDirty("VendorGLAccountId"); } }
+       
+	 
 
     public OldEntityPM: APPaymentPM;
 		

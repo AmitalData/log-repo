@@ -132,7 +132,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string PaymentChequeCreationPayToName { get; set; }
         public string PaymentChequeCreationNotes { get; set; }
         public bool ExcludeFromDeductionReport { get; set; }
-
+        public string VendorGLAccountId { get; set; }
 
 
 

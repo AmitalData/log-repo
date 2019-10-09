@@ -1,12 +1,25 @@
 
 
-<table >
+<table *ngIf="IsVisibile">
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td colspan="4">
             <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
         </td>
     </tr>
+    <tr  style="height:1px;">
+        <td colspan="2">
 
+            <div class="alert-animation SaveAlert"
+                 [style.text-align]="isRTL ? 'right' : 'left'"
+                 style=" text-align:center; margin: 0 auto;margin-bottom: 8px;min-width: 325px;height: 24px;width: fit-content;background: #c0e8c2;border: 1px solid #54a758;color: #6a7769;position: relative;padding: 3px 5px;border-radius: 5px; padding-left: 40px;" [style.padding-left]="isRTL ? '40px' : 'initial'" [style.padding-right]="isRTL ? 'initial' : '40px'">
+
+
+                {{'Accounting.General.O.FillPayToName' | TextCodeTranslationPipe}} 
+             
+            </div>
+        </td>
+
+    </tr>
     <tr>
         <td style="width: 450px">
             <table>
@@ -89,7 +102,7 @@
                             </tr>
 
                             <!-- CurrencyId -->
-                            <tr  [style.height.px]="50">
+                            <tr [style.height.px]="50">
                                 <td colspan="2">
                                     <table>
 
