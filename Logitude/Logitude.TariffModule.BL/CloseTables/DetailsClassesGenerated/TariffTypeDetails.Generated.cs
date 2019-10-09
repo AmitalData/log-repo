@@ -34,6 +34,13 @@ namespace Logitude.TariffModule.BL.CLoseTable
                 Code = "ASC", 
                 SearchFields = "ASC,Air Surcharges Cost", 
 			});
+			 
+            all.Add(new TariffTypeDetails()
+            {    
+                Code = "OSC", 
+                Name = "Ocean Surcharges Cost", 
+                SearchFields = "OSC,Ocean Surcharges Cost", 
+			});
 			
             return all;
        }
