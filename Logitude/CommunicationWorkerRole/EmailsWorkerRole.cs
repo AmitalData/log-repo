@@ -133,21 +133,7 @@ namespace CommunicationWorkerRole
                                 {
                                     if (cl != null)
                                     {
-                                        if (cl.Subject != null && cl.Subject.ToLower() == "kill my thread" && cl.Retries < 4)
-                                        {
-                                            
-                                            cl.Retries++;
-                                            cl.ExceptionMessage = "Thread was killed";
-                                            SetNextTryDateTime(cl);
-                                            if (context != null)
-                                            {
-                                                communicationLogRep.Update(cl);
-                                                communicationLogRep.SubmitChanges();
-                                            }
-
-                                            return;
-
-                                        }
+                                        
 
                                         if (cl.CommunicationStatusTypeCode == "D")
                                         {
@@ -164,7 +150,7 @@ namespace CommunicationWorkerRole
                                                 communicationLogRep.Update(cl);
                                                 communicationLogRep.SubmitChanges();
                                             }
-                                            else SendCommunicationLog(communicationLogId, tenant, cl, communicationLogRep);
+                                            else SendCommunicationLog(communicationLogId, tenant, cl, communicationLogRep, response);
 
                                             queueservice.Complete();
                                             LogDoneItemInMemory();
@@ -352,13 +338,13 @@ namespace CommunicationWorkerRole
         }
 
         ICommonDataContext context;
-        private void SendCommunicationLog(string communicationLogId, int tenant, CommunicationLog cl, CommunicationLogRepository communicationLogRep)
+        private void SendCommunicationLog(string communicationLogId, int tenant, CommunicationLog cl, CommunicationLogRepository communicationLogRep, QueueResponse response)
         {
 
 
             try
             {
-                if (cl.Retries < 30)
+                if (response.RetryNumber < 30 && cl.Retries < 30)
                 {
                     SendWaitingCommunicationLog(cl);
                 }
@@ -395,6 +381,8 @@ namespace CommunicationWorkerRole
                 SetNextTryDateTime(cl);
                 if (context != null)
                 {
+                    cl.ExceptionMessage = StringHelper.TruncateLongString(cl.ExceptionMessage, 4000);
+
                     communicationLogRep.Update(cl);
                     communicationLogRep.SubmitChanges();
                 }

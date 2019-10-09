@@ -394,6 +394,20 @@
                             <!-- Refresh Button -->
                             <!--<li float-start style="padding: 0 15px;padding-top: 2px;"><button class="Button" (click)="RefreshButtonClicked()">R</button></li>-->
                             <!-- Seperator -->
+                            <!-- <li float-start class="seperator"></li> -->
+
+
+                            <!-- Seperator -->
+                            <li float-start class="seperator"></li>
+
+                            <!-- Show lines in progress -->
+                            <li float-start style="padding: 0 8px;padding-top: 5px;"><CheckBox [IsChecked]="ShowInProgessLines" (Checked)="ShowInProgessLines = $event"></CheckBox></li>
+                            <li float-start [style.padding-left]="isRTL ? '30px' : 'initial'" [style.padding-right]="isRTL ? 'initial' : '30px'"
+                                style="padding-top: 4px;">
+                                {{'ReconcileExternalPageLine.O.ShowInProgess' | TextCodeTranslationPipe}}
+                            </li>
+
+                            <!-- Seperator -->
                             <li float-start class="seperator"></li>
 
                             <!-- Filters Button -->
@@ -414,6 +428,7 @@
                                             border-left: 1px solid #d6d6d6;
                                             border-right: 1px solid #d6d6d6;"></div>
                             </li>
+
 
                         </ul>
 

@@ -117,7 +117,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "",
 			      				    DefaultText =  "Reconcile External Page Line",
-			      				    Code =  "a224",
+			      				    Code =  "6e64",
 			      				    Name =  "ReconcileExternalPageLine Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -1168,7 +1168,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable ReconcileExternalPageLineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ReconcileExternalPageLine" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode ReconcileExternalPageLineTextCode_ReconcileExternalPageLineOShowInProgess = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ReconcileExternalPageLine.O.ShowInProgess", DefaultText = "Show lines in progress",LocalDefaultText = @"הצג שורות בתהליך התאמה", ObjectTableId = ReconcileExternalPageLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 
