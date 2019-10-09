@@ -696,6 +696,9 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
     private ShowConfirmWindow(warningMessage: string) {
 
         let confirmWindow = new ConfirmWindow();
+        confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.Cancel");
+        confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.B.Ok");
+
         confirmWindow.ShowWarningImage = true;
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
