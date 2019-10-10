@@ -974,26 +974,25 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private List<ConsignmentPackagePM> GetDeclarationConsignmentsPackagesPMForInternalTransitions(MN_NG_8241_Cargo_Message customResponse, ConsignmentPM Consignment)
         {
-            var declarationConsignmentsPackagesPMList = new List<ConsignmentPackagePM>();
-
             if (customResponse.CargoItem == null)
             {
-                return declarationConsignmentsPackagesPMList;
-            }
-
-            ConsignmentPackagePM internalConsignmentPackagePM = null;
-            foreach (var consignmentPackageItem in Consignment.ConsignmentPackages)
-            {
-                if (consignmentPackageItem.PackageMeasureQualifierCode == "3")
-                {
-                    internalConsignmentPackagePM = consignmentPackageItem;
-                }
+                return new List<ConsignmentPackagePM>();
             }
 
             int count = 0;
             string packtype = null;
             decimal weight = 0;
             int quntity = 0;
+            ConsignmentPackagePM internalConsignmentPackagePM = null;
+            foreach (var consignmentPackageItem in Consignment.ConsignmentPackages)
+            {
+                count++;
+                if (consignmentPackageItem.PackageMeasureQualifierCode == "3")
+                {
+                    internalConsignmentPackagePM = consignmentPackageItem;
+                }
+            }
+           
             customResponse.CargoItem.OrderBy(ci => ci.PackingType);
             //Array.Sort(customResponse.CargoItem);
             foreach (var package in customResponse.CargoItem)
@@ -1023,14 +1022,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         }
                         weight = 0;
                         quntity = 0;
-                        declarationConsignmentsPackagesPMList.Add(declarationConsignmentPackage);
+                        Consignment.ConsignmentPackages.Add(declarationConsignmentPackage);
                     }
                     else
                     {
-                        internalConsignmentPackagePM.ChangeSetOp = ChangeSetOperation.Insert;
+                        internalConsignmentPackagePM.ChangeSetOp = ChangeSetOperation.Update;
                         internalConsignmentPackagePM.PackageQuantity = quntity;
                         internalConsignmentPackagePM.GrossMassMeasure = weight;
-                        declarationConsignmentsPackagesPMList.Add(internalConsignmentPackagePM);
+                        Consignment.ConsignmentPackages.Add(internalConsignmentPackagePM);
                     }
                 }
                 else
@@ -1067,17 +1066,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         declarationConsignmentPackage.GrossMassMeasure = weight;
                     }
-                    declarationConsignmentsPackagesPMList.Add(declarationConsignmentPackage);
+                    Consignment.ConsignmentPackages.Add(declarationConsignmentPackage);
                 }
                 else
                 {
-                    internalConsignmentPackagePM.ChangeSetOp = ChangeSetOperation.Insert;
+                    internalConsignmentPackagePM.ChangeSetOp = ChangeSetOperation.Update;
                     internalConsignmentPackagePM.PackageQuantity = quntity;
                     internalConsignmentPackagePM.GrossMassMeasure = weight;
-                    declarationConsignmentsPackagesPMList.Add(internalConsignmentPackagePM);
+                    Consignment.ConsignmentPackages.Add(internalConsignmentPackagePM);
                 }
             }
-            return declarationConsignmentsPackagesPMList;
+            return Consignment.ConsignmentPackages;
         }
 
         public class GeneralMessage
