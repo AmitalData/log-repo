@@ -1,8 +1,11 @@
 ﻿using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.BL.EntityUpdateServices;
+using Logitude.Customs.Data;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Def.EntityQueryServicesExt;
 using Logitude.Server.Tools.Contracts;
 using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +26,6 @@ namespace Logitude.Customs.BL.Tasks
             for (int i = 0; i <= 3; i++)
             {
                 LogMessagingUtil.Instance.AppendLine("Log warning # " + i + " , Be careful !!");
-
             }
 
 
@@ -32,6 +34,21 @@ namespace Logitude.Customs.BL.Tasks
         private void RunPerTenant(CustomsSettingPM t)
         {
             LogMessagingUtil.Instance.AppendLine($"RunPerTenant({t.Tenant})");
+
+            CourierMasterQueryService courierMasterQueryService = new CourierMasterQueryService(t.Tenant);
+            List<CourierMasterPM> courierMasterPMList = courierMasterQueryService.GetAllCourierMastersForClosing(t.Tenant);
+            if(courierMasterPMList != null)
+            {
+                ICustomContext dbContext = CustomContext.GetContext(t.Tenant);
+                CourierMasterUpdateService CourierMasterUpdateService = new CourierMasterUpdateService(dbContext, new Dictionary<string, IContext>(), t.Tenant);
+                foreach (CourierMasterPM courierMasterPMItem in courierMasterPMList)
+                {
+                    LogMessagingUtil.Instance.AppendLine($"Close Courier Master({courierMasterPMItem.Id}) ");
+                    courierMasterPMItem.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                    courierMasterPMItem.IsOpen = false;
+                    CourierMasterUpdateService.Update(courierMasterPMItem, true);
+                }
+            }
         }
     }
     

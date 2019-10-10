@@ -280,5 +280,38 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return courierMasterPM;
         }
 
+        public List<CourierMasterPM> GetAllCourierMastersForClosing(int tenant)
+        {
+            List<CourierMasterPM> courierMasterPMList = new List<CourierMasterPM>();
+            List<CourierMaster> pocoList = repository.GetAllOpenCourierMasters(tenant);
+            if (pocoList != null)
+            {
+                foreach (CourierMaster courierMasterPoco in pocoList)
+                {
+                    DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(tenant);
+                    IQueryable<DeclarationCourierStatus> declarations = declarationCourierStatusQueryService.GetBy(tenant, courierMasterPoco.Id);
+                    if(declarations != null)
+                    {
+                        bool isAllCloseToFollowUp = true;
+                        CourierMasterPM courierMasterPM = null;
+                        foreach (DeclarationCourierStatus declarationItem in declarations)
+                        {
+                            if(declarationItem.IsClosedForFollowUp == false)
+                            {
+                                isAllCloseToFollowUp = false;
+                                break;
+                            }
+                        }
+                        if(isAllCloseToFollowUp == true) // If all declarations are ClosedForFollowUp, close master
+                        {
+                            courierMasterPM = this.GetEntityPM(courierMasterPoco, false, null);
+                            courierMasterPMList.Add(courierMasterPM);
+                        }
+                    }
+                }
+            }
+
+            return courierMasterPMList;
+        }
     }
 }
