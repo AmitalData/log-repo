@@ -66,7 +66,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             string key = ProcessLockTableUtil.Instance.GetKey4DocumentsFilingId(requestParams.DocumentsFilingId, requestParams.Tenant);
 
             
-            using (var processLockTableDisposable = DummyDisposable.GetProcessLockTableDisposable(lockit, key, "CRS:2715/UDLT"))
+            using (var processLockTableDisposable = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, lockit, key, "CRS:2715/UDLT"))
             {
                 RealUpdate(customResponse, requestParams);
             }

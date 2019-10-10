@@ -346,6 +346,7 @@
     <Compile Include="Utils\IdCounterUtil.cs" />
     <Compile Include="Utils\LogChangesService.cs" />
     <Compile Include="Utils\Logger.cs" />
+    <Compile Include="Utils\MultiProcessLockTableUtil.cs" />
     <Compile Include="Utils\ProcessLockTableUtil.cs" />
     <Compile Include="Utils\ProxyUtil.cs" />
     <Compile Include="Utils\SMTP.cs" />

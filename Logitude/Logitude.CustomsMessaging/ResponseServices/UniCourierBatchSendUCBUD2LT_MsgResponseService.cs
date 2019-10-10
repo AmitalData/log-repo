@@ -37,8 +37,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             bool lockit = !string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings.Get("Singleton.CRS:2715/UDLT"));
             string key = ProcessLockTableUtil.Instance.GetKey4DocumentsFilingId(customResponse.DocumentsFilingId, requestParams.Tenant);
-            
-            using (var processLockTableDisposable = DummyDisposable.GetProcessLockTableDisposable(lockit, key, "CRS:2715/UDLT"))
+
+            using (var processLockTableDisposable = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, lockit, key, "CRS:2715/UDLT"))
             {
                 RealUpdate(customResponse, requestParams);
             }
