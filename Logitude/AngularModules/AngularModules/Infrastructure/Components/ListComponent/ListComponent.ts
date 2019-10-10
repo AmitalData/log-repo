@@ -439,10 +439,22 @@ export class ListComponent implements OnInit, AfterViewInit {
     AdvanceQFiltersService: PubSubService;
     public TenantPM: TenantPM;
     MethodName: string = null;
+    ListComponentId: string;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     private SessionEvent: any = null;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _http: Http, private _entityListService: EntityListService, private _entityResourceService: EntityResourceService, public pubSubAdvanceQueryFiltersService: PubSubService, private temp: PubSubService1, private entityPMService: EntityPMService, private _totangoService: TotangoService, private CD: ChangeDetectorRef) {
+
+        if (this.CurrentSession == null) {
+            this.ListComponentId = "ListComponentId_-1_-1";
+           
+        }
+
+        else {
+            this.ListComponentId = "ListComponentId_" + this.CurrentSession.LogitudeGridHelper.GetLListComponentIndexId();
+           
+        }
+
         this.ComponentIndex = this.CurrentSession.GetNewListComponentIndex();
 
         this.serviceArgs = new ServiceArgs();
@@ -1407,7 +1419,8 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     filterAgrs.AdditionalFilters.push(filter);
                 });
             }
-            this.CurrentSession.PubSubFiltersChangeEventService.Stream.emit({ QueryId: query.Id, Filters: filterAgrs });
+            var ListComponentPostFex = this.ListComponentId.replace('ListComponentId_','');
+            this.CurrentSession.PubSubFiltersChangeEventService.Stream.emit({ QueryId: query.Id, Filters: filterAgrs, ListComponentPostFex: ListComponentPostFex });
         }
     }
     onMenuHeaderchanged(event) {

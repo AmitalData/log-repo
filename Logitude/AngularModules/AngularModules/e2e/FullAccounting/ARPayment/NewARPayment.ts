@@ -22,10 +22,10 @@ export class NewARPayment {
         this.Helper.ItemsVisibility('ARPayment_BillToId');
         this.Helper.ItemsPresent('ARPayment_BillToId');
         this.Helper.WaitByIdAndFill('ARPayment_BillToId', BillToName);
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'ARPayment_BillToId', BillToName);
         this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndFill('ARPayment_BillToAddressId', 'Main Address');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'ARPayment_BillToAddressId', 'Main Address');
         this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndFill('ARPayment_AmountInPaymentCurrency', '10000');
         this.Helper.WaitByIdAndFill('ARPayment_AccountingPaymentMethodId', 'Cash');

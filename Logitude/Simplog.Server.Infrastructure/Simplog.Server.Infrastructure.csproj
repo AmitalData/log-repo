@@ -217,6 +217,7 @@
     <Compile Include="Helpers\SecuredMapping.cs" />
     <Compile Include="Helpers\ServiceBusQueueHelper.cs" />
     <Compile Include="Helpers\SettingUtil.cs" />
+    <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Helpers\TransactionFactory.cs" />
     <Compile Include="Helpers\XLSUtil.cs" />
     <Compile Include="IContext.cs" />

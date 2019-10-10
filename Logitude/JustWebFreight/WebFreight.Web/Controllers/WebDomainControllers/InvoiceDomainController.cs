@@ -414,7 +414,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 DateTime? invoiceDate = DateHelper.GetDate(invoiceDateString);
 
-                string warningMessage= APInvoiceValidator.ValidateFullAccountingInvoiceDate(invoiceDate, tenant);
+                string warningMessage= APInvoiceValidator.ValidateFullAccountingInvoiceDate(invoiceDate, tenant, loggedUserEmail);
                 return Request.CreateResponse(HttpStatusCode.OK, warningMessage);
             }
 
