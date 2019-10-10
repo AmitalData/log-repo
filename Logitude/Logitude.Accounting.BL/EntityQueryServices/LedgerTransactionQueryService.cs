@@ -593,7 +593,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             IQueryable<LedgerTransactionPM> transactions = GetTransactionsJoinedWithJounrals();
 
             // get payment transaction
-            LedgerTransactionPM paymentTransaction = transactions.Where(t => t.SourceId == arpaymentId).FirstOrDefault();
+            LedgerTransactionPM paymentTransaction = transactions.Where(t => t.SourceId == arpaymentId && t.SourceTypeCode == AccountingEntityValues.ARPayment).FirstOrDefault();
+
             if (paymentTransaction != null)
             {
                 string paymentTransactionId = paymentTransaction.Id;
