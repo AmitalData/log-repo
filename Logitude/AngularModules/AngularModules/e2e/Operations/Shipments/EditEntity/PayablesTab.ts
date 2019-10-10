@@ -10,54 +10,74 @@ export class PayablesTabComponent {
     private amount1: any;
     private amount2: any;
     public PayablesTab(shipperRef1: string, ShipmentType: string) {
+
         this.Helper.WaitEditComponentBusyIndicator();
         this.Helper.WaitByIdAndClick('Shipment.TH.Payables');
         this.Helper.WaitEditComponentBusyIndicator();
-
         this.Helper.ItemsVisibility('ATDSPayable-payable');
- 
-        //var InvoiceAmount: any;
-        if (ShipmentType == '') {
-            this.amount1 = this.AddPayables('Air Frei', '10', '10');
-            this.amount2 = this.AddPayables('Order', '10', '20');
-        } else if (ShipmentType == 'FCL' || ShipmentType == 'LCL') {
-            this.amount1 = this.AddPayables('ocean', '10', '10');
-            this.amount2 = this.AddPayables('Order', '10', '20');
-        } else {
-            this.amount1 = this.AddPayables('Inland', '10', '10');
-            this.amount2 = this.AddPayables('Order', '10', '20');
-        }
-        //InvoiceAmount = this.amount1 + this.amount2
-        // this.AddAPInvoice(shipperRef1);
-    }
-    AddPayables(ChargeType: string, quantity: any, unitPrice: any) {
-        var amount: any = 0;
-        this.Helper.WaitByIdAndClick('AddPayable');
 
+        this.AddPayableLines(shipperRef1,ShipmentType);
+        this.CreatAPInvoice(shipperRef1);
+        this.EditAPInvoice(shipperRef1);
+
+
+
+    }
+
+    AddPayableLines(shipperRef1: string, ShipmentType: string){
+        if (ShipmentType == '') {
+            this.AddPayables('Air Frei', '10', '10','Shipment');
+            this.AddPayables('Order', '10', '20','Shipment');
+
+        } else if (ShipmentType == 'FCL' || ShipmentType == 'LCL') {
+            this.AddPayables('ocean', '10', '10','Shipment');
+            this.AddPayables('Order', '10', '20','Shipment');
+        } else {
+            this.AddPayables('Inland', '10', '10','Shipment');
+            this.AddPayables('Order', '10', '20','Shipment');
+        }
+    }
+    AddPayables(ChargeType: string, quantity: any, unitPrice: any, Source :String) {
+       // var amount: any = 0;
+
+       if(Source == "Shipment"){
+        this.Helper.WaitByIdAndClick('AddPayable');
+        
         this.Helper.WaitByIdAndFill('ShipmentPayable_ChargesTypeId', ChargeType);
         this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'ShipmentPayable_ChargesTypeId', ChargeType);
 
         this.Helper.WaitByIdAndFill('ShipmentPayable_Quantity', quantity);
         this.Helper.WaitByIdAndFill('ShipmentPayable_UnitPrice', unitPrice);
-        amount = parseInt(quantity) * parseInt(unitPrice);
+        //amount = parseInt(quantity) * parseInt(unitPrice);
 
         this.Helper.WaitByIdAndFill('ShipmentPayable_CurrencyId', 'EU');
         this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'ShipmentPayable_CurrencyId', 'EU');
 
         this.Helper.WaitByIdAndClick('Ok-AddPayableBtn');
-        return amount;
     }
-    AddAPInvoice(shipperRef1: string) {
+    else {
+        this.Helper.WaitByIdAndClick('AddInvoiceLine');
+        this.Helper.WaitByIdAndFill('APInvoiceLine_ChargesTypeId', 'order');
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'APInvoiceLine_ChargesTypeId', 'order');
+        this.Helper.WaitByIdAndFill('APInvoiceLine_VatTypeId','zero');
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'APInvoiceLine_VatTypeId','zero');
+        this.Helper.WaitByIdAndFill('APInvoiceLine_InvoiceCurrencyAmount_2','100');
+        this.Helper.WaitByIdAndClick('Ok-AddInvoiceLine');
+    }
+        // return amount;
+    }
+    CreatAPInvoice(shipperRef1: string) {
         this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndClick('ReceiveInvoice');
 
-        this.Helper.WaitByIdAndFill('APInvoice_VendorId', 'TestVendorId');
-        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'APInvoice_VendorId', 'TestVendorId');
+
+        this.Helper.WaitByIdAndFill('APInvoice_VendorId', 'TestAgentExport1');
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'APInvoice_VendorId', 'TestAgentExport1');
 
         this.Helper.WaitByIdAndFill('APInvoice_InvoiceNumber', shipperRef1);
         // this.Helper.WaitByIdAndFill('APInvoice_AmountInInvoiceCurrency', Amount);
 
-        this.Helper.WaitByIdAndFill('APInvoice_AmountInInvoiceCurrency', this.amount1);
+        this.Helper.WaitByIdAndFill('APInvoice_AmountInInvoiceCurrency', '100');
         this.Helper.WaitByIdAndFill('APInvoice_InvoiceCurrencyId', 'EUR');
         this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'APInvoice_InvoiceCurrencyId', 'EUR');
 
@@ -69,30 +89,51 @@ export class PayablesTabComponent {
         this.Helper.WaitByIdAndFill('APInvoice_VATNumber', 'Vat Number ');
         this.Helper.WaitByIdAndClick('Ok-CreateAPInvoice');
         this.Helper.WaitBusyIndicator();
+    }
 
-        this.Helper.WaitByIdAndFill('APInvoice_VatTypeId', 'zero');
-        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'APInvoice_VatTypeId', 'zero');
-
+        EditAPInvoice(shipperRef1: string){
+        this.Helper.WaitByIdAndFill('APInvoice_VatTypeId', 'Zero');
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'APInvoice_VatTypeId', 'Zero');
         this.Helper.WaitByIdAndClick('VATApplyToAll');
 
-        this.Helper.WaitByIdAndFill('APInvoiceLine_ForiegnCurrencyAmount', this.amount1);
-        // this.Helper.WaitByIdAndFill('APInvoiceLine_ForiegnCurrencyAmount_1', this.amount2);
+        this.Helper.WaitByIdAndFill('APInvoiceLine_InvoiceCurrencyAmount', '100');
 
-        // this.Helper.WaitByIdAndClick('APInvoice.B.Save');
+        this.AddPayables('Order', '10', '20','Invoice');
 
-        var EC = protractor.ExpectedConditions;
-        browser.wait(EC.elementToBeClickable(element(by.id('APInvoice.B.Save'))), 20000).then(a => {
-            element(by.id('APInvoice.B.Save')).click();
-            // this.Helper.WaitBusyIndicator();
+        /**/
+        this.Helper.WaitByIdAndClick('CheckBox_0_5_LBL');
+        this.Helper.WaitEditComponentBusyIndicator();
+        this.Helper.WaitByIdAndFill('APInvoice_VATNumber','Lana');
+        this.Helper.WaitByIdAndClick('APInvoice.B.Save');
+        this.Helper.WaitShowEditComponentBusyIndicator();
 
-            browser.wait(EC.invisibilityOf(element(by.css('.busyindicatorcontrol'))), 100000).then(a => {
-                // browser.wait(EC.elementToBeClickable(element(by.id('APInvoice.B.Approve'))), 100000).then(a => {
+        this.Helper.WaitEditComponentBusyIndicator();
+        
+        
+        this.Helper.WaitByIdAndClick('APInvoice.B.Approve');
+        this.WaitBusyIndicatorToShowandHide();
+        this.WaitBusyIndicatorToShowandHide();        
+        
 
-                this.Helper.WaitByIdAndClick('APInvoice.B.Approve');
-            });
-        });
-        this.Helper.WaitBusyIndicator();
+        this.Helper.WaitByIdAndClick('MenuButtons_1');
+        this.Helper.WaitByIdAndClick('APInvoice.B.CancelApproval');
+        this.WaitBusyIndicatorToShowandHide();
+        this.Helper.WaitByIdAndClick('MenuButtons_1');
+        this.Helper.WaitByIdAndClick('APInvoice.B.Void');
+        this.Helper.WaitByIdAndClick('ConfirmWindow_Yes_0');
+        this.WaitBusyIndicatorToShowandHide();
+        
+
+        this.Helper.WaitByIdAndClick('APInvoice.TH.General');
+
         this.Helper.WaitByIdAndClick('EditBackbutton_1');
-        this.Helper.WaitBusyIndicator();
+        this.WaitBusyIndicatorToShowandHide();
+        // this.Helper.WaitBusyIndicator();
+        
     }
+    WaitBusyIndicatorToShowandHide(){
+    this.Helper.WaitShowEditComponentBusyIndicator();
+    this.Helper.WaitEditComponentBusyIndicator();
+   }
+    
 }  

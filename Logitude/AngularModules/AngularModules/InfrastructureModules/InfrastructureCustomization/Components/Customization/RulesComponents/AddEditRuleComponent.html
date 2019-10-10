@@ -1,4 +1,4 @@
-﻿
+
 <style>
 
     .TitleBackGround {
@@ -90,7 +90,7 @@
                                     <LogLabel Text="Rule Type" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td style="width:250px">   
-                                     <ComboBox [ItemsSource]="RuleTypes" [Binding]="'Name'" [SelectedItem]="SelectedRuleType" (SelectedItemChanged)="SelectedRuleType = $event"></ComboBox>
+                                     <ComboBox [ItemsSource]="RuleTypes" [Binding]="'Name'" [SelectedItem]="SelectedRuleType" (SelectedItemChanged)="SelectedRuleType = $event" [IsDisabled]="!IsNewEntity"></ComboBox>
                                   </td>
 
                             </tr>

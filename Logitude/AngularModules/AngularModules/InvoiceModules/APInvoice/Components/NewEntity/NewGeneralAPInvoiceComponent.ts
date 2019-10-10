@@ -671,9 +671,11 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
     private ValidateInvoiceDate(errors) {
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
+            this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
             var invoiceDomainService: InvoiceDomainService = new InvoiceDomainService();
             invoiceDomainService.ValidateInvoiceDate(this.EntityPM.InvoiceDate).subscribe((response: ServiceResponse) => {
                 if (response != null) {
+                  this.CurrentSession.StopBusyIndicator();
                     if (!response.HasError ) {
                        if(response.Result != null){
                         this.ShowConfirmWindow(response.Result);
@@ -686,6 +688,7 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
                      this.ValidationErrorsList = response.ErrorsArray;
                     }
                 }
+
             });
         }
     }
@@ -693,6 +696,9 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
     private ShowConfirmWindow(warningMessage: string) {
 
         let confirmWindow = new ConfirmWindow();
+        confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.Cancel");
+        confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.B.Ok");
+
         confirmWindow.ShowWarningImage = true;
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
