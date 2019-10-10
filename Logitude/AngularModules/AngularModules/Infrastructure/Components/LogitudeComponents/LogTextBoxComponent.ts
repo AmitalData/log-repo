@@ -262,6 +262,8 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                     //this.CurrentSession.CopiedCell = this.DataContext[this.ObjectFieldName];
                     this.DataContext[this.ObjectFieldName] = this.CurrentSession.CopiedCell;
                     this.CurrentSession.CopiedCell = null;
+                    this.TextValue = this.DataContext[this.ObjectFieldName] != undefined && this.DataContext[this.ObjectFieldName] != null ? this.DataContext[this.ObjectFieldName] + '' : this.DataContext[this.ObjectFieldName];
+                    this.GetValueFormatted(this.TextValue);
                 }
             });
 
@@ -501,13 +503,14 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
     public ngxBeforeOnDestroy() {
         //console.log('1. BEFORE ONDESTROY INVOKE METHOD (await 2 sec)');
         return new Promise((resolve) => {
-            setTimeout(() => this.WaitFunction(resolve), 2000);
+            setTimeout(() => this.WaitFunction(resolve), 100);
         });
     }
 
 
-    @BeforeOnDestroy
-    ngOnDestroy() {
+    //@BeforeOnDestroy
+    async ngOnDestroy() {
+        await this.ngxBeforeOnDestroy();
         console.log("LogTextBox:ngOnDestroy");
         this.cd = null;
         if (this._debounceTimeSub) {
@@ -522,7 +525,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
     private WaitFunction(resolve) {
         //console.log('2. EXECUTE HEAVY FUNCTION (3 sec)');
 
-        const sourcef = timer(3000)
+        const sourcef = timer(100)
             .pipe(take(1))
             .subscribe(() => {
                 resolve();
