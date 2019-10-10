@@ -59,8 +59,8 @@ export class EditTabsComponent {
       this.PartnersTabScenario.PartnersTab(ShipmentLevelCode);
       this.PackagesTabScenario.PackagesTab(ShipmentLevelCode, ShipmentType);
       this.RoutingTabScenario.RoutingTab(ShipmentLevelCode, ShipmentType, Direction);
-      this.PayablesTabScenario.PayablesTab(shipperRef1, ShipmentType);
-      this.ReceivablesTabScenario.RecievablesTab(ShipmentLevelCode, ShipmentType);
+      //this.PayablesTabScenario.PayablesTab(shipperRef1, ShipmentType);
+      //this.ReceivablesTabScenario.RecievablesTab(ShipmentLevelCode, ShipmentType);
 
       if (ShipmentLevelCode == 'M') {
         this.ShipmentsTabScenario.ShipmentsTab();
