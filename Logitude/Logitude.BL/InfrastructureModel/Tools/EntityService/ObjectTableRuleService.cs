@@ -81,7 +81,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
 			ObjectTableRuleQuery objectTableRuleQuery = new ObjectTableRuleQuery(entityRepository);
 
-            if (objectTableRuleQuery.GetObjectTableRulePMsByTenant(theEntityPm.Tenant).Where(r => r.RuleCode == this.Poco.RuleCode).FirstOrDefault() == null)
+            if (objectTableRuleQuery.GetObjectTableRulePMsByTenant(theEntityPm.Tenant).Where(r => r.RuleCode == this.Poco.RuleCode && r.Tenant == theEntityPm.Tenant).FirstOrDefault() == null)
             {
                 entityRepository.Add(Poco);
                 entityRepository.SubmitChanges();
