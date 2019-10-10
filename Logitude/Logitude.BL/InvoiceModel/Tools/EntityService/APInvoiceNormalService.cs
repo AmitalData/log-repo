@@ -257,7 +257,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             if (tenantPOCO.AccountingActivated && setVoided)
             {
                 IJournalQueryServiceExt journalQuery = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride("", 1)) as IJournalQueryServiceExt;
-                JournalPM journalPM = journalQuery.GetJournalIdByAccountingEntityId(entityPM.Id, entityPM.Tenant);
+                JournalPM journalPM = journalQuery.GetJournalByAccountingEntityIdAndCode(entityPM.Id,"4", entityPM.Tenant);
                 if (journalPM != null)
                 {
                     var journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalVoidUpdateServiceExt), "JournalVoidUpdateServiceExt", new ParameterOverride("", 1)) as IJournalVoidUpdateServiceExt;
