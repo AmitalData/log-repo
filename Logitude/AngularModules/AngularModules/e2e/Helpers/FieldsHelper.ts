@@ -70,6 +70,11 @@ export class FieldsHelper {
         var EC = protractor.ExpectedConditions;
         browser.wait(EC.invisibilityOf(element(by.id("EditComponentBusyIndicator_0"))), 100000).then(a => { });
     }
+
+    WaitShowEditComponentBusyIndicator() {
+        var EC = protractor.ExpectedConditions;
+        browser.wait(EC.visibilityOf(element(by.id("EditComponentBusyIndicator_0"))), 100000).then(a => { });
+    }
     WaitBusyIndicatorToShow() {
         var EC = protractor.ExpectedConditions;
         browser.wait(EC.visibilityOf(element(by.id("BusyIndicator_0"))), 100000).then(a => { });
