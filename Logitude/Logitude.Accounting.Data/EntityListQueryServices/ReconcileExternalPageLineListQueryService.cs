@@ -49,8 +49,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
 
                                                                    InProgressExternalReconcile = a.InProgressExternalReconcile,
-                                                                   ReconcileRemarks = a.ReconcileRemarks
-
+                                                                   ReconcileRemarks = a.ReconcileRemarks,
+                                                                   InReconcileProgress = a.InReconcileProgress,
+                                                                   
                                                                });
             return query;
         }

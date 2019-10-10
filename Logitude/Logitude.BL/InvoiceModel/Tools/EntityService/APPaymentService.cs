@@ -298,7 +298,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private JournalPM GetJournalByAccountingEntityId(APPaymentPM aPPaymentPM)
         {
             IJournalQueryServiceExt journalQuery = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride("", 1)) as IJournalQueryServiceExt;
-            return journalQuery.GetJournalIdByAccountingEntityId(aPPaymentPM.Id, aPPaymentPM.Tenant);
+            return journalQuery.GetJournalByAccountingEntityIdAndCode(aPPaymentPM.Id, "5" , aPPaymentPM.Tenant);
 
 
         }

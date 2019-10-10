@@ -1,7 +1,6 @@
 import { browser, by, element, WebDriver, protractor } from 'protractor';
 import { FieldsHelper } from '../../../Helpers/FieldsHelper';
 
-
 export class PayablesTabComponent {
     private Helper: FieldsHelper;
 
@@ -10,108 +9,111 @@ export class PayablesTabComponent {
     }
     private amount1: any;
     private amount2: any;
-
-
     public PayablesTab(shipperRef1: string, ShipmentType: string) {
         this.Helper.WaitEditComponentBusyIndicator();
         this.Helper.WaitByIdAndClick('Shipment.TH.Payables');
         this.Helper.WaitEditComponentBusyIndicator();
-        // this.Helper.WaitEditComponentBusyIndicator();
 
         this.Helper.ItemsVisibility('ATDSPayable-payable');
-        // this.Helper.WaitByIdAndClick('ATDSPayable-payable');//Auto-display 
 
-         //this.Helper.WaitByCssButtonClick('RedButton','Yes');
         //var InvoiceAmount: any;
         if (ShipmentType == '') {
-            this.amount1 = this.AddPayables('Air Frei', '10', '10');
-            this.amount2 = this.AddPayables('Order', '10', '20');
+            this.AddPayables('Air Frei', '10', '10');
+            this.AddPayables('Order', '10', '20');
+
         } else if (ShipmentType == 'FCL' || ShipmentType == 'LCL') {
-            this.amount1 = this.AddPayables('ocean', '10', '10');
-            this.amount2 = this.AddPayables('Order', '10', '20');
+            this.AddPayables('ocean', '10', '10');
+            this.AddPayables('Order', '10', '20');
         } else {
-            this.amount1 = this.AddPayables('Inland', '10', '10');
-            this.amount2 = this.AddPayables('Order', '10', '20');
+            this.AddPayables('Inland', '10', '10');
+            this.AddPayables('Order', '10', '20');
         }
-
         //InvoiceAmount = this.amount1 + this.amount2
-        // this.AddAPInvoice(shipperRef1);
+        this.AddAPInvoice(shipperRef1);
     }
-
     AddPayables(ChargeType: string, quantity: any, unitPrice: any) {
-
         var amount: any = 0;
         this.Helper.WaitByIdAndClick('AddPayable');
 
         this.Helper.WaitByIdAndFill('ShipmentPayable_ChargesTypeId', ChargeType);
-        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'ShipmentPayable_ChargesTypeId', ChargeType);
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'ShipmentPayable_ChargesTypeId', ChargeType);
 
         this.Helper.WaitByIdAndFill('ShipmentPayable_Quantity', quantity);
         this.Helper.WaitByIdAndFill('ShipmentPayable_UnitPrice', unitPrice);
-        amount = parseInt(quantity) * parseInt(unitPrice);
+        //amount = parseInt(quantity) * parseInt(unitPrice);
 
         this.Helper.WaitByIdAndFill('ShipmentPayable_CurrencyId', 'EU');
-        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'ShipmentPayable_CurrencyId', 'EU');
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'ShipmentPayable_CurrencyId', 'EU');
 
         this.Helper.WaitByIdAndClick('Ok-AddPayableBtn');
-        return amount;
+        // return amount;
     }
     AddAPInvoice(shipperRef1: string) {
         this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndClick('ReceiveInvoice');
 
-        this.Helper.WaitByIdAndFill('APInvoice_VendorId', 'TestVendorId');
-        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'APInvoice_VendorId', 'TestVendorId');
+        this.Helper.WaitByIdAndFill('APInvoice_VendorId', 'TestAgentExport1');
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'APInvoice_VendorId', 'TestAgentExport1');
 
         this.Helper.WaitByIdAndFill('APInvoice_InvoiceNumber', shipperRef1);
         // this.Helper.WaitByIdAndFill('APInvoice_AmountInInvoiceCurrency', Amount);
 
-        this.Helper.WaitByIdAndFill('APInvoice_AmountInInvoiceCurrency', this.amount1);
+        this.Helper.WaitByIdAndFill('APInvoice_AmountInInvoiceCurrency', '100');
         this.Helper.WaitByIdAndFill('APInvoice_InvoiceCurrencyId', 'EUR');
-        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'APInvoice_InvoiceCurrencyId', 'EUR');
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'APInvoice_InvoiceCurrencyId', 'EUR');
 
         this.Helper.WaitByIdAndFill('date_APInvoice_InvoiceDate', '.');
 
         this.Helper.WaitByIdAndFill('APInvoice_PaymentTermId', 'cash');
-        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'APInvoice_PaymentTermId', 'cash');
-
-
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'APInvoice_PaymentTermId', 'cash');
 
         this.Helper.WaitByIdAndFill('APInvoice_VATNumber', 'Vat Number ');
-
-        // this.Helper.WaitBusyIndicator();
-        // browser.driver.sleep(2000);
-
         this.Helper.WaitByIdAndClick('Ok-CreateAPInvoice');
         this.Helper.WaitBusyIndicator();
 
-        this.Helper.WaitByIdAndFill('APInvoice_VatTypeId', 'zero');
-        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'APInvoice_VatTypeId', 'zero');
 
+
+        //this.Helper.WaitByIdAndClick('VATApplyToAll');
+
+        this.Helper.WaitByIdAndFill('APInvoice_VatTypeId', 'Zero');
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'APInvoice_VatTypeId', 'Zero');
         this.Helper.WaitByIdAndClick('VATApplyToAll');
 
-        this.Helper.WaitByIdAndFill('APInvoiceLine_ForiegnCurrencyAmount', this.amount1);
-        // this.Helper.WaitByIdAndFill('APInvoiceLine_ForiegnCurrencyAmount_1', this.amount2);
+        this.Helper.WaitByIdAndFill('APInvoiceLine_InvoiceCurrencyAmount', '100');
 
-        // this.Helper.WaitByIdAndClick('APInvoice.B.Save');
+        this.Helper.WaitByIdAndClick('AddInvoiceLine');
+        this.Helper.WaitByIdAndFill('APInvoiceLine_ChargesTypeId', 'order');
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'APInvoiceLine_ChargesTypeId', 'order');
+        this.Helper.WaitByIdAndFill('APInvoiceLine_VatTypeId','zero');
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'APInvoiceLine_VatTypeId','zero');
+        this.Helper.WaitByIdAndFill('APInvoiceLine_InvoiceCurrencyAmount_2','100');
+        this.Helper.WaitByIdAndClick('Ok-AddInvoiceLine');
+        this.Helper.WaitByIdAndClick('CheckBox_0_5_LBL');
+        this.Helper.WaitEditComponentBusyIndicator();
+        this.Helper.WaitByIdAndFill('APInvoice_VATNumber','Lana');
+        this.Helper.WaitByIdAndClick('APInvoice.B.Save');
+        this.Helper.WaitShowEditComponentBusyIndicator();
 
-        var EC = protractor.ExpectedConditions;
-        browser.wait(EC.elementToBeClickable(element(by.id('APInvoice.B.Save'))), 20000).then(a => {
-            element(by.id('APInvoice.B.Save')).click();
-            // this.Helper.WaitBusyIndicator();
+        this.Helper.WaitEditComponentBusyIndicator();
+        
+        
+        this.Helper.WaitByIdAndClick('APInvoice.B.Approve');
+        this.Helper.WaitShowEditComponentBusyIndicator();
+        this.Helper.WaitEditComponentBusyIndicator();
+        
 
-            browser.wait(EC.invisibilityOf(element(by.css('.busyindicatorcontrol'))), 100000).then(a => {
-                // browser.wait(EC.elementToBeClickable(element(by.id('APInvoice.B.Approve'))), 100000).then(a => {
+        this.Helper.WaitByIdAndClick('MenuButtons_1');
+        this.Helper.WaitByIdAndClick('APInvoice.B.CancelApproval');
+        this.Helper.WaitEditComponentBusyIndicator();
 
-                this.Helper.WaitByIdAndClick('APInvoice.B.Approve');
-            });
-        });
-        this.Helper.WaitBusyIndicator();
-        //browser.driver.sleep(30000);
-
+        this.Helper.WaitByIdAndClick('MenuButtons_1');
+        this.Helper.WaitByIdAndClick('APInvoice.B.Void');
+        this.Helper.WaitByIdAndClick('ConfirmWindow_Yes_0');
+         this.Helper.WaitEditComponentBusyIndicator();
+        
+        
         this.Helper.WaitByIdAndClick('EditBackbutton_1');
-        this.Helper.WaitBusyIndicator();
-
+        this.Helper.WaitEditComponentBusyIndicator();
+        // this.Helper.WaitBusyIndicator();
     }
-
-} 
+}  

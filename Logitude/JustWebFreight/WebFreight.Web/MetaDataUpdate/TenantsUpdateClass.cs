@@ -418,7 +418,7 @@ namespace WebFreight.Web.MetaDataUpdate
                             updateClass.LoadMenustables();
                             updateClass.LoadEventTypes();
                             updateClass.FillTaxWithholdingAssessOffice();
-                            //updateClass.FillAccountingCompanyType();
+                            updateClass.FillAccountingCompanyType();
                             //updateClass.FillTaxWithholdingAssessOffice();
                             updateClass.FillWithholdingTaxDeductionTypes();
                             

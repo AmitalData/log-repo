@@ -318,6 +318,7 @@ export class TariffDomainService {
 export class TariffSummery {
     AirFreightCount: number;
     AirSurchargeCount: number;
+    OceanSurchargeCount: number;
 }
 
 export class TariffFilterParameter {

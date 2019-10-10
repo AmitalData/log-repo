@@ -33,6 +33,7 @@ namespace Logitude.CRM.Data
 		 IDbSet<EscalationActionTimeIndicator> EscalationActionTimeIndicators { get; }
 		 IDbSet<EscalationPreDefinition> EscalationPreDefinitions { get; }
 		 IDbSet<Occasion> Occasions { get; }
+		 IDbSet<OccasionInvitee> OccasionInvitees { get; }
 		 IDbSet<OccasionStatus> OccasionStatuses { get; }
 		 IDbSet<OccasionType> OccasionTypes { get; }
 		 IDbSet<Opportunity> Opportunities { get; }

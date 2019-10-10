@@ -1958,7 +1958,7 @@ namespace Logitude.BL.InvoiceModel.Tools
             TimeSpan time = new TimeSpan(12, 00, 00);
             DateTime resultdate = pagoItem.FechaPago.Date + time;
             pagoItem.FechaPago = resultdate;
-            if (entityPM.FechaPago != null && FeatureToggleHelper.HasFeatureToggle("FPG", tenant))
+            if (entityPM.FechaPago != null)// && FeatureToggleHelper.HasFeatureToggle("FPG", tenant))
             {
                 pagoItem.FechaPago = entityPM.FechaPago.Value;
             }

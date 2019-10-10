@@ -28,6 +28,7 @@ using Microsoft.Practices.Unity;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using System.Data.Entity.Core;
+using System.Web;
 
 namespace Logitude.BL.InvoiceModel.Tools.Validating
 {
@@ -293,6 +294,28 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 }
             }
         }
+
+        public static string ValidateFullAccountingInvoiceDate(DateTime? invoiceDate, int tenant, string email)
+        {
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+            Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
+            if (tenantPOCO != null && tenantPOCO.AccountingActivated)
+            {
+              
+                bool useLocal = !(GetLoggedContact(tenant,email).DontShowLocal);
+            
+                DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                DateTime last180days = date.AddDays(-180);
+                if (invoiceDate < last180days)
+                {
+                    return TranslateTextsClass.Translate("Accounting.General.O.InvoiceDateValidation", tenant, useLocal);
+                }
+                else return null;
+            }
+            else return null;
+        }
+
+
         private static GLAccountPM getGLAccount(string vendorId, int tenant)
         {
             GLAccountPM glaAccount = null;
@@ -307,18 +330,24 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             return glaAccount;
         }
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
-        private static ContactPM GetLoggedContact(int tenant)
+        private static ContactPM GetLoggedContact( int tenant, string email = null)
         {
             if (OverrideGetLoggedContactFunc != null)
             {
                 return OverrideGetLoggedContactFunc(tenant);
             }
-            ContactPM loggedContact = new ContactQuery(tenant).GetContactByEmailOnly(
-                AuthenticationUtil.ResolveUserIdentityName(tenant)
-                , tenant);
+            ContactPM loggedContact = null;
+            if (email != null)
+            {
+                loggedContact= GetLoggedContactByAuthTokenEmail(email, tenant);
+            }
+            else
+            {
+                loggedContact = new ContactQuery(tenant).GetSingleByEmail( AuthenticationUtil.ResolveUserIdentityName(tenant) , tenant);
+            }
             if (loggedContact == null)
             {
-                loggedContact = new ContactQuery(tenant).GetContactByEmailOnly("system@tenant" + tenant + ".com", tenant);
+                loggedContact = new ContactQuery(tenant).GetSingleByEmail("system@tenant" + tenant + ".com", tenant);
             }
             loggedContact = loggedContact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM() {  };
             return loggedContact;
@@ -335,6 +364,16 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             }
         }
 
+        private static ContactPM GetLoggedContactByAuthTokenEmail(string email, int tenant)
+        {
+            ContactPM loggedContact = null;
+            loggedContact = new ContactQuery(tenant).GetSingleByEmail(email, tenant);
+            if (loggedContact == null)
+            {
+                loggedContact = new ContactQuery(tenant).GetSingleByEmail(email, 0);
+            }
+            return loggedContact;
+        }
         private static void ValidateShipmentConcurrencyGUID(APInvoicePM entityPM, string MainShipmentConcurrencyGUID)
         {
             if (!string.IsNullOrEmpty(entityPM.ShipmentConcurrencyGUID) && !string.IsNullOrEmpty(entityPM.ShipmentNewConcurrencyGUID) && !string.IsNullOrEmpty(MainShipmentConcurrencyGUID))

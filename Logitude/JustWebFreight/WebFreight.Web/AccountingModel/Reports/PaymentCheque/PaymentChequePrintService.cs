@@ -1,4 +1,6 @@
 ﻿using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.BL.EntityUpdateServices;
+using Logitude.Accounting.Data;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -9,6 +11,7 @@ using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
@@ -113,6 +116,13 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
                 }
             }
 
+            if(paymentChequePM.PrintDate == null)
+            {
+                UpdatePaymentChequePrintDate(paymentChequePM);
+               
+               
+            }
+            PaymentChequeDP.PrintDate = paymentChequePM.PrintDate;
 
 
             AddressQuery addressQuery = new AddressQuery(tenant);
@@ -204,7 +214,16 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
            
 
         }
+        private void UpdatePaymentChequePrintDate(PaymentChequePM paymentCheque)
+        {
+            paymentCheque.PrintDate = TenantServerConfigration.GetCurrentDateTime(paymentCheque.Tenant);
+            paymentCheque.ChangeSetOp = ChangeSetOperation.Update;
+            var accountingContext = AccountingContext.GetContext(paymentCheque.Tenant);
 
+            PaymentChequeUpdateService service = new PaymentChequeUpdateService(accountingContext, new Dictionary<string, IContext>(), paymentCheque.Tenant);
+            service.Update(paymentCheque, true);
+
+        }
         public static BankAccountPM GetBankAccountByPaymentChequet(string  bankAccountId, int tenant)
         {
             BankAccountQueryService bankAccountQuery = new BankAccountQueryService(tenant);

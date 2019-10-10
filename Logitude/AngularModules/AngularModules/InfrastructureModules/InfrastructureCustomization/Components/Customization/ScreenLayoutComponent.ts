@@ -201,7 +201,7 @@ export class ScreenLayoutComponent extends BaseComponent {
             } 
         });
         this.MyArgs.Columns = Columns;
-        this.MyArgs.Rows = Math.ceil(Rows / Columns);
+        this.MyArgs.Rows = Rows;//Math.ceil(Rows / Columns);
         this.MyArgs.ScreenId = ScreenId;//this.SelectedItem.ScreenPM.Id;
 
         this.myGeneralService.updateScreenFields(this.MyArgs).subscribe(myResult => {

@@ -30,6 +30,8 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.Helpers;
 using Logitude.BL.InvoiceModel;
 using Logitude.BL.InvoiceModel.CustomFilters;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
 
 namespace WebFreight.Web.App_Code
 {
@@ -125,7 +127,7 @@ namespace WebFreight.Web.App_Code
 
             resultClass.ARInvoices = arInvoices;
             resultClass.ARCharges = aRCharges;
-           
+            resultClass.IsShowAmountLocalCurrencyColumnInSharedLogistics = GetIsShowAmountLocalCurrencyColumnInSharedLogistics(tenant);
             return resultClass;
         }
 
@@ -368,26 +370,41 @@ namespace WebFreight.Web.App_Code
             SecurityUtility.AuthenticationOnTenant(tenant);
             ARInvoiceQuery entityQuery = new ARInvoiceQuery(tenant);
             ARInvoicePM entityPM = entityQuery.GetSinglePM(invoiceId, tenant);
-           
+
             DocumentOutQuery documentOutQuery = new DocumentOutQuery(tenant);
             DocumentTypeQuery query = new DocumentTypeQuery(tenant);
-            DocumentTypePM docType = query.GetSinglePMByCodeAndTenant("999S",tenant);
+            DocumentTypePM docType = query.GetSinglePMByCodeAndTenant("999S", tenant);
 
 
 
-           DocumentOutPM docsOutData = documentOutQuery.GetDocumentOutByDocumentTypeEntityAndChild(entityPM.MainEntityId, entityPM.Id, docType.Id, tenant);
-           string docId = docsOutData.Id;
-           if (docsOutData.DocumentOutCopies.Count() > 0)
-           {
-               docId = docsOutData.DocumentOutCopies.FirstOrDefault().DocumentId;
-           }
-           string documentName = tenant + "_" + docId;
-           //string url = "../WebPages/Downloadpage.aspx?id=" + documentName;
-           string url = "../WebPages/SharedDownloadPage.aspx?id=" + tenant + ":" + docId + ":invc:" + entityPM.Id;
-           entityPM.ReportUrl = url;
+            DocumentOutPM docsOutData = documentOutQuery.GetDocumentOutByDocumentTypeEntityAndChild(entityPM.MainEntityId, entityPM.Id, docType.Id, tenant);
+            string docId = docsOutData.Id;
+            if (docsOutData.DocumentOutCopies.Count() > 0)
+            {
+                docId = docsOutData.DocumentOutCopies.FirstOrDefault().DocumentId;
+            }
+            string documentName = tenant + "_" + docId;
+            //string url = "../WebPages/Downloadpage.aspx?id=" + documentName;
+            string url = "../WebPages/SharedDownloadPage.aspx?id=" + tenant + ":" + docId + ":invc:" + entityPM.Id;
+            entityPM.ReportUrl = url;
+            entityPM.IsShowAmountLocalCurrencyColumnInSharedLogistics = GetIsShowAmountLocalCurrencyColumnInSharedLogistics(tenant);
 
-           CheckSharedContactAuthenticationForInvoice(entityPM.BillToId,tenant);
+            CheckSharedContactAuthenticationForInvoice(entityPM.BillToId, tenant);
+          
             return entityPM;
+        }
+
+        private  bool GetIsShowAmountLocalCurrencyColumnInSharedLogistics(int tenant)
+        {
+            bool isShowAmountLocalCurrencyColumnInSharedLogistics = false;
+            SharedLogisticsSettingRepository sharedLogisticsSettingRepository = new SharedLogisticsSettingRepository(tenant);
+            SharedLogisticsSetting sharedLogisticsSetting = sharedLogisticsSettingRepository.GetSingle(tenant.ToString(), tenant);
+            if (sharedLogisticsSetting != null)
+            {
+                isShowAmountLocalCurrencyColumnInSharedLogistics = sharedLogisticsSetting.IsShowAmountLocalCurrency;
+            }
+
+            return isShowAmountLocalCurrencyColumnInSharedLogistics;
         }
 
         public  bool CheckSharedContactAuthenticationForInvoice(string partnerId, int tenant)

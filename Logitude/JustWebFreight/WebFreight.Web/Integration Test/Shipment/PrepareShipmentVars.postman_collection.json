@@ -75,7 +75,22 @@
 						}
 					}
 				},
-				"url": "{{LogitudeURL}}/api/authentication"
+				"url": {
+					"raw": "{{LogitudeURL}}/api/authentication?tenant={{Tenant}}",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"authentication"
+					],
+					"query": [
+						{
+							"key": "tenant",
+							"value": "{{Tenant}}"
+						}
+					]
+				}
 			},
 			"response": []
 		},

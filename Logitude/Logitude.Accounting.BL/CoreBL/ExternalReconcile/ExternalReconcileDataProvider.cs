@@ -92,24 +92,27 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             return myOldTransToReconcile;
         }
 
-        public List<ReconcileExternalPageLineList> GetReconcileExternalPageLineList(int tenant, List<string> reconcileExternalPageLineIdList)
+        public virtual List<ReconcileExternalPageLineList> GetReconcileExternalPageLineList(int tenant, List<string> reconcileExternalPageLineIdList)
         {
-            var qs = new ReconcileExternalPageLineListQueryService(_AccountingContext);
 
-            var q = qs.GetList(new Simplog.Server.Infrastructure.DataContracts.QueryOperations(), tenant);
-            var list = q.Where(r => reconcileExternalPageLineIdList.Contains(r.Id)).ToList();
+
+            var qs = new ReconcileExternalPageLineListQueryService(_AccountingContext);
+            IQueryable<ReconcileExternalPageLineList> query2 = qs.GetIqueryableList(_AccountingContext.ReconcileExternalPageLines.Where(r=>r.Tenant== tenant));
+            
+            var list = query2.Where(r => reconcileExternalPageLineIdList.Contains(r.Id)).ToList();
             return list;
         }
-        public List<ReconcileExternalPageList> GetReconcileExternalPageList(int tenant, List<string> reconcileExternalPageIdList)
+        public virtual List<ReconcileExternalPageList> GetReconcileExternalPageList(int tenant, List<string> reconcileExternalPageIdList)
         {
             var qs = new ReconcileExternalPageListQueryService(_AccountingContext);
 
-            var q = qs.GetList(new Simplog.Server.Infrastructure.DataContracts.QueryOperations(), tenant);
+            IQueryable<ReconcileExternalPageList> q = qs.GetIqueryableList(_AccountingContext.ReconcileExternalPages.Where(r => r.Tenant == tenant));
+
             var list = q.Where(r => reconcileExternalPageIdList.Contains(r.Id)).ToList();
             return list;
         }
         
-        public LastRate GetLastRateByValueDate(int tenant, string foreignCurrencyId, string baseCurrencyId, DateTime valueDate)
+        public virtual LastRate GetLastRateByValueDate(int tenant, string foreignCurrencyId, string baseCurrencyId, DateTime valueDate)
         {
             if (_IWebFreightContext == null)
             {
@@ -122,7 +125,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             LastRate lastRate = ratesTableQuery.GetLastRecordByValueDate(tenant, foreignCurrencyId, baseCurrencyId, valueDate);
             return lastRate;
         }
-        public string GetaccountingCurrencyId(int tenant)
+        public virtual string GetaccountingCurrencyId(int tenant)
         {
             var tenantQuery = new TenantQuery(tenant);
             var tPM = tenantQuery.GetSinglePM(tenant);
@@ -130,10 +133,12 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             return accountingCurrencyId;
         }
 
-        public List<GLAccountList> GetListOfGLAccountList(int tenant, List<string> listOfAccId)
+        public virtual List<GLAccountList> GetListOfGLAccountList(int tenant, List<string> listOfAccId)
         {
             var qs = new GLAccountListQueryService(_AccountingContext);
-            var listOfGLAccountList =qs.GetList(tenant).Where(r => listOfAccId.Contains(r.Id)).ToList();
+            var q = qs.GetIqueryableList(_AccountingContext.GLAccounts.Where(r => r.Tenant == tenant));
+            var listOfGLAccountList =q.Where(r => listOfAccId.Contains(r.Id)).ToList();
+
             return listOfGLAccountList;
         }
     }

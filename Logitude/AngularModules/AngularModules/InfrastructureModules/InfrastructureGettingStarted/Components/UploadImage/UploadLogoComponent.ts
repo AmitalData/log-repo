@@ -18,7 +18,6 @@ import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocato
 })
 
 export class UploadLogoComponent implements AfterViewInit {
-    DataImage: any;
     IsShowMessageComplate: boolean = false;
     IsShowProgressLoading: boolean = false;
     ShowUploadVerySmallLogo: boolean = false;
