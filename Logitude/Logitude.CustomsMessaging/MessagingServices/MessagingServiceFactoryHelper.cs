@@ -269,6 +269,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 TPG_8304_DeficitFileFilterParamMessagingService>
                 ((new TPG_8304_DeficitFileFilterParamMessagingService()).MainInterfaceCode);
 
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                DCAInDE_NG_5108_DecisionMessageMessagingService>
+                ((new DCAInDE_NG_5108_DecisionMessageMessagingService()).MainInterfaceCode);
+
             //<--- Yuval Chalup 23.06.2015 TASK-13278
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                 TSH_NG_8289_Web05_CreditQueryMessagingService>
@@ -435,6 +439,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                 DCAInUCBCTML_MsgMessagingService>
                 ((new DCAInUCBCTML_MsgMessagingService()).MainInterfaceCode);
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                DCAInDE_NG_5108_DecisionMessageMessagingService>
+                ((new DCAInDE_NG_5108_DecisionMessageMessagingService()).MainInterfaceCode);
 
         }
         public static void InitContainer()

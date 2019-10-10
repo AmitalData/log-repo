@@ -1,4 +1,4 @@
-﻿<style type="text/css">
+<style type="text/css">
     .TabCloseIcon:hover {
         background: url('./Images/Tab.X.Blue.png') no-repeat;
     }
@@ -145,11 +145,11 @@
                 <!-- Tab Body -->
                 <div class="TabControlBody" style="background: white;">
                     <div class="MediaFillAbsolute">
-                        <div  style="height: 100%;padding: 15px;" [ngSwitch]="SelectedTab">
+                        <div style="height: 100%;padding: 15px;" [ngSwitch]="SelectedTab">
 
                             <!-- #region Details Tab -->
                             <div *ngSwitchCase="'Details'" style="height: 100%;">
-                                
+
                                 <!-- Filters Fields-->
                                 <table *ngIf="ClonedItemPM" style="height: 150px;">
 
@@ -161,7 +161,7 @@
                                         </td>
                                         <td style="width: 65px; padding-left: 5px;">
                                             <LogTextBox [ObjectFieldName]="'StatisticQuantity'" [ObjectTableName]="ObjectTableName" [IsAccumulative]="true"
-                                                        [InputType]="'decimal'" [HideColumns]="true" [DataContext]="DataContext" ></LogTextBox>
+                                                        [InputType]="'decimal'" [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
                                         </td>
                                         <td style="width: 70px;">
                                             <LogLov [ObjectFieldName]="'StatisticQuantityType'"
@@ -180,8 +180,8 @@
                                                       [DataContext]="DataContext"></LogLabel>
                                         </td>
                                         <td style="width: 135px;">
-                                            <LogTextBox [ObjectFieldName]="'DeferredCustomsTax'" [ObjectTableName]="ObjectTableName"  [AddCommasToNumbers]="true"
-                                                        [InputType]="'decimal'" [HideColumns]="true" [DataContext]="DataContext" ></LogTextBox>
+                                            <LogTextBox [ObjectFieldName]="'DeferredCustomsTax'" [ObjectTableName]="ObjectTableName" [AddCommasToNumbers]="true"
+                                                        [InputType]="'decimal'" [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
                                         </td>
 
                                         <td style="width: 10px;"><div></div></td>
@@ -193,7 +193,7 @@
                                         </td>
                                         <td style="width: 85px; padding-left: 5px;">
                                             <LogTextBox [ObjectFieldName]="'NonCustomsItemPrice'" [ObjectTableName]="ObjectTableName"
-                                                        [InputType]="'decimal'" [HideColumns]="true" [DataContext]="DataContext" ></LogTextBox>
+                                                        [InputType]="'decimal'" [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
                                         </td>
                                         <td style="width: 70px;">
                                             <LogLov [ObjectFieldName]="'NonCustomsItemPriceCurCode'"
@@ -213,7 +213,7 @@
                                         </td>
                                         <td style="width: 65px; padding-left: 5px;">
                                             <LogTextBox [ObjectFieldName]="'AdditionalQuantity'" [ObjectTableName]="ObjectTableName"
-                                                        [InputType]="'decimal'" [HideColumns]="true" [DataContext]="DataContext" ></LogTextBox>
+                                                        [InputType]="'decimal'" [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
                                         </td>
                                         <td style="width: 70px;">
                                             <LogLov [ObjectFieldName]="'AdditionalQuantityType'"
@@ -232,8 +232,8 @@
                                                       [DataContext]="DataContext"></LogLabel>
                                         </td>
                                         <td>
-                                            <LogTextBox [ObjectFieldName]="'DeferredPurchaseTax'" [ObjectTableName]="ObjectTableName"  [AddCommasToNumbers]="true"
-                                                        [InputType]="'decimal'" [HideColumns]="true" [DataContext]="DataContext" ></LogTextBox>
+                                            <LogTextBox [ObjectFieldName]="'DeferredPurchaseTax'" [ObjectTableName]="ObjectTableName" [AddCommasToNumbers]="true"
+                                                        [InputType]="'decimal'" [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
                                         </td>
 
                                         <td style="width: 10px;"><div></div></td>
@@ -310,7 +310,7 @@
                                         </td>
                                         <td colspan="2">
                                             <LogTextBox [ObjectFieldName]="'PreferenceDocumentNumber'" [ObjectTableName]="ObjectTableName"
-                                                        [InputType]="'text'" [HideColumns]="true" [DataContext]="DataContext" ></LogTextBox>
+                                                        [InputType]="'text'" [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
                                         </td>
 
                                         <td style="width: 10px;"><div></div></td>
@@ -322,7 +322,7 @@
                                         </td>
                                         <td>
                                             <!--<LogTextBox [ObjectFieldName]="'TaxExemptCode'" [ObjectTableName]="ObjectTableName"
-                                                        [InputType]="'ntext'" [HideColumns]="true" [DataContext]="DataContext" ></LogTextBox>-->
+                                [InputType]="'ntext'" [HideColumns]="true" [DataContext]="DataContext" ></LogTextBox>-->
 
                                             <SearchBox [ObjectTableName]="'Customs.CustomsItems'"
                                                        [IsQuickSearch]="true"
@@ -359,8 +359,8 @@
                                                       [DataContext]="DataContext"></LogLabel>
                                         </td>
                                         <td colspan="2">
-                                            <LogTextBox style="float: right; width: 107px;" [ObjectFieldName]="'ActualInvoiceLines'" [ObjectTableName]="ObjectTableName"   [Text]="ActualInvoiceLines"
-                                                        [InputType]="'text'" [HideColumns]="true" [DataContext]="DataContext" ></LogTextBox>
+                                            <LogTextBox style="float: right; width: 107px;" [ObjectFieldName]="'ActualInvoiceLines'" [ObjectTableName]="ObjectTableName" [Text]="ActualInvoiceLines"
+                                                        [InputType]="'text'" [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
                                             <IconButton [IsEnabled]="!IsDisplayOnly" style="float: left; padding-top: 2px;" [IsSmall]="true" [Name]="'edit'" (click)="EditActualLines()"></IconButton>
                                         </td>
 
@@ -373,7 +373,7 @@
                                         </td>
                                         <td>
                                             <LogTextBox [ObjectFieldName]="'OptionalTamaPercentage'" [ObjectTableName]="ObjectTableName" [AddCommasToNumbers]="true"
-                                                        [InputType]="'decimal'" [HideColumns]="true" [DataContext]="DataContext" ></LogTextBox>
+                                                        [InputType]="'decimal'" [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
                                         </td>
 
                                         <td style="width: 10px;"><div></div></td>
@@ -386,14 +386,15 @@
                                         <td colspan="2">
                                             <LogTextBox [ObjectFieldName]="'DangerousClassificationCode'" [ObjectTableName]="ObjectTableName"
                                                         [InputType]="'integer'" [HideColumns]="true" [DataContext]="DataContext"
-                                                        (LostFocus)="OnDangClasCodeBlur()" ></LogTextBox>
+                                                        (LostFocus)="OnDangClasCodeBlur()"></LogTextBox>
                                         </td>
 
                                     </tr>
-                                    <tr>
+                                                                        <tr>
                                         <td colspan="6"><div></div></td>
 
                                         <td style="width: 10px;"><div></div></td>
+
 
                                         <!-- DangerousPackingGroupTypeCode -->
                                         <td>
@@ -453,7 +454,7 @@
                                                                 <!-- CurrencyTypeCode -->
                                                                 <log-column [header]="'Customs.SupplierInvoiceItemsMod.F.CurrencyTypeCode' | TextCodeTranslationPipe" [width]="'148'" [Alignment]="'right'" [binding]="'CurrencyTypeCode'">
                                                                     <log-cell-template template="let item" #logcelltemplate>
-                                                                        <div style="text-align: right;"  class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                        <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
                                                                             <span>{{item.CurrencyTypeName}}</span>
                                                                         </div>
                                                                         <div *ngIf="logcelltemplate.IsEditMode">
@@ -478,14 +479,14 @@
                                                                         </div>
                                                                         <div *ngIf="logcelltemplate.IsEditMode">
                                                                             <LogTextBox [ObjectFieldName]="'Amount'" [InputType]="'double'" [DataContext]="item"
-                                                                                        [ObjectTableName]="'Customs.SupplierInvoiceItemsMod'" [HideColumns]="true" [FocusOnMe]="true" ></LogTextBox>
+                                                                                        [ObjectTableName]="'Customs.SupplierInvoiceItemsMod'" [HideColumns]="true" [FocusOnMe]="true"></LogTextBox>
                                                                         </div>
                                                                     </log-cell-template>
                                                                 </log-column>
 
                                                                 <!-- Buttons -->
                                                                 <log-column [width]="'40'" [Alignment]="'right'">
-                                                                    <log-cell-template template="let item"  [IgnoreMods]="true">
+                                                                    <log-cell-template template="let item" [IgnoreMods]="true">
                                                                         <span class="CellSeparator" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'"></span>
                                                                         <IconButton [IsEnabled]="!IsDisplayOnly" [Name]="'Delete'" [IsSmall]="true" (click)="RemoveModification(item)"
                                                                                     style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
@@ -558,10 +559,9 @@
 
                             </div>
                             <!-- #endregion -->
-
                             <!-- #region Declarations Tab -->
                             <div *ngSwitchCase="'Declarations'" style="height: 100%;">
-                                
+
                                 <table style="height: 100%;">
                                     <tr>
                                         <td>
@@ -607,7 +607,7 @@
                                                                         </div>
                                                                         <div *ngIf="logcelltemplate.IsEditMode">
                                                                             <LogTextBox [ObjectFieldName]="'DeclarationNumber'" [InputType]="'text'" [DataContext]="item"
-                                                                                        [ObjectTableName]="'Customs.SupplierInvoiceItemsConDeclar'" [HideColumns]="true" [FocusOnMe]="true" ></LogTextBox>
+                                                                                        [ObjectTableName]="'Customs.SupplierInvoiceItemsConDeclar'" [HideColumns]="true" [FocusOnMe]="true"></LogTextBox>
                                                                         </div>
                                                                     </log-cell-template>
                                                                 </log-column>
@@ -620,7 +620,7 @@
                                                                         </div>
                                                                         <div *ngIf="logcelltemplate.IsEditMode">
                                                                             <LogTextBox [ObjectFieldName]="'InvoiceNumber'" [InputType]="'Integer'" [DataContext]="item"
-                                                                                        [ObjectTableName]="'Customs.SupplierInvoiceItemsConDeclar'" [HideColumns]="true" [FocusOnMe]="true" ></LogTextBox>
+                                                                                        [ObjectTableName]="'Customs.SupplierInvoiceItemsConDeclar'" [HideColumns]="true" [FocusOnMe]="true"></LogTextBox>
                                                                         </div>
                                                                     </log-cell-template>
                                                                 </log-column>
@@ -633,7 +633,7 @@
                                                                         </div>
                                                                         <div *ngIf="logcelltemplate.IsEditMode">
                                                                             <LogTextBox [ObjectFieldName]="'ItemSequence'" [InputType]="'Integer'" [DataContext]="item"
-                                                                                        [ObjectTableName]="'Customs.SupplierInvoiceItemsConDeclar'" [HideColumns]="true" [FocusOnMe]="true" ></LogTextBox>
+                                                                                        [ObjectTableName]="'Customs.SupplierInvoiceItemsConDeclar'" [HideColumns]="true" [FocusOnMe]="true"></LogTextBox>
                                                                         </div>
                                                                     </log-cell-template>
                                                                 </log-column>
@@ -646,7 +646,7 @@
                                                                         </div>
                                                                         <div *ngIf="logcelltemplate.IsEditMode">
                                                                             <LogTextBox [ObjectFieldName]="'Quantity'" [InputType]="'double'" [DataContext]="item"
-                                                                                        [ObjectTableName]="'Customs.SupplierInvoiceItemsConDeclar'" [HideColumns]="true" [FocusOnMe]="true" ></LogTextBox>
+                                                                                        [ObjectTableName]="'Customs.SupplierInvoiceItemsConDeclar'" [HideColumns]="true" [FocusOnMe]="true"></LogTextBox>
                                                                         </div>
                                                                     </log-cell-template>
                                                                 </log-column>
@@ -696,10 +696,9 @@
 
                             </div>
                             <!-- #endregion -->
-
                             <!-- #region Serial Numbers Tab -->
                             <div *ngSwitchCase="'SerialNumbers'" style="height: 100%;">
-                                
+
                                 <table style="height: 100%;">
                                     <tr>
                                         <!-- SerialNumbersList -->
@@ -744,7 +743,7 @@
                                                                         </div>
                                                                         <div *ngIf="logcelltemplate.IsEditMode">
                                                                             <LogTextBox [ObjectFieldName]="'SerialNumber'" [InputType]="'text'" [DataContext]="item"
-                                                                                        [ObjectTableName]="'Customs.SupplierInvoiceItemsSerialNum'" [HideColumns]="true" [FocusOnMe]="true" ></LogTextBox>
+                                                                                        [ObjectTableName]="'Customs.SupplierInvoiceItemsSerialNum'" [HideColumns]="true" [FocusOnMe]="true"></LogTextBox>
                                                                         </div>
                                                                     </log-cell-template>
                                                                 </log-column>
@@ -812,7 +811,7 @@
                                                                         </div>
                                                                         <div *ngIf="logcelltemplate.IsEditMode">
                                                                             <LogTextBox [ObjectFieldName]="'Description'" [InputType]="'ntext'" [DataContext]="item"
-                                                                                        [ObjectTableName]="'Customs.SupplierInvoiceItemsDescript'" [HideColumns]="true" [FocusOnMe]="true" ></LogTextBox>
+                                                                                        [ObjectTableName]="'Customs.SupplierInvoiceItemsDescript'" [HideColumns]="true" [FocusOnMe]="true"></LogTextBox>
                                                                         </div>
                                                                     </log-cell-template>
                                                                 </log-column>
@@ -881,7 +880,7 @@
                                                                         </div>
                                                                         <div *ngIf="logcelltemplate.IsEditMode">
                                                                             <LogTextBox [ObjectFieldName]="'Identification'" [InputType]="'text'" [DataContext]="item"
-                                                                                        [ObjectTableName]="'Customs.SupplierInvoiceItemsProdIdent'" [HideColumns]="true" [FocusOnMe]="true" ></LogTextBox>
+                                                                                        [ObjectTableName]="'Customs.SupplierInvoiceItemsProdIdent'" [HideColumns]="true" [FocusOnMe]="true"></LogTextBox>
                                                                         </div>
                                                                     </log-cell-template>
                                                                 </log-column>
@@ -911,10 +910,9 @@
 
                             </div>
                             <!-- #endregion -->
-
                             <!-- #region Levies  Tab -->
                             <div *ngSwitchCase="'Levies'" style="height: 100%;">
-                                
+
                                 <table style="height: 100%;">
                                     <tr>
                                         <td>
@@ -960,7 +958,7 @@
                                                                         </div>
                                                                         <div *ngIf="logcelltemplate.IsEditMode">
                                                                             <LogTextBox [ObjectFieldName]="'TradeLevyNumber'" [InputType]="'Integer'" [DataContext]="item"
-                                                                                        [ObjectTableName]="'Customs.SupplierInvoiceItemsLevy'" [HideColumns]="true" [FocusOnMe]="true" ></LogTextBox>
+                                                                                        [ObjectTableName]="'Customs.SupplierInvoiceItemsLevy'" [HideColumns]="true" [FocusOnMe]="true"></LogTextBox>
                                                                         </div>
                                                                     </log-cell-template>
                                                                 </log-column>
@@ -989,7 +987,63 @@
 
                             </div>
                             <!-- #endregion -->
+                            <!-- #region Package  Tab -->
+                            <div *ngSwitchCase="'Packages'" style="height: 100%;">
 
+                                <table style="height: 30%;">
+                                    <tr>
+                                        <td>
+
+                                            <!-- Grid -->
+                                            <table>
+
+                                                <tr>
+                                                    <!-- PackageQuantity -->
+                                                    <td style="width: 100px;">
+                                                        <LogLabel [ObjectFieldName]="'PackageQuantity'" [ObjectTableName]="ObjectTableName"
+                                                                  [DataContext]="DataContext"></LogLabel>
+                                                    </td>
+                                                    <td style="width: 135px;">
+                                                        <LogTextBox [ObjectFieldName]="'PackageQuantity'" [ObjectTableName]="ObjectTableName" [AddCommasToNumbers]="true"
+                                                                    [InputType]="'decimal'" [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                                                    </td>
+
+                                                    <!-- Weight -->
+                                                    <td style="width: 100px;">
+                                                        <LogLabel [ObjectFieldName]="'Weight'" [ObjectTableName]="ObjectTableName"
+                                                                  [DataContext]="DataContext"></LogLabel>
+                                                    </td>
+                                                    <td style="width: 135px;">
+                                                        <LogTextBox [ObjectFieldName]="'Weight'" [ObjectTableName]="ObjectTableName" [AddCommasToNumbers]="true"
+                                                                    [InputType]="'decimal'" [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                                                    </td>
+
+                                                    <td><div></div></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <!-- MarksAndNumbers -->
+                                                    <td style="width: 100px; vertical-align: top;padding-top: 2px;">
+                                                        <LogLabel [ObjectFieldName]="'MarksAndNumbers'" [ObjectTableName]="ObjectTableName"
+                                                                  [DataContext]="DataContext"></LogLabel>
+                                                    </td>
+                                                    <td colspan="3" style="width: 370px; vertical-align: top;padding-top: 2px; ">
+                                                        <LogTextBox [ObjectFieldName]="'MarksAndNumbers'" [ObjectTableName]="ObjectTableName" [Text]="MarksAndNumbers"
+                                                                    [HideColumns]="true" [IsMultiline]="true" [DataContext]="DataContext"></LogTextBox>
+                                                    </td>
+
+                                                    <td><div></div></td>
+                                                </tr>
+
+                                            </table>
+
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+
+                            </div>
+                            <!-- #endregion -->
                         </div>
                     </div>
                 </div>

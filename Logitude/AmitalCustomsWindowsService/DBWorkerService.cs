@@ -16,6 +16,7 @@ using Simplog.Global.Data.GlobalModel;
 using System.Configuration;
 using Devart.Data.Oracle;
 using CustomsWorkerRole;
+using CommunicationWorkerRole;
 
 namespace AmitalCustomsWindowsService
 {
@@ -172,9 +173,14 @@ namespace AmitalCustomsWindowsService
             listOfWorkerEntryPoint.Add(new SendWEBAPIMessage2MamanWR());
             listOfWorkerEntryPoint.Add(new FTPToAnalyzeQueueWR());
             listOfWorkerEntryPoint.Add(new CustomsAnalyzeQueueWR());
-            
+            listOfWorkerEntryPoint.Add(new CustomsSchedularWR());
 
 
+            bool testOnlyCustomsSchedularWR = false;
+            if (testOnlyCustomsSchedularWR)
+            {
+                int removedRec = BatchServicesDefinitions.RemoveAll(r => r.ClassName != "CustomsSchedularWR");
+            }
 
             foreach (var batchServicesDefinitionPM in BatchServicesDefinitions)
             {

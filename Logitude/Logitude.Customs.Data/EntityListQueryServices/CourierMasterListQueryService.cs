@@ -21,7 +21,47 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
 	    private IQueryable<CourierMasterList> GetIqueryableList(IQueryable<CourierMaster> iQueryable)
         {
+
+            var qJoin=
+(from p in context.CourierDeclarations
+ join dec in context.Declarations
+                     on p.DeclarationId equals dec.Id
+                     into DecJoin
+ from myDeclarations in DecJoin
+ join sts1 in context.DeclarationCourierStatuses
+                     on myDeclarations.Id equals sts1.DeclarationId
+                     into DeclarationCourierStatusesJoin
+ from myDeclarationCourierStatuses in DeclarationCourierStatusesJoin
+ select new { p.CourierMasterId, myDeclarations , myDeclarationCourierStatuses }
+
+
+
+);
+            var qMyJoin =
+                (
+                from rec in qJoin
+                group rec by rec.CourierMasterId into g
+                select new MyJoin
+                {
+                    CourierMasterId = g.Key,
+                    IsClosedForFollowUp0 = g.Count(r => r.myDeclarationCourierStatuses.IsClosedForFollowUp == false),
+                    P900 = g.Count(
+                        r => r.myDeclarationCourierStatuses.CourierPendingReasonList != null && r.myDeclarationCourierStatuses.CourierPendingReasonList.Contains("900"))
+                }
+                );
+
+
             IQueryable<CourierMasterList> query = (from a in iQueryable.Include("CustomsAirline").Include("MAWBType").Include("OriginPort").Include("GatewayPort").Include("Card")
+
+
+//#if false
+
+
+                                                   join recJoin in qMyJoin
+                                                              on a.Id equals recJoin.CourierMasterId
+                                                              into qrecJoin
+                                                   from myJoin in qrecJoin.DefaultIfEmpty()
+//#endif
                                                    select new CourierMasterList()
                                                    {
                                                        // comments made because of cannot convert nclob to char exception ---mohammad
@@ -61,6 +101,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        TruckerId = a.TruckerId,
                                                        IntegratorCode = a.IntegratorCode,
                                                        IntegratorName = a.Card != null ? a.Card.LocalName : null,
+                                                       //IsAllDecClosedForFollowUp = myJoin != null ? (myJoin.IsClosedForFollowUp0 > 0 ? false : true) : true,
+                                                       //CustomsFileNo = qJoin != null ? (qJoin.FirstOrDefault().myDeclarations != null ? qJoin.FirstOrDefault().myDeclarations.CustomFileNo : null ) : null,
+                                                       //CourierHAWB = qJoin != null ? (qJoin.FirstOrDefault().myDeclarations != null ? qJoin.FirstOrDefault().myDeclarations.CourierHAWB : null) : null,
                                                    });
             return query;
 		}
@@ -70,7 +113,15 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             return iQueryable;
 
         }
-	}
+
+        class MyJoin
+        {
+            public string CourierMasterId { get; set; }
+            public int IsClosedForFollowUp0 { get; set; }
+            public int P900 { get; set; }
+        }
+
+    }
 
 
 }

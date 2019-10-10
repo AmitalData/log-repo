@@ -241,7 +241,14 @@ namespace AmitalCustomsWindowsService
             listOfWorkerEntryPoint.Add(new SendWEBAPIMessage2MamanWR());
             listOfWorkerEntryPoint.Add(new FTPToAnalyzeQueueWR());
             listOfWorkerEntryPoint.Add(new CustomsAnalyzeQueueWR());
+            bool testCustomsSchedularWR = false;
+            if (testCustomsSchedularWR)
+            {
+                listOfWorkerEntryPoint = new List<Logitude.Server.Tools.WorkerEntryPoint>();
+            }
+            listOfWorkerEntryPoint.Add(new CustomsSchedularWR());
             
+
 
             BatchServicesDefinitionRepository BatchServicesRepository = new BatchServicesDefinitionRepository();
             BatchServicesDefinitionQuery BatchServicesQuery = new BatchServicesDefinitionQuery(BatchServicesRepository);

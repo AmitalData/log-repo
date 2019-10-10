@@ -94,6 +94,27 @@ namespace Logitude.Server.Tools.QueueService
                 {
                     delaySeconds = (int)delayTime.Value.TotalSeconds;
                 }
+                else
+                {
+                    if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+                    {
+                        if (NextRunDate.HasValue)
+                        {
+                            if (DateTime.UtcNow> NextRunDate)
+                            {
+                                delaySeconds = 0;
+                                
+                            }
+                            else
+                            {
+                                var ts = NextRunDate.Value.Subtract(DateTime.UtcNow);
+                                delaySeconds = (int)ts.TotalSeconds;
+                            }
+                            NextRunDate = null;
+                        }
+                    }
+
+                }
                 if (CustomerId != null)
                 {
                     CId = CustomerId;

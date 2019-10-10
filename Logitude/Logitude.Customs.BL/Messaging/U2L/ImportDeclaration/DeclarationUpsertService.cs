@@ -38,6 +38,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
         private CourierMasterPM _CourierMasterPM;
         private CourierDeclarationPM _CourierDeclarationPM;
         private string mode;
+        public Boolean suppressNewTrans;
 
         private AmitalContext amitalContext;
 
@@ -117,10 +118,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             throw new NotImplementedException();
         }
 
-        private void Upsert()
+        private void Upsert(bool suppressNewTrans=false)
         {
             //CheckExist();
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(10)))
+            using (TransactionScope scope =
+                suppressNewTrans? TransactionFactory.GetTransaction():TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(10)))
             {
                 AppendLogLine("Upsert..");
 
@@ -1175,7 +1177,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 }
 
                 MyGenericResponseObj.Stage = "Upsert";
-                Upsert();
+                Upsert(suppressNewTrans);
                 MyGenericResponseObj.Stage = "Done";
 
 

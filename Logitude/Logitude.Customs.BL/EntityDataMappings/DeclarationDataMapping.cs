@@ -374,7 +374,23 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 }
             }
 
+            if (entityPM.CourierPendingReasonList != null)
+            {
 
+                entityPM.CourierPendingReasonList = getCourierPendingReasonName(entityPM);
+            }
+
+            if (entityPM.FastIndividualProcessCode != null)
+            {
+                if (entityPM.FastIndividualProcessCode == "F")
+                {
+                    entityPM.FastIndividualProcessCode = "מהיר";
+                }
+                else if(entityPM.FastIndividualProcessCode == "I")
+                {
+                    entityPM.FastIndividualProcessCode = "פרטני";
+                }
+            }
 
         }
 
@@ -495,6 +511,25 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             entityPM.CourierSearchFields = result.ToLower();
             poco.CourierSearchFields = entityPM.CourierSearchFields;
+        }
+
+        private string getCourierPendingReasonName(DeclarationPM entityPM)
+        {
+            var courierPendingReasonList = entityPM.CourierPendingReasonList;
+            if (!string.IsNullOrWhiteSpace(courierPendingReasonList))
+            {
+                if (courierPendingReasonList.Contains(","))
+                {
+                    courierPendingReasonList = "רשימה";
+                }
+                else
+                {
+                    CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(entityPM.Tenant);
+                    CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle(courierPendingReasonList, false, false);
+                    courierPendingReasonList = courierPendingReasonPM.LocalName;
+                }
+            }
+            return courierPendingReasonList;
         }
     }
 

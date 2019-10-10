@@ -356,6 +356,22 @@
     <Compile Include="Migrations\201907311207513_missing20190731.Designer.cs">
       <DependentUpon>201907311207513_missing20190731.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907311245148_missingreleasenotes20190731.cs" />
+    <Compile Include="Migrations\201907311245148_missingreleasenotes20190731.Designer.cs">
+      <DependentUpon>201907311245148_missingreleasenotes20190731.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908151128118_AddDSupplierInvoiceItemsEntryFields.cs" />
+    <Compile Include="Migrations\201908151128118_AddDSupplierInvoiceItemsEntryFields.Designer.cs">
+      <DependentUpon>201908151128118_AddDSupplierInvoiceItemsEntryFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909010915024_AddCMisReadyForInvoice.cs" />
+    <Compile Include="Migrations\201909010915024_AddCMisReadyForInvoice.Designer.cs">
+      <DependentUpon>201909010915024_AddCMisReadyForInvoice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909110831576_AddSched.cs" />
+    <Compile Include="Migrations\201909110831576_AddSched.Designer.cs">
+      <DependentUpon>201909110831576_AddSched.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -609,6 +625,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907311207513_missing20190731.resx">
       <DependentUpon>201907311207513_missing20190731.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907311245148_missingreleasenotes20190731.resx">
+      <DependentUpon>201907311245148_missingreleasenotes20190731.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908151128118_AddDSupplierInvoiceItemsEntryFields.resx">
+      <DependentUpon>201908151128118_AddDSupplierInvoiceItemsEntryFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909010915024_AddCMisReadyForInvoice.resx">
+      <DependentUpon>201909010915024_AddCMisReadyForInvoice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909110831576_AddSched.resx">
+      <DependentUpon>201909110831576_AddSched.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>

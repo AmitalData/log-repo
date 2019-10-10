@@ -324,6 +324,7 @@ namespace WebFreight.Web.MetaDataUpdate
                             updateClass.FillCustomsNotificationDefinitions();
 
                             updateClass.FillCustomsInterfaceSendOptions();
+                            updateClass.FillSchedulerProcedure();
                             updateClass.FillCustomsInterfaceManagements();
 
 
@@ -348,7 +349,7 @@ namespace WebFreight.Web.MetaDataUpdate
                             //updateClass.FillCourierPaymentStatus();
                             updateClass.FillMamanSpecialActionTable();
                             updateClass.FillMamanSpecialActionStatusTable();
-
+                            updateClass.FillCourierPendingReasonTable();
 
 
                             break;

@@ -986,6 +986,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isReadyForInvoice ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsReadyForInvoice  
+	   {
+	    
+	     get
+		{
+		   return isReadyForInvoice;
+		 }
+		 set
+		 {
+		   if(isReadyForInvoice != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsReadyForInvoice",OldValue=isReadyForInvoice,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isReadyForInvoice=value;
+		   }
+			
+		 }
+	   }
+	  private bool isAllDecClosedForFollowUp ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsAllDecClosedForFollowUp  
+	   {
+	    
+	     get
+		{
+		   return isAllDecClosedForFollowUp;
+		 }
+		 set
+		 {
+		   if(isAllDecClosedForFollowUp != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsAllDecClosedForFollowUp",OldValue=isAllDecClosedForFollowUp,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isAllDecClosedForFollowUp=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

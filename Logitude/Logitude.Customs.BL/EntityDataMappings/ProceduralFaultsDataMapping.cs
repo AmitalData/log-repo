@@ -82,6 +82,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.ProceduralFaultName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.SignedByUserName);
 
+
             if (entityPOCO.InputTypeCode != null)
             {
                 ProceduralFaultInSourceTypeQueryService proceduralFaultInputSourceTypeQueryService = new ProceduralFaultInSourceTypeQueryService(entityPOCO.Tenant);
@@ -131,13 +132,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             }
 
-
-            DeclarationQueryService declarationQuery = new DeclarationQueryService(entityPOCO.Tenant);
-            DeclarationPM declaration = declarationQuery.GetSingle(entityPOCO.DeclarationId, false, false);
-            entityPM.DeclarationNumber = declaration != null ? declaration.DeclarationNumber : null;
-            entityPM.CustomFileNo = declaration != null ? declaration.CustomFileNo : null;
-
-
             if (entityPOCO.SignedByUserId != null)
             {
                 Simplog.Data.CommonDataModel.Repositories.UserRepository userRep = new Simplog.Data.CommonDataModel.Repositories.UserRepository(entityPM.Tenant);
@@ -148,6 +142,13 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 }
 
             }
+
+
+            DeclarationQueryService declarationQuery = new DeclarationQueryService(entityPOCO.Tenant);
+            DeclarationPM declaration = declarationQuery.GetSingle(entityPOCO.DeclarationId, false, false);
+            entityPM.DeclarationNumber = declaration != null ? declaration.DeclarationNumber : null;
+            entityPM.CustomFileNo = declaration != null ? declaration.CustomFileNo : null;
+
         }
    }
 

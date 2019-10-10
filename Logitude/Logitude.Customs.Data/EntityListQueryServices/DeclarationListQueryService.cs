@@ -141,12 +141,73 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         private IQueryable<DeclarationList> GetIqueryableList(IQueryable<Declaration> iQueryable)
         {
 
+            var qJoin =
+(from p in context.CourierDeclarations
+ join dec in context.Declarations
+                     on p.DeclarationId equals dec.Id
+                     into DecJoin
+ from myDeclarations in DecJoin
+ join sts1 in context.DeclarationCourierStatuses
+                     on myDeclarations.Id equals sts1.DeclarationId
+                     into DeclarationCourierStatusesJoin
+
+ 
+
+ from myDeclarationCourierStatuses in DeclarationCourierStatusesJoin
+ 
+ select new { p.CourierMasterId, p.CourierMaster, myDeclarations, myDeclarationCourierStatuses }
+ );
+
+            var qMyJoin =
+                (
+                from rec in qJoin
+                select new MyDecJoin
+                {
+                    DeclarationId = rec.myDeclarations.Id,
+                    CourierMasterId = rec.CourierMasterId,
+                    IsClosedForFollowUp = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.IsClosedForFollowUp : false,
+                    FastIndividualProcessCode = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.FastIndividualProcessCode : null,
+                    TotalInvoiceAmountInUSD = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.TotalInvoiceAmountInUSD : null,
+                    IsPending902 = rec.myDeclarationCourierStatuses != null ? (rec.myDeclarationCourierStatuses.CourierPendingReasonList.Contains("902") ? true : false) : false,
+                    IsPending900 = rec.myDeclarationCourierStatuses != null ? (rec.myDeclarationCourierStatuses.CourierPendingReasonList.Contains("900") ? true : false) : false,
+                    CourierPendingReasonList = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.CourierPendingReasonList : null,
+                    MAWB = rec.CourierMaster != null ? rec.CourierMaster.MAWB : null,
+                    IsCourierMissingClassification = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.IsCourierMissingClassification : false,
+                    
+                }
+                );
+
+            var q1stConsignments =
+                (from a in context.Consignments
+                 group a by a.DeclarationId into gConsignments
+                 select gConsignments.Take(1))
+                     .SelectMany(r => r);
 
 
+            bool isCourierEnv = context.CustomsSettings.FirstOrDefault(r => r.Tenant == 1).CompanyType =="B" ;
+            if (!isCourierEnv)
+            {
+                //qMyJoin = (from rec in context.CourierDeclarations.Where(r => r.DeclarationId == "-1")select new MyDecJoin());
+                qMyJoin = Enumerable.Empty<MyDecJoin>().AsQueryable();
+                //q1stConsignments = context.Consignments.Where(r => r.DeclarationId == "-1");
+                q1stConsignments = Enumerable.Empty<Consignment>().AsQueryable();
+            }
+            
 
             IQueryable<DeclarationList> query = (from a in iQueryable.Include("DeclarationOffice").Include("AutonomyRegionType").Include("CustomerCard").Include("EntitleImporterCountry").Include("ImporterEntitlementType").Include("ImporterPassCountry").Include("ProcedureCurrent").Include("TransferImporterCountry").Include("Department").Include("DeclarationStatusType")
                                                  //.Include("CreatedByUser.Contact")
                                                  .Include("Importer").Include("EntitleImporter").Include("TransferImporter").Include("ImporterType").Include("TransferImporterType").Include("EntitleImporterType").Include("StorageStatus").Include("FreightPaymentMethod")
+
+                                                 join recJoin in qMyJoin
+                                                              on a.Id equals recJoin.DeclarationId
+                                                              into qrecJoin
+                                                 from myJoin in qrecJoin.DefaultIfEmpty()
+
+
+                                                 join recConsignment in q1stConsignments
+                                                 on a.Id equals recConsignment.DeclarationId into qjoinConsignments
+                                                 from myJoinConsignment in qjoinConsignments.DefaultIfEmpty()
+
                                                  select new DeclarationList()
                                                  {
                                                      Id = a.Id,
@@ -259,7 +320,19 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      CourierSuspentionCode = a.CourierSuspentionCode,
                                                      CourierSuspentionName = a.CourierSuspention != null ? a.CourierSuspention.LocalName : null,
                                                      DepositionStatusCode = a.DepositionStatusCode,
+                                                     //CustomsFileNo = qJoin != null ? (qJoin.FirstOrDefault().myDeclarations != null ? qJoin.FirstOrDefault().myDeclarations.CustomFileNo : null ) : null,
+                                                     //CourierHAWB = qJoin != null ? (qJoin.FirstOrDefault().myDeclarations != null ? qJoin.FirstOrDefault().myDeclarations.CourierHAWB : null) : null,
+                                                     IsClosedForFollowUp = myJoin != null ? myJoin.IsClosedForFollowUp : false,
+                                                     FastIndividualProcessCode = myJoin != null ? myJoin.FastIndividualProcessCode : null,
+                                                     TotalInvoiceAmountInUSD = myJoin != null ? myJoin.TotalInvoiceAmountInUSD : null,
+                                                     IsPending902 = myJoin != null ? myJoin.IsPending902 : false,
+                                                     IsPending900 = myJoin != null ? myJoin.IsPending900 : false,
+                                                     CourierPendingReasonList = myJoin != null ? myJoin.CourierPendingReasonList : null,
+                                                     MAWB = myJoin != null ? myJoin.MAWB : null,
+                                                     IsCourierMissingClassification = myJoin != null ? myJoin.IsCourierMissingClassification : false,
+                                                     CargoDescription = myJoinConsignment!=null ? myJoinConsignment.CargoDescription :"",
                                                  });
+
 
 
 
@@ -276,8 +349,76 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
             return iQueryable;
         }
-	}
+        /*
+        private string getCourierPendingReasonName(DeclarationPM entityPM)
+        {
+            var courierPendingReasonList = entityPM.CourierPendingReasonList;
+            if (!string.IsNullOrWhiteSpace(courierPendingReasonList))
+            {
+                if (courierPendingReasonList.Contains(","))
+                {
+                    courierPendingReasonList = "רשימה";
+                }
+                else
+                {
+                    CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(entityPM.Tenant);
+                    CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle(courierPendingReasonList, false, false);
+                    courierPendingReasonList = courierPendingReasonPM.LocalName;
+                }
+            }
+            return courierPendingReasonList;
+        }
 
+        */
 
+        private string getFastIndividualProcessName(string fastIndividualProcessCode)
+        {
+            if (fastIndividualProcessCode != null)
+            {
+                if (fastIndividualProcessCode == "F")
+                {
+                    fastIndividualProcessCode = "מהיר";
+                }
+                else if (fastIndividualProcessCode == "I")
+                {
+                    fastIndividualProcessCode = "פרטני";
+                }
+            }
+            return fastIndividualProcessCode;
+        }
+        
+    }
+
+    internal class MyDecJoin
+    {
+        public string CourierMasterId { get; set; }
+        public bool IsClosedForFollowUp { get; set; }
+        internal string DeclarationId { get; set; }
+        internal string FastIndividualProcessCode
+        {
+            get
+            {
+                return this.FastIndividualProcessCode;
+            }
+            set
+            {
+                this.FastIndividualProcessCode = value;
+                if(this.FastIndividualProcessCode == "I")
+                {
+                    this.FastIndividualProcessCode = "פרטני";
+                }
+                else if(this.FastIndividualProcessCode == "F")
+                {
+                    this.FastIndividualProcessCode = "מהיר";
+                }
+            }
+        }
+    internal decimal? TotalInvoiceAmountInUSD { get; set; }
+        public bool IsPending902 { get; set; }
+        public bool IsPending900 { get; set; }
+        public string CourierPendingReasonList { get; internal set; }
+        public string MAWB { get; internal set; }
+        public bool IsCourierMissingClassification { get; internal set; }
+    }
 }
 	

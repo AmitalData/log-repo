@@ -175,6 +175,8 @@
                                                         <button style="text-align:right" (click)="GatepassRequestMethod()" [disabled]="IsDisplayOnly">{{'גייטפס העברות' }}</button>
                                                         <button *ngIf="IsMamanEnabled" style="text-align:right" (click)="SendFTPMamanRequestMethod()" [disabled]="IsDisplayOnly">{{'Customs.Declaration.O.DeclarationMamanRequest' | TextCodeTranslationPipe }}</button>
                                                         <button style="text-align:right" (click)="ChangeStorageSiteMethod()" [disabled]="IsDisplayOnly">{{'שינוי אתר אחסון' }}</button>
+                                                        
+                                                        <button style="text-align:right" (click)="IsReadyForInvoiceClick()" [disabled]="IsDisplayOnly">{{'מוכן להכנת חשבונית' }}<img *ngIf="entityPM.IsReadyForInvoice" class="certOkImg" style="position:relative;width:10px;margin-top:10px;opacity: 0.8;" src="./Images/Buttons/EditWithGreenTick.png" /></button>
                                                     </div>
 
                                                 </div>
@@ -320,7 +322,8 @@
                                                                     <tr>
                                                                         <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems == null || (_CourierWorksheetSharedDataService._SelectedItems != null
                                                                             && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0)"
-                                                                            style="width:220px">
+                                                                            style="width:400px">
+                                                                            
                                                                             <split-button (DefaultSplitButtonClicked)="SendALLCorrectManifest('R')"
                                                                                           [ButtonText]=_ReadyMNFToBatchSendButtonText
                                                                                           [IsDisabled]="IsDisplayOnly"
@@ -339,7 +342,7 @@
                                                                             </split-button>
                                                                         </td>
                                                                         <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems != null && _CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0"
-                                                                            style="width:220px">
+                                                                            style="width:400px">
                                                                             <split-button (DefaultSplitButtonClicked)="SendALLCorrectManifest('M')"
                                                                                           [ButtonText]=SelectedMNFToBatchSendButtonText
                                                                                           [IsDisabled]="IsDisplayOnly"
@@ -362,7 +365,7 @@
 
                                                                         <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems == null || (_CourierWorksheetSharedDataService._SelectedItems != null
                                                                             && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0)"
-                                                                            style="width:220px">
+                                                                            style="width:400px">
                                                                             <split-button (DefaultSplitButtonClicked)="SendALLCorrectDec('R')"
                                                                                           [ButtonText]=_ReadyDECToBatchSendButtonText
                                                                                           [IsDisabled]="IsDisplayOnly"
@@ -381,7 +384,7 @@
                                                                             </split-button>
                                                                         </td>
                                                                         <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems != null && _CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0"
-                                                                            style="width:220px">
+                                                                            style="width:400px">
                                                                             <split-button (DefaultSplitButtonClicked)="SendALLCorrectDec('M')"
                                                                                           [ButtonText]=SelectedDECToBatchSendButtonText
                                                                                           [IsDisabled]="IsDisplayOnly"
@@ -531,7 +534,7 @@
                                                                             {{'Pending'}}
                                                                         </td>
 
-                                                                        <td style="width:100px">
+                                                                        <td style="width:150px">
                                                                             <ComboBox [ItemsSource]="_PendingCodes" [Binding]="'Value'" [SelectedItem]="SelectedPendingCodeFilter" (SelectedItemChanged)="HOLDFilterClicked($event)"></ComboBox>
                                                                         </td>
 

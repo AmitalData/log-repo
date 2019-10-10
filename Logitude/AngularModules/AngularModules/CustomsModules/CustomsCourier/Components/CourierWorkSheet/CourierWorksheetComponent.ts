@@ -28,7 +28,12 @@ import { CustomsSettingExtendedListService } from '../../../../Customs/Services/
 import { DeclarationCourierStatusList } from '../../../../Customs/EntityLists/DeclarationCourierStatusList';
 import { CustomsRequestsSheetPM } from '../../../../Customs/EntityPMs/CustomsRequestsSheetPM';
 import { SendUnCorrectDocumentsRequestParams } from '../../../../Customs/DataContract/RequestParams/SendUnCorrectDocumentsRequestParams';
-
+import { CourierPendingReasonListService } from '../../../../Customs/Services/StandardLists/CourierPendingReasonListService';
+import { CourierPendingReasonList } from '../../../../Customs/EntityLists/CourierPendingReasonList';
+import { element } from 'protractor';
+import { CourierMasterPMService } from '../../../../Customs/Services/StandardPMs/CourierMasterPMService';
+import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
+import { CacheCourierPendingReasonService } from '../../../../Customs/Services/Others/CacheCourierPendingReasonService';
 
 @Component({
     moduleId: module.id,
@@ -128,7 +133,7 @@ implements OnDestroy
         //        });
         //);
         this.GetMamanPUR();
-        
+        CacheCourierPendingReasonService.Instance.CreateCacheCourierPendingReasonList();
     }
     //PseventRowSelectEventSubscribe: any;
     ngOnDestroy() {
@@ -150,7 +155,13 @@ implements OnDestroy
         this._SelectedDECValue = 'A';
         this._SelectedDOCValue = 'A';
         this._SelectedACCValue = 'A';
-        if (this.SelectedPendingCodeFilter == null && this._PendingCodes != null && this._PendingCodes.length > 0) this.SelectedPendingCodeFilter = this._PendingCodes[0];
+        //if (this.SelectedPendingCodeFilter == null && this._PendingCodes != null && this._PendingCodes.length > 0) this.SelectedPendingCodeFilter = this._PendingCodes[0];
+        if (this._PendingCodes != null && this._PendingCodes.length > 0) {
+            this.SelectedPendingCodeFilter = this._PendingCodes[0];
+        }
+        else {
+            this.SelectedPendingCodeFilter = null;
+            }
 
         switch (item.Code) {
             case "DECR": 
@@ -489,9 +500,9 @@ implements OnDestroy
         //this.onQueryChangeEvent.emit({ Filters: this.filterAgrs, Reload: true });
         this.RefreshStatistic();
         this.RefreshMasterRequiredFields();
-        this.RefreshList();
+        if (this._SelectedTabFilter.Code != "HOLD")this.RefreshList();
         this.DisplayOnlyCheck();
-
+        CacheCourierPendingReasonService.Instance.CreateCacheCourierPendingReasonList();
     }
 
     RefreshList() {
@@ -652,7 +663,7 @@ implements OnDestroy
                             this._HOLD_Total = item.Value;
                             var TabFilter = this._TabFilterList.filter(d => d.Code == item.Key)[0];
                             TabFilter.Total = item.Value;
-
+                            this.GetPending();
                             break;
                         }
                         default: {
@@ -667,7 +678,7 @@ implements OnDestroy
 
             });
         if (this._SelectedTabFilter.Code == "HOLD") {
-            this.GetPending();
+            
         }
     }
 
@@ -724,7 +735,7 @@ implements OnDestroy
             FieldName: 'ImporterName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CustomerName"),
-            Styles: { width: '200px' },
+            Styles: { width: '160px' },
             IsCustomTemplate: true,
             ServerSideSortable: false,
         });
@@ -733,7 +744,7 @@ implements OnDestroy
             FieldName: 'ImporterCode',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.ImporterCode"),
-            Styles: { width: '100px' },
+            Styles: { width: '90px' },
             IsCustomTemplate: true,
             ServerSideSortable: false,
         });
@@ -1044,7 +1055,8 @@ implements OnDestroy
                 break;
             }
         }
-        if (this.SelectedPendingCodeFilter != null) {
+
+        if (this.SelectedPendingCodeFilter != null && this._SelectedTabFilter.Code == "HOLD") {
             switch (this.SelectedPendingCodeFilter.Key) {
                 case "A": {
                     break;
@@ -1055,6 +1067,7 @@ implements OnDestroy
                 }
             }
         }
+
         if (!AppTool.IsNullOrEmpty(this.SearchFilter)) {
             filters.addAdditionalFilter("CourierSearchFields", this.SearchFilter, null, null, "Contains", false, false, false, "string", false, true);
         }
@@ -1134,9 +1147,11 @@ implements OnDestroy
             .subscribe(resu => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 var list: string[];
+                var itemPname = null;
                 list = resu.Result;
                 list.forEach(itemP => {
-                    this._PendingCodes.push({ 'Key': itemP, 'Value': itemP });
+                    itemPname = this.getCourierPendingReasonName(itemP);
+                    this._PendingCodes.push({ 'Key': itemP, 'Value': itemPname });
                 });
                 if (AppTool.IsNullOrEmpty(this.PendingFilter)) this.PendingFilter = "A";
                 if (!AppTool.IsNullOrEmpty(this.PendingFilter) && this._PendingCodes != null && this._PendingCodes.length > 0) {
@@ -1152,6 +1167,20 @@ implements OnDestroy
             });
     }
 
+
+    getCourierPendingReasonName(courierPendingReason: string) {
+        var toolTip = courierPendingReason
+        if (!AppTool.IsNullOrEmpty(toolTip) && toolTip.indexOf(',') < 0) {
+
+            var myCourierPendingReasonListService = new CourierPendingReasonListService();
+            myCourierPendingReasonListService.getSingleFromCache(toolTip)
+                .subscribe(serviceResponse => {
+                    var CourierPendingReason = serviceResponse.Result as CourierPendingReasonList;
+                    toolTip = CourierPendingReason.LocalName;
+                });
+        }
+        return toolTip;
+    }
 
     HOLDFilterClicked(value) {
 
@@ -1562,6 +1591,40 @@ implements OnDestroy
             this.RefreshButtonClicked();
         });
     }
+    _CourierMasterPMService: CourierMasterPMService = new CourierMasterPMService();
+    IsReadyForInvoiceClick() {
+
+
+        if (this.entityPM.IsReadyForInvoice) {
+            let text = "האם לבטל סימון הטיסה כמוכנה להפקת חשבונית";
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Show(text);
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    this.UpdateIsReadyForInvoice();
+                }
+            });
+
+
+        } else {
+            this.UpdateIsReadyForInvoice();
+        }
+    }
+    UpdateIsReadyForInvoice() {
+        SessionLocator.SelectedSession.StartBusyIndicatorSaving();
+        this.entityPM.IsReadyForInvoice = !this.entityPM.IsReadyForInvoice;
+        this._CourierMasterPMService
+            .update(this.entityPM)
+            .subscribe((response: ServiceResponse) => {
+                SessionLocator.SelectedSession.StopBusyIndicator();
+                if (response.HasError) {
+                    var mess
+                } else {
+                    this.entityPM = response.Result;
+                }
+            });
+    }
+
 
     DisplayOnlyCheck() {
         this.IsDisplayOnly = false;

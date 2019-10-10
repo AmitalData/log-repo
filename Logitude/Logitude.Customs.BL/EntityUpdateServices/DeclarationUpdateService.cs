@@ -919,8 +919,21 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             }
                         }
                     }
+                    if (newDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Insert)
+                    {
+                        if(entityPM.Consignments != null && entityPM.Consignments.Count() > 0)
+                        {
+                            ConsignmentPM consignmentPM = entityPM.Consignments.FirstOrDefault();
+                            if (consignmentPM != null)
+                            {
+                                ConsignmentUpdateService consignmentUpdateService = new ConsignmentUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
+                                consignmentUpdateService.UpdatePendingByKeyWords(consignmentPM, true);
+                            }
+                        }
+                    }
                     
                 }
+                
             }
         }
 

@@ -332,7 +332,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-        public HttpResponseMessage GetSendALLDeclarationsStatusRequest(string CourierMasterId)
+        public HttpResponseMessage GetSendALLDeclarationsStatusRequest(string CourierMasterId,string testerSendOption)
         {
             try
             {
@@ -344,7 +344,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
                 var messagingService = new DCAInUCB8250_MsgMessagingService();
-                var sts = messagingService.CreateCRS(tenant, null, CourierMasterId);
+                var sts = messagingService.CreateCRS(tenant, null, CourierMasterId, testerSendOption);
 
                 return Request.CreateResponse(HttpStatusCode.OK, sts);
             }

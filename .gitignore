@@ -410,3 +410,5 @@ __pycache__/
 /Logitude/JustWebFreight/WebFreight.Web/JustAmitalCustomsWindowsServiceConnectionStrings.config
 *.7z
 /Logitude/AngularModules/package.json
+/Logitude/AngularModules/AngularModules/CustomsModules/Workspaces
+/Logitude/AngularModules/AngularModules/CustomsModules/CustomsCourier/CustomsRequests

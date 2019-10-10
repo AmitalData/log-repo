@@ -17,6 +17,7 @@ import { ClaimWebService } from '../../../../../Customs/Services/WebServices/Cla
 
 
 @Component({
+    selector: 'ClaimRelatedEntityCancelOrObjectionTabComponent',
     moduleId: module.id,
     templateUrl: './ClaimRelatedEntityCancelOrObjectionTabComponent.html',
 })
@@ -37,6 +38,7 @@ export class ClaimRelatedEntityCancelOrObjectionTabComponent
     _ClaimsRelatedEntityExtendedPMService: ClaimsRelatedEntityExtendedPMService = new ClaimsRelatedEntityExtendedPMService()
     _ClaimWebService: ClaimWebService = new ClaimWebService()
 
+    SaveCompletedEvent: any;
     constructor(public entityArgs: EntityArgs) {
         super();
 
@@ -49,11 +51,13 @@ export class ClaimRelatedEntityCancelOrObjectionTabComponent
 
             this.CurrentEditComponentId = SessionLocator.SelectedSession.CurrentEditComponent.ComponentId;
 
-            SessionLocator.SelectedSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                if (isSaveSuccess) {
-                    this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
-                }
-            });
+            if (!this.SaveCompletedEvent) {
+                this.SaveCompletedEvent = SessionLocator.SelectedSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
+                    }
+                });
+            }
 
             SessionLocator.SelectedSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
@@ -101,6 +105,7 @@ export class ClaimRelatedEntityCancelOrObjectionTabComponent
         }
         else {
             this.ResponseData = new ContinuousResponseOnClaimFileResponseData();
+            //this.ResponseData.
         }
     }
 
@@ -117,24 +122,24 @@ export class ClaimRelatedEntityCancelOrObjectionTabComponent
     //#endregion
 
     //#region Response Properties
-    get ContinuousMessagesTypeCode() { return this.ResponseData.ContinuousMessagesTypeCode; }
+    get ContinuousMessagesTypeCode() { return this.EntityPM.ContinuousMessagesTypeCode; }
     set ContinuousMessagesTypeCode(value: string) {
         if (this.ResponseData.ContinuousMessagesTypeCode != value) {
             this.ResponseData.ContinuousMessagesTypeCode = value;
         }
     }
 
-    get ClaimRequestNumber() { return this.ResponseData.ClaimRequestNumber; }
+    get ClaimRequestNumber() { return this.EntityPM.ClaimRequestNumber; }
     set ClaimRequestNumber(value: string) {
         if (this.ResponseData.ClaimRequestNumber != value) {
             this.ResponseData.ClaimRequestNumber = value;
         }
     }
 
-    get Note() { return this.ResponseData.Note; }
+    get Note() { return this.EntityPM.Note; }
     set Note(value: string) {
-        if (this.ResponseData.Note != value) {
-            this.ResponseData.Note = value;
+        if (this.EntityPM.Note != value) {
+            this.EntityPM.Note = value;
         }
     }
     //#endregion
@@ -155,6 +160,7 @@ export class ClaimRelatedEntityCancelOrObjectionTabComponent
 
     }
 
+    private _IsSendContinuousRequest: boolean = false;
     OnCustomSendOptionsButtonClick(customSendOptionsArgs: CustomSendOptionsArgs) {
 
         this.FillErrors();
@@ -162,15 +168,19 @@ export class ClaimRelatedEntityCancelOrObjectionTabComponent
             return;
         }
 
+        this._IsSendContinuousRequest = true;
         SessionLocator.SelectedSession.StartBusyIndicatorSaving();
         SessionLocator.SelectedSession.CurrentEditComponent.SaveCompleted.subscribe(myResult => {
             var res: ServiceResponse = myResult;
-            if (!res.HasError) {
-                SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
-                this.SendContinuousRequestOnClaimMessage(customSendOptionsArgs);
-            }
-            else {
-                this.ValidationErrorsList = res.ErrorsArray;
+            if (this._IsSendContinuousRequest) {
+                this._IsSendContinuousRequest = false;
+                if (!res.HasError) {
+                    SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
+                    this.SendContinuousRequestOnClaimMessage(customSendOptionsArgs);
+                }
+                else {
+                    this.ValidationErrorsList = res.ErrorsArray;
+                }
             }
             SessionLocator.SelectedSession.StopBusyIndicator();
             return false;
@@ -196,7 +206,8 @@ export class ClaimRelatedEntityCancelOrObjectionTabComponent
             .ShowProgressBar(currRequestParams.PBId,
                 "שליחת בקשה ביטול/ערר תביעה", true)
             .then((res) => {
-                //
+                this.ResponseData = res;
+                this.OnMassageDisplayMethod();
             }
             ).catch((err) => {
                 this.ValidationErrors.push(err);
@@ -204,8 +215,6 @@ export class ClaimRelatedEntityCancelOrObjectionTabComponent
 
         this._ClaimWebService.PostSendContinuousRequestOnClaim(currRequestParams)
             .subscribe((myServiceResponse: ServiceResponse) => {
-                this.ResponseData = myServiceResponse.Result;
-                this.OnMassageDisplayMethod();
         });
     }
 }

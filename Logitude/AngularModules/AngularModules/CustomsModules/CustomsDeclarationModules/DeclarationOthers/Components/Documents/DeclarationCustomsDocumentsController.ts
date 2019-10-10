@@ -585,6 +585,39 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
         return connectedItems;
     }
 
+    FillConnectedDocumentPointer(customsDocumentPointerPM: CustomsDocumentPointerPM) {
+        if (customsDocumentPointerPM == null) {
+            return null;
+        }
+
+        let connectedDocumentPointer;
+
+        switch (customsDocumentPointerPM.Child1EntityCode) {
+            case "SupplierInvoice":
+                if (customsDocumentPointerPM.Child2EntityCode == "SupplierInvoiceItem") {
+                    connectedDocumentPointer = {
+                        "SelectedIndex": 2,
+                        "DisplayConnectedEntityNumber": customsDocumentPointerPM.Child1EntityId,
+                        "SupplierInvoiceItemNumber": customsDocumentPointerPM.Child2EntityId,
+                    };
+                }
+                else {
+                    connectedDocumentPointer = {
+                        "SelectedIndex": 1,
+                        "DisplayConnectedEntityNumber": customsDocumentPointerPM.Child1EntityId,
+                    };
+                }
+                break;
+            default:
+                connectedDocumentPointer = {
+                    "SelectedIndex": 0,
+                };
+                break;
+        }
+        
+        return connectedDocumentPointer;
+    }
+
     GetRelatedEntityLabel() {
         return TextCodeTranslator.Translate("Customs.CustomsDocument.SupplierInvoice");
     }

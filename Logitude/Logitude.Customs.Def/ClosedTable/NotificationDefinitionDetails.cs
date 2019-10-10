@@ -222,6 +222,14 @@ namespace Logitude.Customs.Def.ClosedTable
                 AssigneeNotificationTypeCode = "I",
             });
 
+            all.Add(new NotificationDefinitionDetails() // mirit 25.8.19 - Task 55928 
+            {
+                Code = "5101F",
+                EnglishName = "Collateral Demand",
+                LocalName = "עמידה/אי עמידה בדרישה לבטוחה",
+                AssigneeNotificationTypeCode = "I",
+            });
+
             //all.Add(new NotificationDefinitionDetails() // Mirit 22.04.15 - Task 12713 //delete Task 20106
             //{
             //    Code = "5101I",
@@ -608,6 +616,14 @@ namespace Logitude.Customs.Def.ClosedTable
                 Code = "5114N",
                 EnglishName = "Acceptance/Rejection Claim Message",
                 LocalName = "אישור/דחיית תביעה",
+                AssigneeNotificationTypeCode = "A",
+            });
+
+            all.Add(new NotificationDefinitionDetails() // Mirit 04/08/19 Task 53620
+            {
+                Code = "5108N",
+                EnglishName = "Deficit Customs Answer",
+                LocalName = "החלטה בגין גרעון",
                 AssigneeNotificationTypeCode = "A",
             });
 

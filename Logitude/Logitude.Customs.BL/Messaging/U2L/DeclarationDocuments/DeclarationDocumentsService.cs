@@ -73,7 +73,12 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
             }
             AppendLogLine("GetSingle:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart(); 
             ICustomContext dbContext = CustomContext.GetContext(ResolvedTenant());
-            
+
+            if (this._MyDeclarationPM.PaymentDate.HasValue)
+            {
+                throw new BusinessErrorException("Declaration has already been payed");
+            }
+
             MyGenericResponseObj.Stage = "Add Ticket for file " + this._MyDeclarationPM.CustomFileNo;
 
             if (!String.IsNullOrWhiteSpace(this._LogitudeDocs.COM_ID))

@@ -446,7 +446,7 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
                 var windowTitle = "Supplier Invoice";
 
             var logWindow = new LogitudeWindow();
-            logWindow.Width = 995; // don't change this width!
+            logWindow.Width = 1017;// this changed By Rabaia for Task No. 54930; Dont change it back before calling me. //995; // don't change this width!
             logWindow.Height = 600;
 
                 if (!AppTool.IsNullOrEmpty(item.InvoiceNumber) && !AppTool.IsNullOrEmpty(this.EntityPM.DeclarationNumber)) {
@@ -649,7 +649,7 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
         windowArgs.NumberOfLoadedItems = 0;
         windowArgs.WindowTitle = windowTitle;
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 995; // don't change this width!
+        logWindow.Width = 1017;// this changed By Rabaia for Task No. 54930; Dont change it back before calling me. //995; // don't change this width!
         logWindow.Height = 600;
       //  logWindow.Title = windowTitle;
         logWindow.WindowArgs = windowArgs;

@@ -177,6 +177,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                  + "\n" + "סכום לתשלום:" + _PaymentOrderPM.TotalSumToPay
                                  + "\n" + "התהליך היוצר:" + _PaymentOrderPM.PaymentProcessName,
                 };
+                LogMessagingUtil.Instance.AppendLine("requestParams.DCAFileName = " + requestParams.DCAFileName ?? "NULL");
+                if (!string.IsNullOrWhiteSpace(requestParams.DCAFileName) && requestParams.DCAFileName.Contains("SendTSH_MSG7_AgentPaymentReply_Out"))
+                {
+                    myInsertEventContextTagModel.UnifreighTaskCode = "LE2U";
+                }
                 _PaymentOrderPM.CurrentContextTag = myInsertEventContextTagModel;
 
                 _PaymentOrderPM.IsClosed = true;

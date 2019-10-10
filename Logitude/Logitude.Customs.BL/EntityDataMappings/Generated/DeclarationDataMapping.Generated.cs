@@ -281,7 +281,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CourierSuspentionCode, 
 	         CourierSuspentionName, 
 	         DepositionStatusCode, 
-	         CourierMasterId,
+	         CourierMasterId, 
+	         IsClosedForFollowUp, 
+	         FastIndividualProcessCode, 
+	         TotalInvoiceAmountInUSD, 
+	         IsPending902, 
+	         IsCourierMissingClassification, 
+	         MAWB, 
+	         IsPending900, 
+	         CourierPendingReasonList, 
+	         CargoDescription,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

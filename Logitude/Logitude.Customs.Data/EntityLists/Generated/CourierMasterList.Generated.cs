@@ -92,6 +92,10 @@ namespace Logitude.Customs.Data.EntityLists
        public string IntegratorName  { get; set; }
        [DataMember]
        public string IntegratorNumber  { get; set; }
+       [DataMember]
+       public bool IsReadyForInvoice  { get; set; }
+       [DataMember]
+       public bool IsAllDecClosedForFollowUp  { get; set; }
    }
 
 }

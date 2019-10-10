@@ -1586,6 +1586,17 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             get;
             set;
         }
+        public IDbSet<SchedulerLogs> SchedulerLogs
+        {
+            get;
+            set;
+        }
+        public IDbSet<SchedulerProcedure> SchedulerProcedures
+        {
+            get;
+            set;
+        }
+
         public IDbSet<AWBOCI> AWBOCIs { get; set; }
         public IDbSet<AWBCustomsInformation> AWBCustomsInformations { get; set; }
         public IDbSet<AWBInformation> AWBInformations { get; set; }
@@ -3443,8 +3454,10 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
 
         }
         #endregion
+        public IDbSet<UsersReleaseNotesDisplay> UsersReleaseNotesDisplays { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Configurations.Add(new UsersReleaseNotesDisplayMap());
             #region Social
             modelBuilder.Configurations.Add(new ConversationHeaderMap());
             modelBuilder.Configurations.Add(new ConversationHeaderMessageMap());
@@ -4591,6 +4604,8 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new TenantLoginPolicyMap());
             modelBuilder.Configurations.Add(new LoginPolicyMap());
 
+            modelBuilder.Configurations.Add(new SchedulerLogsMap());
+            modelBuilder.Configurations.Add(new SchedulerProcedureMap());
 
 
 

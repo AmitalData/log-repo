@@ -1,6 +1,6 @@
 <div>
     <!-- ClaimRelatedEntityCancelOrObjection view  -->
-    <custom-message-wrapper [CustomSendOptionsButtonCanForcePersonalSign]="'true'">
+    <custom-message-wrapper>
 
         <!-- ClaimRelatedEntityCancelOrObjection Request  -->
         <div class="class-request-content">
@@ -39,7 +39,7 @@
                                     <td style="width: 110px; vertical-align:top;">
                                         <div style="margin-right:10px; vertical-align:top;" [style.text-align]="'right'" class="Label MultiLinesText">{{'Customs.ClaimsRelatedEntity.F.Explanation' | TextCodeTranslationPipe }}:</div>
                                     </td>
-                                    <td style="width: 150px; vertical-align: top;padding-top: 2px;">
+                                    <td colspan="2" style="width: 250px; vertical-align: top;padding-top: 2px;">
                                         <LogTextBox [ObjectFieldName]="'Explanation'" [ObjectTableName]="ObjectTableName" [Text]="Explanation"
                                                     [HideColumns]="true" [IsMultiline]="true" [DataContext]="DataContext"></LogTextBox>
                                     </td>
@@ -65,10 +65,10 @@
                         {{'Customs.Claim.TH.CancelOrObjectionDecision'| TextCodeTranslationPipe}}
                     </td>
                 </tr>
-                <tr style="width: 550px; height: 200px">
-                    <td style="width: 550px; height: 200px">
-                        <div style="width: 550px; height: 200px;">
-                            <table style="width: 550px; height: 200px">
+                <tr style="width: 550px; height: 100px">
+                    <td style="width: 550px; height: 100px">
+                        <div style="width: 550px; height: 100px;">
+                            <table style="width: 550px; height: 100px">
                                 <tr class="FormFieldRow">
                                     <td style="width: 110px; ">
                                         <LogLabel [ObjectFieldName]="'ContinuousMessagesTypeCode'" [DataContext]="DataContext" [TextCode]="'Customs.Claim.TH.ClaimDecision'"></LogLabel>
@@ -82,15 +82,6 @@
                                                 [HideColumns]="true"
                                                 [LookUpTableName]="'Customs.ContinuousMessagesTypeCode'">
                                         </LogLov>
-                                    </td>
-
-                                    <td style="width: 110px; ">
-                                        <LogLabel [ObjectFieldName]="'ClaimRequestNumber'" [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"></LogLabel>
-                                    </td>
-                                    <td style="width: 150px;">
-                                        <LogTextBox [ObjectFieldName]="'ClaimRequestNumber'" [ObjectTableName]="ObjectTableName" [Text]="ClaimRequestNumber"
-                                                    [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
                                     </td>
 
                                     <td><div></div></td>
@@ -114,19 +105,10 @@
 
                     <td><div></div></td>
                 </tr>
+                <tr> <td> <div></div> </td></tr>
             </table>
 
         </div>
 
     </custom-message-wrapper>
 </div>
-
-
-
-
-
-
-
-<table>
-    
-</table>

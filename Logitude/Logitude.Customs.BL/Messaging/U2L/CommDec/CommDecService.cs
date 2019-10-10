@@ -3,6 +3,7 @@ using Logitude.AmitalMessaging.Infrastructure;
 using Logitude.AmitalMessaging.Utils;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Customs.BL.BL;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.BL.Messaging.Customs;
@@ -40,7 +41,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
 
         private AmitalContext amitalContext;
 
-        public const string UpsertActionConst = "Logitude.Customs.BL.Messaging.U2L.CommDec.CommDecService.Upsert()";
+        public string UpsertActionConst = "Logitude.Customs.BL.Messaging.U2L.CommDec.CommDecService.Upsert()";
         private Logitude.AmitalMessaging.Customs.CustomFile.CommDecFile.INVOICE _INVOICE;
         private DeclarationPM _MyDeclarationPM;
         //private DeclarationPM _MyEntryDeclarationPM;
@@ -106,7 +107,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             DeclarationUpsertService myDeclarationUpsertService = new DeclarationUpsertService();
             try
             {
-                var upsertParam = "CommDecService"; 
+                var upsertParam = "CommDecService";
+                ///myDeclarationUpsertService.suppressNewTrans = true;
                 myDeclarationUpsertService.ProccessGenericRequest(xmlLOGICUSTFILE, ref upsertParam, out MessageOut);
             }
             catch (DbEntityValidationException ex)
@@ -178,6 +180,40 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 _CourierDeclarationPM = myCourierDeclarationQueryService.GetSingle(_MyDeclarationPM.Id, _CourierMasterPM.Id, false, true);
                 if (_CourierDeclarationPM == null)
                 {
+                    if (!this._MyDeclarationPM.HatraDate.HasValue)
+                    {
+                        CourierDeclarationPM _CourierDeclarationPMPMDiferentMaster = myCourierDeclarationQueryService.GetCourierDeclarationByDeclarationId(_MyDeclarationPM.Id, ResolvedTenant());
+                        if (_CourierDeclarationPMPMDiferentMaster != null)
+                        {
+                            _CourierDeclarationPMPMDiferentMaster.ChangeSetOp = ChangeSetOperation.Delete;
+                            myCourierDeclarationUpdateService.Update(_CourierDeclarationPMPMDiferentMaster, true);
+                            string prevVal = null;
+                            string currvVal = null;
+                            DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
+                            DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
+                            if (currentDeclarationCourierStatusPM != null)
+                            {
+                                CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(_MyDeclarationPM, _MyDeclarationPM.Id, _MyDeclarationPM.Tenant);
+                                prevVal = currentDeclarationCourierStatusPM.CourierManifestStatusCode;
+                                if (prevVal == "V")
+                                {
+                                    currvVal = "R";
+                                }
+                                else
+                                {
+                                    calculateDeclarationCourierStatus.CalcCourierManifestStatusCode(currentDeclarationCourierStatusPM);
+                                    currvVal = currentDeclarationCourierStatusPM.CourierManifestStatusCode;
+                                }
+                                if (prevVal != currvVal)
+                                {
+                                    DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                                    currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                                    declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+                                }
+                            }
+                            this.UpsertActionConst = String.Concat(UpsertActionConst, "+CourierMasterChange");
+                        }
+                    }
                     _CourierDeclarationPM = new CourierDeclarationPM();
                     _CourierDeclarationPM.ChangeSetOp = ChangeSetOperation.Insert;
                     _CourierDeclarationPM.DeclarationId = _MyDeclarationPM.Id;

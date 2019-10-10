@@ -841,14 +841,16 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     var requestData2 = "";
                     var myEventContextTagModel = new EventContextTagModel();
                     myEventContextTagModel = this._DirtyDeclarationPM.CurrentContextTag as EventContextTagModel;
-
-                    if (myEventContextTagModel.EventCode.ToString() == "INR" || string.IsNullOrWhiteSpace(myEventContextTagModel.EventCode.ToString()))
+                    if (myEventContextTagModel != null)
                     {
-                        requestData2 = GetMyFUStatusXML("INR", "INR", "", "new", DateTime.Now, false);
-                    }
-                    if (myEventContextTagModel.CallProccessID == EventContextTagModel.ProccessEnum.DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseServiceUpdate)
-                    {
-                        requestData2 = GetMyFUStatusXML(myEventContextTagModel.EventCode, myEventContextTagModel.EventCode, "", "new", myEventContextTagModel.StatusDateTime, false);
+                        if (myEventContextTagModel.EventCode.ToString() == "INR" || string.IsNullOrWhiteSpace(myEventContextTagModel.EventCode.ToString()))
+                        {
+                            requestData2 = GetMyFUStatusXML("INR", "INR", "", "new", DateTime.Now, false);
+                        }
+                        if (myEventContextTagModel.CallProccessID == EventContextTagModel.ProccessEnum.DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseServiceUpdate)
+                        {
+                            requestData2 = GetMyFUStatusXML(myEventContextTagModel.EventCode, myEventContextTagModel.EventCode, "", "new", myEventContextTagModel.StatusDateTime, false);
+                        }
                     }
                     //if (myEventContextTagModel.CallProccessID == EventContextTagModel.ProccessEnum.MN_MSG4_SendManifestFeedBack_MessageResponseService)
                     //{
@@ -1030,32 +1032,35 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             try
             {
                 var eventContextTagModel = dirtyDeclarationPM.CurrentContextTag as EventContextTagModel;
-                var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                if (eventContextTagModel != null)
                 {
-
-                    Tenant = dirtyDeclarationPM.Tenant,
-                    objectTableName = "Customs.Declaration",
-                    EventCode = eventCode,
-                    notes = "",
-                    CommunicationLoggingEntityReference = dirtyDeclarationPM.DeclarationNumber,
-                    EntityId = dirtyDeclarationPM.Id,
-                    UserId = loggingUserId,
-                    CommunicationSubject = "FU Status" + statusCode + " from logitude",
-                    MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                    var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
                     {
-                        entname = "CFIFILEM",
-                        primary_number = dirtyDeclarationPM.CustomFileNo,
-                        status = "new",
-                        xml_status = "new",
-                        status_id = statusCode,
-                        status_DateTime = DateTime.Now,
-                        //status_save = "no_fail",
-                        comments = "",
-                    }
-                };
 
-                LogMessagingUtil.Instance.AppendLine("AmitalEventTracer.CreateTraceEvent: EventCode= " + eventCode + "CustomFileNo= " + dirtyDeclarationPM.CustomFileNo + "  ");
-                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, doNotSendStatus);
+                        Tenant = dirtyDeclarationPM.Tenant,
+                        objectTableName = "Customs.Declaration",
+                        EventCode = eventCode,
+                        notes = "",
+                        CommunicationLoggingEntityReference = dirtyDeclarationPM.DeclarationNumber,
+                        EntityId = dirtyDeclarationPM.Id,
+                        UserId = loggingUserId,
+                        CommunicationSubject = "FU Status" + statusCode + " from logitude",
+                        MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                        {
+                            entname = "CFIFILEM",
+                            primary_number = dirtyDeclarationPM.CustomFileNo,
+                            status = "new",
+                            xml_status = "new",
+                            status_id = statusCode,
+                            status_DateTime = DateTime.Now,
+                            //status_save = "no_fail",
+                            comments = "",
+                        }
+                    };
+
+                    LogMessagingUtil.Instance.AppendLine("AmitalEventTracer.CreateTraceEvent: EventCode= " + eventCode + "CustomFileNo= " + dirtyDeclarationPM.CustomFileNo + "  ");
+                    AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, doNotSendStatus);
+                }
             }
             catch (Exception)
             {

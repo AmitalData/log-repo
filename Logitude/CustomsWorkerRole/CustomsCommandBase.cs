@@ -83,7 +83,7 @@ namespace CustomsWorkerRole
             //{
             if (_OnStartDone) return true;
             _OnStartDone = true;
-
+            DoneItemsInRange = new Dictionary<DateTime, int>();
             var myClass = this.GetType().Name;
             if (!string.IsNullOrWhiteSpace(_QueueNameOverride))
             {
@@ -252,7 +252,7 @@ namespace CustomsWorkerRole
                         }
 
 
-
+                        LastActivity = DateTime.UtcNow;
                         proccesDone = true;
                         bool successProcessMessage = ProcessMessage_Db(response);
                         if (successProcessMessage)
@@ -262,6 +262,20 @@ namespace CustomsWorkerRole
                         }
                         else if (!successProcessMessage)/// IF FAILED USE NEW TRANS !!!!
                         {
+                            
+                            try
+                            {
+                                
+                                // if inner scope dispose without Complete // this can crush 
+
+                                // but there is case that there is acrush withou transaction
+                                // like while dca check status = so we want that the try of the step will increase in 1 - we must try commit it !!
+                                Queue_scope.Complete();
+                            }
+                            catch (Exception)
+                            {
+                                //throw;
+                            }
                             Queue_scope.Dispose();//remove lock !!
                             using (var Abandon_Queue_scope = new TransactionScope(TransactionScopeOption.RequiresNew))
                             {
