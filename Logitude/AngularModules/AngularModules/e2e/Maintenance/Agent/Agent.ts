@@ -38,7 +38,6 @@ export class NewAgent {
         this.helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
         this.helper.WaitBusyIndicator();
         this.helper.WaitByIdAndFill('Address_City', "Poznan");
-        browser.sleep(1000)
         this.helper.WaitByIdAndClick('OkButtonId');
     }
 

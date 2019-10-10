@@ -390,7 +390,7 @@
 
                     <!-- Preview -->
                     <td style="width: 1px;">
-                        <button class="Button" (click)="PreviewAWBMethod()">Preview</button>
+                        <button id="{{'Preview' | IdGeneratorPipe}}" class="Button" (click)="PreviewAWBMethod()">Preview</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -417,13 +417,13 @@
                         <div></div>
                     </td>
                     <td style="width: 1px;" *ngIf="IsSendVisible &&!IsImportWizard">
-                        <button class="Button" (click)="SendClicked()">{{SendAWBLabel}}</button>
+                        <button id="{{'SendFWB' | IdGeneratorPipe}}" class="Button" (click)="SendClicked()">{{SendAWBLabel}}</button>
                     </td>
                     <td style="width: 5px;" *ngIf="IsSendFHLsVisible &&!IsImportWizard">
                         <div></div>
                     </td>
                     <td style="width: 1px;" *ngIf="IsSendFHLsVisible &&!IsImportWizard">
-                        <button class="Button" (click)="SendFHLsClicked()">Send FHL(s)</button>
+                        <button id="{{'SendFHL' | IdGeneratorPipe}}" class="Button" (click)="SendFHLsClicked()">Send FHL(s)</button>
                     </td>
 
                     <!-- Cargonaut -->
@@ -494,7 +494,7 @@
 
                     <!-- Close -->
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CloseClicked()">Close</button>
+                        <button id="{{'CloseWizard' | IdGeneratorPipe}}"  class="Button" (click)="CloseClicked()">Close</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -503,12 +503,12 @@
 
                     <!-- Save -->
                     <td style="width: 57px;">
-                        <button *ngIf="!EntityPM.IsDirty" class="Button">
+                        <button id="{{'SaveWizard' | IdGeneratorPipe}}"  *ngIf="!EntityPM.IsDirty" class="Button">
                             <img class="LeftCenter" style="margin-left: 2px;" src="./Images/Buttons/Save.png" />
                             <span style="line-height: 19px; margin-left: 17px;">Save</span>
                         </button>
 
-                        <button *ngIf="EntityPM.IsDirty" class="EntityChangesButton" (click)="SaveClicked()">
+                        <button id="{{'SaveWizard' | IdGeneratorPipe}}"  *ngIf="EntityPM.IsDirty" class="EntityChangesButton" (click)="SaveClicked()">
                             <img class="LeftCenter" style="margin-left: 2px;" src="./Images/Buttons/Save.Red.png" />
                             <span style="line-height: 19px; margin-left: 17px;">Save</span>
                         </button>

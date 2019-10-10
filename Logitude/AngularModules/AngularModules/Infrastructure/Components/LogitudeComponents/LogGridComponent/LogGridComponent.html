@@ -170,7 +170,7 @@
                      style="position: absolute;display: inline-block;min-width:25px;">
 
                     <div style="width: calc(100% - 5px);" [style.float]="RTL == true ? 'right' : 'left'" (mousedown)="ServerSort(col, ColumnId + 'resizable-column-,'+i)">
-                        <list-header-template *ngIf="col.ColumnHeaderTemplateName" [colDef]="col"></list-header-template>
+                        <list-header-template *ngIf="col.ColumnHeaderTemplateName" [htmlListHeaderUrl]="col.ColumnHeaderTemplateUrl" [colDef]="col"></list-header-template>
 
                         <div [style.lineHeight.px]="IsCustomTemplate == true ? 23 : 27" [style.textAlign]="RTL == true ? 'right' : 'left'" style="overflow:hidden; text-overflow: ellipsis;" *ngIf="!col.ColumnHeaderTemplateName" [title]="col.Display">{{col.Display}}</div>
 

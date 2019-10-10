@@ -164,7 +164,10 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         if (this.fromDate != value) {
             this.oldFromDate = this.fromDate;
             this.fromDate = value;
+            //if (this.fromDate > this.ToDate) {
 
+            //    this.UIProperties.SetValidity("FromDate", this.ObjectTableName, false, TextCodeTranslator.Translate("To date must be Greater or equal than from date"));
+            //}
             //if (!AppTool.IsNullOrEmpty(this.ToDate) && !AppTool.IsNullOrEmpty(this.FromDate)) {
             //    this.dateFilter = new FilterItem("CreateDate", this.FromDate, this.ToDate, null, "Between", false, false, false, "Date", false);
             //    //this.GetTransactions();
@@ -172,7 +175,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             //}
 
             if (!this.isValidate)
-                this.validateDates();
+               this.validateDates();
             else {
                 this.isValidate = false;
             }
@@ -186,7 +189,10 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         if (this.toDate != value) {
             this.oldToDate = this.toDate;
             this.toDate = value;
+            //if (this.toDate < this.FromDate) {
 
+            //    this.UIProperties.SetValidity("ToDate", this.ObjectTableName, false, TextCodeTranslator.Translate("To date must be Greater or equal than from date"));
+            //}
             //if (!AppTool.IsNullOrEmpty(this.ToDate) && !AppTool.IsNullOrEmpty(this.FromDate)) {
             //    this.dateFilter = new FilterItem("CreateDate", this.FromDate, this.ToDate, null, "Between", false, false, false, "Date", false);
             //    //this.GetTransactions();
@@ -660,7 +666,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         if (this.FromDate > this.ToDate) {
 
             this.timerToken = setTimeout(() => {
-                this.UIProperties.SetValidity("ToDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.ToDateMustGreaterFromDate"));
+                this.UIProperties.SetValidity("ToDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.ToDateGreater"));
                 this.UIProperties.SetValidity("FromDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.FromDateMustSmallerToDate"));
                 this.CD.detectChanges();
             }, 200);
@@ -668,14 +674,14 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
 
             //// Change dates
-            //this.timerToken = setTimeout(() => {
-            //    this.isValidate = true;
-            //    this.FromDate = this.oldFromDate;
-            //    this.isValidate = true;
-            //    this.ToDate = this.oldToDate;
-            //    this.LoadData();
+            this.timerToken = setTimeout(() => {
+                this.isValidate = true;
+                this.FromDate = this.oldFromDate;
+                this.isValidate = true;
+                this.ToDate = this.oldToDate;
+                this.LoadData();
 
-            //}, 200);
+            }, 200);
 
         } else {
             this.timerToken = setTimeout(() => {

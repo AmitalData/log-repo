@@ -1,8 +1,5 @@
 import { browser, by, element, WebDriver, protractor } from 'protractor';
 import { FieldsHelper } from '../../../Helpers/FieldsHelper';
-import { DirectAWB } from './DirectAWB';
-import { HouseAWB } from './HouseAWB';
-import { MasterAWB } from './MasterAWB';
 import { DirectShipment } from './DirectShipment';
 import { HouseShipment } from './HouseShipment';
 import { MasterShipment } from './MasterShipment';
@@ -13,9 +10,7 @@ import { ShipmentHelper } from '../ShipmentHelper';
 
 export class ShipmentWorkSpace {
     private Helper: FieldsHelper;
-    private DirectAWB: DirectAWB;
-    private HouseAWB: HouseAWB;
-    private MasterAWB: MasterAWB;
+
 
     private DirectShipment: DirectShipment;
     private HouseShipment: HouseShipment;
@@ -27,10 +22,6 @@ export class ShipmentWorkSpace {
 
     constructor() {
         this.Helper = new FieldsHelper();
-        this.DirectAWB = new DirectAWB();
-        this.HouseAWB = new HouseAWB();
-        this.MasterAWB = new MasterAWB();
-
         this.DirectShipment = new DirectShipment();
         this.HouseShipment = new HouseShipment();
         this.MasterShipment = new MasterShipment();
@@ -93,20 +84,6 @@ export class ShipmentWorkSpace {
             //this.EditShipmentTabs.EditTabs(shipperRef1, ShipmentLevelCode, ShipmentType, Direction);
         }
 
-    }
-
-    CreateWizard(LogitudeWizardType: string) {
-        var shipperRef1 = this.GeneralFunction.RandomNum();
-
-        if (LogitudeWizardType == 'D') {
-            this.DirectAWB.CreateDirectAWB(shipperRef1, LogitudeWizardType);
-        }
-        else if (LogitudeWizardType == 'H') {
-            this.HouseAWB.CreateHouseWizard(shipperRef1, LogitudeWizardType);
-        }
-        else if (LogitudeWizardType == 'M') {
-            this.MasterAWB.CreateMasterWizard(shipperRef1, LogitudeWizardType);
-        }
     }
 }
 
