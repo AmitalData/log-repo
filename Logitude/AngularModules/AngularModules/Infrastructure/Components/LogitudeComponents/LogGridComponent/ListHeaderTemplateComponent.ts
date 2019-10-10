@@ -1,4 +1,4 @@
-﻿import {SessionLocator} from '../../../Utilities/SessionLocator';
+import {SessionLocator} from '../../../Utilities/SessionLocator';
 import {Component, ElementRef, OnInit, ViewContainerRef} from '@angular/core';
 
 @Component({
@@ -8,11 +8,11 @@ import {Component, ElementRef, OnInit, ViewContainerRef} from '@angular/core';
                <span><span style="text-overflow: ellipsis" *ngIf="noComponent">{{col.Display}}</span></span>
             
                <!--</div>-->`,
-    inputs: ['colDef']
+    inputs: ['colDef', 'htmlListHeaderUrl']
 })
 
 export class ListHeaderTemplateComponent implements OnInit {
-
+    public htmlListHeaderUrl: string;
     public colDef: any;
 
     constructor(private _elementRef: ElementRef, private _ViewContainerRef: ViewContainerRef) {
@@ -23,18 +23,15 @@ export class ListHeaderTemplateComponent implements OnInit {
 
     ngOnInit() {
 
-        if (this.colDef.ColumnHeaderTemplateName && this.colDef.ColumnHeaderTemplateName) {
+        if (this.colDef.ColumnHeaderTemplateName) {
             this.noComponent = false;
-            //console.log("htmlHeaderComponent is -----> ", this.htmlHeaderComponent);
+            
             if (this.colDef.ColumnHeaderTemplateName === "TransportModeHeaderTemplate") {
-
                 SessionLocator.DynamicLoader.Load("./Shipment/Components/ListHeaderTemplates/TransportModeListHeaderTemplate", this._ViewContainerRef);
-
             }
+
             if (this.colDef.ColumnHeaderTemplateName === "DirectionHeaderTemplate") {
-
                 SessionLocator.DynamicLoader.Load("./Shipment/Components/ListHeaderTemplates/DirectionListHeaderTemplate", this._ViewContainerRef);
-
             }
 
             if (this.colDef.ColumnHeaderTemplateName === "ARInvoiceIsPrintedHeaderTemplate") {
@@ -44,11 +41,17 @@ export class ListHeaderTemplateComponent implements OnInit {
             if (this.colDef.ColumnHeaderTemplateName === "ARInvoiceSentHeaderTemplate") {
                 SessionLocator.DynamicLoader.Load("./Invoice/Components/ListHeaderTemplates/ARInvoiceSentHeaderTemplate", this._ViewContainerRef);
             }
+
+            if (this.htmlListHeaderUrl) {
+                SessionLocator.DynamicLoader.Load(this.htmlListHeaderUrl, this._ViewContainerRef)
+                    .then((res) => {
+                        res.instance.setVariables();
+                    });
+            }
         }
+        
         else {
             this.noComponent = true;
         }
-
     }
-
 }
