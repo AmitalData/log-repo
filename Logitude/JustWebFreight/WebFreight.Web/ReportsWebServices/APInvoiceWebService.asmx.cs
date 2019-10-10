@@ -638,6 +638,12 @@ namespace WebFreight.Web.ReportsWebServices
                 #region Vendor
                 if (vendorCard != null)
                 {
+                    invoiceDataProvider.VendorSwift = vendorCard.Swift;
+                    invoiceDataProvider.VendorBankName = vendorCard.BankName;
+                    invoiceDataProvider.VendorBankAddress = vendorCard.BankAddress;
+                    invoiceDataProvider.VendorBankAccountNumber = vendorCard.AccountNumber;
+                    invoiceDataProvider.VendoIBANNo = vendorCard.IBANNumber;
+
                     invoiceDataProvider.VendorNumber = vendorCard.Code;
                     invoiceDataProvider.VendorVatNumber = vendorCard.VatNumber;
 
