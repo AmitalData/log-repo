@@ -714,7 +714,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
     }
 
     filterChanged(filters) {
-        var LogGridIdPostFex = this.LogGridId.replace('LogGridId_', '');
+        var LogGridIdPostFex = this.LogGridId.replace('LogGrid_', '');
         if (LogGridIdPostFex != filters.ListComponentPostFex) {
             return;
         }
