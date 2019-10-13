@@ -12,6 +12,7 @@ import { BatchTaskExecutionListService } from '../../../Infrastructure/Services/
 import { BatchTaskExecutionList } from '../../../Infrastructure/EntityLists/BatchTaskExecutionList';
 import { AppTool } from '../../../Infrastructure/Tools';
 import { DocumentsFilingExtendedPMService } from '../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
+import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 
 declare var ResultAsArray: any;
 
@@ -34,6 +35,7 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
     public AirSurchargeCount: string;
     public OceanSurchargeCount: string;
     public OceanLCLFreightCount: string;
+
 
     private isLoaderReady: boolean = false;
     RunComponent() {
@@ -91,6 +93,13 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
             logWindow.Title = "Price Check";
             logWindow.Show("./TariffModule/Components/Workspaces/TariffSearchAirFreightPricesComponent");
         });      
+    }
+
+    public OceanLCLFreightCostVisibility: boolean = false;
+    SetQueriesVisibility() {
+        if (FeatureLocator.HasFeaturePermession("Tariff", "Ocean LCL Freight Cost")) {
+            this.OceanLCLFreightCostVisibility = true;
+        }
     }
 
     public NewTariff(code: string) {
