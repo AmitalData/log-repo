@@ -23,7 +23,7 @@ import {FroalaEditorSetting} from '../../../InfrastructureModules/Infrastructure
 import {QuoteTemplateTextCodePM} from '../../../Quote/EntityPMs/QuoteTemplateTextCodePM';
 import {QuoteTemplateSectionPM} from '../../../Quote/EntityPMs/QuoteTemplateSectionPM';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
-
+import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 @Component({
     selector: 'EditQuoteTemplateComponent',
     moduleId: module.id,
@@ -520,7 +520,9 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
 
 
                         }
-
+                       else if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
+                            this.ShowMessage(pmResponse.ErrorsArray[0]);
+                        }
 
                     });
                 }
@@ -542,6 +544,22 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
         }
 
     }
+
+
+
+    public ShowMessage(message: string, title: string = "") {
+
+        var messageWindow: MessageWindow = new MessageWindow();
+        messageWindow.Show(message);
+
+        if (title) {
+            messageWindow.Title = title;
+        }
+    }
+
+
+
+
 
     LoadCompleted() {
         if (!this.IsLoadQuoteTemplateSectionRuning && !this.IsLoadQuoteTemplateTextCodeRuning && !this.IsLoadQuoteTemplateSettingsRuning && !this.IsLoadPreviewSectionRuning) {
