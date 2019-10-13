@@ -29,47 +29,50 @@ namespace WebFreight.Web.ExternalAPIs.V1
 {
     public class APInvoiceController : ApiController
     {
-
-        public HttpResponseMessage GetSingleAPInvoice(string id, string number, string externalId)
+        public HttpResponseMessage GetSingleAPInvoice(string id, string number, string externalId, string internalNumber)
         {
             try
             {
-
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-
-
+                
                 APInvoiceQueryService Service = new APInvoiceQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
                 var Result = new APInvoice();
+
                 if (!string.IsNullOrEmpty(id))
                 {
                     Result = Service.GetAPInvoiceById(id, tenant);
                 }
+
                 else if(!string.IsNullOrEmpty(number))
                 {
                     Result = Service.GetAPInvoiceByInvoiceNumber(number, tenant);
-
                 }
+
                 else if (!string.IsNullOrEmpty(externalId))
                 {
                     Result = Service.GetSingleInvoiceByExternalEntityId(externalId, tenant);
                 }
 
+                else if (!string.IsNullOrEmpty(internalNumber))
+                {
+                    Result = Service.GetAPInvoiceByInternalNumber(internalNumber, tenant);
+                }
 
                 string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
             }
+
             catch (Exception ex)
             {
                 var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
         }
-
-
+        
         public HttpResponseMessage Post(APInvoice apinvoice)
         {
             APInvoice oldEntity = apinvoice;

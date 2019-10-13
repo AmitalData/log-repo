@@ -42,6 +42,27 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 throw ex;
             }
         }
+
+        public APInvoice GetAPInvoiceByInternalNumber(string number, int tenant)
+        {
+            try
+            {
+                APInvoicePM temp = query.GetSinglePMByInternalNumber(number, tenant);
+
+                if (temp == null)
+                {
+                    throw new ApplicationException("APInvoice with internal number " + number + " doesn't exist");
+                }
+
+                return APInvoiceDataMapping(temp, tenant);
+            }
+            
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public APInvoice GetSingleInvoiceByExternalEntityId(string externalId, int tenant)
         {
             try { 
