@@ -297,6 +297,7 @@ export class LogDatePickerComponent
                         this.DataContext[this.ObjectFieldName] =
                             this.CurrentSession.CopiedCell;
                         this.CurrentSession.CopiedCell = null;
+                        this.SetParsedDateValueToDatePickerInput();
                     }
                 }
             );
@@ -474,6 +475,9 @@ export class LogDatePickerComponent
             );
         }
 
+        this.SetParsedDateValueToDatePickerInput();
+    }
+    SetParsedDateValueToDatePickerInput(){
         var valueDate = this.DataContext[this.ObjectFieldName];
         if (this.ObjectField && this.ObjectField.IsCustom) {
             var customFieldClass: CustomFieldClass = this.DataContext[
@@ -495,7 +499,6 @@ export class LogDatePickerComponent
         this.GetParsedDate(valueDate); //(this.DataContext[this.ObjectFieldName]);
         this.initialized = true;
     }
-
     SetControlPropertiesAndValidations(
         uiProperty: UIProperty,
         ctrl: FormControl
