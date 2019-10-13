@@ -372,6 +372,8 @@ namespace WebFreight.Web.ReportsWebServices
 
          return apPaymentDataProvider;
         }
+        private Contact GetLoggedContact(int tenant)
+        {
 
         private APPaymentDataProvider SetDataProviderbankFields(APPayment payment, APPaymentDataProvider apPaymentDataProvider)
         {
