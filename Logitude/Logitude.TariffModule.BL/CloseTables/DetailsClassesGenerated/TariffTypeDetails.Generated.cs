@@ -23,6 +23,7 @@ namespace Logitude.TariffModule.BL.CLoseTable
 		    var all = new List<TariffTypeDetails>();  
             all.Add(new TariffTypeDetails()
             {    
+                TransportModeCode = "A", 
                 Code = "AFC", 
                 Name = "Air Freight Cost", 
                 SearchFields = "AFC,Air Freight Cost", 
@@ -30,6 +31,7 @@ namespace Logitude.TariffModule.BL.CLoseTable
 			 
             all.Add(new TariffTypeDetails()
             {    
+                TransportModeCode = "A", 
                 Name = "Air Surcharges Cost", 
                 Code = "ASC", 
                 SearchFields = "ASC,Air Surcharges Cost", 
@@ -37,9 +39,18 @@ namespace Logitude.TariffModule.BL.CLoseTable
 			 
             all.Add(new TariffTypeDetails()
             {    
+                TransportModeCode = "O", 
                 Code = "OSC", 
                 Name = "Ocean Surcharges Cost", 
                 SearchFields = "OSC,Ocean Surcharges Cost", 
+			});
+			 
+            all.Add(new TariffTypeDetails()
+            {    
+                TransportModeCode = "O", 
+                Name = "Ocean LCL Freight Cost", 
+                Code = "OLC", 
+                SearchFields = "OLC,Ocean LCL Freight Cost", 
 			});
 			
             return all;
@@ -47,6 +58,7 @@ namespace Logitude.TariffModule.BL.CLoseTable
 
 	    public void MapPoco(TariffType newPoco)
         {   
+		    newPoco.TransportModeCode = this.TransportModeCode;  
 		    newPoco.Code = this.Code;  
 		    newPoco.Name = this.Name;  
 			newPoco.SearchFields = GetSearchFields(this);    
@@ -54,7 +66,7 @@ namespace Logitude.TariffModule.BL.CLoseTable
 
 		public string GetSearchFields(TariffType rec)
         {   
-           return String.Concat(rec.Code,",",rec.Name,",");
+           return String.Concat(rec.TransportModeCode,",",rec.Code,",",rec.Name,",");
         }
    }
 }

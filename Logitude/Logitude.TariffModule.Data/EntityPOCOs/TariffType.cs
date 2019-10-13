@@ -25,6 +25,11 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
 	    public string Name { get; set; }
         [Column("SearchFields")]
 	    public string SearchFields { get; set; }
+        [ForeignKey("TransportMode")]
+        [Column("TransportModeCode")]
+	    public string TransportModeCode { get; set; }
+	      
+        public virtual TransportMode TransportMode { get; set; }
     }
 }
 	 
