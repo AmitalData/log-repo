@@ -13,6 +13,7 @@ import {SLAEscalationPM} from '../EntityPMs/SLAEscalationPM';
 import {SLAEscalationRecepientPM} from '../EntityPMs/SLAEscalationRecepientPM';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass'; 
 import {Guid} from '../../Infrastructure/Utilities/Guid';
+import { PerformanceLogger } from '../../Infrastructure/Utilities/PerformanceLogger';
 
 @Injectable()
 
@@ -1484,33 +1485,7 @@ export class CRMDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-
-    BrowseOccasionContacts(filter: OccasionContactArgs) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        authHeader.append('Content-Type', 'application/json');
-
-        return Observable.defer(() => {
-            return this._http.post(this._apiUrl + "/PostBrowseOccasionContacts", JSON.stringify(filter), {
-                headers: authHeader,
-            }).map(response => {
-                var myJsonResult = response.json();
-
-                var myResult: OccasionContactSearchresult[] = [];
-
-                for (var key in myJsonResult) {
-                    var entity: OccasionContactSearchresult;
-                    entity = this.MapOccasionContactSearchresult(myJsonResult[key]);
-                    myResult.push(entity);
-                }
-
-                var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = myResult;
-                return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
-        });
-    }
-
+    
     GetCountOfOccasionAllCustomers(contactIds: string) {
 
         var authHeader = new Headers();
@@ -1526,8 +1501,67 @@ export class CRMDomainService {
 
             }).catch(ServiceHelper.HandleServiceError);
         });
-    }
+    }    
 
+    GetOccasionContactsByFilters(filters: ApiQueryFilters) {
+        var callTime = new Date();
+
+        var urlparameters = '/GetOccasionContactsByFilters?';
+        var mykeys = Object.keys(filters);
+        var addtionalFiltersValues = null;
+
+        for (var i in mykeys) {
+            var propName = mykeys[i];
+            var propValue = filters[propName];
+
+            var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
+
+            if (urlparameters != "?") {
+                urlparameters = urlparameters.concat('&');
+            }
+            if (!ignoreFilter) {
+                propValue = encodeURIComponent(propValue);
+                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+            }
+
+            if (propName == "AdditionalFilters" && propValue.length > 0)
+                addtionalFiltersValues = JSON.stringify(propValue);
+        }
+
+        if (addtionalFiltersValues) {
+            urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
+        }
+
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        var callUrl = this._apiUrl.concat(urlparameters);
+
+        return Observable.defer(() => {
+            return this._http.get(callUrl, {
+                headers: authHeader
+            }).map(response => {
+                var serviceResponse: ServiceResponse;
+                serviceResponse = response.json();
+
+                var _mappedListsArray: Array<OccasionContactSearchresult> = [];
+                if (serviceResponse.Result) {
+                    for (var key in serviceResponse.Result) {
+
+                        var entity: OccasionContactSearchresult;
+                        entity = this.MapOccasionContactSearchresult(serviceResponse.Result[key]);
+                        _mappedListsArray.push(entity);
+                    }
+                }
+
+                serviceResponse.Result = _mappedListsArray;
+                serviceResponse.CallTime = callTime;
+                var servertime = response.headers.get('ServerExecutionTime');
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "User", "GetByFilters", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll);
+
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
     MapOccasionContactSearchresult(jsonList: any) {
         var entityList: OccasionContactSearchresult;
         entityList = new OccasionContactSearchresult();
@@ -1540,6 +1574,7 @@ export class CRMDomainService {
 
         return entityList;
     }
+
 }
 
 export class DailySpotlightClass {
@@ -1592,13 +1627,4 @@ export class OccasionContactSearchresult {
     public ContactPosition: string;
     public ContactTel: string;
 
-}
-
-export class OccasionContactArgs {
-    public CustomerSizeId: string;
-    public RegionId: string;
-    public IndustryId: string;
-    public OccasionId: string;
-    public ProductTypes: string;
-    public AdditionalServices: string;
 }

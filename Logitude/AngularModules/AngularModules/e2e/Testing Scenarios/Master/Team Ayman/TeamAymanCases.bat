@@ -58,13 +58,38 @@ cd C:\Automation e2e\TeamAyman\Test
 >test.txt echo Errors in : %TotalErrors%
 >>test.txt echo Total Errors :%NumberErrors% 
 
+
+
 IF %NumberErrors% NEQ 0 ( 
   exit 1
 )
-
-pause
+Pause
 
 SETLOCAL
-:CheckError 
-for /f %%a in ('type D:\E2ETeamAyman\prot.log ^| find /c /i "error"') DO (if %%a NEQ 0 set TotalErrors=%TotalErrors%    %~1%NL% & @SET /a "NumberErrors=%NumberErrors%+1" )
+:CheckError
+
+set /a count=0
+
+cd /
+cd windows
+c:
+cd C:\Automation e2e\TeamAyman\Test\screenshots
+
+IF EXIST images (
+
+cd /
+cd windows
+c:
+cd C:\Automation e2e\TeamAyman\Test\screenshots\images
+
+for %%x in (*.png) do set /a count+=1
+set /A NumberErrors=count
+
+
+)
+cd /
+cd windows
+c:
+cd C:\Program Files (x86)\Jenkins\workspace\LogitudeTestDevOps\Logitude\AngularModules\AngularModules
+
 goto:eof

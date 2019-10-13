@@ -89,36 +89,50 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void Trace(GLAccountWithholdingTaxPM entityPM, GLAccountWithholdingTax entityPOCO, string changesXml)
         {
-            if(entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update) { 
-            PropertyInfo[] pmProperties = EntityPM.GetType().GetProperties();
-            PropertyInfo[] pocoProperties = EntityPOCO.GetType().GetProperties();
+           
+            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update) {
+               
+
+                PropertyInfo[] pmProperties = EntityPM.GetType().GetProperties();
+                PropertyInfo[] pocoProperties = EntityPOCO.GetType().GetProperties();
                 foreach (PropertyInfo property in pmProperties)
                 {
-                    PropertyInfo pmProperty = pmProperties.Where(d => d.Name == property.Name).FirstOrDefault();//[0];
-                    PropertyInfo pocoProperty = pocoProperties.Where(d => d.Name == property.Name).FirstOrDefault();//[0];
-                    if (pmProperty != null && pocoProperty != null )
+                    string notes = GetTraceEventNotes(pmProperties, pocoProperties, property);
+                    if (notes != null)
                     {
-                        var pmPropertyValue = pmProperty.GetValue(EntityPM, null);
-                        var pocoPropertyValue = pocoProperty.GetValue(EntityPOCO, null);
-                        if (!pocoPropertyValue.Equals(pmPropertyValue))
-                        {
-                            CreateTraceEvent(pmProperty, pocoProperty);
-                        }
-
+                        CreateTraceEvent(notes);
                     }
+
+
 
                 }
 
             }
 
         }
+        public string GetTraceEventNotes(PropertyInfo[] pmProperties, PropertyInfo[] pocoProperties, PropertyInfo property)
+        {
+            string notes = null;
+            PropertyInfo pmProperty = pmProperties.Where(d => d.Name == property.Name).FirstOrDefault();//[0];
+            PropertyInfo pocoProperty = pocoProperties.Where(d => d.Name == property.Name).FirstOrDefault();//[0];
+            if (pmProperty != null && pocoProperty != null)
+            {
+                var pmPropertyValue = pmProperty.GetValue(EntityPM, null);
+                var pocoPropertyValue = pocoProperty.GetValue(EntityPOCO, null);
+                if (!pocoPropertyValue.Equals(pmPropertyValue))
+                {
+                   notes = TranslateTextsClass.Translate("Accounting.General.O.OldValue", 0) + pocoPropertyValue + TranslateTextsClass.Translate("Accounting.General.O.NewValue", 0) + pmPropertyValue;
 
-        private void CreateTraceEvent(PropertyInfo pmProperty,PropertyInfo pocoProperty)
+                  
+                }
+
+            }
+            return notes;
+        }
+
+        private void CreateTraceEvent(string notes)
         {
             Contact contact = GetLoggedContact();
-            var pmPropertyValue = pmProperty.GetValue(EntityPM, null);
-            var pocoPropertyValue = pocoProperty.GetValue(EntityPOCO, null);
-            String notes = TranslateTextsClass.Translate("Accounting.General.O.OldValue", 0) + pocoPropertyValue + TranslateTextsClass.Translate("Accounting.General.O.NewValue", 0) + pmPropertyValue;
             EventTracer.CreateTraceEvent(new EventTracerArgs()
             {
                 EntityId = EntityParentPM.Id,

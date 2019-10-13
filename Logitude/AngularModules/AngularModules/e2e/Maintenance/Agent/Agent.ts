@@ -17,7 +17,7 @@ export class NewAgent {
     QuickSearch() {
 
         this.helper.WaitBusyIndicator();
-        this.helper.WaitByIdAndClick('General.MH.Maintenance');
+      //  this.helper.WaitByIdAndClick('General.MH.Maintenance');
         this.helper.waitByCss('#null_Search');
         this.helper.WaitBusyIndicator();
 
@@ -38,7 +38,6 @@ export class NewAgent {
         this.helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
         this.helper.WaitBusyIndicator();
         this.helper.WaitByIdAndFill('Address_City', "Poznan");
-        browser.sleep(1000)
         this.helper.WaitByIdAndClick('OkButtonId');
     }
 

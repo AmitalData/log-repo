@@ -66,6 +66,17 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return mappedInvoicePM;
         }
 
+        public APInvoicePM GetSinglePMByInternalNumber(string number, int tenant)
+        {
+            IQueryable<APInvoicePM> invoices = GetAPInvoiceIQueryable();
+
+            APInvoicePM invoicePM = invoices.Where(d => d.InternalNumber == number && d.Tenant == tenant).FirstOrDefault();
+
+            APInvoicePM mappedInvoicePM = GetMappedEntity(tenant, invoicePM);
+
+            return mappedInvoicePM;
+        }
+
         private IQueryable<APInvoicePM> GetAPInvoiceIQueryable()
         {
             return (from a in repository.context.APInvoices.Include("Status").Include("LocalCurrency").Include("InvoiceCurrency").Include("TransferStatus").Include("VendorCard").Include("PaymentTerm").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("CreatedByUser").Include("CreatedByUser.Contact")
