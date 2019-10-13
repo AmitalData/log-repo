@@ -392,6 +392,7 @@ namespace WebFreight.Web.ReportsWebServices
                     apPaymentDataProvider.Account = payment.Account != null ? payment.Account : "";
                 }
             }
+            return apPaymentDataProvider;
 
         }
         private Contact GetLoggedContact(int tenant)
