@@ -68,6 +68,7 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
 
     LoadAllScreenData() {
         this.LoadQueriesCounts();
+        this.SetQueriesVisibility();
     }
     LoadQueriesCounts() {
         this.tariffDomainService.GetTariffsCounts().subscribe((myResponse: ServiceResponse) => {
@@ -97,8 +98,8 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
 
     public OceanLCLFreightCostVisibility: boolean = false;
     SetQueriesVisibility() {
-        if (FeatureLocator.HasFeaturePermession("Tariff", "Ocean LCL Freight Cost")) {
-            this.OceanLCLFreightCostVisibility = true;
+        if (FeatureLocator.HasFeaturePermession("Tariff", "Tariff.Q.OceanLCLFreightCost")) {
+            this.OceanLCLFreightCostVisibility = false;
         }
     }
 
