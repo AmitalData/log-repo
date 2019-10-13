@@ -273,6 +273,8 @@ namespace WebFreight.Web.ReportsWebServices
                         }
                     }
 
+                 
+
                     if (currentPayment.PaymentMethod != null)
                     {
                         if (currentPayment.PaymentMethod.Name == "Cash")
@@ -290,23 +292,11 @@ namespace WebFreight.Web.ReportsWebServices
                             apPaymentDataProvider.Account = currentPayment.Account != null ? currentPayment.Account : "";
                         }
                     }
-                    if (currentPayment.AccountingPaymentMethod != null)
+                    else
                     {
-                        if (currentPayment.AccountingPaymentMethod.Code == "CA")
-                        {
-                            apPaymentDataProvider.ChequeOrPaymentRef = "Cash";
-                            apPaymentDataProvider.Bank = "Cash";
-                            apPaymentDataProvider.Branch = "Cash";
-                            apPaymentDataProvider.Account = "Cash";
-                        }
-                        else
-                        {
-                            apPaymentDataProvider.ChequeOrPaymentRef = currentPayment.ChequeOrPaymentRef != null ? currentPayment.ChequeOrPaymentRef : "";
-                            apPaymentDataProvider.Bank = currentPayment.Bank != null ? currentPayment.Bank : "";
-                            apPaymentDataProvider.Branch = currentPayment.BankBranch != null ? currentPayment.BankBranch : "";
-                            apPaymentDataProvider.Account = currentPayment.Account != null ? currentPayment.Account : "";
-                        }
+                        apPaymentDataProvider = SetDataProviderbankFields(currentPayment, apPaymentDataProvider);
                     }
+                    
                     apPaymentDataProvider.ValueDate = currentPayment.ValueDate;
 
                     if (!string.IsNullOrEmpty(currentPayment.BranchId))
@@ -381,6 +371,28 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
          return apPaymentDataProvider;
+        }
+
+        private APPaymentDataProvider SetDataProviderbankFields(APPayment payment, APPaymentDataProvider apPaymentDataProvider)
+        {
+            if (payment.AccountingPaymentMethod != null)
+            {
+                if (payment.AccountingPaymentMethod.Code == "CA")
+                {
+                    apPaymentDataProvider.ChequeOrPaymentRef = "Cash";
+                    apPaymentDataProvider.Bank = "Cash";
+                    apPaymentDataProvider.Branch = "Cash";
+                    apPaymentDataProvider.Account = "Cash";
+                }
+                else
+                {
+                    apPaymentDataProvider.ChequeOrPaymentRef = payment.ChequeOrPaymentRef != null ? payment.ChequeOrPaymentRef : "";
+                    apPaymentDataProvider.Bank = payment.Bank != null ? payment.Bank : "";
+                    apPaymentDataProvider.Branch = payment.BankBranch != null ? payment.BankBranch : "";
+                    apPaymentDataProvider.Account = payment.Account != null ? payment.Account : "";
+                }
+            }
+
         }
         private Contact GetLoggedContact(int tenant)
         {
