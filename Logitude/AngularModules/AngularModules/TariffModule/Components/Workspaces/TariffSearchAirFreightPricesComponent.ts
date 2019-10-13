@@ -4,12 +4,10 @@ import { BaseComponent } from '../../../Infrastructure/Components/LogitudeCompon
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
-import { TariffDomainService, SurchargeSummary, TariffSummery } from '../../../TariffModule/Services/TariffDomainService';
+import { TariffDomainService} from '../../../TariffModule/Services/TariffDomainService';
 import { TariffSearchSummary } from '../../../TariffModule/Services/TariffDomainService';
-import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { CurrencyList } from '../../../Common/EntityLists/CurrencyList';
-import { CommonDomainService } from '../../../Common/Services/CommonDomainService';
 import { CurrencyListService } from '../../../Common/Services/StandardLists/CurrencyListService';
 import { ShipmentPM } from '../../../Shipment/EntityPMs/ShipmentPM';
 import { ShipmentPayablePM } from '../../../Shipment/EntityPMs/ShipmentPayablePM';
@@ -18,7 +16,7 @@ import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import {  ShipmentGenerator } from '../../../Shipment/Tools';
 import { ChargesTypeList } from '../../../Common/EntityLists/ChargesTypeList';
 import { ChargesTypeListService } from '../../../Common/Services/StandardLists/ChargesTypeListService';
-import { PayablesTabComponent, ShipmentPayableItem } from '../../../ShipmentModules/ShipmentTabs/Components/Payables/PayablesTabComponent';
+import { ShipmentPayableItem } from '../../../ShipmentModules/ShipmentTabs/Components/Payables/PayablesTabComponent';
 
 @Component({
     moduleId: module.id,
