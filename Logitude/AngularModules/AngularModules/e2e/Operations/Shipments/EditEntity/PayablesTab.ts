@@ -36,7 +36,9 @@ export class PayablesTabComponent {
             this.AddPayables('Inland', '10', '10','Shipment');
             this.AddPayables('Order', '10', '20','Shipment');
         }
+        
     }
+
     AddPayables(ChargeType: string, quantity: any, unitPrice: any, Source :String) {
        // var amount: any = 0;
 
@@ -52,6 +54,9 @@ export class PayablesTabComponent {
 
         this.Helper.WaitByIdAndFill('ShipmentPayable_CurrencyId', 'EU');
         this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'ShipmentPayable_CurrencyId', 'EU');
+
+        this.Helper.WaitByIdAndFill('ShipmentPayable_MeasurementId','fixed')
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'ShipmentPayable_MeasurementId','fixed');
 
         this.Helper.WaitByIdAndClick('Ok-AddPayableBtn');
     }
