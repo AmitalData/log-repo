@@ -372,8 +372,7 @@ namespace WebFreight.Web.ReportsWebServices
 
          return apPaymentDataProvider;
         }
-        private Contact GetLoggedContact(int tenant)
-        {
+     
 
         private APPaymentDataProvider SetDataProviderbankFields(APPayment payment, APPaymentDataProvider apPaymentDataProvider)
         {
@@ -394,6 +393,8 @@ namespace WebFreight.Web.ReportsWebServices
                     apPaymentDataProvider.Account = payment.Account != null ? payment.Account : "";
                 }
             }
+
+            return apPaymentDataProvider;
 
         }
         private Contact GetLoggedContact(int tenant)
