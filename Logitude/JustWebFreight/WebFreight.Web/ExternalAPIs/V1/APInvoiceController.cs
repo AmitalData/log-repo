@@ -81,7 +81,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
             {
                 try
                 {
-
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
                         string token = HttpContext.Current.Request.Headers["Token"];
@@ -91,13 +90,23 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                         SecurityUtility.AuthenticateAPICall(authToken.Tenant);
 
-                        if (apinvoice != null) oldEntity = LogitudeXmlSerializer.DeserializeObject<APInvoice>(LogitudeXmlSerializer.SerializeObjectToXmlString(apinvoice));
+                        string computingPartnerCode = "";                       
+
+                        if (apinvoice != null)
+                        {
+                            if (!string.IsNullOrEmpty(apinvoice.ComputingPartnerCode))
+                            {
+                                computingPartnerCode = apinvoice.ComputingPartnerCode;
+                            }
+
+                            oldEntity = LogitudeXmlSerializer.DeserializeObject<APInvoice>(LogitudeXmlSerializer.SerializeObjectToXmlString(apinvoice));
+                        }
 
                         IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
                         APInvoiceQueryService apinvoiceQuery = new APInvoiceQueryService(tenant);
                         apinvoice.Tenant = tenant;
                         apinvoiceQuery.CustomeValidateAPInvoice(apinvoice);
-                        apinvoiceQuery.APInvoiceCustomDataMapping(apinvoice, tenant);
+                        apinvoiceQuery.APInvoiceCustomDataMapping(apinvoice, tenant, computingPartnerCode);
 
                         //
                         APInvoicePM apinvoicePM = apinvoiceQuery.APInvoiceDataMappingAndValidatin(apinvoice, tenant);

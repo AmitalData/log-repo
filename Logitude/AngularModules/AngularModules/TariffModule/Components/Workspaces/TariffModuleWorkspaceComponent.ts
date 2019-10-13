@@ -176,7 +176,7 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
 
             case "OSC": {
                 var listArgs = new ListComponentArgs();
-                listArgs.QueryCode = "Ocean Surcharges Cost Tariffs";
+                listArgs.QueryCode = "Ocean.LCL.Surcharges.Cost";
                 listArgs.ObjectTableName = "Tariff";
                 listArgs.DisplayTitle = "Ocean Surcharges Cost";
                 listArgs.BackButtonTitle = "Tariff";

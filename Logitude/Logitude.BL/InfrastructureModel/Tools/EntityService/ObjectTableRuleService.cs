@@ -215,5 +215,61 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
 
         }
+
+
+        public void Delete(string ruleId)
+        {
+
+            string ruleslistName = "objecttablerulestenant" + tenant;
+            if (CacheManager.CacheWrapper.Get(ruleslistName) != null)
+            {
+                CacheManager.CacheWrapper.Invalidate(ruleslistName);
+            }
+            string pmslistName = "objecttablerulepmstenant" + tenant;
+            if (CacheManager.CacheWrapper.Get(pmslistName) != null)
+            {
+                CacheManager.CacheWrapper.Invalidate(pmslistName);
+            }
+
+            string objectRulesListName = ruleId + "DuplicationRules" + tenant;
+            if (CacheManager.CacheWrapper.Get(objectRulesListName) != null)
+            {
+                CacheManager.CacheWrapper.Invalidate(objectRulesListName);
+            }
+
+
+            this.isNewEntity = false;
+             
+            this.Poco = entityRepository.GetSingleObjectTableRule(ruleId, tenant);
+            if(this.Poco.Tenant == 0)
+            {
+                throw new Exception("You can not delete a system rule!");
+            }
+
+            ruleTypeRepository = new RuleTypeRepository(ObjectContext);
+            ruleConditionFieldRepository = new RuleConditionFieldRepository(ObjectContext);
+
+            ObjectTableRuleFieldRepository objectTableRuleFieldRepository = new ObjectTableRuleFieldRepository(ObjectContext);
+            List<ObjectTableRuleField> objectTableRuleFieldList = objectTableRuleFieldRepository.GetRuleFieldsByRuleId(ruleId, tenant).ToList();
+            foreach (var field in objectTableRuleFieldList)
+            {
+                objectTableRuleFieldRepository.Remove(field);
+            }
+
+             List<RuleConditionField> ruleConditionFieldsList = ruleConditionFieldRepository.GetRuleConditionFieldsByRuleId(ruleId, tenant).ToList();
+            foreach (var field in ruleConditionFieldsList)
+            {
+                ruleConditionFieldRepository.Remove(field);
+            }
+
+            entityRepository.Remove(this.Poco);
+
+         
+            
+
+            ObjectContext.SaveChanges();
+
+
+        }
     }
 }

@@ -79,14 +79,15 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             }
         }
 
-        public void APInvoiceCustomDataMapping(APInvoice apinvoice, int tenant)
+        public void APInvoiceCustomDataMapping(APInvoice apinvoice, int tenant, string ComputingPartnerCode = "")
         {
             apinvoice.Tenant = tenant;
             apinvoice.InvoiceExpectedAmount = apinvoice.AmountInInvoiceCurrency;
 
             if (apinvoice.InvoiceCurrencyExchangeRate == null)
+            {
                 apinvoice.InvoiceCurrencyExchangeRate = GetInvoiceCurrencyExchangeRate(apinvoice, tenant);
-
+            }
 
             TenantPM tenantPM = GetTenantPM(tenant);
             if (apinvoice.LocalCurrency == null)
@@ -100,15 +101,26 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             }
 
             apinvoice.AmountDue = apinvoice.AmountInInvoiceCurrency == null ? 0 : apinvoice.AmountInInvoiceCurrency;
-
             apinvoice.IsExternalEntity = true;
             apinvoice.IsGeneralInvoice = true;
 
-
             if (apinvoice.AccountingDate == null)
+            {
                 apinvoice.AccountingDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-
- 
+            }
+            
+            //entityPM.StatusCode = "WA";
+            //entityPM.StatusName = "Waiting for Approval";
+            //entityPM.CreatedByUserId = SessionLocator.LoggedUserId;
+            //entityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
+            //entityPM.CreateDate = todayDateTime;
+            //entityPM.UpdateDate = todayDateTime;
+            //entityPM.BranchId = SessionLocator.LoggedUserPM.BranchId;
+            //entityPM.LocalCurrencyId = SessionLocator.LocalCurrencyId;
+            //entityPM.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
+            //entityPM.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
+            //entityPM.SubTotalInLocalCurrency = 0;
+            //entityPM.SubTotalInInvoiceCurrency = 0;
         }
 
         public void PaymentTermMapAndValidate(APInvoice apinvoice, APInvoicePM apinvoicePM, int tenant)
@@ -195,44 +207,59 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
         public void CustomeValidateAPInvoice(APInvoice apinvoice)
         {
             if (apinvoice.InvoiceDate == null)
+            {
                 throw new ApplicationException("InvoiceDate is not provided");
+            }
 
             if (apinvoice.AccountingDate == null)
+            {
                 throw new ApplicationException("AccountingDate is not provided");
+            }
 
-            if(apinvoice.Vendor == null)
+            if (apinvoice.Vendor == null)
+            {
                 throw new ApplicationException("Vendor is not provided");
+            }
 
-            
             if (apinvoice.VATNumber == null)
+            {
                 throw new ApplicationException("VATNumber is not provided");
-
+            }
 
             if (apinvoice.AmountInInvoiceCurrency == null)
+            {
                 throw new ApplicationException("AmountInInvoiceCurrency is not provided");
-
+            }
 
             if (apinvoice.InvoiceCurrency == null)
+            {
                 throw new ApplicationException("InvoiceCurrency is not provided");
-
-
-            //if (apinvoice.DueDate == null)
-            //    throw new ApplicationException("DueDate is not provided");
+            }
 
             if (apinvoice.Branch == null)
+            {
                 throw new ApplicationException("Branch is not provided");
+            }
 
             foreach (APInvoiceLine line in apinvoice.InvoiceLines)
             {
                 if (line.ChargesType == null)
+                {
                     throw new ApplicationException("ChargesType is not provided");
-                if (line.InvoiceCurrencyAmount == null)
-                    throw new ApplicationException("InvoiceCurrencyAmount is not provided");
-                if (line.VatType == null)
-                    throw new ApplicationException("VatType is not provided"); 
+                }
 
+                if (line.InvoiceCurrencyAmount == null)
+                {
+                    throw new ApplicationException("InvoiceCurrencyAmount is not provided");
+                }
+
+                if (line.VatType == null)
+                {
+                    throw new ApplicationException("VatType is not provided");
+                }
             }
-            CheckIfExternlaEntiityIdExist(apinvoice);
+
+            this.CheckIfExternlaEntiityIdExist(apinvoice);
             
             // validate totals
             double SubTotalInLocalCurrency =    Math.Round(apinvoice.InvoiceLines.Sum(d => d.LocalCurrencyAmount).Value, 2);
@@ -243,8 +270,6 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             //{
             //    throw new ApplicationException("Invoice Amount field doesnt match the total amount");
             //}
-
-
         }
 
         private void CheckIfExternlaEntiityIdExist(APInvoice apinvoice)
