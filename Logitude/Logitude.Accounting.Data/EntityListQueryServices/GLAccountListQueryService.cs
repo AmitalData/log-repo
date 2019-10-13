@@ -123,7 +123,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                         UpdateDate = a.UpdateDate,
                                                         UpdatedByLocalName =    a.UpdatedByUser != null ? a.UpdatedByUser.Contact.LocalName : null,
                                                         UpdatedByUserName =     a.UpdatedByUser != null ? a.UpdatedByUser.Contact.EnglishName : null,
-
+                                                        ExcludeFromDeductionReport = a.ExcludeFromDeductionReport,
 
                                                });
             return query;

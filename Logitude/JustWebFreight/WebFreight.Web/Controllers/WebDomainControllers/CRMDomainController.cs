@@ -33,6 +33,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Reflection;
 using System.Transactions;
 using System.Web;
 using System.Web.Http;
@@ -2093,22 +2094,36 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             return loggedUserId;
         }
 
-        [ActionName("PostBrowseOccasionContacts")]
-        public HttpResponseMessage PostBrowseOccasionContacts(OccasionContactArgs args)
+        [HttpGet]
+        public HttpResponseMessage GetOccasionContactsByFilters([FromUri] ApiQueryFilters filters)
         {
             try
             {
                 string token = System.Web.HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                int tenant = authToken.Tenant;
 
-                ICommonDataContext commonDataContext = CommonDataContext.GetContext(authToken.Tenant);
-                IQueryable<Customer> customers = this.GetFilteredCustomers(args, commonDataContext, authToken.Tenant);
-                IQueryable<CardContact> contacts = this.GetCustomerContacts(customers, commonDataContext, authToken.Tenant);
+                QueryOperations queryOperations = new QueryOperations()
+                {
+                    ObjectTableName = "Contact",
+                    PageIndex = filters.PageIndex,
+                    PageSize = filters.PageSize,
+                    QuerySection = "Contacts",
+                    SortByColumnName = filters.SortBy,
+                    SortDirectin = filters.SortDirection,
+                    GetAll = filters.GetAll,
+                };
+
+                OccasionContactArgs args = this.AnalyzeOccasionFilters(filters);                
+                
+                ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
+                IQueryable<Customer> customers = this.GetFilteredCustomers(args, commonDataContext, tenant);
+                IQueryable<CardContact> contacts = this.GetCustomerContacts(customers, commonDataContext, tenant);
                 
                 if (!string.IsNullOrEmpty(args.OccasionId))
                 {
-                    List<string> contactsIds = this.GetContactsIdsFromOccasion(args.OccasionId, authToken.Tenant);
+                    List<string> contactsIds = this.GetContactsIdsFromOccasion(args.OccasionId, tenant);
                     if (contactsIds != null)
                     {
                         contacts = contacts.Where(d => contactsIds.Contains(d.ContactId));
@@ -2137,7 +2152,29 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     myResult = this.BuildFilteredContacts(contacts, commonDataContext, authToken.Tenant);                    
                 }
                 
-                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                if (!string.IsNullOrEmpty(args.SearchText))
+                {
+                    myResult = myResult.Where(f => f.Email != null && f.Email.ToLower().StartsWith(args.SearchText.ToLower())
+                            || f.Name != null && f.Name.ToLower().StartsWith(args.SearchText.ToLower())
+                            || f.Company != null && f.Company.ToLower().StartsWith(args.SearchText.ToLower())).ToList();
+                }
+
+                if (!queryOperations.GetAll)
+                {
+                    myResult = myResult.Skip(queryOperations.PageIndex).ToList();
+                    myResult = myResult.Take(queryOperations.PageSize).ToList();
+                }
+
+                ServiceResponse response = new ServiceResponse();
+                if (filters.GetCount)
+                {
+                    response.Count = myResult.Count;
+                }
+
+                response.Result = myResult;
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+
+                return reponseMessage;
             }
 
             catch (Exception ex)
@@ -2145,10 +2182,75 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        private OccasionContactArgs AnalyzeOccasionFilters(ApiQueryFilters filters)
+        {
+            OccasionContactArgs args = new OccasionContactArgs();
+
+            List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
+            for (int i = 1; i <= 10; i++)
+            {
+                object filterNameProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Name")).GetValue(filters);
+                object filterValue1 = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Value")).GetValue(filters);
+
+                if (filterNameProp != null)
+                {
+                    string filterName = filterNameProp.ToString();
+                    string filterValue = filterValue1 != null ? filterValue1.ToString() : null;
+
+                    switch (filterName)
+                    {
+                        case "SearchText":
+                            {
+                                args.SearchText = filterValue;
+                                break;
+                            }
+
+                        case "CustomerSizeId":
+                            {
+                                args.CustomerSizeId = filterValue;
+                                break;
+                            }
+
+                        case "RegionId":
+                            {
+                                args.RegionId = filterValue;
+                                break;
+                            }
+
+                        case "IndustryId":
+                            {
+                                args.IndustryId = filterValue;
+                                break;
+                            }
+
+                        case "OccasionId":
+                            {
+                                args.OccasionId = filterValue;
+                                break;
+                            }
+
+                        case "Products":
+                            {
+                                args.ProductTypes = filterValue;
+                                break;
+                            }
+
+                        case "AdditionalServices":
+                            {
+                                args.AdditionalServices = filterValue;
+                                break;
+                            }
+                    }
+                }
+            }
+
+            return args;
+        }
         private IQueryable<Customer> GetFilteredCustomers(OccasionContactArgs args, ICommonDataContext commonDataContext, int tenant)
         {
             CustomerRepository customerRepository = new CustomerRepository(commonDataContext);
             IQueryable<Customer> customers = customerRepository.GetCustomers(tenant);
+            customers = customers.Where(d => d.IsCustomer);
 
             if (!string.IsNullOrEmpty(args.CustomerSizeId))
             {
@@ -2345,6 +2447,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public string OccasionId { get; set; }
         public string ProductTypes { get; set; }
         public string AdditionalServices { get; set; }
+        public string SearchText { get; set; }
     }
 
     public class OccasionContactSearchresult
@@ -2361,8 +2464,5 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public string ContactPosition { get; set; }
         public string ContactMobile { get; set; }
         public string ContactTel { get; set; }
-
-        
-
     }
 }
