@@ -13,6 +13,7 @@ namespace Logitude.TariffModule.BLs
        public const string AirFreightCost = "AFC";  
        public const string AirSurchargesCost = "ASC";  
        public const string OceanSurchargesCost = "OSC";  
+       public const string OceanLCLFreightCost = "OLC";  
     }
 }
 
