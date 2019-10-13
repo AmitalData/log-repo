@@ -127,7 +127,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     {
                         SecurityUtility.CheckContactFeature("PaymentCheque", "NEW", entityPM.Tenant);
                          VendorGLAccount = GetGLAccountByCard(entityPM);
-                        CreatePaymentCheque(entityPM);
+                        paymentCheque= CreatePaymentCheque(entityPM);
                         SubmitPaymentCheque(paymentCheque);
                        
 
@@ -169,43 +169,55 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         }
 
 
-        private void CreatePaymentCheque(APPaymentPM entityPM)
+        private PaymentChequePM CreatePaymentCheque(APPaymentPM entityPM)
         {
-
-            paymentCheque = new PaymentChequePM()
-            {
-
-                CreateDate = DateTime.Today,
-
-                PayToGLAccountId = VendorGLAccount != null ? VendorGLAccount.Id : null,
-                PayToName = VendorGLAccount != null ? (VendorGLAccount.LocalName != null ? VendorGLAccount.LocalName : VendorGLAccount.EnglishName) : null,
-                BankAccountId = entityPM.BankAccountId,
-                BankAccountGLAccountId = GetTransferAccountIdByBankAccountId(entityPM),
-                LocalAmount = (decimal?)entityPM.AmountInLocalCurrency- entityPM.TaxDeductionLocalAmount,
-                CurrencyId = entityPM.PaymentCurrencyId,
-                ExchangeRate = (decimal?)entityPM.PaymentCurrencyExchangeRate,
-                ForeignAmount = (decimal?)entityPM.AmountInPaymentCurrency,
-                ValueDate = entityPM.ValueDate,
-                ApprovedByUserId = entityPM.ApprovedByUserId,
-                ApproveDate = entityPM.ApprovedDateTime,
-                APPaymentId = entityPM.Id,
-                PaymentChequeStatusCode = "2",
-                ChangeSetOp = ChangeSetOperation.Insert,
-                Tenant = entityPM.Tenant,
-
-            };
-
-            PaymentChequeLinePM paymentChequeLine = new PaymentChequeLinePM()
-            {
-                Notes = entityPM.PaymentNo,
-                Amount = (decimal?)entityPM.AmountInLocalCurrency - entityPM.TaxDeductionLocalAmount,
-                ChangeSetOp = ChangeSetOperation.Insert,
-                Line = 1,
-                Tenant = entityPM.Tenant
-
-            };
+            PaymentChequePM paymentCheque = MapPaymentChequePM(entityPM);
+            PaymentChequeLinePM paymentChequeLine = MapPaymentChequeLinePM(entityPM);
             paymentCheque.PaymentChequeLines.Add(paymentChequeLine);
+            return paymentCheque;
         } 
+
+        private PaymentChequePM MapPaymentChequePM(APPaymentPM payment)
+        {
+            PaymentChequePM paymentCheque = new PaymentChequePM();
+            paymentCheque.CreateDate = DateTime.Today;
+            paymentCheque.PayToGLAccountId = VendorGLAccount != null ? VendorGLAccount.Id : null;
+            if (payment.PaymentChequeCreationPayToName == null)
+            {
+                paymentCheque.PayToName = VendorGLAccount != null ? (VendorGLAccount.LocalName != null ? VendorGLAccount.LocalName : VendorGLAccount.EnglishName) : null;
+            }
+            else { paymentCheque.PayToName = payment.PaymentChequeCreationPayToName; }
+            paymentCheque.BankAccountId = payment.BankAccountId;
+            paymentCheque.BankAccountGLAccountId = GetTransferAccountIdByBankAccountId(payment);
+            paymentCheque.LocalAmount = (decimal?)payment.AmountInLocalCurrency - payment.TaxDeductionLocalAmount;
+            paymentCheque.CurrencyId = payment.PaymentCurrencyId;
+            paymentCheque.ExchangeRate = (decimal?)payment.PaymentCurrencyExchangeRate;
+            paymentCheque.ForeignAmount = (decimal?)payment.AmountInPaymentCurrency;
+            paymentCheque.ValueDate = payment.ValueDate;
+            paymentCheque.ApprovedByUserId = payment.ApprovedByUserId;
+            paymentCheque.ApproveDate = payment.ApprovedDateTime;
+            paymentCheque.APPaymentId = payment.Id;
+            paymentCheque.PaymentChequeStatusCode = "2";
+            paymentCheque.ChangeSetOp = ChangeSetOperation.Insert;
+            paymentCheque.Tenant = payment.Tenant;
+            return paymentCheque;
+        }
+
+        private PaymentChequeLinePM MapPaymentChequeLinePM(APPaymentPM payment)
+        {
+            PaymentChequeLinePM paymentChequeLine = new PaymentChequeLinePM();
+            if (payment.PaymentChequeCreationNotes == null || payment.PaymentChequeCreationNotes == "undefined")
+            {
+                paymentChequeLine.Notes = payment.PaymentNo;
+            }
+            else { paymentChequeLine.Notes = payment.PaymentChequeCreationNotes; }
+            paymentChequeLine.Amount = (decimal?)payment.AmountInLocalCurrency - payment.TaxDeductionLocalAmount;
+            paymentChequeLine.ChangeSetOp = ChangeSetOperation.Insert;
+            paymentChequeLine.Line = 1;
+            paymentChequeLine.Tenant = payment.Tenant;
+            return paymentChequeLine;
+        }
+
         public GLAccountPM GetGLAccountByCard(APPaymentPM paymentPM)
         {
             CardPM card = GetCardByVendorId(paymentPM);

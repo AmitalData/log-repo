@@ -10,6 +10,8 @@ namespace WebFreight.Web.DataProviders
         public string PaymentMethodName { get; set; }
         public string ClientNumber { get; set; }
         public string PaymentCurrencyCode { get; set; }
+        public string PaymentCurrencyName { get; set; }
+
         public string PaidBy { get; set; } // custom
         public string PrintNotes { get; set; }
         public string IssuedByUserName { get; set; }
@@ -40,7 +42,8 @@ namespace WebFreight.Web.DataProviders
         public string IBANNumber { get; set; }
         public string Swift { get; set; }
         public string BankAccountNumber { get; set; }
-        
+        public string PaidToCode  { get; set; }
+        public DateTime? CreateDate { get; set; }
         //tenant data
         public string Signature { get; set; }
         public string TenantData { get; set; }
@@ -65,6 +68,7 @@ namespace WebFreight.Web.DataProviders
         public string CustomerField9 { get; set; }
         public string CustomerField10 { get; set; }
         public string BranchAddress { get; set; }
+        public string BranchName { get; set; }
 
         public DateTime? TodayLocal { get; set; }
 
