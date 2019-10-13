@@ -99,7 +99,7 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
     public OceanLCLFreightCostVisibility: boolean = false;
     SetQueriesVisibility() {
         if (FeatureLocator.HasFeaturePermession("Tariff", "Tariff.Q.OceanLCLFreightCost")) {
-            this.OceanLCLFreightCostVisibility = false;
+            this.OceanLCLFreightCostVisibility = true;
         }
     }
 
