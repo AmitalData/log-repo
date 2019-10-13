@@ -368,6 +368,26 @@ export class APPaymentPM {
     public set AutomaticPaymentCheque(newValue: boolean) { if (this.automaticPaymentCheque != newValue) { this.automaticPaymentCheque = newValue; this.MarkAsDirty("AutomaticPaymentCheque"); } }
        
 	 
+    private paymentChequeCreationPayToName: string;
+    public get PaymentChequeCreationPayToName() { return this.paymentChequeCreationPayToName; }
+    public set PaymentChequeCreationPayToName(newValue: string) { if (this.paymentChequeCreationPayToName != newValue) { this.paymentChequeCreationPayToName = newValue; this.MarkAsDirty("PaymentChequeCreationPayToName"); } }
+       
+	 
+    private paymentChequeCreationNotes: string;
+    public get PaymentChequeCreationNotes() { return this.paymentChequeCreationNotes; }
+    public set PaymentChequeCreationNotes(newValue: string) { if (this.paymentChequeCreationNotes != newValue) { this.paymentChequeCreationNotes = newValue; this.MarkAsDirty("PaymentChequeCreationNotes"); } }
+       
+	 
+    private excludeFromDeductionReport: boolean;
+    public get ExcludeFromDeductionReport() { return this.excludeFromDeductionReport; }
+    public set ExcludeFromDeductionReport(newValue: boolean) { if (this.excludeFromDeductionReport != newValue) { this.excludeFromDeductionReport = newValue; this.MarkAsDirty("ExcludeFromDeductionReport"); } }
+       
+	 
+    private vendorGLAccountId: string;
+    public get VendorGLAccountId() { return this.vendorGLAccountId; }
+    public set VendorGLAccountId(newValue: string) { if (this.vendorGLAccountId != newValue) { this.vendorGLAccountId = newValue; this.MarkAsDirty("VendorGLAccountId"); } }
+       
+	 
 
     public OldEntityPM: APPaymentPM;
 		

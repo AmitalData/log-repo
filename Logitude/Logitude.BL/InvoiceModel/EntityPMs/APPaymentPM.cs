@@ -126,7 +126,13 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string BankAccountId { get; set; }
         public string BranchName { get; set; }
         public bool AutomaticPaymentCheque { get; set; }
-      
+        public string PaymentChequeCreationPayToName { get; set; }
+        public string PaymentChequeCreationNotes { get; set; }
+        public bool ExcludeFromDeductionReport { get; set; }
+        public string VendorGLAccountId { get; set; }
+
+
+
 
     }
 }
