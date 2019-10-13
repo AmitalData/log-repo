@@ -15,6 +15,7 @@ import {ObjectTableRulePM} from '../../../../../Infrastructure/EntityPMs/ObjectT
 import {RuleConditionFieldPM} from '../../../../../Infrastructure/EntityPMs/RuleConditionFieldPM';
 import {ObjectTableRuleFieldPM} from '../../../../../Infrastructure/EntityPMs/ObjectTableRuleFieldPM';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
+import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
 declare var window: any;
 
 @Component({
@@ -116,6 +117,25 @@ export class RulesMainComponent {
             });
         }
         
+    }
+
+
+    OnRestoreRule(item) {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Show("Are you sure you want to restore current rule?");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+
+                this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+                this._objectTableRulePMService.restoreDefaultRule(item.Id).subscribe(response => {
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    if (!response.HasError) {
+                        this.LoadRules();
+                    }
+
+                });
+            }
+        });
     }
 
     OnAddRule() {

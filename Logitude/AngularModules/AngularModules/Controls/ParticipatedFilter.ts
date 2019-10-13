@@ -15,8 +15,8 @@ import {SessionLocator} from '../Infrastructure/Utilities/SessionLocator';
         <li  style=" width: 80px;" (click)="itemClicked('PA')" (mouseover)="itemMouseOver('PA')" (mouseleave)="itemMouseLeave('PA')" [class.SelectedFilter]="SelectedValue === 'PA'" title="Participated">
             Participated
         </li>
-        <li  style=" width: 110px;" (click)="itemClicked('DP')" (mouseover)="itemMouseOver('DP')" (mouseleave)="itemMouseLeave('DP')" [class.SelectedFilter]="SelectedValue === 'DP'" title="Didn't Participated">
-           Didn't Participated
+        <li  style=" width: 110px;" (click)="itemClicked('DP')" (mouseover)="itemMouseOver('DP')" (mouseleave)="itemMouseLeave('DP')" [class.SelectedFilter]="SelectedValue === 'DP'" title="Didn't Participate">
+           Didn't Participate
         </li>
     </ul>
     `

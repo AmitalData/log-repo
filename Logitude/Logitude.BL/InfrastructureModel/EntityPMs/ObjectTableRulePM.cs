@@ -26,6 +26,8 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public bool Internal { get; set; }
         public bool AdvancedCondition { get; set; }
 
+        public bool IsCreatedFromSystemRule { get; set; }
+
 
         private List<RuleConditionFieldPM> ruleConditionFields;
         [Include]

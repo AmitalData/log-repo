@@ -51,11 +51,13 @@
             </table>
         </td>
     </tr>
+
     <tr style="height:10px">
         <td>
             <div></div>
         </td>
     </tr>
+
     <tr>
         <td>
             <table>
@@ -82,8 +84,11 @@
         </td>
 
     </tr>
+
     <tr style="height:10px">
-        <td></td>
+        <td>
+            <div></div>
+        </td>
     </tr>
     <tr>
         <td>
@@ -112,10 +117,45 @@
 
     </tr>
 
-
     <tr style="height:10px">
-        <td></td>
+        <td>
+            <div></div>
+        </td>
     </tr>
+
+    <tr *ngIf="OceanLCLFreightCostVisibility">
+        <td>
+            <table>
+                <tr>
+                    <td style="width:180px">
+                        <div>
+                            <HyperlinkQuery (click)="ViewTariffs('OLC')">Ocean LCL Freight Cost ({{OceanLCLFreightCount}})</HyperlinkQuery>
+                        </div>
+                    </td>
+
+                    <td style="width:20px">
+                        <div></div>
+                    </td>
+
+                    <td style="width:20px">
+                        <button class="Button" (click)="NewTariff('OLC')">New</button>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+
+    </tr>
+
+    <tr style="height:10px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
     <tr>
         <td>
             <table>

@@ -110,9 +110,6 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
 
         if (this.QuoteTemplateSettingPM) {
             this.HeightArea = this.QuoteTemplateSectionTypeName == "Header" ? this.QuoteTemplateSettingPM.PageHeaderAreaHeight : this.QuoteTemplateSettingPM.PageFooterAreaHeight;
-            this.Area1Width = this.QuoteTemplateSectionTypeName == "Header" ? this.QuoteTemplateSettingPM.PageHeaderArea1Width : this.QuoteTemplateSettingPM.PageFooterArea1Width;
-            this.Area2Width = this.QuoteTemplateSectionTypeName == "Header" ? this.QuoteTemplateSettingPM.PageHeaderArea2Width : this.QuoteTemplateSettingPM.PageFooterArea2Width;
-            this.Area3Width = this.QuoteTemplateSectionTypeName == "Header" ? this.QuoteTemplateSettingPM.PageHeaderArea3Width : this.QuoteTemplateSettingPM.PageFooterArea3Width;
         }
     }
     FullBorderTypesLists() {
@@ -137,26 +134,56 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
 
     private area1Width = 0;
     get Area1Width() {
+        if (this.QuoteTemplateSectionTypeName == "Header") {
+            this.area1Width = this.QuoteTemplateSettingPM.PageHeaderArea1Width;
+        } else this.area1Width = this.QuoteTemplateSettingPM.PageFooterArea1Width;
+
         return this.area1Width;
     }
     set Area1Width(newValue: number) {
-        this.area1Width = newValue;
+        if (newValue != this.area1Width) {
+            this.area1Width = newValue;
+            if (this.QuoteTemplateSectionTypeName == "Header") {
+                this.QuoteTemplateSettingPM.PageHeaderArea1Width = newValue;
+            } else this.QuoteTemplateSettingPM.PageFooterArea1Width = newValue;
+            this.SaveAreaWdith();
+        }
     }
 
     private area2Width = 0;
     get Area2Width() {
+        if (this.QuoteTemplateSectionTypeName == "Header") {
+            this.area2Width = this.QuoteTemplateSettingPM.PageHeaderArea2Width;
+        } else this.area2Width = this.QuoteTemplateSettingPM.PageFooterArea2Width;
+
         return this.area2Width;
     }
     set Area2Width(newValue: number) {
-        this.area2Width = newValue;
+        if (newValue != this.area2Width) {
+            this.area2Width = newValue;
+            if (this.QuoteTemplateSectionTypeName == "Header") {
+                this.QuoteTemplateSettingPM.PageHeaderArea2Width = newValue;
+            } else this.QuoteTemplateSettingPM.PageFooterArea2Width = newValue;
+            this.SaveAreaWdith();
+        }
     }
 
     private area3Width = 0;
     get Area3Width() {
+        if (this.QuoteTemplateSectionTypeName == "Header") {
+            this.area3Width = this.QuoteTemplateSettingPM.PageHeaderArea3Width;
+        } else this.area3Width = this.QuoteTemplateSettingPM.PageFooterArea3Width;
+
         return this.area3Width;
     }
     set Area3Width(newValue: number) {
-        this.area3Width = newValue;
+        if (newValue != this.area3Width) {
+            if (this.QuoteTemplateSectionTypeName == "Header") {
+                this.QuoteTemplateSettingPM.PageHeaderArea3Width = newValue;
+            } else this.QuoteTemplateSettingPM.PageFooterArea3Width = newValue;
+           this.SaveAreaWdith();
+        }
+
     }
 
     private heightArea = 0;
@@ -186,45 +213,15 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
 
 
 
-    //Event
+    //Events
 
-    AreaWidthLostFocusMethod(area: string) {
+    SaveAreaWdith() {
 
         this.ValidateFields();
-        
-            if (area == "Area1") {
-                var oldValue: number = this.QuoteTemplateSectionTypeName == "Header" ? this.QuoteTemplateSettingPM.PageHeaderArea1Width : this.QuoteTemplateSettingPM.PageFooterArea1Width;
-                if (oldValue != this.Area1Width) {
-                    if (this.QuoteTemplateSectionTypeName == "Header") {
-                        this.QuoteTemplateSettingPM.PageHeaderArea1Width = this.Area1Width;
-                    } else this.QuoteTemplateSettingPM.PageFooterArea1Width = this.Area1Width;
+        if (this.ValidationErrorsList.length == 0) {
+            this.SaveChanges();
+        }
 
-                    this.SaveChanges();
-                }
-            }
-
-            if (area == "Area2") {
-                var oldValue: number = this.QuoteTemplateSectionTypeName == "Header" ? this.QuoteTemplateSettingPM.PageHeaderArea2Width : this.QuoteTemplateSettingPM.PageFooterArea2Width;
-                if (oldValue != this.Area2Width) {
-                    if (this.QuoteTemplateSectionTypeName == "Header") {
-                        this.QuoteTemplateSettingPM.PageHeaderArea2Width = this.Area2Width;
-                    } else this.QuoteTemplateSettingPM.PageFooterArea2Width = this.Area2Width;
-
-                    this.SaveChanges();
-                }
-            }
-
-            if (area == "Area3") {
-                var oldValue: number = this.QuoteTemplateSectionTypeName == "Header" ? this.QuoteTemplateSettingPM.PageHeaderArea3Width : this.QuoteTemplateSettingPM.PageFooterArea3Width;
-                if (oldValue != this.Area3Width) {
-                    if (this.QuoteTemplateSectionTypeName == "Header") {
-                        this.QuoteTemplateSettingPM.PageHeaderArea3Width = this.Area3Width;
-                    } else this.QuoteTemplateSettingPM.PageFooterArea3Width = this.Area3Width;
-
-                    this.SaveChanges();
-                }
-            }
-       
     }
 
     HeightAreaLostFocusMethod() {
@@ -239,15 +236,26 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
 
     }
 
-    PageAreaSelectedChanged(area:string , value:string) {
+    PageAreaSelectedChanged(area: string, value: string) {
+
+
+
         if (area == "Area1") {
             var oldValue = this.QuoteTemplateSectionTypeName == "Header" ? this.QuoteTemplateSettingPM.PageHeaderArea1Type : this.QuoteTemplateSettingPM.PageFooterArea1Type;
             if (oldValue != value) {
                 if (this.QuoteTemplateSectionTypeName == "Header") {
                     this.QuoteTemplateSettingPM.PageHeaderArea1Type = value;
                 } else this.QuoteTemplateSettingPM.PageFooterArea1Type = value;
-                this.SaveChanges();
+
+                if (value == "None" && this.Area1Width!=0) {
+                    this.Area1Width = 0;
+                } else this.SaveChanges();
+
+               
             }
+       
+
+
         }
         else if (area == "Area2") {
             var oldValue = this.QuoteTemplateSectionTypeName == "Header" ? this.QuoteTemplateSettingPM.PageHeaderArea2Type : this.QuoteTemplateSettingPM.PageFooterArea2Type;
@@ -255,17 +263,29 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
                 if (this.QuoteTemplateSectionTypeName == "Header") {
                     this.QuoteTemplateSettingPM.PageHeaderArea2Type = value;
                 } else this.QuoteTemplateSettingPM.PageFooterArea2Type = value;
-                this.SaveChanges(); 
+
+                if (value == "None" && this.Area2Width != 0) {
+                    this.Area2Width = 0;
+                } else this.SaveChanges();
+
             }
+
         } else if (area == "Area3") {
             var oldValue = this.QuoteTemplateSectionTypeName == "Header" ? this.QuoteTemplateSettingPM.PageHeaderArea3Type : this.QuoteTemplateSettingPM.PageFooterArea3Type;
             if (oldValue != value) {
                 if (this.QuoteTemplateSectionTypeName == "Header") {
                     this.QuoteTemplateSettingPM.PageHeaderArea3Type = value;
                 } else this.QuoteTemplateSettingPM.PageFooterArea3Type = value;
-                this.SaveChanges();
+
+                if (value == "None" && this.Area3Width != 0) {
+                    this.Area3Width = 0;
+                } else this.SaveChanges();
             }
+            
         }
+
+
+
     }
 
     BorderTypesSelectedChanged(border: BorderType) {

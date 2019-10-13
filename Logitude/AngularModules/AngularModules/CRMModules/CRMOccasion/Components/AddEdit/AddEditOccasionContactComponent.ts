@@ -27,7 +27,7 @@ export class AddEditOccasionContactComponent extends BaseComponent implements On
     public ObjectTableName: string = "Occasion";
     private crmService: CRMDomainService;
     @Output() onQueryChangeEvent = new EventEmitter();
-    @Output() SearchFieldchangeevent = new EventEmitter();
+    @Output() SearchFieldChangeEvent = new EventEmitter();
     private selectedItems: ObservableCollection;
     private selectedItemsCount: number = 0;
     constructor() {
