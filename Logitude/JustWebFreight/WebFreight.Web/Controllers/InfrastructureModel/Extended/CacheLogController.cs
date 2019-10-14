@@ -28,7 +28,10 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-                List<CacheLog> keys = CacheLogger.KeysGetCounter.Select(d=> new CacheLog() { Key = d.Key, Count = d.Value } ).ToList();
+                List<CacheLog> keys = CacheLogger.KeysGetCounter
+                    .Select(d=> new CacheLog() { Key = d.Key, Count = d.Value } )
+                    .OrderByDescending(d=>d.Count)
+                    .ToList();
 
                 return Request.CreateResponse(HttpStatusCode.OK, keys);
 

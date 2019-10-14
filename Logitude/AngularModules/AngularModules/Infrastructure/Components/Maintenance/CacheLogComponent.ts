@@ -1,3 +1,4 @@
+import { ObservableCollection } from './../../Utilities/ObservableCollection';
 import { CacheLogService } from './../../Services/ExtendedLists/CacheLogService';
 import { Component } from '@angular/core';
 import { BaseComponent } from '../LogitudeComponents/BaseComponent';
@@ -23,10 +24,13 @@ export class CacheLogComponent extends BaseComponent {
 
     OriginalCacheKeys: CacheKey[] = [];
     CacheKeys: CacheKey[] = [];
+    Keys: ObservableCollection = new ObservableCollection([]);
 
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
+
+
 
         this.GetKeys();
         this.GetIsLoggerEnabled();
@@ -51,8 +55,12 @@ export class CacheLogComponent extends BaseComponent {
 
             if (!AppTool.IsNullOrEmpty(result) && result.length > 0) {
                 this.OriginalCacheKeys = result;
-                result.sort((a, b) => { return (a.Count === b.Count) ? 0 : (a.Count < b.Count) ? 1 : -1 });
+                // result.sort((a, b) => { return (a.Count === b.Count) ? 0 : (a.Count < b.Count) ? 1 : -1 });
+
                 this.CacheKeys = result;
+
+                this.Keys = new ObservableCollection([]);
+                this.Keys.InsertCollection(this.CacheKeys, true);
 
                 this.TextChanged(this.searchText);
 
@@ -61,6 +69,7 @@ export class CacheLogComponent extends BaseComponent {
             } else {
                 this.OriginalCacheKeys = [];
                 this.CacheKeys = [];
+                this.Keys = new ObservableCollection([]);
             }
         });
 
@@ -96,6 +105,10 @@ export class CacheLogComponent extends BaseComponent {
             });
         }
         this.CacheKeys = lines;
+
+
+        this.Keys = new ObservableCollection([]);
+        this.Keys.InsertCollection(lines, true);
     }
     //#endregion
 
