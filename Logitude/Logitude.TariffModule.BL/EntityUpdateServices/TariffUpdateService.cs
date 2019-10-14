@@ -395,7 +395,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                     throw new ApplicationException("Invalid Tariff Lines");
                 }
 
-                if (entityPM.TypeCode == "AFC")
+                if (entityPM.TypeCode == "AFC" || entityPM.TypeCode == "OLC")
                 {
                     if (iDraftVersion.ExpirationDate != null)
                     {
