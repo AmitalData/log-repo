@@ -45,10 +45,13 @@ export class PayablesTabComponent {
        // var amount: any = 0;
        this.Helper.WaitBusyIndicator();
        if(Source == "Shipment"){
-        this.Helper.WaitByIdAndClick('AddPayable');
+        this.Helper.WaitByIdAndClick('Add');
         
         this.Helper.WaitByIdAndFill('ShipmentPayable_ChargesTypeId', ChargeType);
         this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'ShipmentPayable_ChargesTypeId', ChargeType);
+
+        this.Helper.WaitByIdAndFill('ShipmentPayable_MeasurementId','fixed')
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'ShipmentPayable_MeasurementId','fixed');
 
         this.Helper.WaitByIdAndFill('ShipmentPayable_Quantity', quantity);
         this.Helper.WaitByIdAndFill('ShipmentPayable_UnitPrice', unitPrice);
@@ -57,8 +60,7 @@ export class PayablesTabComponent {
         this.Helper.WaitByIdAndFill('ShipmentPayable_CurrencyId', 'EU');
         this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'ShipmentPayable_CurrencyId', 'EU');
 
-        this.Helper.WaitByIdAndFill('ShipmentPayable_MeasurementId','fixed')
-        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'ShipmentPayable_MeasurementId','fixed');
+       
 
         this.Helper.WaitByIdAndClick('Ok-AddPayableBtn');
     }
@@ -101,6 +103,7 @@ export class PayablesTabComponent {
     }
 
         EditAPInvoice(shipperRef1: string,Voided :boolean){
+        this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndFill('APInvoice_VatTypeId', 'Zero');
         this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'APInvoice_VatTypeId', 'Zero');
         this.Helper.WaitByIdAndClick('VATApplyToAll');

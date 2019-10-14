@@ -4644,6 +4644,9 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new FormCustomFields1Map());
             modelBuilder.Configurations.Add(new FWBStatuMap());
             modelBuilder.Configurations.Add(new CustomsTransmissionsStatusMap());
+            modelBuilder.Configurations.Add(new CustomsTransferHeaderMap());
+            modelBuilder.Configurations.Add(new CustomsTransferLineMap());
+            modelBuilder.Configurations.Add(new CustomsTransferTypeMap());
             modelBuilder.Configurations.Add(new GlobalZoneMap());
             modelBuilder.Configurations.Add(new IATACodeMap());
             modelBuilder.Configurations.Add(new ImageDetailMap());

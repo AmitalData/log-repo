@@ -600,6 +600,9 @@
     <Compile Include="QuoteModel\EntityPOCOs\QuoteSetting.cs" />
     <Compile Include="QuoteModel\Mapping\QuoteSettingMap.cs" />
     <Compile Include="QuoteModel\Repositories\QuoteSettingRepository.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\CustomsTransferHeader.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\CustomsTransferLine.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\CustomsTransferType.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\HarmonizeCode.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\INTTRABookingStatus.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\INTTRABookingTransStatus.cs" />
@@ -615,6 +618,9 @@
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentCustomsMessageType.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentCustomsTransmission.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentPackageHarmonize.cs" />
+    <Compile Include="ShipmentsModel\Mapping\CustomsTransferHeaderMap.cs" />
+    <Compile Include="ShipmentsModel\Mapping\CustomsTransferLineMap.cs" />
+    <Compile Include="ShipmentsModel\Mapping\CustomsTransferTypeMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\HarmonizeCodeMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\INTTRABookingStatusMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\INTTRABookingTransStatusMap.cs" />
@@ -630,6 +636,9 @@
     <Compile Include="ShipmentsModel\Mapping\ShipmentCustomsMessageTypeMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentCustomsTransmissionMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentPackageHarmonizeMap.cs" />
+    <Compile Include="ShipmentsModel\Repositories\CustomsTransferHeaderRepository.cs" />
+    <Compile Include="ShipmentsModel\Repositories\CustomsTransferLineRepository.cs" />
+    <Compile Include="ShipmentsModel\Repositories\CustomsTransferTypeRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\FBLStockRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\FeaturePackageTypeRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\HybridTenantStateRepository.cs" />
