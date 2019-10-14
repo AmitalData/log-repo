@@ -1,4 +1,4 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Observable';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
@@ -12,6 +12,8 @@ import {RuleConditionFieldPM} from '../../EntityPMs/RuleConditionFieldPM';
  import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 @Injectable()
 export class ObjectTableRulePMService {
+   
+   
     private _http: Http;
     private _apiUrl: string;
     constructor() {
@@ -173,6 +175,32 @@ export class ObjectTableRulePMService {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = mappedResult;
+                return serviceResponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
+    restoreDefaultRule(id: string) {
+
+
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetRestoredDefaultRule?' + 'id=' + id, {
+                headers: authHeader
+            }).map(response => {
+                var pm = response.json();
+
+                var entity: ObjectTableRulePM;
+                if (pm) {
+                    entity = this.MapJsonToEntityPM(pm);
+                }
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = entity;
                 return serviceResponse;
 
             }).catch(ServiceHelper.HandleServiceError);

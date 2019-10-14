@@ -319,6 +319,7 @@ export class TariffSummery {
     AirFreightCount: number;
     AirSurchargeCount: number;
     OceanSurchargeCount: number;
+    OceanLCLFreightCount: number;
 }
 
 export class TariffFilterParameter {

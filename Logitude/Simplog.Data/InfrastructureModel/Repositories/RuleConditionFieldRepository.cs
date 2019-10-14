@@ -43,7 +43,15 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         }
 
-        
+        public IQueryable<RuleConditionField> GetRuleConditionFieldsByRuleId(string ruleId,int tenant)
+        {
+            IQueryable<RuleConditionField> ruleConditionFields = from a in context.RuleConditionFields.Include("ObjectField")
+                                                                 where a.Tenant == tenant && a.ObjectTableRuleId == ruleId
+                                                                 select a;
+            return ruleConditionFields;
+
+        }
+
 
         public static List<RuleConditionField> GetObjectRuleConditionFieldsByTenant(int tenant)
         {

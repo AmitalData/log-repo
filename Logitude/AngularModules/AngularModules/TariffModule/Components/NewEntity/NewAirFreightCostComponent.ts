@@ -35,7 +35,8 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
     private myService: TariffPMService;
     public PriceSteps: string;
     public PriceStepsText: string;
-    public  SellerDependancy: string = "AL";
+    public SellerDependancy: string = "AL";
+
     constructor() {
         super();
         this.myService = new TariffPMService();
@@ -52,12 +53,11 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
         this.EntityPM.TypeCode = args.TypeCode;
         if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode =="OSC") {
             this.VisibileSurchargesArea = true;
-            this.BuildQueryFilters();
         }
         else {
             this.VisibileSurchargesArea = false;
         }
-
+        this.BuildQueryFilters();
         this.SetUIProperties();
     }
 
@@ -83,7 +83,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
 
     BuildQueryFilters() {
         var EntityType: string = "IsAir";
-        if (this.EntityPM.TypeCode == "OSC") {
+        if (this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OLC") {
             EntityType = "IsOcean";
             this.SellerDependancy = "SL";
         }
@@ -557,14 +557,10 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
 
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, this.ValidationErrorsList);
 
-        if (this.EntityPM.TypeCode == "AFC") {
+        if (this.EntityPM.TypeCode == "AFC" || this.EntityPM.TypeCode == "OLC") {
             if (this.StartDate == null) {                
                 this.ValidationErrorsList.push("Satrt Date Field is Required");            
             }
-
-            //if (this.ExpirationDate == null) {
-            //    this.ValidationErrorsList.push("Expiration Date Field is Required");
-            //}
 
             if (this.StartDate != null && this.ExpirationDate != null) {
                 if (this.ExpirationDate < this.StartDate) {

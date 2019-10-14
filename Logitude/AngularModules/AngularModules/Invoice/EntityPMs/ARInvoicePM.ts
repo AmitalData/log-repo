@@ -663,6 +663,11 @@ export class ARInvoicePM {
     public set SATApprovalDate(newValue: Date) { if (this.sATApprovalDate != newValue) { this.sATApprovalDate = newValue; this.MarkAsDirty("SATApprovalDate"); } }
        
 	 
+    private isShowAmountLocalCurrencyColumnInSharedLogistics: boolean;
+    public get IsShowAmountLocalCurrencyColumnInSharedLogistics() { return this.isShowAmountLocalCurrencyColumnInSharedLogistics; }
+    public set IsShowAmountLocalCurrencyColumnInSharedLogistics(newValue: boolean) { if (this.isShowAmountLocalCurrencyColumnInSharedLogistics != newValue) { this.isShowAmountLocalCurrencyColumnInSharedLogistics = newValue; this.MarkAsDirty("IsShowAmountLocalCurrencyColumnInSharedLogistics"); } }
+       
+	 
     private bankAccountLiteId: string;
     public get BankAccountLiteId() { return this.bankAccountLiteId; }
     public set BankAccountLiteId(newValue: string) { if (this.bankAccountLiteId != newValue) { this.bankAccountLiteId = newValue; this.MarkAsDirty("BankAccountLiteId"); } }

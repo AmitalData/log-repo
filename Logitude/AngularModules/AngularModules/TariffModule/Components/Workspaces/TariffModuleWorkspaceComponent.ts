@@ -12,6 +12,7 @@ import { BatchTaskExecutionListService } from '../../../Infrastructure/Services/
 import { BatchTaskExecutionList } from '../../../Infrastructure/EntityLists/BatchTaskExecutionList';
 import { AppTool } from '../../../Infrastructure/Tools';
 import { DocumentsFilingExtendedPMService } from '../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
+import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 
 declare var ResultAsArray: any;
 
@@ -33,6 +34,8 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
     public AirFreightCount: string;
     public AirSurchargeCount: string;
     public OceanSurchargeCount: string;
+    public OceanLCLFreightCount: string;
+
 
     private isLoaderReady: boolean = false;
     RunComponent() {
@@ -53,9 +56,11 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        if (this.CurrentSession == null)
-            this.CurrentSession = SessionLocator.SelectedSession;
-        this.InitComponent();
+        this._entityResourceService.getEntityResourceByTableName("Tariff", 0).subscribe(response => {
+            if (this.CurrentSession == null)
+                this.CurrentSession = SessionLocator.SelectedSession;
+            this.InitComponent();
+        });
     }
     ngOnDestroy() {
         this.StopTimer();
@@ -63,22 +68,23 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
 
     LoadAllScreenData() {
         this.LoadQueriesCounts();
+        this.SetQueriesVisibility();
     }
     LoadQueriesCounts() {
         this.tariffDomainService.GetTariffsCounts().subscribe((myResponse: ServiceResponse) => {
-                if (myResponse != null) {
-                    if (!myResponse.HasError) {
-                        var myResult: TariffSummery = myResponse.Result;
+            if (myResponse != null) {
+                if (!myResponse.HasError) {
+                    var myResult: TariffSummery = myResponse.Result;
 
-                        if (myResult != null) {
-                            this.AirFreightCount = myResult.AirFreightCount > 1000 ? "1000+" : myResult.AirFreightCount.toString();
-                            this.AirSurchargeCount = myResult.AirSurchargeCount > 1000 ? "1000+" : myResult.AirSurchargeCount.toString();
-                            this.OceanSurchargeCount = myResult.OceanSurchargeCount > 1000 ? "1000+" : myResult.OceanSurchargeCount.toString();
-                             }
+                    if (myResult != null) {
+                        this.AirFreightCount = myResult.AirFreightCount > 1000 ? "1000+" : myResult.AirFreightCount.toString();
+                        this.AirSurchargeCount = myResult.AirSurchargeCount > 1000 ? "1000+" : myResult.AirSurchargeCount.toString();
+                        this.OceanSurchargeCount = myResult.OceanSurchargeCount > 1000 ? "1000+" : myResult.OceanSurchargeCount.toString();
+                        this.OceanLCLFreightCount = myResult.OceanLCLFreightCount > 1000 ? "1000+" : myResult.OceanLCLFreightCount.toString();
                     }
                 }
-            });
-        
+            }
+        });
     }
     CheckAirfreightCost() {
         this._entityResourceService.getEntityResourceByTableName("TariffLine").subscribe((res1: any) => {
@@ -90,78 +96,55 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
         });      
     }
 
+    public OceanLCLFreightCostVisibility: boolean = false;
+    SetQueriesVisibility() {
+        if (FeatureLocator.HasFeaturePermession("Tariff", "Tariff.Q.OceanLCLFreightCost")) {
+            this.OceanLCLFreightCostVisibility = true;
+        }
+    }
+
     public NewTariff(code: string) {
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 850;
+        logWindow.Height = 500;
+        var windowTitle = "";
+        var typeCode = "";
         switch (code) {
             case "A": {
-                this._entityResourceService.getEntityResourceByTableName("Tariff", 0).subscribe(response => {
-
-                    var windowTitle = "New Air Freight Cost";
-
-                    var logWindow = new LogitudeWindow();
-                    logWindow.Width = 850;
-                    logWindow.Height = 500;
-                    logWindow.Title = windowTitle;
-                    logWindow.WindowClosed.subscribe(($event: any) => {
-                        this.LoadQueriesCounts();
-                    });
-                    logWindow.ComponentLoaded.subscribe(comp => {
-                        comp.SetWindowArgs({ TypeCode: "AFC"});
-                    });
-                        logWindow.Show('./TariffModule/Components/NewEntity/NewAirFreightCostComponent');
-                });
+                windowTitle = "New Air Freight Cost";
+                typeCode = "AFC";
                 break;
             }
-
-            case "AS": {
-                this._entityResourceService.getEntityResourceByTableName("Tariff", 0).subscribe(response => {
-
-                    var windowTitle = "New Air Surcharges Cost";
-
-                    var logWindow = new LogitudeWindow();
-                    logWindow.Width = 850;
-                    logWindow.Height = 500;
-                    logWindow.Title = windowTitle;
-                    logWindow.WindowClosed.subscribe(($event: any) => {
-                        this.LoadQueriesCounts();
-                    });
-
-                    logWindow.ComponentLoaded.subscribe(comp => {
-                        comp.SetWindowArgs({ TypeCode: "ASC" });
-                    });
-
-                    logWindow.Show('./TariffModule/Components/NewEntity/NewAirFreightCostComponent');
-                });
+            case "OLC": {
+                windowTitle = "Ocean LCL Freight Cost";
+                typeCode = "OLC";
                 break;
             }
-
-
+            case "A": {
+                windowTitle = "New Air Surcharges Cost";
+                typeCode = "ASC";
+                break;
+            }
             case "OSC": {
-                this._entityResourceService.getEntityResourceByTableName("Tariff", 0).subscribe(response => {
-
-                    var windowTitle = "New Ocean Surcharges Cost";
-
-                    var logWindow = new LogitudeWindow();
-                    logWindow.Width = 850;
-                    logWindow.Height = 500;
-                    logWindow.Title = windowTitle;
-                    logWindow.WindowClosed.subscribe(($event: any) => {
-                        this.LoadQueriesCounts();
-                    });
-
-                    logWindow.ComponentLoaded.subscribe(comp => {
-                        comp.SetWindowArgs({ TypeCode: "OSC" });
-                    });
-
-                    logWindow.Show('./TariffModule/Components/NewEntity/NewAirFreightCostComponent');
-                });
+                windowTitle = "New Ocean Surcharges Cost";
+                typeCode = "OSC";
                 break;
             }
-
             default: {
                 break;
             }
-        }       
+        }
+
+        logWindow.Title = windowTitle;
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            this.LoadQueriesCounts();
+        });
+        logWindow.ComponentLoaded.subscribe(comp => {
+            comp.SetWindowArgs({ TypeCode: typeCode });
+        });
+        logWindow.Show('./TariffModule/Components/NewEntity/NewAirFreightCostComponent');
     }
+
     public ViewTariffs(code: string) {
 
         switch (code) {
@@ -203,9 +186,27 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
 
             case "OSC": {
                 var listArgs = new ListComponentArgs();
-                listArgs.QueryCode = "Ocean Surcharges Cost Tariffs";
+                listArgs.QueryCode = "Ocean.LCL.Surcharges.Cost";
                 listArgs.ObjectTableName = "Tariff";
                 listArgs.DisplayTitle = "Ocean Surcharges Cost";
+                listArgs.BackButtonTitle = "Tariff";
+                this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                        .then(cmpRef => {
+                            cmpRef.instance.ComponentRef = cmpRef;
+                            cmpRef.instance.Run(listArgs);
+                            cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
+                            this.CurrentSession.AddMenuReference(cmpRef);
+                        });
+                });
+                break;
+            }
+
+            case "OLC": {
+                var listArgs = new ListComponentArgs();
+                listArgs.QueryCode = "Ocean LCL Freight Cost";
+                listArgs.ObjectTableName = "Tariff";
+                listArgs.DisplayTitle = "Ocean LCL Freight Cost";
                 listArgs.BackButtonTitle = "Tariff";
                 this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                     SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)

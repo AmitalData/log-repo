@@ -44,6 +44,7 @@ namespace WebFreight.Web.DataProviders
         public string BankAccountNumber { get; set; }
         public string PaidToCode  { get; set; }
         public DateTime? CreateDate { get; set; }
+        public string BankAccountName { get; set; }
         //tenant data
         public string Signature { get; set; }
         public string TenantData { get; set; }
@@ -52,7 +53,7 @@ namespace WebFreight.Web.DataProviders
         public string FaxLable { get; set; }
         public string Phone { get; set; }
         public string Fax { get; set; }
-
+        public string Company { get; set; }
         public double? OutstandingBalance { get; set; }
         public double? TotalAmount { get; set; }
         public double? TotalPayment { get; set; }
