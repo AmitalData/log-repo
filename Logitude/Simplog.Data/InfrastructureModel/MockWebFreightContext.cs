@@ -2059,10 +2059,10 @@ namespace Simplog.Data.InfrastructureModel
             get { throw new NotImplementedException(); }
         }
 
-        public IDbSet<SchedulerLogs> SchedulerLogs
-        {
-            get { throw new NotImplementedException(); }
-        }
+        //public IDbSet<SchedulerLogs> SchedulerLogs
+        //{
+        //    get { throw new NotImplementedException(); }
+        //}
         public IDbSet<SchedulerProcedure> SchedulerProcedures
         {
             get { throw new NotImplementedException(); }
