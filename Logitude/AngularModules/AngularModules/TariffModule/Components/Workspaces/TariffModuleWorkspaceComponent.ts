@@ -120,7 +120,7 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
                 typeCode = "OLC";
                 break;
             }
-            case "A": {
+            case "AS": {
                 windowTitle = "New Air Surcharges Cost";
                 typeCode = "ASC";
                 break;
