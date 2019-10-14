@@ -174,6 +174,10 @@ export class TariffTabsContentComponent implements OnDestroy {
             this.EditTabTariffType = "SVR";
         }
 
+        if (this.EntityPM.TypeCode == "OLC") {
+            this.EditTabTariffType = "VR";
+        }
+
         this.BuildTabs();
         this.RunComponent();        
     }

@@ -7,7 +7,7 @@
         height: 164px;
         background: white;
         margin: 5px;
-        margin-left: 15px;
+        /*margin-left: 15px;*/
         float: left;
     }
 
@@ -260,7 +260,7 @@
                         <div style="overflow-y:auto;overflow-x:hidden;">
                             <!--<div *ngFor="let item1 of externalDocs" style="padding:5px;float:right;width:100%;">-->
                                 <!--<span style="font-size:16px;border-bottom:1px solid #BCBEC0;color:#1B90CB;width:100%;float:left;">{{item1.key}}</span>-->
-                                <div *ngFor="let item of externalDocs let i = index" (click)="SelectTicket(item)" class="emptyticket" [class.selectedemptyticket]="item == SelectedTicket" style="max-width:164px;margin-top:10px;direction:ltr;float:right;">
+                                <div *ngFor="let item of externalDocs let i = index" (click)="SelectTicket(item)" class="emptyticket" [class.selectedemptyticket]="item == SelectedTicket" style="max-width:164px;margin-top:10px;direction:ltr;" [style.float]="Language == 'HB' ? 'right' : 'left'">
                                     <table *ngIf="!item.hasFile" style="height:162px;">
                                         <tr>
                                             <td style="height:40px;">
@@ -387,9 +387,9 @@
             <div [class.Disable]="DimApproveButton == true || DimDenyButton == true" style="width:420px;margin-right: 5px;" [style.float]="Language == 'HB' ? 'right' : 'left'">
                 <LogCheckBox [Checked]="IsAccepted" (ValueChanged)="IsAcceptedChanged($event)" [ObjectFieldName]="'IsAccepted'" [DataContext]="DataContext" style="margin-top:2px;" [style.float]="Language == 'HB' ? 'right' : 'left'"></LogCheckBox>
                 <label *ngIf="Language == 'HB'" style="margin-right:-10px;">אני הח"מ מצהיר בזה כי אני מודע לנתונים המפורטים בהצהרת היבוא,</label><br *ngIf="Language == 'HB'" />
-                <label *ngIf="Language == 'HB'">  לתוכנם ונכונותם של הצרופות ומאשר הגשתם למכס</label>
-                <label *ngIf="Language != 'HB'">I Declare that I accept all data and documents content and</label><br *ngIf="Language != 'HB'" />
-                <label *ngIf="Language != 'HB'" style="margin-right:-25px;"> approve sending it to Customs.</label><!--<br *ngIf="Language != 'HB'" />-->
+                <label *ngIf="Language == 'HB'" style="margin-right: 24px;">  לתוכנם ונכונותם של הצרופות ומאשר הגשתם למכס</label>
+                <label *ngIf="Language != 'HB'" style="margin-left:-10px;">I Declare that I accept all data and documents content and</label><br *ngIf="Language != 'HB'" />
+                <label *ngIf="Language != 'HB'" style="margin-left: 24px;"> approve sending it to Customs.</label><!--<br *ngIf="Language != 'HB'" />-->
                 <!--<label *ngIf="Language != 'HB'" style="margin-right:23px;"> the attached declaration</label>-->
                 <!--<input type="checkbox" for="Cancel" [(ngModel)]="ShowDeleted" />
      <label style="margin-right:-10px;">אני הח"מ מצהיר בזה כי אני מודע לנתונים המפורטים בהצהרת היבוא,</label><br />

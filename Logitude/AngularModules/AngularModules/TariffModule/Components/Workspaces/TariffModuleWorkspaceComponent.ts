@@ -132,11 +132,11 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
                 break;
             }
             case "OLC": {
-                windowTitle = "Ocean LCL Freight Cost";
+                windowTitle = "New Ocean LCL Freight Cost";
                 typeCode = "OLC";
                 break;
             }
-            case "A": {
+            case "AS": {
                 windowTitle = "New Air Surcharges Cost";
                 typeCode = "ASC";
                 break;

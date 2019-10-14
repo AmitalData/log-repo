@@ -2345,6 +2345,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsDepositionRequired { get; set; }
         public string ImporterDepositionRequestDetails { get; set; }
         public bool IsShipmentComputedFieldChange { get; set; }
+        public bool IsShipmentAdditionalCloudDataChange { get; set; }
+
 
         public string PackagesTypesNames { get; set; }
         public string PackagesTypesPrintAs { get; set; }

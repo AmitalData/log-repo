@@ -466,7 +466,6 @@
     <None Include="EntityFiles\InfrastructureModel\ObjectField.lxml" />
     <None Include="EntityFiles\InfrastructureModel\ObjectTable.lxml" />
     <None Include="EntityFiles\InfrastructureModel\RatesTable.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\SchedulerLogs.lxml" />
     <None Include="EntityFiles\InfrastructureModel\SchedulerProcedure.lxml" />
     <None Include="EntityFiles\InfrastructureModel\TaskSchedulerHistory.lxml" />
     <None Include="EntityFiles\InfrastructureModel\TasksScheduler.lxml" />
@@ -581,6 +580,9 @@
     <None Include="EntityFiles\ShipmentsModel\AWBChargesCode.lxml" />
     <None Include="EntityFiles\ShipmentsModel\AWBCustomsInformation.lxml" />
     <None Include="EntityFiles\ShipmentsModel\AWBInformation.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\CustomsTransferHeader.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\CustomsTransferLine.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\CustomsTransferType.lxml" />
     <None Include="EntityFiles\ShipmentsModel\HarmonizeCode.lxml" />
     <None Include="EntityFiles\ShipmentsModel\INTTRABookingStatus.lxml" />
     <None Include="EntityFiles\ShipmentsModel\INTTRABookingTransStatus.lxml" />

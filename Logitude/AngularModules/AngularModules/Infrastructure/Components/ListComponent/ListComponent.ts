@@ -2580,7 +2580,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         windowArgs.TypeCode = "AFC";
                     }
                     else if (QueryCodeOriginal == "Ocean LCL Freight Cost")  {
-                        logWindow.Title = "New Ocean Freight Cost";
+                        logWindow.Title = "New Ocean LCL Freight Cost";
                         windowArgs.TypeCode = "OLC";
                     }
                     else {

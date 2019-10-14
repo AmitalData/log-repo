@@ -2,10 +2,12 @@
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.QueueService;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
@@ -78,24 +80,21 @@ namespace WebFreight.Web.WcfApi
 
         private string UpdateShipmentAdditionalDataFromIncomingApprovalRequest(DeclarationApprovalRequestPM declarationApprovalRequestPM,int tenant)
         {
-            ShipmentQuery ShipmentQuery = new ShipmentQuery(tenant);
-            string ShipmentId = ShipmentQuery.GetShipmentIdByShipmentNumber(declarationApprovalRequestPM.ShipmentNumber, tenant);
-            //int? ImporterTenant = ShipmentQuery.GetCustomerTenantByShipmentNumber(declarationApprovalRequestPM.ShipmentNumber, tenant);
-
-            if (!string.IsNullOrEmpty(ShipmentId))
+            string shipmentId = string.Empty;
+            ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+            ShipmentPM shipmentPM = shipmentQuery.GetSingleShipmentPMByNumber(declarationApprovalRequestPM.ShipmentNumber, tenant);
+            if (shipmentPM!=null)
             {
-                ShipmentAdditionalCloudDataRepository ShipmentAdditionalDataRepository = new ShipmentAdditionalCloudDataRepository(tenant);
-                ShipmentAdditionalCloudData ShipmentAdditionalData = ShipmentAdditionalDataRepository.GetSingleShipmentAdditionalCloudData(ShipmentId, tenant);
-                ShipmentAdditionalData.DeclarationXmlData = declarationApprovalRequestPM.DeclarationXmlData;
-                ShipmentAdditionalData.IsImporterApprovalRequried = true;
-
-
-                ShipmentAdditionalDataRepository.Update(ShipmentAdditionalData);
-                ShipmentAdditionalDataRepository.SubmitChanges();
+                shipmentPM.IsShipmentAdditionalCloudDataChange = true;
+                shipmentPM.DeclarationXMLData = declarationApprovalRequestPM.DeclarationXmlData;
+                shipmentPM.IsImporterApprovalRequired = true;
+                shipmentId = shipmentPM.Id;
+                string email =Logitude.BL.Security.SecurityUtility.GetAuthenticatedUser(tenant);
+                IShipmentsContext objectContext = ShipmentsContext.GetContext(shipmentPM.Tenant);
+                ShipmentService shipmentService = new ShipmentService(objectContext, shipmentPM, email);
+                shipmentService.Update();
             }
-          
-
-            return ShipmentId;
+            return shipmentId;
 
         }
 
