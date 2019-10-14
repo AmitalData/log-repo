@@ -96,10 +96,26 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
         });      
     }
 
+    public AirFreightCostVisibility: boolean = false;
+    public AirSurchargesCostVisibility: boolean = false;
     public OceanLCLFreightCostVisibility: boolean = false;
+    public OceanLCLSurchargesCostVisibility: boolean = false;
     SetQueriesVisibility() {
+
+        if (FeatureLocator.HasFeaturePermession("Tariff", "Tariff.Q.AirFreightCostTariffs")) {
+            this.AirFreightCostVisibility = true;
+        }
+
+        if (FeatureLocator.HasFeaturePermession("Tariff", "Tariff.Q.AirSurchargesCostTariffs")) {
+            this.AirSurchargesCostVisibility = true;
+        }
+
         if (FeatureLocator.HasFeaturePermession("Tariff", "Tariff.Q.OceanLCLFreightCost")) {
             this.OceanLCLFreightCostVisibility = true;
+        }
+
+        if (FeatureLocator.HasFeaturePermession("Tariff", "Tariff.Q.Ocean.LCL.Surcharges.Cost")) {
+            this.OceanLCLSurchargesCostVisibility = true;
         }
     }
 
