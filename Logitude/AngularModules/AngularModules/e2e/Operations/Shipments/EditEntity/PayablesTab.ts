@@ -17,8 +17,10 @@ export class PayablesTabComponent {
         this.Helper.ItemsVisibility('ATDSPayable-payable');
 
         this.AddPayableLines(shipperRef1,ShipmentType);
-        this.CreatAPInvoice(shipperRef1);
-        this.EditAPInvoice(shipperRef1);
+        this.CreatAPInvoicewithVoid(shipperRef1,true);
+        this.EditAPInvoice(shipperRef1,true);
+        this.CreatAPInvoicewithVoid(shipperRef1+'1L1',false);
+        this.EditAPInvoice(shipperRef1+'1L1',false);
 
 
 
@@ -71,7 +73,8 @@ export class PayablesTabComponent {
     }
         // return amount;
     }
-    CreatAPInvoice(shipperRef1: string) {
+    
+    CreatAPInvoicewithVoid(shipperRef1: string,Voided :boolean) {
         this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndClick('ReceiveInvoice');
 
@@ -96,22 +99,23 @@ export class PayablesTabComponent {
         this.Helper.WaitBusyIndicator();
     }
 
-        EditAPInvoice(shipperRef1: string){
+        EditAPInvoice(shipperRef1: string,Voided :boolean){
         this.Helper.WaitByIdAndFill('APInvoice_VatTypeId', 'Zero');
         this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'APInvoice_VatTypeId', 'Zero');
         this.Helper.WaitByIdAndClick('VATApplyToAll');
-
+        
         this.Helper.WaitByIdAndFill('APInvoiceLine_InvoiceCurrencyAmount', '100');
-
+        if(Voided==true){
         this.AddPayables('Order', '10', '20','Invoice');
+        
 
         /**/
         this.Helper.WaitByIdAndClick('CheckBox_0_5_LBL');
         this.Helper.WaitEditComponentBusyIndicator();
         this.Helper.WaitByIdAndFill('APInvoice_VATNumber','Lana');
+        }
         this.Helper.WaitByIdAndClick('APInvoice.B.Save');
         this.Helper.WaitShowEditComponentBusyIndicator();
-
         this.Helper.WaitEditComponentBusyIndicator();
         
         
@@ -119,23 +123,33 @@ export class PayablesTabComponent {
         this.WaitBusyIndicatorToShowandHide();
         this.WaitBusyIndicatorToShowandHide();        
         
-
+        if(Voided==true){
         this.Helper.WaitByIdAndClick('MenuButtons_1');
         this.Helper.WaitByIdAndClick('APInvoice.B.CancelApproval');
         this.WaitBusyIndicatorToShowandHide();
+       
         this.Helper.WaitByIdAndClick('MenuButtons_1');
         this.Helper.WaitByIdAndClick('APInvoice.B.Void');
         this.Helper.WaitByIdAndClick('ConfirmWindow_Yes_0');
         this.WaitBusyIndicatorToShowandHide();
-        
-
+       
+       
         this.Helper.WaitByIdAndClick('APInvoice.TH.General');
-
+        
         this.Helper.WaitByIdAndClick('EditBackbutton_1');
+        }
+        else{
+            this.Helper.WaitByIdAndClick('EditBackbutton_2');
+        }
         this.WaitBusyIndicatorToShowandHide();
-        // this.Helper.WaitBusyIndicator();
+       
+        
         
     }
+
+   
+
+
     WaitBusyIndicatorToShowandHide(){
     this.Helper.WaitShowEditComponentBusyIndicator();
     this.Helper.WaitEditComponentBusyIndicator();
