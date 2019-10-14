@@ -207,7 +207,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         byte[] data = null;
 
-                        if (tariff.TypeCode == "AFC")
+                        if (tariff.TypeCode == "AFC" || tariff.TypeCode == "OLC")
                         {
                             data = this.ExportAirFreightCostLinesToExcel(tariff, tariffVersion.TariffLines, tenant, type);
                         }
@@ -806,7 +806,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 IWorksheet sheet = workbook.Worksheets[0];
 
                 List<ExcelTariffLines> tariffLinesResult = new List<ExcelTariffLines>();
-                if (filter.TariffType == "AFC")
+                if (filter.TariffType == "AFC" || filter.TariffType == "OLC")
                 {
                     tariffLinesResult = this.BuildAirFreightCostExcelLines(sheet, authToken.Tenant, filter);
                 }
