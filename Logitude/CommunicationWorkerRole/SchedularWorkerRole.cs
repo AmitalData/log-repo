@@ -93,9 +93,9 @@ namespace CommunicationWorkerRole
             {
                 IWebFreightContext objectContext = WebFreightContext.GetContext(Tenant);
                 TaskSchedulerHistoryService TaskSchedulerHistoryService = new TaskSchedulerHistoryService(objectContext, Tenant);
-                SchedulerLogsService SchedulerLogsService = new SchedulerLogsService(objectContext, Tenant);
+                //SchedulerLogsService SchedulerLogsService = new SchedulerLogsService(objectContext, Tenant);
                 TaskSchedulerHistoryQuery TaskSchedulerHistoryQuery = new TaskSchedulerHistoryQuery(Tenant);
-                SchedulerLogsQuery SchedulerLogsQuery = new SchedulerLogsQuery(Tenant);
+                //SchedulerLogsQuery SchedulerLogsQuery = new SchedulerLogsQuery(Tenant);
                 TaskSchedulerHistoryPM TaskSchedulerHistory = new TaskSchedulerHistoryPM() { Tenant = Tenant, TaskId = Task.Id };
                 TaskSchedulerHistory.EndDateTime = TenantServerConfigration.GetCurrentDateTime(TaskSchedulerHistory.Tenant);
                 TaskSchedulerHistory.StartDateTime = TenantServerConfigration.GetCurrentDateTime(TaskSchedulerHistory.Tenant);

@@ -490,10 +490,10 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
             this.LoadData();
         }
     }
-    get InternalNotes() { return this.newARPaymentPM.InternalNotes; }
-    set InternalNotes(newValue: string) {
-        if (this.newARPaymentPM.InternalNotes != newValue) {
-            this.newARPaymentPM.InternalNotes = newValue;
+    get PrintNotes() { return this.newARPaymentPM.PrintNotes; }
+    set PrintNotes(newValue: string) {
+        if (this.newARPaymentPM.PrintNotes != newValue) {
+            this.newARPaymentPM.PrintNotes = newValue;
         }
     }
     public TodayDate: Date = new Date();

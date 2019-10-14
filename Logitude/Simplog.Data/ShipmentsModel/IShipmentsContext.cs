@@ -72,6 +72,9 @@ namespace Simplog.Data.ShipmentsModel
         IDbSet<ShipmentPackageHarmonize> ShipmentPackageHarmonizes { get; }
         IDbSet<PickUpDeliveryPackageHarmonize> PickUpDeliveryPackageHarmonizes { get; }
         IDbSet<HarmonizeCode> HarmonizeCodes { get; }
+        IDbSet<CustomsTransferType> CustomsTransferTypes { get; }
+        IDbSet<CustomsTransferLine> CustomsTransferLines { get; }
+        IDbSet<CustomsTransferHeader> CustomsTransferHeaders { get; }
 
         IQueryable<TOutput> FunctionTableValue<TOutput>(string functionName, SqlParameter[] parameters);
         IQueryable<ShipmentDataView> ShipmentSearch(string SearchFields);

@@ -6,11 +6,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class SchedulerLogsList {
-   		Id: string;
-		Tenant: number;
-		CreateDate: Date;
-		Log: string;
-		HistoryId: string;
+export class CustomsTransferTypeList {
+   		Code: string;
+		Name: string;
+		SearchFields: string;
 	
 }

@@ -8,26 +8,26 @@
 import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
-import {ApiQueryFilters} from '../../DataContracts/ApiQueryFilters';
-import {ServiceResponse} from '../../DataContracts/ServiceResponse';
-import {InfraGenericFilter} from '../../Utilities/InfraGenericFilter';
-import {CachedDataManager} from '../../Utilities/CachedDataManager';
-import {ServiceHelper} from '../../Utilities/ServiceHelper';
-import {SessionLocator} from '../../Utilities/SessionLocator';
-import {SessionInfo} from '../../Utilities/SessionInfo';
-import {LocalStorageManager} from '../../Utilities/LocalStorageManager';
-import {PerformanceLogger} from '../../Utilities/PerformanceLogger';
-import {SchedulerLogsList} from '../../EntityLists/SchedulerLogsList';
+import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
+import {InfraGenericFilter} from '../../../Infrastructure/Utilities/InfraGenericFilter';
+import {CachedDataManager} from '../../../Infrastructure/Utilities/CachedDataManager';
+import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
+import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
+import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
+import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
+import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorageManager';
+import {CustomsTransferHeaderList} from '../../EntityLists/CustomsTransferHeaderList';
 
 @Injectable()
 
-export class SchedulerLogsListService {
+export class CustomsTransferHeaderListService {
 	private _http: Http;
     private _apiUrl: string;   
-	public static CachedData: Array<SchedulerLogsList> = [];
+	public static CachedData: Array<CustomsTransferHeaderList> = [];
     constructor() {
         this._http = ServiceHelper.Http;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/schedulerlogsviews';  
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/customstransferheaderviews';  
     }
 
     getSingle(id: string) {
@@ -40,7 +40,7 @@ export class SchedulerLogsListService {
 
                 var list = response.json();
                     
-                var entity: SchedulerLogsList;
+                var entity: CustomsTransferHeaderList;
 				if(list)
 				{
                    entity = this.MapJsonToEntityList(list);
@@ -51,7 +51,7 @@ export class SchedulerLogsListService {
                 serviceResponse.Result = entity;  
 				serviceResponse.CallTime = callTime;
                 var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "SchedulerLogs", "GetSingleList", 'id=' + id); 
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CustomsTransferHeader", "GetSingleList", 'id=' + id); 
 
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
@@ -67,11 +67,11 @@ export class SchedulerLogsListService {
             return this._http.get(this._apiUrl+'/getall', { headers: authHeader }).map(response => {
 
               var allLists = response.json();
-              var _mappedListsArray: Array< SchedulerLogsList> = [];
+              var _mappedListsArray: Array< CustomsTransferHeaderList> = [];
 		      if(allLists)
 			  {
 				for (var key in  allLists) {				
-				   var entity: SchedulerLogsList;
+				   var entity: CustomsTransferHeaderList;
                    entity = this.MapJsonToEntityList(allLists[key]);
 				   _mappedListsArray.push(entity);
 				 }
@@ -82,7 +82,7 @@ export class SchedulerLogsListService {
                 serviceResponse.Result = _mappedListsArray;
 				serviceResponse.CallTime = callTime;
                 var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "SchedulerLogs", "GetAllLists", ""); 
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CustomsTransferHeader", "GetAllLists", ""); 
 
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
@@ -132,12 +132,12 @@ export class SchedulerLogsListService {
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = response.json();
-                var _mappedListsArray: Array< SchedulerLogsList> = [];
+                var _mappedListsArray: Array< CustomsTransferHeaderList> = [];
 				if(serviceResponse.Result)
 				{
                 for (var key in serviceResponse.Result) {
 				
-				   var entity: SchedulerLogsList;
+				   var entity: CustomsTransferHeaderList;
                    entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
 				   _mappedListsArray.push(entity);
 
@@ -147,7 +147,7 @@ export class SchedulerLogsListService {
                 serviceResponse.Result = _mappedListsArray;       
 				serviceResponse.CallTime = callTime;
                 var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "SchedulerLogs", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CustomsTransferHeader", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
 				           
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
@@ -157,8 +157,8 @@ export class SchedulerLogsListService {
 	
 	    MapJsonToEntityList(jsonList: any) {
        
-            var entityList: SchedulerLogsList;
-            entityList = new SchedulerLogsList();
+            var entityList: CustomsTransferHeaderList;
+            entityList = new CustomsTransferHeaderList();
             var jsonListKeys = Object.keys(jsonList);
 
             for (var key in jsonListKeys) {
