@@ -581,6 +581,9 @@
     <None Include="EntityFiles\ShipmentsModel\AWBChargesCode.lxml" />
     <None Include="EntityFiles\ShipmentsModel\AWBCustomsInformation.lxml" />
     <None Include="EntityFiles\ShipmentsModel\AWBInformation.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\CustomsTransferHeader.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\CustomsTransferLine.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\CustomsTransferType.lxml" />
     <None Include="EntityFiles\ShipmentsModel\HarmonizeCode.lxml" />
     <None Include="EntityFiles\ShipmentsModel\INTTRABookingStatus.lxml" />
     <None Include="EntityFiles\ShipmentsModel\INTTRABookingTransStatus.lxml" />
