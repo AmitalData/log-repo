@@ -15,7 +15,7 @@ export class PayablesTabComponent {
         this.Helper.WaitByIdAndClick('Shipment.TH.Payables');
         this.Helper.WaitEditComponentBusyIndicator();
         this.Helper.ItemsVisibility('ATDSPayable-payable');
-
+        
         this.AddPayableLines(shipperRef1,ShipmentType);
         this.CreatAPInvoicewithVoid(shipperRef1,true);
         this.EditAPInvoice(shipperRef1,true);
@@ -43,7 +43,7 @@ export class PayablesTabComponent {
 
     AddPayables(ChargeType: string, quantity: any, unitPrice: any, Source :String) {
        // var amount: any = 0;
-
+       this.Helper.WaitBusyIndicator();
        if(Source == "Shipment"){
         this.Helper.WaitByIdAndClick('AddPayable');
         
@@ -88,8 +88,9 @@ export class PayablesTabComponent {
         this.Helper.WaitByIdAndFill('APInvoice_AmountInInvoiceCurrency', '100');
         this.Helper.WaitByIdAndFill('APInvoice_InvoiceCurrencyId', 'EUR');
         this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'APInvoice_InvoiceCurrencyId', 'EUR');
-
-        this.Helper.WaitByIdAndFill('date_APInvoice_InvoiceDate', '.');
+        var TodayDate=new Date().getDate();
+        console.log(TodayDate);
+        this.Helper.WaitByIdAndFill('date_APInvoice_InvoiceDate',TodayDate.toString() );
 
         this.Helper.WaitByIdAndFill('APInvoice_PaymentTermId', 'cash');
         this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'APInvoice_PaymentTermId', 'cash');
