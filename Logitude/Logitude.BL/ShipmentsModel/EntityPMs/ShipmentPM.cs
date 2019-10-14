@@ -2354,6 +2354,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool ConvertShipmentToFCL { get; set; }
 
         public bool ShipmentDirectionConverted { get; set; }
+        public bool ShipmentConvertedNewNumber { get; set; }
         public bool FromCountryIsEC { get; set; }
         public bool ToCountryIsEC { get; set; }
         public bool PackagesDeleted { get; set; }

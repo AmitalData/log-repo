@@ -918,6 +918,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             // AR: Auto Credited
             // VD: Void
 
+            entityPM.IsFullAccounting = IsFullAccountingActivated(entityPM.Tenant);
+
             if (string.IsNullOrEmpty(entityPM.Id))
             {
                 entityPM.Id = IdCounter.GetNumber("ARInvoice", entityPM.Tenant).ToString();

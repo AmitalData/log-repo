@@ -477,6 +477,12 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                         string fieldLabel = TranslateTextsClass.Translate("ARInvoice.F.InvoiceCurrencyExchangeRate", entityPM.Tenant);
                         throw new ApplicationException("Can't update " + fieldLabel);
                     }
+
+                    if (entityPM.AmountInInvoiceCurrency != entityPOCO.AmountInInvoiceCurrency)
+                    {
+                        string fieldLabel = TranslateTextsClass.Translate("ARInvoice.F.AmountInInvoiceCurrency", entityPM.Tenant);
+                        throw new ApplicationException("Can't update " + fieldLabel);
+                    }
                 }
             }
         }

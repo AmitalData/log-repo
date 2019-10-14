@@ -55,7 +55,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                     entityPM.ComputedShipmentNumber = entityPM.ShipmentNumber;
                 }
 
-
                 if (entityPoco.DirectionId == "C")
                 {
                     entityPM.ProductCode = "CI";
@@ -79,6 +78,24 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 if (entityPM.ConvertToCustomFile)
                 {
                     entityPoco.DirectionId = entityPM.DirectionId;
+                }
+
+                if (entityPM.ShipmentDirectionConverted)
+                {
+                    entityPoco.DirectionId = entityPM.DirectionId;
+                    entityPM.ShipmentDirectionConverted = false;
+                }
+
+                if (entityPM.ShipmentConvertedNewNumber)
+                {
+                    entityPoco.ShipmentNumber = entityPM.ShipmentNumber;
+
+                    if (entityPM.ShipmentLevelCode == "D" || entityPM.ShipmentLevelCode == "C")
+                    {
+                        entityPM.ComputedShipmentNumber = entityPM.ShipmentNumber;
+                    }
+
+                    entityPM.ShipmentConvertedNewNumber = false;
                 }
             }
 
@@ -430,12 +447,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
             entityPoco.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
             entityPM.ConcurrencyGUID = entityPoco.ConcurrencyGUID;
-
-            if (entityPM.ShipmentDirectionConverted)
-            {
-                entityPoco.DirectionId = entityPM.DirectionId;
-                entityPM.ShipmentDirectionConverted = false;
-            }
             
             entityPM.PackagesDeleted = false;            
 

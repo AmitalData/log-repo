@@ -363,7 +363,7 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new SharedUserQueryMap());
             modelBuilder.Configurations.Add(new DWCategoriesMap());
             modelBuilder.Configurations.Add(new DWObjectFieldCategoriesMap());
-            modelBuilder.Configurations.Add(new SchedulerLogsMap());
+            //modelBuilder.Configurations.Add(new SchedulerLogsMap());
             modelBuilder.Configurations.Add(new SchedulerProcedureMap());
 
             modelBuilder.Entity<ObjectTable>().HasOptional(p => p.MainTip).WithMany();
@@ -821,11 +821,11 @@ namespace Simplog.Data.InfrastructureModel
             set;
         }
 
-        public IDbSet<SchedulerLogs> SchedulerLogs
-        {
-            get;
-            set;
-        }
+        //public IDbSet<SchedulerLogs> SchedulerLogs
+        //{
+        //    get;
+        //    set;
+        //}
 
         public IDbSet<SchedulerProcedure> SchedulerProcedures
         {

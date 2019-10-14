@@ -33,7 +33,6 @@ export class GeneralEmailSender {
     DocumentTypeLists: DocumentTypeList[];
     EntityPM: any;
     ToSpecificeEmail: string = "";
-    ExportQuotationsToIntegratedSystem: boolean;
     Subject: string;
     Replyto: string;
     From: string;
@@ -61,7 +60,7 @@ export class GeneralEmailSender {
         this.IsCrm = isCrm;
         this.EventTypeCode = eventTypeCode;
         this.ToSpecificeEmail = "";
-        this.ExportQuotationsToIntegratedSystem = false;
+
     }
 
 
@@ -217,7 +216,7 @@ export class GeneralEmailSender {
         SelectedInternalDocument.EventRefreshName = this.EventRefreshName;
         SelectedInternalDocument.AttachmentsLists = this.Attachments;
         SelectedInternalDocument.ToSpecificeEmail = this.ToSpecificeEmail;
-        SelectedInternalDocument.ExportQuotationsToIntegratedSystem = this.ExportQuotationsToIntegratedSystem;
+
 
         var logWindow = new LogitudeWindow();
         logWindow.Width = sendWindowWidth;
