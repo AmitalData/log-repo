@@ -332,44 +332,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        public HttpResponseMessage PutExportBIReportToExcelByWR(BIReportXMLData bIReportXMLData)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-                BIReportsExecutionLogRepository reportExecutionLogRepository = new BIReportsExecutionLogRepository(tenant);
-                BIReportsExecutionLog bIReportExecutionLog = new BIReportsExecutionLog()
-                {
-                    Id = IdCounter.GetNumber("BIReportsExecutionLog", tenant),
-                    CreateDate = DateTime.Now,
-                    CreatedByUserId = bIReportXMLData.UserId,
-                    ReportFilterXML = LogitudeXmlSerializer.SerializeObjectToXmlString(bIReportXMLData),
-                    Tenant = tenant,
-                    StatusCode = "W",
-                    BIReportId = bIReportXMLData.BIReportId,
-                };
-                reportExecutionLogRepository.Add(bIReportExecutionLog);
-                reportExecutionLogRepository.SubmitChanges();
-                IQueueService queueservice = new DbQueueService();
-                queueservice.InitializeQueue("BIReportsExecutionLogQueue", bIReportExecutionLog.Tenant);
-                queueservice.Send(new Dictionary<string, string>() {
-                    { "BIReportExecutionLogId", bIReportExecutionLog.Id },
-                    { "Tenant", bIReportExecutionLog.Tenant.ToString() }
-                }, null, null, null, null);
-
-                return Request.CreateResponse(HttpStatusCode.OK, bIReportXMLData);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
         public HttpResponseMessage GetBIReportLogStatus(string reportId)
         {
             try
