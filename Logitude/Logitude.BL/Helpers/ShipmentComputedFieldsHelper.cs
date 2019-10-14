@@ -2,6 +2,7 @@
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
@@ -24,7 +25,7 @@ namespace Logitude.BL.Helpers
             if (shipmentComputedFields != null)
             {
                 bool isSaveShipmentComputedFields = false;
-                if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1")
+                if (EntityChangeHelper.IsShowLogBoxAutomationFields())
                 {
                     ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(shipmentComputedFields.Tenant);
                     ShipmentComputedFields oldShipmentCompField = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(shipmentComputedFields.Id, shipmentComputedFields.Tenant);

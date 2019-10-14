@@ -196,11 +196,11 @@ namespace WebFreight.Web.MetaDataUpdate
                             updateClass.LoadHelpResources();
                             updateClass.CreateMasterCounter(0);
                             updateClass.LoadEmailAlertSettings();
-                            if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1")
+                            if (EntityChangeHelper.IsShowLogBoxAutomationFields())
                             {
                                 updateClass.UpdateShipmentLogboxAuomationObjectFields(context);
                             }
-                         
+                    
 
                             break;
                         }
@@ -429,7 +429,7 @@ namespace WebFreight.Web.MetaDataUpdate
                             ShipmentsModelUpdateClass shipmentModelUpdateClass = new ShipmentsModelUpdateClass();
                             shipmentModelUpdateClass.LoadObjectsTenantZero(context);
 
-                            if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1")
+                            if (EntityChangeHelper.IsShowLogBoxAutomationFields())
                             {
                                 MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
                                 updateClass.UpdateShipmentLogboxAuomationObjectFields(context);

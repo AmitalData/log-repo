@@ -3064,9 +3064,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         shipmentAdditionalCloudData.DenyReason = null;
                         shipmentAdditionalCloudData.VersionApproved = null;
                         if (loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
-                        { 
+                        {
                             AddImporterApprovalReceivedQueue();
                         }
+                    }
+                    else if (entityPM.IsShipmentAdditionalCloudDataChange)
+                    {
+                        shipmentAdditionalCloudData.DeclarationXmlData = entityPM.DeclarationXMLData;
+                        shipmentAdditionalCloudData.IsImporterApprovalRequried = entityPM.IsImporterApprovalRequired;
                     }
 
                     if (entityPM.DeclarationWCOXml != shipmentAdditionalCloudData.DeclarationWCOXml && !string.IsNullOrEmpty(entityPM.DeclarationWCOXml))
