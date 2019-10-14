@@ -15,10 +15,12 @@ export class PayablesTabComponent {
         this.Helper.WaitByIdAndClick('Shipment.TH.Payables');
         this.Helper.WaitEditComponentBusyIndicator();
         this.Helper.ItemsVisibility('ATDSPayable-payable');
-
+        
         this.AddPayableLines(shipperRef1,ShipmentType);
-        this.CreatAPInvoice(shipperRef1);
-        this.EditAPInvoice(shipperRef1);
+        this.CreatAPInvoicewithVoid(shipperRef1,true);
+        this.EditAPInvoice(shipperRef1,true);
+        this.CreatAPInvoicewithVoid(shipperRef1+'1L1',false);
+        this.EditAPInvoice(shipperRef1+'1L1',false);
 
 
 
@@ -41,7 +43,7 @@ export class PayablesTabComponent {
 
     AddPayables(ChargeType: string, quantity: any, unitPrice: any, Source :String) {
        // var amount: any = 0;
-
+       this.Helper.WaitBusyIndicator();
        if(Source == "Shipment"){
         this.Helper.WaitByIdAndClick('AddPayable');
         
@@ -71,7 +73,8 @@ export class PayablesTabComponent {
     }
         // return amount;
     }
-    CreatAPInvoice(shipperRef1: string) {
+    
+    CreatAPInvoicewithVoid(shipperRef1: string,Voided :boolean) {
         this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndClick('ReceiveInvoice');
 
@@ -85,8 +88,9 @@ export class PayablesTabComponent {
         this.Helper.WaitByIdAndFill('APInvoice_AmountInInvoiceCurrency', '100');
         this.Helper.WaitByIdAndFill('APInvoice_InvoiceCurrencyId', 'EUR');
         this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'APInvoice_InvoiceCurrencyId', 'EUR');
-
-        this.Helper.WaitByIdAndFill('date_APInvoice_InvoiceDate', '.');
+        var TodayDate=new Date().getDate();
+        console.log(TodayDate);
+        this.Helper.WaitByIdAndFill('date_APInvoice_InvoiceDate',TodayDate.toString() );
 
         this.Helper.WaitByIdAndFill('APInvoice_PaymentTermId', 'cash');
         this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'APInvoice_PaymentTermId', 'cash');
@@ -96,22 +100,23 @@ export class PayablesTabComponent {
         this.Helper.WaitBusyIndicator();
     }
 
-        EditAPInvoice(shipperRef1: string){
+        EditAPInvoice(shipperRef1: string,Voided :boolean){
         this.Helper.WaitByIdAndFill('APInvoice_VatTypeId', 'Zero');
         this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'APInvoice_VatTypeId', 'Zero');
         this.Helper.WaitByIdAndClick('VATApplyToAll');
-
+        
         this.Helper.WaitByIdAndFill('APInvoiceLine_InvoiceCurrencyAmount', '100');
-
+        if(Voided==true){
         this.AddPayables('Order', '10', '20','Invoice');
+        
 
         /**/
         this.Helper.WaitByIdAndClick('CheckBox_0_5_LBL');
         this.Helper.WaitEditComponentBusyIndicator();
         this.Helper.WaitByIdAndFill('APInvoice_VATNumber','Lana');
+        }
         this.Helper.WaitByIdAndClick('APInvoice.B.Save');
         this.Helper.WaitShowEditComponentBusyIndicator();
-
         this.Helper.WaitEditComponentBusyIndicator();
         
         
@@ -119,23 +124,33 @@ export class PayablesTabComponent {
         this.WaitBusyIndicatorToShowandHide();
         this.WaitBusyIndicatorToShowandHide();        
         
-
+        if(Voided==true){
         this.Helper.WaitByIdAndClick('MenuButtons_1');
         this.Helper.WaitByIdAndClick('APInvoice.B.CancelApproval');
         this.WaitBusyIndicatorToShowandHide();
+       
         this.Helper.WaitByIdAndClick('MenuButtons_1');
         this.Helper.WaitByIdAndClick('APInvoice.B.Void');
         this.Helper.WaitByIdAndClick('ConfirmWindow_Yes_0');
         this.WaitBusyIndicatorToShowandHide();
-        
-
+       
+       
         this.Helper.WaitByIdAndClick('APInvoice.TH.General');
-
+        
         this.Helper.WaitByIdAndClick('EditBackbutton_1');
+        }
+        else{
+            this.Helper.WaitByIdAndClick('EditBackbutton_2');
+        }
         this.WaitBusyIndicatorToShowandHide();
-        // this.Helper.WaitBusyIndicator();
+       
+        
         
     }
+
+   
+
+
     WaitBusyIndicatorToShowandHide(){
     this.Helper.WaitShowEditComponentBusyIndicator();
     this.Helper.WaitEditComponentBusyIndicator();

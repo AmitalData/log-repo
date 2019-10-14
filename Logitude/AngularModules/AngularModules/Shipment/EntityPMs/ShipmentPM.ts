@@ -4256,6 +4256,10 @@ export class ShipmentPM {
     public get ShipmentDirectionConverted() { return this.shipmentDirectionConverted; }
     public set ShipmentDirectionConverted(newValue: boolean) { if (this.shipmentDirectionConverted != newValue) { this.shipmentDirectionConverted = newValue; this.MarkAsDirty("ShipmentDirectionConverted"); } }
 
+    private shipmentConvertedNewNumber: boolean;
+    public get ShipmentConvertedNewNumber() { return this.shipmentConvertedNewNumber; }
+    public set ShipmentConvertedNewNumber(newValue: boolean) { if (this.shipmentConvertedNewNumber != newValue) { this.shipmentConvertedNewNumber = newValue; this.MarkAsDirty("ShipmentConvertedNewNumber"); } }
+
     private packagesDeleted: boolean;
     public get PackagesDeleted() { return this.packagesDeleted; }
     public set PackagesDeleted(newValue: boolean) { if (this.packagesDeleted != newValue) { this.packagesDeleted = newValue; this.MarkAsDirty("PackagesDeleted"); } }

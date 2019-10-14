@@ -120,10 +120,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-				if (LogitudeSettings.DeploymentStage == "Dev")
-				{
-					myResult.IsCounterUsed = false;
-				}
+                if (LogitudeSettings.DeploymentStage == "Dev")
+                {
+                    myResult.IsCounterUsed = false;
+                }
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
@@ -191,7 +191,69 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        public HttpResponseMessage GetCounterProperties(string counterCode)
+        {
+            // SHIP
+            // MAST
 
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            int tenant = authToken.Tenant;
+
+            SecurityUtility.AuthenticationOnTenant(tenant);
+
+            CounterProperties myResult = new CounterProperties();
+
+            if (!string.IsNullOrEmpty(counterCode))
+            {
+                IWebFreightContext context = WebFreightContext.GetContext(tenant);
+
+                Counter iCounter = (from d in context.Counters where d.Tenant == tenant && d.Code.ToLower() == counterCode.ToLower() select d).FirstOrDefault();
+                if (iCounter != null)
+                {
+                    myResult.CounterId = iCounter.Id;
+
+                    int myGroupbyCount = (from d in context.CounterDefinitions
+                                         where d.CounterId == iCounter.Id
+                                         group d by d.Prefix into g
+                                         select g).Count();
+
+                    switch (myGroupbyCount)
+                    {
+                        case 1:
+                            {
+                                myResult.SameForAllDirectios = true;
+                                myResult.SameForAllTransports = true;
+                                break;
+                            }
+
+                        case 2:
+                        case 3:
+                            {
+                                myResult.SameForAllDirectios = true;
+                                myResult.SameForAllTransports = false;
+                                break;
+                            }
+
+                        case 4:
+                            {
+                                myResult.SameForAllDirectios = false;
+                                myResult.SameForAllTransports = true;
+                                break;
+                            }
+
+                        default:
+                            {
+                                myResult.SameForAllDirectios = false;
+                                myResult.SameForAllTransports = false;
+                                break;
+                            }
+                    }
+                }
+            }
+            
+            return Request.CreateResponse(HttpStatusCode.OK, myResult);
+        }
     }
 
     public class CounterAPIHelper
@@ -202,5 +264,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public CounterPM CounterPM { get; set; }
         public List<TenantSettingPM> TenantSettings { get; set; }
         public List<CounterDefinitionPM> CounterDefinitions { get; set; }
+    }
+
+    public class CounterProperties
+    {
+        public string CounterId { get; set; }
+        public bool SameForAllDirectios { get; set; }
+        public bool SameForAllTransports { get; set; }
     }
 }
