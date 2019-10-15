@@ -299,7 +299,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-
+        [ActionName("PutExportBIReportToExcel")]
         public HttpResponseMessage PutExportBIReportToExcel(BIReportXMLData bIReportXMLData)
         {
             try

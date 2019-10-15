@@ -18,6 +18,10 @@ using WebFreight.Web.Helpers;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.BL.Helpers;
+using System.Web;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.Repositories;
+
 namespace WebFreight.Web.ReportsWebServices
 { 
     /// <summary>
@@ -52,9 +56,10 @@ namespace WebFreight.Web.ReportsWebServices
             APInvoicePaymentRepository invoicePaymentRep = new APInvoicePaymentRepository(invoiceCotnext);
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             IWebFreightContext webFreighContext = WebFreightContext.GetContext(tenant);
-            APPayment currentPayment = paymentRep.GetSingleAPPayment(paymentId);
+            APPayment currentPayment = paymentRep.GetSingleAPPayment(paymentId, tenant);
             AddressRepository addressRepository = new AddressRepository(tenant);
-
+            Contact loggedContact = GetLoggedContact(tenant);
+            BankAccount bankAccount = GetBankAccountById(currentPayment.BankAccountId, currentPayment.Tenant);
             if (currentPayment != null)
             {
                 Tenant tenantSettings = (from a in commonContext.Tenants
@@ -64,7 +69,21 @@ namespace WebFreight.Web.ReportsWebServices
                 ObjectTable currentObjectTable = (from obj in webFreighContext.ObjectTables
                                       where obj.Name == "APPayment" 
                                       select obj).FirstOrDefault();
+                apPaymentDataProvider.CreateDate = currentPayment.CreateDate;
+               
+                if(bankAccount != null)
+                {
+                    if (loggedContact.DontShowLocalLabels)
+                    {
+                        apPaymentDataProvider.BankAccountName  = bankAccount.EnglishName;
+                    }
+                    else
+                    {
+                        apPaymentDataProvider.BankAccountName = bankAccount.LocalName;
+                    }
 
+                }
+             
                 // tenant data
                 if (tenantSettings != null)
                 {
@@ -95,6 +114,7 @@ namespace WebFreight.Web.ReportsWebServices
                         apPaymentDataProvider.FaxLable = address.FaxNumber != null ? "Fax:" : "";
                         apPaymentDataProvider.Fax = address.FaxNumber != null ? address.FaxNumber : "";
                         apPaymentDataProvider.TenantData = (tenantSettings.Company != null ? tenantSettings.Company : "") + Environment.NewLine + DataProviders.General.GetAddress(address);
+                        apPaymentDataProvider.Company = tenantSettings.Company != null ? tenantSettings.Company : ""; ;
                     }
 
                     else
@@ -135,13 +155,14 @@ namespace WebFreight.Web.ReportsWebServices
                         apPaymentDataProvider.IBANNumber = paidToCard.IBANNumber;
                         apPaymentDataProvider.Swift = paidToCard.Swift;
                         apPaymentDataProvider.AccountNumber = GetPartnerAccountNumber(paidToCard);
-                         
+                        apPaymentDataProvider.PaidToCode = paidToCard.Code;
+                     
                         Address address = addressRepository.GetSingleAddress(currentPayment.VendorAddressId, tenant);
                         if (address != null)
                         {
                             apPaymentDataProvider.PaidToAddress = DataProviders.General.GetAddress(address);
 
-                            if (address.IsLocalLanguage)
+                            if (!loggedContact.DontShowLocalLabels)
                             {
                                 if (!string.IsNullOrEmpty(paidToCard.LocalName))
                                 {
@@ -226,13 +247,14 @@ namespace WebFreight.Web.ReportsWebServices
                     if (paymentCurrency != null)
                     {
                         apPaymentDataProvider.PaymentCurrencyCode = paymentCurrency.Code;
+                        apPaymentDataProvider.PaymentCurrencyName = paymentCurrency.LocalName;
                     }
 
                     //print notes
                     apPaymentDataProvider.PrintNotes = currentPayment.PrintNotes != null ? currentPayment.PrintNotes : "";
 
                     //Issued By User 
-                    User createByUserId = (from user in commonContext.Users
+                    User createByUserId = (from user in commonContext.Users.Include("Contact")
                                            where user.Id == currentPayment.CreatedByUserId
                                            select user).FirstOrDefault();
                     if (createByUserId != null)
@@ -240,9 +262,18 @@ namespace WebFreight.Web.ReportsWebServices
                         Contact contact = createByUserId.Contact;
                         if (contact != null)
                         {
-                            apPaymentDataProvider.IssuedByUserName = contact.EnglishName != null ? contact.EnglishName : "";
+                            if (loggedContact.DontShowLocalLabels)
+                            {
+                                apPaymentDataProvider.IssuedByUserName = contact.EnglishName != null ? contact.EnglishName : "";
+                            }
+                            else
+                            {
+                                apPaymentDataProvider.IssuedByUserName = contact.LocalName != null ? contact.LocalName : "";
+                            }
                         }
                     }
+
+                 
 
                     if (currentPayment.PaymentMethod != null)
                     {
@@ -261,7 +292,11 @@ namespace WebFreight.Web.ReportsWebServices
                             apPaymentDataProvider.Account = currentPayment.Account != null ? currentPayment.Account : "";
                         }
                     }
-
+                    else
+                    {
+                        apPaymentDataProvider = SetDataProviderbankFields(currentPayment, apPaymentDataProvider);
+                    }
+                    
                     apPaymentDataProvider.ValueDate = currentPayment.ValueDate;
 
                     if (!string.IsNullOrEmpty(currentPayment.BranchId))
@@ -271,6 +306,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                         if (branch != null)
                         {
+                            apPaymentDataProvider.BranchName = branch.LocalName;
                             if (!string.IsNullOrEmpty(branch.AddressId))
                             {
                                 Address branchAddress = addressRepository.GetSingleAddress(branch.AddressId, tenant);
@@ -335,6 +371,44 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
          return apPaymentDataProvider;
+        }
+
+        private APPaymentDataProvider SetDataProviderbankFields(APPayment payment, APPaymentDataProvider apPaymentDataProvider)
+        {
+            if (payment.AccountingPaymentMethod != null)
+            {
+                if (payment.AccountingPaymentMethod.Code == "CA")
+                {
+                    apPaymentDataProvider.ChequeOrPaymentRef = "Cash";
+                    apPaymentDataProvider.Bank = "Cash";
+                    apPaymentDataProvider.Branch = "Cash";
+                    apPaymentDataProvider.Account = "Cash";
+                }
+                else
+                {
+                    apPaymentDataProvider.ChequeOrPaymentRef = payment.ChequeOrPaymentRef != null ? payment.ChequeOrPaymentRef : "";
+                    apPaymentDataProvider.Bank = payment.Bank != null ? payment.Bank : "";
+                    apPaymentDataProvider.Branch = payment.BankBranch != null ? payment.BankBranch : "";
+                    apPaymentDataProvider.Account = payment.Account != null ? payment.Account : "";
+                }
+            }
+            return apPaymentDataProvider;
+
+        }
+        private Contact GetLoggedContact(int tenant)
+        {
+
+            string email = HttpContext.Current.User.Identity.Name;
+            ContactRepository contactRepository = new ContactRepository(tenant);
+            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
+            return loggedContact;
+        }
+        private BankAccount GetBankAccountById(string bankId, int tenant)
+        {
+            BankAccountRepository bankRepository = new BankAccountRepository(tenant);
+            BankAccount bankAccount = bankRepository.GetSingleBankAccount(bankId, tenant);
+            return bankAccount;
+
         }
 
         private string GetPartnerAccountNumber(Card card)
