@@ -5,7 +5,7 @@
         </td>
     </tr>
 
-    <tr *ngIf="TariffType == 'AFC'">
+    <tr *ngIf="TariffType == 'AFC' || TariffType == 'OLC'">
         <td>
             <table>
                 <!-- StartDate -->
@@ -50,7 +50,7 @@
         </td>
     </tr>
 
-    <tr *ngIf="TariffType == 'ASC'">
+    <tr *ngIf="TariffType == 'ASC' || TariffType == 'OSC' ">
         <td>
             <table>
                 <tr style="height:1px;">

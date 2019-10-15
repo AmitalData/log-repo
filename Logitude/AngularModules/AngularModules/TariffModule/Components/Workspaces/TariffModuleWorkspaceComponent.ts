@@ -13,6 +13,7 @@ import { BatchTaskExecutionList } from '../../../Infrastructure/EntityLists/Batc
 import { AppTool } from '../../../Infrastructure/Tools';
 import { DocumentsFilingExtendedPMService } from '../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
+import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 
 declare var ResultAsArray: any;
 
@@ -142,7 +143,7 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
                 break;
             }
             case "OSC": {
-                windowTitle = "New Ocean Surcharges Cost";
+                windowTitle = "New " + TextCodeTranslator.Translate("Tariff.Q.Ocean.LCL.Surcharges.Cost");
                 typeCode = "OSC";
                 break;
             }
@@ -204,7 +205,7 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
                 var listArgs = new ListComponentArgs();
                 listArgs.QueryCode = "Ocean.LCL.Surcharges.Cost";
                 listArgs.ObjectTableName = "Tariff";
-                listArgs.DisplayTitle = "Ocean Surcharges Cost";
+                listArgs.DisplayTitle = TextCodeTranslator.Translate("Tariff.Q.Ocean.LCL.Surcharges.Cost");
                 listArgs.BackButtonTitle = "Tariff";
                 this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                     SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)

@@ -17,6 +17,7 @@ export class AddEditTariffLineComponent  {
     public DataContext: any;
     public ObjectTableName: string = "TariffLine";
     private CurrentSession = SessionLocator.SelectedSession;
+
     public ValidationErrorsList: string[];
     public OriginDependencyFilterValue: string = "A";
     public DestinationDependencyFilterValue = "A";
@@ -34,7 +35,7 @@ export class AddEditTariffLineComponent  {
     }
 
     SetOriginDependencyFilterValue() {
-        if (this.TariffType == "OLC") {
+        if (this.TariffType == "OLC" || this.TariffType == "OSC") {
             this.OriginDependencyFilterValue = "O";
             this.DestinationDependencyFilterValue = "O";
         }
@@ -86,7 +87,7 @@ export class AddEditTariffLineComponent  {
             }
         }
 
-        else if (this.TariffType == "ASC") {
+        else if (this.TariffType == "ASC" || this.TariffType == "OSC") {
             if (AppTool.IsNullOrEmpty(this.DataContext.DestinationPortId) && !this.DataContext.IsToAllOtherPorts) {
                 errors.push("To port or To All Other Ports is required");
             }
@@ -137,7 +138,7 @@ export class AddEditTariffLineComponent  {
             this.myCloner.AddField('Step8Price');            
         }
 
-        else if (this.TariffType == "ASC") {
+        else if (this.TariffType == "ASC" || this.TariffType == "OSC") {
             this.myCloner.AddField('Surcharge1Price');
             this.myCloner.AddField('Surcharge2Price');
             this.myCloner.AddField('Surcharge3Price');

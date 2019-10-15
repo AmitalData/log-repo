@@ -16,6 +16,7 @@ export class ChoosePortComponent extends BaseComponent {
     public UpdateClass: DestinationClass;
     public ObjectTableName = "Tariff";
     public ForceFocus: any;
+    public OriginDependencyFilterValue: string = "A";
 
     public ValidationErrorsList: string[] = [];
     constructor() {
@@ -23,7 +24,15 @@ export class ChoosePortComponent extends BaseComponent {
     }
 
     SetDataContext(dataContext: DestinationClass) {
-        this.UpdateClass = dataContext;        
+        this.UpdateClass = dataContext;
+        this.SetOriginDependencyFilterValue();
+    }
+
+
+    SetOriginDependencyFilterValue() {
+        if (this.UpdateClass.fatherComponent.EntityPM.EntityParentPM.TypeCode == "OLC" || this.UpdateClass.fatherComponent.EntityPM.EntityParentPM.TypeCode == "OSC") {
+            this.OriginDependencyFilterValue = "O";
+        }
     }
 
 

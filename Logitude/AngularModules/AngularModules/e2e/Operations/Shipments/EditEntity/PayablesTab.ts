@@ -43,8 +43,8 @@ export class PayablesTabComponent {
 
     AddPayables(ChargeType: string, quantity: any, unitPrice: any, Source :String) {
        // var amount: any = 0;
-       this.Helper.WaitBusyIndicator();
-       this.Helper.WaitBusyIndicator();
+       //this.WaitBusyIndicatorToShowandHide();
+       this.Helper.WaitEditComponentBusyIndicator();
        if(Source == "Shipment"){
         this.Helper.WaitByIdAndClick('Add');
         
@@ -78,9 +78,14 @@ export class PayablesTabComponent {
     }
     
     CreatAPInvoicewithVoid(shipperRef1: string,Voided :boolean) {
+       
+        if(Voided==true){
+        this.Helper.WaitByIdAndClick('Shipment-Save');
         this.WaitBusyIndicatorToShowandHide();
+        }
+        
         this.Helper.WaitByIdAndClick('ReceiveInvoice');
-
+        this.Helper.WaitEditComponentBusyIndicator();
 
         this.Helper.WaitByIdAndFill('APInvoice_VendorId', 'TestAgentExport1');
         this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'APInvoice_VendorId', 'TestAgentExport1');
@@ -121,8 +126,7 @@ export class PayablesTabComponent {
         this.Helper.WaitByIdAndFill('APInvoice_VATNumber','Lana');
         }
         this.Helper.WaitByIdAndClick('APInvoice.B.Save');
-        this.Helper.WaitShowEditComponentBusyIndicator();
-        this.Helper.WaitEditComponentBusyIndicator();
+        this.WaitBusyIndicatorToShowandHide();
         
         
         this.Helper.WaitByIdAndClick('APInvoice.B.Approve');
@@ -137,18 +141,20 @@ export class PayablesTabComponent {
         this.Helper.WaitByIdAndClick('MenuButtons_1');
         this.Helper.WaitByIdAndClick('APInvoice.B.Void');
         this.Helper.WaitByIdAndClick('ConfirmWindow_Yes_0');
-        this.WaitBusyIndicatorToShowandHide();
+        this.Helper.WaitEditComponentBusyIndicator();
        
        
         this.Helper.WaitByIdAndClick('APInvoice.TH.General');
-        
+      
         this.Helper.WaitByIdAndClick('EditBackbutton_1');
         }
         else{
             this.Helper.WaitByIdAndClick('EditBackbutton_2');
+            
         }
-        this.WaitBusyIndicatorToShowandHide();
        
+        this.Helper.WaitEditComponentBusyIndicator();
+        
         
         
     }
