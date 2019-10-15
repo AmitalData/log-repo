@@ -1,4 +1,4 @@
-﻿
+
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -175,7 +175,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CancelClicked()">Cancel</button>
+                        <button id="{{'CancelAddStock' | IdGeneratorPipe}}" class="Button" (click)="CancelClicked()">Cancel</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -183,7 +183,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                        <button id="{{'OkAddStock' | IdGeneratorPipe}}" class="RedButton" (click)="OkButtonClicked()">Ok</button>
                     </td>
                 </tr>
             </table>

@@ -616,10 +616,27 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
 
                         if (string.IsNullOrEmpty(tariffLine.OriginPortId) && !string.IsNullOrEmpty(tariffLine.OriginPortText))
                         {
-                            Port fromPort = portRepository.GetAirlinePortByCode(entityPM.Tenant, tariffLine.OriginPortText.Trim(), true);
+                            Port fromPort = null;
+                            if (entityPM.TypeCode == "AFC")
+                            {
+                                fromPort = portRepository.GetAirlinePortByCode(entityPM.Tenant, tariffLine.OriginPortText.Trim(), true);
+                            }
+                            else
+                            {
+                                fromPort = portRepository.GetOceanPortByCode(entityPM.Tenant, tariffLine.OriginPortText.Trim(), true);
+                            }
                             if (fromPort == null)
                             {
-                                Port portZero = portRepository.GetAirlinePortByCode(0, tariffLine.OriginPortText.Trim(), true);
+                                Port portZero = null;
+                                if (entityPM.TypeCode == "AFC")
+                                {
+                                    portZero = portRepository.GetAirlinePortByCode(0, tariffLine.OriginPortText.Trim(), true);
+                                }
+                                else
+                                {
+                                    portZero = portRepository.GetOceanPortByCode(0, tariffLine.OriginPortText.Trim(), true);
+                                }
+                               
                                 if (portZero != null)
                                 {
                                     fromPort = this.GetPortCopyToCurrentTenant(portZero, entityPM.Tenant, portRepository);
@@ -636,10 +653,27 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
 
                         if (string.IsNullOrEmpty(tariffLine.DestinationPortId) && !string.IsNullOrEmpty(tariffLine.DestinationPortText))
                         {
-                            Port toPort = portRepository.GetAirlinePortByCode(entityPM.Tenant, tariffLine.DestinationPortText.Trim(), true);
+                            Port toPort = null;
+                            if (entityPM.TypeCode == "AFC")
+                            {
+                                toPort = portRepository.GetAirlinePortByCode(entityPM.Tenant, tariffLine.DestinationPortText.Trim(), true);
+                            }
+                            else
+                            {
+                                toPort = portRepository.GetOceanPortByCode(entityPM.Tenant, tariffLine.DestinationPortText.Trim(), true);
+                            }
+
                             if (toPort == null)
                             {
-                                Port portZero = portRepository.GetAirlinePortByCode(0, tariffLine.DestinationPortText.Trim(), true);
+                                Port portZero = null;
+                                if (entityPM.TypeCode == "AFC")
+                                {
+                                    portZero = portRepository.GetAirlinePortByCode(0, tariffLine.DestinationPortText.Trim(), true);
+                                }
+                                else
+                                {
+                                    portZero = portRepository.GetOceanPortByCode(0, tariffLine.DestinationPortText.Trim(), true);
+                                }
                                 if (portZero != null)
                                 {
                                     toPort = this.GetPortCopyToCurrentTenant(portZero, entityPM.Tenant, portRepository);

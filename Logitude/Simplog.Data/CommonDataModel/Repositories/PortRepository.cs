@@ -242,7 +242,54 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
             return null;
         }
-       
+
+        public Port GetOceanPortByCode(int myTenant, string myCode, bool getFromCache)
+        {
+            if (!string.IsNullOrEmpty(myCode))
+            {
+                string entityName = "OceanPort" + myCode + myTenant;
+                Port entity;
+
+                if (getFromCache)
+                {
+                    if (CacheManager.CacheWrapper != null)
+                    {
+                        if (CacheManager.CacheWrapper.Get(entityName) == null)
+                        {
+                            entity = (from a in context.Ports.Include("Country")
+                                      where a.Tenant == myTenant && a.Code == myCode && a.IsOcean
+                                      select a).FirstOrDefault();
+
+                            if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
+                            {
+                                CacheManager.CacheWrapper.Insert(entityName, entity, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                            }
+                        }
+
+                        else
+                        {
+                            entity = (Port)CacheManager.CacheWrapper.Get(entityName);
+                        }
+                    }
+
+                    else
+                    {
+                        entity = (from a in context.Ports.Include("Country") where a.Code == myCode && a.Tenant == myTenant && a.IsOcean select a).FirstOrDefault();
+                    }
+                }
+
+                else
+                {
+                    entity = (from a in context.Ports.Include("Country") where a.Code == myCode && a.Tenant == myTenant && a.IsOcean select a).FirstOrDefault();
+                }
+
+                return entity;
+            }
+
+            return null;
+        }
+
+
         public IQueryable<Port> GetSinglePortByCode(string input, bool byCode, int tenant)
         {
             if (byCode)

@@ -61,7 +61,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 IApplication application = excelEngine.Excel;
                 IWorkbook workbook = excelEngine.Excel.Workbooks.Open(stream);
                 IWorksheet sheet = workbook.Worksheets[0];
-                tariffLinesResult = tariffDomainController.BuildAirFreightCostExcelLines(sheet, parameterArgs.Tenant);
+                tariffLinesResult = tariffDomainController.BuildOceanAirFreightCostExcelLines(sheet, parameterArgs.Tenant);
                 this.GenerateExcel(tariffLinesResult, parameterArgs.LoggedUserEmail, parameterArgs.Tenant);
             }
         }
