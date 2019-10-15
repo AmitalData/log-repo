@@ -78,7 +78,7 @@ export class PayablesTabComponent {
     }
     
     CreatAPInvoicewithVoid(shipperRef1: string,Voided :boolean) {
-        this.Helper.WaitEditComponentBusyIndicator();
+        this.Helper.WaitBusyIndicatorToShowandHide();
         this.Helper.WaitByIdAndClick('ReceiveInvoice');
 
 
@@ -111,7 +111,7 @@ export class PayablesTabComponent {
         
         this.Helper.WaitByIdAndFill('APInvoiceLine_InvoiceCurrencyAmount', '100');
         if(Voided==true){
-        this.WaitBusyIndicatorToShowandHide();
+        
         this.AddPayables('Order', '10', '20','Invoice');
         
 
