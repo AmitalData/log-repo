@@ -86,7 +86,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 this.CreateTariffVersion(entityPM);
             }
 
-            if (entityPM.TypeCode == "ASC")
+            if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC")
             {
                 if (entityPM.TariffVersions.Where(d => d.StartDate != null || d.ExpirationDate != null).Any())
                 {
@@ -120,7 +120,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
         List<ChargesType> ChargeTypes;
         private void InsertTariffSurchargeLog(TariffPM tariff)
         {
-            if (tariff.TypeCode == "ASC" && !tariff.IsFromUpdateScreen && !tariff.IsFromCopy)
+            if ((tariff.TypeCode == "ASC" || tariff.TypeCode == "OSC") && !tariff.IsFromUpdateScreen && !tariff.IsFromCopy)
             {
                 TariffSurchargesUpdateUpdateService tariffSurchargeUpdateService = new TariffSurchargesUpdateUpdateService(TariffModuleContext.GetContext(tariff.Tenant), new Dictionary<string, IContext>(), tariff.Tenant);
                 TariffVersionPM version = tariff.TariffVersions.Where(prop => prop.IsDraft == true).FirstOrDefault();
@@ -361,7 +361,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 IsDraft = true,
             };
 
-            if (entityPM.TypeCode == "ASC")
+            if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC")
             {
                 tariffVersionPM.StartDate = null;
                 tariffVersionPM.ExpirationDate = null;
@@ -431,7 +431,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                     Notes = "Version " + iDraftVersion.Version + " approved",
                 });
 
-                if (entityPM.TypeCode == "ASC")
+                if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC")
                 {
                     TariffVersionPM iPreviousVersion = entityPM.ActiveVersions.OrderByDescending(o => o.CreateDate).FirstOrDefault();
                     if (iPreviousVersion != null)
@@ -569,14 +569,14 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
 
         private void ValidateSurchargeUniqueSeller(TariffPM entityPM)
         {
-            if (entityPM.TypeCode == "ASC")
+            if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC")
             {
                 ITariffModuleContext iContext = TariffModuleContext.GetContext(entityPM.Tenant);
                 int iCount = (from d in iContext.Tariffs
                               where d.Tenant == entityPM.Tenant
                               && d.Id != entityPM.Id
                               && d.SellerId == entityPM.SellerId
-                              && d.TypeCode == "ASC"
+                              && (d.TypeCode == "ASC" || d.TypeCode == "OSC")
                               select d).Count();
 
                 if (iCount >= 1)

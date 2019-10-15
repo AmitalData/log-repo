@@ -697,7 +697,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
         {
            TariffPM entityPM = this.GetSingle(TariffId, true, false);
             TariffLineRepository iTariffLineRepository = new TariffLineRepository(entityPM.Tenant);
-            if (entityPM.TypeCode == "ASC")
+            if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC")
             {
                 TariffVersionPM iPreviousVersion = entityPM.ActiveVersions.OrderByDescending(o => o.CreateDate).FirstOrDefault();
                 if (iPreviousVersion != null)
