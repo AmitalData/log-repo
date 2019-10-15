@@ -51,12 +51,13 @@
             </table>
         </td>
     </tr>
-    <tr style="height:10px">
+
+    <tr style="height:10px" *ngIf="AirFreightCostVisibility">
         <td>
             <div></div>
         </td>
     </tr>
-    <tr>
+    <tr *ngIf="AirFreightCostVisibility">
         <td>
             <table>
                 <tr>
@@ -82,10 +83,13 @@
         </td>
 
     </tr>
-    <tr style="height:10px">
-        <td></td>
+
+    <tr style="height:10px" *ngIf="AirSurchargesCostVisibility">
+        <td>
+            <div></div>
+        </td>
     </tr>
-    <tr>
+    <tr *ngIf="AirSurchargesCostVisibility">
         <td>
             <table>
                 <tr>
@@ -112,17 +116,50 @@
 
     </tr>
 
-
-    <tr style="height:10px">
-        <td></td>
+    <tr style="height:10px" *ngIf="OceanLCLFreightCostVisibility">
+        <td>
+            <div></div>
+        </td>
     </tr>
-    <tr>
+    <tr *ngIf="OceanLCLFreightCostVisibility">
         <td>
             <table>
                 <tr>
                     <td style="width:180px">
                         <div>
-                            <HyperlinkQuery (click)="ViewTariffs('OSC')">Ocean Surcharges Cost ({{OceanSurchargeCount}})</HyperlinkQuery>
+                            <HyperlinkQuery (click)="ViewTariffs('OLC')">Ocean LCL Freight Cost ({{OceanLCLFreightCount}})</HyperlinkQuery>
+                        </div>
+                    </td>
+
+                    <td style="width:20px">
+                        <div></div>
+                    </td>
+
+                    <td style="width:20px">
+                        <button class="Button" (click)="NewTariff('OLC')">New</button>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+
+    </tr>
+
+    <tr style="height:10px;" *ngIf="OceanLCLSurchargesCostVisibility">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+    <tr *ngIf="OceanLCLSurchargesCostVisibility">
+        <td>
+            <table>
+                <tr>
+                    <td style="width:180px">
+                        <div>
+                            <HyperlinkQuery (click)="ViewTariffs('OSC')">Ocean Surcharges Costs ({{OceanSurchargeCount}})</HyperlinkQuery>
                         </div>
                     </td>
 

@@ -409,7 +409,7 @@ namespace WebFreight.Web.MetaDataUpdate
               string objectTableid =  objectTableRepository.GetObjectTableIdByName("Shipment");
 
 
-                List<string> fieldsName = new List<string> { "OwnerLink", "IsDigitalSignRequired", "IsRequestedDocuments" , "IsDepositionRequired" };
+                List<string> fieldsName = new List<string> { "OwnerLink", "IsDigitalSignRequired", "IsRequestedDocuments" , "IsDepositionRequired", "IsImporterApprovalRequired" };
                 ObjectFieldsRepository = new ObjectFieldRepository(context);
                 List<ObjectField> objectFields = ObjectFieldsRepository.GetObjectFieldsByFieldsNamesAndObjectTable(fieldsName, objectTableid).ToList();
                 if (objectFields.Count > 0)

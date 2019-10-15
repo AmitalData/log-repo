@@ -7,6 +7,7 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
+import {CustomsTransferHeaderPM} from './CustomsTransferHeaderPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -15,15 +16,17 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 
-export class SchedulerLogsPM {
+export class CustomsTransferLinePM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
-	  constructor() {
+	        constructor(_entityParentPM: any) {
+          this.EntityParentPM = _entityParentPM;
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
- 	 
+
+	 
     
     private id: string;
     public get Id() { return this.id; }
@@ -35,35 +38,53 @@ export class SchedulerLogsPM {
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
        
 	 
-    private createDate: Date;
-    public get CreateDate() { return this.createDate; }
-    public set CreateDate(newValue: Date) { if (this.createDate != newValue) { this.createDate = newValue; this.MarkAsDirty("CreateDate"); } }
+    private searchFields: string;
+    public get SearchFields() { return this.searchFields; }
+    public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
        
 	 
-    private log: string;
-    public get Log() { return this.log; }
-    public set Log(newValue: string) { if (this.log != newValue) { this.log = newValue; this.MarkAsDirty("Log"); } }
+    private changeSetOp: string;
+    public get ChangeSetOp() { return this.changeSetOp; }
+    public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
        
 	 
-    private historyId: string;
-    public get HistoryId() { return this.historyId; }
-    public set HistoryId(newValue: string) { if (this.historyId != newValue) { this.historyId = newValue; this.MarkAsDirty("HistoryId"); } }
+    private customsTransferHeaderId: string;
+    public get CustomsTransferHeaderId() { return this.customsTransferHeaderId; }
+    public set CustomsTransferHeaderId(newValue: string) { if (this.customsTransferHeaderId != newValue) { this.customsTransferHeaderId = newValue; this.MarkAsDirty("CustomsTransferHeaderId"); } }
+       
+	 
+    private shipmentId: string;
+    public get ShipmentId() { return this.shipmentId; }
+    public set ShipmentId(newValue: string) { if (this.shipmentId != newValue) { this.shipmentId = newValue; this.MarkAsDirty("ShipmentId"); } }
+       
+	 
+    private shipmentNumber: string;
+    public get ShipmentNumber() { return this.shipmentNumber; }
+    public set ShipmentNumber(newValue: string) { if (this.shipmentNumber != newValue) { this.shipmentNumber = newValue; this.MarkAsDirty("ShipmentNumber"); } }
        
 	 
 
-    public OldEntityPM: SchedulerLogsPM;
-		
+    public OldEntityPM: CustomsTransferLinePM;
+	    
+	private entityParentPM: any;
+    public get EntityParentPM() { return this.entityParentPM; }
+    public set EntityParentPM(newValue: any) { this.entityParentPM = newValue; }
+
+    public UniqueKey: string;
+	 	
     public IsDirty: boolean;
     MarkAsDirty(propertyName:string = null) {
         this.IsDirty = true;
-		  	
+		  if (this.EntityParentPM) {
+            this.EntityParentPM.MarkAsDirty();
+        }	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "SchedulerLogs");
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "CustomsTransferLine");
            
         }
     }
-    private MyClone: SchedulerLogsPM;
+    private MyClone: CustomsTransferLinePM;
 
     public CloneMe() {
         ServiceHelper.CloneEntityPM(this);

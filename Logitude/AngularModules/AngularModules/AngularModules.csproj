@@ -1064,6 +1064,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\SharedLogisticsSettingPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\WebhookKeysPMService.ts" />
     <TypeScriptCompile Include="InvoiceModules\APInvoice\ModuleAPInvoice.ts" />
+    <TypeScriptCompile Include="InvoiceModules\APPayment\Components\EditTabs\EditPaymentChequeComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\ModuleAPPayment.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\ModuleDeclarations.ts" />
     <Content Include="Infrastructure\Components\CustomControls\RatioBoxComponent.html" />
@@ -1083,6 +1084,7 @@
     <Content Include="Infrastructure\Components\QueryColumnsComponents\DWLogSearchAddFieldsComponent.html" />
     <Content Include="Infrastructure\Components\QueryColumnsComponents\DWLogSearchWindowFieldsComponent.html" />
     <Content Include="InvoiceModules\APPayment\Components\EditTabs\APEditMultiCurrency.html" />
+    <Content Include="InvoiceModules\APPayment\Components\EditTabs\EditPaymentChequeComponent.html" />
     <Content Include="InvoiceModules\ARInvoice\Components\EditTabs\AddEditARGeneralInvoiceLineComponent.html" />
     <Content Include="InvoiceModules\ARInvoice\Components\EditTabs\AddEditARInvoiceLineComponent.html" />
     <Content Include="InvoiceModules\ARInvoice\Components\EditTabs\ARInvoiceDetailsTabConsolidation.html" />
@@ -6521,6 +6523,8 @@
     <TypeScriptCompile Include="Shipment\Components\Workspaces\AMANACComponent.ts" />
     <TypeScriptCompile Include="Shipment\Components\Workspaces\ContainersFUsComponent.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\ContainerFollowUpList.ts" />
+    <TypeScriptCompile Include="Shipment\EntityLists\CustomsTransferHeaderList.ts" />
+    <TypeScriptCompile Include="Shipment\EntityLists\CustomsTransferTypeList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\CustomsTransmissionsStatusList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\FBLStockList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\HarmonizeCodeList.ts" />
@@ -6532,6 +6536,8 @@
     <TypeScriptCompile Include="Shipment\EntityLists\ShipmentCustomsMessageTypeList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\ShipmentCustomsTransmissionList.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ContainerFollowUpPM.ts" />
+    <TypeScriptCompile Include="Shipment\EntityPMs\CustomsTransferHeaderPM.ts" />
+    <TypeScriptCompile Include="Shipment\EntityPMs\CustomsTransferLinePM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\FBLStockPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\MessagingStockPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\MessagingStockUsageHistoryPM.ts" />
@@ -6550,6 +6556,8 @@
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentFollowUpPM.ts" />
     <TypeScriptCompile Include="Shipment\Services\SplitShipmentService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\ContainerFollowUpListService.ts" />
+    <TypeScriptCompile Include="Shipment\Services\StandardLists\CustomsTransferHeaderListService.ts" />
+    <TypeScriptCompile Include="Shipment\Services\StandardLists\CustomsTransferTypeListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\HarmonizeCodeListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\INTTRADocumentTypeListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\MessagingStockListService.ts" />
@@ -6560,6 +6568,7 @@
     <TypeScriptCompile Include="Shipment\Services\StandardLists\ShipmentCustomsMessageTypeListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\ShipmentCustomsTransmissionListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\ContainerFollowUpPMService.ts" />
+    <TypeScriptCompile Include="Shipment\Services\StandardPMs\CustomsTransferHeaderPMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\ShipmentComputedFieldPMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\ShipmentCustomsTransmissionPMService.ts" />
     <TypeScriptCompile Include="Social\Components\AddSocialMessageParticipantsComponent.ts" />

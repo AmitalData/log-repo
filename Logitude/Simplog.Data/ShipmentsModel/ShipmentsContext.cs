@@ -328,7 +328,9 @@ namespace Simplog.Data.ShipmentsModel
             modelBuilder.Configurations.Add(new PickUpDeliveryPackageHarmonizeMap());
             modelBuilder.Configurations.Add(new CustomsShipperMap());
             modelBuilder.Configurations.Add(new HarmonizeCodeMap());
-
+            modelBuilder.Configurations.Add(new CustomsTransferHeaderMap());
+            modelBuilder.Configurations.Add(new CustomsTransferLineMap());
+            modelBuilder.Configurations.Add(new CustomsTransferTypeMap());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -419,6 +421,24 @@ namespace Simplog.Data.ShipmentsModel
         }
 
         public IDbSet<ShipmentAssembly> ShipmentAssemblies
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<CustomsTransferType> CustomsTransferTypes
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<CustomsTransferLine> CustomsTransferLines
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<CustomsTransferHeader> CustomsTransferHeaders
         {
             get;
             set;

@@ -207,83 +207,12 @@
                     <tr>
                         <td>
                             <div class="MediaFill">
-                                <div class="SimpleGridView">
-                                    <div class="SimpleGridViewHeader">
-                                        <table>
-                                            <tr>
-                                                <td style="width: 25px; min-width: 25px; max-width: 25px; padding:0 !important;">
-                                                    <div class="MediaFill">
-                                                        <div class="CenterCenter" style="width: 16px; height: 16px;">
-                                                            <CheckBox [IsChecked]="IsAllChecked" [IsEnabled]="ItemsSource.length > 0" (Checked)="IsAllChecked = $event"></CheckBox>
-                                                        </div>
-                                                    </div>
-                                                </td>
-
-                                                <td style="width: 150px; min-width: 150px; max-width: 150px;">Email</td>
-                                                <td style="width: 150px; min-width: 150px; max-width: 150px;">Name</td>
-                                                <td style="width: 200px; min-width: 200px; max-width: 200px;">Company</td>
-                                                <td style="width: 120px; min-width: 120px; max-width: 120px;">Region</td>
-                                                <td style="width: 120px; min-width: 120px; max-width: 120px;">Industry</td>
-                                                <td style="width: 200px; min-width: 200px; max-width: 200px;">Product</td>
-                                                <td style="width: 120px; min-width: 120px; max-width: 120px;">Customer Size</td>
-                                                <td class="LastChild">
-                                                    <div></div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-
-                                    <div class="SimpleGridViewBody">
-                                        <table>
-                                            <tr class="SimpleGridViewRow" *ngFor="let item of ItemsSource" [class.RowSelected]="item == SelectedItem" (click)="SelectedItem = item">
-                                                <td style="width: 25px; min-width: 25px; max-width: 25px; padding:0 !important;">
-                                                    <div class="MediaFill">
-                                                        <div class="CenterCenter" style="width: 16px; height: 16px; padding-left: 1px;">
-                                                            <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event"></CheckBox>
-                                                        </div>
-                                                    </div>
-                                                </td>
-
-                                                <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px;">
-                                                    {{item.Email}}
-                                                </td>
-
-                                                <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px;">
-                                                    {{item.Name}}
-                                                </td>
-
-                                                <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px;">
-                                                    {{item.Company}}
-                                                </td>
-
-                                                <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px;">
-                                                    {{item.Region}}
-                                                </td>
-
-                                                <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px;">
-                                                    {{item.Industry}}
-                                                </td>
-
-                                                <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px;">
-                                                    {{item.Product}}
-                                                </td>
-
-                                                <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px;">
-                                                    {{item.CustomerSize}}
-                                                </td>
-
-                                                <td>
-                                                    <div></div>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td colspan="9">
-                                                    <div></div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
+                                <div style="vertical-align:top;" class="GeneratedGridContainer">
+                                    <logitude-grid style="vertical-align:top;" [QueryChangeEvent]="onQueryChangeEvent" GridWidth="100%" GridHeight="100%"
+                                                   [dataSource]="DataSource" [ReloadData]="true" [columns]="Columns" [autoLoad]="true" [rows]="Items"
+                                                   [searchFields]="SearchText" [SearchFieldchangeevent]="SearchFieldChangeEvent"
+                                                   (CheckBoxChecked)="onCheckBoxChecked($event)" [IsAllRecordsChecked]="IsAllChecked">
+                                    </logitude-grid>
                                 </div>
                             </div>
                         </td>

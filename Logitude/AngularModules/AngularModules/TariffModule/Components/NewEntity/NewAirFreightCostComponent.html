@@ -1,4 +1,3 @@
-
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -83,7 +82,7 @@
                                 </tr>
 
                                 <!-- Price Steps  -->
-                                <tr *ngIf="EntityPM.TypeCode != 'ASC'" class="FormFieldRow">
+                                <tr *ngIf="EntityPM.TypeCode != 'ASC' && EntityPM.TypeCode != 'OSC' " class="FormFieldRow">
                                     <td>
                                         <LogLabel [NoObjectField]="true" [Text]="'Price Steps'" [DataContext]="DataContext"></LogLabel>
                                     </td>
