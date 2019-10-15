@@ -262,6 +262,8 @@ namespace AmitalCustomsWindowsService.Tester
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+            clsTester.MultiProccessTestLockTab();
+            return;
             string customsResponseXml = File.ReadAllText(@"C:\Users\itzik\Desktop\zevel\1-43468729.xml");
             WebFreight.Web.CustomWebServices.Testers.Tester.DeSerializeObject3052(customsResponseXml);
             customsResponseXml = File.ReadAllText(@"C:\Users\itzik\Desktop\zevel\1-20980020.xml");
@@ -819,7 +821,7 @@ namespace AmitalCustomsWindowsService.Tester
 
         private void TesterForm_Load(object sender, EventArgs e)
         {
-
+            WebFreight.Web.CustomWebServices.Testers.Tester.GetSingleDeclarationPMByNumber();
         }
 
         private void buildMamanBaldarSTBToolStripMenuItem_Click(object sender, EventArgs e)

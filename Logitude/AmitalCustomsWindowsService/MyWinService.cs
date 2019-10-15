@@ -21,6 +21,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using CommunicationWorkerRole;
 using Logitude.BL.GlobalModel.EntityQueries;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace AmitalCustomsWindowsService
 {
@@ -344,6 +345,8 @@ namespace AmitalCustomsWindowsService
                 var state=ServiceState.GetState();
                 if (DateTime.Now.Subtract(GCAt) > TimeSpan.FromMinutes(10))
                 {
+                    GCAt = DateTime.Now;
+                    CacheManager.ClearCacheItems();
                     CustomsWorkerRole.Utils.GenUtil.CollectGC();
                 }
                 

@@ -436,9 +436,15 @@ namespace Logitude.CustomsMessaging.MessagingServices
                             ((new GP_1030_GatepassRequestMessageMessagingService()).MainInterfaceCode);
 
 
+
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
-                DCAInUCBCTML_MsgMessagingService>
-                ((new DCAInUCBCTML_MsgMessagingService()).MainInterfaceCode);
+                            DCAInUCBStorageSite_MsgMessagingService>
+                            ((new DCAInUCBStorageSite_MsgMessagingService()).MainInterfaceCode);
+
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                DCAInUCBUD2LT_MsgMessagingService>
+                ((new DCAInUCBUD2LT_MsgMessagingService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                 DCAInDE_NG_5108_DecisionMessageMessagingService>

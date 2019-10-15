@@ -348,7 +348,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             TResponseData responseData = default(TResponseData);
             DCAServerUploadResponse dCAServerUploadResponse = null;
             DCAServerUploadStatus dCAServerUploadStatus = null;
-            LogMessagingUtil.Instance.Clear();
+            //LogMessagingUtil.Instance.Clear();
             Stopwatch totalStopwatch = null;
 
 
@@ -366,7 +366,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                 var transitions = InitTransition();
 
-
+                
                 var CommandList = new List<CustomsRCmmand>()
                 {
                     new CustomsRCmmand(CustomsCommandEnum.CustomsCommandGetCustomRequestWR, (o) =>{ return CustomsCommandGetCustomRequest(out customsRequest);   }) ,
@@ -915,8 +915,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
             object ContextObjectTag = null;
             bool toContinueNextCommand = DoStep(stepRequest, () =>
             {
-
+                LogMessagingUtilWR.Instance.AppendLine("AnalyzeCore:b4");
                 var res = AnalyzeCore(requestParams, customsResponse, false);
+                LogMessagingUtilWR.Instance.AppendLine("AnalyzeCore:after");
                 bool tryConcurrentKiller = true;//ConfigurationManager.AppSettings["20180718.ConcurrentKiller"] == "1";
                 if (tryConcurrentKiller)
                 {
@@ -928,7 +929,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
             },
             () =>
             {
+                LogMessagingUtilWR.Instance.AppendLine("GetResponseDataAfterAnalyze:b4");
                 var res = GetResponseDataAfterAnalyze(requestParams, customsResponse);
+                LogMessagingUtilWR.Instance.AppendLine("GetResponseDataAfterAnalyze:after");
                 ContextObjectTag = res.ContextObjectTag;
                 return res;
             },

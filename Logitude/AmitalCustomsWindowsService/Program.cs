@@ -15,6 +15,7 @@ using System.Linq;
 using System.Reflection;
 using System.ServiceProcess;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WebFreight.Web.CustomModel;
@@ -40,6 +41,7 @@ namespace AmitalCustomsWindowsService
         [STAThread]
         static void Main()
         {
+            //ThreadPool.SetMinThreads(400, 400);
             ServiceBase[] ServicesToRun;
 
             // More than one user Service may run within the same process. To add
@@ -53,7 +55,6 @@ namespace AmitalCustomsWindowsService
             //var aa = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
             //GatewayService.TestXmlDF_MSG10000_ImportDeclaration(@"D:\Source\2012\UnifreightIIG\UnifreightIIG.ServerTester\UnifreightIIG.ServerTester\IIGProxys\ImportDeclaration\SaveDF_MSG2750_2754_ImportDeclarationRequest-309925709-7788.xml");
-
             
 
             Debug.WriteLine("AmitalCustomsWindowsService !!!...");

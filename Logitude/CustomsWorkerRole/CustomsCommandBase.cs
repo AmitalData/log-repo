@@ -27,6 +27,8 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Simplog.Server.Infrastructure;
 using System.Transactions;
+using Logitude.Server.Tools.Utils;
+using System.Configuration;
 
 namespace CustomsWorkerRole
 {
@@ -174,11 +176,11 @@ namespace CustomsWorkerRole
                 if (DateTime.Now.Subtract(_LastGC) > TimeSpan.FromMinutes(10))//cache 20 min
                 {
                     _LastGC = DateTime.Now;
-                    CacheManager.ClearCacheItems();
-                    CustomsWorkerRole.Utils.GenUtil.CollectGC();
+                    //CacheManager.ClearCacheItems();
+                    //CustomsWorkerRole.Utils.GenUtil.CollectGC();
 
                     ///_AllCustomsSetting.Clear();
-                    GenUtil.CollectGC();
+                    //GenUtil.CollectGC();
                 }
 
                 OnStart();
@@ -217,23 +219,28 @@ namespace CustomsWorkerRole
 
             
             
-            CustomDBQueueMessage response;
+            CustomDBQueueMessage response=null;
             List<long> deferredSequenceNumbers = new List<long>();
             bool proccesDone = false;
             for (int filtterPriority = 2; filtterPriority < 3; filtterPriority++)
             {
                 while (true)
                 {
+                    LogMessagingUtilWR.Instance.Clear();
+                    LogMessagingUtil.Instance.Clear();
                     //throw new Exception("BrokeredMessage receivedMessage = _QueueClient.Receive(TimeSpan.FromSeconds(5));");
-                    using (TransactionScope Queue_scope = TransactionFactory.GetTransaction())
+                    LogMessagingUtilWR.Instance.AppendLine("TransactionFactory.GetTransaction");
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
                         try
                         {
 
-
-
-
+                            LogMessagingUtilWR.Instance.AppendLine("QRecive");
+                            
                             response = _CustomDbQueueService.Receive();
+                            LogMessagingUtilWR.Instance.AppendLine("QRecive:after");
+
+
 
 
                             // receivedMessage = _QueueClient.Receive(TimeSpan.FromSeconds(5)); //islam
@@ -247,7 +254,8 @@ namespace CustomsWorkerRole
 
                         if (response == null || (response != null && response.MessageId == null))
                         {
-                            Thread.Sleep(TimeSpan.FromSeconds(1));
+                            //Thread.Sleep(TimeSpan.FromSeconds(5));
+                            Thread.Sleep(TimeSpan.FromMilliseconds(100));
                             break;
                         }
 
@@ -284,7 +292,18 @@ namespace CustomsWorkerRole
                                 Abandon_Queue_scope.Complete();
                             }
                         }
+                        LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();");
                         LogDoneItemInMemory();
+                        LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();AFTER");
+
+                        string logItMessagingUtilWR = ConfigurationManager.AppSettings.Get("LogMessagingUtilWR");
+
+                        if (!string.IsNullOrWhiteSpace(logItMessagingUtilWR))
+                        {
+                            string morethan = "";
+                            string str = LogMessagingUtilWR.Instance.GetString(out morethan);
+                            Logger.LogMe(str, false, this.GetType().ToString() + "_" + morethan);
+                        }
                     }
                 }
             }
@@ -294,7 +313,7 @@ namespace CustomsWorkerRole
 
         protected virtual bool ProcessMessage_Db(CustomDBQueueMessage msgResponse)
         {
-
+            LogMessagingUtilWR.Instance.AppendLine("ProcessMessage_Db");
             try
             {
                 int tenant = -1;
@@ -326,6 +345,7 @@ namespace CustomsWorkerRole
                 }
 
                 string correlationId = msgResponse.Properties["CorrelationId"].ToString();
+                LogMessagingUtilWR.Instance.AppendLine($"correlationId = {correlationId};analyzeClass={analyzeClass}");
                 // var correlationId = message.CorrelationId;
                 //LogMessagingUtil.Instance.AppendLine("receivedMessage.DeliveryCount =" + message.DeliveryCount.ToString());
 
@@ -339,11 +359,8 @@ namespace CustomsWorkerRole
                 {
                     throw new Exception("Enum.TryParse<CustomsCommandEnum>(s, out myCustomsCommandEnum)");
                 }
-                //using (var CustomsCommandScope = TransactionFactory.GetNewTransaction())
-                {
-                    MessagingServiceFactoryHelper.ResolveAndExecute(analyzeClass, tenant, correlationId, myCustomsCommandEnum);
-                    //CustomsCommandScope.Complete();
-                }
+                LogMessagingUtilWR.Instance.AppendLine("ResolveAndExecute");
+                MessagingServiceFactoryHelper.ResolveAndExecute(analyzeClass, tenant, correlationId, myCustomsCommandEnum);
 
 
 
