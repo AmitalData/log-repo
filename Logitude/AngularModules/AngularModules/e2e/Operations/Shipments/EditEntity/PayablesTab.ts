@@ -111,7 +111,6 @@ export class PayablesTabComponent {
         
         this.Helper.WaitByIdAndFill('APInvoiceLine_InvoiceCurrencyAmount', '100');
         if(Voided==true){
-        this.WaitBusyIndicatorToShowandHide();
         this.AddPayables('Order', '10', '20','Invoice');
         
 
