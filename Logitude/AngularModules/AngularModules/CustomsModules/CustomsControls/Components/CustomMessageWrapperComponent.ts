@@ -41,6 +41,13 @@ export class CustomMessageWrapperComponent
     }
     @Input()
     public CustomSendOptionsButtonCanForcePersonalSign: boolean = false;
+
+    @Input()
+    get CustomSendOptionsButtonAvoidDoubleClick() { return this.MyCustomSendOptionsComponent ? this.MyCustomSendOptionsComponent.AvoidDoubleClick : null; }
+    set CustomSendOptionsButtonAvoidDoubleClick(newValue: boolean) {
+        this.MyCustomSendOptionsComponent.AvoidDoubleClick = newValue;
+    }
+
     @Input()
     public IsShowCustomResponseContent: boolean = true;
     @Input()

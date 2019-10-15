@@ -120,8 +120,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             customResponse.ServerSplitDeclarationsList = 
             list100.Select(r => r.Key + "," + r.Value).ToList();
-        //CreateDCAInUCB1170_MsgMessagingService(customResponse, requestParams);
-        var CreateDCAInUCB1170_MsgMessagingService = new CRSUtil();
+            customResponse.LoggingUserId = requestParams.LoggingUserId;
+            //CreateDCAInUCB1170_MsgMessagingService(customResponse, requestParams);
+            var CreateDCAInUCB1170_MsgMessagingService = new CRSUtil();
             CreateDCAInUCB1170_MsgMessagingService
             .CreateCRS_DCAIn<DCAInUCBCTMLWithResponseContentHeader>(customResponse, (requestParams as RequestParamsBase));
 

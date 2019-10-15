@@ -42,8 +42,8 @@ namespace WebFreight.Web.CustomWebServices.Testers
                 //    DCAInUCB2755_MsgMessagingService();
                 //s.CreateCRS(1, "1-7", "1-69", "bbb" , "1-3");
                 //ExportExcel();
-                ExportExcel8330();
-
+                //ExportExcel8330();
+                ExportExcel8326();
             }
             catch (Exception eee)
             {
@@ -52,6 +52,19 @@ namespace WebFreight.Web.CustomWebServices.Testers
 
             }
             
+        }
+        private static void ExportExcel8326()
+        {
+            var myXLSExportService = new XLSExportService();
+            var result =
+            myXLSExportService
+            //.Start("8347","1-1370596", 1);
+            .Start("8326", null, 1, new ImporterDeclarationDetailProvider());
+
+            string ShowType = "attachment";
+            string documentName = Guid.NewGuid().ToString() + ".xls";
+            HttpContext.Current.Response.AppendHeader("Content-Disposition", ShowType + "; filename=\"" + HttpUtility.UrlPathEncode(documentName) + "\"");
+            HttpContext.Current.Response.BinaryWrite(result);
         }
         private static void ExportExcel8330()
         {

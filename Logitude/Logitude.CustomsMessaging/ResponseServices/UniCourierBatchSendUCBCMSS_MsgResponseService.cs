@@ -61,6 +61,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     //CreateCRS(customResponse, requestParams,list100);
                     customResponse.ServerSplitDeclarationsList = list100;
+                    customResponse.LoggingUserId = requestParams.LoggingUserId;
                     var myCRSUtil = new CRSUtil();
                     myCRSUtil
                     .CreateCRS_DCAIn<DCAInUCBCMSSWithResponseContentHeader>(customResponse, (requestParams as RequestParamsBase));
