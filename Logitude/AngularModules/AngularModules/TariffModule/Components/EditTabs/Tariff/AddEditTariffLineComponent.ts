@@ -17,7 +17,6 @@ export class AddEditTariffLineComponent  {
     public DataContext: any;
     public ObjectTableName: string = "TariffLine";
     private CurrentSession = SessionLocator.SelectedSession;
-    public PortDependancyType: string = "A";
 
     public ValidationErrorsList: string[];
     public OriginDependencyFilterValue: string = "A";
@@ -36,7 +35,7 @@ export class AddEditTariffLineComponent  {
     }
 
     SetOriginDependencyFilterValue() {
-        if (this.TariffType == "OLC") {
+        if (this.TariffType == "OLC" || this.TariffType == "OSC") {
             this.OriginDependencyFilterValue = "O";
             this.DestinationDependencyFilterValue = "O";
         }
