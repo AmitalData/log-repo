@@ -1,17 +1,10 @@
 ﻿using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.Validators;
 using Logitude.Accounting.Data;
-using Logitude.Accounting.Data.EntityListQueryServices;
-using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.DataContracts;
-using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +16,6 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
     public class ExternalReconcileDataProvider : IExternalReconcileDataProvider
     {
         private IAccountingContext _AccountingContext;
-        private IWebFreightContext _IWebFreightContext;
 
         public ExternalReconcileDataProvider(IAccountingContext accountingContext)
         {

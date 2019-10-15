@@ -434,5 +434,6 @@ export class ShipmentList {
 		ImporterDepositionRequestDetails: string;
 		ForwarderPartnerId: string;
 		ARInvoices: string;
+		NotInvoicedReceivablesAmount: number;
 	
 }

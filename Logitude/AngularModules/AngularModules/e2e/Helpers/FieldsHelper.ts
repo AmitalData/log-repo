@@ -142,7 +142,7 @@ export class FieldsHelper {
     }
     WaitByCssAndClick_FromTagInsideListWithCheck(className: string, index: number, Id: string = null, input: string = null) {
         var EC = protractor.ExpectedConditions;
-        browser.wait(EC.elementToBeClickable(element(by.css(className))), 1000000).then(a => {
+        browser.wait(EC.elementToBeClickable(element(by.css(className))), 100000).then(a => {
             var item = element.all(by.css(className)).get(index);
             if (item == null) {
                 this.WaitByCssAndClick_FromTagInsideListWithCheck(className, index, Id, input);

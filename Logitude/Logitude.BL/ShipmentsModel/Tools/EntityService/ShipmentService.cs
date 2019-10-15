@@ -158,7 +158,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
 
             this.loggedTenant = TenantRepository.GetSingleTenant(tenant, true);
-            this.loggedTenant.LogBoxTenantSetting = LogBoxTenantSettingRepository.GetSingleLBTenantSetting(tenant);
         }
 
         private List<ShipmentPackagePM> shipmentPackagesChangeSet;
@@ -222,7 +221,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.InitializeComponent();
 
                 //this.HandleBackToBack();
-                if (!loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
+                if (!loggedTenant.IsDocumentsArchive)
                 {
                     ShipmentValidating.Validate(entityPM, entityPoco, isNewEntity, myCommonContext, loggedTenant);
                     ShipmentValidating.ValidateRoutingDates(entityPM, entityPM.ShipmentPickUps, entityPM.ShipmentDeliveries);
@@ -292,7 +291,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 entityPM.CalculatePayables = calculatePayables;
                 entityPM.CalculateReceivables = calculateReceivables;
 
-                if (!entityPM.IsHybrid && !loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
+                if (!entityPM.IsHybrid && !loggedTenant.IsDocumentsArchive)
                 {
                     shipmentTracing.BeginTracing();
                 }
@@ -438,7 +437,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     //this.HandleBackToBack();
 
-                    if (!loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
+                    if (!loggedTenant.IsDocumentsArchive)
                     {
                         ShipmentValidating.Validate(entityPM, entityPoco, isNewEntity, myCommonContext, loggedTenant);
                         ShipmentValidating.ValidateRoutingDates(entityPM, this.shipmentPickUpsChangeSet, this.shipmentDeliveriesChangeSet);
@@ -463,7 +462,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     entityPM.CalculatePayables = calculatePayables;
                     entityPM.CalculateReceivables = calculateReceivables;
 
-                    if (!entityPM.IsHybrid && !loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
+                    if (!entityPM.IsHybrid && !loggedTenant.IsDocumentsArchive)
                     {
                         shipmentTracing.BeginTracing();
                     }
@@ -1199,7 +1198,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "ImporterTenant", customerTenantAccessInfo.CustomerTenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() }, { "CustomerId", !string.IsNullOrEmpty(OldCustomerId) ? OldCustomerId : entityPM.CustomerId }, { "CustomerChanged", CustomerChanged } }, null, entityPM.CustomerId);
                         }
                     }
-                    if (loggedTenant.LogBoxTenantSetting.IsDocumentsArchive && !entityPM.DontAddToForwarderQueue && ((entityPM.StatusName.ToLower() == "in progress" && string.IsNullOrEmpty(entityPM.ForwarderShipmentNumber)) || entityPM.SendUpdatesToAgentEnabled))
+                    if (loggedTenant.IsDocumentsArchive && !entityPM.DontAddToForwarderQueue && ((entityPM.StatusName.ToLower() == "in progress" && string.IsNullOrEmpty(entityPM.ForwarderShipmentNumber)) || entityPM.SendUpdatesToAgentEnabled))
                     {
                         IQueueService queueservice = new DbQueueService();
                         queueservice.InitializeQueue("ForwarderShipmentQueue", 0);
@@ -1236,7 +1235,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         }
         private bool IsShipmentMatchLogBoxConditions(Tenant loggedTenant, ShipmentPM entityPM, bool isNewEntity)
         {
-            if (!entityPM.DontAddToImportersQueue && !loggedTenant.LogBoxTenantSetting.IsDocumentsArchive && (isNewEntity == true ? !entityPM.IsCancelled : true) && loggedTenant.IsCustomerTenantShare && (entityPM.DirectionId.ToUpper() == "C" || IsImportShipmentsAllowedForLogBox(loggedTenant, entityPM) || IsExportShipmentsAllowedForLogBox(loggedTenant, entityPM)))
+            if (!entityPM.DontAddToImportersQueue && !loggedTenant.IsDocumentsArchive && (isNewEntity == true ? !entityPM.IsCancelled : true) && loggedTenant.IsCustomerTenantShare && (entityPM.DirectionId.ToUpper() == "C" || IsImportShipmentsAllowedForLogBox(loggedTenant, entityPM) || IsExportShipmentsAllowedForLogBox(loggedTenant, entityPM)))
             {
                 return true;
             }
@@ -1248,7 +1247,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private bool IsImportShipmentsAllowedForLogBox(Tenant loggedTenant, ShipmentPM entityPM)
         {
-            if (loggedTenant.LogBoxTenantSetting.CustomerTenantShareImportFile == true)
+            if (loggedTenant.CustomerTenantShareImportFile == true)
             {
                 return (entityPM.DirectionId.ToUpper() == "I");
             }
@@ -1395,7 +1394,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private void InitializeShipmentDocument()
         {
-            if (loggedTenant.LogBoxTenantSetting.IsDocumentsArchive == true)
+            if (loggedTenant.IsDocumentsArchive == true)
             {
 
                 try
@@ -2541,7 +2540,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         if (isHaveAutomation)
                         {
 
-                            string fields = "MainCarriageCarrierId,MainCarriageETD,MainCarriageATD,MainCarriageFinalDestinationETA,MainCarriageFinalDestinationATA,FinalDistenationPortId,StatusId,CutoffDate";
+                            string fields = "MainCarriageCarrierId,MainCarriageETD,MainCarriageATD,MainCarriageETA,MainCarriageATA,FinalDistenationPortId,StatusId,CutoffDate";
                             List<NotifyPropertyChangeValues> changedProperties = notifyPropertyChangeValuesLists.Where(d => fields.Split(',').Contains(d.PropertyName)).ToList();
                             if (changedProperties.Count > 0)
                             {
@@ -3032,7 +3031,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
 
 
-                if (entityPM.IsHybrid || loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
+                if (entityPM.IsHybrid || loggedTenant.IsDocumentsArchive)
                 {
                     shipmentAdditionalCloudData = shipmentAdditionalCloudDataRepository.GetSingleShipmentAdditionalCloudData(entityPM.Id, entityPM.Tenant);
                     shipmentAdditionalCloudData.IsImporterApprovalRequried = entityPM.IsImporterApprovalRequired;

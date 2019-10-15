@@ -7,13 +7,13 @@ namespace Logitude.DatabaseMigration.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class Nawras_AddFieldsToWarehouseReleaseTable : IMigrationMetadata
+    public sealed partial class addNotInvoicedReceivablesAmount : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Nawras_AddFieldsToWarehouseReleaseTable));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(addNotInvoicedReceivablesAmount));
         
         string IMigrationMetadata.Id
         {
-            get { return "201909151004078_Nawras_AddFieldsToWarehouseReleaseTable"; }
+            get { return "201909301617282_addNotInvoicedReceivablesAmount"; }
         }
         
         string IMigrationMetadata.Source

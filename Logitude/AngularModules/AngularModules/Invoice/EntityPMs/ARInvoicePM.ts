@@ -423,6 +423,11 @@ export class ARInvoicePM {
     public set BranchId(newValue: string) { if (this.branchId != newValue) { this.branchId = newValue; this.MarkAsDirty("BranchId"); } }
        
 	 
+    private branchName: string;
+    public get BranchName() { return this.branchName; }
+    public set BranchName(newValue: string) { if (this.branchName != newValue) { this.branchName = newValue; this.MarkAsDirty("BranchName"); } }
+       
+	 
     private isPrinted: boolean;
     public get IsPrinted() { return this.isPrinted; }
     public set IsPrinted(newValue: boolean) { if (this.isPrinted != newValue) { this.isPrinted = newValue; this.MarkAsDirty("IsPrinted"); } }

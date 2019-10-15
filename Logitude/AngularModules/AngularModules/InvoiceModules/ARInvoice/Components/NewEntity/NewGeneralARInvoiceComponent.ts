@@ -557,6 +557,13 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         }
     }
 
+    get BranchId() { return this.EntityPM.BranchId; }
+    set BranchId(value: string) {
+        if (this.EntityPM.BranchId != value) {
+            this.EntityPM.BranchId = value;
+        }
+    }
+
     // Load Date
     private LastRatesList: LastRate[] = [];
     private VatTypePercentagesList: VatTypePercentagePM[] = [];

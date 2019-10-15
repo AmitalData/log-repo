@@ -200,7 +200,6 @@
     <Compile Include="CoreBL\BuildTenant\DummyTenantProvider.cs" />
     <Compile Include="CoreBL\BuildTenant\FullAccountingProvider.cs" />
     <Compile Include="CoreBL\BuildTenant\IFullAccountingGenerator.cs" />
-    <Compile Include="CoreBL\ExternalReconcile\ExternalReconcileAdjustBankFeesService.cs" />
     <Compile Include="CoreBL\ExternalReconcile\TransferTransactionsExternalReconciliationService.cs" />
     <Compile Include="CoreBL\GLAccountCounterService.cs" />
     <Compile Include="CoreBL\ExternalReconcile\CreateAutoExternalReconcileWhileStreamingService.cs" />
@@ -231,6 +230,7 @@
     <Compile Include="CoreBL\JournalLineOnUpdate.cs" />
     <Compile Include="CoreBL\JournalUpdateOnUpdating.cs" />
     <Compile Include="CoreBL\Reconcile\CreateAutoReconcileWhileStreamingService.cs" />
+    <Compile Include="CoreBL\Reports\AgingReportV1Service.cs" />
     <Compile Include="CoreBL\Reports\ARPaymentChequeRedemptionService.cs" />
     <Compile Include="CoreBL\Reports\ITrailReportBase.cs" />
     <Compile Include="CoreBL\Reports\LedgerTransactionCardIndexService.cs" />

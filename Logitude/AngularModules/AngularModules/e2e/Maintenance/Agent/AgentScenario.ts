@@ -32,12 +32,10 @@ export class NewAgentScenario {
         this.NewAgent.CreateNewAgent();
 
     }
-  /*  public SearchAgent() {
+    public SearchAgent() {
         this.NewAgent.SearchAgent();
 
     }
-    public SaveAgent() {
-        this.NewAgent.SaveAgent();
-    }*/
+
 
 }

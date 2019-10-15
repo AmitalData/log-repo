@@ -583,7 +583,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             if (invoice != null)
             {
-                Tenant myTenant = (from t in commonContext.Tenants where t.Id == currentTenant select t).FirstOrDefault();
+                Tenant myTenant = (from t in commonContext.Tenants.Include("ProfitCurrency") where t.Id == currentTenant select t).FirstOrDefault();
                 Card vendorCard = cardRepository.GetSingleCard(invoice.VendorId, currentTenant);
                
                 #region Invoice
@@ -640,6 +640,14 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     invoiceDataProvider.VendorNumber = vendorCard.Code;
                     invoiceDataProvider.VendorVatNumber = vendorCard.VatNumber;
+                    invoiceDataProvider.IRSPlace = vendorCard.IRSPlace;
+                    invoiceDataProvider.IRSNumber = vendorCard.IRSNumber;
+                    invoiceDataProvider.VendorBankName = vendorCard.BankName;
+                    invoiceDataProvider.VendorBankAddress = vendorCard.BankAddress;
+                    invoiceDataProvider.VendorSwift = vendorCard.Swift;
+                    invoiceDataProvider.VendorBankAccountNumber = vendorCard.AccountNumber;
+                    invoiceDataProvider.VendoIBANNo = vendorCard.IBANNumber;
+                    invoiceDataProvider.VendorName = vendorCard.EnglishName;
 
                     Address vendorAddress = addressRepository.GetMainAddressByCardId(invoice.VendorId, currentTenant);
 
@@ -690,22 +698,19 @@ namespace WebFreight.Web.ReportsWebServices
 
                 if (invoice.InvoiceMultipleShipments.Count > 0)
                 {
+                    List<string> frieghtChargesIds = (from d in commonContext.ChargesTypes where d.Tenant == currentTenant && d.ChargesGroupCode == "FRT" select d.Id).ToList();
+                    List<string> otherChargesIds = (from d in commonContext.ChargesTypes where d.Tenant == currentTenant && d.ChargesGroupCode != "FRT" select d.Id).ToList();
+
                     foreach (APInvoiceMultipleShipmentPM item in invoice.InvoiceMultipleShipments)
                     {
-                        APInvoiceMultipleEntity singleRecord = new APInvoiceMultipleEntity()
-                            {
-                                MasterNumber = item.Master,
-                                HouseNumber = item.House,
-                                ShipmentNumber = item.ShipmentNumber,
-                                PartnerName = item.PartnerName,
-                                ExpectedAmount = item.ExpectedAmount,
-                                OpenAmount = item.OpenAmount,
-                                Total = item.SubTotalInInvoiceCurrency,
-                                TotalVAT = item.TotalVATAmount,
-                            };
-
+                        item.Currency = myTenant.ProfitCurrency!=null?myTenant.ProfitCurrency.Code:null;
+                        APInvoiceMultipleEntity singleRecord = CalculateAPInvoiceMultipileShipment(item, frieghtChargesIds, otherChargesIds);
                         invoiceDataProvider.APInvoiceMultipleEntityList.Add(singleRecord);
                     }
+                }
+                if (FeatureToggleHelper.HasFeatureToggle("MAP", currentTenant))
+                {
+                    CalculateMAPTotals(invoiceDataProvider);                   
                 }
 
                 #endregion
@@ -736,6 +741,82 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
             return invoiceDataProvider;
+        }
+
+        private void CalculateMAPTotals(APInvoiceDataProvider invoiceDataProvider)
+        {
+            invoiceDataProvider.TotalChargeableWeight = invoiceDataProvider.APInvoiceMultipleEntityList.Sum(p => p.ChargeableWeight);
+            invoiceDataProvider.TotalFreight = invoiceDataProvider.APInvoiceMultipleEntityList.Sum(p => p.FreightAccounted);
+            invoiceDataProvider.TotalOtherCharges = invoiceDataProvider.APInvoiceMultipleEntityList.Sum(p => p.OtherChargesAccounted);
+            invoiceDataProvider.TotalProfit = invoiceDataProvider.APInvoiceMultipleEntityList.Sum(p => p.Profit);
+            invoiceDataProvider.TotalReceivablesSum = invoiceDataProvider.APInvoiceMultipleEntityList.Sum(p => p.TotalReceivables);
+            invoiceDataProvider.TotalPayable = invoiceDataProvider.APInvoiceMultipleEntityList.Sum(p => p.PayablesAccounted);
+            invoiceDataProvider.TotalVat = invoiceDataProvider.APInvoiceMultipleEntityList.Sum(p => p.TotalVAT);
+        }
+
+        private APInvoiceMultipleEntity CalculateAPInvoiceMultipileShipment(APInvoiceMultipleShipmentPM item, List<string> frieghtChargesIds, List<string> otherChargesIds)
+        {
+            APInvoiceMultipleEntity singleRecord = new APInvoiceMultipleEntity()
+            {
+                MasterNumber = item.Master,
+                HouseNumber = item.House,
+                ShipmentNumber = item.ShipmentNumber,
+                PartnerName = item.PartnerName,
+                ExpectedAmount = item.ExpectedAmount,
+                OpenAmount = item.OpenAmount,
+                Total = item.SubTotalInInvoiceCurrency,
+                TotalVAT = item.TotalVATAmount!=null?item.TotalVATAmount:0,
+            };
+            
+            if (FeatureToggleHelper.HasFeatureToggle("MAP", currentTenant))
+            {
+                APInvoiceFreights aPInvoiceFreights = new APInvoiceFreights();
+                aPInvoiceFreights.FrieghtChargesIds = frieghtChargesIds;
+                aPInvoiceFreights.OtherChargesIds = otherChargesIds;
+                singleRecord.OperationalDate = item.OperationalDate;
+                CalculateMAPFields(singleRecord, item);               
+                CalculateFreight(singleRecord, item, aPInvoiceFreights);              
+            }
+            return singleRecord;
+        }
+
+        private void CalculateMAPFields(APInvoiceMultipleEntity singleRecord, APInvoiceMultipleShipmentPM item)
+        {
+            singleRecord.MainCarriageOrigin = item.MainCarriageOrigin;
+            singleRecord.MainCarriageFinalDestination = item.MainCarriageFinalDestination;
+            singleRecord.ChargeableWeight = item.ChargeableWeight;
+            singleRecord.TotalReceivables = item.TotalReceivables;
+            singleRecord.Profit = item.Profit;
+            singleRecord.Currency = item.Currency;
+            singleRecord.PayablesAccounted = item.SubTotalInInvoiceCurrency;
+            singleRecord.LongMaster = item.LongMaster;
+        }
+
+        private void CalculateFreight(APInvoiceMultipleEntity singleRecord, APInvoiceMultipleShipmentPM item, APInvoiceFreights aPInvoiceFreights)
+        {
+            var freightAccounted = (from d in invoiceCotnext.APInvoiceLines
+                                    where d.EntityId == item.ShipmentId && d.APInvoiceId == item.APInvoiceId
+                                    && aPInvoiceFreights.FrieghtChargesIds.Contains(d.ChargesTypeId)
+                                    select d.InvoiceCurrencyAmount).Sum();
+
+            var otherAccounted = (from d in invoiceCotnext.APInvoiceLines
+                                  where d.EntityId == item.ShipmentId && d.APInvoiceId == item.APInvoiceId
+                                  && aPInvoiceFreights.OtherChargesIds.Contains(d.ChargesTypeId)
+                                  select d.InvoiceCurrencyAmount).Sum();
+
+            singleRecord.FreightAccounted = freightAccounted == null ? 0 : freightAccounted;
+            singleRecord.OtherChargesAccounted = otherAccounted == null ? 0 : otherAccounted;
+        }
+
+        private class APInvoiceFreights
+        {
+            public List<string> FrieghtChargesIds { get; set; }
+            public List<string> OtherChargesIds { get; set; }
+            public APInvoiceFreights() {
+                this.FrieghtChargesIds = new List<string>();
+                this.OtherChargesIds = new List<string>();
+            }
+
         }
     }
 }

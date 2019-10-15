@@ -178,8 +178,10 @@ export class AddEditPayableComponent {
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
                     this.DataContext.TariffId = null;
+                    this.DataContext.MinAmount = null;
                     this.DataContext.TariffNumber = null;
                     this.DataContext.IsNewEntity = false;
+                    this.EntityPM.PayablesDisconnectedFromTariff = true;
                     this.DataContext.SetUIProperties();
                     this.CurrentSession.CloseCurrentWindowEmit("OK");     
                 }

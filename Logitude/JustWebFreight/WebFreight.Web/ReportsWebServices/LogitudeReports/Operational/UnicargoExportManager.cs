@@ -37,7 +37,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
         private ContactRepository ContactRepository;
         private CustomFieldResolver customFieldResolver;
         private CardRepository cardRepository;
-
+        private Dictionary<string, string> LeadSources;
         public UnicargoExportManager(byte[] xmlFilters, int tenant)
         {
             this.tenant = tenant;
@@ -54,6 +54,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
             QueryOperations myQueryOperations = (QueryOperations)xmlSerializer.Deserialize(memoryStream);
         }
 
+
+
         public byte[] GetData()
         {
             UnicargoExportDataProvider myDataProvider = this.LoadDataProvider();
@@ -69,13 +71,51 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
             return bytearray;
         }
 
+        private void FillShipmentcustomerContact(UnicargoExport Shipment, string customerContactId)
+        {
+            Contact contact = ContactRepository.GetSingleContactByIdAndTenant(customerContactId, tenant, true);
+            if (contact != null)
+            {
+                Shipment.CustomerContactEmail = contact.Email;
+                Shipment.CustomerContactName = contact.EnglishName;
+            }
+        }
+
+        private void FillShipmentCustomerLeadSource(UnicargoExport Shipment, string leadSourceId)
+        {
+            if (LeadSources.ContainsKey(leadSourceId))
+            {
+                Shipment.LeadSource = LeadSources[leadSourceId];
+            }
+        }
+
+        private void FillShipmentCustomer(UnicargoExport Shipment, string customerId)
+        {
+            Card card = cardRepository.GetSingleCardByIdAndTenant(customerId, tenant, true);
+            if (card != null)
+            {
+                Shipment.Customer = card.EnglishName;
+                Shipment.CustomerId = card.Code;
+                if (card.Customer != null)
+                {
+                    if (!string.IsNullOrEmpty(card.Customer.LeadSourceId))
+                    {
+                        FillShipmentCustomerLeadSource(Shipment, card.Customer.LeadSourceId);                       
+                    }
+                }
+                Shipment.PaymentTerms = card.PaymentTerm != null ? card.PaymentTerm.EnglishName : null;
+            }
+        }
+
+
+
         private UnicargoExportDataProvider LoadDataProvider()
         {
             UnicargoExportDataProvider myDataProvider = new UnicargoExportDataProvider()
             {
                 Shipments = new List<UnicargoExport>()
             };
-
+            
             List<Shipment> shipments = shipmentsContext.Shipments.Where(p => p.Tenant == tenant && p.IsOperationalClosed == false && p.IsAccountingClosed == false && p.IsCancelled == false).ToList();
             Dictionary<string, string> incoterms = commonDataContext.Incoterms.Where(p => p.Tenant == tenant).ToDictionary(a => a.Id, b => b.Name);
             List<string> shipmentdelevriesIds = shipments.Select(d => d.Id).ToList();
@@ -107,7 +147,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
             List<Country> FromAddressCountryLists = (from record in commonDataContext.Countries.Include("GlobalZone") where FromAddressCountryIds.Contains(record.Id) && record.Tenant == tenant select record).ToList();
             List<Address> ToPartnerAddressLists = (from a in commonDataContext.Addresses.Include("Country").Include("State") where a.Tenant == tenant && ToPartnerCardIds.Contains(a.CardId) && a.AddressTypeId.ToUpper() == "M" select a).ToList();
 
-            Dictionary<string, string> LeadSources = commonDataContext.LeadSources.Where(p => p.Tenant == tenant).ToDictionary(a => a.Id, b => b.Name);
+            LeadSources = commonDataContext.LeadSources.Where(p => p.Tenant == tenant).ToDictionary(a => a.Id, b => b.Name);
 
 
 
@@ -119,7 +159,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 #region  General Section
                 Shipment.House = item.House;
                 Shipment.FileNumber = item.ShipmentNumber;
-                
+         
                 if (!string.IsNullOrEmpty(item.IncotermId))
                 {
                     Shipment.Incoterms = incoterms.ContainsKey(item.IncotermId) ? incoterms[item.IncotermId] != null ? incoterms[item.IncotermId] : null : null;
@@ -206,7 +246,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 }
                 Shipment.CreateDate = item.CreateDateTime;
                 Shipment.ValueofGoods = item.ValueOfGoods;
-               // customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, item, Shipment);
+                customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, item, Shipment);
 
 
                 #endregion
@@ -229,11 +269,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                     {
                         Shipment.ConsigneeAddress = DataProviders.General.GetAddress(ConsigneeAddress);// myPartnerAddress.Country == null ? "" : myPartnerAddress.Country.EnglishName;
                         Shipment.ConsigneePhone = ConsigneeAddress.PhoneNumber;
-
                     }
-
-
-
                 }
 
                 if (!string.IsNullOrEmpty(item.Notify1Id))
@@ -284,39 +320,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 }
 
 
-
                 if (!string.IsNullOrEmpty(item.CustomerId))
                 {
-                    Card card = cardRepository.GetSingleCardByIdAndTenant(item.CustomerId, tenant, true);
-                    if (card != null)
-                    {
-                        Shipment.Customer = card.EnglishName;
-                        Shipment.CustomerId = card.Code;
-                        if (card.Customer != null)
-                        {
-                            if (!string.IsNullOrEmpty(card.Customer.LeadSourceId))
-                            {
-                                if (LeadSources.ContainsKey(card.Customer.LeadSourceId))
-                                {
-                                    Shipment.LeadSource = LeadSources[card.Customer.LeadSourceId];
-                                }
-                            }
-                        }
-                        Shipment.PaymentTerms = card.PaymentTerm!=null?card.PaymentTerm.EnglishName:null;
-
-
-                    }
+                    FillShipmentCustomer(Shipment, item.CustomerId);   
                 }
 
                 if (!string.IsNullOrEmpty(item.CustomerContactId))
                 {
-                    Contact contact = ContactRepository.GetSingleContactByIdAndTenant(item.CustomerContactId, tenant, true);
-                    if (contact != null)
-                    {
-                        Shipment.CustomerContactEmail = contact.Email;
-                        Shipment.CustomerContactName = contact.EnglishName;
-
-                    }
+                    FillShipmentcustomerContact(Shipment, item.CustomerContactId);                    
                 }
 
                 if (!string.IsNullOrEmpty(item.ShipperNotExporterId))
@@ -633,6 +644,17 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                         }
 
                     }
+
+                    else if (!string.IsNullOrEmpty(MasterData.MainCarriageToPartnerId) && item.TransportModeId == "I" && item.DirectionId == "D")
+                    {
+                        Card card = cardRepository.GetSingleCardByIdAndTenant(MasterData.MainCarriageToPartnerId, tenant, true);
+                        if (card != null)
+                        {
+                            Shipment.ToPortCountryCode = card.CountryCode;
+                        }
+                    }
+
+
            
 
 
@@ -811,6 +833,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
                             }
 
+                            else if (!string.IsNullOrEmpty(MasterData.MainCarriageToPartnerId) && item.TransportModeId == "I" && item.DirectionId == "D")
+                            {
+                                Card card = cardRepository.GetSingleCardByIdAndTenant(MasterData.MainCarriageToPartnerId, tenant, true);
+                                if (card != null)
+                                {
+                                    Shipment.ToPortCountryCode = card.CountryCode;
+                                }
+                            }
+
 
 
                             if (!string.IsNullOrEmpty(MasterShipment.MainCarriageCarrierId))
@@ -923,6 +954,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
             return myDataProvider;
         }
+
 
     }
 }

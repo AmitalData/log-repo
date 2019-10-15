@@ -1,5 +1,4 @@
-﻿using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Def.EntityPMs;
+﻿using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
@@ -8,13 +7,12 @@ using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
-    public partial class GLAccountWithholdingTaxUpdateService
+  public partial  class GLAccountWithholdingTaxUpdateService
     {
         public const string RaiseEventWBLKConst = "RaiseEventWBLK";
         public const string RaiseEventWLDAConst = "RaiseEventWLDA";
@@ -80,10 +78,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             //            Notes = notes,
             //        });
             //    }
-
-
-
-
             base.OnUpdating(entityPM);
         }
 

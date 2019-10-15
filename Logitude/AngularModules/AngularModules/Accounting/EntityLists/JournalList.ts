@@ -14,7 +14,6 @@ export class JournalList {
 	CreateDate: Date;
 	AccountingDate: Date;
 	TypeCode: string;
-	StatusCode: string;
 	AccountingEntityCode: string;
 	ExternalNo: string;
 	TypeName: string;

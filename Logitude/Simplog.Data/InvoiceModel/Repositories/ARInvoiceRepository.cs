@@ -168,7 +168,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
 
         public ARInvoice GetSingleARInvoice(string id, int tenant)
         {
-            return (from a in context.ARInvoices.Include("BillTo").Include("BillTo.PartnerType").Include("CreatedByUser.Contact").Include("InvoiceCurrency").Include("Status").Include("ARInvoiceType").Include("IssuedByUser.Contact").Include("PrintByUser.Contact").Include("PaymentTerm").Include("ProfitCurrency").Include("LocalCurrency").Include("TransferStatus").Include("ApprovedByUser.Contact").Include("SalesmanUser.Contact").Include("SATInvoiceStatus").Include("SATTransferStatus")
+            return (from a in context.ARInvoices.Include("BillTo").Include("BillTo.PartnerType").Include("CreatedByUser.Contact").Include("InvoiceCurrency").Include("Status").Include("ARInvoiceType").Include("IssuedByUser.Contact").Include("PrintByUser.Contact").Include("PaymentTerm").Include("ProfitCurrency").Include("LocalCurrency").Include("TransferStatus").Include("ApprovedByUser.Contact").Include("SalesmanUser.Contact").Include("SATInvoiceStatus").Include("SATTransferStatus").Include("Branch")
                     where a.Id == id && a.Tenant == tenant
                     select a).FirstOrDefault();
         }

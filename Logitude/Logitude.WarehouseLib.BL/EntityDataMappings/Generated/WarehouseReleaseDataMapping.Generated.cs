@@ -540,15 +540,7 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 					entityPM.ConnectedTo = entityPOCO.ConnectedTo;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FromPortId))
-            {
-					entityPM.FromPortId = entityPOCO.FromPortId;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ToPortId))
-            {
-					entityPM.ToPortId = entityPOCO.ToPortId;
-            }
+		}
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomerAddressId))
             {

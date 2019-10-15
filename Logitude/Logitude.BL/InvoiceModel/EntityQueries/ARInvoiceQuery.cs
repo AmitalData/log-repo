@@ -43,7 +43,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             ARInvoicePM entityPM = null;
 
             ARInvoice entityPOCO =
-                (from a in repository.context.ARInvoices.Include("ProfitCurrency").Include("InvoiceCurrency").Include("Status").Include("LocalCurrency").Include("BillTo").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("SATInvoiceStatus").Include("SATTransferStatus")
+                (from a in repository.context.ARInvoices.Include("ProfitCurrency").Include("InvoiceCurrency").Include("Status").Include("LocalCurrency").Include("BillTo").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("SATInvoiceStatus").Include("SATTransferStatus").Include("Branch")
                  where a.Id == id && a.Tenant == tenant
                  select a).FirstOrDefault();
 
@@ -62,7 +62,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         {
 
             ARInvoice entityPOCO =
-                (from a in repository.context.ARInvoices.Include("ProfitCurrency").Include("InvoiceCurrency").Include("Status").Include("LocalCurrency").Include("BillTo").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("SATInvoiceStatus").Include("SATTransferStatus")
+                (from a in repository.context.ARInvoices.Include("ProfitCurrency").Include("InvoiceCurrency").Include("Status").Include("LocalCurrency").Include("BillTo").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("SATInvoiceStatus").Include("SATTransferStatus").Include("Branch")
                  where a.Id == id && a.Tenant == tenant
                  select a).FirstOrDefault();
 
@@ -75,7 +75,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             ARInvoicePM entityPM = null;
 
             ARInvoice entityPOCO =
-                (from a in repository.context.ARInvoices.Include("ProfitCurrency").Include("InvoiceCurrency").Include("Status").Include("LocalCurrency").Include("BillTo").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact")
+                (from a in repository.context.ARInvoices.Include("ProfitCurrency").Include("InvoiceCurrency").Include("Status").Include("LocalCurrency").Include("BillTo").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("Branch")
                  where a.InvoiceNumber == invoiceNumber && a.Tenant == tenant
                  select a).FirstOrDefault();
 
@@ -96,7 +96,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             ARInvoice entityPOCO = null;
 
             IQueryable<ARInvoice> iQueryable_Data =
-                (from a in repository.context.ARInvoices.Include("ProfitCurrency").Include("InvoiceCurrency").Include("Status").Include("LocalCurrency").Include("BillTo").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact")
+                (from a in repository.context.ARInvoices.Include("ProfitCurrency").Include("InvoiceCurrency").Include("Status").Include("LocalCurrency").Include("BillTo").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("Branch")
                  where a.Tenant == tenant
                  && a.TransferTries < 5
                  && a.StatusCode != "DR"
@@ -1285,7 +1285,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         {
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
 
-            var query = from a in repository.context.ARInvoices.Include("InvoiceCurrency").Include("BillTo").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact")
+            var query = from a in repository.context.ARInvoices.Include("InvoiceCurrency").Include("BillTo").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("Branch")
                         where a.Tenant == tenant && a.StatusCode != "DR" && a.StatusCode != "VD" && a.StatusCode != "LL" && !a.IsAutoCredit && !a.IsCancelled && !a.IsClosed
                         select new ARInvoiceList()
                         {
@@ -1366,6 +1366,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             SATApprovalDate = a.SATApprovalDate,
                             IsFullAccounting = a.IsFullAccounting,
                             ARInvoiceStockId = a.ARInvoiceStockId,
+                            BranchName = a.Branch == null ? null : a.Branch.EnglishName,
                         };
 
             return query;
@@ -1381,7 +1382,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
 
-            var result = from entity in iQueryable.Include("BillTo").Include("BillTo.PartnerType").Include("CreatedByUser.Contact").Include("InvoiceCurrency").Include("Status").Include("ARInvoiceType").Include("IssuedByUser.Contact").Include("PrintByUser.Contact").Include("PaymentTerm").Include("ProfitCurrency").Include("LocalCurrency").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("CreditedByARInvoice").Include("SATInvoiceStatus").Include("SATTransferStatus")
+            var result = from entity in iQueryable.Include("BillTo").Include("BillTo.PartnerType").Include("CreatedByUser.Contact").Include("InvoiceCurrency").Include("Status").Include("ARInvoiceType").Include("IssuedByUser.Contact").Include("PrintByUser.Contact").Include("PaymentTerm").Include("ProfitCurrency").Include("LocalCurrency").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("CreditedByARInvoice").Include("SATInvoiceStatus").Include("SATTransferStatus").Include("Branch")
                          select new ARInvoiceList()
                          {
                              IsClosed = entity.IsClosed,
@@ -1499,6 +1500,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              SATApprovalDate = entity.SATApprovalDate,
                              IsFullAccounting = entity.IsFullAccounting,
                              IsInvoiceNumberFromStock = entity.IsInvoiceNumberFromStock,
+                             BranchName = entity.Branch == null ? null : entity.Branch.EnglishName,
                          };
 
             return result;
@@ -1506,7 +1508,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
         public List<ARInvoicePM> GetInvoicesByCustomer(string customerId, int tenant)
         {
-            List<ARInvoicePM> invoices = (from a in repository.context.ARInvoices.Include("BillTo").Include("InvoiceCurrency").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact")
+            List<ARInvoicePM> invoices = (from a in repository.context.ARInvoices.Include("BillTo").Include("InvoiceCurrency").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("Branch")
                                           where a.BillToId == customerId && a.Tenant == tenant
                                           select new ARInvoicePM()
                                           {
@@ -1607,6 +1609,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               IsFullAccounting = a.IsFullAccounting,
                                               ARInvoiceStockId = a.ARInvoiceStockId,
                                               IsInvoiceNumberFromStock = a.IsInvoiceNumberFromStock,
+                                              BranchName = a.Branch == null ? null : a.Branch.EnglishName,
                                           }).ToList();
             return invoices;
         }
@@ -1719,7 +1722,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     IsFullAccounting = entityPOCO.IsFullAccounting,
                     ARInvoiceStockId = entityPOCO.ARInvoiceStockId,
                     IsInvoiceNumberFromStock = entityPOCO.IsInvoiceNumberFromStock,
-                    DocumentFilingId = entityPOCO.DocumentFilingId
+                    DocumentFilingId = entityPOCO.DocumentFilingId,
+                    BranchName = entityPOCO.Branch == null ? null : entityPOCO.Branch.EnglishName,
                 };
 
                 entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;
@@ -1921,7 +1925,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         {
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
 
-            var result = from entity in repository.context.ARInvoices.Include("BillTo").Include("BillTo.PartnerType").Include("CreatedByUser.Contact").Include("InvoiceCurrency").Include("Status").Include("ARInvoiceType").Include("IssuedByUser.Contact").Include("PrintByUser.Contact").Include("PaymentTerm").Include("ProfitCurrency").Include("LocalCurrency").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact")
+            var result = from entity in repository.context.ARInvoices.Include("BillTo").Include("BillTo.PartnerType").Include("CreatedByUser.Contact").Include("InvoiceCurrency").Include("Status").Include("ARInvoiceType").Include("IssuedByUser.Contact").Include("PrintByUser.Contact").Include("PaymentTerm").Include("ProfitCurrency").Include("LocalCurrency").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("Branch")
                          where entity.Tenant == tenant && entity.StatusCode != "LL"
                          select new ARInvoiceList()
                          {
@@ -2039,6 +2043,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              IsFullAccounting = entity.IsFullAccounting,
                              ARInvoiceStockId = entity.ARInvoiceStockId,
                              IsInvoiceNumberFromStock = entity.IsInvoiceNumberFromStock,
+                             BranchName = entity.Branch == null ? null : entity.Branch.EnglishName,
                          };
 
             return result;

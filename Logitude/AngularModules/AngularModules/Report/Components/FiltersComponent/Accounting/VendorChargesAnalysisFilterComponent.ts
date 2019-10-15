@@ -28,6 +28,7 @@ export class VendorChargesAnalysisFilterComponent extends BaseComponent {
     public ProfitCurrencyCode: string;
     public LocalCurrencyCode: string;
     public IncludeAccountedOnly: boolean = false;
+    public ShipmentNumber: string;
 
     InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
         this.ReportsPreview = myReportsPreview;
@@ -323,6 +324,7 @@ export class VendorChargesAnalysisFilterComponent extends BaseComponent {
             myFilterItems.push(new QueryFilterItem("AccountingType", this.SelectedAccountingCode));
             myFilterItems.push(new QueryFilterItem("Direction", this.SelectedDirectionFilter));
             myFilterItems.push(new QueryFilterItem("TransportMode", this.SelectedTransportFilter));
+            myFilterItems.push(new QueryFilterItem("ShipmentNumber", this.ShipmentNumber));
 
             var myReportFliter: ReportFliter = new ReportFliter();
             myReportFliter.NumberOfPage = 1;

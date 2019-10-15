@@ -20,11 +20,10 @@ export class NewAgent {
       //  this.helper.WaitByIdAndClick('General.MH.Maintenance');
         this.helper.waitByCss('#null_Search');
         this.helper.WaitBusyIndicator();
-
     }
 
     SearchAgentTab() {
-        
+       
         this.helper.WaitByIdAndFill('null_Search', "Agent");
         this.helper.WaitByIdAndClick('MaintenanceItemMTAG');
 
@@ -42,7 +41,7 @@ export class NewAgent {
     }
 
 
-  /*  SearchAgent() {
+    SearchAgent() {
 
         this.helper.WaitBusyIndicator();
         this.helper.WaitWindowClosed();
@@ -52,12 +51,5 @@ export class NewAgent {
         this.helper.WaitByIdAndClick('Agent-Save');
 
     }
-    SaveAgent() {
-     //   this.helper.ItemsVisibility('Agent-Save')
-        this.helper.WaitByIdAndClick('Agent-Save');
-
-
-    }*/
-
 
 }

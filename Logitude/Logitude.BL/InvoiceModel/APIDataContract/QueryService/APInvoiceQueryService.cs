@@ -272,20 +272,6 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             //}
         }
 
-        private void CheckIfExternlaEntiityIdExist(APInvoice apinvoice)
-        {
-
-            if (apinvoice.ExternalAccountingEntityId != null)
-            {
-                APInvoicePM invoice = query.GetSingleInvoiceByExternlaEntityId(apinvoice.ExternalAccountingEntityId, apinvoice.Tenant);
-                if (invoice != null)
-                {
-                    throw new Exception("invoice with the same externla id already exist!");
-                }
-            }
-
-        }
-
         private double GetInvoiceCurrencyExchangeRate(APInvoice apinvoice, int tenant)
         {
             CurrencyPM invoiceCurrency = GetInvoiceCurrency(apinvoice, tenant);

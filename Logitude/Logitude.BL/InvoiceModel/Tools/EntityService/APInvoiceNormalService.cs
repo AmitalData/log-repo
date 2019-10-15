@@ -2102,7 +2102,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             DocumentDate = theEntityPm.InvoiceDate.Value,
                             AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant),
                             DueDate = theEntityPm.DueDate.Value,
-                            LocalAmount = vat.VatRecognizedPercentage != null? (((decimal)vat.VatRecognizedPercentage /100 ) *(decimal)vat.LocalVATAmount)  : (decimal) vat.LocalVATAmount,
+                            LocalAmount = vat.VatRecognizedPercentage != null? (((decimal)vat.VatRecognizedPercentage /100) *(decimal)vat.LocalVATAmount)  : (decimal) vat.LocalVATAmount,
                             CurrencyId = theEntityPm.InvoiceCurrencyId,
                             ForeignAmount = (decimal)vat.InvoiceCurrencyVATAmount,
                             ExchangeRate = (decimal)theEntityPm.InvoiceCurrencyExchangeRate,

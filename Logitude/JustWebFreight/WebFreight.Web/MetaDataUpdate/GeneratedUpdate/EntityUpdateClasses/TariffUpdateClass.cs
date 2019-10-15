@@ -3583,7 +3583,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   Feature TariffFeature_UPDATESURCHARGES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATESURCHARGES", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TariffObjectTable.Id, Tenant = 0, NameTextCodeCode = "Tariff.Features.UPDATESURCHARGES", NameTextCodeDefaultText = @"Update Surcharges" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature TariffFeature_UPDATEMISSINGPORTS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATEMISSINGPORTS", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TariffObjectTable.Id, Tenant = 0, NameTextCodeCode = "Tariff.Features.UPDATEMISSINGPORTS", NameTextCodeDefaultText = @" Update Missing Ports " }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature TariffFeature_UPDATEMISSINGPORTS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATEMISSINGPORTS", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TariffObjectTable.Id, Tenant = 0, NameTextCodeCode = "Tariff.Features.UPDATEMISSINGPORTS", NameTextCodeDefaultText = @"Update Missing Ports" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
    
 	    
@@ -3845,7 +3845,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable TariffObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Tariff" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode TariffTextCode_TariffODefaultCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tariff.O.DefaultCurrency", DefaultText = "Default Currency",LocalDefaultText = null, ObjectTableId = TariffObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 

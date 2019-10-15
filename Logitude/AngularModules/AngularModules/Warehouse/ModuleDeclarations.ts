@@ -1,4 +1,4 @@
-
+﻿
 
 import {NewWarehouseEntryComponent} from './Components/NewWarehouseEntryComponent';
 import {NewWarehouseReleaseComponent} from './Components/NewWarehouseReleaseComponent';
@@ -28,7 +28,6 @@ import {WarehouseEntryPackagesTabComponent} from './Components/EditTabs/Packages
 import {WarehouseReleaseFiltersMenuComponent} from './Components/FiltersMenu/WarehouseReleaseFiltersMenuComponent';
 
 import {WarehouseReleasePackagesDetailsComponent} from './Components/WarehouseReleasePackagesDetailsComponent';
-import { NewFullWarehouseReleaseComponent } from './Components/NewEntity/NewFullWarehouseReleaseComponent';
 
 
 import {WarehouseReleaseRoutingsTabComponent} from './Components/EditTabs/RoutingsTab/WarehouseReleaseRoutingsTabComponent'; 

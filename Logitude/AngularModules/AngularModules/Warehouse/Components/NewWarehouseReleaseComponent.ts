@@ -226,12 +226,12 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
         //}
         if (this.ShipmentPM) {
             this.CurrentSession.StartBusyIndicatorLoading();
-            this.warehouseEntryPackagePMExtendedService.GetWarehouseEntryPackagePMListsByShipmentIdAndWarehouseIdAndCustomerId(null, this.warehouseReleasePM.CustomerId, this.warehouseReleasePM.WarehouseId, this.ShipmentPM.Tenant).subscribe((res: any) => {
+            this.warehouseEntryPackagePMExtendedService.GetWarehouseEntryPackagePMListsByShipmentIdAndWarehouseIdAndCustomerId(this.ShipmentPM.Id, this.warehouseReleasePM.CustomerId, this.warehouseReleasePM.WarehouseId, this.ShipmentPM.Tenant).subscribe((res: any) => {
                 var pmResponse: ServiceResponse = res;
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 if (!pmResponse.HasError) {
                     this.AllWarehouseEntryPackagesLists = pmResponse.Result;
-
+ 
                 }
 
             });
@@ -334,8 +334,7 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
             this.IsChoosePackageOpen = true;
             if (this.CustomerId != this.warehouseReleasePM.CustomerId || this.WarehouseId != this.warehouseReleasePM.WarehouseId) {
 
-                //var shipmentId: string = this.ShipmentPM ? this.ShipmentPM.Id : "";
-                var shipmentId = null;
+                var shipmentId: string = this.ShipmentPM ? this.ShipmentPM.Id : "";
                 this.AllWarehouseEntryPackagesLists = [];
                 this.warehouseEntryPackagePMExtendedService.GetWarehouseEntryPackagePMListsByShipmentIdAndWarehouseIdAndCustomerId(shipmentId, this.warehouseReleasePM.CustomerId, this.warehouseReleasePM.WarehouseId, this.ShipmentPM.Tenant).subscribe((res: any) => {
                     var pmResponse: ServiceResponse = res;
@@ -357,8 +356,8 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
     TransportModeId: string;
     DirectionId: string;
     CustomerId: string;
-    //FromPortId: string;
-    //ToPortId: string;
+    FromPortId: string;
+    ToPortId: string;
     ConnectedTo: string;
     OpenChoosePackage(packageType: string) {
 
@@ -376,9 +375,8 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
         var windowArgs: any = {};
         windowArgs.WarehouseReleasePM = this.warehouseReleasePM;
 
-        //windowArgs.WarehouseEntryPackagesLists = this.AllWarehouseEntryPackagesLists;
+        windowArgs.WarehouseEntryPackagesLists = this.AllWarehouseEntryPackagesLists;
         windowArgs.ViewModelTrigger = this;
-        windowArgs.IsFromFullWarehouseReleaseComponent = false;
 
 
 
@@ -397,7 +395,7 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
                 this.warehouseReleasePM.UIProperties.SetEnabled("CustomerId", "WarehouseRelease", false);
                 this.warehouseReleasePM.UIProperties.SetEnabled("WarehouseId", "WarehouseRelease", false);
             }
-            this.ComputeAndFullTotalPackage();
+
         });
 
 
@@ -455,7 +453,6 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
             }
         }
     }
-
 
     SetActualDateClicked(fieldName: string) {
         this.ActualReleaseDate = DateTool.GetDateParts(this.warehouseReleasePM.ExpectedReleaseDate).DateObject;
