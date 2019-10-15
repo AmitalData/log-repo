@@ -45,11 +45,21 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     public IsUpdateSurchargesButtonVisible: boolean = false;
     public IsFirstDraft: boolean = false;
     public SelectedVersionNumber: number;
+    public OriginDependencyFilterValue: string = "A";
+    public DestinationDependencyFilterValue = "A";
     private deletedLinesExpirationDates: TariffLineExpirationDatePM[];
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
         this.Listen();
+    }
+
+
+    SetOriginDependencyFilterValue() {
+        if (this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OSC") {
+            this.OriginDependencyFilterValue = "O";
+            this.DestinationDependencyFilterValue = "O";
+        }
     }
 
     public AllChargesTypes: ChargesTypeList[];
@@ -100,6 +110,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
                 });
             }
         });
+        this.SetOriginDependencyFilterValue();
     }
 
     private SaveCompletedEvent: any = null;
@@ -453,7 +464,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             newVersion.ParentVersionNumber = item.ParentVersionNumber;
             newVersion.Id = item.TariffId;
 
-            if (this.EntityPM.TypeCode == "ASC") {
+            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode =="OSC") {
                 newVersion.Name = "Version " + item.Version;
             }
 

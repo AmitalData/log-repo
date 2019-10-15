@@ -2575,18 +2575,30 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     logWindow.Width = 850;
                     logWindow.Height = 500;
 
-                    if (QueryCodeOriginal == "Air Freight Cost Tariffs") {
-                        logWindow.Title = "New Air Freight Cost";
-                        windowArgs.TypeCode = "AFC";
-                    }
-                    else if (QueryCodeOriginal == "Ocean LCL Freight Cost")  {
-                        logWindow.Title = "New Ocean LCL Freight Cost";
-                        windowArgs.TypeCode = "OLC";
-                    }
-                    else {
-                        "Air Surcharges Cost Tariffs";
-                        logWindow.Title = "New Air Surcharges Cost";
-                        windowArgs.TypeCode = "ASC";
+                    switch (QueryCodeOriginal) {
+                        case "Air Freight Cost Tariffs": {
+                            logWindow.Title = "New Air Freight Cost";
+                            windowArgs.TypeCode = "AFC";
+                            break;
+                        }
+
+                        case "Air Surcharges Cost Tariffs": {
+                            logWindow.Title = "New Air Surcharges Cost";
+                            windowArgs.TypeCode = "ASC";
+                            break;
+                        }
+
+                        case "Ocean LCL Freight Cost": {
+                            logWindow.Title = "New Ocean LCL Freight Cost";
+                            windowArgs.TypeCode = "OLC";
+                            break;
+                        }
+
+                        case "Ocean.LCL.Surcharges.Cost": {
+                            logWindow.Title = "New " + TextCodeTranslator.TranslateTable("Tariff.Q.Ocean.LCL.Surcharges.Cost");
+                            windowArgs.TypeCode = "OSC";
+                            break;
+                        }
                     }
                  
                     logWindow.WindowArgs = windowArgs;
