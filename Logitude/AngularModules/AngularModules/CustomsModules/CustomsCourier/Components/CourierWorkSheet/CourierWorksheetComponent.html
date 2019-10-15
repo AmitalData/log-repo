@@ -323,7 +323,7 @@
                                                                         <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems == null || (_CourierWorksheetSharedDataService._SelectedItems != null
                                                                             && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0)"
                                                                             style="width:500px">
-                                                                            
+
                                                                             <split-button (DefaultSplitButtonClicked)="SendALLCorrectManifest('R')"
                                                                                           [ButtonText]=_ReadyMNFToBatchSendButtonText
                                                                                           [IsDisabled]="IsDisplayOnly"
@@ -593,7 +593,12 @@
                                                                             <ComboBox [ItemsSource]="_PendingCodes" [Binding]="'Value'" [SelectedItem]="SelectedPendingCodeFilter" (SelectedItemChanged)="HOLDFilterClicked($event)"></ComboBox>
                                                                         </td>
 
-                                                            <td></td>
+                                                                        <td></td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+
+                                                            <td style="width:5px; float:left;"></td>
                                                             <td style="width:150px;">
                                                                 <SearchTextBox [ObjectTableName]="'Customs.CourierMaster'" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)" [SearchText]="SearchFilter" [PlaceHolder]="'תיק/הצהרה/ש.מ.ב/לקוח'"></SearchTextBox>
                                                             </td>
