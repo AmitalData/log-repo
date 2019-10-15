@@ -42,7 +42,7 @@
                                 </div>
                             </td>
 
-                            <td *ngIf="TariffType == 'ASC'">
+                            <td *ngIf="TariffType == 'ASC' || TariffType == 'OSC'">
                                 <table>
                                     <tr>
                                         <td style="width:130px;">
@@ -91,7 +91,7 @@
                                 </div>
                             </td>
 
-                            <td *ngIf="TariffType == 'ASC'">
+                            <td *ngIf="TariffType == 'ASC' || TariffType == 'OSC'">
                                 <table>
                                     <tr>
                                         <td style="width:130px;">
@@ -112,7 +112,7 @@
 
 
                         <!-- Currency -->
-                        <tr class="FormFieldRow" *ngIf="TariffType == 'ASC'">
+                        <tr class="FormFieldRow" *ngIf="TariffType == 'ASC' || TariffType == 'OSC'">
                             <td>
                                 <LogLabel [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                             </td>
@@ -134,7 +134,7 @@
                         </tr>
 
                         <!-- StartDate -->
-                        <tr class="FormFieldRow" *ngIf="TariffType == 'ASC'">
+                        <tr class="FormFieldRow" *ngIf="TariffType == 'ASC' || TariffType == 'OSC'">
                             <td>
                                 <LogLabel [ObjectFieldName]="'StartDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                             </td>
@@ -300,7 +300,7 @@
                         </tr>
 
                         <!-- Air Surcharges Cost-->
-                        <tr *ngIf="TariffType == 'ASC'" style="height:1px;">
+                        <tr *ngIf="TariffType == 'ASC' || TariffType == 'OSC'" style="height:1px;">
                             <td colspan="3">
                                 <table>
                                     <!-- Surcharge1Price -->

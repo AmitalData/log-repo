@@ -270,6 +270,20 @@ export class LoginComponent {
         }
     }
 
+
+
+    InputPasswordType: string = "password";
+    ShowHidePasswordClick() {
+
+        var showHidePasswordLink = document.getElementById("ShowHidePasswordLinkId");
+        if (showHidePasswordLink) {
+            showHidePasswordLink.innerText = showHidePasswordLink.innerText == "Hide" ? "Show" : "Hide";
+            this.InputPasswordType = this.InputPasswordType == "password" ? "text" : "password";
+        }
+
+
+    }
+
     PasswordExpirationButtomClicked(type: string) {
 
         if (type == "Yes") {

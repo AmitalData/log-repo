@@ -55,6 +55,27 @@
             background: #10205E;
         }
 
+
+        .InputShow{
+      margin: 0px;
+    height: 15px;
+    /*width: 200px;
+    padding: 3px;*/
+    border: 1px solid #D1D1D1;
+    outline-style: solid;
+    outline-width: 0px;
+    font: 11px "Lucida Sans Unicode";
+    color: #45494A;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -moz-box-shadow: inset 0 0 10px #D1D1D1;
+    -webkit-box-shadow: inset 0 0 10px #D1D1D1;
+    box-shadow: inset 0 0 10px #D1D1D1;
+    background: white;
+
+}
+
     .cmdSubmit {
         -moz-box-shadow: inset 0px 1px 0px 0px #caefab;
         -webkit-box-shadow: inset 0px 1px 0px 0px #caefab;
@@ -206,10 +227,11 @@
                                                                     </tr>
 
                                                                     <tr [style.height]="IsShowAreaCaptcha ?'50px':'70px'">
-                                                                        <td>
+                                                                        <td class="column1">
                                                                             <label>password</label>
-                                                                            <div>
-                                                                                <input class="auto-style1" [(ngModel)]="Password" required type="password"  (keydown)="OnMouseDownEvt($event)" />
+                                                                            <div style="height:31px;width:280px;border:1px solid lightgray;border-radius:4px;" class="InputShow">
+                                                                                <input [attr.type]="InputPasswordType" style="width:235px;border:0px" class="auto-style1" id="Password" [(ngModel)]="Password" required   (keydown)="OnMouseDownEvt($event)" />
+                                                                                <span> <a id="ShowHidePasswordLinkId" style="padding-left:2px;font-size:12px;vertical-align:central;font-family:Arial; cursor:pointer;text-decoration:none" (click)="ShowHidePasswordClick()">Show</a></span>
                                                                             </div>
                                                                         </td>
                                                                     </tr>

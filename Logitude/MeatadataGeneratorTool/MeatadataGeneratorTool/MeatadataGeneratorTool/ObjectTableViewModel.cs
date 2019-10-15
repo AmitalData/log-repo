@@ -2472,6 +2472,13 @@ namespace MeatadataGeneratorTool
         {
             bool succeeded = false;
 
+            if (this.IsComposition && string.IsNullOrEmpty(ParentTableName))
+            {
+                ErrorMessages = "ParentTableName Table Name is required for composition table";
+                ErrorsVisibility = Visibility.Visible;
+                return false;
+            }
+
             if (string.IsNullOrEmpty(DBTableName))
             {
                 ErrorMessages = "DataBase Table Name is required ..";
