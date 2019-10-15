@@ -230,7 +230,7 @@ namespace CustomsWorkerRole
                     LogMessagingUtil.Instance.Clear();
                     //throw new Exception("BrokeredMessage receivedMessage = _QueueClient.Receive(TimeSpan.FromSeconds(5));");
                     LogMessagingUtilWR.Instance.AppendLine("TransactionFactory.GetTransaction");
-                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    using (TransactionScope Queue_scope = TransactionFactory.GetTransaction())
                     {
                         try
                         {
@@ -255,14 +255,16 @@ namespace CustomsWorkerRole
                         if (response == null || (response != null && response.MessageId == null))
                         {
                             //Thread.Sleep(TimeSpan.FromSeconds(5));
-                            Thread.Sleep(TimeSpan.FromMilliseconds(100));
+                            Thread.Sleep(TimeSpan.FromMilliseconds(300));
                             break;
                         }
 
 
                         LastActivity = DateTime.UtcNow;
                         proccesDone = true;
+                        LogMessagingUtilWR.Instance.AppendLine("ProcessMessage_Db");
                         bool successProcessMessage = ProcessMessage_Db(response);
+                        LogMessagingUtilWR.Instance.AppendLine("successProcessMessage");
                         if (successProcessMessage)
                         {
                             _CustomDbQueueService.SafeComplete();
