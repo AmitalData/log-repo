@@ -373,6 +373,7 @@ export class ImporterDeclarationComponent
             "שליחת שאילתא לתצהיר יבואן", true)
             .then((res) => {
                 this.ResponseData = res;
+                this.MyLastCustomsRequestSheetId = currRequestParams.PBId;
                 this.OnMassageDisplayMethod();
             }
             ).catch((err) => {

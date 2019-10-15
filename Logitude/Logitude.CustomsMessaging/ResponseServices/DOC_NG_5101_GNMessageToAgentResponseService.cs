@@ -52,7 +52,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var declarationNumber = customResponse?.MessageToAgent?.RelatedEntity?.entityIdKey1;
             
             string key = ProcessLockTableUtil.Instance.GetKey4Declaration(declarationNumber, requestParams.Tenant);
-            using (var disposableToken = ProcessLockTableUtil.Instance.LockItAndGetReleaseToken(key, "5101ResponseService.Update"))
+            using (var disposableToken = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant,true,key, "5101ResponseService.Update"))
             {
                 UpdateIt(customResponse, requestParams);
             }

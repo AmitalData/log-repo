@@ -1,24 +1,24 @@
 declare var window;
-import {CustomsDocumentPM} from "../../../../Customs/EntityPMs/CustomsDocumentPM";
-import {CustomsDocumentsTicketPM} from "../../../../Customs/EntityPMs/CustomsDocumentsTicketPM";
-import {CustomsDocumentPointerPM} from "../../../../Customs/EntityPMs/CustomsDocumentPointerPM";
-import {ClaimPM} from "../../../../Customs/EntityPMs/ClaimPM";
-import {DocumentsFilingPM} from "../../../../Common/EntityPMs/DocumentsFilingPM";
-import {DeclarationDisplayOnlyChecks, DisplayOnlyCheckResult} from "../../../../Customs/Utilities/DeclarationDisplayOnlyChecks";
+import { CustomsDocumentPM } from "../../../../Customs/EntityPMs/CustomsDocumentPM";
+import { CustomsDocumentsTicketPM } from "../../../../Customs/EntityPMs/CustomsDocumentsTicketPM";
+import { CustomsDocumentPointerPM } from "../../../../Customs/EntityPMs/CustomsDocumentPointerPM";
+import { ClaimPM } from "../../../../Customs/EntityPMs/ClaimPM";
+import { DocumentsFilingPM } from "../../../../Common/EntityPMs/DocumentsFilingPM";
+import { DeclarationDisplayOnlyChecks, DisplayOnlyCheckResult } from "../../../../Customs/Utilities/DeclarationDisplayOnlyChecks";
 import { ICustomsDocumentsController } from "../../../CustomsDocuments/Components/ICustomsDocumentsController";
-import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { CustomsDocumentTicketViewModel } from '../../../CustomsDocuments/Components/CustomsDocumentTicketViewModel';
 import { RelatedEntityParams } from '../../../CustomsDocuments/Components/CustomsDocumentsComponent';
-import {Observable}     from 'rxjs/Rx';
-import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {AppTool, ArrayTool, DateTool} from '../../../../Infrastructure/Tools';
-import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import {Http, Headers} from '@angular/http';
-import {SessionInfo} from '../../../../Infrastructure/Utilities/SessionInfo';
-import {ServiceHelper} from '../../../../Infrastructure/Utilities/ServiceHelper';
+import { Observable } from 'rxjs/Rx';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { AppTool, ArrayTool, DateTool } from '../../../../Infrastructure/Tools';
+import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { Http, Headers } from '@angular/http';
+import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
+import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { ConnectedToItem } from '../../../CustomsDocuments/Components/ConnectedToItem';
-import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
-import {EventEmitter} from '@angular/core';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { EventEmitter } from '@angular/core';
 ``
 export class ClaimCustomsDocumentsController implements ICustomsDocumentsController {
     private originalCustomsDocumentTicketViewModel: CustomsDocumentTicketViewModel[];
@@ -216,20 +216,20 @@ export class ClaimCustomsDocumentsController implements ICustomsDocumentsControl
     public GetCustomsInterfaceSettingsDocumentTypes(entityPM: any) {
         // in this method i expect you to return a list of customs documents type codes e.g: 270,IL70 ......etc to open tickets for the declaration.
         // you have the entityPM :DeclarationPM to take CargoTypeCode , ProcessTypeCode , TransportTypeCode from declaration as the design says.
-      var serviceResponse: ServiceResponse = new ServiceResponse();
+        var serviceResponse: ServiceResponse = new ServiceResponse();
 
-      //this array should be replaced by your result.
-      var documentTypes: string[] = [];
+        //this array should be replaced by your result.
+        var documentTypes: string[] = [];
 
 
-      serviceResponse.Result = this.generatedCustomsDocumentTicketViewModel;
+        serviceResponse.Result = this.generatedCustomsDocumentTicketViewModel;
 
-      this.GetCustomsInterfaceSettingsDocumentTypesCompleted.emit(serviceResponse);;
+        this.GetCustomsInterfaceSettingsDocumentTypesCompleted.emit(serviceResponse);;
     }
 
-  public GetRefreshFrom() {
-    return "e";
-  }
+    public GetRefreshFrom() {
+        return "e";
+    }
     public SelectionCompleted: EventEmitter<any> = new EventEmitter();
     public GetCustomsInterfaceSettingsDocumentTypesCompleted: EventEmitter<any> = new EventEmitter();
 

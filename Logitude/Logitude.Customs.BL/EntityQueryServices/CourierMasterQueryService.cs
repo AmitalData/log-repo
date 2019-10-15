@@ -139,6 +139,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             int ACC_WS = 0;
             int MNFR_RV = 0;
             int DECR_RV = 0;
+            int PAY_C = 0;
+            int PAY_R = 0;
+            int PAY_I = 0;
 
             var totQ =
             (from dStatus in q
@@ -280,5 +283,38 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return courierMasterPM;
         }
 
+        public List<CourierMasterPM> GetAllCourierMastersForClosing(int tenant)
+        {
+            List<CourierMasterPM> courierMasterPMList = new List<CourierMasterPM>();
+            List<CourierMaster> pocoList = repository.GetAllOpenCourierMasters(tenant);
+            if (pocoList != null)
+            {
+                foreach (CourierMaster courierMasterPoco in pocoList)
+                {
+                    DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(tenant);
+                    IQueryable<DeclarationCourierStatus> declarations = declarationCourierStatusQueryService.GetBy(tenant, courierMasterPoco.Id);
+                    if(declarations != null)
+                    {
+                        bool isAllCloseToFollowUp = true;
+                        CourierMasterPM courierMasterPM = null;
+                        foreach (DeclarationCourierStatus declarationItem in declarations)
+                        {
+                            if(declarationItem.IsClosedForFollowUp == false)
+                            {
+                                isAllCloseToFollowUp = false;
+                                break;
+                            }
+                        }
+                        if(isAllCloseToFollowUp == true) // If all declarations are ClosedForFollowUp, close master
+                        {
+                            courierMasterPM = this.GetEntityPM(courierMasterPoco, false, null);
+                            courierMasterPMList.Add(courierMasterPM);
+                        }
+                    }
+                }
+            }
+
+            return courierMasterPMList;
+        }
     }
 }

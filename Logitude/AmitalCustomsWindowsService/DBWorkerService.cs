@@ -182,6 +182,13 @@ namespace AmitalCustomsWindowsService
                 int removedRec = BatchServicesDefinitions.RemoveAll(r => r.ClassName != "CustomsSchedularWR");
             }
 
+            if (!string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings.Get("Discard.DownloadDcaMessageSheetWR")))
+            {
+                BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName != "DownloadDcaMessageSheetWR").ToList();
+            }
+            
+
+
             foreach (var batchServicesDefinitionPM in BatchServicesDefinitions)
             {
                 var worker = listOfWorkerEntryPoint.FirstOrDefault(r => r.NameOf() == batchServicesDefinitionPM.Code);

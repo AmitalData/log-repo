@@ -610,9 +610,15 @@ rgb(27, 144, 203)
             myLastCol.Borders[ExcelBordersIndex.EdgeRight].ColorRGB = this.SectionBorder;
         }
 
-        protected IRange SetSubHeader(IRange lastRange, string Text)
+        protected IRange SetSubHeader(IRange lastRange, string Text,int? the1stColumn=null)
         {
-            var currHeader = _MainWorksheet[lastRange.LastRow + 2, lastRange.Column, lastRange.LastRow + 2, ReportWidth / 10 - 2];
+            int col = lastRange.Column;
+            if (the1stColumn.GetValueOrDefault()> 0)
+            {
+                col = the1stColumn.GetValueOrDefault();
+            }
+             
+            var currHeader = _MainWorksheet[lastRange.LastRow + 2, col, lastRange.LastRow + 2, ReportWidth / 10 - 2];
             currHeader.Merge();
             currHeader[currHeader.Row, currHeader.Column].Text = Text;// "תנועות אשראי";
             currHeader[currHeader.Row, currHeader.Column].VerticalAlignment = ExcelVAlign.VAlignCenter;
@@ -620,7 +626,7 @@ rgb(27, 144, 203)
 
             currHeader[currHeader.Row, currHeader.Column].CellStyle.Font.RGBColor = //this.ResultHeaderColor;
                 this.SectionBorder;
-            currHeader[currHeader.Row, currHeader.Column].IndentLevel = 3;
+            currHeader[currHeader.Row, currHeader.Column].IndentLevel = 0;
             return currHeader;
         }
     }
@@ -637,7 +643,8 @@ rgb(27, 144, 203)
     {
         Object = 0,
         Number,
-        Text
+        Text,
+        TrueFalse
     }
 
     public enum ExcelHAlignEnum

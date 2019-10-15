@@ -1749,9 +1749,9 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
         this.WindowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.NewInvoice");
 
         if (this.copyInvoiceWithItem) {
-        //    this.NumberOfLoadedItems = 500;
-            
-                this.supplierInvoiceExtendedPMService.GetSingleSupplierInvoicePMWithLimitedItems(this.EntityPM.DeclarationId, counterKey, 0, this.NumberOfLoadedItems, "child").subscribe(response => {
+            //    this.NumberOfLoadedItems = 500;
+            let take = 500;
+            this.supplierInvoiceExtendedPMService.GetSingleSupplierInvoicePMWithLimitedItems(this.EntityPM.DeclarationId, counterKey, 0, take/*this.NumberOfLoadedItems*/, "child").subscribe(response => {
                     if (!response.HasError) {
                         this.OldEntityPM = response.Result;
                         var supplierinvoiceitems: SupplierInvoiceItemPM[] = [];

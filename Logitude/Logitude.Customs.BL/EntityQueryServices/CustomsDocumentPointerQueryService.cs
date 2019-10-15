@@ -129,6 +129,12 @@ namespace Logitude.Customs.BL.EntityQueryServices
             
         }
 
+        public IQueryable<CustomsDocumentPointer> GetCustomsDocumentPointerListParentOnly(GetTicketsParams parameters, int tenant)
+        {
+            return repository.GetCustomsDocumentPointerListParentOnly(parameters, tenant);
+
+        }
+
         public List<CustomsDocumentPointerPM> GetCustomDocumentPoinersForItems(string parentEntityId, string invCounterKey, string itemLineNumbers, int tenant)
         {
             IQueryable<CustomsDocumentPointer> pointers = repository.GetCustomDocumentPoinersForItems(parentEntityId, invCounterKey, itemLineNumbers,tenant);

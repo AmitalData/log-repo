@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
 using UnifreightIIG.UServer;
@@ -49,6 +50,13 @@ namespace Logitude.Customs.BL.Messaging.Amital
             //{
             //    throw new Exception("SendFileToAmitalService():no setting for tenant");
             //}
+
+            bool testDelay = false;
+            if (testDelay)
+            {
+                Thread.Sleep(TimeSpan.FromMinutes(1));
+            }
+
             bool Immediately;
             if (pImmediately == null)
             {

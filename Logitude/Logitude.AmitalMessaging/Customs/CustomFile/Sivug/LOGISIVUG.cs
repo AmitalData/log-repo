@@ -149,8 +149,6 @@
 
         private INVOICEITEMS[] iNVOICEITEMSField;
 
-        private EXPENSES[] eXPENSESField;
-
         private string changeInSupplierInvoiceField;
 
         /// <remarks/>
@@ -298,20 +296,6 @@
         }
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("EXPENSES")]
-        public EXPENSES[] EXPENSES
-        {
-            get
-            {
-                return this.eXPENSESField;
-            }
-            set
-            {
-                this.eXPENSESField = value;
-            }
-        }
-
-        /// <remarks/>
         public string ChangeInSupplierInvoice
         {
             get
@@ -368,6 +352,8 @@
         private string statisticQuantityTypeField;
 
         private CERTIFICATES[] cERTIFICATESField;
+
+        private EXPENSES[] eXPENSESField;
 
         /// <remarks/>
         public string ITEMLINENO
@@ -588,6 +574,20 @@
             set
             {
                 this.cERTIFICATESField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("EXPENSES")]
+        public EXPENSES[] EXPENSES
+        {
+            get
+            {
+                return this.eXPENSESField;
+            }
+            set
+            {
+                this.eXPENSESField = value;
             }
         }
     }

@@ -224,7 +224,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCBCMSS",//,Batch Send change StorageSite per CourierMasterId
 "1170", // - מסר מצהר
 "1171", // - מסר תשובה מצהר
-"1172" // - מסר תשובה מצהר - נדחף
+"1172", // - מסר תשובה מצהר - נדחף
+"8373"//"שאילתא לשחזור נתוני הצהרה"
             };
             return intrefaceTypeListDisplayOnly;
         }

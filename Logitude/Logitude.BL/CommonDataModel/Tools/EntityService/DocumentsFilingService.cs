@@ -1187,7 +1187,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                             string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(mappedPM);
 
-                            if (!string.IsNullOrWhiteSpace(this.MetaDataVersionValue))//DeclarationPrint
+                            //54378
+                            string UseSend2UServer =ConfigurationManager.AppSettings["20190909.UseSend2UServer8302"]??"";
+                            if (!string.IsNullOrWhiteSpace(UseSend2UServer) && !string.IsNullOrWhiteSpace(this.MetaDataVersionValue))//DeclarationPrint
                             {
                                 Send2UServer(mappedPM, loggedUserId, extDocPM.Id);
                             }

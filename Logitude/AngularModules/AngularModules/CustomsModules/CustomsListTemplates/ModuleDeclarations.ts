@@ -25,7 +25,8 @@ export const Components =
     DeclarationSupplierInvoiceListTemplate,
     DeclarationQueryListTemplate,
     NotificationListTemplate,
-    SupplierInvoiceItemsTaxListTemplate,
+        SupplierInvoiceItemsTaxListTemplate,
+        
   ];
 
 export class ModuleDeclarations {
@@ -33,23 +34,23 @@ export class ModuleDeclarations {
 
     var myResult: any = null;
 
-    switch (name) {
-      case "CustomsRequestsSheetsListTemplate": { myResult = CustomsRequestsSheetsListTemplate; break; }
-      case "DeclarationSupplierInvoiceListTemplate": { myResult = DeclarationSupplierInvoiceListTemplate; break; }
-      case "CustomsClosedTablesListTemplate": { myResult = CustomsClosedTablesListTemplate; break; }
-      case "CertificateCheckBoxComponent": { myResult = CertificateCheckBoxComponent; break; }
-      case "CertificateTextBoxComponent": { myResult = CertificateTextBoxComponent; break; }
-      case "NotificationListTemplate": { myResult = NotificationListTemplate; break; }
-      case "SupplierInvoiceItemsTaxListTemplate": { myResult = SupplierInvoiceItemsTaxListTemplate; break; }
-      case "InterfaceManagementsListTemplate": { myResult = SupplierInvoiceItemsTaxListTemplate; break; }
-      case "SignStationListTemplate": { myResult = SignStationListTemplate; break; }
-      case "CourierWorksheetListTemplate": { myResult = CourierWorksheetListTemplate; break; }
-      case "CourierConnectedDeclarationListTemplate": { myResult = CourierConnectedDeclarationListTemplate; break; }
-      case "DeclarationQueryListTemplate": { myResult = DeclarationQueryListTemplate; break; }
+      switch (name) {
+          case "CustomsRequestsSheetsListTemplate": { myResult = CustomsRequestsSheetsListTemplate; break; }
+          case "DeclarationSupplierInvoiceListTemplate": { myResult = DeclarationSupplierInvoiceListTemplate; break; }
+          case "CustomsClosedTablesListTemplate": { myResult = CustomsClosedTablesListTemplate; break; }
+          case "CertificateCheckBoxComponent": { myResult = CertificateCheckBoxComponent; break; }
+          case "CertificateTextBoxComponent": { myResult = CertificateTextBoxComponent; break; }
+          case "NotificationListTemplate": { myResult = NotificationListTemplate; break; }
+          case "SupplierInvoiceItemsTaxListTemplate": { myResult = SupplierInvoiceItemsTaxListTemplate; break; }
+          case "InterfaceManagementsListTemplate": { myResult = InterfaceManagementsListTemplate; break; }
+          case "SignStationListTemplate": { myResult = SignStationListTemplate; break; }
+          case "CourierWorksheetListTemplate": { myResult = CourierWorksheetListTemplate; break; }
+          case "CourierConnectedDeclarationListTemplate": { myResult = CourierConnectedDeclarationListTemplate; break; }
+          case "DeclarationQueryListTemplate": { myResult = DeclarationQueryListTemplate; break; }
 
 
 
-    }
+      }
 
     return myResult;
   }

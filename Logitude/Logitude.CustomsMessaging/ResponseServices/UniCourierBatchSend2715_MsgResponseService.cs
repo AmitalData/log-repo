@@ -49,7 +49,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (customResponse.ServerSplitDeclarationsList != null && customResponse.ServerSplitDeclarationsList.Count > 0)
             {
                 mess.AppendLine($"מפוצל כבר !!!");
-                listPoco = repo.GetDeclarationsByIds(customResponse.ClientFilterDeclarationsList, requestParams.Tenant);
+                listPoco = repo.GetDeclarationsByIds(customResponse.ServerSplitDeclarationsList, requestParams.Tenant);
                 Send2715WhereDocumentStatusCodeIs2(mess, context, /*myCustomsDocumentUpdateService,*/ listPoco);
             }
             else
@@ -84,6 +84,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
     .ForEach(list100 =>
     {
         customResponse.ServerSplitDeclarationsList = list100;
+        customResponse.LoggingUserId = requestParams.LoggingUserId;
         //CreateDCAInUCB2715_MsgMessagingService(customResponse, requestParams);
         var CreateDCAInUCB2715_MsgMessagingService = new CRSUtil();
         CreateDCAInUCB2715_MsgMessagingService
@@ -107,7 +108,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
             foreach (var itemPoco in listPoco)
             {
                 var customsDocumentQueryService = new CustomsDocumentQueryService(context);
-                var customsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDoc(new GetTicketsParams() { ParentEntityId = itemPoco.DeclarationId, ParentEntityCode = "Declaration" }, itemPoco.Tenant);
+                //var customsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDoc(new GetTicketsParams() { ParentEntityId = itemPoco.DeclarationId, ParentEntityCode = "Declaration" }, itemPoco.Tenant);
+                bool needCustomsDocumentMetaDataValues = true;
+                var customsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDocParentOnly(new GetTicketsParams() { ParentEntityId = itemPoco.DeclarationId, ParentEntityCode = "Declaration" }, itemPoco.Tenant
+                    , needCustomsDocumentMetaDataValues);
 
                 foreach (var customsDocumentPMItem in customsDocumentPMList)
                 {

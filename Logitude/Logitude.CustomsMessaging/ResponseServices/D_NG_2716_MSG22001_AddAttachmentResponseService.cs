@@ -23,7 +23,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnifreightIIG.Common.GlobalScannedAttachmentToEntityServiceReference;
-
+using Logitude.Server.Tools.Utils;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -61,6 +61,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
             base.OnRequestFail(customResponse, requestParams);
         }
         public override void Update(D_NG_2716_MSG22001_AddAttachmentResponse customResponse, D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityRequestParam requestParams)
+        {
+            bool lockit = !string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings.Get("Singleton.CRS:2715/UDLT"));
+            string key = ProcessLockTableUtil.Instance.GetKey4DocumentsFilingId(requestParams.DocumentsFilingId, requestParams.Tenant);
+
+            
+            using (var processLockTableDisposable = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, lockit, key, "CRS:2715/UDLT"))
+            {
+                RealUpdate(customResponse, requestParams);
+            }
+        }
+
+        
+
+        private void RealUpdate(D_NG_2716_MSG22001_AddAttachmentResponse customResponse, D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityRequestParam requestParams)
         {
             this.MyResponseData = new AddAttachmentResponseData()
             {
@@ -139,7 +153,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         var myCustomsDocumentsTicketUpdateService = new CustomsDocumentsTicketUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
                         foreach (var customsDocumentsTicket in customsDocumentsTicketPMList)
                         {
-                            if(!string.IsNullOrWhiteSpace(customsDocumentsTicket.RequestedCustomsDocId))
+                            if (!string.IsNullOrWhiteSpace(customsDocumentsTicket.RequestedCustomsDocId))
                             {
                                 customsDocumentsTicket.VerificationStatusTypeCode = "8";
                                 customsDocumentsTicket.ChangeSetOp = ChangeSetOperation.Update;
@@ -147,7 +161,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             }
                         }
                     }
-                    
+
                     //else
                     {
                         _MyCustomsDocumentPM.DocumentStatusCode = "1"; // Sent
@@ -189,10 +203,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 LogMessagingUtil.Instance.AppendLine("LoadTestSendMessageToQueue  >>> LoadTest");
                 _MyCustomsDocumentPM.DocumentRemarks = "LoadTest";
             }
-            
+
             LogMessagingUtil.Instance.AppendLine("_MyCustomsDocumentPM.CustomsDocId == " + _MyCustomsDocumentPM.CustomsDocId);
             LogMessagingUtil.Instance.AppendLine("_MyCustomsDocumentPM.DocumentStatusCode == " + _MyCustomsDocumentPM.DocumentStatusCode);
-            EnshureIsPartOfDeclaration(context,requestParams.DeclaretionId);
+            EnshureIsPartOfDeclaration(context, requestParams.DeclaretionId);
             myCustomsDocumentUpdateService.Update(_MyCustomsDocumentPM, true);
             UpdateDeclarationCourierStatus(context, _MyCustomsDocumentPM, requestParams.DeclaretionId);
             this.MyResponseData.ApplicationID = _MyCustomsDocumentPM.CustomsDocId;
@@ -230,7 +244,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     AppicationId = requestParams.DeclaretionId,
                     RequestVIA = SendRequestVIA.WebServiceBatch,
                     LoggingEnabled = true,
-                    InterfaceTypeCode= "2750",
+                    InterfaceTypeCode = "2750",
                     MainInterfaceCode = "2750",
                     LoggingEntityId = requestParams.DeclaretionId,
                     //LoggingEntityReference = this._DeclarationPM.DeclarationNumber;
@@ -265,14 +279,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                 }
 
-                
+
 
             }
-
-
-
         }
 
+        
         private void EnshureIsPartOfDeclaration(ICustomContext context, string declaretionId)
         {
             if (String.IsNullOrWhiteSpace(declaretionId)) return;
