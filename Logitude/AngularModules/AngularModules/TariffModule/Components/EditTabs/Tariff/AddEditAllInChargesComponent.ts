@@ -56,9 +56,14 @@ export class AddEditAllInChargesComponent {
     }
 
     BuildQueryFilters() {
+        var entityType: string = "IsAir";
+        if (this.TariffPM.TypeCode == "OSC" || this.TariffPM.TypeCode == "OLC") {
+            entityType = "IsOcean";
+        }
+
         this.ChargeTypesQueryFilters = new ApiQueryFilters();
         this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");
-        this.ChargeTypesQueryFilters.addAdditionalFilter("IsAir", true, null, null, "Equals", false, false, false, "Boolean");
+        this.ChargeTypesQueryFilters.addAdditionalFilter(entityType, true, null, null, "Equals", false, false, false, "Boolean");
         this.ChargeTypesQueryFilters.addAdditionalFilter("ChargesGroupCode", "FRT", null, null, "NotEqual", false, false, false, "string");
     }
 

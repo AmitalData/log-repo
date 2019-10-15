@@ -2579,6 +2579,10 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         logWindow.Title = "New Air Freight Cost";
                         windowArgs.TypeCode = "AFC";
                     }
+                    else if (QueryCodeOriginal == "Ocean LCL Freight Cost")  {
+                        logWindow.Title = "New Ocean LCL Freight Cost";
+                        windowArgs.TypeCode = "OLC";
+                    }
                     else {
                         "Air Surcharges Cost Tariffs";
                         logWindow.Title = "New Air Surcharges Cost";

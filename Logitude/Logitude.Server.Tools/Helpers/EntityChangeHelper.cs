@@ -12,6 +12,7 @@ using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel.Repositories;
+using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -1702,5 +1703,18 @@ namespace Logitude.Server.Tools.Helpers
 
             return lastUpdate;
         }
+
+        public static bool IsShowLogBoxAutomationFields()
+        {
+            bool result = false;
+            if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && (LogitudeSettings.DeploymentStage.ToLower() == "logboxpre" || LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1" || LogitudeSettings.DeploymentStage.ToLower() == "Test2" || LogitudeSettings.LogitudeURL == "http://localhost:9996"))
+            {
+                result = true;
+            }
+            return result;
+        }
+
+
+
     }
 }

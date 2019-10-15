@@ -26,11 +26,11 @@
                                         (SelectedItemChanged)="DataContext.OriginPort = $event"
                                         [DisplayMemberPath]="'Code'"
                                         [SelectedValue]="DataContext.OriginPortId"
-                                        [DependencyFilter1Value]="PortDependancyType">
+                                        [DependencyFilter1Value]="OriginDependencyFilterValue">
                                 </LogLov>
                             </td>
 
-                            <td *ngIf="TariffType == 'AFC'">
+                            <td *ngIf="TariffType == 'AFC' || TariffType == 'OLC'">
                                 <div class="MediaFill">
                                     <table *ngIf="!DataContext.OriginPortId">
                                         <tr>
@@ -75,11 +75,11 @@
                                         [DataContext]="DataContext"
                                         (SelectedItemChanged)="DataContext.DestinationPort = $event"
                                         [SelectedValue]="DataContext.DestinationPortId"
-                                        [DependencyFilter1Value]="PortDependancyType">
+                                        [DependencyFilter1Value]="DestinationDependencyFilterValue">
                                 </LogLov>
                             </td>
 
-                            <td *ngIf="TariffType == 'AFC'">
+                            <td *ngIf="TariffType == 'AFC' || TariffType == 'OLC'">
                                 <div class="MediaFill">
                                     <table *ngIf="!DataContext.DestinationPortId">
                                         <tr>
@@ -149,7 +149,7 @@
                         </tr>
 
                         <!-- Air Freight Cost-->
-                        <tr *ngIf="TariffType == 'AFC'" style="height:1px;">
+                        <tr *ngIf="TariffType == 'AFC' || TariffType == 'OLC'" style="height:1px;">
                             <td colspan="3">
                                 <table>
                                     <!-- Min -->

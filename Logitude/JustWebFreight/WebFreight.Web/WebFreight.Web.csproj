@@ -1823,6 +1823,8 @@
     <Compile Include="Controllers\ShipmentsModel\Extended\ShipmentComputedFieldExtendedController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\ShipmentTestDataController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ContainerFollowUpViewsController.cs" />
+    <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\CustomsTransferHeaderViewsController.Generated.cs" />
+    <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\CustomsTransferTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\HarmonizeCodeViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\INTTRABookingStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\INTTRABookingTransStatusViewsController.Generated.cs" />
@@ -1834,6 +1836,7 @@
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ShipmentCustomsTransmissionViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\AWBSpecialHandlingCodeController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\ContainerFollowUpController.cs" />
+    <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\CustomsTransferHeaderController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\FBLStockController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\CustomsTransmissionsStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\ShipmentCustomsTransmissionController.Generated.cs" />
@@ -2837,6 +2840,9 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\AWBChargesCodeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\AWBCustomsInformationUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\AWBInformationUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\CustomsTransferHeaderUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\CustomsTransferLineUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\CustomsTransferTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\HarmonizeCodeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\INTTRABookingStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\INTTRABookingTransStatusUpdateClass.cs" />
@@ -2938,6 +2944,7 @@
     <Content Include="Monitoring\ProfactMonitoring.aspx" />
     <Content Include="Monitoring\INTTRAMonitoring.aspx" />
     <Content Include="Monitoring\QuickbooksOnlineQueue.aspx" />
+    <Content Include="Monitoring\ReportExecutionLogWaitingStatus.aspx" />
     <Content Include="Monitoring\StorageBackup.aspx" />
     <Content Include="QuickbooksOnline.aspx" />
     <EmbeddedResource Include="Properties\webfreight.web.dll.licenses" />
@@ -5075,6 +5082,13 @@
     </Compile>
     <Compile Include="Monitoring\QuickbooksOnlineQueue.aspx.designer.cs">
       <DependentUpon>QuickbooksOnlineQueue.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Monitoring\ReportExecutionLogWaitingStatus.aspx.cs">
+      <DependentUpon>ReportExecutionLogWaitingStatus.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\ReportExecutionLogWaitingStatus.aspx.designer.cs">
+      <DependentUpon>ReportExecutionLogWaitingStatus.aspx</DependentUpon>
     </Compile>
     <Compile Include="Monitoring\StorageBackup.aspx.cs">
       <DependentUpon>StorageBackup.aspx</DependentUpon>

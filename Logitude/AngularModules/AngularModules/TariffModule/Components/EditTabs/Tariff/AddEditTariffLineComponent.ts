@@ -20,6 +20,9 @@ export class AddEditTariffLineComponent  {
     public PortDependancyType: string = "A";
 
     public ValidationErrorsList: string[];
+    public OriginDependencyFilterValue: string = "A";
+    public DestinationDependencyFilterValue = "A";
+
     constructor() {
 
     }
@@ -28,12 +31,15 @@ export class AddEditTariffLineComponent  {
         this.DataContext = args['DataContext'];
         this.EntityPM = args['EntityPM'];
         this.TariffType = args['TariffType'];
-
-        if (this.TariffType == "OSC" || this.TariffType == "OLC") {
-            this.PortDependancyType = "O";
-        }
-
+        this.SetOriginDependencyFilterValue();
         this.Clone();
+    }
+
+    SetOriginDependencyFilterValue() {
+        if (this.TariffType == "OLC") {
+            this.OriginDependencyFilterValue = "O";
+            this.DestinationDependencyFilterValue = "O";
+        }
     }
 
     get OriginPortText() { return this.EntityPM.OriginPortText; }
@@ -72,7 +78,7 @@ export class AddEditTariffLineComponent  {
 
         var msg: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
-        if (this.TariffType == "AFC") {
+        if (this.TariffType == "AFC" || this.TariffType == "OLC") {
             if (AppTool.IsNullOrEmpty(this.DataContext.DestinationPortId)) {
                 errors.push(msg.replace("%FieldName", "To"));
             }
@@ -121,7 +127,7 @@ export class AddEditTariffLineComponent  {
         this.myCloner.AddField('StartDate');
         this.myCloner.AddField('ExpirationDate');
 
-        if (this.TariffType == "AFC") {
+        if (this.TariffType == "AFC" || this.TariffType == "OLC") {
             this.myCloner.AddField('MinPrice');
             this.myCloner.AddField('Step1Price');
             this.myCloner.AddField('Step2Price');

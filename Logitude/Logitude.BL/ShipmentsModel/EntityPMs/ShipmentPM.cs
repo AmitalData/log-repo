@@ -2345,6 +2345,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsDepositionRequired { get; set; }
         public string ImporterDepositionRequestDetails { get; set; }
         public bool IsShipmentComputedFieldChange { get; set; }
+        public bool IsShipmentAdditionalCloudDataChange { get; set; }
+
 
         public string PackagesTypesNames { get; set; }
         public string PackagesTypesPrintAs { get; set; }
@@ -2354,6 +2356,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool ConvertShipmentToFCL { get; set; }
 
         public bool ShipmentDirectionConverted { get; set; }
+        public bool ShipmentConvertedNewNumber { get; set; }
         public bool FromCountryIsEC { get; set; }
         public bool ToCountryIsEC { get; set; }
         public bool PackagesDeleted { get; set; }

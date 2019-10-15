@@ -12,6 +12,7 @@ import { BatchTaskExecutionListService } from '../../../Infrastructure/Services/
 import { BatchTaskExecutionList } from '../../../Infrastructure/EntityLists/BatchTaskExecutionList';
 import { AppTool } from '../../../Infrastructure/Tools';
 import { DocumentsFilingExtendedPMService } from '../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
+import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 
 declare var ResultAsArray: any;
 
@@ -34,6 +35,7 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
     public AirSurchargeCount: string;
     public OceanSurchargeCount: string;
     public OceanLCLFreightCount: string;
+
 
     private isLoaderReady: boolean = false;
     RunComponent() {
@@ -66,6 +68,7 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
 
     LoadAllScreenData() {
         this.LoadQueriesCounts();
+        this.SetQueriesVisibility();
     }
     LoadQueriesCounts() {
         this.tariffDomainService.GetTariffsCounts().subscribe((myResponse: ServiceResponse) => {
@@ -93,6 +96,29 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
         });      
     }
 
+    public AirFreightCostVisibility: boolean = false;
+    public AirSurchargesCostVisibility: boolean = false;
+    public OceanLCLFreightCostVisibility: boolean = false;
+    public OceanLCLSurchargesCostVisibility: boolean = false;
+    SetQueriesVisibility() {
+
+        if (FeatureLocator.HasFeaturePermession("Tariff", "Tariff.Q.AirFreightCostTariffs")) {
+            this.AirFreightCostVisibility = true;
+        }
+
+        if (FeatureLocator.HasFeaturePermession("Tariff", "Tariff.Q.AirSurchargesCostTariffs")) {
+            this.AirSurchargesCostVisibility = true;
+        }
+
+        if (FeatureLocator.HasFeaturePermession("Tariff", "Tariff.Q.OceanLCLFreightCost")) {
+            this.OceanLCLFreightCostVisibility = true;
+        }
+
+        if (FeatureLocator.HasFeaturePermession("Tariff", "Tariff.Q.Ocean.LCL.Surcharges.Cost")) {
+            this.OceanLCLSurchargesCostVisibility = true;
+        }
+    }
+
     public NewTariff(code: string) {
         var logWindow = new LogitudeWindow();
         logWindow.Width = 850;
@@ -106,11 +132,11 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
                 break;
             }
             case "OLC": {
-                windowTitle = "Ocean LCL Freight Cost";
+                windowTitle = "New Ocean LCL Freight Cost";
                 typeCode = "OLC";
                 break;
             }
-            case "A": {
+            case "AS": {
                 windowTitle = "New Air Surcharges Cost";
                 typeCode = "ASC";
                 break;

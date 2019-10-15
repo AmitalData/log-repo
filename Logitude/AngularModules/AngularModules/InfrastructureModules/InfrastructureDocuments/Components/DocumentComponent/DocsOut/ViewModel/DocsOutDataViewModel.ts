@@ -49,7 +49,6 @@ export class DocsOutDataViewModel {
     public CommunicationLogPMs : CommunicationLogPMViewModel[];
     public CommunicationLogObsList: CommunicationLogPMViewModel[];
     public SelectedCommunicationLogViewMode: CommunicationLogPMViewModel;
-    public  ExportQuotationsToIntegratedSystem: boolean;
     PageRequestSendComponent: string;
     public ModeEditDocument: string;
     public HasTree: boolean = false;
