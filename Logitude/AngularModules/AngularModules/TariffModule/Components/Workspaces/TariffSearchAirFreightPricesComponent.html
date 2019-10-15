@@ -509,10 +509,9 @@
                                                                                                             <td style="width:3px;">
                                                                                                                 <div></div>
                                                                                                             </td>
-                                                                                                            <td *ngIf="item.IsMinIconVisible" style="width:18px;">
-                                                                                                                <img src="./Images/CellIcons/M-icon.png" style="display: block; margin: auto; width: 16px; height: 16px;" [attr.title]="'Min Price'" />
+                                                                                                            <td style="width:18px;">
+                                                                                                                <img *ngIf="item.IsMinIconVisible" src="./Images/CellIcons/M-icon.png" style="display: block; margin: auto; width: 16px; height: 16px;" [attr.title]="'Min Price'" />
                                                                                                             </td>
-
                                                                                                         </tr>
                                                                                                     </table>
                                                                                                 </td>
@@ -583,8 +582,8 @@
                                                                                                             <td style="width:3px;">
                                                                                                                 <div></div>
                                                                                                             </td>
-                                                                                                            <td *ngIf="surcharge.IsMinIconVisible" style="width: 18px;">
-                                                                                                                <img src="./Images/CellIcons/M-icon.png" style="display: block; margin: auto; width: 16px; height: 16px;" [attr.title]="'Min Price'" />
+                                                                                                            <td  style="width: 18px;">
+                                                                                                                <img *ngIf="surcharge.IsMinIconVisible" src="./Images/CellIcons/M-icon.png" style="display: block; margin: auto; width: 16px; height: 16px;" [attr.title]="'Min Price'" />
                                                                                                             </td>
                                                                                                         </tr>
                                                                                                     </table>
