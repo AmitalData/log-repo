@@ -2644,12 +2644,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
 
 
-            //if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1")
-            // {
-            AddFieldChangedProperties(changeTrackingPM, "IsDigitalSignRequired", changeTrackingPM.IsDigitalSignRequired, pm.IsDigitalSignRequired, "bool", notifyPropertyChangeValuesList);
-            AddFieldChangedProperties(changeTrackingPM, "IsRequestedDocuments", changeTrackingPM.IsRequestedDocuments, pm.IsRequestedDocuments, "bool", notifyPropertyChangeValuesList);
-            AddFieldChangedProperties(changeTrackingPM, "IsDepositionRequired", changeTrackingPM.IsDepositionRequired, pm.IsDepositionRequired, "bool", notifyPropertyChangeValuesList);
-            // }
+            if (EntityChangeHelper.IsShowLogBoxAutomationFields())
+            {
+                AddFieldChangedProperties(changeTrackingPM, "IsDigitalSignRequired", changeTrackingPM.IsDigitalSignRequired, pm.IsDigitalSignRequired, "bool", notifyPropertyChangeValuesList);
+                AddFieldChangedProperties(changeTrackingPM, "IsRequestedDocuments", changeTrackingPM.IsRequestedDocuments, pm.IsRequestedDocuments, "bool", notifyPropertyChangeValuesList);
+                AddFieldChangedProperties(changeTrackingPM, "IsDepositionRequired", changeTrackingPM.IsDepositionRequired, pm.IsDepositionRequired, "bool", notifyPropertyChangeValuesList);
+                AddFieldChangedProperties(changeTrackingPM, "IsImporterApprovalRequired", changeTrackingPM.IsImporterApprovalRequired, pm.IsImporterApprovalRequired, "bool", notifyPropertyChangeValuesList);
+            }
 
 
             return notifyPropertyChangeValuesList;
@@ -2706,11 +2707,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             shipmentPM.CustomerContactId = houseShipment.CustomerContactId;
             shipmentPM.AgentContactId = houseShipment.AgentContactId;
 
-            shipmentPM.IsDepositionRequired = houseShipment.IsDepositionRequired;
-            shipmentPM.IsDigitalSignRequired = houseShipment.IsDigitalSignRequired;
-            shipmentPM.IsRequestedDocuments = houseShipment.IsRequestedDocuments;
-            shipmentPM.ShipmentTypeId = houseShipment.ShipmentTypeId;
+            if (EntityChangeHelper.IsShowLogBoxAutomationFields())
+            {
+                shipmentPM.IsDepositionRequired = houseShipment.IsDepositionRequired;
+                shipmentPM.IsDigitalSignRequired = houseShipment.IsDigitalSignRequired;
+                shipmentPM.IsRequestedDocuments = houseShipment.IsRequestedDocuments;
+                shipmentPM.IsImporterApprovalRequired = houseShipment.IsImporterApprovalRequired;
+            }
 
+            shipmentPM.ShipmentTypeId = houseShipment.ShipmentTypeId;
 
             shipmentPM.Field1 = houseShipment.Field1;
             shipmentPM.Field2 = houseShipment.Field2;
