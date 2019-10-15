@@ -21,6 +21,7 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
     public ChargeTypesQueryFilters: ApiQueryFilters;
     public ValidationErrorsList: string[] = [];
     private chargesTypePMService: ChargesTypeListService;
+    public SellerDependancy: string = "AL";
 
     constructor(public entityArgs: EntityArgs) {
         super();
@@ -28,7 +29,7 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
         this.chargesTypePMService = new ChargesTypeListService();
         this.FillChargesIDsAndUOMS();
         this.BuildQueryFilters();
-        if (this.EntityPM.TypeCode == "ASC") {
+        if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC") {
             this.VisibileSurchargesArea = true;
         }
         else {
@@ -39,9 +40,15 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
 
 
     BuildQueryFilters() {
+        var EntityType: string = "IsAir";
+        if (this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OLC") {
+            EntityType = "IsOcean";
+            this.SellerDependancy = "SL";
+        }
+
         this.ChargeTypesQueryFilters = new ApiQueryFilters();
         this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");
-        this.ChargeTypesQueryFilters.addAdditionalFilter("IsAir", true, null, null, "Equals", false, false, false, "Boolean");
+        this.ChargeTypesQueryFilters.addAdditionalFilter(EntityType, true, null, null, "Equals", false, false, false, "Boolean");
         this.ChargeTypesQueryFilters.addAdditionalFilter("ChargesGroupCode", "FRT", null, null, "NotEqual", false, false, false, "string");
     }
 

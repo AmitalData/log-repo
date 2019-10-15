@@ -52,13 +52,12 @@
         </td>
     </tr>
 
-    <tr style="height:10px">
+    <tr style="height:10px" *ngIf="AirFreightCostVisibility">
         <td>
             <div></div>
         </td>
     </tr>
-
-    <tr>
+    <tr *ngIf="AirFreightCostVisibility">
         <td>
             <table>
                 <tr>
@@ -85,12 +84,12 @@
 
     </tr>
 
-    <tr style="height:10px">
+    <tr style="height:10px" *ngIf="AirSurchargesCostVisibility">
         <td>
             <div></div>
         </td>
     </tr>
-    <tr>
+    <tr *ngIf="AirSurchargesCostVisibility">
         <td>
             <table>
                 <tr>
@@ -117,12 +116,11 @@
 
     </tr>
 
-    <tr style="height:10px">
+    <tr style="height:10px" *ngIf="OceanLCLFreightCostVisibility">
         <td>
             <div></div>
         </td>
     </tr>
-
     <tr *ngIf="OceanLCLFreightCostVisibility">
         <td>
             <table>
@@ -150,19 +148,18 @@
 
     </tr>
 
-    <tr style="height:10px;">
+    <tr style="height:10px;" *ngIf="OceanLCLSurchargesCostVisibility">
         <td>
             <div></div>
         </td>
     </tr>
-
-    <tr>
+    <tr *ngIf="OceanLCLSurchargesCostVisibility">
         <td>
             <table>
                 <tr>
                     <td style="width:180px">
                         <div>
-                            <HyperlinkQuery (click)="ViewTariffs('OSC')">Ocean Surcharges Costs ({{OceanSurchargeCount}})</HyperlinkQuery>
+                            <HyperlinkQuery (click)="ViewTariffs('OSC')">{{'Tariff.Q.Ocean.LCL.Surcharges.Cost' | TextCodeTranslationPipe}} ({{OceanSurchargeCount}})</HyperlinkQuery>
                         </div>
                     </td>
 
