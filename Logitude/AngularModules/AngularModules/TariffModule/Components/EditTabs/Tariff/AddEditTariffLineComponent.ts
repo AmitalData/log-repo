@@ -17,6 +17,8 @@ export class AddEditTariffLineComponent  {
     public DataContext: any;
     public ObjectTableName: string = "TariffLine";
     private CurrentSession = SessionLocator.SelectedSession;
+    public PortDependancyType: string = "A";
+
     public ValidationErrorsList: string[];
     constructor() {
 
@@ -26,6 +28,11 @@ export class AddEditTariffLineComponent  {
         this.DataContext = args['DataContext'];
         this.EntityPM = args['EntityPM'];
         this.TariffType = args['TariffType'];
+
+        if (this.TariffType == "OSC" || this.TariffType == "OLC") {
+            this.PortDependancyType = "O";
+        }
+
         this.Clone();
     }
 
