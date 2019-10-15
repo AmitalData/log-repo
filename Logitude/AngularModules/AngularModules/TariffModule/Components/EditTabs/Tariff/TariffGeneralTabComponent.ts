@@ -29,7 +29,7 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
         this.chargesTypePMService = new ChargesTypeListService();
         this.FillChargesIDsAndUOMS();
         this.BuildQueryFilters();
-        if (this.EntityPM.TypeCode == "ASC") {
+        if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC") {
             this.VisibileSurchargesArea = true;
         }
         else {
