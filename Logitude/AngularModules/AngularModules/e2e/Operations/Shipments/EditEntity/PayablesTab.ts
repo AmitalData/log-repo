@@ -44,6 +44,7 @@ export class PayablesTabComponent {
     AddPayables(ChargeType: string, quantity: any, unitPrice: any, Source :String) {
        // var amount: any = 0;
        this.Helper.WaitBusyIndicator();
+       this.Helper.WaitBusyIndicator();
        if(Source == "Shipment"){
         this.Helper.WaitByIdAndClick('Add');
         
@@ -77,7 +78,7 @@ export class PayablesTabComponent {
     }
     
     CreatAPInvoicewithVoid(shipperRef1: string,Voided :boolean) {
-        this.Helper.WaitBusyIndicator();
+        this.Helper.WaitEditComponentBusyIndicator();
         this.Helper.WaitByIdAndClick('ReceiveInvoice');
 
 
@@ -103,13 +104,14 @@ export class PayablesTabComponent {
     }
 
         EditAPInvoice(shipperRef1: string,Voided :boolean){
-        this.Helper.WaitBusyIndicator();
+        this.Helper.WaitEditComponentBusyIndicator();
         this.Helper.WaitByIdAndFill('APInvoice_VatTypeId', 'Zero');
         this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'APInvoice_VatTypeId', 'Zero');
         this.Helper.WaitByIdAndClick('VATApplyToAll');
         
         this.Helper.WaitByIdAndFill('APInvoiceLine_InvoiceCurrencyAmount', '100');
         if(Voided==true){
+        this.WaitBusyIndicatorToShowandHide();
         this.AddPayables('Order', '10', '20','Invoice');
         
 
