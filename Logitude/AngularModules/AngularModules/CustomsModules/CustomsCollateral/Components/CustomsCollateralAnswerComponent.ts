@@ -9,7 +9,9 @@ import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTran
 import { CollateralsRequestFileCondPM } from '../../../Customs/EntityPMs/CollateralsRequestFileCondPM';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
+import { CustomsSettingExtendedListService } from '../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
+
 declare var window: any;
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 
@@ -25,6 +27,9 @@ export class CustomsCollateralAnswerComponent extends BaseComponent {
     answerFileFilterItems: ApiQueryFilters;
     IsClosed: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    private isGuaranteeDefaultList: boolean = false;
+    private GuaranteeDefaultList: string[] = [];
+
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
 
@@ -343,7 +348,68 @@ export class CustomsCollateralAnswerComponent extends BaseComponent {
         
     }
 
+    OpenGuaranteeDefaultListScreen() {
+
+        if (!this.IsGuaranteeDefaultList) {
+            return;
+        }
+
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 300;
+        logitudeWindow.Height = 400;
+        logitudeWindow.IsShowCloseButton = true;
+        logitudeWindow.Title = "רשימת מספרי ערבות";
+        logitudeWindow.WindowArgs = this.GuaranteeDefaultList;
+        logitudeWindow.WindowClosed.subscribe(($event: any) => this.OnGuaranteeDefaultListScreenWindowClosed($event));
+        logitudeWindow.Show('./CustomsModules/CustomsPaymentOrder/Components/EditTabs/General/AccountingCustomFilesComponent');
+    }
+
+    OnGuaranteeDefaultListScreenWindowClosed(arg: any) {
+        if (!AppTool.IsNullOrEmpty(arg)) {
+            this.TapagFile = arg;
+        }
+    }
+    
+    private BuildAccountingCustomFilesList() {
+        this.GuaranteeDefaultList = [];
+        /*
+         let myDeclarationPMService: DeclarationPMService = new DeclarationPMService()
+        myDeclarationPMService.get(this._CourierWorksheet['DeclarationId']).subscribe(rsptPMget => {
+            let entitypm: DeclarationPM = rsptPMget.Result;
+            if (entitypm != null && entitypm.Consignments != null) {
+                if (this.WebAPICourierGWMessageECTHRDataMaman.includes(entitypm.Consignments[0].StorageSiteCode)) {
+                    this.IsWebAPICourierGWMessageECTHRDataMamanEnable = true;
+                }
+            }
+            this._IsSplitButtonMenuFilterReady = true;
+            this.CD.detectChanges();
+        });
+        */
+        var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
+        myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CIM_GUARANTEE_N", "NON", this.collateralPM.CustomerId, SessionLocator.Tenant)
+            .subscribe(response => {
+                this.IsGuaranteeDefaultList = false;
+                if (!response.HasError) {// reEdit this default !!!
+                    if (response.Result != null) {
+                        if (!AppTool.IsNullOrEmpty(response.Result.DefaultValue)) {
+                            this.IsGuaranteeDefaultList = true;
+                        }
+                        var result = response.Result.DefaultValue.split(";");
+                        result.forEach((item) => {
+                            this.GuaranteeDefaultList.push(item);
+                        });
+
+                    }
+                }
+            });
+
+    }
+    
+
     //#region properties
+
+    public get IsGuaranteeDefaultList() { return this.isGuaranteeDefaultList; }
+    public set IsGuaranteeDefaultList(newValue: boolean) { this.isGuaranteeDefaultList = newValue; }
     
     private paymentOrderStatus: string;
     public get PaymentOrderStatus() { return this.paymentOrderStatus; }

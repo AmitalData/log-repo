@@ -133,8 +133,13 @@
                                              <td>
                                                  <label style="color:#282E30">{{'Customs.CustomsCollateral.O.TapagFile' |TextCodeTranslationPipe}}</label>
                                              </td>
-                                             <td style="color:#282E30"> 
+                                             <td style="color:#282E30">
                                                  {{TapagFile}}
+                                             </td>
+                                             <td style="width: 20px; padding-right: 4px; padding-top: 3px;">
+                                                 <div *ngIf="IsGuaranteeDefaultList" style="width: 18px; float: left; height:20px;">
+                                                     <img [ngStyle]="imgNgStyle" src="./Images/LOVSearch.png" (click)="OpenGuaranteeDefaultListScreen()" title="Guarantee No. Default List" />
+                                                 </div>
                                              </td>
                                          </tr>
                                          <tr *ngIf="PaymentOrderVsibility">
