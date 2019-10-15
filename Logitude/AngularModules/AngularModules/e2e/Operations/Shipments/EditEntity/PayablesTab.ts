@@ -78,7 +78,7 @@ export class PayablesTabComponent {
     }
     
     CreatAPInvoicewithVoid(shipperRef1: string,Voided :boolean) {
-        this.Helper.WaitBusyIndicatorToShowandHide();
+        this.WaitBusyIndicatorToShowandHide();
         this.Helper.WaitByIdAndClick('ReceiveInvoice');
 
 

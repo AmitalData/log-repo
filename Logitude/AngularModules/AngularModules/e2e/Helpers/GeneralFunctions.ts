@@ -38,12 +38,13 @@ export class GeneralFunctions {
         for (var i = 0; i < 5; i++) {
             result += characters.charAt(Math.floor(Math.random() * charactersLength));
         }
-
-
         return result;
     }
+    public StockNumbers() {
+        var randomNumber = Math.floor(Math.random() * 10000000).toString();
+        return randomNumber;
+    }
     UseSearchBox(searchFeildId: string, searchByRef: string, listItemCss: string) {
-
         this.Helper.WaitByIdAndFill(searchFeildId, searchByRef);
         this.Helper.WaitByCssAndClick_FromTagInsideList('.'+listItemCss, 0);
     }

@@ -6,12 +6,10 @@ describe('EAWB Module', () => {
     let EAWBTypes: OpEAWB = new OpEAWB();
     let GeneralFun: GeneralFunctions=new GeneralFunctions();
 
-    var shipperRef1 ;
     afterEach(() => {
     })
-
+    var shipperRef1 = GeneralFun.RandomNum();
     if (browser.params.ShipParams.ShipmentLevelCode == "D") {
-        shipperRef1 = GeneralFun.RandomNum();
         it('Create Direct AWB .. ', function () {
             browser.ignoreSynchronization = true;
             EAWBTypes.CreateAWB('D',shipperRef1);
@@ -27,11 +25,19 @@ describe('EAWB Module', () => {
             browser.ignoreSynchronization = true;
             EAWBTypes.CreateAWB('H',shipperRef1);
         });
+        it('Search for House AWB # ' + shipperRef1, function () {
+            browser.ignoreSynchronization = true;
+            GeneralFun.UseSearchBox('Shipment_Search', shipperRef1, 'ListBoxItem');
+        });
     }
     else if (browser.params.ShipParams.ShipmentLevelCode == "M") {
         it('Create Master AWB .. ', function () {
             browser.ignoreSynchronization = true;
             EAWBTypes.CreateAWB('M',shipperRef1);
+        });
+        it('Search for Master AWB # ' + shipperRef1, function () {
+            browser.ignoreSynchronization = true;
+            GeneralFun.UseSearchBox('Shipment_Search', shipperRef1, 'ListBoxItem');
         });
     }
 });
