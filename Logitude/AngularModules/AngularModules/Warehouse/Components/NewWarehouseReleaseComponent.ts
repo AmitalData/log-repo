@@ -356,8 +356,7 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
     TransportModeId: string;
     DirectionId: string;
     CustomerId: string;
-    FromPortId: string;
-    ToPortId: string;
+
     ConnectedTo: string;
     OpenChoosePackage(packageType: string) {
 

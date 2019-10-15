@@ -1501,6 +1501,10 @@
     <Compile Include="Migrations\201909300620491_AbedAddBCCFieldToDocumentTypeTemplate.Designer.cs">
       <DependentUpon>201909300620491_AbedAddBCCFieldToDocumentTypeTemplate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909301617282_addNotInvoicedReceivablesAmount.cs" />
+    <Compile Include="Migrations\201909301617282_addNotInvoicedReceivablesAmount.Designer.cs">
+      <DependentUpon>201909301617282_addNotInvoicedReceivablesAmount.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201910010723488_RemoveOpenReceivablesLines.cs" />
     <Compile Include="Migrations\201910010723488_RemoveOpenReceivablesLines.Designer.cs">
       <DependentUpon>201910010723488_RemoveOpenReceivablesLines.cs</DependentUpon>
@@ -1536,6 +1540,10 @@
     <Compile Include="Migrations\201910131134436_AddShipmentCustomsTransferTables_Samar.cs" />
     <Compile Include="Migrations\201910131134436_AddShipmentCustomsTransferTables_Samar.Designer.cs">
       <DependentUpon>201910131134436_AddShipmentCustomsTransferTables_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910151744432_AddDetectingChanges.cs" />
+    <Compile Include="Migrations\201910151744432_AddDetectingChanges.Designer.cs">
+      <DependentUpon>201910151744432_AddDetectingChanges.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
@@ -2605,6 +2613,9 @@
     <EmbeddedResource Include="Migrations\201909300620491_AbedAddBCCFieldToDocumentTypeTemplate.resx">
       <DependentUpon>201909300620491_AbedAddBCCFieldToDocumentTypeTemplate.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909301617282_addNotInvoicedReceivablesAmount.resx">
+      <DependentUpon>201909301617282_addNotInvoicedReceivablesAmount.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910010723488_RemoveOpenReceivablesLines.resx">
       <DependentUpon>201910010723488_RemoveOpenReceivablesLines.cs</DependentUpon>
     </EmbeddedResource>
@@ -2631,6 +2642,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910131134436_AddShipmentCustomsTransferTables_Samar.resx">
       <DependentUpon>201910131134436_AddShipmentCustomsTransferTables_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910151744432_AddDetectingChanges.resx">
+      <DependentUpon>201910151744432_AddDetectingChanges.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

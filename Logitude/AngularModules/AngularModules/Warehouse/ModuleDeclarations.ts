@@ -1,4 +1,4 @@
-﻿
+
 
 import {NewWarehouseEntryComponent} from './Components/NewWarehouseEntryComponent';
 import {NewWarehouseReleaseComponent} from './Components/NewWarehouseReleaseComponent';
@@ -17,7 +17,10 @@ import {CopyFromReleasesPackagesComponent} from './Components/CopyFromReleasesPa
 import {WarehouseDocsOutTabComponent} from './Components/EditTabs/DocsOut/WarehouseDocsOutTabComponent';
 import {WarehouseDocsInTabComponent} from './Components/EditTabs/DocsIn/WarehouseDocsInTabComponent';
 import {WarehouseWorkspaceComponent} from './Components/Workspaces/WarehouseWorkspaceComponent';
-import {NewFullWarehouseEntryComponent} from './Components/NewEntity/NewFullWarehouseEntryComponent';
+import { NewFullWarehouseEntryComponent } from './Components/NewEntity/NewFullWarehouseEntryComponent';
+import { NewFullWarehouseReleaseComponent } from './Components/NewEntity/NewFullWarehouseReleaseComponent';
+
+
 import {WarehouseEntryPackagesDetailsComponent} from './Components/WarehouseEntryPackagesDetailsComponent';
 import {WarehouseEntryFiltersMenuComponent} from './Components/FiltersMenu/WarehouseEntryFiltersMenuComponent';
 import {WarehouseEntryPartnersTabComponent} from './Components/EditTabs/PartnersTab/WarehouseEntryPartnersTabComponent';

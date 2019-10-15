@@ -294,6 +294,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\INTTRABranchRegisteredCarrier.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\INTTRASetting.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\INTTRASettingMode.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\LogBoxTenantSetting.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\LogitudeMessagesTransmissionLog.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\MetodoPago.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\PackageConnectedPackage.cs" />
@@ -427,6 +428,7 @@
     <Compile Include="CommonDataModel\Mapping\INTTRABranchRegisteredCarrierMap.cs" />
     <Compile Include="CommonDataModel\Mapping\INTTRASettingMap.cs" />
     <Compile Include="CommonDataModel\Mapping\INTTRASettingModeMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\LogBoxTenantSettingMap.cs" />
     <Compile Include="CommonDataModel\Mapping\LogitudeMessagesTransmissionLogMap.cs" />
     <Compile Include="CommonDataModel\Mapping\MetodoPagoMap.cs" />
     <Compile Include="CommonDataModel\Mapping\PackageConnectedPackageMap.cs" />
@@ -479,7 +481,6 @@
     <Compile Include="CommonDataModel\Repositories\ComputingPartnerTranslationRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ContactsUnseenEntitieRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\DWHBuildStatusRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\LogBoxTenantSettingRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CountryCityRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CreditLimitSettingRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CustomerDepositionRepository.cs" />
@@ -519,6 +520,7 @@
     <Compile Include="CommonDataModel\Repositories\INTTRABranchRegisteredCarrierRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\INTTRASettingModeRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\INTTRASettingRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\LogBoxTenantSettingRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\MetodoPagoRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\RegistryDateTypeRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ReportExecutionLogRepository.cs" />

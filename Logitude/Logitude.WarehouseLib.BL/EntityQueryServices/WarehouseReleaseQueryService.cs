@@ -166,11 +166,18 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                     cardLists = cardQuery.GetCardListsByListIds(cardIds, tenant);
                 }
 
-                List<ShipmentList> shipmentLists = new List<ShipmentList>();
-                if (shipmentIds.Count > 0)
+                //List<ShipmentList> shipmentLists = new List<ShipmentList>();
+                //if (shipmentIds.Count > 0)
+                //{
+                //    ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+                //    shipmentLists = shipmentQuery.GetShipmentsForCrossDock(shipmentIds, tenant);
+                //}
+
+                List<PortList> portLists = new List<PortList>();
+                if (portIds.Count > 0)
                 {
-                    ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-                    shipmentLists = shipmentQuery.GetShipmentsForCrossDock(shipmentIds, tenant);
+                    PortQuery portQuery = new PortQuery(tenant);
+                    portLists = portQuery.GetPortListsByListIds(portIds, tenant);
                 }
 
                 foreach (EntityLastActivity activity in lastActivities)
@@ -184,7 +191,7 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                             Tenant = warehouseRelease.Tenant,
                             ReleaseNumber = warehouseRelease.ReleaseNumber,
                             TransportModeId = warehouseRelease.TransportModeId,
-                            DirectionId = shipmentList.DirectionId,
+                            DirectionId = warehouseRelease.DirectionId,
                             StatusName = warehouseRelease.WarehouseReleaseStatus != null ? warehouseRelease.WarehouseReleaseStatus.Name : "",
                             WarehouseId = warehouseRelease.WarehouseId,
                             CustomerId = warehouseRelease.CustomerId,
