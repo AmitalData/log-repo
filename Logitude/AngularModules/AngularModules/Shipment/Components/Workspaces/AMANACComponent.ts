@@ -3,6 +3,8 @@ import { SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator'
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ShipmentDomainService } from '../../../Shipment/Services/ShipmentDomainService';
+import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { ListComponentArgs } from '../../../Infrastructure/Args';
 
 @Component({
     moduleId: module.id,
@@ -26,11 +28,11 @@ export class AMANACComponent implements OnInit {
         var transferTypeCode: string = null;
         if (args == "Air") {
             logWindowTitle = "New Air Shipment AMANAC Transfer";
-            transferTypeCode = "Air";
+            transferTypeCode = "AMAS";
         }
         else {
             logWindowTitle = "New Ocean Shipment AMANAC Transfer";
-            transferTypeCode = "Ocean";
+            transferTypeCode = "AMOS";
         }
 
         var logWindow = new LogitudeWindow();
@@ -74,4 +76,28 @@ export class AMANACComponent implements OnInit {
             this.LoadDataCount();
         });
     }
-}
+
+    ViewQueryClicked(args: string) {
+        var filterAgrs = new ApiQueryFilters();
+        filterAgrs.addAdditionalFilter("CustomsTransferTypeCode", args, null, null, "Equals", false, false, false, "String");
+        
+        var listArgs = new ListComponentArgs();
+        listArgs.Filters = filterAgrs;
+        listArgs.QueryCode = "ShipmentsTransferHistory";
+        listArgs.ObjectTableName = "CustomsTransferHeader";
+        listArgs.BackButtonTitle = "Operations";
+
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+            .then(cmpRef => {
+                this.CurrentSession.AddMenuReference(cmpRef);
+
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run(listArgs);
+
+                cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                    this.LoadDataCount();
+                });
+            });
+    }
+}  
+

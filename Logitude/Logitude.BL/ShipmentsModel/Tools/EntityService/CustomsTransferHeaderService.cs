@@ -33,15 +33,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private CustomsTransferHeaderRepository entityRepository;
         private CustomsTransferLineRepository CustomsTransferLineRepository;
         
-        //private List<ARInvoice> aRInvoices;
-        //private List<APInvoice> aPInvoices;
-        //private List<ARPayment> aRPayments;
-        //private List<APPayment> aPPayments;
-        //private ARInvoiceRepository aRInvoiceRepository;
-        //private APInvoiceRepository aPInvoiceRepository;
-        //private ARPaymentRepository aRPaymentRepository;
-        //private APPaymentRepository aPPaymentRepository;
-        //private MessageEntityService webService;
+        private List<Shipment> shipments;
+        private ShipmentRepository shipmentRepository;
         public CustomsTransferHeaderService(IShipmentsContext objectContext, int tenant)
         {
             this.tenant = tenant;
@@ -50,15 +43,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.CustomsTransferLineRepository = new CustomsTransferLineRepository(objectContext);
             this.loggedTenant = TenantRepository.GetSingleTenant(tenant, true);
 
-            //this.aRInvoices = new List<ARInvoice>();
-            //this.aPInvoices = new List<APInvoice>();
-            //this.aRPayments = new List<ARPayment>();
-            //this.aPPayments = new List<APPayment>();
-            //this.aRInvoiceRepository = new ARInvoiceRepository(objectContext);
-            //this.aPInvoiceRepository = new APInvoiceRepository(objectContext);
-            //this.aRPaymentRepository = new ARPaymentRepository(objectContext);
-            //this.aPPaymentRepository = new APPaymentRepository(objectContext);
-            //this.webService = new MessageEntityService();
+            this.shipments = new List<Shipment>();
+            this.shipmentRepository = new ShipmentRepository(objectContext);
 
             this.GetLoggedContact();
         }
@@ -88,31 +74,21 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             if (ids.Count > 0)
             {
+                this.shipments = shipmentRepository.GetShipmentsListFromIdList(ids, tenant);
+
                 switch (entityPM.CustomsTransferTypeCode)
                 {
-                    //case "ARIN":
-                    //    {
-                    //        this.aRInvoices = aRInvoiceRepository.GetInvoicesListFromIdList(ids, tenant);
-                    //        break;
-                    //    }
+                    case "AMAS":
+                        {
+                            this.shipments = this.shipments.Where(d => d.TransportModeId == "A").ToList();
+                            break;
+                        }
 
-                    //case "APIN":
-                    //    {
-                    //        this.aPInvoices = aPInvoiceRepository.GetInvoicesListFromIdList(ids, tenant);
-                    //        break;
-                    //    }
-
-                    //case "ARPA":
-                    //    {
-                    //        this.aRPayments = aRPaymentRepository.GetPaymentsListFromIdList(ids, tenant);
-                    //        break;
-                    //    }
-
-                    //case "APPA":
-                    //    {
-                    //        this.aPPayments = aPPaymentRepository.GetPaymentsListFromIdList(ids, tenant);
-                    //        break;
-                    //    }
+                    case "AMOS":
+                        {
+                            this.shipments = this.shipments.Where(d => d.TransportModeId == "O").ToList();
+                            break;
+                        }
                 }
             }
         }
@@ -146,7 +122,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             entityRepository.Add(entityPoco);
             entityRepository.SubmitChanges();
 
-            //this.TransferData();
+            this.TransferData();
         }
 
         public void Update(CustomsTransferHeaderPM entityPM, bool mapComposition = false)
@@ -195,88 +171,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         {
             if (isNewEntity)
             {
-                AccountingSettingRepository accountingSettingRepository = new AccountingSettingRepository(tenant);
-                AccountingSetting accountingSetting = accountingSettingRepository.GetSingleAccountSetting(tenant);
-
                 switch (entityPM.CustomsTransferTypeCode)
                 {
-                    case "ARIN":
+                    case "AMAS":
                         {
-                            if (accountingSetting.AccountingSystemCode == "HV")
-                            {
-                                entityPM.FileName = "movein" + entityPM.TransferNumber + ".doc";
-                            }
-
-                            else if (accountingSetting.AccountingSystemCode == "GI" || accountingSetting.AccountingSystemCode == "AI")
-                            {
-                                entityPM.FileName = "ARInvoices" + entityPM.TransferNumber + ".xml";
-                            }
-
-                            else
-                            {
-                                entityPM.FileName = "movein" + entityPM.TransferNumber + ".dat";
-                            }
-
+                            entityPM.FileName = "Air Shipments" + entityPM.TransferNumber + ".xls";
                             break;
                         }
 
-                    case "APIN":
+                    case "AMOS":
                         {
-                            if (accountingSetting.AccountingSystemCode == "HV")
-                            {
-                                entityPM.FileName = "movein" + entityPM.TransferNumber + ".doc";
-                            }
-
-                            else if (accountingSetting.AccountingSystemCode == "GI" || accountingSetting.AccountingSystemCode == "AI")
-                            {
-                                entityPM.FileName = "APInvoices" + entityPM.TransferNumber + ".xml";
-                            }
-
-                            else
-                            {
-                                entityPM.FileName = "movein" + entityPM.TransferNumber + ".dat";
-                            }
-
-                            break;
-                        }
-
-                    case "ARPA":
-                        {
-                            if (accountingSetting.AccountingSystemCode == "HV")
-                            {
-                                entityPM.FileName = "movein" + entityPM.TransferNumber + ".doc";
-                            }
-
-                            else if (accountingSetting.AccountingSystemCode == "GI" || accountingSetting.AccountingSystemCode == "AI")
-                            {
-                                entityPM.FileName = "ARPayments" + entityPM.TransferNumber + ".xml";
-                            }
-
-                            else
-                            {
-                                entityPM.FileName = "movein" + entityPM.TransferNumber + ".dat";
-                            }
-
-                            break;
-                        }
-
-                    case "APPA":
-                        {
-                            if (accountingSetting.AccountingSystemCode == "HV")
-                            {
-                                entityPM.FileName = "movein" + entityPM.TransferNumber + ".doc";
-                            }
-
-                            else if (accountingSetting.AccountingSystemCode == "GI" || accountingSetting.AccountingSystemCode == "AI")
-                            {
-                                entityPM.FileName = "APPayments" + entityPM.TransferNumber + ".xml";
-                            }
-
-                            else
-                            {
-                                entityPM.FileName = "movein" + entityPM.TransferNumber + ".dat";
-                            }
-
+                            entityPM.FileName = "Ocean Shipments" + entityPM.TransferNumber + ".xls";
                             break;
                         }
                 }
@@ -341,32 +246,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             CustomsTransferHeaderMapping.MapLine(itemPM, itemPoco, true);
             CustomsTransferLineRepository.Add(itemPoco);
 
-            switch (entityPM.CustomsTransferTypeCode)
-            {
-                //case "ARIN":
-                //    {
-                //        UpdateARInvoice(itemPM.ShipmentId);
-                //        break;
-                //    }
-
-                //case "APIN":
-                //    {
-                //        UpdateAPInvoice(itemPM.EntityId);
-                //        break;
-                //    }
-
-                //case "ARPA":
-                //    {
-                //        UpdateARPayment(itemPM.EntityId);
-                //        break;
-                //    }
-
-                //case "APPA":
-                //    {
-                //        UpdateAPPayment(itemPM.EntityId);
-                //        break;
-                //    }
-            }
+            this.UpdateShipment(itemPM.ShipmentId);           
         }
         private void UpdateCustomsTransferLine(CustomsTransferLinePM itemPM)
         {
@@ -386,81 +266,25 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
-        //private void UpdateARInvoice(string myEntityId)
-        //{
-        //    ARInvoice invoice = aRInvoices.Where(d => d.Id == myEntityId).FirstOrDefault();
+        private void UpdateShipment(string myEntityId)
+        {
+            Shipment shipment = this.shipments.Where(d => d.Id == myEntityId).FirstOrDefault();
 
-        //    if (invoice != null)
-        //    {
-        //        invoice.TransferStatusCode = "TR";
-        //        invoice.TransferError = null;
-        //        aRInvoiceRepository.Update(invoice);
-        //    }
-        //}
-        //private void UpdateAPInvoice(string myEntityId)
-        //{
-        //    APInvoice invoice = aPInvoices.Where(d => d.Id == myEntityId).FirstOrDefault();
+            if (shipment != null)
+            {
+                shipment.LocalCustomsTransmissionsStatusCode = "SENT";
+                shipment.LocalCustomsTransmissionsStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                shipment.LocalCustomsTransmissionsStatusError = null;
+                shipmentRepository.Update(shipment);
+            }
+        }
 
-        //    if (invoice != null)
-        //    {
-        //        invoice.TransferStatusCode = "TR";
-        //        invoice.TransferError = null;
-        //        aPInvoiceRepository.Update(invoice);
-        //    }
-        //}
-        //private void UpdateARPayment(string myEntityId)
-        //{
-        //    ARPayment myPayment = aRPayments.Where(d => d.Id == myEntityId).FirstOrDefault();
-
-        //    if (myPayment != null)
-        //    {
-        //        myPayment.TransferStatusCode = "TR";
-        //        myPayment.TransferError = null;
-        //        aRPaymentRepository.Update(myPayment);
-        //    }
-        //}
-        //private void UpdateAPPayment(string myEntityId)
-        //{
-        //    APPayment myPayment = aPPayments.Where(d => d.Id == myEntityId).FirstOrDefault();
-
-        //    if (myPayment != null)
-        //    {
-        //        myPayment.TransferStatusCode = "TR";
-        //        myPayment.TransferError = null;
-        //        aPPaymentRepository.Update(myPayment);
-        //    }
-        //}
-        //private void TransferData()
-        //{
-        //    if (isNewEntity)
-        //    {
-        //        switch (entityPM.AccountingTransferTypeCode)
-        //        {
-        //            case "ARIN":
-        //                {
-        //                    webService.TransferARInvoices(aRInvoices, entityPM.FileName, tenant);
-        //                    break;
-        //                }
-
-        //            case "APIN":
-        //                {
-        //                    webService.TransferAPInvoices(aPInvoices, entityPM.FileName, tenant);
-        //                    break;
-        //                }
-
-        //            case "ARPA":
-        //                {
-        //                    webService.TransferARPayments(aRPayments, entityPM.FileName, tenant);
-        //                    break;
-        //                }
-
-        //            case "APPA":
-        //                {
-        //                    webService.TransferAPPayments(aPPayments, entityPM.FileName, tenant);
-        //                    break;
-        //                }
-        //        }
-        //    }
-        //}
+        private void TransferData()
+        {
+            if (isNewEntity)
+            {
+                
+            }
+        }
     }
 }

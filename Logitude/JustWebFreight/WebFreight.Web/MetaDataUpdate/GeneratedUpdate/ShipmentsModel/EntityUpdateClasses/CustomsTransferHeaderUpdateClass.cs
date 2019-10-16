@@ -85,6 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	             				    ObjectTableName =  "CustomsTransferHeader",
 			      				    IsNew =  true,
 			      				    DBTableName =  "CustomsTransferHeaders",
+			      				    OldDBTableName =  "CustomsTransferHeaders",
 			      				    ObjectTableSingular =  "Customs Transfer Header",
 			      				    ObjectTablePlural =  "Customs Transfer Headers",
 			      				    HasCustomFilter =  true,
@@ -116,7 +117,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "NewCustomsTransfer",
 			      				    DefaultText =  "Customs Transfer Header",
-			      				    Code =  "505a",
+			      				    Code =  "66ad",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Shipment",
@@ -140,6 +141,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CreatedByUserId",
+					  						OldFieldName =  "CreatedByUserId",
 					  						ObjectTableName =  "CustomsTransferHeader",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -160,6 +162,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CreatedByUserId",
 					  						ListPropertyPath =  "CreatedByUserId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -195,6 +198,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "SearchFields",
+					  						OldFieldName =  "SearchFields",
 					  						ObjectTableName =  "CustomsTransferHeader",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -214,6 +218,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "SearchFields",
 					  						ListPropertyPath =  "SearchFields",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -252,6 +257,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "TransferNumber",
+					  						OldFieldName =  "TransferNumber",
 					  						ObjectTableName =  "CustomsTransferHeader",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -271,6 +277,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "TransferNumber",
 					  						ListPropertyPath =  "TransferNumber",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -309,6 +316,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "TransferDate",
+					  						OldFieldName =  "TransferDate",
 					  						ObjectTableName =  "CustomsTransferHeader",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -328,6 +336,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "TransferDate",
 					  						ListPropertyPath =  "TransferDate",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -366,6 +375,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "FileName",
+					  						OldFieldName =  "FileName",
 					  						ObjectTableName =  "CustomsTransferHeader",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -385,6 +395,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "FileName",
 					  						ListPropertyPath =  "FileName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -423,6 +434,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CustomsTransferTypeCode",
+					  						OldFieldName =  "CustomsTransferTypeCode",
 					  						ObjectTableName =  "CustomsTransferHeader",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "CustomsTransferType",
@@ -443,6 +455,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CustomsTransferTypeCode",
 					  						ListPropertyPath =  "CustomsTransferTypeCode",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -478,6 +491,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CustomsTransferTypeName",
+					  						OldFieldName =  "CustomsTransferTypeName",
 					  						ObjectTableName =  "CustomsTransferHeader",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -497,6 +511,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CustomsTransferTypeName",
 					  						ListPropertyPath =  "CustomsTransferTypeName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -535,6 +550,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "Notes",
+					  						OldFieldName =  "Notes",
 					  						ObjectTableName =  "CustomsTransferHeader",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -554,6 +570,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Notes",
 					  						ListPropertyPath =  "Notes",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -592,6 +609,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CreatedByUserName",
+					  						OldFieldName =  "CreatedByUserName",
 					  						ObjectTableName =  "CustomsTransferHeader",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -611,6 +629,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CreatedByUserName",
 					  						ListPropertyPath =  "CreatedByUserName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -649,6 +668,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   {
 					 
 					 						FieldName =  "CustomsTransferLines",
+					  						OldFieldName =  "CustomsTransferLines",
 					  						ObjectTableName =  "CustomsTransferHeader",
 					  						FieldsDataType =  "List",
 					  						MinLength =  0,
@@ -668,6 +688,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CustomsTransferLines",
 					  						ListPropertyPath =  "CustomsTransferLines",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -702,7 +723,32 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
-	    {  	   
+	    {  
+	        FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+	        QueryGroup CustomsTransferHeaderQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "66ad", Name = " Query Group" }, queryGroupRepository);
+						QueryGroup CustomsTransferHeaderQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "f4c1", Name = " Query Group" }, queryGroupRepository);
+				        queryGroupRepository.SubmitChanges();
+
+	        ObjectTable CustomsTransferHeaderObjectTable = objectContext.ObjectTables.Where(d => d.Name == "CustomsTransferHeader" && d.Tenant == 0).FirstOrDefault();
+	        List<ObjectField> CustomsTransferHeaderObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CustomsTransferHeader").ToList();   
+
+			   TextCode CustomsTransferHeaderTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomsTransferHeader.Q.ShipmentsTransferHistory", DefaultText = @"Transfer history",LocalDefaultText = "Transfer history", ObjectTableId = CustomsTransferHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature CustomsTransferHeaderFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsTransferHeader.Q.ShipmentsTransferHistory", ObjectTableId = CustomsTransferHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsTransferHeaderFeatures.ShipmentsTransferHistory", NameTextCodeDefaultText = "ShipmentsTransferHistory", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+
+	        TextCodeRepository.SubmitChanges();
+	        FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query ShipmentsTransferHistoryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsTransferHeaderTextCode_0.Id, Code = "ShipmentsTransferHistory",  QueryGroupCode = "66ad", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomsTransferHeaderObjectTable.Id, QuerySection = "CustomsTransferHeader", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomsTransferHeaderFeature_0.Id, DefaultSortName = "TransferDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+	
+			 QueryColumn ShipmentsTransferHistoryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShipmentsTransferHistoryQuery.Id, IndexOrder = 0, ObjectFieldId = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "TransferNumber" && d.ObjectTableId == CustomsTransferHeaderObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 110 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ShipmentsTransferHistoryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShipmentsTransferHistoryQuery.Id, IndexOrder = 1, ObjectFieldId = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "TransferDate" && d.ObjectTableId == CustomsTransferHeaderObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ShipmentsTransferHistoryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ShipmentsTransferHistoryQuery.Id, IndexOrder = 2, ObjectFieldId = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "FileName" && d.ObjectTableId == CustomsTransferHeaderObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+	   
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
