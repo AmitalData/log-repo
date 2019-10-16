@@ -86,6 +86,7 @@ export class AMANACComponent implements OnInit {
         listArgs.QueryCode = "ShipmentsTransferHistory";
         listArgs.ObjectTableName = "CustomsTransferHeader";
         listArgs.BackButtonTitle = "Operations";
+        listArgs.DisplayTitle = "Transfer History";
 
         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
             .then(cmpRef => {

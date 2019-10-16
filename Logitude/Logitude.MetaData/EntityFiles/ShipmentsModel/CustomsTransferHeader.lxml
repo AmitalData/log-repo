@@ -20,6 +20,17 @@
     </QueryColumns>
     <QueryFilters />
   </Query>
+  <Screen Name="&quot;CustomsTransferHeaderHeaderScreen&quot;" ObjectTableName="&quot;CustomsTransferHeader&quot;" NumberOfColumns="3" NumberOfRows="2" IsReadOnly="true" IsHeaderScreen="true" Code="&quot;CustomsTransfer.HeaderScreen&quot;">
+    <ScreenFields>
+      <ScreenField Column="0" Row="0" ObjectFieldName="&quot;TransferNumber&quot;" ScreenName="CustomsTransferHeaderHeaderScreen" />
+      <ScreenField Column="0" Row="1" ObjectFieldName="&quot;TransferDate&quot;" ScreenName="CustomsTransferHeaderHeaderScreen" />
+      <ScreenField Column="1" Row="0" ObjectFieldName="&quot;FileName&quot;" ScreenName="CustomsTransferHeaderHeaderScreen" />
+      <ScreenField Column="1" Row="1" ObjectFieldName="&quot;CreatedByUserName&quot;" ScreenName="CustomsTransferHeaderHeaderScreen" />
+      <ScreenField Column="2" Row="0" ObjectFieldName="&quot;CustomsTransferTypeName&quot;" ScreenName="CustomsTransferHeaderHeaderScreen" />
+    </ScreenFields>
+  </Screen>
+  <Tab TabName="&quot;Details&quot;" TabLocalName="&quot;Details&quot;" ObjectTableName="&quot;CustomsTransferHeader&quot;" Code="&quot;CTGR&quot;" ControlPath="&quot;CustomsTransferGeneralTabComponent&quot;" TextCode="&quot;CustomsTransferHeader.TH.Details&quot;" IsPackagable="true" IndexOrder="0" HtmlComponentURL="&quot;./ShipmentModules/ShipmentAMANAC/Components/EditTabs/CustomsTransferGeneralTabComponent&quot;" HtmlComponentName="&quot;CustomsTransferGeneralTabComponent&quot;" IsSpellChecked="false" HasGeneralFeature="false" />
+  <Tab TabName="&quot;Events&quot;" TabLocalName="&quot;Events&quot;" ObjectTableName="&quot;CustomsTransferHeader&quot;" Code="&quot;CTET&quot;" ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;" TextCode="&quot;CustomsTransferHeader.TH.Events&quot;" IsPackagable="true" IndexOrder="1" IsSpellChecked="false" HasGeneralFeature="false" />
   <EventTypes>
     <EventType Code="&quot;CREV&quot;" ObjectTableName="&quot;CustomsTransferHeader&quot;" EnglishName="&quot;Created&quot;" LocalName="&quot;Created&quot;" IsManualEntry="false" ShortView="true" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
     <EventType Code="&quot;UPEV&quot;" ObjectTableName="&quot;CustomsTransferHeader&quot;" EnglishName="&quot;Updated&quot;" LocalName="&quot;Updated&quot;" IsManualEntry="false" ShortView="false" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />

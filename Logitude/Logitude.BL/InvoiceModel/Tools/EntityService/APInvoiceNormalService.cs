@@ -338,7 +338,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.UpdateInvoicePayments(invoicePaymentsChangeSet);
             this.UpdateInvoiceAmountDue();
             this.BuildSearchFields();
-        
+
             invoiceRepository.Update(invoice);
             invoiceRepository.SubmitChanges();
 
@@ -358,8 +358,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
 
-
-                this.GetForeignFields();
+            this.GetForeignFields();
 
             if (!entityPM.IsGeneralInvoice)
             {
@@ -426,12 +425,18 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         #region InitializeComponent
 
+        DateTime? todayDateTime = null;
         private void InitializeComponent()
         {
-            if (string.IsNullOrEmpty(entityPM.Id))
+            todayDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+
+            if (this.isNewEntity)
             {
                 entityPM.Id = IdCounter.GetNumber("APInvoice", entityPM.Tenant).ToString();
+                entityPM.CreateDate = todayDateTime;                
             }
+
+            entityPM.UpdateDate = todayDateTime;
 
             if (entityPM.DueDate != null)
             {
