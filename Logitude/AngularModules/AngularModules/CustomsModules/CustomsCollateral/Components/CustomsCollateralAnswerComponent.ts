@@ -386,6 +386,7 @@ export class CustomsCollateralAnswerComponent extends BaseComponent {
         });
         */
         var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
+        if (AppTool.IsNullOrEmpty(this.collateralPM.CustomerId)) this.collateralPM.CustomerId = "10010418";
         myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CIM_GUARANTEE_N", "NON", this.collateralPM.CustomerId, SessionLocator.Tenant)
             .subscribe(response => {
                 this.IsGuaranteeDefaultList = false;
