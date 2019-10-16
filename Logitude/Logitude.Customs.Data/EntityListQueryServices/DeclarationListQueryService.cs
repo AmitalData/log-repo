@@ -143,19 +143,19 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
             var qJoin =
 (from p in context.CourierDeclarations
- join dec in context.Declarations
-                     on p.DeclarationId equals dec.Id
-                     into DecJoin
- from myDeclarations in DecJoin
+ //join dec in context.Declarations
+ //                    on p.DeclarationId equals dec.Id
+ //                    into DecJoin
+ //from myDeclarations in DecJoin
  join sts1 in context.DeclarationCourierStatuses
-                     on myDeclarations.Id equals sts1.DeclarationId
+                     on p.DeclarationId equals sts1.DeclarationId
                      into DeclarationCourierStatusesJoin
 
  
 
  from myDeclarationCourierStatuses in DeclarationCourierStatusesJoin
  
- select new { p.CourierMasterId, p.CourierMaster, myDeclarations, myDeclarationCourierStatuses }
+ select new { p.CourierMasterId, p.CourierMaster/*, myDeclarations*/, myDeclarationCourierStatuses }
  );
 
             var qMyJoin =
@@ -163,8 +163,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 from rec in qJoin
                 select new MyDecJoin
                 {
-                    DeclarationId = rec.myDeclarations.Id,
-                    CourierMasterId = rec.CourierMasterId,
+                    DeclarationId = rec.myDeclarationCourierStatuses.DeclarationId/*myDeclarations.Id*/,
+                    //CourierMasterId = rec.CourierMasterId,
                     IsClosedForFollowUp = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.IsClosedForFollowUp : false,
                     FastIndividualProcessCode = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.FastIndividualProcessCode : null,
                     TotalInvoiceAmountInUSD = rec.myDeclarationCourierStatuses != null ? rec.myDeclarationCourierStatuses.TotalInvoiceAmountInUSD : null,
@@ -177,15 +177,15 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 }
                 );
 
-            var q1stConsignments =
-                (from a in context.Consignments
-                 group a by a.DeclarationId into gConsignments
-                 select gConsignments.Take(1))
-                     .SelectMany(r => r);
-            q1stConsignments =
-    (from a in context.Consignments
-     group a by a.DeclarationId into gConsignments
-     select gConsignments.FirstOrDefault());
+    //        var q1stConsignments =
+    //            (from a in context.Consignments
+    //             group a by a.DeclarationId into gConsignments
+    //             select gConsignments.Take(1))
+    //                 .SelectMany(r => r);
+    //        q1stConsignments =
+    //(from a in context.Consignments
+    // group a by a.DeclarationId into gConsignments
+    // select gConsignments.FirstOrDefault());
 
 
             var qConsignmentNumber = (from a in context.Consignments
@@ -197,7 +197,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                         ConsignmentNumber = gConsignments.Min(r => r.ConsignmentNumber)
                     });
 
-            q1stConsignments =
+            var q1stConsignments =
                 (from a in context.Consignments
                  join c in qConsignmentNumber
                  on new { a.DeclarationId, a.ConsignmentNumber } equals new { c.DeclarationId, c.ConsignmentNumber }
@@ -210,6 +210,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             bool test = false;
             if (test)
             {
+                var myMyJoin = qMyJoin.ToList();
                 var s = q1stConsignments.ToList();
             }
 
@@ -219,7 +220,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 qMyJoin = (from rec in context.CourierDeclarations.Where(r => r.DeclarationId == "-1")
                            select new MyDecJoin() {
                                DeclarationId = rec.DeclarationId,
-                               CourierMasterId = rec.CourierMasterId,
+                               //CourierMasterId = rec.CourierMasterId,
                                IsClosedForFollowUp = false,
                                FastIndividualProcessCode = "",
                                TotalInvoiceAmountInUSD = 1,
@@ -440,27 +441,28 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
     public class MyDecJoin
     {
-        public string CourierMasterId { get; set; }
+        //public string CourierMasterId { get; set; }
         public bool IsClosedForFollowUp { get; set; }
         public string DeclarationId { get; set; }
         public string FastIndividualProcessCode
         {
-            get
-            {
-                return this.FastIndividualProcessCode;
-            }
-            set
-            {
-                this.FastIndividualProcessCode = value;
-                //if(this.FastIndividualProcessCode == "I")
-                //{
-                //    this.FastIndividualProcessCode = "פרטני";
-                //}
-                //else if(this.FastIndividualProcessCode == "F")
-                //{
-                //    this.FastIndividualProcessCode = "מהיר";
-                //}
-            }
+            //get
+            //{
+            //    return this.FastIndividualProcessCode;
+            //}
+            //set
+            //{
+            //    this.FastIndividualProcessCode = value;
+            //    //if(this.FastIndividualProcessCode == "I")
+            //    //{
+            //    //    this.FastIndividualProcessCode = "פרטני";
+            //    //}
+            //    //else if(this.FastIndividualProcessCode == "F")
+            //    //{
+            //    //    this.FastIndividualProcessCode = "מהיר";
+            //    //}
+            //}
+            get; set;
         }
         public  decimal? TotalInvoiceAmountInUSD { get; set; }
         public bool IsPending902 { get; set; }
