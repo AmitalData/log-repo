@@ -7,9 +7,19 @@
     </tr>
 
     <tr style="height: 1px;" *ngIf="IsRadioButtonsVisible">
+
         <td>
-            <RadioButton [Name]="'CustomerRadio'" [IsChecked]="IsCustomer" (Checked)="SetIsCustomer(true)" [Text]="'Is Customer (Allows more options in customer management)'"></RadioButton>
-            <RadioButton [Name]="'CustomerRadio'" [IsChecked]="!IsCustomer" (Checked)="SetIsCustomer(false)" [Text]="'Shipper / Consignee is NOT my customer'" [Top]="5"></RadioButton>
+            <div>
+                <RadioButton [Name]="'CustomerRadio'" [IsChecked]="IsCustomer" (Checked)="SetIsCustomer(true)" [Text]="'Is Customer (Allows more options in customer management)'"></RadioButton>
+            </div>
+
+            <div>
+                <RadioButton [Name]="'CustomerRadio'" [IsChecked]="!IsCustomer" (Checked)="SetIsCustomer(false)" [Text]="'Shipper / Consignee is NOT my customer'" [Top]="5"></RadioButton>
+            </div>
+        </td>
+
+        <td>
+
         </td>
     </tr>
 
