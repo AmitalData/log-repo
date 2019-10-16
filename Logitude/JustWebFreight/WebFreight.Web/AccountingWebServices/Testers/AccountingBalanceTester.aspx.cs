@@ -148,6 +148,16 @@ namespace WebFreight.Web.AccountingWebServices.Testers
 
         }
 
+        private static void ExternalReconcileAdjustBankFees()
+        {
+            var accountingContext = AccountingContext.GetContext(1071);
+            IExternalReconcileDataProvider externalReconcileDataProvider = new ExternalReconcileDataProvider(accountingContext);
+            var a = new ExternalReconcileAdjustBankFeesService();
+            a.MustInit(externalReconcileDataProvider);
+            a.CreateJournalWithExtReconcile(1071, new List<string>() { "1-12487" }, "1-216674", "Notes ");
+            var aa = a.TheNewJournal;
+        }
+
         private void CreateJournalReconcile()
         {
             var jPM = new JournalPM()

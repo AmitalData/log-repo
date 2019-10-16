@@ -29,6 +29,8 @@ using System.Data.SqlClient;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.BL.CoreBL.ExternalReconcile;
 using Simplog.Data.CommonDataModel.Repositories;
+using Logitude.Accounting.BL.CoreBL.ReverseEngineer;
+using Logitude.Server.Tools;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -979,7 +981,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             }
 
-            private void CreateBatchAccountingIntegrityCheck()
+            public void CreateBatchAccountingIntegrityCheck()
             {
                 try
                 {
@@ -995,6 +997,17 @@ namespace Logitude.Accounting.BL.CoreBL
                             IAccountingContext MyContext = AccountingContext.GetContext(tenant);
                             AccountingIntegrityCheckUpdateService service = new AccountingIntegrityCheckUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
 
+                            var paramsObj = new AccountingIntegrityInParam()
+                            {
+                                Tenant = tenant,
+                                FromMonthInclusive = new DateTime(year, 1, 1),
+                                ToMonthInclusive = DateTime.Now,
+                            };
+
+                            // serialize
+                            string xmlString = LogitudeXmlSerializer.SerializeObjectToXmlElementString<AccountingIntegrityInParam>(paramsObj);
+
+
                             service.Update(new AccountingIntegrityCheckPM()
                             {
                                 ChangeSetOp = ChangeSetOperation.Insert,
@@ -1003,7 +1016,8 @@ namespace Logitude.Accounting.BL.CoreBL
                                 FromMonthInclusive = new DateTime(year, 1, 1),
                                 ToMonthInclusive = DateTime.Now,
                                 StatusCode = "1",
-                                SendEmailWhileError=true
+                                SendEmailWhileError = true,
+                                ParametersXML = xmlString,
 
                             }
                             , true);
