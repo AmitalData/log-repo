@@ -9,7 +9,6 @@ export class FieldsHelper {
         var EC = protractor.ExpectedConditions;
         browser.wait(EC.elementToBeClickable(element(by.cssContainingText(className, Text))), 100000).then(a => {
             var Button = element(by.cssContainingText(className, Text)).click();
-
         });
     }
 
@@ -42,6 +41,7 @@ export class FieldsHelper {
         browser.wait(EC.visibilityOf(element(by.id(Id))), 1000000).then(a => function () {
         });
     }
+
     ItemsPresent(Id: string) {
         var EC = protractor.ExpectedConditions;
         browser.wait(EC.presenceOf(element(by.id(Id))), 1000000).then(a => function () {
@@ -50,10 +50,7 @@ export class FieldsHelper {
     }
 
 
-    WaitBusyIndicator() {
-        var EC = protractor.ExpectedConditions;
-        browser.wait(EC.invisibilityOf(element(by.id("BusyIndicator_0"))), 100000).then(a => { });
-    }
+  
     WaitEditComponentBusyIndicator() {
         var EC = protractor.ExpectedConditions;
         browser.wait(EC.invisibilityOf(element(by.id("EditComponentBusyIndicator_0"))), 100000).then(a => { });
@@ -62,6 +59,11 @@ export class FieldsHelper {
     WaitShowEditComponentBusyIndicator() {
         var EC = protractor.ExpectedConditions;
         browser.wait(EC.visibilityOf(element(by.id("EditComponentBusyIndicator_0"))), 100000).then(a => { });
+    }
+
+    WaitBusyIndicator() {
+        var EC = protractor.ExpectedConditions;
+        browser.wait(EC.invisibilityOf(element(by.id("BusyIndicator_0"))), 100000).then(a => { });
     }
     WaitBusyIndicatorToShow() {
         var EC = protractor.ExpectedConditions;
@@ -78,20 +80,8 @@ export class FieldsHelper {
             return true;
         });
     }
-    CheckIfChanged(Id: string, Text1: string) {
-        var EC = protractor.ExpectedConditions;
-        browser.wait(EC.textToBePresentInElement($(Id), ('Text')), 5000);
-    }
-    WaitByIdAndCheckText(Id: string, Text: string) {
-        //var t = element(by.id(Id)).getAttribute('textContent');
-        ////  var EC = protractor.ExpectedConditions;
-        //// expect(browser.wait(EC.textToBePresentInElement($(Id), ('Text')), 500000));
-        ////expect(t).toBe(Text);
-        //browser.wait(expect(t).toBe(Text), 5000);
-        var EC = protractor.ExpectedConditions;
-        browser.wait(EC.textToBePresentInElementValue($('#ARInvoiceHeaderStatusName'), 'Unpaid'), 10000).then(a => { console.log("this is inside the wait for unpaid " + a); });
 
-    }
+
     WaitByIdAndFill(Id: string, Value: string) {
         var EC = protractor.ExpectedConditions;
         browser.wait(EC.elementToBeClickable(element(by.id(Id))), 10000).then(a => {
@@ -103,14 +93,13 @@ export class FieldsHelper {
                     input.clear();
                     input.sendKeys(Value);
                     var Newinput = element(by.id(Id)).getAttribute('value');
-                    Newinput.then(p => {// This adjustment is added because sometimes the text is not filled correctly so this way makes sure that is the value we fill
+                    Newinput.then(p => {
                         console.log(p);
                         if (p != Value) {
                             this.WaitByIdAndFill(Id, Value);
 
                         }
                     });
-                    //});
                 });
             });
         });
@@ -144,19 +133,7 @@ export class FieldsHelper {
                         this.WaitByCssAndClick_FromTagInsideListWithCheck(className, index, Id, input);
                     } else {
                         this.WaitDropDownToBeClosed(className);
-                        this.WaitBusyIndicator();
-                        // if(EC.visibilityOf(element(by.css(className)))){
-                        //     this.WaitByCssAndClick_FromTagInsideListWithCheck(className, index, Id, input);
-                        // }
-                        // browser.wait(EC.invisibilityOf(element(by.css(className))), 100000).then(a => {
-                        // });
-                        // if(EC.invisibilityOf(element(by.cs(className))).){
-                        //     console.log('element is selected ');
-
-                        // }else{
-                        //     this.WaitByCssAndClick_FromTagInsideListWithCheck(className, index, Id, input);
-
-                        // }
+                        this.WaitBusyIndicator();              
                     }
                 });
             }
@@ -169,19 +146,13 @@ export class FieldsHelper {
             });
         }
         catch (Exception) {
-            console.log("Ayman Catch");
+            console.log("Catch drop down to be closed");
             console.log(Exception);
             this.WaitDropDownToBeClosed(className);
         }
     }
 
 
-    WaitByCssButtonClick(className: string, Text: string) {
-        var EC = protractor.ExpectedConditions;
-        browser.wait(EC.elementToBeClickable(element(by.buttonText(Text))), 100000).then(a => {
-            var button = element(by.buttonText(Text)).click();
-        });
-    }
 
 
 
