@@ -139,8 +139,8 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 
 
             journal.CreatedByUserId = _ExternalReconcileDataProvider.ResolveUserId(myLedgerTransactionTransferPM.Tenant);  // _ExternalReconcileDataProvider.ResolveUserId(myLedgerTransactionTransferPM.Tenant); ;
-            
-            journal.AccountingEntityCode = "12";//public const string BankAdjustment = "12";  
+            journal.AccountingEntityCode = "6"; journal.AccountingEntityCode = ""; // Cheque Deposit//
+            journal.AccountingEntityCode = "";//if  AccountingEntityCode = "6" crush while aRPaymentCheque.StatusCode = "6"; due aRPaymentCheque not found !!
             //journal.AccountingEntityId = theEntityPm.Id;
             journal.AccountingEntityReference = myReconcileExternalPageLinePM.Reference;
             journal.UpdateDate = _ExternalReconcileDataProvider.GetCurrentDateTime(myLedgerTransactionTransferPM.Tenant);

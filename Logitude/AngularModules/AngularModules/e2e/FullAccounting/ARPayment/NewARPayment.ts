@@ -1,6 +1,5 @@
 import { FieldsHelper } from '../../Helpers/FieldsHelper';
 import { GeneralFunctions } from '../../Helpers/GeneralFunctions';
-
 import { browser, by, element, WebDriver, protractor, $ } from 'protractor';
 
 
@@ -29,30 +28,30 @@ export class NewARPayment {
         this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndFill('ARPayment_AmountInPaymentCurrency', '10000');
         this.Helper.WaitByIdAndFill('ARPayment_AccountingPaymentMethodId', 'Cash');
-        this.Helper.WaitByCssAndClick_SelectItemFromList('.DropDownList', 0),
-        this.Helper.WaitBusyIndicator();
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'ARPayment_AccountingPaymentMethodId', 'Cash'),
+            this.Helper.WaitBusyIndicator();
 
-       
+
         this.Helper.WaitByIdAndClick('ok-AddARPayment');
         this.Helper.WaitWindowClosed();
         this.Helper.WaitBusyIndicator();
         this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndFill('ARPayment_BranchId', 'Main Office');
         this.Helper.WaitBusyIndicator();
-        this.Helper.WaitByCssAndClick_SelectItemFromList('.DropDownList', 0);
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'ARPayment_BranchId', 'Main Office');
         this.Helper.WaitBusyIndicator();
-       // this.Helper.ItemsVisibility('row0');
-//        this.Helper.WaitWindowClosed();
+        // this.Helper.ItemsVisibility('row0');
+        //        this.Helper.WaitWindowClosed();
         var ec = protractor.ExpectedConditions;
         browser.wait(ec.invisibilityOf(element(by.id("ARPaymentSpinner"))), 100000);
         this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndClick('ARPayment.B.Approve');
         this.Helper.WaitBusyIndicator();
-      //  browser.sleep(6000);
-       // this.Helper.WaitByIdAndClick('EditBackbutton');
+        //  browser.sleep(6000);
+        // this.Helper.WaitByIdAndClick('EditBackbutton');
 
 
-       // browser.sleep(6000);
+        // browser.sleep(6000);
 
 
 

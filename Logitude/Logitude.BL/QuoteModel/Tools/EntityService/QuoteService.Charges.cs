@@ -417,6 +417,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     {
                         this.ComputeLineCostQuantity(item);
                         this.ComputeLineSaleQuantity(item);
+                        this.ComputeLineCostUnitPrice(item);
+                        this.ComputeLineSaleUnitPrice(item);
                         this.ComputeLineCostTotalAmounts(item);
                         this.ComputeLineSaleTotalAmounts(item);
                     }
@@ -424,12 +426,14 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     foreach (QuoteChargePM item in entityPM.QuoteCharges.Where(d => d.CostMeasurementCode == "PRFR"))
                     {
                         this.ComputeLineCostQuantity(item);
+                        this.ComputeLineCostUnitPrice(item);
                         this.ComputeLineCostTotalAmounts(item);
                     }
 
                     foreach (QuoteChargePM item in entityPM.QuoteCharges.Where(d => d.SaleMeasurementCode == "PRFR"))
                     {
                         this.ComputeLineSaleQuantity(item);
+                        this.ComputeLineSaleUnitPrice(item);
                         this.ComputeLineSaleTotalAmounts(item);
                     }
 
@@ -437,6 +441,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 }
             }
         }
+
 
         private void GetAllItemsExchangeRate()
         {
@@ -570,6 +575,90 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
             item.SaleQuantity = MethodHelper.Round(myResult, 2);
         }
+
+        private void ComputeLineCostUnitPrice(QuoteChargePM item)
+        {
+            if (this.entityPM.IsSaleCurrencySameAsCost)
+            {
+                item.CostUnitPriceInSaleCurrency = item.CostUnitPrice;
+                item.CostUnitPrice1InSaleCurrency = item.CostContainerType1UnitPrice;
+                item.CostUnitPrice2InSaleCurrency = item.CostContainerType2UnitPrice;
+                item.CostUnitPrice3InSaleCurrency = item.CostContainerType3UnitPrice;
+                item.CostUnitPrice4InSaleCurrency = item.CostContainerType4UnitPrice;
+                item.CostUnitPrice5InSaleCurrency = item.CostContainerType5UnitPrice;
+            }
+
+            else
+            {
+                item.CostUnitPriceInSaleCurrency = MethodHelper.Round(item.CostUnitPrice * item.CostExchangeRate / this.entityPM.ExchangeRate, 3);
+                item.CostUnitPrice1InSaleCurrency = MethodHelper.Round(item.CostContainerType1UnitPrice * item.CostExchangeRate / this.entityPM.ExchangeRate, 3);
+                item.CostUnitPrice2InSaleCurrency = MethodHelper.Round(item.CostContainerType2UnitPrice * item.CostExchangeRate / this.entityPM.ExchangeRate, 3);
+                item.CostUnitPrice3InSaleCurrency = MethodHelper.Round(item.CostContainerType3UnitPrice * item.CostExchangeRate / this.entityPM.ExchangeRate, 3);
+                item.CostUnitPrice4InSaleCurrency = MethodHelper.Round(item.CostContainerType4UnitPrice * item.CostExchangeRate / this.entityPM.ExchangeRate, 3);
+                item.CostUnitPrice5InSaleCurrency = MethodHelper.Round(item.CostContainerType5UnitPrice * item.CostExchangeRate / this.entityPM.ExchangeRate, 3);
+            }
+        }
+        private void ComputeLineSaleUnitPrice(QuoteChargePM item)
+        {
+            if (item.CostUnitPriceInSaleCurrency != null)
+            {
+                item.SaleUnitPrice = this.ComputeLineSaleUnitPrice(item.CostUnitPriceInSaleCurrency, item.MarkUpValue, item.MarkUpTypeCode);
+            }
+
+            if (item.CostUnitPrice1InSaleCurrency != null)
+            {
+                item.SaleContainerType1UnitPrice = this.ComputeLineSaleUnitPrice(item.CostUnitPrice1InSaleCurrency, item.ContainerType1MarkUpValue, item.ContainerType1MarkUpTypeCode);
+            }
+
+            if (item.CostUnitPrice2InSaleCurrency != null)
+            {
+                item.SaleContainerType2UnitPrice = this.ComputeLineSaleUnitPrice(item.CostUnitPrice2InSaleCurrency, item.ContainerType2MarkUpValue, item.ContainerType2MarkUpTypeCode);
+            }
+
+            if (item.CostUnitPrice3InSaleCurrency != null)
+            {
+                item.SaleContainerType3UnitPrice = this.ComputeLineSaleUnitPrice(item.CostUnitPrice3InSaleCurrency, item.ContainerType3MarkUpValue, item.ContainerType3MarkUpTypeCode);
+            }
+
+            if (item.CostUnitPrice4InSaleCurrency != null)
+            {
+                item.SaleContainerType4UnitPrice = this.ComputeLineSaleUnitPrice(item.CostUnitPrice4InSaleCurrency, item.ContainerType4MarkUpValue, item.ContainerType4MarkUpTypeCode);
+            }
+
+            if (item.CostUnitPrice5InSaleCurrency != null)
+            {
+                item.SaleContainerType5UnitPrice = this.ComputeLineSaleUnitPrice(item.CostUnitPrice5InSaleCurrency, item.ContainerType5MarkUpValue, item.ContainerType5MarkUpTypeCode);
+            }
+        }
+
+        private double? ComputeLineSaleUnitPrice(double? costUnitPriceInSaleCurrency, double? markUpValue, string markUpTypeCode)
+        {
+            double? myResult = costUnitPriceInSaleCurrency;
+
+
+            if (costUnitPriceInSaleCurrency != null)
+            {
+                double markup = markUpValue == null ? 0 : markUpValue.Value;
+
+                if (markUpTypeCode == "P")
+                {
+                    myResult = costUnitPriceInSaleCurrency + (costUnitPriceInSaleCurrency * (markup / 100));
+                }
+
+                else
+                {
+                    myResult = costUnitPriceInSaleCurrency + markup;
+                }
+            }
+
+            if (myResult == 0)
+            {
+                myResult = null;
+            }
+
+            return myResult;
+        }
+
         private void ComputeLineCostTotalAmounts(QuoteChargePM item)
         {
             double? myTotalAmount = null;

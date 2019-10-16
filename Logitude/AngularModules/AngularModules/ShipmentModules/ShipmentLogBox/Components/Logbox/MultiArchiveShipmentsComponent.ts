@@ -447,9 +447,9 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
 
     ValidationErrorsList: any[];
 
-
+    ArchivedRecordNumber = 0;
     SaveData() {
-
+        this.ArchivedRecordNumber = 0;
         if (this.SelectedRecords.length > 0 || this.IsAllRecordSelected == true) {
             this.StartBusyIndicator("Archiving ...");
             //if (this.IsAllRecordSelected == true) {
@@ -465,17 +465,32 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
             //    });
             //}
             //else {
-                this._ShipmentPMService.ArchiveShipments(this.SelectedRecords).subscribe(myResult => {
+            for (var i = 0; i < (this.SelectedRecords.length / 10); i += 9) {
+                var TenSelectedRecords = this.SelectedRecords.slice(i,i+10)
+                this._ShipmentPMService.ArchiveShipments(TenSelectedRecords).subscribe(myResult => {
                     if (!myResult.HasError) {
-                        this.StopBusyIndicator();
-                        this.LoadImporterShipments();
-                        this.CurrentSession.SessionEvent.emit({ Name: "CustomReloadShipments" });
+                        if ((this.ArchivedRecordNumber + 10) > this.SelectedRecords.length) {
+                            this.ArchivedRecordNumber = this.SelectedRecords.length;
+                        }
+                        else {
+                            this.ArchivedRecordNumber += 10;
+                        }
+                        this.StartBusyIndicator("Archiving " + this.ArchivedRecordNumber + " ...");
+                        if (this.SelectedRecords.length == this.ArchivedRecordNumber) {
+                            this.StopBusyIndicator();
+                            this.LoadImporterShipments();
+                            this.CurrentSession.SessionEvent.emit({ Name: "CustomReloadShipments" });
+                        }
                         //this.CurrentSession.CloseCurrentWindow();//.CurrentWindow.Close("");
                     }
                     else {
+                        this.StopBusyIndicator();
+                        this.LoadImporterShipments();
+                        this.CurrentSession.SessionEvent.emit({ Name: "CustomReloadShipments" });
                         this.ValidationErrorsList = myResult.ErrorsArray;
                     }
                 });
+            }
             //}
         }
 

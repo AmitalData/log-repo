@@ -11,30 +11,32 @@ export class OpEAWB {
     private Helper: FieldsHelper;
     private ShipmentWorkSpace: ShipmentWorkSpace;
     private Operation: GeneralFunctions;
-    private DirectWizard:DirectAWB;
+    private DirectWizard: DirectAWB;
     private HouseWizard: HouseAWB = new HouseAWB();
     private MasterWizard: MasterAWB = new MasterAWB();
-
 
     constructor() {
         this.Helper = new FieldsHelper();
         this.ShipmentWorkSpace = new ShipmentWorkSpace();
         this.Operation = new GeneralFunctions();
-        this.DirectWizard=new DirectAWB();
+        this.DirectWizard = new DirectAWB();
     }
-    CreateAWB(LogitudeWizardType: string,shipperRef1:string) {
+    CreateAWB(LogitudeWizardType: string, shipperRef1: string) {
         this.Operation.GoToMainMenu('General.MH.Operations');
         this.Operation.SelectMenuWorkSpaceTabs('SHIP');
-        //var shipperRef1 = this.Operation.RandomNum();
+        this.Helper.WaitByIdAndClick('NewAWB');
 
         if (LogitudeWizardType == 'D') {
-           this.DirectWizard.CreateDirectAWB(shipperRef1, LogitudeWizardType);
+            this.Helper.WaitByIdAndClick('DirectAWB');
+            this.DirectWizard.CreateDirectAWB(shipperRef1, LogitudeWizardType);
         }
-        //else if (LogitudeWizardType == 'H') {
-        //    this.HouseWizard.CreateHouseWizard(shipperRef1, LogitudeWizardType);
-        //}
-        //else if (LogitudeWizardType == 'M') {
-        //    this.MasterWizard.CreateMasterWizard(shipperRef1, LogitudeWizardType);
-        //}
+        else if (LogitudeWizardType == 'H') {
+            this.Helper.WaitByIdAndClick('HouseAWB');
+            this.HouseWizard.CreateHouseWizard(shipperRef1, LogitudeWizardType);
+        }
+        else if (LogitudeWizardType == 'M') {
+            this.Helper.WaitByIdAndClick('MasterAWB');
+            this.MasterWizard.CreateMasterWizard(shipperRef1, LogitudeWizardType);
+        }
     }
 }

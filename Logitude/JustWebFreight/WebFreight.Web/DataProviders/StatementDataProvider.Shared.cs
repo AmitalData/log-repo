@@ -125,6 +125,8 @@ namespace WebFreight.Web.DataProviders
             public string InvoiceStatus { get; set; }
             public double? InvoiceAmount { get; set; }
             public double? AmountPaid { get; set; }
+            public string BranchId { get; set; }
+            public string BranchName { get; set; }
         }
 
         public string Name { get; set; }

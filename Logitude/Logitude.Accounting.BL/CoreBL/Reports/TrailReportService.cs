@@ -166,7 +166,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
 
 
-                 IsMultiCurrency = chartf.IsMultiCurrency,
+
                  GLAccountName = chartf.GLAccountName,
                  GLAccountNumber = chartf.GLAccountNumber,
                  GLAccountId = chartf.GLAccountId,
@@ -311,7 +311,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                                      ChartOfAcountCode3 = groupTrailOnlyCOAType.Key.ChartOfAcountCode3,
                                                      ChartOfAcountCode4 = groupTrailOnlyCOAType.Key.ChartOfAcountCode4,
                                                      ChartOfAcountCode5 = groupTrailOnlyCOAType.Key.ChartOfAcountCode5,
-                                                     IsMultiCurrency = false,
+
                                                      GLAccountName = "",//= groupTrailOnlyCOAType.Key.GLAccountName,
                                                      GLAccountNumber="",
                                                      GLAccountId = "",// groupTrailOnlyCOAType.Key.GLAccountId,
@@ -364,7 +364,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          row.ChartOfAcountCode3,
                          row.ChartOfAcountCode4,
                          row.ChartOfAcountCode5,
-                         row.IsMultiCurrency,
+
                          row.GLAccountName,
                          row.GLAccountNumber,
                          row.GLAccountId
@@ -390,7 +390,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 ChartOfAcountCode3 = groupTrailOnlyCurrency.Key.ChartOfAcountCode3,
                  ChartOfAcountCode4 = groupTrailOnlyCurrency.Key.ChartOfAcountCode4,
                   ChartOfAcountCode5 = groupTrailOnlyCurrency.Key.ChartOfAcountCode5,
-                  IsMultiCurrency = groupTrailOnlyCurrency.Key.IsMultiCurrency,
+
                     GLAccountName = groupTrailOnlyCurrency.Key.GLAccountName,
                     GLAccountNumber=groupTrailOnlyCurrency.Key.GLAccountNumber,
                   GLAccountId = groupTrailOnlyCurrency.Key.GLAccountId,
@@ -461,7 +461,6 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
 
                  GLAccountId = aGL.Id,
-                 IsMultiCurrency = aGL.IsMultiCurrency,
                  GLAccountName = aGL.LocalName,
                  GLAccountNumber = aGL.DisplayNumber,
                  ChartOfAccountId=aGL.ChartOfAccountsId,
@@ -535,7 +534,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                        ChartOfAcount3 = "",
                                        ChartOfAcount4 = "",
                                        ChartOfAcount5 = "",
-                                       IsMultiCurrency = false,
+
                                        GLAccountName = "",
                                        GLAccountNumber="",
                                        GLAccountId = g.Key.AccountId,
@@ -864,7 +863,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
         public string GLAccountName { get; set; }
         public string GLAccountNumber { get; set; }
-        public bool? IsMultiCurrency { get; set; }
+
         public string GLAccountId { get; set; }
         public string CurrencyId { get; set; }
         public string ChartOfAccountId { get; set; }

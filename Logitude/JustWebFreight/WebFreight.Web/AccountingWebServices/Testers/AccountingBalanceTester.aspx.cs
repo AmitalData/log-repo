@@ -100,12 +100,10 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             //var a = new ReconcileOpenAmountService();
             //var l = a.GetLedgerOpenAmountDiff(1106, 2019);
             //externalPageLineId": "1 - 12487",
-            var accountingContext = AccountingContext.GetContext(1071);
-            IExternalReconcileDataProvider externalReconcileDataProvider = new ExternalReconcileDataProvider(accountingContext);
-            var a = new ExternalReconcileAdjustBankFeesService();
-            a.MustInit(externalReconcileDataProvider);
-            a.CreateJournalWithExtReconcile(1071, new List<string>() { "1-12487" }, "1-216674", "Notes ");
-            var aa = a.TheNewJournal;
+
+            //ExternalReconcileAdjustBankFees();
+            var myWorker = new JournalApproveService.JournalApproveWorker();
+            myWorker.CreateBatchAccountingIntegrityCheck();
             try
             {
 
@@ -152,6 +150,16 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 //_LabelDate.Text = _MyDate.ToString();
             }
 
+        }
+
+        private static void ExternalReconcileAdjustBankFees()
+        {
+            var accountingContext = AccountingContext.GetContext(1071);
+            IExternalReconcileDataProvider externalReconcileDataProvider = new ExternalReconcileDataProvider(accountingContext);
+            var a = new ExternalReconcileAdjustBankFeesService();
+            a.MustInit(externalReconcileDataProvider);
+            a.CreateJournalWithExtReconcile(1071, new List<string>() { "1-12487" }, "1-216674", "Notes ");
+            var aa = a.TheNewJournal;
         }
 
         private void CreateJournalReconcile()

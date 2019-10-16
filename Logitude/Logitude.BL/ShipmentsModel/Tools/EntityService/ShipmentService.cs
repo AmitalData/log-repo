@@ -307,7 +307,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 entityRepository.SubmitChanges();
                 UpdateShipmentComputedFields();
 
-                if(!string.IsNullOrEmpty(entityPM.MasterCreatedFromHouseId))
+                if (!string.IsNullOrEmpty(entityPM.MasterCreatedFromHouseId))
                 {
                     //Shipment houseShipment = entityRepository.GetSingleShipment(entityPM.MasterCreatedFromHouseId, tenant);
 
@@ -569,7 +569,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         {
             if (entityComputedFields != null)
             {
-                MapComputedFields(entityComputedFields, entityPM);             
+                MapComputedFields(entityComputedFields, entityPM);
                 shipmentComputedFieldsRepository.Update(entityComputedFields);
             }
 
@@ -586,7 +586,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             if (entityPM.ShipmentPackages != null)
             {
-                foreach (ShipmentPackagePM packagePM in entityPM.ShipmentPackages.Where(p=>p.ChangeSetOp != ChangeSetOperation.Delete))
+                foreach (ShipmentPackagePM packagePM in entityPM.ShipmentPackages.Where(p => p.ChangeSetOp != ChangeSetOperation.Delete))
                 {
                     if (string.IsNullOrEmpty(myContainersNumbers))
                     {
@@ -597,7 +597,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         myContainersNumbers += ", " + packagePM.ContainerNumber;
                     }
                 }
-                
+
                 if (!string.IsNullOrEmpty(myContainersNumbers) && myContainersNumbers.Length > 1000)
                 {
                     myContainersNumbers = myContainersNumbers.Substring(0, 1000);
@@ -607,9 +607,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             entityComputedFields.ContainersNumbers = myContainersNumbers;
 
 
-            }
+        }
 
-            private void ComputeAgentComputed(ShipmentPM entityPM, Shipment entityPoco)
+        private void ComputeAgentComputed(ShipmentPM entityPM, Shipment entityPoco)
         {
             if (entityPM.ShipmentLevelCode == "D" || entityPM.ShipmentLevelCode == "C")
             {
@@ -636,7 +636,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
         }
-        
+
         private void UpdateWareHouseEntry()
         {
             List<WarehouseEntry> warehouseEntryLists = null;
@@ -1419,7 +1419,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     if (string.IsNullOrEmpty(serviceContextUser))
                     {
                         loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser();
-                    } 
+                    }
                     UserRepository userRepository = new UserRepository(entityPM.Tenant);
                     User loggedUser = userRepository.GetSingleUserByCodeOrEmail(null, loggedUserEmail, entityPM.Tenant, true);
                     if (loggedUser == null)
@@ -2968,7 +2968,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     {
                         if (entityPM.ShipmentConvertedNewNumber)
                         {
-                            this.GetCounterShipmentNumber();                            
+                            this.GetCounterShipmentNumber();
                         }
                     }
                 }
@@ -3220,9 +3220,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         {
             IQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("ImporterApprovalReceivedQueue", 0);
-            queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() } , { "CorrelationId", Guid.NewGuid().ToString() } }, null, null);
+            queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } }, null, null);
         }
-         
+
         private void AddPaymentReceivedToQueue()
         {
             if (LogitudeSettings.EnableHybridQueue)

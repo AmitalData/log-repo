@@ -176,7 +176,5 @@
   </MenuButtons>
   <DataContracts />
   <AdditionalTextCodes />
-  <AdditionalFeatures>
-    <Feature Code="&quot;ShowNewFullWarehouseRelease&quot;" FeatureTypeCode="&quot;OTH&quot;" FeatureTextCodeCode="&quot;WarehouseRelease.Features.ShowNewFullWarehouseRelease&quot;" FeatureDefaultText="&quot;Show New Full Warehouse Release Button&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
-  </AdditionalFeatures>
+  <AdditionalFeatures />
 </entity>

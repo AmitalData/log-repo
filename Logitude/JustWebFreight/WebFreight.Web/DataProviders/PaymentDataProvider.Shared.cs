@@ -73,6 +73,8 @@ namespace WebFreight.Web.DataProviders
 		public string BillToCountryCode { get; set; }
         public string ForeignRFC { get; set; }
 
+        public double? AmountInLocalCurrency { get; set; }
+
         public List<InvoicePayments> PaidInvoicesList { get; set; }     
 
         public class InvoicePayments

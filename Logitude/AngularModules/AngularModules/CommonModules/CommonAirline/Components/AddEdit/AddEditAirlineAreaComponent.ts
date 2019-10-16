@@ -79,11 +79,10 @@ export class AddEditAirlineAreaComponent extends BaseComponent {
             this.EntityPM = new AirlineAreaPM(this.AirlinePM);
             this.EntityPM.CloneMe();
             this.Clone();
-
+            this.IsResourcesReady = true;
         }
         
         else {
-            
             this.EntityPM = windowArgs['Entity'];
             this.EntityPM.CloneMe();
             this.Clone();
@@ -91,10 +90,9 @@ export class AddEditAirlineAreaComponent extends BaseComponent {
                 this.ISNullDescription = true;
             }
             this.EntityPM.AirlineAreasPorts.forEach(item => {
+                this.CurrentSession.StartBusyIndicatorLoading();
                 this.AddedAirlineAreas.push(item);
-
                 this.myCloner.AddEntity(item);
-
                 this.portListService.getSingleFromCache(item.PortId).subscribe(p => {
                     if (!p.HasError) {
                         if (p.Result) {
@@ -106,12 +104,12 @@ export class AddEditAirlineAreaComponent extends BaseComponent {
                         this.ValidationErrorsList = p.ErrorsArray;
                     }
                 });
-
             });
 
-
+            this.ItemList = this.ItemList.sort((a, b) => { return (a.CountryCode === b.CountryCode) ? 0 : (a.CountryCode < b.CountryCode) ? -1 : 1 });
+            this.CurrentSession.StopBusyIndicator();
+            this.IsResourcesReady = true;
         }
-        this.IsResourcesReady = true;
     }
 
     ChoosePort() {
@@ -126,11 +124,23 @@ export class AddEditAirlineAreaComponent extends BaseComponent {
         logWindow.Show('./CommonModules/CommonAirline/Components/AddEdit/ChoosePortComponent');
     }
 
+    ChooseCountry() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 320;
+        logWindow.Height = 170;
+
+        var itemComponent = new DestinationClass(this, null, true);
+        logWindow.DataContext = itemComponent;
+
+        logWindow.Title = "Choose Country Ports";
+        logWindow.Show('./CommonModules/CommonAirline/Components/AddEdit/ChooseCountryPortComponent');
+    }
 
     DeletePort(Item: DestinationClass) {
         var index = this.ItemList.indexOf(Item);
         if (index > -1) {
-            this.ItemList.splice(index,1);
+            this.ItemList.splice(index, 1);
+            this.ItemList = this.ItemList.sort((a, b) => { return (a.CountryCode === b.CountryCode) ? 0 : (a.CountryCode < b.CountryCode) ? -1 : 1 });
         }
 
         var index = this.AddedAirlineAreas.indexOf(Item.EntityPM);
@@ -154,6 +164,7 @@ export class AddEditAirlineAreaComponent extends BaseComponent {
        
       
         if (this.ValidationErrorsList.length == 0) {
+            this.CurrentSession.StartBusyIndicatorLoading();
             this.AddedAirlineAreas.forEach(item => {
                 this.EntityPM.AddAirlineAreasPortPM(item);
             });
@@ -171,8 +182,8 @@ export class AddEditAirlineAreaComponent extends BaseComponent {
                 this.AirlinePM.AddAirlineAreaPM(this.EntityPM);
 
             }
+            this.CurrentSession.StopBusyIndicator();
             this.CurrentSession.CloseCurrentWindow();
-
         }       
     }
 
@@ -192,10 +203,6 @@ export class AddEditAirlineAreaComponent extends BaseComponent {
 
          this.CurrentSession.CloseCurrentWindow();
     }
-
-  
-
-
 }
 
 
@@ -204,6 +211,7 @@ export class DestinationClass extends BaseComponent {
     public Name: string;
     public Code: string;
     public Id: string;
+    public CountryCode: string;
 
     public EntityPM: AirlineAreasPortPM;
     constructor(public fatherComponent: AddEditAirlineAreaComponent, Port: PortList,IsNew: boolean) {
@@ -212,6 +220,7 @@ export class DestinationClass extends BaseComponent {
             this.Indication = "Port";
             this.Name = Port.EnglishName;
             this.Code = Port.Code;
+            this.CountryCode = Port.CountryCode;
             this.Id = Port.Id;
             this.EntityPM = new AirlineAreasPortPM(fatherComponent.EntityPM);
             this.EntityPM.Name = this.Name;
@@ -225,6 +234,7 @@ export class DestinationClass extends BaseComponent {
                 this.Indication = "Port";
                 this.Name = Port.EnglishName;
                 this.Code = Port.Code;
+                this.CountryCode = Port.CountryCode;
                 this.Id = Port.Id;
                 this.EntityPM = fatherComponent.EntityPM.AirlineAreasPorts.filter(p => p.PortId == Port.Id)[0];
 

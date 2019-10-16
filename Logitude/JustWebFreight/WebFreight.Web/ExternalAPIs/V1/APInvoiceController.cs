@@ -245,6 +245,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
             return rate;
         }
+
         private AuthenticationToken GetAuthenticationToken()
         {
             string token = HttpContext.Current.Request.Headers["Token"];
@@ -252,6 +253,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
             return authToken;
         }
+
         public HttpResponseMessage GetCancel(string externalId)
         {
             try

@@ -27,6 +27,8 @@ import {OBLTypeListService} from './Services/StandardLists/OBLTypeListService';
 import {PickUpDeliveryTransportModeListService} from './Services/StandardLists/PickUpDeliveryTransportModeListService';
 import {INTTRADocumentTypeListService} from './Services/StandardLists/INTTRADocumentTypeListService';
 import { HarmonizeCodeListService } from './Services/StandardLists/HarmonizeCodeListService';
+import { CustomsTransferHeaderListService } from './Services/StandardLists/CustomsTransferHeaderListService';
+import { CustomsTransferHeaderPMService } from './Services/StandardPMs/CustomsTransferHeaderPMService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -58,13 +60,15 @@ export class ModuleProviders {
             case "OBLTypeListService": { myResult = new OBLTypeListService(); break; }
             case "PickUpDeliveryTransportModeListService": { myResult = new PickUpDeliveryTransportModeListService(); break; }
             case "INTTRADocumentTypeListService": { myResult = new INTTRADocumentTypeListService(); break; }               
-            case "HarmonizeCodeListService": { myResult = new HarmonizeCodeListService(); break; }                              
+            case "HarmonizeCodeListService": { myResult = new HarmonizeCodeListService(); break; }
+            case "CustomsTransferHeaderListService": { myResult = new CustomsTransferHeaderListService(); break; }
 
             // PM
             case "MessagingStockPMService": { myResult = new MessagingStockPMService(); break; }
             case "ShipmentPMService": { myResult = new ShipmentPMService(); break; }
             case "SpecialServicesTypePMService": { myResult = new SpecialServicesTypePMService(); break; }
             case "FBLStockExtenedPMService": { myResult = new FBLStockExtenedPMService(); break; }
+            case "CustomsTransferHeaderPMService": { myResult = new CustomsTransferHeaderPMService(); break;}
 
             // Handler
             case "MessagingStockMenuButtonsHandler": { myResult = new MessagingStockMenuButtonsHandler(); break; }

@@ -733,5 +733,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string ReleasingAgentName { get; set; }
 
         public string ColoaderId { get; set; }
+        public double? NotInvoicedReceivablesAmount { get; set; }
+
     }
 }

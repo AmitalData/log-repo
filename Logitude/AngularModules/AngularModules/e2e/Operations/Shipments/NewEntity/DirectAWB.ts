@@ -9,28 +9,25 @@ export class DirectAWB {
         this.WizardTabs = new WizardTabComponent();
     }
     public CreateDirectAWB(shipperRef1: string, LogitudeWizardType: string) {
-
-        var AWBToggle = this.Helper.WaitByIdAndClick('NewAWB');
-        this.Helper.WaitByIdAndClick('DirectAWB');
         this.FillDirectAWBFields(shipperRef1, LogitudeWizardType);
 
-        this.Helper.WaitByCssButtonClick(".EntityChangesButton", "Save");
+        this.Helper.WaitByIdAndClick('SaveWizard');
         this.Helper.WaitBusyIndicator();
 
-        this.Helper.WaitByCssButtonClick(".Button", "Close");
+        this.Helper.WaitByIdAndClick('CloseWizard');
     }
+
     FillDirectAWBFields(shipperRef1: string, LogitudeWizardType: string) {
         this.WizardTabs.FillPartnersTab(shipperRef1, LogitudeWizardType);
         this.WizardTabs.FillRoutingTab(shipperRef1, LogitudeWizardType);
         this.WizardTabs.FillPackagesTab(LogitudeWizardType);
         this.WizardTabs.FillFreightChargesTab(LogitudeWizardType);
-        // this.WizardTabs.FillOtherChargesTab(LogitudeWizardType);
+        this.WizardTabs.FillOtherChargesTab(LogitudeWizardType);
+        this.WizardTabs.FillRADetails(LogitudeWizardType);
         this.WizardTabs.FillGeneralDetailsTab(LogitudeWizardType);
         this.WizardTabs.FillOCITab(LogitudeWizardType);
         this.WizardTabs.FillOtherPartnersTab(LogitudeWizardType);
-
     }
-
 }
 
 

@@ -24,7 +24,6 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
     {
         private IAccountingContext _AccountingContext;
         private IWebFreightContext _IWebFreightContext;
-
         public ExternalReconcileDataProvider(IAccountingContext accountingContext)
         {
             _AccountingContext = accountingContext;

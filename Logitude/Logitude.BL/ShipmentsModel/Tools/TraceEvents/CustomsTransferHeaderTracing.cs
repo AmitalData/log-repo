@@ -20,14 +20,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
             if (isNewEntity)
             {
-                //EventTracer.CreateTraceEvent(new EventTracerArgs()
-                //{
-                //    Tenant = entityPM.Tenant,
-                //    EventTypeCode = "CAAH",
-                //    UserId = loggedContact.Id,
-                //    EntityId = entityPM.Id,
-                //    ObjectTableName = "CustomsTransferHeader",
-                //});
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = entityPM.Tenant,
+                    EventTypeCode = "CREV",
+                    UserId = loggedContact.Id,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = "CustomsTransferHeader",
+                });
             }
         }
     }

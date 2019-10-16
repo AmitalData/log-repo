@@ -37,6 +37,7 @@ import { SplitPartialPackageComponent } from './Components/SplitShipment/SplitPa
 import { RemoveTasksButtonListTemplate } from './Components/ListTemplates/RemoveTasksButtonListTemplate';
 import { AnalyzeChampXMLComponent } from './Components/Helpers/AnalyzeChampXMLComponent';
 import { ShipmenDirectionConvertComponent } from './Components/MenuButtons/ShipmenDirectionConvertComponent';
+import { CustomsTransferHeaderHelperComponent } from './Components/Helpers/CustomsTransferHeaderHelperComponent';
 
 export const Components =
     [
@@ -77,6 +78,7 @@ export const Components =
         RemoveTasksButtonListTemplate,
         AnalyzeChampXMLComponent,
         ShipmenDirectionConvertComponent,
+        CustomsTransferHeaderHelperComponent,
     ];
 
 export const ControlsComponents =
@@ -128,6 +130,7 @@ export class ModuleDeclarations {
             case "RemoveTasksButtonListTemplate": { myResult = RemoveTasksButtonListTemplate; break; }
             case "AnalyzeChampXMLComponent": { myResult = AnalyzeChampXMLComponent; break; }
             case "ShipmenDirectionConvertComponent": { myResult = ShipmenDirectionConvertComponent; break; }
+            case "CustomsTransferHeaderHelperComponent": { myResult = CustomsTransferHeaderHelperComponent; break; }
         }
 
         return myResult;

@@ -58,16 +58,8 @@ exports.config = {
         require('ts-node').register({
             project: 'e2e/tsconfig.e2e.json'
         });
-        const junitReporterAyman = new JUnitXmlReporter({
-            savePath: 'C:/Program Files (x86)/Jenkins/workspace/TeamAymanE2EScripts',
-            consolidateAll: false
-        });
-        const junitReporterIslam = new JUnitXmlReporter({
-            savePath: 'C:/Program Files (x86)/Jenkins/workspace/TeamIslamE2EScripts',
-            consolidateAll: false
-        });
-        const junitReporterMohammad = new JUnitXmlReporter({
-            savePath: 'C:/Program Files (x86)/Jenkins/workspace/TeamMohammadE2EScripts',
+        const junitReporter = new JUnitXmlReporter({
+            savePath: 'C:/Program Files (x86)/Jenkins/workspace/E2ETestResults',
             consolidateAll: false
         });
         if (browser.params.Env == "prod") {
@@ -77,11 +69,6 @@ exports.config = {
         }
         else if (browser.params.Env == "staging") {
             browser.params.Link = "https://staging.logitudeworld.com";
-            browser.params.Login.Email = "protractor@test.com";
-            browser.params.Login.Password = "!P123t456";
-        }
-        else if (browser.params.Env == "logitudepre") {
-            browser.params.Link = "https://pre.logitudeworld.com";
             browser.params.Login.Email = "protractor@test.com";
             browser.params.Login.Password = "!P123t456";
         }
@@ -140,11 +127,6 @@ exports.config = {
             browser.params.Login.Email = "ahmadb@test.com";
             browser.params.Login.Password = "ahmed!A123";
         }
-        else if (browser.params.Env == "Pre_Cloud") {
-            browser.params.Link = "https://pre.amital.co.il/";
-            browser.params.Login.Email = "sgaumtomation@pre.com";
-            browser.params.Login.Password = "Sg0592463934!";
-        }
         else if (browser.params.Env == "test_1109") {
             browser.params.Link = "https://test.logitudeworld.com/test";
             browser.params.Login.Email = "sumaya@automation.com";
@@ -160,8 +142,6 @@ exports.config = {
         } else if (browser.params.Team == "islam") {
             jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
             jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/E2ETeamIslam/screenshots' }).getJasmine2Reporter());
-            jasmine.getEnv().addReporter(junitReporterIslam);
-
         } else if (browser.params.Team == "mohammad") {
             jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
             jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/E2ETeamMohammad/screenshots' }).getJasmine2Reporter());
@@ -204,11 +184,9 @@ exports.config = {
         // ********************* FullAccounting **********************************
         ARPayment: 'e2e/FullAccounting/**/ARPayment-spec.ts',
         NewChartOfAccount: 'e2e/FullAccounting/ChartOfAccount/**/ChartOfAccount-spec.ts',
-        
         FullAccProcess: 'e2e/FullAccounting/**/FullAccScenarios-spec.ts',
         ARInvoice: 'e2e/FullAccounting/ARInvoice/**/ARInvoice-spec.ts',
         BankAccount: 'e2e/FullAccounting/BankAccount/**/NewBank-spec.ts',
-        PaymentCheque: 'e2e/FullAccounting/PaymentCheque/**/NewPaymentCheque-spec.ts' ,
         VendorGLAccount: 'e2e/FullAccounting/GlAccounts/**/VendorGLAccount-spec.ts',
         CustomerGLAccount: 'e2e/FullAccounting/**/CustomerGLAccount-spec.ts',
         APInvoice: 'e2e/FullAccounting/APInvoice/**/APInvoice-spec.ts',

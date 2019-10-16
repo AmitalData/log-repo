@@ -47,6 +47,7 @@ export class APPaymentList {
 		UpdateDate: Date;
 		UpdatedByUserId: string;
 		BranchId: string;
+		BranchName: string;
 		CreditCardTypeId: string;
 		TransferStatusCode: string;
 		TransferError: string;
@@ -58,7 +59,6 @@ export class APPaymentList {
 		ApprovedDateTime: Date;
 		AccountingPaymentMethodId: string;
 		BankAccountId: string;
-		BranchName: string;
 		FirstApproveDate: Date;
 	
 }

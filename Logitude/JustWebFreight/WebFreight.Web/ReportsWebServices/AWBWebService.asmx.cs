@@ -96,7 +96,9 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     awbDp.AWBComments = shipmentPM.AWBPrintingComments;
                 }
-                
+
+                awbDp.AccountManagerName = shipmentPM.AccountManagerUserName;
+
                 awbDp.MAWBShort = shipmentPM.Master == null ? "" : shipmentPM.Master;
                 awbDp.HAWB = shipmentPM.House == null ? "" : shipmentPM.House;
                 awbDp.LeadingCurrency = shipmentPM.AWBCurrencyCode == null ? "" : shipmentPM.AWBCurrencyCode;

@@ -1874,7 +1874,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                                     foreach (string charge in args.Surcharge)
                                     {
-
                                         string[] charge_array = charge.Split(',');
                                         decimal? price = null;
                                         decimal? minPrice = null;
@@ -1916,6 +1915,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                         OriginPortId = rout.FromCode,
                                         StartDate = args.StartDate,
                                         TariffId = args.TariffId,
+                                        CurrencyId = tariff.CurrencyId,
                                     };
 
                                     foreach (string charge in args.Surcharge)
@@ -2161,8 +2161,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             return myResult;
         }
-
-
+        
         public HttpResponseMessage GetTariffsLogsByTariffId(string tariffId, int version)
         {
             string token = HttpContext.Current.Request.Headers["Token"];

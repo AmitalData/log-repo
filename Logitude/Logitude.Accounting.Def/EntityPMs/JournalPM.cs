@@ -33,6 +33,8 @@ namespace Logitude.Accounting.Def.EntityPMs
                 this.StatusCode = iVal.ToString();
             }
         }
+
+        public string LineCreditAccountId { get; set; }
     }
 
 }
