@@ -112,6 +112,7 @@ export class PayablesTabComponent {
         this.Helper.WaitEditComponentBusyIndicator();
         this.Helper.WaitByIdAndFill('APInvoice_VatTypeId', 'Zero');
         this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'APInvoice_VatTypeId', 'Zero');
+        this.Helper.WaitEditComponentBusyIndicator();
         this.Helper.WaitByIdAndClick('VATApplyToAll');
         
         this.Helper.WaitByIdAndFill('APInvoiceLine_InvoiceCurrencyAmount', '100');
@@ -131,9 +132,10 @@ export class PayablesTabComponent {
         
         this.Helper.WaitByIdAndClick('APInvoice.B.Approve');
         this.WaitBusyIndicatorToShowandHide();
-        this.WaitBusyIndicatorToShowandHide();        
-        
+        //this.WaitBusyIndicatorToShowandHide();        
+        this.Helper.WaitEditComponentBusyIndicator();
         if(Voided==true){
+        //this.Helper.WaitEditComponentBusyIndicator();
         this.Helper.WaitByIdAndClick('MenuButtons_1');
         this.Helper.WaitByIdAndClick('APInvoice.B.CancelApproval');
         this.WaitBusyIndicatorToShowandHide();
