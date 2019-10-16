@@ -340,7 +340,7 @@ export class APPaymentMenuButtonsHandler {
 
             this.GetFullAccountingSettings();
 
-            }
+        }
 
         else {
             if (this.entityArgs.EditComponent.ValidationErrorsList == null) {
@@ -367,6 +367,46 @@ export class APPaymentMenuButtonsHandler {
 
             this.entityArgs.EditComponent.SaveChanges();
         }
+    }
+    OpenEditPaymentChequeScreen() {
+        this.CurrentSession.StartBusyIndicatorLoading();
+   
+       
+        var windowTitle = TextCodeTranslator.Translate("PaymentCheque");
+        var logWindow = new LogitudeWindow();
+        var windowArgs: any = {};
+        windowArgs = this.SetPaymentChequeWindowArgs(windowArgs);
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Width = 520;
+        logWindow.Height = 450;
+        logWindow.Title = windowTitle;
+        logWindow.ShowCloseButton = true;
+
+        logWindow.WindowClosed.subscribe(($event: any) => this.ContinueSaving($event));
+        logWindow.Show('./InvoiceModules/APPayment/Components/EditTabs/EditPaymentChequeComponent');
+        this.CurrentSession.StopBusyIndicator();
+
+    }
+
+    public GetFullAccountingSettings() {
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.fullAccountingSettingPMService.get(SessionLocator.TenantPM.Id.toString()).subscribe(myResult => {
+            var myResponse: ServiceResponse = myResult;
+            this.CurrentSession.StopBusyIndicator();
+
+            if (myResponse != null) {
+
+                var res = myResponse.Result;
+                var fullAccountingSetting: FullAccountingSettingPM = res;
+                if (fullAccountingSetting.IsPaymentChequesActivated && this.EntityPM.ExcludeFromDeductionReport && this.EntityPM.PaymentMethodCode == "CH") {
+                    this.OpenEditPaymentChequeScreen();
+                } else {
+                    this.ContinueSaving(null);
+                }
+            }
+
+        });
+
     }
     OpenEditPaymentChequeScreen() {
         this.CurrentSession.StartBusyIndicatorLoading();
