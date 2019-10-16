@@ -335,7 +335,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 this.FillOwnerData(item);
                 iWorkDaysPerGategoryDataList.Add(itemRecord);
             }
-            this.iDataProvider.GategoryRecordList = iWorkDaysPerGategoryDataList.Where(a=>a.IsVisisble).ToList();
+            this.iDataProvider.GategoryRecordList = iWorkDaysPerGategoryDataList.Where(a=>a.IsVisisble).OrderBy(a => a.CategoryName).ToList();
             if (this.iDataProvider.GategoryRecordList.Count > 0)
             {
                 this.CalculateAllTotalsOfCategoryFields();

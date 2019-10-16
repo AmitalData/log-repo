@@ -61,9 +61,9 @@
         <td>
             <table>
                 <tr>
-                    <td style="width:180px">
+                    <td style="width:190px">
                         <div>
-                            <HyperlinkQuery (click)="ViewTariffs('A')">Air Freight Costs ({{AirFreightCount}})</HyperlinkQuery>
+                            <HyperlinkQuery (click)="ViewTariffs('A')">{{'Tariff.Q.AirFreightCostTariffs' | TextCodeTranslationPipe}} ({{AirFreightCount}})</HyperlinkQuery>
                         </div>
                     </td>
 
@@ -93,9 +93,9 @@
         <td>
             <table>
                 <tr>
-                    <td style="width:180px">
+                    <td style="width:190px">
                         <div>
-                            <HyperlinkQuery (click)="ViewTariffs('AS')">Air Surcharges Costs ({{AirSurchargeCount}})</HyperlinkQuery>
+                            <HyperlinkQuery (click)="ViewTariffs('AS')">{{'Tariff.Q.AirSurchargesCostTariffs' | TextCodeTranslationPipe}} ({{AirSurchargeCount}})</HyperlinkQuery>
                         </div>
                     </td>
 
@@ -125,9 +125,9 @@
         <td>
             <table>
                 <tr>
-                    <td style="width:180px">
+                    <td style="width:190px">
                         <div>
-                            <HyperlinkQuery (click)="ViewTariffs('OLC')">Ocean LCL Freight Cost ({{OceanLCLFreightCount}})</HyperlinkQuery>
+                            <HyperlinkQuery (click)="ViewTariffs('OLC')">{{'Tariff.Q.OceanLCLFreightCost' | TextCodeTranslationPipe}} ({{OceanLCLFreightCount}})</HyperlinkQuery>
                         </div>
                     </td>
 
@@ -157,7 +157,7 @@
         <td>
             <table>
                 <tr>
-                    <td style="width:180px">
+                    <td style="width:190px">
                         <div>
                             <HyperlinkQuery (click)="ViewTariffs('OSC')">{{'Tariff.Q.Ocean.LCL.Surcharges.Cost' | TextCodeTranslationPipe}} ({{OceanSurchargeCount}})</HyperlinkQuery>
                         </div>

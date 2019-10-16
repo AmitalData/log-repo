@@ -20,7 +20,7 @@ export class TariffValidator {
         if (entityPM != null) {
             Validator.TryValidateObject(this.entityPM, "Tariff", this.Errors);
 
-            if (entityPM.TypeCode == "ASC") {
+            if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC") {
                 this.chargesTypePMService = new ChargesTypeListService();
                 this.FillChargesIDsAndUOMS();
                 this.ValidateSurcharge();
@@ -135,7 +135,7 @@ export class TariffValidator {
             draftVersion.TariffLines.forEach(item => {
                 Validator.TryValidateObject(item, "TariffLine", this.Errors);
 
-                if (this.entityPM.TypeCode == "ASC") {
+                if (this.entityPM.TypeCode == "ASC" || this.entityPM.TypeCode =="OSC") {
                     if (AppTool.IsNullOrEmpty(item.CurrencyId)) {
                         this.Errors.push(msg.replace("%FieldName", "Currency"));
                     }
