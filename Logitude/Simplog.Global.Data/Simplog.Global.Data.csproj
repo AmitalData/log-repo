@@ -349,6 +349,10 @@
     <Compile Include="Migrations\201906120916074_AbedAddNewFieldCPUIntensiveWebServicesURLToSetting.Designer.cs">
       <DependentUpon>201906120916074_AbedAddNewFieldCPUIntensiveWebServicesURLToSetting.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906130619553_NewField_DebitAmount_ReconcileExternalPageLines.cs" />
+    <Compile Include="Migrations\201906130619553_NewField_DebitAmount_ReconcileExternalPageLines.Designer.cs">
+      <DependentUpon>201906130619553_NewField_DebitAmount_ReconcileExternalPageLines.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201906231629362_MakeTariffVersionDatesNullable.cs" />
     <Compile Include="Migrations\201906231629362_MakeTariffVersionDatesNullable.Designer.cs">
       <DependentUpon>201906231629362_MakeTariffVersionDatesNullable.cs</DependentUpon>
@@ -494,6 +498,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906120916074_AbedAddNewFieldCPUIntensiveWebServicesURLToSetting.resx">
       <DependentUpon>201906120916074_AbedAddNewFieldCPUIntensiveWebServicesURLToSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906130619553_NewField_DebitAmount_ReconcileExternalPageLines.resx">
+      <DependentUpon>201906130619553_NewField_DebitAmount_ReconcileExternalPageLines.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906231629362_MakeTariffVersionDatesNullable.resx">
       <DependentUpon>201906231629362_MakeTariffVersionDatesNullable.cs</DependentUpon>

@@ -24,7 +24,7 @@ import {JournalValidator} from '../../../Validators/JournalValidator';
 import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
-import { ReportsTemplateRestoreItem } from '../../../../Report/Components/ReportsTemplateRestoreComponent';
+import {GLAccountListService} from '../../../Services/StandardLists/GLAccountListService'
 
 
 @Component({
@@ -52,7 +52,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     Approved: boolean = false;
     AccountingPeriods: AccountingPeriodList[] = [];
     _AccountingPeriodListService: AccountingPeriodListService = new AccountingPeriodListService();
-
+    
     OnRowEnded($event) {
         console.log("this.JournalLines.Length : " + this.JournalLines.Length);
         if (($event) == this.JournalLines.Length) {
@@ -574,6 +574,7 @@ class JournalLineModel extends BaseComponent {
     public DataContext = this;
     ratesTableExtendedListService: RatesTableExtendedListService;
     _GLAccountExtendedListService: GLAccountExtendedListService;
+    private glaccountListService:GLAccountListService;
     // private CD: ChangeDetectorRef
 
     public CreditAccountFilterItems: ApiQueryFilters;
@@ -615,6 +616,7 @@ class JournalLineModel extends BaseComponent {
         this.DebitAccountFilterItems = new ApiQueryFilters();
         this.DebitAccountFilterItems.addAdditionalFilter("AccountTypeCode", "4,5", null, null, "Exclude", false, false, false, "string", false, true);
         //#endregion
+        this.glaccountListService=new GLAccountListService();
     }
 
 
@@ -674,7 +676,7 @@ class JournalLineModel extends BaseComponent {
         if (this.journalActionType != value) {
             this.journalActionType = value;
             if (value != null) {
-                this.ActionCode = value.Code;
+                //this.ActionCode = value.Code;
                 this.ActionName = value.LocalName;
             }
         }
@@ -699,6 +701,13 @@ class JournalLineModel extends BaseComponent {
     set CreditAccountId(value: string) {
         if (this.JournalLinePM.CreditAccountId != value) {
             this.JournalLinePM.CreditAccountId = value;
+            this.glaccountListService.getSingle(value).subscribe((result)=>{
+                var entity=result.Result;
+                if(entity){
+                    this.CreditAccount=entity;
+                    this.CreditAccountName=this.CreditAccount.LocalName;
+                }
+            });
         }
     }
 
@@ -706,6 +715,13 @@ class JournalLineModel extends BaseComponent {
     set DebitAccountId(value: string) {
         if (this.JournalLinePM.DebitAccountId != value) {
             this.JournalLinePM.DebitAccountId = value;
+            this.glaccountListService.getSingle(value).subscribe((result)=>{
+                var entity=result.Result;
+                if(entity){
+                    this.DebitAccount=entity;
+                    this.DebitAccountName=this.DebitAccount.LocalName;
+                }
+            });
         }
     }
 

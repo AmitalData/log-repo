@@ -283,7 +283,7 @@ namespace CommunicationWorkerRole
             BatchServicesDefinitionRepository BatchServicesRepository = new BatchServicesDefinitionRepository();
             BatchServicesDefinitionQuery BatchServicesQuery = new BatchServicesDefinitionQuery(BatchServicesRepository);
             List<BatchServicesDefinitionPM> BatchServicesDefinitionsTemp = BatchServicesQuery.GetAllActiveBatchServicesDefinitions().ToList();//.Where(b => b.Code == "EmailOut-EmailQueue")
-            if (!string.IsNullOrEmpty(SpecialBatchCode))
+            if (!string.IsNullOrEmpty(SpecialBatchCode) && Environment.MachineName == "LogitudeWR2")
             {
                 var temp = SpecialBatchCode.Split(',');
                 if (temp.Length > 0)

@@ -78,7 +78,11 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string StatusName { get; set; }
         public string PaymentCurrencyCode { get; set; }
         public string PaymentMethodName { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string BranchId { get; set; }
+        public string BranchName { get; set; }
+
         public DateTime? UpdateDate { get; set; }
         public string UpdatedByUserId { get; set; }
         public string CreditCardTypeId { get; set; }
@@ -124,9 +128,14 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public DateTime? ApprovedDateTime { get; set; }
 
         public string BankAccountId { get; set; }
-        public string BranchName { get; set; }
         public bool AutomaticPaymentCheque { get; set; }
-      
+        public string PaymentChequeCreationPayToName { get; set; }
+        public string PaymentChequeCreationNotes { get; set; }
+        public bool ExcludeFromDeductionReport { get; set; }
+        public string VendorGLAccountId { get; set; }
+
+
+
 
     }
 }

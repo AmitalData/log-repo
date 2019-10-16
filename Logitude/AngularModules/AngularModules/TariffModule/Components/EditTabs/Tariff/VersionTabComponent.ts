@@ -45,6 +45,9 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     private CurrentSession = SessionLocator.SelectedSession;
     public IsFirstDraft = false;
     public SelectedVersionNumber: number;
+    public OriginDependencyFilterValue: string = "A";
+    public DestinationDependencyFilterValue = "A";
+
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -55,6 +58,15 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         this.CurrentVersion = args['CurrentVersion'];
         this.SelectedVersionNumber = args['SelectedVersionNumber'];
         this.LoadVersions();
+        this.SetOriginDependencyFilterValue();
+
+    }
+
+    SetOriginDependencyFilterValue() {
+        if (this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OSC") {
+            this.OriginDependencyFilterValue = "O";
+            this.DestinationDependencyFilterValue = "O";
+        }
     }
 
     LoadVersions() {
@@ -205,13 +217,14 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         var isApproveVersionButtonVisible: boolean = false;
         var isUpdateMissingPortsVisible: boolean = false;
 
-        if (this.IsDraftVersion) {
-            if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "TARRIFAPPROVEVERSION")) {
-                isApproveVersionButtonVisible = true;
-            }
-
-            if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "UPDATEMISSINGPORTS")) {
-                isUpdateMissingPortsVisible = true;
+        if (this.IsDraftVersion && FeatureLocator.HasFeaturePermession(this.ObjectTableName, "TARRIFAPPROVEVERSION")) {
+            if (this.IsDraftVersion) {
+                if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "TARRIFAPPROVEVERSION")) {
+                    isApproveVersionButtonVisible = true;
+                }
+                if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "UPDATEMISSINGPORTS")) {
+                    isUpdateMissingPortsVisible = true;
+                }
             }
         }
 

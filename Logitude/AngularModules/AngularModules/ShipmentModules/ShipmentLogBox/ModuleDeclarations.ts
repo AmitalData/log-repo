@@ -1,4 +1,4 @@
-﻿import {LogBoxDocumentsComponent} from './Components/LogBox/LogBoxDocumentsComponent';
+import {LogBoxDocumentsComponent} from './Components/LogBox/LogBoxDocumentsComponent';
 import {LogBoxMainComponent} from './Components/LogBox/LogBoxMainComponent';
 import {EditLogBoxShipmentComponent} from './Components/LogBox/EditLogBoxShipmentComponent';
 import {DigitalSignDocTypeComponent} from './Components/LogBox/DigitalSignDocTypeComponent';
@@ -9,7 +9,8 @@ import {ForwarderShipmentsComponent} from './Components/Logbox/ForwarderShipment
 import {MultiArchiveShipmentsComponent} from './Components/Logbox/MultiArchiveShipmentsComponent';
 import {DownloadAllFilesComponent} from './Components/LogBox/DownloadAllFilesComponent';
 import {AddEditPrivateLabelShipmentComponent} from './Components/Logbox/AddEditPrivateLabelShipmentComponent';
-import {PrivateLabelApprovePaymentComponent} from './Components/Logbox/PrivateLabelApprovePaymentComponent';
+import { PrivateLabelApprovePaymentComponent } from './Components/Logbox/PrivateLabelApprovePaymentComponent';
+import { LogBoxApprovePaymentComponent } from './Components/Logbox/LogBoxApprovePaymentComponent';
 import {PrivateLabelApprovebyMobileComponent} from './Components/Logbox/PrivateLabelApprovebyMobileComponent';
 import {ECommercePaymentRequestMobileComponent} from './Components/Logbox/ECommercePaymentRequestMobileComponent';
 import {TaxScreenComponent} from './Components/Logbox/TaxScreenComponent';
@@ -32,6 +33,7 @@ export const Components =
         DownloadAllFilesComponent,
         AddEditPrivateLabelShipmentComponent,
         PrivateLabelApprovePaymentComponent,
+        LogBoxApprovePaymentComponent,
         PrivateLabelApprovebyMobileComponent,
         TaxScreenComponent,
         GoodsValueComponent,
@@ -60,6 +62,7 @@ export class ModuleDeclarations {
             case "DownloadAllFilesComponent": { myResult = DownloadAllFilesComponent; break; }
             case "AddEditPrivateLabelShipmentComponent": { myResult = AddEditPrivateLabelShipmentComponent; break; }
             case "PrivateLabelApprovePaymentComponent": { myResult = PrivateLabelApprovePaymentComponent; break; }
+            case "LogBoxApprovePaymentComponent": { myResult = LogBoxApprovePaymentComponent; break; }
             case "PrivateLabelApprovebyMobileComponent": { myResult = PrivateLabelApprovebyMobileComponent; break; }
             case "TaxScreenComponent": { myResult = TaxScreenComponent; break; }
             case "GoodsValueComponent": { myResult = GoodsValueComponent; break; }

@@ -60,11 +60,11 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 int tenant = authToken.Tenant;
 
                 SecurityUtility.CheckContactFeature("TasksScheduler", "READ", authToken.Tenant);
-                SchedulerLogsQuery LogsQuery = new SchedulerLogsQuery(tenant);
-                var HistoryLogs = LogsQuery.GetSchedulerLogsByHistory(historyId);
-             
+                //SchedulerLogsQuery LogsQuery = new SchedulerLogsQuery(tenant);
+                //var HistoryLogs = LogsQuery.GetSchedulerLogsByHistory(historyId);
 
-                return Request.CreateResponse(HttpStatusCode.OK, HistoryLogs);
+
+                return Request.CreateResponse(HttpStatusCode.OK);// HistoryLogs);
             }
 
             catch (Exception ex)

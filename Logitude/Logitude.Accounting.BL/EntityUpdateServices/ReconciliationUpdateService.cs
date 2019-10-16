@@ -77,7 +77,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             entityPM.SearchFields = ///Task:25238 GetentityPM.AccountId + "," + 
                 entityPM.Number + ",";
-            
+
         }
 
         protected override void OnUpdating(ReconciliationPM entityPM)

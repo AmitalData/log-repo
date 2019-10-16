@@ -53,7 +53,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             if (entityPOCO.AccountId != null)
             {
                 GLAccountQueryService query = new GLAccountQueryService(entityPOCO.Tenant);
-                GLAccountPM account = query.GetSingle(entityPOCO.AccountId, false, true);
+                GLAccountPM account = query.GetSingle(entityPOCO.AccountId, false, false);
 
                 if (account != null)
                 {

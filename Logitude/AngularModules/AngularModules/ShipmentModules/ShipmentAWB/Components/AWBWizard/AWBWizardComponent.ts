@@ -505,7 +505,7 @@ export class AWBWizardComponent {
         var iMeasurementListService: MeasurementListService = new MeasurementListService();
         var iIATACodeListService: IATACodeListService = new IATACodeListService();
 
-        iChargesTypeListService.getAllFromCache().subscribe((iResponseCharges: ServiceResponse) => {
+        iChargesTypeListService.getAll().subscribe((iResponseCharges: ServiceResponse) => {
             if (!iResponseCharges.HasError) {
                 var AllChargesTypes: ChargesTypeList[] = iResponseCharges.Result;
 

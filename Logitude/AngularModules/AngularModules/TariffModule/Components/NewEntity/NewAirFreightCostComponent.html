@@ -1,4 +1,3 @@
-
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -54,7 +53,7 @@
                                                 [DataContext]="DataContext"
                                                 [DependencyFilter1IsList]="true"
                                                 [HideMaintenanceIcon]="true"
-                                                [DependencyFilter1Value]="'AL'"
+                                                [DependencyFilter1Value]="SellerDependancy"
                                                 [LookUpTableName]="'Card'">
                                         </LogLov>
                                     </td>
@@ -66,7 +65,7 @@
                                 <!-- Currency -->
                                 <tr class="FormFieldRow">
                                     <td>
-                                        <LogLabel [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        <LogLabel [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="TariffCurrencyTextCode"></LogLabel>
                                     </td>
                                     <td>
                                         <LogLov [ObjectFieldName]="'CurrencyId'"
@@ -83,7 +82,7 @@
                                 </tr>
 
                                 <!-- Price Steps  -->
-                                <tr *ngIf="EntityPM.TypeCode != 'ASC'" class="FormFieldRow">
+                                <tr *ngIf="EntityPM.TypeCode != 'ASC' && EntityPM.TypeCode != 'OSC' " class="FormFieldRow">
                                     <td>
                                         <LogLabel [NoObjectField]="true" [Text]="'Price Steps'" [DataContext]="DataContext"></LogLabel>
                                     </td>

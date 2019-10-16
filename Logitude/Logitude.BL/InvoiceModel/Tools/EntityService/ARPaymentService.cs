@@ -1110,7 +1110,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     //   this.CreateARPaymentChequeJournals(theEntityPm, arPaymentcheque);
                                 }
 
-                               
+                                if (theEntityPm.IsExternalEntity && theEntityPm.ARPaymentChequeReplicas.Count() >0 )
+                                {
+
+
+                                    MapPaymentChequeFieldsToPayment(theEntityPm.ARPaymentChequeReplicas.First(), theEntityPm);
+                                }
                             }
                             this.CreateARPaymentChequeJournals(theEntityPm, arPaymentcheque);
                         }
@@ -1123,7 +1128,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
         }
+        private void MapPaymentChequeFieldsToPayment(ARPaymentChequeReplicaPM paymentCheque, ARPaymentPM payment)
+        {
+            payment.Bank = paymentCheque.BankId;
 
+
+        }
         private void CreateCashBook(ARPaymentChequePM aRPaymentCheque)
         {
             CashBookLinePM cashBookLine = new CashBookLinePM();
@@ -1732,7 +1742,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
 
             IJournalQueryServiceExt journalQuery = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride("", 1)) as IJournalQueryServiceExt;
-            JournalPM journalPM = journalQuery.GetJournalIdByAccountingEntityId(entityPM.Id, entityPM.Tenant);
+            JournalPM journalPM = journalQuery.GetJournalByAccountingEntityIdAndCode(entityPM.Id, "3", entityPM.Tenant);
             if (journalPM != null)
             {
                 //journalPM.AccountingEntityReference = entityPM.PaymentNo;

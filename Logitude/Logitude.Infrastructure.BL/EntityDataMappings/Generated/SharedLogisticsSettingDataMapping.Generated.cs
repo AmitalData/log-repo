@@ -42,7 +42,8 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         IsConsolidatorShared, 
 	         IsReleasingAgentShared, 
 	         IsShipperShared, 
-	         IsConsigneeShared,
+	         IsConsigneeShared, 
+	         IsShowAmountLocalCurrency,
 	      }
 
 
@@ -69,7 +70,8 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         IsConsolidatorShared, 
 	         IsReleasingAgentShared, 
 	         IsShipperShared, 
-	         IsConsigneeShared,
+	         IsConsigneeShared, 
+	         IsShowAmountLocalCurrency,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -176,6 +178,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsConsigneeShared))
             {
 				entityPOCO.IsConsigneeShared = entityPM.IsConsigneeShared;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsShowAmountLocalCurrency))
+            {
+				entityPOCO.IsShowAmountLocalCurrency = entityPM.IsShowAmountLocalCurrency;
 			}
 			}
 
@@ -287,6 +294,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 					entityPM.IsConsigneeShared = entityPOCO.IsConsigneeShared;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsShowAmountLocalCurrency))
+            {
+					entityPM.IsShowAmountLocalCurrency = entityPOCO.IsShowAmountLocalCurrency;
+            }
+
 		}
 
 		public void PMToOldPM(SharedLogisticsSettingPM entityPM, SharedLogisticsSettingPM oldEntityPM)
@@ -391,6 +403,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsConsigneeShared))
             {
                 oldEntityPM.IsConsigneeShared = entityPM.IsConsigneeShared;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsShowAmountLocalCurrency))
+            {
+                oldEntityPM.IsShowAmountLocalCurrency = entityPM.IsShowAmountLocalCurrency;
             }
 			
 		}

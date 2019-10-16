@@ -206,48 +206,6 @@ namespace WebFreight.Web.App_Code
 
                         reslut = htmlEditorHelper.SendEmailOutActivityForEntity(bytedata, bytePlainTextdata, filter.Tenant, filter.ToEmail, filter.Subject, filter.Cc, filter.Bcc, filter.UserId, filter.EntityId, filter.CustomerId, filter.ObjectTableId, filter.Attachments, filter.EntityReference, filter.DocumentTypeCode, filter.EventTypeCode);
                     }
-
-                    if (filter.ExportQuotationsToIntegratedSystem && filter.ObjectTableName == "Quote")
-                    {
-                        QuoteQueryService quoteQueryService = new QuoteQueryService(filter.Tenant);
-                        Logitude.BL.QuoteModel.APIDataContract.ApiV1.Quote quote = quoteQueryService.GetQuoteById(filter.EntityId, filter.Tenant);
-                        string xmlstring = "";
-
-                        if (quote != null)
-                        {
-                            xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(quote);
-                        }
-                        CommunicationsParams tasklogParams = new CommunicationsParams()
-                        {
-                            Tenant = filter.Tenant,
-                            CommunicationLogTypeCode = "Q",
-                            QueueName = "externaltasksqueue" + filter.Tenant + 1,
-                            Priority = 1,
-                            InOut = "O",
-                            Status = "W",
-                            LoggingUserId = filter.UserId,
-                            LoggingObjectTableId = filter.ObjectTableId,
-                            LoggingEntityId = filter.EntityId,
-                            Subject = "Quotation Document",
-                            FolderName = "ExternalTasksQueue",
-                        };
-
-                        List<QueueTask> queue2Tasks = new List<QueueTask>();
-                        queue2Tasks.Add(
-                            new QueueTask()
-                            {
-                                Action = "ExportQuotationsToIntegratedSystem",
-                                Parameters = new List<Parameter>()
-                            {
-                                         new Parameter{ Name = "QuoteMetaData", Order = 1,Value =  xmlstring},
-
-                            }
-                            });
-
-                        tasklogParams.ByteData = LogitudeXmlSerializer.SerializeObject(queue2Tasks);
-                        Communications.AddCommunicationLog(tasklogParams);
-
-                    }
                 }
                 else throw new Exception("Sorry you’re not authenticated to send this email");
                 return Request.CreateResponse(HttpStatusCode.OK, reslut);

@@ -798,7 +798,7 @@
                                 <div *ngIf="TransactionsList?.Length == 0 && !_loading" class="NoDataText">
                                     {{'ARPayment.S.NoInvoicesFound' | TextCodeTranslationPipe}}
                                 </div>
-                                <div *ngIf="_loading" class="NoDataText" id="{{'ARPaymentSpinner' | IdGeneratorPipe}}">
+                                <div *ngIf="_loading" class="NoDataText">
                                     <div class="spinner">
                                         <div class="rect1"></div>
                                         <div class="rect2"></div>

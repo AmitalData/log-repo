@@ -37,6 +37,7 @@ export class AddEditRuleComponent extends BaseComponent {
     public IsResourcesReady: boolean = false;
     private ObjectTableId: string;
     private IsNewEntity: boolean = false;
+    private IsCopyFromSystemRule: boolean = false;
     public ConditionTXTAreaId: string;
 
     
@@ -92,7 +93,7 @@ export class AddEditRuleComponent extends BaseComponent {
  
     SetWindowArgs(windowArgs: any) {
         this.ObjectTableId = windowArgs.ObjectTableId;
-        
+
         this.IsNewEntity = windowArgs.IsNewEntity;
         if (this.IsNewEntity) {
             this.DataContext = new ObjectTableRulePM();
@@ -101,20 +102,30 @@ export class AddEditRuleComponent extends BaseComponent {
             this.DataContext.RuleNotificationTypeCode = "WAR";
         }
         else {
-            this.DataContext = windowArgs.EntityPM;
-            this.currentRuleFields = window.ObjectTableRuleFields.filter(r => r.ObjectTableRuleId === this.DataContext.Id);//
-            this.RuleFields = window.ObjectTableRuleFields.filter(r => r.ObjectTableRuleId === this.DataContext.Id);;
+
+            if (windowArgs.EntityPM.SystemLevel && windowArgs.EntityPM.Tenant == 0 && SessionLocator.Tenant != 0) {
+                let tenantLevelRule: ObjectTableRulePM = this.CreateTenantLevelRule(windowArgs.EntityPM);
+
+                this.DataContext = tenantLevelRule;
+
+
+            }
+            else {
+                this.DataContext = windowArgs.EntityPM;
+                this.currentRuleFields = window.ObjectTableRuleFields.filter(r => r.ObjectTableRuleId === this.DataContext.Id);//
+                this.RuleFields = window.ObjectTableRuleFields.filter(r => r.ObjectTableRuleId === this.DataContext.Id);
+            }
         }
 
         this.ObjectTable = window.ObjectTables.filter((d: any) => d.Id == this.ObjectTableId)[0];
         this.ObjectTableId = this.ObjectTable.Id;
-      this.ObjectFields = window.ObjectFields.filter((d: any) => d.ObjectTableId === this.ObjectTableId && !AppTool.IsNullOrEmpty(d.PMPropertyPath) && !d.DisplayOnly && !d.IsMulti);//!d.IsCustomFilter             
+        this.ObjectFields = window.ObjectFields.filter((d: any) => d.ObjectTableId === this.ObjectTableId && !AppTool.IsNullOrEmpty(d.PMPropertyPath) && !d.DisplayOnly && !d.IsMulti);//!d.IsCustomFilter             
         this.ObjectFields = this.ObjectFields.sort((a, b) => { return (a.FieldName.toLowerCase() === b.FieldName.toLowerCase()) ? 0 : (a.FieldName.toLowerCase() < b.FieldName.toLowerCase()) ? -1 : 1 });
 
         this.FieldsLovQueryFilters = new ApiQueryFilters();
         this.FieldsLovQueryFilters.Tenant = 0;
         this.FieldsLovQueryFilters.addAdditionalFilter("ObjectTableId", this.ObjectTableId, null, null, "Equals", false, false, false, "string");
-        
+
         //var mappedFields = [];
         //this.ObjectFields.forEach((item, key) => {
         //    if (item) {
@@ -130,9 +141,9 @@ export class AddEditRuleComponent extends BaseComponent {
 
         if (this.ObjectFields) {
 
-            this.allFilterFields = this.ObjectFields.filter(o =>o.DataTypeCode != "Constant");
+            this.allFilterFields = this.ObjectFields.filter(o => o.DataTypeCode != "Constant");
 
-            this.constantFilterFieldsList = this.ObjectFields.filter(o =>o.DataTypeCode == "Constant" );
+            this.constantFilterFieldsList = this.ObjectFields.filter(o => o.DataTypeCode == "Constant");
 
             //this.timeFilterFieldsClass.AddFiltersList(window.ObjectFields.filter(o => o.CanFilter == true && o.FieldName != "TimeFrameFilter" && o.IsTimeFrameFilter == true && (o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection)), this.currentQuery.Id, myResult);
 
@@ -148,12 +159,11 @@ export class AddEditRuleComponent extends BaseComponent {
 
         this.filterFields.AddFiltersList(this.allFilterFields, null, []);
 
-         
+
         this.fieldsStaticList = this.NEWallFilterFieldsClass.FilterFields;
 
 
-        for(var k in this.DataContext.RuleConditionFields)
-        {
+        for (var k in this.DataContext.RuleConditionFields) {
             var field = this.DataContext.RuleConditionFields[k];
             var objectField: ObjectFieldPM = this.ObjectFields.filter(f => f.Id == field.ObjectFieldId)[0];
             if (objectField) {
@@ -162,8 +172,56 @@ export class AddEditRuleComponent extends BaseComponent {
             }
         }
 
-        
-      
+
+
+    }
+
+    private CreateTenantLevelRule(systemLevelRule: ObjectTableRulePM) {
+        this.IsCopyFromSystemRule = true;
+        let tenantLevelRule: ObjectTableRulePM = new ObjectTableRulePM();
+        tenantLevelRule.RuleTypeCode = systemLevelRule.RuleTypeCode;
+        tenantLevelRule.RuleCode = systemLevelRule.RuleCode;
+        tenantLevelRule.RuleNotificationTypeCode = systemLevelRule.RuleNotificationTypeCode;
+        tenantLevelRule.TriggerTypeCode = systemLevelRule.TriggerTypeCode;
+        tenantLevelRule.TriggerFieldId = systemLevelRule.TriggerFieldId;
+        tenantLevelRule.ActiveForNew = systemLevelRule.ActiveForNew;
+        tenantLevelRule.ActiveForUpdate = systemLevelRule.ActiveForUpdate;
+        tenantLevelRule.AdvancedCondition = systemLevelRule.AdvancedCondition;
+        tenantLevelRule.Condition = systemLevelRule.Condition;
+        tenantLevelRule.Name = systemLevelRule.Name;
+        tenantLevelRule.ObjectTableId = systemLevelRule.ObjectTableId;
+        tenantLevelRule.OutputMessage = systemLevelRule.OutputMessage;
+        tenantLevelRule.RuleTypeName = systemLevelRule.RuleTypeName;
+        tenantLevelRule.Tenant = SessionLocator.Tenant;
+        systemLevelRule.RuleConditionFields.forEach(item => {
+            var newField: RuleConditionFieldPM = new RuleConditionFieldPM(tenantLevelRule);
+            newField.ObjectFieldId = item.ObjectFieldId;
+            newField.ObjectFieldName = item.ObjectFieldName;
+            newField.Operator = item.Operator;
+            newField.Value = item.Value;
+            newField.Tenant = SessionLocator.Tenant;
+            newField.ObjectTableRuleId = tenantLevelRule.Id;
+            newField.ChangeSetOp = "Insert";
+            tenantLevelRule.AddRuleConditionField(newField);
+        });
+        let zeroRuleFields: ObjectTableRuleFieldPM[] = window.ObjectTableRuleFields.filter(r => r.ObjectTableRuleId === systemLevelRule.Id && r.Tenant == 0);
+        zeroRuleFields.forEach(item => {
+            let ruleField: ObjectTableRuleFieldPM = new ObjectTableRuleFieldPM();
+            ruleField.Id = 'New';
+            ruleField.ObjectFieldId = item.ObjectFieldId;
+            ruleField.ObjectTableRuleId = tenantLevelRule.Id;
+            ruleField.SystemLevel = false;
+            ruleField.Tenant = SessionLocator.Tenant;
+            ruleField.ObjectFieldName = item.ObjectFieldName;
+            ruleField.Expression = item.Expression;
+            ruleField.ObjectTableRuleCode = item.ObjectTableRuleCode;
+            ruleField.ObjectTableRuleTypeCode = item.ObjectTableRuleTypeCode;
+            ruleField.RuleNotificationTypeCode = item.RuleNotificationTypeCode;
+            ruleField.ChangeSetOp = 'Insert';
+            this.RuleFields.push(ruleField);
+            this.currentRuleFields.push(ruleField);
+        });
+        return tenantLevelRule;
     }
 
     //LoadRuleFields() {
@@ -368,7 +426,7 @@ export class AddEditRuleComponent extends BaseComponent {
                 }
             }
             else {
-                 
+
                 if (this.SelectedConditionObjectFields.length == 0) {
                     this.ValidationErrorsList.push("Condition field is required");
                 }
@@ -392,135 +450,120 @@ export class AddEditRuleComponent extends BaseComponent {
                 this.ValidationErrorsList.push("Trigger Field is required");
             }
         }
-
+        if (AppTool.IsNullOrEmpty(this.DataContext.TriggerTypeCode)) {
+            this.ValidationErrorsList.push("Trigger Type Field is required");
+        }
         if (this.ValidationErrorsList.length != 0) {
             return;
         }
 
         if (this.IsNewEntity) {
-            this.SelectedConditionObjectFields.forEach((item, key) => {
-
-                if (item.RuleConditionFieldPM) {
-
-                    item.RuleConditionFieldPM.Value = FieldValueResolver.GetFieldStringValue(item.ObjectField, item.TextValue);
-                    item.RuleConditionFieldPM.Operator = item.Operation.Code;
-                    item.RuleConditionFieldPM.ChangeSetOp = "Insert";
-
-                }
-                else {
-                    var ruleConditionField = new RuleConditionFieldPM(this.DataContext);
-
-                    var newField: RuleConditionFieldPM = new RuleConditionFieldPM(this.DataContext);
-
-                    newField.ObjectFieldId = item.ObjectField.Id;
-                    newField.ObjectFieldName = item.ObjectField.FieldName;
-                    newField.Operator = item.Operation.Code;
-                    newField.Value = FieldValueResolver.GetFieldStringValue(item.ObjectField, item.TextValue);
-                    newField.Tenant = SessionLocator.Tenant;
-                    newField.ObjectTableRuleId = this.DataContext.Id;
-                    newField.ChangeSetOp = "Insert";
-
-                    this.DataContext.AddRuleConditionField(newField);
-                }
-            });
-
-            this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
-
-            this._objectTableRulePMService.insert(this.DataContext).subscribe(resp => {
-                
-                if (!resp.HasError && resp.Result) {
-                    var ruleFields: ObjectTableRuleFieldPM[] = [];
-
-                    this.RuleFields.forEach(r => {
-                        r.ObjectTableRuleId = resp.Result.Id;
-                        r.ChangeSetOp = 'Insert';
-
-                        ruleFields.push(r);
-                    });
-                    this._objectTableRuleFieldPMService.updateRuleFieldsList(ruleFields).subscribe(resp2 => {
-                        this.CurrentSession.CurrentWindow.Close('saved');
-                    });
-
-                }
-                else {
-                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
-                    this.ValidationErrorsList = resp.ErrorsArray;
-                }
-
-                
-             
-            });
+            this.SaveNewRule();
         }
-        else {
+        else if (this.IsCopyFromSystemRule) {
+            this.SaveNewRule();
+            //this.SaveNewRuleFromSystemRule();
+        } else {
 
-            this.SelectedConditionObjectFields.forEach((item, key) => {
-
-                if (item.RuleConditionFieldPM) {
-
-                    item.RuleConditionFieldPM.Value = FieldValueResolver.GetFieldStringValue(item.ObjectField, item.TextValue);
-                    item.RuleConditionFieldPM.Operator = item.Operation.Code;
-                    item.RuleConditionFieldPM.ChangeSetOp = "Update";
-
-                }
-                else {
-                    var ruleConditionField = new RuleConditionFieldPM(this.DataContext);
-
-                    var newField: RuleConditionFieldPM = new RuleConditionFieldPM(this.DataContext);
-
-                    newField.ObjectFieldId = item.ObjectField.Id;
-                    newField.ObjectFieldName = item.ObjectField.FieldName;
-                    newField.Operator = item.Operation.Code;
-                    newField.Value = FieldValueResolver.GetFieldStringValue(item.ObjectField, item.TextValue);
-                    newField.Tenant = SessionLocator.Tenant;
-                    newField.ObjectTableRuleId = this.DataContext.Id;
-                    newField.ChangeSetOp = "Insert";
-
-                    this.DataContext.AddRuleConditionField(newField);
-                }
-            });
-
-            this.RemovedConditionObjectFields.forEach((item, key) => {
-                if (item) {
-                    this.DataContext.RemoveRuleConditionField(item.RuleConditionFieldPM);
-                }
-            });
-
-
-            this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
-
-            this._objectTableRulePMService.update(this.DataContext).subscribe(resp => {
-               
-                if (!resp.HasError) {
-                    var ruleFields: ObjectTableRuleFieldPM[] = [];
-
-                    this.RuleFields.forEach(r => {
-                        if (r.ChangeSetOp != 'Insert') {
-                            r.ChangeSetOp = 'Update';
-                        }
-                        ruleFields.push(r);
-                    });
-
-                    this.removedFields.forEach(r => {
-                        if (!AppTool.IsNullOrEmpty(r.Id) && r.Id != 'New') {
-                            r.ChangeSetOp = 'Delete';
-                        }
-                        ruleFields.push(r);
-                    });
-
-                    this._objectTableRuleFieldPMService.updateRuleFieldsList(ruleFields).subscribe(resp2 => {
-                        this.CurrentSession.CurrentWindow.Close('saved');
-                    });
-                }
-                else {
-                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
-                    this.ValidationErrorsList = resp.ErrorsArray;
-                }
-
-               
-            });
+            this.SaveEditedTenantRule();
         }
     }
+    SaveNewRuleFromSystemRule() {
+         
+    }
 
+
+    private SaveEditedTenantRule() {
+        this.SelectedConditionObjectFields.forEach((item, key) => {
+            if (item.RuleConditionFieldPM) {
+                item.RuleConditionFieldPM.Value = FieldValueResolver.GetFieldStringValue(item.ObjectField, item.TextValue);
+                item.RuleConditionFieldPM.Operator = item.Operation.Code;
+                item.RuleConditionFieldPM.ChangeSetOp = "Update";
+            }
+            else {
+                var ruleConditionField = new RuleConditionFieldPM(this.DataContext);
+                var newField: RuleConditionFieldPM = new RuleConditionFieldPM(this.DataContext);
+                newField.ObjectFieldId = item.ObjectField.Id;
+                newField.ObjectFieldName = item.ObjectField.FieldName;
+                newField.Operator = item.Operation.Code;
+                newField.Value = FieldValueResolver.GetFieldStringValue(item.ObjectField, item.TextValue);
+                newField.Tenant = SessionLocator.Tenant;
+                newField.ObjectTableRuleId = this.DataContext.Id;
+                newField.ChangeSetOp = "Insert";
+                this.DataContext.AddRuleConditionField(newField);
+            }
+        });
+        this.RemovedConditionObjectFields.forEach((item, key) => {
+            if (item) {
+                this.DataContext.RemoveRuleConditionField(item.RuleConditionFieldPM);
+            }
+        });
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+        this._objectTableRulePMService.update(this.DataContext).subscribe(resp => {
+            if (!resp.HasError) {
+                var ruleFields: ObjectTableRuleFieldPM[] = [];
+                this.RuleFields.forEach(r => {
+                    if (r.ChangeSetOp != 'Insert') {
+                        r.ChangeSetOp = 'Update';
+                    }
+                    ruleFields.push(r);
+                });
+                this.removedFields.forEach(r => {
+                    if (!AppTool.IsNullOrEmpty(r.Id) && r.Id != 'New') {
+                        r.ChangeSetOp = 'Delete';
+                    }
+                    ruleFields.push(r);
+                });
+                this._objectTableRuleFieldPMService.updateRuleFieldsList(ruleFields).subscribe(resp2 => {
+                    this.CurrentSession.CurrentWindow.Close('saved');
+                });
+            }
+            else {
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.ValidationErrorsList = resp.ErrorsArray;
+            }
+        });
+    }
+
+    private SaveNewRule() {
+        this.SelectedConditionObjectFields.forEach((item, key) => {
+            if (item.RuleConditionFieldPM) {
+                item.RuleConditionFieldPM.Value = FieldValueResolver.GetFieldStringValue(item.ObjectField, item.TextValue);
+                item.RuleConditionFieldPM.Operator = item.Operation.Code;
+                item.RuleConditionFieldPM.ChangeSetOp = "Insert";
+            }
+            else {
+                var ruleConditionField = new RuleConditionFieldPM(this.DataContext);
+                var newField: RuleConditionFieldPM = new RuleConditionFieldPM(this.DataContext);
+                newField.ObjectFieldId = item.ObjectField.Id;
+                newField.ObjectFieldName = item.ObjectField.FieldName;
+                newField.Operator = item.Operation.Code;
+                newField.Value = FieldValueResolver.GetFieldStringValue(item.ObjectField, item.TextValue);
+                newField.Tenant = SessionLocator.Tenant;
+                newField.ObjectTableRuleId = this.DataContext.Id;
+                newField.ChangeSetOp = "Insert";
+                this.DataContext.AddRuleConditionField(newField);
+            }
+        });
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+        this._objectTableRulePMService.insert(this.DataContext).subscribe(resp => {
+            if (!resp.HasError && resp.Result) {
+                var ruleFields: ObjectTableRuleFieldPM[] = [];
+                this.RuleFields.forEach(r => {
+                    r.ObjectTableRuleId = resp.Result.Id;
+                    r.ChangeSetOp = 'Insert';
+                    ruleFields.push(r);
+                });
+                this._objectTableRuleFieldPMService.updateRuleFieldsList(ruleFields).subscribe(resp2 => {
+                    this.CurrentSession.CurrentWindow.Close('saved');
+                });
+            }
+            else {
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.ValidationErrorsList = resp.ErrorsArray;
+            }
+        });
+    }
 
     CancelClicked() {
         this.CurrentSession.CloseCurrentWindow();

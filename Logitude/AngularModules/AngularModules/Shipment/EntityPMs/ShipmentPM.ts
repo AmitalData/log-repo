@@ -85,6 +85,10 @@ export class ShipmentPM {
     public get CarrierTransportDocumentNumber() { return this.carrierTransportDocumentNumber; }
     public set CarrierTransportDocumentNumber(newValue: string) { if (this.carrierTransportDocumentNumber != newValue) { this.carrierTransportDocumentNumber = newValue; this.MarkAsDirty("CarrierTransportDocumentNumber"); } }
 
+    private notInvoicedReceivablesAmount: number;
+    public get NotInvoicedReceivablesAmount() { return this.notInvoicedReceivablesAmount; }
+    public set NotInvoicedReceivablesAmount(newValue: number) { if (this.notInvoicedReceivablesAmount != newValue) { this.notInvoicedReceivablesAmount = newValue; this.MarkAsDirty("NotInvoicedReceivablesAmount"); } }
+
 
     private openReceivablesInLocalCurrency: number;
     public get OpenReceivablesInLocalCurrency() { return this.openReceivablesInLocalCurrency; }
@@ -4256,6 +4260,10 @@ export class ShipmentPM {
     public get ShipmentDirectionConverted() { return this.shipmentDirectionConverted; }
     public set ShipmentDirectionConverted(newValue: boolean) { if (this.shipmentDirectionConverted != newValue) { this.shipmentDirectionConverted = newValue; this.MarkAsDirty("ShipmentDirectionConverted"); } }
 
+    private shipmentConvertedNewNumber: boolean;
+    public get ShipmentConvertedNewNumber() { return this.shipmentConvertedNewNumber; }
+    public set ShipmentConvertedNewNumber(newValue: boolean) { if (this.shipmentConvertedNewNumber != newValue) { this.shipmentConvertedNewNumber = newValue; this.MarkAsDirty("ShipmentConvertedNewNumber"); } }
+
     private packagesDeleted: boolean;
     public get PackagesDeleted() { return this.packagesDeleted; }
     public set PackagesDeleted(newValue: boolean) { if (this.packagesDeleted != newValue) { this.packagesDeleted = newValue; this.MarkAsDirty("PackagesDeleted"); } }
@@ -4263,6 +4271,7 @@ export class ShipmentPM {
     private isDeletingAllPayables: boolean;
     public get IsDeletingAllPayables() { return this.isDeletingAllPayables; }
     public set IsDeletingAllPayables(newValue: boolean) { if (this.isDeletingAllPayables != newValue) { this.isDeletingAllPayables = newValue; this.MarkAsDirty("IsDeletingAllPayables"); } }
+
 
     public OldEntityPM: ShipmentPM;
 

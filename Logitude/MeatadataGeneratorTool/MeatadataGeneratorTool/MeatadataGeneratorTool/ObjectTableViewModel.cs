@@ -1721,14 +1721,6 @@ namespace MeatadataGeneratorTool
             set { isTabsHidden = value; FirePropertyChanged("IsTabsHidden"); }
         }
 
-        bool primaryKeyIsTenant;
-
-        public bool PrimaryKeyIsTenant
-        {
-            get { return primaryKeyIsTenant; }
-            set { primaryKeyIsTenant = value; FirePropertyChanged("PrimaryKeyIsTenant"); }
-        }
-
         ObjectFieldsViewModel selectedObjectField;
 
         public ObjectFieldsViewModel SelectedObjectField
@@ -2471,6 +2463,13 @@ namespace MeatadataGeneratorTool
         public bool SaveChanges()
         {
             bool succeeded = false;
+
+            if (this.IsComposition && string.IsNullOrEmpty(ParentTableName))
+            {
+                ErrorMessages = "ParentTableName Table Name is required for composition table";
+                ErrorsVisibility = Visibility.Visible;
+                return false;
+            }
 
             if (string.IsNullOrEmpty(DBTableName))
             {
@@ -3825,7 +3824,6 @@ namespace MeatadataGeneratorTool
         public bool HasDocuments { get;  set; }
         public bool IsLookUp { get; set; }
         public string SearchFields { get; set; }
-       
 
         private void Col1MoveDownMethod(MenuButtonViewModel Qmodel)
         {

@@ -257,7 +257,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             if (tenantPOCO.AccountingActivated && setVoided)
             {
                 IJournalQueryServiceExt journalQuery = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride("", 1)) as IJournalQueryServiceExt;
-                JournalPM journalPM = journalQuery.GetJournalIdByAccountingEntityId(entityPM.Id, entityPM.Tenant);
+                JournalPM journalPM = journalQuery.GetJournalByAccountingEntityIdAndCode(entityPM.Id,"4", entityPM.Tenant);
                 if (journalPM != null)
                 {
                     var journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalVoidUpdateServiceExt), "JournalVoidUpdateServiceExt", new ParameterOverride("", 1)) as IJournalVoidUpdateServiceExt;
@@ -338,7 +338,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.UpdateInvoicePayments(invoicePaymentsChangeSet);
             this.UpdateInvoiceAmountDue();
             this.BuildSearchFields();
-        
+
             invoiceRepository.Update(invoice);
             invoiceRepository.SubmitChanges();
 
@@ -358,8 +358,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
 
-
-                this.GetForeignFields();
+            this.GetForeignFields();
 
             if (!entityPM.IsGeneralInvoice)
             {
@@ -426,12 +425,18 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         #region InitializeComponent
 
+        DateTime? todayDateTime = null;
         private void InitializeComponent()
         {
-            if (string.IsNullOrEmpty(entityPM.Id))
+            todayDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+
+            if (this.isNewEntity)
             {
                 entityPM.Id = IdCounter.GetNumber("APInvoice", entityPM.Tenant).ToString();
+                entityPM.CreateDate = todayDateTime;                
             }
+
+            entityPM.UpdateDate = todayDateTime;
 
             if (entityPM.DueDate != null)
             {
@@ -571,27 +576,47 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     {
                         ChargesType myChargesType = ChargesTypeRepository.GetSingleChargesType(line.ChargesTypeId, tenant, true);
 
-                        if (myChargesType.AccountingVATSplit)
+                        if (line.ChargeTypeGLAccountId == null)
                         {
-                            ChargeTypeAccounting myChargeTypeAccounting = (from d in iQueryable_ChargeTypeAccounting where d.ChargeTypeId == line.ChargesTypeId && d.VatTypeId == line.VatTypeId select d).FirstOrDefault();
-                            if (myChargeTypeAccounting != null)
+
+                            if (myChargesType.AccountingVATSplit)
                             {
-                                line.ChargeTypeGLAccountId = myChargeTypeAccounting.PayableDebitGLAcountId;
+                                ChargeTypeAccounting myChargeTypeAccounting = (from d in iQueryable_ChargeTypeAccounting where d.ChargeTypeId == line.ChargesTypeId && d.VatTypeId == line.VatTypeId select d).FirstOrDefault();
+                                if (myChargeTypeAccounting != null)
+                                {
+                                    line.ChargeTypeGLAccountId = myChargeTypeAccounting.PayableDebitGLAcountId;
+                                }
                             }
-                        }
+                            else
+                            {
 
-                        else
-                        {
-                            line.ChargeTypeGLAccountId = myChargesType.PayableDebitGLAcountId;
-                        }
+                                if (!string.IsNullOrWhiteSpace(line.DebitAccount))
+                                {
+                                    GLAccountPM glaAccount = GetGLAccountForLine(line);
+                                    line.ChargeTypeGLAccountId = glaAccount?.Id;
+                                }
+                                else
+                                {
+                                    line.ChargeTypeGLAccountId = myChargesType.PayableDebitGLAcountId;
+                                }
 
-                        if (string.IsNullOrEmpty(line.ChargeTypeGLAccountId))
-                        {
-                            throw new Exception("The Payabel GLAccount of the Charge Type " + myChargesType.EnglishName + " is NULL");
+                            }
+
+                            if (string.IsNullOrEmpty(line.ChargeTypeGLAccountId))
+                            {
+                                throw new Exception("The Payabel GLAccount of the Charge Type " + myChargesType.EnglishName + " is NULL");
+                            }
                         }
                     }
                 }
             }
+        }
+
+        private GLAccountPM GetGLAccountForLine(APInvoiceLinePM line)
+        {
+            IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+            GLAccountPM glaAccount = glAccountQuery.GetGLAccountByDisplayNumber(line.DebitAccount, tenant);
+            return glaAccount;
         }
         #endregion
 
@@ -2082,7 +2107,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             DocumentDate = theEntityPm.InvoiceDate.Value,
                             AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant),
                             DueDate = theEntityPm.DueDate.Value,
-                            LocalAmount = vat.VatRecognizedPercentage != null? (((decimal)vat.VatRecognizedPercentage /100 ) *(decimal)vat.LocalVATAmount)  : (decimal) vat.LocalVATAmount,
+                            LocalAmount = vat.VatRecognizedPercentage != null? (((decimal)vat.VatRecognizedPercentage /100) *(decimal)vat.LocalVATAmount)  : (decimal) vat.LocalVATAmount,
                             CurrencyId = theEntityPm.InvoiceCurrencyId,
                             ForeignAmount = (decimal)vat.InvoiceCurrencyVATAmount,
                             ExchangeRate = (decimal)theEntityPm.InvoiceCurrencyExchangeRate,

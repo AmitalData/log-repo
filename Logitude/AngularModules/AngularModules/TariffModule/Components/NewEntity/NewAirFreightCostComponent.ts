@@ -35,6 +35,9 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
     private myService: TariffPMService;
     public PriceSteps: string;
     public PriceStepsText: string;
+    public TariffCurrencyTextCode: string;
+    public SellerDependancy: string = "AL";
+
     constructor() {
         super();
         this.myService = new TariffPMService();
@@ -49,20 +52,23 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
 
     SetWindowArgs(args) {
         this.EntityPM.TypeCode = args.TypeCode;
-        if (this.EntityPM.TypeCode == "ASC") {
+        if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode =="OSC") {
             this.VisibileSurchargesArea = true;
             this.BuildQueryFilters();
-        }
-        else {
-            this.VisibileSurchargesArea = false;
+            this.TariffCurrencyTextCode = "Tariff.O.DefaultCurrency";
         }
 
+        else {
+            this.VisibileSurchargesArea = false;
+            this.TariffCurrencyTextCode = "Tariff.F.CurrencyId";
+        }
+        this.BuildQueryFilters();
         this.SetUIProperties();
     }
 
     SetUIProperties() {
         var isDatesVisible: boolean = true;
-        if (this.EntityPM.TypeCode == "ASC") {
+        if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC") {
             isDatesVisible = false;
         }
 
@@ -81,9 +87,14 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
     }
 
     BuildQueryFilters() {
+        var EntityType: string = "IsAir";
+        if (this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OLC") {
+            EntityType = "IsOcean";
+            this.SellerDependancy = "SL";
+        }
         this.ChargeTypesQueryFilters = new ApiQueryFilters();
         this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");
-        this.ChargeTypesQueryFilters.addAdditionalFilter("IsAir", true, null, null, "Equals", false, false, false, "Boolean");
+        this.ChargeTypesQueryFilters.addAdditionalFilter(EntityType, true, null, null, "Equals", false, false, false, "Boolean");
         this.ChargeTypesQueryFilters.addAdditionalFilter("ChargesGroupCode", "FRT", null, null, "NotEqual", false, false, false, "string");
         this.Validate(true);
     }
@@ -551,14 +562,10 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
 
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, this.ValidationErrorsList);
 
-        if (this.EntityPM.TypeCode == "AFC") {
+        if (this.EntityPM.TypeCode == "AFC" || this.EntityPM.TypeCode == "OLC") {
             if (this.StartDate == null) {                
                 this.ValidationErrorsList.push("Satrt Date Field is Required");            
             }
-
-            //if (this.ExpirationDate == null) {
-            //    this.ValidationErrorsList.push("Expiration Date Field is Required");
-            //}
 
             if (this.StartDate != null && this.ExpirationDate != null) {
                 if (this.ExpirationDate < this.StartDate) {
@@ -566,8 +573,8 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
                 }
             }
         }
-        
-        else if (this.EntityPM.TypeCode == "ASC") {
+
+        else if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC") {
             var validator: ClassLevelValidator = new ClassLevelValidator();
 
             var errorsArray = validator.Validate("Tariff", this.EntityPM);

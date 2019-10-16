@@ -16,8 +16,6 @@ export class ChargesTabComponent {
     this.Helper.WaitByIdAndClick('AddCharges');
     this.Helper.WaitByIdAndFill('QuoteCharge_ChargesTypeId','coc');
     this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'QuoteCharge_ChargesTypeId','coc');
-   
-   
     this.Helper.WaitByIdAndClick('CostPrice');
     this.Helper.WaitByIdAndFill('QuoteCharge_CostUnitPrice','10');
     

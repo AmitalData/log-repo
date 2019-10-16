@@ -17,14 +17,13 @@ export class NewAgent {
     QuickSearch() {
 
         this.helper.WaitBusyIndicator();
-        this.helper.WaitByIdAndClick('General.MH.Maintenance');
+      //  this.helper.WaitByIdAndClick('General.MH.Maintenance');
         this.helper.waitByCss('#null_Search');
         this.helper.WaitBusyIndicator();
-
     }
 
     SearchAgentTab() {
-        
+       
         this.helper.WaitByIdAndFill('null_Search', "Agent");
         this.helper.WaitByIdAndClick('MaintenanceItemMTAG');
 
@@ -38,12 +37,11 @@ export class NewAgent {
         this.helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
         this.helper.WaitBusyIndicator();
         this.helper.WaitByIdAndFill('Address_City', "Poznan");
-        browser.sleep(1000)
         this.helper.WaitByIdAndClick('OkButtonId');
     }
 
 
-  /*  SearchAgent() {
+    SearchAgent() {
 
         this.helper.WaitBusyIndicator();
         this.helper.WaitWindowClosed();
@@ -53,12 +51,5 @@ export class NewAgent {
         this.helper.WaitByIdAndClick('Agent-Save');
 
     }
-    SaveAgent() {
-     //   this.helper.ItemsVisibility('Agent-Save')
-        this.helper.WaitByIdAndClick('Agent-Save');
-
-
-    }*/
-
 
 }

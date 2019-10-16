@@ -294,6 +294,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\INTTRABranchRegisteredCarrier.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\INTTRASetting.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\INTTRASettingMode.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\LogBoxTenantSetting.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\LogitudeMessagesTransmissionLog.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\MetodoPago.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\PackageConnectedPackage.cs" />
@@ -342,7 +343,6 @@
     <Compile Include="CommonDataModel\EntityPOCOs\ShippingLine.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\SmallDocument.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\TemperatureUnit.cs" />
-    <Compile Include="CommonDataModel\EntityPOCOs\LogBoxTenantSetting.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\TenantLoginPolicy.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\TenantAdditionalData.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\TenantManagmentLicense.cs" />
@@ -428,6 +428,7 @@
     <Compile Include="CommonDataModel\Mapping\INTTRABranchRegisteredCarrierMap.cs" />
     <Compile Include="CommonDataModel\Mapping\INTTRASettingMap.cs" />
     <Compile Include="CommonDataModel\Mapping\INTTRASettingModeMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\LogBoxTenantSettingMap.cs" />
     <Compile Include="CommonDataModel\Mapping\LogitudeMessagesTransmissionLogMap.cs" />
     <Compile Include="CommonDataModel\Mapping\MetodoPagoMap.cs" />
     <Compile Include="CommonDataModel\Mapping\PackageConnectedPackageMap.cs" />
@@ -446,7 +447,6 @@
     <Compile Include="CommonDataModel\Mapping\TenantAdditionalDataMap.cs" />
     <Compile Include="CommonDataModel\Mapping\TenantLoginPolicyMap.cs" />
     <Compile Include="CommonDataModel\Mapping\TenantManagmentLicenseMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\LogBoxTenantSettingMap.cs" />
     <Compile Include="CommonDataModel\Mapping\TwoFactorAuthenticationDeviceMap.cs" />
     <Compile Include="CommonDataModel\Mapping\LoginPolicyMap.cs" />
     <Compile Include="CommonDataModel\Mapping\UserLicenseMap.cs" />
@@ -481,7 +481,6 @@
     <Compile Include="CommonDataModel\Repositories\ComputingPartnerTranslationRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ContactsUnseenEntitieRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\DWHBuildStatusRepository.cs" />
-    <Compile Include="CommonDataModel\Repositories\LogBoxTenantSettingRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CountryCityRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CreditLimitSettingRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CustomerDepositionRepository.cs" />
@@ -521,6 +520,7 @@
     <Compile Include="CommonDataModel\Repositories\INTTRABranchRegisteredCarrierRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\INTTRASettingModeRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\INTTRASettingRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\LogBoxTenantSettingRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\MetodoPagoRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\RegistryDateTypeRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ReportExecutionLogRepository.cs" />
@@ -547,7 +547,6 @@
     <Compile Include="InfrastructureModel\EntityPOCOs\DWQueryFilter.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\SchedulerProcedure.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\SharedUserQuery.cs" />
-    <Compile Include="InfrastructureModel\EntityPOCOs\SchedulerLogs.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWObjectFieldCategoriesMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWObjectFieldMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWCategoriesMap.cs" />
@@ -557,7 +556,6 @@
     <Compile Include="InfrastructureModel\Mapping\DWSubQueryMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\SchedulerProcedureMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\SharedUserQueryMap.cs" />
-    <Compile Include="InfrastructureModel\Mapping\SchedulerLogsMap.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWObjectFieldCategoriesRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWQueryColumnRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWQueryFilterRepository.cs" />
@@ -569,7 +567,6 @@
     <Compile Include="InfrastructureModel\Repositories\DWQueryRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\SchedulerProcedureRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\SharedUserQueryRepository.cs" />
-    <Compile Include="InfrastructureModel\Repositories\SchedulerLogsRepository.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\ARInvoiceStock.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\ARInvoiceStockLine.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\ARInvoiceStocksStatus.cs" />
@@ -603,6 +600,9 @@
     <Compile Include="QuoteModel\EntityPOCOs\QuoteSetting.cs" />
     <Compile Include="QuoteModel\Mapping\QuoteSettingMap.cs" />
     <Compile Include="QuoteModel\Repositories\QuoteSettingRepository.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\CustomsTransferHeader.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\CustomsTransferLine.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\CustomsTransferType.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\HarmonizeCode.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\INTTRABookingStatus.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\INTTRABookingTransStatus.cs" />
@@ -618,6 +618,9 @@
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentCustomsMessageType.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentCustomsTransmission.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentPackageHarmonize.cs" />
+    <Compile Include="ShipmentsModel\Mapping\CustomsTransferHeaderMap.cs" />
+    <Compile Include="ShipmentsModel\Mapping\CustomsTransferLineMap.cs" />
+    <Compile Include="ShipmentsModel\Mapping\CustomsTransferTypeMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\HarmonizeCodeMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\INTTRABookingStatusMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\INTTRABookingTransStatusMap.cs" />
@@ -633,6 +636,9 @@
     <Compile Include="ShipmentsModel\Mapping\ShipmentCustomsMessageTypeMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentCustomsTransmissionMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentPackageHarmonizeMap.cs" />
+    <Compile Include="ShipmentsModel\Repositories\CustomsTransferHeaderRepository.cs" />
+    <Compile Include="ShipmentsModel\Repositories\CustomsTransferLineRepository.cs" />
+    <Compile Include="ShipmentsModel\Repositories\CustomsTransferTypeRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\FBLStockRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\FeaturePackageTypeRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\HybridTenantStateRepository.cs" />

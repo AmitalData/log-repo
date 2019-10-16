@@ -503,6 +503,29 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
+	  private bool isShowAmountLocalCurrency ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsShowAmountLocalCurrency  
+	   {
+	    
+	     get
+		{
+		   return isShowAmountLocalCurrency;
+		 }
+		 set
+		 {
+		   if(isShowAmountLocalCurrency != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsShowAmountLocalCurrency",OldValue=isShowAmountLocalCurrency,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isShowAmountLocalCurrency=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -11,6 +11,7 @@ export class TariffTypeList {
 	Code: string;
 	Name: string;
 	SearchFields: string;
+	TransportModeCode: string;
 	
 }
  

@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 {
-    public class TransferTransactionsExternalReconciliationService
+    class TransferTransactionsExternalReconciliationService
     {
         int tenant;
         ExternalReconciliationPM externalRecoPM;
@@ -39,23 +39,12 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
         {
             List<ExternalReconciliationLinePM> transferRecoLines = GetRecoLinesOfTransferAccount();
 
-            if(transferRecoLines.Count != 1)
-            {
-                IAccountingContext MyContext = AccountingContext.GetContext(tenant);
-                ExternalReconciliationUpdateService service = new ExternalReconciliationUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
-                externalRecoPM.ChangeSetOp = ChangeSetOperation.Insert;
-                service.Update(externalRecoPM, true);
-            }
-            else
-            {
-                if (transferRecoLines.Count > 1) throw new ApplicationException("for now, you can select only one transaction for transfer account");
+            if (transferRecoLines.Count > 1) throw new ApplicationException("for now, you can select only one transaction for transfer account");
 
-                for (int i = 0; i < transferRecoLines.Count; i++)
-                {
-                    MoveTransactionFromTransferGLAccountToBankGLAccount(transferRecoLines[i].LedgerTransactionId);
-                }
+            for (int i = 0; i < transferRecoLines.Count; i++)
+            {
+                MoveTransactionFromTransferGLAccountToBankGLAccount(transferRecoLines[i].LedgerTransactionId);
             }
-
 
         }
 

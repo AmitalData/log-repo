@@ -111,7 +111,6 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<CustomerSalesNote> CustomerSalesNotes { get; set; }
         public IDbSet<BusinessUnit> BusinessUnits { get; set; }
         public IDbSet<FeatureAccessLevel> FeatureAccessLevels { get; set; }
-        public IDbSet<LogBoxTenantSetting> LogBoxTenantSettings { get; set; }
         public IDbSet<AddressType> AddressTypes
         {
             get;
@@ -1631,11 +1630,11 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             set;
         }
 
-        public IDbSet<SchedulerLogs> SchedulerLogs
-        {
-            get;
-            set;
-        }
+        //public IDbSet<SchedulerLogs> SchedulerLogs
+        //{
+        //    get;
+        //    set;
+        //}
         public IDbSet<SchedulerProcedure> SchedulerProcedures
         {
             get;
@@ -3024,6 +3023,9 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<Occasion> Occasions { get; set; }
         public IDbSet<OccasionType> OccasionTypes { get; set; }
         public IDbSet<OccasionStatus> OccasionStatuses { get; set; }
+        public IDbSet<OccasionInvitee> OccasionInvitees { get; set; }
+
+        
         #endregion
 
         #region Social Context
@@ -3752,6 +3754,9 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new OccasionMap());
             modelBuilder.Configurations.Add(new OccasionStatusMap());
             modelBuilder.Configurations.Add(new OccasionTypeMap());
+            modelBuilder.Configurations.Add(new OccasionInviteeMap());
+
+            
             #endregion
 
             #region Booking
@@ -4638,6 +4643,9 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new FormCustomFields1Map());
             modelBuilder.Configurations.Add(new FWBStatuMap());
             modelBuilder.Configurations.Add(new CustomsTransmissionsStatusMap());
+            modelBuilder.Configurations.Add(new CustomsTransferHeaderMap());
+            modelBuilder.Configurations.Add(new CustomsTransferLineMap());
+            modelBuilder.Configurations.Add(new CustomsTransferTypeMap());
             modelBuilder.Configurations.Add(new GlobalZoneMap());
             modelBuilder.Configurations.Add(new IATACodeMap());
             modelBuilder.Configurations.Add(new ImageDetailMap());
@@ -4941,11 +4949,11 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new HarmonizeCodeMap());
             modelBuilder.Configurations.Add(new DWCategoriesMap());
             modelBuilder.Configurations.Add(new DWObjectFieldCategoriesMap());
-            modelBuilder.Configurations.Add(new SchedulerLogsMap());
+            //modelBuilder.Configurations.Add(new SchedulerLogsMap());
             modelBuilder.Configurations.Add(new SchedulerProcedureMap());
             modelBuilder.Configurations.Add(new UsersReleaseNotesDisplayMap());
             modelBuilder.Configurations.Add(new CheckDigitControlAlgorithmMap());
-            modelBuilder.Configurations.Add(new LogBoxTenantSettingMap());
+
             base.OnModelCreating(modelBuilder);
         }
     }

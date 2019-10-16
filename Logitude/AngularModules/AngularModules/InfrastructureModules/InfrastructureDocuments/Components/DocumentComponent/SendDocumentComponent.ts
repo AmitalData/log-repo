@@ -838,7 +838,6 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         filter.Cc = this.Cc;
         filter.Bcc = this.Bcc;
         filter.Attachments = "";
-        filter.ExportQuotationsToIntegratedSystem = this.SelectedInternalDocument.ExportQuotationsToIntegratedSystem;
         filter.ObjectTableName = this.ObjecttableName;
         if (this.SelectedInternalDocument.IsCrm) {
             filter.EventTypeCode = this.SelectedInternalDocument.EventTypeCode;
@@ -902,7 +901,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         });
 
 
-        if (totalsize > 15) {
+        if (totalsize > 25) {
             this.ShowMessage("The maximum size of documents you can attach is 15 MB. Please send the documents in separated emails", "Attachment Limit");
             //this.ShowMessage("The file you are trying to send exceeds the 15 MB attachment limit.", "Attachment Limit");
              this.CurrentSession.StopBusyIndicator();

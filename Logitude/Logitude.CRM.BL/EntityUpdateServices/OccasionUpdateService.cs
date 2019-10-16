@@ -11,6 +11,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using System;
 using System.Collections.Generic;
+using Simplog.Server.Infrastructure;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,16 +47,22 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                 {
                     entityPM.CreatedByUserId = loggedContact.Id;
                 }
-            }
-
+            }       
         }
 
         protected override void OnUpdating(EntityPMs.OccasionPM entityPM, Occasion entityPOCO)
         {
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
             {
-                this.MapDummyFields(entityPM,entityPOCO);
+                this.MapDummyFields(entityPM, entityPOCO);
+                this.ComputeOccasionCountsFields(entityPM);
             }
+        }
+
+        protected override void UpdateComposition(OccasionPM entityPM)
+        {
+            OccasionInviteeUpdateService occasionInviteeUpdateService = new OccasionInviteeUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+            occasionInviteeUpdateService.UpdateMulti(entityPM.OccasionInvitees, entityPM.DeletedOccasionInvitees, entityPM, false);
         }
 
         private void MapDummyFields(OccasionPM entityPM, Occasion entityPOCO)
@@ -114,6 +121,28 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                 });
             }
 
+        }
+
+        private void ComputeOccasionCountsFields(OccasionPM entityPM)
+        {
+            if (entityPM.OccasionInvitees != null && entityPM.OccasionInvitees.Count() > 0)
+            {
+                var invitedList = entityPM.OccasionInvitees.Where(a=>a.ChangeSetOp != ChangeSetOperation.Delete).Where(a => a.Invited);
+                var participatedList = entityPM.OccasionInvitees.Where(a => a.ChangeSetOp != ChangeSetOperation.Delete).Where(a => a.Participated);
+
+                entityPM.InvitedContacts = invitedList != null ? invitedList.Count() : 0;
+                entityPM.ParticipatedContacts = participatedList != null ? participatedList.Count() : 0;
+
+                List<string> contactIds_Invited = (from a in invitedList
+                                                   select a.ContactId).ToList();
+
+                List<string> contactIds_Participated = (from a in participatedList
+                                                        select a.ContactId).ToList();
+
+                CardContactRepository cardContactRepository = new CardContactRepository(entityPM.Tenant);
+                entityPM.InvitedCustomers = cardContactRepository.GetCardsContactsForContactIds_Count(contactIds_Invited, entityPM.Tenant);
+                entityPM.ParticipatedCustomers = cardContactRepository.GetCardsContactsForContactIds_Count(contactIds_Participated, entityPM.Tenant);
+            }
         }
     }
 }

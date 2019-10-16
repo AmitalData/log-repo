@@ -33,6 +33,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Reflection;
 using System.Transactions;
 using System.Web;
 using System.Web.Http;
@@ -112,7 +113,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 cardContactRepository.Add(cardContact);
 
                 IQueryable<Contact> myContacts = cardContactRepository.GetContactsByCardId(companyId);
-                if(myContacts == null || (myContacts != null && myContacts.Count() == 0))
+                if (myContacts == null || (myContacts != null && myContacts.Count() == 0))
                 {
                     CardQuery cardQuery = new CardQuery(authToken.Tenant);
                     CardPM card = cardQuery.GetSinglePM(companyId, authToken.Tenant);
@@ -145,7 +146,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     contactId = this.FixFilter(contactId);
 
                     CardContactRepository myCardContactRepository = new CardContactRepository(tenant);
-                    CardContact myContact = myCardContactRepository.GetSingleCardContact( contactId, companyId, tenant);
+                    CardContact myContact = myCardContactRepository.GetSingleCardContact(contactId, companyId, tenant);
                     scope.Complete();
                     return Request.CreateResponse(HttpStatusCode.OK, myContact);
                 }
@@ -729,12 +730,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         if (!string.IsNullOrEmpty(ownerId))
                         {
-                            iQueryable = iQueryable.Where(d =>  d.Customer.SalesmanUserId == ownerId);
+                            iQueryable = iQueryable.Where(d => d.Customer.SalesmanUserId == ownerId);
                         }
 
                         if (!string.IsNullOrEmpty(businessUnitId))
                         {
-                            iQueryable = iQueryable.Where(d =>  d.Customer.SalesmanUser.BusinessUnitId == businessUnitId);
+                            iQueryable = iQueryable.Where(d => d.Customer.SalesmanUser.BusinessUnitId == businessUnitId);
                         }
                     }
 
@@ -1065,7 +1066,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         ToDate = null;
 
 
-                 
+
 
                     ownerId = this.FixFilter(ownerId);
                     businessUnitId = this.FixFilter(businessUnitId);
@@ -1134,9 +1135,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     if (ToDateOBJ == null)
                     {
                         ToDateOBJ = TenantServerConfigration.GetCurrentDateTime(tenant);
-                    }                    
+                    }
                     PartnersDomainService crmDomain = new PartnersDomainService();
-                    List<ChartingDataClass> myResult = crmDomain.GetCustomersGroupBySalesmanCustom(FromDateOBJ,ToDateOBJ, ownerId, businessUnitId, fieldCode, tenant, isTopTen);
+                    List<ChartingDataClass> myResult = crmDomain.GetCustomersGroupBySalesmanCustom(FromDateOBJ, ToDateOBJ, ownerId, businessUnitId, fieldCode, tenant, isTopTen);
                     scope.Complete();
                     return Request.CreateResponse(HttpStatusCode.OK, myResult);
                 }
@@ -1178,7 +1179,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        public HttpResponseMessage GetActivitiesGroupBySalesmanCustom(string FromDate,string ToDate, string ownerId, string businessUnitId, string fieldCode, bool isTopTen)
+        public HttpResponseMessage GetActivitiesGroupBySalesmanCustom(string FromDate, string ToDate, string ownerId, string businessUnitId, string fieldCode, bool isTopTen)
         {
             try
             {
@@ -1212,7 +1213,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                     CRMDomainService crmDomain = new CRMDomainService();
 
-                    List<ChartingDataClass> myResult = crmDomain.GetActivitiesGroupBySalesmanCustom(FromDateOBJ,ToDateOBJ, ownerId, businessUnitId, fieldCode, tenant, isTopTen);
+                    List<ChartingDataClass> myResult = crmDomain.GetActivitiesGroupBySalesmanCustom(FromDateOBJ, ToDateOBJ, ownerId, businessUnitId, fieldCode, tenant, isTopTen);
                     scope.Complete();
                     return Request.CreateResponse(HttpStatusCode.OK, myResult);
                 }
@@ -1252,7 +1253,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetOpportunitiesGroupBySalesmanCustom(string FromDate,string ToDate, string ownerId, string businessUnitId, string fieldCode, bool isTopTen)
+        public HttpResponseMessage GetOpportunitiesGroupBySalesmanCustom(string FromDate, string ToDate, string ownerId, string businessUnitId, string fieldCode, bool isTopTen)
         {
             try
             {
@@ -1284,7 +1285,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
 
                     CRMDomainService crmDomain = new CRMDomainService();
-                    List<ChartingDataClass> myResult = crmDomain.GetOpportunitiesGroupBySalesmanCustom(FromDateOBJ,ToDateOBJ, ownerId, businessUnitId, fieldCode, tenant, isTopTen);
+                    List<ChartingDataClass> myResult = crmDomain.GetOpportunitiesGroupBySalesmanCustom(FromDateOBJ, ToDateOBJ, ownerId, businessUnitId, fieldCode, tenant, isTopTen);
                     scope.Complete();
                     return Request.CreateResponse(HttpStatusCode.OK, myResult);
                 }
@@ -1355,7 +1356,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                     QuotesDomainService QuoteDomain = new QuotesDomainService();
 
-                    List<ChartingDataClass> myResult = QuoteDomain.GetQuotesChartDataCustom(FromDateOBJ,ToDateOBJ, ownerId, businessUnitId, chartCode, tenant);
+                    List<ChartingDataClass> myResult = QuoteDomain.GetQuotesChartDataCustom(FromDateOBJ, ToDateOBJ, ownerId, businessUnitId, chartCode, tenant);
                     scope.Complete();
                     return Request.CreateResponse(HttpStatusCode.OK, myResult);
                 }
@@ -1432,10 +1433,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         ToDateOBJ = TenantServerConfigration.GetCurrentDateTime(tenant);
                     }
-                    
+
                     CRMDomainService QuoteDomain = new CRMDomainService();
 
-                    List<ChartingDataClass> myResult = QuoteDomain.GetOpportunitiesChartDataCustom(FromDateOBJ,ToDateOBJ, ownerId, businessUnitId, chartCode, tenant);
+                    List<ChartingDataClass> myResult = QuoteDomain.GetOpportunitiesChartDataCustom(FromDateOBJ, ToDateOBJ, ownerId, businessUnitId, chartCode, tenant);
                     scope.Complete();
                     return Request.CreateResponse(HttpStatusCode.OK, myResult);
                 }
@@ -1480,7 +1481,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
         }
 
-        public HttpResponseMessage GetActivitiesChartDataCustom(string FromDate,string ToDate, string ownerId, string businessUnitId, string chartCode)
+        public HttpResponseMessage GetActivitiesChartDataCustom(string FromDate, string ToDate, string ownerId, string businessUnitId, string chartCode)
         {
 
             try
@@ -1513,7 +1514,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
 
                     CRMDomainService QuoteDomain = new CRMDomainService();
-                    List<ChartingDataClass> myResult = QuoteDomain.GetActivitiesChartDataCustom(FromDateOBJ,ToDateOBJ, ownerId, businessUnitId, chartCode, tenant);
+                    List<ChartingDataClass> myResult = QuoteDomain.GetActivitiesChartDataCustom(FromDateOBJ, ToDateOBJ, ownerId, businessUnitId, chartCode, tenant);
                     scope.Complete();
                     return Request.CreateResponse(HttpStatusCode.OK, myResult);
                 }
@@ -2006,9 +2007,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-
-
-
         //public HttpResponseMessage GetUpdatingActivityMettingSummary(string mettingSummary, bool post, string activityId)
         //{
         //    try
@@ -2095,6 +2093,337 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             return loggedUserId;
         }
+
+        [HttpGet]
+        public HttpResponseMessage GetOccasionContactsByFilters([FromUri] ApiQueryFilters filters)
+        {
+            try
+            {
+                string token = System.Web.HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                int tenant = authToken.Tenant;
+
+                QueryOperations queryOperations = new QueryOperations()
+                {
+                    ObjectTableName = "Contact",
+                    PageIndex = filters.PageIndex,
+                    PageSize = filters.PageSize,
+                    QuerySection = "Contacts",
+                    SortByColumnName = filters.SortBy,
+                    SortDirectin = filters.SortDirection,
+                    GetAll = filters.GetAll,
+                };
+
+                OccasionContactArgs args = this.AnalyzeOccasionFilters(filters);                
+                
+                ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
+                IQueryable<Customer> customers = this.GetFilteredCustomers(args, commonDataContext, tenant);
+                IQueryable<CardContact> contacts = this.GetCustomerContacts(customers, commonDataContext, tenant);
+                
+                if (!string.IsNullOrEmpty(args.OccasionId))
+                {
+                    List<string> contactsIds = this.GetContactsIdsFromOccasion(args.OccasionId, tenant);
+                    if (contactsIds != null)
+                    {
+                        contacts = contacts.Where(d => contactsIds.Contains(d.ContactId));
+                    }
+                }
+                
+                if (!string.IsNullOrEmpty(args.ProductTypes))
+                {
+                    List<string> myproductsTypesList = this.GetProductsTypesCodes(args.ProductTypes, commonDataContext, authToken.Tenant);                    
+                    if (myproductsTypesList.Count() > 0)
+                    {
+                        List<CardContactProduct> cardContactProducts = commonDataContext.CardContactProducts.Where(d => myproductsTypesList.Contains(d.ProductTypeCode)).ToList();
+                        List<string> cardContactsIds = cardContactProducts.Select(s => s.CardContactId).ToList();
+                        contacts = contacts.Where(d => cardContactsIds.Contains(d.Id));
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(args.AdditionalServices))
+                {
+
+                }
+
+                List<OccasionContactSearchresult> myResult = new List<OccasionContactSearchresult>();
+                if (contacts != null && contacts.Count() > 0)
+                {
+                    myResult = this.BuildFilteredContacts(contacts, commonDataContext, authToken.Tenant);                    
+                }
+                
+                if (!string.IsNullOrEmpty(args.SearchText))
+                {
+                    myResult = myResult.Where(f => f.Email != null && f.Email.ToLower().StartsWith(args.SearchText.ToLower())
+                            || f.Name != null && f.Name.ToLower().StartsWith(args.SearchText.ToLower())
+                            || f.Company != null && f.Company.ToLower().StartsWith(args.SearchText.ToLower())).ToList();
+                }
+
+                if (!queryOperations.GetAll)
+                {
+                    myResult = myResult.Skip(queryOperations.PageIndex).ToList();
+                    myResult = myResult.Take(queryOperations.PageSize).ToList();
+                }
+
+                ServiceResponse response = new ServiceResponse();
+                if (filters.GetCount)
+                {
+                    response.Count = myResult.Count;
+                }
+
+                response.Result = myResult;
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+
+                return reponseMessage;
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        private OccasionContactArgs AnalyzeOccasionFilters(ApiQueryFilters filters)
+        {
+            OccasionContactArgs args = new OccasionContactArgs();
+
+            List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
+            for (int i = 1; i <= 10; i++)
+            {
+                object filterNameProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Name")).GetValue(filters);
+                object filterValue1 = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Value")).GetValue(filters);
+
+                if (filterNameProp != null)
+                {
+                    string filterName = filterNameProp.ToString();
+                    string filterValue = filterValue1 != null ? filterValue1.ToString() : null;
+
+                    switch (filterName)
+                    {
+                        case "SearchText":
+                            {
+                                args.SearchText = filterValue;
+                                break;
+                            }
+
+                        case "CustomerSizeId":
+                            {
+                                args.CustomerSizeId = filterValue;
+                                break;
+                            }
+
+                        case "RegionId":
+                            {
+                                args.RegionId = filterValue;
+                                break;
+                            }
+
+                        case "IndustryId":
+                            {
+                                args.IndustryId = filterValue;
+                                break;
+                            }
+
+                        case "OccasionId":
+                            {
+                                args.OccasionId = filterValue;
+                                break;
+                            }
+
+                        case "Products":
+                            {
+                                args.ProductTypes = filterValue;
+                                break;
+                            }
+
+                        case "AdditionalServices":
+                            {
+                                args.AdditionalServices = filterValue;
+                                break;
+                            }
+                    }
+                }
+            }
+
+            return args;
+        }
+        private IQueryable<Customer> GetFilteredCustomers(OccasionContactArgs args, ICommonDataContext commonDataContext, int tenant)
+        {
+            CustomerRepository customerRepository = new CustomerRepository(commonDataContext);
+            IQueryable<Customer> customers = customerRepository.GetCustomers(tenant);
+            customers = customers.Where(d => d.IsCustomer);
+
+            if (!string.IsNullOrEmpty(args.CustomerSizeId))
+            {
+                customers = customers.Where(d => d.CustomerSizeId == args.CustomerSizeId);
+            }
+
+            if (!string.IsNullOrEmpty(args.RegionId))
+            {
+                customers = customers.Where(d => d.RegionId == args.RegionId);
+            }
+
+            if (!string.IsNullOrEmpty(args.IndustryId))
+            {
+                customers = customers.Where(d => d.IndustryId == args.IndustryId);
+            }
+
+            return customers;
+        }
+        private IQueryable<CardContact> GetCustomerContacts(IQueryable<Customer> customers, ICommonDataContext commonDataContext, int tenant)
+        {
+            List<string> customersIds = customers.Select(s => s.Id).ToList();
+
+            CardContactRepository cardContactRepository = new CardContactRepository(commonDataContext);
+            IQueryable<CardContact> contacts = cardContactRepository.GetCardsContactsForCustomerIds(customersIds, tenant);
+
+            return contacts;
+        }
+        private List<string> GetContactsIdsFromOccasion(string occasionId, int tenant)
+        {
+            ICRMContext cRMContext = CRMContext.GetContext(tenant);
+            OccasionRepository occasionRepository = new OccasionRepository(cRMContext);
+            OccasionInviteeRepository occasionInviteeRepository = new OccasionInviteeRepository(cRMContext);
+            IQueryable<OccasionInvitee> occasionInvitees = occasionInviteeRepository.GetOccasionInviteesByOccasion(occasionId, tenant);
+            List<string> contactsIds = occasionInvitees.Select(s => s.ContactId).ToList();
+            return contactsIds;
+        }
+        private List<string> GetProductsTypesCodes(string productTypes, ICommonDataContext commonDataContext, int tenant)
+        {
+            List<string> myproductsTypesList = new List<string>();
+
+            productTypes = productTypes.Replace(" ", "");
+
+            if (productTypes.ToLower() == "all")
+            {
+                //ProductTypeRepository productTypeRepository = new ProductTypeRepository(commonDataContext);
+                //IQueryable<ProductType> iQueryable = productTypeRepository.GetActiveProductTypes(tenant);
+                //if (iQueryable.Count() > 0)
+                //{
+                //    myproductsTypesList = iQueryable.Select(s => s.Code).ToList();
+                //}
+            }
+
+            else
+            {
+                productTypes = productTypes.Trim(',');
+                string[] myProductsTypes = productTypes.Split(',');
+                myproductsTypesList = myProductsTypes.ToList();
+            }
+
+            return myproductsTypesList;
+        }
+        private List<OccasionContactSearchresult> BuildFilteredContacts(IQueryable<CardContact> contacts, ICommonDataContext commonDataContext, int tenant)
+        {
+            List<OccasionContactSearchresult> myResult = new List<OccasionContactSearchresult>();
+
+            foreach (CardContact cardContact in contacts)
+            {
+                string regionName = "";
+                string industryName = "";
+                string customerSizeName = "";
+                if (cardContact.Card != null && cardContact.Card.Customer != null)
+                {
+                    if (!string.IsNullOrEmpty(cardContact.Card.Customer.RegionId))
+                    {
+                        Region region = commonDataContext.Regions.Where(d => d.Id == cardContact.Card.Customer.RegionId && d.Tenant == tenant).FirstOrDefault();
+                        if (region != null)
+                        {
+                            regionName = region.Name;
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(cardContact.Card.Customer.IndustryId))
+                    {
+                        Industry industry = commonDataContext.Industries.Where(d => d.Id == cardContact.Card.Customer.IndustryId && d.Tenant == tenant).FirstOrDefault();
+                        if (industry != null)
+                        {
+                            industryName = industry.Name;
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(cardContact.Card.Customer.CustomerSizeId))
+                    {
+                        CustomerSize customerSize = commonDataContext.CustomerSizes.Where(d => d.Id == cardContact.Card.Customer.CustomerSizeId && d.Tenant == tenant).FirstOrDefault();
+                        if (customerSize != null)
+                        {
+                            customerSizeName = customerSize.Name;
+                        }
+                    }
+                }
+
+                string productsNames = "";
+                CardContactProductRepository cardContactProductRepository = new CardContactProductRepository(commonDataContext);
+                IQueryable<CardContactProduct> products = cardContactProductRepository.GetProductsByCardContactIdd(cardContact.Id, tenant);
+                if (products != null && products.Count() > 0)
+                {
+                    foreach(CardContactProduct item in products)
+                    {
+                        if(item.ProductType != null)
+                        {
+                            if(string.IsNullOrEmpty(productsNames))
+                            {
+                                productsNames = item.ProductType.Name;
+                            }
+
+                            else
+                            {
+                                productsNames = productsNames + ", " + item.ProductType.Name;
+                            }
+                        }
+                    }
+                }
+
+                myResult.Add(new OccasionContactSearchresult()
+                {
+                    ContactId = cardContact.ContactId,
+                    Name = cardContact.Contact == null ? null : cardContact.Contact.EnglishName,
+                    Email = cardContact.Contact == null ? null : cardContact.Contact.Email,
+                    Company = cardContact.Card == null ? null : cardContact.Card.EnglishName,
+                    Region = regionName,
+                    Industry = industryName,
+                    Product = productsNames,
+                    CustomerSize = customerSizeName,
+
+                    ContactMobile = cardContact.Contact == null ? null : cardContact.Contact.Mobile,
+                    ContactPhone = cardContact.Contact == null ? null : cardContact.Contact.BusinessPhone,
+                    ContactPosition = cardContact.Contact == null ? null : cardContact.Contact.Position,
+                    ContactTel = cardContact.Contact == null ? null : cardContact.Contact.BusinessPhone,
+
+
+                });
+            }
+
+            return myResult;
+        }
+
+
+        public HttpResponseMessage GetCountOfOccasionAllCustomers(String contactIds)
+        {
+            try
+            {
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    int tenant = authToken.Tenant;
+
+                    var myResult = 0;
+                    if (!string.IsNullOrEmpty(contactIds))
+                    {
+                        List<string> contactIds_Invited = contactIds.TrimEnd(',').Split(',').ToList();
+                        CardContactRepository cardContactRepository = new CardContactRepository(tenant);
+                        myResult = cardContactRepository.GetCardsContactsForContactIds_Count(contactIds_Invited, tenant);
+                    }
+ 
+                    scope.Complete();
+                    return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 
     public class MeetingSummary
@@ -2108,5 +2437,32 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
     {
         public int Id { get; set; }
         public int AllOccasionsCount { get; set; }
+    }
+
+    public class OccasionContactArgs
+    {
+        public string CustomerSizeId { get; set; }
+        public string RegionId { get; set; }
+        public string IndustryId { get; set; }
+        public string OccasionId { get; set; }
+        public string ProductTypes { get; set; }
+        public string AdditionalServices { get; set; }
+        public string SearchText { get; set; }
+    }
+
+    public class OccasionContactSearchresult
+    {
+        public string ContactId { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string Company { get; set; }
+        public string Region { get; set; }
+        public string Industry { get; set; }
+        public string Product { get; set; }
+        public string CustomerSize { get; set; }
+        public string ContactPhone { get; set; }
+        public string ContactPosition { get; set; }
+        public string ContactMobile { get; set; }
+        public string ContactTel { get; set; }
     }
 }

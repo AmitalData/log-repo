@@ -1057,7 +1057,6 @@ namespace MeatadataGeneratorTool
             SetAttribute("HasDocuments", table.HasDocuments.ToString().ToLower(), entityElement);
             SetAttribute("IsLookUp", table.IsLookUp.ToString().ToLower(), entityElement);
             SetAttribute("IsTabsHidden", table.IsTabsHidden.ToString().ToLower(), entityElement);
-            SetAttribute("PrimaryKeyIsTenant", table.PrimaryKeyIsTenant.ToString().ToLower(), entityElement);
 
             if (!string.IsNullOrEmpty(table.SearchFields))
             {
@@ -1385,15 +1384,29 @@ namespace MeatadataGeneratorTool
 
             foreach (ScreensViewModel f in table.ScreensObsList)
             {
+                XmlElement ScreenElement = doc.CreateElement("Screen");
+                entityElement.AppendChild(ScreenElement);
+                SetAttribute("Name", GetStringValue(f.Name), ScreenElement, null);
+                SetAttribute("ObjectTableName", GetStringValue(f.ObjectTableName), ScreenElement, null);
+                SetAttribute("IsReadOnly", f.IsReadOnly.ToString().ToLower(), ScreenElement, null);
+                SetAttribute("IsHeaderScreen", f.IsHeaderScreen.ToString().ToLower(), ScreenElement, null);
+                if (!string.IsNullOrEmpty(f.Code))
+                {
+                    SetAttribute("Code", GetStringValue(f.Code), ScreenElement, null);
+                }
+
+                SetAttribute("NumberOfColumns", "2", ScreenElement, null);
+                SetAttribute("NumberOfRows", "1", ScreenElement, null);
+
+                // Screen Fields Properties
+                XmlElement ScreenFieldsElement = doc.CreateElement("ScreenFields");
+                ScreenElement.AppendChild(ScreenFieldsElement);
+
                 if ((f.ScreenFieldCol1ObsList != null && f.ScreenFieldCol1ObsList.Count > 0) || (f.ScreenFieldCol2ObsList != null && f.ScreenFieldCol2ObsList.Count > 0)
                     || (f.ScreenFieldCol3ObsList != null && f.ScreenFieldCol3ObsList.Count > 0) || (f.ScreenFieldCol4ObsList != null && f.ScreenFieldCol4ObsList.Count > 0)
                     || (f.ScreenFieldCol5ObsList != null && f.ScreenFieldCol5ObsList.Count > 0))
                 {
-                    XmlElement ScreenElement = doc.CreateElement("Screen");
-                    entityElement.AppendChild(ScreenElement);
-
-                    SetAttribute("Name", GetStringValue(f.Name), ScreenElement, null);
-                    SetAttribute("ObjectTableName", GetStringValue(f.ObjectTableName), ScreenElement, null);
+                   
                     int ColCount = 0;
                     int RowCount = 0;
                     if (f.ScreenFieldCol1ObsList != null && f.ScreenFieldCol1ObsList.Count > 0)
@@ -1423,15 +1436,9 @@ namespace MeatadataGeneratorTool
                     }
                     SetAttribute("NumberOfColumns", ColCount.ToString(), ScreenElement, null);
                     SetAttribute("NumberOfRows", RowCount.ToString(), ScreenElement, null);
-                    SetAttribute("IsReadOnly", f.IsReadOnly.ToString().ToLower(), ScreenElement, null);
-                    SetAttribute("IsHeaderScreen", f.IsHeaderScreen.ToString().ToLower(), ScreenElement, null);
-                    if (!string.IsNullOrEmpty(f.Code))
-                    {
-                        SetAttribute("Code", GetStringValue(f.Code), ScreenElement, null);
-                    }
-                    // Screen Fields Properties
-                    XmlElement ScreenFieldsElement = doc.CreateElement("ScreenFields");
-                    ScreenElement.AppendChild(ScreenFieldsElement);
+
+                  
+                   
                     for (int i = 0; i < ColCount; i++)
                     {
                         if (f.ScreenFieldCol1ObsList != null && f.ScreenFieldCol1ObsList.Count > 0)

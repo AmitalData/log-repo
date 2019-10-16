@@ -39,6 +39,7 @@ using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.Security;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -57,9 +58,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private ObjectTableRepository ObjectTableRepository;
         private ShipmentComputedFieldsRepository shipmentComputedFieldsRepository;
         private TenantQuery tenantQuery;
-
-
-        private LogBoxTenantSettingQuery LBtenantsettingQuery;
 
         private bool _OnCreateUnifreightFillingMode;
         private const int FileSizeOnUnifreightConst = 20160220;
@@ -177,10 +175,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             tenantQuery = new TenantQuery(theEntityPm.Tenant);
             TenantPM tenantPM = tenantQuery.GetSinglePM(theEntityPm.Tenant);
-            LBtenantsettingQuery = new LogBoxTenantSettingQuery(theEntityPm.Tenant);
-            LogBoxTenantSettingPM tenantsettingPM = LBtenantsettingQuery.GetSinglePM(theEntityPm.Tenant);
 
-            if (string.IsNullOrEmpty(entityPM.EntityId) && tenantsettingPM.IsDocumentsArchive == false)
+            if (string.IsNullOrEmpty(entityPM.EntityId) && tenantPM.IsDocumentsArchive == false)
             {
                 DocumentsMetaDataTypeRepository DocumentsMetaDataTypeRepo = new DocumentsMetaDataTypeRepository(theEntityPm.Tenant);
                 var LBC = DocumentsMetaDataTypeRepo.GetSingleDocumentsMetaDataTypeByCode("LBC", theEntityPm.Tenant);
@@ -243,7 +239,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             DocumentsFilingMapping.MapEntity(theEntityPm, Poco, isNewEntity);
           
 
-            if (tenantsettingPM.IsDocumentsArchive == true)
+            if (tenantPM.IsDocumentsArchive == true)
             {
                 if (theEntityPm.DirectionCode == "I")
                 {
@@ -358,7 +354,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
             ///move after adding (was Devart.Data.Oracle.OracleException: ORA-02291: אילוץ כלילות (AMINET_MAIN.FK_N1103284768) הופר - מפתח אב לא נמצא )
-            if (!tenantsettingPM.IsDocumentsArchive && LogitudeSettings.DeploymentStage != "Simplog")
+            if (!tenantPM.IsDocumentsArchive && LogitudeSettings.DeploymentStage != "Simplog")
             {
                 AddToTasksQueue(theEntityPm, isNewEntity, loggedUserId);
             }
@@ -367,7 +363,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 var OTName = ObjectTableRepository.GetSingleObjectTable(Poco.ObjectTableId, tenant, false);
                 if ((OTName != null && OTName.Name == "Shipment") || theEntityPm.IsDeleted)//&& !string.IsNullOrEmpty(this.Poco.EntityId)
                 {
-                    if (!entityPM.DontAddToQueue && (entityPM.IsSharedWithCustomer || (theEntityPm.IsSharedWithForwarder && HavingDREL == true)) && !tenantsettingPM.IsDocumentsArchive)
+                    if (!entityPM.DontAddToQueue && (entityPM.IsSharedWithCustomer || (theEntityPm.IsSharedWithForwarder && HavingDREL == true)) && !tenantPM.IsDocumentsArchive)
                     {
                         IQueueService queueservice = new DbQueueService();
                         queueservice.InitializeQueue("ImportersShipmentDocumentsQueue", 0);
@@ -455,10 +451,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             tenantQuery = new TenantQuery(theEntityPm.Tenant);
             TenantPM tenantPM = tenantQuery.GetSinglePM(theEntityPm.Tenant);
-
-
-            LBtenantsettingQuery = new LogBoxTenantSettingQuery(theEntityPm.Tenant);
-            LogBoxTenantSettingPM tenantsettingPM = LBtenantsettingQuery.GetSinglePM(theEntityPm.Tenant);
             //if (tenantPM.IsHybrid)
             //{
             //    entityPM.IsSharedWithCustomer = true;
@@ -476,7 +468,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 Random rnd = new Random();
                 Poco.SecurityId = entityPM.Id + RandomString(10);
             }
-            if (tenantsettingPM.IsDocumentsArchive == true)
+            if (tenantPM.IsDocumentsArchive == true)
             {
                 if (theEntityPm.DirectionCode == "I")
                 {
@@ -607,7 +599,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
-            if (!tenantsettingPM.IsDocumentsArchive && LogitudeSettings.DeploymentStage != "Simplog")
+            if (!tenantPM.IsDocumentsArchive && LogitudeSettings.DeploymentStage != "Simplog")
             {
                 AddToTasksQueue(theEntityPm, isNewEntity, loggedUserId);
             }
@@ -619,7 +611,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 //var OTName = ObjectTableRepository.GetSingleObjectTable(Poco.ObjectTableId, tenant, false);
                 //if (OTName != null && OTName.Name == "Shipment")//&& !string.IsNullOrEmpty(this.Poco.EntityId)
                 //{
-                if (!entityPM.DontAddToQueue && (entityPM.IsSharedWithCustomer || (theEntityPm.IsSharedWithForwarder && HavingDREL == true)) && !tenantsettingPM.IsDocumentsArchive && (!string.IsNullOrEmpty(entityPM.EntityId) || entityPM.IsDeleted))
+                if (!entityPM.DontAddToQueue && (entityPM.IsSharedWithCustomer || (theEntityPm.IsSharedWithForwarder && HavingDREL == true)) && !tenantPM.IsDocumentsArchive && (!string.IsNullOrEmpty(entityPM.EntityId) || entityPM.IsDeleted))
                 {
                     IQueueService queueservice = new DbQueueService();
                     queueservice.InitializeQueue("ImportersShipmentDocumentsQueue", 0);
@@ -665,8 +657,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             tenantQuery = new TenantQuery(theEntityPm.Tenant);
             TenantPM tenantPM = tenantQuery.GetSinglePM(theEntityPm.Tenant);
-            LBtenantsettingQuery = new LogBoxTenantSettingQuery(theEntityPm.Tenant);
-            LogBoxTenantSettingPM tenantsettingPM = LBtenantsettingQuery.GetSinglePM(theEntityPm.Tenant);
             //if (tenantPM.IsHybrid)
             //{
             //    entityPM.IsSharedWithCustomer = true;
@@ -683,7 +673,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
 
 
-            if (tenantsettingPM.IsDocumentsArchive == true)
+            if (tenantPM.IsDocumentsArchive == true)
             {
                 if (theEntityPm.DirectionCode == "I")
                 {
@@ -813,7 +803,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
-            if (!tenantsettingPM.IsDocumentsArchive && !entityPM.DontAddToQueue)
+            if (!tenantPM.IsDocumentsArchive && !entityPM.DontAddToQueue)
             {
                 AddToTasksQueue(theEntityPm, isNewEntity, null);
             }
@@ -825,7 +815,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 //if (OTName != null && OTName.Name == "Shipment")//&& !string.IsNullOrEmpty(this.Poco.EntityId)
                 //{
 
-                if (!entityPM.DontAddToQueue && (entityPM.IsSharedWithCustomer || (theEntityPm.IsSharedWithForwarder && HavingDREL == true)) && !tenantsettingPM.IsDocumentsArchive && (!string.IsNullOrEmpty(entityPM.EntityId) || entityPM.IsDeleted))
+                if (!entityPM.DontAddToQueue && (entityPM.IsSharedWithCustomer || (theEntityPm.IsSharedWithForwarder && HavingDREL == true)) && !tenantPM.IsDocumentsArchive && (!string.IsNullOrEmpty(entityPM.EntityId) || entityPM.IsDeleted))
                 {
                     if (!LogitudeSettings.IsCostomsDeploy) //ITZIK + YARON 
                     {
@@ -1086,9 +1076,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
             var tenantQuery = new TenantQuery(EntityPm.Tenant);
             TenantPM tenantPM = tenantQuery.GetSinglePM(EntityPm.Tenant);
-           var LBtenantsettingQuery = new LogBoxTenantSettingQuery(EntityPm.Tenant);
-            LogBoxTenantSettingPM tenantsettingPM = LBtenantsettingQuery.GetSinglePM(EntityPm.Tenant);
-            if (tenantsettingPM.IsDocumentsArchive == true && EntityPm.HasFile)
+            if (tenantPM.IsDocumentsArchive == true && EntityPm.HasFile)
             {
                 var ShipmentCompField = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(EntityPm.EntityId, tenant);
                 if (ShipmentCompField != null)

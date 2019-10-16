@@ -120,12 +120,12 @@ namespace CommunicationWorkerRole
                                     continue;
                                 }
 
-                                if (reportExecutionLog.StatusCode!="W")
+                                if (reportExecutionLog.StatusCode != "W")
                                 {
                                     queueservice.Complete();
                                     continue;
                                 }
-
+                                UpdateReportExecutionLogStatusToInProgress(reportExecutionLog, reportExecutionLogRepository);
 
                                 ReportFliter reportFliter = null;
                                 if (!string.IsNullOrEmpty(reportExecutionLog.ReportFilterXML))
@@ -138,11 +138,11 @@ namespace CommunicationWorkerRole
                                     Thread thread = new Thread(() => BuildReport(reportFliter, reportExecutionLog, reportExecutionLogRepository, queueservice, response));
                                     thread.IsBackground = true;
                                     thread.Start();
-                          
+
                                 }
                                 else
                                 {
-                                    UpdateReportExecutionLogArgs updateReportExecutionLogArgs = new UpdateReportExecutionLogArgs() { ReportExecutionLog = reportExecutionLog, ReportExecutionLogRepository = reportExecutionLogRepository,  ExceptionMessage = "Report fliter not found", queueservice = queueservice, StatusCode = "F" };
+                                    UpdateReportExecutionLogArgs updateReportExecutionLogArgs = new UpdateReportExecutionLogArgs() { ReportExecutionLog = reportExecutionLog, ReportExecutionLogRepository = reportExecutionLogRepository, ExceptionMessage = "Report fliter not found", queueservice = queueservice, StatusCode = "F" };
                                     this.UpdateReportExecutionLog(updateReportExecutionLogArgs);
                                     //queueservice.Complete();
                                     LogDoneItemInMemory();
@@ -181,6 +181,12 @@ namespace CommunicationWorkerRole
             }
         }
 
+        private  void UpdateReportExecutionLogStatusToInProgress(ReportExecutionLog reportExecutionLog, ReportExecutionLogRepository reportExecutionLogRepository)
+        {
+            reportExecutionLog.StatusCode = "P";
+            reportExecutionLogRepository.Update(reportExecutionLog);
+            reportExecutionLogRepository.SubmitChanges();
+        }
 
         private void ConnectClient()
         {

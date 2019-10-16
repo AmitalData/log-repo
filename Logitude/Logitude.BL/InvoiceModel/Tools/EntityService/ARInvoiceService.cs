@@ -918,6 +918,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             // AR: Auto Credited
             // VD: Void
 
+            entityPM.IsFullAccounting = IsFullAccountingActivated(entityPM.Tenant);
+
             if (string.IsNullOrEmpty(entityPM.Id))
             {
                 entityPM.Id = IdCounter.GetNumber("ARInvoice", entityPM.Tenant).ToString();
@@ -1944,34 +1946,42 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             string myResult = "DRFT";
 
-            switch (entityPM.StatusCode)
+            if (entityPM.IsConstituentInvoice)
             {
-                case "NT":
-                case "CN":
-                    {
-                        if (this.isNewEntity)
+                myResult = "ACCT";
+            }
+
+            else
+            {
+                switch (entityPM.StatusCode)
+                {
+                    case "NT":
+                    case "CN":
                         {
-                            //myResult = "OAMT";
-                            myResult = "ACCT";
+                            if (this.isNewEntity)
+                            {
+                                //myResult = "OAMT";
+                                myResult = "ACCT";
+                            }
+
+                            break;
                         }
 
-                        break;
-                    }
+                    case "AD":
+                    case "PD":
+                    case "PP":
+                        {
+                            myResult = "ACCT";
+                            break;
+                        }
 
-                case "AD":
-                case "PD":
-                case "PP":
-                    {
-                        myResult = "ACCT";
-                        break;
-                    }
-                
-                case "VD":
-                case "LL":
-                    {
-                        myResult = "OAMT";
-                        break;
-                    }
+                    case "VD":
+                    case "LL":
+                        {
+                            myResult = "OAMT";
+                            break;
+                        }
+                }
             }
 
             return myResult;
@@ -2280,6 +2290,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         List<string> allInvoiceIds = entityPM.ConstituentInvoices.Select(s => s.Id).ToList();
                         List<ARInvoice> allInvoices = invoiceRepository.GetInvoicesListFromIdList(allInvoiceIds, tenant);
 
+                        this.ValidateConstituentInvoiceConnected(allInvoices);
+
                         foreach (ARInvoice myInvoice in allInvoices)
                         {
                             myInvoice.IsClosed = true;
@@ -2318,6 +2330,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                     List<string> allInvoiceIds = invoiceConstituentsChangeSet.Select(s => s.Id).ToList();
                     List<ARInvoice> allInvoices = invoiceRepository.GetInvoicesListFromIdList(allInvoiceIds, tenant);
+
+                    this.ValidateConstituentInvoiceConnected(allInvoices);
 
                     bool isConnectedInvoicesChanged = false;
                     
@@ -2426,6 +2440,18 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             myLineNumber += 1;
                         }
                     }
+                }
+            }
+        }
+
+        private void ValidateConstituentInvoiceConnected(List<ARInvoice> allInvoices)
+        {
+            if (allInvoices.Count > 0)
+            {
+                ARInvoice connectedConstituentInvoice = allInvoices.Where(d => d.StatusCode == "CN" && d.ConsolidationInvoiceId != this.entityPM.Id).FirstOrDefault();
+                if (connectedConstituentInvoice != null)
+                {
+                    throw new ApplicationException("Constituent Invoice: " + connectedConstituentInvoice.InvoiceNumber + " is connected to another Consolidation");
                 }
             }
         }

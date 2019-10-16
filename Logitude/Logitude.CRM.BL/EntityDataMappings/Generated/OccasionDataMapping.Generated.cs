@@ -37,7 +37,11 @@ namespace Logitude.CRM.BL.EntityDataMappings
 	         OwnerId, 
 	         IndustryId, 
 	         OccasionTypeId, 
-	         OccasionStatusId,
+	         OccasionStatusId, 
+	         ParticipatedCustomers, 
+	         ParticipatedContacts, 
+	         InvitedCustomers, 
+	         InvitedContacts,
 	      }
 
 
@@ -65,7 +69,11 @@ namespace Logitude.CRM.BL.EntityDataMappings
 	         TypeName, 
 	         OwnerName, 
 	         OccasionStatusName, 
-	         IndustryName,
+	         IndustryName, 
+	         ParticipatedCustomers, 
+	         ParticipatedContacts, 
+	         InvitedCustomers, 
+	         InvitedContacts,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -147,6 +155,26 @@ namespace Logitude.CRM.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OccasionStatusId))
             {
 				entityPOCO.OccasionStatusId = entityPM.OccasionStatusId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ParticipatedCustomers))
+            {
+				entityPOCO.ParticipatedCustomers = entityPM.ParticipatedCustomers;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ParticipatedContacts))
+            {
+				entityPOCO.ParticipatedContacts = entityPM.ParticipatedContacts;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InvitedCustomers))
+            {
+				entityPOCO.InvitedCustomers = entityPM.InvitedCustomers;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InvitedContacts))
+            {
+				entityPOCO.InvitedContacts = entityPM.InvitedContacts;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -235,6 +263,26 @@ namespace Logitude.CRM.BL.EntityDataMappings
 					entityPM.OccasionStatusId = entityPOCO.OccasionStatusId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ParticipatedCustomers))
+            {
+					entityPM.ParticipatedCustomers = entityPOCO.ParticipatedCustomers;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ParticipatedContacts))
+            {
+					entityPM.ParticipatedContacts = entityPOCO.ParticipatedContacts;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InvitedCustomers))
+            {
+					entityPM.InvitedCustomers = entityPOCO.InvitedCustomers;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InvitedContacts))
+            {
+					entityPM.InvitedContacts = entityPOCO.InvitedContacts;
+            }
+
 		}
 
 		public void PMToOldPM(OccasionPM entityPM, OccasionPM oldEntityPM)
@@ -314,6 +362,26 @@ namespace Logitude.CRM.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OccasionStatusId))
             {
                 oldEntityPM.OccasionStatusId = entityPM.OccasionStatusId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ParticipatedCustomers))
+            {
+                oldEntityPM.ParticipatedCustomers = entityPM.ParticipatedCustomers;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ParticipatedContacts))
+            {
+                oldEntityPM.ParticipatedContacts = entityPM.ParticipatedContacts;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InvitedCustomers))
+            {
+                oldEntityPM.InvitedCustomers = entityPM.InvitedCustomers;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InvitedContacts))
+            {
+                oldEntityPM.InvitedContacts = entityPM.InvitedContacts;
             }
 			
 		}

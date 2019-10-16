@@ -5,23 +5,15 @@ export class NewTask {
   private Helper: FieldsHelper;
   private Generator: GeneralFunctions;
 
-
   constructor() {
     this.Helper = new FieldsHelper();
     this.Generator = new GeneralFunctions();
   }
-
-
   public CreateNewTask(taskNo: string) {
-
     this.Helper.WaitByIdAndClick('NEWACTIVITY');
     this.Helper.WaitByIdAndClick('NEWTASK');
 
     this.FillTaskFields(taskNo);
-    this.Helper.WaitByIdAndClick('Ok-AddActivity');
-    this.Helper.WaitBusyIndicator();
-    this.Helper.WaitWindowClosed();
-
   }
 
   FillTaskFields(taskNo: string) {
@@ -42,6 +34,5 @@ export class NewTask {
     this.Helper.WaitWindowClosed();
   }
 }
-
 
 

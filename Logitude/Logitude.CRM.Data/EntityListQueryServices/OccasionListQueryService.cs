@@ -68,6 +68,11 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                                   UpdatedByUserName = a.UpdatedByUser != null ? a.UpdatedByUser.Contact.EnglishName : null,
 
                                                   IndustryName = a.Industry == null ? "" : a.Industry.Name,
+                                                  ParticipatedContacts = a.ParticipatedContacts,
+                                                  ParticipatedCustomers = a.ParticipatedCustomers,
+                                                  InvitedContacts = a.InvitedContacts,
+                                                  InvitedCustomers  =a.InvitedCustomers,
+
                                               });
             return query;
         }
