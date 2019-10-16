@@ -13,7 +13,6 @@ export class FieldsHelper {
         });
     }
 
-    //to choose last element
     WaitActionButtonAndClick(containerClassName: string, isLast: boolean) {
         var EC = protractor.ExpectedConditions;
         browser.wait(EC.elementToBeClickable(element(by.className(containerClassName))), 100000).then(a => {
@@ -34,16 +33,9 @@ export class FieldsHelper {
         var EC = protractor.ExpectedConditions;
         browser.wait(EC.elementToBeClickable(element(by.id(Id))), 100000000).then(a => {
             element(by.id(Id)).click();
-
         });
-
     }
 
-    WaitByIdAndClickRabaia(Id: string) {
-        var EC = protractor.ExpectedConditions;
-        return browser.wait(EC.elementToBeClickable(element(by.id(Id))), 1000000);
-
-    }
 
     ItemsVisibility(Id: string) {
         var EC = protractor.ExpectedConditions;
@@ -56,11 +48,7 @@ export class FieldsHelper {
 
         });
     }
-    // WaitBusyIndicator(){
-    //   var EC = protractor.ExpectedConditions;
-    //     browser.wait(EC.invisibilityOf(element(by.css(".BusyIndicatorControl"))), 100000).then(a=>{                             
-    //     });
-    // }
+
 
     WaitBusyIndicator() {
         var EC = protractor.ExpectedConditions;
@@ -195,49 +183,7 @@ export class FieldsHelper {
         });
     }
 
-    public ButtonClick(BtnId: string) {
-        var EC = protractor.ExpectedConditions;
-        browser.wait(EC.elementToBeClickable(element(by.id(BtnId))), 100000).then(a => {
-            var button = element(by.id(BtnId)).click();
-            console.log("Button Clicked");
-        });
-    }
 
-    public SmarWait_1(Id: string, Text: string) {
-        return browser.wait(function () {
-            var temp = "";
-            var Text1 = element(by.id(Id)).getAttribute('textContent').then(function (OrigionalText) {
-                temp = OrigionalText;
 
-                if (Text == OrigionalText) {
-                    var EC = protractor.ExpectedConditions;
-
-                    console.log("smart wait trueeeeeeeee");
-                    expect(Text).toBe(OrigionalText);
-
-                }
-                else {
-                    console.log("smart wait falseseeeeeeeee");
-                    return false;
-
-                }
-            });
-        }, 100000);
-    }
-    public SmartWait(Id: string, text: string) {
-        var EC = protractor.ExpectedConditions;
-        let testSearchingLookingMethod = function (elementFinder) {
-            let searchesForText = function () {
-                return elementFinder.getText().then(function (actualTextResultedFromAPromise) {
-                    return actualTextResultedFromAPromise;
-                });
-            };
-            return EC.and(EC.presenceOf(elementFinder), searchesForText);
-        };
-        return browser.wait(testSearchingLookingMethod(element(by.id(Id))), 1000000000);
-        //return element(by.id(Id)).getText().then(function (actualTextResultedFromAPromise) {
-        //    return actualTextResultedFromAPromise;
-        //});
-    }
 }
 
