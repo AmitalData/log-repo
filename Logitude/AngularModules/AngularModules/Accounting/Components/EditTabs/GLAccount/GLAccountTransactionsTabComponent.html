@@ -385,7 +385,7 @@
 
                                                 <td style="width: 90px;">
                                                     <LogDatePicker [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName"
-                                                        [NoObjectField]="true" [DataContext]="DataContext"
+                                                        [NoObjectField]="true" [ForceSubscribe]="true" [DataContext]="DataContext"
                                                         [HideColumns]="true" [SelectedDateValue]="FromDate"></LogDatePicker>
                                                 </td>
 
@@ -398,7 +398,7 @@
 
                                                 <td style="width: 90px;">
                                                     <LogDatePicker [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName"
-                                                        [NoObjectField]="true" [DataContext]="DataContext"
+                                                        [NoObjectField]="true"  [ForceSubscribe]="true"  [DataContext]="DataContext"
                                                         [HideColumns]="true" [SelectedDateValue]="ToDate"></LogDatePicker>
                                                 </td>
                                                 <td style="width:300px" rowspan="2">
