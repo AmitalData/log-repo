@@ -468,7 +468,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         public bool IsPending902 { get; set; }
         public bool IsPending900 { get; set; }
         public string CourierPendingReasonList { get; set; }
-        public string MAWB { get; internal set; }
+        public string MAWB { get; set; }
         public bool IsCourierMissingClassification { get; set; }
     }
 }
