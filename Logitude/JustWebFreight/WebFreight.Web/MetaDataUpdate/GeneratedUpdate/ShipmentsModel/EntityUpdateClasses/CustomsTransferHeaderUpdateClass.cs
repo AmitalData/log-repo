@@ -752,12 +752,50 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable CustomsTransferHeaderObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomsTransferHeader" && d.Tenant == 0).FirstOrDefault();
+		   List<ObjectField> CustomsTransferHeaderObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CustomsTransferHeader").ToList();
+		       
+	      
+
+	         Screen CustomsTransferHeaderCustomsTransferHeaderHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomsTransfer.HeaderScreen", Name = "CustomsTransferHeaderHeaderScreen", ObjectTableId = CustomsTransferHeaderObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
+      
+            ScreenField CustomsTransferHeaderCustomsTransferHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "TransferNumber").FirstOrDefault().Id, ScreenId = CustomsTransferHeaderCustomsTransferHeaderHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField CustomsTransferHeaderCustomsTransferHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "TransferDate").FirstOrDefault().Id, ScreenId = CustomsTransferHeaderCustomsTransferHeaderHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField CustomsTransferHeaderCustomsTransferHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "FileName").FirstOrDefault().Id, ScreenId = CustomsTransferHeaderCustomsTransferHeaderHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField CustomsTransferHeaderCustomsTransferHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "CreatedByUserName").FirstOrDefault().Id, ScreenId = CustomsTransferHeaderCustomsTransferHeaderHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField CustomsTransferHeaderCustomsTransferHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = CustomsTransferHeaderObjectFields.Where(d => d.FieldName == "CustomsTransferTypeName").FirstOrDefault().Id, ScreenId = CustomsTransferHeaderCustomsTransferHeaderHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         	
+		    CustomsTransferHeaderObjectTable.HeaderScreenId = CustomsTransferHeaderCustomsTransferHeaderHeaderScreenScreen0.Id;
+	   		  
 
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {      
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable CustomsTransferHeaderObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomsTransferHeader" && d.Tenant == 0).FirstOrDefault();  
+                 
+			   TextCode CustomsTransferHeaderDetailsTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomsTransferHeader.TH.Details", DefaultText = "Details",LocalDefaultText = "Details", ObjectTableId = CustomsTransferHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature CustomsTransferHeaderDetailsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsTransferHeader.Tab.Details", ObjectTableId = CustomsTransferHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsTransferHeaderFeatures.CTGR", NameTextCodeDefaultText = "Details", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+ 
+                 
+			   TextCode CustomsTransferHeaderEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomsTransferHeader.TH.Events", DefaultText = "Events",LocalDefaultText = "Events", ObjectTableId = CustomsTransferHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature CustomsTransferHeaderEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsTransferHeader.Tab.Events", ObjectTableId = CustomsTransferHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsTransferHeaderFeatures.CTET", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			 TextCodeRepository.SubmitChanges();
+			 FeaturesRepository.SubmitChanges();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			    
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CTGR",HtmlComponentName = "CustomsTransferGeneralTabComponent",HtmlComponentUrl = "./ShipmentModules/ShipmentAMANAC/Components/EditTabs/CustomsTransferGeneralTabComponent", FeatureId = CustomsTransferHeaderDetailsFeature_TH0.Id, ControlPath = "CustomsTransferGeneralTabComponent", ObjectTableId = CustomsTransferHeaderObjectTable.Id, TabNameTextCodeId = CustomsTransferHeaderDetailsTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CTET",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomsTransferHeaderEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CustomsTransferHeaderObjectTable.Id, TabNameTextCodeId = CustomsTransferHeaderEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
