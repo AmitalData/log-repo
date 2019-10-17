@@ -450,8 +450,7 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
     ArchivedRecordNumber = 0;
     SaveData() {
         this.ArchivedRecordNumber = 0;
-        if (this.SelectedRecords.length > 0 || this.IsAllRecordSelected == true) {
-            this.StartBusyIndicator("Archiving ...");
+        if (this.SelectedRecords.length > 0 || this.IsAllRecordSelected == true) { 
             //if (this.IsAllRecordSelected == true) {
             //    this._ShipmentPMService.ArchiveAllShipments(this.filterAgrs).subscribe(myResult => {
             //        if (!myResult.HasError) {
@@ -465,8 +464,10 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
             //    });
             //}
             //else {
-            for (var i = 0; i < (this.SelectedRecords.length / 10); i += 9) {
-                var TenSelectedRecords = this.SelectedRecords.slice(i,i+10)
+            var NumberOfTimes = ((this.SelectedRecords.length % 10) == 0 ? (this.SelectedRecords.length / 10) : (this.SelectedRecords.length / 10) + 1)
+            for (var i = 0; i < NumberOfTimes; i += 9) {
+                var TenSelectedRecords = this.SelectedRecords.slice(i, i + 10)
+                this.StartBusyIndicator("Archiving " + TenSelectedRecords.length + "/" + this.SelectedRecords.length  + " ...");
                 this._ShipmentPMService.ArchiveShipments(TenSelectedRecords).subscribe(myResult => {
                     if (!myResult.HasError) {
                         if ((this.ArchivedRecordNumber + 10) > this.SelectedRecords.length) {
@@ -475,7 +476,7 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
                         else {
                             this.ArchivedRecordNumber += 10;
                         }
-                        this.StartBusyIndicator("Archiving " + this.ArchivedRecordNumber + " ...");
+                        this.StartBusyIndicator("Archiving " + this.ArchivedRecordNumber + "/" + this.SelectedRecords.length + " ...");
                         if (this.SelectedRecords.length == this.ArchivedRecordNumber) {
                             this.StopBusyIndicator();
                             this.LoadImporterShipments();
