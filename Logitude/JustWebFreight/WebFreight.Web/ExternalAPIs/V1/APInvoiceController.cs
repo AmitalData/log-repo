@@ -140,7 +140,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                         else
                         {
-                            apinvoicePM = apinvoiceQuery.APInvoiceCustomDataMappingAndValidating(apinvoice, tenant, computingPartnerCode);                           
+                            apinvoicePM = apinvoiceQuery.APInvoiceCustomDataMappingAndValidating(apinvoice, tenant, computingPartnerCode);
+                            apinvoicePM.CreatedFromAPI = true;
                         }
                         
                         APInvoiceService apinvoiceService = new APInvoiceService(MyContext, tenant);

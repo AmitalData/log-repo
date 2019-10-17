@@ -213,13 +213,13 @@
                                                 </div>
 
                                                 <!-- Pickup -->
-                                                <div style="margin-bottom:5px; height:22px;">
+                                                <div id="{{'IncludePickupDiv' | IdGeneratorPipe}}" style="margin-bottom:5px; height:22px;">
                                                     <!--<CheckBox [IsChecked]="CopyPickUpIsChecked" (Checked)="CopyPickUpIsChecked = $event" [Text]="'Include PickUp'"></CheckBox>-->
                                                     <LogCheckBox [ObjectFieldName]="'CopyPickUpIsChecked'" [Checked]="CopyPickUpIsChecked" [Text]="'Include PickUp'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [NoObjectField]="true" [HideColumns]="true"></LogCheckBox>
                                                 </div>
 
                                                 <!-- Delivery -->
-                                                <div style="height:22px;">
+                                                <div  id="{{'IncludeDeliveryDiv' | IdGeneratorPipe}}" style="height:22px;">
                                                     <!--<CheckBox [IsChecked]="CopyDeliveryIsChecked" (Checked)="CopyDeliveryIsChecked = $event" [Text]="'Include Delivery'"></CheckBox>-->
                                                     <LogCheckBox [ObjectFieldName]="'CopyDeliveryIsChecked'" [Checked]="CopyDeliveryIsChecked" [Text]="'Include Delivery'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [NoObjectField]="true" [HideColumns]="true"></LogCheckBox>
                                                 </div>

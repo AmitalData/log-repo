@@ -48,10 +48,25 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                  }).FirstOrDefault();
 
             entityPM.CustomsTransferLines = linesQuery.GetCustomsTransferLinePMsForTransferHeader(id, tenant).ToList();
-            
+
+            ShipmentRepository myRepository = new ShipmentRepository(tenant);
+
+            foreach (CustomsTransferLinePM item in entityPM.CustomsTransferLines)
+            {
+                Shipment entity = myRepository.GetSingleShipment(item.ShipmentId, tenant);
+
+                if (entity != null)
+                {
+                    item.ArrivalDate = entity.FinalArrivalDate;
+                    item.Shipper = entity.ShipperName;
+                    item.Consignee = entity.ConsigneeName;
+                    item.Status = entity.EntityStatus == null ? "" : entity.EntityStatus.Name;
+                }
+            }
+
             return entityPM;
         }
-
+        
         public IQueryable<CustomsTransferHeaderList> GetIQueryableEntityList(IQueryable<CustomsTransferHeader> iQueryable)
         {
             var result = from a in iQueryable
@@ -66,6 +81,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                              TransferNumber = a.TransferNumber,
                              CreatedByUserId = a.CreatedByUserId,
                              Notes = a.Notes,
+                             CreatedByUserName = a.CreatedByUser == null ? "" : (a.CreatedByUser.Contact == null ? "" : a.CreatedByUser.Contact.EnglishName),
+                             CustomsTransferTypeName = a.CustomsTransferType == null ? "" : a.CustomsTransferType.Name,
                          };
 
             return result;

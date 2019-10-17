@@ -29,11 +29,11 @@ export class CustomsTransferGeneralTabComponent extends BaseComponent {
     }
     
     RebuildClicked() {
-        //this.CurrentSession.StartBusyIndicator("Rebuilding ...");
+        this.CurrentSession.StartBusyIndicator("Rebuilding ...");
 
-        //this.shipmentDomainService.RebuildTransferFile(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
-        //    this.CurrentSession.StopBusyIndicator();
-        //});
+        this.shipmentDomainService.RebuildTransferFile(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+            this.CurrentSession.StopBusyIndicator();
+        });
     }
 
     DownloadClicked() {
