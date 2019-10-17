@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entity.FileName = entityPM.FileName;
             entity.CreatedByUserId = entityPM.CreatedByUserId;
             entity.Notes = entityPM.Notes;
-            entity.SearchFields = entityPM.SearchFields;
+
+            string mySearchFields = "";
+            
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.TransferNumber);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.FileName);
+
+            entityPM.SearchFields = mySearchFields;
+            entity.SearchFields = mySearchFields;
         }
 
         public static void MapLine(CustomsTransferLinePM entityPM, CustomsTransferLine entity, bool isNewState)
@@ -38,7 +46,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
             entity.ShipmentId = entityPM.ShipmentId;
             entity.ShipmentNumber = entityPM.ShipmentNumber;
-            entity.SearchFields = entityPM.SearchFields;
         }
     }
 }

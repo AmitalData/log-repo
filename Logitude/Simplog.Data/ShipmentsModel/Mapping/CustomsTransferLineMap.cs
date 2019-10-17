@@ -36,11 +36,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
                 .IsOptional()
                 .HasMaxLength(20)
                 .IsUnicode(false);
-
-            this.Property(t => t.SearchFields)
-                .HasMaxLength(1000)
-                .IsOptional().IsUnicode(true);
-
+            
 
             // Table & Column Mappings
             this.ToTable("CustomsTransferLines");
@@ -49,7 +45,6 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.CustomsTransferHeaderId).HasColumnName("CustomsTransferHeaderId");
             this.Property(t => t.ShipmentId).HasColumnName("ShipmentId");
             this.Property(t => t.ShipmentNumber).HasColumnName("ShipmentNumber");
-            this.Property(t => t.SearchFields).HasColumnName("SearchFields");
 
             // Relationships
             this.HasRequired(t => t.CustomsTransferHeader).WithMany().HasForeignKey(d => d.CustomsTransferHeaderId);
