@@ -104,7 +104,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetPaymentChequeByPaymentId(string paymentId)
+        public HttpResponseMessage GetPaymentChequeByPaymentIdAndChequeNumber(string paymentId , string chequeNo)
         {
             try
             {
@@ -116,9 +116,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                     IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
                     PaymentChequeQueryService paymentChequeQueryService = new PaymentChequeQueryService(MyContext);
                     if (paymentId == "undefined") paymentId = null;
-                    List<PaymentChequePM> paymentCheques = paymentChequeQueryService.GetPaymentChequesByPaymentId(paymentId, authToken.Tenant);
+                    PaymentChequePM paymentCheque = paymentChequeQueryService.GetPaymentChequeByPaymentIdAndChequeNo(chequeNo,paymentId, authToken.Tenant);
 
-                    return Request.CreateResponse(HttpStatusCode.OK, paymentCheques.First());
+                    return Request.CreateResponse(HttpStatusCode.OK, paymentCheque);
                 }
                 catch (Exception ex)
                 {
