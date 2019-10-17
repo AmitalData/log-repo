@@ -62,7 +62,7 @@ SETLOCAL
     cd /
     cd windows
     c:
-    cd C:\Automation e2e\TeamAyman\Test\screenshots
+    cd C:\Automation e2e\TeamAyman\prod\screenshots
 
     IF EXIST images (
         cd /
