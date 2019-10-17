@@ -19,6 +19,7 @@ namespace Logitude.Infrastructure.BL.CloseTables
        public const string RunReportViaWorkerRole = "RRW";  
        public const string ARPaymentFetchaPago = "FPG";  
        public const string TicketJumpingCounter = "TJC";  
+       public const string MultipileAPShipment = "MAP";  
     }
 }
 

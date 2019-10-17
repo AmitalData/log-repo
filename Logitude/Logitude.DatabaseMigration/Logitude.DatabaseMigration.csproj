@@ -1469,14 +1469,6 @@
     <Compile Include="Migrations\201909091017333_VatTypeRecognizedPercentageMigration.Designer.cs">
       <DependentUpon>201909091017333_VatTypeRecognizedPercentageMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201909111259248_Nawras_CreateLogBoxTenantSettingTable.cs" />
-    <Compile Include="Migrations\201909111259248_Nawras_CreateLogBoxTenantSettingTable.Designer.cs">
-      <DependentUpon>201909111259248_Nawras_CreateLogBoxTenantSettingTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201909111400134_Nawras_Delete7FieldsFromTenantTable.cs" />
-    <Compile Include="Migrations\201909111400134_Nawras_Delete7FieldsFromTenantTable.Designer.cs">
-      <DependentUpon>201909111400134_Nawras_Delete7FieldsFromTenantTable.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201909110732513_RenameDescriptionFieldToNotesInTariff_Samar.cs" />
     <Compile Include="Migrations\201909110732513_RenameDescriptionFieldToNotesInTariff_Samar.Designer.cs">
       <DependentUpon>201909110732513_RenameDescriptionFieldToNotesInTariff_Samar.cs</DependentUpon>
@@ -1488,22 +1480,6 @@
     <Compile Include="Migrations\201909150859476_PaymentChequeLocalNameMigration.cs" />
     <Compile Include="Migrations\201909150859476_PaymentChequeLocalNameMigration.Designer.cs">
       <DependentUpon>201909150859476_PaymentChequeLocalNameMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201909151332019_AddOpenReceivablesLinesField.cs" />
-    <Compile Include="Migrations\201909151332019_AddOpenReceivablesLinesField.Designer.cs">
-      <DependentUpon>201909151332019_AddOpenReceivablesLinesField.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201909161137037_AddCreditLimitPartnersSettings.cs" />
-    <Compile Include="Migrations\201909161137037_AddCreditLimitPartnersSettings.Designer.cs">
-      <DependentUpon>201909161137037_AddCreditLimitPartnersSettings.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201909151004078_Nawras_AddFieldsToWarehouseReleaseTable.cs" />
-    <Compile Include="Migrations\201909151004078_Nawras_AddFieldsToWarehouseReleaseTable.Designer.cs">
-      <DependentUpon>201909151004078_Nawras_AddFieldsToWarehouseReleaseTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201909180751302_Nawras_Add2FieldsToWarehouseRelaeaseTable.cs" />
-    <Compile Include="Migrations\201909180751302_Nawras_Add2FieldsToWarehouseRelaeaseTable.Designer.cs">
-      <DependentUpon>201909180751302_Nawras_Add2FieldsToWarehouseRelaeaseTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201909250807022_ReconcileExternalPageLineIdNullable.cs" />
     <Compile Include="Migrations\201909250807022_ReconcileExternalPageLineIdNullable.Designer.cs">
@@ -1524,6 +1500,10 @@
     <Compile Include="Migrations\201909300620491_AbedAddBCCFieldToDocumentTypeTemplate.cs" />
     <Compile Include="Migrations\201909300620491_AbedAddBCCFieldToDocumentTypeTemplate.Designer.cs">
       <DependentUpon>201909300620491_AbedAddBCCFieldToDocumentTypeTemplate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909301617282_addNotInvoicedReceivablesAmount.cs" />
+    <Compile Include="Migrations\201909301617282_addNotInvoicedReceivablesAmount.Designer.cs">
+      <DependentUpon>201909301617282_addNotInvoicedReceivablesAmount.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201910010723488_RemoveOpenReceivablesLines.cs" />
     <Compile Include="Migrations\201910010723488_RemoveOpenReceivablesLines.Designer.cs">
@@ -1560,6 +1540,10 @@
     <Compile Include="Migrations\201910131134436_AddShipmentCustomsTransferTables_Samar.cs" />
     <Compile Include="Migrations\201910131134436_AddShipmentCustomsTransferTables_Samar.Designer.cs">
       <DependentUpon>201910131134436_AddShipmentCustomsTransferTables_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910151744432_AddDetectingChanges.cs" />
+    <Compile Include="Migrations\201910151744432_AddDetectingChanges.Designer.cs">
+      <DependentUpon>201910151744432_AddDetectingChanges.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
@@ -2605,12 +2589,6 @@
     <EmbeddedResource Include="Migrations\201909091017333_VatTypeRecognizedPercentageMigration.resx">
       <DependentUpon>201909091017333_VatTypeRecognizedPercentageMigration.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909111259248_Nawras_CreateLogBoxTenantSettingTable.resx">
-      <DependentUpon>201909111259248_Nawras_CreateLogBoxTenantSettingTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909111400134_Nawras_Delete7FieldsFromTenantTable.resx">
-      <DependentUpon>201909111400134_Nawras_Delete7FieldsFromTenantTable.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909110732513_RenameDescriptionFieldToNotesInTariff_Samar.resx">
       <DependentUpon>201909110732513_RenameDescriptionFieldToNotesInTariff_Samar.cs</DependentUpon>
     </EmbeddedResource>
@@ -2619,18 +2597,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909150859476_PaymentChequeLocalNameMigration.resx">
       <DependentUpon>201909150859476_PaymentChequeLocalNameMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909151332019_AddOpenReceivablesLinesField.resx">
-      <DependentUpon>201909151332019_AddOpenReceivablesLinesField.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909161137037_AddCreditLimitPartnersSettings.resx">
-      <DependentUpon>201909161137037_AddCreditLimitPartnersSettings.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909151004078_Nawras_AddFieldsToWarehouseReleaseTable.resx">
-      <DependentUpon>201909151004078_Nawras_AddFieldsToWarehouseReleaseTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909180751302_Nawras_Add2FieldsToWarehouseRelaeaseTable.resx">
-      <DependentUpon>201909180751302_Nawras_Add2FieldsToWarehouseRelaeaseTable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909250807022_ReconcileExternalPageLineIdNullable.resx">
       <DependentUpon>201909250807022_ReconcileExternalPageLineIdNullable.cs</DependentUpon>
@@ -2646,6 +2612,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909300620491_AbedAddBCCFieldToDocumentTypeTemplate.resx">
       <DependentUpon>201909300620491_AbedAddBCCFieldToDocumentTypeTemplate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909301617282_addNotInvoicedReceivablesAmount.resx">
+      <DependentUpon>201909301617282_addNotInvoicedReceivablesAmount.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910010723488_RemoveOpenReceivablesLines.resx">
       <DependentUpon>201910010723488_RemoveOpenReceivablesLines.cs</DependentUpon>
@@ -2673,6 +2642,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910131134436_AddShipmentCustomsTransferTables_Samar.resx">
       <DependentUpon>201910131134436_AddShipmentCustomsTransferTables_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910151744432_AddDetectingChanges.resx">
+      <DependentUpon>201910151744432_AddDetectingChanges.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

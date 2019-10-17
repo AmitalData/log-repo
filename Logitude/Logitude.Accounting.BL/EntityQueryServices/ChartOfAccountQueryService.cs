@@ -62,7 +62,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                     Level5Code="",
 
                     GLAccountId = "",
-                    IsMultiCurrency = false,
                     GLAccountName = "",
                     GLAccountNumber="",
                     ChartOfAccountId ="",
@@ -103,7 +102,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                      Level5Code = "",
 
                      GLAccountId = "",
-                     IsMultiCurrency = false,
                     GLAccountName = "",
                     GLAccountNumber="",
                      ChartOfAccountId = "",
@@ -123,7 +121,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                          Tenant = lastChartLevel.Tenant,
                          Level1Id = lastChartLevel.Level1Id,
                          Level1Name = lastChartLevel.Level1Name,
-                         Level1Code = lastChartLevel.Level1Code,
+                         Level1Code=lastChartLevel.Level1Code,
 
                          Level2Id = lastChartLevel.Level2Id,
                          Level2Name = lastChartLevel.Level2Name,
@@ -142,7 +140,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                          Level5Code = lastChartLevel.Level5Code,
 
                          GLAccountId = "",
-                         IsMultiCurrency = false,
                          GLAccountName = "",
                          GLAccountNumber="",
                          ChartOfAccountId = "",
@@ -183,7 +180,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                         Level5Code = lastChartLevel.Level5Code,
 
                         GLAccountId = "",
-                        IsMultiCurrency = false,
                         GLAccountName = "",
                         GLAccountNumber="",
                         ChartOfAccountId = "",
@@ -223,7 +219,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                       Level5Code = currentChartLevel.Code,
 
                       GLAccountId = "",
-                      IsMultiCurrency = false,
                       GLAccountName = "",
                       GLAccountNumber="",
                       ChartOfAccountId = "",
@@ -488,7 +483,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public string LeafId { get; set; }
         public string GLAccountNumber { get; set; }
         public string ChartOfAccountId { get; set; }
-        public bool? IsMultiCurrency { get;  set; }
+
     }
 
 }

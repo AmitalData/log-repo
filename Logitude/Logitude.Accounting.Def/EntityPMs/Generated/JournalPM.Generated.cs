@@ -903,7 +903,30 @@ namespace Logitude.Accounting.Def.EntityPMs
               }
              set {  deletedJournalExternalReconciles = value; }
 	    }
-	     }
+	  	  private string lineCreditAccountTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LineCreditAccountTypeCode  
+	   {
+	    
+	     get
+		{
+		   return lineCreditAccountTypeCode;
+		 }
+		 set
+		 {
+		   if(lineCreditAccountTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LineCreditAccountTypeCode",OldValue=lineCreditAccountTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   lineCreditAccountTypeCode=value;
+		   }
+			
+		 }
+	   }
+   }
    
 }
 	 

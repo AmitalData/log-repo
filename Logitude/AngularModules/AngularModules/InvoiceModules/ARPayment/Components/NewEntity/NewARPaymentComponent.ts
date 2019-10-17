@@ -481,6 +481,8 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         if (!SessionLocator.LoggedUserPM.IsCustomerCare) {
             this.newARPaymentPM.BranchId = SessionLocator.LoggedUserPM.BranchId;
         }
+
+        this.EntityPM = this.newARPaymentPM;
     }
 
     get RegisterDate() { return this.newARPaymentPM.RegisterDate; }
@@ -820,6 +822,13 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         }
     }
 
+    get BranchId() { return this.newARPaymentPM.BranchId; }
+    set BranchId(value: string) {
+        if (this.newARPaymentPM.BranchId != value) {
+            this.newARPaymentPM.BranchId = value;
+        }
+    }
+
     ComputeTotals() {
         this.OpenAmount = this.AmountInPaymentCurrency;
         this.AmountInLocalCurrency = this.PaymentCurrencyExchangeRate == null ? 0 : this.AmountInPaymentCurrency * this.PaymentCurrencyExchangeRate;
@@ -947,6 +956,10 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
             if (!this.IsNegativeAmountEnabled) {
                 errors.push(TextCodeTranslator.Translate("ARPayment.M.CantSetMinusAmount"));
             }
+        }
+
+        if (AppTool.IsNullOrEmpty(this.newARPaymentPM.BranchId)) {
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.BranchId")));
         }
 
         this.ValidationErrorsList = errors;

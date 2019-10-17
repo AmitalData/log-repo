@@ -120,11 +120,9 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
 
         public string RegulatedAgentNumber { get; set; }
         public bool RegulatedAgentRegimeActivated { get; set; }
-        
         public string CustomerId { get; set; }
         public virtual Card CustomerCard { get; set; }
         public bool IsCustomerTenantShare { get; set; }
-        
         public bool CustomerTenantShareExportFile { get; set; }
 
 
@@ -137,7 +135,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
 
         public virtual VatFormatType VatFormatType { get; set; }
         public virtual Country VatFormatCountry { get; set; }
-        
+
 
         public bool IsCorrespondenceRightToLeftEnabled { get; set; }
         public bool IsNotesRightToLeftEnabled { get; set; }
@@ -152,7 +150,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string FMCNumber { get; set; }
         public bool TenantVATManagement { get; set; }
 
-       
         public string StorageEncryptionKey { get; set; }
         public string LayoutDirection { get; set; }
 
@@ -161,9 +158,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string TemperatureUnitCode { get; set; }
 
         public string DefaultSLAId { get; set; }
-        
         public int TenantEmailSendingQuota { get; set; }
-        
 
         public string NumberFormatCode { get; set; }
 
@@ -181,7 +176,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string CheckDigitControlAlgorithmCode { get; set; }
 
         public bool ApplyVATForAllPartners { get; set; }
-
         public LogBoxTenantSetting LogBoxTenantSetting { get; set; }
     }
 }

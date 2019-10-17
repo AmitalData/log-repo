@@ -231,7 +231,7 @@ export class ShipmentHelperComponent implements OnDestroy {
     setImportAWBWizardButton() {
         this.IsImportAWBWizardButtonVisible = false;
         if (FeatureLocator.HasFeaturePermession("Shipment", "IMPORTAWBWIZARD")) {
-            if (this.EntityPM.DirectionId == "I") {
+            if (this.EntityPM.DirectionId == "I" && this.EntityPM.TransportModeId == "A") {
                 this.IsImportAWBWizardButtonVisible = true;
             }
         }

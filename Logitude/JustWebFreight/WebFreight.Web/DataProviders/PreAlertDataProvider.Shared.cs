@@ -183,6 +183,13 @@ namespace WebFreight.Web.DataProviders
         public DateTime? Transshipment2ETD_DateTime { get; set; }
         public DateTime? MainCarriageETD_DateTime { get; set; }
 
+        public DateTime? MainCarriageETA_DateTime { get; set; }
+        public DateTime? Transshipment1ETA_DateTime { get; set; }
+        public DateTime? Transshipment2ETA_DateTime { get; set; }
+        public DateTime? Transshipment3ETD_DateTime { get; set; }
+        public DateTime? Transshipment3ETA_DateTime { get; set; }
+
+
         public string ReleasingAgentName { get; set; }
         public string ReleasingAgentAddress { get; set; }
 

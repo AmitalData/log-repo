@@ -281,11 +281,11 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   BluesnapEAWBContractId = a.BluesnapEAWBContractId,
                                                   BluesnapEAWBSContractId = a.BluesnapEAWBSContractId,
                                                   BluesnapOneTimeContract = a.BluesnapOneTimeContract,
-                                                  BluesnapContractQTY=a.BluesnapContractQTY,
-                                                  BluesnapCRMContractQTY=a.BluesnapCRMContractQTY,
-                                                  BluesnapEAWBContractQTY=a.BluesnapEAWBContractQTY,
-                                                  BluesnapEAWBSContractQTY=a.BluesnapEAWBSContractQTY,
-                                                  BluesnapOneTimeContractQTY=a.BluesnapOneTimeContractQTY,
+                                                  BluesnapContractQTY = a.BluesnapContractQTY,
+                                                  BluesnapCRMContractQTY = a.BluesnapCRMContractQTY,
+                                                  BluesnapEAWBContractQTY = a.BluesnapEAWBContractQTY,
+                                                  BluesnapEAWBSContractQTY = a.BluesnapEAWBSContractQTY,
+                                                  BluesnapOneTimeContractQTY = a.BluesnapOneTimeContractQTY,
                                                   BluesnapInttraStockContractQTY = a.BluesnapInttraStockContractQTY,
                                                   BluesnapInttraStockContractId = a.BluesnapInttraStockContractId,
                                                   //     BluesnapContractId = a.BluesnapContract == null ? null : a.BluesnapContract.ContractId,
@@ -978,7 +978,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
         }
 
         public List<TenantManagementDW> GetTenantManagementDWs(int tenant, int skip, int take)
-        {            
+        {
             List<TenantManagementDW> result = (from a in repository.context.TenantManagements.Include("PaymentChannel").Include("PaymentCurrency").Include("RecurringPeriod")
                                                select new TenantManagementDW()
                                                {
@@ -996,11 +996,11 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                    IsMultiPackage = a.IsMultiPackage,
                                                    PackageCode = a.PackageCode,
                                                    MainPackage = a.PackageName,
-                                                   CRMYN =a.PackageCode == "LOGI" ? "Y": "N",
+                                                   CRMYN = a.PackageCode == "LOGI" ? "Y" : "N",
                                                    EAWBYN = a.IsAWBStockPrepaid || a.PackageCode == "EAWB" || a.PackageCode == "BUBK" ? "Y" : "N",
-                                                   MainPackageNumberOfUsers =!a.IsMultiPackage ? a.NumberOfUsers:0,
+                                                   MainPackageNumberOfUsers = !a.IsMultiPackage ? a.NumberOfUsers : 0,
                                                    CRMNumberOfUsers = !a.IsMultiPackage && a.PackageCode == "LOGI" ? a.NumberOfUsers : 0,
-                                                   EAWBNumberOfUsers = !a.IsMultiPackage && (a.PackageCode == "EAWB" ||  a.PackageCode == "BUBK") ? a.NumberOfUsers : 0,
+                                                   EAWBNumberOfUsers = !a.IsMultiPackage && (a.PackageCode == "EAWB" || a.PackageCode == "BUBK") ? a.NumberOfUsers : 0,
                                                }).OrderBy(d => d.TenantNumber).Skip(skip).Take(take).ToList();
 
             List<int> tenantManagementIds = new List<int>();
@@ -1075,21 +1075,21 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                 }
             }
 
-            
+
             return result;
         }
 
-        private bool CheckIfMultiPackageHasThisCode(List<TenantManagementLicensePM>  multiPackage , string packageCode, string packageCode2=null)
+        private bool CheckIfMultiPackageHasThisCode(List<TenantManagementLicensePM> multiPackage, string packageCode, string packageCode2 = null)
         {
             TenantManagementLicensePM tenantManagementLicensePM = null;
-            if(multiPackage!=null)
-            tenantManagementLicensePM = multiPackage.Where(d => d.PackageCode == packageCode).FirstOrDefault();
-            if(tenantManagementLicensePM == null && !string.IsNullOrEmpty(packageCode2))
+            if (multiPackage != null)
+                tenantManagementLicensePM = multiPackage.Where(d => d.PackageCode == packageCode).FirstOrDefault();
+            if (tenantManagementLicensePM == null && !string.IsNullOrEmpty(packageCode2))
             {
-                 tenantManagementLicensePM = multiPackage.Where(d => d.PackageCode == packageCode2).FirstOrDefault();
+                tenantManagementLicensePM = multiPackage.Where(d => d.PackageCode == packageCode2).FirstOrDefault();
             }
-           
-            return tenantManagementLicensePM !=null ?true:false;
+
+            return tenantManagementLicensePM != null ? true : false;
         }
     }
 }

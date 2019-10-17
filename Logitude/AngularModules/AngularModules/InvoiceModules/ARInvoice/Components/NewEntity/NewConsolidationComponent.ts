@@ -433,6 +433,13 @@ export class NewConsolidationComponent extends BaseComponent {
         }
     }
 
+    get BranchId() { return this.EntityPM.BranchId; }
+    set BranchId(value: string) {
+        if (this.EntityPM.BranchId != value) {
+            this.EntityPM.BranchId = value;
+        }
+    }
+
     // Load Date 
     private LastRatesList: LastRate[] = [];
     private myCurrencyRatesService: CurrencyRatesService;
@@ -592,6 +599,10 @@ export class NewConsolidationComponent extends BaseComponent {
             if (this.MetodoPagoCode == "PUE" && this.SATPaymentMethodCode == "99") {
                 errors.push("Since the metodo pago was set as PUE, you can't select Por definir (99). Please choose another value for the forma Pago.");
             }
+        }
+
+        if (AppTool.IsNullOrEmpty(this.EntityPM.BranchId)) {
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.BranchId")));
         }
 
         //if (errors.length == 0) {

@@ -12,7 +12,7 @@
                     <td style="color:#1B90CB;font-size:14px;">Filter By:</td>
                 </tr>
 
-                <tr style="height:28px;">
+                <tr class="FormFieldRow">
                     <td>
                         <table>
                             <tr>
@@ -62,7 +62,7 @@
                     </td>
                 </tr>
 
-                <tr style="height:28px;">
+                <tr class="FormFieldRow">
                     <td>
                         <table>
                             <tr>
@@ -80,8 +80,14 @@
                                     </LogLov>
                                 </td>
 
-                                <td style="width: 1px;">
+                                <td style="width: 190px;">
                                     <CheckBox [IsChecked]="IncludeAccountedOnly" (Checked)="IncludeAccountedOnly = $event" [Text]="'Include Accounted Only'"></CheckBox>
+                                </td>
+
+                                <td style="width:20px;"><div></div></td>
+                                <td style="width:80px;" class="Label">Shipment No: </td>
+                                <td style="width:110px;">
+                                    <LogTextBox [NoObjectField]="true" [Text]="ShipmentNumber" [ObjectFieldName]="'ShipmentNumber'" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                 </td>
 
                                 <td>
@@ -92,7 +98,7 @@
                     </td>
                 </tr>
 
-                <tr style="height:28px;">
+                <tr class="FormFieldRow">
                     <td>
                         <table>
                             <tr>

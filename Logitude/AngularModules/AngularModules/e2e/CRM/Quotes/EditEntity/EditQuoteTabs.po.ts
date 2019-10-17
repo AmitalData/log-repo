@@ -2,11 +2,11 @@ import { browser, by, element, WebDriver, protractor } from 'protractor';
 import { FieldsHelper } from '../../../Helpers/FieldsHelper';
 import { GeneralFunctions } from '../../../Helpers/GeneralFunctions';
 import { OverviewTabComponent } from './OverviewTab';
-import { DetailsTabComponent} from './DetailsTab';
-import { PartnerTabComponent} from './PartnerTab';
-import { PackagesTabComponent} from './PackagesTab';
-import { RoutingsTabComponent} from './RoutingsTab';
-import { ChargesTabComponent} from './ChargesTab';
+import { DetailsTabComponent } from './DetailsTab';
+import { PartnerTabComponent } from './PartnerTab';
+import { PackagesTabComponent } from './PackagesTab';
+import { RoutingsTabComponent } from './RoutingsTab';
+import { ChargesTabComponent } from './ChargesTab';
 import { QuoteActions } from '../EditEntity/QuoteActions';
 
 export class EditTabsComponent {
@@ -48,4 +48,3 @@ export class EditTabsComponent {
     }
 
 }
-

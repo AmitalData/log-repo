@@ -799,20 +799,22 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
         this.PackagesTotalPrice = ArrayTool.Sum(this.PackagesList, "Price");
         this.PackagesTotalTotalPrice = ArrayTool.Sum(this.PackagesList, "TotalPrice");
 
-        if (this.NumberOfUsers) {
-            this.PackagesTotalNumberOfUsers += this.NumberOfUsers;
-        }
+        if (!this.IsMultiPackage) {
+            if (this.NumberOfUsers) {
+                this.PackagesTotalNumberOfUsers += this.NumberOfUsers;
+            }
 
-        if (this.FreeUsers) {
-            this.PackagesTotalFreeUsers += this.FreeUsers;
-        }
+            if (this.FreeUsers) {
+                this.PackagesTotalFreeUsers += this.FreeUsers;
+            }
 
-        if (this.LicensePrice) {
-            this.PackagesTotalPrice += this.LicensePrice;
-        }
+            if (this.LicensePrice) {
+                this.PackagesTotalPrice += this.LicensePrice;
+            }
 
-        if (this.TotalPrice) {
-            this.PackagesTotalTotalPrice += this.TotalPrice;
+            if (this.TotalPrice) {
+                this.PackagesTotalTotalPrice += this.TotalPrice;
+            }
         }
     }
 
@@ -1138,6 +1140,8 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     set IsMultiPackage(newValue: boolean) {
         if (this.EntityPM.IsMultiPackage != newValue) {
             this.EntityPM.IsMultiPackage = newValue;
+
+            this.ComputePackagesTotals();
 
             this.SetUIProperties_NumberOfUsers();
             this.SetUIProperties_ManageLicencesPerUser();

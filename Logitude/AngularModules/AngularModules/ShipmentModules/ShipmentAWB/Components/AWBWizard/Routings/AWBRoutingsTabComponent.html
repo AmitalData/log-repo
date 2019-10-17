@@ -197,7 +197,7 @@
 
                                                                                 <td style="padding-left: 5px;">
                                                                                     <div>
-                                                                                        <span class="hyperlink" *ngIf="MainCarriageCarrierId" (click)="AddStockClicked(MainCarriageCarrierId)">Add Stock</span>
+                                                                                        <span id="{{'AddStock' | IdGeneratorPipe}}" class="hyperlink" *ngIf="MainCarriageCarrierId" (click)="AddStockClicked(MainCarriageCarrierId)">Add Stock</span>
                                                                                     </div>
                                                                                 </td>
                                                                             </tr>
@@ -284,7 +284,7 @@
 
                                                                                 <td>
                                                                                     <div style="padding-left: 5px;">
-                                                                                        <span class="hyperlink" *ngIf="InterlineId" (click)="AddStockClicked(InterlineId)">Add Stock</span>
+                                                                                        <span id="{{'AddStock' | IdGeneratorPipe}}" class="hyperlink" *ngIf="InterlineId" (click)="AddStockClicked(InterlineId)">Add Stock</span>
                                                                                     </div>
                                                                                 </td>
                                                                             </tr>

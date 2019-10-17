@@ -340,7 +340,7 @@ export class APPaymentMenuButtonsHandler {
 
             this.GetFullAccountingSettings();
 
-            }
+        }
 
         else {
             if (this.entityArgs.EditComponent.ValidationErrorsList == null) {
@@ -408,7 +408,7 @@ export class APPaymentMenuButtonsHandler {
         });
 
     }
-
+    
     SetPaymentChequeWindowArgs(windowArgs: any) {
         windowArgs.PayToGLAccountId = this.EntityPM.VendorGLAccountId;
         windowArgs.BankAccountId = this.EntityPM.BankAccountId;

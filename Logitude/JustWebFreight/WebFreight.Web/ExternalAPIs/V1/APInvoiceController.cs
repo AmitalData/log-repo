@@ -90,8 +90,14 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                         SecurityUtility.AuthenticateAPICall(authToken.Tenant);
 
-                        string computingPartnerCode = "";                       
+                        bool isFullAccounting = false;
+                        Tenant myTenant = TenantRepository.GetSingleTenant(tenant, true);
+                        if(myTenant != null)
+                        {
+                            isFullAccounting = myTenant.AccountingActivated;
+                        }
 
+                        string computingPartnerCode = "";
                         if (apinvoice != null)
                         {
                             if (!string.IsNullOrEmpty(apinvoice.ComputingPartnerCode))
@@ -104,43 +110,44 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                         IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
                         APInvoiceQueryService apinvoiceQuery = new APInvoiceQueryService(tenant);
-                        apinvoice.Tenant = tenant;
-                        apinvoiceQuery.CustomeValidateAPInvoice(apinvoice);
-                        apinvoiceQuery.APInvoiceCustomDataMapping(apinvoice, tenant, computingPartnerCode);
+                        APInvoicePM apinvoicePM = null;
 
-                        //
-                        APInvoicePM apinvoicePM = apinvoiceQuery.APInvoiceDataMappingAndValidatin(apinvoice, tenant);
+                        if (isFullAccounting)
+                        {
+                            apinvoice.Tenant = tenant;
+                            apinvoiceQuery.CustomeValidateAPInvoice(apinvoice);
+                            apinvoiceQuery.APInvoiceCustomDataMapping(apinvoice, tenant);
 
-                        apinvoiceQuery.PaymentTermMapAndValidate(apinvoice, apinvoicePM, tenant);
+                            apinvoicePM = apinvoiceQuery.APInvoiceDataMappingAndValidatin(apinvoice, tenant);
+                            apinvoiceQuery.PaymentTermMapAndValidate(apinvoice, apinvoicePM, tenant);
 
-                        // VendorGLAccountId
-                        CardQuery cardQuery = new CardQuery(tenant);
-                        CardPM vendor = cardQuery.GetSinglePM(apinvoicePM.VendorId, tenant);
-                        apinvoicePM.VendorGLAccountId = vendor.GLAccountId;
+                            // VendorGLAccountId
+                            CardQuery cardQuery = new CardQuery(tenant);
+                            CardPM vendor = cardQuery.GetSinglePM(apinvoicePM.VendorId, tenant);
+                            apinvoicePM.VendorGLAccountId = vendor.GLAccountId;
 
-                        // SET approved
-                        apinvoicePM.SetVoided = false;
-                        apinvoicePM.SetApproved = true;
-                        apinvoicePM.SetReTransfer = false;
-                        apinvoicePM.SetCancelApproval = false;
+                            // SET approved
+                            apinvoicePM.SetVoided = false;
+                            apinvoicePM.SetApproved = true;
+                            apinvoicePM.SetReTransfer = false;
+                            apinvoicePM.SetCancelApproval = false;
 
-                        if (apinvoicePM.TransferStatusCode == null)
-                            apinvoicePM.TransferStatusCode = "NR";
+                            if (apinvoicePM.TransferStatusCode == null)
+                                apinvoicePM.TransferStatusCode = "NR";
 
-                        MapLines(apinvoice, tenant, apinvoicePM);
+                            this.MapLines(apinvoice, tenant, apinvoicePM);
+                        }
 
+                        else
+                        {
+                            apinvoicePM = apinvoiceQuery.APInvoiceCustomDataMappingAndValidating(apinvoice, tenant, computingPartnerCode);                           
+                        }
+                        
                         APInvoiceService apinvoiceService = new APInvoiceService(MyContext, tenant);
                         apinvoiceService.Create(apinvoicePM);
 
-
                         APIHelper.AddCommunicationLog("D", oldEntity, apinvoice, "APInvoice", apinvoicePM.Id, "APInvoice API", tenant);
-
-
-
-
-
                         scope.Complete();
-
 
                         return Request.CreateResponse(HttpStatusCode.OK, apinvoice);
                     }
@@ -245,6 +252,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
             return rate;
         }
+
         private AuthenticationToken GetAuthenticationToken()
         {
             string token = HttpContext.Current.Request.Headers["Token"];
@@ -252,6 +260,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
             return authToken;
         }
+
         public HttpResponseMessage GetCancel(string externalId)
         {
             try

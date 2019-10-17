@@ -170,9 +170,6 @@
                                     </td>
                                 </tr>
 
-
-
-
                                 <!-- AmountInPaymentCurrency -->
                                 <tr class="FormFieldRow">
                                     <td>
@@ -187,8 +184,28 @@
                                         <div></div>
                                     </td>
                                 </tr>
-                                <!--InternalNotes-->
 
+                                <!-- BranchId -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'BranchId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'BranchId'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [SelectedValue]="BranchId"
+                                                [LookUpTableName]="'Branch'">
+                                        </LogLov>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <!--InternalNotes-->
                                 <tr class="FormFieldRow" style="height: 75px;">
                                     <td>
                                         <table>
@@ -216,6 +233,7 @@
                                         <div></div>
                                     </td>
                                 </tr>
+
                                 <!-- BankAccountLiteId -->
                                 <tr class="FormFieldRow" *ngIf="!accountingActivated">
                                     <td>

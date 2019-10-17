@@ -111,7 +111,6 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<CustomerSalesNote> CustomerSalesNotes { get; set; }
         public IDbSet<BusinessUnit> BusinessUnits { get; set; }
         public IDbSet<FeatureAccessLevel> FeatureAccessLevels { get; set; }
-        public IDbSet<LogBoxTenantSetting> LogBoxTenantSettings { get; set; }
         public IDbSet<AddressType> AddressTypes
         {
             get;
@@ -4954,7 +4953,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new SchedulerProcedureMap());
             modelBuilder.Configurations.Add(new UsersReleaseNotesDisplayMap());
             modelBuilder.Configurations.Add(new CheckDigitControlAlgorithmMap());
-            modelBuilder.Configurations.Add(new LogBoxTenantSettingMap());
+
             base.OnModelCreating(modelBuilder);
         }
     }

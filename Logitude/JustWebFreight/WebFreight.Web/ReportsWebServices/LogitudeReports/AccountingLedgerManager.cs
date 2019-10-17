@@ -125,6 +125,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             List<AccountingPaymentMethod> AllPaymentMethods = myInvoiceContext.AccountingPaymentMethods.Where(d => d.Tenant == tenant).ToList();
             List<AccountingPaymentMethod> ARPaymentMethods = AllPaymentMethods.Where(d => d.IsAR).ToList();
             List<AccountingPaymentMethod> APPaymentMethods = AllPaymentMethods.Where(d => d.IsAP).ToList();
+            List<Branch> branches = (from d in myCommonContext.Branches where d.Tenant == tenant select d).ToList();
 
             #region General Data
 
@@ -277,6 +278,17 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 accountingLedgerRecord.Notes = openARinvoice.InternalNotes;
                 accountingLedgerRecord.CustomerId = openARinvoice.BillToId;
 
+                if (openARinvoice.BranchId != null)
+                {
+                    accountingLedgerRecord.BranchId = openARinvoice.BranchId;
+
+                    Branch iBranch = branches.Where(d => d.Id == openARinvoice.BranchId).FirstOrDefault();
+                    if (iBranch != null)
+                    {
+                        accountingLedgerRecord.BranchName = iBranch.EnglishName;
+                    }
+                }
+
                 if (openARinvoice.ARInvoiceTypeCode == "CD")
                 {
                     accountingLedgerRecord.ReferenceType = "Credit Note";
@@ -326,6 +338,17 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 accountingLedgerRecord.Notes = openAPInvoice.InternalNotes;
                 accountingLedgerRecord.CustomerId = openAPInvoice.VendorId;
 
+                if (openAPInvoice.BranchId != null)
+                {
+                    accountingLedgerRecord.BranchId = openAPInvoice.BranchId;
+
+                    Branch iBranch = branches.Where(d => d.Id == openAPInvoice.BranchId).FirstOrDefault();
+                    if (iBranch != null)
+                    {
+                        accountingLedgerRecord.BranchName = iBranch.EnglishName;
+                    }
+                }
+
                 if (openAPInvoice.AmountInInvoiceCurrency > 0)
                 {
                     accountingLedgerRecord.ReferenceType = "A\\P Invoice";
@@ -347,6 +370,17 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 AccountingLedger accountingLedgerRecord = new AccountingLedger();
                 accountingLedgerRecord.ReferenceType = "A\\R Payment";
                 accountingLedgerRecord.CustomerId = openARpayment.BillToId;
+
+                if (openARpayment.BranchId != null)
+                {
+                    accountingLedgerRecord.BranchId = openARpayment.BranchId;
+
+                    Branch iBranch = branches.Where(d => d.Id == openARpayment.BranchId).FirstOrDefault();
+                    if (iBranch != null)
+                    {
+                        accountingLedgerRecord.BranchName = iBranch.EnglishName;
+                    }
+                }
 
                 if (ARPaymentMethods.Where(d => d.Id == openARpayment.AccountingPaymentMethodId).FirstOrDefault().Code == "FS")
                 {
@@ -378,6 +412,17 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 AccountingLedger accountingLedgerRecord = new AccountingLedger();
                 accountingLedgerRecord.ReferenceType = "A\\P Payment";
                 accountingLedgerRecord.CustomerId = openAPpayment.VendorId;
+
+                if (openAPpayment.BranchId != null)
+                {
+                    accountingLedgerRecord.BranchId = openAPpayment.BranchId;
+
+                    Branch iBranch = branches.Where(d => d.Id == openAPpayment.BranchId).FirstOrDefault();
+                    if (iBranch != null)
+                    {
+                        accountingLedgerRecord.BranchName = iBranch.EnglishName;
+                    }
+                }
 
                 if (APPaymentMethods.Where(d => d.Id == openAPpayment.AccountingPaymentMethodId).FirstOrDefault().Code == "FS")
                 {
@@ -481,6 +526,17 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 accountingLedgerRecord.Notes = arInvoice.InternalNotes;
                 accountingLedgerRecord.CustomerId = arInvoice.BillToId;
 
+                if (arInvoice.BranchId != null)
+                {
+                    accountingLedgerRecord.BranchId = arInvoice.BranchId;
+
+                    Branch iBranch = branches.Where(d => d.Id == arInvoice.BranchId).FirstOrDefault();
+                    if (iBranch != null)
+                    {
+                        accountingLedgerRecord.BranchName = iBranch.EnglishName;
+                    }
+                }
+
                 if (!string.IsNullOrEmpty(arInvoice.BillToId))
                 {
                     Card card = cardRepository.GetSingleCard(arInvoice.BillToId, tenant);
@@ -569,6 +625,17 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 accountingLedgerRecord.Currency = systemCurrencies.Where(d => d.Id == apInvoice.InvoiceCurrencyId).FirstOrDefault().Code;
                 accountingLedgerRecord.CustomerId = apInvoice.VendorId;
 
+                if (apInvoice.BranchId != null)
+                {
+                    accountingLedgerRecord.BranchId = apInvoice.BranchId;
+
+                    Branch iBranch = branches.Where(d => d.Id == apInvoice.BranchId).FirstOrDefault();
+                    if (iBranch != null)
+                    {
+                        accountingLedgerRecord.BranchName = iBranch.EnglishName;
+                    }
+                }
+
                 if (!string.IsNullOrEmpty(apInvoice.VendorId))
                 {
                     Card card = cardRepository.GetSingleCard(apInvoice.VendorId, tenant);
@@ -632,6 +699,17 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 accountingLedgerRecord.ReferenceType = "A\\R Payment";
                 accountingLedgerRecord.CustomerId = arPayment.BillToId;
 
+                if (arPayment.BranchId != null)
+                {
+                    accountingLedgerRecord.BranchId = arPayment.BranchId;
+
+                    Branch iBranch = branches.Where(d => d.Id == arPayment.BranchId).FirstOrDefault();
+                    if (iBranch != null)
+                    {
+                        accountingLedgerRecord.BranchName = iBranch.EnglishName;
+                    }
+                }
+
                 if (!string.IsNullOrEmpty(arPayment.BillToId))
                 {
                     Card card = cardRepository.GetSingleCard(arPayment.BillToId, tenant);
@@ -687,6 +765,17 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 accountingLedgerRecord.ReferenceNumber = apPayment.PaymentNo;
                 accountingLedgerRecord.ReferenceType = "A\\P Payment";
                 accountingLedgerRecord.CustomerId = apPayment.VendorId;
+
+                if (apPayment.BranchId != null)
+                {
+                    accountingLedgerRecord.BranchId = apPayment.BranchId;
+
+                    Branch iBranch = branches.Where(d => d.Id == apPayment.BranchId).FirstOrDefault();
+                    if (iBranch != null)
+                    {
+                        accountingLedgerRecord.BranchName = iBranch.EnglishName;
+                    }
+                }
 
                 if (!string.IsNullOrEmpty(apPayment.VendorId))
                 {
@@ -802,6 +891,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         currencyRecord.ShipmentNumber = ledger.ShipmentNumber;
                         currencyRecord.Notes = ledger.Notes;
                         currencyRecord.BillToVendor = ledger.BillToVendor;
+                        currencyRecord.BranchId = ledger.BranchId;
+                        currencyRecord.BranchName = ledger.BranchName;
 
                         customerRecord.AccountingLedgerList.Add(currencyRecord);
                     }

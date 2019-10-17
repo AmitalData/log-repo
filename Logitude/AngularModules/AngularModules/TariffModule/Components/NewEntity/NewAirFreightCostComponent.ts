@@ -35,6 +35,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
     private myService: TariffPMService;
     public PriceSteps: string;
     public PriceStepsText: string;
+    public TariffCurrencyTextCode: string;
     public SellerDependancy: string = "AL";
 
     constructor() {
@@ -53,9 +54,13 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
         this.EntityPM.TypeCode = args.TypeCode;
         if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode =="OSC") {
             this.VisibileSurchargesArea = true;
+            this.BuildQueryFilters();
+            this.TariffCurrencyTextCode = "Tariff.O.DefaultCurrency";
         }
+
         else {
             this.VisibileSurchargesArea = false;
+            this.TariffCurrencyTextCode = "Tariff.F.CurrencyId";
         }
         this.BuildQueryFilters();
         this.SetUIProperties();

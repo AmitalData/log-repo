@@ -1582,6 +1582,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.OpenReceivablesInProfitCurrency = shipment.OpenReceivablesInProfitCurrency;
             shipmentPM.AccountedReceivablesInProfitCurrency = shipment.AccountedReceivablesInProfitCurrency;
             shipmentPM.ProfitInProfitCurrency = shipment.ProfitInProfitCurrency;
+            shipmentPM.NotInvoicedReceivablesAmount = shipment.NotInvoicedReceivablesAmount;
+
             #endregion
 
             #region Routings
@@ -10375,6 +10377,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                      Volume = shipment.Volume,
                      PackageVolume = jd.Volume,
                      MainCarriageCarrierId = m.MainCarriageCarrierId,
+                     NumberOfContainers = shipment.NumberOfContainers,
                  });
 
             return dataList;
@@ -11043,7 +11046,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                CarrierLastStatusCode = f.CarrierLastStatusCode,
                                ShipmentViewId = f.Id,
                                Id = f.Id,
-                               Tenant =f.Tenant,
                                Shipper = f.Shipper,
                                Consignee = f.Consignee,
                                DirectionId = f.DirectionId,
@@ -11184,7 +11186,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                CarrierNumber = f.CarrierNumber,
                                AgentId = f.AgentId,
                                AgentComputed = f.AgentComputed,
-                               // ComputedShipmentNumber = f.ComputedShipmentNumber,
+                              // ComputedShipmentNumber = f.ComputedShipmentNumber,
                                ARInvoiceIssued = f.ARInvoiceIssued,
                                CreditNoteIssued = f.CreditNoteIssued,
                                CustomFileNumber = f.CustomFileNumber,
@@ -11347,8 +11349,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                To = f.To,
                                Origin = f.Origin,
                                ARInvoices = f.ARInvoices,
+                               NotInvoicedReceivablesAmount = f.NotInvoicedReceivablesAmount,
                            };
-
             return myResult;
         }
 
@@ -11690,6 +11692,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     To = f.To,
                     Origin = f.Origin,
                     ARInvoices = f.ARInvoices,
+                    NotInvoicedReceivablesAmount = f.NotInvoicedReceivablesAmount,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
@@ -11945,6 +11948,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ARInvoices = f.ARInvoices,
                     Notes = f.Notes,
                     EstimatedFinalArrivalDate = f.EstimatedFinalArrivalDate,
+                    NotInvoicedReceivablesAmount = f.NotInvoicedReceivablesAmount,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
