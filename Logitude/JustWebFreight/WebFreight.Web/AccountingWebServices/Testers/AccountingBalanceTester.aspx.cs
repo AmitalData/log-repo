@@ -1395,9 +1395,9 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
                         var accountingContext = AccountingContext.GetContext(tenant);
-
+                        string userId = AuthenticationUtil.ResolveUserId(tenant);
                         ICheckAndQYearTransferService yearTransferService = new YearTransferService();
-                        string taskiD = yearTransferService.Check_CreateQBatchTaskYearTransfer(YY, tenant);
+                        string taskiD = yearTransferService.Check_CreateQBatchTaskYearTransfer(YY, tenant, userId);
 
                         scope.Complete();
                     }
@@ -1430,9 +1430,9 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(10)))
             {
                 var accountingContext = AccountingContext.GetContext(tenant);
-
+                string userId = AuthenticationUtil.ResolveUserId(tenant);
                 IYearTransferService yearTransferService = new YearTransferService();
-                journal = yearTransferService.ProccessJournal(accountingContext, YY, tenant);
+                journal = yearTransferService.ProccessJournal(accountingContext, YY, tenant, userId);
                 if (journal != null)
                 {
                     //var parser = new JournalApproveParser(journal, false,
@@ -1487,11 +1487,13 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 int YY = param.YY;
                 int tenant = param.Tenant;
                 JournalPM journal = null;
+                
                 using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(10)))
                 {
                     var accountingContext = AccountingContext.GetContext(tenant);
+                    string userId = AuthenticationUtil.ResolveUserId(tenant);
                     ICancelYearTransferService yearTransferService = new YearTransferService();
-                    journal = yearTransferService.CancelYear(accountingContext, YY, tenant);
+                    journal = yearTransferService.CancelYear(accountingContext, YY, tenant/*, userId*/);
                     if (journal != null)
                     {
                         //var parser = new JournalApproveParser(journal, false,
