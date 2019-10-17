@@ -102,8 +102,8 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             //externalPageLineId": "1 - 12487",
 
             //ExternalReconcileAdjustBankFees();
-            var myWorker = new JournalApproveService.JournalApproveWorker();
-            myWorker.CreateBatchAccountingIntegrityCheck();
+            //var myWorker = new JournalApproveService.JournalApproveWorker();
+            //myWorker.CreateBatchAccountingIntegrityCheck();
             try
             {
 

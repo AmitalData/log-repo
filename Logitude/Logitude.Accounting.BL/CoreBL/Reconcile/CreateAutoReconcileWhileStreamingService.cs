@@ -108,7 +108,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 Debug.WriteLine("isPartialReconciliation!!!! eyal said only 1 oldTRans Against 1 newTrans");
                 if (newLTranListOfAccountID.Count!=1 || oldLTransGroupByAccountId.Count() != 1)
                 {
-                    throw new Exception("isPartialReconciliation!!!! eyal said only 1 oldTRans Against 1 newTrans");
+                    //throw new Exception("isPartialReconciliation!!!! eyal said only 1 oldTRans Against 1 newTrans");
                 }
 
             }
