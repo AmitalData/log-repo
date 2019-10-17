@@ -17,7 +17,7 @@ export class NewAgent {
     QuickSearch() {
 
         this.helper.WaitBusyIndicator();
-      //  this.helper.WaitByIdAndClick('General.MH.Maintenance');
+       // this.helper.WaitByIdAndClick('General.MH.Maintenance');
         this.helper.waitByCss('#null_Search');
         this.helper.WaitBusyIndicator();
     }
@@ -40,8 +40,5 @@ export class NewAgent {
         this.helper.WaitByIdAndClick('OkButtonId');
     }
 
-
-
-    
 
 }
