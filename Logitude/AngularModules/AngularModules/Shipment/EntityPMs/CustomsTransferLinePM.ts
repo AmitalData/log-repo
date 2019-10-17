@@ -63,6 +63,26 @@ export class CustomsTransferLinePM {
     public set ShipmentNumber(newValue: string) { if (this.shipmentNumber != newValue) { this.shipmentNumber = newValue; this.MarkAsDirty("ShipmentNumber"); } }
        
 	 
+    private arrivalDate: Date;
+    public get ArrivalDate() { return this.arrivalDate; }
+    public set ArrivalDate(newValue: Date) { if (this.arrivalDate != newValue) { this.arrivalDate = newValue; this.MarkAsDirty("ArrivalDate"); } }
+       
+	 
+    private shipper: string;
+    public get Shipper() { return this.shipper; }
+    public set Shipper(newValue: string) { if (this.shipper != newValue) { this.shipper = newValue; this.MarkAsDirty("Shipper"); } }
+       
+	 
+    private consignee: string;
+    public get Consignee() { return this.consignee; }
+    public set Consignee(newValue: string) { if (this.consignee != newValue) { this.consignee = newValue; this.MarkAsDirty("Consignee"); } }
+       
+	 
+    private status: string;
+    public get Status() { return this.status; }
+    public set Status(newValue: string) { if (this.status != newValue) { this.status = newValue; this.MarkAsDirty("Status"); } }
+       
+	 
 
     public OldEntityPM: CustomsTransferLinePM;
 	    

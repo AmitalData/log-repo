@@ -211,9 +211,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             if (!entityPM.IsGeneralInvoice)
             {
-                this.BuildUnexpectedPayables();
-                this.GetShipmentsData(entityPM.InvoiceLines);
-                this.UpdateInvoiceEntities();
+                if (!entityPM.CreatedFromAPI)
+                {
+                    this.BuildUnexpectedPayables();
+                    this.GetShipmentsData(entityPM.InvoiceLines);
+                    this.UpdateInvoiceEntities();
+                }
             }
 
             this.UpdateInvoiceLines();
@@ -1580,6 +1583,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private void CreateInvoiceLine(APInvoiceLinePM item)
         {
             item.APInvoiceId = entityPM.Id;
+            item.Tenant = tenant;
             APInvoiceLine invoiceLine = new APInvoiceLine();
             APInvoiceMapping.MapInvoiceLine(item, invoiceLine, true);
             invoiceLineRepository.Add(invoiceLine);

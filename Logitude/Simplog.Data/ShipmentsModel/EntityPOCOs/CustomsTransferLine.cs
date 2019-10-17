@@ -13,7 +13,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string Id { get; set; }
         public int Tenant { get; set; }       
         public string CustomsTransferHeaderId { get; set; }
-        public string SearchFields { get; set; }
         public string ShipmentId { get; set; }
         public string ShipmentNumber { get; set; }
         
