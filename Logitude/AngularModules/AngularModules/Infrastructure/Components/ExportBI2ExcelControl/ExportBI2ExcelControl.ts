@@ -10,6 +10,10 @@ import { AmitalGatewayUtil } from '../../../Infrastructure/Utilities/AmitalGatew
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { BIReportXMLData } from '../../../Infrastructure/Services/InfrastructureDomainService';
+import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
+import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
+import { Observable } from 'rxjs/Rx';
+import { DateTool } from '../../Tools';
 
 @Component({
     moduleId: module.id,
@@ -24,7 +28,10 @@ export class ExportBI2ExcelControl {
     url: string;
     RTL: boolean = ObjectsLocator.GlobalSetting == undefined ? false : (ObjectsLocator.GlobalSetting.LayoutDirection == 'rtl' ? true : false);//true;
     private CurrentSession = SessionLocator.SelectedSession;
+    private WebFreightDomainService: WebFreightDomainService;
+
     constructor(private http: Http) {
+        this.WebFreightDomainService = new WebFreightDomainService();
         ServiceHelper.Http = http;
     }
     ObjectTableName: string;
@@ -37,26 +44,189 @@ export class ExportBI2ExcelControl {
     BIReportXMLData: BIReportXMLData = null;
 
     SetWindowArgs(args: any) {
-        var myService: WebFreightDomainService = new WebFreightDomainService();
         this.queryId = args.queryId;
         this.reportId = args.reportId;
         this.queryName = args.reportName;
         this.BIReportXMLData = args.BIReportXMLData;
-        myService.GetExportBIReportToExcel(this.BIReportXMLData).subscribe((myResponse: ServiceResponse) => {
+        this.BIReportXMLData.UserId = SessionInfo.LoggedUserId;
+        this.StartBuildStimulReportViaWorkerRole();
+    }
+
+    StartBuildStimulReportViaWorkerRole() {
+
+        this.StartBusyIndicator("Generating...");
+        this.StartTimerChangeBusyIndicatorMessageAfter50Sec();
+
+        if (this.WebFreightDomainService == null) {
+            this.WebFreightDomainService = new WebFreightDomainService();
+        }
+        this.WebFreightDomainService.GetExportBIReportToExcel(this.BIReportXMLData).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
-                if (myResponse.Result == "Faild") {
-                    this.btnRetryVisibile = true;
-                    this.busyExportingVisibile = false;
-                    this.btnSaveToFileVisibile = false;
-                }
-                else {
-                    this.FileName = myResponse.Result;
-                    this.btnRetryVisibile = false;
-                    this.busyExportingVisibile = false;
-                    this.btnSaveToFileVisibile = true;
+                this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer();
+            } else {
+                this.StopBusyIndicator();
+                if (myResponse.HasError && myResponse.ErrorsArray && myResponse.ErrorsArray.length > 0) {
+                    var messageWindow = new MessageWindow();
+                    messageWindow.Show(myResponse.ErrorsArray[0]);
                 }
             }
+
+            //if (!myResponse.HasError) {
+            //    if (myResponse.Result == "Faild") {
+            //        this.btnRetryVisibile = true;
+            //        this.busyExportingVisibile = false;
+            //        this.btnSaveToFileVisibile = false;
+            //    }
+            //    else {
+            //        this.FileName = myResponse.Result;
+            //        this.btnRetryVisibile = false;
+            //        this.busyExportingVisibile = false;
+            //        this.btnSaveToFileVisibile = true;
+            //    }
+            //}
+
         });
+    }
+
+    //Stimul Soft Report Timer
+    initializeStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer() {
+        return Observable.interval(2000).timeInterval();
+    }
+
+
+    IsStartTimerWaitingFirstStimulReportBuildRunning: boolean = false;
+    initializeStartTimerWaitingFirstStimulReportBuild() {
+        return Observable.interval(50000).timeInterval();
+    }
+    private StartTimerWaitingFirstStimulReportBuildsub: any = null;
+    StartTimerWaitingFirststimulReportBuild() {
+        if (this.IsStartTimerWaitingFirstStimulReportBuildRunning) {
+            this.StartTimerWaitingFirstStimulReportBuildsub.unsubscribe();
+        }
+        this.IsStartTimerWaitingFirstStimulReportBuildRunning = true;
+        this.StartTimerWaitingFirstStimulReportBuildsub = this.initializeStartTimerWaitingFirstStimulReportBuild().subscribe(res => {
+            if (this.CurrentSession && this.CurrentSession.isDestroingSession) {
+                this.StartTimerWaitingFirstStimulReportBuildsub.unsubscribe();
+                this.IsStartTimerWaitingFirstStimulReportBuildRunning = false;
+                return;
+            }
+            if (this.IsStartTimerWaitingFirstStimulReportBuildRunning) {
+                this.StartBuildStimulReportViaWorkerRole();
+                this.StartTimerWaitingFirstStimulReportBuildsub.unsubscribe();
+                this.IsStartTimerWaitingFirstStimulReportBuildRunning = false;
+            }
+        });
+    }
+
+    private StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub: any = null;
+    IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer: boolean = false;
+    StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer() {
+        if (this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer) {
+            this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub.unsubscribe();
+        }
+
+        this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer = true;
+        this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub = this.initializeStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer().subscribe(respose => {
+
+            if ((this.CurrentSession && this.CurrentSession.isDestroingSession) || !this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer) {
+                this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub.unsubscribe();
+                this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer = false;
+                return;
+            }
+
+            if (this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer) {
+                if (this.WebFreightDomainService == null) {
+                    this.WebFreightDomainService = new WebFreightDomainService();
+                }
+
+                this.WebFreightDomainService.GetBIReportLogStatus(this.reportId).subscribe(res => {
+                    var pmResponse: ServiceResponse = res;
+                    if (this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer) {
+                        if (pmResponse.HasError || (pmResponse.Result && pmResponse.Result.HasError) || (pmResponse.Result && pmResponse.Result.StatusCode == "D")) {
+                            this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub.unsubscribe();
+                            this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer = false;
+                            this.StopBusyIndicator();
+                        }
+                        if (!pmResponse.HasError) {
+                            var result = pmResponse.Result;
+                            if (result) {
+                                if (result.HasError) {
+                                    var messageWindow = new MessageWindow();
+                                    messageWindow.Show(result.ExceptionMessage);
+                                }
+                                else if (result.StatusCode == "D") {
+                                    // Work
+                                    this.btnRetryVisibile = false;
+                                    this.busyExportingVisibile = false;
+                                    this.btnSaveToFileVisibile = true;
+                                }
+                            }
+                        }
+                        else {
+                            if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
+                                var messageWindow = new MessageWindow();
+                                messageWindow.Show(pmResponse.ErrorsArray[0]);
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    //Wait Result Stimul Timer
+    IsStartTimerChangeBusyIndicatorMessageAfter50SecsRunning: boolean = false;
+    initializeStartTimerChangeBusyIndicatorMessageAfter50Sec() {
+        return Observable.interval(50000).timeInterval();
+    }
+    private StartTimerChangeBusyIndicatorMessageAfter50Secsub: any = null;
+    StartTimerChangeBusyIndicatorMessageAfter50Sec() {
+
+        if (this.IsStartTimerChangeBusyIndicatorMessageAfter50SecsRunning) {
+            this.StartTimerChangeBusyIndicatorMessageAfter50Secsub.unsubscribe();
+        }
+
+        this.IsStartTimerChangeBusyIndicatorMessageAfter50SecsRunning = true;
+        this.StartTimerChangeBusyIndicatorMessageAfter50Secsub = this.initializeStartTimerChangeBusyIndicatorMessageAfter50Sec().subscribe(res => {
+            if (this.CurrentSession && this.CurrentSession.isDestroingSession) {
+                this.StartTimerChangeBusyIndicatorMessageAfter50Secsub.unsubscribe();
+                this.IsStartTimerChangeBusyIndicatorMessageAfter50SecsRunning = false;
+                return;
+            }
+
+            if (this.IsStartTimerChangeBusyIndicatorMessageAfter50SecsRunning) {
+                this.StartBusyIndicator("Report generating is taking longer than expected. Please wait", 400);
+                this.StartTimerChangeBusyIndicatorMessageAfter50Secsub.unsubscribe();
+                this.IsStartTimerChangeBusyIndicatorMessageAfter50SecsRunning = false;
+            }
+        });
+    }
+    ShowBusyIndicator: boolean = false;
+    BusyIndicatorText: string = "";
+    WidthBusyIndicator: number;
+    StartBusyIndicator(message: string = "Generating...", width: number = 200) {
+
+        this.ShowBusyIndicator = true;
+        this.BusyIndicatorText = message;
+        this.WidthBusyIndicator = width;
+
+    }
+
+    StopBusyIndicator() {
+        if (this.IsStartTimerWaitingFirstStimulReportBuildRunning) {
+            this.StartTimerWaitingFirstStimulReportBuildsub.unsubscribe();
+            this.IsStartTimerWaitingFirstStimulReportBuildRunning = false;
+        }
+        if (this.IsStartTimerChangeBusyIndicatorMessageAfter50SecsRunning) {
+            this.StartTimerChangeBusyIndicatorMessageAfter50Secsub.unsubscribe();
+            this.IsStartTimerChangeBusyIndicatorMessageAfter50SecsRunning = false;
+        }
+
+        if (this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer) {
+            this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub.unsubscribe();
+            this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer = false;
+        }
+        this.ShowBusyIndicator = false;
     }
 
     SaveExcelFile(tenant: number, FileName: string, OTName: string) {
@@ -79,17 +249,19 @@ export class ExportBI2ExcelControl {
         var myService: WebFreightDomainService = new WebFreightDomainService();
         myService.GetExportBIReportToExcel(this.BIReportXMLData).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
-                if (myResponse.Result == "Faild") {
-                    this.btnRetryVisibile = true;
-                    this.busyExportingVisibile = false;
-                    this.btnSaveToFileVisibile = false;
-                }
-                else {
-                    this.FileName = myResponse.Result;
+
+                if (myResponse.Result) {
+                    this.FileName = myResponse.Result.BIReportKey;
                     this.btnRetryVisibile = false;
                     this.busyExportingVisibile = false;
                     this.btnSaveToFileVisibile = true;
                 }
+                
+
+            } else {
+                this.btnRetryVisibile = true;
+                this.busyExportingVisibile = false;
+                this.btnSaveToFileVisibile = false;
             }
         });
     }
