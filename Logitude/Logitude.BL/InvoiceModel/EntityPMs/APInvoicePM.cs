@@ -14,6 +14,8 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool IsSecured { get; set; }
         public string InternalNumber { get; set; }
 
+        public bool CreatedFromAPI { get; set; }
+
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string InvoiceNumber { get; set; }
 

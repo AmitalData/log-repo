@@ -41,15 +41,7 @@ export class NewAgent {
     }
 
 
-    SearchAgent() {
 
-        this.helper.WaitBusyIndicator();
-        this.helper.WaitWindowClosed();
-        this.helper.WaitByIdAndFill('SearchFieldsId_0_0', this.agentName);
-        this.helper.WaitByIdAndClick('LogGrid_0_0row0');
-        this.helper.WaitByIdAndFill('Agent_Notes', "This Is Test For Protractor")
-        this.helper.WaitByIdAndClick('Agent-Save');
-
-    }
+    
 
 }
