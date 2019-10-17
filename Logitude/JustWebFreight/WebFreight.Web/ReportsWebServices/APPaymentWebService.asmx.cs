@@ -413,43 +413,7 @@ namespace WebFreight.Web.ReportsWebServices
 
         }
 
-        private APPaymentDataProvider SetDataProviderbankFields(APPayment payment, APPaymentDataProvider apPaymentDataProvider)
-        {
-            if (payment.AccountingPaymentMethod != null)
-            {
-                if (payment.AccountingPaymentMethod.Code == "CA")
-                {
-                    apPaymentDataProvider.ChequeOrPaymentRef = "Cash";
-                    apPaymentDataProvider.Bank = "Cash";
-                    apPaymentDataProvider.Branch = "Cash";
-                    apPaymentDataProvider.Account = "Cash";
-                }
-                else
-                {
-                    apPaymentDataProvider.ChequeOrPaymentRef = payment.ChequeOrPaymentRef != null ? payment.ChequeOrPaymentRef : "";
-                    apPaymentDataProvider.Bank = payment.Bank != null ? payment.Bank : "";
-                    apPaymentDataProvider.Branch = payment.BankBranch != null ? payment.BankBranch : "";
-                    apPaymentDataProvider.Account = payment.Account != null ? payment.Account : "";
-                }
-            }
-            return apPaymentDataProvider;
-
-        }
-        private Contact GetLoggedContact(int tenant)
-        {
-
-            string email = HttpContext.Current.User.Identity.Name;
-            ContactRepository contactRepository = new ContactRepository(tenant);
-            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
-            return loggedContact;
-        }
-        private BankAccount GetBankAccountById(string bankId, int tenant)
-        {
-            BankAccountRepository bankRepository = new BankAccountRepository(tenant);
-            BankAccount bankAccount = bankRepository.GetSingleBankAccount(bankId, tenant);
-            return bankAccount;
-
-        }
+    
 
         private string GetPartnerAccountNumber(Card card)
         {

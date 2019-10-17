@@ -611,6 +611,8 @@ export class LogDatePickerComponent
 
         if (this.uiProperty.ValidValue) {
             this.DatePickerInputDivStyle = null;
+        }else {
+            this.DatePickerInputDivStyle = { border: "1px solid #ff0000" };
         }
 
         if (!this.MouseInArea) {
@@ -1113,7 +1115,7 @@ export class LogDatePickerComponent
                 );
                 timeUiProp.UIPropertyChanged.emit("datevaluechanges");
                 dateUiProp.UIPropertyChanged.emit("datevaluechanges");
-        
+
                 if (!this.IsFreeValue) {
                     this.SetValidity(true, null);
                     this.ValidateField();

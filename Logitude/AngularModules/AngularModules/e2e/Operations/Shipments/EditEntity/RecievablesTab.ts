@@ -135,7 +135,7 @@ export class ReceivablesTabComponent {
 
         this.Helper.WaitByIdAndFill('ARInvoice_VatTypeId', 'zero');
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-        this.Helper.WaitByCssButtonClick('.Button', 'Apply to all');
+        //this.Helper.WaitByCssButtonClick('.Button', 'Apply to all');
 
         this.Helper.WaitBusyIndicator();
 
