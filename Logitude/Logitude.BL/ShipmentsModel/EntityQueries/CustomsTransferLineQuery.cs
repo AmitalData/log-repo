@@ -34,7 +34,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                      ShipmentId = a.ShipmentId,
                      ShipmentNumber = a.ShipmentNumber,
                      Tenant = a.Tenant,
-                     SearchFields = a.SearchFields,
                  }).FirstOrDefault();
 
             return result;
@@ -54,7 +53,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                      ShipmentId = a.ShipmentId,
                      ShipmentNumber = a.ShipmentNumber,
                      Tenant = a.Tenant,
-                     SearchFields = a.SearchFields,
                  });
 
             return result;

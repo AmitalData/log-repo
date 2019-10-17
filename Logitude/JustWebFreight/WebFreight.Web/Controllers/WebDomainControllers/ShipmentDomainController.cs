@@ -1664,7 +1664,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    
+
                     IShipmentsContext iContext = ShipmentsContext.GetContext(0);
                     ShipmentRepository iShipmentRepository = new ShipmentRepository(iContext);
                     ShipmentQuery iShipmentQuery = new ShipmentQuery(iShipmentRepository);
@@ -1716,7 +1716,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticationOnTenant(tenant);
-                
+
                 ShipmentPackageRepository shipmentPackageRepository = new ShipmentPackageRepository(tenant);
                 PackageTypeRepository packageTypeRepository = new PackageTypeRepository(tenant);
 
@@ -1740,7 +1740,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
                 storageservice.Write(data, fileInfo);
 
-                return Request.CreateResponse(HttpStatusCode.OK, fileName);                
+                return Request.CreateResponse(HttpStatusCode.OK, fileName);
             }
 
             catch (Exception ex)
@@ -1818,12 +1818,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             sheet1.Range["A2:A80"].DataValidation.ListOfValues = types.Select(s => s.Code).ToArray();
             sheet1.Range["A2:A80"].DataValidation.IsSuppressDropDownArrow = false;
-            
+
             DataTable dataTable2 = this.ConvertToDataTable(types);
 
             sheet1.ImportDataTable(dataTable1, true, 1, 1);
             sheet2.ImportDataTable(dataTable2, true, 1, 1);
-            
+
             workbook.SaveAs(memory);
 
             return memory.ToArray();
@@ -1832,7 +1832,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(typeof(T));
             DataTable table = new DataTable();
-            
+
             foreach (PropertyDescriptor prop in properties)
             {
                 table.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
@@ -1865,9 +1865,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
                 IWarehouseContext warehouseContext = WarehouseContext.GetContext(tenant);
-                WarehouseEntryRepository warehouseEntryRepository = new WarehouseEntryRepository(warehouseContext);  
+                WarehouseEntryRepository warehouseEntryRepository = new WarehouseEntryRepository(warehouseContext);
                 IQueryable<WarehouseEntry> warehouseEntries = warehouseEntryRepository.GetWarehouseEntriesByshipmentId(shipmentId, tenant);
-               
+
                 bool myResult = false;
                 if (warehouseEntries.Count() > 0)
                 {
@@ -1883,7 +1883,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         myResult = true;
                     }
-                }                
+                }
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
@@ -1912,7 +1912,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 IWorkbook workbook = excelEngine.Excel.Workbooks.Open(stream);
                 IWorksheet sheet = workbook.Worksheets[0];
 
-                List<ExcelPackage> packagesResult = this.BuildPackagesExcelLines(sheet, authToken.Tenant);                
+                List<ExcelPackage> packagesResult = this.BuildPackagesExcelLines(sheet, authToken.Tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, packagesResult);
             }
@@ -1932,7 +1932,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 String[] rowData = new String[sheet.Columns.Count()];
                 ExcelPackage excelPackage = new ExcelPackage();
-                
+
                 for (int i = 0; i < sheet.Columns.Count(); i++)
                 {
                     rowData[i] = row.Cells[i].Value2.ToString();
@@ -2108,7 +2108,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 myResult.Add(excelPackage);
             }
-            
+
             return myResult;
         }
         private bool IsNumber(string text)
@@ -2139,9 +2139,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 Shipment houseShipment = shipmentRepository.GetSingleShipment(houseId, tenant);
                 bool myResult = false;
 
-                if(houseShipment != null)
+                if (houseShipment != null)
                 {
-                    if(!string.IsNullOrEmpty(houseShipment.MasterShipmentDataId))
+                    if (!string.IsNullOrEmpty(houseShipment.MasterShipmentDataId))
                     {
                         myResult = true;
                     }
@@ -2165,7 +2165,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string loggedUserEmail = authToken.Email;
                 int tenant = authToken.Tenant;
 
-                SecurityUtility.AuthenticationOnTenant(tenant);                
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 if (!string.IsNullOrEmpty(allIdsString))
                 {
@@ -2174,7 +2174,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
                         List<Shipment> shipments = this.GetFilteredShipments(ids, entityCode, tenant, shipmentRepository);
-                        this.BlockShipmentsForTransfer(shipments, shipmentRepository);                        
+                        this.BlockShipmentsForTransfer(shipments, shipmentRepository);
                     }
                 }
 
@@ -2188,7 +2188,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         }
         private List<Shipment> GetFilteredShipments(List<string> ids, string entityCode, int tenant, ShipmentRepository shipmentRepository)
         {
-            List<Shipment> shipments = new List<Shipment>();            
+            List<Shipment> shipments = new List<Shipment>();
             shipments = shipmentRepository.GetShipmentsListFromIdList(ids, tenant);
 
             if (entityCode == "Air")
@@ -2238,7 +2238,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                         DateTime? myStartDate = DateHelper.GetDate(myStartDateString);
                         this.UpdateAMANACStartDates(customsInterfaceSetting, myStartDate, entityCode, customsInterfaceSettingRepository);
-                        
+
                         scope.Complete();
                         return Request.CreateResponse(HttpStatusCode.OK, true);
                     }
@@ -2303,7 +2303,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     switch (entityCode)
                     {
                         case "Air":
-                            {    
+                            {
                                 iQueryable_Data = iQueryable_Data.Where(d => d.TransportModeId == "A");
                                 break;
                             }
@@ -2364,7 +2364,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-        }        
+        }
         private byte[] ExportAMANACShipmentToExcel(ShipmentPM shipment)
         {
             byte[] data = null;
@@ -2379,7 +2379,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 data = this.ExportAirAMANACShipmentToExcel(shipment);
             }
 
-            return data;            
+            return data;
         }
         public byte[] ExportOceanAMANACShipmentToExcel(ShipmentPM shipment)
         {
@@ -2431,7 +2431,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             ShippingLineRepository shippingLineRepository = new ShippingLineRepository(commoContext);
             AddressRepository addressRepository = new AddressRepository(commoContext);
 
-            Tenant myTenant = TenantRepository.GetSingleTenant(shipment.Tenant, true);            
+            Tenant myTenant = TenantRepository.GetSingleTenant(shipment.Tenant, true);
             ShippingLine carrier = shippingLineRepository.GetSingleShippingLine(shipment.MainCarriageCarrierId, shipment.Tenant);
             Address shipperAddress = addressRepository.GetSingleAddress(shipment.ShipperAddressId, shipment.Tenant);
             Address consigneeAddress = addressRepository.GetSingleAddress(shipment.ConsigneeAddressId, shipment.Tenant);
@@ -2455,7 +2455,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             //row[15] = ;
             //row[16] = ;
             row[17] = "1";
-            row[18] = shipment.ShipperName;            
+            row[18] = shipment.ShipperName;
             //row[19] = ;
             row[20] = General.GetAddress(shipperAddress);
             row[21] = "2";
@@ -2487,7 +2487,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             sheet1.Range["A1:AA1"].CellStyle.Font.Color = ExcelKnownColors.White;
             sheet1.Range["A1:AA1"].CellStyle.Color = System.Drawing.Color.Orange;
             sheet1.Range["A1:AA1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
-            
+
             DataTable dataTable1 = new DataTable();
             dataTable1.Columns.Add("Master B/L");
             dataTable1.Columns.Add("ORIGIN_AIRPORT_CODE");
@@ -2532,7 +2532,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             row[11] = shipment.ShipperName;
             row[12] = this.ComputeAddress(shipment.ShipperAddress1, shipment.ShipperAddress2);
 
-            if(!string.IsNullOrEmpty(shipment.ShipperCountryId))
+            if (!string.IsNullOrEmpty(shipment.ShipperCountryId))
             {
                 Country shipperCountry = CountryRepository.GetSingleCountry(shipment.ShipperCountryId, shipment.Tenant, true);
                 if (shipperCountry != null)
@@ -2541,7 +2541,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     row[14] = shipperCountry.EnglishName;
                 }
             }
-            
+
             //row[15] = shipment.ShipperCityCode;
             row[16] = shipment.ShipperCity;
             row[17] = shipment.ConsigneeName;
@@ -2556,7 +2556,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     row[20] = consigneeCountry.EnglishName;
                 }
             }
-            
+
             //row[21] = shipment.ConsigneeCityCode;
             row[22] = shipment.ConsigneeCity;
             row[23] = shipment.DescriptionOfGoods;
@@ -2573,14 +2573,14 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             string fullAddress = "";
 
-            if(!string.IsNullOrEmpty(address1))
+            if (!string.IsNullOrEmpty(address1))
             {
                 fullAddress = address1;
             }
 
             if (!string.IsNullOrEmpty(address2))
             {
-                if(string.IsNullOrEmpty(fullAddress))
+                if (string.IsNullOrEmpty(fullAddress))
                 {
                     fullAddress = address2;
                 }
@@ -2635,7 +2635,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     shipment.LocalCustomsTransmissionsStatusCode = "BLOK";
                     shipmentRepository.Update(shipment);
                     shipmentRepository.SubmitChanges();
-                }                
+                }
 
                 return Request.CreateResponse(HttpStatusCode.OK, "ok");
             }
@@ -2679,13 +2679,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);               
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
                 ShipmentTransferSummary myResult = new ShipmentTransferSummary();
-                
+
                 if (SecurityUtility.CheckTableContactFeature("Shipment", "READ", tenant))
                 {
                     ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
@@ -2695,7 +2695,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     shipments = BranchPermitionsFilter.AddUserBranchRestrictionFilters<Shipment>(new QueryOperations(), shipments, tenant);
 
                     myResult.BlockedOceanShipmentsCount = shipments.Where(d => d.LocalCustomsTransmissionsStatusCode == "BLOK" && d.TransportModeId == "O").Count();
-                    myResult.BlockedAirShipmentsCount = shipments.Where(d => d.LocalCustomsTransmissionsStatusCode == "BLOK" && d.TransportModeId == "A").Count();                    
+                    myResult.BlockedAirShipmentsCount = shipments.Where(d => d.LocalCustomsTransmissionsStatusCode == "BLOK" && d.TransportModeId == "A").Count();
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -2707,6 +2707,57 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
+        public HttpResponseMessage GetRebuildTransferFile(string entityId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                string loggedUserEmail = authToken.Email;
+                int tenant = authToken.Tenant;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                IShipmentsContext myContext = ShipmentsContext.GetContext(tenant);
+
+                CustomsTransferHeaderRepository entityRepository = new CustomsTransferHeaderRepository(myContext);
+                CustomsTransferHeader entityPoco = entityRepository.GetSingleEntity(entityId, tenant);
+
+                if (entityPoco != null)
+                {
+                    List<string> shipmentsIdsList = (from a in myContext.CustomsTransferLines
+                                                     where a.Tenant == tenant
+                                                     && a.CustomsTransferHeaderId == entityId
+                                                     select a.ShipmentId).ToList();
+
+                    ShipmentRepository shipmentRepository = new ShipmentRepository(myContext);
+                    List<Shipment> shipments = shipmentRepository.GetShipmentsListFromIdList(shipmentsIdsList, tenant);
+
+                    switch (entityPoco.CustomsTransferTypeCode)
+                    {
+                        case "AMAS":
+                            {
+                                shipments = shipments.Where(d => d.TransportModeId == "A").ToList();
+                                break;
+                            }
+
+                        case "AMOS":
+                            {
+                                shipments = shipments.Where(d => d.TransportModeId == "A").ToList();
+                                break;
+
+                            }
+                    }
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, true);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }
 
