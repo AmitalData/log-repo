@@ -25,5 +25,10 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ShipmentNumber { get; set; }
+
+        public DateTime? ArrivalDate { get; set; }
+        public string Shipper { get; set; }
+        public string Consignee { get; set; }
+        public string Status { get; set; }
     }
 }
