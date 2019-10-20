@@ -6654,6 +6654,154 @@
 			"response": []
 		},
 		{
+			"name": "GetVendor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d06a84dd-6008-49f2-8e3a-e344aee985a5",
+						"exec": [
+							"pm.test(\"GetVendor\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   ",
+							"      var idvalue1 = (pm.response.json().Result[0].Id);",
+							"      var test1 =idvalue1 !== null;",
+							"      pm.expect(test1);",
+							"      pm.environment.set(\"TestVendorId\",idvalue1);",
+							"  ",
+							" if (idexist)  {",
+							"    postman.setNextRequest(\"CreateAPInvoiceInsideShipment\");  ",
+							"    } ",
+							"    ",
+							"});",
+							"     ",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{LogitudeURL}}/api/vendorviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=TestVendor&GetCount=true&PageIndex=0&PageSize=23",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"vendorviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "TestVendor"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateVendor ",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "67f43ab5-61ac-4490-a44f-43d42c31fa02",
+						"exec": [
+							"pm.test(\"CreateVendor \", function () {",
+							"   pm.response.to.have.status(200);",
+							"  ",
+							"    var idvalue = (pm.response.json().Vendor.Id);",
+							" ",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"TestVendorId\",idvalue);",
+							"  ",
+							"  ",
+							"});",
+							"     ",
+							"    "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Token",
+						"value": "{{Token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \n  \"Tenant\": \"{{Tenant}}\",\n\n  \"PartnerTypeId\": \"VD\",\n  \"IsAddressDirty\": false,\n  \"IsContactDirty\": false,\n  \"IsPartnerDirty\": false,\n  \"Address\": {\n    \"$id\": \"2\",\n\n    \"Tenant\": \"{{Tenant}}\",\n    \"Description\": \"Main Address\",\n    \"City\": \"shanghai\",\n    \"StateId\": null,\n    \"ZipCode\": null,\n    \"FaxNumber\": null,\n    \"PhoneNumber\": null,\n    \"ATTN\": null,\n    \"AddressTypeId\": \"M\",\n    \"Address1\": null,\n    \"Address2\": null,\n    \"Name\": \"TestVendor\",\n    \"CountryId\": \"1-434\",\n    \"CarrierId\": null,\n    \"CardId\": \"1-667162\",\n    \"CountryCode\": \"CN\",\n    \"CountryName\": \"China\",\n    \"CountryEnglishName\": \"China\",\n    \"StateEnglishName\": null,\n    \"StateCode\": null,\n    \"SearchFields\": \"TestVendor,shanghai,China\",\n    \"ExternalId\": null,\n    \"InActive\": false,\n    \"IsLocalLanguage\": false,\n    \"IsHybrid\": false,\n    \"VatNumber\": null,\n    \"SalesmanUserId\": null,\n    \"Signature\": null,\n    \"CityCode\": null,\n    \"CardCode\": \"new\",\n    \"ContactEmail\": null,\n    \"ContactName\": null,\n    \"ContactPosition\": null,\n    \"ContactBusinessPhone\": null,\n    \"ContactMobile\": null,\n    \"ContactFax\": null,\n    \"IsCreatedWithPartner\": true,\n    \"CardEnglishName\": null,\n    \"HasStates\": false,\n    \"IsStateRequired\": false,\n    \"BranchId\": null\n  },\n  \"Contact\": null,\n  \"Agent\": null,\n  \"Customer\": null,\n  \"CustomAgent\": null,\n  \"ShippingAgent\": null,\n  \"Vendor\": {\n    \"$id\": \"3\",\n    \n    \"Tenant\": \"{{Tenant}}\",\n    \"IsSecured\": false,\n    \"TenantAddressId\": null,\n    \"BankName\": null,\n    \"BankAddress\": null,\n    \"Swift\": null,\n    \"AccountNumber\": null,\n    \"IBANNumber\": null,\n    \"IsHybrid\": false,\n    \"EnglishName\": \"TestVendor\",\n    \"Website\": null,\n    \"VatNumber\": null,\n    \"LocalName\": \"TestVendor\",\n    \"InActive\": false,\n    \"PaymentTermId\": null,\n    \"ReceivablesAccountingCard\": null,\n    \"PayablesAccountingCard\": null,\n    \"Notes\": null,\n   \n    \"InvoiceCurrencyId\": null,\n    \"VatTypeId\": null,\n    \"ComputedLocalName\": null,\n    \"CreateDate\": \"2019-10-20T08:24:22.27049Z\",\n    \"UpdateDate\": \"2019-10-20T08:24:22.27049Z\",\n    \"CreatedByUserId\": \"1-105543\",\n    \"UpdatedByUserId\": \"1-105543\",\n    \"PartnerTypeId\": \"VD\",\n    \"CardPMId\": null,\n    \"ExistedContactId\": null,\n    \"FieldsChanged\": false,\n\n    \"CountryId\": \"1-434\",\n  \n    \"IsExternal\": false,\n    \"PrimaryContactId\": null,\n    \"IsFirstContactToAdd\": false,\n    \"EnableConsolidationInvoices\": false,\n\n    \"Addresses\": [\n      {\n        \"$ref\": \"2\"\n      }\n    ]\n\n  }\n \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{LogitudeURL}}/api/PartnersDomain"
+			},
+			"response": []
+		},
+		{
 			"name": "GetPackageTypeIdPackagePP2",
 			"event": [
 				{
@@ -6782,6 +6930,194 @@
 					"raw": "{\n  \"$id\": \"1\",\n  \"Tenant\": {{Tenant}},\n  \"Code\": \"PP2\",\n  \"EnglishName\": \"PackageTypePP2\",\n  \"LocalName\": null,\n  \"IsOcean\": true,\n  \"IsAir\": false,\n  \"IsInland\": true,\n  \"Notes\": null,\n  \"IsContainer\": false,\n  \"TEU\": 0,\n  \"ContainerSize\": 0,\n  \"Volume\": 0,\n  \"PrintAs\": \"PC'1\",\n  \"ComputedLocalName\": null,\n  \"AddedManually\": true,\n  \"InActive\": false,\n  \"MeasurementId\": \"1-56758\",\n  \"MeasurementCode\": null,\n  \"MeasurementShortName\": null,\n  \"SearchFields\": null,\n  \"IsHybrid\": false,\n  \"IsRefrigerated\": false,\n  \"IsVehicle\": false\n}"
 				},
 				"url": "{{LogitudeURL}}/api/packagetypes"
+			},
+			"response": []
+		},
+		{
+			"name": "GetZeroVatType",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5818b671-ceb8-4b08-b186-e7e98d6d0982",
+						"exec": [
+							"",
+							"pm.test(\"GetZeroVatType\", function () {",
+							"     pm.response.to.have.status(200);",
+							"     ",
+							"      var idvalue1 = (pm.response.json().Result[0].Id);",
+							"      var test1 =idvalue1 !== null;",
+							"      pm.expect(test1);",
+							"      pm.environment.set(\"ZeroVatType\",idvalue1);",
+							"      ",
+							"  ",
+							"    ",
+							"   ",
+							"    ",
+							"",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{LogitudeURL}}/api/vattypeviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=Zero&GetCount=true&PageIndex=0&PageSize=23",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"vattypeviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "Zero"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetCashPaymentTerm",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "462de9fc-a2d8-4bab-a7f2-a9e6b3a9cf84",
+						"exec": [
+							"",
+							"pm.test(\"GetCashPaymentTerm\", function () {",
+							"     pm.response.to.have.status(200);",
+							"     ",
+							"      var idvalue1 = (pm.response.json().Result[0].Id);",
+							"      var test1 =idvalue1 !== null;",
+							"      pm.expect(test1);",
+							"      pm.environment.set(\"CashPAymentTerm\",idvalue1);",
+							"      ",
+							"  ",
+							"    ",
+							"   ",
+							"    ",
+							"",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{LogitudeURL}}/api/paymenttermviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=Cash&GetCount=true&PageIndex=0&PageSize=23",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"paymenttermviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "Cash"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
+						}
+					]
+				}
 			},
 			"response": []
 		}
