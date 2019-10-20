@@ -1,3 +1,4 @@
+import { ServiceResponse } from './../../DataContracts/ServiceResponse';
 import { ObservableCollection } from './../../Utilities/ObservableCollection';
 import { CacheLogService } from './../../Services/ExtendedLists/CacheLogService';
 import { Component } from '@angular/core';
@@ -7,6 +8,7 @@ import { EntityArgs } from '../../DataContracts/EntityArgs';
 
 import { AppTool } from '../../Tools';
 import { CardPMService } from '../../../Common/Services/StandardPMs/CardPMService';
+import { ServiceHelper } from '../../Utilities/ServiceHelper';
 
 //
 @Component({
@@ -157,6 +159,26 @@ export class CacheLogComponent extends BaseComponent {
 
     }
 
+    Export2ExcelClicked(){
+        this.cacheLogService.GetCacheLogExcelFile().subscribe((myResponse: ServiceResponse) =>
+        {
+            if (!myResponse.HasError) {
+                var excelFileName = myResponse.Result;
+
+                this.DownloadFile(excelFileName);
+            }
+        });
+    }
+
+
+    private DownloadFile(fileName: any)
+    {
+        var url = ServiceHelper.GetLogitudeURL()
+            + "WebPages/DawnLoadExcelPage.aspx?fileName=" + fileName
+            + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken()
+            + "&qname=" + fileName;
+        window.open(url);
+    }
 }
 export class CacheKey {
 

@@ -144,8 +144,12 @@
                                             <div float-start class="circleDraw black" > </div>
                                         </button>
 
-                                        <div float-start>
+                                        <div float-start
+                                            style="margin-right:5px;margin-left:5px;width: fit-content;">
                                             <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
+                                        </div>
+                                        <div float-start>
+                                            <IconButton [Name]="'Excel'" (click)="Export2ExcelClicked()"></IconButton>
                                         </div>
                                         <div float-start style="width: 65px;margin: 0 5px;">
                                             <button class="Button" (click)="ResetButtonClicked()">Reset</button>
