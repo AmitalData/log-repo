@@ -35,12 +35,15 @@ export class QuoteActions {
 
         }
         else {
+            this.Helper.ItemsPresent('IncludePickupDiv');
+            this.Helper.ItemsPresent('IncludeDeliveryDiv');
+
             var includePickup = element(by.id('Quote_CopyPickUpIsChecked'));
             browser.executeScript("arguments[0].click();", includePickup.getWebElement());
 
             var includeDelivery = element(by.id('Quote_CopyDeliveryIsChecked'));
             browser.executeScript("arguments[0].click();", includeDelivery.getWebElement());
-            
+
             // this.Helper.WaitByIdAndFill('Quote_FromAddressCity_1', 'Ramallah');
             // this.Helper.WaitByIdAndFill('Quote_FromAddressCountryId_1', 'State Of Palestine');
             // this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);

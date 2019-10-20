@@ -20,7 +20,7 @@ exports.config = {
             Direction: null,
             TransportMode: null,
             ShipmentType: null,
-            ShipmentEditTabs:null,
+            ShipmentEditTabs: null,
         },
         QuoteParams: {
             Direction: null,
@@ -35,9 +35,9 @@ exports.config = {
         FullAccount: {
             FullAccountingType: null,
         },
-        CRM:{
-            CRMType:null,
-            ActivityType:null,
+        CRM: {
+            CRMType: null,
+            ActivityType: null,
         }
     },
     capabilities: {
@@ -58,10 +58,19 @@ exports.config = {
         require('ts-node').register({
             project: 'e2e/tsconfig.e2e.json'
         });
-        const junitReporter = new JUnitXmlReporter({
-            savePath: 'C:/Program Files (x86)/Jenkins/workspace/E2ETestResults',
+        const junitReporterAyman = new JUnitXmlReporter({
+            savePath: 'C:/Program Files (x86)/Jenkins/workspace/TeamAymanE2EScripts',
             consolidateAll: false
         });
+        const junitReporterIslam = new JUnitXmlReporter({
+            savePath: 'C:/Program Files (x86)/Jenkins/workspace/TeamIslamE2EScripts',
+            consolidateAll: false
+        });
+        const junitReporterMohammad = new JUnitXmlReporter({
+            savePath: 'C:/Program Files (x86)/Jenkins/workspace/TeamMohammadE2EScripts',
+            consolidateAll: false
+        });
+     
         if (browser.params.Env == "prod") {
             browser.params.Link = "https://system.logitudeworld.com";
             browser.params.Login.Email = "razantest@protractor.com";
@@ -136,7 +145,7 @@ exports.config = {
         //------------------------------------- Reporter --------------------------------
         if (browser.params.Team == "ayman") {
             jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
-            jasmine.getEnv().addReporter(new HtmlReporter({baseDirectory: 'C:/Automation e2e/TeamAyman/Test/screenshots', takeScreenShotsOnlyForFailedSpecs: true, screenshotsSubfolder: 'images'}).getJasmine2Reporter());
+            jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/Automation e2e/TeamAyman/Test/screenshots', takeScreenShotsOnlyForFailedSpecs: true, screenshotsSubfolder: 'images' }).getJasmine2Reporter());
             jasmine.getEnv().addReporter(junitReporterAyman);
 
         } else if (browser.params.Team == "islam") {
@@ -144,7 +153,7 @@ exports.config = {
             jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/E2ETeamIslam/screenshots' }).getJasmine2Reporter());
         } else if (browser.params.Team == "mohammad") {
             jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
-            jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/E2ETeamMohammad/screenshots' }).getJasmine2Reporter());
+            jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/Automation e2e/TeamMohammad/Test/screenshots', takeScreenShotsOnlyForFailedSpecs: true, screenshotsSubfolder: 'images' }).getJasmine2Reporter());
             jasmine.getEnv().addReporter(junitReporterMohammad);
 
         }
@@ -168,20 +177,21 @@ exports.config = {
         // ********************* Login **********************************
         login: 'e2e/Login/**/Login.e2e-spec.ts',
         NewQuote: 'e2e/CRM/Quotes/NewEntity/**/NewQuote-spec.ts',
-       // CustomerGLA: 'e2e/FullAccounting/'
-      
+        // CustomerGLA: 'e2e/FullAccounting/'
+
         CRM: 'e2e/CRM/**/CRMModule-spec.ts',
-       //  'e2e/LogBox/Login/**/Login.e2e-spec.ts',
-       
+        //  'e2e/LogBox/Login/**/Login.e2e-spec.ts',
+
         NewShipment: 'e2e/Operations/Shipments/NewEntity/**/Operations.e2e-spec.ts',
         NewEAWB: 'e2e/Operations/Shipments/NewEntity/**/OpEAWB-spec.ts',
         NewShipmentlogbox: 'e2e/LogBox/Shipments/**/ShipmentSearch.e2e-spec.ts',
         Contact: 'e2e/Contacts/**/Contacts-spec.ts',
         EditTabs: 'e2e/Operations/Shipments/EditEntity/**/EditShipmentTabs.e2e-spec.ts',
         ShipmentSearch: 'e2e/Operations/**/ShipmentSearch.e2e-spec.ts',
-        
+
 
         // ********************* FullAccounting **********************************
+        PaymentCheque:'e2e/FullAccounting/PaymentCheque/**/NewPaymentCheque-spec.ts',
         ARPayment: 'e2e/FullAccounting/**/ARPayment-spec.ts',
         NewChartOfAccount: 'e2e/FullAccounting/ChartOfAccount/**/ChartOfAccount-spec.ts',
         FullAccProcess: 'e2e/FullAccounting/**/FullAccScenarios-spec.ts',
@@ -191,14 +201,14 @@ exports.config = {
         CustomerGLAccount: 'e2e/FullAccounting/**/CustomerGLAccount-spec.ts',
         APInvoice: 'e2e/FullAccounting/APInvoice/**/APInvoice-spec.ts',
         RevGLAccount: 'e2e/FullAccounting/**/GlAccount-spec.ts',
-        CashDeposit: 'e2e/FullAccounting/**/Deposit/NewDposit-spec.ts',
+     //   CashDeposit: 'e2e/FullAccounting/**/Deposit/NewDposit-spec.ts',
         //*************Report********************
         Reports: 'e2e/Report/**/Report-spec.ts',
 
         //*************ShipmentView********************
         ShipmentView: 'e2e/**/ShipmentView-spec.ts',
 
-     //*************Maintenance********************
+        //*************Maintenance********************
         CompanyAddressSetting: 'e2e/Maintenance/**/CompanyAddressSetting-spec.ts',
         NewAgent: 'e2e/Maintenance/**/Agent-spec.ts',
         NewUser: 'e2e/Maintenance/**/Users-spec.ts',

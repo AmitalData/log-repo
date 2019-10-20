@@ -10,11 +10,13 @@ export class PrintDocOut {
     }
 
     isPrintingCompleted(expectedId, closePopup) {
-        this.helper.WaitBusyIndicator();
+       // this.helper.WaitBusyIndicator();
+       this.helper.WaitEditComponentBusyIndicator();
         this.helper.ItemsPresent(expectedId);
         if (closePopup) {
             this.helper.WaitByCssStringAndClick('.Button', 'Close');
-            this.helper.WaitBusyIndicator();
+           // this.helper.WaitBusyIndicator();
+           this.helper.WaitEditComponentBusyIndicator();
             this.helper.WaitWindowClosed();
         } else {
            

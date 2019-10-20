@@ -5,6 +5,7 @@ import { OperationsComp } from './NewEntity/Operations.po';
 import { SendMailPopup } from '../SendMailPopup/SendMailPopup';
 import { PrintDocOut } from '../PrintDocOut/PrintDocOut';
 import { FieldsHelper } from '../../Helpers/FieldsHelper';
+import { ShipmentSearch } from '../ShipmentSearch';
 
 
 
@@ -18,20 +19,23 @@ export class DocOutSenario {
   private printDocOut: PrintDocOut = new PrintDocOut();
   private helper = new FieldsHelper();
 
+  
+
 
 
   constructor() {
 
   }
+  public OpenDocOutTab() {
+    var shipperRef;
+    shipperRef = this.NewDirectShipment.DoOperations();
+    this.NewDirectShipment.SearchForShipment(shipperRef);
+    this.NewDirectShipment.EditShipment(shipperRef);
 
-   public OpenDocOutTab() {
-        var shipperRef;
-        shipperRef = this.NewDirectShipment.DoOperations();
-        this.NewDirectShipment.SearchForShipment(shipperRef);
-        this.NewDirectShipment.EditShipment(shipperRef);
-  }
+}
 
-  public SuccessfullyPrintingDocument() {
+    public SuccessfullyPrintingDocument() {
+     this.helper.WaitEditComponentBusyIndicator();
     this.docsOutTab.QuickSearchDocOut('ETO-P-DocsOut', 'ETO-L-DocsOut', 'Export Trucking Order');
     this.printDocOut.isPrintingCompleted('BuildDocumentSucceededDiv', true);
     this.helper.WaitWindowClosed()
@@ -42,7 +46,8 @@ export class DocOutSenario {
 
   public FailingPrintingDocument() {
 
-    this.helper.WaitBusyIndicator();
+    // this.helper.WaitBusyIndicator();
+    this.helper.WaitEditComponentBusyIndicator();
     this.helper.WaitWindowClosed();
     this.docsOutTab.QuickSearchDocOut('FTDT-P-DocsOut', 'FTDT-L-DocsOut', 'Failure Test Document');
     this.helper.WaitBusyIndicator();

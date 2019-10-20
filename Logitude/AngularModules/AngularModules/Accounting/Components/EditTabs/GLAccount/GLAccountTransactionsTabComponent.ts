@@ -674,14 +674,14 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
 
             //// Change dates
-            this.timerToken = setTimeout(() => {
-                this.isValidate = true;
-                this.FromDate = this.oldFromDate;
-                this.isValidate = true;
-                this.ToDate = this.oldToDate;
-                this.LoadData();
+            // this.timerToken = setTimeout(() => {
+            //     this.isValidate = true;
+            //     this.FromDate = this.oldFromDate;
+            //     this.isValidate = true;
+            //     this.ToDate = this.oldToDate;
+            //     this.LoadData();
 
-            }, 200);
+            // }, 200);
 
         } else {
             this.timerToken = setTimeout(() => {

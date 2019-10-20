@@ -45,7 +45,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         LastPageEndDate, 
 	         LastPageCloseBalance, 
 	         TransferGLAcccountId, 
-	         CurrencyId,
+	         CurrencyId, 
+	         PrintingBranchNumber, 
+	         PrintingAccountNumber,
 	      }
 
 
@@ -88,7 +90,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CurrencyId, 
 	         CurrencyName, 
 	         CurrencyCode, 
-	         CurrencySign,
+	         CurrencySign, 
+	         PrintingBranchNumber, 
+	         PrintingAccountNumber,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -210,6 +214,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrencyId))
             {
 				entityPOCO.CurrencyId = entityPM.CurrencyId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PrintingBranchNumber))
+            {
+				entityPOCO.PrintingBranchNumber = entityPM.PrintingBranchNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PrintingAccountNumber))
+            {
+				entityPOCO.PrintingAccountNumber = entityPM.PrintingAccountNumber;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -338,6 +352,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.CurrencyId = entityPOCO.CurrencyId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PrintingBranchNumber))
+            {
+					entityPM.PrintingBranchNumber = entityPOCO.PrintingBranchNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PrintingAccountNumber))
+            {
+					entityPM.PrintingAccountNumber = entityPOCO.PrintingAccountNumber;
+            }
+
 		}
 
 		public void PMToOldPM(BankAccountPM entityPM, BankAccountPM oldEntityPM)
@@ -457,6 +481,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrencyId))
             {
                 oldEntityPM.CurrencyId = entityPM.CurrencyId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PrintingBranchNumber))
+            {
+                oldEntityPM.PrintingBranchNumber = entityPM.PrintingBranchNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PrintingAccountNumber))
+            {
+                oldEntityPM.PrintingAccountNumber = entityPM.PrintingAccountNumber;
             }
 			
 		}
