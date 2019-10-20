@@ -1545,6 +1545,10 @@
     <Compile Include="Migrations\201910151744432_AddDetectingChanges.Designer.cs">
       <DependentUpon>201910151744432_AddDetectingChanges.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910171345073_BankAccountPrintFieldsMigration.cs" />
+    <Compile Include="Migrations\201910171345073_BankAccountPrintFieldsMigration.Designer.cs">
+      <DependentUpon>201910171345073_BankAccountPrintFieldsMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201910170619476_DropSearchFieldColumnFromCustomsTransferLine_Samar.cs" />
     <Compile Include="Migrations\201910170619476_DropSearchFieldColumnFromCustomsTransferLine_Samar.Designer.cs">
       <DependentUpon>201910170619476_DropSearchFieldColumnFromCustomsTransferLine_Samar.cs</DependentUpon>
@@ -2649,6 +2653,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910151744432_AddDetectingChanges.resx">
       <DependentUpon>201910151744432_AddDetectingChanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910171345073_BankAccountPrintFieldsMigration.resx">
+      <DependentUpon>201910171345073_BankAccountPrintFieldsMigration.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910170619476_DropSearchFieldColumnFromCustomsTransferLine_Samar.resx">
       <DependentUpon>201910170619476_DropSearchFieldColumnFromCustomsTransferLine_Samar.cs</DependentUpon>

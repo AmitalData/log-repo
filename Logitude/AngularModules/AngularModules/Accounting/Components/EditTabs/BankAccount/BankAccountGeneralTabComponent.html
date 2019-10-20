@@ -28,7 +28,7 @@
                                                               [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
-                                                <td  style="" [style.padding-right]="isRTL ? 'initial' : '36px'" [style.padding-left]="isRTL ? '36px' : 'initial'">
+                                                <td style="" [style.padding-right]="isRTL ? 'initial' : '36px'" [style.padding-left]="isRTL ? '36px' : 'initial'">
                                                     <LogLov [ObjectFieldName]="'BankId'"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
@@ -46,8 +46,23 @@
                                                               [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
-                                                <td  style="" [style.padding-right]="isRTL ? 'initial' : '36px'" [style.padding-left]="isRTL ? '36px' : 'initial'">
+                                                <td style="" [style.padding-right]="isRTL ? 'initial' : '36px'" [style.padding-left]="isRTL ? '36px' : 'initial'">
                                                     <LogTextBox [ObjectFieldName]="'BranchNumber'" [InputType]="'integer'" [DataContext]="DataContext"
+                                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+
+                                            <!-- PrintingBranchNumber -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'PrintingBranchNumber'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="" [style.padding-right]="isRTL ? 'initial' : '36px'" [style.padding-left]="isRTL ? '36px' : 'initial'">
+                                                    <LogTextBox [ObjectFieldName]="'PrintingBranchNumber'" [DataContext]="DataContext"
                                                                 [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                                                 </td>
                                                 <td><div></div></td>
@@ -66,16 +81,29 @@
                                                 </td>
                                                 <td><div></div></td>
                                             </tr>
-
-                                            <!-- CurrencyId -->
+                                            <!-- PrintingAccountNumber -->
                                             <tr class="FormFieldRow">
-                                                    <td style="width: 180px;">
-                                                            <LogLabel [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName"
-                                                                [DataContext]="DataContext"></LogLabel>
+                                                <td style="width: 180px;">
+                                                    <LogLabel [ObjectFieldName]="'PrintingAccountNumber'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
                                                 <td style="width: 200px;" [style.padding-right]="isRTL ? 'initial' : '36px'" [style.padding-left]="isRTL ? '36px' : 'initial'">
-                                                        <LogLov [ObjectFieldName]="'CurrencyId'"
+                                                    <LogTextBox [ObjectFieldName]="'PrintingAccountNumber'" [InputType]="'text'" [DataContext]="DataContext"
+                                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                </td>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                            <!-- CurrencyId -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 180px;">
+                                                    <LogLabel [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 200px;" [style.padding-right]="isRTL ? 'initial' : '36px'" [style.padding-left]="isRTL ? '36px' : 'initial'">
+                                                    <LogLov [ObjectFieldName]="'CurrencyId'"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [SelectedValue]="CurrencyId"
