@@ -213,5 +213,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public bool IsUserAdditionalPackagesOnly { get; set; }
+
+        [DataMember]
+        public bool IsLicencedUser { get; set; }
     }
 }
