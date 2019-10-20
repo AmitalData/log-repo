@@ -997,7 +997,7 @@ img {
     <script type="text/javascript">
         function OnDownloadDocument(documentId) {
             $.SendContactActivity($.CurrentEmail, "Shipment", "Document Download", $.CurrentTenant, $.CurrentCardId);
-            window.open("../WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType);
+            window.open("../WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + documentId + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType);
         }
 
         function OnDownloadAllDocument() {
