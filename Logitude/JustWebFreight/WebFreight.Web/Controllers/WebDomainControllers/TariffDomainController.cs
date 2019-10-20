@@ -946,6 +946,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 String[] rowData = new String[sheet.Columns.Count() - 1];
                 ExcelTariffLines tariffLine = new ExcelTariffLines();
                 tariffLine.Index = rowIndex;
+                var rowDataLength = rowData.Length;
                 var StepLength = rowData.Length;
                 if (filter != null && !string.IsNullOrEmpty(filter.PriceSteps))
                 {
@@ -1008,7 +1009,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     tariffLine.ToPortText = this.TrimTo_20(rowData[1]);
                 }
 
-                if (StepLength > 2)
+                if (StepLength > 2 && rowDataLength > 2)
                 {
                     if (this.IsNumber(rowData[2]))
                     {
@@ -1030,7 +1031,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (StepLength > 3)
+                if (StepLength > 3 && rowDataLength > 3)
                 {
                     if (this.IsNumber(rowData[3]))
                     {
@@ -1052,7 +1053,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (StepLength > 4)
+                if (StepLength > 4 && rowDataLength > 4)
                 {
                     if (this.IsNumber(rowData[4]))
                     {
@@ -1074,7 +1075,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (StepLength > 5)
+                if (StepLength > 5 && rowDataLength > 5)
                 {
                     if (this.IsNumber(rowData[5]))
                     {
@@ -1096,7 +1097,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (StepLength > 6)
+                if (StepLength > 6 && rowDataLength > 6)
                 {
                     if (this.IsNumber(rowData[6]))
                     {
@@ -1118,7 +1119,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (StepLength > 7)
+                if (StepLength > 7 && rowDataLength > 7)
                 {
                     if (this.IsNumber(rowData[7]))
                     {
@@ -1140,7 +1141,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (StepLength > 8)
+                if (StepLength > 8 && rowDataLength > 8)
                 {
                     if (this.IsNumber(rowData[8]))
                     {
@@ -1162,7 +1163,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (StepLength > 9)
+                if (StepLength > 9 && rowDataLength > 9)
                 {
                     if (this.IsNumber(rowData[9]))
                     {
@@ -1184,7 +1185,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (StepLength > 10)
+                if (StepLength > 10 && rowDataLength > 10)
                 {
                     if (this.IsNumber(rowData[10]))
                     {
