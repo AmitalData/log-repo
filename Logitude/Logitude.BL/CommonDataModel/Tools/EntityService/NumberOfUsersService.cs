@@ -70,6 +70,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.tenant = entityPM.Tenant;
             this.userId = entityPM.Id;
             this.additionalPackagesOnly = entityPM.IsUserAdditionalPackagesOnly;
+            this.licencedUser = entityPM.IsLicencedUser;
             this.commonDataContext = CommonDataContext.GetContext(this.tenant);
             this.userRepository = new UserRepository(this.commonDataContext);
 
@@ -232,25 +233,24 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                         else
                         {
-                            this.exceptionMessage = "Sorry You can't activate this user since you reached the maximum number of users!";
+                            this.exceptionMessage = "Sorry You can't mark this user as not Additional Packages Only since you reached the maximum number of users!";
                         }
                     }
 
                     else
                     {
+                        if (this.inactive_DB && !this.inactive)
+                        {
+                            this.eventNotes = "The user " + this.englishName + " has been activated and Additional Packages Only!";
+                        }
+
                         this.isValid = true;
                     }
                 }
 
-                if (this.inactive_DB && !this.inactive)
+                else
                 {
-                    if (!this.additionalPackagesOnly_DB && this.additionalPackagesOnly)
-                    {
-                        this.isValid = true;
-                        this.eventNotes = "The user " + this.englishName + " has been activated and Additional Packages Only!";
-                    }
-
-                    else
+                    if (this.inactive_DB && !this.inactive)
                     {
                         if (tenantUsersCount < totalTenantManagementUsers)
                         {
@@ -264,11 +264,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                             this.exceptionMessage = "Sorry You can't activate this user since you reached the maximum number of users!";
                         }
                     }
-                }
 
-                else
-                {
-                    this.isValid = true;
+                    else
+                    {
+                        this.isValid = true;
+                    }
                 }
             }
         }
@@ -333,28 +333,36 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                         else
                         {
-                            this.isValid = true;
-                        }
-                    }
+                            if (this.inactive_DB && !this.inactive)
+                            {
+                                this.eventNotes = "The user " + this.englishName + " has been activated and Licensed!";
+                            }
 
-                    if (this.inactive_DB && !this.inactive)
-                    {
-                        if (tenantUsersCount < totalTenantManagementUsers)
-                        {
                             this.isValid = true;
-                            this.eventNotes = "The user " + this.englishName + " has been activated";
-                        }
-
-                        else
-                        {
-                            this.isValid = false;
-                            this.exceptionMessage = "Sorry You can't activate this user since you reached the maximum number of users!";
                         }
                     }
 
                     else
                     {
-                        this.isValid = true;
+                        if (this.inactive_DB && !this.inactive)
+                        {
+                            if (tenantUsersCount < totalTenantManagementUsers)
+                            {
+                                this.isValid = true;
+                                this.eventNotes = "The user " + this.englishName + " has been activated";
+                            }
+
+                            else
+                            {
+                                this.isValid = false;
+                                this.exceptionMessage = "Sorry You can't activate this user since you reached the maximum number of users!";
+                            }
+                        }
+
+                        else
+                        {
+                            this.isValid = true;
+                        }
                     }
                 }
             }

@@ -419,6 +419,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             contact.IsUser = true;
             contact.DontShowLocal = true;
             contact.IsUserAdditionalPackagesOnly = user.AdditionalPackagesOnly;
+            contact.IsLicencedUser = user.LicencedUser;
         }
 
         private ContactTenant InseartNewContact(UserPM entityPM)
