@@ -17,6 +17,10 @@ describe('NewUser', () => {
 
     browser.ignoreSynchronization = true;
 
+    it('QuickSearch', function () {
+
+        UsersScenario.Quicksearch()
+    });
 
     it('SearchUserTab', function () {
 

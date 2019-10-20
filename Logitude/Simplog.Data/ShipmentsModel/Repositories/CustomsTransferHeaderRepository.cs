@@ -1,5 +1,6 @@
 ﻿using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
 
         public CustomsTransferHeader GetSingleCustomsTransferHeader(string id, int tenant)
         {
-            return (from a in context.CustomsTransferHeaders
+            return (from a in context.CustomsTransferHeaders.Include("CreatedByUser").Include("CreatedByUser.Contact").Include("CustomsTransferType")
                     where a.Id == id && a.Tenant == tenant
                     select a).FirstOrDefault();
         }

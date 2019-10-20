@@ -16,5 +16,7 @@ export class CustomsTransferHeaderList {
 		CustomsTransferTypeCode: string;
 		SearchFields: string;
 		Notes: string;
+		CreatedByUserName: string;
+		CustomsTransferTypeName: string;
 	
 }
