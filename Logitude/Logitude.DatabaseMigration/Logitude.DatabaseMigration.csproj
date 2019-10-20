@@ -1489,6 +1489,10 @@
     <Compile Include="Migrations\201909301617282_addNotInvoicedReceivablesAmount.Designer.cs">
       <DependentUpon>201909301617282_addNotInvoicedReceivablesAmount.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910201217593_UpdateField_JournalLine_Length.cs" />
+    <Compile Include="Migrations\201910201217593_UpdateField_JournalLine_Length.Designer.cs">
+      <DependentUpon>201910201217593_UpdateField_JournalLine_Length.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201910201427034_UpdateField_JournalLine_Length2.cs" />
     <Compile Include="Migrations\201910201427034_UpdateField_JournalLine_Length2.Designer.cs">
       <DependentUpon>201910201427034_UpdateField_JournalLine_Length2.cs</DependentUpon>
@@ -2551,6 +2555,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909301617282_addNotInvoicedReceivablesAmount.resx">
       <DependentUpon>201909301617282_addNotInvoicedReceivablesAmount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910201217593_UpdateField_JournalLine_Length.resx">
+      <DependentUpon>201910201217593_UpdateField_JournalLine_Length.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910201427034_UpdateField_JournalLine_Length2.resx">
       <DependentUpon>201910201427034_UpdateField_JournalLine_Length2.cs</DependentUpon>
