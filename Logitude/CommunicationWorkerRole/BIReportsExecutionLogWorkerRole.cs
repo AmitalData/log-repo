@@ -152,7 +152,7 @@ namespace CommunicationWorkerRole
                 {
                     BlobFileInfo fileInfo = new BlobFileInfo()
                     {
-                        FileName = ObjectTableName + DateTime.Now.ToShortDateString(),
+                        FileName = bIReportXMLData.BIReportKey,
                         FolderName = "others",
                         Extension = "xlsx",
                         Tenant = tenant,
