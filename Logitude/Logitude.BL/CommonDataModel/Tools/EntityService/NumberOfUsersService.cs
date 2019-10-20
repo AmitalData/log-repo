@@ -225,26 +225,74 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 {
                     if (this.additionalPackagesOnly_DB && !this.additionalPackagesOnly)
                     {
-                        if (tenantUsersCount < totalTenantManagementUsers)
+                        if (this.inactive_DB && !this.inactive)
                         {
-                            this.isValid = true;
-                            this.eventNotes = "The user " + this.englishName + " is Additional Packages Only";
+                            if (tenantUsersCount < totalTenantManagementUsers)
+                            {
+                                isValid = true;
+                                this.eventNotes = "The user " + this.englishName + " has been activated and Additional Packages Only!";
+                            }
+
+                            else
+                            {
+                                this.exceptionMessage = "Sorry You can't activate this user since you reached the maximum number of users!";
+                            }
                         }
 
                         else
                         {
-                            this.exceptionMessage = "Sorry You can't mark this user as not Additional Packages Only since you reached the maximum number of users!";
-                        }
+                            if (this.inactive)
+                            {
+                                this.isValid = true;
+                                this.eventNotes = "The user " + this.englishName + " is Additional Packages Only";
+                            }
+
+                            else
+                            {
+                                if (tenantUsersCount < totalTenantManagementUsers)
+                                {
+                                    this.isValid = true;
+                                    this.eventNotes = "The user " + this.englishName + " is Additional Packages Only";
+                                }
+
+                                else
+                                {
+                                    this.exceptionMessage = "Sorry You can't mark this user as not Additional Packages Only since you reached the maximum number of users!";
+                                }
+                            }
+                        }                        
                     }
 
                     else
                     {
                         if (this.inactive_DB && !this.inactive)
                         {
-                            this.eventNotes = "The user " + this.englishName + " has been activated and Additional Packages Only!";
+                            if (this.additionalPackagesOnly)
+                            {
+                                this.isValid = true;
+                                this.eventNotes = "The user " + this.englishName + " has been activated";
+                            }
+
+                            else
+                            {
+                                if (tenantUsersCount < totalTenantManagementUsers)
+                                {
+                                    this.isValid = true;
+                                    this.eventNotes = "The user " + this.englishName + " has been activated";
+                                }
+
+                                else
+                                {
+                                    this.isValid = false;
+                                    this.exceptionMessage = "Sorry You can't activate this user since you reached the maximum number of users!";
+                                }
+                            }
                         }
 
-                        this.isValid = true;
+                        else
+                        {
+                            this.isValid = true;
+                        }
                     }
                 }
 
