@@ -84,6 +84,10 @@ namespace Logitude.Accounting.Data.EntityLists
        public string CurrencyCode  { get; set; }
        [DataMember]
        public string CurrencySign  { get; set; }
+       [DataMember]
+       public string PrintingBranchNumber  { get; set; }
+       [DataMember]
+       public string PrintingAccountNumber  { get; set; }
    }
 
 }

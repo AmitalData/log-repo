@@ -1545,6 +1545,10 @@
     <Compile Include="Migrations\201910151744432_AddDetectingChanges.Designer.cs">
       <DependentUpon>201910151744432_AddDetectingChanges.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910171345073_BankAccountPrintFieldsMigration.cs" />
+    <Compile Include="Migrations\201910171345073_BankAccountPrintFieldsMigration.Designer.cs">
+      <DependentUpon>201910171345073_BankAccountPrintFieldsMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2645,6 +2649,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910151744432_AddDetectingChanges.resx">
       <DependentUpon>201910151744432_AddDetectingChanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910171345073_BankAccountPrintFieldsMigration.resx">
+      <DependentUpon>201910171345073_BankAccountPrintFieldsMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
