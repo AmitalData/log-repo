@@ -272,6 +272,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private void CheckNumberOfUsers()
         {
             NumberOfUsersService numberOfUsersService = new NumberOfUsersService(this.entityPm, this.Poco, this.isNewEntity);
+            numberOfUsersService.Validate();
         }
 
         private void UpdateUserRolesForHybrid(UserPM entityPM, ContactTenant contactTenant)
@@ -417,6 +418,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             contact.SearchFields = user.SearchFields;
             contact.IsUser = true;
             contact.DontShowLocal = true;
+            contact.IsUserAdditionalPackagesOnly = user.AdditionalPackagesOnly;
+            contact.IsLicencedUser = user.LicencedUser;
         }
 
         private ContactTenant InseartNewContact(UserPM entityPM)
