@@ -465,8 +465,9 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
             //}
             //else {
             var NumberOfTimes = ((this.SelectedRecords.length % 10) == 0 ? (this.SelectedRecords.length / 10) : (this.SelectedRecords.length / 10) + 1)
-            for (var i = 0; i < NumberOfTimes; i += 9) {
-                var TenSelectedRecords = this.SelectedRecords.slice(i, i + 10)
+            for (var i = 0; i < NumberOfTimes; i++) {
+                var nextStart = (i * 10);
+                var TenSelectedRecords = this.SelectedRecords.slice(nextStart, nextStart + 10)
                 this.StartBusyIndicator("Archiving " + TenSelectedRecords.length + "/" + this.SelectedRecords.length  + " ...");
                 this._ShipmentPMService.ArchiveShipments(TenSelectedRecords).subscribe(myResult => {
                     if (!myResult.HasError) {

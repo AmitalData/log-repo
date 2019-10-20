@@ -45,7 +45,7 @@
                     <tr>
                         <td>
                             <!-- Air Freight Cost-->
-                            <div *ngIf="EntityPM.TypeCode == 'AFC'" class="MediaFill">
+                            <div *ngIf="EntityPM.TypeCode == 'AFC' || EntityPM.TypeCode == 'OLC'" class="MediaFill">
                                 <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="VersionLinesSource">
                                     <!-- OriginPortId -->
                                     <log-column [header]="'TariffLine.F.OriginPortId' | TextCodeTranslationPipe" [width]="'70'">

@@ -30,7 +30,8 @@ export class NewPaymentCheque {
         this.Helper.WaitByIdAndFill('PaymentCheque_BankAccountId', 'Bank');
         this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'PaymentCheque_BankAccountId', 'Bank');
 
-
+        this.Helper.ItemsVisibility('PaymentCheque_LocalAmount');
+        this.Helper.ItemsPresent('PaymentCheque_LocalAmount');
         this.Helper.WaitByIdAndFill('PaymentCheque_LocalAmount', '1200');
       
         this.Helper.WaitByIdAndClick('CREATEPAYMENTCHEQUE');
