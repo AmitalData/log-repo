@@ -7,7 +7,7 @@ import { LoginComp } from "../../login/Login.po";
 
 
 
-describe('NewAgent', () => {
+describe('NewShipper', () => {
 
     let Newshipper: NewShipper = new NewShipper();
     let ShipperScenario: NewShipperScenario = new NewShipperScenario();
@@ -18,6 +18,10 @@ describe('NewAgent', () => {
 
     browser.ignoreSynchronization = true;
 
+    it('QuickSearch', function () {
+
+        ShipperScenario.Quicksearch();
+    });
 
     it('SearchShippertTab', function () {
 
