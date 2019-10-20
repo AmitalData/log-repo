@@ -248,8 +248,9 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
 
                                         break;
                                     }
+
                                 case "Status":
-                                    {
+                                    {                                        
                                         XmlSerializer xmlSerializer = new XmlSerializer(typeof(INTTRA_Status.MessageType));
                                         INTTRA_Status.MessageType iMessage = (INTTRA_Status.MessageType)xmlSerializer.Deserialize(myMemoryStream);
                                         this.iMessage_Status = iMessage;
@@ -296,11 +297,13 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
 
                         break;
                     }
+
                 case "Booking":
                     {
                         this.AnalyzeINTTRABooking();
                         break;
                     }
+
                 default:
                     {
                         if (Subject == null)
@@ -732,7 +735,11 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                         {
                             case "Status":
                                 {
-                                    Analyze_Status();
+                                    if (Tenant != 1508)
+                                    {
+                                        Analyze_Status();
+                                    }
+
                                     break;
                                 }
 
