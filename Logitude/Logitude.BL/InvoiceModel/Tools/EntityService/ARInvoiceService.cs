@@ -3379,7 +3379,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 if (invoiceCurrencyLine != null)
                 {
-                    journal.JournalLines.Where(w => w.CurrencyId == invoice.InvoiceCurrencyId).ToList().ForEach(s => s.LocalAmount = s.LocalAmount + (decimal)vat.LocalVATAmount);
+                    journal.JournalLines.Where(w => w.CurrencyId == invoice.InvoiceCurrencyId).ToList().ForEach(s => s.LocalAmount = s.ForeignAmount= s.LocalAmount + (decimal)vat.LocalVATAmount);
                 }
                 else
                 {
