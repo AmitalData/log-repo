@@ -314,6 +314,8 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
 
     ComaredLines() {
         this.ItemsCollection.forEach((item: AirCostTariffLineData) => {
+            item.IsNewEntity = false;
+
             var line = this.compareTariffLines.sort(p => p.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
             if (line) {
                 item.ComparedEntity = line;
