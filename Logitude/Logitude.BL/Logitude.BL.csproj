@@ -190,6 +190,10 @@
     <Reference Include="SilverlightExpressions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SilverlightExpression.1.0.0\lib\Net40\SilverlightExpressions.dll</HintPath>
     </Reference>
+    <Reference Include="Syncfusion.XlsIO.Web, Version=10.104.0.44, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Syncfusion.1.0.0\lib\Net40\Syncfusion.XlsIO.Web.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -2437,6 +2441,7 @@
     <Compile Include="ShipmentsModel\EntityLists\ShipmentTypeList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\SpecialServicesTypeList.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\APILogsDataPM.cs" />
+    <Compile Include="ShipmentsModel\EntityOtherServices\CustomsTransferService.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\AWBAdditionalHandlingInfoPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\AWBChargesCodePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\AWBCustomsInformationPM.cs" />

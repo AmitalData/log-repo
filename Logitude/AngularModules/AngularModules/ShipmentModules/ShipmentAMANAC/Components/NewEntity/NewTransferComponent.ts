@@ -171,10 +171,11 @@ export class NewTransferComponent extends BaseComponent {
             filters.addAdditionalFilter("SearchFields", this.SearchText, null, null, "Contains", false, true, false, "string");
         }
 
-        if (this.TransferTypeCode == "Air") {
+        if (this.TransferTypeCode == "AMAS") {
             filters.addAdditionalFilter("TransportModeId", "A", null, null, "Equals", false, true, false, "string");
         }
-        else {
+
+        else if (this.TransferTypeCode == "AMOS"){
             filters.addAdditionalFilter("TransportModeId", "O", null, null, "Equals", false, true, false, "string");
         }
 

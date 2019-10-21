@@ -26,8 +26,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             else
             {
-                APInvoiceNormalService service = new APInvoiceNormalService(objectContext, entityPM.Tenant);
-                service.Create(entityPM);
+                APInvoiceNormalService service = new APInvoiceNormalService(objectContext, entityPM);
+                service.Create();
             }
         }
 
@@ -48,14 +48,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             else
             {
 
-                APInvoiceNormalService service = new APInvoiceNormalService(objectContext, entityPM.Tenant);
+                APInvoiceNormalService service = new APInvoiceNormalService(objectContext, entityPM);
 
                 if (!mapComposition)
                 {
                     service.SetChangeSets(invoiceLinesChangeSet, invoicePaymentsChangeSet);
                 }
 
-                service.Update(entityPM, mapComposition);
+                service.Update(mapComposition);
             }
         }
 
