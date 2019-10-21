@@ -1,7 +1,9 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Security;
+using Logitude.BL.ShipmentsModel.EntityOtherServices;
 using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.DataMapping;
 using Logitude.BL.ShipmentsModel.Tools.TraceEvents;
 using Logitude.Server.Tools.Counters;
@@ -33,7 +35,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private CustomsTransferHeaderRepository entityRepository;
         private CustomsTransferLineRepository CustomsTransferLineRepository;
         
-        private List<Shipment> shipments;
+        private List<ShipmentDataView> shipments;
         private ShipmentRepository shipmentRepository;
         public CustomsTransferHeaderService(IShipmentsContext objectContext, int tenant)
         {
@@ -43,7 +45,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.CustomsTransferLineRepository = new CustomsTransferLineRepository(objectContext);
             this.loggedTenant = TenantRepository.GetSingleTenant(tenant, true);
 
-            this.shipments = new List<Shipment>();
+            this.shipments = new List<ShipmentDataView>();
             this.shipmentRepository = new ShipmentRepository(objectContext);
 
             this.GetLoggedContact();
@@ -74,7 +76,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             if (ids.Count > 0)
             {
-                this.shipments = shipmentRepository.GetShipmentsListFromIdList(ids, tenant);
+                this.shipments = shipmentRepository.GetShipmentsFromIdList(ids, tenant);
 
                 switch (entityPM.CustomsTransferTypeCode)
                 {
@@ -268,8 +270,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private void UpdateShipment(string myEntityId)
         {
-            Shipment shipment = this.shipments.Where(d => d.Id == myEntityId).FirstOrDefault();
-
+            Shipment shipment = shipmentRepository.GetSingleShipment(myEntityId, tenant);
             if (shipment != null)
             {
                 shipment.LocalCustomsTransmissionsStatusCode = "SENT";
@@ -283,7 +284,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         {
             if (isNewEntity)
             {
-                
+                CustomsTransferService customsTransferService = new CustomsTransferService(shipments, entityPM.FileName, entityPM.CustomsTransferTypeCode, tenant);
+                customsTransferService.Transfer();
             }
         }
     }

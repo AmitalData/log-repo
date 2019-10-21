@@ -21,6 +21,7 @@ import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {BankDepositExtendedPMService } from '../../../Services/ExtendedPMs/BankDepositExtendedPMService';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+import { BankDepositPMService } from '../../../Services/StandardPMs/BankDepositPMService';
 
 @Component({
     moduleId: module.id,
@@ -40,7 +41,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     CashBookPM: CashBookPM;
     BankDepositLines: BankDepositLinePM[];
     CashBookLines: CashBookLinePM[];
-
+    BankDepositPMService: BankDepositPMService = new BankDepositPMService();
     _CashBookPMService: CashBookPMService = new CashBookPMService();
     ratesTableExtendedListService: RatesTableExtendedListService = new RatesTableExtendedListService();
     currencyListService: CurrencyListService = new CurrencyListService();
@@ -716,21 +717,31 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
     }
     ReturnCheque(chequeId:string ,returnType:string, notes: string) {
-        //
-        // returnType: Customer / Cashbook
-        //
         this.CurrentSession.StartBusyIndicatorLoading();
         this._BankDepositExtendedPMService.returnCheque(this.EntityPM.Id, chequeId, returnType, notes).subscribe(myResult => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
-                this.RedrawScreen();
+                this.GetEntityPMAndRedrawScreen();
+               
             }
             else {
                 this.CurrentSession.CurrentEditComponent.ValidationErrorsList = mm.ErrorsArray;
                 this.CurrentSession.StopBusyIndicator();
             }
         });
+    }
+    GetEntityPMAndRedrawScreen() {
+        this.BankDepositPMService.get(this.EntityPM.Id).subscribe(Result => {
+
+            var result: ServiceResponse = Result;
+            if (!result.HasError) {
+                //this.EntityPM = Result.Result;
+                this.CurrentSession.CurrentEditComponent.EntityPM = Result.Result;
+                this.RedrawScreen();
+            }
+        });
+
     }
     //#endregion
 
