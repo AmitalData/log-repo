@@ -243,28 +243,6 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     public Surcharge9PriceLabel: string;
     public Surcharge10PriceLabel: string;
 
-    public Surcharge1PriceVisibility: boolean;
-    public Surcharge2PriceVisibility: boolean;
-    public Surcharge3PriceVisibility: boolean;
-    public Surcharge4PriceVisibility: boolean;
-    public Surcharge5PriceVisibility: boolean;
-    public Surcharge6PriceVisibility: boolean;
-    public Surcharge7PriceVisibility: boolean;
-    public Surcharge8PriceVisibility: boolean;
-    public Surcharge9PriceVisibility: boolean;
-    public Surcharge10PriceVisibility: boolean;
-
-    public IsSurcharge1MinPriceEditVisible: boolean = false;
-    public IsSurcharge2MinPriceEditVisible: boolean = false;
-    public IsSurcharge3MinPriceEditVisible: boolean = false;
-    public IsSurcharge4MinPriceEditVisible: boolean = false;
-    public IsSurcharge5MinPriceEditVisible: boolean = false;
-    public IsSurcharge6MinPriceEditVisible: boolean = false;
-    public IsSurcharge7MinPriceEditVisible: boolean = false;
-    public IsSurcharge8MinPriceEditVisible: boolean = false;
-    public IsSurcharge9MinPriceEditVisible: boolean = false;
-    public IsSurcharge10MinPriceEditVisible: boolean = false;
-
     public Surcharge1MinPriceLabel: string;
     public Surcharge2MinPriceLabel: string;
     public Surcharge3MinPriceLabel: string;
@@ -276,6 +254,28 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     public Surcharge9MinPriceLabel: string;
     public Surcharge10MinPriceLabel: string;
 
+    public Surcharge1PriceVisibility: boolean;
+    public Surcharge2PriceVisibility: boolean;
+    public Surcharge3PriceVisibility: boolean;
+    public Surcharge4PriceVisibility: boolean;
+    public Surcharge5PriceVisibility: boolean;
+    public Surcharge6PriceVisibility: boolean;
+    public Surcharge7PriceVisibility: boolean;
+    public Surcharge8PriceVisibility: boolean;
+    public Surcharge9PriceVisibility: boolean;
+    public Surcharge10PriceVisibility: boolean;
+
+    public Surcharge1MinPriceVisibility: boolean;
+    public Surcharge2MinPriceVisibility: boolean;
+    public Surcharge3MinPriceVisibility: boolean;
+    public Surcharge4MinPriceVisibility: boolean;
+    public Surcharge5MinPriceVisibility: boolean;
+    public Surcharge6MinPriceVisibility: boolean;
+    public Surcharge7MinPriceVisibility: boolean;
+    public Surcharge8MinPriceVisibility: boolean;
+    public Surcharge9MinPriceVisibility: boolean;
+    public Surcharge10MinPriceVisibility: boolean;
+    
     private tariffCharges: CodeNameClass[] = [];
     SetSurchargesLabelsAndVisibility() {
         this.tariffCharges = [];
@@ -317,11 +317,8 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
                 this['Surcharge' + index + 'PriceLabel'] = item.DisplyText;
                 this['Surcharge' + index + 'PriceVisibility'] = true;
-                this['Surcharge' + index + 'MinPriceLabel'] = "Min " + iChargeType.Code;
-
-                if (!isMeasurmentFixed) {
-                    this['IsSurcharge' + index + 'MinPriceEditVisible'] = true;
-                }
+                this['Surcharge' + index + 'MinPriceVisibility'] = !isMeasurmentFixed;
+                this['Surcharge' + index + 'MinPriceLabel'] = "Min " + iChargeType.Code;               
             }
         }
     }

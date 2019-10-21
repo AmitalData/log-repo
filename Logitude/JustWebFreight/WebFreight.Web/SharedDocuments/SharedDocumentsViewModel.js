@@ -75,8 +75,8 @@
                 if (shipmentPM) {
                     $.CurrentEntityPM = shipmentPM;
                     
-                    ko.applyBindings(BuildShipmentBackAreaViewModel(shipmentPM, ""), document.getElementById("BackArea"));
-                    ko.applyBindings(BuildShipmentHeaderViewModel(shipmentPM, ""), document.getElementById("EntityHeaderArea"));
+                    ko.applyBindings(BuildShipmentBackAreaViewModel(shipmentPM, "../"), document.getElementById("BackArea"));
+                    ko.applyBindings(BuildShipmentHeaderViewModel(shipmentPM, "", "../"), document.getElementById("EntityHeaderArea"));
 
                     $(".ShowOnDataControl").show();
                     $.SendContactActivity($.CurrentEmail, "Shipment", "Shipment Display", $.CurrentTenant, $.CurrentCardId);

@@ -6,37 +6,37 @@ import { CompanyAddressSetting } from './CompanyAddressSetting';
 
 
 
-export class CompanyAddressSettingScenario{
+export class CompanyAddressSettingScenario {
 
     private generalFun = new GeneralFunctions();
     private login: LoginComp = new LoginComp();
     private helper = new FieldsHelper();
     private CompanyAddress: CompanyAddressSetting = new CompanyAddressSetting();
 
-constructor(){ 
+    constructor() {
     }
 
 
-public Quicksearch(){
-    
-    this.CompanyAddress.QuickSearch();
+    public Quicksearch() {
+
+        this.CompanyAddress.QuickSearch();
 
 
-}
+    }
 
-public SearchCompanyAddressSetting(){
-    
-    this.CompanyAddress.SearchCompanyAddressSetting();
+    public SearchCompanyAddressSetting() {
 
-
-}
-
-public EditCompanyAddressSitting(){
-    
-    this.CompanyAddress.EditCompanyAddressSitting();
+        this.CompanyAddress.SearchCompanyAddressSetting();
 
 
-}
+    }
+
+    public EditCompanyAddressSitting() {
+
+        this.CompanyAddress.EditCompanyAddressSitting();
+
+
+    }
 
 
 

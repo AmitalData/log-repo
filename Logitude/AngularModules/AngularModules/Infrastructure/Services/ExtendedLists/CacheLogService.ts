@@ -98,6 +98,20 @@ export class CacheLogService {
         });
     }
 
+    GetCacheLogExcelFile() {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        var url = this._apiUrl + '/GetCacheLogExcelFile?';
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var myResult = response.json();
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myResult;
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
     MapJsonToEntityList(jsonList: any) {
 
         var entityList: CacheKey;
