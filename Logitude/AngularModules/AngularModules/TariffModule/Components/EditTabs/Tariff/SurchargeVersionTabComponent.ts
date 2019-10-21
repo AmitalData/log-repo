@@ -398,6 +398,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
     ComaredLines() {
         this.ItemsCollection.forEach((item: AirSurchargeTariffLineData) => {
+            item.IsNewEntity = false;
             var line = this.compareTariffLines.sort((a, b) => a.Index - b.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
             if (line) {
                 item.ComparedEntity = line;

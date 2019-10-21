@@ -5,6 +5,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.EntityLists;
+using Logitude.BL.ShipmentsModel.EntityOtherServices;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
@@ -2344,19 +2345,22 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-                ShipmentQuery shipmentQuery = new ShipmentQuery(authToken.Tenant);
-                ShipmentPM shipment = shipmentQuery.GetSinglePMWithoutComposition(shipmentId, authToken.Tenant);
+                ShipmentRepository shipmentRepository = new ShipmentRepository(authToken.Tenant);
+                ShipmentDataView shipment = shipmentRepository.GetSingleShipmentDataView(shipmentId, authToken.Tenant);
 
                 string fileName = "";
-                byte[] data = null;
                 if (shipment != null)
                 {
-                    data = this.ExportAMANACShipmentToExcel(shipment);
-                    fileName = "Shipment-" + shipment.ShipmentNumber + "-" + String.Format("{0:dd-MM-yyyy}", TenantServerConfigration.GetCurrentDateTime(authToken.Tenant));
-                }
+                    string transferType = shipment.TransportModeId == "O" ? "AMOS" : "AMAS"; 
 
-                BlobFileInfo fileInfo = this.CreateAMANACBlobFile(data, fileName, authToken.Tenant);
-                this.WriteBlobFileToStorage(data, fileInfo);
+                    List<ShipmentDataView> shipments = new List<ShipmentDataView>();
+                    shipments.Add(shipment);
+
+                    fileName = "Shipment-" + shipment.ShipmentNumber + "-" + String.Format("{0:dd-MM-yyyy}", TenantServerConfigration.GetCurrentDateTime(authToken.Tenant));
+                    CustomsTransferService customsTransferService = new CustomsTransferService(shipments, fileName, transferType, authToken.Tenant);
+                    customsTransferService.Transfer();
+                }
+                
                 return Request.CreateResponse(HttpStatusCode.OK, fileName);
             }
 
@@ -2364,257 +2368,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-        }
-        private byte[] ExportAMANACShipmentToExcel(ShipmentPM shipment)
-        {
-            byte[] data = null;
-
-            if (shipment.TransportModeId == "O")
-            {
-                data = this.ExportOceanAMANACShipmentToExcel(shipment);
-            }
-
-            else if (shipment.TransportModeId == "A")
-            {
-                data = this.ExportAirAMANACShipmentToExcel(shipment);
-            }
-
-            return data;
-        }
-        public byte[] ExportOceanAMANACShipmentToExcel(ShipmentPM shipment)
-        {
-            System.IO.MemoryStream memory = new System.IO.MemoryStream();
-            ExcelEngine excelEngine = new ExcelEngine();
-            IApplication application = excelEngine.Excel;
-            IWorkbook workbook = excelEngine.Excel.Workbooks.Create(2);
-
-            IWorksheet sheet1 = workbook.Worksheets[0];
-            sheet1.Range["A1:AC1"].CellStyle.Font.Bold = true;
-            sheet1.Range["A1:AC1"].CellStyle.Font.Size = 10;
-            sheet1.Range["A1:AC1"].CellStyle.Font.FontName = "Calibri";
-            sheet1.Range["A1:AC1"].CellStyle.Font.Color = ExcelKnownColors.Black;
-            sheet1.Range["A1:AC1"].CellStyle.Color = System.Drawing.Color.FromArgb(255, 242, 220, 219);
-            sheet1.Range["A1:AC1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
-
-            DataTable dataTable1 = new DataTable();
-            dataTable1.Columns.Add("Consecutive");
-            dataTable1.Columns.Add("Unique_Number_of_Manifest");
-            dataTable1.Columns.Add("Code_CAAT");
-            dataTable1.Columns.Add("Kind_of_Movement");
-            dataTable1.Columns.Add("Electronic_Acknowledgment_of_Recepction");
-            dataTable1.Columns.Add("Key_Carrier");
-            dataTable1.Columns.Add("Name_of_Vessel");
-            dataTable1.Columns.Add("Number_of_Trip");
-            dataTable1.Columns.Add("Type_of_Operation");
-            dataTable1.Columns.Add("Number_Of_BL");
-            dataTable1.Columns.Add("Port_of_Loading_Discharge");
-            dataTable1.Columns.Add("Country_of_Port_of_Loading_Discharge");
-            dataTable1.Columns.Add("Type_of_BL");
-            dataTable1.Columns.Add("Number_of_BL_Reference");
-            dataTable1.Columns.Add("Type_of_Port");
-            dataTable1.Columns.Add("Key_of_port");
-            dataTable1.Columns.Add("Country_of_Port");
-            dataTable1.Columns.Add("Type_Figure1");
-            dataTable1.Columns.Add("Name1");
-            dataTable1.Columns.Add("Identification_Key_Fiscal1");
-            dataTable1.Columns.Add("Place_of_Residence1");
-            dataTable1.Columns.Add("Type_Figure2");
-            dataTable1.Columns.Add("Name2");
-            dataTable1.Columns.Add("Identification_Key_Fiscal2");
-            dataTable1.Columns.Add("Place_of_residence2");
-            dataTable1.Columns.Add("Type_Figure3");
-            dataTable1.Columns.Add("Name3");
-            dataTable1.Columns.Add("Identification_Key_Fiscal3");
-            dataTable1.Columns.Add("Place_of_residence3");
-
-            ICommonDataContext commoContext = CommonDataContext.GetContext(shipment.Tenant);
-            ShippingLineRepository shippingLineRepository = new ShippingLineRepository(commoContext);
-            AddressRepository addressRepository = new AddressRepository(commoContext);
-
-            Tenant myTenant = TenantRepository.GetSingleTenant(shipment.Tenant, true);
-            ShippingLine carrier = shippingLineRepository.GetSingleShippingLine(shipment.MainCarriageCarrierId, shipment.Tenant);
-            Address shipperAddress = addressRepository.GetSingleAddress(shipment.ShipperAddressId, shipment.Tenant);
-            Address consigneeAddress = addressRepository.GetSingleAddress(shipment.ConsigneeAddressId, shipment.Tenant);
-
-            DataRow row = dataTable1.NewRow();
-            row[0] = "1";
-            //row[1] = ;
-            row[2] = myTenant == null ? "" : myTenant.CAAT;
-            row[3] = "8";
-            //row[4] = ;
-            row[5] = carrier == null ? "" : carrier.SCACCode;
-            row[6] = shipment.MainCarriageVesselName;
-            row[7] = shipment.MainCarriageCarrierNumber;
-            row[8] = shipment.DirectionId == "E" ? "2" : "1";
-            row[9] = shipment.House;
-            //row[10] = ;
-            //row[11] = ;
-            row[12] = "H";
-            row[13] = shipment.House;
-            row[14] = "2";
-            //row[15] = ;
-            //row[16] = ;
-            row[17] = "1";
-            row[18] = shipment.ShipperName;
-            //row[19] = ;
-            row[20] = General.GetAddress(shipperAddress);
-            row[21] = "2";
-            row[22] = shipment.ConsigneeName;
-            //row[23] = ;
-            row[24] = General.GetAddress(consigneeAddress);
-            row[25] = "3";
-            row[26] = shipment.ConsigneeName;
-            //row[27] = ;
-            row[28] = General.GetAddress(consigneeAddress);
-            dataTable1.Rows.Add(row);
-
-            sheet1.ImportDataTable(dataTable1, true, 1, 1);
-            workbook.SaveAs(memory);
-            return memory.ToArray();
-        }
-        public byte[] ExportAirAMANACShipmentToExcel(ShipmentPM shipment)
-        {
-
-            System.IO.MemoryStream memory = new System.IO.MemoryStream();
-            ExcelEngine excelEngine = new ExcelEngine();
-            IApplication application = excelEngine.Excel;
-            IWorkbook workbook = excelEngine.Excel.Workbooks.Create(2);
-            IWorksheet sheet1 = workbook.Worksheets[0];
-
-            sheet1.Range["A1:AA1"].CellStyle.Font.Bold = true;
-            sheet1.Range["A1:AA1"].CellStyle.Font.Size = 10;
-            sheet1.Range["A1:AA1"].CellStyle.Font.FontName = "Calibri";
-            sheet1.Range["A1:AA1"].CellStyle.Font.Color = ExcelKnownColors.White;
-            sheet1.Range["A1:AA1"].CellStyle.Color = System.Drawing.Color.Orange;
-            sheet1.Range["A1:AA1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
-
-            DataTable dataTable1 = new DataTable();
-            dataTable1.Columns.Add("Master B/L");
-            dataTable1.Columns.Add("ORIGIN_AIRPORT_CODE");
-            dataTable1.Columns.Add("ORIGIN_AIRPORT");
-            dataTable1.Columns.Add("DESTINATION_AIRPORT_CODE");
-            dataTable1.Columns.Add("DESTINATION_AIRPORT");
-            dataTable1.Columns.Add("House B/L");
-            dataTable1.Columns.Add("CURRENCY");
-            dataTable1.Columns.Add("Code IATA Carrier");
-            dataTable1.Columns.Add("CARRIER (AEROLINEA)");
-            dataTable1.Columns.Add("PIECES");
-            dataTable1.Columns.Add("GROSS_WEIGHT");
-            dataTable1.Columns.Add("SHIPPER_NAME");
-            dataTable1.Columns.Add("SHIPPER_STREET");
-            dataTable1.Columns.Add("SHIPPER_COUNTRY_Code");
-            dataTable1.Columns.Add("SHIPPER_COUNTRY");
-            dataTable1.Columns.Add("SHIPPER_CITY_Code");
-            dataTable1.Columns.Add("SHIPPER_CITY");
-            dataTable1.Columns.Add("CONSIGNEE_NAME");
-            dataTable1.Columns.Add("CONSIGNEE_STREET");
-            dataTable1.Columns.Add("CONSIGNEE_COUNTRY_code");
-            dataTable1.Columns.Add("CONSIGNEE_COUNTRY");
-            dataTable1.Columns.Add("CONSIGNEE_CITY_code");
-            dataTable1.Columns.Add("CONSIGNEE_CITY");
-            dataTable1.Columns.Add("GOOD_DESCRIPTION");
-            dataTable1.Columns.Add("Number_of_United_Nations");
-            dataTable1.Columns.Add("Number_of_United_Nations_Code");
-            dataTable1.Columns.Add("Additional_information_of_Goods");
-
-            DataRow row = dataTable1.NewRow();
-            row[0] = shipment.LongMaster;
-            row[1] = shipment.MainCarriageFromPortCode;
-            row[2] = shipment.MainCarriageFromPortName;
-            row[3] = shipment.MainCarriageFinalDestinationPortCode;
-            row[4] = shipment.MainCarriageFinalDestinationPortName;
-            row[5] = shipment.House;
-            row[6] = shipment.AWBCurrencyCode;
-            row[7] = shipment.MainCarriageCarrierCode;
-            row[8] = shipment.MainCarriageCarrierName;
-            row[9] = shipment.NumberOfPackages;
-            row[10] = shipment.GrossWeight;
-            row[11] = shipment.ShipperName;
-            row[12] = this.ComputeAddress(shipment.ShipperAddress1, shipment.ShipperAddress2);
-
-            if (!string.IsNullOrEmpty(shipment.ShipperCountryId))
-            {
-                Country shipperCountry = CountryRepository.GetSingleCountry(shipment.ShipperCountryId, shipment.Tenant, true);
-                if (shipperCountry != null)
-                {
-                    row[13] = shipperCountry.Code;
-                    row[14] = shipperCountry.EnglishName;
-                }
-            }
-
-            //row[15] = shipment.ShipperCityCode;
-            row[16] = shipment.ShipperCity;
-            row[17] = shipment.ConsigneeName;
-            row[18] = this.ComputeAddress(shipment.ConsigneeAddress1, shipment.ConsigneeAddress2);
-
-            if (!string.IsNullOrEmpty(shipment.ConsigneeCountryId))
-            {
-                Country consigneeCountry = CountryRepository.GetSingleCountry(shipment.ConsigneeCountryId, shipment.Tenant, true);
-                if (consigneeCountry != null)
-                {
-                    row[19] = consigneeCountry.Code;
-                    row[20] = consigneeCountry.EnglishName;
-                }
-            }
-
-            //row[21] = shipment.ConsigneeCityCode;
-            row[22] = shipment.ConsigneeCity;
-            row[23] = shipment.DescriptionOfGoods;
-            row[24] = shipment.IsDangerous ? "ED" : "";
-            row[25] = shipment.DangerousUnNumber;
-            row[26] = shipment.DescriptionOfGoods;
-            dataTable1.Rows.Add(row);
-
-            sheet1.ImportDataTable(dataTable1, true, 1, 1);
-            workbook.SaveAs(memory);
-            return memory.ToArray();
-        }
-        private string ComputeAddress(string address1, string address2)
-        {
-            string fullAddress = "";
-
-            if (!string.IsNullOrEmpty(address1))
-            {
-                fullAddress = address1;
-            }
-
-            if (!string.IsNullOrEmpty(address2))
-            {
-                if (string.IsNullOrEmpty(fullAddress))
-                {
-                    fullAddress = address2;
-                }
-
-                else
-                {
-                    fullAddress = fullAddress + "," + address2;
-                }
-            }
-
-            return fullAddress;
-        }
-        private BlobFileInfo CreateAMANACBlobFile(byte[] data, string fileName, int tenant)
-        {
-            BlobFileInfo fileInfo = new BlobFileInfo();
-
-            if (data != null)
-            {
-                fileInfo = new BlobFileInfo()
-                {
-                    FileName = fileName,
-                    FolderName = "others",
-                    Extension = "xls",
-                    Tenant = tenant,
-                    FileSize = data.Length,
-                };
-            }
-
-            return fileInfo;
-        }
-        private void WriteBlobFileToStorage(byte[] data, BlobFileInfo fileInfo)
-        {
-            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-            storageservice.Write(data, fileInfo);
         }
 
         public HttpResponseMessage GetMarkShipmentAsBlocked(string shipmentId)
@@ -2731,7 +2484,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                                      select a.ShipmentId).ToList();
 
                     ShipmentRepository shipmentRepository = new ShipmentRepository(myContext);
-                    List<Shipment> shipments = shipmentRepository.GetShipmentsListFromIdList(shipmentsIdsList, tenant);
+                    List<ShipmentDataView> shipments = shipmentRepository.GetShipmentsFromIdList(shipmentsIdsList, tenant);
 
                     switch (entityPoco.CustomsTransferTypeCode)
                     {
@@ -2748,6 +2501,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                             }
                     }
+
+                    CustomsTransferService customsTransferService = new CustomsTransferService(shipments, entityPoco.FileName, entityPoco.CustomsTransferTypeCode, tenant);
+                    customsTransferService.Transfer();
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, true);
