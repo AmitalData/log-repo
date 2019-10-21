@@ -64,6 +64,7 @@ export class AddEditTaxWithholdingLineComponent extends BaseComponent {
         if (this.newEntity.FromDate != value) {
             if (value) {
                 this.newEntity.FromDate = value;
+             
                 this.UIProperties.SetValidity("FromDate", this.ObjectTableName, true, null);
               var datetocompare = DateTool.GetDateParts(this.LastLineToDate).DateTicks;
               var dateFromcompare = DateTool.GetDateParts(this.LastLineFromDate).DateTicks;
