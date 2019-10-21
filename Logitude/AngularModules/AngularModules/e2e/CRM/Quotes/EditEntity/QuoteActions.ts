@@ -31,7 +31,7 @@ export class QuoteActions {
         this.Helper.WaitByIdAndClick('MenuButtons');
         this.Helper.WaitByIdAndClick('Quote.B.CopyQuote');
         this.Helper.WaitEditComponentBusyIndicator();
-        if (Direction == 'Domestic' && TransportMode == 'I') {
+      /*  if (Direction == 'Domestic' && TransportMode == 'I') {
 
         }
         else {
@@ -51,7 +51,7 @@ export class QuoteActions {
             // this.Helper.WaitByIdAndFill('Quote_ToAddressCity_1', 'Ramallah');
             // this.Helper.WaitByIdAndFill('Quote_ToAddressCountryId_1', 'State Of Palestine');
             // this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-        }
+        }*/
         this.Helper.WaitByIdAndClick('CreateQuote');
     }
 
