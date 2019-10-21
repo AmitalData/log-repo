@@ -70,10 +70,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private ShipmentPayableRepository shipmentPayableRepository;
         private string QBOAPPaymentId;
 
-        public APInvoiceNormalService(IInvoiceContext objectContext, int tenant)
+        public APInvoiceNormalService(IInvoiceContext objectContext, APInvoicePM entityPM)
         {
-            this.tenant = tenant;
-
+            this.tenant = entityPM.Tenant;
+            this.entityPM = entityPM;
             this.isUpdateTotalVats = false;
             this.objectContext = objectContext;
             this.myCommonContext = CommonDataContext.GetContext(tenant);
@@ -126,20 +126,28 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void GetLoggedContact()
         {
-            ContactRepository contactRepository = new ContactRepository(tenant);
-
-            string email = HttpContext.Current.User.Identity.Name;
-
-            if (email != null)
+            if (entityPM.CreatedFromAPI)
             {
-                Contact loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
-                this.loggedContactId = loggedContact.Id;
+                this.loggedContactId = entityPM.CreatedByUserId;
             }
 
             else
             {
-                ContactPM loggedContact = new ContactQuery(tenant).GetContactByNameAndTenant(SecurityUtility.GetAuthenticatedUser(), tenant, true);
-                this.loggedContactId = loggedContact.Id;
+                ContactRepository contactRepository = new ContactRepository(tenant);
+
+                string email = HttpContext.Current.User.Identity.Name;
+
+                if (email != null)
+                {
+                    Contact loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
+                    this.loggedContactId = loggedContact.Id;
+                }
+
+                else
+                {
+                    ContactPM loggedContact = new ContactQuery(tenant).GetContactByNameAndTenant(SecurityUtility.GetAuthenticatedUser(), tenant, true);
+                    this.loggedContactId = loggedContact.Id;
+                }
             }
         }
 
@@ -194,9 +202,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.invoicePaymentsChangeSet = invoicePaymentsChangeSet;
         }
 
-        public void Create(APInvoicePM entityPM)
+        public void Create()
         {
-            this.entityPM = entityPM;
             this.isNewEntity = true;
             this.invoice = new APInvoice();
 
@@ -211,9 +218,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             if (!entityPM.IsGeneralInvoice)
             {
-                this.BuildUnexpectedPayables();
-                this.GetShipmentsData(entityPM.InvoiceLines);
-                this.UpdateInvoiceEntities();
+                if (!entityPM.CreatedFromAPI)
+                {
+                    this.BuildUnexpectedPayables();
+                    this.GetShipmentsData(entityPM.InvoiceLines);
+                    this.UpdateInvoiceEntities();
+                }
             }
 
             this.UpdateInvoiceLines();
@@ -231,8 +241,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             if (!entityPM.IsGeneralInvoice)
             {
-                this.UpdateAllPayablesAccountedAmountAndStatus();
+                if (!entityPM.CreatedFromAPI)
+                {
+                    this.UpdateAllPayablesAccountedAmountAndStatus();
+                }
             }
+
             this.UpdateInvoiceAmountDue();
 
             // Journal Work
@@ -243,9 +257,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.CreateAPInvoiceMessage(setApproved);
 
             this.GetForeignFields();
+
             if (!entityPM.IsGeneralInvoice)
             {
-                this.RunStoredProcedures();
+                if (!entityPM.CreatedFromAPI)
+                {
+                    this.RunStoredProcedures();
+                }
             }
         }
 
@@ -271,7 +289,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
         }
 
-        public void Update(APInvoicePM entityPM, bool mapComposition = false)
+        public void Update(bool mapComposition = false)
         {
             if (mapComposition)
             {
@@ -279,7 +297,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.invoicePaymentsChangeSet = entityPM.InvoicePayments;
             }
 
-            this.entityPM = entityPM;
             this.isNewEntity = false;
 
             this.invoice = invoiceRepository.GetSingleAPInvoice(entityPM.Id, tenant);
@@ -341,7 +358,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             invoiceRepository.Update(invoice);
             invoiceRepository.SubmitChanges();
-
 
             if (!String.IsNullOrEmpty(QBOAPPaymentId))
             {
@@ -526,9 +542,27 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 entityPM.StatusCode = "WA";
             }
 
+            if (entityPM.CreatedFromAPI)
+            {
+                this.InitializeCreatedFromAPI();
+            }
+
             this.InitializeVATs();
             this.InitializeTransferComponents();
             this.InitializeAmountDueFields();
+        }
+
+        private void InitializeCreatedFromAPI()
+        {
+            if (this.isNewEntity)
+            {
+                if (entityPM.ProfitCurrencyId == null)
+                {
+                    TenantRepository tenantRepository = new TenantRepository(this.myCommonContext);
+                    Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
+                    entityPM.ProfitCurrencyId = tenantPOCO.ProfitCurrencyId;
+                }
+            }
         }
 
         private List<VatType> allVatTypes = new List<VatType>();
@@ -740,7 +774,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     {
                         if (line.ChangeSetOp == ChangeSetOperation.None)
                         {
-                            UpdateInvoiceLines(line);
+                            UpdateInvoiceLine(line);
                         }
                     }
                 }
@@ -1011,109 +1045,115 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void UpdatePayable(APInvoiceLinePM item)
         {
-            ShipmentPayable payable = (from a in allPayables where a.Id == item.EntityPayableId select a).FirstOrDefault();
-
-            if (payable != null)
+            if (!entityPM.CreatedFromAPI)
             {
-                string shipmentProfitCurrencyId = shipmentRepository.GetShipmentProfitCurrencyId(payable.ShipmentId);
+                ShipmentPayable payable = (from a in allPayables where a.Id == item.EntityPayableId select a).FirstOrDefault();
 
-                bool isConnectedToOthers = (from d in invoiceLineRepository.context.APInvoiceLines
-                                            where d.Tenant == tenant
-                                            && d.EntityPayableId == payable.Id
-                                            && (d.APInvoiceId != item.APInvoiceId)
-                                            select d).Any();
-
-                if (!isConnectedToOthers)
+                if (payable != null)
                 {
-                    payable.Rate = item.ForiegnExchangeRate;
-                    payable.ProfitCurrencyExchangeRate = entityPM.ProfitCurrencyExchangeRate;
+                    string shipmentProfitCurrencyId = shipmentRepository.GetShipmentProfitCurrencyId(payable.ShipmentId);
 
-                    payable.ExpectedAmountLocal = MethodHelper.Round(payable.ExpectedAmount * payable.Rate, 2);
+                    bool isConnectedToOthers = (from d in invoiceLineRepository.context.APInvoiceLines
+                                                where d.Tenant == tenant
+                                                && d.EntityPayableId == payable.Id
+                                                && (d.APInvoiceId != item.APInvoiceId)
+                                                select d).Any();
 
-                    if (payable.CurrencyId == shipmentProfitCurrencyId)
+                    if (!isConnectedToOthers)
                     {
-                        payable.ExpectedAmountInProfitCurrency = payable.ExpectedAmount;
+                        payable.Rate = item.ForiegnExchangeRate;
+                        payable.ProfitCurrencyExchangeRate = entityPM.ProfitCurrencyExchangeRate;
+
+                        payable.ExpectedAmountLocal = MethodHelper.Round(payable.ExpectedAmount * payable.Rate, 2);
+
+                        if (payable.CurrencyId == shipmentProfitCurrencyId)
+                        {
+                            payable.ExpectedAmountInProfitCurrency = payable.ExpectedAmount;
+                        }
+
+                        else
+                        {
+                            payable.ExpectedAmountInProfitCurrency = MethodHelper.Round(payable.ExpectedAmountLocal / payable.ProfitCurrencyExchangeRate, 2);
+                        }
+                    }
+
+                    if (item.CorrectionAmount == null || item.CorrectionAmount == 0)
+                    {
+                        payable.CorrectionAmount = null;
+                        payable.CorrectionByUserId = null;
+                        payable.CorrectionDate = null;
+                        payable.CorrectionNote = null;
                     }
 
                     else
                     {
-                        payable.ExpectedAmountInProfitCurrency = MethodHelper.Round(payable.ExpectedAmountLocal / payable.ProfitCurrencyExchangeRate, 2);
+                        payable.CorrectionAmount = item.CorrectionAmount;
+                        payable.CorrectionByUserId = entityPM.UpdatedByUserId;
+                        payable.CorrectionDate = TenantServerConfigration.GetCurrentDateTime(payable.Tenant);
+                        payable.CorrectionNote = item.CorrectionNote;
                     }
+
+                    payable.VendorId = entityPM.VendorId;
+                    payable.OpenAmount = item.OpenAmount;
+                    payable.OpenAmountInLocalCurrency = Round(payable.OpenAmount * payable.Rate, 2);
+
+                    if (payable.CurrencyId == shipmentProfitCurrencyId)
+                    {
+                        payable.OpenAmountInProfitCurrency = payable.OpenAmount;
+                    }
+
+                    else
+                    {
+                        payable.OpenAmountInProfitCurrency = Round(payable.OpenAmountInLocalCurrency / payable.ProfitCurrencyExchangeRate, 2);
+                    }
+
+                    shipmentPayableRepository.Update(payable);
                 }
-
-                if (item.CorrectionAmount == null || item.CorrectionAmount == 0)
-                {
-                    payable.CorrectionAmount = null;
-                    payable.CorrectionByUserId = null;
-                    payable.CorrectionDate = null;
-                    payable.CorrectionNote = null;
-                }
-
-                else
-                {
-                    payable.CorrectionAmount = item.CorrectionAmount;
-                    payable.CorrectionByUserId = entityPM.UpdatedByUserId;
-                    payable.CorrectionDate = TenantServerConfigration.GetCurrentDateTime(payable.Tenant);
-                    payable.CorrectionNote = item.CorrectionNote;
-                }
-
-                payable.VendorId = entityPM.VendorId;
-                payable.OpenAmount = item.OpenAmount;
-                payable.OpenAmountInLocalCurrency = Round(payable.OpenAmount * payable.Rate, 2);
-
-                if (payable.CurrencyId == shipmentProfitCurrencyId)
-                {
-                    payable.OpenAmountInProfitCurrency = payable.OpenAmount;
-                }
-
-                else
-                {
-                    payable.OpenAmountInProfitCurrency = Round(payable.OpenAmountInLocalCurrency / payable.ProfitCurrencyExchangeRate, 2);
-                }
-
-                shipmentPayableRepository.Update(payable);
             }
         }
 
         private void DisconnectPayable(string payableId, double? myForiegnCurrencyAmount)
         {
-            ShipmentPayable myPayable = (from a in allPayables where a.Id == payableId select a).FirstOrDefault();
-            if (myPayable != null)
+            if (!entityPM.CreatedFromAPI)
             {
-                if (myPayable.ShipmentPayableAmountTypeCode == "NEXP")
+                ShipmentPayable myPayable = (from a in allPayables where a.Id == payableId select a).FirstOrDefault();
+                if (myPayable != null)
                 {
-                    List<ShipmentPayable> ChildPayables = shipmentPayableRepository.GetChildPayablesByParentPayable(myPayable.Id, tenant);
-                    foreach (ShipmentPayable myChild in ChildPayables)
+                    if (myPayable.ShipmentPayableAmountTypeCode == "NEXP")
                     {
-                        shipmentPayableRepository.Remove(myChild);
+                        List<ShipmentPayable> ChildPayables = shipmentPayableRepository.GetChildPayablesByParentPayable(myPayable.Id, tenant);
+                        foreach (ShipmentPayable myChild in ChildPayables)
+                        {
+                            shipmentPayableRepository.Remove(myChild);
+                        }
+
+                        shipmentPayableRepository.Remove(myPayable);
+                        allPayables.Remove(myPayable);
                     }
 
-                    shipmentPayableRepository.Remove(myPayable);
-                    allPayables.Remove(myPayable);
+                    else
+                    {
+                        myPayable.CorrectionAmount = null;
+                        myPayable.CorrectionByUserId = null;
+                        myPayable.CorrectionDate = null;
+                        myPayable.CorrectionNote = null;
+
+                        myForiegnCurrencyAmount = myForiegnCurrencyAmount == null ? 0 : myForiegnCurrencyAmount.Value;
+                        double? myAccountedAmount = myPayable.AccountedAmount == null ? 0 : myPayable.AccountedAmount.Value;
+                        double? myExpectedAmount = myPayable.ExpectedAmount == null ? 0 : myPayable.ExpectedAmount.Value;
+                        double? myCorrectionAmount = myPayable.CorrectionAmount == null ? 0 : myPayable.CorrectionAmount.Value;
+
+                        double? myOtherInvoicesAmounts = myAccountedAmount - myForiegnCurrencyAmount;
+                        double? myOpenAmount = myExpectedAmount - myOtherInvoicesAmounts - myCorrectionAmount;
+
+                        myPayable.OpenAmount = Round(myOpenAmount, 2);
+                        myPayable.OpenAmountInLocalCurrency = Round(myPayable.OpenAmount * myPayable.Rate, 2);
+                        myPayable.OpenAmountInProfitCurrency = Round(myPayable.OpenAmountInLocalCurrency / myPayable.ProfitCurrencyExchangeRate, 2);
+                        shipmentPayableRepository.Update(myPayable);
+                    }
+
+                    shipmentPayableRepository.SubmitChanges();
                 }
-
-                else
-                {
-                    myPayable.CorrectionAmount = null;
-                    myPayable.CorrectionByUserId = null;
-                    myPayable.CorrectionDate = null;
-                    myPayable.CorrectionNote = null;
-
-                    myForiegnCurrencyAmount = myForiegnCurrencyAmount == null ? 0 : myForiegnCurrencyAmount.Value;
-                    double? myAccountedAmount = myPayable.AccountedAmount == null ? 0 : myPayable.AccountedAmount.Value;
-                    double? myExpectedAmount = myPayable.ExpectedAmount == null ? 0 : myPayable.ExpectedAmount.Value;
-                    double? myCorrectionAmount = myPayable.CorrectionAmount == null ? 0 : myPayable.CorrectionAmount.Value;
-
-                    double? myOtherInvoicesAmounts = myAccountedAmount - myForiegnCurrencyAmount;
-                    double? myOpenAmount = myExpectedAmount - myOtherInvoicesAmounts - myCorrectionAmount;
-
-                    myPayable.OpenAmount = Round(myOpenAmount, 2);
-                    myPayable.OpenAmountInLocalCurrency = Round(myPayable.OpenAmount * myPayable.Rate, 2);
-                    myPayable.OpenAmountInProfitCurrency = Round(myPayable.OpenAmountInLocalCurrency / myPayable.ProfitCurrencyExchangeRate, 2);
-                    shipmentPayableRepository.Update(myPayable);
-                }
-
-                shipmentPayableRepository.SubmitChanges();
             }
         }
 
@@ -1556,7 +1596,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                                 case ChangeSetOperation.Update:
                                     {
-                                        this.UpdateInvoiceLines(item);
+                                        this.UpdateInvoiceLine(item);
                                         this.UpdatePayable(item);
                                         isUpdateTotalVats = true;
                                         break;
@@ -1580,11 +1620,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private void CreateInvoiceLine(APInvoiceLinePM item)
         {
             item.APInvoiceId = entityPM.Id;
+            item.Tenant = tenant;
             APInvoiceLine invoiceLine = new APInvoiceLine();
             APInvoiceMapping.MapInvoiceLine(item, invoiceLine, true);
             invoiceLineRepository.Add(invoiceLine);
         }
-        private void UpdateInvoiceLines(APInvoiceLinePM item)
+        private void UpdateInvoiceLine(APInvoiceLinePM item)
         {
             APInvoiceLine invoiceLine = invoiceLineRepository.GetSingleAPInvoiceLine(item.APInvoiceId, item.LineNumber, entityPM.Tenant);
             APInvoiceMapping.MapInvoiceLine(item, invoiceLine, false);

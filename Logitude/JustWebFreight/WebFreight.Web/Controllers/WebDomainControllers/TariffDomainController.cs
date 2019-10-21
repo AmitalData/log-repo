@@ -212,7 +212,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             data = this.ExportAirFreightCostLinesToExcel(tariff, tariffVersion.TariffLines, tenant, type);
                         }
 
-                        else if (tariff.TypeCode == "ASC")
+                        else if (tariff.TypeCode == "ASC" || tariff.TypeCode == "OSC")
                         {
                             data = this.ExportAirSurchargesCostLinesToExcel(tariff, tariffVersion.TariffLines, tenant, type);
                         }

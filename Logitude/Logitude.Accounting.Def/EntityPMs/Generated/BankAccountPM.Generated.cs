@@ -871,6 +871,52 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string printingBranchNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PrintingBranchNumber  
+	   {
+	    
+	     get
+		{
+		   return printingBranchNumber;
+		 }
+		 set
+		 {
+		   if(printingBranchNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PrintingBranchNumber",OldValue=printingBranchNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   printingBranchNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string printingAccountNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PrintingAccountNumber  
+	   {
+	    
+	     get
+		{
+		   return printingAccountNumber;
+		 }
+		 set
+		 {
+		   if(printingAccountNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PrintingAccountNumber",OldValue=printingAccountNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   printingAccountNumber=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
