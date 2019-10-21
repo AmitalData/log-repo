@@ -40,6 +40,7 @@ export class ShipmentView {
 
     EditNewView() {
         browser.sleep(1000)
+        this.helper.WaitBusyIndicator()
         this.helper.WaitByIdAndClick('QueryList_0_0');
         this.helper.WaitActionButtonAndClick('ActionButtonsParent', true);
         this.helper.waitByCss('.ListBoxItem');
@@ -53,7 +54,7 @@ export class ShipmentView {
     }
 
     DeleteNewView() {
-
+     
         this.helper.WaitByIdAndClick('QueryList_0_0');
         this.helper.WaitActionButtonAndClick('ActionButtonsParent', false);
         this.helper.waitByCss('.ConfirmWindow');
