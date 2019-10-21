@@ -3141,7 +3141,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.InitializePartners();
                 this.InitializeInlandDomestic();
                 this.InitializeAWBFields();
-                if (!loggedTenant.IsDocumentsArchive)
+
+                if (!loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
                 {
                     this.InitializeMAWBStack();
                 } 
