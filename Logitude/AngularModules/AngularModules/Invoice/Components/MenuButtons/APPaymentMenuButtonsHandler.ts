@@ -331,7 +331,7 @@ export class APPaymentMenuButtonsHandler {
         }
 
         if (isValid) {
-
+            this.entityArgs.EditComponent.ValidationErrorsList = [];
             this.GetFullAccountingSettings();
 
         }
