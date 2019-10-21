@@ -150,12 +150,14 @@ export class TariffValidator {
                 }
 
                 else if (this.entityPM.TypeCode == "AFC") {
-                    if (AppTool.IsNullOrEmpty(item.DestinationPortId)) {
-                        this.Errors.push(msg.replace("%FieldName", "To"));
-                    }
+                    if (!this.entityPM.TariffLinesAddedFromExcel) {
+                        if (AppTool.IsNullOrEmpty(item.DestinationPortId)) {
+                            this.Errors.push(msg.replace("%FieldName", "To"));
+                        }
 
-                    if (AppTool.IsNullOrEmpty(item.OriginPortId)) {
-                        this.Errors.push(msg.replace("%FieldName", "From"));
+                        if (AppTool.IsNullOrEmpty(item.OriginPortId)) {
+                            this.Errors.push(msg.replace("%FieldName", "From"));
+                        }
                     }
                 }
             });

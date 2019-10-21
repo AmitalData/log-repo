@@ -3220,65 +3220,59 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     journal.ApproveDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                     journal.ApprovedByUserId = theEntityPm.ApprovedByUserId;
                     journal.ChangeSetOp = ChangeSetOperation.Insert;
-                    JournalLinePM journalLine;
+
                     // Insert Journal Lines 
-                    if (theEntityPm.IsMultiCurrency)
-                    {
-                        journal = CreateJournalDebitLinesForMultiCurrencyInvoice(journal, theEntityPm );
-                    }
-                    else
-                    {
-                        // [Debit]
-                        GLAccountPM glAccount = getDebitGLAccount(theEntityPm.BillToId, theEntityPm.Tenant);
-                         journalLine = new JournalLinePM();
-                        journalLine.Tenant = tenant;
-                        journalLine.JournalId = journal.Id;
-                        journalLine.Line = 1;
-                        journalLine.ActionCode = "2";
-                        journalLine.ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit;
-                        journalLine.DocumentDate = theEntityPm.InvoiceDate.Value;
-                        journalLine.AccountingDate = theEntityPm.InvoiceDate.Value;
-                        journalLine.DueDate = theEntityPm.DueDate.Value;
-                        journalLine.LocalAmount = (decimal)theEntityPm.AmountInLocalCurrency;
-                        journalLine.CurrencyId = theEntityPm.InvoiceCurrencyId;
-                        journalLine.ForeignAmount = (decimal)theEntityPm.AmountInInvoiceCurrency;
-                        journalLine.ExchangeRate = (decimal)theEntityPm.InvoiceCurrencyExchangeRate;
-                        journalLine.Reference1 = theEntityPm.InvoiceNumber;
-                        journalLine.Reference2 = theEntityPm.MainEntityReference;
-                        journalLine.Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber;
-                        journalLine.Notes = theEntityPm.InternalNotes;
-                        journalLine.DebitAccountId = splittedByCurrencyAccount == null ? "" : splittedByCurrencyAccount.Id;
-                        journalLine.DebitControlAccountId = splittedByCurrencyAccount == null ? "" : splittedByCurrencyAccount.ControlAccountId;
-                        journalLine.ChangeSetOp = ChangeSetOperation.Insert;
-                        journal.JournalLines.Add(journalLine);
-                    }
+                    // [Debit]
+                    GLAccountPM glAccount = getDebitGLAccount(theEntityPm.BillToId, theEntityPm.Tenant);
+                    JournalLinePM journalLine = new JournalLinePM();
+                    journalLine.Tenant = tenant;
+                    journalLine.JournalId = journal.Id;
+                    journalLine.Line = 1;
+                    journalLine.ActionCode = "2";
+                    journalLine.ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit;
+                    journalLine.DocumentDate = theEntityPm.InvoiceDate.Value;
+                    journalLine.AccountingDate = theEntityPm.InvoiceDate.Value;
+                    journalLine.DueDate = theEntityPm.DueDate.Value;
+                    journalLine.LocalAmount = (decimal)theEntityPm.AmountInLocalCurrency;
+                    journalLine.CurrencyId = theEntityPm.InvoiceCurrencyId;
+                    journalLine.ForeignAmount = (decimal)theEntityPm.AmountInInvoiceCurrency;
+                    journalLine.ExchangeRate = (decimal)theEntityPm.InvoiceCurrencyExchangeRate;
+                    journalLine.Reference1 = theEntityPm.InvoiceNumber;
+                    journalLine.Reference2 = theEntityPm.MainEntityReference;
+                    journalLine.Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber;
+                    journalLine.Notes = theEntityPm.PrintNotes;
+                    journalLine.DebitAccountId = splittedByCurrencyAccount == null ? "" : splittedByCurrencyAccount.Id;
+                    journalLine.DebitControlAccountId = splittedByCurrencyAccount == null ? "" : splittedByCurrencyAccount.ControlAccountId;
+                    journalLine.ChangeSetOp = ChangeSetOperation.Insert;
+                    journal.JournalLines.Add(journalLine);
+
                     // [Credit]
-                         journalLine = new JournalLinePM();
-                        int counter = 1;
-                        List<JournalLinePM> journalLines = (from d in theEntityPm.InvoiceLines
-                                                            group d by new { d.GLAccountId, d.ForiegnCurrencyId, d.ForiegnExchangeRate } into g
-                                                            select new JournalLinePM()
-                                                            {
-                                                                Tenant = tenant,
-                                                                ActionCode = "1",
-                                                                ActionTypeCodeEnum = MyJournalActionTypeEnum.Credit,
-                                                                JournalId = journal.Id,
-                                                                CreditAccountId = g.Key.GLAccountId,
-                                                                Line = ++counter,
-                                                                DocumentDate = theEntityPm.InvoiceDate.Value,
-                                                                AccountingDate = theEntityPm.InvoiceDate.Value,
-                                                                DueDate = theEntityPm.DueDate.Value,
-                                                                LocalAmount = (decimal)g.Sum(a => a.LocalCurrencyAmount),
-                                                                CurrencyId = g.Key.ForiegnCurrencyId,
-                                                                ForeignAmount = (decimal)g.Sum(a => a.ForiegnCurrencyAmount),
-                                                                ExchangeRate = (decimal)g.Key.ForiegnExchangeRate,
-                                                                Reference1 = theEntityPm.InvoiceNumber,
-                                                                Reference2 = theEntityPm.MainEntityReference,
-                                                                Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber,
-                                                                Notes = theEntityPm.InternalNotes,
-                                                                DebitAccountId = splittedByCurrencyAccount == null ? "" : splittedByCurrencyAccount.Id,
-                                                                DebitControlAccountId = splittedByCurrencyAccount == null ? "" : splittedByCurrencyAccount.ControlAccountId,
-                                                            }).ToList();
+                    journalLine = new JournalLinePM();
+                    int counter = 1;
+                    List<JournalLinePM> journalLines = (from d in theEntityPm.InvoiceLines
+                                                        group d by new { d.GLAccountId, d.ForiegnCurrencyId, d.ForiegnExchangeRate } into g
+                                                        select new JournalLinePM()
+                                                        {
+                                                            Tenant = tenant,
+                                                            ActionCode = "1",
+                                                            ActionTypeCodeEnum = MyJournalActionTypeEnum.Credit,
+                                                            JournalId = journal.Id,
+                                                            CreditAccountId = g.Key.GLAccountId,
+                                                            Line = ++counter,
+                                                            DocumentDate = theEntityPm.InvoiceDate.Value,
+                                                            AccountingDate = theEntityPm.InvoiceDate.Value,
+                                                            DueDate = theEntityPm.DueDate.Value,
+                                                            LocalAmount = (decimal)g.Sum(a => a.LocalCurrencyAmount),
+                                                            CurrencyId = g.Key.ForiegnCurrencyId,
+                                                            ForeignAmount = (decimal)g.Sum(a => a.ForiegnCurrencyAmount),
+                                                            ExchangeRate = (decimal)g.Key.ForiegnExchangeRate,
+                                                            Reference1 = theEntityPm.InvoiceNumber,
+                                                            Reference2 = theEntityPm.MainEntityReference,
+                                                            Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber,
+                                                            Notes = theEntityPm.PrintNotes,
+                                                            DebitAccountId= splittedByCurrencyAccount == null ? "" : splittedByCurrencyAccount.Id,
+                                                            DebitControlAccountId = splittedByCurrencyAccount == null ? "" : splittedByCurrencyAccount.ControlAccountId,
+                                                        }).ToList();
 
                         journal.JournalLines.AddRange(journalLines);
 

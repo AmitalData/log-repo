@@ -1060,6 +1060,7 @@ namespace WebFreight.Web.Security
                                 if (features)
                                 {
                                     inf.HasAccess = true;
+                                    break;
                                 }
                                 else
                                 {
