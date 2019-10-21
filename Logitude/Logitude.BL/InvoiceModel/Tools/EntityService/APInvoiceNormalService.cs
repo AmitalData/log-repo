@@ -70,10 +70,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private ShipmentPayableRepository shipmentPayableRepository;
         private string QBOAPPaymentId;
 
-        public APInvoiceNormalService(IInvoiceContext objectContext, int tenant)
+        public APInvoiceNormalService(IInvoiceContext objectContext, APInvoicePM entityPM)
         {
-            this.tenant = tenant;
-
+            this.tenant = entityPM.Tenant;
+            this.entityPM = entityPM;
             this.isUpdateTotalVats = false;
             this.objectContext = objectContext;
             this.myCommonContext = CommonDataContext.GetContext(tenant);
@@ -202,9 +202,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.invoicePaymentsChangeSet = invoicePaymentsChangeSet;
         }
 
-        public void Create(APInvoicePM entityPM)
+        public void Create()
         {
-            this.entityPM = entityPM;
             this.isNewEntity = true;
             this.invoice = new APInvoice();
 
@@ -290,7 +289,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
         }
 
-        public void Update(APInvoicePM entityPM, bool mapComposition = false)
+        public void Update(bool mapComposition = false)
         {
             if (mapComposition)
             {
@@ -298,7 +297,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.invoicePaymentsChangeSet = entityPM.InvoicePayments;
             }
 
-            this.entityPM = entityPM;
             this.isNewEntity = false;
 
             this.invoice = invoiceRepository.GetSingleAPInvoice(entityPM.Id, tenant);
