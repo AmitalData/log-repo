@@ -79,9 +79,11 @@ export class TenantList {
 		AllowEAWBMoreThanTenPackages: boolean;
 		RegulatedAgentNumber: string;
 		RegulatedAgentRegimeActivated: boolean;
+		IsDocumentsArchive: boolean;
 		CustomerId: string;
 		CustomerName: string;
 		IsCustomerTenantShare: boolean;
+		CustomerTenantShareImportFile: boolean;
 		CustomerTenantShareExportFile: boolean;
 		AllowAgentInCustomersLOV: boolean;
 		IsCorrespondenceRightToLeftEnabled: boolean;

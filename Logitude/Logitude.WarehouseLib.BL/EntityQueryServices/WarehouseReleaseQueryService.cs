@@ -128,10 +128,14 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
             EntityLastActivityRepository entityLastActivityRepository = new EntityLastActivityRepository(tenant);
             List<EntityLastActivity> lastActivities = entityLastActivityRepository.GetTopEntityLastActivities(tenant, userId, objectTableId).ToList();
 
-            List<string> entityIds = lastActivities.Select(d => d.EntityId).ToList();
-            
+            List<string> ids = new List<string>();
+            foreach (EntityLastActivity activity in lastActivities)
+            {
+                ids.Add(activity.EntityId);
+            }
+
             WarehouseReleaseRepository repository = new WarehouseReleaseRepository(tenant);
-            List<WarehouseRelease> warehouseReleases = repository.GetWarehouseReleasesFromIdList(entityIds, tenant).ToList();
+            List<WarehouseRelease> warehouseReleases = repository.GetWarehouseReleasesFromIdList(ids, tenant).ToList();
 
             warehouseReleases = BranchPermitionsFilter.AddUserBranchRestrictionFilters<WarehouseRelease>(new QueryOperations(), warehouseReleases.AsQueryable<WarehouseRelease>(), tenant).ToList();
             warehouseReleases = ProductPermitionsFilter.AddUserProductRestrictionFilters<WarehouseRelease>(new QueryOperations(), warehouseReleases.AsQueryable<WarehouseRelease>(), tenant).ToList();
@@ -144,7 +148,7 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                 List<string> cardIds = new List<string>();
                 List<string> portIds = new List<string>();
                 List<string> addressIds = new List<string>();
-
+                List<string> shipmentIds = new List<string>();
                 foreach (WarehouseRelease warehouseRelease in warehouseReleases)
                 {
 
@@ -154,12 +158,21 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                     if (!string.IsNullOrEmpty(warehouseRelease.ToPortId) && !cardIds.Contains(warehouseRelease.ToPortId)) portIds.Add(warehouseRelease.ToPortId);
                 }
 
+
                 List<CardList> cardLists = new List<CardList>();
                 if (cardIds.Count > 0)
                 {
                     CardQuery cardQuery = new CardQuery(tenant);
                     cardLists = cardQuery.GetCardListsByListIds(cardIds, tenant);
                 }
+
+                //List<ShipmentList> shipmentLists = new List<ShipmentList>();
+                //if (shipmentIds.Count > 0)
+                //{
+                //    ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+                //    shipmentLists = shipmentQuery.GetShipmentsForCrossDock(shipmentIds, tenant);
+                //}
+
                 List<PortList> portLists = new List<PortList>();
                 if (portIds.Count > 0)
                 {

@@ -100,12 +100,10 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             //var a = new ReconcileOpenAmountService();
             //var l = a.GetLedgerOpenAmountDiff(1106, 2019);
             //externalPageLineId": "1 - 12487",
-            var accountingContext = AccountingContext.GetContext(1071);
-            IExternalReconcileDataProvider externalReconcileDataProvider = new ExternalReconcileDataProvider(accountingContext);
-            var a = new ExternalReconcileAdjustBankFeesService();
-            a.MustInit(externalReconcileDataProvider);
-            a.CreateJournalWithExtReconcile(1071, new List<string>() { "1-12487" }, "1-216674", "Notes ");
-            var aa = a.TheNewJournal;
+
+            //ExternalReconcileAdjustBankFees();
+            //var myWorker = new JournalApproveService.JournalApproveWorker();
+            //myWorker.CreateBatchAccountingIntegrityCheck();
             try
             {
 
@@ -152,6 +150,16 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 //_LabelDate.Text = _MyDate.ToString();
             }
 
+        }
+
+        private static void ExternalReconcileAdjustBankFees()
+        {
+            var accountingContext = AccountingContext.GetContext(1071);
+            IExternalReconcileDataProvider externalReconcileDataProvider = new ExternalReconcileDataProvider(accountingContext);
+            var a = new ExternalReconcileAdjustBankFeesService();
+            a.MustInit(externalReconcileDataProvider);
+            a.CreateJournalWithExtReconcile(1071, new List<string>() { "1-12487" }, "1-216674", "Notes ");
+            var aa = a.TheNewJournal;
         }
 
         private void CreateJournalReconcile()
@@ -1387,9 +1395,9 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
                         var accountingContext = AccountingContext.GetContext(tenant);
-
+                        string userId = AuthenticationUtil.ResolveUserId(tenant);
                         ICheckAndQYearTransferService yearTransferService = new YearTransferService();
-                        string taskiD = yearTransferService.Check_CreateQBatchTaskYearTransfer(YY, tenant);
+                        string taskiD = yearTransferService.Check_CreateQBatchTaskYearTransfer(YY, tenant, userId);
 
                         scope.Complete();
                     }
@@ -1422,9 +1430,9 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(10)))
             {
                 var accountingContext = AccountingContext.GetContext(tenant);
-
+                string userId = AuthenticationUtil.ResolveUserId(tenant);
                 IYearTransferService yearTransferService = new YearTransferService();
-                journal = yearTransferService.ProccessJournal(accountingContext, YY, tenant);
+                journal = yearTransferService.ProccessJournal(accountingContext, YY, tenant, userId);
                 if (journal != null)
                 {
                     //var parser = new JournalApproveParser(journal, false,
@@ -1479,11 +1487,13 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 int YY = param.YY;
                 int tenant = param.Tenant;
                 JournalPM journal = null;
+                
                 using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(10)))
                 {
                     var accountingContext = AccountingContext.GetContext(tenant);
+                    string userId = AuthenticationUtil.ResolveUserId(tenant);
                     ICancelYearTransferService yearTransferService = new YearTransferService();
-                    journal = yearTransferService.CancelYear(accountingContext, YY, tenant);
+                    journal = yearTransferService.CancelYear(accountingContext, YY, tenant/*, userId*/);
                     if (journal != null)
                     {
                         //var parser = new JournalApproveParser(journal, false,

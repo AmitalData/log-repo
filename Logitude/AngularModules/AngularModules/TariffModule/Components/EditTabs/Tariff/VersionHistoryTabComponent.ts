@@ -40,12 +40,12 @@ export class VersionHistoryTabComponent implements OnDestroy {
         this.VersionLinesSource = new ObservableCollection([]);
         this.TariffDomainService = new TariffDomainService();
 
-        if (this.EntityPM.TypeCode == "AFC") {
+        if (this.EntityPM.TypeCode == "AFC" || this.EntityPM.TypeCode == "OLC") {
             this.SetStepsLabelsAndVisibility();
             this.IsDownloadExcelTemplateVisible = true;
         }
 
-        else if (this.EntityPM.TypeCode == "ASC") {
+        else if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC") {
             this.IsDownloadExcelTemplateVisible = false;
             this.GetAllChargesTypes();
         }
@@ -310,7 +310,7 @@ export class VersionHistoryTabComponent implements OnDestroy {
             var newVersion: CodeNameClass = new CodeNameClass();
             newVersion.Code_Int = item.Version;
 
-            if (this.EntityPM.TypeCode == "ASC") {
+            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC") {
                 newVersion.Name = "Version " + item.Version;
             }
 
@@ -409,7 +409,7 @@ export class VersionHistoryTabComponent implements OnDestroy {
 
     private isCopyButtonClicked: boolean = false;
     private DoCopy() {
-        if (this.EntityPM.TypeCode == "AFC") {
+        if (this.EntityPM.TypeCode == "AFC" || this.EntityPM.TypeCode == "OLC") {
             var windowTitle = "New Copy Version";
             var logWindow = new LogitudeWindow();
             logWindow.Width = 450;
@@ -445,7 +445,7 @@ export class VersionHistoryTabComponent implements OnDestroy {
         copiedVersion.CreateDate = DateTool.GetCurrentDateAsUtc();
         copiedVersion.CreatedByUserId = SessionInfo.LoggedUserId;
 
-        if (this.EntityPM.TypeCode == "AFC") {
+        if (this.EntityPM.TypeCode == "AFC" || this.EntityPM.TypeCode == "OLC") {
             copiedVersion.ExpirationDate = this.VersionPM.ExpirationDate != null ? this.VersionPM.ExpirationDate : this.VersionPM.InitialEnddate;
         }
 
@@ -472,7 +472,7 @@ export class VersionHistoryTabComponent implements OnDestroy {
             tariffLine.IsFromAllOtherPorts = item.IsFromAllOtherPorts;
             tariffLine.IsToAllOtherPorts = item.IsToAllOtherPorts;
 
-            if (this.EntityPM.TypeCode == "AFC") {
+            if (this.EntityPM.TypeCode == "AFC" || this.EntityPM.TypeCode == "OLC") {
                 tariffLine.MinPrice = item.MinPrice;
                 tariffLine.Step1Price = item.Step1Price;
                 tariffLine.Step2Price = item.Step2Price;
@@ -486,7 +486,7 @@ export class VersionHistoryTabComponent implements OnDestroy {
                 tariffLine.ExpirationDate = this.VersionPM.ExpirationDate;
             }
 
-            else if (this.EntityPM.TypeCode == "ASC") {
+            else if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC") {
                 tariffLine.Surcharge1Price = item.Surcharge1Price;
                 tariffLine.Surcharge2Price = item.Surcharge2Price;
                 tariffLine.Surcharge3Price = item.Surcharge3Price;

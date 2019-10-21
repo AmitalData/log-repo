@@ -1582,6 +1582,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.OpenReceivablesInProfitCurrency = shipment.OpenReceivablesInProfitCurrency;
             shipmentPM.AccountedReceivablesInProfitCurrency = shipment.AccountedReceivablesInProfitCurrency;
             shipmentPM.ProfitInProfitCurrency = shipment.ProfitInProfitCurrency;
+            shipmentPM.NotInvoicedReceivablesAmount = shipment.NotInvoicedReceivablesAmount;
+
             #endregion
 
             #region Routings
@@ -3127,9 +3129,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 }
             }
 
-            #region ShipmentComputedFields
-            if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1")
+
+            if (EntityChangeHelper.IsShowLogBoxAutomationFields())
             {
+                #region ShipmentComputedFields
                 ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(shipment.Tenant);
                 ShipmentComputedFields entityComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(shipment.Id, shipment.Tenant);
 
@@ -3139,8 +3142,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.IsDigitalSignRequired = entityComputedFields.IsDigitalSignRequired;
                     shipmentPM.IsRequestedDocuments = entityComputedFields.IsRequestedDocuments;
                 }
+                #endregion
+
+                #region ShipmentAdditionalCloudDatas
+                shipmentPM.IsImporterApprovalRequired = GetIsImporterApprovalRequried(shipment.Id, shipment.Tenant);
+                #endregion
             }
-            #endregion
+
+
+
+
 
             shipmentPM.Tenant = shipment.Tenant;
             shipmentPM.Id = shipment.Id;
@@ -3223,6 +3234,24 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
 
             return null;
+        }
+
+        private bool GetIsImporterApprovalRequried(string shipmentId , int tenant , List<ShipmentAdditionalCloudData> shipmentAdditionalCloudDataLists = null)
+        {
+            bool isImporterApprovalRequried = false;
+            ShipmentAdditionalCloudData shipmentAdditionalCloudDatas = null; 
+            if (shipmentAdditionalCloudDataLists == null)
+            {
+                shipmentAdditionalCloudDatas = (from a in repository.context.ShipmentAdditionalCloudDatas
+                                                    where a.Id == shipmentId && a.Tenant == tenant
+                                                    select a).FirstOrDefault();
+
+            }
+            else  shipmentAdditionalCloudDatas = shipmentAdditionalCloudDataLists.Where(d => d.Id == shipmentId && d.Tenant == tenant).FirstOrDefault();
+
+            if (shipmentAdditionalCloudDatas != null) isImporterApprovalRequried = shipmentAdditionalCloudDatas.IsImporterApprovalRequried;
+
+            return isImporterApprovalRequried;
         }
 
         private string GetNewStatusId(string currentStatusId, string newStatusId, int tenant, ref string statusName)
@@ -4025,16 +4054,21 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (shipmentLists.Count() > 0)
             {
 
+                List<ShipmentAdditionalCloudData> shipmentAdditionalCloudDataLists = new List<ShipmentAdditionalCloudData>();
                 List<ShipmentComputedFields> entityComputedFieldsLists = new List<ShipmentComputedFields>();
                 ShipmentMasterData m = (from a in repository.context.ShipmentMasterDatas
                                         where a.Id == masterId
                                         select a).FirstOrDefault();
 
-                if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1")
+                if (EntityChangeHelper.IsShowLogBoxAutomationFields())
                 {
                     List<string> shipmentIds = shipmentLists.GroupBy(d => d.Id).Select(d => d.First().Id).ToList();
                     ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(tenant);
                     entityComputedFieldsLists = shipmentComputedFieldsRepository.GetShipmentComputedFieldsByIds(shipmentIds, tenant).ToList();
+
+                    shipmentAdditionalCloudDataLists = (from a in repository.context.ShipmentAdditionalCloudDatas
+                                                        where shipmentIds.Contains(a.Id) && a.Tenant == tenant
+                                                        select a).ToList();
                 }
 
 
@@ -4121,7 +4155,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.Field40 = new CustomFieldClass("Field40", "Shipment", shipment.Field40);
 
 
-                    if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1")
+                    if (EntityChangeHelper.IsShowLogBoxAutomationFields())
                     {
                         var entityComputedFields = entityComputedFieldsLists.Where(d => d.Id == shipment.Id).FirstOrDefault();
                         if (entityComputedFields != null)
@@ -4130,6 +4164,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             shipmentPM.IsDigitalSignRequired = entityComputedFields.IsDigitalSignRequired;
                             shipmentPM.IsRequestedDocuments = entityComputedFields.IsRequestedDocuments;
                         }
+
+                        #region ShipmentAdditionalCloudDatas
+                        shipmentPM.IsImporterApprovalRequired = GetIsImporterApprovalRequried(shipment.Id, shipment.Tenant, shipmentAdditionalCloudDataLists);
+                        #endregion
+
                     }
 
 
@@ -4170,6 +4209,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return securedShipmentPMs;
             #endregion
         }
+
+
 
         public List<ShipmentPM> GetShipmentPMsByMasterIdAndTenantForSharedManifest(string masterId, int tenant)
         {
@@ -10336,6 +10377,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                      Volume = shipment.Volume,
                      PackageVolume = jd.Volume,
                      MainCarriageCarrierId = m.MainCarriageCarrierId,
+                     NumberOfContainers = shipment.NumberOfContainers,
                  });
 
             return dataList;
@@ -11004,7 +11046,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                CarrierLastStatusCode = f.CarrierLastStatusCode,
                                ShipmentViewId = f.Id,
                                Id = f.Id,
-                               Tenant =f.Tenant,
                                Shipper = f.Shipper,
                                Consignee = f.Consignee,
                                DirectionId = f.DirectionId,
@@ -11145,7 +11186,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                CarrierNumber = f.CarrierNumber,
                                AgentId = f.AgentId,
                                AgentComputed = f.AgentComputed,
-                               // ComputedShipmentNumber = f.ComputedShipmentNumber,
+                              // ComputedShipmentNumber = f.ComputedShipmentNumber,
                                ARInvoiceIssued = f.ARInvoiceIssued,
                                CreditNoteIssued = f.CreditNoteIssued,
                                CustomFileNumber = f.CustomFileNumber,
@@ -11308,8 +11349,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                To = f.To,
                                Origin = f.Origin,
                                ARInvoices = f.ARInvoices,
+                               NotInvoicedReceivablesAmount = f.NotInvoicedReceivablesAmount,
                            };
-
             return myResult;
         }
 
@@ -11651,6 +11692,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     To = f.To,
                     Origin = f.Origin,
                     ARInvoices = f.ARInvoices,
+                    NotInvoicedReceivablesAmount = f.NotInvoicedReceivablesAmount,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
@@ -11906,6 +11948,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ARInvoices = f.ARInvoices,
                     Notes = f.Notes,
                     EstimatedFinalArrivalDate = f.EstimatedFinalArrivalDate,
+                    NotInvoicedReceivablesAmount = f.NotInvoicedReceivablesAmount,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();

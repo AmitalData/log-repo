@@ -112,6 +112,11 @@ export class ARPaymentPM {
     public set BranchId(newValue: string) { if (this.branchId != newValue) { this.branchId = newValue; this.MarkAsDirty("BranchId"); } }
        
 	 
+    private branchName: string;
+    public get BranchName() { return this.branchName; }
+    public set BranchName(newValue: string) { if (this.branchName != newValue) { this.branchName = newValue; this.MarkAsDirty("BranchName"); } }
+       
+	 
     private billToId: string;
     public get BillToId() { return this.billToId; }
     public set BillToId(newValue: string) { if (this.billToId != newValue) { this.billToId = newValue; this.MarkAsDirty("BillToId"); } }
@@ -466,11 +471,6 @@ export class ARPaymentPM {
     private selloPago: string;
     public get SelloPago() { return this.selloPago; }
     public set SelloPago(newValue: string) { if (this.selloPago != newValue) { this.selloPago = newValue; this.MarkAsDirty("SelloPago"); } }
-       
-	 
-    private branchName: string;
-    public get BranchName() { return this.branchName; }
-    public set BranchName(newValue: string) { if (this.branchName != newValue) { this.branchName = newValue; this.MarkAsDirty("BranchName"); } }
        
 	 
     private approvedDate: Date;

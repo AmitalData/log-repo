@@ -13,6 +13,7 @@ import { BatchTaskExecutionList } from '../../../Infrastructure/EntityLists/Batc
 import { AppTool } from '../../../Infrastructure/Tools';
 import { DocumentsFilingExtendedPMService } from '../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
+import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 
 declare var ResultAsArray: any;
 
@@ -96,10 +97,26 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
         });      
     }
 
+    public AirFreightCostVisibility: boolean = false;
+    public AirSurchargesCostVisibility: boolean = false;
     public OceanLCLFreightCostVisibility: boolean = false;
+    public OceanLCLSurchargesCostVisibility: boolean = false;
     SetQueriesVisibility() {
+
+        if (FeatureLocator.HasFeaturePermession("Tariff", "Tariff.Q.AirFreightCostTariffs")) {
+            this.AirFreightCostVisibility = true;
+        }
+
+        if (FeatureLocator.HasFeaturePermession("Tariff", "Tariff.Q.AirSurchargesCostTariffs")) {
+            this.AirSurchargesCostVisibility = true;
+        }
+
         if (FeatureLocator.HasFeaturePermession("Tariff", "Tariff.Q.OceanLCLFreightCost")) {
             this.OceanLCLFreightCostVisibility = true;
+        }
+
+        if (FeatureLocator.HasFeaturePermession("Tariff", "Tariff.Q.Ocean.LCL.Surcharges.Cost")) {
+            this.OceanLCLSurchargesCostVisibility = true;
         }
     }
 
@@ -116,17 +133,17 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
                 break;
             }
             case "OLC": {
-                windowTitle = "Ocean LCL Freight Cost";
+                windowTitle = "New Ocean LCL Freight Cost";
                 typeCode = "OLC";
                 break;
             }
-            case "A": {
+            case "AS": {
                 windowTitle = "New Air Surcharges Cost";
                 typeCode = "ASC";
                 break;
             }
             case "OSC": {
-                windowTitle = "New Ocean Surcharges Cost";
+                windowTitle = "New " + TextCodeTranslator.Translate("Tariff.Q.Ocean.LCL.Surcharges.Cost");
                 typeCode = "OSC";
                 break;
             }
@@ -188,7 +205,7 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
                 var listArgs = new ListComponentArgs();
                 listArgs.QueryCode = "Ocean.LCL.Surcharges.Cost";
                 listArgs.ObjectTableName = "Tariff";
-                listArgs.DisplayTitle = "Ocean Surcharges Cost";
+                listArgs.DisplayTitle = TextCodeTranslator.Translate("Tariff.Q.Ocean.LCL.Surcharges.Cost");
                 listArgs.BackButtonTitle = "Tariff";
                 this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                     SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)

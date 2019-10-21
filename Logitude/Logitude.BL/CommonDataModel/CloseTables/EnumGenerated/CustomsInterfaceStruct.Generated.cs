@@ -15,7 +15,6 @@ namespace Logitude.BL.CommonDataModel.CloseTables
        public const string CBPdirect = "CBP";  
        public const string MamanCourier = "CMN";  
        public const string None = "NO";  
-       public const string AMANACMexico = "AMC";  
     }
 }
 

@@ -457,42 +457,43 @@ namespace WebFreight.Web.ReportsWebServices
                         invoiceDataProvider.NumberofPackages = myNumberofPackages;
                     }
 
-                }
-                #endregion
-
-                #region ReleasingAgent
-                string myReleasingAgentId = shipment.ReleasingAgentId;
-                string myReleasingAgentAddressId = shipment.ReleasingAgentAddressId;
-                if (!string.IsNullOrEmpty(myReleasingAgentId))
-                {
-                    Card myPartnerCard = CardRepository.GetSingleCard(myReleasingAgentId, currentTenant, true);
-
-                    if (myPartnerCard != null)
+                    #region ReleasingAgent
+                    string myReleasingAgentId = shipment.ReleasingAgentId;
+                    string myReleasingAgentAddressId = shipment.ReleasingAgentAddressId;
+                    if (!string.IsNullOrEmpty(myReleasingAgentId))
                     {
-                        invoiceDataProvider.ReleasingAgentAddress = myPartnerCard.EnglishName != null ? myPartnerCard.EnglishName + Environment.NewLine : "";
-                        invoiceDataProvider.ReleasingAgentName = myPartnerCard.EnglishName;
-                        if (!string.IsNullOrEmpty(myReleasingAgentAddressId))
+                        Card myPartnerCard = CardRepository.GetSingleCard(myReleasingAgentId, currentTenant, true);
+
+                        if (myPartnerCard != null)
                         {
-                            Address myPartnerAddress = addressRepository.GetSingleAddress(myReleasingAgentAddressId, currentTenant);
-
-                            if (myPartnerAddress != null)
+                            invoiceDataProvider.ReleasingAgentAddress = myPartnerCard.EnglishName != null ? myPartnerCard.EnglishName + Environment.NewLine : "";
+                            invoiceDataProvider.ReleasingAgentName = myPartnerCard.EnglishName;
+                            if (!string.IsNullOrEmpty(myReleasingAgentAddressId))
                             {
-                                if (myPartnerAddress.IsLocalLanguage && !string.IsNullOrEmpty(myPartnerCard.LocalName))
-                                {
-                                    invoiceDataProvider.ReleasingAgentAddress = myPartnerCard.LocalName + Environment.NewLine;
-                                }
+                                Address myPartnerAddress = addressRepository.GetSingleAddress(myReleasingAgentAddressId, currentTenant);
 
-                                invoiceDataProvider.ReleasingAgentAddress = invoiceDataProvider.ReleasingAgentAddress + DataProviders.General.GetAddress(myPartnerAddress);
-
-                                if (myPartnerAddress.PhoneNumber != null || myPartnerAddress.FaxNumber != null)
+                                if (myPartnerAddress != null)
                                 {
-                                    invoiceDataProvider.ReleasingAgentAddress = invoiceDataProvider.ReleasingAgentAddress + Environment.NewLine + (myPartnerAddress.PhoneNumber != null ? "Tel: " + myPartnerAddress.PhoneNumber + " " : "") + (myPartnerAddress.FaxNumber != null ? "Fax: " + myPartnerAddress.FaxNumber + " " : "");
+                                    if (myPartnerAddress.IsLocalLanguage && !string.IsNullOrEmpty(myPartnerCard.LocalName))
+                                    {
+                                        invoiceDataProvider.ReleasingAgentAddress = myPartnerCard.LocalName + Environment.NewLine;
+                                    }
+
+                                    invoiceDataProvider.ReleasingAgentAddress = invoiceDataProvider.ReleasingAgentAddress + DataProviders.General.GetAddress(myPartnerAddress);
+
+                                    if (myPartnerAddress.PhoneNumber != null || myPartnerAddress.FaxNumber != null)
+                                    {
+                                        invoiceDataProvider.ReleasingAgentAddress = invoiceDataProvider.ReleasingAgentAddress + Environment.NewLine + (myPartnerAddress.PhoneNumber != null ? "Tel: " + myPartnerAddress.PhoneNumber + " " : "") + (myPartnerAddress.FaxNumber != null ? "Fax: " + myPartnerAddress.FaxNumber + " " : "");
+                                    }
                                 }
                             }
                         }
                     }
+                    #endregion
                 }
-                #endregion 
+                #endregion
+
+
 
                 #region InvoiceLines
 
@@ -506,7 +507,7 @@ namespace WebFreight.Web.ReportsWebServices
                     Currency foreigncurrency = (from f in commonContext.Currencies where f.Id == invoiceline.ForiegnCurrencyId select f).FirstOrDefault();
                     ChargesType chargesType = (from c in commonContext.ChargesTypes where c.Id == invoiceline.ChargesTypeId select c).FirstOrDefault();
                     VatType vatType = (from v in commonContext.VatTypes where v.Id == invoiceline.VatTypeId select v).FirstOrDefault();
-                    ShipmentPayable payable = payableRepository.GetSingleShipmentPayable(invoiceline.EntityPayableId);
+                    
 
                     reportinvoiceline.ChargeTypeCode = chargesType == null ? "" : chargesType.Code;
                     reportinvoiceline.ChargeTypeName = invoiceline.Description != null ? invoiceline.Description : "";
@@ -514,12 +515,19 @@ namespace WebFreight.Web.ReportsWebServices
                     reportinvoiceline.VatTypePercentage = invoiceline.VatPercentage;
                     reportinvoiceline.ForeignCurrency = foreigncurrency != null ? foreigncurrency.Code : "";
 
-                    reportinvoiceline.ExpectedAmount = payable == null ? 0 : payable.ExpectedAmount;
-                    reportinvoiceline.OtherInvoicesAmount = payable == null ? 0 : (payable.AccountedAmount - invoiceline.ForiegnCurrencyAmount);
+
                     reportinvoiceline.ForeignAmount = MethodHelper.Round(invoiceline.ForiegnCurrencyAmount, 2);
                     reportinvoiceline.InvoiceAmount = MethodHelper.Round(invoiceline.InvoiceCurrencyAmount, 2);
-                    reportinvoiceline.OpenAmount = payable == null ? 0 : payable.OpenAmount;
+                   
                     reportinvoiceline.Notes = invoiceline.Notes != null ? invoiceline.Notes : "";
+
+                    if(invoiceline.EntityPayableId != null)
+                    {
+                        ShipmentPayable payable = payableRepository.GetSingleShipmentPayable(invoiceline.EntityPayableId);
+                        reportinvoiceline.ExpectedAmount = payable == null ? 0 : payable.ExpectedAmount;
+                        reportinvoiceline.OtherInvoicesAmount = payable == null ? 0 : (payable.AccountedAmount - invoiceline.ForiegnCurrencyAmount);
+                        reportinvoiceline.OpenAmount = payable == null ? 0 : payable.OpenAmount;
+                    }
 
                     invoiceDataProvider.APInvoiceLinesList.Add(reportinvoiceline);
                 }
@@ -583,7 +591,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             if (invoice != null)
             {
-                Tenant myTenant = (from t in commonContext.Tenants where t.Id == currentTenant select t).FirstOrDefault();
+                Tenant myTenant = (from t in commonContext.Tenants.Include("ProfitCurrency") where t.Id == currentTenant select t).FirstOrDefault();
                 Card vendorCard = cardRepository.GetSingleCard(invoice.VendorId, currentTenant);
                
                 #region Invoice
@@ -640,6 +648,14 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     invoiceDataProvider.VendorNumber = vendorCard.Code;
                     invoiceDataProvider.VendorVatNumber = vendorCard.VatNumber;
+                    invoiceDataProvider.IRSPlace = vendorCard.IRSPlace;
+                    invoiceDataProvider.IRSNumber = vendorCard.IRSNumber;
+                    invoiceDataProvider.VendorBankName = vendorCard.BankName;
+                    invoiceDataProvider.VendorBankAddress = vendorCard.BankAddress;
+                    invoiceDataProvider.VendorSwift = vendorCard.Swift;
+                    invoiceDataProvider.VendorBankAccountNumber = vendorCard.AccountNumber;
+                    invoiceDataProvider.VendoIBANNo = vendorCard.IBANNumber;
+                    invoiceDataProvider.VendorName = vendorCard.EnglishName;
 
                     Address vendorAddress = addressRepository.GetMainAddressByCardId(invoice.VendorId, currentTenant);
 
@@ -690,22 +706,19 @@ namespace WebFreight.Web.ReportsWebServices
 
                 if (invoice.InvoiceMultipleShipments.Count > 0)
                 {
+                    List<string> frieghtChargesIds = (from d in commonContext.ChargesTypes where d.Tenant == currentTenant && d.ChargesGroupCode == "FRT" select d.Id).ToList();
+                    List<string> otherChargesIds = (from d in commonContext.ChargesTypes where d.Tenant == currentTenant && d.ChargesGroupCode != "FRT" select d.Id).ToList();
+
                     foreach (APInvoiceMultipleShipmentPM item in invoice.InvoiceMultipleShipments)
                     {
-                        APInvoiceMultipleEntity singleRecord = new APInvoiceMultipleEntity()
-                            {
-                                MasterNumber = item.Master,
-                                HouseNumber = item.House,
-                                ShipmentNumber = item.ShipmentNumber,
-                                PartnerName = item.PartnerName,
-                                ExpectedAmount = item.ExpectedAmount,
-                                OpenAmount = item.OpenAmount,
-                                Total = item.SubTotalInInvoiceCurrency,
-                                TotalVAT = item.TotalVATAmount,
-                            };
-
+                        item.Currency = myTenant.ProfitCurrency!=null?myTenant.ProfitCurrency.Code:null;
+                        APInvoiceMultipleEntity singleRecord = CalculateAPInvoiceMultipileShipment(item, frieghtChargesIds, otherChargesIds);
                         invoiceDataProvider.APInvoiceMultipleEntityList.Add(singleRecord);
                     }
+                }
+                if (FeatureToggleHelper.HasFeatureToggle("MAP", currentTenant))
+                {
+                    CalculateMAPTotals(invoiceDataProvider);                   
                 }
 
                 #endregion
@@ -736,6 +749,82 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
             return invoiceDataProvider;
+        }
+
+        private void CalculateMAPTotals(APInvoiceDataProvider invoiceDataProvider)
+        {
+            invoiceDataProvider.TotalChargeableWeight = invoiceDataProvider.APInvoiceMultipleEntityList.Sum(p => p.ChargeableWeight);
+            invoiceDataProvider.TotalFreight = invoiceDataProvider.APInvoiceMultipleEntityList.Sum(p => p.FreightAccounted);
+            invoiceDataProvider.TotalOtherCharges = invoiceDataProvider.APInvoiceMultipleEntityList.Sum(p => p.OtherChargesAccounted);
+            invoiceDataProvider.TotalProfit = invoiceDataProvider.APInvoiceMultipleEntityList.Sum(p => p.Profit);
+            invoiceDataProvider.TotalReceivablesSum = invoiceDataProvider.APInvoiceMultipleEntityList.Sum(p => p.TotalReceivables);
+            invoiceDataProvider.TotalPayable = invoiceDataProvider.APInvoiceMultipleEntityList.Sum(p => p.PayablesAccounted);
+            invoiceDataProvider.TotalVat = invoiceDataProvider.APInvoiceMultipleEntityList.Sum(p => p.TotalVAT);
+        }
+
+        private APInvoiceMultipleEntity CalculateAPInvoiceMultipileShipment(APInvoiceMultipleShipmentPM item, List<string> frieghtChargesIds, List<string> otherChargesIds)
+        {
+            APInvoiceMultipleEntity singleRecord = new APInvoiceMultipleEntity()
+            {
+                MasterNumber = item.Master,
+                HouseNumber = item.House,
+                ShipmentNumber = item.ShipmentNumber,
+                PartnerName = item.PartnerName,
+                ExpectedAmount = item.ExpectedAmount,
+                OpenAmount = item.OpenAmount,
+                Total = item.SubTotalInInvoiceCurrency,
+                TotalVAT = item.TotalVATAmount!=null?item.TotalVATAmount:0,
+            };
+            
+            if (FeatureToggleHelper.HasFeatureToggle("MAP", currentTenant))
+            {
+                APInvoiceFreights aPInvoiceFreights = new APInvoiceFreights();
+                aPInvoiceFreights.FrieghtChargesIds = frieghtChargesIds;
+                aPInvoiceFreights.OtherChargesIds = otherChargesIds;
+                singleRecord.OperationalDate = item.OperationalDate;
+                CalculateMAPFields(singleRecord, item);               
+                CalculateFreight(singleRecord, item, aPInvoiceFreights);              
+            }
+            return singleRecord;
+        }
+
+        private void CalculateMAPFields(APInvoiceMultipleEntity singleRecord, APInvoiceMultipleShipmentPM item)
+        {
+            singleRecord.MainCarriageOrigin = item.MainCarriageOrigin;
+            singleRecord.MainCarriageFinalDestination = item.MainCarriageFinalDestination;
+            singleRecord.ChargeableWeight = item.ChargeableWeight;
+            singleRecord.TotalReceivables = item.TotalReceivables;
+            singleRecord.Profit = item.Profit;
+            singleRecord.Currency = item.Currency;
+            singleRecord.PayablesAccounted = item.SubTotalInInvoiceCurrency;
+            singleRecord.LongMaster = item.LongMaster;
+        }
+
+        private void CalculateFreight(APInvoiceMultipleEntity singleRecord, APInvoiceMultipleShipmentPM item, APInvoiceFreights aPInvoiceFreights)
+        {
+            var freightAccounted = (from d in invoiceCotnext.APInvoiceLines
+                                    where d.EntityId == item.ShipmentId && d.APInvoiceId == item.APInvoiceId
+                                    && aPInvoiceFreights.FrieghtChargesIds.Contains(d.ChargesTypeId)
+                                    select d.InvoiceCurrencyAmount).Sum();
+
+            var otherAccounted = (from d in invoiceCotnext.APInvoiceLines
+                                  where d.EntityId == item.ShipmentId && d.APInvoiceId == item.APInvoiceId
+                                  && aPInvoiceFreights.OtherChargesIds.Contains(d.ChargesTypeId)
+                                  select d.InvoiceCurrencyAmount).Sum();
+
+            singleRecord.FreightAccounted = freightAccounted == null ? 0 : freightAccounted;
+            singleRecord.OtherChargesAccounted = otherAccounted == null ? 0 : otherAccounted;
+        }
+
+        private class APInvoiceFreights
+        {
+            public List<string> FrieghtChargesIds { get; set; }
+            public List<string> OtherChargesIds { get; set; }
+            public APInvoiceFreights() {
+                this.FrieghtChargesIds = new List<string>();
+                this.OtherChargesIds = new List<string>();
+            }
+
         }
     }
 }

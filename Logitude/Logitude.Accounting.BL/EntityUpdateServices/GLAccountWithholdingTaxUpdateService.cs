@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
-    public partial class GLAccountWithholdingTaxUpdateService
+  public partial  class GLAccountWithholdingTaxUpdateService
     {
         public const string RaiseEventWBLKConst = "RaiseEventWBLK";
         public const string RaiseEventWLDAConst = "RaiseEventWLDA";
@@ -45,6 +45,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void OnUpdating(GLAccountWithholdingTaxPM entityPM)
         {
+            entityPM.FromDate = new DateTime(entityPM.FromDate.Year, entityPM.FromDate.Month, entityPM.FromDate.Day, 00, 00, 00);
+            entityPM.ToDate = new DateTime(entityPM.ToDate.Year, entityPM.ToDate.Month, entityPM.ToDate.Day, 00, 00, 00);
             //    var currentContextTag = entityPM.CurrentContextTag ?? "";
             //    if (currentContextTag.ToString() == RaiseEventWBLKConst)
             //        {
@@ -80,10 +82,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             //            Notes = notes,
             //        });
             //    }
-
-
-
-
             base.OnUpdating(entityPM);
         }
 

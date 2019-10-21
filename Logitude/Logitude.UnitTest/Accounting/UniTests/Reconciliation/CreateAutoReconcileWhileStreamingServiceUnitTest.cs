@@ -109,7 +109,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
 
         [TestMethod]
-        public void CreateAutoReconcileWhileStreaming101_PARTIAL2LineExample_Exception()
+        public void CreateAutoReconcileWhileStreaming101_PARTIAL2LineExample_ok()
         {
 
 
@@ -154,12 +154,46 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 .MustInit(fakeIAccountingContext,
                newJournal,
                 myNewLedgerTransactionPM_storno);
-            
 
-            TestsUtil.AssertThrows<Exception>(() =>
-            {
-                myCreateAutoReconcileWhileStreamingService.CreateAutoReconcileWhileStreaming(true);
-            }, "eyal said only 1 oldTRans Against 1 newTrans");
+            myCreateAutoReconcileWhileStreamingService.CreateAutoReconcileWhileStreaming(true);
+            var reconciliationList = myCreateAutoReconcileWhileStreamingService.ReconciliationList;
+            Assert.IsNotNull(reconciliationList);
+            Assert.AreEqual(2, reconciliationList.Count);
+
+
+            var reco = reconciliationList[0];
+            Assert.AreEqual("AccountId1", reco.AccountId);
+            Assert.AreEqual(Simplog.Server.Infrastructure.ChangeSetOperation.Insert, reco.ChangeSetOp);
+
+            Assert.IsNotNull(reco.ReconciliationLines);
+            Assert.AreEqual(4, reco.ReconciliationLines.Count);
+
+
+            Assert.AreEqual("2", reco.ReconciliationLines[0].TransactionId);
+            Assert.AreEqual(-100, reco.ReconciliationLines[0].ReconciliationAmount);
+            Assert.AreEqual("usd", reco.ReconciliationLines[0].CurrencyId);
+            Assert.AreEqual(Simplog.Server.Infrastructure.ChangeSetOperation.Insert, reco.ReconciliationLines[0].ChangeSetOp);
+
+
+            Assert.AreEqual("6", reco.ReconciliationLines[1].TransactionId);
+            Assert.AreEqual(-8, reco.ReconciliationLines[1].ReconciliationAmount);
+            Assert.AreEqual("usd", reco.ReconciliationLines[1].CurrencyId);
+            Assert.AreEqual(Simplog.Server.Infrastructure.ChangeSetOperation.Insert, reco.ReconciliationLines[1].ChangeSetOp);
+
+
+            Assert.AreEqual("1", reco.ReconciliationLines[2].TransactionId);
+            Assert.AreEqual(99, reco.ReconciliationLines[2].ReconciliationAmount);
+            Assert.AreEqual("usd", reco.ReconciliationLines[2].CurrencyId);
+            Assert.AreEqual(Simplog.Server.Infrastructure.ChangeSetOperation.Insert, reco.ReconciliationLines[2].ChangeSetOp);
+
+
+            Assert.AreEqual("5", reco.ReconciliationLines[3].TransactionId);
+            Assert.AreEqual(9, reco.ReconciliationLines[3].ReconciliationAmount);
+            Assert.AreEqual("usd", reco.ReconciliationLines[3].CurrencyId);
+            Assert.AreEqual(Simplog.Server.Infrastructure.ChangeSetOperation.Insert, reco.ReconciliationLines[3].ChangeSetOp);
+
+
+
 
         }
 

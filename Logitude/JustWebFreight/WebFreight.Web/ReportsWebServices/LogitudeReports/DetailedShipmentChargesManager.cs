@@ -59,7 +59,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             QueryFilterItem filterItem_IncludeEstimations = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeEstimations").FirstOrDefault();
             QueryFilterItem filterItem_SplitByCharges = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "SplitByCharges").FirstOrDefault();
             QueryFilterItem filterItem_IncludeCancelledShipments = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeCancelledShipments").FirstOrDefault();
-
+            
             if (filterItem_FromDate != null)
             {
                 if (filterItem_FromDate.FieldValue != null)
@@ -435,7 +435,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             {
                 iQueryable_Shipments = iQueryable_Shipments.Where(d => !d.IsCancelled);
             }
-
+            
             List<ShipmentDataView> allShipments = iQueryable_Shipments.ToList();
 
             if (allShipments.Count > 0)
@@ -1044,6 +1044,21 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 if (this.ToDate != null)
                 {
                     iQueryable_Shipments = iQueryable_Shipments.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.OperationalDate) <= System.Data.Entity.DbFunctions.TruncateTime(this.ToDate));
+                }
+            }
+
+            else if (this.SelectedDateType == "OPC")
+            {
+                iQueryable_Shipments = iQueryable_Shipments.Where(d => d.OperationalCloseDate != null);
+
+                if (this.FromDate != null)
+                {
+                    iQueryable_Shipments = iQueryable_Shipments.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.OperationalCloseDate) >= System.Data.Entity.DbFunctions.TruncateTime(this.FromDate));
+                }
+
+                if (this.ToDate != null)
+                {
+                    iQueryable_Shipments = iQueryable_Shipments.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.OperationalCloseDate) <= System.Data.Entity.DbFunctions.TruncateTime(this.ToDate));
                 }
             }
 

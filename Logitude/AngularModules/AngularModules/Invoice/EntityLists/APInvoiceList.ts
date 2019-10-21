@@ -54,6 +54,7 @@ export class APInvoiceList {
 		AmountDueInLocalCurrency: number;
 		AmountDueInProfitCurrency: number;
 		BranchId: string;
+		BranchName: string;
 		HouseNumber: string;
 		MasterNumber: string;
 		Description: string;

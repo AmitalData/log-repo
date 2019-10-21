@@ -31,27 +31,20 @@ export class QuoteActions {
         this.Helper.WaitByIdAndClick('MenuButtons');
         this.Helper.WaitByIdAndClick('Quote.B.CopyQuote');
         this.Helper.WaitEditComponentBusyIndicator();
-        // this.Helper.ItemsVisibility('Quote_CopyPickUpIsChecked');
-        // var EC = protractor.ExpectedConditions;
-        // browser.wait(EC.elementToBeClickable(element(by.id('Quote_CopyPickUpIsChecked'))), 100000).then(a => {
-        // });
-
-        // var includePickup = element(by.id('Quote_CopyPickUpIsChecked'));
-        // browser.executeScript("arguments[0].click();", includePickup.getWebElement());
-
-        // var includeDelivery = element(by.id('Quote_CopyDeliveryIsChecked'));
-        // browser.executeScript("arguments[0].click();", includeDelivery.getWebElement());
-
         if (Direction == 'Domestic' && TransportMode == 'I') {
 
         }
         else {
-             var includePickup = element(by.id('Quote_CopyPickUpIsChecked'));
-        browser.executeScript("arguments[0].click();", includePickup.getWebElement());
+            this.Helper.ItemsPresent('IncludePickupDiv');
+            this.Helper.ItemsPresent('IncludeDeliveryDiv');
 
-        var includeDelivery = element(by.id('Quote_CopyDeliveryIsChecked'));
-        browser.executeScript("arguments[0].click();", includeDelivery.getWebElement());
-            // this.Helper.WaitByIdAndFill('textboxdiv_Quote_FromAddressCity_1', 'Ramallah');
+            var includePickup = element(by.id('Quote_CopyPickUpIsChecked'));
+            browser.executeScript("arguments[0].click();", includePickup.getWebElement());
+
+            var includeDelivery = element(by.id('Quote_CopyDeliveryIsChecked'));
+            browser.executeScript("arguments[0].click();", includeDelivery.getWebElement());
+
+            // this.Helper.WaitByIdAndFill('Quote_FromAddressCity_1', 'Ramallah');
             // this.Helper.WaitByIdAndFill('Quote_FromAddressCountryId_1', 'State Of Palestine');
             // this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
@@ -89,7 +82,7 @@ export class QuoteActions {
         });
         this.Helper.WaitByIdAndClick('ConfrimApproved');
         this.Helper.WaitEditComponentBusyIndicator();
-       
+
     }
     QuoteDeclined() {
         this.Helper.WaitByIdAndClick('Quote.B.Decline');

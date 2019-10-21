@@ -299,7 +299,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-
+        [ActionName("PutExportBIReportToExcel")]
         public HttpResponseMessage PutExportBIReportToExcel(BIReportXMLData bIReportXMLData)
         {
             try
@@ -332,6 +332,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
+        [ActionName("PutExportBIReportToExcelByWR")]
         public HttpResponseMessage PutExportBIReportToExcelByWR(BIReportXMLData bIReportXMLData)
         {
             try
@@ -354,6 +355,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 };
                 reportExecutionLogRepository.Add(bIReportExecutionLog);
                 reportExecutionLogRepository.SubmitChanges();
+
+                bIReportXMLData.BIReportKey = Guid.NewGuid() + bIReportExecutionLog.Id;
+
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("BIReportsExecutionLogQueue", bIReportExecutionLog.Tenant);
                 queueservice.Send(new Dictionary<string, string>() {

@@ -49,11 +49,6 @@ export class WarehouseReleaseList {
 	TotalQuantity: number;
 	ChargeableWeightUnitCode: string;
 	ConnectedTo: string;
-	FromPortId: string;
-	ToPortId: string;
-	CustomerAddressId: string;
-	TotalVolumetricWeight: number;
-	Ratio: number;
 	
 }
  

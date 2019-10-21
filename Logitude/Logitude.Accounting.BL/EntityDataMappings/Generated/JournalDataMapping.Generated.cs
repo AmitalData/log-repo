@@ -86,7 +86,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ExternalSystem, 
 	         QueueId, 
 	         StatusLocalName, 
-	         IsLedgerCreated,
+	         IsLedgerCreated, 
+	         LineCreditAccountTypeCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

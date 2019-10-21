@@ -8,6 +8,10 @@ import { ShipmentListService } from '../../../../Shipment/Services/StandardLists
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 import { ShipmentDomainService } from '../../../../Shipment/Services/ShipmentDomainService';
+import { CustomsTransferHeaderPM } from '../../../../Shipment/EntityPMs/CustomsTransferHeaderPM';
+import { CustomsTransferLinePM } from '../../../../Shipment/EntityPMs/CustomsTransferLinePM';
+import { Validator } from '../../../../Infrastructure/Validators/Validator';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 
 @Component({
     moduleId: module.id,
@@ -15,8 +19,8 @@ import { ShipmentDomainService } from '../../../../Shipment/Services/ShipmentDom
 })
 
 export class NewTransferComponent extends BaseComponent {
-    //public EntityPM: AccountingTransferHeaderPM = null;
-    public ObjectTableName: string = "AccountingTransferHeader";
+    public EntityPM: CustomsTransferHeaderPM = null;
+    public ObjectTableName: string = "CustomsTransferHeader";
     public DataContext = this;
     public TransferTypeCode: string = null;
     public ValidationErrorsList: string[] = [];
@@ -26,10 +30,10 @@ export class NewTransferComponent extends BaseComponent {
     private shipmentDomainService: ShipmentDomainService;
     constructor() {
         super();
-        //this.EntityPM = new AccountingTransferHeaderPM();
-        //this.EntityPM.Tenant = SessionLocator.Tenant;
-        //this.EntityPM.UserId = SessionLocator.LoggedUserId;
-        //this.EntityPM.TransferDate = DateTool.GetCurrentDateTimeAsUtc();
+        this.EntityPM = new CustomsTransferHeaderPM();
+        this.EntityPM.Tenant = SessionLocator.Tenant;
+        this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
+        this.EntityPM.TransferDate = DateTool.GetCurrentDateTimeAsUtc();
 
         this.shipmentDomainService = new ShipmentDomainService();
 
@@ -39,14 +43,16 @@ export class NewTransferComponent extends BaseComponent {
 
     private Listen() {
         this.CurrentSession.SessionEvent.subscribe(s => {
-
-
+            if (s == "TransferExportFirstTime") {
+                this.IsFirstTimeLoading = true;
+                this.LoadData()
+            }
         });
     }
 
     SetWindowArgs(transferTypeCode: string) {
         this.TransferTypeCode = transferTypeCode;
-        //this.EntityPM.AccountingTransferTypeCode = transferTypeCode;
+        this.EntityPM.CustomsTransferTypeCode = transferTypeCode;
         this.LoadData();
     }
 
@@ -64,11 +70,10 @@ export class NewTransferComponent extends BaseComponent {
         }
     }
 
-    private notes: string = "";
-    get Notes() { return this.notes; }    
+    get Notes() { return this.EntityPM.Notes; }
     set Notes(value: string) {
-        if (this.notes != value) {
-            this.notes = value;
+        if (this.EntityPM.Notes != value) {
+            this.EntityPM.Notes = value;
         }
     }
 
@@ -166,10 +171,11 @@ export class NewTransferComponent extends BaseComponent {
             filters.addAdditionalFilter("SearchFields", this.SearchText, null, null, "Contains", false, true, false, "string");
         }
 
-        if (this.TransferTypeCode == "Air") {
+        if (this.TransferTypeCode == "AMAS") {
             filters.addAdditionalFilter("TransportModeId", "A", null, null, "Equals", false, true, false, "string");
         }
-        else {
+
+        else if (this.TransferTypeCode == "AMOS"){
             filters.addAdditionalFilter("TransportModeId", "O", null, null, "Equals", false, true, false, "string");
         }
 
@@ -241,7 +247,8 @@ export class NewTransferComponent extends BaseComponent {
 
     ExportButtonClicked() {
         var errors: string[] = [];
-        
+        Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
+
         this.SelectedCount = this.ItemsSource.filter(f => f.IsChecked == true).length;
 
         if (this.SelectedCount == 0) {
@@ -255,7 +262,23 @@ export class NewTransferComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
-           
+            var logWindow = new LogitudeWindow();
+            logWindow.Title = "";
+            logWindow.Width = 500;
+            logWindow.Height = 200;
+            logWindow.Show('./ShipmentModules/ShipmentAMANAC/Components/NewEntity/AMANACExportTransferComponent');
+            logWindow.ComponentLoaded.subscribe(comp => {
+
+                this.ItemsSource.filter(f => f.IsChecked == true).forEach(item => {
+                    var TransferLinePM = new CustomsTransferLinePM(null);
+                    TransferLinePM.Tenant = SessionLocator.Tenant;
+                    TransferLinePM.ShipmentId = item.Id;
+                    TransferLinePM.ShipmentNumber = item.ShipmentNumber;
+                    this.EntityPM.AddCustomsTransferLinePM(TransferLinePM);
+                });
+
+                comp.Export(this.EntityPM);
+            }); 
         }
     }
 

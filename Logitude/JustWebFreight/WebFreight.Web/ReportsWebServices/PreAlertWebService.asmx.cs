@@ -402,8 +402,9 @@ namespace WebFreight.Web.ReportsWebServices
                 prealertDataProvider.FinalPort = shipmentpm.ToPortName != null ? shipmentpm.ToPortName : "";
                 prealertDataProvider.MainCarriageCarrierNumber = shipmentpm.MainCarriageCarrierNumber;
                 prealertDataProvider.MainCarriageETA = shipmentpm.MainCarriageETA != null ? String.Format("{0:dd MMM yyyy}", shipmentpm.MainCarriageETA) : "";
+                prealertDataProvider.MainCarriageETA_DateTime = shipmentpm.MainCarriageETA != null ? shipmentpm.MainCarriageETA : null;
                 prealertDataProvider.MainCarriageETD = shipmentpm.MainCarriageETD != null ? String.Format("{0:dd MMM yyyy}", shipmentpm.MainCarriageETD) : "";
-                prealertDataProvider.MainCarriageETD_DateTime = shipmentpm.MainCarriageETD;
+                prealertDataProvider.MainCarriageETD_DateTime = shipmentpm.MainCarriageETD != null ? shipmentpm.MainCarriageETD : null;
                 prealertDataProvider.mainCarriageToPortCode = !string.IsNullOrEmpty(shipmentpm.MainCarriageToPortCode) ? shipmentpm.MainCarriageToPortCode : "";
                 prealertDataProvider.mainCarriageToPortName = !string.IsNullOrEmpty(shipmentpm.MainCarriageToPortName) ? shipmentpm.MainCarriageToPortName : "";
                 prealertDataProvider.GeneralDescriptionOfGoods = shipmentpm.DescriptionOfGoods != null ? shipmentpm.DescriptionOfGoods : "";
@@ -512,8 +513,9 @@ namespace WebFreight.Web.ReportsWebServices
                 }
 
                 prealertDataProvider.Transshipment1ETA = shipmentpm.Transshipment1ETA != null ? String.Format("{0:dd MMM yyyy}", shipmentpm.Transshipment1ETA) : "";
+                prealertDataProvider.Transshipment1ETA_DateTime =  shipmentpm.Transshipment1ETA != null ? shipmentpm.Transshipment1ETA : null;
                 prealertDataProvider.Transshipment1ETD = shipmentpm.Transshipment1ETD != null ? String.Format("{0:dd MMM yyyy}", shipmentpm.Transshipment1ETD) : "";
-                prealertDataProvider.Transshipment1ETD_DateTime = shipmentpm.Transshipment1ETD;
+                prealertDataProvider.Transshipment1ETD_DateTime = shipmentpm.Transshipment1ETD != null ? shipmentpm.Transshipment1ETD : null;
                 prealertDataProvider.Transshipment1ToPortCode = shipmentpm.Transshipment1ToPortCode != null ? shipmentpm.Transshipment1ToPortCode : "";
                 prealertDataProvider.Transshipment1ToPortName = shipmentpm.Transshipment1ToPortName != null ? shipmentpm.Transshipment1ToPortName : "";
 
@@ -528,8 +530,9 @@ namespace WebFreight.Web.ReportsWebServices
                 }
 
                 prealertDataProvider.Transshipment2ETA = shipmentpm.Transshipment2ETA != null ? String.Format("{0:dd MMM yyyy}", shipmentpm.Transshipment2ETA) : "";
+                prealertDataProvider.Transshipment2ETA_DateTime = shipmentpm.Transshipment2ETA != null ? shipmentpm.Transshipment2ETA : null;
                 prealertDataProvider.Transshipment2ETD = shipmentpm.Transshipment2ETD != null ? String.Format("{0:dd MMM yyyy}", shipmentpm.Transshipment2ETD) : "";
-                prealertDataProvider.Transshipment2ETD_DateTime = shipmentpm.Transshipment2ETD;
+                prealertDataProvider.Transshipment2ETD_DateTime = shipmentpm.Transshipment2ETD != null ? shipmentpm.Transshipment2ETD : null;
                 prealertDataProvider.Transshipment2ToPortCode = shipmentpm.Transshipment2ToPortCode != null ? shipmentpm.Transshipment2ToPortCode : "";
                 prealertDataProvider.Transshipment2ToPortName = shipmentpm.Transshipment2ToPortName != null ? shipmentpm.Transshipment2ToPortName : "";
 
@@ -544,7 +547,9 @@ namespace WebFreight.Web.ReportsWebServices
                 }
 
                 prealertDataProvider.Transshipment3ETA = shipmentpm.Transshipment3ETA != null ? String.Format("{0:dd MMM yyyy}", shipmentpm.Transshipment3ETA) : "";
+                prealertDataProvider.Transshipment3ETA_DateTime = shipmentpm.Transshipment3ETA != null ? shipmentpm.Transshipment3ETA : null;
                 prealertDataProvider.Transshipment3ETD = shipmentpm.Transshipment3ETD != null ? String.Format("{0:dd MMM yyyy}", shipmentpm.Transshipment3ETD) : "";
+                prealertDataProvider.Transshipment3ETD_DateTime = shipmentpm.Transshipment3ETD != null ? shipmentpm.Transshipment3ETD : null;
                 prealertDataProvider.Transshipment3ToPortCode = shipmentpm.Transshipment3ToPortCode != null ? shipmentpm.Transshipment3ToPortCode : "";
                 prealertDataProvider.Transshipment3ToPortName = shipmentpm.Transshipment3ToPortName != null ? shipmentpm.Transshipment3ToPortName : "";
 

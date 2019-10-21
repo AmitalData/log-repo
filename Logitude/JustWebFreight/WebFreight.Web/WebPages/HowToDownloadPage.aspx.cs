@@ -367,7 +367,7 @@ namespace WebFreight.Web.WebPages
                     break;
 
                 case "71":
-                    documentName = "inttra_quicktour.pdf";
+                    documentName = "inttra_connection_tutorial.pdf";
                     data = manager.DownloadStaticFile(documentName, "how-to");
                     break;
 

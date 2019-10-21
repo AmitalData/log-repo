@@ -82,20 +82,24 @@
                 <!-- Journal -->
                 <div *ngIf="ObjectTableName == 'Journal'">
                     <div *ngIf="FieldName == 'StatusName'" [style.text-align]="isRTL ? 'right' : 'left'">
-                        <div *ngIf="Entity.StatusCode == '0'">
-                            {{ showLocal ?  Entity.StatusLocalName : Entity.StatusName
+                        <div *ngIf="FieldValue == 'Draft'">{{ showLocal ? Entity.StatusLocalName : Entity.StatusName }}
+                        </div>
+                        <div *ngIf="FieldValue == 'Waiting for Approval'" style="color: darkorange;">
+                            {{
+ showLocal ?
+                            Entity.StatusLocalName : Entity.StatusName
                             }}
                         </div>
-                        <div *ngIf="Entity.StatusCode == '1'" style="color: darkorange;">
-                            {{  showLocal ? Entity.StatusLocalName : Entity.StatusName
+                        <div *ngIf="FieldValue == 'Approved'" style="color: green;">
+                            {{
+ showLocal ?
+                            Entity.StatusLocalName : Entity.StatusName
                             }}
                         </div>
-                        <div *ngIf="Entity.StatusCode == '2'" style="color: green;">
-                            {{ showLocal ? Entity.StatusLocalName : Entity.StatusName
-                            }}
-                        </div>
-                        <div *ngIf="Entity.StatusCode == '3'" style="color: darkred;">
-                            {{ showLocal ? Entity.StatusLocalName : Entity.StatusName
+                        <div *ngIf="FieldValue == 'Voided'" style="color: darkred;">
+                            {{
+ showLocal ?
+                            Entity.StatusLocalName : Entity.StatusName
                             }}
                         </div>
                     </div>

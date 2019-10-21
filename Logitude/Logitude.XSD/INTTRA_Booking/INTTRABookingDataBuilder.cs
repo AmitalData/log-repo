@@ -18,6 +18,12 @@ namespace Logitude.XSD.INTTRA_Booking
         public INTTRA_Booking.HeaderType GetHeader()
         {
             string myDocumentIdentifier = "B-" + this.Context.ShipmentNumber + "-" + this.Context.Tenant + "-" + this.Context.XMLCreateDate + "-" + this.Context.CommunicationLogIdCounter;
+            var transactionStatus = HeaderTypeTransactionStatus.Original;
+            if (this.Context.Shipment.INTTRABookingTransStatusCode != "NST")
+            {
+                transactionStatus = HeaderTypeTransactionStatus.Change;
+            }
+
             INTTRA_Booking.HeaderType myResult = new INTTRA_Booking.HeaderType
             {
                 SenderId = "LOGITUDE",
@@ -27,7 +33,7 @@ namespace Logitude.XSD.INTTRA_Booking
                 TransactionType = TransactionTypeValues.Booking,
                 TransactionVersion = HeaderTypeTransactionVersion.Item20,
                 DocumentIdentifier = myDocumentIdentifier,
-                TransactionStatus = HeaderTypeTransactionStatus.Change,
+                TransactionStatus = transactionStatus,
                 TransactionSplitIndicator = false,
             };
 
@@ -58,6 +64,7 @@ namespace Logitude.XSD.INTTRA_Booking
                     Value = new DateTime(this.Context.TodayDateTime.Year, this.Context.TodayDateTime.Month, this.Context.TodayDateTime.Day, this.Context.TodayDateTime.Hour, this.Context.TodayDateTime.Minute, this.Context.TodayDateTime.Second),
                 },
                 MovementType = this.Context.MovementType,
+                MovementTypeSpecified = true,
                 Location = this.Context.Locations.ToArray<INTTRA_Booking.LocationDateTimeType>(),
                 ReferenceInformation = this.Context.ReferenceInformations.ToArray<INTTRA_Booking.ReferenceInformationType>(),
                 TransportationDetails = this.Context.TransportationDetails.ToArray(),

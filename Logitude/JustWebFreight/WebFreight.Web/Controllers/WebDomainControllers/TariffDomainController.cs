@@ -207,12 +207,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         byte[] data = null;
 
-                        if (tariff.TypeCode == "AFC")
+                        if (tariff.TypeCode == "AFC" || tariff.TypeCode == "OLC")
                         {
                             data = this.ExportAirFreightCostLinesToExcel(tariff, tariffVersion.TariffLines, tenant, type);
                         }
 
-                        else if (tariff.TypeCode == "ASC")
+                        else if (tariff.TypeCode == "ASC" || tariff.TypeCode == "OSC")
                         {
                             data = this.ExportAirSurchargesCostLinesToExcel(tariff, tariffVersion.TariffLines, tenant, type);
                         }
@@ -780,6 +780,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
+        private string TariffType = ""; 
         [ActionName("PostUploadExcelFile")]
         public HttpResponseMessage PostUploadExcelFile(TariffFilterParameter filter)
         {
@@ -806,9 +807,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 IWorksheet sheet = workbook.Worksheets[0];
 
                 List<ExcelTariffLines> tariffLinesResult = new List<ExcelTariffLines>();
-                if (filter.TariffType == "AFC")
+                if (filter.TariffType == "AFC" || filter.TariffType == "OLC")
                 {
-                    tariffLinesResult = this.BuildAirFreightCostExcelLines(sheet, authToken.Tenant, filter);
+                    this.TariffType = filter.TariffType;
+                    tariffLinesResult = this.BuildOceanAirFreightCostExcelLines(sheet, authToken.Tenant, filter);
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, tariffLinesResult);
@@ -935,7 +937,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 storageservice.Write(ByteData, fileInfo);
             }
         }
-        public List<ExcelTariffLines> BuildAirFreightCostExcelLines(IWorksheet sheet, int tenant, TariffFilterParameter filter = null)
+        public List<ExcelTariffLines> BuildOceanAirFreightCostExcelLines(IWorksheet sheet, int tenant, TariffFilterParameter filter = null)
         {
             List<ExcelTariffLines> myResult = new List<ExcelTariffLines>();
             int rowIndex = 0;
@@ -947,8 +949,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 ExcelTariffLines tariffLine = new ExcelTariffLines();
                 tariffLine.Index = rowIndex;
                 var StepLength = rowData.Length;
+                var tariffType = "";
                 if (filter != null && !string.IsNullOrEmpty(filter.PriceSteps))
                 {
+                    tariffType = filter.TariffType;
                     StepLength = filter.PriceSteps.Split(',').Length + 3;
                 }
 
@@ -969,7 +973,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 Port fromPort = this.GetPortDetails(rowData[0], tenant);
                 if (fromPort != null)
                 {
-                    if (fromPort.IsAir)
+                    if ((fromPort.IsAir && tariffType == "AFC") || (fromPort.IsOcean && tariffType == "OLC"))
                     {
                         tariffLine.FromPortId = fromPort.Id;
                         tariffLine.FromPortCode = fromPort.Code;
@@ -990,7 +994,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 Port toPort = this.GetPortDetails(rowData[1], tenant);
                 if (toPort != null)
                 {
-                    if (toPort.IsAir)
+                    if ((toPort.IsAir && tariffType == "AFC") || (toPort.IsOcean && tariffType == "OLC"))
                     {
                         tariffLine.ToPortId = toPort.Id;
                         tariffLine.ToPortCode = toPort.Code;
@@ -1613,17 +1617,32 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             if (!string.IsNullOrEmpty(code))
             {
                 code = code.Trim();
-                myPort = this.portRepository.GetAirlinePortByCode(tenant, code, true);
+                if (this.TariffType == "AFC")
+                {
+                    myPort = this.portRepository.GetAirlinePortByCode(tenant, code, true);
+                }
+                else if (this.TariffType == "OLC")
+                {
+                    myPort = this.portRepository.GetOceanPortByCode(tenant, code, true);
+                }
+
                 if (myPort == null)
                 {
-                    Port portZero = this.portRepository.GetAirlinePortByCode(0, code, true);
+                    Port portZero = null;
+                    if (this.TariffType == "AFC")
+                    {
+                        portZero = this.portRepository.GetAirlinePortByCode(0, code, true);
+                    }
+                    else if (this.TariffType == "OLC")
+                    {
+                        portZero = this.portRepository.GetOceanPortByCode(0, code, true);
+                    }
                     if (portZero != null)
                     {
                         myPort = this.GetPortCopyToCurrentTenant(portZero, tenant);
                     }
                 }
             }
-
             return myPort;
         }
         private Port GetPortCopyToCurrentTenant(Port ZeroPort, int tenant)
@@ -1855,7 +1874,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                                     foreach (string charge in args.Surcharge)
                                     {
-
                                         string[] charge_array = charge.Split(',');
                                         decimal? price = null;
                                         decimal? minPrice = null;
@@ -1897,6 +1915,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                         OriginPortId = rout.FromCode,
                                         StartDate = args.StartDate,
                                         TariffId = args.TariffId,
+                                        CurrencyId = tariff.CurrencyId,
                                     };
 
                                     foreach (string charge in args.Surcharge)
@@ -2142,8 +2161,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             return myResult;
         }
-
-
+        
         public HttpResponseMessage GetTariffsLogsByTariffId(string tariffId, int version)
         {
             string token = HttpContext.Current.Request.Headers["Token"];

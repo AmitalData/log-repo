@@ -83,6 +83,13 @@ namespace Logitude.Infrastructure.BL
                 Name = "Ticket Jumping Counter", 
                 SearchFields = "TJC,Ticket Jumping Counter", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "MAP", 
+                Name = "Multipile AP Shipment", 
+                SearchFields = "MAP,Multipile AP Shipment", 
+			});
 			
             return all;
        }

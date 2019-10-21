@@ -1097,7 +1097,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 ExchangeRate = (decimal)paymentPM.PaymentCurrencyExchangeRate,
                 Reference1 = paymentPM.PaymentNo,
                 Reference2 = paymentPM.ChequeOrPaymentRef,
-                Notes = paymentPM.InternalNotes,
+                Notes = paymentPM.PrintNotes,
                 CreditAccountId = accountingSettings?.TaxWithholdingGLAccountId,
                 DebitAccountId = glAccount?.Id,
                 ChangeSetOp = ChangeSetOperation.Insert,
@@ -1139,7 +1139,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 ExchangeRate = (decimal)paymentPM.PaymentCurrencyExchangeRate,
                 Reference1 = paymentPM.PaymentNo,
                 Reference2 = paymentPM.ChequeOrPaymentRef,
-                Notes = paymentPM.InternalNotes,
+                Notes = paymentPM.PrintNotes,
                 DebitAccountId = glAccount != null ? glAccount.Id : null,
                 ChangeSetOp = ChangeSetOperation.Insert
             };
@@ -1164,7 +1164,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 ExchangeRate = (decimal)paymentPM.PaymentCurrencyExchangeRate,
                 Reference1 = paymentPM.PaymentNo,
                 Reference2 = paymentPM.ChequeOrPaymentRef,
-                Notes = paymentPM.InternalNotes,
+                Notes = paymentPM.PrintNotes,
                 CreditAccountId = GetCreditAccoutId(paymentPM),
                 ChangeSetOp = ChangeSetOperation.Insert
             };

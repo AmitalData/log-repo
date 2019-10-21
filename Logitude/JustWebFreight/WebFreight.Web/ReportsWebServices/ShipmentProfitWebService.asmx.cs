@@ -463,6 +463,9 @@ namespace WebFreight.Web.ReportsWebServices
                 #region Partners
 
                 provider.AgentName = ServiceStringConvertor(shipmentPM.AgentName);
+                provider.AgentRef1 = ServiceStringConvertor(shipmentPM.AgentReference1);
+                provider.AgentRef2 = ServiceStringConvertor(shipmentPM.AgentReference2);
+
                 provider.ShipperName = ServiceStringConvertor(shipmentPM.ShipperName);
                 provider.ConsigneeName = ServiceStringConvertor(shipmentPM.ConsigneeName);
 

@@ -1265,9 +1265,9 @@ export class ShipmentPayableItem extends BaseComponent {
                 isOpenAmountEnabled = false;
             }            
 
-            if (AppTool.IsNullOrEmpty(this.TariffId)) {
-                isOpenAmountEnabled = false;
-            }
+            //if (AppTool.IsNullOrEmpty(this.TariffId)) {
+            //    isOpenAmountEnabled = false;
+            //}
 
             if (isLineAttachted) {
                 isEditingEnabled = false;
@@ -1422,7 +1422,7 @@ export class ShipmentPayableItem extends BaseComponent {
 
         if (culculatedAmount != null) {
             if (this.MinAmount != null) {
-                if (culculatedAmount < this.MinAmount) {
+                if (culculatedAmount <= this.MinAmount) {
                     isVisible = true;
                 }
             }

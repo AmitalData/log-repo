@@ -212,8 +212,8 @@ export class RoutingTabComponent {
         this.Helper.WaitByIdAndClick('Add');
         this.Helper.WaitByIdAndFill('ShipmentPickUpDeliveryPackage_Quantity', '10');
         this.Helper.WaitByIdAndFill('ShipmentPickUpDeliveryPackage_Weight', '100');
-        this.Helper.WaitByCssButtonClick('.RedButton', 'Ok');
-        // this.Helper.WaitByIdAndClick('AddPickupPackage');
+       // this.Helper.WaitByCssButtonClick('.RedButton', 'Ok');
+         this.Helper.WaitByIdAndClick('AddPickupPackage');
 
         this.Helper.WaitByIdAndClick('SaveBtn');
         this.Helper.WaitEditComponentBusyIndicator();

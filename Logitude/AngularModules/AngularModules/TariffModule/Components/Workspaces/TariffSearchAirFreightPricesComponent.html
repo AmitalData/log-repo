@@ -111,7 +111,7 @@
                                                 </table>
                                             </td>
 
-                                        </tr>                                       
+                                        </tr>
 
                                         <tr style="height:5px">
                                             <td colspan="2">
@@ -331,7 +331,7 @@
                                                                                 <tr>
                                                                                     <td style="width:150px;min-width:150px">
                                                                                         <div>
-                                                                                            <img style="width:120px;height:80px;border:1px solid #A0A0A0" *ngIf="item.ImageId" class="CenterCenter" [attr.id]="item.Name" src="{{item.ImageId}}" />
+                                                                                            <img style="width:120px;height:80px;" *ngIf="item.ImageId" class="CenterCenter" [attr.id]="item.Name" src="{{item.ImageId}}" />
 
                                                                                         </div>
                                                                                     </td>
@@ -347,7 +347,7 @@
                                                                                                             </td>
                                                                                                             <td>
                                                                                                                 <div class="TextTrimming">
-                                                                                                                    {{item.Name}}
+                                                                                                                    {{item.SellerName}}
                                                                                                                 </div>
                                                                                                             </td>
                                                                                                         </tr>
@@ -361,7 +361,7 @@
                                                                                                     <table>
                                                                                                         <tr>
                                                                                                             <td style="width:80px">
-                                                                                                                <label style="color:darkgray"> Effective till:</label>
+                                                                                                                <label style="color:darkgray"> Valid till:</label>
 
                                                                                                             </td>
                                                                                                             <td>
@@ -417,12 +417,6 @@
                                                                                     <td>
                                                                                         <table>
                                                                                             <tr>
-
-                                                                                                <td  style="width: 57px;">
-                                                                                                    <div *ngIf="IsGeneratePayablesVisible">
-                                                                                                        <button class="Button" (click)="GeneratePayablesClicked(item)">Generate Payables</button>
-                                                                                                    </div>
-                                                                                                </td>
                                                                                                 <td style="width:100px;max-width:165px;font-size:x-large;font-weight:bold">
                                                                                                     <span style="font-size:x-large;font-weight:bold;color:#0e276d;float:right">
                                                                                                         {{item.WholePrice | NumbersPipe:'N2'}} {{item.CurrencyCode}}
@@ -430,8 +424,7 @@
                                                                                                 </td>
                                                                                             </tr>
 
-                                                                                            <tr>
-                                                                                                <td></td>
+                                                                                            <tr>     
                                                                                                 <td style="width:200px">
                                                                                                     <table>
                                                                                                         <tr>
@@ -447,6 +440,18 @@
                                                                                                             </td>
                                                                                                         </tr>
                                                                                                     </table>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </td>
+
+                                                                                    <td *ngIf="IsGeneratePayablesVisible" style="width:100px;float:right;">
+                                                                                        <table>
+                                                                                            <tr>
+                                                                                                <td>
+                                                                                                    <div>
+                                                                                                        <button class="Button"  style="height:60px;width:100px;font-size:14px;font-weight:bold; border: 1px solid" (click)="GeneratePayablesClicked(item)">Choose</button>
+                                                                                                    </div>
                                                                                                 </td>
                                                                                             </tr>
                                                                                         </table>
@@ -520,8 +525,21 @@
                                                                                 </tr>
                                                                                 <tr style="height:40px">
                                                                                     <td>
-                                                                                        <p style="font-weight:bold;font-size:large">Surcharges</p>
+                                                                                        <table>
+                                                                                            <tr>
+                                                                                                <td style="width:105px;">
+                                                                                                    <p style="font-weight:bold;font-size:large">Surcharges</p>
+                                                                                                </td>
+                                                                                                <td style="width:3px;">
+                                                                                                    <div></div>
+                                                                                                </td>
+                                                                                                <td *ngIf="item != null && item.Surcharges != null && item.Surcharges.length > 0" style="float:left;top:12px;">
+                                                                                                    <Hyperlink [FontSize]="12" (click)="ViewSurchargesClicked(item)">(view tariff)</Hyperlink>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
                                                                                     </td>
+
                                                                                 </tr>
                                                                                 <tr style="height:1px;background-color:#D1D1D1">
                                                                                     <td>

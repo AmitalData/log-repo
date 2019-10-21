@@ -14,6 +14,8 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool IsSecured { get; set; }
         public string InternalNumber { get; set; }
 
+        public bool CreatedFromAPI { get; set; }
+
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string InvoiceNumber { get; set; }
 
@@ -84,7 +86,11 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public double? RefundAmount { get; set; }
         public double? AmountDueInLocalCurrency { get; set; }
         public double? AmountDueInProfitCurrency { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string BranchId { get; set; }
+        public string BranchName { get; set; }
+
         public string ConnectedEntityReferences { get; set; }
         public string HouseNumber {get; set;}
         public string MasterNumber {get; set;}

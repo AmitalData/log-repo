@@ -45,11 +45,21 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     public IsUpdateSurchargesButtonVisible: boolean = false;
     public IsFirstDraft: boolean = false;
     public SelectedVersionNumber: number;
+    public OriginDependencyFilterValue: string = "A";
+    public DestinationDependencyFilterValue = "A";
     private deletedLinesExpirationDates: TariffLineExpirationDatePM[];
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
         this.Listen();
+    }
+
+
+    SetOriginDependencyFilterValue() {
+        if (this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OSC") {
+            this.OriginDependencyFilterValue = "O";
+            this.DestinationDependencyFilterValue = "O";
+        }
     }
 
     public AllChargesTypes: ChargesTypeList[];
@@ -100,6 +110,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
                 });
             }
         });
+        this.SetOriginDependencyFilterValue();
     }
 
     private SaveCompletedEvent: any = null;
@@ -243,6 +254,17 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     public Surcharge9PriceVisibility: boolean;
     public Surcharge10PriceVisibility: boolean;
 
+    public IsSurcharge1MinPriceEditVisible: boolean = false;
+    public IsSurcharge2MinPriceEditVisible: boolean = false;
+    public IsSurcharge3MinPriceEditVisible: boolean = false;
+    public IsSurcharge4MinPriceEditVisible: boolean = false;
+    public IsSurcharge5MinPriceEditVisible: boolean = false;
+    public IsSurcharge6MinPriceEditVisible: boolean = false;
+    public IsSurcharge7MinPriceEditVisible: boolean = false;
+    public IsSurcharge8MinPriceEditVisible: boolean = false;
+    public IsSurcharge9MinPriceEditVisible: boolean = false;
+    public IsSurcharge10MinPriceEditVisible: boolean = false;
+
     public Surcharge1MinPriceLabel: string;
     public Surcharge2MinPriceLabel: string;
     public Surcharge3MinPriceLabel: string;
@@ -280,10 +302,15 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
                 item.DisplyText = iChargeType.Code;
                 item.Code_Int = index;                
 
+                var isMeasurmentFixed: boolean = false;
                 var iMeasurement: MeasurementList = this.AllMeasurements.filter(f => f.Id == iMeasurementId)[0];
                 if (iMeasurement) {
                     item.DisplyText = iChargeType.Code + " (" + iMeasurement.Code + ")";
                     item.AdditionalField = iMeasurement.Code;
+
+                    if (iMeasurement.Code == "FIXD") {
+                        isMeasurmentFixed = true;
+                    }
                 }
 
                 this.tariffCharges.push(item);
@@ -291,6 +318,10 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
                 this['Surcharge' + index + 'PriceLabel'] = item.DisplyText;
                 this['Surcharge' + index + 'PriceVisibility'] = true;
                 this['Surcharge' + index + 'MinPriceLabel'] = "Min " + iChargeType.Code;
+
+                if (!isMeasurmentFixed) {
+                    this['IsSurcharge' + index + 'MinPriceEditVisible'] = true;
+                }
             }
         }
     }
@@ -367,6 +398,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
     ComaredLines() {
         this.ItemsCollection.forEach((item: AirSurchargeTariffLineData) => {
+            item.IsNewEntity = false;
             var line = this.compareTariffLines.sort((a, b) => a.Index - b.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
             if (line) {
                 item.ComparedEntity = line;
@@ -453,7 +485,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             newVersion.ParentVersionNumber = item.ParentVersionNumber;
             newVersion.Id = item.TariffId;
 
-            if (this.EntityPM.TypeCode == "ASC") {
+            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode =="OSC") {
                 newVersion.Name = "Version " + item.Version;
             }
 
@@ -500,6 +532,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         itemPM.Tenant = SessionLocator.Tenant;
         itemPM.Version = this.CurrentVersion.Version;
         itemPM.Index = 0;
+        itemPM.CurrencyId = this.EntityPM.CurrencyId;
 
         var Version: TariffVersionPM = this.EntityPM.TariffVersions.filter(p => p.Version == itemPM.Version)[0];
         if (Version) {

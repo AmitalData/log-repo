@@ -74,7 +74,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             FillGLAccountChartOfAccountCode(gLAccountPM);
 
-            string prefix = gLAccountPM.ChartOfAccountsTypeCode + gLAccountPM.ChartOfAccountsCode;
+            string prefix = gLAccountPM.ChartOfAccountsCode; // gLAccountPM.ChartOfAccountsTypeCode + WI 58074
             string displayNumber = GetNewDisplayNumber(prefix);
             return displayNumber;
         }
@@ -115,7 +115,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private void CheckCounterLengthField()
         {
-            if (fullAccountingSettings != null && fullAccountingSettings.GLAccounterCounterLength == null)
+            if (fullAccountingSettings.GLAccounterCounterLength == null)
             {
                 var showLocal = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
                 var msg = TextCodesTranslator.TranslateText("GLAccount.O.CounterIsntDefined", tenant, showLocal);

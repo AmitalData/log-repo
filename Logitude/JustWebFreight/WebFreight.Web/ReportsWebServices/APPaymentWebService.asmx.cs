@@ -413,6 +413,8 @@ namespace WebFreight.Web.ReportsWebServices
 
         }
 
+    
+
         private string GetPartnerAccountNumber(Card card)
         {
           

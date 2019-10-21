@@ -57,7 +57,7 @@ describe('CRM Module', () => {
     else if (browser.params.CRM.CRMType == 'opportunity') {
         it('Opportunities Success', function () {
             browser.ignoreSynchronization = true;
-            CRMPage.DoCRM('Opportunities'); 
+            CRMPage.DoCRM('Opportunities');
         });
     }
 });

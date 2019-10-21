@@ -111,7 +111,6 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<CustomerSalesNote> CustomerSalesNotes { get; set; }
         public IDbSet<BusinessUnit> BusinessUnits { get; set; }
         public IDbSet<FeatureAccessLevel> FeatureAccessLevels { get; set; }
-        public IDbSet<LogBoxTenantSetting> LogBoxTenantSettings { get; set; }
         public IDbSet<AddressType> AddressTypes
         {
             get;
@@ -4644,6 +4643,9 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new FormCustomFields1Map());
             modelBuilder.Configurations.Add(new FWBStatuMap());
             modelBuilder.Configurations.Add(new CustomsTransmissionsStatusMap());
+            modelBuilder.Configurations.Add(new CustomsTransferHeaderMap());
+            modelBuilder.Configurations.Add(new CustomsTransferLineMap());
+            modelBuilder.Configurations.Add(new CustomsTransferTypeMap());
             modelBuilder.Configurations.Add(new GlobalZoneMap());
             modelBuilder.Configurations.Add(new IATACodeMap());
             modelBuilder.Configurations.Add(new ImageDetailMap());
@@ -4951,7 +4953,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new SchedulerProcedureMap());
             modelBuilder.Configurations.Add(new UsersReleaseNotesDisplayMap());
             modelBuilder.Configurations.Add(new CheckDigitControlAlgorithmMap());
-            modelBuilder.Configurations.Add(new LogBoxTenantSettingMap());
+
             base.OnModelCreating(modelBuilder);
         }
     }

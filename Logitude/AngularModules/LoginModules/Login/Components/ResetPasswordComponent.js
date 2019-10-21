@@ -62,10 +62,7 @@ var ResetPasswordComponent = /** @class */ (function () {
             this.ErrorMessage = "Please re-enter the characters you see in the image above";
         }
         else {
-            this.Succeeded = false;
             this.HasErrors = false;
-            this.ErrorMessage = "";
-            this.HasCaptchaErrors = false;
             var params = {
                 Email: this.Email,
                 IsChampLogin: false,
@@ -81,13 +78,14 @@ var ResetPasswordComponent = /** @class */ (function () {
                 }
                 else {
                     _this.CaptchaKey = userdata ? userdata.CaptchaKey : "";
+                    //disableForm(false);
                     if (userdata.InValidCaptcha) {
                         _this.CaptchaCode = "";
                         _this.IsShowAreaCaptcha = true;
                         _this.CaptchaImageUrl = userdata.CaptchaImage;
                         _this.HasCaptchaErrors = true;
                     }
-                    var errorMessage = "";
+                    var errorMessage = "Submit failed! invalid email." + "<br/>";
                     if (userdata.ExceptionMessage)
                         alert(userdata.ExceptionMessage);
                     else {
@@ -97,16 +95,14 @@ var ResetPasswordComponent = /** @class */ (function () {
                             errorMessage = "Unauthorized IP Address. Your IP is not authorized to access this account!";
                         if (userdata.InActive)
                             errorMessage = "Your account has been deactivated!" + "please contact your administrator.";
-                        if (errorMessage) {
-                            _this.HasErrors = true;
-                            _this.ErrorMessage = errorMessage;
+                        if (userdata.InValidMailOrPassword) {
+                            errorMessage = "Submit failed! invalid email.";
+                            _this.HasCaptchaErrors = false;
                         }
-                        else {
-                            _this.Succeeded = true;
-                            _this.HasErrors = false;
-                            _this.HideAreaCaptcha();
-                        }
+                        _this.HasErrors = true;
+                        _this.ErrorMessage = errorMessage;
                     }
+                    _this.ErrorMessage = errorMessage;
                 }
             });
         }

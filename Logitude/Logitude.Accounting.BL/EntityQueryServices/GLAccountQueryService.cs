@@ -707,55 +707,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                  }).ToList();
             DateTime fromdate = new DateTime((int)reportYear,1, 1);
             DateTime todate= new DateTime((int)reportYear,12, 31 );
-            //var trailReportParam = new TrailReportParam()
-            //{
-            //    Tenant = tenant,
-               
-            //    ToDate = (DateTime)todate,
-            //    FromDate = (DateTime)fromdate,
-            //    CurrenciesDetailed = false,
-            //    DetailedControlVendors = true,
-            //    DetailedControlClients = false,
-            //    Category1 = null,
-            //    Category5 = null,
-            //    Suppress_DoNotShowCardWithoutActivity = false,
-            //    IsRevenueExpenseReport = false,
-            //    MyTrailReportLevel = ReportLevel.GLAccount,
 
-            //};
-
-
-            //var typeservice = TrailReportFactory.CreateNew(trailReportParam);
-            //List<TrailReportM> res1 = typeservice.Execute();
-            //typeservice.Dispose();
-
-            //IEnumerable<IGrouping<string, TrailReportM>> res = res1.GroupBy(d => d.GLAccountId);
-            //var result = res.Where(d => d.Key != null).ToDictionary(x => x.Key, x => x);
-
-            //foreach (DBVendorsList item in DBVendorsList)
-            //{
-            //    LedgerTransactionBalanceFilter LTBFilter = new LedgerTransactionBalanceFilter();
-
-
-            //    LTBFilter.PageSize = 10;
-            //    LTBFilter.PageStartAtRecordIndex = 0;
-            //    LTBFilter.Tenant = tenant;
-
-
-
-            //    LTBFilter.GLAccountId = item.GlAccountId;
-            //    LTBFilter.From = new DateTime((int)reportYear, 1, 1);
-            //    LTBFilter.To = new DateTime((int)reportYear, 12, 31);
-            //    LTBFilter.IncludeRelatedCurrenciesAccount = false;
-            //    LTBFilter.IncludeChildAccounts = false;
-
-            //    var ledgerTransactionBalanceService = new LedgerTransactionBalanceService(context, LTBFilter);
-            //    ledgerTransactionBalanceService.Run();
-
-            //    item.EndYearBalance = ledgerTransactionBalanceService.Response.EndBalanceLocal != null ? ledgerTransactionBalanceService.Response.EndBalanceLocal : 0;
-
-
-            //}
 
             List<APPaymentList> groupedpayments = (from a in payments
                                                    join v in vendors on a.VendorId equals v.Id

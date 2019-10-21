@@ -259,14 +259,7 @@
 							"    pm.environment.set(\"CurrentMonth\",month);",
 							"    var idvalue7 = (pm.response.json().Result[pm.response.json().Result.length-2].OpenMonth);",
 							"    pm.environment.set(\"AcocuntingPeriodsOpenMonth\",idvalue7);",
-							"    ",
-							"      if (idvalue7 < month)",
-							"      {",
-							"           tests[\"Current Month Opened  : \" + false ] = ( true );",
-							"      }",
-							"      ",
-							"        else {",
-							"    var idvalue1 = (pm.response.json().Result[pm.response.json().Result.length-2].Id);",
+							"      var idvalue1 = (pm.response.json().Result[pm.response.json().Result.length-2].Id);",
 							"    var idvalue2 = (pm.response.json().Result[pm.response.json().Result.length-2].Tenant);",
 							"    var idvalue3 = (pm.response.json().Result[pm.response.json().Result.length-2].Year);",
 							"    var idvalue4 = (pm.response.json().Result[pm.response.json().Result.length-2].PeriodTypeCode);",
@@ -281,9 +274,20 @@
 							"    pm.environment.set(\"AcocuntingPeriodsClosedMonth\",idvalue6);",
 							"",
 							"  ",
-							"   tests[\"Current Month Opened  : \" + true ] = ( true )",
-							"   ;}",
-							"   postman.setNextRequest(\"GetAccountingCurriency\");",
+							"    ",
+							"      if (idvalue7 < month)",
+							"      {",
+							"           tests[\"Current Month Opened  : \" + false ] = ( true );",
+							"           ",
+							"            postman.setNextRequest(\"OpenCurrentMonth\");",
+							"      }",
+							"      ",
+							"        else {",
+							"  ",
+							"   tests[\"Current Month Opened  : \" + true ] = ( true );",
+							"           postman.setNextRequest(\"GetAccountingCurriency\");  ",
+							"        }",
+							"  ",
 							" ",
 							"});",
 							"",
@@ -338,6 +342,72 @@
 							"value": null,
 							"disabled": true
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OpenCurrentMonth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "aaa5876d-4629-4a6d-9ac8-be0e6a7b3b4f",
+						"exec": [
+							"pm.test(\"Current month opened \", function () {",
+							"    ",
+							"    pm.response.to.have.status(200);",
+							"   ",
+							"      var idvalue1 = (pm.response.json().Result.Id);",
+							"   postman.setNextRequest(\"GetAccountingCurriency\");  ",
+							"  ",
+							" ",
+							"});",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n\"ChangeSetOp\": 2,\r\n\"ClosedMonth\":{{AcocuntingPeriodsClosedMonth}} ,\r\n\"EncodeBase64NVARCHARFieldsBy\": null,\r\n\"Id\": \"{{AcocuntingPeriodsId}}\",\r\n\"OpenMonth\":{{CurrentMonth}},\r\n\"PeriodTypeCode\": \"1\",\r\n\"PeriodTypeName\": \"Accounting\",\r\n\"Tenant\": {{AcocuntingPeriodsTenant}},\r\n\"Year\": {{AcocuntingPeriodsYear}}\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/TEST/api/accountingperiods",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"TEST",
+						"api",
+						"accountingperiods"
 					]
 				}
 			},

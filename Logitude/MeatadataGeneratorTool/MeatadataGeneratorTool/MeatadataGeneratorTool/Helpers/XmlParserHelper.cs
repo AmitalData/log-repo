@@ -1102,14 +1102,7 @@ namespace MeatadataGeneratorTool.Helpers
                     objectTable.IsTabsHidden = false;
                 }
 
-                if (entity.Attributes["PrimaryKeyIsTenant"] != null)
-                {
-                    objectTable.PrimaryKeyIsTenant = GetAttributeBoolValue(entity.Attributes["PrimaryKeyIsTenant"]);
-                }
-                else
-                {
-                    objectTable.PrimaryKeyIsTenant = false;
-                }
+
             }
             return objectTable;
 

@@ -95,8 +95,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                         paymentChequePM.JournalNumber = journal.JournalNumber;
                     }
-
-
                 }
                 else
                 {
@@ -203,10 +201,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             else
             {
-                if (entityPM.ChequeNumber == null)
-                {
-                    entityPM.ChequeNumber = bankAccount.ChequeCounter.ToString();
-                }
+                entityPM.ChequeNumber = entityPM.ChequeNumber == null?  bankAccount.ChequeCounter.ToString() : entityPM.ChequeNumber;
                 entityPM.UniqueField = entityPM.ChequeNumber;
 
                 BankAccountUpdateService bankAccountUpdateService = new BankAccountUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);

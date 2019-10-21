@@ -227,6 +227,7 @@ namespace WebFreight.Web.DataProviders
 
         public string ConsolidatorName { get; set; }
         public string MainCarriageLeg2_MAWB { get; set; }
+        public string AccountManagerName { get; set; }
     }
 
     public class CommodityLine
