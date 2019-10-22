@@ -3220,7 +3220,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     journal.ApproveDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                     journal.ApprovedByUserId = theEntityPm.ApprovedByUserId;
                     journal.ChangeSetOp = ChangeSetOperation.Insert;
-                    JournalLinePM journalLine;
+
                     // Insert Journal Lines 
                     // [Debit]
                     GLAccountPM glAccount = getDebitGLAccount(theEntityPm.BillToId, theEntityPm.Tenant);

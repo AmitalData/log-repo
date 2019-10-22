@@ -331,13 +331,7 @@ export class APPaymentMenuButtonsHandler {
         }
 
         if (isValid) {
-
-         ///   if (this.EntityPM.)
-
-            this.EntityPM.SetVoided = false;
-            this.EntityPM.SetApproved = true;
-            this.EntityPM.SetCancelApproval = false;
-
+            this.entityArgs.EditComponent.ValidationErrorsList = [];
             this.GetFullAccountingSettings();
 
         }
@@ -398,9 +392,15 @@ export class APPaymentMenuButtonsHandler {
 
                 var res = myResponse.Result;
                 var fullAccountingSetting: FullAccountingSettingPM = res;
-                if (fullAccountingSetting.IsPaymentChequesActivated && this.EntityPM.ExcludeFromDeductionReport && this.EntityPM.PaymentMethodCode == "CH") {
-                    this.OpenEditPaymentChequeScreen();
-                } else {
+                if (fullAccountingSetting != null) {
+                    if (fullAccountingSetting.IsPaymentChequesActivated && this.EntityPM.ExcludeFromDeductionReport && this.EntityPM.PaymentMethodCode == "CH") {
+                        this.OpenEditPaymentChequeScreen();
+                    }
+                    else {
+                        this.ContinueSaving(null);
+                    }
+                }
+                else {
                     this.ContinueSaving(null);
                 }
             }
