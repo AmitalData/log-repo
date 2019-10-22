@@ -23,7 +23,7 @@ export class NewAgent {
     }
 
     SearchAgentTab() {
-       
+
         this.helper.WaitByIdAndFill('null_Search', "Agent");
         this.helper.WaitByIdAndClick('MaintenanceItemMTAG');
 

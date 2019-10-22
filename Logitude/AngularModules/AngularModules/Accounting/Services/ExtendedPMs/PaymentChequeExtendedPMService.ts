@@ -26,7 +26,7 @@ export class PaymentChequeExtendedPMService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/PaymentChequeViews';
     }
 
-
+    
 
     getPaymentChequeByChequeNumber(chequeNumber: string) {
 
@@ -52,6 +52,37 @@ export class PaymentChequeExtendedPMService {
                 serviceResponse.Result = entity;
 
               
+
+                return serviceResponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
+    GetPaymentChequeByPaymentIdAndChequeNumber(chequeNumber:string, paymentId: string) {
+
+
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        var callTime = new Date();
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetPaymentChequeByPaymentIdAndChequeNumber?' + 'paymentId=' + paymentId + '&chequeNo=' + chequeNumber, {
+                headers: authHeader
+            }).map(response => {
+                var pm = response.json();
+
+
+
+                var entity: PaymentChequePM;
+                if (pm) {
+                    entity = this.MapJsonToEntityPM(pm);
+                }
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = entity;
+
+
 
                 return serviceResponse;
 

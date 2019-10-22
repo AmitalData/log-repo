@@ -130,12 +130,26 @@
 
                                 <tr style="height: 30px;">
                                     <td>
-                                        <button float-start class="Button" (click)="EnableLog = !EnableLog" style="margin-right:5px;margin-left:5px;width: fit-content;">
+                                        <!-- <button float-start class="Button" (click)="EnableLog = !EnableLog" style="margin-right:5px;margin-left:5px;width: fit-content;">
                                                 <div float-start  class="circleDraw black" [class.black]="!EnableLog" [class.blink]="EnableLog"> </div>
+                                        </button> -->
+
+                                        <button float-start class="Button" (click)="EnableLog = true"
+                                            style="margin-right:5px;margin-left:5px;width: fit-content;">
+                                            <div float-start class="circleDraw"> </div>
                                         </button>
 
-                                        <div float-start>
+                                        <button float-start class="Button" (click)="EnableLog = false"
+                                            style="margin-right:5px;margin-left:5px;width: fit-content;">
+                                            <div float-start class="circleDraw black" > </div>
+                                        </button>
+
+                                        <div float-start
+                                            style="margin-right:5px;margin-left:5px;width: fit-content;">
                                             <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
+                                        </div>
+                                        <div float-start>
+                                            <IconButton [Name]="'Excel'" (click)="Export2ExcelClicked()"></IconButton>
                                         </div>
                                         <div float-start style="width: 65px;margin: 0 5px;">
                                             <button class="Button" (click)="ResetButtonClicked()">Reset</button>
@@ -156,34 +170,61 @@
 
                                 <!-- table -->
                                 <tr>
-                                    <td colspan="5" >
-                                        <div class="SimpleGridView">
-                                            <div class="SimpleGridViewHeader">
-                                                <table>
-                                                    <tr class="SimpleGridHeaderRow">
-                                                        <td style="padding-right: 5px; padding-left: 5px; width: 550px; max-width: 550px">Key</td>
-                                                        <td style="padding-right: 5px; padding-left: 5px; width: 100px; max-width: 100px"> Count</td>
-                                                        <td></td>
-                                                    </tr>
-                                                </table>
-                                            </div>
+                                    <td colspan="5" style="height: 100%;">
+                                        <div class="CellContent">
+                                            <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="Keys"
+                                                [UseVirtuallization]="true">
 
-                                            <div class="SimpleGridViewBody" >
-                                                <table>
-                                                    <tr class="SimpleGridViewRow" *ngFor="let key of CacheKeys; let i=index;">
-                                                        <td class="GridViewCell" style="width:550px;">
-                                                            {{key.Key}}
-                                                        </td>
-                                                        <td class="GridViewCell" style="width: 100px;text-align: left;">
-                                                            {{key.Count}}
-                                                        </td>
-                                                        <td></td>
+                                                <log-column [Alignment]="'right'"
+                                                    [header]="'Key'" [width]="'550'"
+                                                    [binding]="'Key'">
+                                                    <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                                                        <div class="TextTrimming" text-start>
+                                                            <span>{{item.Key}}</span>
+                                                        </div>
+                                                    </log-cell-template>
+                                                </log-column>
 
-                                                    </tr>
+                                                <log-column [Alignment]="'center'"
+                                                    [header]="'Count'" [width]="'150'"
+                                                    [binding]="'Count'">
+                                                    <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                                                        <div class="TextTrimming" [style.text-align]="'center'">
+                                                            <span>{{item.Count}}</span>
+                                                        </div>
+                                                    </log-cell-template>
+                                                </log-column>
 
-                                                </table>
-                                            </div>
+                                            </logitude-edit-grid>
+
                                         </div>
+                                        <!-- <div class="SimpleGridView">
+                                                                            <div class="SimpleGridViewHeader">
+                                                                                <table>
+                                                                                    <tr class="SimpleGridHeaderRow">
+                                                                                        <td style="padding-right: 5px; padding-left: 5px; width: 550px; max-width: 550px">Key</td>
+                                                                                        <td style="padding-right: 5px; padding-left: 5px; width: 100px; max-width: 100px"> Count</td>
+                                                                                        <td></td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </div>
+
+                                                                            <div class="SimpleGridViewBody" >
+                                                                                <table>
+                                                                                    <tr class="SimpleGridViewRow" *ngFor="let key of CacheKeys; let i=index;">
+                                                                                        <td class="GridViewCell" style="width:550px;">
+                                                                                            {{key.Key}}
+                                                                                        </td>
+                                                                                        <td class="GridViewCell" style="width: 100px;text-align: left;">
+                                                                                            {{key.Count}}
+                                                                                        </td>
+                                                                                        <td></td>
+
+                                                                                    </tr>
+
+                                                                                </table>
+                                                                            </div>
+                                                                        </div> -->
                                     </td>
                                 </tr>
 

@@ -126,7 +126,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     entityId: string;
     ViewPaymentCheque() {
 
-        this.PaymentChequePMService.getPaymentChequeByChequeNumber(this.EntityPM.ChequeOrPaymentRef).subscribe(myResult => {
+        this.PaymentChequePMService.GetPaymentChequeByPaymentIdAndChequeNumber(this.EntityPM.ChequeOrPaymentRef, this.EntityPM.Id).subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
             if (myResponse != null) {
 

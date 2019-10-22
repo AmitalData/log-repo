@@ -457,42 +457,43 @@ namespace WebFreight.Web.ReportsWebServices
                         invoiceDataProvider.NumberofPackages = myNumberofPackages;
                     }
 
-                }
-                #endregion
-
-                #region ReleasingAgent
-                string myReleasingAgentId = shipment.ReleasingAgentId;
-                string myReleasingAgentAddressId = shipment.ReleasingAgentAddressId;
-                if (!string.IsNullOrEmpty(myReleasingAgentId))
-                {
-                    Card myPartnerCard = CardRepository.GetSingleCard(myReleasingAgentId, currentTenant, true);
-
-                    if (myPartnerCard != null)
+                    #region ReleasingAgent
+                    string myReleasingAgentId = shipment.ReleasingAgentId;
+                    string myReleasingAgentAddressId = shipment.ReleasingAgentAddressId;
+                    if (!string.IsNullOrEmpty(myReleasingAgentId))
                     {
-                        invoiceDataProvider.ReleasingAgentAddress = myPartnerCard.EnglishName != null ? myPartnerCard.EnglishName + Environment.NewLine : "";
-                        invoiceDataProvider.ReleasingAgentName = myPartnerCard.EnglishName;
-                        if (!string.IsNullOrEmpty(myReleasingAgentAddressId))
+                        Card myPartnerCard = CardRepository.GetSingleCard(myReleasingAgentId, currentTenant, true);
+
+                        if (myPartnerCard != null)
                         {
-                            Address myPartnerAddress = addressRepository.GetSingleAddress(myReleasingAgentAddressId, currentTenant);
-
-                            if (myPartnerAddress != null)
+                            invoiceDataProvider.ReleasingAgentAddress = myPartnerCard.EnglishName != null ? myPartnerCard.EnglishName + Environment.NewLine : "";
+                            invoiceDataProvider.ReleasingAgentName = myPartnerCard.EnglishName;
+                            if (!string.IsNullOrEmpty(myReleasingAgentAddressId))
                             {
-                                if (myPartnerAddress.IsLocalLanguage && !string.IsNullOrEmpty(myPartnerCard.LocalName))
-                                {
-                                    invoiceDataProvider.ReleasingAgentAddress = myPartnerCard.LocalName + Environment.NewLine;
-                                }
+                                Address myPartnerAddress = addressRepository.GetSingleAddress(myReleasingAgentAddressId, currentTenant);
 
-                                invoiceDataProvider.ReleasingAgentAddress = invoiceDataProvider.ReleasingAgentAddress + DataProviders.General.GetAddress(myPartnerAddress);
-
-                                if (myPartnerAddress.PhoneNumber != null || myPartnerAddress.FaxNumber != null)
+                                if (myPartnerAddress != null)
                                 {
-                                    invoiceDataProvider.ReleasingAgentAddress = invoiceDataProvider.ReleasingAgentAddress + Environment.NewLine + (myPartnerAddress.PhoneNumber != null ? "Tel: " + myPartnerAddress.PhoneNumber + " " : "") + (myPartnerAddress.FaxNumber != null ? "Fax: " + myPartnerAddress.FaxNumber + " " : "");
+                                    if (myPartnerAddress.IsLocalLanguage && !string.IsNullOrEmpty(myPartnerCard.LocalName))
+                                    {
+                                        invoiceDataProvider.ReleasingAgentAddress = myPartnerCard.LocalName + Environment.NewLine;
+                                    }
+
+                                    invoiceDataProvider.ReleasingAgentAddress = invoiceDataProvider.ReleasingAgentAddress + DataProviders.General.GetAddress(myPartnerAddress);
+
+                                    if (myPartnerAddress.PhoneNumber != null || myPartnerAddress.FaxNumber != null)
+                                    {
+                                        invoiceDataProvider.ReleasingAgentAddress = invoiceDataProvider.ReleasingAgentAddress + Environment.NewLine + (myPartnerAddress.PhoneNumber != null ? "Tel: " + myPartnerAddress.PhoneNumber + " " : "") + (myPartnerAddress.FaxNumber != null ? "Fax: " + myPartnerAddress.FaxNumber + " " : "");
+                                    }
                                 }
                             }
                         }
                     }
+                    #endregion
                 }
-                #endregion 
+                #endregion
+
+
 
                 #region InvoiceLines
 
@@ -506,7 +507,7 @@ namespace WebFreight.Web.ReportsWebServices
                     Currency foreigncurrency = (from f in commonContext.Currencies where f.Id == invoiceline.ForiegnCurrencyId select f).FirstOrDefault();
                     ChargesType chargesType = (from c in commonContext.ChargesTypes where c.Id == invoiceline.ChargesTypeId select c).FirstOrDefault();
                     VatType vatType = (from v in commonContext.VatTypes where v.Id == invoiceline.VatTypeId select v).FirstOrDefault();
-                    ShipmentPayable payable = payableRepository.GetSingleShipmentPayable(invoiceline.EntityPayableId);
+                    
 
                     reportinvoiceline.ChargeTypeCode = chargesType == null ? "" : chargesType.Code;
                     reportinvoiceline.ChargeTypeName = invoiceline.Description != null ? invoiceline.Description : "";
@@ -514,12 +515,19 @@ namespace WebFreight.Web.ReportsWebServices
                     reportinvoiceline.VatTypePercentage = invoiceline.VatPercentage;
                     reportinvoiceline.ForeignCurrency = foreigncurrency != null ? foreigncurrency.Code : "";
 
-                    reportinvoiceline.ExpectedAmount = payable == null ? 0 : payable.ExpectedAmount;
-                    reportinvoiceline.OtherInvoicesAmount = payable == null ? 0 : (payable.AccountedAmount - invoiceline.ForiegnCurrencyAmount);
+
                     reportinvoiceline.ForeignAmount = MethodHelper.Round(invoiceline.ForiegnCurrencyAmount, 2);
                     reportinvoiceline.InvoiceAmount = MethodHelper.Round(invoiceline.InvoiceCurrencyAmount, 2);
-                    reportinvoiceline.OpenAmount = payable == null ? 0 : payable.OpenAmount;
+                   
                     reportinvoiceline.Notes = invoiceline.Notes != null ? invoiceline.Notes : "";
+
+                    if(invoiceline.EntityPayableId != null)
+                    {
+                        ShipmentPayable payable = payableRepository.GetSingleShipmentPayable(invoiceline.EntityPayableId);
+                        reportinvoiceline.ExpectedAmount = payable == null ? 0 : payable.ExpectedAmount;
+                        reportinvoiceline.OtherInvoicesAmount = payable == null ? 0 : (payable.AccountedAmount - invoiceline.ForiegnCurrencyAmount);
+                        reportinvoiceline.OpenAmount = payable == null ? 0 : payable.OpenAmount;
+                    }
 
                     invoiceDataProvider.APInvoiceLinesList.Add(reportinvoiceline);
                 }
