@@ -228,9 +228,9 @@ namespace Logitude.Accounting.BL.CoreBL
                         if (card != null && card.PartnerTypeId == PartnerTypeValues.Vendor)
                             VatNumber = card.VatNumber;
                       
-                        IQueryable<LedgerTransaction> transactionsByJournal = ledgerTransactionRepository.GetByJournalAndReference1(a.JournalId, a.Reference, tenant);
-                        decimal transactionSum = transactionsByJournal.Sum(d => d.LocalAmountCredit);
-                        //var transactionSum = ledgerTransactons.Where(d => d.JournalId == a.JournalId && d.Reference == a.Reference).Sum(d => d.LocalAmountCredit);
+                        //IQueryable<LedgerTransaction> transactionsByJournal = ledgerTransactionRepository.GetByJournalAndReference1(a.JournalId, a.Reference, tenant);
+                        //decimal transactionSum = transactionsByJournal.Sum(d => d.LocalAmountCredit);
+                        var transactionSum = ledgerTransactons.Where(d => d.JournalId == a.JournalId && d.Reference == a.Reference).Sum(d => d.LocalAmountCredit);
                         InputInvoiceAmount = transactionSum - InputVatAmount;
                     }
                     
