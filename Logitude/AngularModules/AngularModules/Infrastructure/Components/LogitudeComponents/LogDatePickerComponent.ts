@@ -1713,6 +1713,7 @@ export class LogDatePickerComponent
                 );
             }
             this.SetValidity(false, errorMessage);
+            this.DataContext[this.ObjectFieldName] = null;
         } else {
             this.SetValidity(true, null);
         }
