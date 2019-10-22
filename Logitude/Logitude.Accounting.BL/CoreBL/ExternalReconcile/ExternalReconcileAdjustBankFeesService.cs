@@ -59,26 +59,31 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             {
                 screenNotes = "התאמת דף בנק (עמלה)";
             }
-            _ErrorList = new List<string>();
-            var listOfpageLineList = _ExternalReconcileDataProvider.GetReconcileExternalPageLineList(tenant, reconcileExternalPageLineIdList);
-
-            var reconcileExternalPageIdList =listOfpageLineList.Select(r => r.ReconcileExternalPageId).Distinct().ToList();
-            var listOfpageList = _ExternalReconcileDataProvider.GetReconcileExternalPageList(tenant, reconcileExternalPageIdList);
-            Validate(tenant, reconcileExternalPageLineIdList, adjustGLAccountId, listOfpageLineList, listOfpageList);
-            if (_ErrorList.Count()>0)
-            {
-                throw new Exception(string.Join(Environment.NewLine, _ErrorList.ToArray()));
-            }
-
+            List<ReconcileExternalPageLineList> listOfpageLineList;
+            List<ReconcileExternalPageList> listOfpageList;
+            PrapareAndValid(tenant, reconcileExternalPageLineIdList, adjustGLAccountId, out listOfpageLineList, out listOfpageList);
 
             string accountingCurrencyId = _ExternalReconcileDataProvider.GetaccountingCurrencyId(tenant);
 
-            var listOfAccId =listOfpageList.Select(r => r.GLAccountId).ToList();
+            var listOfAccId = listOfpageList.Select(r => r.GLAccountId).ToList();
 
             List<GLAccountList> ListOfGLAccountList = _ExternalReconcileDataProvider.GetListOfGLAccountList(tenant, listOfAccId);
             var bankGLAccountList = ListOfGLAccountList.First();//must have 
-            CreateJournal(tenant, adjustGLAccountId, listOfpageLineList, listOfpageList,  bankGLAccountList, accountingCurrencyId, screenNotes);
+            CreateJournal(tenant, adjustGLAccountId, listOfpageLineList, listOfpageList, bankGLAccountList, accountingCurrencyId, screenNotes);
 
+        }
+
+        public void PrapareAndValid(int tenant, List<string> reconcileExternalPageLineIdList, string adjustGLAccountId, out List<ReconcileExternalPageLineList> listOfpageLineList, out List<ReconcileExternalPageList> listOfpageList)
+        {
+            _ErrorList = new List<string>();
+            listOfpageLineList = _ExternalReconcileDataProvider.GetReconcileExternalPageLineList(tenant, reconcileExternalPageLineIdList);
+            var reconcileExternalPageIdList = listOfpageLineList.Select(r => r.ReconcileExternalPageId).Distinct().ToList();
+            listOfpageList = _ExternalReconcileDataProvider.GetReconcileExternalPageList(tenant, reconcileExternalPageIdList);
+            Validate(tenant, reconcileExternalPageLineIdList, adjustGLAccountId, listOfpageLineList, listOfpageList);
+            if (_ErrorList.Count() > 0)
+            {
+                throw new Exception(string.Join(Environment.NewLine, _ErrorList.ToArray()));
+            }
         }
 
         private void CreateJournal(int tenant, string adjustGLAccountId, List<Data.EntityLists.ReconcileExternalPageLineList> listOfpageLineList, List<Data.EntityLists.ReconcileExternalPageList> listOfpageList, GLAccountList bankGLAccountList, string accountingCurrencyId, string screenNotes)

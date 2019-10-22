@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.Validators;
 using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
 using Simplog.Server.Infrastructure;
@@ -42,20 +43,47 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             {
                 return;//nothing to do !!!
             }
-            if (_JournalPM.JournalExternalReconciles.Count > 1)
-            {
-                throw new Exception("Sorry meanwhile only one Adjust Allowed !!!");
-            }
-
-
-            
-
-
-            var myJournalExternalReconcile = _JournalPM.JournalExternalReconciles[0];//meanwhile only one Adjust Allowed !!!
-
 
             this.ExternalReconciliationList = new List<ExternalReconciliationPM>();
 
+            if (_JournalPM.JournalExternalReconciles.Any(r => string.IsNullOrWhiteSpace(r.LedgerTransactionId)))
+            {
+                AdjustBankFees();
+            }
+            else
+            {
+                MoveBankCheckFromTransfer();
+            }
+        }
+        private void AdjustBankFees()
+        {
+            List<LedgerTransactionPM> myOldTransToReconcile = GetOldTransToReconcileThrowIfNotInProgress();
+
+            if (!_JournalPM.JournalExternalReconciles.TrueForAll(r => string.IsNullOrWhiteSpace(r.LedgerTransactionId)))
+            {
+                throw new Exception("in all JournalExternalReconciles LedgerTransactionId must be empty   ");
+            }
+            List<string> reconcileExternalPageLineIdList = _JournalPM.JournalExternalReconciles.Select(r => r.ReconcileExternalPageLineId).ToList();
+
+            var myExternalReconcileAdjustBankFeesService = new ExternalReconcileAdjustBankFeesService();
+            myExternalReconcileAdjustBankFeesService.MustInit(_ExternalReconcileDataProvider);
+            List<ReconcileExternalPageLineList> listOfpageLineList;
+            List<ReconcileExternalPageList> listOfpageList;
+            myExternalReconcileAdjustBankFeesService.PrapareAndValid(tenant, reconcileExternalPageLineIdList, adjustGLAccountId, out listOfpageLineList, out listOfpageList);
+
+
+
+        }
+
+        private void AllReconcileExternalPageLineIdMustinthesameBank()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void MoveBankCheckFromTransfer()
+        {
+            var myJournalExternalReconcile = _JournalPM.JournalExternalReconciles[0];//meanwhile only one Adjust Allowed !!!
+            
             List<LedgerTransactionPM> myOldTransToReconcile = GetOldTransToReconcileThrowIfNotInProgress();
 
 
@@ -79,10 +107,9 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 
 
             LedgerTransactionPM myNewLedgerTransactionBankGLAccountInCredit = GetTheNewLedgerTransactionBankGLAccountInCredit(bankAccountFromTransfer);
-            AddExReconcile_DebitPage_CreditGLAccount(myJournalExternalReconcile,myNewLedgerTransactionBankGLAccountInCredit);
+            AddExReconcile_DebitPage_CreditGLAccount(myJournalExternalReconcile, myNewLedgerTransactionBankGLAccountInCredit);
         }
 
-        
 
         private void AddExReconcile_DebitPage_CreditGLAccount(JournalExternalReconcilePM myJournalExternalReconcile, LedgerTransactionPM myNewLedgerTransactionBankGLAccountInCredit)
         {
@@ -125,6 +152,10 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
         {
             var theReconcileAgainstLTranIdList = _JournalPM.JournalExternalReconciles.Select(r => r.LedgerTransactionId).ToList();
             List<LedgerTransactionPM> myOldTransToReconcile = _ExternalReconcileDataProvider.GetLedgerTransactionList(theReconcileAgainstLTranIdList, _JournalPM.Tenant);
+            if (!myOldTransToReconcile.Any())
+            {
+                throw new Exception("!myOldTransToReconcile.Any()");
+            }
             if (myOldTransToReconcile.Any(r => !r.InProgressExternalReconcile))
             {
                 throw new Exception("_JournalPM.JournalReconciles have  myOldTransToReconcile.Any( r=> !r.InProgressExternalReconcile) ");
