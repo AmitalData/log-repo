@@ -37,8 +37,8 @@ cmd /c call npm run e2e -- --params.Env="prod_1" --params.Team="islam" --suite=l
  CALL :CheckError "NewUser"
  
 --NewShipper--
-cmd /c call npm run e2e -- --params.Env="prod_1" --params.Team="islam" --suite=login,NewShipper>D:\E2ETeamIslamReport\Report.log
- CALL :CheckError "NewShipper"
+rem cmd /c call npm run e2e -- --params.Env="prod_1" --params.Team="islam" --suite=login,NewShipper>D:\E2ETeamIslamReport\Report.log
+rem  CALL :CheckError "NewShipper"
  
 
 )
