@@ -2485,6 +2485,7 @@ export class LogDatePickerComponent
                 this.uiProperty.ValidValue = validValue;
                 this.uiProperty.ValidationError = errorMessage;
                 if (!validValue) {
+                    
                     this.DatePickerInputDivStyle = {
                         border: "1px solid #ff0000"
                     };
