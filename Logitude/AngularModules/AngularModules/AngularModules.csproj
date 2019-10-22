@@ -271,9 +271,6 @@
     <Content Include="CRMModules\CRMActivity\Components\NewEntity\NewTaskComponent.html" />
     <Content Include="Customs\Components\ListTemplates\EndDateComponent.html" />
     <Content Include="Customs\Components\ListTemplates\SupplierInvoiceItemListTemplate.html" />
-    <Content Include="dist\out-tsc\Shipment\EntityPMs\ShipmentPickUpDeliveryPackagePM.js" />
-    <Content Include="dist\out-tsc\Shipment\Services\StandardLists\ShipmentComputedFieldListService.js" />
-    <Content Include="dist\out-tsc\Shipment\Services\StandardPMs\ShipmentComputedFieldPMService.js" />
     <Content Include="e2e\dist\out-tsc\Shipment\EntityPMs\ShipmentPickUpDeliveryPackagePM.js" />
     <Content Include="Images\Buttons\downarrow.png" />
     <Content Include="Images\Buttons\uparrow.png" />
@@ -6720,9 +6717,6 @@
     <Content Include="e2e\LogBox\tsconfig.e2e.json" />
     <Content Include="e2e\.vscode\launch.json" />
     <Content Include="InfrastructureModules.zip" />
-    <Content Include="dist\out-tsc\Shipment\EntityPMs\ShipmentPickUpDeliveryPackagePM.js.map" />
-    <Content Include="dist\out-tsc\Shipment\Services\StandardLists\ShipmentComputedFieldListService.js.map" />
-    <Content Include="dist\out-tsc\Shipment\Services\StandardPMs\ShipmentComputedFieldPMService.js.map" />
     <Content Include="e2e\Testing Scenarios\Production\Team Ayman\ProtractorProdStaging.bat" />
     <Content Include="e2e\Testing Scenarios\Production\Team Ayman\ProtractorProdFullCollection.bat" />
   </ItemGroup>

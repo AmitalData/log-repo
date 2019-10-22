@@ -43,6 +43,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void OnUpdating(GLAccountWithholdingTaxPM entityPM)
         {
+            entityPM.FromDate = new DateTime(entityPM.FromDate.Year, entityPM.FromDate.Month, entityPM.FromDate.Day, 00, 00, 00);
+            entityPM.ToDate = new DateTime(entityPM.ToDate.Year, entityPM.ToDate.Month, entityPM.ToDate.Day, 00, 00, 00);
             //    var currentContextTag = entityPM.CurrentContextTag ?? "";
             //    if (currentContextTag.ToString() == RaiseEventWBLKConst)
             //        {

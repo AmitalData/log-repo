@@ -428,113 +428,186 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             int count = 0;
             ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(tenant);
+            MeasurementRepository measurementRepository = new MeasurementRepository(tenant);
             ChargesType chargesType = null;
+            Measurement measurement = null;
+
             if (!string.IsNullOrEmpty(tariff.Surcharge1Id))
             {
-                count = 2;
+                count = 1;
                 chargesType = chargesTypeRepository.GetSingleChargesType(tariff.Surcharge1Id, tenant);
-                if (chargesType != null)
+                measurement = measurementRepository.GetSingleMeasurement(tariff.Surcharge1UOM, tenant);
+
+                if (chargesType != null && measurement != null)
                 {
-                    table.Columns.Add("Min " + chargesType.Code);
+                    if (measurement.Code != "FIXD")
+                    {
+                        count++;
+                        table.Columns.Add("Min " + chargesType.Code);
+                    }
+
                     table.Columns.Add(chargesType.Code);
                 }
             }
 
             if (!string.IsNullOrEmpty(tariff.Surcharge2Id))
             {
-                count = 4;
+                count++;
                 chargesType = chargesTypeRepository.GetSingleChargesType(tariff.Surcharge2Id, tenant);
-                if (chargesType != null)
+                measurement = measurementRepository.GetSingleMeasurement(tariff.Surcharge2UOM, tenant);
+
+                if (chargesType != null && measurement != null)
                 {
-                    table.Columns.Add("Min " + chargesType.Code);
+                    if (measurement.Code != "FIXD")
+                    {
+                        count++;
+                        table.Columns.Add("Min " + chargesType.Code);
+                    }
+
                     table.Columns.Add(chargesType.Code);
                 }
             }
 
             if (!string.IsNullOrEmpty(tariff.Surcharge3Id))
             {
-                count = 6;
+                count++;
                 chargesType = chargesTypeRepository.GetSingleChargesType(tariff.Surcharge3Id, tenant);
-                if (chargesType != null)
+                measurement = measurementRepository.GetSingleMeasurement(tariff.Surcharge3UOM, tenant);
+
+                if (chargesType != null && measurement != null)
                 {
-                    table.Columns.Add("Min " + chargesType.Code);
+                    if (measurement.Code != "FIXD")
+                    {
+                        count++;
+                        table.Columns.Add("Min " + chargesType.Code);
+                    }
+
                     table.Columns.Add(chargesType.Code);
                 }
             }
 
             if (!string.IsNullOrEmpty(tariff.Surcharge4Id))
             {
-                count = 8;
+                count++;
                 chargesType = chargesTypeRepository.GetSingleChargesType(tariff.Surcharge4Id, tenant);
-                if (chargesType != null)
+                measurement = measurementRepository.GetSingleMeasurement(tariff.Surcharge4UOM, tenant);
+
+                if (chargesType != null && measurement != null)
                 {
-                    table.Columns.Add("Min " + chargesType.Code);
+                    if (measurement.Code != "FIXD")
+                    {
+                        count++;
+                        table.Columns.Add("Min " + chargesType.Code);
+                    }
+
                     table.Columns.Add(chargesType.Code);
                 }
             }
 
             if (!string.IsNullOrEmpty(tariff.Surcharge5Id))
             {
-                count = 10;
+                count++;
                 chargesType = chargesTypeRepository.GetSingleChargesType(tariff.Surcharge5Id, tenant);
-                if (chargesType != null)
+                measurement = measurementRepository.GetSingleMeasurement(tariff.Surcharge5UOM, tenant);
+
+                if (chargesType != null && measurement != null)
                 {
-                    table.Columns.Add("Min " + chargesType.Code);
+                    if (measurement.Code != "FIXD")
+                    {
+                        count++;
+                        table.Columns.Add("Min " + chargesType.Code);
+                    }
+
                     table.Columns.Add(chargesType.Code);
                 }
             }
 
             if (!string.IsNullOrEmpty(tariff.Surcharge6Id))
             {
-                count = 12;
+                count++;
                 chargesType = chargesTypeRepository.GetSingleChargesType(tariff.Surcharge6Id, tenant);
-                if (chargesType != null)
+                measurement = measurementRepository.GetSingleMeasurement(tariff.Surcharge6UOM, tenant);
+
+                if (chargesType != null && measurement != null)
                 {
-                    table.Columns.Add("Min " + chargesType.Code);
+                    if (measurement.Code != "FIXD")
+                    {
+                        count++;
+                        table.Columns.Add("Min " + chargesType.Code);
+                    }
+
                     table.Columns.Add(chargesType.Code);
                 }
             }
 
             if (!string.IsNullOrEmpty(tariff.Surcharge7Id))
             {
-                count = 14;
+                count++;
                 chargesType = chargesTypeRepository.GetSingleChargesType(tariff.Surcharge7Id, tenant);
-                if (chargesType != null)
+                measurement = measurementRepository.GetSingleMeasurement(tariff.Surcharge7UOM, tenant);
+
+                if (chargesType != null && measurement != null)
                 {
-                    table.Columns.Add("Min " + chargesType.Code);
+                    if (measurement.Code != "FIXD")
+                    {
+                        count++;
+                        table.Columns.Add("Min " + chargesType.Code);
+                    }
+
                     table.Columns.Add(chargesType.Code);
                 }
             }
 
             if (!string.IsNullOrEmpty(tariff.Surcharge8Id))
             {
-                count = 16;
+                count++;
                 chargesType = chargesTypeRepository.GetSingleChargesType(tariff.Surcharge8Id, tenant);
-                if (chargesType != null)
+                measurement = measurementRepository.GetSingleMeasurement(tariff.Surcharge8UOM, tenant);
+
+                if (chargesType != null && measurement != null)
                 {
-                    table.Columns.Add("Min " + chargesType.Code);
+                    if (measurement.Code != "FIXD")
+                    {
+                        count++;
+                        table.Columns.Add("Min " + chargesType.Code);
+                    }
+
                     table.Columns.Add(chargesType.Code);
                 }
             }
 
             if (!string.IsNullOrEmpty(tariff.Surcharge9Id))
             {
-                count = 18;
+                count++;
                 chargesType = chargesTypeRepository.GetSingleChargesType(tariff.Surcharge9Id, tenant);
-                if (chargesType != null)
+                measurement = measurementRepository.GetSingleMeasurement(tariff.Surcharge9UOM, tenant);
+
+                if (chargesType != null && measurement != null)
                 {
-                    table.Columns.Add("Min " + chargesType.Code);
+                    if (measurement.Code != "FIXD")
+                    {
+                        count++;
+                        table.Columns.Add("Min " + chargesType.Code);
+                    }
+
                     table.Columns.Add(chargesType.Code);
                 }
             }
 
             if (!string.IsNullOrEmpty(tariff.Surcharge10Id))
             {
-                count = 20;
+                count++;
                 chargesType = chargesTypeRepository.GetSingleChargesType(tariff.Surcharge10Id, tenant);
-                if (chargesType != null)
+                measurement = measurementRepository.GetSingleMeasurement(tariff.Surcharge10UOM, tenant);
+
+                if (chargesType != null && measurement != null)
                 {
-                    table.Columns.Add("Min " + chargesType.Code);
+                    if (measurement.Code != "FIXD")
+                    {
+                        count++;
+                        table.Columns.Add("Min " + chargesType.Code);
+                    }
+
                     table.Columns.Add(chargesType.Code);
                 }
             }
@@ -544,51 +617,82 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             #region range
             string range = "A1:E1";
-            if (count == 2)
+            if (count == 1)
+            {
+                range = "A1:F1";
+            }
+            else if (count == 2)
             {
                 range = "A1:G1";
             }
-
+            else if (count == 3)
+            {
+                range = "A1:H1";
+            }
             else if (count == 4)
             {
                 range = "A1:I1";
             }
-
+            else if (count == 5)
+            {
+                range = "A1:J1";
+            }
             else if (count == 6)
             {
                 range = "A1:K1";
             }
-
+            else if (count == 7)
+            {
+                range = "A1:L1";
+            }
             else if (count == 8)
             {
                 range = "A1:M1";
             }
-
+            else if (count == 9)
+            {
+                range = "A1:N1";
+            }
             else if (count == 10)
             {
                 range = "A1:O1";
             }
-
+            else if (count == 11)
+            {
+                range = "A1:P1";
+            }
             else if (count == 12)
             {
                 range = "A1:Q1";
             }
-
+            else if (count == 13)
+            {
+                range = "A1:R1";
+            }
             else if (count == 14)
             {
                 range = "A1:S1";
             }
-
+            else if (count == 15)
+            {
+                range = "A1:T1";
+            }
             else if (count == 16)
             {
                 range = "A1:U1";
             }
-
+            else if (count == 17)
+            {
+                range = "A1:V1";
+            }
             else if (count == 18)
             {
                 range = "A1:W1";
             }
-
+            else if (count == 19)
+            {
+                range = "A1:X1";
+            }
             else if (count == 20)
             {
                 range = "A1:Y1";
@@ -607,104 +711,106 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         row[2] = item.CurrencyCode ?? null;
                         row[3] = item.StartDate ?? null;
 
+                        int rowIndex = 4;
+
                         if (item.Surcharge1MinPrice.HasValue)
                         {
-                            row[4] = item.Surcharge1MinPrice ?? null;
+                            row[rowIndex++] = item.Surcharge1MinPrice ?? null;
                         }
 
                         if (item.Surcharge1Price.HasValue)
                         {
-                            row[5] = item.Surcharge1Price ?? null;
+                            row[rowIndex++] = item.Surcharge1Price ?? null;
                         }
 
                         if (item.Surcharge2MinPrice.HasValue)
                         {
-                            row[6] = item.Surcharge2MinPrice ?? null;
+                            row[rowIndex++] = item.Surcharge2MinPrice ?? null;
                         }
 
                         if (item.Surcharge2Price.HasValue)
                         {
-                            row[7] = item.Surcharge2Price ?? null;
+                            row[rowIndex++] = item.Surcharge2Price ?? null;
                         }
 
                         if (item.Surcharge3MinPrice.HasValue)
                         {
-                            row[8] = item.Surcharge3MinPrice ?? null;
+                            row[rowIndex++] = item.Surcharge3MinPrice ?? null;
                         }
 
                         if (item.Surcharge3Price.HasValue)
                         {
-                            row[9] = item.Surcharge3Price ?? null;
+                            row[rowIndex++] = item.Surcharge3Price ?? null;
                         }
 
                         if (item.Surcharge4MinPrice.HasValue)
                         {
-                            row[10] = item.Surcharge4MinPrice ?? null;
+                            row[rowIndex++] = item.Surcharge4MinPrice ?? null;
                         }
 
                         if (item.Surcharge4Price.HasValue)
                         {
-                            row[11] = item.Surcharge4Price ?? null;
+                            row[rowIndex++] = item.Surcharge4Price ?? null;
                         }
 
                         if (item.Surcharge5MinPrice.HasValue)
                         {
-                            row[12] = item.Surcharge5MinPrice ?? null;
+                            row[rowIndex++] = item.Surcharge5MinPrice ?? null;
                         }
 
                         if (item.Surcharge5Price.HasValue)
                         {
-                            row[13] = item.Surcharge5Price ?? null;
+                            row[rowIndex++] = item.Surcharge5Price ?? null;
                         }
 
                         if (item.Surcharge6MinPrice.HasValue)
                         {
-                            row[14] = item.Surcharge6MinPrice ?? null;
+                            row[rowIndex++] = item.Surcharge6MinPrice ?? null;
                         }
 
                         if (item.Surcharge6Price.HasValue)
                         {
-                            row[15] = item.Surcharge6Price ?? null;
+                            row[rowIndex++] = item.Surcharge6Price ?? null;
                         }
 
                         if (item.Surcharge7MinPrice.HasValue)
                         {
-                            row[16] = item.Surcharge7MinPrice ?? null;
+                            row[rowIndex++] = item.Surcharge7MinPrice ?? null;
                         }
 
                         if (item.Surcharge7Price.HasValue)
                         {
-                            row[17] = item.Surcharge7Price ?? null;
+                            row[rowIndex++] = item.Surcharge7Price ?? null;
                         }
 
                         if (item.Surcharge8MinPrice.HasValue)
                         {
-                            row[18] = item.Surcharge8MinPrice ?? null;
+                            row[rowIndex++] = item.Surcharge8MinPrice ?? null;
                         }
 
                         if (item.Surcharge8Price.HasValue)
                         {
-                            row[19] = item.Surcharge8Price ?? null;
+                            row[rowIndex++] = item.Surcharge8Price ?? null;
                         }
 
                         if (item.Surcharge9MinPrice.HasValue)
                         {
-                            row[20] = item.Surcharge9MinPrice ?? null;
+                            row[rowIndex++] = item.Surcharge9MinPrice ?? null;
                         }
 
                         if (item.Surcharge9Price.HasValue)
                         {
-                            row[21] = item.Surcharge9Price ?? null;
+                            row[rowIndex++] = item.Surcharge9Price ?? null;
                         }
 
                         if (item.Surcharge10MinPrice.HasValue)
                         {
-                            row[22] = item.Surcharge10Price ?? null;
+                            row[rowIndex++] = item.Surcharge10Price ?? null;
                         }
 
                         if (item.Surcharge10MinPrice.HasValue)
                         {
-                            row[23] = item.Surcharge10Price ?? null;
+                            row[rowIndex++] = item.Surcharge10Price ?? null;
                         }
 
                         row[count + 4] = item.Notes ?? null;
@@ -946,6 +1052,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 String[] rowData = new String[sheet.Columns.Count() - 1];
                 ExcelTariffLines tariffLine = new ExcelTariffLines();
                 tariffLine.Index = rowIndex;
+                var rowDataLength = rowData.Length;
                 var StepLength = rowData.Length;
                 if (filter != null && !string.IsNullOrEmpty(filter.PriceSteps))
                 {
@@ -1008,7 +1115,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     tariffLine.ToPortText = this.TrimTo_20(rowData[1]);
                 }
 
-                if (StepLength > 2)
+                if (StepLength > 2 && rowDataLength > 2)
                 {
                     if (this.IsNumber(rowData[2]))
                     {
@@ -1030,7 +1137,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (StepLength > 3)
+                if (StepLength > 3 && rowDataLength > 3)
                 {
                     if (this.IsNumber(rowData[3]))
                     {
@@ -1052,7 +1159,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (StepLength > 4)
+                if (StepLength > 4 && rowDataLength > 4)
                 {
                     if (this.IsNumber(rowData[4]))
                     {
@@ -1074,7 +1181,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (StepLength > 5)
+                if (StepLength > 5 && rowDataLength > 5)
                 {
                     if (this.IsNumber(rowData[5]))
                     {
@@ -1096,7 +1203,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (StepLength > 6)
+                if (StepLength > 6 && rowDataLength > 6)
                 {
                     if (this.IsNumber(rowData[6]))
                     {
@@ -1118,7 +1225,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (StepLength > 7)
+                if (StepLength > 7 && rowDataLength > 7)
                 {
                     if (this.IsNumber(rowData[7]))
                     {
@@ -1140,7 +1247,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (StepLength > 8)
+                if (StepLength > 8 && rowDataLength > 8)
                 {
                     if (this.IsNumber(rowData[8]))
                     {
@@ -1162,7 +1269,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (StepLength > 9)
+                if (StepLength > 9 && rowDataLength > 9)
                 {
                     if (this.IsNumber(rowData[9]))
                     {
@@ -1184,7 +1291,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (StepLength > 10)
+                if (StepLength > 10 && rowDataLength > 10)
                 {
                     if (this.IsNumber(rowData[10]))
                     {
