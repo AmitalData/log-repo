@@ -499,9 +499,23 @@
                                                                                                 <td>
                                                                                                     <div></div>
                                                                                                 </td>
-                                                                                                <td style="float:right;width:200px;height:100%" (click)="PriceClick(item)">
-                                                                                                    <p style="float:right;padding-top:12px;font-size:small" class="hyperlink">{{item.Price  | NumbersPipe:'N2'}} {{item.CurrencyCode}}</p>
+                                                                                                <td style="float:right;height:100%;padding-top:12px;">
+                                                                                                    <table>
+                                                                                                        <tr>
+
+                                                                                                            <td style="width:100px;" (click)="PriceClick(item)">
+                                                                                                                <p style="float:right;font-size:small" class="hyperlink">{{item.Price  | NumbersPipe:'N2'}} {{item.CurrencyCode}}</p>
+                                                                                                            </td>
+                                                                                                            <td style="width:3px;">
+                                                                                                                <div></div>
+                                                                                                            </td>
+                                                                                                            <td style="width:18px;">
+                                                                                                                <img *ngIf="item.IsMinIconVisible" src="./Images/CellIcons/M-icon.png" style="display: block; margin: auto; width: 16px; height: 16px;" [attr.title]="'Min Price'" />
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                    </table>
                                                                                                 </td>
+                                                                                                
                                                                                                 <td style="width:10px">
                                                                                                     <div></div>
                                                                                                 </td>
@@ -557,11 +571,24 @@
                                                                                                 <td style="font-size:small">
                                                                                                     {{surcharge.Name}}
                                                                                                 </td>
-                                                                                                <td style="width:100px;float:right">
-                                                                                                    <div style="float:right;font-size:small;margin-right:10px">
-                                                                                                        {{surcharge.Price  | NumbersPipe:'N2'}}
-                                                                                                    </div>
+                                                                                                <td style="float:right">
+                                                                                                    <table>
+                                                                                                        <tr>
+                                                                                                            <td style="width:100px;">
+                                                                                                                <div style="float:right;font-size:small;margin-right:10px">
+                                                                                                                    {{surcharge.Price  | NumbersPipe:'N2'}}
+                                                                                                                </div>
+                                                                                                            </td>
+                                                                                                            <td style="width:3px;">
+                                                                                                                <div></div>
+                                                                                                            </td>
+                                                                                                            <td  style="width: 18px;">
+                                                                                                                <img *ngIf="surcharge.IsMinIconVisible" src="./Images/CellIcons/M-icon.png" style="display: block; margin: auto; width: 16px; height: 16px;" [attr.title]="'Min Price'" />
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                    </table>
                                                                                                 </td>
+                                                                                              
                                                                                             </tr>
                                                                                             <tr style="height:1px;background-color:#D1D1D1">
                                                                                                 <td colspan="3"></td>

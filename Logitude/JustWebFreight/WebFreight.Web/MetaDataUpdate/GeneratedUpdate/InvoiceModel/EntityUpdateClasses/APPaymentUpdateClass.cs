@@ -3890,7 +3890,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						HasTemplate =  false,
+					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
@@ -4157,7 +4157,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
            
 	      
 
-	         Screen APPaymentAPPaymentFullACCHeaderScreenScreen2 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "APPayment.HeaderScreen", Name = "APPayment.FullACCHeaderScreen", ObjectTableId = APPaymentObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 1, IsReadOnly = false }, screensRepository, tenantScreens);
+	         Screen APPaymentAPPaymentFullACCHeaderScreenScreen2 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "APPayment.FullACCHeaderScreen", Name = "APPayment.FullACCHeaderScreen", ObjectTableId = APPaymentObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 1, IsReadOnly = false }, screensRepository, tenantScreens);
       
             ScreenField APPaymentAPPaymentFullACCHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = APPaymentObjectFields.Where(d => d.FieldName == "PaymentNo").FirstOrDefault().Id, ScreenId = APPaymentAPPaymentFullACCHeaderScreenScreen2.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
@@ -4166,9 +4166,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
             ScreenField APPaymentAPPaymentFullACCHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = APPaymentObjectFields.Where(d => d.FieldName == "StatusName").FirstOrDefault().Id, ScreenId = APPaymentAPPaymentFullACCHeaderScreenScreen2.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
             ScreenField APPaymentAPPaymentFullACCHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = APPaymentObjectFields.Where(d => d.FieldName == "JournalNumber").FirstOrDefault().Id, ScreenId = APPaymentAPPaymentFullACCHeaderScreenScreen2.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
-		    APPaymentObjectTable.HeaderScreenId = APPaymentAPPaymentFullACCHeaderScreenScreen2.Id;
-	   		  
+           
 
 	    }
 

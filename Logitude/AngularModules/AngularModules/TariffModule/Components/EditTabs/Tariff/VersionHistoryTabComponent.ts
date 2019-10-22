@@ -258,6 +258,17 @@ export class VersionHistoryTabComponent implements OnDestroy {
     public Surcharge9PriceVisibility: boolean;
     public Surcharge10PriceVisibility: boolean;
 
+    public Surcharge1MinPriceVisibility: boolean;
+    public Surcharge2MinPriceVisibility: boolean;
+    public Surcharge3MinPriceVisibility: boolean;
+    public Surcharge4MinPriceVisibility: boolean;
+    public Surcharge5MinPriceVisibility: boolean;
+    public Surcharge6MinPriceVisibility: boolean;
+    public Surcharge7MinPriceVisibility: boolean;
+    public Surcharge8MinPriceVisibility: boolean;
+    public Surcharge9MinPriceVisibility: boolean;
+    public Surcharge10MinPriceVisibility: boolean;
+
     SetSurchargesLabelsAndVisibility() {        
         this.AddChargeColumn(this.EntityPM.Surcharge1Id, this.EntityPM.Surcharge1UOM, 1);
         this.AddChargeColumn(this.EntityPM.Surcharge2Id, this.EntityPM.Surcharge2UOM, 2);
@@ -275,14 +286,20 @@ export class VersionHistoryTabComponent implements OnDestroy {
             var iChargeType: ChargesTypeList = this.AllChargesTypes.filter(a => a.Id == iChargeTypeId)[0];
             if (iChargeType) {
                 var displyText: string = iChargeType.Code;               
+                var isFixed = false;
 
                 var iMeasurement: MeasurementList = this.AllMeasurements.filter(f => f.Id == iMeasurementId)[0];
                 if (iMeasurement) {
                     displyText = iChargeType.Code + " (" + iMeasurement.Code + ")";
+
+                    if (iMeasurement.Code == "FIXD") {
+                        isFixed = true;
+                    }
                 }
 
                 this['Surcharge' + index + 'PriceLabel'] = displyText;
                 this['Surcharge' + index + 'PriceVisibility'] = true;
+                this['Surcharge' + index + 'MinPriceVisibility'] = !isFixed;
                 this['Surcharge' + index + 'MinPriceLabel'] = "Min " + iChargeType.Code;
             }
         }
