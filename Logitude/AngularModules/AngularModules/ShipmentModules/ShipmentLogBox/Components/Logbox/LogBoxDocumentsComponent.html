@@ -480,18 +480,21 @@
                                             </div>
                                         </li>
                                     </ul>
-                                    <div style="float:right;width:150px;margin-right: -12px;">
+                                    <!--<div style="float:right;width:150px;margin-right: -12px;">
                                         <LogCheckBox [ObjectFieldName]="'ShowDeleted'" [DataContext]="DataContext" style="float:right;"></LogCheckBox>
                                         <label style="margin-right:-10px;">Show Cancelled ({{DeletedDocsCount}})</label>
-                                        <!--<input type="checkbox" for="Cancel" [(ngModel)]="ShowDeleted" />-->
-                                    </div>
+                                     
+                                    </div>-->
                                 </div>
                                 <div class="TabControlBody BodyBackground" style="height:calc(100% - 16px);">
                                     <!-- Category -->
                                     <div id="DocsTab" class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'CAT'">
                                         <div class="LocationDirective" LocationDirective Code="CAT" style="height:calc(100% - 6px);">
                                             <div style="overflow-y:auto;overflow-x:hidden;" class="BodyBackground MediaFill">
-
+                                                <div style="width:150px;position:absolute;top:7px;right:0;">
+                                                    <LogCheckBox [ObjectFieldName]="'ShowDeleted'" [DataContext]="DataContext" style="float:right;"></LogCheckBox>
+                                                    <label style="margin-right:-10px;">Show Cancelled ({{DeletedDocsCount}})</label> 
+                                                </div>
                                                 <div *ngFor="let item1 of externalDocs" style="padding:5px;float:left;width:100%;">
                                                     <span style="font-size:16px;border-bottom:1px solid #BCBEC0;width:100%;float:left;">{{item1.key}}</span>
                                                     <div id="{{'EmptyTicket' | IdGeneratorPipe}}" *ngFor="let item of item1.value let i = index" class="emptyticket" [class.SearchResult]="(SearchText != null && SearchText != '' && item.SearchFields.toLowerCase().indexOf(SearchText.toLowerCase()) > -1)" style="max-width:164px;margin-top:10px;">
@@ -507,7 +510,7 @@
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td style="height:1px;"> 
+                                                                <td style="height:1px;">
                                                                     <div style="margin:5px;float:right;max-width:150px;" class="TextTrimming" [title]="item.Description">
                                                                         <span *ngIf="item.IsRequested && item.Description" style="text-align:right;">{{item.Description}}</span>
                                                                     </div>
@@ -535,14 +538,14 @@
                                                             <tr>
                                                                 <td>
                                                                     <!--<div [id]="'BusyIndecator' + item.Id" class="CenterCenter" [style.width.px]="162" [style.height.px]="162" [style.display]="item.SignRequestByUserEmail ? 'block' : 'none'" style="z-index: 1;background: linear-gradient(rgba(240, 240, 240, 0.5), rgba(198, 198, 198, 0.5));">
-                                                                        <div style="margin: auto; margin-top: 40px;" [style.width.px]="25" [style.height.px]="25">
-                                                                            <img src="./Images/BusyIndicator.gif" alt="Loading..." [style.width.px]="25" [style.height.px]="25" />
-                                                                        </div>
+                            <div style="margin: auto; margin-top: 40px;" [style.width.px]="25" [style.height.px]="25">
+                                <img src="./Images/BusyIndicator.gif" alt="Loading..." [style.width.px]="25" [style.height.px]="25" />
+                            </div>
 
-                                                                        <div style="margin-top: 15px; height: 20px; width: 100%; text-align: center;">
-                                                                            <label style="font-weight:bold;color:orange;">waiting to be signed ...</label>
-                                                                        </div>
-                                                                    </div>-->
+                            <div style="margin-top: 15px; height: 20px; width: 100%; text-align: center;">
+                                <label style="font-weight:bold;color:orange;">waiting to be signed ...</label>
+                            </div>
+                        </div>-->
                                                                     <table (click)="DocumentClicked(item)">
                                                                         <tr style="max-width:162px;">
                                                                             <td style="height:40px;max-width:162px;">
@@ -550,8 +553,8 @@
                                                                                     <div style="color:white;float:left;width:80%;padding-left:3px;" class="TextTrimming" [title]="item.DocumentTypeName">
                                                                                         <span style="text-align:center;color: white;">{{item.DocumentTypeName}}</span>
                                                                                     </div>
-                                                                                    <img *ngIf="item.IsCustomReference == true" src="./Images/CustomReference.png" style="float:right;padding-right:5px;"  [title]="'Customs Reference: ' + item.CustomReference"/>
-                                                                                </div> 
+                                                                                    <img *ngIf="item.IsCustomReference == true" src="./Images/CustomReference.png" style="float:right;padding-right:5px;" [title]="'Customs Reference: ' + item.CustomReference" />
+                                                                                </div>
                                                                                 <img *ngIf="(SearchText != null && SearchText != '' && item.SearchFields.toLowerCase().indexOf(SearchText.toLowerCase()) > -1)" src="./Images/DocSearchResult.png" style="float:right;" />
                                                                             </td>
                                                                         </tr>
@@ -561,12 +564,12 @@
                                                                                     <tr>
                                                                                         <td>
                                                                                             <span style="white-space:pre-wrap;margin-left:2px;text-align:center;color: #45494A;font-size: 13px;word-wrap: break-word;" [title]="item.Description && item.Description.length > 56 ? item.Description : ''">{{item.Description && item.Description.length > 56 ? item.Description.substring(0, 54) + '...' : item.Description}}</span>
-                                                                                            
+
                                                                                         </td>
                                                                                     </tr>
                                                                                     <tr>
                                                                                         <td>
-                                                                                            <div [id]="'BusyIndecator' + item.Id" [style.display]="item.SignRequestByUserEmail ? 'block' : 'none'"> 
+                                                                                            <div [id]="'BusyIndecator' + item.Id" [style.display]="item.SignRequestByUserEmail ? 'block' : 'none'">
                                                                                                 <div style="height: 20px; width: 100%; text-align: center;">
                                                                                                     <label style="font-weight:bold;color:orange;">Signing in progress..</label>
                                                                                                     <img src="./Images/close.png" style="width:22px;height:22px;cursor:pointer;" class="ActionButtons" title="Delete" (click)="CancelSignProcess(item)" />
@@ -577,7 +580,7 @@
                                                                                     <tr>
                                                                                         <td></td>
                                                                                     </tr>
-                                                                                </table> 
+                                                                                </table>
                                                                             </td>
                                                                         </tr>
                                                                         <tr style="height:40px;max-width:162px;">
@@ -605,14 +608,15 @@
                                                                                                         <img src="./Images/BusyIndicator.gif" style="position:absolute;top:5px;left:-20px;width:30px;height:30px;" />
                                                                                                         <img src="./Images/DigitallySignedO.png" style="position:absolute;top:14px;left:-10px;" />
                                                                                                     </div>
-                                                                                                    <div style="float:left;margin:3px;" *ngIf="item.IsSharedWithForwarder"><!--*ngIf="!item.ForwarderDocumentId && item.IsSharedWithCustomer == false"-->
-                                                                                                       <img src="./Images/SharedWithAgentB.png" [title]="'Shared With ' + AgentLable" />
+                                                                                                    <div style="float:left;margin:3px;" *ngIf="item.IsSharedWithForwarder">
+                                                                                                        <!--*ngIf="!item.ForwarderDocumentId && item.IsSharedWithCustomer == false"-->
+                                                                                                        <img src="./Images/SharedWithAgentB.png" [title]="'Shared With ' + AgentLable" />
                                                                                                     </div>
                                                                                                     <div style="float:left;margin:3px;" *ngIf="item.IsSharedWithForwarder == false && item.IsSharedWithCustomer == false">
                                                                                                         <img src="./Images/ShareWithAgentGray.png" (click)="ShareWithAgent(item)" [title]="'Share With ' + AgentLable" />
                                                                                                     </div>
                                                                                                     <div style="float:left;margin:3px;" *ngIf="item.IsSharedWithForwarder == false && item.IsSharedWithCustomer == true">
-                                                                                                        <img src="./Images/CloudArrowUp.png" [title]="item.ExternalEntityReference ? 'Agent Reference : ' + item.ExternalEntityReference : ''"/>
+                                                                                                        <img src="./Images/CloudArrowUp.png" [title]="item.ExternalEntityReference ? 'Agent Reference : ' + item.ExternalEntityReference : ''" />
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </td>
@@ -626,8 +630,8 @@
                                                             </tr>
                                                         </table>
                                                         <!--<div>
-                                                            <img [id]="'Note' + item1.key + i" src="./Images/ToggleNote.png" style="position:relative;z-index:1;display:none;" />
-                                                        </div>-->
+                <img [id]="'Note' + item1.key + i" src="./Images/ToggleNote.png" style="position:relative;z-index:1;display:none;" />
+            </div>-->
 
                                                     </div>
                                                 </div>
@@ -640,6 +644,10 @@
                                     <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'REQ'">
                                         <div class="LocationDirective" LocationDirective Code="REQ" style="height:calc(100% - 6px);">
                                             <div style="overflow-y:auto;overflow-x:hidden;" class="BodyBackground MediaFill">
+                                                <div style="width:150px;position:absolute;top:7px;right:0;">
+                                                    <LogCheckBox [ObjectFieldName]="'ShowDeleted'" [DataContext]="DataContext" style="float:right;"></LogCheckBox>
+                                                    <label style="margin-right:-10px;">Show Cancelled ({{DeletedDocsCount}})</label>
+                                                </div>
                                                 <div *ngFor="let item1 of externalRequestedDocs" style="padding:5px;float:left;width:100%;">
                                                     <span style="font-size:16px;border-bottom:1px solid #BCBEC0;width:100%;float:left;">{{item1.key}}</span>
                                                     <div *ngFor="let item of item1.value let i = index" class="emptyticket" style="max-width:164px;margin-top:10px;">
@@ -689,6 +697,10 @@
                                     <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'SREQ'">
                                         <div class="LocationDirective" LocationDirective Code="SREQ" style="height:calc(100% - 6px);">
                                             <div style="overflow-y:auto;overflow-x:hidden;" class="BodyBackground MediaFill">
+                                                <div style="width:150px;position:absolute;top:7px;right:0;">
+                                                    <LogCheckBox [ObjectFieldName]="'ShowDeleted'" [DataContext]="DataContext" style="float:right;"></LogCheckBox>
+                                                    <label style="margin-right:-10px;">Show Cancelled ({{DeletedDocsCount}})</label>
+                                                </div>
                                                 <div *ngFor="let item1 of SignReqDocs; let myIndex = index" style="padding:5px;float:left;width:100%;">
                                                     <div style="border-bottom:1px solid #BCBEC0;width:100%;height:30px;">
                                                         <button *ngIf="myIndex == 0" class="IconButton" style="width:70px;height:26px;margin-right:5px;float:right" (click)="SignAllClick()">
@@ -696,7 +708,7 @@
                                                             <span style="vertical-align:middle;">Sign All</span>
                                                         </button>
                                                         <span style="font-size:16px;float:left;">{{item1.key}}</span>
-                                                    </div> 
+                                                    </div>
                                                     <div *ngFor="let item of item1.value let i = index" class="emptyticket" [class.SearchResult]="(SearchText != null && SearchText != '' && item.SearchFields.toLowerCase().indexOf(SearchText.toLowerCase()) > -1)" style="max-width:164px;margin-top:10px;">
                                                         <table *ngIf="!item.hasFile" style="height:162px;width:162px;" (click)="DocumentClicked(item)">
                                                             <tr>

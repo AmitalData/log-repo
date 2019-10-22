@@ -18,6 +18,8 @@ using Microsoft.Practices.Unity;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Accounting.Data.Repositories;
+using Logitude.Accounting.Data.EntityPOCOs;
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {
@@ -114,9 +116,34 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             APPaymentPM securedPM = new APPaymentPM();
             SecuredMapping.GetMappedPM(payment, securedPM, "APPayment", tenant);
 
+            if (IsFullAccountingActivated(tenant))
+                MapJournalFields(securedPM);
+
             return BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);
         }
 
+
+        private void MapJournalFields(APPaymentPM entityPM)
+        {
+            Journal journal = GetJournalOfAPPayment(entityPM);
+            if (journal != null)
+            {
+                entityPM.JournalId = journal.Id;
+                entityPM.JournalNumber = journal.JournalNumber;
+            }
+        }
+        private Journal GetJournalOfAPPayment(APPaymentPM entityPM)
+        {
+            JournalRepository rep = new JournalRepository(entityPM.Tenant);
+            Journal journal = rep.GetByAccountingEntityId(entityPM.Id, "5", entityPM.Tenant); // 5- APPayment
+            return journal;
+        }
+        private bool IsFullAccountingActivated(int tenant)
+        {
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+            Tenant tenantPoco = tenantRepository.GetSingleTenant(tenant);
+            return (tenantPoco != null && tenantPoco.AccountingActivated);
+        }
         public Contact  GetLogContact(int tenant)
         {
             ContactRepository contactRep = new ContactRepository(tenant);
