@@ -57,6 +57,9 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
         }
         private void AdjustBankFees()
         {
+#if false
+
+
             List<LedgerTransactionPM> myOldTransToReconcile = GetOldTransToReconcileThrowIfNotInProgress();
 
             if (!_JournalPM.JournalExternalReconciles.TrueForAll(r => string.IsNullOrWhiteSpace(r.LedgerTransactionId)))
@@ -71,7 +74,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             List<ReconcileExternalPageList> listOfpageList;
             myExternalReconcileAdjustBankFeesService.PrapareAndValid(tenant, reconcileExternalPageLineIdList, adjustGLAccountId, out listOfpageLineList, out listOfpageList);
 
-
+#endif
 
         }
 
