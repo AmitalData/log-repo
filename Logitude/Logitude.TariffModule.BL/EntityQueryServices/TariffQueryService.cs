@@ -362,9 +362,6 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                 SurchargeTariffLinesFiltered.Add(entry.Key, filteredLines);
             }
 
-
-
-
             foreach (Tariff result in TariffList)
             {
                 List<TariffResult> resultItems = items.Where(x => x.tariffid == result.Id && TariffVersionList.Where(a => a.Version == x.TariffVersion && a.TariffId == result.Id).FirstOrDefault() != null).ToList();
@@ -400,7 +397,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                         if ((item.Price * (decimal)weight) < minprice)
                         {
                             item.Price = minprice;
-
+                            tariffsSummary.IsMinIconVisible = true;
                         }
                         else
                         {
@@ -409,9 +406,17 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                     }
                     else
                     {
-                        item.Price = minprice != null ? minprice : 0;
-
+                        if (minprice != null)
+                        {
+                            item.Price = minprice;
+                            tariffsSummary.IsMinIconVisible = true;
+                        }
+                        else
+                        {
+                            item.Price = 0;
+                        }
                     }
+
                     //tariffsSummary.price = Math.Round((double)item.price, 2).ToString("0.00");
                     tariffsSummary.Price = Math.Round((double)CalculateLocalAmount(item.Price != null ? item.Price.Value : 0, currencyId, result.CurrencyId, tenant), 2).ToString("0.00");
                     tariffsSummary.ActualPrice = item.Price;
@@ -513,7 +518,10 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                                                         decimal minimumPrice = (decimal)valueofSurchargeMin;
                                                         minPriceSurcharge = CalculateLocalAmount(minimumPrice, currencyId, CurrencyId, tenant);
                                                         if (minPriceSurcharge > LinePrice)
+                                                        {
                                                             LinePrice = minPriceSurcharge.Value;
+                                                            SurchargeItem.IsMinIconVisible = true;
+                                                        }
                                                     }
 
                                                     SurchargeItem.Price = LinePrice;

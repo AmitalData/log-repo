@@ -9,27 +9,36 @@
     <tr class="FormFieldRow">
         <td>
             <table>
-                <tr>
-                    <td style="width:70px;" class="Label">
-                        Country:
-                    </td>
-
-                    <td style="width:200px;">
-                        <LogLov [ObjectFieldName]="'CountryId'"
-                                [SelectedValue]="CountryId"
-                                [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"
-                                [LookUpTableName]="'Country'"
-                                [NoObjectField]="true"
-                                (KeyDownEvent)="KeyDownEvent($event)"
-                                [ForceFocus]="ForceFocus"
-                                (SelectedItemChanged)="Country = $event">
-                        </LogLov>
-                    </td>
-
+                <tr style="height: 1px;">
                     <td>
-                        <div>
-                        </div>
+                        <div class="Label"> {{CountryPortsMessageCount}}</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:70px;" class="Label">
+                                    Country:
+                                </td>
+                                <td style="width:200px;">
+                                    <LogLov [ObjectFieldName]="'CountryId'"
+                                            [SelectedValue]="CountryId"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Country'"
+                                            [NoObjectField]="true"
+                                            (KeyDownEvent)="KeyDownEvent($event)"
+                                            [ForceFocus]="ForceFocus"
+                                            (SelectedItemChanged)="Country = $event">
+                                    </LogLov>
+                                </td>
+                                <td>
+                                    <div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
                     </td>
                 </tr>
             </table>

@@ -73,10 +73,10 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
     }
     public class LedgerOpenAmountRecoDiffM
     {
-        public string LedgerTransactionId { get; internal set; }
-        public decimal? OpenAmount { get; internal set; }
-        public decimal? LedgerAmount { get; internal set; }
-        public decimal? TotalReconciliationAmount { get; internal set; }
-        public string ReconcileMethod { get; internal set; }
+        public string LedgerTransactionId { get;  set; }
+        public decimal? OpenAmount { get; set; }
+        public decimal? LedgerAmount { get; set; }
+        public decimal? TotalReconciliationAmount { get; set; }
+        public string ReconcileMethod { get; set; }
     }
 }
