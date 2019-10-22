@@ -31,8 +31,6 @@ export class NewUser {
         this.helper.WaitByIdAndFill('User_Email', this.UserName+"@mail.com");
         this.helper.WaitByIdAndFill('PasswordId', "123");
         this.helper.WaitByIdAndFill('retypePass',"123")
-        //retypepassword
-        //  this.helper.WaitByIdAndFill('', "Poland");
         this.helper.WaitByIdAndFill('User_EnglishName', this.UserName);
         this.helper.WaitByIdAndFill('User_DepartmentId', "Management");
         this.helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'User_DepartmentId', "Management");
