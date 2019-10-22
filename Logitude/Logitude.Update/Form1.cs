@@ -413,8 +413,8 @@ User/Pass",
             IdCounterUtilResolver.RegisterIdCounterUtil();
             AccountingRegistrations.Register();
 
-            CommunicationWorkerRole.BatchTaskExecutionWR btwr = new CommunicationWorkerRole.BatchTaskExecutionWR();
-            btwr.ExecuteQueue(null);
+            //CommunicationWorkerRole.BatchTaskExecutionWR btwr = new CommunicationWorkerRole.BatchTaskExecutionWR();
+            //btwr.ExecuteQueue(null);
 
             ////DateTime date = DateTime.Now.AddDays(-180);
             ////DateTime last180days = new DateTime(date.Year, date.Month, 1);
