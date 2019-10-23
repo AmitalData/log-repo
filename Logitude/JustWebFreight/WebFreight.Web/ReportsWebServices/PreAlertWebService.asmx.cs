@@ -620,10 +620,12 @@ namespace WebFreight.Web.ReportsWebServices
                 #endregion
 
                 #region Others
-                if (User != null)
+
+                string loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser(tenant);
+                if (!string.IsNullOrEmpty(loggedUserEmail))
                 {
                     ContactQuery contactQuery = new ContactQuery(contactRepository);
-                    ContactPM contactpm = contactQuery.GetContactByEmailOnly(User.Identity.Name, tenant);
+                    ContactPM contactpm = contactQuery.GetContactByEmailOnly(loggedUserEmail, tenant);
 
                     if (contactpm != null)
                     {
