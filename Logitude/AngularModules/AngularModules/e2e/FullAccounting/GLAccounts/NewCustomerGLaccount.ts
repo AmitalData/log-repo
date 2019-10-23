@@ -52,13 +52,13 @@ export class NewCustomer{
         this.Helper.WaitByIdAndClick('Customer.TH.Accounting');
         this.Helper.WaitByIdAndClick('Activate');
         this.Helper.WaitByIdAndFill('GLAccount_ChartOfAccountsId', 'cust');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'GLAccount_ChartOfAccountsId', 'cust');
         this.Helper.WaitBusyIndicator();
 
         // this.Helper.WaitByIdAndFill('GLAccount_DisplayNumber', DisplayNumber);
         //this.Helper.WaitByIdAndFill('GLAccount_LocalName', Name+DisplayNumber);
         this.Helper.WaitByIdAndFill('GLAccount_CurrencyId', 'Nis');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'GLAccount_CurrencyId', 'Nis');
         this.Helper.WaitBusyIndicator();
 
 

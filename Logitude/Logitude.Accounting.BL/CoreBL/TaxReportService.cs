@@ -58,7 +58,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
         public static List<TaxReportLinePM> CreateTaxReportLines(TaxReportPM taxReport, int tenant)
         {
-            using (TransactionScope scope = TransactionFactory.GetTransaction())
+            using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(60)))
             {
 
                 JournalRepository journalRepository = new JournalRepository(tenant);
@@ -228,9 +228,9 @@ namespace Logitude.Accounting.BL.CoreBL
                         if (card != null && card.PartnerTypeId == PartnerTypeValues.Vendor)
                             VatNumber = card.VatNumber;
                       
-                        IQueryable<LedgerTransaction> transactionsByJournal = ledgerTransactionRepository.GetByJournalAndReference1(a.JournalId, a.Reference, tenant);
-                        decimal transactionSum = transactionsByJournal.Sum(d => d.LocalAmountCredit);
-                        //var transactionSum = ledgerTransactons.Where(d => d.JournalId == a.JournalId && d.Reference == a.Reference).Sum(d => d.LocalAmountCredit);
+                        //IQueryable<LedgerTransaction> transactionsByJournal = ledgerTransactionRepository.GetByJournalAndReference1(a.JournalId, a.Reference, tenant);
+                        //decimal transactionSum = transactionsByJournal.Sum(d => d.LocalAmountCredit);
+                        var transactionSum = ledgerTransactons.Where(d => d.JournalId == a.JournalId && d.Reference == a.Reference).Sum(d => d.LocalAmountCredit);
                         InputInvoiceAmount = transactionSum - InputVatAmount;
                     }
                     
@@ -339,16 +339,19 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 // saving report
                 taxReport.ChangeSetOp = ChangeSetOperation.Update;
+               
                 updateService.Update(taxReport, true);
 
-                // saving lines
+               // saving lines
                 int count = 0;
+                //int submitChangesCounter
                 foreach (TaxReportLinePM linePM in reportLinesList)
                 {
                     linePM.Line = ++count;
                     linePM.ChangeSetOp = ChangeSetOperation.Insert;
                     linePM.UpdatedByUserId = taxReport.UpdatedByUserId;
-                    lineUpdateService.Update(linePM, true);
+                    
+                    lineUpdateService.Update(linePM, true);//the problem is here it loops on more than 3000  lines and updates them one by one ,each update will have to get single tenant and get single currency along with multible db gets which make the db to time out for the opened transaction
                 }
 
 

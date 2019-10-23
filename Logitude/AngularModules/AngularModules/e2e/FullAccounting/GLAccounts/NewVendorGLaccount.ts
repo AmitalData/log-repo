@@ -3,15 +3,15 @@ import { FieldsHelper } from '../../Helpers/FieldsHelper';
 import { GeneralFunctions } from '../../Helpers/GeneralFunctions';
 
 export class NewVendor {
-  private Helper: FieldsHelper;
-  private Generator: GeneralFunctions;
+    private Helper: FieldsHelper;
+    private Generator: GeneralFunctions;
 
-  constructor() {
-    this.Helper = new FieldsHelper();
-    this.Generator = new GeneralFunctions();
-  }
+    constructor() {
+        this.Helper = new FieldsHelper();
+        this.Generator = new GeneralFunctions();
+    }
 
-  public CreateNewVendorGLAccount(Name: string) {
+    public CreateNewVendorGLAccount(Name: string) {
 
         this.Helper.WaitByIdAndClick('General.MH.Maintenance');
         this.Generator.GoToMainMenu('MaintenanceItemMTVD');
@@ -44,11 +44,11 @@ export class NewVendor {
 
         this.Helper.WaitByIdAndClick('Activate');
         this.Helper.WaitByIdAndFill('GLAccount_ChartOfAccountsId', 'ven');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'GLAccount_ChartOfAccountsId', 'ven');
         // this.Helper.WaitByIdAndFill('GLAccount_DisplayNumber', DisplayNumber);
         // this.Helper.WaitByIdAndFill('GLAccount_LocalName', Name + DisplayNumber);
         this.Helper.WaitByIdAndFill('GLAccount_CurrencyId', 'Nis');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'GLAccount_CurrencyId', 'Nis');
         this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndClick('Ok-AddGLAccount');
         this.Helper.WaitBusyIndicator();
