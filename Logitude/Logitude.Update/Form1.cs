@@ -233,6 +233,9 @@ namespace Logitude.Update
         {
             Thread thread = new Thread(() =>
             {
+                Logitude.BL.Helpers.TableLastUpdateClass.UpdateCacheTableHistory();
+                Logitude.BL.Helpers.TableLastUpdateClass.UpdateSystemMetaDataHistory();
+
                 UpdateModule(0, "customs", UpdateCustomslbl);
                 Func<string> GetConnetionStringFunc = () =>
                 {
