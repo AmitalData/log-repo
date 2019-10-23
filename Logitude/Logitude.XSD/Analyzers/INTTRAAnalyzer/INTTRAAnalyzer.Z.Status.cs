@@ -104,16 +104,16 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
             {
                 DateTime iLogDate = TenantServerConfigration.GetCurrentDateTime(this.Tenant);
 
-                this.UpdateShipmentRoutings();
-                this.UpdateContainerFields();
-
-                this.UpdateLastStatus(this.EventLocationCode, this.EventLocationeDate, iLogDate, iContainer);
-
-                shipmentPM.INTTRALastStatusDate = iLogDate;
+                if (this.isUpdatingShipmentDates)
+                {
+                    this.UpdateShipmentRoutings();
+                    this.UpdateContainerFields();
+                    this.UpdateLastStatus(this.EventLocationCode, this.EventLocationeDate, iLogDate, iContainer);
+                    shipmentPM.INTTRALastStatusDate = iLogDate;
+                }
 
                 ShipmentService service = new ShipmentService(myShipmentContext, shipmentPM, systemEmail);
                 service.Update(true);
-
 
                 ShipmentContainerStatus iStatus = new ShipmentContainerStatus()
                 {
@@ -141,7 +141,6 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
 
                 iShipmentContainerStatusRepository.Add(iStatus);
 
-
                 if (this.shipmentPM.ShipmentLevelCode == "C")
                 {
                     if (this.shipmentPM.ShipmentConsoleShipments.Count > 0)
@@ -160,9 +159,11 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
 
                             if (iHouseContainer != null)
                             {
-                                this.UpdateLastStatus(this.EventLocationCode, this.EventLocationeDate, iLogDate, iHouseContainer);
-
-                                iHouse.INTTRALastStatusDate = iLogDate;
+                                if (this.isUpdatingShipmentDates)
+                                {
+                                    this.UpdateLastStatus(this.EventLocationCode, this.EventLocationeDate, iLogDate, iHouseContainer);
+                                    iHouse.INTTRALastStatusDate = iLogDate;
+                                }
 
                                 ShipmentService iHouseService = new ShipmentService(myShipmentContext, iHouse, systemEmail);
                                 iHouseService.Update(true);
@@ -210,6 +211,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
         private string VesselName = null;
         private string VoyageNumber = null;
         private string ShippingLineName = null;
+        private bool isUpdatingShipmentDates = true;
         private void ReadShippingLine(MessagePropertiesType iMessageProperties)
         {
             this.ShippingLineName = shipmentPM.MainCarriageCarrierName;
@@ -223,6 +225,21 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
 
                     string d = iMessageProperties.TransportationDetails.ConveyanceInformation.CarrierSCAC;
                     string f = iMessageProperties.TransportationDetails.ConveyanceInformation.TransportIdentification.Value;
+                }
+            }
+
+            if (this.Tenant == 1508)
+            {
+                this.isUpdatingShipmentDates = false;
+
+                if (shipmentPM.MainCarriageCarrierId != null)
+                {
+                    ShippingLineRepository iShippingLineRepository = new ShippingLineRepository(myCommonContext);
+                    ShippingLine iShippingLine = iShippingLineRepository.GetSingleShippingLine(shipmentPM.MainCarriageCarrierId, this.Tenant);
+                    if (iShippingLine != null)
+                    {
+                        this.isUpdatingShipmentDates = iShippingLine.INTTRAUpdatesShipment;
+                    }
                 }
             }
         }
