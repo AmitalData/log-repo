@@ -44,11 +44,11 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
 { 
 
     
-    public partial class AccountingSettingsController : ApiController
+    public partial class AccountingPartnerController : ApiController
     {
 	  
        
-        public HttpResponseMessage GetSingle(int id)
+        public HttpResponseMessage GetSingle(string id)
         {
 		  try
             {
@@ -56,12 +56,14 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                AccountingSettingQuery accountingSettingQuery = new AccountingSettingQuery(authToken.Tenant);
-                AccountingSettingPM accountingSettingPM = accountingSettingQuery.GetSinglePM(id);
+
+                SecurityUtility.CheckContactFeature("AccountingPartner", "READ", authToken.Tenant);
+                AccountingPartnerQuery accountingPartnerQuery = new AccountingPartnerQuery(authToken.Tenant);
+                AccountingPartnerPM accountingPartnerPM = accountingPartnerQuery.GetSinglePM(id, authToken.Tenant);
                 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
-                return Request.CreateResponse(HttpStatusCode.OK, accountingSettingPM);
+                return Request.CreateResponse(HttpStatusCode.OK, accountingPartnerPM);
 			 
 			}
             catch (Exception ex)
@@ -74,7 +76,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
          
 		
 
-        public HttpResponseMessage Post(AccountingSettingPM entityPM)
+        public HttpResponseMessage Post(AccountingPartnerPM entityPM)
         {
             if (ModelState.IsValid)
             {
@@ -86,19 +88,21 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.CheckContactFeature("AccountingPartner", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("AccountingPartner", entityPM.Tenant, authToken.Tenant);
                 
-                        ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Id);
-                        AccountingSettingService service = new AccountingSettingService(MyContext, entityPM.Id);
+                        ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
+                        AccountingPartnerService service = new AccountingPartnerService(MyContext, entityPM.Tenant);
                         service.Create(entityPM);
 				
-                        //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Id);
-                        // ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("AccountingSetting", 0, true);
+                        //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
+                        // ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("AccountingPartner", 0, true);
                         //string email = HttpContext.Current.User.Identity.Name;
-                        // ContactRepository contactRepository = new ContactRepository(entityPM.Id);
-                        //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Id);
+                        // ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
+                        //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
                         //if (loggedContact != null)
                         //{
-                        //    ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Id, "U", loggedContact.Id);
+                        //    ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
                         //}
 
                         scope.Complete();
@@ -120,7 +124,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
         }
 
 
-        public HttpResponseMessage Put(AccountingSettingPM entityPM)
+        public HttpResponseMessage Put(AccountingPartnerPM entityPM)
         {
             if (ModelState.IsValid)
             {
@@ -132,20 +136,32 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                
-                        ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Id);
-                        AccountingSettingService service = new AccountingSettingService(MyContext, entityPM.Id);
- 
-                        service.Update(entityPM);
+                        SecurityUtility.CheckContactFeature("AccountingPartner", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("AccountingPartner", entityPM.Tenant, authToken.Tenant);
 
-                        //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Id);
-                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("AccountingSetting", 0, true);
+                        string entityName = "AccountingPartner" + entityPM.Id + entityPM.Tenant;
+                        string entityPmName = "AccountingPartnerPM" + entityPM.Id + entityPM.Tenant;
+                        if (CacheManager.CacheWrapper.Get(entityName) != null)
+                        {
+                            CacheManager.CacheWrapper.Invalidate(entityName);
+                        }
+                        if (CacheManager.CacheWrapper.Get(entityPmName) != null)
+                        {
+                            CacheManager.CacheWrapper.Invalidate(entityPmName);
+                        }
+                
+                        ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
+                        AccountingPartnerService service = new AccountingPartnerService(MyContext, entityPM.Tenant);
+                        service.Update(entityPM, true);
+
+                        //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
+                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("AccountingPartner", 0, true);
                         //string email = HttpContext.Current.User.Identity.Name;
-                        //ContactRepository contactRepository = new ContactRepository(entityPM.Id);
-                        //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Id);
+                        //ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
+                        //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
                         //if (loggedContact != null)
                         //{
-                        //   ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Id, "U", loggedContact.Id);
+                        //   ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
                         //}
 
 

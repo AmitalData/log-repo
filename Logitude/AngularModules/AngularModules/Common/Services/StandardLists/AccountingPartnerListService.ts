@@ -17,20 +17,20 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorageManager';
-import {AccountingSettingList} from '../../EntityLists/AccountingSettingList';
+import {AccountingPartnerList} from '../../EntityLists/AccountingPartnerList';
 
 @Injectable()
 
-export class AccountingSettingListService {
+export class AccountingPartnerListService {
 	private _http: Http;
     private _apiUrl: string;   
-	public static CachedData: Array<AccountingSettingList> = [];
+	public static CachedData: Array<AccountingPartnerList> = [];
     constructor() {
         this._http = ServiceHelper.Http;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/accountingsettingviews';  
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/accountingpartnerviews';  
     }
 
-    getSingle(id: number) {
+    getSingle(id: string) {
 	   
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
@@ -40,7 +40,7 @@ export class AccountingSettingListService {
 
                 var list = response.json();
                     
-                var entity: AccountingSettingList;
+                var entity: AccountingPartnerList;
 				if(list)
 				{
                    entity = this.MapJsonToEntityList(list);
@@ -51,7 +51,7 @@ export class AccountingSettingListService {
                 serviceResponse.Result = entity;  
 				serviceResponse.CallTime = callTime;
                 var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AccountingSetting", "GetSingleList", 'id=' + id); 
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AccountingPartner", "GetSingleList", 'id=' + id); 
 
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
@@ -67,11 +67,11 @@ export class AccountingSettingListService {
             return this._http.get(this._apiUrl+'/getall', { headers: authHeader }).map(response => {
 
               var allLists = response.json();
-              var _mappedListsArray: Array< AccountingSettingList> = [];
+              var _mappedListsArray: Array< AccountingPartnerList> = [];
 		      if(allLists)
 			  {
 				for (var key in  allLists) {				
-				   var entity: AccountingSettingList;
+				   var entity: AccountingPartnerList;
                    entity = this.MapJsonToEntityList(allLists[key]);
 				   _mappedListsArray.push(entity);
 				 }
@@ -82,7 +82,7 @@ export class AccountingSettingListService {
                 serviceResponse.Result = _mappedListsArray;
 				serviceResponse.CallTime = callTime;
                 var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AccountingSetting", "GetAllLists", ""); 
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AccountingPartner", "GetAllLists", ""); 
 
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
@@ -132,12 +132,12 @@ export class AccountingSettingListService {
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = response.json();
-                var _mappedListsArray: Array< AccountingSettingList> = [];
+                var _mappedListsArray: Array< AccountingPartnerList> = [];
 				if(serviceResponse.Result)
 				{
                 for (var key in serviceResponse.Result) {
 				
-				   var entity: AccountingSettingList;
+				   var entity: AccountingPartnerList;
                    entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
 				   _mappedListsArray.push(entity);
 
@@ -147,7 +147,7 @@ export class AccountingSettingListService {
                 serviceResponse.Result = _mappedListsArray;       
 				serviceResponse.CallTime = callTime;
                 var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AccountingSetting", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AccountingPartner", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
 				           
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
@@ -157,8 +157,8 @@ export class AccountingSettingListService {
 	
 	    MapJsonToEntityList(jsonList: any) {
        
-            var entityList: AccountingSettingList;
-            entityList = new AccountingSettingList();
+            var entityList: AccountingPartnerList;
+            entityList = new AccountingPartnerList();
             var jsonListKeys = Object.keys(jsonList);
 
             for (var key in jsonListKeys) {
