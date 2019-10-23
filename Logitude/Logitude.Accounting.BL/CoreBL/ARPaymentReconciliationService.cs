@@ -36,6 +36,8 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 ARPaymentPM paymentPM = GetARPaymentPMById(paymentTransaction.SourceId, paymentTransaction.Tenant);
 
+                paymentPM.PaymentInvoices = new List<ARPaymentInvoicePM>(); // [!] payment invoices removed in order to avoid validation (CheckLinesAmountToReconcileTotal) in ARPayment service, in this block we only need to update open amount and status , WI 58101
+
                 CalculatePaymentOpenAmount(paymentPM);
 
                 CalculatePaymentStatus(paymentPM);

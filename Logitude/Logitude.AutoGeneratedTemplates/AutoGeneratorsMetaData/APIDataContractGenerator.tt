@@ -298,9 +298,11 @@ using <#=myspacestring#>
 							 if(IsSpecialField == "true"){ #>
 
 				   ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant); 
-				   temp.<#=DCFieldName#> = helper.GetComputingPartnerCodeTranslation(<#+if(IsComposition == "true"){#>item<#+}else{#>MyEntityPM<#+}#>.<#=FieldName#>,ComputingPartnerName,"<#=ObjectTableName#>");  <#+}else{#>
+				   temp.<#=DCFieldName#> = helper.GetComputingPartnerCodeTranslation(<#+if(IsComposition == "true"){#>item<#+}else{#>MyEntityPM<#+}#>.<#=FieldName#>,ComputingPartnerName,"<#=ObjectTableName#>");  <#+}else{
+				   if(!string.IsNullOrEmpty(FieldName)){
+				   #>
 
-				   temp.<#=DCFieldName#> = <#+if(IsComposition == "true"){#>item<#+}else{#>MyEntityPM<#+}#>.<#=FieldName#>;<#+}
+				   temp.<#=DCFieldName#> = <#+if(IsComposition == "true"){#>item<#+}else{#>MyEntityPM<#+}#>.<#=FieldName#>;<#+}}
 			   
 							 }}#>
 					<#+if(IsComposition == "true"){#>
@@ -500,9 +502,10 @@ using <#=myspacestring#>
 					{
 						temp.<#=FieldName#> = <#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#>;
 					}<#+}
-								 else{#>
+								 else{
+								  if(!string.IsNullOrEmpty(FieldName)){#>
 
-					temp.<#=FieldName#> = <#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#>;<#+}
+					temp.<#=FieldName#> = <#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#>;<#+}}
 								 }}#>
 					   <#+if(IsComposition == "true"){#>
 
