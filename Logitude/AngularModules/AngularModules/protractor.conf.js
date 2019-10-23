@@ -150,7 +150,7 @@ exports.config = {
 
         } else if (browser.params.Team == "islam") {
             jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
-            jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/E2ETeamIslam/screenshots', takeScreenShotsOnlyForFailedSpecs: true, screenshotsSubfolder: 'images' }).getJasmine2Reporter());
+            jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/Automation e2e/TeamIslam/Test/screenshots', takeScreenShotsOnlyForFailedSpecs: true, screenshotsSubfolder: 'images' }).getJasmine2Reporter());
             jasmine.getEnv().addReporter(junitReporterIslam);
 
         } else if (browser.params.Team == "mohammad") {

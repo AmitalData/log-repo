@@ -132,10 +132,10 @@ export class PayablesTabComponent {
         
         this.Helper.WaitByIdAndClick('APInvoice.B.Approve');
         this.WaitBusyIndicatorToShowandHide();
-        //this.WaitBusyIndicatorToShowandHide();        
+       
         this.Helper.WaitEditComponentBusyIndicator();
         if(Voided==true){
-        //this.Helper.WaitEditComponentBusyIndicator();
+        
         this.Helper.WaitByIdAndClick('MenuButtons_1');
         this.Helper.WaitByIdAndClick('APInvoice.B.CancelApproval');
         this.WaitBusyIndicatorToShowandHide();

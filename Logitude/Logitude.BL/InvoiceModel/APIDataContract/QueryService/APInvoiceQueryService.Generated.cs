@@ -174,7 +174,8 @@ using Simplog.Data.InvoiceModel;
 
 							 
 				   temp.AmountInInvoiceCurrency = MyEntityPM.AmountInInvoiceCurrency;
-				   temp.InvoiceExpectedAmount = MyEntityPM.InvoiceExpectedAmount;					
+				   temp.InvoiceExpectedAmount = MyEntityPM.InvoiceExpectedAmount;
+				   temp.EntityReference = MyEntityPM.MainEntityReference;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -361,7 +362,8 @@ using Simplog.Data.InvoiceModel;
 
 								 
 					temp.AmountInInvoiceCurrency = MyEntity.AmountInInvoiceCurrency;
-					temp.InvoiceExpectedAmount = MyEntity.InvoiceExpectedAmount;					   
+					temp.InvoiceExpectedAmount = MyEntity.InvoiceExpectedAmount;
+					temp.MainEntityReference = MyEntity.EntityReference;					   
 					   return temp;
 		    }
             catch (Exception ex)
