@@ -61,7 +61,6 @@ namespace CommunicationWorkerRole
         DbQueueService queueservice;
         int tenant = 0;
 
-
         public DocumentExecutionWorkerRole()
         {
 
@@ -116,9 +115,6 @@ namespace CommunicationWorkerRole
             else Thread.Sleep(new TimeSpan(0, 0, 1));
         }
 
-
-
-
         private ExportDocumentArgs GetExportDocumentArgs(QueueResponse response)
         {
             ExportDocumentArgs exportDocumentArgs = null;
@@ -130,25 +126,28 @@ namespace CommunicationWorkerRole
             return exportDocumentArgs;
         }
 
-
         private void BuildDocument(ExportDocumentArgs exportDocumentArgs, DbQueueService queueservice, QueueResponse response)
         {
             try
             {
+                AuthenticationUtil.AuthenticatedUserEmail = GetLoggedUserEmail(exportDocumentArgs.LoggedContactId , exportDocumentArgs.Tenant);
                 Parallel.ForEach(exportDocumentArgs.DocumentTypeCopyIdsList, (documentTypeCopyId) =>
                 {
-                    HttpContext.Current = new HttpContext(null,null);
-                    HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity("Hamodi@fnarsoft.com"), new string[0]);
                     ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
                     string result = exportDocumentHelper.ExportDocument2Pdf(exportDocumentArgs.DocumentTypeId, exportDocumentArgs.EntityId, exportDocumentArgs.ObjectTableId, exportDocumentArgs.ChildEntityId, exportDocumentArgs.ChildObjectTableId, exportDocumentArgs.CurrentDocumentOutId, exportDocumentArgs.Tenant, documentTypeCopyId, exportDocumentArgs.LoggedContactId);
                 });
-
                 queueservice.Complete();
             }
             catch (Exception ex)
             {
                 HandleDocumentExecutionException( ex , queueservice , response);
             }
+        }
+
+        private string GetLoggedUserEmail(string loggedContactId, int tenant)
+        {
+            ContactQuery contactQuery = new ContactQuery(tenant);
+            return   contactQuery.GetContactEmailById(loggedContactId, tenant);
         }
 
         private void HandleDocumentExecutionException(Exception ex, DbQueueService queueservice, QueueResponse response)
