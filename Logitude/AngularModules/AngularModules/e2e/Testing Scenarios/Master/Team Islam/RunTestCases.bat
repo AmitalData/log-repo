@@ -1,6 +1,5 @@
-
 SETLOCAL enabledelayedexpansion
-SET err=0
+SET NumberErrors=0
 SET TotalErrors
 
 cd /
@@ -8,7 +7,7 @@ cd windows
 c:
 cd C:\Program Files (x86)\Jenkins\workspace\LogitudeTestDevOps\Logitude\AngularModules\AngularModules
 
-set NumberErrors=0
+
 
 FOR /L %%A IN (1,1,1) DO (
 
@@ -46,27 +45,43 @@ CALL :CheckError "ShipmentView"
  
 )
 
-
-
-
 cd /
 cd C:\Automation e2e\TeamIslam\Test
-
 >test.txt echo Errors in : %TotalErrors%
 >>test.txt echo Total Errors :%NumberErrors% 
+
 
 
 IF %NumberErrors% NEQ 0 ( 
   exit 1
 )
-
-pause
-
+Pause
 
 SETLOCAL
-:CheckError 
-for /f %%a in ('type D:\E2ETeamIslamReport\Report.log ^| find /c /i "error"') DO (if %%a NEQ 0 set TotalErrors=%TotalErrors%    %~1%NL% & @SET /a "NumberErrors=%NumberErrors%+1" )
+:CheckError
 
-for /f %%a in ('type D:\E2ETeamIslamReport\Report.log ^| find /c /i "This will be an error in future versions"') DO (if %%a NEQ 0 set TotalErrors=%TotalErrors%    %~1%NL% & @SET /a "NumberErrors=%NumberErrors%-1" )
+set /a count=0
+
+cd /
+cd windows
+c:
+cd C:\Automation e2e\TeamIslam\Test\screenshots
+
+IF EXIST images (
+
+cd /
+cd windows
+c:
+cd C:\Automation e2e\TeamIslam\Test\screenshots\images
+
+for %%x in (*.png) do set /a count+=1
+set /A NumberErrors=count
+
+
+)
+cd /
+cd windows
+c:
+cd C:\Program Files (x86)\Jenkins\workspace\LogitudeTestDevOps\Logitude\AngularModules\AngularModules
 
 goto:eof
