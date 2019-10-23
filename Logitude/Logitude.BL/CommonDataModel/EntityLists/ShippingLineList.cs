@@ -40,7 +40,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string UsoCFDICode { get; set; }
         public bool IsINTTRARegistered { get; set; }
         public string INTTRARegistrationNotes { get; set; }
-
+        public bool INTTRAUpdatesShipment { get; set; }
         public string PrimaryContactName { get; set; }
         public string PrimaryContactEmail { get; set; }
         public string PrimaryContactPhone { get; set; }
