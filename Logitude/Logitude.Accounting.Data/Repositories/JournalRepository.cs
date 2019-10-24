@@ -463,9 +463,9 @@ namespace Logitude.Accounting.Data.Repositories
 
         public IQueryable<Journal> GetByJournalsAccountingIds(List<string> ids, int tenant)
         {
-            var journals = (from a in context.Journals
+            var journals = (from a in context.Journals 
                             where a.Tenant == tenant
-                            where ids.Contains(a.Id)
+                            && ids.Contains(a.Id)
                             select a);
 
             return journals;

@@ -918,6 +918,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             // AR: Auto Credited
             // VD: Void
 
+            entityPM.IsFullAccounting = IsFullAccountingActivated(entityPM.Tenant);
+
             if (string.IsNullOrEmpty(entityPM.Id))
             {
                 entityPM.Id = IdCounter.GetNumber("ARInvoice", entityPM.Tenant).ToString();
@@ -3237,7 +3239,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     journalLine.Reference1 = theEntityPm.InvoiceNumber;
                     journalLine.Reference2 = theEntityPm.MainEntityReference;
                     journalLine.Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber;
-                    journalLine.Notes = theEntityPm.InternalNotes;
+                    journalLine.Notes = theEntityPm.PrintNotes;
                     journalLine.DebitAccountId = splittedByCurrencyAccount == null ? "" : splittedByCurrencyAccount.Id;
                     journalLine.DebitControlAccountId = splittedByCurrencyAccount == null ? "" : splittedByCurrencyAccount.ControlAccountId;
                     journalLine.ChangeSetOp = ChangeSetOperation.Insert;
@@ -3266,7 +3268,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                             Reference1 = theEntityPm.InvoiceNumber,
                                                             Reference2 = theEntityPm.MainEntityReference,
                                                             Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber,
-                                                            Notes = theEntityPm.InternalNotes,
+                                                            Notes = theEntityPm.PrintNotes,
                                                             DebitAccountId= splittedByCurrencyAccount == null ? "" : splittedByCurrencyAccount.Id,
                                                             DebitControlAccountId = splittedByCurrencyAccount == null ? "" : splittedByCurrencyAccount.ControlAccountId,
                                                         }).ToList();

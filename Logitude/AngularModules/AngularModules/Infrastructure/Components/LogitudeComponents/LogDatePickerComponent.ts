@@ -608,6 +608,8 @@ export class LogDatePickerComponent
 
         if (this.uiProperty.ValidValue) {
             this.DatePickerInputDivStyle = null;
+        }else {
+            this.DatePickerInputDivStyle = { border: "1px solid #ff0000" };
         }
 
         if (!this.MouseInArea) {
@@ -1711,6 +1713,7 @@ export class LogDatePickerComponent
                 );
             }
             this.SetValidity(false, errorMessage);
+            this.DataContext[this.ObjectFieldName] = null;
         } else {
             this.SetValidity(true, null);
         }
@@ -2480,6 +2483,7 @@ export class LogDatePickerComponent
                 this.uiProperty.ValidValue = validValue;
                 this.uiProperty.ValidationError = errorMessage;
                 if (!validValue) {
+                    
                     this.DatePickerInputDivStyle = {
                         border: "1px solid #ff0000"
                     };

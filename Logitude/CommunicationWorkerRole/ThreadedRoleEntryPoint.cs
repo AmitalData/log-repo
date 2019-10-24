@@ -220,9 +220,9 @@ namespace CommunicationWorkerRole
 
                 var batchTaskExecutionWR = new BatchTaskExecutionWR();
                 var dic = new Dictionary<string, string>();
-
-                dic.Add("BatchTaskExecutionId", "1-6172");
-                dic.Add("Tenant", "989");
+                //{"BatchTaskExecutionId":"1-7167","Tenant":"1071"}-QueueDefinitionCode ='batchtaskexecutionqueue'
+                dic.Add("BatchTaskExecutionId", "1-7167");
+                dic.Add("Tenant", "1071");
                 batchTaskExecutionWR.SupressStartThread = true;
                 batchTaskExecutionWR.ExecuteQueue(new Logitude.Server.Tools.QueueService.QueueResponse() { MessageValues = dic });
                 //var myEmailsWorkerRole = new EmailsWorkerRole("EmailQueue","itzik");
@@ -283,7 +283,7 @@ namespace CommunicationWorkerRole
             BatchServicesDefinitionRepository BatchServicesRepository = new BatchServicesDefinitionRepository();
             BatchServicesDefinitionQuery BatchServicesQuery = new BatchServicesDefinitionQuery(BatchServicesRepository);
             List<BatchServicesDefinitionPM> BatchServicesDefinitionsTemp = BatchServicesQuery.GetAllActiveBatchServicesDefinitions().ToList();//.Where(b => b.Code == "EmailOut-EmailQueue")
-            if (!string.IsNullOrEmpty(SpecialBatchCode))
+            if (!string.IsNullOrEmpty(SpecialBatchCode) && Environment.MachineName == "LogitudeWR2")
             {
                 var temp = SpecialBatchCode.Split(',');
                 if (temp.Length > 0)

@@ -153,7 +153,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         Extension = document.Extension,
                         Tenant = tenant,
                         FileSize = flatFileData.Length,
-
+                        IsEncrypted = true
                     };
                     storageservice.Write(flatFileData, fileInfo);
 

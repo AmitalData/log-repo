@@ -455,6 +455,9 @@ namespace WebFreight.Web.ReportsWebServices
                 {
 					this.MapPaymentProfact33Fields(currentPayment, paymentDataProvider, tenantSettings, invoiceCotnext, billToCard);
                 }
+
+                paymentDataProvider.AmountInLocalCurrency =  currentPayment.AmountInLocalCurrency;
+
             }
 
             return paymentDataProvider;
@@ -517,7 +520,8 @@ namespace WebFreight.Web.ReportsWebServices
 			if (billToCard != null)
 			{
 				paymentDataProvider.SAT.SATForeignRFC = (billToCard.SATForeignRFC ?? null);
-			}
+                paymentDataProvider.ForeignRFC = (billToCard.SATForeignRFC ?? null);
+            }
 
 			if (!string.IsNullOrEmpty(currentPayment.SATXML))
             {

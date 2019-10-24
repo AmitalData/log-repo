@@ -248,8 +248,9 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
 
                                         break;
                                     }
+
                                 case "Status":
-                                    {
+                                    {                                        
                                         XmlSerializer xmlSerializer = new XmlSerializer(typeof(INTTRA_Status.MessageType));
                                         INTTRA_Status.MessageType iMessage = (INTTRA_Status.MessageType)xmlSerializer.Deserialize(myMemoryStream);
                                         this.iMessage_Status = iMessage;
@@ -296,11 +297,13 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
 
                         break;
                     }
+
                 case "Booking":
                     {
                         this.AnalyzeINTTRABooking();
                         break;
                     }
+
                 default:
                     {
                         if (Subject == null)
@@ -418,9 +421,16 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                     string[] Parts = HeaderDocumentIdentifier.Split('-');
 
                                     int CONTRL_Tenant = 0;
-
-                                    bool is_CONTRL_Tenant = Int32.TryParse(Parts[1], out CONTRL_Tenant);
-
+                                    bool is_CONTRL_Tenant = false;
+                                    if (Parts[0] == "B")
+                                    {
+                                        is_CONTRL_Tenant = Int32.TryParse(Parts[2], out CONTRL_Tenant);
+                                    }
+                                    else
+                                    {
+                                        is_CONTRL_Tenant = Int32.TryParse(Parts[1], out CONTRL_Tenant);
+                                    }
+                                    
                                     if (is_CONTRL_Tenant)
                                     {
                                         iMessageTenant = CONTRL_Tenant;
@@ -732,7 +742,11 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                         {
                             case "Status":
                                 {
-                                    Analyze_Status();
+                                    if (Tenant != 1508)
+                                    {
+                                        Analyze_Status();
+                                    }
+
                                     break;
                                 }
 

@@ -144,5 +144,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
 
         public double? PackageVolume { get; set; }
         public string MainCarriageCarrierId { get; set; }
+
+        public int? NumberOfContainers { get; set; }
     }
 }

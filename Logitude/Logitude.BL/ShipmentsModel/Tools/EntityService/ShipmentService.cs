@@ -3156,8 +3156,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.InitializePartners();
                 this.InitializeInlandDomestic();
                 this.InitializeAWBFields();
-                this.InitializeMAWBStack();
-
+                if (!loggedTenant.IsDocumentsArchive)
+                {
+                    this.InitializeMAWBStack();
+                } 
                 this.InitializeNumberOfInsidePackages();
                 this.InitializeAccountManager();
                 this.InitializeCarrierPrefix();

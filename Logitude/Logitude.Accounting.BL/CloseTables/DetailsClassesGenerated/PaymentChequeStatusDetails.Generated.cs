@@ -20,17 +20,53 @@ namespace Logitude.Accounting.BL
    {
        public List<PaymentChequeStatusDetails> GetAll()
        {
-		    var all = new List<PaymentChequeStatusDetails>(); 
+		    var all = new List<PaymentChequeStatusDetails>();  
+            all.Add(new PaymentChequeStatusDetails()
+            {    
+                Code = "1", 
+                EnglishName = "Draft", 
+                LocalName = "טיוטה", 
+                SearchFields = "1,Draft,טיוטה", 
+			});
+			 
+            all.Add(new PaymentChequeStatusDetails()
+            {    
+                Code = "3", 
+                EnglishName = "Redeemed", 
+                LocalName = "נפרע", 
+                SearchFields = "3,Redeemed,נפרע", 
+			});
+			 
+            all.Add(new PaymentChequeStatusDetails()
+            {    
+                Code = "4", 
+                EnglishName = "Canceled", 
+                LocalName = "מבוטל", 
+                SearchFields = "4,Canceled,מבוטל", 
+			});
+			 
+            all.Add(new PaymentChequeStatusDetails()
+            {    
+                Code = "2", 
+                EnglishName = "Approved", 
+                LocalName = "אושר", 
+                SearchFields = "2,Approved,אושר", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(PaymentChequeStatus newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+		    newPoco.EnglishName = this.EnglishName;  
+		    newPoco.LocalName = this.LocalName;  
+			newPoco.SearchFields = GetSearchFields(this);    
         }
 
 		public string GetSearchFields(PaymentChequeStatus rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.EnglishName,",",rec.LocalName,",");
         }
    }
 }

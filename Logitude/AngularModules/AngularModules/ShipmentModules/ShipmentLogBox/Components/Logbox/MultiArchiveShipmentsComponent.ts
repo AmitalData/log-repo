@@ -473,6 +473,9 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
                         //this.CurrentSession.CloseCurrentWindow();//.CurrentWindow.Close("");
                     }
                     else {
+                        this.StopBusyIndicator();
+                        this.LoadImporterShipments();
+                        this.CurrentSession.SessionEvent.emit({ Name: "CustomReloadShipments" });
                         this.ValidationErrorsList = myResult.ErrorsArray;
                     }
                 });

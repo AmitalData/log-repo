@@ -3,27 +3,27 @@ import { DocOutSenario } from './DocOutSenario';
 
 describe('DocsOut', () => {
 
-  let DocOutSenarios: DocOutSenario = new DocOutSenario();
+    let DocOutSenarios: DocOutSenario = new DocOutSenario();
 
 
-  beforeEach(() => {
+    beforeEach(() => {
 
-  });
-  browser.ignoreSynchronization = true;
+    });
+    browser.ignoreSynchronization = true;
 
-  it('OpenDocOutTab', function () {
-    DocOutSenarios.OpenDocOutTab();
+    it('OpenDocOutTab', function () {
+        DocOutSenarios.OpenDocOutTab();
 
-  });
+    });
 
-  it('Successfully Printing Document', function () {
-    DocOutSenarios.SuccessfullyPrintingDocument();
+    it('Successfully Printing Document', function () {
+        DocOutSenarios.SuccessfullyPrintingDocument();
 
-  });
+    });
 
-  it('Failing Printing Document', function () {
-    DocOutSenarios.FailingPrintingDocument();
+    it('Failing Printing Document', function () {
+        DocOutSenarios.FailingPrintingDocument();
 
 
-  });
+    });
 });

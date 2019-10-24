@@ -10338,6 +10338,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                      Volume = shipment.Volume,
                      PackageVolume = jd.Volume,
                      MainCarriageCarrierId = m.MainCarriageCarrierId,
+                     NumberOfContainers = shipment.NumberOfContainers,
                  });
 
             return dataList;

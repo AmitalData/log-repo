@@ -221,6 +221,11 @@ namespace Logitude.XSD.INTTRA_Booking
             {
                 this.Errors.Add("Shipment Description  of Goods is required");
             }
+
+            if (this.ShipmentOrderPackages == null || (this.ShipmentOrderPackages!= null && this.ShipmentOrderPackages.Count() == 0))
+            {
+                this.Errors.Add("Shipment Order Packages is required");
+            }
         }
 
         private Address ShipperAddress;
@@ -618,7 +623,7 @@ namespace Logitude.XSD.INTTRA_Booking
                     }
 
                     var contacts = new List<INTTRA_Booking.ContactInformationType>();
-                    var contactPM = contactQuery.GetSinglePM(myCard.PrimaryContactId, Tenant);
+                    var contactPM = contactQuery.GetSinglePM(myCard.ContactId, Tenant);
                     if (contactPM != null)
                     {
                         contacts.Add(new ContactInformationType()
@@ -658,9 +663,14 @@ namespace Logitude.XSD.INTTRA_Booking
                     }
 
                     var contacts = new List<INTTRA_Booking.ContactInformationType>();
-                    var contactPM = contactQuery.GetSinglePM(shipper.PrimaryContactId, Tenant);
-                    if(contactPM != null)
+                    var contactPM = contactQuery.GetSinglePM(this.Shipment.ShipperContactId, Tenant);
+                    if (contactPM != null)
                     {
+                        if (contactPM.Email == null && contactPM.Fax == null && contactPM.BusinessPhone == null)
+                        {
+                            this.Errors.Add("At least one of Shipper Information Contact Phone Number, Email Address or Fax Number must be provided.");
+                        }
+
                         contacts.Add(new ContactInformationType()
                         {
                             Type = ContactTypeValues.InformationContact,
@@ -674,9 +684,13 @@ namespace Logitude.XSD.INTTRA_Booking
                         });
                     }
 
+                    else
+                    {
+                        this.Errors.Add("The Shipper Contact is required.");
+                    }
                     item.Contacts = contacts.ToArray();
                     this.MessagePropertiesParties.Add(item);
-                }    
+                }
             }
             #endregion
             #region Consignee
@@ -698,7 +712,7 @@ namespace Logitude.XSD.INTTRA_Booking
                     }
 
                     var contacts = new List<INTTRA_Booking.ContactInformationType>();
-                    var contactPM = contactQuery.GetSinglePM(myCard.PrimaryContactId, Tenant);
+                    var contactPM = contactQuery.GetSinglePM(this.Shipment.ConsigneeContactId, Tenant);
                     if (contactPM != null)
                     {
                         contacts.Add(new ContactInformationType()
@@ -775,6 +789,7 @@ namespace Logitude.XSD.INTTRA_Booking
         }
         private void BuildMessageDetails_EquipmentDetails()
         {
+       
             var groupedOrders = (from d in this.ShipmentOrderPackages
                                  group d by new { d.PackageTypeId } into g
                                  select new
@@ -783,6 +798,7 @@ namespace Logitude.XSD.INTTRA_Booking
                                      Quantity = g.Sum(s => s.Quantity),
                                  });
 
+           
             List<string> ids = groupedOrders.Select(s => s.PackageTypeId).ToList();
             this.AllPackageTypes = (from d in CommonContext.PackageTypes
                                     where d.Tenant == this.Tenant

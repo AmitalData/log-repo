@@ -829,7 +829,6 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         filter.Cc = this.Cc;
         filter.Bcc = this.Bcc;
         filter.Attachments = "";
-        filter.ExportQuotationsToIntegratedSystem = this.SelectedInternalDocument.ExportQuotationsToIntegratedSystem;
         filter.ObjectTableName = this.ObjecttableName;
         if (this.SelectedInternalDocument.IsCrm) {
             filter.EventTypeCode = this.SelectedInternalDocument.EventTypeCode;
