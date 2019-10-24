@@ -1069,25 +1069,25 @@ export class QuoteChargeItem extends BaseComponent {
 
     public IsAllInCheckBoxVisible: boolean = false;
     SetUIProperties_AllIn() {
-        var isAllInCheckBoxVisible = true;
+        var isAllInCheckBoxVisible = false;
 
-        if (this.ChargesGroupCode == "FRT") {
-            isAllInCheckBoxVisible = false;
+        if (this.ChargesGroupCode != "FRT" && this.IsAdhoc) {
+            var itemFrieght: QuoteChargePM = this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT")[0];
+
+            if (itemFrieght) {
+                if (this.QuotePM.IsSaleCurrencySameAsCost) {
+                    if (this.CostCurrencyId == itemFrieght.CostCurrencyId) {
+                        isAllInCheckBoxVisible = true;
+                    }
+                }
+
+                else {
+                    isAllInCheckBoxVisible = true;
+                }
+            }
         }
 
-        else if (this.IsRoutingRate) {
-            isAllInCheckBoxVisible = false;
-        }
-
-        else if (this.QuotePM.IsSaleCurrencySameAsCost) {
-            isAllInCheckBoxVisible = false;
-        }
-
-        else if (this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT").length == 0) {
-            isAllInCheckBoxVisible = false;
-        }
-
-        this.IsAllInCheckBoxVisible = isAllInCheckBoxVisible;        
+        this.IsAllInCheckBoxVisible = isAllInCheckBoxVisible;
     }
 
     public IsEnabled_CostQuantity: boolean = false;
