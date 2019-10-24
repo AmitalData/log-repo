@@ -1317,35 +1317,17 @@ export class FCLQuoteChargeItem extends BaseComponent {
         var isAllInCheckBoxVisible = false;
         var isAllInInfoIconVisible = false;
 
-        if (this.QuotePM.IsSaleCurrencySameAsCost) {
-            isAllInCheckBoxVisible = false;
-            //isAllInInfoIconVisible = false;
-        }
+        if (this.ChargesGroupCode != "FRT" && this.IsAdhoc) {
+            var itemFrieght: QuoteChargePM = this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT")[0];
 
-      else  if (this.ChargesGroupCode == "FRT") {
-            isAllInCheckBoxVisible = false;
-            isAllInInfoIconVisible = false;
-        }
+            if (itemFrieght) {
+                if (this.CostMeasurementId == itemFrieght.CostMeasurementId && this.CostCurrencyId == itemFrieght.CostCurrencyId) {
+                    isAllInCheckBoxVisible = true;
+                }
 
-        //else if (this.IsRoutingRate) {
-        //    isAllInCheckBoxVisible = false;
-        //    isAllInInfoIconVisible = false;
-        //}
-
-        else if (this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT").length == 0) {
-            isAllInCheckBoxVisible = false;
-            isAllInInfoIconVisible = false;
-        }
-
-        else {
-            var freightCharge = this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT")[0];
-
-            if (this.CostMeasurementId == freightCharge.CostMeasurementId && this.CostCurrencyId == freightCharge.CostCurrencyId) {
-                isAllInCheckBoxVisible = true;
-            }
-
-            else {
-                isAllInInfoIconVisible = true;
+                else {
+                    isAllInInfoIconVisible = true;
+                }
             }
         }
 
