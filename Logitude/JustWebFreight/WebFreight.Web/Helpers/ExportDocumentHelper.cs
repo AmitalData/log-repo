@@ -558,6 +558,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                     }
 
                     break;
+
                 case "MBOL":
                 case "SBOL":
                 case "716":
@@ -1191,9 +1192,34 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         break;
                     }
 
+                case "SBOLP":
+                    {
+                        OceanExportWebService oceanWebService = new OceanExportWebService();
+                        byte[] byteArray = oceanWebService.GetFBLDataForPickUp(entityId, childEntityId, tenant);
+                        MemoryStream memorystream = new MemoryStream(byteArray);
+                        XmlSerializer serializer = new XmlSerializer(typeof(FBLDataProvider));
+                        FBLDataProvider fbLdataprovider = (FBLDataProvider)serializer.Deserialize(memorystream);
+                        fbLdataprovider.InServerSide = true;
+                        theT2 = System.DateTime.Now.Ticks;
+                       
+                        StiDataColumnsCollection packagesLinesColumns = new StiDataColumnsCollection();
+                        packagesLinesColumns.Add("PackageMarksAndNumbers", typeof(string));
+                        packagesLinesColumns.Add("PackageQuantity", typeof(string));
+                        packagesLinesColumns.Add("PackageType", typeof(string));
+                        packagesLinesColumns.Add("PackageDescriptionOfGoods", typeof(string));
+                        packagesLinesColumns.Add("PackageGrossWeight", typeof(string));
+                        packagesLinesColumns.Add("PackageVolume", typeof(string));
+                        packagesLinesColumns.Add("PackageQuantityAndType", typeof(string));
 
+                        StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "FBL", Name = "FBLDataProvider", BusinessObjectValue = fbLdataprovider };
+                        StiBusinessObject packageLinesBusinessObject = new StiBusinessObject() { Name = "PackagesLines", Alias = "PackagesLines", ParentBusinessObject = currentBusinessObject, Columns = packagesLinesColumns };
+                        
+                        report.Dictionary.BusinessObjects.Clear();
+                        currentBusinessObject.BusinessObjects.Add(packageLinesBusinessObject);
 
-
+                        report = LoadandRender(defaulttemplate, currentBusinessObject, tenant);
+                        break;
+                    }                    
             }
 
             return report;
