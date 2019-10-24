@@ -173,6 +173,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.RefreshScreen();
                 }
