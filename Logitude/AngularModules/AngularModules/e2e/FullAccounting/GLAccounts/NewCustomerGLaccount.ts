@@ -2,17 +2,17 @@ import { browser, by, element, WebDriver, protractor } from 'protractor';
 import { FieldsHelper } from '../../Helpers/FieldsHelper';
 import { GeneralFunctions } from '../../Helpers/GeneralFunctions';
 
-export class NewCustomer{
-  private Helper: FieldsHelper;
-  private Generator: GeneralFunctions;
+export class NewCustomer {
+    private Helper: FieldsHelper;
+    private Generator: GeneralFunctions;
 
-  constructor() {
-    this.Helper = new FieldsHelper();
-    this.Generator = new GeneralFunctions();
-  }
+    constructor() {
+        this.Helper = new FieldsHelper();
+        this.Generator = new GeneralFunctions();
+    }
 
 
-  public CreateNewCustomerGLAccount(Name: string) {
+    public CreateNewCustomerGLAccount(Name: string) {
 
         this.Helper.WaitByIdAndClick('NewCustomer');
         this.Helper.ItemsVisibility('Customer_EnglishName');
@@ -52,13 +52,13 @@ export class NewCustomer{
         this.Helper.WaitByIdAndClick('Customer.TH.Accounting');
         this.Helper.WaitByIdAndClick('Activate');
         this.Helper.WaitByIdAndFill('GLAccount_ChartOfAccountsId', 'cust');
-        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'GLAccount_ChartOfAccountsId', 'cust');
+        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
         this.Helper.WaitBusyIndicator();
 
         // this.Helper.WaitByIdAndFill('GLAccount_DisplayNumber', DisplayNumber);
         //this.Helper.WaitByIdAndFill('GLAccount_LocalName', Name+DisplayNumber);
         this.Helper.WaitByIdAndFill('GLAccount_CurrencyId', 'Nis');
-        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'GLAccount_CurrencyId', 'Nis');
+        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
         this.Helper.WaitBusyIndicator();
 
 
