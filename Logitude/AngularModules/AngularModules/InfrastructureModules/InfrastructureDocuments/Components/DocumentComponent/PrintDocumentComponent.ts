@@ -1,3 +1,4 @@
+
 declare var System: any;
 declare var window: any;
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -31,6 +32,8 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {Guid} from '../../../../Infrastructure/Utilities/Guid';
 import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
 import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadManager';
+import {ExportDocumentArgs} from '../../../../Infrastructure/DataContracts/ExportDocumentArgs';
+
 
 @Component({
     moduleId: module.id,
@@ -935,7 +938,10 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
             var numberOfCopy = this.AddedDocumentTypeCopyViewModels.filter(d => d.IsSelected).length;
             var count: number = 0;
+            var copiesIds: string[] = [];
+             
             this.AddedDocumentTypeCopyViewModels.filter(d => d.IsSelected).forEach((copy) => {
+                if (!this.IsBuildDocumentViaWorkerRole) {
 
                     this._exportDocumentService.getDocumentPdfFile(this.DataContext.DocumentTypePM.Id, this.EntityId, this.ObjectTableId, this.ChildEntityId, this.ChildObjectTableId, this.CurrentDocumentOut.Id, this.CurrentDocumentOut.Tenant, copy.CurrentDocumentTypeCopy.Id, SessionLocator.LoggedUserId).subscribe(res => {
                         count += 1;
@@ -948,11 +954,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                                 copy.Exists = true;
 
                                 if (numberOfCopy == count) {
-                                    this.CurrentDocumentOut.Issued = true;
-                                    this.CurrentDocumentOut.NeedsRebuild = false;
-                                    this.DataContext.Issued = true;
-                                    this.CurrentDocumentOut.IssuedByUserId = SessionInfo.LoggedUserId;
-                                    this.CurrentDocumentOut.IsChangeIssuedDate = true;
+                                    this.UpdateDocumentOutData();
                                     this.SaveContext();
                                 }
                             }
@@ -967,9 +969,16 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                         }                
 
                     });
-          
-             
+                }
+
             });
+
+            if (this.IsBuildDocumentViaWorkerRole) {
+                this.BliudDocumentViewWorkerRole(this.AddedDocumentTypeCopyViewModels.filter(d => d.IsSelected));
+                this.IsBuildDocumentViaWorkerRole = false;
+            }
+
+
             if (mode == "New" && this.AddedDocumentTypeCopyViewModels) {
            
                     var copies = new Array<DocumentCopiesViewModel>();
@@ -998,6 +1007,19 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
       
     }
+
+
+
+    UpdateDocumentOutData() {
+        if (this.CurrentDocumentOut) {
+            this.CurrentDocumentOut.Issued = true;
+            this.CurrentDocumentOut.NeedsRebuild = false;
+            this.DataContext.Issued = true;
+            this.CurrentDocumentOut.IssuedByUserId = SessionInfo.LoggedUserId;
+            this.CurrentDocumentOut.IsChangeIssuedDate = true;
+        }
+    }
+
 
     IsDocumentBuildSucceeded: boolean = false;
     IsDocumentBuildFailed: boolean = false;
@@ -1060,7 +1082,36 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
     }
 
+    BliudDocumentViewWorkerRole(documentTypeCopyLists: DocumentCopiesViewModel[]) {
 
+        if (documentTypeCopyLists.length > 0) {
+            var exportDocumentArgs = new ExportDocumentArgs();
+            exportDocumentArgs.DocumentTypeId = this.DataContext.DocumentTypePM.Id;
+            exportDocumentArgs.EntityId = this.EntityId;
+            exportDocumentArgs.ObjectTableId = this.ObjectTableId;
+            exportDocumentArgs.ChildEntityId = this.ChildEntityId;
+            exportDocumentArgs.ChildObjectTableId = this.ChildObjectTableId;
+            exportDocumentArgs.CurrentDocumentOutId = this.CurrentDocumentOut.Id;
+            exportDocumentArgs.LoggedContactId = SessionLocator.LoggedUserId;
+            exportDocumentArgs.Tenant = SessionLocator.Tenant;
+            exportDocumentArgs.DocumentTypeCopyIdsList = documentTypeCopyLists.map(function (a) { return a.Id; });
+            this._exportDocumentService.BuildDocumentViaWorkerRole(exportDocumentArgs).subscribe(res => {
+
+                documentTypeCopyLists.forEach((copy) => {
+                    copy.Status = "Success";
+                    copy.Exists = true;
+                });
+
+
+                this.CurrentDocumentOut.Issued = true;
+                this.CurrentDocumentOut.NeedsRebuild = false;
+                this.DataContext.Issued = true;
+                this.CurrentDocumentOut.IssuedByUserId = SessionInfo.LoggedUserId;
+                this.CurrentDocumentOut.IsChangeIssuedDate = true;
+                this.SaveContext();
+            });
+        }
+    }
 
 
     PrintMethod(item: DocumentCopiesViewModel) {
@@ -1211,9 +1262,10 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
     }
 
-    public UpdateDocument() {
+    IsBuildDocumentViaWorkerRole: boolean = false;
+    public UpdateDocument(usedWorkerRole: boolean = false) {
 
-
+        this.IsBuildDocumentViaWorkerRole = usedWorkerRole;
         this.CurrentSession.CurrentWindow = this.CurrentSession.Windows.filter(d=> d.Title == "Print " + this.DataContext.DocumentTypePM.Name)[0];
 
         ServiceLocator.SendTotangoUserActivity(this.ObjectTableName, this.DocumentTypeload.Name + " Building");

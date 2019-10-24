@@ -362,7 +362,10 @@ export class APInvoiceMenuButtonsHandler {
     }
 
     ValidateInvoiceDate() {
-        this.CurrentSession.StartBusyIndicatorLoading();
+        //this.CurrentSession.StartBusyIndicatorLoading();
+
+        this.entityArgs.EditComponent.StartBusyIndicatorLoading();
+
         var service: InvoiceDomainService = new InvoiceDomainService();
         service.ValidateInvoiceDate(this.EntityPM.InvoiceDate).subscribe((response: ServiceResponse) => {
 

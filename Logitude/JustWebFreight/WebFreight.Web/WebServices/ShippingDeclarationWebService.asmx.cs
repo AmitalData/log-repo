@@ -103,7 +103,7 @@ namespace WebFreight.Web.WebServices
             }
 
             ContactQuery contactQuery = new ContactQuery(tenant);
-            string email = AuthenticationUtil.GetAuthenticatedUser();
+            string email = AuthenticationUtil.GetAuthenticatedUser(tenant);
             ContactPM loggedContact = contactQuery.GetContactByEmailOnly(email, tenant);
             if (loggedContact != null)
             {
@@ -956,10 +956,14 @@ namespace WebFreight.Web.WebServices
                 #endregion
 
                 #region User
-                if (User != null)
+
+                string contactEmail = AuthenticationUtil.GetAuthenticatedUser(tenant);
+
+
+                if (!string.IsNullOrEmpty(contactEmail))
                 {
                     Contact currentContact = (from a in commonContext.Contacts
-                                              where a.Email == User.Identity.Name && a.Tenant == tenant
+                                              where a.Email == contactEmail && a.Tenant == tenant
                                               select a).FirstOrDefault();
 
                     if (currentContact != null)

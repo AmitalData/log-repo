@@ -3,6 +3,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Helpers;
 using Logitude.Server.Tools;
+using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.StorageService;
 using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
@@ -49,7 +50,7 @@ namespace WebFreight.Web.App_Code
 
         public HttpResponseMessage GetDocumentPdfFile(string documentTypeId, string entityId, string entityObjectTableId, string childEntityId, string childObjectTableId, string documentOutId, int tenant, string documentTypeCopyId, string userId)
         {
-         
+
             try
             {
 
@@ -73,7 +74,7 @@ namespace WebFreight.Web.App_Code
             }
         }
 
- 
+
         public HttpResponseMessage GetDownloadFileFromServer(string documentId, int tenant)
         {
             List<object> htmlResult = new List<object>();
@@ -141,6 +142,22 @@ namespace WebFreight.Web.App_Code
         string ReportKey = "";
         int Tenant = 0;
         bool IsDisplayOnly = false;
+
+
+
+        public HttpResponseMessage PostBuildDocumentViaWorkerRole(ExportDocumentArgs filter)
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("DocumentExecutionQueue", filter.Tenant);
+            queueservice.Send(new Dictionary<string, string>() { { "ExportDocumentArgsXmal", LogitudeXmlSerializer.SerializeObjectToXmlString(filter) } }, null, null, null, null);
+
+
+            return Request.CreateResponse(HttpStatusCode.OK, "");
+        }
 
 
         public HttpResponseMessage PostReportStimulsoftViewer(ExportDocumentArgs filter)

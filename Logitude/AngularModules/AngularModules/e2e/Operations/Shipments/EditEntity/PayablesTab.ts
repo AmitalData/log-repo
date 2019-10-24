@@ -14,6 +14,7 @@ export class PayablesTabComponent {
         this.Helper.WaitEditComponentBusyIndicator();
         this.Helper.WaitByIdAndClick('Shipment.TH.Payables');
         this.Helper.WaitEditComponentBusyIndicator();
+       
         this.Helper.ItemsVisibility('ATDSPayable-payable');
         
         this.AddPayableLines(shipperRef1,ShipmentType);
@@ -38,6 +39,9 @@ export class PayablesTabComponent {
             this.AddPayables('Inland', '10', '10','Shipment');
             this.AddPayables('Order', '10', '20','Shipment');
         }
+
+        this.Helper.WaitByIdAndClick('Shipment-Save');
+        this.WaitBusyIndicatorToShowandHide();
         
     }
 
@@ -79,10 +83,6 @@ export class PayablesTabComponent {
     
     CreatAPInvoicewithVoid(shipperRef1: string,Voided :boolean) {
        
-        if(Voided==true){
-        this.Helper.WaitByIdAndClick('Shipment-Save');
-        this.WaitBusyIndicatorToShowandHide();
-        }
         
         this.Helper.WaitByIdAndClick('ReceiveInvoice');
         this.Helper.WaitEditComponentBusyIndicator();
@@ -132,10 +132,10 @@ export class PayablesTabComponent {
         
         this.Helper.WaitByIdAndClick('APInvoice.B.Approve');
         this.WaitBusyIndicatorToShowandHide();
-        //this.WaitBusyIndicatorToShowandHide();        
-        this.Helper.WaitEditComponentBusyIndicator();
+       
+        this.WaitBusyIndicatorToShowandHide();
         if(Voided==true){
-        //this.Helper.WaitEditComponentBusyIndicator();
+        
         this.Helper.WaitByIdAndClick('MenuButtons_1');
         this.Helper.WaitByIdAndClick('APInvoice.B.CancelApproval');
         this.WaitBusyIndicatorToShowandHide();

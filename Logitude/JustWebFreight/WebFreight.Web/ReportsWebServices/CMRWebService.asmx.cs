@@ -19,6 +19,7 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.BL.Helpers;
 using Simplog.Server.Infrastructure.Helpers;
+using Logitude.Server.Tools.Helpers;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -73,16 +74,17 @@ namespace WebFreight.Web.ReportsWebServices
 
             if (currentUser == null)
             {
+                string email = AuthenticationUtil.GetAuthenticatedUser(tenant);
                 if (tenant != 0)
                 {
                     currentUser = (from a in commonContext.Users
-                                   where a.Contact.Email == User.Identity.Name && a.Tenant == tenant
+                                   where a.Contact.Email == email && a.Tenant == tenant
                                    select a).FirstOrDefault();
                 }
                 else
                 {
                     currentUser = (from a in commonContext.Users
-                                   where a.Contact.Email == User.Identity.Name && a.Tenant == 0
+                                   where a.Contact.Email == email && a.Tenant == 0
                                    select a).FirstOrDefault();
                 }
             }
