@@ -58,7 +58,7 @@ export class FieldsHelper {
 
     WaitShowEditComponentBusyIndicator() {
         var EC = protractor.ExpectedConditions;
-        browser.wait(EC.visibilityOf(element(by.id("EditComponentBusyIndicator_0"))), 100000).then(a => { });
+        browser.wait(EC.visibilityOf(element(by.id("EditComponentBusyIndicator_0"))), 100000000).then(a => { });
     }
 
     WaitBusyIndicator() {
