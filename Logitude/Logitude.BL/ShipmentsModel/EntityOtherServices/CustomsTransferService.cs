@@ -407,10 +407,13 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
         {
             if (ComputedData != null)
             {
+                string[] fileProps = fileName.Split('.');
+
                 BlobFileInfo fileInfo = new BlobFileInfo()
                 {
-                    FileName = fileName,
-                    FolderName = "others",
+                    FileName = fileProps[0],
+                    HasExternalContainer = true,
+                    //FolderName = "others",
                     Extension = "xls",
                     Tenant = tenant,
                     FileSize = ComputedData.Length,

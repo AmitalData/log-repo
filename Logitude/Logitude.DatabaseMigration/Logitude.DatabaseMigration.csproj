@@ -1553,6 +1553,10 @@
     <Compile Include="Migrations\201910170619476_DropSearchFieldColumnFromCustomsTransferLine_Samar.Designer.cs">
       <DependentUpon>201910170619476_DropSearchFieldColumnFromCustomsTransferLine_Samar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910211551152_UpdateField_JournalLine_IncreaseLength3.cs" />
+    <Compile Include="Migrations\201910211551152_UpdateField_JournalLine_IncreaseLength3.Designer.cs">
+      <DependentUpon>201910211551152_UpdateField_JournalLine_IncreaseLength3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201910231231109_CardFieldsMappingMigration.cs" />
     <Compile Include="Migrations\201910231231109_CardFieldsMappingMigration.Designer.cs">
       <DependentUpon>201910231231109_CardFieldsMappingMigration.cs</DependentUpon>
@@ -2663,6 +2667,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910170619476_DropSearchFieldColumnFromCustomsTransferLine_Samar.resx">
       <DependentUpon>201910170619476_DropSearchFieldColumnFromCustomsTransferLine_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910211551152_UpdateField_JournalLine_IncreaseLength3.resx">
+      <DependentUpon>201910211551152_UpdateField_JournalLine_IncreaseLength3.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910231231109_CardFieldsMappingMigration.resx">
       <DependentUpon>201910231231109_CardFieldsMappingMigration.cs</DependentUpon>
