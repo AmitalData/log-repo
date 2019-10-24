@@ -117,6 +117,7 @@ export class NewDocumentTypeComponent extends BaseComponent implements OnInit {
                 case "Vendor":
                 case "Warehouse":
                 case "OpenFormatReport":
+                case "Occasion":
                 {                        
                     if (tempList.filter(f => f.Name == item.Name).length == 0) {
                         tempList.push(item);

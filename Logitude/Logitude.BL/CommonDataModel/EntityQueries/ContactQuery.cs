@@ -1129,11 +1129,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public string GetContactEmailById(string id, int tenant)
         {
-         
-
-
             string email = (from a in repository.context.Contacts
-                                   where a.Id == id && a.Tenant == tenant
+                                   where a.Id == id 
                                    && a.Tenant == tenant
                                    select new ContactPM()
                                    {

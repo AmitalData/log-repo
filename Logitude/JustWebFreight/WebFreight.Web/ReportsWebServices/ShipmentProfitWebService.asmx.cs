@@ -398,10 +398,11 @@ namespace WebFreight.Web.ReportsWebServices
                 }
                 else
                 {
-                    if (User != null)
+                    string loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser(tenant);
+                    if (!string.IsNullOrEmpty(loggedUserEmail))
                     {
                         Contact currentContact = (from a in commonContext.Contacts
-                                                  where a.Email == User.Identity.Name && a.Tenant == tenant
+                                                  where a.Email == loggedUserEmail && a.Tenant == tenant
                                                   select a).FirstOrDefault();
 
                         if (currentContact != null)

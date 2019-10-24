@@ -21,6 +21,7 @@ using Logitude.BL.Helpers;
 using System.Web;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
+using Logitude.Server.Tools.Helpers;
 
 namespace WebFreight.Web.ReportsWebServices
 { 
@@ -400,7 +401,7 @@ namespace WebFreight.Web.ReportsWebServices
         private Contact GetLoggedContact(int tenant)
         {
 
-            string email = HttpContext.Current.User.Identity.Name;
+            string email = AuthenticationUtil.GetAuthenticatedUser(tenant);
             ContactRepository contactRepository = new ContactRepository(tenant);
             Contact loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
             return loggedContact;
