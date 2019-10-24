@@ -79,12 +79,29 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     {
                         List<ARPaymentChequePM> aRPaymentChequePMs = bankDepositQueryService.GetListByPaymentId(transactionPM.SourceId, entityPM.Tenant);
                         ARPaymentChequePM aRPaymentCheque = aRPaymentChequePMs.Where(a => a.ChequeNumber == transactionPM.Reference1).FirstOrDefault();
-
-                        aRPaymentCheque.StatusCode = "6";
-                        aRPaymentCheque.ChangeSetOp = ChangeSetOperation.Update;
-                        ARPaymentChequeUpdateService aRPaymentChequeUpdateService = new ARPaymentChequeUpdateService(MainContext, AdditionalContexts, entityPM.Tenant);
-                         aRPaymentChequeUpdateService.Update(aRPaymentCheque, true);
+                        if (aRPaymentCheque != null)
+                        {
+                            aRPaymentCheque.StatusCode = "6";
+                            aRPaymentCheque.ChangeSetOp = ChangeSetOperation.Update;
+                            ARPaymentChequeUpdateService aRPaymentChequeUpdateService = new ARPaymentChequeUpdateService(MainContext, AdditionalContexts, entityPM.Tenant);
+                            aRPaymentChequeUpdateService.Update(aRPaymentCheque, true);
+                        }
                         
+                    }
+                    if (transactionPM.SourceTypeCode == "3") // 3- ARPayment
+                    {
+                        List<ARPaymentChequePM> aRPaymentChequePMs = aRPaymentChequeQueryService.GetInBankAccountChequesByPaymentId(transactionPM.SourceId, entityPM.Tenant);
+
+                        ARPaymentChequePM aRPaymentCheque = aRPaymentChequePMs.Where(a => a.ChequeNumber == transactionPM.Reference2).FirstOrDefault();
+
+                        if (aRPaymentCheque != null)
+                        {
+                            aRPaymentCheque.StatusCode = "6";
+                            aRPaymentCheque.ChangeSetOp = ChangeSetOperation.Update;
+                            ARPaymentChequeUpdateService aRPaymentChequeUpdateService = new ARPaymentChequeUpdateService(MainContext, AdditionalContexts, entityPM.Tenant);
+                            aRPaymentChequeUpdateService.Update(aRPaymentCheque, true);
+                        }
+
                     }
                     else if (transactionPM.SourceTypeCode == "9") // 9- Payment Cheque
                     {
