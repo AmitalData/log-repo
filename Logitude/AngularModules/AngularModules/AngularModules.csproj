@@ -6752,9 +6752,10 @@
     <Content Include="InfrastructureModules.zip" />
     <Content Include="e2e\Testing Scenarios\Production\Team Ayman\ProtractorProdStaging.bat" />
     <Content Include="e2e\Testing Scenarios\Production\Team Ayman\ProtractorProdFullCollection.bat" />
-    <Content Include="e2e\Testing Scenarios\Master\Team Ayman\TeamAymanCases.bat" />
+    <Content Include="e2e\Testing Scenarios\Master\Team Ayman\ProtractorMasterAfterSwap.bat" />
     <Content Include="e2e\Testing Scenarios\Master\Team Islam\RunTestCases.bat" />
     <Content Include="e2e\Testing Scenarios\Master\Team Mohammad\TeamMohammadCases.bat" />
+    <Content Include="e2e\Testing Scenarios\Master\Team Ayman\ProtractorMasterStaging.bat" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Common\EntityLists\AddressList.ts" />
