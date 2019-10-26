@@ -1,10 +1,11 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Simplog.Data.CommonDataModel.EntityPOCOs
 {
     public class AccountingPartner
     {
-        [Key]
+        [Key, ForeignKey("Card")] 
         public string Id { get; set; }
         public int Tenant { get; set; }
         public string PrimaryContactName { get; set; }

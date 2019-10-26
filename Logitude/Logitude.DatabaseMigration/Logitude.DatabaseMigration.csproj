@@ -1565,6 +1565,10 @@
     <Compile Include="Migrations\201910231127147_AddingAccountingPartnerTable_Rabaia.Designer.cs">
       <DependentUpon>201910231127147_AddingAccountingPartnerTable_Rabaia.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910261310088_FixingPrincipleError_Rabaia.cs" />
+    <Compile Include="Migrations\201910261310088_FixingPrincipleError_Rabaia.Designer.cs">
+      <DependentUpon>201910261310088_FixingPrincipleError_Rabaia.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2680,6 +2684,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910231231109_CardFieldsMappingMigration.resx">
       <DependentUpon>201910231231109_CardFieldsMappingMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910261310088_FixingPrincipleError_Rabaia.resx">
+      <DependentUpon>201910261310088_FixingPrincipleError_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
