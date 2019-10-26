@@ -262,7 +262,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             }
             else
             {
-                Stream blbstr = null;
+                //Stream blbstr = null;
                 if (bytearray != null)
                 {
                     string[] fileProps = fileName.Split('.');

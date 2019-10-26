@@ -1557,6 +1557,10 @@
     <Compile Include="Migrations\201910211551152_UpdateField_JournalLine_IncreaseLength3.Designer.cs">
       <DependentUpon>201910211551152_UpdateField_JournalLine_IncreaseLength3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910231231109_CardFieldsMappingMigration.cs" />
+    <Compile Include="Migrations\201910231231109_CardFieldsMappingMigration.Designer.cs">
+      <DependentUpon>201910231231109_CardFieldsMappingMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201910231127147_AddingAccountingPartnerTable_Rabaia.cs" />
     <Compile Include="Migrations\201910231127147_AddingAccountingPartnerTable_Rabaia.Designer.cs">
       <DependentUpon>201910231127147_AddingAccountingPartnerTable_Rabaia.cs</DependentUpon>
@@ -2673,6 +2677,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910211551152_UpdateField_JournalLine_IncreaseLength3.resx">
       <DependentUpon>201910211551152_UpdateField_JournalLine_IncreaseLength3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910231231109_CardFieldsMappingMigration.resx">
+      <DependentUpon>201910231231109_CardFieldsMappingMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

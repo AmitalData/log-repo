@@ -5,7 +5,7 @@ import {Injectable} from '@angular/core';
 @Injectable()
 
 export class ExportDocumentArgs {
-
+    public DocumentTypeId: string;
     public DocumentTypeTemplateId: string;
     public Tenant: number;
     public CurrentDocumentOutId: string;
@@ -23,5 +23,7 @@ export class ExportDocumentArgs {
     public ChildObjectTableId: string;
     public LoggedContactName: string;
     public AccountingCurrencyId: string;
+    public DocumentTypeCopyIdsList: string[];
+
 }
 

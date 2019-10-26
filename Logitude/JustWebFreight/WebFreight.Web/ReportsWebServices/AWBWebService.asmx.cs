@@ -232,10 +232,12 @@ namespace WebFreight.Web.ReportsWebServices
 
         private void GetLoggedContactData(AWBDataProvider awbDp, int tenant)
         {
-            if (User != null)
+           string contactEmail =  AuthenticationUtil.GetAuthenticatedUser(tenant);
+
+            if (!string.IsNullOrEmpty(contactEmail))
             {
                 ContactQuery contactQuery = new ContactQuery(tenant);
-                ContactPM contactPM = contactQuery.GetContactByEmailOnly(User.Identity.Name, tenant);
+                ContactPM contactPM = contactQuery.GetContactByEmailOnly(contactEmail, tenant);
 
                 if (contactPM != null)
                 {
