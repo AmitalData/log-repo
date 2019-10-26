@@ -4392,7 +4392,6 @@
     <Content Include="WcfApi\TotangoWcfService.svc" />
     <Content Include="WcfApi\TruckerWcfService.svc" />
     <Content Include="WcfApi\VendorCommissionWcfService.svc" />
-    <Content Include="WcfApi\VendorWcfService - Copy.svc" />
     <Content Include="WcfApi\VendorWcfService.svc" />
     <Content Include="WcfApi\VesselWcfServcie.svc" />
     <Content Include="WcfServices\XapFilesDatabaseWcfService.svc" />
@@ -6000,9 +5999,6 @@
     <Compile Include="WcfApi\VendorCommissionWcfService.svc.cs">
       <DependentUpon>VendorCommissionWcfService.svc</DependentUpon>
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WcfApi\VendorWcfService - Copy.svc.cs">
-      <DependentUpon>VendorWcfService - Copy.svc</DependentUpon>
     </Compile>
     <Compile Include="WcfApi\VendorWcfService.svc.cs">
       <DependentUpon>VendorWcfService.svc</DependentUpon>
