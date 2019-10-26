@@ -421,9 +421,16 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                     string[] Parts = HeaderDocumentIdentifier.Split('-');
 
                                     int CONTRL_Tenant = 0;
-
-                                    bool is_CONTRL_Tenant = Int32.TryParse(Parts[1], out CONTRL_Tenant);
-
+                                    bool is_CONTRL_Tenant = false;
+                                    if (Parts[0] == "B")
+                                    {
+                                        is_CONTRL_Tenant = Int32.TryParse(Parts[2], out CONTRL_Tenant);
+                                    }
+                                    else
+                                    {
+                                        is_CONTRL_Tenant = Int32.TryParse(Parts[1], out CONTRL_Tenant);
+                                    }
+                                    
                                     if (is_CONTRL_Tenant)
                                     {
                                         iMessageTenant = CONTRL_Tenant;

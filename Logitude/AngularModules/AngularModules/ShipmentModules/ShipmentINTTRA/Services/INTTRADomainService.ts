@@ -228,9 +228,12 @@ export class INTTRASettingsHelperItem {
     BranchId: string;
     RegisteredCarrierId: string;
     IsRegistered: boolean;
+    IsRegistered_Old: boolean;
     Tenant: number;
     IsFromTenantZero: boolean;
     ShippingLineId: string;
+    UpdatesShipmentsDates: boolean;
+    UpdatesShipmentsDates_Old: boolean;
 }
 export class INTTRACommunicationSettingsHelper {
     Id: string;

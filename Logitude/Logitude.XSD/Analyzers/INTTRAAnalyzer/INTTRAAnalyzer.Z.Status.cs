@@ -104,16 +104,17 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
             {
                 DateTime iLogDate = TenantServerConfigration.GetCurrentDateTime(this.Tenant);
 
-                this.UpdateShipmentRoutings();
+                if (this.isUpdatingShipmentDates)
+                {
+                    this.UpdateShipmentRoutings();
+                }
+
                 this.UpdateContainerFields();
-
                 this.UpdateLastStatus(this.EventLocationCode, this.EventLocationeDate, iLogDate, iContainer);
-
                 shipmentPM.INTTRALastStatusDate = iLogDate;
 
                 ShipmentService service = new ShipmentService(myShipmentContext, shipmentPM, systemEmail);
                 service.Update(true);
-
 
                 ShipmentContainerStatus iStatus = new ShipmentContainerStatus()
                 {
@@ -141,7 +142,6 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
 
                 iShipmentContainerStatusRepository.Add(iStatus);
 
-
                 if (this.shipmentPM.ShipmentLevelCode == "C")
                 {
                     if (this.shipmentPM.ShipmentConsoleShipments.Count > 0)
@@ -161,9 +161,8 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                             if (iHouseContainer != null)
                             {
                                 this.UpdateLastStatus(this.EventLocationCode, this.EventLocationeDate, iLogDate, iHouseContainer);
-
                                 iHouse.INTTRALastStatusDate = iLogDate;
-
+                                
                                 ShipmentService iHouseService = new ShipmentService(myShipmentContext, iHouse, systemEmail);
                                 iHouseService.Update(true);
 
@@ -210,6 +209,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
         private string VesselName = null;
         private string VoyageNumber = null;
         private string ShippingLineName = null;
+        private bool isUpdatingShipmentDates = false;
         private void ReadShippingLine(MessagePropertiesType iMessageProperties)
         {
             this.ShippingLineName = shipmentPM.MainCarriageCarrierName;
@@ -223,6 +223,16 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
 
                     string d = iMessageProperties.TransportationDetails.ConveyanceInformation.CarrierSCAC;
                     string f = iMessageProperties.TransportationDetails.ConveyanceInformation.TransportIdentification.Value;
+                }
+            }
+
+            if (shipmentPM.MainCarriageCarrierId != null)
+            {
+                ShippingLineRepository iShippingLineRepository = new ShippingLineRepository(myCommonContext);
+                ShippingLine iShippingLine = iShippingLineRepository.GetSingleShippingLine(shipmentPM.MainCarriageCarrierId, this.Tenant);
+                if (iShippingLine != null)
+                {
+                    this.isUpdatingShipmentDates = iShippingLine.INTTRAUpdatesShipment;
                 }
             }
         }
@@ -832,56 +842,59 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
             {
                 shipmentPM.HasContainerException = false;
 
-                var AllVoyageNumber = (from a in AllContainers
-                                       where
-                                       a.VoyageTripNumber != null
-                                       && a.RoutingIds != null
-                                       && a.ETD != null
-                                       && a.ETA != null
-
-                                       group a by new
-                                       {
-                                           a.VoyageTripNumber,
-                                           a.RoutingIds,
-                                           a.ETD,
-                                           a.ETA
-                                       } into g
-
-                                       select g.Key).ToList();
-
-                if (AllVoyageNumber.Count == 1)
+                if (this.isUpdatingShipmentDates)
                 {
-                    string iRouting_Main = this.shipmentPM.MainCarriageFromPortId + "," + this.shipmentPM.MainCarriageToPortId;
-                    string iRouting_Trs1 = this.shipmentPM.Transshipment1FromPortId + "," + this.shipmentPM.Transshipment1ToPortId;
-                    string iRouting_Trs2 = this.shipmentPM.Transshipment2FromPortId + "," + this.shipmentPM.Transshipment2ToPortId;
-                    string iRouting_Trs3 = this.shipmentPM.Transshipment3FromPortId + "," + this.shipmentPM.Transshipment3ToPortId;
+                    var AllVoyageNumber = (from a in AllContainers
+                                           where
+                                           a.VoyageTripNumber != null
+                                           && a.RoutingIds != null
+                                           && a.ETD != null
+                                           && a.ETA != null
 
-                    string iRoutingIds = AllVoyageNumber.FirstOrDefault().RoutingIds;
-                    DateTime? iETD = AllVoyageNumber.FirstOrDefault().ETD;
-                    DateTime? iETA = AllVoyageNumber.FirstOrDefault().ETA;
+                                           group a by new
+                                           {
+                                               a.VoyageTripNumber,
+                                               a.RoutingIds,
+                                               a.ETD,
+                                               a.ETA
+                                           } into g
 
-                    if (iRoutingIds == iRouting_Main)
+                                           select g.Key).ToList();
+
+                    if (AllVoyageNumber.Count == 1)
                     {
-                        this.shipmentPM.MainCarriageETD = iETD;
-                        this.shipmentPM.MainCarriageETA = iETA;
-                    }
+                        string iRouting_Main = this.shipmentPM.MainCarriageFromPortId + "," + this.shipmentPM.MainCarriageToPortId;
+                        string iRouting_Trs1 = this.shipmentPM.Transshipment1FromPortId + "," + this.shipmentPM.Transshipment1ToPortId;
+                        string iRouting_Trs2 = this.shipmentPM.Transshipment2FromPortId + "," + this.shipmentPM.Transshipment2ToPortId;
+                        string iRouting_Trs3 = this.shipmentPM.Transshipment3FromPortId + "," + this.shipmentPM.Transshipment3ToPortId;
 
-                    else if (iRoutingIds == iRouting_Trs1)
-                    {
-                        this.shipmentPM.Transshipment1ETD = iETD;
-                        this.shipmentPM.Transshipment1ETA = iETA;
-                    }
+                        string iRoutingIds = AllVoyageNumber.FirstOrDefault().RoutingIds;
+                        DateTime? iETD = AllVoyageNumber.FirstOrDefault().ETD;
+                        DateTime? iETA = AllVoyageNumber.FirstOrDefault().ETA;
 
-                    else if (iRoutingIds == iRouting_Trs2)
-                    {
-                        this.shipmentPM.Transshipment2ETD = iETD;
-                        this.shipmentPM.Transshipment2ETA = iETA;
-                    }
+                        if (iRoutingIds == iRouting_Main)
+                        {
+                            this.shipmentPM.MainCarriageETD = iETD;
+                            this.shipmentPM.MainCarriageETA = iETA;
+                        }
 
-                    else if (iRoutingIds == iRouting_Trs3)
-                    {
-                        this.shipmentPM.Transshipment3ETD = iETD;
-                        this.shipmentPM.Transshipment3ETA = iETA;
+                        else if (iRoutingIds == iRouting_Trs1)
+                        {
+                            this.shipmentPM.Transshipment1ETD = iETD;
+                            this.shipmentPM.Transshipment1ETA = iETA;
+                        }
+
+                        else if (iRoutingIds == iRouting_Trs2)
+                        {
+                            this.shipmentPM.Transshipment2ETD = iETD;
+                            this.shipmentPM.Transshipment2ETA = iETA;
+                        }
+
+                        else if (iRoutingIds == iRouting_Trs3)
+                        {
+                            this.shipmentPM.Transshipment3ETD = iETD;
+                            this.shipmentPM.Transshipment3ETA = iETA;
+                        }
                     }
                 }
             }
