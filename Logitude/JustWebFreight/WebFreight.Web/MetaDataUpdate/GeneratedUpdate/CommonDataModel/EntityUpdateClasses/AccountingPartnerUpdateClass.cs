@@ -117,7 +117,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "Simplog.FreightLib.NewAccountingPartnerCommand",
 			      				    DefaultText =  "Accounting Partner",
-			      				    Code =  "VNDR",
+			      				    Code =  "ACCP",
 			      				    Name =  "AccountingPartners",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -2363,7 +2363,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup AccountingPartnerQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "VNDR", Name = "AccountingPartners" }, queryGroupRepository);
+	        QueryGroup AccountingPartnerQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ACCP", Name = "AccountingPartners" }, queryGroupRepository);
 						QueryGroup AccountingPartnerQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "35d6", Name = " Query Group" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
 
@@ -2371,7 +2371,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        List<ObjectField> AccountingPartnerObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AccountingPartner").ToList();   
 
 			   TextCode AccountingPartnerTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPartner.Q.AccountingPartners", DefaultText = @"Accounting Partners",LocalDefaultText = null, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature AccountingPartnerFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VENDORS", ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartner.Features.AccountingPartners", NameTextCodeDefaultText = "AccountingPartners", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature AccountingPartnerFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGPARTNERS", ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartner.Features.AccountingPartners", NameTextCodeDefaultText = "AccountingPartners", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
