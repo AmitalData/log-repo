@@ -13,8 +13,6 @@ FOR /L %%A IN (1,1,1) DO (
 call npm run e2e -- --params.Env="test_1071" --params.Team="mohammad" --suite=login,BankAccount>D:\TeamMohammadE2E\Test\prot.log 2>&1
 CALL :CheckError "Create BankAccount"
 
-call npm run e2e -- --params.Env="test_1071" --params.Team="mohammad" --suite=login,ARPayment>D:\TeamMohammadE2E\Test\prot.log 2>&1
-CALL :CheckError "Create ARPayment"
 
 
 call npm run e2e -- --params.Env="test_1071" --params.Team="mohammad" --suite=login,NewChartOfAccount>D:\TeamMohammadE2E\Test\prot.log 2>&1
@@ -26,12 +24,16 @@ CALL :CheckError "Create VendorGLAccount"
 call npm run e2e -- --params.Env="test_1071" --params.Team="mohammad" --suite=login,CustomerGLAccount>D:\TeamMohammadE2E\Test\prot.log 2>&1
 CALL :CheckError "Create CustomerGLAccount"
 
+call npm run e2e -- --params.Env="test_1071" --params.Team="mohammad" --suite=login,ARPayment>D:\TeamMohammadE2E\Test\prot.log 2>&1
+CALL :CheckError "Create ARPayment"
+
+
 
 call npm run e2e -- --params.Env="test_1071" --params.Team="mohammad" --suite=login,RevGLAccount>D:\TeamMohammadE2E\Test\prot.log 2>&1
 CALL :CheckError "Create RevGLAccount"
 
-call npm run e2e -- --params.Env="test_1071" --params.Team="mohammad" --suite=login,PaymentCheque>D:\TeamMohammadE2E\Test\prot.log 2>&1
-CALL :CheckError "Create PaymentCheque"
+rem call npm run e2e -- --params.Env="test_1071" --params.Team="mohammad" --suite=login,PaymentCheque>D:\TeamMohammadE2E\Test\prot.log 2>&1
+rem CALL :CheckError "Create PaymentCheque"
 
 
 )

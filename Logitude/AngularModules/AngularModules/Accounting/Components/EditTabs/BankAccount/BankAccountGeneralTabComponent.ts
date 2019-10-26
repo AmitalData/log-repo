@@ -132,7 +132,7 @@ export class BankAccountGeneralTabComponent extends BaseComponent {
             this.EntityPM.PrintingBranchNumber = value;
         }
     }
-    get PrintingAccountNumber() { return this.EntityPM.BranchNumber; }
+    get PrintingAccountNumber() { return this.EntityPM.PrintingAccountNumber; }
     set PrintingAccountNumber(value: string) {
         if (this.EntityPM.PrintingAccountNumber != value) {
             this.EntityPM.PrintingAccountNumber = value;
