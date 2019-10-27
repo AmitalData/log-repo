@@ -61,17 +61,28 @@ namespace WebFreight.Web.Helpers
         public string ExportDocument2Pdf(string documentTypeId, string entityId, string entityObjectTableId, string childEntityId, string childObjectTableId, string documentOutId, int tenant, string documentTypeCopyId, string userId=null)
         {
             string result = string.Empty;
-            if (IsCallBuildDocumentReportWebService(tenant))
-            {
-                result = ExportDocument2PdfViewWebService(documentTypeId, entityId, entityObjectTableId, childEntityId, childObjectTableId, documentOutId, tenant, documentTypeCopyId, userId);
-            }
-            else
-            {
+            //if (IsCallBuildDocumentReportWebService(tenant))
+            //{
+            //    result = ExportDocument2PdfViewWebService(documentTypeId, entityId, entityObjectTableId, childEntityId, childObjectTableId, documentOutId, tenant, documentTypeCopyId, userId);
+            //}
+            //else
+            //{
                 result = ExportDocument2PdfNormalWay(documentTypeId, entityId, entityObjectTableId, childEntityId, childObjectTableId, documentOutId, tenant, documentTypeCopyId, userId);
-            }
+            //}
 
             return result;
         }
+
+
+        public string ExportDocument2Pdf(ExportDocumentArgs exportDocumentArgs , string documentTypeCopyId)
+        {
+            string result = ExportDocument2PdfNormalWay(exportDocumentArgs.DocumentTypeId, exportDocumentArgs.EntityId, exportDocumentArgs.ObjectTableId, exportDocumentArgs.ChildEntityId, exportDocumentArgs.ChildObjectTableId, exportDocumentArgs.CurrentDocumentOutId, exportDocumentArgs.Tenant, documentTypeCopyId, exportDocumentArgs.LoggedContactId);
+            return result;
+        }
+
+
+
+
 
         private string ExportDocument2PdfViewWebService(string documentTypeId, string entityId, string entityObjectTableId, string childEntityId, string childObjectTableId, string documentOutId, int tenant, string documentTypeCopyId, string userId)
         {

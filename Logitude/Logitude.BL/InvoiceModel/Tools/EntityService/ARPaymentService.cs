@@ -1270,7 +1270,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     journalLine.DebitAccountId = cashBook.AccountId;
                     journalLine.CreditAccountId = glAccount != null ? glAccount.Id : null;
                     journalLine.ChangeSetOp = ChangeSetOperation.Insert;
-                    journalLine.Notes = paymentPM.PrintNotes;
+                    journalLine.Notes = paymentPM.InternalNotes;
                     journal.JournalLines.Add(journalLine);
                 }
             }
@@ -1355,7 +1355,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 journalLine.DebitAccountId = cashBook.AccountId;
                 journalLine.CreditAccountId = glAccount != null ? glAccount.Id : null;
                 journalLine.ChangeSetOp = ChangeSetOperation.Insert;
-                journalLine.Notes = payment.PrintNotes;
+                journalLine.Notes = payment.InternalNotes;
                 journal.JournalLines.Add(journalLine);
             }
             return journal;

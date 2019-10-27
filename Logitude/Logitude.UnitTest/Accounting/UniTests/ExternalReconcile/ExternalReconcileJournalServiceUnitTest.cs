@@ -52,11 +52,11 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
 
 
-            var myExternalReconcileJournalService = new ExternalReconcileJournalService();
+            var myExternalReconcileJournalService = new ExternalReconcileMoveBankCheckFromTransfer2GLAccountService();
             myExternalReconcileJournalService.MustInit(fakeExternalReconcileDataProvider);
             TestsUtil.AssertThrows<Exception>(() =>
             {
-                myExternalReconcileJournalService.MoveBankCheckFromTransfer2GLAccount(_Tenant, "", myReconcileExternalPageLinePM.Id);
+                myExternalReconcileJournalService.CreateJournalWithExtReconcile(_Tenant, "", myReconcileExternalPageLinePM.Id);
             }, "ledgerTransactionBankTransferId is must", "if (string.IsNullOrWhiteSpace(ledgerTransactionBankTransferId))");
             
 
@@ -95,11 +95,11 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
 
 
-            var myExternalReconcileJournalService = new ExternalReconcileJournalService();
+            var myExternalReconcileJournalService = new ExternalReconcileMoveBankCheckFromTransfer2GLAccountService();
             myExternalReconcileJournalService.MustInit(fakeExternalReconcileDataProvider);
             TestsUtil.AssertThrows<Exception>(() =>
             {
-                myExternalReconcileJournalService.MoveBankCheckFromTransfer2GLAccount(_Tenant, myOrginalJournalTransaction.First().Id,"" /*myReconcileExternalPageLinePM.Id*/);
+                myExternalReconcileJournalService.CreateJournalWithExtReconcile(_Tenant, myOrginalJournalTransaction.First().Id,"" /*myReconcileExternalPageLinePM.Id*/);
             }, "reconcileExternalPageLineId is must", "if (string.IsNullOrWhiteSpace(reconcileExternalPageLineId))");
 
 
@@ -140,11 +140,11 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
 
 
-            var myExternalReconcileJournalService = new ExternalReconcileJournalService();
+            var myExternalReconcileJournalService = new ExternalReconcileMoveBankCheckFromTransfer2GLAccountService();
             myExternalReconcileJournalService.MustInit(fakeExternalReconcileDataProvider);
             TestsUtil.AssertThrows<Exception>(() =>
             {
-                myExternalReconcileJournalService.MoveBankCheckFromTransfer2GLAccount(_Tenant, "my Bad Legdager not exist"/*myOrginalJournalTransaction.First().Id*/, myReconcileExternalPageLinePM.Id);
+                myExternalReconcileJournalService.CreateJournalWithExtReconcile(_Tenant, "my Bad Legdager not exist"/*myOrginalJournalTransaction.First().Id*/, myReconcileExternalPageLinePM.Id);
             }, "Ledger not exist", "_ExternalReconcileDataProvider.GetLedgerTransactionList");
 
 
@@ -189,12 +189,12 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
 
 
-            var myExternalReconcileJournalService = new ExternalReconcileJournalService();
+            var myExternalReconcileJournalService = new ExternalReconcileMoveBankCheckFromTransfer2GLAccountService();
             myExternalReconcileJournalService.MustInit(fakeExternalReconcileDataProvider);
             TestsUtil.AssertThrows<Exception>(() =>
             {
-                myExternalReconcileJournalService.MoveBankCheckFromTransfer2GLAccount(_Tenant, myOrginalJournalTransaction.First().Id, myReconcileExternalPageLinePM.Id);
-            }, ExternalReconcileJournalService.M_LedgerNotInTransferBank, "if (bankAccountFromTransfer == null)");
+                myExternalReconcileJournalService.CreateJournalWithExtReconcile(_Tenant, myOrginalJournalTransaction.First().Id, myReconcileExternalPageLinePM.Id);
+            }, ExternalReconcileMoveBankCheckFromTransfer2GLAccountService.M_LedgerNotInTransferBank, "if (bankAccountFromTransfer == null)");
 
         }
 
@@ -238,12 +238,12 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
             
 
-            var myExternalReconcileJournalService = new ExternalReconcileJournalService();
+            var myExternalReconcileJournalService = new ExternalReconcileMoveBankCheckFromTransfer2GLAccountService();
             myExternalReconcileJournalService.MustInit(fakeExternalReconcileDataProvider);
             TestsUtil.AssertThrows<Exception>(() =>
             {
-                myExternalReconcileJournalService.MoveBankCheckFromTransfer2GLAccount(_Tenant, myOrginalJournalTransaction.First().Id, myReconcileExternalPageLinePM.Id);
-            }, ExternalReconcileJournalService.M_InputPageLineNotInTransferBank, "if (bankAccountFromReconcileExternalPageLine == null)");
+                myExternalReconcileJournalService.CreateJournalWithExtReconcile(_Tenant, myOrginalJournalTransaction.First().Id, myReconcileExternalPageLinePM.Id);
+            }, ExternalReconcileMoveBankCheckFromTransfer2GLAccountService.M_InputPageLineNotInTransferBank, "if (bankAccountFromReconcileExternalPageLine == null)");
 
         }
 
@@ -288,12 +288,12 @@ fakeExternalReconcileDataProvider.GetBankAccountFromReconcileExternalPageLineId(
 
 
 
-            var myExternalReconcileJournalService = new ExternalReconcileJournalService();
+            var myExternalReconcileJournalService = new ExternalReconcileMoveBankCheckFromTransfer2GLAccountService();
             myExternalReconcileJournalService.MustInit(fakeExternalReconcileDataProvider);
             TestsUtil.AssertThrows<Exception>(() =>
             {
-                myExternalReconcileJournalService.MoveBankCheckFromTransfer2GLAccount(_Tenant, myOrginalJournalTransaction.First().Id, myReconcileExternalPageLinePM.Id);
-            }, ExternalReconcileJournalService.M_BankBelongtoDifferentBankThanLedger, "");
+                myExternalReconcileJournalService.CreateJournalWithExtReconcile(_Tenant, myOrginalJournalTransaction.First().Id, myReconcileExternalPageLinePM.Id);
+            }, ExternalReconcileMoveBankCheckFromTransfer2GLAccountService.M_BankBelongtoDifferentBankThanLedger, "");
 
         }
         ///have to teste
@@ -334,12 +334,12 @@ fakeExternalReconcileDataProvider.GetBankAccountFromReconcileExternalPageLineId(
 
             myReconcileExternalPageLinePM.DebitAmount = 1234567677;
 
-            var myExternalReconcileJournalService = new ExternalReconcileJournalService();
+            var myExternalReconcileJournalService = new ExternalReconcileMoveBankCheckFromTransfer2GLAccountService();
             myExternalReconcileJournalService.MustInit(fakeExternalReconcileDataProvider);
             TestsUtil.AssertThrows<Exception>(() =>
             {
-                myExternalReconcileJournalService.MoveBankCheckFromTransfer2GLAccount(_Tenant, myOrginalJournalTransaction.First().Id, myReconcileExternalPageLinePM.Id);
-            }, ExternalReconcileJournalService.M_AmountInPageAndLedgerMustBeEqual, "");
+                myExternalReconcileJournalService.CreateJournalWithExtReconcile(_Tenant, myOrginalJournalTransaction.First().Id, myReconcileExternalPageLinePM.Id);
+            }, ExternalReconcileMoveBankCheckFromTransfer2GLAccountService.M_AmountInPageAndLedgerMustBeEqual, "");
 
         }
         ///have to teste
@@ -381,12 +381,12 @@ fakeExternalReconcileDataProvider.GetBankAccountFromReconcileExternalPageLineId(
             myReconcileExternalPageLinePM.DebitAmount = 0;
             myReconcileExternalPageLinePM.CreditAmount = 10;
 
-            var myExternalReconcileJournalService = new ExternalReconcileJournalService();
+            var myExternalReconcileJournalService = new ExternalReconcileMoveBankCheckFromTransfer2GLAccountService();
             myExternalReconcileJournalService.MustInit(fakeExternalReconcileDataProvider);
             TestsUtil.AssertThrows<Exception>(() =>
             {
-                myExternalReconcileJournalService.MoveBankCheckFromTransfer2GLAccount(_Tenant, myOrginalJournalTransaction.First().Id, myReconcileExternalPageLinePM.Id);
-            }, ExternalReconcileJournalService.M_CheckAmountInPageMustBeInDebit, "");
+                myExternalReconcileJournalService.CreateJournalWithExtReconcile(_Tenant, myOrginalJournalTransaction.First().Id, myReconcileExternalPageLinePM.Id);
+            }, ExternalReconcileMoveBankCheckFromTransfer2GLAccountService.M_CheckAmountInPageMustBeInDebit, "");
 
         }
 
@@ -427,12 +427,12 @@ fakeExternalReconcileDataProvider.GetBankAccountFromReconcileExternalPageLineId(
 
 
             myLedgerTransactionTransferInCredit.IsExternalReconcile = true;
-            var myExternalReconcileJournalService = new ExternalReconcileJournalService();
+            var myExternalReconcileJournalService = new ExternalReconcileMoveBankCheckFromTransfer2GLAccountService();
             myExternalReconcileJournalService.MustInit(fakeExternalReconcileDataProvider);
             TestsUtil.AssertThrows<Exception>(() =>
             {
-                myExternalReconcileJournalService.MoveBankCheckFromTransfer2GLAccount(_Tenant, myOrginalJournalTransaction.First().Id, myReconcileExternalPageLinePM.Id);
-            }, ExternalReconcileJournalService.M_LedgerAlreadyHaveExternalReconcile, "");
+                myExternalReconcileJournalService.CreateJournalWithExtReconcile(_Tenant, myOrginalJournalTransaction.First().Id, myReconcileExternalPageLinePM.Id);
+            }, ExternalReconcileMoveBankCheckFromTransfer2GLAccountService.M_LedgerAlreadyHaveExternalReconcile, "");
 
         }
 
@@ -475,12 +475,12 @@ fakeExternalReconcileDataProvider.GetBankAccountFromReconcileExternalPageLineId(
 
             myOrginalJournalTransaction.ForEach(r => r.InProgressExternalReconcile = true);
 
-            var myExternalReconcileJournalService = new ExternalReconcileJournalService();
+            var myExternalReconcileJournalService = new ExternalReconcileMoveBankCheckFromTransfer2GLAccountService();
             myExternalReconcileJournalService.MustInit(fakeExternalReconcileDataProvider);
             TestsUtil.AssertThrows<Exception>(() =>
             {
-                myExternalReconcileJournalService.MoveBankCheckFromTransfer2GLAccount(_Tenant, myOrginalJournalTransaction.First().Id, myReconcileExternalPageLinePM.Id);
-            }, ExternalReconcileJournalService.M_InProgressExternalReconcile_Ledger, "");
+                myExternalReconcileJournalService.CreateJournalWithExtReconcile(_Tenant, myOrginalJournalTransaction.First().Id, myReconcileExternalPageLinePM.Id);
+            }, ExternalReconcileMoveBankCheckFromTransfer2GLAccountService.M_InProgressExternalReconcile_Ledger, "");
 
         }
 
@@ -522,12 +522,12 @@ fakeExternalReconcileDataProvider.GetBankAccountFromReconcileExternalPageLineId(
 
             myReconcileExternalPageLinePM.InProgressExternalReconcile = true;
 
-            var myExternalReconcileJournalService = new ExternalReconcileJournalService();
+            var myExternalReconcileJournalService = new ExternalReconcileMoveBankCheckFromTransfer2GLAccountService();
             myExternalReconcileJournalService.MustInit(fakeExternalReconcileDataProvider);
             TestsUtil.AssertThrows<Exception>(() =>
             {
-                myExternalReconcileJournalService.MoveBankCheckFromTransfer2GLAccount(_Tenant, myOrginalJournalTransaction.First().Id, myReconcileExternalPageLinePM.Id);
-            }, ExternalReconcileJournalService.M_InProgressExternalReconcile_Page, "");
+                myExternalReconcileJournalService.CreateJournalWithExtReconcile(_Tenant, myOrginalJournalTransaction.First().Id, myReconcileExternalPageLinePM.Id);
+            }, ExternalReconcileMoveBankCheckFromTransfer2GLAccountService.M_InProgressExternalReconcile_Page, "");
 
         }
 
@@ -567,9 +567,9 @@ fakeExternalReconcileDataProvider.GetBankAccountFromReconcileExternalPageLineId(
 
 
 
-            var myExternalReconcileJournalService = new ExternalReconcileJournalService();
+            var myExternalReconcileJournalService = new ExternalReconcileMoveBankCheckFromTransfer2GLAccountService();
             myExternalReconcileJournalService.MustInit(fakeExternalReconcileDataProvider);
-            myExternalReconcileJournalService.MoveBankCheckFromTransfer2GLAccount(_Tenant, myOrginalJournalTransaction.First().Id, myReconcileExternalPageLinePM.Id);
+            myExternalReconcileJournalService.CreateJournalWithExtReconcile(_Tenant, myOrginalJournalTransaction.First().Id, myReconcileExternalPageLinePM.Id);
 
             Assert.IsNotNull(myExternalReconcileJournalService.TheJournalPM);
             var theCreatedJournal = myExternalReconcileJournalService.TheJournalPM;

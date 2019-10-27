@@ -147,16 +147,21 @@ namespace WebFreight.Web.App_Code
 
         public HttpResponseMessage PostBuildDocumentViaWorkerRole(ExportDocumentArgs filter)
         {
-            string token = HttpContext.Current.Request.Headers["Token"];
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-            IQueueService queueservice = new DbQueueService();
-            queueservice.InitializeQueue("DocumentExecutionQueue", filter.Tenant);
-            queueservice.Send(new Dictionary<string, string>() { { "ExportDocumentArgsXmal", LogitudeXmlSerializer.SerializeObjectToXmlString(filter) } }, null, null, null, null);
-
-
-            return Request.CreateResponse(HttpStatusCode.OK, "");
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue("DocumentExecutionQueue", filter.Tenant);
+                queueservice.Send(new Dictionary<string, string>() { { "ExportDocumentArgsXmal", LogitudeXmlSerializer.SerializeObjectToXmlString(filter) } }, null, null, null, null);
+                return Request.CreateResponse(HttpStatusCode.OK, "");
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
         }
 
 

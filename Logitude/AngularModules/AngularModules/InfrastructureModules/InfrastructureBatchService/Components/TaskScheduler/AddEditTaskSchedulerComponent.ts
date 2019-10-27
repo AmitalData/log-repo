@@ -347,7 +347,9 @@ export class AddEditTaskSchedulerComponent  {
                         this.CurrentSession.CloseCurrentWindow();
                         this.EntityPM = myResponse.Result;
                         this.EntityPM.IsDirty = false;
-                        this.DataContext.fatherComponent.RefreshTasksSchedular(this.EntityPM);
+                        if (this.DataContext.fatherComponent) {
+                            this.DataContext.fatherComponent.RefreshTasksSchedular(this.EntityPM);
+                        }
                     }
 
                     else {
@@ -368,7 +370,9 @@ export class AddEditTaskSchedulerComponent  {
                             this.EntityPM = myResponse.Result;
                             this.EntityPM.IsDirty = false;
                             this.CurrentSession.CloseCurrentWindow();
-                            this.DataContext.fatherComponent.RefreshTasksSchedular(this.EntityPM);
+                            if (this.DataContext.fatherComponent) {
+                                this.DataContext.fatherComponent.RefreshTasksSchedular(this.EntityPM);
+                            }
                         }
 
                         else {

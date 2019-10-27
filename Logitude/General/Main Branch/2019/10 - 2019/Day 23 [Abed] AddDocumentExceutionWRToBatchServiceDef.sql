@@ -20,5 +20,3 @@ INSERT INTO [dbo].[BatchServicesDefinitionMods]
            ('DocumentExecutionWR'
            ,0
            ,1)
-
-		   select * from BatchServicesDefinitions

@@ -2890,6 +2890,8 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         public IDbSet<DecCargoSplitConsPackDet> DecCargoSplitConsPackDets { get; set; }
         public IDbSet<TPGFileType> TPGFileTypes { get; set; }
         public IDbSet<DecCargoSplitCargoIdentifier> DecCargoSplitCargoIdentifiers { get; set; }
+        public IDbSet<AccountingPartner> AccountingPartners { get; set; }
+
 
 
         #endregion
@@ -3402,6 +3404,8 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new CorrespondencesAttachmentMap());
             modelBuilder.Configurations.Add(new TicketSourceMap());
             modelBuilder.Configurations.Add(new TicketCreatedByTypeMap());
+            modelBuilder.Configurations.Add(new AccountingPartnerMap());
+
             #endregion
 
             #region Booking
