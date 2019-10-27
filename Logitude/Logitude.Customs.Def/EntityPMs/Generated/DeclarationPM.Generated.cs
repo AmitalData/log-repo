@@ -3927,6 +3927,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isPaymentProtested ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsPaymentProtested  
+	   {
+	    
+	     get
+		{
+		   return isPaymentProtested;
+		 }
+		 set
+		 {
+		   if(isPaymentProtested != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsPaymentProtested",OldValue=isPaymentProtested,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isPaymentProtested=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -143,6 +143,7 @@ export class DeclarationList {
 	IsPending900: boolean;
 	CourierPendingReasonList: string;
 	CargoDescription: string;
+	IsPaymentProtested: boolean;
 	
 }
  

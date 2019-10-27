@@ -372,6 +372,10 @@
     <Compile Include="Migrations\201909110831576_AddSched.Designer.cs">
       <DependentUpon>201909110831576_AddSched.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910271409135_AddDECIsPaymentProtested.cs" />
+    <Compile Include="Migrations\201910271409135_AddDECIsPaymentProtested.Designer.cs">
+      <DependentUpon>201910271409135_AddDECIsPaymentProtested.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -637,6 +641,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909110831576_AddSched.resx">
       <DependentUpon>201909110831576_AddSched.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910271409135_AddDECIsPaymentProtested.resx">
+      <DependentUpon>201910271409135_AddDECIsPaymentProtested.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
