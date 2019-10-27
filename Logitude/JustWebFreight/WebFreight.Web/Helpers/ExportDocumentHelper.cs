@@ -2109,40 +2109,6 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
             return documentsExecutionLog;
         }
 
-        public  DocumentsBuildViaWorkerRoleResult GetDocumentsBuildViaWorkerRoleResult(string documentExecutionLogId, int tenant)
-        {
-            DocumentsExecutionLogRepository documentsExecutionLogRepository = new DocumentsExecutionLogRepository(tenant);
-            DocumentsExecutionLog documentsExecutionLog = documentsExecutionLogRepository.GetSingleDocumentsExecutionLog(documentExecutionLogId, tenant);
-            DocumentsBuildViaWorkerRoleResult result = new DocumentsBuildViaWorkerRoleResult();
-            if (documentsExecutionLog != null)
-            {
-                result.StatusCode = documentsExecutionLog.StatusCode;
-                if (result.StatusCode == "F")
-                {
-                    result.HasError = true;
-                    result.ExceptionMessage = GetUnderStandableMessageFromMessageException(documentsExecutionLog.ExceptionMessage);
-                }
-            }
-            else
-            {
-                result.HasError = true;
-                result.ExceptionMessage = "Documents execution Log not found";
-            }
-            return result;
-        }
-
-
-        private  string GetUnderStandableMessageFromMessageException(string exceptionMessage)
-        {
-            string result = string.Empty;
-            if (!string.IsNullOrEmpty(exceptionMessage))
-            {
-                string[] lines = exceptionMessage.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
-                result = lines[0];
-            }
-            return result;
-        }
-
     }
 
 
@@ -2163,10 +2129,5 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
         public string DocumentOutId { get; set; }
     }
 
-    public class DocumentsBuildViaWorkerRoleResult
-    {
-        public string ExceptionMessage { get; set; }
-        public bool HasError { get; set; }
-        public string StatusCode { get; set; }
-    }
+
 }

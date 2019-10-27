@@ -861,8 +861,6 @@ namespace WebFreight.Web.App_Code
             return pixels;
         }
 
-
-
         public HttpResponseMessage PostBuildDocumentViaWorkerRole(ExportDocumentArgs exportDocumentArgs)
         {
             try
@@ -882,24 +880,7 @@ namespace WebFreight.Web.App_Code
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetCheckDocumentsIsBulidedViaWorkerRoleResult(string documentExecutionLogId, int tenant)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
-                DocumentsBuildViaWorkerRoleResult result = exportDocumentHelper.GetDocumentsBuildViaWorkerRoleResult(documentExecutionLogId, tenant);
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
 
-     
 
     }
 

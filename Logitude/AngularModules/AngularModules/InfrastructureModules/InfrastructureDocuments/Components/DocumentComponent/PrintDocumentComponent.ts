@@ -35,7 +35,8 @@ import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadMana
 import {ExportDocumentArgs} from '../../../../Infrastructure/DataContracts/ExportDocumentArgs';
 import {Observable}     from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
-
+import {DocumentsExecutionLogList} from '../../../../Common/EntityLists/DocumentsExecutionLogList';
+import {DocumentsExecutionLogListExtendedService} from '../../../../Common/Services/ExtendedLists/DocumentsExecutionLogListExtendedService';
 @Component({
     moduleId: module.id,
     selector: 'PrintDocument',
@@ -86,6 +87,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
     public SelectedAsDefaultBtnVisible: boolean;
     private CurrentSession = SessionLocator.SelectedSession;
+    private documentsExecutionLogListExtendedService: DocumentsExecutionLogListExtendedService;
     constructor(public _documentTypeCustomFieldService: DocumentTypeCustomFieldService, public _documentOutPMService: DocumentOutPMService, public _documentTypePMService: DocumentTypePMExtendedService, public _exportDocumentService: ExportDocumentService, public _documentTypeTemplateListExtendedService: DocumentTypeTemplateListExtendedService, public _htmlEditorService: HtmlEditorService) {
         super();
 
@@ -1144,24 +1146,30 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
             if (this.IsStartCheckDocumentBuildViaWorkerRoleTimer) {
 
+                if (this.documentsExecutionLogListExtendedService == null) {
+                    this.documentsExecutionLogListExtendedService = new DocumentsExecutionLogListExtendedService();
+                }
 
-                this._exportDocumentService.GetCheckDocumentsIsBulidedViaWorkerRoleResult(documentExecutionLogId, SessionLocator.Tenant).subscribe(res => {
+
+                this.documentsExecutionLogListExtendedService.GetDocumentsExecutionLogList(documentExecutionLogId).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
+                    var documentsExecutionLogList: DocumentsExecutionLogList = res.Result;
+
                     if (this.IsStartCheckDocumentBuildViaWorkerRoleTimer) {
-                        if (pmResponse.HasError || (pmResponse.Result && pmResponse.Result.HasError) || (pmResponse.Result && pmResponse.Result.StatusCode == "D")) {
+                        if (pmResponse.HasError || !documentsExecutionLogList  || (documentsExecutionLogList && (documentsExecutionLogList.StatusCode == "D" || documentsExecutionLogList.StatusCode == "F"))) {
                             this.StartCheckDocumentBuildViaWorkerRoleTimerTimersub.unsubscribe();
                             this.IsStartCheckDocumentBuildViaWorkerRoleTimer = false;
                             this.StopBusyIndicator();
                         }
 
                         if (!pmResponse.HasError) {
-                            var result: any = pmResponse.Result;
-                            if (result) {
-                                if (result.HasError) {
+
+                            if (documentsExecutionLogList) {
+                                if (documentsExecutionLogList.StatusCode == "F") {
                                     var messageWindow = new MessageWindow();
-                                    messageWindow.Show(result.ExceptionMessage);
+                                    messageWindow.Show(documentsExecutionLogList.ExceptionMessage);
                                 }
-                                else if (result.StatusCode == "D") {
+                                else if (documentsExecutionLogList.StatusCode == "D") {
                                     documentTypeCopyLists.forEach((copy) => {
                                         copy.Status = "Success";
                                         copy.Exists = true;
@@ -1173,7 +1181,10 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                                     this.CurrentDocumentOut.IsChangeIssuedDate = true;
                                     this.SaveContext();
                                 }
-
+                            }
+                            else {
+                                var messageWindow = new MessageWindow();
+                                messageWindow.Show("Documents execution Log not found");
                             }
 
                         }
