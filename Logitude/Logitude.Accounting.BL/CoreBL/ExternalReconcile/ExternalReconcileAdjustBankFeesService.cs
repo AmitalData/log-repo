@@ -117,10 +117,18 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 
                 JournalId = TheNewJournal.Id,
                 Line = line++,
-                //IF EXISTS (SELECT name FROM sys.indexes WHERE name = N'IX_ReconcileExternalPageLineId' AND object_id = object_id(N'[dbo].[JournalExternalReconciles]', N'U'))
-                //DROP INDEX[IX_ReconcileExternalPageLineId] ON[dbo].[JournalExternalReconciles]
-                //ALTER TABLE[dbo].[JournalExternalReconciles] ALTER COLUMN[ReconcileExternalPageLineId][varchar](15) NULL
-                //CREATE INDEX[IX_ReconcileExternalPageLineId] ON[dbo].[JournalExternalReconciles]([ReconcileExternalPageLineId])
+
+
+//                DROP INDEX[IX_ReconcileExternalPageLineId] ON[dbo].[JournalExternalReconciles]
+//                ALTER TABLE[dbo].[JournalExternalReconciles] ALTER COLUMN[ReconcileExternalPageLineId][varchar](15) not null
+//                CREATE INDEX[IX_ReconcileExternalPageLineId] ON[dbo].[JournalExternalReconciles]([ReconcileExternalPageLineId])
+
+
+//IF EXISTS(SELECT name FROM sys.indexes WHERE name = N'IX_LedgerTransactionId' AND object_id = object_id(N'[dbo].[JournalExternalReconciles]', N'U'))
+//    DROP INDEX[IX_LedgerTransactionId] ON[dbo].[JournalExternalReconciles]
+//ALTER TABLE[dbo].[JournalExternalReconciles] ALTER COLUMN[LedgerTransactionId][varchar](15) NULL
+//CREATE INDEX[IX_LedgerTransactionId] ON[dbo].[JournalExternalReconciles]([LedgerTransactionId])
+
                 LedgerTransactionId = null,
                 ReconcileExternalPageLineId = r.Id
             };
