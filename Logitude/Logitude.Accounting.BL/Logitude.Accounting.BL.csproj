@@ -205,7 +205,7 @@
     <Compile Include="CoreBL\GLAccountCounterService.cs" />
     <Compile Include="CoreBL\ExternalReconcile\CreateAutoExternalReconcileWhileStreamingService.cs" />
     <Compile Include="CoreBL\ExternalReconcile\ExternalReconcileDataProvider.cs" />
-    <Compile Include="CoreBL\ExternalReconcile\ExternalReconcileJournalService.cs" />
+    <Compile Include="CoreBL\ExternalReconcile\ExternalReconcileMoveBankCheckFromTransfer2GLAccountService.cs" />
     <Compile Include="CoreBL\CreateJournalReconcileService.cs" />
     <Compile Include="CoreBL\CashbookService.cs" />
     <Compile Include="CoreBL\FunctionalTests\ClearAccountingDB.cs" />

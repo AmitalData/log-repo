@@ -283,10 +283,32 @@ export class QuoteStepItem extends BaseComponent {
         this.IsNew = isNew;
         this.EntityPM = entity;
         this.QuoteChargePM = fatherComponent.EntityPM;
+
+        this.SetWeightUnitCode();
     }
 
-    get WeightUnitCode() { return this.fatherComponent.DataContext.QuotePM.GrossWeightUnitCode; }
+    public WeightUnitCode: string;
+    private SetWeightUnitCode() {
+        var code: string;
 
+        switch (this.QuoteChargePM.CostMeasurementCode) {
+            case "GRWT": { code = this.fatherComponent.DataContext.QuotePM.GrossWeightUnitCode; break; }
+            case "CHWT": { code = this.fatherComponent.DataContext.QuotePM.ChargeableWeightUnitCode; break; }
+            case "VOLU": { code = this.fatherComponent.DataContext.QuotePM.VolumeUnitCode; break; }
+            //case "BTEU": { code = ; break; }
+            //case "FIXD": { code = ; break; }
+            //case "PRVL": { code = ; break; }
+            //case "PRFR": { code = ; break; }
+            case "GWTN": { code = "Ton"; break; }
+            case "QTY": { code = "pieces"; break; }
+            case "CWKG": { code = "KG"; break; }
+            case "GWKG": { code = "KG"; break; }
+            case "VCBM": { code = "CBM"; break; }
+        }
+
+        this.WeightUnitCode = code;
+    }
+    
     get MarkUpType() {
         var myResult = "";
 
