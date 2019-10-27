@@ -259,9 +259,26 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
                 SecurityUtility.CheckContactFeature("User", "READ", authToken.Tenant);
 
                 List<UserExtendedList> totalDataList = new List<UserExtendedList>();
-                List<UserList> usersList = new List<UserList>();
-                List<UserLicense> usersLicenses = new List<UserLicense>();
-                List<TenantManagementLicense> tenantManagementLicenses = new List<TenantManagementLicense>();
+
+                #region Tenant Management & Tenant Management Licenses
+                IGlobalContext globalContext = GlobalContext.GetContext();
+                TenantManagementRepository tenantManagementRepository = new TenantManagementRepository(globalContext);
+                TenantManagementLicenseRepository myTenantRepository = new TenantManagementLicenseRepository(globalContext);
+
+                TenantManagement tenantManagement = tenantManagementRepository.GetSingleTenantManagement(tenant);
+                IQueryable<TenantManagementLicense> myTenantResult = myTenantRepository.GetTenantManagementLicenses(tenant);
+                List<TenantManagementLicense> tenantManagementLicenses  = myTenantResult.ToList();
+                #endregion
+
+                #region Users Licenses
+                List<string> Codes = tenantManagementLicenses.Select(s => s.PackageCode).ToList();
+
+                UserLicenseRepository myRepository = new UserLicenseRepository(tenant);
+                IQueryable<UserLicense> myResult = myRepository.GetUserLicenses(tenant);
+                List<UserLicense> usersLicenses = (from d in myResult
+                                 where Codes.Contains(d.PackageCode)
+                                 select d).ToList();
+                #endregion
 
                 #region Users
                 QueryOperations queryOperations = new QueryOperations()
@@ -335,11 +352,56 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
 
                 ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
                 UserRepository userRepository = new UserRepository(MyContext);
-                IQueryable<User> entityPocos = userRepository.GetUsers(tenant);
-                entityPocos = entityPocos.Where(d => !d.Contact.InActive);
-
                 UserQuery userQuery = new UserQuery(userRepository);
 
+                IQueryable<User> entityPocos = userRepository.GetUsers(tenant);
+                //IQueryable<User> entityPocos = allUsers.Where(d => !d.Contact.InActive);
+
+                //if (queryOperations.PageIndex == 0)
+                //{
+                //    IQueryable<User> entityPocos_inactive = allUsers.Where(d => d.Contact.InActive);
+                //    List<string> inactiveIds = entityPocos_inactive.Select(s => s.Id).ToList();
+                //    List<string> inactiveIds_Licenses = usersLicenses.Where(d => inactiveIds.Contains(d.UserId)).Select(s => s.UserId).ToList();
+                //    entityPocos_inactive = entityPocos_inactive.Where(d => inactiveIds_Licenses.Contains(d.Id));
+
+                //    List<UserList> users_inactive = userQuery.GetIQueryableEntityList(entityPocos_inactive).ToList();
+
+                //    foreach (UserList user in users_inactive)
+                //    {
+                //        UserExtendedList myResultItem = new UserExtendedList()
+                //        {
+                //            Id = user.Id,
+                //            Tenant = user.Tenant,
+                //            EnglishName = user.EnglishName,
+                //            Email = user.Email,
+                //            AdditionalPackagesOnly = user.AdditionalPackagesOnly,
+                //            SearchFields = user.EnglishName + "," + user.Email,
+                //            InActive = user.InActive,
+                //        };
+
+                //        if (tenantManagement.MainAdditionalPackageApplied)
+                //        {
+                //            this.SetUserLicenseExists(myResultItem, 0, tenantManagement.PackageCode);
+                //        }
+
+                //        int index = 0;
+                //        foreach (TenantManagementLicense license in tenantManagementLicenses.OrderBy(o => o.PackageCode))
+                //        {
+                //            index++;
+                //            if (index <= 10)
+                //            {
+                //                UserLicense item = usersLicenses.Where(d => d.PackageCode == license.PackageCode && d.UserId == user.Id).FirstOrDefault();
+                //                if (item != null)
+                //                {
+                //                    this.SetUserLicenseExists(myResultItem, index, license.PackageCode);
+                //                }
+                //            }
+                //        }
+
+                //        totalDataList.Add(myResultItem);
+                //    }
+                //}
+                
                 QueryOperations nonListQueryOperation = new QueryOperations();
                 nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
@@ -353,66 +415,52 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
                 IQueryable<UserList> entityLists = userQuery.GetIQueryableEntityList(entityPocos);
 
                 entityLists = genericFilter.GetFilteredQuery<UserList>(listQueryOperation, entityLists);
-                usersList = entityLists.ToList();
-                #endregion
-
-                #region Tenant Management & Tenant Management Licenses
-                IGlobalContext globalContext = GlobalContext.GetContext();
-                TenantManagementRepository tenantManagementRepository = new TenantManagementRepository(globalContext);
-                TenantManagementLicenseRepository myTenantRepository = new TenantManagementLicenseRepository(globalContext);
-
-                TenantManagement tenantManagement = tenantManagementRepository.GetSingleTenantManagement(tenant);                
-                IQueryable<TenantManagementLicense> myTenantResult = myTenantRepository.GetTenantManagementLicenses(tenant);
-                tenantManagementLicenses = myTenantResult.ToList();
-                #endregion
-
-                #region Users Licenses
-                List<string> Codes = tenantManagementLicenses.Select(s => s.PackageCode).ToList();
-
-                //if (tenantManagement.MainAdditionalPackageApplied)
-                //{
-                //    Codes.Add(tenantManagement.PackageCode);
-                //}
-
-                UserLicenseRepository myRepository = new UserLicenseRepository(tenant);
-                IQueryable<UserLicense> myResult = myRepository.GetUserLicenses(tenant);
-                usersLicenses = (from d in myResult
-                                 where Codes.Contains(d.PackageCode)
-                                 select d).ToList();
+                List<UserList> usersList = entityLists.ToList();
+                
                 #endregion
 
                 foreach (UserList user in usersList)
                 {
-                    UserExtendedList myResultItem = new UserExtendedList()
+                    bool addUser = true;
+                    if (user.InActive)
                     {
-                        Id = user.Id,
-                        Tenant = user.Tenant,
-                        EnglishName = user.EnglishName,
-                        Email = user.Email,
-                        AdditionalPackagesOnly = user.AdditionalPackagesOnly,
-                        SearchFields = user.EnglishName + "," + user.Email,
-                    };
-
-                    if (tenantManagement.MainAdditionalPackageApplied)
-                    {
-                        this.SetUserLicenseExists(myResultItem, 0, tenantManagement.PackageCode);
+                        addUser = usersLicenses.Where(d => d.UserId == user.Id).Any();
                     }
 
-                    int index = 0;
-                    foreach (TenantManagementLicense license in tenantManagementLicenses.OrderBy(o => o.PackageCode))
+                    if (addUser)
                     {
-                        index++;
-                        if (index <= 10)
+                        UserExtendedList myResultItem = new UserExtendedList()
                         {
-                            UserLicense item = usersLicenses.Where(d => d.PackageCode == license.PackageCode && d.UserId == user.Id).FirstOrDefault();
-                            if (item != null)
+                            Id = user.Id,
+                            Tenant = user.Tenant,
+                            EnglishName = user.EnglishName,
+                            Email = user.Email,
+                            AdditionalPackagesOnly = user.AdditionalPackagesOnly,
+                            SearchFields = user.EnglishName + "," + user.Email,
+                            InActive = user.InActive,
+                        };
+
+                        if (tenantManagement.MainAdditionalPackageApplied)
+                        {
+                            this.SetUserLicenseExists(myResultItem, 0, tenantManagement.PackageCode);
+                        }
+
+                        int index = 0;
+                        foreach (TenantManagementLicense license in tenantManagementLicenses.OrderBy(o => o.PackageCode))
+                        {
+                            index++;
+                            if (index <= 10)
                             {
-                                this.SetUserLicenseExists(myResultItem, index, license.PackageCode);
+                                UserLicense item = usersLicenses.Where(d => d.PackageCode == license.PackageCode && d.UserId == user.Id).FirstOrDefault();
+                                if (item != null)
+                                {
+                                    this.SetUserLicenseExists(myResultItem, index, license.PackageCode);
+                                }
                             }
                         }
-                    }
 
-                    totalDataList.Add(myResultItem);
+                        totalDataList.Add(myResultItem);
+                    }
                 }
 
                 IQueryable<UserExtendedList> iQueryableData = totalDataList.AsQueryable();
@@ -809,6 +857,7 @@ public class UserExtendedList
     public string Email { get; set; }
     public bool AdditionalPackagesOnly { get; set; }
     public string SearchFields { get; set; }
+    public bool InActive { get; set; }
 
     public string PackageCode0 { get; set; }
     public string PackageCode1 { get; set; }
