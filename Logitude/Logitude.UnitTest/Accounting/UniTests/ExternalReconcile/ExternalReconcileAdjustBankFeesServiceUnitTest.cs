@@ -124,13 +124,13 @@ namespace Logitude.UnitTest.Accounting.UniTests.ExternalReconcile
                 Assert.AreEqual(2, theCreatedJournal.JournalLines.Count(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit));
 
 
-                Assert.AreEqual(_AdjustGLAccountId, theCreatedJournal.JournalLines[0].CreditAccountId);
-                Assert.AreEqual(_AdjustGLAccountId, theCreatedJournal.JournalLines[1].CreditAccountId);
+                Assert.AreEqual(_BankAccountId, theCreatedJournal.JournalLines[0].CreditAccountId);
+                Assert.AreEqual(_BankAccountId, theCreatedJournal.JournalLines[1].CreditAccountId);
                 Assert.AreEqual(MyJournalActionTypeEnum.Credit, theCreatedJournal.JournalLines[0].ActionTypeCodeEnum);
                 Assert.AreEqual(MyJournalActionTypeEnum.Credit, theCreatedJournal.JournalLines[1].ActionTypeCodeEnum);
 
-                Assert.AreEqual(_BankAccountId, theCreatedJournal.JournalLines[0].DebitAccountId);
-                Assert.AreEqual(_BankAccountId, theCreatedJournal.JournalLines[1].DebitAccountId);
+                Assert.AreEqual(_AdjustGLAccountId, theCreatedJournal.JournalLines[0].DebitAccountId);
+                Assert.AreEqual(_AdjustGLAccountId, theCreatedJournal.JournalLines[1].DebitAccountId);
 
 
                 Assert.AreEqual(reconcileExternalPageLineLists[0].DebitAmount, theCreatedJournal.JournalLines[0].ForeignAmount);
@@ -155,13 +155,13 @@ namespace Logitude.UnitTest.Accounting.UniTests.ExternalReconcile
                 Assert.AreEqual(1, theCreatedJournal.JournalLines.Count(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit));
                 Assert.AreEqual(2, theCreatedJournal.JournalLines.Count(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Debit));
 
-                Assert.AreEqual(_AdjustGLAccountId, theCreatedJournal.JournalLines[0].DebitAccountId);
-                Assert.AreEqual(_AdjustGLAccountId, theCreatedJournal.JournalLines[1].DebitAccountId);
+                Assert.AreEqual(_BankAccountId, theCreatedJournal.JournalLines[0].DebitAccountId);
+                Assert.AreEqual(_BankAccountId, theCreatedJournal.JournalLines[1].DebitAccountId);
                 Assert.AreEqual(MyJournalActionTypeEnum.Debit, theCreatedJournal.JournalLines[0].ActionTypeCodeEnum);
                 Assert.AreEqual(MyJournalActionTypeEnum.Debit, theCreatedJournal.JournalLines[1].ActionTypeCodeEnum);
 
-                Assert.AreEqual(_BankAccountId, theCreatedJournal.JournalLines[0].CreditAccountId);
-                Assert.AreEqual(_BankAccountId, theCreatedJournal.JournalLines[1].CreditAccountId);
+                Assert.AreEqual(_AdjustGLAccountId, theCreatedJournal.JournalLines[0].CreditAccountId);
+                Assert.AreEqual(_AdjustGLAccountId, theCreatedJournal.JournalLines[1].CreditAccountId);
 
 
                 Assert.AreEqual(reconcileExternalPageLineLists[0].CreditAmount, theCreatedJournal.JournalLines[0].ForeignAmount);

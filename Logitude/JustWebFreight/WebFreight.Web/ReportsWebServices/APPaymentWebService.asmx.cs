@@ -401,7 +401,7 @@ namespace WebFreight.Web.ReportsWebServices
         private Contact GetLoggedContact(int tenant)
         {
 
-            string email = AuthenticationUtil.GetAuthenticatedUser(tenant);
+            string email = AuthenticationUtil.GetLoggedUserEmail(tenant);
             ContactRepository contactRepository = new ContactRepository(tenant);
             Contact loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
             return loggedContact;

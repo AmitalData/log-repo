@@ -74,7 +74,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             if (currentUser == null)
             {
-                string email = AuthenticationUtil.GetAuthenticatedUser(tenant);
+                string email = AuthenticationUtil.GetLoggedUserEmail(tenant);
                 if (tenant != 0)
                 {
                     currentUser = (from a in commonContext.Users

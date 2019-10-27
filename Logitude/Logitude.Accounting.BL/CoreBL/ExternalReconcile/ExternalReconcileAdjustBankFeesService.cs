@@ -213,8 +213,8 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 
                 ///if r.DebitAmount != 0 then credit else debit 
                 ActionTypeCodeEnum = r.DebitAmount != 0 ? MyJournalActionTypeEnum.Credit : MyJournalActionTypeEnum.Debit,
-                DebitAccountId = r.DebitAmount != 0 ? bankGLAccountList.Id : adjustGLAccountId,
-                CreditAccountId = r.CreditAmount != 0 ? bankGLAccountList.Id : adjustGLAccountId,
+                DebitAccountId = r.DebitAmount != 0 ?  adjustGLAccountId: bankGLAccountList.Id,
+                CreditAccountId = r.DebitAmount != 0 ? bankGLAccountList.Id : adjustGLAccountId,
                 LocalAmount = Convert2LocalAmount(bankGLAccountList.CurrencyId, accountingCurrencyId, r),
                 Notes = screenNotes + Environment.NewLine+ r.Notes,
                 Reference1 =r.Reference,
