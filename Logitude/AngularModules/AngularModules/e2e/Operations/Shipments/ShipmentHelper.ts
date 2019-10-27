@@ -18,36 +18,6 @@ export class ShipmentHelper {
         var directionID: string;
         var shipmentTypeID: string;
 
-        // if (Direction == 'Export') {
-        //   directionID = "DirectionRadio_0E";
-        // }
-        // else if (Direction == 'Import') {
-        //   directionID == 'DirectionRadio_0I';
-        // }
-        // else if (Direction == 'Domestic') {
-        //   directionID = 'DirectionRadio_0D';
-        // }
-        // else if (Direction == 'Drop') {
-        //   directionID = 'DirectionRadio_0R';
-        // }
-
-        // if (ShipmentType == 'FCL') {
-        //   shipmentTypeID = 'ShipmentTypeRadio_0FCLD';
-        // }
-        // else if (ShipmentType == 'LCL') {
-        //   shipmentTypeID == 'ShipmentTypeRadio_0LCLD';
-        // }
-        // else if (ShipmentType == 'FTL') {
-        //   shipmentTypeID = 'ShipmentTypeRadio_0FTL';
-        // }
-        // else if (ShipmentType == 'LTL') {
-        //   shipmentTypeID = 'ShipmentTypeRadio_0LTL';
-        // }
-        // else
-        //   shipmentTypeID = 'ShipmentTypeRadio_0MyGO';
-
-
-
         if (TransportMode == 'A' && ShipmentType == '') {
 
             var EC = protractor.ExpectedConditions;
@@ -155,52 +125,5 @@ export class ShipmentHelper {
         this.SelectDicrctionTransportMode(Direction, TransportMode, ShipmentType);
 
         this.Helper.WaitByIdAndClick(CancelBtnId);
-    }
-
-    OperationalCloseShipment() {
-        this.Helper.WaitByIdAndClick('MenuButtons');
-        this.Helper.WaitByIdAndClick('Shipment.B.OperationalClose');
-
-        this.Helper.WaitByCssStringAndClick('.RedButton', 'Confirm');
-        this.Helper.WaitBusyIndicator();
-    }
-    OperationalReopenShipment() {
-        this.Helper.WaitByIdAndClick('MenuButtons');
-        this.Helper.WaitByIdAndClick('Shipment.B.OperationalReopen');
-        this.Helper.WaitByIdAndFill('EventNotes', 'Operational ReOpen - Protractor Testing .. ')
-
-        this.Helper.WaitByCssStringAndClick('.RedButton', 'Confirm');
-        this.Helper.WaitBusyIndicator();
-    }
-    AccountingCloseShipment() {
-        this.Helper.WaitByIdAndClick('MenuButtons');
-        this.Helper.WaitByIdAndClick('Shipment.B.AccountingClose');
-
-        this.Helper.WaitByCssStringAndClick('.RedButton', 'Confirm');
-        this.Helper.WaitBusyIndicator();
-    }
-    AccountedReopenShipment() {
-        this.Helper.WaitByIdAndClick('MenuButtons');
-        this.Helper.WaitByIdAndClick('Shipment.B.AccountedReopen');
-        this.Helper.WaitByIdAndFill('EventNotes', 'Accounting ReOpen - Protractor Testing .. ');
-
-        this.Helper.WaitByCssStringAndClick('.RedButton', 'Confirm');
-        this.Helper.WaitBusyIndicator();
-    }
-    CopyShipment() {
-
-        this.Helper.WaitByIdAndClick('MenuButtons');
-        this.Helper.WaitByIdAndClick('Shipment.B.CopyShipment');
-        // this.Helper.WaitByIdAndClick('Shipment.B.CopyShipment');
-        // this.Helper.WaitByIdAndClick('CheckBox_0_5');//Include pickup
-        this.Helper.WaitByCssStringAndClick('.LogitudeCheckBox', 'Include PickUp')
-
-        // this.Helper.WaitByIdAndClick('CheckBox_0_6');//Include Delivery
-        // this.Helper.WaitByIdAndClick('CheckBox_0_7');//Include Flight
-        // this.Helper.WaitByIdAndClick('CheckBox_0_8');//Include PreCarriage
-        // this.Helper.WaitByIdAndClick('CheckBox_0_9');//Include OnCarriage
-
-        this.Helper.WaitByIdAndClick('ShipmentCreatebtn');
-        this.Helper.WaitBusyIndicator();
     }
 }

@@ -1561,6 +1561,18 @@
     <Compile Include="Migrations\201910231231109_CardFieldsMappingMigration.Designer.cs">
       <DependentUpon>201910231231109_CardFieldsMappingMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910231127147_AddingAccountingPartnerTable_Rabaia.cs" />
+    <Compile Include="Migrations\201910231127147_AddingAccountingPartnerTable_Rabaia.Designer.cs">
+      <DependentUpon>201910231127147_AddingAccountingPartnerTable_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910261310088_FixingPrincipleError_Rabaia.cs" />
+    <Compile Include="Migrations\201910261310088_FixingPrincipleError_Rabaia.Designer.cs">
+      <DependentUpon>201910261310088_FixingPrincipleError_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910270847485_ReconcileExternalPageLineIdNullabletk2.cs" />
+    <Compile Include="Migrations\201910270847485_ReconcileExternalPageLineIdNullabletk2.Designer.cs">
+      <DependentUpon>201910270847485_ReconcileExternalPageLineIdNullabletk2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201910241030000_AbedAddNewTableDocumentsExecutionLog.cs" />
     <Compile Include="Migrations\201910241030000_AbedAddNewTableDocumentsExecutionLog.Designer.cs">
       <DependentUpon>201910241030000_AbedAddNewTableDocumentsExecutionLog.cs</DependentUpon>
@@ -2672,11 +2684,20 @@
     <EmbeddedResource Include="Migrations\201910170619476_DropSearchFieldColumnFromCustomsTransferLine_Samar.resx">
       <DependentUpon>201910170619476_DropSearchFieldColumnFromCustomsTransferLine_Samar.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910231127147_AddingAccountingPartnerTable_Rabaia.resx">
+      <DependentUpon>201910231127147_AddingAccountingPartnerTable_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910211551152_UpdateField_JournalLine_IncreaseLength3.resx">
       <DependentUpon>201910211551152_UpdateField_JournalLine_IncreaseLength3.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910231231109_CardFieldsMappingMigration.resx">
       <DependentUpon>201910231231109_CardFieldsMappingMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910261310088_FixingPrincipleError_Rabaia.resx">
+      <DependentUpon>201910261310088_FixingPrincipleError_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910270847485_ReconcileExternalPageLineIdNullabletk2.resx">
+      <DependentUpon>201910270847485_ReconcileExternalPageLineIdNullabletk2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910241030000_AbedAddNewTableDocumentsExecutionLog.resx">
       <DependentUpon>201910241030000_AbedAddNewTableDocumentsExecutionLog.cs</DependentUpon>

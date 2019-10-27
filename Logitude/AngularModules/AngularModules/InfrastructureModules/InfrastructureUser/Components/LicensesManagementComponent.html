@@ -37,7 +37,9 @@
             <div class="MediaFill">
                 <div style="vertical-align:top;" class="GeneratedGridContainer" *ngIf="DataLoaded">
                     <logitude-grid style="vertical-align:top;" GridWidth="100%" GridHeight="100%" [dataSource]="DataSource" [ReloadData]="true"
-                                   [columns]="Columns" [autoLoad]="true" [rows]="Items" [searchFields]="SearchFields" [SearchFieldchangeevent]="SearchFieldChangeEvent">
+                                   [columns]="Columns" [autoLoad]="true" [rows]="Items" [searchFields]="SearchFields" [SearchFieldchangeevent]="SearchFieldChangeEvent"
+                                   [RowBackGroundColor]="'#fbbcbc'" [ChangeColorByPropName]="'InActive'" [ChangeColorByPropValue]="true"
+                                   [MenuHeaderchangeevent]="MenuHeaderchangeevent">
                     </logitude-grid>
                 </div>
             </div>

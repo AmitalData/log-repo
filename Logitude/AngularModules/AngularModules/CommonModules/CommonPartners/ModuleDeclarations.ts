@@ -28,6 +28,8 @@ import { ShippingLineDocsInTabComponent } from './Components/EditTabs/ShippingLi
 import { TruckerDocsInTabComponent } from './Components/EditTabs/Trucker/TruckerDocsInTabComponent';
 import { VendorDocsInTabComponent } from './Components/EditTabs/Vendor/VendorDocsInTabComponent';
 import { WarehouseDocsInTabComponent } from './Components/EditTabs/Warehouse/WarehouseDocsInTabComponent';
+import { NewAccountingPartnerComponent } from './Components/NewEntity/NewAccountingPartnerComponent';
+
 
 export const Components =
     [
@@ -61,6 +63,7 @@ export const Components =
         TruckerDocsInTabComponent,
         VendorDocsInTabComponent,
         WarehouseDocsInTabComponent,
+        NewAccountingPartnerComponent,
     ];
 
 export class ModuleDeclarations {
@@ -99,6 +102,8 @@ export class ModuleDeclarations {
             case "TruckerDocsInTabComponent": { myResult = TruckerDocsInTabComponent; break; }
             case "VendorDocsInTabComponent": { myResult = VendorDocsInTabComponent; break; }
             case "WarehouseDocsInTabComponent": { myResult = WarehouseDocsInTabComponent; break; }
+            case "NewAccountingPartnerComponent": { myResult = NewAccountingPartnerComponent; break; }
+
         }
 
         return myResult;

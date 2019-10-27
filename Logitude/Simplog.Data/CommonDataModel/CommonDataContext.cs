@@ -1002,6 +1002,7 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<DocumentsExecutionLog> DocumentsExecutionLogs { get; set; }
         
 
+        public IDbSet<AccountingPartner> AccountingPartners { get; set; }
 
         public DbConnection GetConnection()
         {
