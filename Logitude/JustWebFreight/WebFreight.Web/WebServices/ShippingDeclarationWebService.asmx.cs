@@ -137,6 +137,7 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.MasterInternalNumber = shipment.MasterShipmentNumber;
                 myDataProvider.CompleteShipmentType = shipment.TransportModeName + " " + shipment.DirectionName;
                 myDataProvider.ChargeableWeight = shipment.ChargeableWeight;
+                myDataProvider.ChargeableWeightUnitCode = shipment.ChargeableWeightUnitCode;
                 myDataProvider.ProjectNumber = shipment.ProjectNumber;
                 myDataProvider.ARInvoices = shipment.ARInvoices;
                 myDataProvider.IsDangerous = shipment.IsDangerous;
