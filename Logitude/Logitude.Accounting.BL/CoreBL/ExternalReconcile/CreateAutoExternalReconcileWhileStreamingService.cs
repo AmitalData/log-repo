@@ -57,34 +57,108 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
         }
         private void AdjustBankFees()
         {
-#if false
 
 
-            List<LedgerTransactionPM> myOldTransToReconcile = GetOldTransToReconcileThrowIfNotInProgress();
+
+            //List<LedgerTransactionPM> myOldTransToReconcile = GetOldTransToReconcileThrowIfNotInProgress();
+            
 
             if (!_JournalPM.JournalExternalReconciles.TrueForAll(r => string.IsNullOrWhiteSpace(r.LedgerTransactionId)))
             {
                 throw new Exception("in all JournalExternalReconciles LedgerTransactionId must be empty   ");
             }
             List<string> reconcileExternalPageLineIdList = _JournalPM.JournalExternalReconciles.Select(r => r.ReconcileExternalPageLineId).ToList();
-
-            var myExternalReconcileAdjustBankFeesService = new ExternalReconcileAdjustBankFeesService();
+            //reconcileExternalPageLineIdList
+            IExternalReconcileAdjustBankFees_Validate myExternalReconcileAdjustBankFeesService = new ExternalReconcileAdjustBankFeesService();
             myExternalReconcileAdjustBankFeesService.MustInit(_ExternalReconcileDataProvider);
+
+            string adjustGLAccountId = CreateAutoExternalReconcileWhileStreamingService.GetAdjustGLAccountId(_JournalPM);
+
             List<ReconcileExternalPageLineList> listOfpageLineList;
             List<ReconcileExternalPageList> listOfpageList;
-            myExternalReconcileAdjustBankFeesService.PrapareAndValid(tenant, reconcileExternalPageLineIdList, adjustGLAccountId, out listOfpageLineList, out listOfpageList);
+            bool CheckWhileStreaming = true;
+            myExternalReconcileAdjustBankFeesService.PrapareAndValid(_JournalPM.Tenant, reconcileExternalPageLineIdList, adjustGLAccountId, out listOfpageLineList, out listOfpageList, CheckWhileStreaming);
 
-#endif
+            if (listOfpageLineList.Any(r => !r.InProgressExternalReconcile))
+            {
+                throw new Exception("All connected ReconcileExternalPageLineList  must be InProgress");
+            }
+
+            GLAccountList bankGLAccountList =GetbankGLAccountList(listOfpageList);
+            var bankGLAccountNewLedger = _NewLedgerTransactionsWithCounters.First(r => r.AccountId == bankGLAccountList.Id);
+
+            var reconcile_BankFees = new ExternalReconciliationPM();
+            reconcile_BankFees.Tenant = _JournalPM.Tenant;
+            reconcile_BankFees.ChangeSetOp = ChangeSetOperation.Insert;
+            reconcile_BankFees.GLAccountId = bankGLAccountList.Id;
+            reconcile_BankFees.Id = "new";
+
+            int line = 1;
+
+            reconcile_BankFees.ExternalReconciliationLines.AddRange(_JournalPM.JournalExternalReconciles.Select(r =>
+new ExternalReconciliationLinePM()
+{
+    Tenant = _JournalPM.Tenant,
+    ChangeSetOp = ChangeSetOperation.Insert,
+    GroupNumber = 1,
+    ReconciliationId = reconcile_BankFees.Id,
+    Line = line++,
+    ExternalPageLineId = r.ReconcileExternalPageLineId,
+})
+);
+
+
+            var reconcileLine_NewbankGLAccountLedger = new ExternalReconciliationLinePM()
+            {
+                Tenant = _JournalPM.Tenant,
+                ChangeSetOp = ChangeSetOperation.Insert,
+                GroupNumber = 1,
+                ReconciliationId = reconcile_BankFees.Id,
+                Line = 2,
+
+                LedgerTransactionId = bankGLAccountNewLedger.Id,
+            };
+
+            reconcile_BankFees.ExternalReconciliationLines.Add(reconcileLine_NewbankGLAccountLedger);
+            this.ExternalReconciliationList.Add(reconcile_BankFees);
 
         }
 
-        private void AllReconcileExternalPageLineIdMustinthesameBank()
+        private GLAccountList GetbankGLAccountList(List<ReconcileExternalPageList> listOfpageList)
         {
-            throw new NotImplementedException();
+            GLAccountList bankGLAccountList;
+            
+            List<GLAccountList> ListOfGLAccountList = _ExternalReconcileDataProvider.GetListOfGLAccountList(_JournalPM.Tenant, listOfpageList.Select(r => r.GLAccountId).Distinct().ToList());
+            bankGLAccountList = ListOfGLAccountList.First();
+            return bankGLAccountList;
         }
+
+        public static string GetAdjustGLAccountId(JournalPM myJournalPM)
+        {
+            string adjustGLAccountId = "";
+            var journalLineToadjustGLAccount = myJournalPM.JournalLines.Last();
+            if (journalLineToadjustGLAccount.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit)
+            {
+                adjustGLAccountId = journalLineToadjustGLAccount.CreditAccountId;
+            }
+            else if (journalLineToadjustGLAccount.ActionTypeCodeEnum == MyJournalActionTypeEnum.Debit)
+            {
+                adjustGLAccountId = journalLineToadjustGLAccount.DebitAccountId;
+            }
+
+            return adjustGLAccountId;
+        }
+
+
+
 
         private void MoveBankCheckFromTransfer()
         {
+            if (_JournalPM.JournalExternalReconciles.Count > 1)
+            {
+                throw new Exception("Sorry (MoveBankCheckFromTransfer) meanwhile only one Adjust Allowed !!!");
+                //errorsList.Add(TranslateMyTextCode("Sorry meanwhile only one Adjust Allowed !!!", myJournalPM.Tenant));
+            }
             var myJournalExternalReconcile = _JournalPM.JournalExternalReconciles[0];//meanwhile only one Adjust Allowed !!!
             
             List<LedgerTransactionPM> myOldTransToReconcile = GetOldTransToReconcileThrowIfNotInProgress();
