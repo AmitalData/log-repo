@@ -41,6 +41,11 @@ export class OperationsComp {
             this.ShipmentActions.CopyShipment();
 
         }
+        else if (actionType == 'copycancel') {
+            this.ShipmentActions.CopyShipment();
+            this.Helper.WaitByIdAndClick('Shipment.TH.Overview');
+            this.ShipmentActions.CancelShipment();
+        }
     }
 }
 
