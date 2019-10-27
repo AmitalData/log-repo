@@ -13,6 +13,7 @@ using System.Xml.Serialization;
 
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityLists;
+using System.Linq.Expressions;
 
 namespace Logitude.Accounting.Data.EntityListQueryServices
 {
@@ -142,12 +143,16 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
             return iQueryable;
         }
+        
+
         public IQueryable<ReconcileExternalPageLine> ApplyBusinessUnitFilters(QueryOperations queryOperations, IQueryable<ReconcileExternalPageLine> iQueryable, int tenant)
         {
             return iQueryable;
         }
 
     }
+    
+  
 
 
 }
