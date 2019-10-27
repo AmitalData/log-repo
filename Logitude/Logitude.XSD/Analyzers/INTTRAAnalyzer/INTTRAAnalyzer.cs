@@ -742,10 +742,10 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                         {
                             case "Status":
                                 {
-                                    //if (Tenant != 1508)
-                                    //{
+                                    if (Tenant != 1508)
+                                    {
                                         Analyze_Status();
-                                    //}
+                                    }
 
                                     break;
                                 }
