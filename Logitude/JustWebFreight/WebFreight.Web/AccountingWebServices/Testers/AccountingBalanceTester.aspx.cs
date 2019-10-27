@@ -101,7 +101,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             //var l = a.GetLedgerOpenAmountDiff(1106, 2019);
             //externalPageLineId": "1 - 12487",
 
-            ExternalReconcileAdjustBankFees();
+            //ExternalReconcileAdjustBankFees();
             //var myWorker = new JournalApproveService.JournalApproveWorker();
             //myWorker.CreateBatchAccountingIntegrityCheck();
             try
