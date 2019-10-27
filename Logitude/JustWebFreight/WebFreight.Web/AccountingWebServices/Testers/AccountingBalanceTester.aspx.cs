@@ -152,7 +152,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
 
         }
 
-        private static void ExternalReconcileAdjustBankFees()
+        private void ExternalReconcileAdjustBankFees()
         {
             var accountingContext = AccountingContext.GetContext(1071);
             IExternalReconcileDataProvider externalReconcileDataProvider = new ExternalReconcileDataProvider(accountingContext);
@@ -160,6 +160,11 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             a.MustInit(externalReconcileDataProvider);
             a.CreateJournalWithExtReconcile(1071, new List<string>() { "1-12487" }, "1-216674", "Notes ");
             var aa = a.TheNewJournal;
+
+            var us = new JournalUpdateService(AccountingContext.GetContext(a.TheNewJournal.Tenant), new Dictionary<string, IContext>(), a.TheNewJournal.Tenant);
+            us.Update(a.TheNewJournal, true);
+            _LabelResult.Text = JsonConvert.SerializeObject(a.TheNewJournal); ;
+
         }
 
         private void CreateJournalReconcile()
@@ -2291,9 +2296,9 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 string ReconcileExternalPageLineId = param.ReconcileExternalPageLineId;
 
                 
-                var myExternalReconcileJournalService = new ExternalReconcileJournalService();
+                var myExternalReconcileJournalService = new ExternalReconcileMoveBankCheckFromTransfer2GLAccountService();
                 myExternalReconcileJournalService.MustInit(new ExternalReconcileDataProvider( AccountingContext.GetContext(Tenant)));
-                myExternalReconcileJournalService.MoveBankCheckFromTransfer2GLAccount(Tenant, LedgerTransactionId, ReconcileExternalPageLineId);
+                myExternalReconcileJournalService.CreateJournalWithExtReconcile(Tenant, LedgerTransactionId, ReconcileExternalPageLineId);
                 var us = new JournalUpdateService(AccountingContext.GetContext(Tenant), new Dictionary<string, IContext>(),Tenant);
                 us.Update(myExternalReconcileJournalService.TheJournalPM, true);
                 _LabelResult.Text = JsonConvert.SerializeObject(myExternalReconcileJournalService.TheJournalPM); ;

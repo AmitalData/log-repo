@@ -150,6 +150,7 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
                 case "Trucker":
                 case "Vendor":
                 case "Warehouse":
+                case "Occasion":
                     {
 
                     if (tempList.filter(f => f.Name == item.Name).length == 0) {

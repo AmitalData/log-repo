@@ -29,13 +29,17 @@ export class LicensesManagementComponent implements OnDestroy {
         this.Listen();
     }
 
+    @Output() MenuHeaderchangeevent = new EventEmitter();
+    private Refresh: boolean = false;
     private ListenEvent: any = null;
     Listen() {
         this.ListenEvent = this.CurrentSession.PseventRowSelectEvent.subscribe((res) => {
             if (res.Name == "Add") {
                 this.Add(res.User, res.PackageCode);
             }
+
             if (res.Name == "Remove") {
+                this.Refresh = res.Refresh;
                 this.Remove(res.User, res.PackageCode);
             }
         });        
@@ -89,7 +93,8 @@ export class LicensesManagementComponent implements OnDestroy {
             return tempo;
         },
     };
-    
+
+    private filterAgrs: ApiQueryFilters;
     private GetRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
         if (filters == null) {
             filters = new ApiQueryFilters();
@@ -108,7 +113,8 @@ export class LicensesManagementComponent implements OnDestroy {
             filters.Filter1Value = this.SearchFields;
             filters.Filter1Operator = "Contains";
         }
-        
+
+        this.filterAgrs = filters;
         var service: UserExtendedListService = new UserExtendedListService();
         return new Promise((resolve, reject) => { resolve(service.GetCustomDataByFilters(filters)) });
     }
@@ -319,9 +325,12 @@ export class LicensesManagementComponent implements OnDestroy {
                         }
                     }  
 
+                    if (this.Refresh) {
+                        this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });                        
+                        this.Refresh = false;
+                    }
                    
-                    this.dirtyItem = null;
-                    //this.LoadUserLicenses();
+                    this.dirtyItem = null;                    
                     this.BuildHeaders();
                     this.CurrentSession.StopBusyIndicator();
                 }
