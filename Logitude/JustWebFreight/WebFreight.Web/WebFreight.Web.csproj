@@ -1088,6 +1088,7 @@
     <Compile Include="Controllers\CommonDataModel\Extended\ReportsTemplatesVersionExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\TenantAdditionalDataViewsExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\WarehouseExtendedController.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\AccountingPartnerViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\AgentSharedDocumentViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\AirlineMessagingRuleViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\ChargesExternalAccountsByProductViewsController.Generated.cs" />
@@ -1109,6 +1110,7 @@
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\TenantAdditionalDataViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\WarehouseTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\UsoCFDIViewsController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\AccountingPartnerController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\AgentSharedDocumentController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\AirlineMessagingRuleController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\CustomerTenantAccessStatusTypeViewsController.Generated.cs" />
@@ -2433,6 +2435,7 @@
     <Compile Include="MetaDataUpdate\DetailClasses\WarehouseTypeDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\UsoCFDIDetails.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\CommonDataModelUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\AccountingPartnerUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\AccountingSettingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\AccountingSystemUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\AdditionalServiceUpdateClass.cs" />
@@ -2924,6 +2927,7 @@
     <Content Include="Integration Test\Security\SecurityTests.postman_collection.json" />
     <Content Include="Integration Test\Maintenance\SystemSettings.postman_collection.json" />
     <Content Include="Integration Test\Quotes\Quotes.postman_collection.json" />
+    <Content Include="Integration Test\WarmServer\WarmServer.postman_collection.json" />
     <None Include="Properties\PublishProfiles\main.pubxml" />
     <None Include="Properties\PublishProfiles\NewPublish.pubxml" />
     <None Include="Resources\A252_2015_020151011133801779020300040816.mrt" />
@@ -4339,6 +4343,7 @@
     <Content Include="TrainingResourcesHTML\images\video-icon.png" />
     <Content Include="TrainingResourcesHTML\TrainingResourcesMainPage.aspx" />
     <Content Include="TrainingResourcesHTML\TrainingResourcesViewModel.js" />
+    <Content Include="WcfApi\AccountingPartnerWcfService.svc" />
     <Content Include="WcfApi\ActivityDWWcfService.svc" />
     <Content Include="WcfApi\ActivityWcfService.svc" />
     <Content Include="WcfApi\AddressWcfService.svc" />
@@ -5794,6 +5799,9 @@
     </Compile>
     <Compile Include="Validators\RulesValidator.cs" />
     <Compile Include="WarehouseModel\DomainServices\WarehousesDomainService.cs" />
+    <Compile Include="WcfApi\AccountingPartnerWcfService.svc.cs">
+      <DependentUpon>AccountingPartnerWcfService.svc</DependentUpon>
+    </Compile>
     <Compile Include="WcfApi\ActivityDWWcfService.svc.cs">
       <DependentUpon>ActivityDWWcfService.svc</DependentUpon>
     </Compile>
@@ -5937,6 +5945,7 @@
     <Compile Include="WcfApi\IVendorCommissionWcfService.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="WcfApi\IAccountingPartnerWcfService.cs" />
     <Compile Include="WcfApi\IVendorWcfService.cs" />
     <Compile Include="WcfApi\IVesselWcfServcie.cs" />
     <Compile Include="WcfApi\LoginWcfService.svc.cs">

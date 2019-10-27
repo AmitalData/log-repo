@@ -997,6 +997,7 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<UsersReleaseNotesDisplay> UsersReleaseNotesDisplays { get; set; }
         public IDbSet<CheckDigitControlAlgorithm> CheckDigitControlAlgorithms { get; set; }
         public IDbSet<CardContactProduct> CardContactProducts { get; set; }
+        public IDbSet<AccountingPartner> AccountingPartners { get; set; }
 
         public DbConnection GetConnection()
         {

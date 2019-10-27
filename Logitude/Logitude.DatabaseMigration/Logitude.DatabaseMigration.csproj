@@ -1545,9 +1545,29 @@
     <Compile Include="Migrations\201910151744432_AddDetectingChanges.Designer.cs">
       <DependentUpon>201910151744432_AddDetectingChanges.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910171345073_BankAccountPrintFieldsMigration.cs" />
+    <Compile Include="Migrations\201910171345073_BankAccountPrintFieldsMigration.Designer.cs">
+      <DependentUpon>201910171345073_BankAccountPrintFieldsMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201910170619476_DropSearchFieldColumnFromCustomsTransferLine_Samar.cs" />
     <Compile Include="Migrations\201910170619476_DropSearchFieldColumnFromCustomsTransferLine_Samar.Designer.cs">
       <DependentUpon>201910170619476_DropSearchFieldColumnFromCustomsTransferLine_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910211551152_UpdateField_JournalLine_IncreaseLength3.cs" />
+    <Compile Include="Migrations\201910211551152_UpdateField_JournalLine_IncreaseLength3.Designer.cs">
+      <DependentUpon>201910211551152_UpdateField_JournalLine_IncreaseLength3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910231231109_CardFieldsMappingMigration.cs" />
+    <Compile Include="Migrations\201910231231109_CardFieldsMappingMigration.Designer.cs">
+      <DependentUpon>201910231231109_CardFieldsMappingMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910231127147_AddingAccountingPartnerTable_Rabaia.cs" />
+    <Compile Include="Migrations\201910231127147_AddingAccountingPartnerTable_Rabaia.Designer.cs">
+      <DependentUpon>201910231127147_AddingAccountingPartnerTable_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910261310088_FixingPrincipleError_Rabaia.cs" />
+    <Compile Include="Migrations\201910261310088_FixingPrincipleError_Rabaia.Designer.cs">
+      <DependentUpon>201910261310088_FixingPrincipleError_Rabaia.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
@@ -2650,8 +2670,23 @@
     <EmbeddedResource Include="Migrations\201910151744432_AddDetectingChanges.resx">
       <DependentUpon>201910151744432_AddDetectingChanges.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910171345073_BankAccountPrintFieldsMigration.resx">
+      <DependentUpon>201910171345073_BankAccountPrintFieldsMigration.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910170619476_DropSearchFieldColumnFromCustomsTransferLine_Samar.resx">
       <DependentUpon>201910170619476_DropSearchFieldColumnFromCustomsTransferLine_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910231127147_AddingAccountingPartnerTable_Rabaia.resx">
+      <DependentUpon>201910231127147_AddingAccountingPartnerTable_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910211551152_UpdateField_JournalLine_IncreaseLength3.resx">
+      <DependentUpon>201910211551152_UpdateField_JournalLine_IncreaseLength3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910231231109_CardFieldsMappingMigration.resx">
+      <DependentUpon>201910231231109_CardFieldsMappingMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910261310088_FixingPrincipleError_Rabaia.resx">
+      <DependentUpon>201910261310088_FixingPrincipleError_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

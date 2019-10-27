@@ -58,6 +58,11 @@ export class APInvoicePM {
     public set InternalNumber(newValue: string) { if (this.internalNumber != newValue) { this.internalNumber = newValue; this.MarkAsDirty("InternalNumber"); } }
        
 	 
+    private createdFromAPI: boolean;
+    public get CreatedFromAPI() { return this.createdFromAPI; }
+    public set CreatedFromAPI(newValue: boolean) { if (this.createdFromAPI != newValue) { this.createdFromAPI = newValue; this.MarkAsDirty("CreatedFromAPI"); } }
+       
+	 
     private invoiceNumber: string;
     public get InvoiceNumber() { return this.invoiceNumber; }
     public set InvoiceNumber(newValue: string) { if (this.invoiceNumber != newValue) { this.invoiceNumber = newValue; this.MarkAsDirty("InvoiceNumber"); } }

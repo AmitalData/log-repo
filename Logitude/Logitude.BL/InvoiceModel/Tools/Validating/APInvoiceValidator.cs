@@ -376,12 +376,15 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
         }
         private static void ValidateShipmentConcurrencyGUID(APInvoicePM entityPM, string MainShipmentConcurrencyGUID)
         {
-            if (!string.IsNullOrEmpty(entityPM.ShipmentConcurrencyGUID) && !string.IsNullOrEmpty(entityPM.ShipmentNewConcurrencyGUID) && !string.IsNullOrEmpty(MainShipmentConcurrencyGUID))
+            if (!entityPM.CreatedFromAPI)
             {
-                if (!entityPM.ShipmentConcurrencyGUID.Equals(MainShipmentConcurrencyGUID) && !entityPM.ShipmentNewConcurrencyGUID.Equals(MainShipmentConcurrencyGUID))
+                if (!string.IsNullOrEmpty(entityPM.ShipmentConcurrencyGUID) && !string.IsNullOrEmpty(entityPM.ShipmentNewConcurrencyGUID) && !string.IsNullOrEmpty(MainShipmentConcurrencyGUID))
                 {
-                    string msg = TranslateTextsClass.Translate("General.M.CantUpdateRecord", entityPM.Tenant);
-                    throw new OptimisticConcurrencyException(msg);
+                    if (!entityPM.ShipmentConcurrencyGUID.Equals(MainShipmentConcurrencyGUID) && !entityPM.ShipmentNewConcurrencyGUID.Equals(MainShipmentConcurrencyGUID))
+                    {
+                        string msg = TranslateTextsClass.Translate("General.M.CantUpdateRecord", entityPM.Tenant);
+                        throw new OptimisticConcurrencyException(msg);
+                    }
                 }
             }
         }

@@ -1,6 +1,7 @@
 import { NewOccasionComponent } from './Components/NewEntity/NewOccasionComponent';
 import { OccasionGeneralTabComponent } from './Components/EditTabs/OccasionGeneralTabComponent';
 import { OccasionMainTabComponent } from './Components/EditTabs/OccasionMainTabComponent';
+import { OccasionDocsInTabComponent } from './Components/EditTabs/OccasionDocsInTabComponent';
 import { AddEditOccasionContactComponent } from './Components/AddEdit/AddEditOccasionContactComponent';
 import { CheckAllInviteeCheckBoxComponent } from './Components/AddEdit/CheckAllInviteeCheckBoxComponent';
 
@@ -11,6 +12,7 @@ export const Components =
         OccasionMainTabComponent,
         AddEditOccasionContactComponent,
         CheckAllInviteeCheckBoxComponent,
+        OccasionDocsInTabComponent,
     ];
 
 export class ModuleDeclarations {
@@ -24,6 +26,7 @@ export class ModuleDeclarations {
             case "OccasionMainTabComponent": { myResult = OccasionMainTabComponent; break; }
             case "AddEditOccasionContactComponent": { myResult = AddEditOccasionContactComponent; break; }
             case "CheckAllInviteeCheckBoxComponent": { myResult = CheckAllInviteeCheckBoxComponent; break; }
+            case "OccasionDocsInTabComponent": { myResult = OccasionDocsInTabComponent; break; }
         }
 
         return myResult;

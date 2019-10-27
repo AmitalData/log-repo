@@ -43,6 +43,8 @@ export class BankAccountList {
 	CurrencyName: string;
 	CurrencyCode: string;
 	CurrencySign: string;
+	PrintingBranchNumber: string;
+	PrintingAccountNumber: string;
 	
 }
  

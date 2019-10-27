@@ -54,7 +54,7 @@ namespace Logitude.BL.Helpers
                             shipmentPM.IsShipmentComputedFieldChange = true;
                             shipmentPM.IsImporterShipment = true;
 
-                            string email = SecurityUtility.GetAuthenticatedUser(shipmentComputedFields.Tenant);
+                            string email = "system@tenant" + shipmentComputedFields.Tenant.ToString() + ".com"; //SecurityUtility.GetAuthenticatedUser(shipmentComputedFields.Tenant);
                             IShipmentsContext objectContext = ShipmentsContext.GetContext(shipmentPM.Tenant);
                             ShipmentService shipmentService = new ShipmentService(objectContext, shipmentPM, email);
                             shipmentService.entityComputedFields = shipmentComputedFields;

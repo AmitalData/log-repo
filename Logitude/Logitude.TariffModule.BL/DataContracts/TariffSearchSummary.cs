@@ -31,5 +31,6 @@ namespace Logitude.TariffModule.BL.DataContracts
         public List<SurchargeSummary> Surcharges { get; set; }
         public string SellerId { get;  set; }
         public decimal? MinPrice { get; set; }
+        public bool IsMinIconVisible { get; set; }
     }
 }

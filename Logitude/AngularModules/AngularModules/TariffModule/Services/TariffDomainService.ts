@@ -354,6 +354,7 @@ export class TariffSearchSummary {
     UnitOfMesurmentId: string;
     SellerId: string;
     MinPrice: number;
+    IsMinIconVisible: boolean;
 }
 
 
@@ -372,6 +373,7 @@ export class SurchargeSummary {
     SellerId: string;
     SellerName: string;
     MinPrice: number;
+    IsMinIconVisible: boolean;
 }
 
 export class ExcelTariffLines {

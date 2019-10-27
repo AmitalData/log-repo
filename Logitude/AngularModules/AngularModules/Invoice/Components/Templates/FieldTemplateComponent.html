@@ -402,6 +402,14 @@
                                         </tr>
                                     </table>
                                 </div>
+
+                                <!-- Journal - in case full accounting only -->
+                                <div *ngIf="FieldName == 'JournalNumber' && IsHeaderScreenTemplate">
+                                    <div>
+                                        <a href="#" (click)="OpenJournal(Entity.JournalId)">{{Entity.JournalNumber}}</a>
+                                    </div>
+                                </div>
+
                             </div>
                         </td>
                     </tr>

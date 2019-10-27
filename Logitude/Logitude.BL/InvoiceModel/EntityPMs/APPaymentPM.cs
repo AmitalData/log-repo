@@ -133,6 +133,8 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string PaymentChequeCreationNotes { get; set; }
         public bool ExcludeFromDeductionReport { get; set; }
         public string VendorGLAccountId { get; set; }
+        public string JournalId { get; set; }
+        public string JournalNumber { get; set; }
 
 
 

@@ -74,7 +74,7 @@ namespace CommunicationWorkerRole
             return base.OnStart();
         }
 
-        public override async void AsyncRun()
+        public override void Run()
         {
 
             while (IsRunning)
