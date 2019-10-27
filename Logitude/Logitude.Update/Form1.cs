@@ -233,10 +233,11 @@ namespace Logitude.Update
         {
             Thread thread = new Thread(() =>
             {
+                UpdateModule(0, "customs", UpdateCustomslbl);
                 Logitude.BL.Helpers.TableLastUpdateClass.UpdateCacheTableHistory();
                 Logitude.BL.Helpers.TableLastUpdateClass.UpdateSystemMetaDataHistory();
 
-                UpdateModule(0, "customs", UpdateCustomslbl);
+
                 Func<string> GetConnetionStringFunc = () =>
                 {
                     string input = Microsoft.VisualBasic.Interaction.InputBox(
