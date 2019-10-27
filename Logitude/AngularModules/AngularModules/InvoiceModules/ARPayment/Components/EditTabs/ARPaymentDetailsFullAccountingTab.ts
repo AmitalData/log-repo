@@ -73,6 +73,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     public showLocal: boolean = false;
     public ARPaymentChequeStatus = "";
     public ARPaymentChequeStatusColor = "black";
+    BankFieldsVisibile: boolean;
     isMultipleCheques: boolean = false;
     get TextStore(){
         return TextStore;
@@ -667,9 +668,10 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 if (AppTool.IsNullOrEmpty(this.Bank)) {
                     this.UIProperties.SetRequired("Bank", this.ObjectTableName, true);
                 }
-                this.UIProperties.SetVisibility("Bank", this.ObjectTableName, true);
-                this.UIProperties.SetVisibility("BankBranch", this.ObjectTableName, true);
-                this.UIProperties.SetVisibility("Account", this.ObjectTableName, true);
+                //this.UIProperties.SetVisibility("Bank", this.ObjectTableName, true);
+                //this.UIProperties.SetVisibility("BankBranch", this.ObjectTableName, true);
+                //this.UIProperties.SetVisibility("Account", this.ObjectTableName, true);
+                this.BankFieldsVisibile = true;
             }
         }
     }
@@ -683,9 +685,10 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 this.UIProperties.SetRequired("CreditCardTypeId", this.ObjectTableName, true);
             }
             this.UIProperties.SetVisibility("CreditCardTypeId", this.ObjectTableName, true);
-            this.UIProperties.SetVisibility("Bank", this.ObjectTableName, true);
-            this.UIProperties.SetVisibility("BankBranch", this.ObjectTableName, true);
-            this.UIProperties.SetVisibility("Account", this.ObjectTableName, true);
+            //this.UIProperties.SetVisibility("Bank", this.ObjectTableName, true);
+            //this.UIProperties.SetVisibility("BankBranch", this.ObjectTableName, true);
+            //this.UIProperties.SetVisibility("Account", this.ObjectTableName, true);
+            this.BankFieldsVisibile = true;
             this.CreditCardTypeIdVisibility = true;
         }
     }
@@ -698,14 +701,16 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
             this.UIProperties.SetVisibility("BankAccountId", this.ObjectTableName, true);
             if (!this.isFullAccounting) {
-                this.UIProperties.SetVisibility("Bank", this.ObjectTableName, true);
-                this.UIProperties.SetVisibility("BankBranch", this.ObjectTableName, true);
-                this.UIProperties.SetVisibility("Account", this.ObjectTableName, true);
+                //this.UIProperties.SetVisibility("Bank", this.ObjectTableName, true);
+                //this.UIProperties.SetVisibility("BankBranch", this.ObjectTableName, true);
+                //this.UIProperties.SetVisibility("Account", this.ObjectTableName, true);
+                this.BankFieldsVisibile = true;
             }
             else {
-                this.UIProperties.SetVisibility("Bank", this.ObjectTableName, false);
-                this.UIProperties.SetVisibility("BankBranch", this.ObjectTableName, false);
-                this.UIProperties.SetVisibility("Account", this.ObjectTableName, false);
+                //this.UIProperties.SetVisibility("Bank", this.ObjectTableName, false);
+                //this.UIProperties.SetVisibility("BankBranch", this.ObjectTableName, false);
+                //this.UIProperties.SetVisibility("Account", this.ObjectTableName, false);
+                this.BankFieldsVisibile = false;
             }
             this.BankAccountIdVisibility = true;
         }

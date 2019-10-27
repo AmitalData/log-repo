@@ -233,7 +233,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             }
 
             ValidateAirlineRestriction(entityPM, myCommonContext);
-            ValidateBillToCreditLimit(entityPM, myContext, myCommonContext, isNew);
+            ValidateBillToCreditLimit(entityPM, entityPOCO, myContext, myCommonContext, isNew);
             ValidateAccountingSetting(entityPM, myContext, myCommonContext, isNew);
             ValidateFullAccounting(entityPM.Tenant, entityPM.BillToId, entityPM.InvoiceCurrencyId, entityPM.InvoiceDate, isNew);
             ValidateMultiVatPercentages(entityPM, accountingSetting, allVats);
@@ -760,21 +760,23 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 }
             }
         }
-        private static void ValidateBillToCreditLimit(ARInvoicePM entityPM, IInvoiceContext myContext, ICommonDataContext myCommonContext, bool isNew)
+        private static void ValidateBillToCreditLimit(ARInvoicePM entityPM, ARInvoice entityPOCO, IInvoiceContext myContext, ICommonDataContext myCommonContext, bool isNew)
         {
-            if (isNew)
+            int tenant = entityPM.Tenant;
+            string id = tenant.ToString();
+            CreditLimitSetting mySettings = (from d in myCommonContext.CreditLimitSettings where d.Id == id select d).FirstOrDefault();
+            if (mySettings != null)
             {
-                if (!entityPM.HasCreditLimitOverrideFeature)
+                if (mySettings.IsCreditLimitEnabled)
                 {
-                    int tenant = entityPM.Tenant;
-                    string id = tenant.ToString();
-                    string myCustomerId = entityPM.BillToId;
+                    ValidateCreditLimitPartnersRestrictions(entityPM, entityPOCO, mySettings, isNew);
 
-                    CreditLimitSetting mySettings = (from d in myCommonContext.CreditLimitSettings where d.Id == id select d).FirstOrDefault();
-                    if (mySettings != null)
+                    if (isNew)
                     {
-                        if (mySettings.IsCreditLimitEnabled)
+                        if (!entityPM.HasCreditLimitOverrideFeature)
                         {
+                            string myCustomerId = entityPM.BillToId;
+
                             if (mySettings.InvoiceCreationBlock)
                             {
                                 // Bill to may be other partners. (not Customr)
@@ -823,6 +825,139 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 }
             }
         }
+
+        private static void ValidateCreditLimitPartnersRestrictions(ARInvoicePM entityPM, ARInvoice entityPOCO, CreditLimitSetting mySettings, bool isNewEntity)
+        {
+            if (entityPM.BillToId != null)
+            {
+                bool isValidating = false;
+
+                if (isNewEntity)
+                {
+                    isValidating = true;
+                }
+
+                else if (entityPM.BillToId != entityPOCO.BillToId)
+                {
+                    isValidating = true;
+                }
+
+                if (isValidating)
+                {
+                    Card iCard = CardRepository.GetSingleCard(entityPM.BillToId, entityPM.Tenant, true);
+
+                    if (iCard != null)
+                    {
+                        string errorText_Blocking = "Credit limit setting is blocking invoice for ";
+
+                        switch (iCard.PartnerTypeId)
+                        {
+                            case "CS":
+                                {
+                                    if (iCard.IsCustomer)
+                                    {
+                                        if (mySettings.CustomersInvoicesBlock)
+                                        {
+                                            throw new ApplicationException(errorText_Blocking + "Customers");
+                                        }
+                                    }
+
+                                    else
+                                    {
+                                        if (mySettings.ShipperConsigneeInvoiceBlock)
+                                        {
+                                            throw new ApplicationException(errorText_Blocking + "Shippers and Consignees");
+                                        }
+                                    }
+
+                                    break;
+                                }
+
+                            case "AG":
+                                {
+                                    if (mySettings.AgentsInvoicesBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Agents");
+                                    }
+
+                                    break;
+                                }
+
+                            case "CG":
+                                {
+                                    if (mySettings.CustomsAgentsInvoicesBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Customs Agents");
+                                    }
+
+                                    break;
+                                }
+
+                            case "SG":
+                                {
+                                    if (mySettings.ShippingAgentsInvoicesBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Shipping Agents");
+                                    }
+
+                                    break;
+                                }
+
+                            case "AL":
+                                {
+                                    if (mySettings.AirlinesInvoicesBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Airlines");
+                                    }
+
+                                    break;
+                                }
+
+                            case "SL":
+                                {
+                                    if (mySettings.ShippingLinesInvoicesBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Shipping Lines");
+                                    }
+
+                                    break;
+                                }
+
+                            case "TR":
+                                {
+                                    if (mySettings.TruckersInvoicesBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Truckers");
+                                    }
+
+                                    break;
+                                }
+
+                            case "VD":
+                                {
+                                    if (mySettings.VendorsInvoicesBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Vendors");
+                                    }
+
+                                    break;
+                                }
+
+                            case "WH":
+                                {
+                                    if (mySettings.WarehousesInvoicesBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Warehouses");
+                                    }
+
+                                    break;
+                                }
+                        }
+                    }
+                }
+            }
+        }
+
         private static void ValidateAccountingSetting(ARInvoicePM entityPM, IInvoiceContext myContext, ICommonDataContext myCommonContext, bool isNew)
         {
             Tenant loggedTenant = (from a in myCommonContext.Tenants.Include("AccountingSetting")
