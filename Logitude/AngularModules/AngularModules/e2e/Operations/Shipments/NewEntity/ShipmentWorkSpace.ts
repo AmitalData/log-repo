@@ -4,20 +4,17 @@ import { DirectShipment } from './DirectShipment';
 import { HouseShipment } from './HouseShipment';
 import { MasterShipment } from './MasterShipment';
 import { GeneralFunctions } from '../../../Helpers/GeneralFunctions';
-// import { ShipmentSearch } from '../../ShipmentSearch';
 import { EditTabsComponent } from '../EditEntity/EditShipmentTabs.po';
 import { ShipmentHelper } from '../ShipmentHelper';
 
 export class ShipmentWorkSpace {
     private Helper: FieldsHelper;
 
-
     private DirectShipment: DirectShipment;
     private HouseShipment: HouseShipment;
     private MasterShipment: MasterShipment;
     private GeneralFunction: GeneralFunctions;
     private EditShipmentTabs: EditTabsComponent;
-    // private QuickSearch: ShipmentSearch;
     private shipHelper: ShipmentHelper;
 
     constructor() {
@@ -26,14 +23,10 @@ export class ShipmentWorkSpace {
         this.HouseShipment = new HouseShipment();
         this.MasterShipment = new MasterShipment();
         this.GeneralFunction = new GeneralFunctions();
-        // this.QuickSearch = new ShipmentSearch();
         this.EditShipmentTabs = new EditTabsComponent();
         this.shipHelper = new ShipmentHelper();
     }
-
-
     CreateShipment(ShipmentLevelCode: string, Direction: string, TransportMode: string, ShipmentType: string) {
-        // this.DirectShipment.CreateAndCloseNewShipment('NEWDIRECT','ShipmentCancelbtn');
         if (ShipmentLevelCode == 'D') {
             this.shipHelper.CreateAndCloseNewShipment('NEWDIRECT', 'ShipmentCancelbtn', Direction, TransportMode, ShipmentType);
             if (TransportMode == 'A') {
@@ -42,22 +35,13 @@ export class ShipmentWorkSpace {
                 this.Helper.WaitBusyIndicator();
                 this.Helper.WaitWindowClosed();
                 return shipperRef1;
-                // this.GeneralFunction.UseSearchBox('Shipment_Search', shipperRef1, 'ListBoxItem');
-                // this.EditShipmentTabs.EditTabs(shipperRef1, ShipmentLevelCode, ShipmentType, Direction);
             }
             else if ((TransportMode == 'O' || TransportMode == 'I') && ShipmentType != '') {
                 var shipperRef1 = this.GeneralFunction.RandomNum();
                 this.DirectShipment.CreateDirectShipment(shipperRef1, Direction, TransportMode, ShipmentType);
                 this.Helper.WaitBusyIndicator();
                 return shipperRef1;
-                // this.GeneralFunction.UseSearchBox('Shipment_Search', shipperRef1, 'ListBoxItem');
-                // this.EditShipmentTabs.EditTabs(shipperRef1, ShipmentLevelCode, ShipmentType, Direction);
             }
-            // this.shipHelper.OperationalCloseShipment();
-            // this.shipHelper.AccountingCloseShipment();
-            // this.shipHelper.AccountedReopenShipment();
-            // this.shipHelper.OperationalReopenShipment();
-            // this.shipHelper.CopyShipment();
         }
         else if (ShipmentLevelCode == 'H') {
             this.shipHelper.CreateAndCloseNewShipment('NEWDIRECT', 'ShipmentCancelbtn', Direction, TransportMode, ShipmentType);
@@ -66,9 +50,6 @@ export class ShipmentWorkSpace {
             this.HouseShipment.CreateHouseShipment(shipperRef1, ShipmentLevelCode, Direction, TransportMode, ShipmentType);// Create shipment 
             this.Helper.WaitBusyIndicator();
             return shipperRef1;
-
-            // this.GeneralFunction.UseSearchBox('Shipment_Search', shipperRef1, 'ListBoxItem');
-            // this.EditShipmentTabs.EditTabs(shipperRef1, ShipmentLevelCode, ShipmentType, Direction);
         }
         else if (ShipmentLevelCode == 'M') {
             this.shipHelper.CreateAndCloseNewShipment('NEWMASTER', 'MasterCancelbtn', Direction, TransportMode, ShipmentType);
@@ -76,13 +57,8 @@ export class ShipmentWorkSpace {
 
             var shipperRef1 = this.GeneralFunction.RandomNum();
             this.MasterShipment.CreateMasterShipment(shipperRef1, ShipmentLevelCode, Direction, TransportMode, ShipmentType);// Create shipment 
-            //  this.Helper.WaitBusyIndicatorToShow();
-            // this.Helper.WaitWindowClosed();
             this.Helper.WaitBusyIndicator();
             return shipperRef1;
-            //this.GeneralFunction.UseSearchBox('Shipment_Search', shipperRef1, 'ListBoxItem');
-            //this.EditShipmentTabs.EditTabs(shipperRef1, ShipmentLevelCode, ShipmentType, Direction);
         }
-
     }
 }

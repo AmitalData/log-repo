@@ -852,8 +852,10 @@
     <TypeScriptCompile Include="e2e\Maintenance\Users\UsersScenario.ts" />
     <TypeScriptCompile Include="e2e\Operations\PrintDocOut\PrintDocOut.ts" />
     <TypeScriptCompile Include="e2e\Operations\SendMailPopup\SendMailPopup.ts" />
+    <TypeScriptCompile Include="e2e\Operations\Shipments\EditEntity\ShipmentActions.ts" />
     <TypeScriptCompile Include="e2e\Operations\Shipments\NewEntity\OpEAWB-spec.ts" />
     <TypeScriptCompile Include="e2e\Operations\Shipments\NewEntity\OpEAWB.ts" />
+    <TypeScriptCompile Include="e2e\Operations\Shipments\ShipmentHelper.ts" />
     <TypeScriptCompile Include="e2e\Operations\ShipmentView\ShipmentView-spec.ts" />
     <TypeScriptCompile Include="e2e\Operations\ShipmentView\ShipmentView.ts" />
     <TypeScriptCompile Include="e2e\Operations\ShipmentView\ShipmentViewScenario.ts" />
@@ -1704,7 +1706,6 @@
     <TypeScriptCompile Include="e2e\Operations\Shipments\EditEntity\WizardTabs.ts" />
     <TypeScriptCompile Include="e2e\Operations\Shipments\NewEntity\HouseAWB.ts" />
     <TypeScriptCompile Include="e2e\Operations\Shipments\NewEntity\MasterAWB.ts" />
-    <TypeScriptCompile Include="e2e\Operations\Shipments\ShipmentHelper.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClient\Components\EditTabs\License\ClientDrivingLicenseTabComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierPendingReason\CourierPendingReasonGeneralComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\CourierWorksheetListTemplate.ts" />
@@ -1716,7 +1717,6 @@
     <TypeScriptCompile Include="Customs\EntityPMs\TPGFileTypePM.ts" />
     <TypeScriptCompile Include="Customs\Services\DataChange\CourierWorksheetSharedDataService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\TPGFileTypeListService.ts" />
-    <TypeScriptCompile Include="e2e\Operations\Shipments\ShipmentHelper.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureAutomation\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureAutomation\ModuleInfrastructureAutomation.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBatchService\Components\BatchService\BatchServicesComponent.ts" />
@@ -3795,7 +3795,6 @@
     <TypeScriptCompile Include="e2e\Operations\Shipments\NewEntity\Operations.e2e-spec.ts" />
     <TypeScriptCompile Include="e2e\Operations\Shipments\NewEntity\Operations.po.ts" />
     <TypeScriptCompile Include="e2e\Operations\Shipments\NewEntity\ShipmentWorkSpace.ts" />
-    <TypeScriptCompile Include="e2e\Operations\Shipments\Shipment\DirectShipment.ts" />
     <TypeScriptCompile Include="environments\environment.prod.ts" />
     <TypeScriptCompile Include="environments\environment.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\EditTabs\CMConnectedDeclarationTabComponent.ts" />
