@@ -315,6 +315,16 @@ export class ContactPM {
     public set CreateDate(newValue: Date) { if (this.createDate != newValue) { this.createDate = newValue; this.MarkAsDirty("CreateDate"); } }
        
 	 
+    private isUserAdditionalPackagesOnly: boolean;
+    public get IsUserAdditionalPackagesOnly() { return this.isUserAdditionalPackagesOnly; }
+    public set IsUserAdditionalPackagesOnly(newValue: boolean) { if (this.isUserAdditionalPackagesOnly != newValue) { this.isUserAdditionalPackagesOnly = newValue; this.MarkAsDirty("IsUserAdditionalPackagesOnly"); } }
+       
+	 
+    private isLicencedUser: boolean;
+    public get IsLicencedUser() { return this.isLicencedUser; }
+    public set IsLicencedUser(newValue: boolean) { if (this.isLicencedUser != newValue) { this.isLicencedUser = newValue; this.MarkAsDirty("IsLicencedUser"); } }
+       
+	 
 
     public OldEntityPM: ContactPM;
 		
