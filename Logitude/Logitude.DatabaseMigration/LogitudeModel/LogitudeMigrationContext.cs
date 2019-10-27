@@ -490,6 +490,11 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             get;
             set;
         }
+        public IDbSet<AccountingPartner> AccountingPartners
+        {
+            get;
+            set;
+        }
         public IDbSet<AccountingSetting> AccountingSettings
         {
             get;
@@ -4257,7 +4262,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new DecCargoSplitConsItemMap());
             modelBuilder.Configurations.Add(new DecCargoSplitConsPackDetMap());
             modelBuilder.Configurations.Add(new DecCargoSplitCargoIdentifierMap());
-            
+            modelBuilder.Configurations.Add(new AccountingPartnerMap());
+
             #endregion
 
             #region Accounting
