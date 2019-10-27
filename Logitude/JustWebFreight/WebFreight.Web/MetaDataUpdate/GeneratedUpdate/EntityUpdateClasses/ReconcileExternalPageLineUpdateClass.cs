@@ -114,7 +114,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "",
 			      				    DefaultText =  "Reconcile External Page Line",
-			      				    Code =  "8e11",
+			      				    Code =  "9be9",
 			      				    Name =  "ReconcileExternalPageLine Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
