@@ -1,4 +1,8 @@
-		   --> Please run this script at Global db 
+--> Please run this script at Global db 
+
+delete BatchServicesDefinitionMods where Code = 'DocumentExecutionWR'
+delete BatchServicesDefinitions where Code = 'DocumentExecutionWR'
+
 INSERT INTO [dbo].[BatchServicesDefinitions]
            ([Code]
            ,[ClassName]
@@ -6,17 +10,17 @@ INSERT INTO [dbo].[BatchServicesDefinitions]
            ,[Parameter2]
 		   ,[QueueDefinitionCode])
      VALUES
-           ('DocumentExecutionWR'
-           ,'DocumentExecutionWorkerRole'
+           ('DocumentsExecutionWR'
+           ,'DocumentsExecutionWorkerRole'
            ,NULL
            ,NULL,
-		   'DocumentExecutionQueue')
+		   'DocumentsExecutionQueue')
 
 INSERT INTO [dbo].[BatchServicesDefinitionMods]
            ([Code]
            ,[InActive]
            ,[NumberOfThreads])
      VALUES
-           ('DocumentExecutionWR'
+           ('DocumentsExecutionWR'
            ,0
            ,1)

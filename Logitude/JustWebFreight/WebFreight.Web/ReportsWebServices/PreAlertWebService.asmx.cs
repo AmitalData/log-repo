@@ -621,7 +621,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                 #region Others
 
-                string loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser(tenant);
+                string loggedUserEmail = AuthenticationUtil.GetLoggedUserEmail(tenant);
                 if (!string.IsNullOrEmpty(loggedUserEmail))
                 {
                     ContactQuery contactQuery = new ContactQuery(contactRepository);

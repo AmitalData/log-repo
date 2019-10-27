@@ -1561,6 +1561,10 @@
     <Compile Include="Migrations\201910231231109_CardFieldsMappingMigration.Designer.cs">
       <DependentUpon>201910231231109_CardFieldsMappingMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910241030000_AbedAddNewTableDocumentsExecutionLog.cs" />
+    <Compile Include="Migrations\201910241030000_AbedAddNewTableDocumentsExecutionLog.Designer.cs">
+      <DependentUpon>201910241030000_AbedAddNewTableDocumentsExecutionLog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2673,6 +2677,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910231231109_CardFieldsMappingMigration.resx">
       <DependentUpon>201910231231109_CardFieldsMappingMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910241030000_AbedAddNewTableDocumentsExecutionLog.resx">
+      <DependentUpon>201910241030000_AbedAddNewTableDocumentsExecutionLog.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
