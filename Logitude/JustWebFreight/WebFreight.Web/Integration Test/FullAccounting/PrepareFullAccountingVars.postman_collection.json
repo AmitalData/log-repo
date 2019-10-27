@@ -2531,6 +2531,11 @@
 						"key": "token",
 						"type": "text",
 						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
 					}
 				],
 				"url": {
@@ -2600,23 +2605,32 @@
 						"key": "token",
 						"value": "{{Token}}",
 						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/chartofaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=BK771&PageSize=23 ",
-					"protocol": "http",
+					"raw": "{{URL}}/api/chartofaccountviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=BK771&GetCount=true&PageIndex=0&PageSize=23",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"chartofaccountviews",
 						"getbyfilters"
 					],
 					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
 						{
 							"key": "Filter1Name",
 							"value": "SearchFields"
@@ -2630,8 +2644,24 @@
 							"value": "BK771"
 						},
 						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
 							"key": "PageSize",
-							"value": "23 "
+							"value": "23"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
 						}
 					]
 				}
@@ -2691,15 +2721,11 @@
 					"raw": "   {\r\n   \t\"$id\": \"1\",\r\n    \"Tenant\": {{Tenant}},\r\n    \"Code\": \"BK771\",\r\n    \"LocalName\": \"PMBankChart\",\r\n    \"Englishname\": \"PMBankChart\",\r\n    \"TypeCode\": \"5\",\r\n    \"Inactive\": true,\r\n    \"ChangeSetOp\": 1\r\n \r\n}\r\n"
 				},
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/chartofaccounts",
-					"protocol": "http",
+					"raw": "{{URL}}/api/chartofaccounts",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"chartofaccounts"
 					]
