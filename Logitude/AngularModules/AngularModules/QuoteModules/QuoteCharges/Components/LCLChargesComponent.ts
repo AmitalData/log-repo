@@ -1063,7 +1063,6 @@ export class QuoteChargeItem extends BaseComponent {
         this.UIProperties.SetEnabled("VendorId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Notes", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("IsChargeBySteps", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("CostCurrencyId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("CostIsFixedRate", this.ObjectTableName, this.IsEditingEnabled);
     }
 
@@ -1088,6 +1087,25 @@ export class QuoteChargeItem extends BaseComponent {
         }
 
         this.IsAllInCheckBoxVisible = isAllInCheckBoxVisible;
+        this.SetUIProperties_AllIn_CostCurrency();
+    }
+    SetUIProperties_AllIn_CostCurrency() {
+
+        var isEnabled_CostCurrencyId = false;
+
+        if (this.IsEditingEnabled) {
+            isEnabled_CostCurrencyId = true;
+
+            if (this.IsAllIN) {
+                isEnabled_CostCurrencyId = false;
+            }
+
+            else if (this.ChargesGroupCode == "FRT" && this.QuotePM.QuoteCharges.filter(d => d.IsAllIN).length > 0) {
+                isEnabled_CostCurrencyId = false;
+            }
+        }
+
+        this.UIProperties.SetEnabled("CostCurrencyId", this.ObjectTableName, isEnabled_CostCurrencyId);
     }
 
     public IsEnabled_CostQuantity: boolean = false;

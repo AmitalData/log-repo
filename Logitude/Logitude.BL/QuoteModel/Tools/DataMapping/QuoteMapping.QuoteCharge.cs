@@ -22,11 +22,6 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
                 itemPoco.QuoteId = itemPM.QuoteId;
             }
 
-            if (iQuotePM.IsSaleCurrencySameAsCost)
-            {
-                itemPM.IsAllIN = false;
-            }
-
             itemPoco.ValueDate = TenantServerConfigration.GetCurrentDateTime(itemPM.Tenant);
             itemPoco.UpdateDate = TenantServerConfigration.GetCurrentDateTime(itemPM.Tenant);
             itemPoco.UpdatedByUserId = itemPM.UpdatedByUserId;
