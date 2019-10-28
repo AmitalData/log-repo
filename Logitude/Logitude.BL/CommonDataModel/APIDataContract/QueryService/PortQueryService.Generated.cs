@@ -135,7 +135,8 @@ using Simplog.Data.CommonDataModel;
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
-						temp.Id = MyEntity.Id;
+					   
+					    throw new ApplicationException("Port with provided key doesn't exist");
 					}
 					temp.CombinedCode = MyEntity.Code;
 					temp.LocalName = MyEntity.LocalName;

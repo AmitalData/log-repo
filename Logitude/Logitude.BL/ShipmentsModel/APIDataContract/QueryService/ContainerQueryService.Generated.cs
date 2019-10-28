@@ -106,7 +106,8 @@ using Simplog.Data.ShipmentsModel;
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
-						temp.Id = item.Id;
+					   
+					    throw new ApplicationException("ShipmentPackage with provided key doesn't exist");
 					}
 					PackageTypeQueryService ContainerTypePackageTypeService = new PackageTypeQueryService(Tenant);
 					if(item.ContainerType != null)

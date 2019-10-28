@@ -144,8 +144,8 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 {
                     throw new ApplicationException("Invoice Date is required");
                 }
-
-                if(!string.IsNullOrEmpty(temp.MainEntityReference))
+                
+                if (!string.IsNullOrEmpty(temp.MainEntityReference))
                 {
                     ShipmentQuery shipmentRepository = new ShipmentQuery(tenant);
                     ShipmentPM shipment = shipmentRepository.GetSinglePMByShipmentNumber(temp.MainEntityReference, tenant, false);
@@ -181,7 +181,26 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                         throw new ApplicationException("No Shipment Found");
                     }
                 }
-                
+
+                foreach (APInvoiceLinePM line in temp.InvoiceLines)
+                {
+                    if(string.IsNullOrEmpty(line.ForiegnCurrencyId))
+                    {
+                        line.ForiegnCurrencyId = temp.InvoiceCurrencyId;
+                    }
+
+                    else
+                    {
+                        if(line.ForiegnCurrencyId != temp.InvoiceCurrencyId)
+                        {
+                            throw new ApplicationException("Line Currency is Different than Invoice Currency");
+                        }
+                    }
+
+                    line.EntityReference = temp.MainEntityReference;
+                    line.EntityId = temp.MainEntityId;
+                }
+
                 return temp;
             }
 

@@ -94,10 +94,12 @@ using Simplog.Data.InfrastructureModel;
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
-						temp.Id = MyEntity.Id;
+					   
+					    throw new ApplicationException("MoveType with provided key doesn't exist");
 					}
 					if(string.IsNullOrEmpty(temp.Code))
 					{
+					   
 						temp.Code = MyEntity.Code;
 					}
 					temp.MoveTypeEnglishName = MyEntity.MoveTypeEnglishName;

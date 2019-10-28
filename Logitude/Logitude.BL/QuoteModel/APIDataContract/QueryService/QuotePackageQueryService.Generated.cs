@@ -93,7 +93,8 @@ using Simplog.Data.QuoteModel;
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
-						temp.Id = item.Id;
+					   
+					    throw new ApplicationException("QuotePackage with provided key doesn't exist");
 					}
 					PackageTypeQueryService PackageTypePackageTypeService = new PackageTypeQueryService(Tenant);
 					if(item.PackageType != null)

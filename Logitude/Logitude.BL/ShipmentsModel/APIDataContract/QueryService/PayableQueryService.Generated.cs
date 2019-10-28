@@ -111,7 +111,8 @@ using Simplog.Data.ShipmentsModel;
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
-						temp.Id = item.Id;
+					   
+					    throw new ApplicationException("ShipmentPayable with provided key doesn't exist");
 					}
 					ChargesTypeQueryService ChargesTypeChargesTypeService = new ChargesTypeQueryService(Tenant);
 					if(item.ChargesType != null)
