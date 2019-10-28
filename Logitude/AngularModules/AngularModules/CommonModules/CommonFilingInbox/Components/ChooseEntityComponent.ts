@@ -142,6 +142,8 @@ export class ChooseEntityComponent {
         filters.PageSize = 100;
         filters.GetAll = false;
         filters.GetCount = true;
+        filters.SortBy = "OpenDate";
+        filters.SortDirection = "Descending";
         var searchValue = null;
 
         if (!AppTool.IsNullOrEmpty(this.SearchText)) {

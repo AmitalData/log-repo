@@ -678,7 +678,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             filters.AdditionalFilters.push(this.searchFieldFilter);
         }
         if (this.openAmountFilter) {
-            var amountFilter = new FilterItem("Amount", this.openAmountFilter.FieldValue, this.openAmountFilter.FieldValue2, null, this.openAmountFilter.Operator, false, false, false, "number", false);
+            var amountFilter = new FilterItem("Amount2Filter", this.openAmountFilter.FieldValue, this.openAmountFilter.FieldValue2, null, this.openAmountFilter.Operator, true, false, true, "number", false);
             filters.AdditionalFilters.push(amountFilter);
         }
 

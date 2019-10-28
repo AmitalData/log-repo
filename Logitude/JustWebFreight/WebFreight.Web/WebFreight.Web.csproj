@@ -1082,6 +1082,7 @@
     <Compile Include="Controllers\CommonDataModel\Extended\CustomerDepositionExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\DepositionRequestController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\DocumentFilingBackupBatchExtendedController.cs" />
+    <Compile Include="Controllers\CommonDataModel\Extended\DocumentsExecutionLogExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\HybridTenantStateExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\ImporterDepositionController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\ReportsTemplateExtendedController.cs" />
@@ -1097,6 +1098,7 @@
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\CustomsShipperViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\DocumentFilingBackupBatchViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\DocumentFilingBackupSettingViewsController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\DocumentsExecutionLogViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\FilingInboxAttachmentLogViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\FilingInboxViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\FTPDetailViewsController.Generated.cs" />
@@ -1226,6 +1228,7 @@
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\CustomsShipperController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\DocumentFilingBackupBatchController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\DocumentFilingBackupSettingController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\DocumentsExecutionLogController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\FilingInboxAttachmentLogController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\FilingInboxController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\FTPDetailController.Generated.cs" />
@@ -2501,6 +2504,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\DocumentFilingBackupBatchUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\DocumentFilingBackupSettingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\DocumentFolderUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\DocumentsExecutionLogUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\DocumentsFilingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\DocumentTypeCategoryUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\DocumentTypeCopyUpdateClass.cs" />

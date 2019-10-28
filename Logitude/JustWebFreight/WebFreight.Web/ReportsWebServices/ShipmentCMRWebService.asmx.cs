@@ -67,7 +67,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 where a.Id == userId
                                 select a).FirstOrDefault();
 
-            string loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser(tenant);
+            string loggedUserEmail = AuthenticationUtil.GetLoggedUserEmail(tenant);
             if (currentUser == null)
             {
                 if (tenant != 0)

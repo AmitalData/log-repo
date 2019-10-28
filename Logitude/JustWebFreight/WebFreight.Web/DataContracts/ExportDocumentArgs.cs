@@ -27,8 +27,8 @@ namespace WebFreight.Web.DataContracts
         public string AccountingCurrencyId { get; set; }
         public List<string> DocumentTypeCopyIdsList { get; set; }
         public string DocumentTypeId { get; set; }
-
-
+        public string DocumentTypeName { get; set; }
+        
 
 
     }
