@@ -39,7 +39,7 @@ namespace Logitude.XSD.INTTRA_Booking
         private ComputingPartnerTranslationHelper computingPartnerHelper;
         public bool IsValid { get; set; }
         public List<string> Errors { get; set; }
-        private INTTRAGeneralMethods iNTTRAGeneralMethods;
+        public INTTRAGeneralMethods iNTTRAGeneralMethods;
 
         public INTRABookingContext(int teannt, string shipmentId, Simplog.Data.CommonDataModel.EntityPOCOs.Contact loggedContact, ICommonDataContext CommonContext)
         {
@@ -841,7 +841,7 @@ namespace Logitude.XSD.INTTRA_Booking
             INTTRA_Booking.GoodsDetailsType itemDetails = new INTTRA_Booking.GoodsDetailsType()
             {
                 LineNumber = "1",
-                GoodDescription =this.ShipmentPM.DescriptionOfGoods,
+                GoodDescription = this.iNTTRAGeneralMethods.GetStringList(this.ShipmentPM.DescriptionOfGoods, 2, 1024).FirstOrDefault(),
                 PackageDetail = new PackageDetailType()
                 {
                     OuterPack = new OuterPackType(),
