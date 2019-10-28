@@ -135,6 +135,10 @@ export class PickupMainTabComponent extends BaseComponent {
                 else if (list.indexOf(this.EntityPM) == 0) {
                     isFirstPickup = true;
                 }
+
+                //if (isFirstPickup) {
+                    isEmptyContainerVisible = true;
+               // }
             }
         }
 
