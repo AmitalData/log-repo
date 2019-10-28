@@ -88,7 +88,8 @@ using Simplog.Data.InvoiceModel;
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
-						temp.Id = item.Id;
+					   
+					    throw new ApplicationException("ARPaymentChequeReplica with provided key doesn't exist");
 					}
 					temp.Tenant = item.Tenant;
 					temp.LineNumber = item.LineNumber;

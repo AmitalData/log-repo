@@ -136,7 +136,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                             if (string.IsNullOrEmpty(apinvoice.EntityReference))
                             {
-                                throw new ApplicationException("Entity Referance is missing");
+                                throw new ApplicationException("Entity Reference is missing");
                             }
                         }
 
