@@ -936,6 +936,11 @@ export class AppTool {
         var myResult: string = null;
 
         switch (Code) {
+            case "General.MH.Occasions": {
+                myResult = "Occasion";
+                break;
+            }
+
             case "General.MH.Operations": {
                 myResult = "Box";
                 break;

@@ -118,8 +118,10 @@ export class LicensesManagementComponent implements OnDestroy {
         var service: UserExtendedListService = new UserExtendedListService();
         return new Promise((resolve, reject) => { resolve(service.GetCustomDataByFilters(filters)) });
     }
-
+    
     private LoadUserLicenses() {
+        this.DataLoaded = false;
+
         var userExtendedPMService: UserExtendedPMService = new UserExtendedPMService();
         userExtendedPMService.GetUserLicenses().subscribe(myResult => {
             if (myResult == null) {
@@ -183,8 +185,6 @@ export class LicensesManagementComponent implements OnDestroy {
     }
 
     private BuildAdditionalColumns() {
-        this.DataLoaded = false;
-
         if (SessionLocator.TenantManagementJS.MainAdditionalPackageApplied) {
             this.Columns.push({
                 FieldName: SessionLocator.TenantManagementJS.PackageCode + ",0" ,
@@ -268,6 +268,8 @@ export class LicensesManagementComponent implements OnDestroy {
 
     public ValidationErrorsList: string[] = [];
     private Save(myPackageCode: string) {
+        this.BuildHeaders();
+
         var errors: string[] = [];
 
         var userLicenses: UserLicensePM[] = this.AllUserLicenses.filter(d => d.PackageCode == myPackageCode);
@@ -280,7 +282,7 @@ export class LicensesManagementComponent implements OnDestroy {
             errors.push("Some Packages have exceeded the allowed number of users");
         }
 
-        this.BuildHeaders();
+        //this.BuildHeaders();
         
         this.ValidationErrorsList = errors;
 
@@ -291,6 +293,12 @@ export class LicensesManagementComponent implements OnDestroy {
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
                     this.RunSave();
+                }
+
+                else {
+                    this.InitColumns();
+                    this.LoadUserLicenses();
+                    this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
                 }
             });
         }
