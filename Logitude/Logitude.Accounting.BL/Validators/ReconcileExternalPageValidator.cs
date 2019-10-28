@@ -28,7 +28,7 @@ namespace Logitude.Accounting.BL.Validators
 
                 
                 ReconcileExternalPageQueryService query = new ReconcileExternalPageQueryService(entityPM.Tenant);
-                ReconcileExternalPagePM prevPage = query.GetPrevPageNoByPageNo(entityPM.PageNo, entityPM.BankAccountId, entityPM.Tenant);
+                ReconcileExternalPagePM prevPage = query.GetPrevPageNoByPageNo(entityPM.PageNo, entityPM.EntityId, entityPM.Tenant);
                 if (prevPage != null)
                 {
 
