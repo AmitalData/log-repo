@@ -107,6 +107,12 @@ exports.config = {
             browser.params.Login.Email = "Raghad@protractor.com";
             browser.params.Login.Password = "!RS123Rs";
         }
+
+        else if (browser.params.Env == "testStaging") {
+            browser.params.Link = "https://staging.logitudeworld.com";
+            browser.params.Login.Email = "Raghad@protractor.com";
+            browser.params.Login.Password = "!RS123Rs";
+        }
         else if (browser.params.Env == "test_1071") {
             browser.params.Link = "https://test.logitudeworld.com/test";
             browser.params.Login.Email = "sgautomation@pro.com";
