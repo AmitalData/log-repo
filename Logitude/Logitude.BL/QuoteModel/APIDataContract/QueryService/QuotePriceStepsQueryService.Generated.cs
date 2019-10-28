@@ -83,7 +83,8 @@ using Simplog.Data.QuoteModel;
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
-						temp.Id = item.Id;
+					   
+					    throw new ApplicationException("QuotePriceSteps with provided key doesn't exist");
 					}
 					temp.Step = item.PriceBreakStep;
 					temp.CostUnitPrice = item.CostUnitPrice;

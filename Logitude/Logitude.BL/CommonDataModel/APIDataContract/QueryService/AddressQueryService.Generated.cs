@@ -119,7 +119,8 @@ using Simplog.Data.CommonDataModel;
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
-						temp.Id = MyEntity.Id;
+					   
+					    throw new ApplicationException("Address with provided key doesn't exist");
 					}
 					temp.Name = MyEntity.Name;
 					temp.Address1 = MyEntity.Address1;

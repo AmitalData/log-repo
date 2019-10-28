@@ -94,10 +94,12 @@ using Simplog.Data.CommonDataModel;
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
-						temp.Id = MyEntity.Id;
+					   
+					    throw new ApplicationException("VatType with provided key doesn't exist");
 					}
 					if(string.IsNullOrEmpty(temp.Code))
 					{
+					   
 						temp.Code = MyEntity.Code;
 					}
 					temp.EnglishName = MyEntity.EnglishName;

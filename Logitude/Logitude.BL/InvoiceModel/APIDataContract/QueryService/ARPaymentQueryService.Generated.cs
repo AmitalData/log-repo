@@ -163,7 +163,8 @@ using Simplog.Data.InvoiceModel;
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
-						temp.Id = MyEntity.Id;
+					   
+					    throw new ApplicationException("ARPayment with provided key doesn't exist");
 					}
 					temp.Tenant = MyEntity.Tenant;
 					temp.PaymentNo = MyEntity.PaymentNo;
