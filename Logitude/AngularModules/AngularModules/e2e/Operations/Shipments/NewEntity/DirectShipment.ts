@@ -61,8 +61,8 @@ export class DirectShipment {
             }
         }
         if (TransportMode == 'A') {
-            this.Helper.WaitByIdAndFill('Shipment_MainCarriageCarrierId', 'LY');
-            this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Shipment_MainCarriageCarrierId', 'LY');
+            this.Helper.WaitByIdAndFill('Shipment_MainCarriageCarrierId', 'BA');
+            this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Shipment_MainCarriageCarrierId', 'BA');
 
             this.Helper.WaitByIdAndFill('Shipment_MainCarriageCarrierNumber', '115');
 
