@@ -94,7 +94,16 @@ using Simplog.Data.InfrastructureModel;
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
-					    throw new ApplicationException("ChargesGroup with provided key doesn't exist");
+					    if(!string.IsNullOrEmpty(MyEntity.Id))
+					    {
+					        throw new ApplicationException("ChargesGroup with provided key doesn't exist");
+						
+						}
+						//else
+						//{
+						//    temp.Id = MyEntity.Id;
+
+						//}
 					}
 					if(string.IsNullOrEmpty(temp.Code))
 					{
