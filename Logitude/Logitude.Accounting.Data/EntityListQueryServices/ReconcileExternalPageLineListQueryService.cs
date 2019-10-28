@@ -75,9 +75,10 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
             if (amountFilter != null)
             {
-
-                decimal.TryParse(amountFilter.FieldValue.ToString(), out decimal amount);
-                decimal.TryParse(amountFilter.FieldValue2?.ToString(), out decimal amount2);
+                decimal amount;
+                decimal amount2;
+                decimal.TryParse(amountFilter.FieldValue.ToString(), out amount);
+                decimal.TryParse(amountFilter.FieldValue2?.ToString(), out amount2);
 
                 switch (amountFilter.Operator)
                 {
