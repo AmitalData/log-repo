@@ -62,9 +62,9 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             LedgerTransactionPM transferAccountTransaction = GetLedgerTransactionById(transactionId);
             ExternalReconciliationLinePM pageLine = externalRecoPM.ExternalReconciliationLines.FirstOrDefault(d => d.ExternalPageLineId != null);
 
-            ExternalReconcileJournalService extRecoJournalService = new ExternalReconcileJournalService();
+            ExternalReconcileMoveBankCheckFromTransfer2GLAccountService extRecoJournalService = new ExternalReconcileMoveBankCheckFromTransfer2GLAccountService();
             extRecoJournalService.MustInit(new ExternalReconcileDataProvider(AccountingContext.GetContext(tenant)));
-            extRecoJournalService.MoveBankCheckFromTransfer2GLAccount(tenant, transferAccountTransaction.Id, pageLine.ExternalPageLineId);
+            extRecoJournalService.CreateJournalWithExtReconcile(tenant, transferAccountTransaction.Id, pageLine.ExternalPageLineId);
             JournalPM journalPM = extRecoJournalService.TheJournalPM;
 
             //JournalPM journalPM = CreateMovingJournal(transferAccountTransaction);
@@ -94,9 +94,9 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             //    ReconcileExternalPageLineId = pageLine.ExternalPageLineId,
             //});
 
-            var myExternalReconcileJournalService = new ExternalReconcileJournalService();
+            var myExternalReconcileJournalService = new ExternalReconcileMoveBankCheckFromTransfer2GLAccountService();
             myExternalReconcileJournalService.MustInit(new ExternalReconcileDataProvider(AccountingContext.GetContext(tenant)));
-            myExternalReconcileJournalService.MoveBankCheckFromTransfer2GLAccount(tenant, ledgerTransactionForTransferAccount.Id, pageLine.ExternalPageLineId);
+            myExternalReconcileJournalService.CreateJournalWithExtReconcile(tenant, ledgerTransactionForTransferAccount.Id, pageLine.ExternalPageLineId);
 
             //autoExternalReconcileService.MustInit(providor, journalPM, transactions);
             //autoExternalReconcileService.MoveBankCheckFromTransfer2GLAccount();

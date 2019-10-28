@@ -94,11 +94,13 @@ using Simplog.Data.InvoiceModel;
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
-						temp.Id = MyEntity.Id;
+					   
+					    throw new ApplicationException("AccountingPaymentMethod with provided key doesn't exist");
 					}
 					temp.Tenant = MyEntity.Tenant;
 					if(string.IsNullOrEmpty(temp.Code))
 					{
+					   
 						temp.Code = MyEntity.Code;
 					}
 					temp.Name = MyEntity.Name;					   

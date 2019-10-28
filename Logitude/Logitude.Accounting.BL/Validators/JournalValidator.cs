@@ -3,6 +3,7 @@ using Logitude.Accounting.BL.CoreBL;
 using Logitude.Accounting.BL.CoreBL.ExternalReconcile;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -524,28 +525,57 @@ accountingValidationContextServiceProvider
 
         private static void ValidateJournalExternalReconciles(JournalPM myJournalPM, List<string> errorsList, IExternalReconcileDataProvider myIExternalReconcileDataProvider)
         {
-            if (myJournalPM.JournalExternalReconciles.Count > 1)
+            if (myJournalPM.JournalExternalReconciles.Count() == 0)
             {
-                //throw new Exception("Sorry meanwhile only one Adjust Allowed !!!");
-                errorsList.Add(TranslateMyTextCode("Sorry meanwhile only one Adjust Allowed !!!", myJournalPM.Tenant));
+                return;
             }
-            if (myJournalPM.JournalExternalReconciles.Count == 1)
+            if (!myJournalPM.JournalExternalReconciles.Any(r => r.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.None))
             {
-                var myExternalReconcileJournalService = new ExternalReconcileJournalService();
-                myExternalReconcileJournalService.MustInit(myIExternalReconcileDataProvider);
+                return;
+            }
 
-                LedgerTransactionPM myLedgerTransactionBankTransferPM;
-                BankAccountPM bankAccountFromTransfer;
-                ReconcileExternalPageLinePM myReconcileExternalPageLinePM;
-                string errString;
-                myExternalReconcileJournalService.PrepareAndValidate(myJournalPM.Tenant, false ,myJournalPM.JournalExternalReconciles[0].LedgerTransactionId, myJournalPM.JournalExternalReconciles[0].ReconcileExternalPageLineId, out myLedgerTransactionBankTransferPM, out bankAccountFromTransfer, out myReconcileExternalPageLinePM, out errString);
-                if (!string.IsNullOrWhiteSpace(errString))
+            if (myJournalPM.JournalExternalReconciles.Any(r => string.IsNullOrWhiteSpace(r.LedgerTransactionId)))
+            {
+                var myExternalReconcileAdjustBankFeesService = new ExternalReconcileAdjustBankFeesService();
+                myExternalReconcileAdjustBankFeesService.MustInit(myIExternalReconcileDataProvider);
+
+                List<string> reconcileExternalPageLineIdList = myJournalPM.JournalExternalReconciles.Select(r => r.ReconcileExternalPageLineId).ToList();
+                string adjustGLAccountId = CreateAutoExternalReconcileWhileStreamingService.GetAdjustGLAccountId(myJournalPM);
+
+                List<ReconcileExternalPageLineList> listOfpageLineList;
+                List<ReconcileExternalPageList> listOfpageList;
+                bool CheckWhileStreaming = false;
+               
+                myExternalReconcileAdjustBankFeesService.PrapareAndValid(myJournalPM.Tenant, reconcileExternalPageLineIdList, adjustGLAccountId, out listOfpageLineList, out listOfpageList, CheckWhileStreaming);
+
+
+            }
+            else
+            {
+                //if (myJournalPM.JournalExternalReconciles.Count > 1)
+                //{
+                //    //throw new Exception("Sorry meanwhile only one Adjust Allowed !!!");
+                //    errorsList.Add(TranslateMyTextCode("Sorry meanwhile only one Adjust Allowed !!!", myJournalPM.Tenant));
+                //}
+                //            if (myJournalPM.JournalExternalReconciles.Count == 1)
                 {
-                    errorsList.Add(errString);
+                    var myExternalReconcileMoveBankCheckFromTransfer2GLAccountService = new ExternalReconcileMoveBankCheckFromTransfer2GLAccountService();
+                    myExternalReconcileMoveBankCheckFromTransfer2GLAccountService.MustInit(myIExternalReconcileDataProvider);
+
+                    LedgerTransactionPM myLedgerTransactionBankTransferPM;
+                    BankAccountPM bankAccountFromTransfer;
+                    ReconcileExternalPageLinePM myReconcileExternalPageLinePM;
+                    string errString;
+                    myExternalReconcileMoveBankCheckFromTransfer2GLAccountService.PrepareAndValidate(myJournalPM.Tenant, false, myJournalPM.JournalExternalReconciles[0].LedgerTransactionId, myJournalPM.JournalExternalReconciles[0].ReconcileExternalPageLineId, out myLedgerTransactionBankTransferPM, out bankAccountFromTransfer, out myReconcileExternalPageLinePM, out errString);
+                    if (!string.IsNullOrWhiteSpace(errString))
+                    {
+                        errorsList.Add(errString);
+                    }
+
                 }
-                
             }
         }
+
 
         static void onRegilarJournalAvoidTheSameReference4DebitOrCredit_DochMaaam(List<string> errorsList, JournalPM myJournalPM)
         {

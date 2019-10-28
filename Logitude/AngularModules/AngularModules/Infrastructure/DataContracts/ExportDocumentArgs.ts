@@ -24,6 +24,7 @@ export class ExportDocumentArgs {
     public LoggedContactName: string;
     public AccountingCurrencyId: string;
     public DocumentTypeCopyIdsList: string[];
-
+    public DocumentTypeName: string;
+    
 }
 

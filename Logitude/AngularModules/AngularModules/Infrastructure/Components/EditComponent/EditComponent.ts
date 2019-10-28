@@ -425,6 +425,11 @@ export class EditComponent implements OnDestroy {
                 this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
             }
         }
+        else if (this.ObjectTableName == "APInvoice") {
+            this.GenerateAPInvoiceHeader(myHeaderScreen,myObjectFields);
+
+
+        }
         else if (this.ObjectTableName == "Tariff") {
             if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC") {
                 myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === this.ObjectTableId && d.Code == "Tariff.SurchagesHeaderScreen")[0];
@@ -457,7 +462,21 @@ export class EditComponent implements OnDestroy {
             this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
         }
     }
+    private GenerateAPInvoiceHeader(headerScreen:any, objectFields:any) {
 
+
+        if (SessionLocator.TenantPM.AccountingActivated) {
+            var myObjectTable = window.ObjectTables.filter(x => x.Name === "APInvoice")[0];
+            var myObjectTableId = myObjectTable.Id;
+
+            headerScreen = window.Screens.filter(d => d.ObjectTableId === myObjectTableId && d.Code == "APInvoice.FullACCHeaderScreen")[0];
+            objectFields = window.ObjectFields.filter(d => d.ObjectTableId === myObjectTableId);
+            this.GenerateHeaderScreen(headerScreen,objectFields);
+        }
+        else {
+            this.GenerateHeaderScreen(headerScreen, objectFields);
+        }
+    }
 
     private FindHeaderRetries: number = 0;
     private FindHeaderTimerToken: any;

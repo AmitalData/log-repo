@@ -55,13 +55,14 @@ using WebFreight.Web.Helpers;
 
 namespace CommunicationWorkerRole
 {
-    class DocumentExecutionWorkerRole : WorkerEntryPoint
+    class DocumentsExecutionWorkerRole : WorkerEntryPoint
     {
 
         DbQueueService queueservice;
         int tenant = 0;
-
-        public DocumentExecutionWorkerRole()
+        DocumentsExecutionLogRepository documentsExecutionLogRepository = null;
+        DocumentsExecutionLog documentsExecutionLog = null;
+        public DocumentsExecutionWorkerRole()
         {
 
         }
@@ -69,7 +70,7 @@ namespace CommunicationWorkerRole
         public override bool OnStart()
         {
             ThreadId = Guid.NewGuid().ToString();
-            BatchServiceCode = "DocumentExecutionWR";
+            BatchServiceCode = "DocumentsExecutionWR";
             DoneItemsInRange = new Dictionary<DateTime, int>();
             ConnectClient();
             return base.OnStart();
@@ -82,12 +83,11 @@ namespace CommunicationWorkerRole
             {
                 if (!General.IsUpdating())
                 {
-                    queueservice = new DbQueueService("DocumentExecutionQueue", 0);
+                    queueservice = new DbQueueService("DocumentsExecutionQueue", 0);
                     var response = queueservice.Receive(new TimeSpan(0, 0, 1));
                     if (response != null && response.MessageId != null)
                     {
-                        ExecuteQueue(response);
-                        queueservice.Complete();
+                        ExecuteDocumentsExecutionQueue(response);
                     }
                     else Thread.Sleep(new TimeSpan(0, 0, 1));
                 }
@@ -96,63 +96,73 @@ namespace CommunicationWorkerRole
         }
 
 
-        private void ExecuteQueue(QueueResponse queueResponse)
+        private void ExecuteDocumentsExecutionQueue(QueueResponse queueResponse)
         {
-            ReportExecutionLog documentExecutionLog = null;
             try
             {
-                documentExecutionLog = GetDocumentExecutionLogByQueueResponse(queueResponse);
-                //if (documentExecutionLog != null)
-              //  {
-                   OpenNewThreadToBuildStimulDocument(documentExecutionLog, queueservice, queueResponse);
-              //  }
+                documentsExecutionLog = GetDocumentsExecutionLogByQueueResponse(queueResponse);
+                if (documentsExecutionLog != null && documentsExecutionLog.StatusCode != "D")
+                {
+                    OpenNewThreadToBuildStimulDocument(documentsExecutionLog, queueservice, queueResponse);
+                }
+                else
+                {
+                    queueservice.Complete();
+                    LogDoneItemInMemory();
+                }
             }
             catch (Exception ex)
             {
-                HandleDocumentExecutionException(new DocumentExecutionArgs() { Exception = ex, DocumentExecutionLog = documentExecutionLog, queueservice = queueservice, response = queueResponse });
-    
+                HandleDocumentsExecutionException(new DocumentsExecutionArgs() { Exception = ex, DocumentsExecutionLog = documentsExecutionLog, DocumentsExecutionLogRepository = documentsExecutionLogRepository, Queueservice = queueservice, Response = queueResponse });
             }
         }
 
-        private void OpenNewThreadToBuildStimulDocument(ReportExecutionLog documentExecutionLog, DbQueueService queueservice, QueueResponse response)
+        private void OpenNewThreadToBuildStimulDocument(DocumentsExecutionLog documentsExecutionLog, DbQueueService queueservice, QueueResponse response)
         {
-            //UpdateDocumentExecutionLog(new DocumentExecutionArgs() {  DocumentExecutionLog = documentExecutionLog , queueservice = queueservice, response =response ,StartDate= DateTime.Now, StatusCode = "P"});
-            ExportDocumentArgs exportDocumentArgs = GetExportDocumentArgs(response);
+            UpdateDocumentsExecutionLog(new DocumentsExecutionArgs() {  DocumentsExecutionLog = documentsExecutionLog, DocumentsExecutionLogRepository = documentsExecutionLogRepository, Response = response ,StartDate= DateTime.Now, StatusCode = "P"});
+            ExportDocumentArgs exportDocumentArgs = GetExportDocumentArgs(documentsExecutionLog);
             if (exportDocumentArgs != null)
             {
-                new Thread(() => BuildStimulDocument(new DocumentExecutionArgs() { DocumentExecutionLog = documentExecutionLog, queueservice = queueservice, response = response, ExportDocumentArgs = exportDocumentArgs })) { IsBackground = true }.Start();
+                new Thread(() => BuildStimulDocument(new DocumentsExecutionArgs() { DocumentsExecutionLog = documentsExecutionLog, DocumentsExecutionLogRepository = documentsExecutionLogRepository, Queueservice = queueservice, Response = response, ExportDocumentArgs = exportDocumentArgs })) { IsBackground = true }.Start();
+                queueservice.Complete();
+            }
+            else
+            {
+                UpdateDocumentsExecutionLog(new DocumentsExecutionArgs() {Exception = new Exception("RequestXML is null"), DocumentsExecutionLog = documentsExecutionLog, DocumentsExecutionLogRepository = documentsExecutionLogRepository, Response = response, DoneDate = DateTime.Now, StatusCode = "F" });
+                queueservice.Complete();
+                LogDoneItemInMemory();
             }
         }
 
-        private void BuildStimulDocument(DocumentExecutionArgs documentExecutionArgs)
+        private void BuildStimulDocument(DocumentsExecutionArgs documentsExecutionArgs)
         {
             try
             {
-                var exportDocumentArgs = documentExecutionArgs.ExportDocumentArgs;
+                var exportDocumentArgs = documentsExecutionArgs.ExportDocumentArgs;
                 AuthenticationUtil.AuthenticatedUserEmail = GetLoggedUserEmail(exportDocumentArgs.LoggedContactId, exportDocumentArgs.Tenant);
                 Parallel.ForEach(exportDocumentArgs.DocumentTypeCopyIdsList, (documentTypeCopyId) =>
                 {
                     ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
                     string result = exportDocumentHelper.ExportDocument2Pdf(exportDocumentArgs, documentTypeCopyId);
                 });
-               // UpdateDocumentExecutionLog(new DocumentExecutionArgs() {  DocumentExecutionLog = documentExecutionArgs.DocumentExecutionLog, queueservice = queueservice, response = documentExecutionArgs.response, StartDate= DateTime.Now, StatusCode = "D", DoneDate = DateTime.Now});
-                documentExecutionArgs.queueservice.Complete();
-                LogDoneItemInMemory();
+                 UpdateDocumentsExecutionLog(new DocumentsExecutionArgs() {  DocumentsExecutionLog = documentsExecutionArgs.DocumentsExecutionLog, DocumentsExecutionLogRepository = documentsExecutionArgs.DocumentsExecutionLogRepository, Queueservice = queueservice, Response = documentsExecutionArgs.Response, StatusCode = "D", DoneDate = DateTime.Now});
+                 documentsExecutionArgs.Queueservice.Complete();
+                 LogDoneItemInMemory();
             }
             catch (Exception ex)
             {
-                HandleDocumentExecutionException(new DocumentExecutionArgs() { Exception = ex, DocumentExecutionLog = documentExecutionArgs.DocumentExecutionLog, queueservice = documentExecutionArgs.queueservice, response = documentExecutionArgs.response });
+                HandleDocumentsExecutionException(new DocumentsExecutionArgs() { Exception = ex, DocumentsExecutionLog = documentsExecutionArgs.DocumentsExecutionLog, DocumentsExecutionLogRepository = documentsExecutionArgs.DocumentsExecutionLogRepository, Queueservice = documentsExecutionArgs.Queueservice, Response = documentsExecutionArgs.Response });
             }
         }
 
-        private ExportDocumentArgs GetExportDocumentArgs(QueueResponse response)
+        private ExportDocumentArgs GetExportDocumentArgs(DocumentsExecutionLog documentsExecutionLog)
         {
             ExportDocumentArgs exportDocumentArgs = null;
-            string exportDocumentArgsXmal = response.MessageValues.Keys.Contains("ExportDocumentArgsXmal") ? response.MessageValues["ExportDocumentArgsXmal"].ToString() : "";
-            if (!string.IsNullOrEmpty(exportDocumentArgsXmal))
+            if (!string.IsNullOrEmpty(documentsExecutionLog.RequestXML))
             {
-                exportDocumentArgs = LogitudeXmlSerializer.DeserializeObject<ExportDocumentArgs>(exportDocumentArgsXmal);
+                exportDocumentArgs = LogitudeXmlSerializer.DeserializeObject<ExportDocumentArgs>(documentsExecutionLog.RequestXML);
             }
+
             return exportDocumentArgs;
         }
 
@@ -161,7 +171,7 @@ namespace CommunicationWorkerRole
             ContactQuery contactQuery = new ContactQuery(tenant);
             return   contactQuery.GetContactEmailById(loggedContactId, tenant);
         }
-        
+
         private string GetExceptionMessage(Exception exception)
         {
             var exceptionMessage = string.Empty;
@@ -181,60 +191,62 @@ namespace CommunicationWorkerRole
             return exceptionMessage;
         }
 
-        private ReportExecutionLog GetDocumentExecutionLogByQueueResponse(QueueResponse queueResponse)
+        private DocumentsExecutionLog GetDocumentsExecutionLogByQueueResponse(QueueResponse queueResponse)
         {
             string tenantString = string.Empty;
-            ReportExecutionLog reportExecutionLog = null;
-            string documentExecutionLogId = queueResponse.MessageValues.Keys.Contains("DocumentExecutionLogId") ? queueResponse.MessageValues["DocumentExecutionLogId"].ToString() : "";
+            DocumentsExecutionLog documentsExecutionLog = null;
+            string documentsExecutionLogId = queueResponse.MessageValues.Keys.Contains("DocumentsExecutionLogId") ? queueResponse.MessageValues["DocumentsExecutionLogId"].ToString() : "";
             if (queueResponse.MessageValues.Keys.Contains("Tenant"))
             {
                 tenantString = queueResponse.MessageValues["Tenant"].ToString();
                 if (!string.IsNullOrEmpty(tenantString)) tenant = int.Parse(tenantString);
             }
-            if (!string.IsNullOrEmpty(documentExecutionLogId) && !string.IsNullOrEmpty(tenantString))
+            if (!string.IsNullOrEmpty(documentsExecutionLogId) && !string.IsNullOrEmpty(tenantString))
             {
-                ReportExecutionLogRepository reportExecutionLogRepository = new ReportExecutionLogRepository(tenant);
-                reportExecutionLog = reportExecutionLogRepository.GetSingleReportExecutionLog(documentExecutionLogId, tenant);
+                documentsExecutionLogRepository = new DocumentsExecutionLogRepository(tenant);
+                documentsExecutionLog = documentsExecutionLogRepository.GetSingleDocumentsExecutionLog(documentsExecutionLogId,tenant);
             }
-            return reportExecutionLog;
+
+            return documentsExecutionLog;
         }
 
-        private void HandleDocumentExecutionException(DocumentExecutionArgs documentExecutionArgs)
+        private void HandleDocumentsExecutionException(DocumentsExecutionArgs DocumentsExecutionArgs)
         {
-            ExceptionHandler.HandleException(documentExecutionArgs.Exception, DateTime.Now, 0, null, "Document execution log queue worker role start", null, null);
-            if (documentExecutionArgs.response != null && documentExecutionArgs.response.MessageValues.Keys.Contains("ExportDocumentArgsXmal"))
+            var exception = DocumentsExecutionArgs.Exception != null ? DocumentsExecutionArgs.Exception.InnerException != null ? DocumentsExecutionArgs.Exception.InnerException : DocumentsExecutionArgs.Exception : DocumentsExecutionArgs.Exception;
+            ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Document execution log queue worker role start", null, null);
+            if (DocumentsExecutionArgs.Response != null && DocumentsExecutionArgs.Response.MessageValues.Keys.Contains("DocumentsExecutionLogId"))
             {
-                if (documentExecutionArgs.response.RetryNumber <= 1)
+                if (DocumentsExecutionArgs.Response.RetryNumber <= 1)
                 {
-                    queueservice.DelayAndReturnBackToQueue(new TimeSpan(0, 0, 0, 5), documentExecutionArgs.response.MessageId);
+                    queueservice.DelayAndReturnBackToQueue(new TimeSpan(0, 0, 0, 5), DocumentsExecutionArgs.Response.MessageId);
                 }
-                if (documentExecutionArgs.response.RetryNumber >= 2)
+                if (DocumentsExecutionArgs.Response.RetryNumber >= 2)
                 {
                     queueservice.CompleteAsFailed();
                 }
             }
             else queueservice.CompleteAsFailed();
-           // UpdateDocumentExecutionLog(new DocumentExecutionArgs() { Exception = documentExecutionArgs.Exception, DocumentExecutionLog = documentExecutionArgs.DocumentExecutionLog, queueservice = queueservice, response = documentExecutionArgs.response });
+
+            UpdateDocumentsExecutionLog(new DocumentsExecutionArgs() { Exception = exception, DocumentsExecutionLog = DocumentsExecutionArgs.DocumentsExecutionLog, DocumentsExecutionLogRepository = DocumentsExecutionArgs.DocumentsExecutionLogRepository, Queueservice = queueservice, Response = DocumentsExecutionArgs.Response });
         }
 
-        private void UpdateDocumentExecutionLog(DocumentExecutionArgs documentExecutionArgs)
+        private void UpdateDocumentsExecutionLog(DocumentsExecutionArgs documentsExecutionArgs)
         {
-            var documentExecutionLog = documentExecutionArgs.DocumentExecutionLog;
-            if (documentExecutionLog != null)
+            var documentsExecutionLog = documentsExecutionArgs.DocumentsExecutionLog;
+            if (documentsExecutionLog != null && documentsExecutionArgs.DocumentsExecutionLogRepository!=null)
             {
-                ReportExecutionLogRepository documentExecutionLogRepository = new ReportExecutionLogRepository(tenant);
-                documentExecutionLog.StatusCode = !string.IsNullOrEmpty(documentExecutionArgs.StatusCode) ? documentExecutionArgs.StatusCode : documentExecutionLog.StatusCode;
-                // documentExecutionLog.RetryNumber = documentExecutionArgs.response!=null ?  documentExecutionArgs.response.RetryNumber : documentExecutionLog.RetryNumber;
-                //documentExecutionLog.StartDate = documentExecutionArgs.StartDate != null ? documentExecutionArgs.StartDate : documentExecutionLog.StartDate;
-                documentExecutionLog.ExceptionMessage = documentExecutionArgs.Exception != null ? GetExceptionMessage(documentExecutionArgs.Exception) : documentExecutionLog.ExceptionMessage;
-                documentExecutionLog.DoneDate = documentExecutionArgs.DoneDate != null ? documentExecutionArgs.DoneDate : documentExecutionLog.DoneDate;
-                //if (documentExecutionLog.RetryNumber >= 2 && documentExecutionLog.StatusCode!="D")
-                //{
-                //    documentExecutionLog.StatusCode = "F";
-                //    documentExecutionLog.DoneDate = DateTime.Now;
-                //}
-                documentExecutionLogRepository.Update(documentExecutionLog);
-                documentExecutionLogRepository.SubmitChanges();
+                documentsExecutionLog.StatusCode = !string.IsNullOrEmpty(documentsExecutionArgs.StatusCode) ? documentsExecutionArgs.StatusCode : documentsExecutionLog.StatusCode;
+                documentsExecutionLog.RetryNumber = documentsExecutionArgs.Response!=null ?  documentsExecutionArgs.Response.RetryNumber : documentsExecutionLog.RetryNumber;
+                documentsExecutionLog.StartDate = documentsExecutionArgs.StartDate != null ? documentsExecutionArgs.StartDate : documentsExecutionLog.StartDate;
+                documentsExecutionLog.ExceptionMessage = documentsExecutionArgs.Exception != null ? GetExceptionMessage(documentsExecutionArgs.Exception) : documentsExecutionLog.ExceptionMessage;
+                documentsExecutionLog.DoneDate = documentsExecutionArgs.DoneDate != null ? documentsExecutionArgs.DoneDate : documentsExecutionLog.DoneDate;
+                if (documentsExecutionLog.RetryNumber >= 2 && documentsExecutionLog.StatusCode != "D")
+                {
+                    documentsExecutionLog.StatusCode = "F";
+                    documentsExecutionLog.DoneDate = DateTime.Now;
+                }
+                documentsExecutionArgs.DocumentsExecutionLogRepository.Update(documentsExecutionLog);
+                documentsExecutionArgs.DocumentsExecutionLogRepository.SubmitChanges();
             }
         }
 
@@ -243,7 +255,7 @@ namespace CommunicationWorkerRole
             try
             {
                 queueservice = new DbQueueService();
-                queueservice.InitializeQueue("DocumentExecutionQueue", tenant);
+                queueservice.InitializeQueue("DocumentsExecutionQueue", tenant);
 
             }
             catch (Exception ex)
@@ -255,17 +267,19 @@ namespace CommunicationWorkerRole
   
     }
 
-    public class DocumentExecutionArgs
+    public class DocumentsExecutionArgs
     {
         public Exception Exception { get; set; }
-        public ReportExecutionLog DocumentExecutionLog { get; set; }
-        public DbQueueService queueservice { get; set; }
-        public QueueResponse response { get; set; }
+        public DocumentsExecutionLog DocumentsExecutionLog { get; set; }
+        public DbQueueService Queueservice { get; set; }
+        public QueueResponse Response { get; set; }
         public string ExceptionMessage { get; set; }
         public string StatusCode { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? DoneDate { get; set; }
         public ExportDocumentArgs ExportDocumentArgs { get; set; }
+        public DocumentsExecutionLogRepository DocumentsExecutionLogRepository { get; set; }
+        
     }
 
 }
