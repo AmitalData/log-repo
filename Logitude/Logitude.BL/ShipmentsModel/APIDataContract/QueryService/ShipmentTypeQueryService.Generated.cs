@@ -89,7 +89,7 @@ using Simplog.Data.ShipmentsModel;
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
-					    if(!string.IsNullOrEmpty(MyEntity.Id))
+					    if(!string.IsNullOrEmpty(MyEntity.Code))
 					    {
 					        throw new ApplicationException("ShipmentType with provided key doesn't exist");
 						

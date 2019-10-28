@@ -89,7 +89,7 @@ using Simplog.Data.InfrastructureModel;
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
-					    if(!string.IsNullOrEmpty(MyEntity.Id))
+					    if(!string.IsNullOrEmpty(MyEntity.Code))
 					    {
 					        throw new ApplicationException("PrepaidCollect with provided key doesn't exist");
 						
