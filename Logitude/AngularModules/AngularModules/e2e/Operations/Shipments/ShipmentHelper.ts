@@ -1,9 +1,11 @@
 import { browser, by, element, WebDriver, protractor } from 'protractor';
 import { FieldsHelper } from './../../Helpers/FieldsHelper';
+import { GeneralFunctions } from './../../Helpers/GeneralFunctions';
+
 
 export class ShipmentHelper {
     private Helper: FieldsHelper;
-
+    private generalFun: GeneralFunctions = new GeneralFunctions();
 
     constructor() {
         this.Helper = new FieldsHelper();
@@ -125,5 +127,46 @@ export class ShipmentHelper {
         this.SelectDicrctionTransportMode(Direction, TransportMode, ShipmentType);
 
         this.Helper.WaitByIdAndClick(CancelBtnId);
+    }
+    AddAirlineStock() {
+        var numbertest = this.generalFun.StockNumbers();
+        this.Helper.WaitByIdAndClick('AddStock');
+        this.Helper.WaitBusyIndicator();
+
+        var EC = protractor.ExpectedConditions;
+        browser.wait(EC.visibilityOf(element(by.id("AirlineSimpleGridBodyId"))), 100000).then(a => {
+            browser.wait(EC.elementToBeClickable(element(by.id("AddStocks"))), 100000).then(a => {
+            });
+        });
+
+        this.Helper.WaitByIdAndClick('AddStocks');
+        this.Helper.WaitBusyIndicator();
+
+        this.Helper.WaitByIdAndFill('StartNumber', numbertest);
+
+        var byAmount = element(by.id('ByAmountRadio'));
+        browser.executeScript("arguments[0].click();", byAmount.getWebElement());
+
+        this.Helper.WaitByIdAndFill('Amount', '1');
+
+        this.Helper.WaitByIdAndClick('OkAddStock');
+
+        this.Helper.WaitBusyIndicator();
+        browser.wait(EC.invisibilityOf(element(by.id("OkAddStock"))), 100000).then(a => {
+            browser.wait(EC.visibilityOf(element(by.css(".SimpleGridViewBody"))), 100000).then(a => {
+            });
+        });
+        this.Helper.WaitByIdAndClick('EditBackbutton');
+
+        this.Helper.WaitByIdAndClick('GetFromStockBtn');
+        this.Helper.WaitBusyIndicator();
+
+        var EC = protractor.ExpectedConditions;
+        browser.wait(EC.elementToBeClickable(element(by.css(".SimpleGridViewRow "))), 100000).then(a => {
+        });
+        element.all(by.css('.SimpleGridViewRow')).get(0).click();
+        this.Helper.WaitByIdAndClick('OkBtn');
+        this.Helper.WaitByIdAndClick('ConfirmWindow_Yes_0');
+        this.Helper.WaitBusyIndicator();
     }
 }
