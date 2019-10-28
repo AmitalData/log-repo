@@ -64,7 +64,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature quoteTtemplatesFeature = tenantFeatures.Where(d => d.Code == "QUOTETMPLATES" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature logitudeleadsFeature = tenantFeatures.Where(d => d.Code == "LOGITUDELEADS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature vendorsFeature = tenantFeatures.Where(d => d.Code == "VENDORS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
-            Feature ACCOUNTINGPARTNERSFeature = tenantFeatures.Where(d => d.Code == "ACCOUNTINGPARTNERS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+            Feature ACCOUNTINGPARTNERSFeature = tenantFeatures.Where(d => d.Code == "ACCOUNTINGPARTNERSMENU" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature mastersFeature = tenantFeatures.Where(d => d.Code == "MASTERS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature gettingStartedFeature = tenantFeatures.Where(d => d.Code == "GETTINGSTARTED" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature creditCardTypeFeature = tenantFeatures.Where(d => d.Code == "CREDITCARDTYPES" && d.FeatureTypeCode == "MENU").FirstOrDefault();

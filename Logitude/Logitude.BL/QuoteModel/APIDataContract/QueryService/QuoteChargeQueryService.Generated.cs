@@ -137,7 +137,8 @@ using Simplog.Data.QuoteModel;
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
-						temp.Id = item.Id;
+					   
+					    throw new ApplicationException("QuoteCharge with provided key doesn't exist");
 					}
 					ChargesTypeQueryService ChargesTypeChargesTypeService = new ChargesTypeQueryService(Tenant);
 					if(item.ChargesType != null)

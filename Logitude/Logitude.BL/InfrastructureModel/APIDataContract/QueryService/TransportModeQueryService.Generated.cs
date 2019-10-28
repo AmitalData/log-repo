@@ -88,7 +88,8 @@ using Simplog.Data.InfrastructureModel;
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
-						temp.Id = MyEntity.Code;
+					   
+					    throw new ApplicationException("TransportMode with provided key doesn't exist");
 					}
 					temp.Name = MyEntity.Name;					   
 					   return temp;

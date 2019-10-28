@@ -398,7 +398,7 @@ namespace WebFreight.Web.ReportsWebServices
                 }
                 else
                 {
-                    string loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser(tenant);
+                    string loggedUserEmail = AuthenticationUtil.GetLoggedUserEmail(tenant);
                     if (!string.IsNullOrEmpty(loggedUserEmail))
                     {
                         Contact currentContact = (from a in commonContext.Contacts

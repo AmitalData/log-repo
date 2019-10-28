@@ -221,9 +221,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 if (!entityPM.CreatedFromAPI)
                 {
                     this.BuildUnexpectedPayables();
-                    this.GetShipmentsData(entityPM.InvoiceLines);
-                    this.UpdateInvoiceEntities();
+                    this.GetShipmentsData(entityPM.InvoiceLines);                    
                 }
+
+                this.UpdateInvoiceEntities();
             }
 
             this.UpdateInvoiceLines();

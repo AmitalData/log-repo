@@ -66,9 +66,9 @@
                         </table>
                     </div>
 
-                    <div class="SimpleGridViewBody">
+                    <div id="{{'AirlineSimpleGridBodyId' | IdGeneratorPipe}}" class="SimpleGridViewBody">
                         <table>
-                            <tr class="SimpleGridViewRow RowHover" *ngFor="let item of ItemsSource" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
+                            <tr  class="SimpleGridViewRow RowHover" *ngFor="let item of ItemsSource" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
 
                                 <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
                                     <div>{{item.Number | PaddingPipe:'L':8:'0'}}</div>

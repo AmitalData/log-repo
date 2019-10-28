@@ -99,7 +99,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public IQueryable<AccountingPartner> GetAccountingPartner(int tenant)
         {
-            throw new NotImplementedException();
+            return (from record in context.AccountingPartners.Include("Card") where record.Tenant == tenant select record);
         }
     }
 }

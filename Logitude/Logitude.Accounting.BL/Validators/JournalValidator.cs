@@ -525,7 +525,14 @@ accountingValidationContextServiceProvider
 
         private static void ValidateJournalExternalReconciles(JournalPM myJournalPM, List<string> errorsList, IExternalReconcileDataProvider myIExternalReconcileDataProvider)
         {
-            if (myJournalPM.JournalExternalReconciles.Count() == 0) return;
+            if (myJournalPM.JournalExternalReconciles.Count() == 0)
+            {
+                return;
+            }
+            if (!myJournalPM.JournalExternalReconciles.Any(r => r.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.None))
+            {
+                return;
+            }
 
             if (myJournalPM.JournalExternalReconciles.Any(r => string.IsNullOrWhiteSpace(r.LedgerTransactionId)))
             {
@@ -538,6 +545,7 @@ accountingValidationContextServiceProvider
                 List<ReconcileExternalPageLineList> listOfpageLineList;
                 List<ReconcileExternalPageList> listOfpageList;
                 bool CheckWhileStreaming = false;
+               
                 myExternalReconcileAdjustBankFeesService.PrapareAndValid(myJournalPM.Tenant, reconcileExternalPageLineIdList, adjustGLAccountId, out listOfpageLineList, out listOfpageList, CheckWhileStreaming);
 
 
