@@ -559,7 +559,7 @@ namespace Logitude.XSD.INTTRA_Booking
                 {
                     Role = INTTRA_Booking.PartyTypeValues.Booker,
                     RoleSpecified  =true,
-                    Name = this.iNTTRAGeneralMethods.FormatString(this.TenantObject.Company, 35),
+                    Name = this.iNTTRAGeneralMethods.GetStringList(this.TenantObject.Company, 2, 35).FirstOrDefault(),
                     Identifier = new INTTRA_Booking.PartyIdentifierType()
                     {
                         Type  = PartyIdentifierTypeValues.PartnerAlias,
@@ -581,7 +581,7 @@ namespace Logitude.XSD.INTTRA_Booking
                 {
                     Role = INTTRA_Booking.PartyTypeValues.Forwarder,
                     RoleSpecified = true,
-                    Name =  this.iNTTRAGeneralMethods.FormatString(this.TenantObject.Company, 35),
+                    Name = this.iNTTRAGeneralMethods.GetStringList(this.TenantObject.Company, 2, 35).FirstOrDefault(),
                     Identifier = new INTTRA_Booking.PartyIdentifierType()
                     {
                         Type = PartyIdentifierTypeValues.PartnerAlias,
@@ -606,7 +606,7 @@ namespace Logitude.XSD.INTTRA_Booking
                     {
                         Role = INTTRA_Booking.PartyTypeValues.Carrier,
                         RoleSpecified = true,
-                        Name = this.iNTTRAGeneralMethods.FormatString(myCard.EnglishName, 35),
+                        Name = this.iNTTRAGeneralMethods.GetStringList(myCard.EnglishName, 2, 35).FirstOrDefault(),
                         Identifier = new INTTRA_Booking.PartyIdentifierType()
                         {
                             Type = PartyIdentifierTypeValues.PartnerAlias,
@@ -632,12 +632,12 @@ namespace Logitude.XSD.INTTRA_Booking
                         contacts.Add(new ContactInformationType()
                         {
                             Type = ContactTypeValues.InformationContact,
-                            Name = contactPM.EnglishName,
+                            Name = this.iNTTRAGeneralMethods.GetStringList(contactPM.EnglishName, 2, 35).FirstOrDefault(),
                             CommunicationDetails = new CoordinatesType()
                             {
-                                Email = new string[] { contactPM.Email },
-                                Fax = new string[] { contactPM.Fax },
-                                Phone = new string[] { contactPM.BusinessPhone },
+                                Email = this.iNTTRAGeneralMethods.GetStringList(contactPM.Email, 9, 512).ToArray(),
+                                Fax = this.iNTTRAGeneralMethods.GetStringList(contactPM.Fax, 9, 512).ToArray(),
+                                Phone = this.iNTTRAGeneralMethods.GetStringList(contactPM.BusinessPhone, 9, 512).ToArray(),
                             }
                         });
                     }
@@ -657,7 +657,7 @@ namespace Logitude.XSD.INTTRA_Booking
                     {
                         Role = INTTRA_Booking.PartyTypeValues.Shipper,
                         RoleSpecified = true,
-                        Name = this.iNTTRAGeneralMethods.FormatString(shipper.EnglishName, 35),
+                        Name = this.iNTTRAGeneralMethods.GetStringList(shipper.EnglishName, 2, 35).FirstOrDefault(),
                     };
 
                     if (this.ShipperAddress != null)
@@ -677,12 +677,12 @@ namespace Logitude.XSD.INTTRA_Booking
                         contacts.Add(new ContactInformationType()
                         {
                             Type = ContactTypeValues.InformationContact,
-                            Name = contactPM.EnglishName,
+                            Name = this.iNTTRAGeneralMethods.GetStringList(contactPM.EnglishName, 2, 35).FirstOrDefault(),
                             CommunicationDetails = new CoordinatesType()
                             {
-                                Email = new string[] { contactPM.Email },
-                                Fax = new string[] { contactPM.Fax },
-                                Phone = new string[] { contactPM.BusinessPhone },
+                                Email = this.iNTTRAGeneralMethods.GetStringList(contactPM.Email, 9, 512).ToArray(),
+                                Fax = this.iNTTRAGeneralMethods.GetStringList(contactPM.Fax, 9, 512).ToArray(),
+                                Phone = this.iNTTRAGeneralMethods.GetStringList(contactPM.BusinessPhone, 9, 512).ToArray(),
                             }
                         });
                     }
@@ -706,7 +706,7 @@ namespace Logitude.XSD.INTTRA_Booking
                     {
                         Role = INTTRA_Booking.PartyTypeValues.Consignee,
                         RoleSpecified = true,
-                        Name = this.iNTTRAGeneralMethods.FormatString(myCard.EnglishName, 35),
+                        Name = this.iNTTRAGeneralMethods.GetStringList(myCard.EnglishName, 2, 35).FirstOrDefault(),
                     };
 
                     if (this.ConsigneeAddress != null)
@@ -721,12 +721,12 @@ namespace Logitude.XSD.INTTRA_Booking
                         contacts.Add(new ContactInformationType()
                         {
                             Type = ContactTypeValues.InformationContact,
-                            Name = contactPM.EnglishName, 
+                            Name = this.iNTTRAGeneralMethods.GetStringList(contactPM.EnglishName,2, 35).FirstOrDefault(),
                             CommunicationDetails = new CoordinatesType()
                             {
-                                Email = new string[] { contactPM.Email },
-                                Fax = new string[] { contactPM.Fax },
-                                Phone = new string[] { contactPM.BusinessPhone },
+                                Email = this.iNTTRAGeneralMethods.GetStringList(contactPM.Email, 9, 512).ToArray(),
+                                Fax = this.iNTTRAGeneralMethods.GetStringList(contactPM.Fax, 9, 512).ToArray(),
+                                Phone = this.iNTTRAGeneralMethods.GetStringList(contactPM.BusinessPhone, 9, 512).ToArray(),
                             }
                         });
                     }
