@@ -232,6 +232,8 @@ import {DocumentFilingBackupSettingPMService} from './Services/StandardPMs/Docum
 import {DocumentFilingBackupBatchPMService} from './Services/StandardPMs/DocumentFilingBackupBatchPMService';
 import { CheckDigitControlAlgorithmListService } from './Services/StandardLists/CheckDigitControlAlgorithmListService';
 import { PaymentGatewayPartnerListService } from './Services/StandardLists/PaymentGatewayPartnerListService';
+import { AccountingPartnerListService } from './Services/StandardLists/AccountingPartnerListService';
+import { AccountingPartnerPMService } from './Services/StandardPMs/AccountingPartnerPMService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -477,7 +479,9 @@ export class ModuleProviders {
             case "NumberFormatListService": { myResult = new NumberFormatListService(); break; }
             case "CheckDigitControlAlgorithmListService": { myResult = new CheckDigitControlAlgorithmListService(); break; }
             case "PaymentGatewayPartnerListService": { myResult = new PaymentGatewayPartnerListService(); break; }
-
+            case "AccountingPartnerListService": { myResult = new AccountingPartnerListService(); break; }
+            case "AccountingPartnerPMService": { myResult = new AccountingPartnerPMService(); break; }
+ 
                 
         }
 

@@ -351,7 +351,8 @@ using Simplog.Data.InvoiceModel;
 					temp.ExternalAccountingEntityId = MyEntity.ExternalAccountingEntityId;
 					if(string.IsNullOrEmpty(temp.Id))
 					{
-						temp.Id = MyEntity.Id;
+					   
+					    throw new ApplicationException("APInvoice with provided key doesn't exist");
 					} 
 
 					if(MyEntity.InvoiceLines != null && MyEntity.InvoiceLines.Count > 0)
