@@ -341,7 +341,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                 string loggingUserId = AuthenticationUtil.ResolveUserId(tenant);
                 var myDCAInUCBUD2LT_MsgMessagingService = new DCAInUCBUD2LT_MsgMessagingService();
-                myDCAInUCBUD2LT_MsgMessagingService.CreateCRS(tenant, loggingUserId,_DocumentsFilingPM);
+                string crs=myDCAInUCBUD2LT_MsgMessagingService.CreateCRS(tenant, loggingUserId,_DocumentsFilingPM);
+                LogitudeSettings.HandleLogMe(crs +" " + jsonPM, false, "CreateUD2LTService.OK", stopLogAt);
 
             }
             catch (Exception E)
