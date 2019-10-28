@@ -18,29 +18,37 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
     {
         private DbQueueService queueservice;
         private QueueResponse queueResponse = null;
-        private int tenant = 0;
+        private int? tenant =null;
+        private string documentsExecutionLogId = string.Empty;
         private DocumentsExecutionLogRepository documentsExecutionLogRepository = null;
         private DocumentsExecutionLog documentsExecutionLog = null;
-        private DateTime? startDate = null;
-
+        private DateTime startDate = DateTime.Now;
+ 
         public DocumentsExecutionService(DbQueueService queueservice , QueueResponse queueResponse)
         {
             this.queueservice = queueservice;
             this.queueResponse = queueResponse;
-            startDate = DateTime.Now;
+            if (queueservice != null && queueResponse != null)
+            {
+                documentsExecutionLogId = queueResponse.MessageValues != null && queueResponse.MessageValues.Keys.Contains("DocumentsExecutionLogId") ? queueResponse.MessageValues["DocumentsExecutionLogId"].ToString() : "";
+                tenant = GetTenantValueFromQueueResponse(queueResponse);
+            }
         }
 
-        public void ExportDocumentToPDF()
+        public void ExecuteDocumentsExecutionQueue()
         {
             try
             {
-                documentsExecutionLog = GetDocumentsExecutionLogByQueueResponse(queueResponse);
-                if (documentsExecutionLog != null && documentsExecutionLog.StatusCode != "D")
+                if (queueservice != null && queueResponse!=null)
                 {
-                    UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() {StartDate = startDate, StatusCode = "P" });
-                    BuildStimulDocument();
+                    documentsExecutionLog = GetDocumentsExecutionLog();
+                    if (documentsExecutionLog != null && (documentsExecutionLog.StatusCode != "D" || documentsExecutionLog.StatusCode != "F"))
+                    {
+                        UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { StartDate = startDate, StatusCode = "P" });
+                        ExportStimulDocumentToPDF();
+                    }
+                    else queueservice.Complete();
                 }
-                else queueservice.Complete();
             }
             catch (Exception ex)
             {
@@ -48,12 +56,12 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
             }
         }
 
-        private void BuildStimulDocument()
+        private void ExportStimulDocumentToPDF()
         {
-            ExportDocumentArgs exportDocumentArgs = GetExportDocumentArgs(documentsExecutionLog);
+            ExportDocumentArgs exportDocumentArgs = !string.IsNullOrEmpty(documentsExecutionLog.RequestXML) ? LogitudeXmlSerializer.DeserializeObject<ExportDocumentArgs>(documentsExecutionLog.RequestXML) : null;
             if (exportDocumentArgs != null)
             {
-                AuthenticationUtil.AuthenticatedUserEmail = GetLoggedUserEmail(exportDocumentArgs.LoggedContactId, exportDocumentArgs.Tenant);
+                AuthenticationUtil.AuthenticatedUserEmail = GetContactEmailByContactId(exportDocumentArgs.LoggedContactId, exportDocumentArgs.Tenant);
                 Parallel.ForEach(exportDocumentArgs.DocumentTypeCopyIdsList, (documentTypeCopyId) =>
                 {
                     ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
@@ -61,37 +69,36 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
                 });
                 UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() {StatusCode = "D", DoneDate = DateTime.Now });
                 queueservice.Complete();
-      
             }
             else
             {
                 UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { Exception = new Exception("RequestXML is null"), DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });
                 queueservice.Complete();
             }
-
         }
 
-        private string GetLoggedUserEmail(string loggedContactId, int tenant)
+        private void UpdateDocumentsExecutionLog(DocumentsExecutionLogArgs documentsExecutionLogArgs)
         {
-            ContactQuery contactQuery = new ContactQuery(tenant);
-            return contactQuery.GetContactEmailById(loggedContactId, tenant);
-        }
-
-        private ExportDocumentArgs GetExportDocumentArgs(DocumentsExecutionLog documentsExecutionLog)
-        {
-            ExportDocumentArgs exportDocumentArgs = null;
-            if (!string.IsNullOrEmpty(documentsExecutionLog.RequestXML))
+            if (documentsExecutionLog != null)
             {
-                exportDocumentArgs = LogitudeXmlSerializer.DeserializeObject<ExportDocumentArgs>(documentsExecutionLog.RequestXML);
+                documentsExecutionLog.StatusCode = !string.IsNullOrEmpty(documentsExecutionLogArgs.StatusCode) ? documentsExecutionLogArgs.StatusCode : documentsExecutionLog.StatusCode;
+                documentsExecutionLog.RetryNumber = queueResponse != null ? queueResponse.RetryNumber : documentsExecutionLog.RetryNumber;
+                documentsExecutionLog.StartDate = documentsExecutionLogArgs.StartDate != null ? documentsExecutionLogArgs.StartDate : documentsExecutionLog.StartDate;
+                documentsExecutionLog.ExceptionMessage = documentsExecutionLogArgs.Exception != null ? GetFullExceptionMessageFromException(documentsExecutionLogArgs.Exception) : documentsExecutionLog.ExceptionMessage;
+                documentsExecutionLog.DoneDate = documentsExecutionLogArgs.DoneDate != null ? documentsExecutionLogArgs.DoneDate : documentsExecutionLog.DoneDate;
+                if (documentsExecutionLog.RetryNumber >= 2 && documentsExecutionLog.StatusCode != "D")
+                {
+                    documentsExecutionLog.StatusCode = "F";
+                    documentsExecutionLog.DoneDate = DateTime.Now;
+                }
+                documentsExecutionLogRepository.Update(documentsExecutionLog);
+                documentsExecutionLogRepository.SubmitChanges();
             }
-
-            return exportDocumentArgs;
         }
 
-        private void HandleDocumentsExecutionException(Exception ex)
+        private void HandleDocumentsExecutionException(Exception exception)
         {
-            var exception = ex.InnerException != null ? ex.InnerException : ex;
-            ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Document execution log queue worker role start", null, null);
+            ExceptionHandler.HandleException(exception.InnerException != null ? exception.InnerException : exception, DateTime.Now, 0, null, "Document execution log queue worker role start", null, null);
             if (queueResponse != null && queueResponse.MessageValues.Keys.Contains("DocumentsExecutionLogId"))
             {
                 if (queueResponse.RetryNumber <= 1)
@@ -105,48 +112,33 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
             }
             else queueservice.CompleteAsFailed();
 
-            UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { Exception = exception });
+            UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { Exception = exception.InnerException != null ? exception.InnerException : exception });
         }
 
-        private DocumentsExecutionLog GetDocumentsExecutionLogByQueueResponse(QueueResponse queueResponse)
+        private DocumentsExecutionLog GetDocumentsExecutionLog()
         {
-            string tenantString = string.Empty;
             DocumentsExecutionLog documentsExecutionLog = null;
-            string documentsExecutionLogId = queueResponse.MessageValues.Keys.Contains("DocumentsExecutionLogId") ? queueResponse.MessageValues["DocumentsExecutionLogId"].ToString() : "";
-            if (queueResponse.MessageValues.Keys.Contains("Tenant"))
+            if (!string.IsNullOrEmpty(documentsExecutionLogId) && tenant!=null)
             {
-                tenantString = queueResponse.MessageValues["Tenant"].ToString();
-                if (!string.IsNullOrEmpty(tenantString)) tenant = int.Parse(tenantString);
-            }
-            if (!string.IsNullOrEmpty(documentsExecutionLogId) && !string.IsNullOrEmpty(tenantString))
-            {
-                documentsExecutionLogRepository = new DocumentsExecutionLogRepository(tenant);
-                documentsExecutionLog = documentsExecutionLogRepository.GetSingleDocumentsExecutionLog(documentsExecutionLogId, tenant);
+                documentsExecutionLogRepository = new DocumentsExecutionLogRepository((int)tenant);
+                documentsExecutionLog = documentsExecutionLogRepository.GetSingleDocumentsExecutionLog(documentsExecutionLogId, (int)tenant);
             }
 
             return documentsExecutionLog;
         }
-        
-        private void UpdateDocumentsExecutionLog(DocumentsExecutionLogArgs documentsExecutionLogArgs)
+
+        private string GetContactEmailByContactId(string loggedContactId, int tenant)
         {
-            if (documentsExecutionLog != null)
+            string contactEmail = string.Empty;
+            if (!string.IsNullOrEmpty(loggedContactId))
             {
-                documentsExecutionLog.StatusCode = !string.IsNullOrEmpty(documentsExecutionLogArgs.StatusCode) ? documentsExecutionLogArgs.StatusCode : documentsExecutionLog.StatusCode;
-                documentsExecutionLog.RetryNumber = queueResponse!=null ?  queueResponse.RetryNumber : documentsExecutionLog.RetryNumber;
-                documentsExecutionLog.StartDate = documentsExecutionLogArgs.StartDate != null ? documentsExecutionLogArgs.StartDate : documentsExecutionLog.StartDate;
-                documentsExecutionLog.ExceptionMessage = documentsExecutionLogArgs.Exception != null ? GetExceptionMessage(documentsExecutionLogArgs.Exception) : documentsExecutionLog.ExceptionMessage;
-                documentsExecutionLog.DoneDate = documentsExecutionLogArgs.DoneDate != null ? documentsExecutionLogArgs.DoneDate : documentsExecutionLog.DoneDate;
-                if (documentsExecutionLog.RetryNumber >= 2 && documentsExecutionLog.StatusCode != "D")
-                {
-                    documentsExecutionLog.StatusCode = "F";
-                    documentsExecutionLog.DoneDate = DateTime.Now;
-                }
-                documentsExecutionLogRepository.Update(documentsExecutionLog);
-                documentsExecutionLogRepository.SubmitChanges();
+                ContactQuery contactQuery = new ContactQuery(tenant);
+                contactEmail = contactQuery.GetContactEmailById(loggedContactId, tenant);
             }
+            return contactEmail;
         }
 
-        private string GetExceptionMessage(Exception exception)
+        private string GetFullExceptionMessageFromException(Exception exception)
         {
             var exceptionMessage = string.Empty;
 
@@ -164,13 +156,25 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
             }
             return exceptionMessage;
         }
+
+        private int? GetTenantValueFromQueueResponse(QueueResponse queueResponse)
+        {
+            int? tenant = null;
+            if (queueResponse.MessageValues != null && queueResponse.MessageValues.Keys.Contains("Tenant"))
+            {
+                string tenantString = queueResponse.MessageValues["Tenant"].ToString();
+                if (!string.IsNullOrEmpty(tenantString)) tenant = int.Parse(tenantString);
+            }
+            return tenant;
+        }
+
     }
 
 
 
 
 
-   public class DocumentsExecutionLogArgs
+    public class DocumentsExecutionLogArgs
     {
         public string ExceptionMessage { get; set; }
         public string StatusCode { get; set; }

@@ -58,7 +58,6 @@ namespace CommunicationWorkerRole
 {
     class DocumentsExecutionWorkerRole : WorkerEntryPoint
     {
-
         private DbQueueService queueservice;
         public override bool OnStart()
         {
@@ -68,8 +67,6 @@ namespace CommunicationWorkerRole
             ConnectClient();
             return base.OnStart();
         }
-        int tenant = 0;
-
         public override void Run()
         {
             while (IsRunning)
@@ -80,9 +77,9 @@ namespace CommunicationWorkerRole
                     var queueresponse = queueservice.Receive(new TimeSpan(0, 0, 1));
                     if (queueresponse != null && queueresponse.MessageId != null)
                     {
-                        ThreadStart threadStart = (() => new DocumentsExecutionService(queueservice, queueresponse).ExportDocumentToPDF());
-                        threadStart += () => { LogDoneItemInMemory();};
-                        new Thread(threadStart) { IsBackground = true }.Start();
+                        ThreadStart executeDocumentsThreadStart = (() => new DocumentsExecutionService(queueservice, queueresponse).ExecuteDocumentsExecutionQueue());
+                        executeDocumentsThreadStart += () => { LogDoneItemInMemory();};
+                        new Thread(executeDocumentsThreadStart) { IsBackground = true }.Start();
                         queueservice.Complete();
                     }
                     else Thread.Sleep(new TimeSpan(0, 0, 1));
@@ -97,7 +94,7 @@ namespace CommunicationWorkerRole
             try
             {
                 queueservice = new DbQueueService();
-                queueservice.InitializeQueue("DocumentsExecutionQueue", tenant);
+                queueservice.InitializeQueue("DocumentsExecutionQueue", 0);
 
             }
             catch (Exception ex)
