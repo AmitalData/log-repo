@@ -94,11 +94,22 @@ using Simplog.Data.InvoiceModel;
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
-						temp.Id = MyEntity.Id;
+					   
+					    if(!string.IsNullOrEmpty(MyEntity.Id))
+					    {
+					        throw new ApplicationException("CreditCardType with provided key doesn't exist");
+						
+						}
+						//else
+						//{
+						//    temp.Id = MyEntity.Id;
+
+						//}
 					}
 					temp.Tenant = MyEntity.Tenant;
 					if(string.IsNullOrEmpty(temp.Code))
 					{
+					   
 						temp.Code = MyEntity.LogitudeCode;
 					}
 					temp.Name = MyEntity.Name;					   
