@@ -19,57 +19,106 @@ import {BankAccountPMService} from '../../../Services/StandardPMs/BankAccountPMS
 
 @Component({
     moduleId: module.id,
-    templateUrl: './BankPagesTabComponent.html'
+    templateUrl: './ExternalPagesTabComponent.html'
 })
 
-export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDestroy {
-    public EntityPM: BankAccountPM = null;
-    public ObjectTableName = "ReconcileExternalPage";
-    public DataContext = this;
+export class ExternalPagesTabComponent extends BaseComponent implements OnInit, OnDestroy {
 
-    // Events
+    public DataContext = this;
+    public ObjectTableName: string;
+    public ObjectTable: any;
+    public EntityPM: any = null;
+    public ReconcilePageTable = "ReconcileExternalPage";
+
     @Output() onQueryChangeEvent = new EventEmitter();
     @Output() MenuHeaderchangeevent = new EventEmitter();
-
-    // Filters
-    dateFilter: FilterItem;
-    searchFieldFilter: FilterItem;
-     preventSelect:boolean = false;
-    // Services
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private _entityListService: EntityListService = new EntityListService();
     _ReconcileExternalPageExtendedPMService: ReconcileExternalPageExtendedPMService = new ReconcileExternalPageExtendedPMService();
     _ReconcileExternalPagePMService: ReconcileExternalPagePMService = new ReconcileExternalPagePMService();
     _BankAccountPMService: BankAccountPMService = new BankAccountPMService();
 
-    public isRTL: boolean = false;
-
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
+    private SaveCompletedEvent: any = null;
+    private LoadCompletedEvent: any = null;
+    dateFilter: FilterItem;
+    searchFieldFilter: FilterItem;
+    preventSelect: boolean = false;
+    public isRTL: boolean = false;
+    public Title: string = "";
+
+
+
+    constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef)
+    {
         super();
+
+        this.LoadResources();
+
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
-        this._entityResourceService.getEntityResourceByTableName("ReconcileExternalPage").subscribe((response: any) => { });
-        this._entityResourceService.getEntityResourceByTableName("ReconcileExternalPageLine").subscribe((response: any) => { });
+        this.SetComponentArgs(entityArgs);
 
-        // Set Entity
-        this.EntityPM = entityArgs.EntityPM;
         this.SetUIProperties();
+        this.InitializeDates();
+        this.Listen();
+    }
 
-        //#region Fill Date Default Values
+
+
+
+    private SetComponentArgs(entityArgs: EntityArgs)
+    {
+        console.log("[ExternalPagesTabComponent.Args] ", entityArgs);
+
+        this.EntityPM = entityArgs.EntityPM;
+        this.ObjectTableName = entityArgs.ObjectTableName;
+
+        this.ObjectTable = window.ObjectTables.filter(d => d.Name === this.ObjectTableName)[0];
+
+        if (!this.ObjectTable)
+            console.log("[ERROR] no object table found! ");
+
+        this.SetTitles();
+
+
+    }
+
+    private SetTitles()
+    {
+        var title = "";
+
+        switch (this.ObjectTableName) {
+            case "BankAccount":
+                title = TextCodeTranslator.Translate("BankAccount.TH.BankPages");
+                break;
+            case "GLAccount":
+                title = "GLAccount External Pages";
+                break;
+            default:
+                title = "External Pages";
+                break;
+        }
+
+        this.Title = title;
+    }
+
+    private InitializeDates()
+    {
         var today = new Date();
         this.ToDate = new Date();
         this.oldToDate = new Date();
         var lastmonth = today.setMonth(today.getMonth() - 1);
         this.FromDate = new Date(lastmonth);
         this.oldFromDate = new Date(lastmonth);
-        //#endregion
-
-        this.Listen();
     }
 
-    private SaveCompletedEvent: any = null;
-    private LoadCompletedEvent: any = null;
+    private LoadResources()
+    {
+        this._entityResourceService.getEntityResourceByTableName("ReconcileExternalPage").subscribe((response: any) => { });
+        this._entityResourceService.getEntityResourceByTableName("ReconcileExternalPageLine").subscribe((response: any) => { });
+    }
+
     Listen() {
         if (this.CurrentSession.CurrentEditComponent != null) {
             if (this.SaveCompletedEvent == null) {
@@ -168,16 +217,16 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
         if (this.FromDate >= this.ToDate) {
 
             this.timerToken = setTimeout(() => {
-                this.UIProperties.SetValidity("ToDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.ToDateMustGreaterFromDate"));
-                this.UIProperties.SetValidity("FromDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.FromDateMustSmallerToDate"));
+                this.UIProperties.SetValidity("ToDate", this.ReconcilePageTable, false, TextCodeTranslator.Translate("Accounting.General.O.ToDateMustGreaterFromDate"));
+                this.UIProperties.SetValidity("FromDate", this.ReconcilePageTable, false, TextCodeTranslator.Translate("Accounting.General.O.FromDateMustSmallerToDate"));
                 this.CD.detectChanges();
             }, 200);
 
 
         } else {
             this.timerToken = setTimeout(() => {
-                this.UIProperties.SetValidity("ToDate", this.ObjectTableName, true, "");
-                this.UIProperties.SetValidity("FromDate", this.ObjectTableName, true, "");
+                this.UIProperties.SetValidity("ToDate", this.ReconcilePageTable, true, "");
+                this.UIProperties.SetValidity("FromDate", this.ReconcilePageTable, true, "");
                 this.CD.detectChanges();
             }, 200);
 
@@ -347,9 +396,7 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
         filters.SortBy = "PageNo"; //FromDate
         filters.SortDirection = "Descending";
 
-        var bankAccountOO = window.ObjectTables.filter(d => d.Name === "BankAccount")[0];
-
-        filters.addAdditionalFilter("ObjectTableId", bankAccountOO.Id, null, null, "Equals", false, false, false, "string");
+        filters.addAdditionalFilter("ObjectTableId", this.ObjectTable.Id, null, null, "Equals", false, false, false, "string");
         filters.addAdditionalFilter("EntityId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
         //filters.addAdditionalFilter("IsCancelled", false, null, null, "Equals", false, false, false, "boolean");
 
