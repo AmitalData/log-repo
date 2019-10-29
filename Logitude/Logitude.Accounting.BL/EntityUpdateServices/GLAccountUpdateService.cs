@@ -52,9 +52,16 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
         protected override void OnCreating(GLAccountPM entityPM, EntityPM entityParentPM)
         {
-            if (entityPM.ChartOfAccountsTypeCode != "3" && entityPM.ChartOfAccountsTypeCode != "4" && entityPM.ChartOfAccountsTypeCode != "6")
-                SetDisplayNumber(entityPM);
+            if (!string.IsNullOrWhiteSpace(EntityPM.ExternalDisplayNumber))
+            {
+                entityPM.DisplayNumber = EntityPM.ExternalDisplayNumber;
+            }
+            else
+            {
+                if (entityPM.ChartOfAccountsTypeCode != "3" && entityPM.ChartOfAccountsTypeCode != "4" && entityPM.ChartOfAccountsTypeCode != "6")
+                    SetDisplayNumber(entityPM);
 
+            }
             AddAcitivityLog(entityPM, "N");
 
             FillSearchFields(entityPM);
