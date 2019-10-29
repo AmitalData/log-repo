@@ -198,8 +198,14 @@ import {CustomerTenantAccessMenuButtonsHandler} from './Components/MenuButtons/C
 import {ReportsTemplatePMService} from './Services/StandardPMs/ReportsTemplatePMService';
 import {ReportsTemplatesVersionPMService} from './Services/StandardPMs/ReportsTemplatesVersionPMService';
 import {ContactMenuButtonsHandler} from './Components/MenuButtons/ContactMenuButtonsHandler';
-
+import { AgentMenuButtonsHandler } from './Components/MenuButtons/AgentMenuButtonsHandler';
 import {DocumentsFilingExtendedPMService} from './Services/ExtendedPMs/DocumentsFilingExtendedPMService';
+import { ShippingAgentMenuButtonsHandler } from './Components/MenuButtons/ShippingAgentMenuButtonsHandler';
+import { CustomAgentMenuButtonsHandler } from './Components/MenuButtons/CustomAgentMenuButtonsHandler';
+import { ShippingLineMenuButtonsHandler } from './Components/MenuButtons/ShippingLineMenuButtonsHandler';
+import { TruckerMenuButtonsHandler } from './Components/MenuButtons/TruckerMenuButtonsHandler';
+import { VendorMenuButtonsHandler } from './Components/MenuButtons/VendorMenuButtonsHandler';
+import { AirlineMenuButtonsHandler } from './Components/MenuButtons/AirlineMenuButtonsHandler';
 
 import {PaymentTermDateTypeListService} from './Services/StandardLists/PaymentTermDateTypeListService';
 import { NumberFormatListService } from './Services/StandardLists/NumberFormatListService';
@@ -427,12 +433,18 @@ export class ModuleProviders {
             case "CustomsShipperPMService": { myResult = new CustomsShipperPMService(); break; }
                 
             //case "WeightUnitPMService": { myResult = new WeightUnitPMService(); break; }
-
+            case "AgentMenuButtonsHandler": { myResult = new AgentMenuButtonsHandler(); break;}
             case "CustomerMenuButtonsHandler": { myResult = new CustomerMenuButtonsHandler(); break; }    
             case "UserMenuButtonsHandler": { myResult = new UserMenuButtonsHandler(); break; }  
             case "CommunicationLogMenuButtonsHandler": { myResult = new CommunicationLogMenuButtonsHandler(); break; } 
             case "ContactMenuButtonsHandler": { myResult = new ContactMenuButtonsHandler(); break; }   
             case "DocumentsFilingExtendedPMService": { myResult = new DocumentsFilingExtendedPMService(); break; }   
+            case "CustomAgentMenuButtonsHandler": { myResult = new CustomAgentMenuButtonsHandler(); break; }
+            case "ShippingAgentMenuButtonsHandler": { myResult = new ShippingAgentMenuButtonsHandler(); break; }
+            case "ShippingLineMenuButtonsHandler": { myResult = new ShippingLineMenuButtonsHandler(); break; }
+            case "VendorMenuButtonsHandler": { myResult = new VendorMenuButtonsHandler(); break; }
+            case "TruckerMenuButtonsHandler": { myResult = new TruckerMenuButtonsHandler(); break; }
+            case "AirlineMenuButtonsHandler": { myResult = new AirlineMenuButtonsHandler(); break; }
 
             case "CarrierExtendedListService": { myResult = new CarrierExtendedListService(); break; }   
             case "PortExtendedListService": { myResult = new PortExtendedListService(); break; }   
