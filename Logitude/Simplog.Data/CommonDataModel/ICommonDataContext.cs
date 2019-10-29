@@ -88,6 +88,7 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<TermsofUseSignature> TermsofUseSignatures { get; }
         IDbSet<ChargeTypeAccounting> ChargeTypeAccountings { get; }
         IDbSet<ContactLastLogin> ContactLastLogins { get; }
+        IDbSet<SharedLogisticsContactLastLogin> SharedLogisticsContactLastLogins { get; }
         IDbSet<ContactLoginLog> ContactLoginLogs { get; }
         IDbSet<Report> Reports { get; }
         IDbSet<UserPermittedBranch> UserPermittedBranches { get; }

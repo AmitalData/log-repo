@@ -337,6 +337,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\Role.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\RoleFeature.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\RoleType.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\SharedLogisticsContactLastLogin.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\SharedManifestsStatus.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\SharedManifestTranslation.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\ShippingAgent.cs" />
@@ -442,6 +443,7 @@
     <Compile Include="CommonDataModel\Mapping\SharedFollowedShipmentMap.cs" />
     <Compile Include="CommonDataModel\Mapping\RegionMap.cs" />
     <Compile Include="CommonDataModel\Mapping\ReportModificationMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\SharedLogisticsContactLastLoginMap.cs" />
     <Compile Include="CommonDataModel\Mapping\SharedManifestsStatusMap.cs" />
     <Compile Include="CommonDataModel\Mapping\SharedManifestTranslationMap.cs" />
     <Compile Include="CommonDataModel\Mapping\TemperatureUnitMap.cs" />
@@ -482,6 +484,7 @@
     <Compile Include="CommonDataModel\Repositories\ComputingPartnerTableRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ComputingPartnerTranslationRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ContactsUnseenEntitieRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\CreateSharedLogisticsContactLastLoginRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\DWHBuildStatusRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CountryCityRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CreditLimitSettingRepository.cs" />

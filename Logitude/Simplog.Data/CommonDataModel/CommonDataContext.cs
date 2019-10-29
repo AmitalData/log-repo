@@ -326,6 +326,7 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new ChargeTypeAccountingMap());
             modelBuilder.Configurations.Add(new ReportMap());
             modelBuilder.Configurations.Add(new ContactLastLoginMap());
+            modelBuilder.Configurations.Add(new SharedLogisticsContactLastLoginMap());
             modelBuilder.Configurations.Add(new ContactLoginLogMap());
             modelBuilder.Configurations.Add(new SmallDocumentMap());
             modelBuilder.Configurations.Add(new CommunicationLogStepMap());
@@ -998,6 +999,8 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<CheckDigitControlAlgorithm> CheckDigitControlAlgorithms { get; set; }
         public IDbSet<CardContactProduct> CardContactProducts { get; set; }
         public IDbSet<AccountingPartner> AccountingPartners { get; set; }
+
+        public IDbSet<SharedLogisticsContactLastLogin> SharedLogisticsContactLastLogins { get; set; }
 
         public DbConnection GetConnection()
         {
