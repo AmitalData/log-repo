@@ -527,6 +527,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return pocos.Select(rec => this.GetEntityPM(rec)).ToList();
         }
 
+        public List<GLAccount> GetByDisplayNumberAndAccType(string displayNumber, string accTypeCode, int tenant)
+        {
+            List<GLAccount> pocos = this.repository.GetByDisplayNumberAndAccType(displayNumber, accTypeCode, tenant);
+            return pocos;
+        }
+
         public IQueryable<GLAccountPM> GetSplittedByCurrencyGLAccounts(string accountId, int tenant)
         {
           
