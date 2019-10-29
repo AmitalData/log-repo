@@ -2388,6 +2388,7 @@
     <Compile Include="Helpers\TFSParseWebhook.cs" />
     <Compile Include="Helpers\TimeClock\TMClockAnalyze.cs" />
     <Compile Include="Helpers\TMMessageBuilderAnalyzer.cs" />
+    <Compile Include="Helpers\WorkerRoleHelpers\DocumentsExecutionService.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.APPaymentTransferStatus.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.ARInvoiceStocksStatus.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.ARPaymentTransferStatus.cs" />
@@ -2456,6 +2457,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\AWBDescriptionOfGoodsUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\BranchUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\BusinessUnitUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CardContactAdditionalServiceUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CardContactProductUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CardExternalAccountsByProductUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CardExternalCodeByCurrencyUpdateClass.cs" />
@@ -2890,6 +2892,7 @@
     <Content Include="Monitoring\AgentSharedManifestMonitoring.aspx" />
     <Content Include="Monitoring\AnalyzeQueue.aspx" />
     <Content Include="Monitoring\AzureDevOpsQueue.aspx" />
+    <Content Include="Monitoring\DocumentsExecutionLogWaitingStatus.aspx" />
     <Content Include="Monitoring\EmailSendingFailedStatus.aspx" />
     <Content Include="Monitoring\FailedLoginLog.aspx" />
     <Content Include="Monitoring\FailedTokenLog.aspx" />
@@ -4936,6 +4939,13 @@
     </Compile>
     <Compile Include="Monitoring\AzureDevOpsQueue.aspx.designer.cs">
       <DependentUpon>AzureDevOpsQueue.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Monitoring\DocumentsExecutionLogWaitingStatus.aspx.cs">
+      <DependentUpon>DocumentsExecutionLogWaitingStatus.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\DocumentsExecutionLogWaitingStatus.aspx.designer.cs">
+      <DependentUpon>DocumentsExecutionLogWaitingStatus.aspx</DependentUpon>
     </Compile>
     <Compile Include="Monitoring\EmailSendingFailedStatus.aspx.cs">
       <DependentUpon>EmailSendingFailedStatus.aspx</DependentUpon>

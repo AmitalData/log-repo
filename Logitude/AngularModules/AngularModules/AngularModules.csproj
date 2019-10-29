@@ -453,7 +453,14 @@
     <TypeScriptCompile Include="Common\Components\FiltersMenu\CustomsShipperFiltersMenuComponent.ts" />
     <TypeScriptCompile Include="Common\Components\Maintenance\CustomsInterface\CustomsInterfaceStartDatesComponent.ts" />
     <TypeScriptCompile Include="Common\Components\Maintenance\CustomsInterface\LocalCustomsInterfaceDetailsComponent.ts" />
+    <TypeScriptCompile Include="Common\Components\MenuButtons\AgentMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Common\Components\MenuButtons\AirlineMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Common\Components\MenuButtons\ContactMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Common\Components\MenuButtons\CustomAgentMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Common\Components\MenuButtons\ShippingAgentMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Common\Components\MenuButtons\ShippingLineMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Common\Components\MenuButtons\TruckerMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Common\Components\MenuButtons\VendorMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Common\CustomFilters\WarehouseCustomFilter.ts" />
     <TypeScriptCompile Include="Common\DataContracts\DWQueryData.ts" />
     <TypeScriptCompile Include="Common\DataContracts\ShipmentPickUpDeliverySL.ts" />
@@ -469,6 +476,8 @@
     <TypeScriptCompile Include="Common\EntityPMs\AccountingPartnerPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\AirlineAreaPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\AirlineAreasPortPM.ts" />
+    <TypeScriptCompile Include="Common\EntityPMs\CardContactAdditionalServicePM.ts" />
+    <TypeScriptCompile Include="Common\EntityPMs\CardContactProductPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CustomerDepositionPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CustomsShipperPM.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedLists\CustomerDepositionListExtendedService.ts" />

@@ -134,15 +134,27 @@ using Simplog.Data.CommonDataModel;
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
-						temp.Id = MyEntity.Id;
+					   
+					    if(!string.IsNullOrEmpty(MyEntity.Id))
+					    {
+					        throw new ApplicationException("Incoterm with provided key doesn't exist");
+						
+						}
+						//else
+						//{
+						//    temp.Id = MyEntity.Id;
+
+						//}
 					}
 					if(string.IsNullOrEmpty(temp.Code))
 					{
+					   
 						temp.Code = MyEntity.Code;
 					}
 					temp.Name = MyEntity.Name;
 					if(string.IsNullOrEmpty(temp.Code))
 					{
+					   
 						temp.Code = MyEntity.PartnerCode;
 					}					   
 					   return temp;
