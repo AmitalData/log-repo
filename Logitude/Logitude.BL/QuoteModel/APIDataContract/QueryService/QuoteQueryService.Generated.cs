@@ -430,7 +430,16 @@ using Simplog.Data.QuoteModel;
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
-					    throw new ApplicationException("Quote with provided key doesn't exist");
+					    if(!string.IsNullOrEmpty(MyEntity.Id))
+					    {
+					        throw new ApplicationException("Quote with provided key doesn't exist");
+						
+						}
+						//else
+						//{
+						//    temp.Id = MyEntity.Id;
+
+						//}
 					}
 					temp.AcceptedDate = MyEntity.AcceptedDate;
 					temp.AgentReference1 = MyEntity.AgentReference1;

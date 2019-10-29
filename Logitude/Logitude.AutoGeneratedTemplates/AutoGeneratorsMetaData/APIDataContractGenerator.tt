@@ -502,7 +502,16 @@ using <#=myspacestring#>
 					{
 					   <#+ if(FieldName == "Id"){ #>
 
-					    throw new ApplicationException("<#=ObjectTableName#> with provided key doesn't exist");<#+
+					    if(!string.IsNullOrEmpty(<#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#>))
+					    {
+					        throw new ApplicationException("<#=ObjectTableName#> with provided key doesn't exist");
+						
+						}
+						//else
+						//{
+						//    temp.<#=FieldName#> = <#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#>;
+
+						//}<#+
 						}else{#>
 
 						temp.<#=FieldName#> = <#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#>;<#+}#>

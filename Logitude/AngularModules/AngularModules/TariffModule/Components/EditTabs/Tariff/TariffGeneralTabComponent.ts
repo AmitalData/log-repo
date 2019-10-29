@@ -6,6 +6,11 @@ import { AppTool } from '../../../../Infrastructure/Tools';
 import { ChargesTypeListService } from '../../../../Common/Services/StandardLists/ChargesTypeListService';
 import { ChargesTypeList } from '../../../../Common/EntityLists/ChargesTypeList';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { TariffDomainService } from '../../../../TariffModule/Services/TariffDomainService';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+
+
+
 @Component({
     moduleId: module.id,
     templateUrl: './TariffGeneralTabComponent.html',
@@ -40,8 +45,47 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
         }
 
         this.Listen();
+        this.CheckCurrancyEnabledProperty();
     }
-    
+
+    SetUIProperties() {
+        this.CheckCurrancyEnabledProperty();
+    }
+
+    CheckCurrancyEnabledProperty() {
+        var service: TariffDomainService = new TariffDomainService();
+        service.GetAllVersionsWithLinesForTariff(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+               var versions = response.Result;
+                if (this.EntityPM.TypeCode == "AFC" || this.EntityPM.TypeCode == "OLC") {
+                    this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);
+                    if (versions != null) {
+                        if (versions != null && versions.length > 1) {
+                            this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
+                        }
+                        else {
+                            var version = versions[0];
+                            if (version == null || (version != null && version.IsDraft)) {
+                                var hasTariffLines = false;
+                                versions.forEach(item => {
+                                    if (item.TariffLines != null && item.TariffLines.length > 0) {
+                                        hasTariffLines = true;
+                                    }
+                                });
+                                if (hasTariffLines) {
+                                    this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
+                                }
+                            }
+                            else if (version != null && !version.IsDraft) {
+                                this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
+                            }
+                        }
+                    }
+                }
+            }
+        }); 
+    }
+
     BuildQueryFilters() {
         var EntityType: string = "IsAir";
         if (this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OLC") {
@@ -460,6 +504,7 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.Validate(true);
+                    this.CheckCurrancyEnabledProperty();
                 }
             });
         }
