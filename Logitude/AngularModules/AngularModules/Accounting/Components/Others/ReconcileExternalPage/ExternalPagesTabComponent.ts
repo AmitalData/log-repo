@@ -446,7 +446,7 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
             this._ReconcileExternalPagePMService.get(entity.Id).subscribe((myResult) => {
                 entityPM = myResult.Result;
 
-                this._ReconcileExternalPageExtendedPMService.CheckLastApprovedBankPageAndReconciledLine(entity.Id).subscribe((myResult) => {
+                this._ReconcileExternalPageExtendedPMService.CheckLastApprovedBankPageAndReconciledLine(entity.Id, this.ObjectTableName).subscribe((myResult) => {
                     if (!myResult.HasError) {
                         if (myResult.Result == null) {
                             this.EnableReconcileEditButton = true;
@@ -478,7 +478,7 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
         else
         {
             this.EnableReconcileEditButton = false;
-            this._ReconcileExternalPageExtendedPMService.GetDraftPage(this.EntityPM.Id).subscribe((myResult) =>
+            this._ReconcileExternalPageExtendedPMService.GetDraftPage(this.EntityPM.Id, this.ObjectTableName).subscribe((myResult) =>
             {
                 var draftPage = myResult.Result;
                 if (!AppTool.IsNullOrEmpty(draftPage))
@@ -545,13 +545,15 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
                 var windowTitle = entity ? (TextCodeTranslator.Translate("ReconcileExternalPage.F.PageNo") + " " + entity.PageNo) : TextCodeTranslator.Translate("Accounting.General.O.NewPage");
                 var windowArgs: any = {};
                 windowArgs.entity = entity;
+                windowArgs.PageObjectTableName = this.ObjectTableName;
+                windowArgs.EntityPM = bankAccount;
+
                 windowArgs.BankAccountId = this.EntityPM.Id;
                 windowArgs.IsRestoreButtonEnabled = this.IsRestoreButtonEnabled;
                 windowArgs.IsRestoreButtonVisibile = this.IsRestoreButtonVisibile;
                 windowArgs.RestoreToolTipMessage = this.RestoreToolTipMessage;
                 windowArgs.EnableReconcileEditButton = this.EnableReconcileEditButton;
                 windowArgs.GLAccountId = bankAccount.GLAccountId;
-                windowArgs.BankAccount = bankAccount;
                 windowArgs.message = this.message;
                 var logWindow = new LogitudeWindow();
                 logWindow.Width = 1000;
