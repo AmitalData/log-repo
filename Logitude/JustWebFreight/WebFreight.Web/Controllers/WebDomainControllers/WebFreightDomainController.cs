@@ -315,7 +315,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     FileName = ObjectTableName + DateTime.Now.ToShortDateString(),
                     FolderName = "others",
-                    Extension = "xls",
+                    Extension = "xlsx",
                     Tenant = tenant,
                     FileSize = data.Length,
 
