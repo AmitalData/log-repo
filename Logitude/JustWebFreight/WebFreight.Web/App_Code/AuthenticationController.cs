@@ -2194,6 +2194,12 @@ namespace WebFreight.Web
 
                         string activity = card.PartnerTypeId == "CS" ? "Customer Access" : "Agent Access";
 
+                        if(card != null)
+                        {
+                            CreateSharedLogisticsContactLastLogin(via, user, card);
+
+                        }
+
                         ActivityLog.SendTotangoContactActivity(contact.Email, "System Login", activity, tenant, true, cardId, via);
                         //Abed    Log
                         ContactLoginLog contactLog = new ContactLoginLog()
@@ -2231,6 +2237,8 @@ namespace WebFreight.Web
                         lastLogin.LoginDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
                         commonDataContext.ContactLoginLogs.Add(contactLog);
                         commonDataContext.SaveChanges();
+
+                         
                         // add a record to contact last login table
                     }
                     //contact.Email != "customercare@logitudeworld.com" && customercare to be replaced with tenant 0 users that are not distributors
@@ -2269,6 +2277,31 @@ namespace WebFreight.Web
                 user.NumberOfRetries = contactPassword.NumberOfRetries;
             }
             return user;
+        }
+
+        private void CreateSharedLogisticsContactLastLogin(string via, UserData user, Card card)
+        {
+            ICommonDataContext commonDataContext = CommonDataContext.GetContext(card.Tenant);
+            string loggedVia = string.IsNullOrEmpty(via) ? "PC" : via;
+            SharedLogisticsContactLastLogin sharedContactLastLogin = (from a in commonDataContext.SharedLogisticsContactLastLogins
+                                                                      where a.ContactId == user.Id && a.CardId == card.Id && a.PartnerTypeId == card.PartnerTypeId && a.Via == loggedVia
+                                                                      select a).FirstOrDefault();
+            if (sharedContactLastLogin == null)
+            {
+                sharedContactLastLogin = new SharedLogisticsContactLastLogin()
+                {
+                    ContactId = user.Id,
+                    CardId = card.Id,
+                    PartnerTypeId = card.PartnerTypeId,
+                    Via = via,
+                    Tenant = card.Tenant,
+
+                };
+                commonDataContext.SharedLogisticsContactLastLogins.Add(sharedContactLastLogin);
+            }
+            sharedContactLastLogin.LoginDateTime = TenantServerConfigration.GetCurrentDateTime(card.Tenant);
+            commonDataContext.SaveChanges();
+
         }
 
         private static bool IscustomerCareIpAuthenticated()
