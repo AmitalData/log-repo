@@ -211,9 +211,10 @@ namespace Logitude.XSD.INTTRA_Booking
                 this.Errors.Add("Consignee is required");
             }
 
-            if (this.MasterData.MainCarriageETD == null && (this.MasterData.MainCarriageVesselId == null && this.MasterData.MainCarriageCarrierNumber == null))
+            if (this.MasterData.MainCarriageETD == null)
             {
-                this.Errors.Add("ETD or Main-Carriage Vessel and Voyage must be provided");
+                if (this.MasterData.MainCarriageVesselId == null || this.MasterData.MainCarriageCarrierNumber == null)
+                    this.Errors.Add("ETD or Main-Carriage Vessel and Voyage must be provided");
             }
 
             if (this.MasterData.MainCarriageVesselId != null)
