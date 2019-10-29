@@ -1,3 +1,4 @@
+declare var window: any;
 import {Component, ChangeDetectorRef} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -119,9 +120,13 @@ export class AddEditRecoExPageComponent extends BaseComponent{
                     var date = DateTool.GetDate(lastDatePlusOne.getFullYear(), lastDatePlusOne.getMonth(), lastDatePlusOne.getDate(), 0, 0, 0);
                     newEntity.FromDate = date;
                 }
+
+                var bankAccountOO = window.ObjectTables.filter(d => d.Name === "BankAccount")[0];
+
                 newEntity.StatusCode = "1"; // 1- Draft
                 newEntity.PageNo = 0;
-                newEntity.BankAccountId = args.BankAccountId;
+                newEntity.EntityId = args.BankAccountId;
+                newEntity.ObjectTableId = bankAccountOO.Id;
                 newEntity.GLAccountId = args.GLAccountId;
                 newEntity.EntryTypeCode = "1"; // 1- Manual
 
@@ -280,7 +285,7 @@ export class AddEditRecoExPageComponent extends BaseComponent{
         this.IsDisplayOnly = false;
         this.SetUIProperties();
         this.closeScreen = false;
-         
+
         this.SaveEntity();
 
     }
@@ -386,19 +391,19 @@ export class AddEditRecoExPageComponent extends BaseComponent{
                 if (!mm.HasError && this.closeScreen) {
                     this.CurrentSession.CloseCurrentWindowEmit("ok");
                 }
-                
+
                 else {
                     if (!this.closeScreen) {
                         this.CurrentSession.StartBusyIndicatorSaving();
                         this._ReconcileExternalPagePMService.get(mm.Result.Id).subscribe(myResult => {
-                            
+
                             var result: ServiceResponse = myResult;
                             if (!result.HasError) {
                                 this.ReconcileExternalPagePM = result.Result;
                                 if (this.IsRestoreButtonVisibile) {
                                     this.IsRestoreButtonVisibile = false;
                                 }
-                                
+
                                 this.FillGridsData();
                             }
                             this.CurrentSession.StopBusyIndicator();

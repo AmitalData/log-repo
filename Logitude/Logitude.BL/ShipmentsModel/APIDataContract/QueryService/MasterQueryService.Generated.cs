@@ -264,7 +264,16 @@ using Simplog.Data.ShipmentsModel;
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
-					    throw new ApplicationException("Shipment with provided key doesn't exist");
+					    if(!string.IsNullOrEmpty(MyEntity.Id))
+					    {
+					        throw new ApplicationException("Shipment with provided key doesn't exist");
+						
+						}
+						//else
+						//{
+						//    temp.Id = MyEntity.Id;
+
+						//}
 					}
 					DirectionQueryService DirectionDirectionService = new DirectionQueryService(Tenant);
 					if(MyEntity.Direction != null)

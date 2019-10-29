@@ -347,7 +347,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 bool uncancelledPageExist = false;
                 if (reconcileExternalPage.StatusCode == "3")
                 {
-                    uncancelledPageExist = reconcileExternalPageQueryService.CheckNextUnCancelledBankPage(reconcileExternalPage.BankAccountId, reconcileExternalPage.PageNo, tenant);
+                    uncancelledPageExist = reconcileExternalPageQueryService.CheckNextUnCancelledBankPage(reconcileExternalPage.EntityId, reconcileExternalPage.PageNo, tenant);
                 }
                 ServiceResponse response = new ServiceResponse();
                 response.Result = SetResponseResult(uncancelledPageExist, response, authToken);             
