@@ -177,6 +177,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\AutomationHistory.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\AutomationLastUpdate.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\AutomationResultEmailRecipient.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\CardContactAdditionalService.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CardContactProduct.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CardExternalAccountsByProduct.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\ChargesExternalAccountsByProduct.cs" />
@@ -372,6 +373,7 @@
     <Compile Include="CommonDataModel\Mapping\AutomationResultEmailRecipientMap.cs" />
     <Compile Include="CommonDataModel\Mapping\AWBDescriptionOfGoodsMap.cs" />
     <Compile Include="CommonDataModel\Mapping\BlobFileMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\CardContactAdditionalServiceMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CardContactProduct.cs" />
     <Compile Include="CommonDataModel\Mapping\CardExternalAccountsByProductMap.cs" />
     <Compile Include="CommonDataModel\Mapping\ChargesExternalAccountsByProductMap.cs" />
@@ -474,6 +476,7 @@
     <Compile Include="CommonDataModel\Repositories\AutomationResultEmailRecipientRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\AWBDescriptionOfGoodsRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\BlobFileRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\CardContactAdditionalServiceRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CardContactProductRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CardExternalAccountsByProductRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ChargesExternalAccountsByProductRepository.cs" />

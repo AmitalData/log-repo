@@ -469,6 +469,8 @@
     <TypeScriptCompile Include="Common\EntityPMs\AccountingPartnerPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\AirlineAreaPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\AirlineAreasPortPM.ts" />
+    <TypeScriptCompile Include="Common\EntityPMs\CardContactAdditionalServicePM.ts" />
+    <TypeScriptCompile Include="Common\EntityPMs\CardContactProductPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CustomerDepositionPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CustomsShipperPM.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedLists\CustomerDepositionListExtendedService.ts" />
