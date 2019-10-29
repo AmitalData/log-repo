@@ -29,13 +29,17 @@ export class LicensesManagementComponent implements OnDestroy {
         this.Listen();
     }
 
+    @Output() MenuHeaderchangeevent = new EventEmitter();
+    private Refresh: boolean = false;
     private ListenEvent: any = null;
     Listen() {
         this.ListenEvent = this.CurrentSession.PseventRowSelectEvent.subscribe((res) => {
             if (res.Name == "Add") {
                 this.Add(res.User, res.PackageCode);
             }
+
             if (res.Name == "Remove") {
+                this.Refresh = res.Refresh;
                 this.Remove(res.User, res.PackageCode);
             }
         });        
@@ -89,7 +93,8 @@ export class LicensesManagementComponent implements OnDestroy {
             return tempo;
         },
     };
-    
+
+    private filterAgrs: ApiQueryFilters;
     private GetRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
         if (filters == null) {
             filters = new ApiQueryFilters();
@@ -108,12 +113,15 @@ export class LicensesManagementComponent implements OnDestroy {
             filters.Filter1Value = this.SearchFields;
             filters.Filter1Operator = "Contains";
         }
-        
+
+        this.filterAgrs = filters;
         var service: UserExtendedListService = new UserExtendedListService();
         return new Promise((resolve, reject) => { resolve(service.GetCustomDataByFilters(filters)) });
     }
-
+    
     private LoadUserLicenses() {
+        this.DataLoaded = false;
+
         var userExtendedPMService: UserExtendedPMService = new UserExtendedPMService();
         userExtendedPMService.GetUserLicenses().subscribe(myResult => {
             if (myResult == null) {
@@ -177,8 +185,6 @@ export class LicensesManagementComponent implements OnDestroy {
     }
 
     private BuildAdditionalColumns() {
-        this.DataLoaded = false;
-
         if (SessionLocator.TenantManagementJS.MainAdditionalPackageApplied) {
             this.Columns.push({
                 FieldName: SessionLocator.TenantManagementJS.PackageCode + ",0" ,
@@ -262,6 +268,8 @@ export class LicensesManagementComponent implements OnDestroy {
 
     public ValidationErrorsList: string[] = [];
     private Save(myPackageCode: string) {
+        this.BuildHeaders();
+
         var errors: string[] = [];
 
         var userLicenses: UserLicensePM[] = this.AllUserLicenses.filter(d => d.PackageCode == myPackageCode);
@@ -274,7 +282,7 @@ export class LicensesManagementComponent implements OnDestroy {
             errors.push("Some Packages have exceeded the allowed number of users");
         }
 
-        this.BuildHeaders();
+        //this.BuildHeaders();
         
         this.ValidationErrorsList = errors;
 
@@ -285,6 +293,12 @@ export class LicensesManagementComponent implements OnDestroy {
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
                     this.RunSave();
+                }
+
+                else {
+                    this.InitColumns();
+                    this.LoadUserLicenses();
+                    this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
                 }
             });
         }
@@ -319,9 +333,12 @@ export class LicensesManagementComponent implements OnDestroy {
                         }
                     }  
 
+                    if (this.Refresh) {
+                        this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });                        
+                        this.Refresh = false;
+                    }
                    
-                    this.dirtyItem = null;
-                    //this.LoadUserLicenses();
+                    this.dirtyItem = null;                    
                     this.BuildHeaders();
                     this.CurrentSession.StopBusyIndicator();
                 }

@@ -133,6 +133,7 @@
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\Trucker\TruckerDocsInTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\Vendor\VendorDocsInTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\Warehouse\WarehouseDocsInTabComponent.html" />
+    <Content Include="CommonModules\CommonPartners\Components\NewEntity\NewAccountingPartnerComponent.html" />
     <Content Include="Common\Components\AccountingTab\AccountingTab_Branch.html" />
     <Content Include="Common\Components\AccountingTab\AccountingTab_ChargesType.html" />
     <Content Include="Common\Components\AccountingTab\AccountingTab_Currency.html" />
@@ -152,6 +153,7 @@
     <Content Include="CRMModules\CRMInboundEmail\Components\EditTabs\ViewInboundLineBodyComponent.html" />
     <Content Include="CRMModules\CRMInboundEmail\Components\NewEntity\NewInboundEmailComponent.html" />
     <Content Include="CRMModules\CRMOccasion\Components\AddEdit\AddEditOccasionContactComponent.html" />
+    <Content Include="CRMModules\CRMOccasion\Components\EditTabs\OccasionDocsInTabComponent.html" />
     <Content Include="CRMModules\CRMOccasion\Components\EditTabs\OccasionGeneralTabComponent.html" />
     <Content Include="CRMModules\CRMOccasion\Components\EditTabs\OccasionMainTabComponent.html" />
     <Content Include="CRMModules\CRMOccasion\Components\NewEntity\NewOccasionComponent.html" />
@@ -447,13 +449,22 @@
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\Trucker\TruckerDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\Vendor\VendorDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\Warehouse\WarehouseDocsInTabComponent.ts" />
+    <TypeScriptCompile Include="CommonModules\CommonPartners\Components\NewEntity\NewAccountingPartnerComponent.ts" />
     <TypeScriptCompile Include="Common\Components\FiltersMenu\CustomsShipperFiltersMenuComponent.ts" />
     <TypeScriptCompile Include="Common\Components\Maintenance\CustomsInterface\CustomsInterfaceStartDatesComponent.ts" />
     <TypeScriptCompile Include="Common\Components\Maintenance\CustomsInterface\LocalCustomsInterfaceDetailsComponent.ts" />
+    <TypeScriptCompile Include="Common\Components\MenuButtons\AgentMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Common\Components\MenuButtons\AirlineMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Common\Components\MenuButtons\ContactMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Common\Components\MenuButtons\CustomAgentMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Common\Components\MenuButtons\ShippingAgentMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Common\Components\MenuButtons\ShippingLineMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Common\Components\MenuButtons\TruckerMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Common\Components\MenuButtons\VendorMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Common\CustomFilters\WarehouseCustomFilter.ts" />
     <TypeScriptCompile Include="Common\DataContracts\DWQueryData.ts" />
     <TypeScriptCompile Include="Common\DataContracts\ShipmentPickUpDeliverySL.ts" />
+    <TypeScriptCompile Include="Common\EntityLists\AccountingPartnerList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\AirlineAreaList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\AirlineAreasPortList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\CheckDigitControlAlgorithmList.ts" />
@@ -462,17 +473,22 @@
     <TypeScriptCompile Include="Common\EntityLists\NumberFormatList.ts" />
     <TypeScriptCompile Include="Common\EntityPMCustomCode\CustomerPMCustomCode.ts" />
     <TypeScriptCompile Include="Common\EntityPMInitServices\ReportPMInitService.ts" />
+    <TypeScriptCompile Include="Common\EntityPMs\AccountingPartnerPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\AirlineAreaPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\AirlineAreasPortPM.ts" />
+    <TypeScriptCompile Include="Common\EntityPMs\CardContactAdditionalServicePM.ts" />
+    <TypeScriptCompile Include="Common\EntityPMs\CardContactProductPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CustomerDepositionPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CustomsShipperPM.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedLists\CustomerDepositionListExtendedService.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedLists\UserExtendedListService.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedPMs\AutomationResultEmailRecipientExtendedService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardLists\AccountingPartnerListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\CheckDigitControlAlgorithmListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\CustomerDepositionListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\CustomsShipperListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\NumberFormatListService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardPMs\AccountingPartnerPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CustomerDepositionPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CustomsShipperPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\LogBoxTenantSettingPMService.ts" />
@@ -484,6 +500,7 @@
     <TypeScriptCompile Include="CRMModules\CRMInboundEmail\Components\EditTabs\ViewInboundLineBodyComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMInboundEmail\Components\NewEntity\NewInboundEmailComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMOccasion\Components\AddEdit\AddEditOccasionContactComponent.ts" />
+    <TypeScriptCompile Include="CRMModules\CRMOccasion\Components\EditTabs\OccasionDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMOccasion\Components\EditTabs\OccasionGeneralTabComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMOccasion\Components\EditTabs\OccasionMainTabComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMOccasion\Components\NewEntity\NewOccasionComponent.ts" />
@@ -844,8 +861,10 @@
     <TypeScriptCompile Include="e2e\Maintenance\Users\UsersScenario.ts" />
     <TypeScriptCompile Include="e2e\Operations\PrintDocOut\PrintDocOut.ts" />
     <TypeScriptCompile Include="e2e\Operations\SendMailPopup\SendMailPopup.ts" />
+    <TypeScriptCompile Include="e2e\Operations\Shipments\EditEntity\ShipmentActions.ts" />
     <TypeScriptCompile Include="e2e\Operations\Shipments\NewEntity\OpEAWB-spec.ts" />
     <TypeScriptCompile Include="e2e\Operations\Shipments\NewEntity\OpEAWB.ts" />
+    <TypeScriptCompile Include="e2e\Operations\Shipments\ShipmentHelper.ts" />
     <TypeScriptCompile Include="e2e\Operations\ShipmentView\ShipmentView-spec.ts" />
     <TypeScriptCompile Include="e2e\Operations\ShipmentView\ShipmentView.ts" />
     <TypeScriptCompile Include="e2e\Operations\ShipmentView\ShipmentViewScenario.ts" />
@@ -1696,7 +1715,6 @@
     <TypeScriptCompile Include="e2e\Operations\Shipments\EditEntity\WizardTabs.ts" />
     <TypeScriptCompile Include="e2e\Operations\Shipments\NewEntity\HouseAWB.ts" />
     <TypeScriptCompile Include="e2e\Operations\Shipments\NewEntity\MasterAWB.ts" />
-    <TypeScriptCompile Include="e2e\Operations\Shipments\ShipmentHelper.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClient\Components\EditTabs\License\ClientDrivingLicenseTabComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierPendingReason\CourierPendingReasonGeneralComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\CourierWorksheetListTemplate.ts" />
@@ -1708,7 +1726,6 @@
     <TypeScriptCompile Include="Customs\EntityPMs\TPGFileTypePM.ts" />
     <TypeScriptCompile Include="Customs\Services\DataChange\CourierWorksheetSharedDataService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\TPGFileTypeListService.ts" />
-    <TypeScriptCompile Include="e2e\Operations\Shipments\ShipmentHelper.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureAutomation\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureAutomation\ModuleInfrastructureAutomation.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBatchService\Components\BatchService\BatchServicesComponent.ts" />
@@ -3787,7 +3804,6 @@
     <TypeScriptCompile Include="e2e\Operations\Shipments\NewEntity\Operations.e2e-spec.ts" />
     <TypeScriptCompile Include="e2e\Operations\Shipments\NewEntity\Operations.po.ts" />
     <TypeScriptCompile Include="e2e\Operations\Shipments\NewEntity\ShipmentWorkSpace.ts" />
-    <TypeScriptCompile Include="e2e\Operations\Shipments\Shipment\DirectShipment.ts" />
     <TypeScriptCompile Include="environments\environment.prod.ts" />
     <TypeScriptCompile Include="environments\environment.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\EditTabs\CMConnectedDeclarationTabComponent.ts" />
@@ -6750,8 +6766,11 @@
     <Content Include="InfrastructureModules.zip" />
     <Content Include="e2e\Testing Scenarios\Production\Team Ayman\ProtractorProdStaging.bat" />
     <Content Include="e2e\Testing Scenarios\Production\Team Ayman\ProtractorProdFullCollection.bat" />
-    <Content Include="e2e\Testing Scenarios\Master\Team Ayman\TeamAymanCases.bat" />
+    <Content Include="e2e\Testing Scenarios\Master\Team Ayman\ProtractorMasterAfterSwap.bat" />
     <Content Include="e2e\Testing Scenarios\Master\Team Islam\RunTestCases.bat" />
+    <Content Include="e2e\Testing Scenarios\Master\Team Mohammad\TeamMohammadCases.bat" />
+    <Content Include="e2e\Testing Scenarios\Master\Team Ayman\ProtractorMasterStaging.bat" />
+    <Content Include="e2e\Testing Scenarios\Master\Team Islam\RunTestCasesStaging.bat" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Common\EntityLists\AddressList.ts" />
@@ -7359,7 +7378,6 @@
     <Folder Include="e2e\CRM\Customers\" />
     <Folder Include="e2e\LogBox\Documents\" />
     <Folder Include="e2e\Testing Scenarios\Master\Smoke Testing Common\" />
-    <Folder Include="e2e\Testing Scenarios\Master\Team Mohammad\" />
     <Folder Include="e2e\Testing Scenarios\Production\Smoke Testing Common\" />
     <Folder Include="e2e\Testing Scenarios\Production\Team Islam\" />
     <Folder Include="e2e\Testing Scenarios\Production\Team Mohammad\" />

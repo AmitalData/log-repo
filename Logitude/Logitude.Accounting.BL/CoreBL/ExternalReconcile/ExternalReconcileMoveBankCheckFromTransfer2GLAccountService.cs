@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 {
-    public class ExternalReconcileJournalService
+    public class ExternalReconcileMoveBankCheckFromTransfer2GLAccountService
     {
         private IExternalReconcileDataProvider _ExternalReconcileDataProvider;
         public const string M_LedgerNotInTransferBank = "התנועה איננה בחשבון בנק לשלם ";
@@ -58,7 +58,9 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
         /// <param name="tenant"></param>
         /// <param name="ledgerTransactionId"></param>
         /// <param name="reconcileExternalPageLineId"></param>
-        public void MoveBankCheckFromTransfer2GLAccount(int tenant, string ledgerTransactionBankTransferId, string reconcileExternalPageLineId)
+        /// CreateJournalWithExtReconcile
+        /// MoveBankCheckFromTransfer2GLAccount
+        public void CreateJournalWithExtReconcile(int tenant, string ledgerTransactionBankTransferId, string reconcileExternalPageLineId)
         {
             LedgerTransactionPM myLedgerTransactionBankTransferPM;
             BankAccountPM bankAccountFromTransfer;

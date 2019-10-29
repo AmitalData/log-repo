@@ -531,7 +531,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             OnUpdatingCheckBalance(entityPM, entityPOCO);
             OnUpdatingCheckReconcileMethod(entityPM, entityPOCO);
 
-            ValidateCurrency(entityPM, entityPOCO);
+            ValidateCurrencyChange(entityPM, entityPOCO);
         }
         protected override void OnUpdating(GLAccountPM entityPM)
         {
@@ -573,7 +573,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         private List<QueueTask> CreateQueueTasks(GLAccountPM glaccounPM)
         {
-            string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(glaccounPM);
+            Logitude.Accounting.BL.APIDataContract.ApiV1.GLAccount gLAccount = GetMappedGLAccountDataContract(glaccounPM);
+
+            string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(gLAccount);
 
             List<QueueTask> queue1Tasks = new List<QueueTask>
                 {
@@ -588,6 +590,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 };
             return queue1Tasks;
         }
+        private Logitude.Accounting.BL.APIDataContract.ApiV1.GLAccount GetMappedGLAccountDataContract(GLAccountPM gLAccountPM)
+        {
+            Logitude.Accounting.BL.APIDataContract.ApiV1.GLAccountQueryService gLAccountQueryService = new APIDataContract.ApiV1.GLAccountQueryService(gLAccountPM.Tenant);
+            Logitude.Accounting.BL.APIDataContract.ApiV1.GLAccount glAccount = gLAccountQueryService.GLAccountDataMapping(gLAccountPM, gLAccountPM.Tenant);
+            return glAccount;
+        }
+
 
         private CommunicationsParams CreateCommunicationParamsForGLAccount(GLAccountPM glaccounPM)
         {
@@ -1974,35 +1983,35 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
 
 
-        private void ValidateCurrency(GLAccountPM entityPM, GLAccount entityPOCO)
+        private void ValidateCurrencyChange(GLAccountPM entityPM, GLAccount entityPOCO)
         {
-            IAccountingContext MyContext = AccountingContext.GetContext(entityPOCO.Tenant);
-            LedgerTransactionListQueryService transactionListQuery = new LedgerTransactionListQueryService(MyContext);
-            ContactPM currenctUser = GetLoggedContact(entityPM.Tenant);
-            bool useLocal = true;
-            if(currenctUser != null)
-                useLocal= !currenctUser.DontShowLocal;
+            CheckMultiToSingleCurrencyChanged(entityPM, entityPOCO);
+            CheckSingleToSingleCurrencyChanged(entityPM, entityPOCO);
+        }
 
-            // CASES: currency changed
-            // 1- from single to multi
-            // 2- from multi to single
-            // 3- from single to single
-            //
-
-            // [1] from single to multi
-            if (entityPOCO.IsMultiCurrency == false && entityPM.IsMultiCurrency == true)
+        private static void CheckSplittedGLAccount(GLAccountPM entityPM)
+        {
+            IAccountingContext ccc = AccountingContext.GetContext(entityPM.Tenant);
+            GLAccountCurrencyListQueryService GLAccountCurrencyQuery = new GLAccountCurrencyListQueryService(ccc);
+            GLAccountCurrencyList glAccountCurrencyList = GLAccountCurrencyQuery.GetByAccountNumber(entityPM.Id, entityPM.Tenant);
+            if (glAccountCurrencyList != null)
             {
-                // Allow to change 
+                throw new ApplicationException("This GLAccount have splitted GLAccounts by currency, Deactivate these GLAccounts before doing these action");
             }
+        }
 
-            // [2] from multi to single
-            else if(entityPOCO.IsMultiCurrency == true && entityPM.IsMultiCurrency == false)
+        private void CheckSingleToSingleCurrencyChanged(GLAccountPM entityPM, GLAccount entityPOCO)
+        {
+
+
+            if ((entityPOCO.IsMultiCurrency == false && entityPM.IsMultiCurrency == false) && entityPOCO.CurrencyId != entityPM.CurrencyId)
             {
-                List<LedgerTransactionList> openTransactions = transactionListQuery.GetOpenByAccountId(entityPM.Id, entityPM.Tenant);
+                List<LedgerTransactionList> openTransactions = GetOpenTransactionsForAccount(entityPM.Id, entityPM.Tenant);
 
-                if(openTransactions.Count > 0)
+                if (openTransactions.Count > 0)
                 {
-                    //check currency, if all transaction have same currency, continu, otherwise throw error
+
+                    // check if the currenct account transaction have only one currency or more?
                     bool isOneCurrency = false;
 
                     var groupedByCurrencyTrans = (from trans in openTransactions
@@ -2014,95 +2023,109 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     if (isOneCurrency)
                     {
                         // check if the transactions currency same as entered account currency
+
                         var transactionsCurrencyId = groupedByCurrencyTrans.First().CurrencyId;
 
                         if (transactionsCurrencyId != entityPM.CurrencyId)
                         {
-                            // throw error 
+                            // throw error
                             // the transactions currency does not equal entered account currency 
-                            throw new ApplicationException(TranslateTextsClass.Translate("Accounting.General.O.ThereOpenTransaction", 0, useLocal));
+                            bool useLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
+                            throw new ApplicationException(TranslateTextsClass.Translate("Accounting.General.O.ThereTransactions4GLAwithexistingCurrency", 0, useLocal));
                         }
                         else
                         {
                             //same currency, continue
 
                         }
+
                     }
                     else
                     {
-                        // throw error
-                        // not all with same currency
-                        throw new ApplicationException(TranslateTextsClass.Translate("Accounting.General.O.ThereOpenTransaction", 0, useLocal));
+                        // [!] this case shouldn't be entered, why? because the account now is single currency, so can't add different currencies transactions
+                        ThrowOpenTransactionMessage(entityPM.Tenant);
                     }
                 }
-                else
-                {
-                    // no transactions
-                    // so we can continue
-                }
-
             }
+        }
 
-            // [3] from single to single
-            else if( (entityPOCO.IsMultiCurrency == false && entityPM.IsMultiCurrency == false) && entityPOCO.CurrencyId != entityPM.CurrencyId)
+        private void ThrowOpenTransactionMessage(int tenant)
+        {
+            // not all transaction have same currency, the transactions have different currencies
+            bool useLocal = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
+            throw new ApplicationException(TranslateTextsClass.Translate("Accounting.General.O.ThereOpenTransaction", 0, useLocal));
+        }
+
+        private List<LedgerTransactionList> GetOpenTransactionsForAccount(string accountId, int tenant)
+        {
+            IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
+            LedgerTransactionListQueryService transactionListQuery = new LedgerTransactionListQueryService(accountingContext);
+            List<LedgerTransactionList> openTransactions = transactionListQuery.GetOpenByAccountId(accountId, tenant);
+            return openTransactions;
+        }
+
+        private void CheckMultiToSingleCurrencyChanged(GLAccountPM entityPM, GLAccount entityPOCO)
+        {
+            if (entityPOCO.IsMultiCurrency == true && entityPM.IsMultiCurrency == false)
             {
-                List<LedgerTransactionList> openTransactions = transactionListQuery.GetOpenByAccountId(entityPM.Id, entityPM.Tenant);
+                CheckAccountTransactions(entityPM);
+                CheckSplittedGLAccount(entityPM);
+            }
+        }
 
-                // check if the currenct account transaction have only one currency or more?
+        private void CheckAccountTransactions(GLAccountPM entityPM)
+        {
+
+            IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
+            LedgerTransactionListQueryService transactionListQuery = new LedgerTransactionListQueryService(MyContext);
+            bool useLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
+            List<LedgerTransactionList> openTransactions = transactionListQuery.GetOpenByAccountId(entityPM.Id, entityPM.Tenant);
+
+            if (openTransactions.Count > 0)
+            {
+                //check currency, if all transaction have same currency, continu, otherwise throw error
                 bool isOneCurrency = false;
-                
+
                 var groupedByCurrencyTrans = (from trans in openTransactions
-                           group trans by trans.CurrencyId into g
-                           select new { CurrencyId = g.Key, Res = g.ToList() });
+                                              group trans by trans.CurrencyId into g
+                                              select new { CurrencyId = g.Key, Res = g.ToList() });
 
                 isOneCurrency = groupedByCurrencyTrans.Count() == 1;
 
                 if (isOneCurrency)
                 {
                     // check if the transactions currency same as entered account currency
-                    
                     var transactionsCurrencyId = groupedByCurrencyTrans.First().CurrencyId;
 
-                    if(transactionsCurrencyId != entityPM.CurrencyId)
+                    if (transactionsCurrencyId != entityPM.CurrencyId)
                     {
-                        // throw error
-                        // the transactions currency does not equal entered account currency 
-                        throw new ApplicationException(TranslateTextsClass.Translate("Accounting.General.O.ThereTransactions4GLAwithexistingCurrency", 0, useLocal));
+                        ThrowOpenTransactionMessage(entityPM.Tenant);
                     }
                     else
                     {
                         //same currency, continue
 
                     }
-
                 }
                 else
                 {
-                    // [!] this case shouldn't be entered, why? because the account now is single currency, so can't add different currencies transactions
-                    //
-                    // throw error
-                    // not all transaction have same currency, the transactions have different currencies
-                    throw new ApplicationException(TranslateTextsClass.Translate("Accounting.General.O.ThereOpenTransaction", 0, useLocal));
+                    ThrowOpenTransactionMessage(entityPM.Tenant);
                 }
-
-
             }
-
-            // splitted glaccount validation
-            if (entityPOCO.IsMultiCurrency == true && entityPM.IsMultiCurrency == false)
+            else
             {
-                IAccountingContext ccc = AccountingContext.GetContext(entityPM.Tenant);
-                GLAccountCurrencyListQueryService GLAccountCurrencyQuery = new GLAccountCurrencyListQueryService(ccc);
-                GLAccountCurrencyList glAccountCurrencyList = GLAccountCurrencyQuery.GetByAccountNumber(entityPM.Id, entityPM.Tenant);
-                if(glAccountCurrencyList != null)
-                {
-                    throw new ApplicationException("This GLAccount have splitted GLAccounts by currency, Deactivate these GLAccounts before doing these action");
-                }
+                // no transactions
+                // so we can continue
             }
-
-
         }
 
+        private void CheckCurrencyChangedFromSingleToMulti(GLAccountPM entityPM, GLAccount entityPOCO)
+        {
+            if (entityPOCO.IsMultiCurrency == false && entityPM.IsMultiCurrency == true)
+            {
+                // Allow to change 
+            }
+        }
     }
 
 

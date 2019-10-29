@@ -111,7 +111,7 @@ namespace WebFreight.Web.ReportsWebServices
             if (shipment != null && tenantSettings != null)
             {
                 ContactQuery contactQuery = new ContactQuery(tenant);
-                string email = AuthenticationUtil.GetAuthenticatedUser();
+                string email = AuthenticationUtil.GetLoggedUserEmail(tenant);
                 ContactPM loggedContact = contactQuery.GetContactByEmailOnly(email, tenant);
                 if (loggedContact != null)
                 {
@@ -935,7 +935,7 @@ namespace WebFreight.Web.ReportsWebServices
             if (shipment != null && tenantSettings != null)
             {
                 ContactQuery contactQuery = new ContactQuery(tenant);
-                string email = AuthenticationUtil.GetAuthenticatedUser();
+                string email = AuthenticationUtil.GetLoggedUserEmail(tenant);
                 ContactPM loggedContact = contactQuery.GetContactByEmailOnly(email, tenant);
                 if (loggedContact != null)
                 {

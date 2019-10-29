@@ -2531,6 +2531,11 @@
 						"key": "token",
 						"type": "text",
 						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
 					}
 				],
 				"url": {
@@ -2691,200 +2696,21 @@
 					"raw": "   {\r\n   \t\"$id\": \"1\",\r\n    \"Tenant\": {{Tenant}},\r\n    \"Code\": \"BK771\",\r\n    \"LocalName\": \"PMBankChart\",\r\n    \"Englishname\": \"PMBankChart\",\r\n    \"TypeCode\": \"5\",\r\n    \"Inactive\": true,\r\n    \"ChangeSetOp\": 1\r\n \r\n}\r\n"
 				},
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/chartofaccounts",
-					"protocol": "http",
-					"host": [
-						"test",
-						"logitudeworld",
-						"com"
-					],
-					"path": [
-						"test",
-						"api",
-						"chartofaccounts"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "CreateBankGLA",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "a88a75e3-d83a-4bd7-8291-b710b32bb350",
-						"exec": [
-							"pm.test(\"CreateBankGLA Successfully Done\", function () {\r",
-							" pm.response.to.have.status(200);\r",
-							"    var idvalue =(pm.response.json().Id);\r",
-							"  \r",
-							"    var idexist = idvalue !== null;  \r",
-							"    pm.expect(idexist);\r",
-							"  \r",
-							"     pm.environment.set(\"BankGLAId\",idvalue);\r",
-							"      \r",
-							"     \r",
-							"  \r",
-							"    \r",
-							"   \r",
-							"    \r",
-							"});  \r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					},
-					{
-						"key": "token",
-						"value": "{{Token}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{  \n   \"$id\":\"1\",\n   \"Tenant\":{{Tenant}},\n   \"AccountTypeCode\":\"1\",\n   \n   \"LocalName\":\"BankGLAccountLocal\",\n   \"EnglishName\":\"BankGlAccountEnglish\",\n   \"SearchFields\":\"BankGl,BankGlAccountEnglish,BankGlAccountLocal\",\n   \"IsMultiCurrency\":false,\n   \"CurrencyId\": \"{{AccountingCurrencyId}}\",\n   \"RevenueExpenseType\":\"3\",\n   \"ChartOfAccountsId\":\"{{BankChartOfAccountId}}\",\n   \"ChartOfAccountsTypeCode\":\"5\",\n   \"ReconcileMethodCode\":\"0\"\n   \n}"
-				},
-				"url": {
-					"raw": "{{URL}}/api/glaccounts",
+					"raw": "{{URL}}/api/cardviews/getsingle/?id={{VendorId}}\n",
 					"host": [
 						"{{URL}}"
 					],
 					"path": [
 						"api",
-						"glaccounts"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "CreateDefferedBAnkGLA",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "d5479988-8aca-450d-af13-8fa145f9428e",
-						"exec": [
-							"pm.test(\"CreateDefferedBankGLA Successfully Done\", function () {\r",
-							" pm.response.to.have.status(200);\r",
-							"    var idvalue =(pm.response.json().Id);\r",
-							"  \r",
-							"    var idexist = idvalue !== null;  \r",
-							"    pm.expect(idexist);\r",
-							"  \r",
-							"     pm.environment.set(\"BankDefferedGLAId\",idvalue);\r",
-							"      \r",
-							"     \r",
-							"  \r",
-							"    \r",
-							"   \r",
-							"    \r",
-							"});  \r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					},
-					{
-						"key": "token",
-						"value": "{{Token}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{  \r\n   \"$id\":\"1\",\r\n   \"Tenant\":{{Tenant}},\r\n   \"AccountTypeCode\":\"1\",\r\n   \r\n   \"LocalName\":\"BankDefferedGLALocal\",\r\n   \"EnglishName\":\"BankDefferedGLAEnglish\",\r\n   \"SearchFields\":\"BankGl,BankDefferedGLALocal,BankDefferedGLAEnglish\",\r\n   \"IsMultiCurrency\":false,\r\n   \"CurrencyId\": \"{{AccountingCurrencyId}}\",\r\n   \"RevenueExpenseType\":\"3\",\r\n   \"ChartOfAccountsId\":\"{{BankChartOfAccountId}}\",\r\n   \"ChartOfAccountsTypeCode\":\"5\",\r\n   \"ReconcileMethodCode\":\"0\"\r\n   \r\n}"
-				},
-				"url": {
-					"raw": "{{URL}}/api/glaccounts",
-					"host": [
-						"{{URL}}"
+						"cardviews",
+						"getsingle",
+						""
 					],
-					"path": [
-						"api",
-						"glaccounts"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "CreateTransferBankGLA",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "9862fa38-b60a-4b2e-8a42-10cb9549113d",
-						"exec": [
-							"pm.test(\"CreateTransferBankGLA Successfully Done\", function () {\r",
-							" pm.response.to.have.status(200);\r",
-							"    var idvalue =(pm.response.json().Id);\r",
-							"  \r",
-							"    var idexist = idvalue !== null;  \r",
-							"    pm.expect(idexist);\r",
-							"  \r",
-							"     pm.environment.set(\"BankTransferGLAId\",idvalue);\r",
-							"      \r",
-							"     \r",
-							"  \r",
-							"    \r",
-							"   \r",
-							"    \r",
-							"});  \r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					},
-					{
-						"key": "token",
-						"value": "{{Token}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{  \r\n   \"$id\":\"1\",\r\n   \"Tenant\":{{Tenant}},\r\n   \"AccountTypeCode\":\"1\",\r\n   \r\n   \"LocalName\":\"BankTransferGLALocal\",\r\n   \"EnglishName\":\"BankTransferGLAEnglish\",\r\n   \"SearchFields\":\"BankGl,BankTransferGLALocal,BankTransferGLAEnglish\",\r\n   \"IsMultiCurrency\":false,\r\n   \"CurrencyId\": \"{{AccountingCurrencyId}}\",\r\n   \"RevenueExpenseType\":\"3\",\r\n   \"ChartOfAccountsId\":\"{{BankChartOfAccountId}}\",\r\n   \"ChartOfAccountsTypeCode\":\"5\",\r\n   \"ReconcileMethodCode\":\"0\"\r\n   \r\n}"
-				},
-				"url": {
-					"raw": "{{URL}}/api/glaccounts",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
-						"api",
-						"glaccounts"
+					"query": [
+						{
+							"key": "id",
+							"value": "{{VendorId}}\n"
+						}
 					]
 				}
 			},

@@ -221,9 +221,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 if (!entityPM.CreatedFromAPI)
                 {
                     this.BuildUnexpectedPayables();
-                    this.GetShipmentsData(entityPM.InvoiceLines);
-                    this.UpdateInvoiceEntities();
+                    this.GetShipmentsData(entityPM.InvoiceLines);                    
                 }
+
+                this.UpdateInvoiceEntities();
             }
 
             this.UpdateInvoiceLines();
@@ -1016,6 +1017,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             if (shipment != null)
             {
+                entityPM.ShipmentTransportModeId = shipment.TransportModeId;
+
                 shipment.ConcurrencyGUID = Guid.NewGuid().ToString();
 
                 if (string.IsNullOrEmpty(entityPM.MainEntityReference))

@@ -12,7 +12,8 @@ import {AgentPM} from '../EntityPMs/AgentPM';
 import {CustomerPM} from '../EntityPMs/CustomerPM';
 import {CustomAgentPM} from '../EntityPMs/CustomAgentPM';
 import {ShippingAgentPM} from '../EntityPMs/ShippingAgentPM';
-import {VendorPM} from '../EntityPMs/VendorPM';
+import { VendorPM } from '../EntityPMs/VendorPM';
+import { AccountingPartnerPM } from '../EntityPMs/AccountingPartnerPM';
 import {WarehousePM} from '../EntityPMs/WarehousePM';
 import {AirlinePM} from '../EntityPMs/AirlinePM';
 import {TruckerPM} from '../EntityPMs/TruckerPM';
@@ -1561,6 +1562,8 @@ export class PartnerServicePM {
     public Airline: AirlinePM = null;
     public ShippingLine: ShippingLinePM = null;
     public Trucker: TruckerPM = null;
+    public AccountingPartner: AccountingPartnerPM = null;
+
 }
 export class PartnerExternalAccountsServicePM {
     public Tenant: number;

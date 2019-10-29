@@ -3,6 +3,8 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Helpers;
 using Logitude.Server.Tools;
+using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.StorageService;
 using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
@@ -49,7 +51,7 @@ namespace WebFreight.Web.App_Code
 
         public HttpResponseMessage GetDocumentPdfFile(string documentTypeId, string entityId, string entityObjectTableId, string childEntityId, string childObjectTableId, string documentOutId, int tenant, string documentTypeCopyId, string userId)
         {
-         
+
             try
             {
 
@@ -73,7 +75,7 @@ namespace WebFreight.Web.App_Code
             }
         }
 
- 
+
         public HttpResponseMessage GetDownloadFileFromServer(string documentId, int tenant)
         {
             List<object> htmlResult = new List<object>();
@@ -142,6 +144,28 @@ namespace WebFreight.Web.App_Code
         int Tenant = 0;
         bool IsDisplayOnly = false;
 
+
+  
+
+        private DocumentsExecutionLog GetNewInStanceFromDocumentsExecutionLog(ExportDocumentArgs exportDocumentArgs)
+        {
+            DocumentsExecutionLogRepository documentsExecutionLogRepository = new DocumentsExecutionLogRepository(exportDocumentArgs.Tenant);
+            DocumentsExecutionLog documentsExecutionLog = new DocumentsExecutionLog()
+            {
+                Id = IdCounter.GetNumber("DocumentsExecutionLog", exportDocumentArgs.Tenant).ToString(),
+                Tenant = exportDocumentArgs.Tenant,
+                CreateDate = DateTime.Now,
+                CreatedByUserId = exportDocumentArgs.LoggedContactId,
+                RequestXML = LogitudeXmlSerializer.SerializeObjectToXmlString(exportDocumentArgs),
+                StatusCode = "W",
+                DocumentTypeId = exportDocumentArgs.DocumentTypeId,
+                DocumentTypeTemplateId = exportDocumentArgs.DocumentTypeTemplateId,
+                Subject = exportDocumentArgs.DocumentTypeName,
+            };
+            documentsExecutionLogRepository.Add(documentsExecutionLog);
+            documentsExecutionLogRepository.SubmitChanges();
+            return documentsExecutionLog;
+        }
 
         public HttpResponseMessage PostReportStimulsoftViewer(ExportDocumentArgs filter)
         {
@@ -837,6 +861,28 @@ namespace WebFreight.Web.App_Code
             return pixels;
         }
 
+        public HttpResponseMessage PostBuildDocumentViaWorkerRole(ExportDocumentArgs exportDocumentArgs)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
+                DocumentsExecutionLog documentsExecutionLog = exportDocumentHelper.GetNewInStanceFromDocumentsExecutionLog(exportDocumentArgs);
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue("DocumentsExecutionQueue", documentsExecutionLog.Tenant);
+                queueservice.Send(new Dictionary<string, string>() { { "DocumentsExecutionLogId", documentsExecutionLog.Id }, { "Tenant", documentsExecutionLog.Tenant.ToString() } }, null, null, null, null);
+                return Request.CreateResponse(HttpStatusCode.OK, documentsExecutionLog.Id);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
 
     }
+
+ 
 }

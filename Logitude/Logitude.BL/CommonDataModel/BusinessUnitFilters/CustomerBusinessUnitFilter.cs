@@ -22,7 +22,7 @@ namespace Logitude.BL.CommonDataModel.BusinessUnitFilters
             this.myCurrentTenant = tenant;
             if (isreport)
             {
-                this.loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser(tenant);
+                this.loggedUserEmail = AuthenticationUtil.GetLoggedUserEmail(tenant);
             }
             else
             {

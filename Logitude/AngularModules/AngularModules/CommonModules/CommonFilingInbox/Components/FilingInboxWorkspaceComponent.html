@@ -626,7 +626,7 @@
                                                                                         <td>
                                                                                             <table>
                                                                                                 <tr>
-                                                                                                    <td *ngIf="item.IsSingleTick && item.AttachLogs == null" style="width:16px;height:11px; padding-right:2px;vertical-align:middle;">
+                                                                                                    <td *ngIf="item.IsSingleTick" style="width:16px;height:11px; padding-right:2px;vertical-align:middle;">
                                                                                                         <div *ngIf="item != SelectedAttachment" class="MediaFill CenterCenter" style="width:16px;height:11px;">
                                                                                                             <button style="width:16px;height:11px;background:url(./Images/single-tick.png) no-repeat;background-size: 100% 100%; position: fixed;padding: 0 !important;vertical-align: middle;display: block;" tabindex="-1"></button>
                                                                                                         </div>
@@ -664,7 +664,7 @@
                                                                                                             </table>
                                                                                                         </CellTooltip>
                                                                                                     </td>
-                                                                                                    <td *ngIf="item.AttachLogs != null && item != SelectedAttachment" style="width:20px;height:15px; padding-right:2px;vertical-align:middle;">
+                                                                                                    <td *ngIf="item.AttachLogs != null && item.AttachLogs.length > 0 && item != SelectedAttachment" style="width:20px;height:15px; padding-right:2px;vertical-align:middle;">
                                                                                                         <CellTooltip [IconWidth]="20" [IconHeight]="15" [Width]="item.EntityNumberColumnWidth + 230" [IconPath]="'./Images/double-tick.png'" [Head]="'Logs'">
                                                                                                             <table>
                                                                                                                 <tr *ngFor="let log of item.AttachLogs" style="vertical-align:top;height:22px;">

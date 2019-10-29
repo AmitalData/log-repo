@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import { Component, OnDestroy} from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -17,7 +17,7 @@ import {ServiceResponse } from '../../../../Infrastructure/DataContracts/Service
     templateUrl: './AddEditPayableComponent.html',
 })
 
-export class AddEditPayableComponent {
+export class AddEditPayableComponent implements OnDestroy {
     public EntityPM: ShipmentPayablePM;
     public DataContext: ShipmentPayableItem;
     public ObjectTableName: string = "ShipmentPayable";
@@ -26,8 +26,14 @@ export class AddEditPayableComponent {
     public ChargeTypesQueryFilters: ApiQueryFilters;
     public IsOrangeInfoVisible: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor() {
+    private PropertyChangedEvent: any = null;
 
+    constructor() {
+        
+    }
+
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(this.PropertyChangedEvent);
     }
 
     SetDataContext(dataContext: ShipmentPayableItem) {
@@ -38,6 +44,7 @@ export class AddEditPayableComponent {
         this.SetDependencies();
         this.BuildQueryFilters();
         this.Clone();
+        this.ListenPropertyChanged();
     }
 
     public MeasurementDependencyProperty1: any = null;
@@ -173,29 +180,66 @@ export class AddEditPayableComponent {
 
         if (!AppTool.IsNullOrEmpty(this.DataContext.TariffId) && this.EntityPM.IsDirty && !this.DataContext.IsNewEntity) {
 
-            var confirmWindow = new ConfirmWindow();
-            confirmWindow.Show("Editing this line will unlink it from the tariff it was generated from.");
-            confirmWindow.WindowClosed.subscribe((event: any) => {
-                if (confirmWindow.Yes) {
-                    this.DataContext.TariffId = null;
-                    this.DataContext.MinAmount = null;
-                    this.DataContext.TariffNumber = null;
-                    this.DataContext.IsNewEntity = false;
-                    this.EntityPM.PayablesDisconnectedFromTariff = true;
-                    this.DataContext.SetUIProperties();
-                    this.CurrentSession.CloseCurrentWindowEmit("OK");     
-                }
-                if (confirmWindow.No) {
-                    //nothing 
-                }
-            });
+            var property = this.propertiesChanges.filter(a => a != "Notes" && a != "Quantity" && a != "PrepaidCollectId"
+                && a !=  "ExpectedAmount"
+                && a !=  "ExpectedAmountLocal"
+                && a != "ExpectedAmountInProfitCurrency"
+                && a !=  "OpenAmount"
+                && a !=  "OpenAmountInLocalCurrency"
+                && a !=  "OpenAmountInProfitCurrency"
+                && a !=  "CorrectionAmount"
+                && a !=  "AccountedAmount"
+                && a !=  "AccountedAmountInLocalCurrency"
+                && a !=  "AccountedAmountInProfitCurrency"
+            )[0];
+
+            if (property) {
+                this.ShowTariffDisconnectionWindow();
+            }
+            else {
+                this.DataContext.IsNewEntity = false;
+                this.CurrentSession.CloseCurrentWindowEmit("OK");
+            }
         }
         else {
             this.DataContext.IsNewEntity = false;
-            this.CurrentSession.CloseCurrentWindowEmit("OK");       
+            this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
 
+    private propertiesChanges = [];
+    private ListenPropertyChanged() {
+
+        if (this.PropertyChangedEvent) {
+            AppTool.KillEventEmitter(this.PropertyChangedEvent);
+            this.PropertyChangedEvent = null;
+        }
+
+        this.PropertyChangedEvent = this.EntityPM.PropertyChanged.subscribe(s => {
+            if (s) {
+                this.propertiesChanges.push(s.PropertyName);
+            }
+        });
+    }
+
+    ShowTariffDisconnectionWindow() {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Show("Editing this line will unlink it from the tariff it was generated from.");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.DataContext.TariffId = null;
+                this.DataContext.MinAmount = null;
+                this.DataContext.TariffNumber = null;
+                this.DataContext.IsNewEntity = false;
+                this.EntityPM.PayablesDisconnectedFromTariff = true;
+                this.DataContext.SetUIProperties();
+                this.CurrentSession.CloseCurrentWindowEmit("OK");
+            }
+            if (confirmWindow.No) {
+                //nothing 
+            }
+        });
+    }
     AddByContainerEntities() {
         if (this.DataContext.IsByContainerType) {
             var _Amount: number = null;

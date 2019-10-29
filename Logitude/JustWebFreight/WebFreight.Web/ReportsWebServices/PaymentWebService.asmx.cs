@@ -32,6 +32,7 @@ using System.Drawing;
 using System.Xml;
 using System.Text;
 using System.Web;
+using Logitude.Server.Tools.Helpers;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -464,8 +465,7 @@ namespace WebFreight.Web.ReportsWebServices
         }
         private Contact GetLoggedContact(int tenant)
         {
-
-            string email = HttpContext.Current.User.Identity.Name;
+            string email = AuthenticationUtil.GetLoggedUserEmail(tenant);
             ContactRepository contactRepository = new ContactRepository(tenant);
             Contact loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
             return loggedContact;

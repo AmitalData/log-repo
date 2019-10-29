@@ -13,7 +13,7 @@ import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTran
 })
 
 export class CRMWorkspaceComponent {
-    public IsOccasionVisible: boolean = false;
+
     public IsContactsVisible: boolean = false;
 
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
@@ -21,10 +21,6 @@ export class CRMWorkspaceComponent {
     constructor(private _entityResourceService: EntityResourceService) {
 
         this.RunComponent();
-
-        if (FeatureLocator.HasFeaturePermession("Occasion", "Module")) {
-            this.IsOccasionVisible = true;
-        }
 
         if (FeatureLocator.HasFeaturePermession("General", "CONTACTS")) {
             this.IsContactsVisible = true;
@@ -187,19 +183,7 @@ export class CRMWorkspaceComponent {
 
                             break;
                         }
-
-                        case "OCC": {
-                            if (this.Page_OCC == null) {
-                                this._entityResourceService.getEntityResourceByTableName("Occasion", 0).subscribe(response => {
-                                    SessionLocator.DynamicLoader.Load('./CRM/Components/Workspaces/OccasionWorkspaceComponent', myLocation.viewContainerRef)
-                                        .then(cmpRef => {
-                                            this.Page_OCC = cmpRef.instance;
-                                        });
-                                });
-                            }
-
-                            break;
-                        }
+ 
                     }
 
                     this.CurrentSession.ChangeSessionHeader({ Text: TextCodeTranslator.Translate("General.MH.CRM") + "\\" + this.GetPageName() });
@@ -219,7 +203,6 @@ export class CRMWorkspaceComponent {
             case "OPP": { myResult = "Opportunities"; break; }
             case "CON": { myResult = TextCodeTranslator.Translate("General.MH.Contacts"); break; }
             case "DAS": { myResult = "Dashboard"; break; }
-            case "OCC": { myResult = "Occasion"; break; }
         }
 
         return myResult;

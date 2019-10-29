@@ -108,6 +108,10 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
     public double? AmountInInvoiceCurrency { get; set; }
     
     public double? InvoiceExpectedAmount { get; set; }
+    
+    public string EntityReference { get; set; }
+    
+    public string EntityType { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

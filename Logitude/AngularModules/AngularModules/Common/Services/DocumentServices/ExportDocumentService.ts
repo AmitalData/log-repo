@@ -63,7 +63,25 @@ export class ExportDocumentService {
     }
 
 
+    BuildDocumentViaWorkerRole(filter: any) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        authHeader.append('Content-Type', 'application/json');
+        return Observable.defer(() => {
+            return this._http.post(this._apiUrl + '/PostBuildDocumentViaWorkerRole', JSON.stringify(filter), {
+                headers: authHeader,
 
+            }).map(response => {
+                var pmresponse: ServiceResponse;
+                pmresponse = new ServiceResponse();
+                pmresponse.Result = response.json();
+                return pmresponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        }
+
+        );
+
+    }
 
 
     GetUsedSpaceForTenant( tenant: number  ){
@@ -123,10 +141,6 @@ export class ExportDocumentService {
         }).catch(ServiceHelper.HandleServiceError);
 
     }
-
-
-
-
 
 }
 
