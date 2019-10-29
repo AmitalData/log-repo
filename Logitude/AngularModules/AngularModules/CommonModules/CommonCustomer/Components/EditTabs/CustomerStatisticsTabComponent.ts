@@ -36,6 +36,7 @@ import {CustomerProductPM} from '../../../../Common/EntityPMs/CustomerProductPM'
 import {LastFilterClass} from '../../../../Infrastructure/Utilities/LastFilterClass';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {ServiceHelper} from '../../../../Infrastructure/Utilities/ServiceHelper';
+import { NumbersPipe } from '../../../../Infrastructure/Pipes/NumbersPipe';
 
 declare var window, UploadLogoFile, HideImage, SetImage, ArrayBufferToBase64, makeAmBarChart, BarClick, ResetItem, makeAMLineChart: any;
 
@@ -718,7 +719,8 @@ export class CustomerStatisticsTabComponent extends BaseComponent {
         }];
         this.lineChartLabels = [];
         data.getAll().forEach(element => {
-
+            
+            //this.lineChartData[0].data[index] = this.Numberpipe.transform(element.YField, "N2") + "";
             this.lineChartData[0].data[index] = element.YField + "";
             this.lineChartLabels.push(element.XField);
             index++;
@@ -939,12 +941,13 @@ export class CustomerStatisticsTabComponent extends BaseComponent {
 
     public EntityId: string = "";
     public EntityName: string = "";
-
+    private Numberpipe: NumbersPipe;
 
     private _entityResourceService: EntityResourceService = new EntityResourceService();
 
     constructor(public entityArgs: EntityArgs) {
         super();
+        this.Numberpipe = new NumbersPipe();
         this.EntityPM = entityArgs.EntityPM;
         this.EntityId = this.EntityPM.Id;
         this.EntityName = "Customer";
