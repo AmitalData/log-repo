@@ -438,6 +438,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 DCAInUCBUD2LT_MsgMessagingService>
                 ((new DCAInUCBUD2LT_MsgMessagingService()).MainInterfaceCode);
 
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                DCAInUCBCTML_MsgMessagingService>
+                ((new DCAInUCBCTML_MsgMessagingService()).MainInterfaceCode);
+
         }
         public static void InitContainer()
         {
