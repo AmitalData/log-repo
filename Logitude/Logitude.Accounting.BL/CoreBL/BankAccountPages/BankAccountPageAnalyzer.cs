@@ -4,6 +4,8 @@ using Logitude.Accounting.BL.Validators;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Server.Tools.Utils;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -442,6 +444,7 @@ s             b                   a
              BankAccountPM dbBankaccountPM
             )
         {
+            ObjectTable bankAccountObjectTable = GetBankAccountObjectTable(tenant);
 
             List<BankPageLineDTO> newBankPageLines = newPageOfBankAccount.GetCopyOfBankPageLines();
             var entityPM = new ReconcileExternalPagePM()
@@ -458,7 +461,8 @@ s             b                   a
 
 
                 GLAccountId = dbBankaccountPM.GLAccountId,
-                BankAccountId = dbBankaccountPM.Id,
+                EntityId = dbBankaccountPM.Id,
+                ObjectTableId = bankAccountObjectTable.Id,
 
                 StartBalance = newPageOfBankAccount.MyBankAccountM.RealOpenBalance,
                 CloseBalance = newPageOfBankAccount.MyBankAccountM.RealCloseBalance,
@@ -508,7 +512,15 @@ s             b                   a
             return entityPM;
         }
 
-        
+        private static ObjectTable GetBankAccountObjectTable(int tenant)
+        {
+            ObjectTableRepository objectTableRepository = new ObjectTableRepository(tenant);
+            ObjectTable bankAccountObjectTable = objectTableRepository.GetObjectTableByName("BankAccount", tenant, false);
+            if (bankAccountObjectTable == null)
+                throw new ApplicationException("No objectfield for BankAccount!");
+            return bankAccountObjectTable;
+        }
+
         private BankCodeQueryService _BankCodeQueryService;
         private BankAccountQueryService _BankAccountQueryService;
         public ResultLoadBankPage MyResultLoadBankPage = new ResultLoadBankPage();
