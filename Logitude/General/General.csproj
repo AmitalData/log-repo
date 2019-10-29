@@ -627,6 +627,7 @@
     <Content Include="Main Branch\2019\09 - 2019\Day 8 [Rabaia] FillBatchServiceQueueNames.sql" />
     <Content Include="Main Branch\2019\10 - 2019\Day 01 [Rabaia] add DeclarationApprovalRequestQueue  batch service.sql" />
     <Content Include="Main Branch\2019\10 - 2019\Day 02 [Abed] fill  parameter Amount in Local Currency column true for all SharedLogisticsSetting.sql" />
+    <Content Include="Main Branch\2019\10 - 2019\Day 29 [Khalid] Delete Toggle Feature for APInvoiceMultipileShipment .sql" />
     <Content Include="Main Branch\2019\10 - 2019\Day 28 [Abdullah] fill new fields of reconcileExternalPage.sql" />
     <Content Include="Main Branch\2019\10 - 2019\Day 23 [Abed] AddDocumentExceutionWRToBatchServiceDef.sql" />
     <Content Include="OracleScripts\18R01\1- from_pre  compare to_pe2.txt" />
