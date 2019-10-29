@@ -29,6 +29,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.SCACCode = entityPM.SCACCode;
             entityPOCO.IsINTTRARegistered = entityPM.IsINTTRARegistered;
             entityPOCO.INTTRARegistrationNotes = entityPM.INTTRARegistrationNotes;
+            entityPOCO.INTTRAUpdatesShipment = entityPM.INTTRAUpdatesShipment;
             entityPOCO.PrimaryContactName = entityPM.PrimaryContactName;
             entityPOCO.PrimaryContactEmail = entityPM.PrimaryContactEmail;
             entityPOCO.PrimaryContactPhone = entityPM.PrimaryContactPhone;

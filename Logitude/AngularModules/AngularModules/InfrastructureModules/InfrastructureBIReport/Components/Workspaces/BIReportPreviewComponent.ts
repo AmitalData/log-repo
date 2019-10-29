@@ -102,7 +102,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     private IsSorting = false;
     private IsResizing = false;
     private ReportXML: any;
-    private isParentTenant: false;
+    private isParentTenant: boolean = false;
 
     private showStaticFilters: boolean = false;
     public get ShowStaticFilters() { return this.showStaticFilters; }
@@ -564,8 +564,13 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
                     newColumn.SortDirction = sortItem["sort"];
                     newColumn.SortOrder = sorting.indexOf(sortItem);
 
+                    var displayName: string = item.DisplayName;
+                    if (displayName.indexOf('[') == -1 && displayName.indexOf(']') == -1) {
+                        displayName = "[" + displayName + "]";
+                    }
+
                     sortsList.push({
-                        colId: item.DisplayName,
+                        colId: displayName,
                         sort: newColumn.SortDirction,
                         order: newColumn.SortOrder
                     });

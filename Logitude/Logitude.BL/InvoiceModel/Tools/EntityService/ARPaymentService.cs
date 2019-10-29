@@ -1159,7 +1159,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         }
 
-        private void CreateARPaymentChequeJournals(ARPaymentPM theEntityPm, ARPaymentChequePM arPaymentcheque)
+        private void CreateARPaymentChequeJournals(ARPaymentPM paymentPM, ARPaymentChequePM arPaymentcheque)
         {
             int counter = 0;
             // Insert Journal 
@@ -1167,22 +1167,22 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             journal.Tenant = tenant;
             journal.JournalNumber = "1";
             journal.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-            journal.AccountingDate = theEntityPm.RegisterDate.Value;
+            journal.AccountingDate = paymentPM.RegisterDate.Value;
             journal.TypeCode = "0";
             journal.StatusCode = "2";
-            journal.CreatedByUserId = theEntityPm.CreatedByUserId;
+            journal.CreatedByUserId = paymentPM.CreatedByUserId;
             journal.AccountingEntityCode = "3";
-            journal.AccountingEntityId = theEntityPm.Id;
-            journal.AccountingEntityReference = theEntityPm.PaymentNo;
+            journal.AccountingEntityId = paymentPM.Id;
+            journal.AccountingEntityReference = paymentPM.PaymentNo;
             journal.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-            journal.UpdatedByUserId = theEntityPm.UpdatedByUserId;
+            journal.UpdatedByUserId = paymentPM.UpdatedByUserId;
             journal.ApproveDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-            journal.ApprovedByUserId = theEntityPm.UpdatedByUserId;
+            journal.ApprovedByUserId = paymentPM.UpdatedByUserId;
             journal.ChangeSetOp = ChangeSetOperation.Insert;
 
             // Insert Journal Lines 
             // [Credit]
-            GLAccountPM glAccount = getGLAccount(theEntityPm.BillToId, theEntityPm.Tenant);
+            GLAccountPM glAccount = getGLAccount(paymentPM.BillToId, paymentPM.Tenant);
             JournalLinePM journalLine = new JournalLinePM();
 
 
@@ -1192,28 +1192,28 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             journalLine.ActionCode = "1";//- Credit
             journalLine.ActionTypeCodeEnum = MyJournalActionTypeEnum.Credit;
             journalLine.CreditAccountId = glAccount != null ? glAccount.Id : null;
-            journalLine.DocumentDate = theEntityPm.RegisterDate.Value;
-            journalLine.AccountingDate = theEntityPm.RegisterDate.Value;
-            journalLine.DueDate = arPaymentcheque != null ? arPaymentcheque.ValueDate : theEntityPm.ValueDate.Value;
-            journalLine.LocalAmount = (decimal)theEntityPm.AmountInLocalCurrency;
-            journalLine.CurrencyId = theEntityPm.PaymentCurrencyId;
-            journalLine.ForeignAmount = (decimal)theEntityPm.AmountInPaymentCurrency;
-            journalLine.ExchangeRate = (decimal)theEntityPm.PaymentCurrencyExchangeRate;
-            journalLine.Reference1 = theEntityPm.PaymentNo;
-            if (theEntityPm.AccountingPaymentMethodCode == "BT")
+            journalLine.DocumentDate = paymentPM.RegisterDate.Value;
+            journalLine.AccountingDate = paymentPM.RegisterDate.Value;
+            journalLine.DueDate = arPaymentcheque != null ? arPaymentcheque.ValueDate : paymentPM.ValueDate.Value;
+            journalLine.LocalAmount = (decimal)paymentPM.AmountInLocalCurrency;
+            journalLine.CurrencyId = paymentPM.PaymentCurrencyId;
+            journalLine.ForeignAmount = (decimal)paymentPM.AmountInPaymentCurrency;
+            journalLine.ExchangeRate = (decimal)paymentPM.PaymentCurrencyExchangeRate;
+            journalLine.Reference1 = paymentPM.PaymentNo;
+            if (paymentPM.AccountingPaymentMethodCode == "BT")
             {
-                journalLine.Reference2 = theEntityPm.ChequeOrPaymentRef;
+                journalLine.Reference2 = paymentPM.ChequeOrPaymentRef;
             }
             else
             {
-                if (theEntityPm.ARPaymentChequeReplicas.Count > 0)
+                if (paymentPM.ARPaymentChequeReplicas.Count > 0)
                 {
                     string reference = "";
                     int count = 0;
-                    foreach (ARPaymentChequeReplicaPM cheque in theEntityPm.ARPaymentChequeReplicas)
+                    foreach (ARPaymentChequeReplicaPM cheque in paymentPM.ARPaymentChequeReplicas)
                     {
                         count++;
-                       if(count == theEntityPm.ARPaymentChequeReplicas.Count())
+                       if(count == paymentPM.ARPaymentChequeReplicas.Count())
                         {
                             reference = reference + cheque.ChequeNumber;
                         }
@@ -1227,10 +1227,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     journalLine.Reference2 = reference;
                 }
                 else {
-                    journalLine.Reference2 = arPaymentcheque != null ? arPaymentcheque.ChequeNumber : theEntityPm.ChequeOrPaymentRef;
+                    journalLine.Reference2 = arPaymentcheque != null ? arPaymentcheque.ChequeNumber : paymentPM.ChequeOrPaymentRef;
                 }
             }
-            journalLine.Notes = theEntityPm.InternalNotes;
+
+            if (paymentPM.AccountingPaymentMethodCode == "CH")
+                journalLine.Notes = paymentPM.PrintNotes;
+            else
+                journalLine.Notes = paymentPM.InternalNotes;
+
             journalLine.ChangeSetOp = ChangeSetOperation.Insert;
             journal.JournalLines.Add(journalLine);
 
@@ -1238,11 +1243,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
 
 
-            if (theEntityPm.AccountingPaymentMethodCode == "CH")
+            if (paymentPM.AccountingPaymentMethodCode == "CH")
             {
-                if (theEntityPm.ARPaymentChequeReplicas.Count > 0)
+                if (paymentPM.ARPaymentChequeReplicas.Count > 0)
                 {
-                    journal = CreateDebitJournalLine(theEntityPm, journal, counter);
+                    journal = CreateDebitJournalLine(paymentPM, journal, counter);
 
                 }
                 else
@@ -1253,8 +1258,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     journalLine.Line = ++counter;
                     journalLine.ActionCode = "2";
                     journalLine.ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit;
-                    journalLine.DocumentDate = theEntityPm.RegisterDate.Value;
-                    journalLine.AccountingDate = theEntityPm.RegisterDate.Value;
+                    journalLine.DocumentDate = paymentPM.RegisterDate.Value;
+                    journalLine.AccountingDate = paymentPM.RegisterDate.Value;
                     journalLine.DueDate = arPaymentcheque.ValueDate;
                     journalLine.LocalAmount = arPaymentcheque.LocalAmount;
                     journalLine.CurrencyId = arPaymentcheque.CurrencyId;
@@ -1265,6 +1270,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     journalLine.DebitAccountId = cashBook.AccountId;
                     journalLine.CreditAccountId = glAccount != null ? glAccount.Id : null;
                     journalLine.ChangeSetOp = ChangeSetOperation.Insert;
+                    journalLine.Notes = paymentPM.InternalNotes;
                     journal.JournalLines.Add(journalLine);
                 }
             }
@@ -1277,16 +1283,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 journalLine.Line = ++counter;
                 journalLine.ActionCode = "2";
                 journalLine.ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit;
-                journalLine.DocumentDate = theEntityPm.RegisterDate.Value;
-                journalLine.AccountingDate = theEntityPm.RegisterDate.Value;
-                journalLine.DueDate = theEntityPm.ValueDate.Value;
-                journalLine.LocalAmount = (decimal)theEntityPm.AmountInLocalCurrency;
-                journalLine.CurrencyId = theEntityPm.PaymentCurrencyId;
-                journalLine.ForeignAmount = (decimal)theEntityPm.AmountInPaymentCurrency;
-                journalLine.ExchangeRate = (decimal)theEntityPm.PaymentCurrencyExchangeRate;
-                journalLine.Reference1 = theEntityPm.PaymentNo;
-                journalLine.Reference2 = theEntityPm.ChequeOrPaymentRef;
-                journalLine.DebitAccountId = this.getGLAccountByPaymentMethodCode(theEntityPm);
+                journalLine.DocumentDate = paymentPM.RegisterDate.Value;
+                journalLine.AccountingDate = paymentPM.RegisterDate.Value;
+                journalLine.DueDate = paymentPM.ValueDate.Value;
+                journalLine.LocalAmount = (decimal)paymentPM.AmountInLocalCurrency;
+                journalLine.CurrencyId = paymentPM.PaymentCurrencyId;
+                journalLine.ForeignAmount = (decimal)paymentPM.AmountInPaymentCurrency;
+                journalLine.ExchangeRate = (decimal)paymentPM.PaymentCurrencyExchangeRate;
+                journalLine.Reference1 = paymentPM.PaymentNo;
+                journalLine.Reference2 = paymentPM.ChequeOrPaymentRef;
+                journalLine.DebitAccountId = this.getGLAccountByPaymentMethodCode(paymentPM);
                 journalLine.CreditAccountId = glAccount != null ? glAccount.Id : null;
                 journalLine.ChangeSetOp = ChangeSetOperation.Insert;
                 journal.JournalLines.Add(journalLine);
@@ -1295,13 +1301,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
 
 
-            if (theEntityPm.PaymentInvoices.Any())
+            if (paymentPM.PaymentInvoices.Any())
             {
                 var AutoReconcileARPaymentServiceExt = ContainerAccessor.Container.Resolve(typeof(IAutoReconcileServiceExt), "AutoReconcileServiceExt", new ParameterOverride("", 1)) as IAutoReconcileServiceExt;
 
 
                 var AutoReconcileRecordList = new List<AutoReconcileRecord>();
-                theEntityPm.PaymentInvoices.ForEach(r =>
+                paymentPM.PaymentInvoices.ForEach(r =>
                 {
                     //JournalPM invoiceJournal=  GetJournalByInvoiceNumber(r);
                     var item = new AutoReconcileRecord()
@@ -1349,6 +1355,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 journalLine.DebitAccountId = cashBook.AccountId;
                 journalLine.CreditAccountId = glAccount != null ? glAccount.Id : null;
                 journalLine.ChangeSetOp = ChangeSetOperation.Insert;
+                journalLine.Notes = payment.InternalNotes;
                 journal.JournalLines.Add(journalLine);
             }
             return journal;

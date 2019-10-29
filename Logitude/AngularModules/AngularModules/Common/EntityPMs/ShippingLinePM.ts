@@ -267,6 +267,11 @@ export class ShippingLinePM {
     public set INTTRARegistrationNotes(newValue: string) { if (this.iNTTRARegistrationNotes != newValue) { this.iNTTRARegistrationNotes = newValue; this.MarkAsDirty("INTTRARegistrationNotes"); } }
        
 	 
+    private iNTTRAUpdatesShipment: boolean;
+    public get INTTRAUpdatesShipment() { return this.iNTTRAUpdatesShipment; }
+    public set INTTRAUpdatesShipment(newValue: boolean) { if (this.iNTTRAUpdatesShipment != newValue) { this.iNTTRAUpdatesShipment = newValue; this.MarkAsDirty("INTTRAUpdatesShipment"); } }
+       
+	 
     private primaryContactName: string;
     public get PrimaryContactName() { return this.primaryContactName; }
     public set PrimaryContactName(newValue: string) { if (this.primaryContactName != newValue) { this.primaryContactName = newValue; this.MarkAsDirty("PrimaryContactName"); } }

@@ -331,7 +331,7 @@ export class APPaymentMenuButtonsHandler {
         }
 
         if (isValid) {
-
+            this.entityArgs.EditComponent.ValidationErrorsList = [];
             this.GetFullAccountingSettings();
 
         }
@@ -372,7 +372,7 @@ export class APPaymentMenuButtonsHandler {
         windowArgs = this.SetPaymentChequeWindowArgs(windowArgs);
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = 520;
-        logWindow.Height = 530;
+        logWindow.Height = 450;
         logWindow.Title = windowTitle;
         logWindow.ShowCloseButton = true;
 
@@ -392,9 +392,15 @@ export class APPaymentMenuButtonsHandler {
 
                 var res = myResponse.Result;
                 var fullAccountingSetting: FullAccountingSettingPM = res;
-                if (fullAccountingSetting.IsPaymentChequesActivated && this.EntityPM.ExcludeFromDeductionReport) {
-                    this.OpenEditPaymentChequeScreen();
-                } else {
+                if (fullAccountingSetting != null) {
+                    if (fullAccountingSetting.IsPaymentChequesActivated && this.EntityPM.ExcludeFromDeductionReport && this.EntityPM.PaymentMethodCode == "CH") {
+                        this.OpenEditPaymentChequeScreen();
+                    }
+                    else {
+                        this.ContinueSaving(null);
+                    }
+                }
+                else {
                     this.ContinueSaving(null);
                 }
             }

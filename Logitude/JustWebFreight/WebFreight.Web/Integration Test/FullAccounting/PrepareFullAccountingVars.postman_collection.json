@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "6e9320f9-114e-41b7-ad41-17d6111ed6a7",
+		"_postman_id": "ea5df949-c1e1-4a19-88a3-880939810fbf",
 		"name": "PrepareFullAccountingVars",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -19,7 +19,7 @@
 							"    ",
 							"   ",
 							"    var idvalue1 = (pm.response.json().Token);",
-							"    var idvalue2 = (pm.response.json().Tenant);",
+							"    var idvalue2 = (pm.response.json().CurrentTenant);",
 							"    var idvalue3 = (pm.response.json().UserId);",
 							"    var idvalue4 = (pm.response.json().DocumentDownloadToken);",
 							"    var idvalue5 = (pm.response.json().InvalidDocumentToken);",
@@ -36,6 +36,7 @@
 							"    pm.expect(id5exist);",
 							"    pm.globals.set(\"Token\",idvalue1);",
 							"    pm.globals.set(\"Tenant\",idvalue2);",
+							"     //pm.environment.set(\"Tenant\",idvalue2);",
 							"    pm.globals.set(\"LoggedUserId\",idvalue3);",
 							"    pm.globals.set(\"DocumentDownloadToken\",idvalue4);",
 							"    pm.globals.set(\"InvalidDocumentToken\",idvalue5);",
@@ -61,7 +62,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"Email\":\"{{Email}}\",\"Password\":\"{{Password}}\",\"IsUser\":true,\"GetToken\":true,\"ClientType\":\"Web\",\"Tenant\":\"{{Tenant}}\",\"GetInvalidDocumentToken\":true}\n"
+					"raw": "{\"Email\":\"{{Email}}\",\"Password\":\"{{Password}}\",\"IsUser\":true,\"GetToken\":true,\"ClientType\":\"Web\",\"Tenant\":\"{{Tenant}}\"}\n"
 				},
 				"url": {
 					"raw": "{{URL}}/api/authentication?tenant={{Tenant}}",
@@ -101,7 +102,7 @@
 							"  if (!id1exist2){",
 							"       //throw new Error('NOt FUll Accounting Tenant');",
 							"         tests[\"Is Full Accounting Tenant :\" + false] = ( true );",
-							"         postman.setNextRequest(null);",
+							"         postman.setNextRequest(\"Get Chreonological Settings \");",
 							" ",
 							"         ",
 							"          ",
@@ -129,7 +130,7 @@
 					},
 					{
 						"key": "tenant",
-						"value": "{{CurrentTenant}}",
+						"value": "",
 						"type": "text",
 						"disabled": true
 					},
@@ -140,15 +141,11 @@
 					}
 				],
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/fullaccountingsettings/getsingle?id={{Tenant}}",
-					"protocol": "http",
+					"raw": "{{URL}}/api/fullaccountingsettings/getsingle?id={{Tenant}}",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"fullaccountingsettings",
 						"getsingle"
@@ -218,18 +215,19 @@
 						"key": "token",
 						"value": "{{Token}}",
 						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "https://test.logitudeworld.com/TEST/api/accountingsettings/getsingle?id={{Tenant}}",
-					"protocol": "https",
+					"raw": "{{URL}}/api/accountingsettings/getsingle?id={{Tenant}}",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"TEST",
 						"api",
 						"accountingsettings",
 						"getsingle"
@@ -261,14 +259,7 @@
 							"    pm.environment.set(\"CurrentMonth\",month);",
 							"    var idvalue7 = (pm.response.json().Result[pm.response.json().Result.length-2].OpenMonth);",
 							"    pm.environment.set(\"AcocuntingPeriodsOpenMonth\",idvalue7);",
-							"    ",
-							"      if (idvalue7 < month)",
-							"      {",
-							"           tests[\"Current Month Opened  : \" + false ] = ( true );",
-							"      }",
-							"      ",
-							"        else {",
-							"    var idvalue1 = (pm.response.json().Result[pm.response.json().Result.length-2].Id);",
+							"      var idvalue1 = (pm.response.json().Result[pm.response.json().Result.length-2].Id);",
 							"    var idvalue2 = (pm.response.json().Result[pm.response.json().Result.length-2].Tenant);",
 							"    var idvalue3 = (pm.response.json().Result[pm.response.json().Result.length-2].Year);",
 							"    var idvalue4 = (pm.response.json().Result[pm.response.json().Result.length-2].PeriodTypeCode);",
@@ -283,9 +274,20 @@
 							"    pm.environment.set(\"AcocuntingPeriodsClosedMonth\",idvalue6);",
 							"",
 							"  ",
-							"   tests[\"Current Month Opened  : \" + true ] = ( true )",
-							"   ;}",
-							"   postman.setNextRequest(\"GetAccountingCurriency\");",
+							"    ",
+							"      if (idvalue7 < month)",
+							"      {",
+							"           tests[\"Current Month Opened  : \" + false ] = ( true );",
+							"           ",
+							"            postman.setNextRequest(\"OpenCurrentMonth\");",
+							"      }",
+							"      ",
+							"        else {",
+							"  ",
+							"   tests[\"Current Month Opened  : \" + true ] = ( true );",
+							"           postman.setNextRequest(\"GetAccountingCurriency\");  ",
+							"        }",
+							"  ",
 							" ",
 							"});",
 							"",
@@ -311,15 +313,11 @@
 					}
 				],
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/accountingperiodviews/getbyfilters?ForceCacheRefresh=false&GetAll=true",
-					"protocol": "http",
+					"raw": "{{URL}}/api/accountingperiodviews/getbyfilters?GetAll=true",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"accountingperiodviews",
 						"getbyfilters"
@@ -327,7 +325,8 @@
 					"query": [
 						{
 							"key": "ForceCacheRefresh",
-							"value": "false"
+							"value": "ture",
+							"disabled": true
 						},
 						{
 							"key": "GetAll",
@@ -335,12 +334,80 @@
 						},
 						{
 							"key": null,
-							"value": null
+							"value": null,
+							"disabled": true
 						},
 						{
 							"key": null,
-							"value": null
+							"value": null,
+							"disabled": true
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OpenCurrentMonth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "aaa5876d-4629-4a6d-9ac8-be0e6a7b3b4f",
+						"exec": [
+							"pm.test(\"Current month opened \", function () {",
+							"    ",
+							"    pm.response.to.have.status(200);",
+							"   ",
+							"      var idvalue1 = (pm.response.json().Result.Id);",
+							"   postman.setNextRequest(\"GetAccountingCurriency\");  ",
+							"  ",
+							" ",
+							"});",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n\"ChangeSetOp\": 2,\r\n\"ClosedMonth\":{{AcocuntingPeriodsClosedMonth}} ,\r\n\"EncodeBase64NVARCHARFieldsBy\": null,\r\n\"Id\": \"{{AcocuntingPeriodsId}}\",\r\n\"OpenMonth\":{{CurrentMonth}},\r\n\"PeriodTypeCode\": \"1\",\r\n\"PeriodTypeName\": \"Accounting\",\r\n\"Tenant\": {{AcocuntingPeriodsTenant}},\r\n\"Year\": {{AcocuntingPeriodsYear}}\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/TEST/api/accountingperiods",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"TEST",
+						"api",
+						"accountingperiods"
 					]
 				}
 			},
@@ -388,15 +455,11 @@
 					}
 				],
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/tenants/getsingle?id={{Tenant}}",
-					"protocol": "http",
+					"raw": "{{URL}}/api/tenants/getsingle?id={{Tenant}}",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"tenants",
 						"getsingle"
@@ -444,15 +507,11 @@
 					}
 				],
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/currencyviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&GetCount=true&PageIndex=0&PageSize=23",
-					"protocol": "http",
+					"raw": "{{URL}}/api/currencyviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&GetCount=true&PageIndex=0&PageSize=23",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"currencyviews",
 						"getbyfilters"
@@ -535,15 +594,11 @@
 					}
 				],
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/countryviews/getbyfilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=AX&PageSize=22",
-					"protocol": "http",
+					"raw": "{{URL}}/api/countryviews/getbyfilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=AX&PageSize=22",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"countryviews",
 						"getbyfilters"
@@ -613,15 +668,11 @@
 					}
 				],
 				"url": {
-					"raw": "https://test.logitudeworld.com/TEST/api/vattypeviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=EPT&GetCount=true&PageIndex=0&PageSize=23&SortBy=&SortDirection=&AdditionalFilters=[{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22EPT%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false}]",
-					"protocol": "https",
+					"raw": "{{URL}}/api/vattypeviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&GetCount=true&PageIndex=0&PageSize=23&SortBy=&SortDirection=&AdditionalFilters=[{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22EPT%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false}]\n&Filter1Value=EXMPT",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"TEST",
 						"api",
 						"vattypeviews",
 						"getbyfilters"
@@ -642,10 +693,6 @@
 						{
 							"key": "Filter1Operator",
 							"value": "Contains"
-						},
-						{
-							"key": "Filter1Value",
-							"value": "EPT"
 						},
 						{
 							"key": "GetCount",
@@ -678,6 +725,10 @@
 						{
 							"key": null,
 							"value": null
+						},
+						{
+							"key": "Filter1Value",
+							"value": "EXMPT"
 						}
 					]
 				}
@@ -731,18 +782,14 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n   \r\n   \"Tenant\":\"{{CurrentTenant}}\",\r\n   \"IsSecured\":false,\r\n   \"Code\":\"EPT\",\r\n   \"EnglishName\":\"Exempt\",\r\n   \"LocalName\":\"f\",\r\n   \"SearchFields\":\"EPT\",\r\n   \"NewEntityPercentage\":0.0,\r\n   \"NewEntityPercentageDate\":\"2019-06-18T00:00:00Z\",\r\n  \r\n   \"VatTypePercentages\":[\r\n      {\r\n        \r\n         \"Tenant\":0,\r\n         \"VatTypeId\":\"1-3465\",\r\n         \"FromDate\":\"2019-06-18T00:00:00Z\",\r\n         \"Percentage\":0.0,\r\n         \"ChangeSetOp\":0\r\n      }\r\n   ]\r\n  \r\n}"
+					"raw": "{\r\n   \r\n   \"Tenant\":{{Tenant}},\r\n   \"IsSecured\":false,\r\n   \"Code\":\"EPT\",\r\n   \"EnglishName\":\"Exempt\",\r\n   \"LocalName\":\"f\",\r\n   \"SearchFields\":\"EPT\",\r\n   \"NewEntityPercentage\":0.0,\r\n   \"NewEntityPercentageDate\":\"2016-02-02T00:00:00Z\",\r\n  \r\n   \"VatTypePercentages\":[\r\n      {\r\n        \r\n         \"Tenant\":{{Tenant}},\r\n         \"VatTypeId\":\"1-3465\",\r\n         \"FromDate\":\"2012-02-02T00:00:00Z\",\r\n         \"Percentage\":0.0,\r\n         \"ChangeSetOp\":0\r\n      }\r\n   ]\r\n  \r\n}"
 				},
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/vattypes",
-					"protocol": "http",
+					"raw": "{{URL}}/api/vattypes",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"vattypes"
 					]
@@ -793,15 +840,11 @@
 					}
 				],
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/paymenttermviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=cash&PageIndex=0&PageSize=23",
-					"protocol": "http",
+					"raw": "{{URL}}/api/paymenttermviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=cash&PageIndex=0&PageSize=23",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"paymenttermviews",
 						"getbyfilters"
@@ -879,18 +922,14 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\r\n   \"Tenant\":{{CurrentTenant}},\r\n   \r\n   \"EnglishName\":\"cash\",\r\n   \"LocalName\":\"cash local\",\r\n   \"Days\":0,\r\n   \"InActive\":false,\r\n   \"DisplayInLOV\":true,\r\n   \"SearchFields\":null,\r\n   \"IsManuallySet\":false,\r\n   \"CurrentMonth\":false,\r\n   \"FromDateTypeCode\":\"INV\"\r\n}"
+					"raw": "{\r\n\r\n   \"Tenant\":{{Tenant}},\r\n   \r\n   \"EnglishName\":\"cash\",\r\n   \"LocalName\":\"cash local\",\r\n   \"Days\":0,\r\n   \"InActive\":false,\r\n   \"DisplayInLOV\":true,\r\n   \"SearchFields\":null,\r\n   \"IsManuallySet\":false,\r\n   \"CurrentMonth\":false,\r\n   \"FromDateTypeCode\":\"INV\"\r\n}"
 				},
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/paymentterms",
-					"protocol": "http",
+					"raw": "{{URL}}/api/paymentterms",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"paymentterms"
 					]
@@ -940,15 +979,11 @@
 					}
 				],
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/accountingpaymentmethodviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=Cash&GetCount=true&PageIndex=0&PageSize=23",
-					"protocol": "http",
+					"raw": "{{URL}}/api/accountingpaymentmethodviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=Cash&GetCount=true&PageIndex=0&PageSize=23",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"accountingpaymentmethodviews",
 						"getbyfilters"
@@ -1040,18 +1075,14 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n   \"Tenant\":{{CurrentTenant}},\r\n   \"IsSecured\":false,\r\n   \"EnglishName\":\"Cash\",\r\n   \"LocalName\":null,\r\n   \"FromDateTypeCode\":\"INV\"\r\n}"
+					"raw": "{\r\n   \"Tenant\":{{Tenant}},\r\n   \"IsSecured\":false,\r\n   \"EnglishName\":\"Cash\",\r\n   \"LocalName\":null,\r\n   \"FromDateTypeCode\":\"INV\"\r\n}"
 				},
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/paymentterms",
-					"protocol": "http",
+					"raw": "{{URL}}/api/paymentterms",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"paymentterms"
 					]
@@ -1125,15 +1156,11 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/branchviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=main&GetCount=true&PageIndex=0&PageSize=23&SortBy=&SortDirection=&AdditionalFilters=[{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22main%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false}]",
-					"protocol": "http",
+					"raw": "{{URL}}/api/branchviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=main&GetCount=true&PageIndex=0&PageSize=23&SortBy=&SortDirection=&AdditionalFilters=[{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22main%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false}]",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"branchviews",
 						"getbyfilters"
@@ -1243,18 +1270,14 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\r\n\r\n   \"Tenant\":\"{{CurrentTenant}}\",\r\n   \r\n   \"EnglishName\":\"Main Office\",\r\n   \"LocalName\":\"Main Office\",\r\n  \r\n   \"InActive\":false,\r\n   \r\n   \"SearchFields\":\"test\",\r\n \r\n   \"IsHybrid\":false,\r\n   \"ExternalId\":null,\r\n   \"AddressId\":null,\r\n   \"Signature\":null,\r\n   \r\n   \"INTTRAContactId\":null,\r\n   \"CounterCode\":null\r\n}"
+					"raw": "{\r\n\r\n\r\n   \"Tenant\":\"{{Tenant}}\",\r\n   \r\n   \"EnglishName\":\"Main Office\",\r\n   \"LocalName\":\"Main Office\",\r\n  \r\n   \"InActive\":false,\r\n   \r\n   \"SearchFields\":\"test\",\r\n \r\n   \"IsHybrid\":false,\r\n   \"ExternalId\":null,\r\n   \"AddressId\":null,\r\n   \"Signature\":null,\r\n   \r\n   \"INTTRAContactId\":null,\r\n   \"CounterCode\":null\r\n}"
 				},
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/branches",
-					"protocol": "http",
+					"raw": "{{URL}}/api/branches",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"branches"
 					]
@@ -1305,15 +1328,11 @@
 					}
 				],
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/chargestypeviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=air%20freight&GetCount=true&PageIndex=0&PageSize=23",
-					"protocol": "http",
+					"raw": "{{URL}}/api/chargestypeviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=air%20freight&GetCount=true&PageIndex=0&PageSize=23",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"chargestypeviews",
 						"getbyfilters"
@@ -1399,18 +1418,14 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n   \"Tenant\":1064,\r\n  \r\n   \"Code\":\"AFT\",\r\n   \"EnglishName\":\"141\",\r\n   \"LocalName\":null,\r\n   \"ChargesGroupCode\":\"COMM\",\r\n   \"ChargesGroupId\":\"1-6036\",\r\n   \"MeasurementId\":\"1-29726\",\r\n   \"ContainerMeasurementId\":null,\r\n   \"Description\":null,\r\n   \"IsReceivable\":true,\r\n   \"IsPayable\":true,\r\n   \"IsAir\":true,\r\n   \"IsOcean\":true,\r\n   \"IsInland\":true,\r\n   \"IsAutoDisplayInShipment\":false,\r\n   \"IsAutoDisplayInConsolidation\":false,\r\n   \"IsAutoDisplayInQuote\":false,\r\n   \"DueTypeCode\":null,\r\n   \"IATACodeId\":null,\r\n   \"AWBPrintDescription\":true,\r\n   \"VatTypeId\":null,\r\n   \"ViewOrder\":100,\r\n  \r\n \r\n   \"IsCustoms\":false,\r\n   \"ComputedLocalName\":null,\r\n   \"AddedManually\":true,\r\n   \"InActive\":false,\r\n   \"MeasurementCode\":null,\r\n   \"MeasurementShortName\":null,\r\n   \"ContainerMeasurementCode\":null,\r\n   \"SearchFields\":\"11,11\",\r\n\r\n   \"PayableDebitGLAcountId\":null,\r\n   \"ReceivableCreditGLAccountId\":null,\r\n   \"IsExpense\":false\r\n ,\r\n  \r\n   \"IsExport\":true\r\n  \r\n}"
+					"raw": "{\r\n   \"Tenant\":{{Tenant}},\r\n  \r\n   \"Code\":\"AFT\",\r\n   \"EnglishName\":\"141\",\r\n   \"LocalName\":null,\r\n   \"ChargesGroupCode\":\"COMM\",\r\n   \"ChargesGroupId\":\"1-6036\",\r\n   \"MeasurementId\":\"1-29726\",\r\n   \"ContainerMeasurementId\":null,\r\n   \"Description\":null,\r\n   \"IsReceivable\":true,\r\n   \"IsPayable\":true,\r\n   \"IsAir\":true,\r\n   \"IsOcean\":true,\r\n   \"IsInland\":true,\r\n   \"IsAutoDisplayInShipment\":false,\r\n   \"IsAutoDisplayInConsolidation\":false,\r\n   \"IsAutoDisplayInQuote\":false,\r\n   \"DueTypeCode\":null,\r\n   \"IATACodeId\":null,\r\n   \"AWBPrintDescription\":true,\r\n   \"VatTypeId\":null,\r\n   \"ViewOrder\":100,\r\n  \r\n \r\n   \"IsCustoms\":false,\r\n   \"ComputedLocalName\":null,\r\n   \"AddedManually\":true,\r\n   \"InActive\":false,\r\n   \"MeasurementCode\":null,\r\n   \"MeasurementShortName\":null,\r\n   \"ContainerMeasurementCode\":null,\r\n   \"SearchFields\":\"11,11\",\r\n\r\n   \"PayableDebitGLAcountId\":null,\r\n   \"ReceivableCreditGLAccountId\":null,\r\n   \"IsExpense\":false\r\n ,\r\n  \r\n   \"IsExport\":true\r\n  \r\n}"
 				},
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/chargestypes",
-					"protocol": "http",
+					"raw": "{{URL}}/api/chargestypes",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"chargestypes"
 					]
@@ -1434,22 +1449,22 @@
 							"        postman.setNextRequest(\"CreateChartOfAccountVend\");   \r",
 							"   }\r",
 							"   else {\r",
-							"    var idvalue =(pm.response.json().Result.filter(a => a.Code == 'PMCHV')[0].Id);\r",
-							"    var idvalue2 =(pm.response.json().Result.filter(a => a.Code == 'PMCHV')[0].Code);\r",
-							"    var idvalue3 =(pm.response.json().Result.filter(a => a.Code == 'PMCHV')[0].LocalName);\r",
-							"    var idvalue4 =(pm.response.json().Result.filter(a => a.Code == 'PMCHV')[0].EnglishName);\r",
-							"    var idvalue5 =(pm.response.json().Result.filter(a => a.Code == 'PMCHV')[0].ParentId);\r",
-							"    var idvalue6 =(pm.response.json().Result.filter(a => a.Code == 'PMCHV')[0].TypeCode);\r",
-							"    var idvalue7 =(pm.response.json().Result.filter(a => a.Code == 'PMCHV')[0].Inactive);\r",
-							"    var idvalue8 =(pm.response.json().Result.filter(a => a.Code == 'PMCHV')[0].TypeName);\r",
-							"    var idvalue9 =(pm.response.json().Result.filter(a => a.Code == 'PMCHV')[0].ParentName);\r",
-							"    var idvalue10 =(pm.response.json().Result.filter(a => a.Code == 'PMCHV')[0].SearchFields);\r",
+							"    var idvalue =(pm.response.json().Result[0].Id);\r",
+							"    var idvalue2 =(pm.response.json().Result.filter(a => a.Code == '1PMCF')[0].Code);\r",
+							"    var idvalue3 =(pm.response.json().Result[0].LocalName);\r",
+							"    var idvalue4 =(pm.response.json().Result[0].EnglishName);\r",
+							"    var idvalue5 =(pm.response.json().Result[0].ParentId);\r",
+							"    var idvalue6 =(pm.response.json().Result[0].TypeCode);\r",
+							"    var idvalue7 =(pm.response.json().Result[0].Inactive);\r",
+							"    var idvalue8 =(pm.response.json().Result[0].TypeName);\r",
+							"    var idvalue9 =(pm.response.json().Result[0].ParentName);\r",
+							"    var idvalue10 =(pm.response.json().Result[0].SearchFields);\r",
 							"    var idexist = idvalue !== null;\r",
 							"    pm.expect(idexist);\r",
 							"    \r",
 							" if (idexist)  {\r",
 							"     pm.environment.set(\"VendorChartOfAccountId\",idvalue);\r",
-							"     pm.environment.set(\"ChartOfAccountCode\",idvalue2);\r",
+							"     pm.environment.set(\"ChartOfAccountCodev\",idvalue2);\r",
 							"     pm.environment.set(\"ChartOfAccountLocalName\",idvalue3);\r",
 							"     pm.environment.set(\"ChartOfAccountEnglishName\",idvalue4);\r",
 							"     pm.environment.set(\"ChartOfAccountParentId\",idvalue5);\r",
@@ -1489,15 +1504,11 @@
 					}
 				],
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/chartofaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=PMCHV&PageSize=23",
-					"protocol": "http",
+					"raw": "{{URL}}/api/chartofaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=1PMCF&PageSize=23",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"chartofaccountviews",
 						"getbyfilters"
@@ -1513,7 +1524,7 @@
 						},
 						{
 							"key": "Filter1Value",
-							"value": "PMCHV"
+							"value": "1PMCF"
 						},
 						{
 							"key": "PageSize",
@@ -1594,18 +1605,14 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "   {\r\n   \t\"$id\": \"1\",\r\n    \"Tenant\": \"{{CurrentTenant}}\",\r\n    \"Code\": \"PMCHV\",\r\n    \"LocalName\": \"ספקים\",\r\n    \"Englishname\": \"PMVendorChart\",\r\n    \"TypeCode\": \"4\",\r\n    \"Inactive\": true,\r\n    \"ChangeSetOp\": 1\r\n \r\n}\r\n"
+					"raw": "   {\r\n   \t\"$id\": \"1\",\r\n    \"Tenant\": {{Tenant}},\r\n    \"Code\": \"1PMCF\",\r\n    \"LocalName\": \"ספקים\",\r\n    \"Englishname\": \"PMVendorChart\",\r\n    \"TypeCode\": \"4\",\r\n    \"Inactive\": true,\r\n    \"ChangeSetOp\": 1\r\n \r\n}\r\n"
 				},
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/chartofaccounts",
-					"protocol": "http",
+					"raw": "{{URL}}/api/chartofaccounts",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"chartofaccounts"
 					]
@@ -1631,7 +1638,7 @@
 							"   }",
 							"   else {",
 							"    ",
-							"var idvalue=pm.response.json().Result[0].Id;",
+							"var idvalue=pm.response.json().Result.filter(a => a.EnglishName == '12PMCS')[0].Id;",
 							"     pm.environment.set(\"CustomerId\",idvalue);",
 							"",
 							"     tests[\"CustomerExsits : \" + true ] = (true);",
@@ -1655,15 +1662,11 @@
 					}
 				],
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/customerviews/getbyfilters?GetAll=true&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=PMCust&GetCount=true&PageIndex=0&PageSize=22",
-					"protocol": "http",
+					"raw": "{{URL}}/api/customerviews/getbyfilters?GetAll=true&Filter1Name=SearchFields&Filter1Operator=Contains&GetCount=true&PageIndex=0&PageSize=22\n&Filter1Value=12PMCS",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"customerviews",
 						"getbyfilters"
@@ -1682,10 +1685,6 @@
 							"value": "Contains"
 						},
 						{
-							"key": "Filter1Value",
-							"value": "PMCust"
-						},
-						{
 							"key": "GetCount",
 							"value": "true"
 						},
@@ -1700,6 +1699,10 @@
 						{
 							"key": null,
 							"value": null
+						},
+						{
+							"key": "Filter1Value",
+							"value": "12PMCS"
 						}
 					]
 				}
@@ -1758,18 +1761,14 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "\r\n{\r\n  \"Tenant\":\"{{CurrentTenant}}\",\r\n \r\n  \"PartnerTypeId\": \"CS\",\r\n\r\n  \"Address\": {\r\n  \r\n    \"Tenant\": \"{{CurrentTenant}}\",\r\n    \"Description\": \"Main Address\",\r\n    \"City\": \"TEST\",\r\n    \r\n    \"AddressTypeId\": \"M\",\r\n    \r\n    \"Name\": \"PMCust\",\r\n    \"CountryId\": \"{{CountryId}}\"\r\n    \r\n    \r\n\r\n \r\n  \r\n  },\r\n \r\n  \"Customer\": {\r\n    \"$id\": \"3\",\r\n    \"Tenant\": \"{{CurrentTenant}}\",\r\n    \"IsSecured\": false,\r\n  \r\n    \"EnglishName\": \"PMCust\",\r\n    \"LocalName\": \"PMCust\",\r\n    \r\n    \r\n\r\n   \r\n   \r\n   \r\n    \"PartnerTypeId\": \"CS\",\r\n   \r\n    \"CityName\": \"TEST\",\r\n    \"CountryId\": \"{{CountryId}}\",\r\n    \"CountryCode\": \"1 \",\r\n    \"CountryName\": \"palestine\",\r\n    \r\n\r\n    \r\n    \"IsCustomer\": true,\r\n    \"CustomerStatusCode\": \"ACT\",\r\n\r\n  \r\n    \"SetAsPotential\": false,\r\n    \r\n   \r\n    \"CustomerTenant\": 0\r\n  }\r\n\r\n}\r\n"
+					"raw": "\r\n{\r\n  \"Tenant\":\"{{Tenant}}\",\r\n \r\n  \"PartnerTypeId\": \"CS\",\r\n\r\n  \"Address\": {\r\n  \r\n    \"Tenant\": \"{{Tenant}}\",\r\n    \"Description\": \"Main Address\",\r\n    \"City\": \"TEST\",\r\n    \r\n    \"AddressTypeId\": \"M\",\r\n    \r\n    \"Name\": \"12PMCSadress\",\r\n    \"CountryId\": \"{{CountryId}}\"\r\n    \r\n    \r\n\r\n \r\n  \r\n  },\r\n \r\n  \"Customer\": {\r\n    \"$id\": \"3\",\r\n    \"Tenant\": \"{{Tenant}}\",\r\n    \"IsSecured\": false,\r\n  \r\n    \"EnglishName\": \"12PMCS\",\r\n    \"LocalName\": \"12PMCS\",\r\n    \r\n    \r\n\r\n   \r\n   \r\n   \r\n    \"PartnerTypeId\": \"CS\",\r\n   \r\n    \"CityName\": \"TEST\",\r\n    \"CountryId\": \"{{CountryId}}\",\r\n    \"CountryCode\": \"1 \",\r\n    \"CountryName\": \"palestine\",\r\n    \r\n\r\n    \r\n    \"IsCustomer\": true,\r\n    \"CustomerStatusCode\": \"ACT\",\r\n\r\n  \r\n    \"SetAsPotential\": false,\r\n    \r\n   \r\n    \"CustomerTenant\": 0\r\n  }\r\n\r\n}\r\n"
 				},
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/PartnersDomain",
-					"protocol": "http",
+					"raw": "{{URL}}/api/PartnersDomain",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"PartnersDomain"
 					]
@@ -1794,7 +1793,7 @@
 							"   }",
 							"   else {",
 							"    ",
-							"var idvalue=pm.response.json().Result[0].Id;",
+							"var idvalue=pm.response.json().Result.filter(a => a.EnglishName == '1s5PMV2')[0].Id;",
 							"     pm.environment.set(\"VendorId\",idvalue);",
 							"",
 							"     tests[\"VendorExsits : \" + true ] = (true);",
@@ -1818,15 +1817,11 @@
 					}
 				],
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/vendorviews/getbyfilters?GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=PMVend&GetCount=true&PageIndex=0&PageSize=22",
-					"protocol": "http",
+					"raw": "{{URL}}/api/vendorviews/getbyfilters?GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&GetCount=true&PageIndex=0&PageSize=22\n&Filter1Value=1s5PMV2",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"vendorviews",
 						"getbyfilters"
@@ -1843,10 +1838,6 @@
 						{
 							"key": "Filter1Operator",
 							"value": "Contains"
-						},
-						{
-							"key": "Filter1Value",
-							"value": "PMVend"
 						},
 						{
 							"key": "GetCount",
@@ -1867,6 +1858,10 @@
 						{
 							"key": null,
 							"value": null
+						},
+						{
+							"key": "Filter1Value",
+							"value": "1s5PMV2"
 						}
 					]
 				}
@@ -1928,18 +1923,14 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "\r\n{\r\n  \"Tenant\":\"{{CurrentTenant}}\",\r\n \r\n  \"PartnerTypeId\": \"VD\",\r\n\r\n  \"Address\": {\r\n  \r\n    \"Tenant\": \"{{CurrentTenant}}\",\r\n    \"Description\": \"Main Address\",\r\n    \"City\": \"TEST\",\r\n    \r\n    \"AddressTypeId\": \"M\",\r\n    \r\n    \"Name\": \"PMVend\",\r\n    \"CountryId\": \"{{CountryId}}\",\r\n    \r\n    \r\n    \r\n    \"SearchFields\": \"PMVend,PMVend,PMVend\"\r\n \r\n  \r\n  },\r\n \r\n  \"Vendor\": {\r\n   \r\n    \"Tenant\": \"{{CurrentTenant}}\",\r\n    \"IsSecured\": false,\r\n  \r\n    \"EnglishName\": \"PMVend\",\r\n    \"LocalName\": \"PMVend\",\r\n    \r\n    \r\n\r\n   \r\n   \r\n   \r\n    \"PartnerTypeId\": \"VD\",\r\n   \r\n    \"CityName\": \"TEST\",\r\n    \"CountryId\": \"{{CountryId}}\",\r\n    \"CountryCode\": \"1 \",\r\n    \"CountryName\": \"palestine\"\r\n  }\r\n\r\n \r\n    \r\n   \r\n  \r\n\r\n}\r\n"
+					"raw": "\r\n{\r\n  \"Tenant\":\"{{Tenant}}\",\r\n \r\n  \"PartnerTypeId\": \"VD\",\r\n\r\n  \"Address\": {\r\n  \r\n    \"Tenant\": \"{{Tenant}}\",\r\n    \"Description\": \"Main Address\",\r\n    \"City\": \"TEST\",\r\n    \r\n    \"AddressTypeId\": \"M\",\r\n    \r\n    \"Name\": \"PMVD\",\r\n    \"CountryId\": \"{{CountryId}}\",\r\n    \r\n    \r\n    \r\n    \"SearchFields\": \"1s5PMV2,1s5PMV2,1s5PMV2\"\r\n \r\n  \r\n  },\r\n \r\n  \"Vendor\": {\r\n   \r\n    \"Tenant\": \"{{Tenant}}\",\r\n    \"IsSecured\": false,\r\n  \r\n    \"EnglishName\": \"1s5PMV2\",\r\n    \"LocalName\": \"1s5PMV2\",\r\n     \"PartnerTypeId\": \"VD\",\r\n    \"CityName\": \"TEST\",\r\n    \"CountryId\": \"{{CountryId}}\",\r\n    \"CountryCode\": \"1 \",\r\n    \"CountryName\": \"palestine\"\r\n  }\r\n}\r\n"
 				},
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/PartnersDomain",
-					"protocol": "http",
+					"raw": "{{URL}}/api/PartnersDomain",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"PartnersDomain"
 					]
@@ -1962,7 +1953,7 @@
 							"        postman.setNextRequest(\"GetChartOfAccountCust1\");   ",
 							"   }",
 							"   else {",
-							"    var idvalue =(pm.response.json().Result.filter(a => a.DisplayNumber=='PMGLCust')[0].Id);",
+							"    var idvalue =(pm.response.json().Result.filter(a => a.DisplayNumber=='54l4CSPM')[0].Id);",
 							"    var idexist = idvalue !== null;",
 							"    pm.expect(idexist);",
 							"    ",
@@ -1994,15 +1985,11 @@
 					}
 				],
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/glaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=PMGLCust&PageSize=23",
-					"protocol": "http",
+					"raw": "{{URL}}/api/glaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=54l4CSPM&PageSize=23",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"glaccountviews",
 						"getbyfilters"
@@ -2018,7 +2005,7 @@
 						},
 						{
 							"key": "Filter1Value",
-							"value": "PMGLCust"
+							"value": "54l4CSPM"
 						},
 						{
 							"key": "PageSize",
@@ -2046,16 +2033,16 @@
 							"        postman.setNextRequest(\"CreateChartOfAccountCust1\");   \r",
 							"   }\r",
 							"   else {\r",
-							"    var idvalue =(pm.response.json().Result.filter(a => a.Code == 'Cust1')[0].Id);\r",
-							"    var idvalue2 =(pm.response.json().Result.filter(a => a.Code == 'Cust1')[0].Code);\r",
-							"    var idvalue3 =(pm.response.json().Result.filter(a => a.Code == 'Cust1')[0].LocalName);\r",
-							"    var idvalue4 =(pm.response.json().Result.filter(a => a.Code == 'Cust1')[0].EnglishName);\r",
-							"    var idvalue5 =(pm.response.json().Result.filter(a => a.Code == 'Cust1')[0].ParentId);\r",
-							"    var idvalue6 =(pm.response.json().Result.filter(a => a.Code == 'Cust1')[0].TypeCode);\r",
-							"    var idvalue7 =(pm.response.json().Result.filter(a => a.Code == 'Cust1')[0].Inactive);\r",
-							"    var idvalue8 =(pm.response.json().Result.filter(a => a.Code == 'Cust1')[0].TypeName);\r",
-							"    var idvalue9 =(pm.response.json().Result.filter(a => a.Code == 'Cust1')[0].ParentName);\r",
-							"    var idvalue10 =(pm.response.json().Result.filter(a => a.Code == 'Cust1')[0].SearchFields);\r",
+							"    var idvalue =(pm.response.json().Result[0].Id);\r",
+							"    var idvalue2 =(pm.response.json().Result.filter(a => a.Code == '15CFC')[0].Code);\r",
+							"    var idvalue3 =(pm.response.json().Result[0].LocalName);\r",
+							"    var idvalue4 =(pm.response.json().Result[0].EnglishName);\r",
+							"    var idvalue5 =(pm.response.json().Result[0].ParentId);\r",
+							"    var idvalue6 =(pm.response.json().Result[0].TypeCode);\r",
+							"    var idvalue7 =(pm.response.json().Result[0].Inactive);\r",
+							"    var idvalue8 =(pm.response.json().Result[0].TypeName);\r",
+							"    var idvalue9 =(pm.response.json().Result[0].ParentName);\r",
+							"    var idvalue10 =(pm.response.json().Result[0].SearchFields);\r",
 							"    var idexist = idvalue !== null;\r",
 							"    pm.expect(idexist);\r",
 							"    \r",
@@ -2101,15 +2088,11 @@
 					}
 				],
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/chartofaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=Cust1&PageSize=23",
-					"protocol": "http",
+					"raw": "{{URL}}/api/chartofaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=15CFC&PageSize=23",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"chartofaccountviews",
 						"getbyfilters"
@@ -2125,7 +2108,7 @@
 						},
 						{
 							"key": "Filter1Value",
-							"value": "Cust1"
+							"value": "15CFC"
 						},
 						{
 							"key": "PageSize",
@@ -2164,7 +2147,7 @@
 							"    pm.expect(idexist);\r",
 							"    if(idexist){\r",
 							"     pm.environment.set(\"ChartOfAccountId\",idvalue);\r",
-							"     pm.environment.set(\"ChartOfAccountCode\",idvalue2);\r",
+							"     pm.environment.set(\"ChartOfAccountCodev\",idvalue2);\r",
 							"     pm.environment.set(\"ChartOfAccountLocalName\",idvalue3);\r",
 							"     pm.environment.set(\"ChartOfAccountEnglishName\",idvalue4);\r",
 							"     pm.environment.set(\"ChartOfAccountParentId\",idvalue5);\r",
@@ -2206,18 +2189,14 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "   {\r\n   \t\"$id\": \"1\",\r\n    \"Tenant\": \"{{CurrentTenant}}\",\r\n    \"Code\": \"Cust1\",\r\n    \"LocalName\": \"לקוחות\",\r\n    \"Englishname\": \"PMCustomerChart\",\r\n    \"TypeCode\": \"3\",\r\n    \"Inactive\": true,\r\n    \"SearchFields\": \"Cust1,לקוחות,CustomerChart\",\r\n    \"ChangeSetOp\": 1\r\n \r\n}\r\n"
+					"raw": "   {\r\n   \t\"$id\": \"1\",\r\n    \"Tenant\": {{Tenant}},\r\n    \"Code\": \"15CFC\",\r\n    \"LocalName\": \"לקוחות\",\r\n    \"Englishname\": \"PMCustomerChart\",\r\n    \"TypeCode\": \"3\",\r\n    \"Inactive\": true,\r\n    \"SearchFields\": \"15CFC,15CFC,15CFC\",\r\n    \"ChangeSetOp\": 1\r\n \r\n}\r\n"
 				},
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/chartofaccounts",
-					"protocol": "http",
+					"raw": "{{URL}}/api/chartofaccounts",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"chartofaccounts"
 					]
@@ -2276,18 +2255,14 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{  \r\n   \"$id\":\"1\",\r\n   \"Tenant\":{{CurrentTenant}},\r\n   \"AccountTypeCode\":\"2\",\r\n   \"DisplayNumber\":\"PMGLCust\",\r\n   \"LocalName\":\"CustGlAccountLocal\",\r\n   \"EnglishName\":\"CustGlAccountEnglish\",\r\n   \"SearchFields\":\"PMGLCust,PMGLCust,PMGLCust\",\r\n   \"IsMultiCurrency\":true,\r\n   \"RevenueExpenseType\":\"3\",\r\n   \"ChartOfAccountsId\":\"{{ChartOfAccountId}}\",\r\n   \"ChartOfAccountsTypeCode\":\"3\",\r\n   \"ReconcileMethodCode\":\"0\",\r\n   \"NewGLAccountCardId\":\"{{CustomerId}}\"\r\n}"
+					"raw": "{  \r\n   \"$id\":\"1\",\r\n   \"Tenant\":{{Tenant}},\r\n   \"AccountTypeCode\":\"2\",\r\n   \"DisplayNumber\":\"54l4CSPM\",\r\n   \"LocalName\":\"54l4CSPM\",\r\n   \"EnglishName\":\"54l4CSPM\",\r\n   \"SearchFields\":\"54l4CSPM,54l4CSPM,54l4CSPM\",\r\n   \"IsMultiCurrency\":true,\r\n   \"RevenueExpenseType\":\"3\",\r\n   \"ChartOfAccountsId\":\"{{ChartOfAccountId}}\",\r\n   \"ChartOfAccountsTypeCode\":\"3\",\r\n   \"ReconcileMethodCode\":\"0\",\r\n   \"NewGLAccountCardId\":\"{{CustomerId}}\"\r\n}"
 				},
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/glaccounts",
-					"protocol": "http",
+					"raw": "{{URL}}/api/glaccounts",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"glaccounts"
 					]
@@ -2310,11 +2285,11 @@
 							"        postman.setNextRequest(\"CreateVendorGlAccountVendGL\");   ",
 							"   }",
 							"   else {",
-							"    var idvalue =(pm.response.json().Result.filter(a => a.DisplayNumber== 'PMGLVend')[0].Id);",
-							"    var idvalue2 =(pm.response.json().Result.filter(a => a.DisplayNumber== 'PMGLVend')[0].InternalNumber);",
-							"      var idvalue3 =(pm.response.json().Result.filter(a => a.DisplayNumber== 'PMGLVend')[0].ControlAccountId);",
-							"   var idvalue4 =(pm.response.json().Result.filter(a => a.DisplayNumber== 'PMGLVend')[0].DisplayNumber);",
-							"    var idvalue5 =(pm.response.json().Result.filter(a => a.DisplayNumber== 'PMGLVend')[0].ChartOfAccountsId);",
+							"    var idvalue =(pm.response.json().Result.filter(a => a.DisplayNumber== '458GLPM')[0].Id);",
+							"    var idvalue2 =(pm.response.json().Result[0].InternalNumber);",
+							"      var idvalue3 =(pm.response.json().Result[0].ControlAccountId);",
+							"   var idvalue4 =(pm.response.json().Result[0].DisplayNumber);",
+							"    var idvalue5 =(pm.response.json().Result[0].ChartOfAccountsId);",
 							"     // var idvalue6 =(pm.response.json().Result.filter(a => a.DisplayNumber== 'PMGLVend')[0].ControlAccountId);",
 							"    var idexist = idvalue !== null;",
 							"    pm.expect(idexist);",
@@ -2351,15 +2326,11 @@
 					}
 				],
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/glaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=PMGLVend&PageSize=23",
-					"protocol": "http",
+					"raw": "{{URL}}/api/glaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=458GLPM&PageSize=23",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"glaccountviews",
 						"getbyfilters"
@@ -2375,7 +2346,7 @@
 						},
 						{
 							"key": "Filter1Value",
-							"value": "PMGLVend"
+							"value": "458GLPM"
 						},
 						{
 							"key": "PageSize",
@@ -2445,18 +2416,14 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{  \r\n   \"$id\":\"1\",\r\n   \"Tenant\":{{CurrentTenant}},\r\n   \"AccountTypeCode\":\"3\",\r\n   \"DisplayNumber\":\"PMGLVend\",\r\n   \"LocalName\":\"VendGlAccountLocal\",\r\n   \"EnglishName\":\"VendGlAccountEnglish\",\r\n   \"SearchFields\":\"VendGl,VendGlAccountEnglish,VendGlAccountLocal\",\r\n   \"IsMultiCurrency\":true,\r\n   \"RevenueExpenseType\":\"3\",\r\n   \"ChartOfAccountsId\":\"{{VendorChartOfAccountId}}\",\r\n   \"ChartOfAccountsTypeCode\":\"4\",\r\n   \"ReconcileMethodCode\":\"0\",\r\n   \"NewGLAccountCardId\":\"{{VendorId}}\"\r\n}"
+					"raw": "{  \r\n   \"$id\":\"1\",\r\n   \"Tenant\":{{Tenant}},\r\n   \"AccountTypeCode\":\"3\",\r\n   \"DisplayNumber\":\"458GLPM\",\r\n   \"LocalName\":\"458GLPM\",\r\n   \"EnglishName\":\"458GLPM\",\r\n   \"SearchFields\":\"458GLPM,458GLPM,458GLPM\",\r\n   \"IsMultiCurrency\":true,\r\n   \"RevenueExpenseType\":\"3\",\r\n   \"ChartOfAccountsId\":\"{{VendorChartOfAccountId}}\",\r\n   \"ChartOfAccountsTypeCode\":\"4\",\r\n   \"ReconcileMethodCode\":\"0\",\r\n   \"NewGLAccountCardId\":\"{{VendorId}}\"\r\n}"
 				},
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/glaccounts",
-					"protocol": "http",
+					"raw": "{{URL}}/api/glaccounts",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"glaccounts"
 					]
@@ -2506,15 +2473,11 @@
 					}
 				],
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/cardviews/getsingle/?id={{CustomerId}}",
-					"protocol": "http",
+					"raw": "{{URL}}/api/cardviews/getsingle/?id={{CustomerId}}",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"cardviews",
 						"getsingle",
@@ -2549,7 +2512,6 @@
 							"     pm.environment.set(\"VendorAddressId\",idvalue);",
 							"     ",
 							"     tests[\"BodyContanisAddressId : \" + idexist] =(idexist);",
-							"      postman.setNextRequest(null);",
 							"    }",
 							"    ",
 							"    ",
@@ -2569,18 +2531,19 @@
 						"key": "token",
 						"type": "text",
 						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/cardviews/getsingle/?id={{VendorId}}",
-					"protocol": "http",
+					"raw": "{{URL}}/api/cardviews/getsingle/?id={{VendorId}}\n",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"cardviews",
 						"getsingle",
@@ -2591,6 +2554,363 @@
 							"key": "id",
 							"value": "{{VendorId}}\n"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetBankChartOfAccount",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a56d05f3-8a9c-491a-91b5-ab82a0fe77d4",
+						"exec": [
+							"pm.test(\"GetChartOfAccountBank BK771 Successfully Done\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"   if(pm.response.json().Result.length < 1 ){\r",
+							"       var idvaluet = \"test\";\r",
+							"        var idexist2 = idvaluet !== null;\r",
+							"     tests[\"ChartOfAccountExists : \" + false] = (true);\r",
+							"        postman.setNextRequest(\"PostBankChartOfAccount\");   \r",
+							"   }\r",
+							"   else {\r",
+							"    var idvalue =(pm.response.json().Result.filter(a => a.Code == 'BK771')[0].Id);\r",
+							"    var idexist = idvalue !== null;\r",
+							"    pm.expect(idexist);\r",
+							"    \r",
+							" if (idexist)  {\r",
+							"     pm.environment.set(\"BankChartOfAccountId\",idvalue);\r",
+							"    \r",
+							"\r",
+							"     \r",
+							"     tests[\"ChartOfAccountExists : \" + true ] = (true);\r",
+							"     postman.setNextRequest(\"CreateBankGLA\");\r",
+							"    }\r",
+							"   }\r",
+							"    \r",
+							"});\r",
+							"     \r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/chartofaccountviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=BK771&GetCount=true&PageIndex=0&PageSize=23",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"chartofaccountviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "BK771"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostBankChartOfAccount",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8eb6ed35-37d6-45d8-b7ba-45b608471c92",
+						"exec": [
+							"pm.test(\"CreateChartOfAccountCust1\", function () {\r",
+							" pm.response.to.have.status(200);\r",
+							"    var idvalue =(pm.response.json().Id);\r",
+							"    \r",
+							"    \r",
+							"    \r",
+							"    var idexist = idvalue !== null;\r",
+							"    pm.expect(idexist);\r",
+							"    if(idexist){\r",
+							"     pm.environment.set(\"BankChartOfAccountId\",idvalue);\r",
+							"     \r",
+							"     \r",
+							"     tests[\"BodyContanisChartOfAccountId : \" + true] =(true);\r",
+							"  \r",
+							"    }\r",
+							"    \r",
+							"   \r",
+							"    \r",
+							"});\r",
+							"     "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "   {\r\n   \t\"$id\": \"1\",\r\n    \"Tenant\": {{Tenant}},\r\n    \"Code\": \"BK771\",\r\n    \"LocalName\": \"PMBankChart\",\r\n    \"Englishname\": \"PMBankChart\",\r\n    \"TypeCode\": \"5\",\r\n    \"Inactive\": true,\r\n    \"ChangeSetOp\": 1\r\n \r\n}\r\n"
+				},
+				"url": {
+					"raw": "{{URL}}/api/chartofaccounts",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"chartofaccounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateBankGLA",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a88a75e3-d83a-4bd7-8291-b710b32bb350",
+						"exec": [
+							"pm.test(\"CreateBankGLA Successfully Done\", function () {\r",
+							" pm.response.to.have.status(200);\r",
+							"    var idvalue =(pm.response.json().Id);\r",
+							"  \r",
+							"    var idexist = idvalue !== null;  \r",
+							"    pm.expect(idexist);\r",
+							"  \r",
+							"     pm.environment.set(\"BankGLAId\",idvalue);\r",
+							"      \r",
+							"     \r",
+							"  \r",
+							"    \r",
+							"   \r",
+							"    \r",
+							"});  \r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \n   \"$id\":\"1\",\n   \"Tenant\":{{Tenant}},\n   \"AccountTypeCode\":\"1\",\n   \n   \"LocalName\":\"BankGLAccountLocal\",\n   \"EnglishName\":\"BankGlAccountEnglish\",\n   \"SearchFields\":\"BankGl,BankGlAccountEnglish,BankGlAccountLocal\",\n   \"IsMultiCurrency\":false,\n   \"CurrencyId\": \"{{AccountingCurrencyId}}\",\n   \"RevenueExpenseType\":\"3\",\n   \"ChartOfAccountsId\":\"{{BankChartOfAccountId}}\",\n   \"ChartOfAccountsTypeCode\":\"5\",\n   \"ReconcileMethodCode\":\"0\"\n   \n}"
+				},
+				"url": {
+					"raw": "{{URL}}/api/glaccounts",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"glaccounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateDefferedBAnkGLA",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d5479988-8aca-450d-af13-8fa145f9428e",
+						"exec": [
+							"pm.test(\"CreateDefferedBankGLA Successfully Done\", function () {\r",
+							" pm.response.to.have.status(200);\r",
+							"    var idvalue =(pm.response.json().Id);\r",
+							"  \r",
+							"    var idexist = idvalue !== null;  \r",
+							"    pm.expect(idexist);\r",
+							"  \r",
+							"     pm.environment.set(\"BankDefferedGLAId\",idvalue);\r",
+							"      \r",
+							"     \r",
+							"  \r",
+							"    \r",
+							"   \r",
+							"    \r",
+							"});  \r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n   \"$id\":\"1\",\r\n   \"Tenant\":{{Tenant}},\r\n   \"AccountTypeCode\":\"1\",\r\n   \r\n   \"LocalName\":\"BankDefferedGLALocal\",\r\n   \"EnglishName\":\"BankDefferedGLAEnglish\",\r\n   \"SearchFields\":\"BankGl,BankDefferedGLALocal,BankDefferedGLAEnglish\",\r\n   \"IsMultiCurrency\":false,\r\n   \"CurrencyId\": \"{{AccountingCurrencyId}}\",\r\n   \"RevenueExpenseType\":\"3\",\r\n   \"ChartOfAccountsId\":\"{{BankChartOfAccountId}}\",\r\n   \"ChartOfAccountsTypeCode\":\"5\",\r\n   \"ReconcileMethodCode\":\"0\"\r\n   \r\n}"
+				},
+				"url": {
+					"raw": "{{URL}}/api/glaccounts",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"glaccounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateTransferBankGLA",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9862fa38-b60a-4b2e-8a42-10cb9549113d",
+						"exec": [
+							"pm.test(\"CreateTransferBankGLA Successfully Done\", function () {\r",
+							" pm.response.to.have.status(200);\r",
+							"    var idvalue =(pm.response.json().Id);\r",
+							"  \r",
+							"    var idexist = idvalue !== null;  \r",
+							"    pm.expect(idexist);\r",
+							"  \r",
+							"     pm.environment.set(\"BankTransferGLAId\",idvalue);\r",
+							"      \r",
+							"     \r",
+							"  \r",
+							"    \r",
+							"   \r",
+							"    \r",
+							"});  \r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n   \"$id\":\"1\",\r\n   \"Tenant\":{{Tenant}},\r\n   \"AccountTypeCode\":\"1\",\r\n   \r\n   \"LocalName\":\"BankTransferGLALocal\",\r\n   \"EnglishName\":\"BankTransferGLAEnglish\",\r\n   \"SearchFields\":\"BankGl,BankTransferGLALocal,BankTransferGLAEnglish\",\r\n   \"IsMultiCurrency\":false,\r\n   \"CurrencyId\": \"{{AccountingCurrencyId}}\",\r\n   \"RevenueExpenseType\":\"3\",\r\n   \"ChartOfAccountsId\":\"{{BankChartOfAccountId}}\",\r\n   \"ChartOfAccountsTypeCode\":\"5\",\r\n   \"ReconcileMethodCode\":\"0\"\r\n   \r\n}"
+				},
+				"url": {
+					"raw": "{{URL}}/api/glaccounts",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"glaccounts"
 					]
 				}
 			},

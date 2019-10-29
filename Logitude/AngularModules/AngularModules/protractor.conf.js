@@ -107,6 +107,17 @@ exports.config = {
             browser.params.Login.Email = "Raghad@protractor.com";
             browser.params.Login.Password = "!RS123Rs";
         }
+
+        else if (browser.params.Env == "testEnvStaging") {
+            browser.params.Link = "https://test.logitudeworld.com/staging";
+            browser.params.Login.Email = "Raghad@protractor.com";
+            browser.params.Login.Password = "!RS123Rs";
+
+        else if (browser.params.Env == "testStaging") {
+            browser.params.Link = "https://staging.logitudeworld.com";
+            browser.params.Login.Email = "Raghad@protractor.com";
+            browser.params.Login.Password = "!RS123Rs";
+        }
         else if (browser.params.Env == "test_1071") {
             browser.params.Link = "https://test.logitudeworld.com/test";
             browser.params.Login.Email = "sgautomation@pro.com";
@@ -136,13 +147,13 @@ exports.config = {
         //------------------------------------- Reporter --------------------------------
         if (browser.params.Team == "ayman") {
             jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
-            jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/Automation e2e/TeamAyman/Prod/screenshots' }).getJasmine2Reporter());
+            jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/Automation e2e/TeamAyman/Prod/screenshots', takeScreenShotsOnlyForFailedSpecs: true, screenshotsSubfolder: 'images' }).getJasmine2Reporter());
         } else if (browser.params.Team == "islam") {
             jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
-            jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/E2ETeamIslam/screenshots' }).getJasmine2Reporter());
+            jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/Automation e2e/TeamIslam/Prod/screenshots', takeScreenShotsOnlyForFailedSpecs: true, screenshotsSubfolder: 'images' }).getJasmine2Reporter());
         } else if (browser.params.Team == "mohammad") {
             jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
-            jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/E2ETeamMohammad/Cloud/screenshots' }).getJasmine2Reporter());
+            jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/Automation e2e/TeamMohammad/Cloud/screenshots', takeScreenShotsOnlyForFailedSpecs: true, screenshotsSubfolder: 'images' }).getJasmine2Reporter());
         } else {
             jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
             jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/e2eTracking/screenshots' }).getJasmine2Reporter());

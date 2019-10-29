@@ -1663,6 +1663,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             SCACCode = oldShippingLine.SCACCode,
                             IsINTTRARegistered = oldShippingLine.IsINTTRARegistered,
                             INTTRARegistrationNotes = oldShippingLine.INTTRARegistrationNotes,
+                            INTTRAUpdatesShipment = oldShippingLine.INTTRAUpdatesShipment,
                         };
 
                         if (oldShippingLine.ShippingAgentId != null)

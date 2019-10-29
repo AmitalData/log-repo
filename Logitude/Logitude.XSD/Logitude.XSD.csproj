@@ -157,6 +157,7 @@
     <Compile Include="INTTRA\BL\INTRADataBuilder.cs" />
     <Compile Include="INTTRA\BL\INTRADataContext.cs" />
     <Compile Include="INTTRA\BL\INTRAHelper.cs" />
+    <Compile Include="INTTRA\INTTRAGeneralMethods.cs" />
     <Compile Include="INTTRA\INTTRA_XML_SI_IG_v32.cs">
       <DependentUpon>INTTRA_XML_SI_IG_v32.xsd</DependentUpon>
     </Compile>
