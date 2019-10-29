@@ -2947,6 +2947,7 @@
     <Content Include="Monitoring\INTTRAMonitoring.aspx" />
     <Content Include="Monitoring\QuickbooksOnlineQueue.aspx" />
     <Content Include="Monitoring\ReportExecutionLogWaitingStatus.aspx" />
+    <Content Include="Monitoring\ReportExecutionRunTimeMonitoring.aspx" />
     <Content Include="Monitoring\StorageBackup.aspx" />
     <Content Include="QuickbooksOnline.aspx" />
     <EmbeddedResource Include="Properties\webfreight.web.dll.licenses" />
@@ -5099,6 +5100,13 @@
     </Compile>
     <Compile Include="Monitoring\ReportExecutionLogWaitingStatus.aspx.designer.cs">
       <DependentUpon>ReportExecutionLogWaitingStatus.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Monitoring\ReportExecutionRunTimeMonitoring.aspx.cs">
+      <DependentUpon>ReportExecutionRunTimeMonitoring.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\ReportExecutionRunTimeMonitoring.aspx.designer.cs">
+      <DependentUpon>ReportExecutionRunTimeMonitoring.aspx</DependentUpon>
     </Compile>
     <Compile Include="Monitoring\StorageBackup.aspx.cs">
       <DependentUpon>StorageBackup.aspx</DependentUpon>
