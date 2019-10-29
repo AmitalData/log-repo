@@ -23,11 +23,6 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string Id { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
-        [ForeignKey("BankAccount")]
-        [Column("BankAccountId")]
-	    public string BankAccountId { get; set; }
-	      
-        public virtual BankAccount BankAccount { get; set; }
         [ForeignKey("GLAccount")]
         [Column("GLAccountId")]
 	    public string GLAccountId { get; set; }
@@ -67,6 +62,10 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string EntryTypeCode { get; set; }
 	      
         public virtual BankPageEntryType BankPageEntryType { get; set; }
+        [Column("ObjectTableId")]
+	    public string ObjectTableId { get; set; }
+        [Column("EntityId")]
+	    public string EntityId { get; set; }
     }
 }
 	 

@@ -283,7 +283,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool SetReSendQBO { get; set; }
 
         public string JournalNumber { get; set; }
-
+        public string JournalId { get; set; }
         public string ShipmentConcurrencyGUID { get; set; }
         public string ShipmentNewConcurrencyGUID { get; set; }
     }

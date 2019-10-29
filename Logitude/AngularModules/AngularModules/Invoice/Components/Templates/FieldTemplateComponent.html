@@ -182,7 +182,11 @@
                                         </table>
                                     </div>
                                 </div>
-
+                                <div *ngIf="FieldName == 'JournalNumber' && IsHeaderScreenTemplate">
+                                    <div>
+                                        <a href="#" (click)="OpenJournal(Entity.JournalId)">{{Entity.JournalNumber}}</a>
+                                    </div>
+                                </div>
                                 <!-- DueDate -->
                                 <div *ngIf="FieldName == 'DueDate'" [ngStyle]="{color: Entity[FieldName] | InvoiceDueDateForegroundPipe:Entity.IsClosed}">
                                     <span>{{Entity[FieldName] | DateTimeToDatePipe}}</span>

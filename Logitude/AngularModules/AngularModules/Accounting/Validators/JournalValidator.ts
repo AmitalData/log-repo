@@ -86,7 +86,8 @@ export class JournalValidator
 
             }
         }
-        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
+        //this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
+        SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList=errors;
         return errors;
     }
 

@@ -64,7 +64,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             var bankPageQS = new ReconcileExternalPageRepository(this._AccountingContext);
             var page = bankPageQS.GetSingle(reconcileExternalPageLinePM.ReconcileExternalPageId, tenant);
             var bankAccountQS = new BankAccountQueryService(this._AccountingContext);
-            var bankAccount = bankAccountQS.GetSingle(page.BankAccountId, false, false);
+            var bankAccount = bankAccountQS.GetSingle(page.EntityId, false, false);
             return bankAccount;
 
         }

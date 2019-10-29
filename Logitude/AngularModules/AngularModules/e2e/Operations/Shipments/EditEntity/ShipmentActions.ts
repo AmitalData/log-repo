@@ -11,26 +11,30 @@ export class ShipmentActionsComponent {
     public ShipmentActions() {
 
     }
-    OperationalCloseShipment() {
-        this.Helper.WaitByIdAndClick('MenuButtons');
-        this.Helper.WaitByIdAndClick('Shipment.B.OperationalClose');
-        this.Helper.WaitByIdAndClick('ConfirmAction');
+    OperationalCloseShipment(ShipmentLevelCode: string) {
+        if (ShipmentLevelCode == 'D' || ShipmentLevelCode=='M') {
+            this.Helper.WaitByIdAndClick('MenuButtons');
+            this.Helper.WaitByIdAndClick('Shipment.B.OperationalClose');
+            this.Helper.WaitByIdAndClick('ConfirmAction');
 
-        this.Helper.WaitEditComponentBusyIndicator();
+            this.Helper.WaitEditComponentBusyIndicator();
+        }
     }
-    OperationalReopenShipment() {
-        this.Helper.WaitByIdAndClick('MenuButtons');
-        this.Helper.WaitByIdAndClick('Shipment.B.OperationalReopen');
-        this.Helper.WaitByIdAndFill('EventNotes', 'Operational ReOpen - Protractor Testing .. ')
+    OperationalReopenShipment(ShipmentLevelCode: string) {
+        if (ShipmentLevelCode == 'D' || ShipmentLevelCode == 'M') {
+            this.Helper.WaitByIdAndClick('MenuButtons');
+            this.Helper.WaitByIdAndClick('Shipment.B.OperationalReopen');
+            this.Helper.WaitByIdAndFill('EventNotes', 'Operational ReOpen - Protractor Testing .. ')
 
-        this.Helper.WaitByCssStringAndClick('.RedButton', 'Confirm');
-        this.Helper.WaitBusyIndicator();
+            this.Helper.WaitByIdAndClick('ConfirmAction');
+            this.Helper.WaitBusyIndicator();
+        }
     }
     AccountingCloseShipment() {
         this.Helper.WaitByIdAndClick('MenuButtons');
         this.Helper.WaitByIdAndClick('Shipment.B.AccountingClose');
 
-        this.Helper.WaitByCssStringAndClick('.RedButton', 'Confirm');
+        this.Helper.WaitByIdAndClick('ConfirmAction');
         this.Helper.WaitBusyIndicator();
     }
     AccountedReopenShipment() {
@@ -38,7 +42,7 @@ export class ShipmentActionsComponent {
         this.Helper.WaitByIdAndClick('Shipment.B.AccountedReopen');
         this.Helper.WaitByIdAndFill('EventNotes', 'Accounting ReOpen - Protractor Testing .. ');
 
-        this.Helper.WaitByCssStringAndClick('.RedButton', 'Confirm');
+        this.Helper.WaitByIdAndClick('ConfirmAction');
         this.Helper.WaitBusyIndicator();
     }
     CopyShipment() {
@@ -53,6 +57,13 @@ export class ShipmentActionsComponent {
             this.Helper.WaitByIdAndFill('Master_Notes', 'Copy shipment ... ')
             this.Helper.WaitByIdAndClick('MasterCreatebtn');
         }
+        this.Helper.WaitBusyIndicator();
+    }
+    CancelShipment() {
+        this.Helper.WaitByIdAndClick('MenuButtons');
+        this.Helper.WaitByIdAndClick('Shipment.B.CancelShipment');
+        this.Helper.WaitByIdAndFill('EventNotes', 'Cancel shipment - Protractor ');
+        this.Helper.WaitByIdAndClick('ConfirmAction');
         this.Helper.WaitBusyIndicator();
     }
 }

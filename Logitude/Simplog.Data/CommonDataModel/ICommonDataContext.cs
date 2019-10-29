@@ -219,7 +219,8 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<LogBoxTenantSetting> LogBoxTenantSettings { get; set; }
         IDbSet<DWHBuildStatus> DWHBuildStatus { get; set; }
         IDbSet<AccountingPartner> AccountingPartners { get; set; }
-
+        IDbSet<DocumentsExecutionLog> DocumentsExecutionLogs { get; set; }
+        IDbSet<CardContactAdditionalService> CardContactAdditionalServices { get; set; }
 
         void SetAsModified(object entity);
         void DetectChanges();

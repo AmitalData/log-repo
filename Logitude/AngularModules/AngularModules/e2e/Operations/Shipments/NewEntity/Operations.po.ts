@@ -35,11 +35,16 @@ export class OperationsComp {
     }
     DoShipmentAction(actionType: string) {
         if (actionType == 'OC') {
-            this.ShipmentActions.OperationalCloseShipment();
+            this.ShipmentActions.OperationalCloseShipment(browser.params.ShipParams.ShipmentLevelCode);
         }
         else if (actionType == 'copy') {
             this.ShipmentActions.CopyShipment();
 
+        }
+        else if (actionType == 'copycancel') {
+            this.ShipmentActions.CopyShipment();
+            this.Helper.WaitByIdAndClick('Shipment.TH.Overview');
+            this.ShipmentActions.CancelShipment();
         }
     }
 }

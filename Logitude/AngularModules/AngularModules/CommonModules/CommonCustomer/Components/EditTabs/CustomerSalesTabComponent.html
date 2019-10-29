@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .Box {
         position: absolute;
@@ -499,7 +499,7 @@
                                                         <label>Last 5 Tickets</label>
                                                     </td>
                                                     <td style="width: 20px; padding: 3px;">
-                                                        <IconButton [Name]="'Add'" [IsSmall]="true" (click)="Add('TKT')"></IconButton>
+                                                        <IconButton [IsEnabled]="IsTicketTabDim"  [Name]="'Add'" [IsSmall]="true" (click)="Add('TKT')"></IconButton>
                                                     </td>
                                                     <td style="width:5px;">
                                                         <div></div>
