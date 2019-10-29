@@ -89,7 +89,16 @@ using Simplog.Data.ShipmentsModel;
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
-					    throw new ApplicationException("ShipmentCommodity with provided key doesn't exist");
+					    if(!string.IsNullOrEmpty(item.Id))
+					    {
+					        throw new ApplicationException("ShipmentCommodity with provided key doesn't exist");
+						
+						}
+						//else
+						//{
+						//    temp.Id = item.Id;
+
+						//}
 					}
 					temp.DescriptionOfGoods = item.DescriptionOfGoods;
 					temp.ChargeableWeight = item.ChargeableWeight;

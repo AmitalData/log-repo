@@ -29,6 +29,6 @@ describe('Operations Module', () => {
         browser.ignoreSynchronization = true;
         page.EditShipment(shipperRef1);
         page.SaveShip();
-        //page.DoShipmentAction('copy');
+        //page.DoShipmentAction('OC');
     });
 });

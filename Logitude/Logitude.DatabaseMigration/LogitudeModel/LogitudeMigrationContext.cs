@@ -562,6 +562,11 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             get;
             set;
         }
+        public IDbSet<SharedLogisticsContactLastLogin> SharedLogisticsContactLastLogins
+        {
+            get;
+            set;
+        }
         public IDbSet<ContactLoginLog> ContactLoginLogs
         {
             get;
@@ -4589,6 +4594,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new BranchMap());
             modelBuilder.Configurations.Add(new CardContactMap());
             modelBuilder.Configurations.Add(new CardContactProductMap());
+            modelBuilder.Configurations.Add(new CardContactAdditionalServiceMap());
             modelBuilder.Configurations.Add(new CardMap());
             modelBuilder.Configurations.Add(new CategoryTypeMap());
             modelBuilder.Configurations.Add(new ChargesGroupMap());
@@ -4767,6 +4773,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new WarehouseMap());
             modelBuilder.Configurations.Add(new WeightUnitMap());
             modelBuilder.Configurations.Add(new ContactLastLoginMap());
+            modelBuilder.Configurations.Add(new SharedLogisticsContactLastLoginMap());
             modelBuilder.Configurations.Add(new SmallDocumentMap());
             modelBuilder.Configurations.Add(new CommunicationLogStepMap());
             modelBuilder.Configurations.Add(new ShipmentPackageItemMap());

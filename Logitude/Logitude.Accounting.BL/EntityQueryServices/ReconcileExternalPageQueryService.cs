@@ -16,6 +16,8 @@ using Logitude.Accounting.Data.EntityKeys;
 using Logitude.Accounting.Data;
 using Simplog.Server.Infrastructure;
 using Logitude.Accounting.Data.EntityListQueryServices;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
 { 
@@ -33,8 +35,14 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         public ReconcileExternalPagePM GetBankPageByPageNo(int pageNumber, string bankAccountId, int tenant)
         {
+            ObjectTable bankAccountObjectTable = GetBankAccountObjectTable(tenant);
+
             ReconcileExternalPagePM myPM = null;
-            var temp = repository.GetAll(tenant).Where(a => a.PageNo == pageNumber && a.BankAccountId == bankAccountId);
+            var temp = repository.GetAll(tenant)
+                .Where(a => a.PageNo == pageNumber 
+                && a.EntityId == bankAccountId
+                && a.ObjectTableId == bankAccountObjectTable.Id
+                );
             if (temp != null)
             {
                 ReconcileExternalPage MyPoco = temp.FirstOrDefault();
@@ -49,15 +57,33 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             }
 
         }
+        private ObjectTable GetBankAccountObjectTable(int tenant)
+        {
+            ObjectTableRepository objectTableRepository = new ObjectTableRepository(tenant);
+            ObjectTable bankAccountObjectTable = objectTableRepository.GetObjectTableByName("BankAccount", tenant, false);
+            if (bankAccountObjectTable == null)
+                throw new ApplicationException("No objectfield for BankAccount!");
+            return bankAccountObjectTable;
+        }
 
         public ReconcileExternalPagePM GetPrevPageNoByPageNo(int pageNumber, string bankAccountId, int tenant)
         {
+            ObjectTable bankAccountObjectTable = GetBankAccountObjectTable(tenant);
+
             ReconcileExternalPagePM myPM = null;
             //&& a.IsApproved == true
-            List<ReconcileExternalPage> approvedPagesOrdered = repository.GetAll(tenant).Where(a => a.BankAccountId == bankAccountId && a.StatusCode == "2").OrderBy(a => a.FromDate).ToList() ;
+            List<ReconcileExternalPage> approvedPagesOrdered = repository.GetAll(tenant)
+                .Where(a =>
+                 a.EntityId == bankAccountId
+                && a.ObjectTableId == bankAccountObjectTable.Id
+                && a.StatusCode == "2").OrderBy(a => a.FromDate).ToList() ;
 
             var list = repository.GetAll(tenant);
-            var list2 = list.Where(a => a.BankAccountId == bankAccountId && a.PageNo == pageNumber);
+            var list2 = list.Where(a =>
+                 a.EntityId == bankAccountId
+                && a.ObjectTableId == bankAccountObjectTable.Id
+                && a.PageNo == pageNumber);
+
             ReconcileExternalPage currentPage = list2.FirstOrDefault();
 
             int currentPageIndex = approvedPagesOrdered.IndexOf(currentPage);
@@ -90,8 +116,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         public ReconcileExternalPagePM GetDraftPage(string bankAccountId, int tenant)
         {
+            ObjectTable bankAccountObjectTable = GetBankAccountObjectTable(tenant);
+
             ReconcileExternalPagePM myPM = null;
-            var temp = repository.GetAll(tenant).Where(a => a.StatusCode == "1" && a.BankAccountId == bankAccountId);
+            var temp = repository.GetAll(tenant).Where(a => a.StatusCode == "1"
+                && a.EntityId == bankAccountId
+                && a.ObjectTableId == bankAccountObjectTable.Id);
             if (temp != null)
             {
                 ReconcileExternalPage MyPoco = temp.FirstOrDefault();
@@ -107,9 +137,13 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         public int GetLastPageNo(string bankAccountId, int tenant)
         {
+            ObjectTable bankAccountObjectTable = GetBankAccountObjectTable(tenant);
             //
             var lastPage = (from a in context.ReconcileExternalPages
-                            where a.BankAccountId == bankAccountId && a.Tenant == tenant
+                            where
+                                a.EntityId == bankAccountId
+                                && a.ObjectTableId == bankAccountObjectTable.Id 
+                                && a.Tenant == tenant
                             orderby a.PageNo descending
                             select a).FirstOrDefault();
             if (lastPage != null)
@@ -121,7 +155,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public bool CheckLastApprovedBankPage(ReconcileExternalPagePM page, int tenant)
         {
             //
-            ReconcileExternalPagePM reconcileExternalPage = GetLastApprovedBankPage(page.BankAccountId, tenant); 
+            ReconcileExternalPagePM reconcileExternalPage = GetLastApprovedBankPage(page.EntityId, tenant); 
 
             if (reconcileExternalPage != null && (reconcileExternalPage.Id == page.Id))
             { return true; }
@@ -140,8 +174,14 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         public ReconcileExternalPagePM GetLastApprovedBankPage(string bankAccountId, int tenant)
         {
+            ObjectTable bankAccountObjectTable = GetBankAccountObjectTable(tenant);
+
             ReconcileExternalPage reconcileExternalPage = (from a in context.ReconcileExternalPages
-                                                           where a.BankAccountId == bankAccountId && a.Tenant == tenant && a.StatusCode == "2"
+                                                           where
+                                                                 a.EntityId == bankAccountId
+                                                                && a.ObjectTableId == bankAccountObjectTable.Id 
+                                                                && a.Tenant == tenant 
+                                                                && a.StatusCode == "2"
                                                            orderby a.PageNo descending
                                                            select a).FirstOrDefault();
             return GetEntityPM(reconcileExternalPage); ;
@@ -183,9 +223,14 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         private bool ChecNextUnCancelledBankPges(string bankAccountId, int pageNo, int tenant)
         {
+            ObjectTable bankAccountObjectTable = GetBankAccountObjectTable(tenant);
 
-           return (from a in context.ReconcileExternalPages
-                   where  a.PageNo > pageNo && a.StatusCode != "3" && a.BankAccountId == bankAccountId && a.Tenant == tenant
+            return (from a in context.ReconcileExternalPages
+                   where  
+                   a.PageNo > pageNo 
+                   && a.StatusCode != "3" 
+                    && a.EntityId == bankAccountId
+                    && a.ObjectTableId == bankAccountObjectTable.Id && a.Tenant == tenant
 
              select a).Any();
 

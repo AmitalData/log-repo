@@ -303,6 +303,7 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new AccountingTransferTypeMap());
             modelBuilder.Configurations.Add(new EventTypeCategoryMap());
             modelBuilder.Configurations.Add(new ContactLastLoginMap());
+            modelBuilder.Configurations.Add(new SharedLogisticsContactLastLoginMap());
             modelBuilder.Configurations.Add(new SmallDocumentMap());
             modelBuilder.Configurations.Add(new CommunicationLogStepMap());
             //modelBuilder.Configurations.Add(new AgingReportInvoiceDataViewMap());
