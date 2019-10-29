@@ -343,6 +343,7 @@
     <Compile Include="CommonDataModel\EntityLists\AccountingPartnerList.cs" />
     <Compile Include="CommonDataModel\EntityPMs\AirlineAreasPortPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\AirlineAreaPM.cs" />
+    <Compile Include="CommonDataModel\EntityPMs\CardContactAdditionalServicePM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\CardContactProductPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\DocumentsExecutionLogPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\LogBoxTenantSettingPM.cs" />
@@ -351,6 +352,7 @@
     <Compile Include="CommonDataModel\EntityPMs\AccountingPartnerPM.cs" />
     <Compile Include="CommonDataModel\EntityQueries\AirlineAreasPortQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\AirlineAreaQuery.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\CardContactAdditionalServiceQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\CardContactProductQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\DocumentsExecutionLogQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\LogBoxTenantSettingQuery.cs" />
@@ -359,6 +361,7 @@
     <Compile Include="CommonDataModel\EntityQueries\AccountingPartnerQuery.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\AirlineAreasPortMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\AirlineAreaMapping.cs" />
+    <Compile Include="CommonDataModel\Tools\DataMapping\CardContactAdditionalServiceMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\CardContactProductMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\DocumentsExecutionLogMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\PaymentGatewayPartnerMapping.cs" />

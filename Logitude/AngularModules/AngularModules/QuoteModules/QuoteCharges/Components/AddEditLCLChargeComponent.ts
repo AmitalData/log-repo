@@ -295,12 +295,11 @@ export class QuoteStepItem extends BaseComponent {
             case "GRWT": { code = this.fatherComponent.DataContext.QuotePM.GrossWeightUnitCode; break; }
             case "CHWT": { code = this.fatherComponent.DataContext.QuotePM.ChargeableWeightUnitCode; break; }
             case "VOLU": { code = this.fatherComponent.DataContext.QuotePM.VolumeUnitCode; break; }
-            //case "BTEU": { code = ; break; }
-            //case "FIXD": { code = ; break; }
-            //case "PRVL": { code = ; break; }
-            //case "PRFR": { code = ; break; }
+            case "BTEU": { code = "TEU"; break; }
+            case "PRVL": { code = "Value of Goods" ; break; }
+            case "PRFR": { code = "Freight Value"; break; }
             case "GWTN": { code = "Ton"; break; }
-            case "QTY": { code = "pieces"; break; }
+            case "QTY": { code = "Pieces"; break; }
             case "CWKG": { code = "KG"; break; }
             case "GWKG": { code = "KG"; break; }
             case "VCBM": { code = "CBM"; break; }
