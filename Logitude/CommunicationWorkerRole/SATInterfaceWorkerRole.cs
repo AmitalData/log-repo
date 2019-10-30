@@ -395,17 +395,8 @@ namespace CommunicationWorkerRole
 							additional.QRImage = Convert.ToBase64String(resultadoTimbre.CodigoBidimensional);//imagedetail.Id;//
 						}
 
-						Profact.TimbraCFDI33.Comprobante resultComprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(resultadoTimbre.Xml);
-						if (comprobante.Complemento.Any != null)
-						{
-							List<System.Xml.XmlElement> myLXmlComplementos = resultComprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
-							var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
-							if (timbreFiscalDigitalElement != null)
-							{
-								Profact.TimbraCFDI.TimbreFiscalDigital digitalTi = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.TimbreFiscalDigital>(timbreFiscalDigitalElement.OuterXml);
-								payment.SATApprovalDate = digitalTi.FechaTimbrado;
-							}
-						}
+                        payment.SATApprovalDate = GetSATApprovalDateFromComplemento(waitingCommLog, comprobante.Complemento);
+                         
 						payment.SATAdditionalFieldsXML = LogitudeXmlSerializer.SerializeObjectToXmlString(additional);
 						payment.SATXML = resultadoTimbre.Xml;
 						payment.SATTransferStatusCode = "TD";
@@ -447,16 +438,8 @@ namespace CommunicationWorkerRole
 						}
 
 						Profact.TimbraCFDI33.Comprobante resultComprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(resultadoTimbre.Xml);
-						if (resultComprobante.Complemento.Any != null)
-						{
-							List<System.Xml.XmlElement> myLXmlComplementos = resultComprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
-							var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
-							if (timbreFiscalDigitalElement != null)
-							{
-								Profact.TimbraCFDI.TimbreFiscalDigital digitalTi = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.TimbreFiscalDigital>(timbreFiscalDigitalElement.OuterXml);
-								invoice.SATApprovalDate = digitalTi.FechaTimbrado;
-							}
-						}
+                        invoice.SATApprovalDate = GetSATApprovalDateFromComplemento(waitingCommLog, resultComprobante.Complemento);
+                         
 
 						invoice.SATXML = resultadoTimbre.Xml;
 						invoice.SATTransferStatusCode = "TD";
@@ -590,17 +573,9 @@ namespace CommunicationWorkerRole
 						{
 							additional.QRImage = Convert.ToBase64String(resultadoConsulta.CodigoBidimensional);//imagedetail.Id;//
 						}
-						if (paymentComprobante.Complemento.Any != null)
-						{
-							List<System.Xml.XmlElement> myLXmlComplementos = paymentComprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
-							var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
-							if (timbreFiscalDigitalElement != null)
-							{
-								Profact.TimbraCFDI.TimbreFiscalDigital digitalTi = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.TimbreFiscalDigital>(timbreFiscalDigitalElement.OuterXml);
-								payment.SATApprovalDate = digitalTi.FechaTimbrado;
-							}
-						}
-						payment.SATAdditionalFieldsXML = LogitudeXmlSerializer.SerializeObjectToXmlString(additional);
+
+                        payment.SATApprovalDate = GetSATApprovalDateFromComplemento(waitingCommLog, paymentComprobante.Complemento);
+                        payment.SATAdditionalFieldsXML = LogitudeXmlSerializer.SerializeObjectToXmlString(additional);
 						payment.SATXML = resultadoConsulta.Xml;
 						payment.SATTransferStatusCode = "TD";
                         payment.TransmissionError = null;
@@ -659,16 +634,9 @@ namespace CommunicationWorkerRole
 
 						Profact.TimbraCFDI33.Comprobante invoiceComprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(resultadoConsulta.Xml);
 
-						if (invoiceComprobante.Complemento.Any != null)
-						{
-							List<System.Xml.XmlElement> myLXmlComplementos = invoiceComprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
-							var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
-							if (timbreFiscalDigitalElement != null)
-							{
-								Profact.TimbraCFDI.TimbreFiscalDigital digitalTi = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.TimbreFiscalDigital>(timbreFiscalDigitalElement.OuterXml);
-								invoice.SATApprovalDate = digitalTi.FechaTimbrado;
-							}
-						}
+                        invoice.SATApprovalDate  = GetSATApprovalDateFromComplemento(waitingCommLog, invoiceComprobante.Complemento);
+
+                      
 
 						string SATAdditionalFieldsXML = LogitudeXmlSerializer.SerializeObjectToXmlString<SATAdditionalFields>(additional);
 
@@ -718,7 +686,37 @@ namespace CommunicationWorkerRole
 			}
 		}
 
-		private string ResolveTransmisionError(ResultadoTimbre resultadoTimbre)
+        private DateTime GetSATApprovalDateFromComplemento(CommunicationLog waitingCommLog, Profact.TimbraCFDI33.ComprobanteComplemento complemento)
+        {
+            if (complemento.Any != null)
+            {
+                List<System.Xml.XmlElement> myLXmlComplementos = complemento.Any.ToList<System.Xml.XmlElement>();
+                var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
+                if (timbreFiscalDigitalElement != null)
+                {
+                    Profact.TimbraCFDI.TimbreFiscalDigital digitalTi = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.TimbreFiscalDigital>(timbreFiscalDigitalElement.OuterXml);
+
+                    if (digitalTi.FechaTimbrado != null && !digitalTi.FechaTimbrado.Equals(DateTime.MinValue))
+                    {
+                        return digitalTi.FechaTimbrado;
+                    }
+                    else
+                    {
+                       return TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
+                    }
+                }
+                else
+                {
+                    return TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
+                }
+            }
+            else
+            {
+                return TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
+            }
+        }
+
+        private string ResolveTransmisionError(ResultadoTimbre resultadoTimbre)
 		{
 			string transError = resultadoTimbre.Descripcion;
 			if (!string.IsNullOrEmpty(resultadoTimbre.Descripcion))
