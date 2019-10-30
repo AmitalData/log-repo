@@ -1597,6 +1597,10 @@
     <Compile Include="Migrations\201910281423569_SharedLogisticsContactLastLogin_modifications.Designer.cs">
       <DependentUpon>201910281423569_SharedLogisticsContactLastLogin_modifications.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910301304030_AbedAddNewFieldToReportExecutionLogs.cs" />
+    <Compile Include="Migrations\201910301304030_AbedAddNewFieldToReportExecutionLogs.Designer.cs">
+      <DependentUpon>201910301304030_AbedAddNewFieldToReportExecutionLogs.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2736,6 +2740,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910281423569_SharedLogisticsContactLastLogin_modifications.resx">
       <DependentUpon>201910281423569_SharedLogisticsContactLastLogin_modifications.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910301304030_AbedAddNewFieldToReportExecutionLogs.resx">
+      <DependentUpon>201910301304030_AbedAddNewFieldToReportExecutionLogs.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

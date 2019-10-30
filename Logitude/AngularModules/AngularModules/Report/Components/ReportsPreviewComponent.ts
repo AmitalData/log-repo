@@ -227,6 +227,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
                 this.ValiditySelectedTemplate();
 
                 this.StartBusyIndicator("Generating...");
+
                 if (this.ReportsRunUsingWR && !this.IsHaveRunReportViewWorkerRoleToggleFeature) {
                     this.StartTimerWaitingFirststimulReportBuild();
                 }

@@ -52,6 +52,11 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 .IsUnicode(true);
 
 
+            this.Property(t => t.ExecutedByServerName)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+
+
             // Table & Column Mappings
             this.ToTable("ReportExecutionLogs");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -65,6 +70,9 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ReportId).HasColumnName("ReportId");
             this.Property(t => t.ReportTemplateId).HasColumnName("ReportTemplateId");
 
+            this.Property(t => t.RetryNumber).HasColumnName("RetryNumber");
+            this.Property(t => t.StartDate).HasColumnName("StartDate");
+            this.Property(t => t.ExecutedByServerName).HasColumnName("ExecutedByServerName");
 
             // Relationships
 
