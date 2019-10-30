@@ -127,7 +127,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                           {
                                                               Id = a.Id,
                                                               Tenant = a.Tenant,
-                                                              EndDateTime = a.EndDateTime,
+                                                              EndDateTime = a.EndDateTime, 
                                                               IsError = a.IsError,
                                                               RunResult = a.RunResult,
                                                               StartDateTime = a.StartDateTime,
