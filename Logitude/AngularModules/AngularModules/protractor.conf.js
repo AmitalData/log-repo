@@ -119,7 +119,7 @@ exports.config = {
             browser.params.Login.Password = "!RS123Rs";
         }
         else if (browser.params.Env == "test_1071") {
-            browser.params.Link = "https://test.logitudeworld.com/test";
+            browser.params.Link = "https://test.logitudeworld.com/staging";
             browser.params.Login.Email = "sgautomation@pro.com";
             browser.params.Login.Password = "Sg0592463934!";
         }
@@ -139,7 +139,7 @@ exports.config = {
             browser.params.Login.Password = "ahmed!A123";
         }
         else if (browser.params.Env == "test_1109") {
-            browser.params.Link = "https://test.logitudeworld.com/test";
+            browser.params.Link = "https://test.logitudeworld.com/staging";
             browser.params.Login.Email = "sumaya@automation.com";
             browser.params.Login.Password = "Sg0592463934!";
         }

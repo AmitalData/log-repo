@@ -206,7 +206,21 @@ namespace Logitude.XSD.INTTRA_Booking
                 this.Errors.Add("Consignee is required");
             }
 
-            this.MainVessel = (from d in CommonContext.Vessels where d.Id == this.MasterData.MainCarriageVesselId select d).FirstOrDefault();
+            if (this.Shipment.ConsigneeId == null)
+            {
+                this.Errors.Add("Consignee is required");
+            }
+
+            if (this.MasterData.MainCarriageETD == null)
+            {
+                if (this.MasterData.MainCarriageVesselId == null || this.MasterData.MainCarriageCarrierNumber == null)
+                    this.Errors.Add("ETD or Main-Carriage Vessel and Voyage must be provided");
+            }
+
+            if (this.MasterData.MainCarriageVesselId != null)
+            {
+                this.MainVessel = (from d in CommonContext.Vessels where d.Id == this.MasterData.MainCarriageVesselId select d).FirstOrDefault();
+            }
         }
         private void GetObjects_ShipmentOrderPackages()
         {
@@ -214,11 +228,6 @@ namespace Logitude.XSD.INTTRA_Booking
                                           where d.Tenant == this.Tenant
                                           && d.ShipmentId == this.ShipmentId
                                           select d).ToList();
-
-            if (string.IsNullOrEmpty(this.ShipmentPM.BookingConfirmationNumber))
-            {
-                this.Errors.Add("Booking Confirmation Number is required");
-            }
 
             if (string.IsNullOrEmpty(this.ShipmentPM.DescriptionOfGoods))
             {
@@ -414,13 +423,15 @@ namespace Logitude.XSD.INTTRA_Booking
         }
         private void BuildMessageProperties_ReferenceInformations()
         {
-            this.ReferenceInformations = new List<INTTRA_Booking.ReferenceInformationType>();
-
-            this.ReferenceInformations.Add(new INTTRA_Booking.ReferenceInformationType()
+            if (this.MasterData.BookingConfirmationNumber != null)
             {
-                Type = INTTRA_Booking.ReferenceTypeValues.BookingNumber,
-                Value = this.MasterData.BookingConfirmationNumber,
-            });
+                this.ReferenceInformations = new List<INTTRA_Booking.ReferenceInformationType>();
+                this.ReferenceInformations.Add(new INTTRA_Booking.ReferenceInformationType()
+                {
+                    Type = INTTRA_Booking.ReferenceTypeValues.BookingNumber,
+                    Value = this.MasterData.BookingConfirmationNumber,
+                });
+            }
         }
         private void BuildMessageProperties_Locations()
         {
@@ -477,7 +488,7 @@ namespace Logitude.XSD.INTTRA_Booking
                 },
             };
 
-            if (this.MasterData.MainCarriageCarrierNumber != null)
+            if (this.MasterData.MainCarriageCarrierNumber != null && this.MasterData.MainCarriageVesselId != null)
             {
                 transportationDetails.ConveyanceInformation.Identifier = new ConveyanceIdentifierType[]
                 {
