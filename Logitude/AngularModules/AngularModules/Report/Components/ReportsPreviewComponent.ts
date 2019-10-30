@@ -158,7 +158,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
                 this.StimulsoftArg.IsShowExportPrinttoPDF = true;
                 this.StimulsoftArg.IsShowExportMicrosoftExcel = true;
                 this.StimulsoftArg.IsShowSendButton = true;
-                this.StimulsoftArg.EditableFieldLists = null;
+                this.StimulsoftArg.BuildStimulReportResult = null;
 
                 this.StimulsoftArg.DefaultTemplateId = this.Report.DefaultTemplateId;
                 this.StimulsoftArg.ReportsTemplateLists = this.ReportsTemplateLists;
@@ -297,7 +297,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
 
                 this.StimulsoftArg.NumberOfPage = this.ReportFliter.NumberOfPage;
                 this.StimulsoftArg.PartnersObslist = this.PartnersObslist;
-                this.StimulsoftArg.EditableFieldLists = myResult;
+                this.StimulsoftArg.BuildStimulReportResult = myResult;
 
                 if (this.StimulsoftArg && this.StimulsoftArg.StimulsoftViewerComponent) {
                     this.StimulsoftArg.StimulsoftViewerComponent.SetStimualData();

@@ -3849,7 +3849,7 @@
     <Compile Include="Helpers\DeparturesArivalsActivityFilter.cs" />
     <Compile Include="Helpers\DocumentFileUploadHelper.cs" />
     <Compile Include="Helpers\DocumentTypeTemplateFilter.cs" />
-    <Compile Include="Helpers\EditableFieldPosition.cs" />
+    <Compile Include="Helpers\BuildStimulReportResult.cs" />
     <Compile Include="Helpers\EntityTrackingFilter.cs" />
     <Compile Include="Helpers\ExportDocumentHelper.cs" />
     <Compile Include="Helpers\FroalaEditorFilters.cs" />
