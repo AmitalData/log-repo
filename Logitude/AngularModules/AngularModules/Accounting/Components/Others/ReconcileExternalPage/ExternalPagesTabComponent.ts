@@ -1,3 +1,5 @@
+import { LedgerTransactionExtendedListService } from './../../../Services/ExtendedLists/LedgerTransactionExtendedListService';
+import { ServiceResponse } from './../../../../Infrastructure/DataContracts/ServiceResponse';
 declare var window: any;
 import {Component, OnInit, Output, EventEmitter, AfterViewInit, OnDestroy, ChangeDetectorRef}  from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -37,6 +39,7 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
     _ReconcileExternalPageExtendedPMService: ReconcileExternalPageExtendedPMService = new ReconcileExternalPageExtendedPMService();
     _ReconcileExternalPagePMService: ReconcileExternalPagePMService = new ReconcileExternalPagePMService();
     _BankAccountPMService: BankAccountPMService = new BankAccountPMService();
+    _LedgerTransactionExtendedListService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
 
     private CurrentSession = SessionLocator.SelectedSession;
     private SaveCompletedEvent: any = null;
@@ -93,7 +96,7 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
                 title = TextCodeTranslator.Translate("BankAccount.TH.BankPages");
                 break;
             case "GLAccount":
-                title = "GLAccount External Pages";
+                title = TextCodeTranslator.Translate("GLAccount.TH.ExternalTransactions");
                 break;
             default:
                 title = "External Pages";
@@ -117,6 +120,8 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
     {
         this._entityResourceService.getEntityResourceByTableName("ReconcileExternalPage").subscribe((response: any) => { });
         this._entityResourceService.getEntityResourceByTableName("ReconcileExternalPageLine").subscribe((response: any) => { });
+        this._entityResourceService.getEntityResourceByTableName("BankAccount").subscribe((response: any) => { });
+        this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => { });
     }
 
     Listen() {
@@ -572,6 +577,48 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
         });
 
 
+    }
+
+    ExternalAdjustButtonClicked()
+    {
+        if(this.ObjectTableName != 'GLAccount')
+            console.error("[ExternalAdjustButtonClicked] table is not glaccount !!!!!!!");
+
+        this._LedgerTransactionExtendedListService.GetFirstLedgerTransaction(this.EntityPM.GLAccountId).subscribe((serviceResponse: ServiceResponse) =>
+        {
+            if (serviceResponse.Result) {
+                var result = serviceResponse.Result;
+                var transaction = result.Result;
+                var openAmountCurrency = transaction ? transaction.OpenAmountCurrencySign : "";
+                this.showReconcileWindow(openAmountCurrency);
+
+            }
+            this.CurrentSession.StopBusyIndicator();
+        });
+    }
+
+    showReconcileWindow(currency: any)
+    {
+
+        var windowArgs: any = {};
+        windowArgs.BankAccountPM = this.EntityPM;
+        windowArgs.openAmountCurrency = currency; // CurrencySign
+        windowArgs.ObjectTableName = this.ObjectTableName;
+
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 900;
+        logitudeWindow.Height = 800;
+        logitudeWindow.IsFullScreen = true;
+
+        logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.ExternalReconcile");
+
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.Show('./Accounting/Components/Others/ExternalReconcileComponent');
+        logitudeWindow.WindowClosed.subscribe(($event: any) =>
+        {
+            // show alert
+            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        });
     }
 
 }

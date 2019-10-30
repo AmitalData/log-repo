@@ -18,10 +18,10 @@ import {BankAccountPMService} from '../../../Services/StandardPMs/BankAccountPMS
 
 @Component({
     moduleId: module.id,
-    templateUrl: './ManageRecoTabComponent.html'
+    templateUrl: './ManageExternalReconciliationTabComponent.html'
 })
 
-export class ManageRecoTabComponent extends BaseComponent implements OnInit, OnDestroy {
+export class ManageExternalReconciliationTabComponent extends BaseComponent implements OnInit, OnDestroy {
     public EntityPM: BankAccountPM = null;
     public ObjectTableName = "ExternalReconciliation";
     public DataContext = this;
@@ -54,7 +54,7 @@ export class ManageRecoTabComponent extends BaseComponent implements OnInit, OnD
         //#region Default date filter value
         var today = new Date();
         this.ToDate = new Date();
-        var lastmonth = today.setMonth(today.getMonth() - 1); // month backward 
+        var lastmonth = today.setMonth(today.getMonth() - 1); // month backward
         this.FromDate = new Date(lastmonth);
         //#endregion
 
@@ -77,7 +77,7 @@ export class ManageRecoTabComponent extends BaseComponent implements OnInit, OnD
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 });
-            } 
+            }
 
             //
             if (this.LoadCompletedEvent == null) {
@@ -148,7 +148,7 @@ export class ManageRecoTabComponent extends BaseComponent implements OnInit, OnD
     }
     //#endregion
 
-    //#region Search 
+    //#region Search
     private timerToken: any;
     TextChanged(searchtext) {
         if (!AppTool.IsNullOrEmpty(searchtext)) {

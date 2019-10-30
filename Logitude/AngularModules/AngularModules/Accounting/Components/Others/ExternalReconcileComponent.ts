@@ -49,27 +49,26 @@ import {ExternalReconciliationExtendedListService} from '../../Services/Extended
 
 export class ExternalReconcileComponent extends BaseComponent implements OnInit, AfterViewInit {
     public DataContext: ExternalReconcileComponent = this;
-    public ObjectTableName: string = "ExternalReconciliation";
-    public FireCheckBoxChecked: EventEmitter<any> = new EventEmitter();
+    public ObjectTableName: string;
+    public ExtRecoTable: string = "ExternalReconciliation";
 
+    public FireCheckBoxChecked: EventEmitter<any> = new EventEmitter();
     public PagePM: ReconcileExternalPagePM;
     public GLAccountPM: GLAccountPM;
     public BankAccountPM: BankAccountPM;
     public ExternalRecoPM: ExternalReconciliationPM;
-
     public ValidationErrorsList: string[] = [];
-
     TransactionSelectedLines: ObservableCollection;
     BankSelectedLines: ObservableCollection;
-
     text_SumOfXRowsSelected: string = TextCodeTranslator.Translate("ReconcileExternalPage.O.SumOfXRowsSelected");
-
     public isRTL: boolean = false;
-
     public OperatorsList: any[] = [];
     public DateFilterList: any[] = [];
-
     IsEntityValid: boolean = true;
+    txt_FiltersSelected: string = "";
+    LoadGrids: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
+    ExternalPagesTitle: string;
 
     entityListService: EntityListService = new EntityListService();
     ledgerTransactionExtendedListService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
@@ -77,9 +76,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     externalReconciliationExtendedPMService: ExternalReconciliationExtendedPMService = new ExternalReconciliationExtendedPMService();
     externalReconciliationPMService: ExternalReconciliationPMService = new ExternalReconciliationPMService();
 
-    txt_FiltersSelected: string = "";
-    LoadGrids: boolean = false;
-    private CurrentSession = SessionLocator.SelectedSession;
+
     constructor(private CD: ChangeDetectorRef) {
         super();
         this.isRTL = SessionLocator.TenantPM.LayoutDirection === 'rtl';
@@ -122,14 +119,38 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     SetWindowArgs(args: any) {
         if (args != null) {
             this.BankAccountPM = args.BankAccountPM;
+            this.ObjectTableName = args.ObjectTableName;
             this.openAmountCurrency = args.openAmountCurrency;
+            this.SetTitles();
             this.SetUIProperty();
         }
     }
 
+    SetTitles()
+    {
+        switch (this.ObjectTableName) {
+            case 'GLAccount': {
+                this.ExternalPagesTitle = TextCodeTranslator.Translate('GLAccount.TH.ExternalTransactions');
+
+                break;
+            }
+            case 'BankAccount': {
+                this.ExternalPagesTitle = TextCodeTranslator.Translate('ReconcileExternalPage.O.BankAccountTransactions');
+
+                break;
+            }
+
+            default: {
+                this.ExternalPagesTitle = TextCodeTranslator.Translate('ReconcileExternalPage.O.BankAccountTransactions');
+
+                break;
+            }
+        }
+    }
+
     SetUIProperty() {
-        this.UIProperties.SetEnabled("FromDate", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("ToDate", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("FromDate", this.ExtRecoTable, false);
+        this.UIProperties.SetEnabled("ToDate", this.ExtRecoTable, false);
     }
 
     ngOnInit() {
@@ -928,8 +949,8 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             var LastYearToDate = DateTool.AddDays((new Date()), 1);
             LastYearToDate.setUTCHours(0, 0, 0, 0);
 
-            this.UIProperties.SetEnabled("FromDate", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("ToDate", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("FromDate", this.ExtRecoTable, false);
+            this.UIProperties.SetEnabled("ToDate", this.ExtRecoTable, false);
 
             switch (this.SelectedDateOperator.EnglishName) {
                 case "Today":
@@ -978,8 +999,8 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
                     {
                         this.FromDate = null;
                         this.ToDate = null;
-                        this.UIProperties.SetEnabled("FromDate", this.ObjectTableName, true);
-                        this.UIProperties.SetEnabled("ToDate", this.ObjectTableName, true);
+                        this.UIProperties.SetEnabled("FromDate", this.ExtRecoTable, true);
+                        this.UIProperties.SetEnabled("ToDate", this.ExtRecoTable, true);
                         this.CD.detectChanges();
                         break;
                     }
