@@ -645,7 +645,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                     concepto.Descripcion = line.Description;
                     concepto.Importe = GetDecimalWith2DigitsAfterPoint(Math.Abs((line.InvoiceCurrencyAmount != null ? ((decimal)line.InvoiceCurrencyAmount.Value) : 0)));
                     decimal valorUnitario = Math.Abs(concepto.Cantidad != 0 ? (concepto.Importe / concepto.Cantidad) : 0);
-                    concepto.ValorUnitario = GetDecimalWith2DigitsAfterPoint(Math.Abs(Math.Truncate(valorUnitario * 1000000m) / 1000000m));
+                    concepto.ValorUnitario = GetDecimalWith3DigitsAfterPointIfZero(Math.Abs(Math.Truncate(valorUnitario * 1000000m) / 1000000m));
 
                     concepto.ClaveProdServ = allChargesTypes.FirstOrDefault(c => c.Id == line.ChargesTypeId).SATExternalId;
                     concepto.ClaveUnidad = computingPartnerHelper.GetComputingPartnerCodeTranslation(line.MeasurementCode, "G-Profact", "Measurement");//"C81";
@@ -2301,7 +2301,13 @@ namespace Logitude.BL.InvoiceModel.Tools
         }
 
 
-
+        private decimal GetDecimalWith3DigitsAfterPointIfZero(decimal dNumber)
+        {
+            decimal result = decimal.Parse(dNumber.ToString("0.00"));
+            if (result == 0 && dNumber != 0)
+                result = decimal.Parse(dNumber.ToString("0.000"));
+            return result;
+        }
         private decimal GetDecimalWith2DigitsAfterPoint(decimal dNumber)
         {
             return decimal.Parse(dNumber.ToString("0.00"));

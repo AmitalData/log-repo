@@ -3,6 +3,8 @@ using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.Resolvers;
 using Logitude.Server.Tools.Helpers;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -25,10 +27,10 @@ namespace Logitude.Accounting.BL.Validators
                 if (currenctUser != null)
                     useLocal = !currenctUser.DontShowLocal;
 
+                ObjectTable objectTable = GetObjectTable(entityPM);
 
-                
                 ReconcileExternalPageQueryService query = new ReconcileExternalPageQueryService(entityPM.Tenant);
-                ReconcileExternalPagePM prevPage = query.GetPrevPageNoByPageNo(entityPM.PageNo, entityPM.EntityId, entityPM.Tenant);
+                ReconcileExternalPagePM prevPage = query.GetPreviousPageByNumber(entityPM.PageNo, entityPM.EntityId, objectTable.Name, entityPM.Tenant);
                 if (prevPage != null)
                 {
 
@@ -46,7 +48,7 @@ namespace Logitude.Accounting.BL.Validators
                             errorsList.Add(TranslateTextsClass.Translate("ReconcileExternalPage.O.FromDateShouldBiggerPrevToDate", entityPM.Tenant, useLocal));
                         }
                     }
-                    
+
 
                     //2
                     if (entityPM.ToDate.Date < entityPM.FromDate.Date)
@@ -128,6 +130,13 @@ namespace Logitude.Accounting.BL.Validators
                 errorString = errorString.Remove(errorString.Length - 1);
                 return new ValidationResult("ReconcileExternalPage Not Valid" + ": " + errorString, errorsList);
             }
+        }
+
+        private static ObjectTable GetObjectTable(ReconcileExternalPagePM entityPM)
+        {
+            ObjectTableRepository tableRepository = new ObjectTableRepository(entityPM.Tenant);
+            ObjectTable objectTable = tableRepository.GetSingleObjectTable(entityPM.ObjectTableId, entityPM.Tenant, false);
+            return objectTable;
         }
 
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }

@@ -38,6 +38,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                CardContactId = a.CardContactId,
                                                Tenant = a.Tenant,
                                                AdditionalServiceName = a.AdditionalService != null ? a.AdditionalService.Name : null,
+                                               AdditionalServiceId = a.AdditionalServiceId,
                                            }).FirstOrDefault();
 
             return entity;
@@ -54,6 +55,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                      CardContactId = a.CardContactId,
                      Tenant = a.Tenant,
                      AdditionalServiceName = a.AdditionalService != null ? a.AdditionalService.Name : null,
+                     AdditionalServiceId = a.AdditionalServiceId,
                  }).ToList();
 
             return result;
