@@ -1,0 +1,1 @@
+delete from toggles where Code = 'MAP'

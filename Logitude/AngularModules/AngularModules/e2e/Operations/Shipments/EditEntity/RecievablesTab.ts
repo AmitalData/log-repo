@@ -10,159 +10,93 @@ export class ReceivablesTabComponent {
         this.Helper = new FieldsHelper();
     }
     public RecievablesTab(ShipmentLevelCode: string, shipmentType: string) {
+
+        this.Helper.WaitEditComponentBusyIndicator();
         this.Helper.WaitByIdAndClick('Shipment.TH.Receivables');
         this.Helper.WaitEditComponentBusyIndicator();
-        // var EC = protractor.ExpectedConditions;
-        // this.Helper.WaitByIdAndClick('Shipment_EstimateProfitInSelectedCurrency');
 
+        this.Helper.ItemsVisibility('ATDS-Receivable');
+        this.AddRecievableLines(ShipmentLevelCode, shipmentType);
+        
+        this.CreatARInvoicewithVoid(true);
+        
+
+        
+
+       
+    }
+
+    AddRecievableLines(ShipmentLevelCode: string, ShipmentType: string){
         if (ShipmentLevelCode == 'D' || ShipmentLevelCode == 'H') {
-            // var InvoiceAmount: any;
-            // this.Helper.WaitByIdAndClick('ATDS-Receivable');//Generate Receivables 
-            if (shipmentType == '') {
+        
+            if (ShipmentType == '') {
                 this.amount1 = this.AddReceivables('Air Frei', '10', '10', 'USD');
                 this.amount2 = this.AddReceivables('Order', '10', '20', 'USD');
-            } else if (shipmentType == 'FCL' || shipmentType == 'LCL') {
+            } else if (ShipmentType == 'FCL' || ShipmentType == 'LCL') {
                 this.amount1 = this.AddReceivables('ocean', '10', '10', 'USD');
                 this.amount2 = this.AddReceivables('Order', '10', '20', 'USD');
             } else {
                 this.amount1 = this.AddReceivables('Inland', '10', '10', 'USD');
                 this.amount2 = this.AddReceivables('Order', '10', '20', 'USD');
             }
-            // expect(element(by.id('ReceivableAmount')).getAttribute('textContent')).toBe(this.amount1 + this.amount2);
-            // this.AddARInvoice();
+           
         }
-        else if (shipmentType == 'M') {
-            // this.Helper.WaitByIdAndFill('Shipment_EstimateProfitInSelectedCurrency', '44');
+        else if (ShipmentType == 'M') {
+        
             this.AddReceivables('A', '5', '10', 'USD');
-            //this.AddReceivables('Order', '10', '20');
-            // InvoiceAmount = this.amount1 + this.amount2
-            // this.AddARInvoice();
+          
         }
+        this.Helper.WaitByIdAndClick('Shipment-Save');
+        this.WaitBusyIndicatorToShowandHide();
+        
     }
     AddReceivables(ChargeType: string, quantity: any, unitPrice: any, currency: any) {
-        var amount: any = 0;
-        var receivableCurrency = '';
-        element(by.id('ProfitCurrency')).getAttribute('textContent').then(function (recCurrency) {
-            receivableCurrency = recCurrency.trim();
-            if (receivableCurrency != null) {
-                console.log('Receivable  Profit Currency-ReceivableTab : ' + receivableCurrency);
-            } else {
-                console.log('No Profit Currency in Receiavble Tab');
-            }
-            // return receivableCurrency;
-        });
+     
+        this.Helper.WaitEditComponentBusyIndicator();
 
-        this.Helper.WaitByIdAndClick('AddReceivable');
+        this.Helper.WaitByIdAndClick('Add');
 
         this.Helper.WaitByIdAndFill('ShipmentReceivable_ChargesTypeId', ChargeType);
         this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'ShipmentReceivable_ChargesTypeId', ChargeType);
 
-        this.Helper.WaitByIdAndFill('ShipmentReceivable_MeasurementId', 'Gross');
-        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'ShipmentReceivable_MeasurementId', 'Gross');
+        this.Helper.WaitByIdAndFill('ShipmentReceivable_MeasurementId', 'fixed');
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'ShipmentReceivable_MeasurementId', 'fixed');
 
         this.Helper.WaitByIdAndFill('ShipmentReceivable_Quantity', quantity);
         this.Helper.WaitByIdAndFill('ShipmentReceivable_UnitPrice', unitPrice);
 
-        this.Helper.WaitByIdAndFill('ShipmentReceivable_CurrencyId', currency);
-        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'ShipmentReceivable_CurrencyId', currency);
-
-        var EC = protractor.ExpectedConditions;
-        // browser.wait(EC.elementToBeClickable(element(by.id('ShipmentReceivable_Rate'))), 20000).then(a => {
-        //     // console.log('inside the Exchange Rate Feild ');
-
-        // });
-        // this.Helper.WaitByIdAndFill('ShipmentReceivable_Notes', 'Note :' + receivableCurrency);
-        // this.Helper.WaitByIdAndFill('ShipmentReceivable_Notes', 'Add Receivable');
-        var receivableAmount = '';
-        var localAmount = '';
-        var profitAmount = '';
-
-
-        element(by.id('ShipmentReceivable_Rate')).getAttribute('value').then(function (divText) {
-            if (divText != '') {
-                console.log('Exchange Rate : ' + divText);
-            } else {
-                element(by.id('ShipmentReceivable_Rate')).sendKeys('4');
-                // this.Helper.WaitByIdAndFill('ShipmentReceivable_Rate', '4');
-                console.log('Exchange Rate is Changed : 4 ');
-            }
-        });
-        var lineAmount;
-        lineAmount = quantity * unitPrice;
-        expect(element(by.id('ShipmentReceivable_TotalAmount')).getAttribute('value')).toBe(lineAmount + '.00');
-
-        element(by.id('ShipmentReceivable_TotalAmount')).getAttribute('value').then(function (recAmount) {
-            receivableAmount = recAmount;
-            console.log('ReceivableAmount : ' + receivableAmount);
-        });
-        element(by.id('ShipmentReceivable_TotalAmountLocal')).getAttribute('value').then(function (locAmount) {
-            localAmount = locAmount;
-            console.log('LocalAmount : ' + localAmount);
-
-            if (receivableCurrency != currency) {
-                element(by.id('ShipmentReceivable_AmountInProfitCurrency')).getAttribute('value').then(function (profAmount) {
-                    profitAmount = profAmount;
-                    console.log('ProfitAmount : ' + profitAmount);
-                });
-            } else {
-                console.log('There is no profit Amount');
-            }
-
-        });
-
-        // element(by.id('ShipmentReceivable_AmountInProfitCurrency')).getAttribute('value').then(function (profAmount) {
-        //     profitAmount = profAmount;
-        //     console.log('ProfitAmount : ' + profitAmount);
-        // });
-        // expect(element(by.id('ShipmentReceivable_Notes')).getAttribute('value')).toBe('razan');
         this.Helper.WaitByIdAndClick('Ok-AddReceivableBtn');
-        return lineAmount;
+        this.Helper.WaitByIdAndClick('Shipment-Save');
+        
+       
     }
 
-    AddARInvoice() {
+    CreatARInvoicewithVoid(Voided :boolean) {
         this.Helper.WaitByIdAndClick('CreateARInvoice');
-
-        this.Helper.WaitByIdAndFill('ARInvoice_InvoiceCurrencyId', 'EUR');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-
-        this.Helper.WaitByIdAndFill('date_ARInvoice_InvoiceDate', '.');
-
-        this.Helper.WaitByIdAndFill('ARInvoice_PaymentTermId', 'cash');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-
-        this.Helper.WaitByIdAndFill('ARInvoice_VatNumber', 'Vat Number ');
+        this.Helper.WaitByIdAndFill('ARInvoice_PaymentTermId','cash');
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'ARInvoice_PaymentTermId','cash');
+        var TodayDate=new Date().getDate();
+        console.log(TodayDate);
+        this.Helper.WaitByIdAndFill('date_ARInvoice_DueDate',TodayDate.toString() );
+        
+       
         this.Helper.WaitByIdAndClick('Ok-CreateARInvoice');
 
-        this.Helper.WaitByIdAndFill('ARInvoice_VatTypeId', 'zero');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-        //this.Helper.WaitByCssButtonClick('.Button', 'Apply to all');
-
         this.Helper.WaitBusyIndicator();
-
-        this.Helper.WaitByIdAndClick('ARInvoice.TH.General');
-        // this.Helper.WaitBusyIndicator();
-        this.Helper.WaitByIdAndFill('ARInvoice_MasterNumber', 'Master #');
-        this.Helper.WaitByIdAndClick('ARInvoice.TH.ARPayments');
-        // this.Helper.WaitBusyIndicator();
-
-        this.Helper.WaitByIdAndClick('ARInvoice.B.SaveAsDraft');
-        // this.Helper.WaitBusyIndicator();
-        var EC = protractor.ExpectedConditions;
-        browser.wait(EC.visibilityOf(element(by.css('.BusyIndicatorControl'))), 20000).then(a => {
-            browser.wait(EC.invisibilityOf(element(by.css('.BusyIndicatorControl')))).then(a => {
-                element(by.id('ARInvoice.B.Approve')).click();
-            });
-            // element(by.id('ARInvoice.B.Approve')).click();
-
-        });
-        // this.Helper.WaitByIdAndClick('ARInvoice.TH.General');
-        // this.Helper.WaitByIdAndClick('ARInvoice_PrintNotes');
-        // this.Helper.WaitByIdAndClick('ARInvoice.B.Approve');
-        // this.Helper.WaitBusyIndicator();
-
-        //  this.Helper.WaitByCssButtonClick('.Button','New Payment');
-        //  this.Helper.WaitByIdAndFill('ARPayment_AmountInPaymentCurrency','3000');
-
-        // this.Helper.WaitByIdAndClick('EditBackbutton_1');
     }
+    EditAPInvoice(Voided :boolean){
+        this.Helper.WaitEditComponentBusyIndicator();
+        this.Helper.WaitByIdAndClick('ARInvoice.B.SaveAsDraft');
+        this.WaitBusyIndicatorToShowandHide();
+        this.Helper.WaitByIdAndClick('ARInvoice.B.Approve');
+        this.WaitBusyIndicatorToShowandHide();
+        this.WaitBusyIndicatorToShowandHide();
+        
+       
+    }
+
+    WaitBusyIndicatorToShowandHide(){
+        this.Helper.WaitShowEditComponentBusyIndicator();
+        this.Helper.WaitEditComponentBusyIndicator();
+       }
 }
