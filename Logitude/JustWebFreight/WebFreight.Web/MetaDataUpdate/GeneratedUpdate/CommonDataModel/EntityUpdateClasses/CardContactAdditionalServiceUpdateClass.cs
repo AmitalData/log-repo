@@ -85,6 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "CardContactAdditionalService",
 			      				    IsNew =  true,
 			      				    DBTableName =  "CardContactAdditionalServices",
+			      				    OldDBTableName =  "CardContactAdditionalServices",
 			      				    ObjectTableSingular =  "Card Contact Additional Service",
 			      				    ObjectTablePlural =  "Card Contact Additional Services",
 			      				    HasCustomFilter =  false,
@@ -115,7 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Card Contact Additional Service",
-			      				    Code =  "ad6b",
+			      				    Code =  "4cc8",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -138,6 +139,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CardContactId",
+					  						OldFieldName =  "CardContactId",
 					  						ObjectTableName =  "CardContactAdditionalService",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -157,6 +159,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CardContactId",
 					  						ListPropertyPath =  "CardContactId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -192,6 +195,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AdditionalServiceId",
+					  						OldFieldName =  "AdditionalServiceId",
 					  						ObjectTableName =  "CardContactAdditionalService",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "AdditionalService",
@@ -212,6 +216,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "AdditionalServiceId",
 					  						ListPropertyPath =  "AdditionalServiceId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -247,6 +252,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AdditionalServiceName",
+					  						OldFieldName =  "AdditionalServiceName",
 					  						ObjectTableName =  "CardContactAdditionalService",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -266,6 +272,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "AdditionalServiceName",
 					  						ListPropertyPath =  "AdditionalServiceName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

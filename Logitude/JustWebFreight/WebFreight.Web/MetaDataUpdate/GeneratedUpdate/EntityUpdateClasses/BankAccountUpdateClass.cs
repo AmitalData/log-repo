@@ -2284,6 +2284,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PrintingBranchNumber",
+					  						OldFieldName =  "PrintingBranchNumber",
 					  						ObjectTableName =  "BankAccount",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2303,6 +2304,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "PrintingBranchNumber",
 					  						ListPropertyPath =  "PrintingBranchNumber",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -2343,6 +2345,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "PrintingAccountNumber",
+					  						OldFieldName =  "PrintingAccountNumber",
 					  						ObjectTableName =  "BankAccount",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2362,6 +2365,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "PrintingAccountNumber",
 					  						ListPropertyPath =  "PrintingAccountNumber",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -2515,7 +2519,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BAGN",HtmlComponentName = "BankAccountGeneralTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/BankAccount/BankAccountGeneralTabComponent", FeatureId = BankAccountGeneralFeature_TH0.Id, ControlPath = "./Accounting/Components/EditTabs/BankAccount/BankAccountGeneralTabComponent", ObjectTableId = BankAccountObjectTable.Id, TabNameTextCodeId = BankAccountGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BABP",HtmlComponentName = "BankPagesTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/BankAccount/BankPagesTabComponent", FeatureId = BankAccountBankPagesFeature_TH1.Id, ControlPath = "./Accounting/Components/EditTabs/BankAccount/BankPagesTabComponent", ObjectTableId = BankAccountObjectTable.Id, TabNameTextCodeId = BankAccountBankPagesTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BABP",HtmlComponentName = "ExternalPagesTabComponent",HtmlComponentUrl = "./Accounting/Components/Others/ReconcileExternalPage/ExternalPagesTabComponent", FeatureId = BankAccountBankPagesFeature_TH1.Id, ControlPath = "./Accounting/Components/Others/ReconcileExternalPage/ExternalPagesTabComponent", ObjectTableId = BankAccountObjectTable.Id, TabNameTextCodeId = BankAccountBankPagesTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BAMR",HtmlComponentName = "ManageRecoTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/BankAccount/ManageRecoTabComponent", FeatureId = BankAccountManageRecoFeature_TH2.Id, ControlPath = "./Accounting/Components/EditTabs/BankAccount/ManageRecoTabComponent", ObjectTableId = BankAccountObjectTable.Id, TabNameTextCodeId = BankAccountManageRecoTextCode_TH2.Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
