@@ -55,7 +55,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
 
-    IsHaveRunReportViewWorkerRolwToggleFeature: boolean = false;
+    IsHaveRunReportViewWorkerRoleToggleFeature: boolean = true;
     constructor(public _reportService: ReportService, private cd: ChangeDetectorRef) {
         var idIndex = this.CurrentSession.GetNewId("ReportsPreviewComponent");
         this.ComponentId = "ReportsPreview_" + idIndex;
@@ -64,20 +64,20 @@ export class ReportsPreviewComponent implements AfterViewInit {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
         //ReportRunViewWorkerRole
-        var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "RRW" && d.TenantNumber == SessionLocator.Tenant)[0];
-        if (featureToggle) {
-            this.IsHaveRunReportViewWorkerRolwToggleFeature = true;
-        }
+        //var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "RRW" && d.TenantNumber == SessionLocator.Tenant)[0];
+        //if (featureToggle) {
+        //    this.IsHaveRunReportViewWorkerRoleToggleFeature = true;
+        //}
 
     }
 
-    ReportsPreview(GroupList: ReportGroupList, ReportList: ReportList, reportTemplateLists: ReportsTemplateList[], reportsRunUsingWR: boolean) {
+    ReportsPreview(GroupList: ReportGroupList, ReportList: ReportList, reportTemplateLists: ReportsTemplateList[]) {
         this.Report = ReportList;
         this.ReportGroup = GroupList;
         this.ReportsTemplateLists = reportTemplateLists;
         this.Title = SessionLocator.LoggedUserPM.DontShowLocal ? ReportList.Name : ReportList.LocalName;
         this.FilterControlName = ReportList.FilterControlName;
-        this.ReportsRunUsingWR = reportsRunUsingWR;
+        this.ReportsRunUsingWR = true;
         this.RunComponent();
     }
 
@@ -158,7 +158,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
                 this.StimulsoftArg.IsShowExportPrinttoPDF = true;
                 this.StimulsoftArg.IsShowExportMicrosoftExcel = true;
                 this.StimulsoftArg.IsShowSendButton = true;
-                this.StimulsoftArg.EditableFieldLists = null;
+                this.StimulsoftArg.BuildStimulReportResult = null;
 
                 this.StimulsoftArg.DefaultTemplateId = this.Report.DefaultTemplateId;
                 this.StimulsoftArg.ReportsTemplateLists = this.ReportsTemplateLists;
@@ -219,7 +219,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
         if (!this.ShowBusyIndicator) {
             this.ShowBusyIndicator = true;
             this.ReportFliter = this.FillReportFilter(filter);
-            if (!this.IsHaveRunReportViewWorkerRolwToggleFeature || (this.IsHaveRunReportViewWorkerRolwToggleFeature && this.ReportFliter.ProcessType != "GenerateReport")) {
+            if (!this.IsHaveRunReportViewWorkerRoleToggleFeature || (this.IsHaveRunReportViewWorkerRoleToggleFeature && this.ReportFliter.ProcessType != "GenerateReport")) {
 
                 this.IsRunReportSucceeded = false;
                 this.IsRunReportFailed = false;
@@ -227,7 +227,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
                 this.ValiditySelectedTemplate();
 
                 this.StartBusyIndicator("Generating...");
-                if (this.ReportsRunUsingWR && !this.IsHaveRunReportViewWorkerRolwToggleFeature) {
+                if (this.ReportsRunUsingWR && !this.IsHaveRunReportViewWorkerRoleToggleFeature) {
                     this.StartTimerWaitingFirststimulReportBuild();
                 }
 
@@ -297,7 +297,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
 
                 this.StimulsoftArg.NumberOfPage = this.ReportFliter.NumberOfPage;
                 this.StimulsoftArg.PartnersObslist = this.PartnersObslist;
-                this.StimulsoftArg.EditableFieldLists = myResult;
+                this.StimulsoftArg.BuildStimulReportResult = myResult;
 
                 if (this.StimulsoftArg && this.StimulsoftArg.StimulsoftViewerComponent) {
                     this.StimulsoftArg.StimulsoftViewerComponent.SetStimualData();

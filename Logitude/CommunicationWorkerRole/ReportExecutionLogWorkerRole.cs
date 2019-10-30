@@ -208,20 +208,12 @@ namespace CommunicationWorkerRole
             try
             {
                 ReportHelper reportHelper = new ReportHelper();
-                BuildReportDataResult buildReportDataResult = reportHelper.BuildReport(reportFliter);
-                UpdateReportExecutionLogArgs handleReportExecutionLogArgs = new UpdateReportExecutionLogArgs() { ReportExecutionLog = reportExecutionLog, ReportExecutionLogRepository = reportExecutionLogRepository, Exception = buildReportDataResult.Exception, queueservice = queueservice, StatusCode = "F" , response = response ,IsInternalException = buildReportDataResult.IsInternalException };
-                
-                if (buildReportDataResult.Exception == null)
-                {
-                    handleReportExecutionLogArgs.StatusCode = "D";
-                    this.UpdateReportExecutionLog(handleReportExecutionLogArgs);
-                    //queueservice.Complete();
-                    LogDoneItemInMemory();
-                }
-                else
-                {
-                    HandleReportExecutionException(handleReportExecutionLogArgs , true);
-                }
+                reportHelper.BuildStimulReport(reportFliter);
+                UpdateReportExecutionLogArgs handleReportExecutionLogArgs = new UpdateReportExecutionLogArgs() { ReportExecutionLog = reportExecutionLog, ReportExecutionLogRepository = reportExecutionLogRepository, queueservice = queueservice, StatusCode = "D" , response = response  };
+                this.UpdateReportExecutionLog(handleReportExecutionLogArgs);
+                queueservice.Complete();
+                LogDoneItemInMemory();
+
 
             }
             catch (Exception ex)
@@ -236,12 +228,8 @@ namespace CommunicationWorkerRole
 
         private void HandleReportExecutionException(UpdateReportExecutionLogArgs updateReportExecutionLogArgs, bool isupdateReportExecutionLog = false)
         {
-            if (!updateReportExecutionLogArgs.IsInternalException)
-            {
-                ExceptionHandler.HandleException(updateReportExecutionLogArgs.Exception, DateTime.Now, 0, null, "Report Execution Log Queue worker role start", null, null);
-            }
-
-            if (updateReportExecutionLogArgs.response != null && updateReportExecutionLogArgs.response.MessageValues.Keys.Contains("ReportExecutionLogId") && !updateReportExecutionLogArgs.IsInternalException)
+            ExceptionHandler.HandleException(updateReportExecutionLogArgs.Exception, DateTime.Now, 0, null, "Report Execution Log Queue worker role start", null, null);
+            if (updateReportExecutionLogArgs.response != null && updateReportExecutionLogArgs.response.MessageValues.Keys.Contains("ReportExecutionLogId"))
             {
                 if (updateReportExecutionLogArgs.response.RetryNumber <= 1)
                 {
@@ -316,7 +304,6 @@ namespace CommunicationWorkerRole
         public string StatusCode { get; set; }
         public string ExceptionMessage { get; set; }
         public DbQueueService queueservice { get; set; }
-        public bool IsInternalException { get; set; }
         public QueueResponse response { get; set; }
         
 

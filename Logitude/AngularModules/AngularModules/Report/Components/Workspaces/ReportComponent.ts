@@ -152,7 +152,7 @@ export class ReportComponent {
         }
     }
 
-    IsLoadSettingWorkerRoleRuning: boolean = false;
+    //IsLoadSettingWorkerRoleRuning: boolean = false;
     IsLoadReportsTemplateListRuning: boolean = false;
     
     ViewReport(groupList: ReportGroupList, reportList: ReportList) {
@@ -160,10 +160,10 @@ export class ReportComponent {
         if (!this.IsViewReport) {
             this.IsViewReport = true;
 
-            this.IsLoadSettingWorkerRoleRuning = true;
+            //this.IsLoadSettingWorkerRoleRuning = true;
             this.IsLoadReportsTemplateListRuning = true;
             this.LoadReportTemplate(groupList, reportList);
-            this.LoadReportsRunUsingWR(groupList, reportList);
+           // this.LoadReportsRunUsingWR(groupList, reportList);
         }
     }
 
@@ -182,28 +182,28 @@ export class ReportComponent {
         });
     }
 
-    ReportsRunUsingWR: boolean = false;
-    LoadReportsRunUsingWR(groupList: ReportGroupList, reportList: ReportList) {
+    //ReportsRunUsingWR: boolean = false;
+    //LoadReportsRunUsingWR(groupList: ReportGroupList, reportList: ReportList) {
        
-        var myService = new ReportService();
-          myService.GetCheckIfReportsRunUsingWR().subscribe(res => {
-            var pmResponse: ServiceResponse = res;
-            if (!pmResponse.HasError) {
-                this.ReportsRunUsingWR = pmResponse.Result;
-            }
+    //    var myService = new ReportService();
+    //      myService.GetCheckIfReportsRunUsingWR().subscribe(res => {
+    //        var pmResponse: ServiceResponse = res;
+    //        if (!pmResponse.HasError) {
+    //            this.ReportsRunUsingWR = pmResponse.Result;
+    //        }
 
-            this.IsLoadSettingWorkerRoleRuning = false;
-            this.LoadComplete(groupList, reportList);
-        });
-    }
+    //        this.IsLoadSettingWorkerRoleRuning = false;
+    //        this.LoadComplete(groupList, reportList);
+    //    });
+    //}
     
     LoadComplete(groupList: ReportGroupList, reportList: ReportList) {
 
-        if (!this.IsLoadSettingWorkerRoleRuning && !this.IsLoadReportsTemplateListRuning) {
+        if (!this.IsLoadReportsTemplateListRuning) {
             SessionLocator.DynamicLoader.Load("./Report/Components/ReportsPreviewComponent", this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.ReportsPreview(groupList, reportList, this.ReportTemplates, this.ReportsRunUsingWR);
+                    cmpRef.instance.ReportsPreview(groupList, reportList, this.ReportTemplates);
                 });
 
             this.IsViewReport = false;

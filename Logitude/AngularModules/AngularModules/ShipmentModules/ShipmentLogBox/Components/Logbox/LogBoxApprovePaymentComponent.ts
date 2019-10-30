@@ -1,41 +1,41 @@
 declare var System: any, window: any;
-import {ShipmentArchiveFilter} from '../../../../Controls/ShipmentArchiveFilter';
-import {TransportsFilter} from '../../../../Controls/TransportsFilter';
-import {Component, Output, EventEmitter, OnInit, AfterViewInit} from '@angular/core';
-import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import {SearchTextBox} from '../../../../Controls/SearchTextBox';
-import {IconButton} from '../../../../Controls/IconButton';
-import {LogGridComponent} from '../../../../Infrastructure/Components/LogitudeComponents/LogGridComponent/LogGridComponent'
-import {Http, Response} from '@angular/http';
-import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs';
-import {EntityListService} from '../../../../Infrastructure/Services/EntityListService';
-import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {LogBoxDocumentsComponent} from './LogBoxDocumentsComponent';
-import {ShipmentDomainService, ImporterQueriesDataCounts} from '../../../../Shipment/Services/ShipmentDomainService';
-import {AppTool} from '../../../../Infrastructure/Tools';
-import {CustomNumbersPipe} from '../../../../Infrastructure/Pipes/CustomNumbersPipe';
-import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
-import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
-import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {EntityStatusListService} from '../../../../Infrastructure/Services/StandardLists/EntityStatusListService';
-import {BranchListService} from '../../../../Common/Services/StandardLists/BranchListService';
-import {DepartmentListService} from '../../../../Common/Services/StandardLists/DepartmentListService';
-import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import {Guid} from '../../../../Infrastructure/Utilities/Guid';
-import {ShipmentPMService} from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
-import {DocumentsFilingExtendedPMService} from '../../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
-import {GroupByPipe} from '../../../../Infrastructure/Pipes/GroupByPipe';
-import {ShipmentAdditionalCloudDataService} from '../../../../Shipment/Services/Others/ShipmentAdditionalCloudDataService';
-import {ImageLibraryService} from '../../../../Common/Services/Others/ImageLibraryService';
-import {ServiceHelper} from '../../../../Infrastructure/Utilities/ServiceHelper';
-import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
-import {DocumentTypeMetaDataExtendedService} from '../../../../Common/Services/ExtendedPMs/DocumentTypeMetaDataExtendedService' 
-import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
-import { CommonDomainService } from '../../../../Common/Services/CommonDomainService'; 
+import { ShipmentArchiveFilter } from '../../../../Controls/ShipmentArchiveFilter';
+import { TransportsFilter } from '../../../../Controls/TransportsFilter';
+import { Component, Output, EventEmitter, OnInit, AfterViewInit } from '@angular/core';
+import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { SearchTextBox } from '../../../../Controls/SearchTextBox';
+import { IconButton } from '../../../../Controls/IconButton';
+import { LogGridComponent } from '../../../../Infrastructure/Components/LogitudeComponents/LogGridComponent/LogGridComponent'
+import { Http, Response } from '@angular/http';
+import { ServiceArgs } from '../../../../Infrastructure/DataContracts/ServiceArgs';
+import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { LogBoxDocumentsComponent } from './LogBoxDocumentsComponent';
+import { ShipmentDomainService, ImporterQueriesDataCounts } from '../../../../Shipment/Services/ShipmentDomainService';
+import { AppTool } from '../../../../Infrastructure/Tools';
+import { CustomNumbersPipe } from '../../../../Infrastructure/Pipes/CustomNumbersPipe';
+import { ShipmentPM } from '../../../../Shipment/EntityPMs/ShipmentPM';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { EntityStatusListService } from '../../../../Infrastructure/Services/StandardLists/EntityStatusListService';
+import { BranchListService } from '../../../../Common/Services/StandardLists/BranchListService';
+import { DepartmentListService } from '../../../../Common/Services/StandardLists/DepartmentListService';
+import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { Guid } from '../../../../Infrastructure/Utilities/Guid';
+import { ShipmentPMService } from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
+import { DocumentsFilingExtendedPMService } from '../../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
+import { GroupByPipe } from '../../../../Infrastructure/Pipes/GroupByPipe';
+import { ShipmentAdditionalCloudDataService } from '../../../../Shipment/Services/Others/ShipmentAdditionalCloudDataService';
+import { ImageLibraryService } from '../../../../Common/Services/Others/ImageLibraryService';
+import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+import { DocumentTypeMetaDataExtendedService } from '../../../../Common/Services/ExtendedPMs/DocumentTypeMetaDataExtendedService'
+import { ServiceLocator } from '../../../../Infrastructure/Locators/ServiceLocator';
+import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
-import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadManager';
+import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
 @Component({
     moduleId: module.id,
     templateUrl: './LogBoxApprovePaymentComponent.html'
@@ -90,99 +90,100 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
         if (args.EntityPm) {
             this.EntityPm = args.EntityPm;
             this.AdditionalData = args.AdditionalData;
-            
-                if (!AppTool.IsNullOrEmpty(this.AdditionalData.DenyReason)) {
-                    this.DimDenyButton = true;
+
+            if (!AppTool.IsNullOrEmpty(this.AdditionalData.DenyReason)) {
+                this.DimDenyButton = true;
+            }
+            if (!AppTool.IsNullOrEmpty(this.AdditionalData.ApprovedByUserName) && !AppTool.IsNullOrEmpty(this.AdditionalData.VersionApproved) && (this.AdditionalData.VersionApproved == this.AdditionalData.VersionId)) {
+                var today = new Date(this.AdditionalData.ApproveDateTime);
+                var d = today.getDate();
+                var m = today.getMonth() + 1; //January is 0!
+                var dd = "";
+                var mm = "";
+                var yyyy = today.getFullYear().toString();
+                if (d < 10) {
+                    dd = '0' + d;
                 }
-                if (!AppTool.IsNullOrEmpty(this.AdditionalData.ApprovedByUserName) && !AppTool.IsNullOrEmpty(this.AdditionalData.VersionApproved) && (this.AdditionalData.VersionApproved == this.AdditionalData.VersionId)) {
-                    var today = new Date(this.AdditionalData.ApproveDateTime);
-                    var d = today.getDate();
-                    var m = today.getMonth() + 1; //January is 0!
-                    var dd = "";
-                    var mm = "";
-                    var yyyy = today.getFullYear().toString();
-                    if (d < 10) {
-                        dd = '0' + d;
-                    }
-                    else {
-                        dd = d.toString();
-                    }
-                    if (m < 10) {
-                        mm = '0' + m;
-                    }
-                    else {
-                        mm = m.toString();
-                    }
-                    var to = dd + '/' + mm + '/' + yyyy;
-                    this.ValidationWarningsList = TextCodeTranslator.Translate("Shipment.O.VersionApprovedBy") + " " + this.AdditionalData.ApprovedByUserName + " " + TextCodeTranslator.Translate("Shipment.O.OnDate") + " " + to;//"גרסת הצהרה זו כבר אושרה על ידי " + this.AdditionalData.ApprovedByUserName + " בתאריך " + to + "";
-
-                    this.DimApproveButton = true;
+                else {
+                    dd = d.toString();
                 }
-                var ObjectTable = window.ObjectTables.filter(x => x.Name === "Shipment")[0];
-                this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading ...");
-                this._documentsFilingExtendedPMService.getAllDocumentsFilingsByEntityIdAndObjectTable(this.EntityPm.Id, ObjectTable.Id, "I", SessionLocator.Tenant).subscribe(res => {
-                    var Result = [];//DocumentTypeMetaDataExtendedService
+                if (m < 10) {
+                    mm = '0' + m;
+                }
+                else {
+                    mm = m.toString();
+                }
+                var to = dd + '/' + mm + '/' + yyyy;
+                var tempMessage = TextCodeTranslator.Translate("Shipment.O.VersionApprovedBy");
+                tempMessage = tempMessage.replace("*VersionID*", this.AdditionalData.VersionId);
+                tempMessage = tempMessage.replace("*ApprovedByUserName*", this.AdditionalData.ApprovedByUserName);
+                tempMessage = tempMessage.replace("*ApproveDateTime*", to);
+                this.ValidationWarningsList = tempMessage;//TextCodeTranslator.Translate("Shipment.O.VersionApprovedBy") + " " + this.AdditionalData.ApprovedByUserName + " " + TextCodeTranslator.Translate("Shipment.O.OnDate") + " " + to;//"גרסת הצהרה זו כבר אושרה על ידי " + this.AdditionalData.ApprovedByUserName + " בתאריך " + to + "";
 
-                    Result = res.Result.filter(a => a.IsDeleted == false && a.HasFile == true);
+                this.DimApproveButton = true;
+            }
+            var ObjectTable = window.ObjectTables.filter(x => x.Name === "Shipment")[0];
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading ...");
+            this._documentsFilingExtendedPMService.getAllDocumentsFilingsByEntityIdAndObjectTable(this.EntityPm.Id, ObjectTable.Id, "I", SessionLocator.Tenant).subscribe(res => {
+                var Result = [];
 
+                Result = res.Result.filter(a => a.IsDeleted == false && a.HasFile == true);
 
-                    this.externalDocs = [];
+                this.externalDocs = [];
 
-                    //var SupplierInvoice = Result.filter(a => a.DocumentTypeCode == "380" || a.DocumentTypeCode == "721");//DEC
-                    var DecForm = Result.filter(a => a.DocumentTypeCode == "DEC");//DEC
-                    var Others = Result.filter(a => a.DocumentTypeCode != "DEC");//&& a.DocumentTypeCode != "380"
-                    //var tempSupplierInvoice = [] = SupplierInvoice;
-                    //var tempOthers = [] = Others;
-                    var DRELID = "";
-                    //this.externalDocs = DecForm;
-                   
-                    this.externalDocs = DecForm.concat(Others);
-                    var Ticket = this.externalDocs[0];
-                    if (Ticket && Ticket.HasFile == true && Ticket.FileExtension.toLowerCase() == "pdf") {
-                        this.IsPDF = true;
-                        this.myCommonDomainService.GetFilingAttachPdfReport(Ticket.DocumentId).subscribe((response: ServiceResponse) => {
-                            if (!response.HasError) {
-                                var buffer = EntityResourceService.base64ToBufferConvertor(response.Result);
-                                var blob = new Blob([buffer], { type: 'application/pdf' });
-                                var objectURL = URL.createObjectURL(blob);
-                                this.IFrameURI = objectURL;
-                            }
-                        });
+                var DecForm = Result.filter(a => a.DocumentTypeCode == "DEC");
+                var Others = Result.filter(a => a.DocumentTypeCode != "DEC");
+
+                var DRELID = "";
+
+                var Ticket = this.externalDocs[0];
+                if (Ticket && Ticket.HasFile == true && Ticket.FileExtension.toLowerCase() == "pdf") {
+                    this.IsPDF = true;
+                    this.myCommonDomainService.GetFilingAttachPdfReport(Ticket.DocumentId).subscribe((response: ServiceResponse) => {
+                        if (!response.HasError) {
+                            var buffer = EntityResourceService.base64ToBufferConvertor(response.Result);
+                            var blob = new Blob([buffer], { type: 'application/pdf' });
+                            var objectURL = URL.createObjectURL(blob);
+                            this.IFrameURI = objectURL;
+                        }
+                    });
+                }
+                else {
+                    this.IsPDF = false;
+                }
+                this.SelectedTicket = Ticket;
+                this._DocumentTypeMetaDataExtendedService.GetDocumentsMetaDataTypeByCode("DREL").subscribe(myResult => {
+                    if (myResult.Result) {
+                        var DRELDecFormDocs = [];
+                        var DRELOtherDocs = [];
+
+                        DRELID = myResult.Result.Id;
+                        if (!AppTool.IsNullOrEmpty(DRELID)) {
+                            DecForm.forEach((mydoc) => {
+                                var DRELTypes = mydoc.DocumentsFilingMetaDataValues.filter(a => a.DocumentsMetaDataTypeId == DRELID);
+                                if (DRELTypes != null && DRELTypes.length > 0) {
+                                    DRELDecFormDocs.push(mydoc);
+                                }
+                            });
+                            Others.forEach((docin) => {
+                                var DRELTypes = docin.DocumentsFilingMetaDataValues.filter(a => a.DocumentsMetaDataTypeId == DRELID);
+                                if (DRELTypes != null && DRELTypes.length > 0) {
+                                    DRELOtherDocs.push(docin);
+                                }
+                            });
+                            this.externalDocs = DRELDecFormDocs.concat(DRELOtherDocs);
+                        }
                     }
-                    else {
-                        this.IsPDF = false;
-                    }
-                    this.SelectedTicket = Ticket;
-                    //this._DocumentTypeMetaDataExtendedService.GetDocumentsMetaDataTypeByCode("DREL").subscribe(myResult => {
-                    //    if (myResult.Result) {
-                    //        DRELID = myResult.Result.Id;
-                    //        if (!AppTool.IsNullOrEmpty(DRELID)) {
-                    //            SupplierInvoice.forEach((mydoc) => {
-                    //                var DRELTypes = mydoc.DocumentsFilingMetaDataValues.filter(a => a.DocumentsMetaDataTypeId == DRELID);
-                    //                if (DRELTypes != null && DRELTypes.length > 0) {
-                    //                    tempSupplierInvoice.push(mydoc);
-                    //                }
-                    //            });
-                    //            Others.forEach((docin) => {
-                    //                var DRELTypes = docin.DocumentsFilingMetaDataValues.filter(a => a.DocumentsMetaDataTypeId == DRELID);
-                    //                if (DRELTypes != null && DRELTypes.length > 0) {
-                    //                    tempOthers.push(docin);
-                    //                }
-                    //            });
-                    //        }
-                    //    }
-                    //});
-
-                    
-                    //this.externalDocs.push({ key: TextCodeTranslator.Translate("Shipment.O.SupplierInvoiceAndPackingList"), value: tempSupplierInvoice });// "חשבונות ספק ורשימות אריזה"
-                    //this.externalDocs.push({ key: TextCodeTranslator.Translate("Shipment.O.AdditionalDocuments"), value: tempOthers });//"מסמכים נוספים"
-                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
-
-                }, error => {
-                    var dd: Response = error;
                 });
-           
-          
+
+
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
+
+            }, error => {
+                var dd: Response = error;
+            });
+
+
         }
     }
     public ValidationWarningsList: string = null;
@@ -199,7 +200,7 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
                 this.messageWindow.Message = TextCodeTranslator.Translate("Shipment.O.VersionAlreadyApproved");//"גרסה זו כבר אושרה על ידי משתמש אחר";
                 this.messageWindow.Show(this.messageWindow.Message);
                 //this.ValidationWarningsList = " גרסת הצהרה זו אושרה על ידי המשתמש " + entity.ApprovedByUserName + " בתאריך " + to;
-                this.CurrentSession.CurrentWindow.StopBusyIndicator(); 
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
             }
             else {
                 entity.ApprovedByUserName = SessionLocator.LoggedUserPM.EnglishName;
@@ -245,7 +246,7 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
         newWindow.Width = 350;
         newWindow.Height = 250;
         newWindow.RTL = true;
-        
+
         this._ShipmentAdditionalCloudDataService.getsingledata(this.EntityPm.Id).subscribe(AdditionalResult => {
             var entity = AdditionalResult.Result
             if (!AppTool.IsNullOrEmpty(entity.DenyReason) || !AppTool.IsNullOrEmpty(entity.ApprovedByUserName)) {
@@ -319,7 +320,7 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
             else {
                 this.IsPDF = false;
             }
-        } 
+        }
     }
 
     public get ShipperReference1() { return this.EntityPm.ShipperReference1 }
