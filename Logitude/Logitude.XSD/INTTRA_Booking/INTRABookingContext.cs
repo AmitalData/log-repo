@@ -229,11 +229,6 @@ namespace Logitude.XSD.INTTRA_Booking
                                           && d.ShipmentId == this.ShipmentId
                                           select d).ToList();
 
-            if (string.IsNullOrEmpty(this.ShipmentPM.BookingConfirmationNumber))
-            {
-                this.Errors.Add("Booking Confirmation Number is required");
-            }
-
             if (string.IsNullOrEmpty(this.ShipmentPM.DescriptionOfGoods))
             {
                 this.Errors.Add("Shipment Description  of Goods is required");
