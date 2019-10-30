@@ -495,6 +495,7 @@ namespace WebFreight.Web.DataProviders
         public DateTime? DeliveryETD { get; set; }
         public string PickupAddress { get; set; }
         public string DeliveryAddress { get; set; }
+        public string PickupShortAddress { get; set; }
 
         public string DepositBankEnglishName { get; set; }
         public string DepositBankLocalName { get; set; }
