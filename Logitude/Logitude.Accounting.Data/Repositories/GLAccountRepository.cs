@@ -839,6 +839,32 @@ namespace Logitude.Accounting.Data.Repositories
                }
            }
        }
+
+        public List<GLAccount> GetByDisplayNumberAndAccType(String displayNumber, String accTypeCode, int tenant)
+        {
+            if (String.IsNullOrEmpty(displayNumber) || String.IsNullOrEmpty(accTypeCode))
+            {
+                List<GLAccount> rv = new List<GLAccount>();
+                return rv;
+            }
+            else
+            {
+                IQueryable<GLAccount> query = from a in context.GLAccounts
+                                              where a.DisplayNumber == displayNumber && a.AccountTypeCode == accTypeCode && a.Tenant == tenant
+                                              select a;
+                if (query.Any())
+                {
+                    return (query).ToList();
+                }
+                else
+                {
+                    List<GLAccount> rv = new List<GLAccount>();
+                    return rv;
+                }
+            }
+        }
+
+
         public IQueryable<string> GetQId(List<string> AllIdAccounts,int tenant)
         {
             return

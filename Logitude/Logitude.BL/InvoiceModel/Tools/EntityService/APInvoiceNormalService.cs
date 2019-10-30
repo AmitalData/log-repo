@@ -1074,6 +1074,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             if (shipment != null)
             {
+                entityPM.ShipmentTransportModeId = shipment.TransportModeId;
+
                 shipment.ConcurrencyGUID = Guid.NewGuid().ToString();
 
                 if (string.IsNullOrEmpty(entityPM.MainEntityReference))

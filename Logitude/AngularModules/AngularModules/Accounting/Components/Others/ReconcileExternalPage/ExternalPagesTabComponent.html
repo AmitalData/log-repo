@@ -10,7 +10,7 @@
             <div class="TableHolder">
                 <table>
                     <tr class="TabTitleRow">
-                        <td>{{'BankAccount.TH.BankPages' | TextCodeTranslationPipe}} </td>
+                        <td>{{Title}}</td>
                     </tr>
 
                     <!-- Filters -->
@@ -26,7 +26,7 @@
                                                 <td style="width: 100px;" [style.text-align]="isRTL ? 'right' : 'left'" >{{'Accounting.General.O.Datefrom' | TextCodeTranslationPipe}}:</td>
 
                                                 <td style="width: 140px;">
-                                                    <LogDatePicker [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName"
+                                                    <LogDatePicker [ObjectFieldName]="'FromDate'" [ObjectTableName]="ReconcilePageTable"
                                                                    [NoObjectField]="true" [SelectedDateValue]="FromDate"
                                                                    [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
                                                 </td>
@@ -36,7 +36,7 @@
                                                 <td style="width: 30px;" [style.text-align]="isRTL ? 'right' : 'left'" >{{'Accounting.General.O.To' | TextCodeTranslationPipe}}:</td>
 
                                                 <td style="width: 140px;">
-                                                    <LogDatePicker [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName"
+                                                    <LogDatePicker [ObjectFieldName]="'ToDate'" [ObjectTableName]="ReconcilePageTable"
                                                                    [NoObjectField]="true" [SelectedDateValue]="ToDate"
                                                                    [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
                                                 </td>

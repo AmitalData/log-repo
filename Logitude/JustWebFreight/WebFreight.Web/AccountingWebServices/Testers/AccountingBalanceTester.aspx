@@ -268,6 +268,7 @@
         var _ReconciliationUrl = urlBase + '/api/ReconciliationOp';
         var _ReconciliationAfterConversionUrl = urlBase + '/api/ReconciliationAfterConversion';
         var _ReconciliationStageBUrl = urlBase + '/api/ReconciliationStageB';
+        var _CardGLAccountConnectUrl = urlBase + '/api/CardGLAccountConnect';
         var _RevaluationUrl = urlBase + '/api/RevaluationOp';
 
         var _ARPaymentChequeUrl = urlBase + '/api/ARPaymentChequeOp';
@@ -615,7 +616,70 @@
 
             return false;
         }
-  
+
+
+     
+        function OnClickButtonCardGLAccountConnect() {
+
+            var defaultParam = new Object();
+            defaultParam.Tenant = 1;
+
+            if (!_ResponseToken) {
+                getToken();
+            }
+            try {
+                var myJson = $(".classTextBoxParam").val();
+
+                var objToCheck = JSON.parse(myJson);
+            } catch (e) {
+
+                var str = JSON.stringify(defaultParam);
+                $(".classTextBoxParam").val(str);
+                return false;
+            }
+            var objToCheck1 = JSON.parse(myJson);
+
+            var myUrl;
+            myUrl = _CardGLAccountConnectUrl + "?tenant=" + objToCheck1.Tenant;
+            
+            //alert(myUrl);
+
+
+            $(".class_LabelLog").val("OnClickButtonCardGLAccountConnect ..." + _ResponseToken);
+            $.ajax({
+                url: myUrl,
+                type: 'GET',
+                dataType: 'json',
+                headers: { 'Token': _ResponseToken },
+                contentType: 'application/json; charset=UTF-8',  
+                data: myJson,
+                success: function (response, textStatus, xhr) {
+                    //handle success 
+                    //alert("success ");;
+                    $(".class_LabelLog").val(JSON.stringify(response));
+                    DrawTableReconciliation(response,arryColumns);
+                    
+                    var obj = JSON.parse(myJson);
+                    obj.CallBack = response;
+                    var str = JSON.stringify(obj);
+                    $(".classTextBoxParam").val(str);
+                    //response.Token = response.Token;
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    if (textStatus != 'abort') {
+                        //handle error
+
+                        alert("error" + textStatus + errorThrown);
+
+                        $(".class_LabelLog").val(xhr.responseText);
+                    }
+                }
+            });
+
+
+            return false;
+        }
+
 
 
         function OnClickButtonRevaluationsBatch() {
@@ -1073,6 +1137,8 @@ div#two {
                     <button id="ButtonRevaluationsBatch" onclick="javascript:return OnClickButtonRevaluationsBatch();" >RevaluationsBatch</button>
                     <%--<button id="ButtonCardIndex" onclick="javascript:return OnClickButtonLedgerTransactionCardIndex();" >CardIndex</button>--%>
                     <asp:Button id="ButtonCardIndex" runat="server" Text="Card Index" OnClick="_ButtonLedgerTransactionCardIndex_Click" />
+                    <%--<asp:Button ID="ButtonCardGLAccountConnect" runat="server" Text="Card GLAccount Connect (Tenant)" OnClick="ButtonCardGLAccountConnect_Click" />--%>        
+                    <button id="ButtonCardGLAccountConnect"  onclick="javascript:return OnClickCardGLAccountConnect();">Card GLAccount Connect (Tenant)</button>        
                 </li>
                 <li>
                     <button id="ButtonPostDatedChequeRedemptionBatch" onclick="javascript:return OnClickButtonPostDatedChequeRedemptionBatch();" >PostDatedChequeRedemptionBatch</button>

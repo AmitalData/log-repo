@@ -2000,6 +2000,41 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return cards.ToList();
         }
 
+        public List<CardPM> GetCustomerCardPMsWithoutGLAccount(int tenant)
+        {
+            List<CardPM> pms = null;
+            List<Card> cardPOCOs = repository.GetAllCustomerCardsWithoutGLAccount(tenant);
+            if (cardPOCOs != null)
+            {
+                pms = cardPOCOs.Select(poco => this.GetSinglePM(poco.Id, tenant)).ToList();
+            }
+            return pms;
+        }
+
+        public List<CardPM> GetVendorCardPMsWithoutGLAccount(int tenant)
+        {
+            List<CardPM> pms = null;
+            List<Card> cardPOCOs = repository.GetAllVendorCardsWithoutGLAccount(tenant);
+            if (cardPOCOs != null)
+            {
+                pms = cardPOCOs.Select(poco => this.GetSinglePM(poco.Id, tenant)).ToList();
+            }
+            return pms;
+        }
+
+        public List<CardPM> GetAllOtherCardPMsWithoutGLAccount(int tenant)
+        {
+            List<CardPM> pms = null;
+            List<Card> cardPOCOs = repository.GetAllOtherCardsWithoutGLAccount(tenant);
+            if (cardPOCOs != null)
+            {
+                pms = cardPOCOs.Select(poco => this.GetSinglePM(poco.Id, tenant)).ToList();
+            }
+            return pms;
+        }
+
+
+
 
     }
 }

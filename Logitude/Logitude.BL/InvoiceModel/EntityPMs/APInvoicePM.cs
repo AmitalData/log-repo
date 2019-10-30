@@ -15,6 +15,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string InternalNumber { get; set; }
 
         public bool CreatedFromAPI { get; set; }
+        public string ShipmentTransportModeId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string InvoiceNumber { get; set; }

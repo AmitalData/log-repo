@@ -88,6 +88,7 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<TermsofUseSignature> TermsofUseSignatures { get; }
         IDbSet<ChargeTypeAccounting> ChargeTypeAccountings { get; }
         IDbSet<ContactLastLogin> ContactLastLogins { get; }
+        IDbSet<SharedLogisticsContactLastLogin> SharedLogisticsContactLastLogins { get; }
         IDbSet<ContactLoginLog> ContactLoginLogs { get; }
         IDbSet<Report> Reports { get; }
         IDbSet<UserPermittedBranch> UserPermittedBranches { get; }
@@ -218,9 +219,9 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<LogBoxTenantSetting> LogBoxTenantSettings { get; set; }
         IDbSet<DWHBuildStatus> DWHBuildStatus { get; set; }
         IDbSet<AccountingPartner> AccountingPartners { get; set; }
-
         IDbSet<DocumentsExecutionLog> DocumentsExecutionLogs { get; set; }
-        
+        IDbSet<CardContactAdditionalService> CardContactAdditionalServices { get; set; }
+
         void SetAsModified(object entity);
         void DetectChanges();
         int SaveChanges();
