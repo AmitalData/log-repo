@@ -30,7 +30,7 @@
     <Content Include="Accounting\Components\EditTabs\AccountingIntegrityCheck\IntegrityCheckTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\BankAccount\BankPageEventsComponent.html" />
     <Content Include="Accounting\Components\EditTabs\BankAccount\ManageRecoTabComponent.html" />
-    <Content Include="Accounting\Components\EditTabs\BankAccount\BankPagesTabComponent.html" />
+    <Content Include="Accounting\Components\EditTabs\BankAccount\ExternalPagesTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\BankCode\BankCodeGeneralTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\BankDeposit\BankDepositDetailsTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\GLAccount\AddEditTaxWithholdingLineComponent.html" />
@@ -453,7 +453,14 @@
     <TypeScriptCompile Include="Common\Components\FiltersMenu\CustomsShipperFiltersMenuComponent.ts" />
     <TypeScriptCompile Include="Common\Components\Maintenance\CustomsInterface\CustomsInterfaceStartDatesComponent.ts" />
     <TypeScriptCompile Include="Common\Components\Maintenance\CustomsInterface\LocalCustomsInterfaceDetailsComponent.ts" />
+    <TypeScriptCompile Include="Common\Components\MenuButtons\AgentMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Common\Components\MenuButtons\AirlineMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Common\Components\MenuButtons\ContactMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Common\Components\MenuButtons\CustomAgentMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Common\Components\MenuButtons\ShippingAgentMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Common\Components\MenuButtons\ShippingLineMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Common\Components\MenuButtons\TruckerMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Common\Components\MenuButtons\VendorMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Common\CustomFilters\WarehouseCustomFilter.ts" />
     <TypeScriptCompile Include="Common\DataContracts\DWQueryData.ts" />
     <TypeScriptCompile Include="Common\DataContracts\ShipmentPickUpDeliverySL.ts" />
@@ -3199,7 +3206,7 @@
     <Content Include="_Resources\js\jszip.js" />
     <Content Include="_Resources\js\Reflect.js" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\BankAccount\ManageRecoTabComponent.ts" />
-    <TypeScriptCompile Include="Accounting\Components\EditTabs\BankAccount\BankPagesTabComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\EditTabs\BankAccount\ExternalPagesTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\BankDeposit\BankDepositDetailsTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\GLAccount\AddEditTaxWithholdingLineComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\GLAccount\GLAccountAdditionalDataTabComponent.ts" />

@@ -132,6 +132,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  true,
 			      				    IsLookUp =  true,
+			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "Customer,Customers,Simplog.FreightLib.NewCustomerCommand,Id,",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
@@ -10187,6 +10188,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
              			   Feature CustomerFeature_MB53 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SETASPOTENTIAL", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.SetAsPotential", NameTextCodeDefaultText = "Set as Potential", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
              			   Feature CustomerFeature_MB54 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NOTMYCUSTOMER", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.SetNotMyCustomer", NameTextCodeDefaultText = "Set as Not My Customer", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
              			   Feature CustomerFeature_MB55 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QUESTIONNAIREANSWERS", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.ViewQuestionnaireAnswers", NameTextCodeDefaultText = "View Questionnaire Answers", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+             			   Feature CustomerFeature_MB56 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Disconnect", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.DisconnectGLAccount", NameTextCodeDefaultText = "Disconnect GLAccount", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -10400,6 +10402,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						FeatureId=  CustomerFeature_MB55.Id,
 						Style = null,
 						LocalDefaultText = null,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
+			   MenuButton CustomerMenuButton56 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "Disconnect",
+						Index = 0, 
+						IsActive = true,
+						LabelTextCodeCode = "Customer.B.DisconnectGLAccount",
+						LabelTextCodeDefaultText = "Disconnect GLAccount",
+						Tenant = 0,
+						MenuButtonGroupId = CustomerMenuButtonGroup.Id,
+						ParentMenuButtonId = CustomerMenuButton5.Id,
+						ObjectTableId = CustomerObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  CustomerFeature_MB56.Id,
+						Style = null,
+						LocalDefaultText = "נתק כרטיס",
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }

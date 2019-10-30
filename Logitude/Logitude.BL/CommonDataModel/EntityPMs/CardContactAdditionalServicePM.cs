@@ -17,6 +17,9 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string CardContactId { get; set; }
         public string AdditionalServiceId { get; set; }
 
+        public string CardId { get; set; }
+        public string ContactId { get; set; }
+
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string AdditionalServiceName { get; set; }
 

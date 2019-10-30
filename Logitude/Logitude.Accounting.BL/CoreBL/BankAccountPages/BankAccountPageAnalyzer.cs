@@ -347,7 +347,7 @@ s             b                   a
             {
                 _ReconcileExternalPageQueryService = new ReconcileExternalPageQueryService(tenant);
                 prevReconcileExternalPagePM =
-                _ReconcileExternalPageQueryService.GetBankPageByPageNo(int.Parse(dbBankaccountPM.LastPageNumber), dbBankaccountPM.Id, tenant);
+                _ReconcileExternalPageQueryService.GetPageByNumber(int.Parse(dbBankaccountPM.LastPageNumber), dbBankaccountPM.Id,"BankAccount", tenant);
             }
 
 

@@ -95,8 +95,8 @@ namespace Logitude.Social.Data
 			modelBuilder.Configurations.Add(new ContactMap());
 			modelBuilder.Configurations.Add(new ContactLastLoginMap());
             modelBuilder.Configurations.Add(new ObjectTableMap());
-
-			 modelBuilder.Configurations.Add(new AccountingSystemMap());
+            modelBuilder.Configurations.Add(new SharedLogisticsContactLastLoginMap());
+            modelBuilder.Configurations.Add(new AccountingSystemMap());
             modelBuilder.Configurations.Add(new AccountingSettingMap());
             modelBuilder.Configurations.Add(new Accounts1Map());
             modelBuilder.Configurations.Add(new AccountTypeMap());
