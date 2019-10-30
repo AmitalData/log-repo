@@ -22,6 +22,7 @@ using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.Helpers;
 using Logitude.BL.GlobalModel.Tools.Validating;
+using Simplog.Server.Infrastructure;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -40,6 +41,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private bool isConnectedToCard = false;
         private Contact oldSimilarContact = null;
         private List<CardContact> allCardContact;
+        private CardContactAdditionalServiceRepository cardContactAdditionalServiceRepository;
         public ContactService(ICommonDataContext objectContext, int tenant)
         {
             this.tenant = tenant;
@@ -50,6 +52,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.contactTenantRepository = new ContactTenantRepository(objectContext);
             this.contactTenantRoleRepository = new ContactTenantRoleRepository(objectContext);
             this.allCardContact = new List<CardContact>();
+            this.cardContactAdditionalServiceRepository = new CardContactAdditionalServiceRepository(objectContext);
         }
 
         public void Create(ContactPM entityPM)
@@ -137,12 +140,19 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 {
                     if (entityPM.DisconectFromCard)
                     {
+                        foreach(CardContactAdditionalServicePM service in entityPM.CardContactAdditionalServices)
+                        {
+                            this.DeleteAdditionalService(service);
+                        }
+
                         CardContactRepository.Remove(myCardContact);
                         CardContactRepository.SubmitChanges();
                     }
 
                     else
                     {
+                        this.UpdateAdditionalServicesCollection(entityPM.CardContactAdditionalServices, myCardContact);
+
                         MapCardContactToContact(myCardContact, entityPM);
                         CardContactRepository.Update(myCardContact);
                     }
@@ -501,6 +511,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     IsOceanImport = entityPM.IsOceanImport,
                 };
 
+                foreach (CardContactAdditionalServicePM item in entityPM.CardContactAdditionalServices)
+                {
+                    this.CreateAdditionalService(item, cardContact);
+                }
+                
                 CardContactRepository.Add(cardContact);
                 CardContactRepository.SubmitChanges();
             }
@@ -552,6 +567,72 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             cardContact.IsOceanImport = contactPM.IsOceanImport;
             cardContact.IsCustomsImport = contactPM.IsCustomsImport;
             cardContact.IsInlandDomestic = contactPM.IsInlandDomestic;
+        }
+
+        private void UpdateAdditionalServicesCollection(List<CardContactAdditionalServicePM> servicePMs, CardContact cardContact)
+        {
+            if (servicePMs != null)
+            {
+                foreach (CardContactAdditionalServicePM itemPM in servicePMs)
+                {
+                    switch (itemPM.ChangeSetOp)
+                    {
+                        case ChangeSetOperation.Insert:
+                            {
+                                this.CreateAdditionalService(itemPM, cardContact);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Update:
+                            {
+                                this.UpdateAdditionalService(itemPM);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Delete:
+                            {
+                                this.DeleteAdditionalService(itemPM);
+                                break;
+                            }
+
+                        default: { break; }
+                    }
+                }
+            }
+        }
+        private void CreateAdditionalService(CardContactAdditionalServicePM itemPM, CardContact cardContact)
+        {
+            itemPM.Id = IdCounter.GetNumber("CardContactAdditionalService", tenant).ToString();
+            itemPM.CardContactId = cardContact.Id;
+            itemPM.Tenant = tenant;
+
+            CardContactAdditionalService itemPoco = new CardContactAdditionalService()
+            {
+                Id = itemPM.Id,
+                CardContactId = itemPM.CardContactId,
+                AdditionalServiceId = itemPM.AdditionalServiceId,
+                Tenant = tenant
+            };
+
+            CardContactAdditionalServiceMapping.MapEntity(itemPM, itemPoco, true);
+            cardContactAdditionalServiceRepository.Add(itemPoco);
+        }
+        private void UpdateAdditionalService(CardContactAdditionalServicePM itemPM)
+        {
+            CardContactAdditionalService itemPoco = cardContactAdditionalServiceRepository.GetSingleCardContactAdditionalService(itemPM.Id, tenant);
+            if (itemPoco != null)
+            {
+                CardContactAdditionalServiceMapping.MapEntity(itemPM, itemPoco, false);
+                cardContactAdditionalServiceRepository.Update(itemPoco);
+            }
+        }
+        private void DeleteAdditionalService(CardContactAdditionalServicePM itemPM)
+        {
+            CardContactAdditionalService itemPoco = cardContactAdditionalServiceRepository.GetSingleCardContactAdditionalService(itemPM.Id, tenant);
+            if (itemPoco != null)
+            {
+                cardContactAdditionalServiceRepository.Remove(itemPoco);
+            }
         }
     }
 }

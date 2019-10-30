@@ -92,7 +92,7 @@ export class BankAccountMenuButtonsHandler {
                                 this.showReconcileWindow(openAmountCurrency);
                                 this.CurrentSession.StopBusyIndicator();
                             });
-                        } 
+                        }
 
                         break;
                     }
@@ -140,6 +140,7 @@ export class BankAccountMenuButtonsHandler {
         var windowArgs: any = {};
         windowArgs.BankAccountPM = this.EntityPM;
         windowArgs.openAmountCurrency = currency; // CurrencySign
+        windowArgs.ObjectTableName = "BankAccount";
 
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = (screenWidth > 1024) ? (screenWidth > 1200 ? 1500 : screenWidth - 20) : 900;

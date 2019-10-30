@@ -1302,7 +1302,6 @@ export class FCLQuoteChargeItem extends BaseComponent {
         this.SetUIProperties_SaleMinMax();
 
         this.UIProperties.SetEnabled("ChargesTypeId", this.ObjectTableName, (this.IsEditingEnabled && !this.IsAllIN) ? true : false);
-        this.UIProperties.SetEnabled("CostCurrencyId", this.ObjectTableName, (this.IsEditingEnabled && !this.IsAllIN) ? true : false);
         this.UIProperties.SetEnabled("CostIsFixedRate", this.ObjectTableName, (this.IsEditingEnabled && !this.IsAllIN) ? true : false);
         this.UIProperties.SetEnabled("VendorId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Notes", this.ObjectTableName, this.IsEditingEnabled);
@@ -1333,7 +1332,26 @@ export class FCLQuoteChargeItem extends BaseComponent {
 
         this.IsAllInCheckBoxVisible = isAllInCheckBoxVisible;
         this.IsAllInInfoIconVisible = isAllInInfoIconVisible;
-        this.IsAllInInfoIconVisible_AmoutLocal = this.IsAllIN && this.CostMeasurementCode == "BCNT" ? true : false;                
+        this.IsAllInInfoIconVisible_AmoutLocal = this.IsAllIN && this.CostMeasurementCode == "BCNT" ? true : false;
+        this.SetUIProperties_AllIn_CostCurrency();
+    }
+    SetUIProperties_AllIn_CostCurrency() {
+
+        var isEnabled_CostCurrencyId = false;
+
+        if (this.IsEditingEnabled) {
+            isEnabled_CostCurrencyId = true;
+
+            if (this.IsAllIN) {
+                isEnabled_CostCurrencyId = false;
+            }
+
+            else if (this.ChargesGroupCode == "FRT" && this.QuotePM.QuoteCharges.filter(d => d.IsAllIN).length > 0) {
+                isEnabled_CostCurrencyId = false;
+            }
+        }
+
+        this.UIProperties.SetEnabled("CostCurrencyId", this.ObjectTableName, isEnabled_CostCurrencyId);
     }
 
     public IsEnabled_CostQuantity: boolean = false;
@@ -1885,6 +1903,8 @@ export class FCLQuoteChargeItem extends BaseComponent {
             this.CostCurrencyId = null;
             this.EntityPM.IsBackToBack = false;
         }
+
+        this.SetUIProperties();
     }
 
     get ChargesTypeCode() { return this.EntityPM.ChargesTypeCode; }

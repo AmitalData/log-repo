@@ -11,20 +11,24 @@ export class ShipmentActionsComponent {
     public ShipmentActions() {
 
     }
-    OperationalCloseShipment() {
-        this.Helper.WaitByIdAndClick('MenuButtons');
-        this.Helper.WaitByIdAndClick('Shipment.B.OperationalClose');
-        this.Helper.WaitByIdAndClick('ConfirmAction');
+    OperationalCloseShipment(ShipmentLevelCode: string) {
+        if (ShipmentLevelCode == 'D' || ShipmentLevelCode=='M') {
+            this.Helper.WaitByIdAndClick('MenuButtons');
+            this.Helper.WaitByIdAndClick('Shipment.B.OperationalClose');
+            this.Helper.WaitByIdAndClick('ConfirmAction');
 
-        this.Helper.WaitEditComponentBusyIndicator();
+            this.Helper.WaitEditComponentBusyIndicator();
+        }
     }
-    OperationalReopenShipment() {
-        this.Helper.WaitByIdAndClick('MenuButtons');
-        this.Helper.WaitByIdAndClick('Shipment.B.OperationalReopen');
-        this.Helper.WaitByIdAndFill('EventNotes', 'Operational ReOpen - Protractor Testing .. ')
+    OperationalReopenShipment(ShipmentLevelCode: string) {
+        if (ShipmentLevelCode == 'D' || ShipmentLevelCode == 'M') {
+            this.Helper.WaitByIdAndClick('MenuButtons');
+            this.Helper.WaitByIdAndClick('Shipment.B.OperationalReopen');
+            this.Helper.WaitByIdAndFill('EventNotes', 'Operational ReOpen - Protractor Testing .. ')
 
-        this.Helper.WaitByIdAndClick('ConfirmAction');
-        this.Helper.WaitBusyIndicator();
+            this.Helper.WaitByIdAndClick('ConfirmAction');
+            this.Helper.WaitBusyIndicator();
+        }
     }
     AccountingCloseShipment() {
         this.Helper.WaitByIdAndClick('MenuButtons');

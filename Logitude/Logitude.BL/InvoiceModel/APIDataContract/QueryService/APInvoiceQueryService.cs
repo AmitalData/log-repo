@@ -51,8 +51,9 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 temp.UpdatedByUserId = myUser.Id;
                 temp.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                 temp.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                temp.SubTotalInLocalCurrency = 0;
-                temp.SubTotalInInvoiceCurrency = 0;
+                
+                //temp.SubTotalInLocalCurrency = 0;
+                //temp.SubTotalInInvoiceCurrency = 0;
 
                 if (string.IsNullOrEmpty(temp.BranchId))
                 {
@@ -115,6 +116,20 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                     throw new ApplicationException("Invoice Currency is required");
                 }
 
+                else
+                {
+                    if(temp.InvoiceCurrencyId == temp.LocalCurrencyId)
+                    {
+                        if (temp.InvoiceCurrencyExchangeRate != null && temp.InvoiceCurrencyExchangeRate != 0)
+                        {
+                            if(temp.InvoiceCurrencyExchangeRate != 1)
+                            {
+                                throw new ApplicationException("Invoice Currency Exchange Rate should be 1 when Invoice Currency same as Local Currency");
+                            }
+                        }
+                    }
+                }
+
                 if (accountingSetting != null && accountingSetting.IsVatNumberMandatoryInAP)
                 {
                     if (string.IsNullOrEmpty(temp.VATNumber))
@@ -144,8 +159,8 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 {
                     throw new ApplicationException("Invoice Date is required");
                 }
-
-                if(!string.IsNullOrEmpty(temp.MainEntityReference))
+                
+                if (!string.IsNullOrEmpty(temp.MainEntityReference))
                 {
                     ShipmentQuery shipmentRepository = new ShipmentQuery(tenant);
                     ShipmentPM shipment = shipmentRepository.GetSinglePMByShipmentNumber(temp.MainEntityReference, tenant, false);
@@ -156,6 +171,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                             throw new ApplicationException("The Shipment is Accounting Closed");
                         }
 
+                        temp.ShipmentTransportModeId = shipment.TransportModeId;
                         temp.MainEntityId = shipment.Id;
                         temp.HouseNumber = shipment.House;
                         temp.MasterNumber = shipment.LongMaster;
@@ -181,7 +197,26 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                         throw new ApplicationException("No Shipment Found");
                     }
                 }
-                
+
+                foreach (APInvoiceLinePM line in temp.InvoiceLines)
+                {
+                    if(string.IsNullOrEmpty(line.ForiegnCurrencyId))
+                    {
+                        line.ForiegnCurrencyId = temp.InvoiceCurrencyId;
+                    }
+
+                    else
+                    {
+                        if(line.ForiegnCurrencyId != temp.InvoiceCurrencyId)
+                        {
+                            throw new ApplicationException("Line Currency is Different than Invoice Currency");
+                        }
+                    }
+
+                    line.EntityReference = temp.MainEntityReference;
+                    line.EntityId = temp.MainEntityId;
+                }
+
                 return temp;
             }
 

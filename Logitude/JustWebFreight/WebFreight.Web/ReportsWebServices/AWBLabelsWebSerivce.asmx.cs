@@ -250,7 +250,7 @@ namespace WebFreight.Web.ReportsWebServices
 
         private void GetLoggedContactData(AWBLabelsDataProvider myDataProvider, int tenant)
         {
-            string contactEmail = AuthenticationUtil.GetAuthenticatedUser(tenant);
+            string contactEmail = AuthenticationUtil.GetLoggedUserEmail(tenant);
             if (!string.IsNullOrEmpty(contactEmail))
             {
                 ContactQuery contactQuery = new ContactQuery(tenant);

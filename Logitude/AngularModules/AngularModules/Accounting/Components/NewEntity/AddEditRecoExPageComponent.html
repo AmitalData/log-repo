@@ -228,7 +228,7 @@
 
                                                     <td style="width: 140px;">
                                                         <LogDatePicker [ObjectFieldName]="'FromDate'"
-                                                            [ObjectTableName]="ObjectTableName" [NoObjectField]="true"
+                                                            [ObjectTableName]="ExternalPageTable" [NoObjectField]="true"
                                                             [SelectedDateValue]="FromDate" [DataContext]="DataContext"
                                                             [HideColumns]="true"></LogDatePicker>
                                                     </td>
@@ -245,7 +245,7 @@
 
                                                     <td style="width: 140px;">
                                                         <LogDatePicker [ObjectFieldName]="'ToDate'"
-                                                            [ObjectTableName]="ObjectTableName" [NoObjectField]="true"
+                                                            [ObjectTableName]="ExternalPageTable" [NoObjectField]="true"
                                                             [SelectedDateValue]="ToDate" [DataContext]="DataContext"
                                                             [HideColumns]="true"></LogDatePicker>
                                                     </td>
@@ -263,7 +263,7 @@
                                                     </td>
                                                     <td>
                                                         <LogTextBox [ObjectFieldName]="'StartBalance'"
-                                                            [ObjectTableName]="ObjectTableName"
+                                                            [ObjectTableName]="ExternalPageTable"
                                                             [DataContext]="DataContext" [HideColumns]="true"
                                                             [InputType]="'decimal'"></LogTextBox>
                                                     </td>
@@ -280,7 +280,7 @@
                                                     </td>
                                                     <td>
                                                         <LogTextBox [ObjectFieldName]="'CloseBalance'"
-                                                            [ObjectTableName]="ObjectTableName"
+                                                            [ObjectTableName]="ExternalPageTable"
                                                             [DataContext]="DataContext" [HideColumns]="true"
                                                             [InputType]="'decimal'"></LogTextBox>
                                                     </td>

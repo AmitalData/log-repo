@@ -8,6 +8,7 @@ using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -950,6 +951,23 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                     else
                                     {
                                         this.UpdateContact(args);
+                                    }
+                                }
+
+                                break;
+                            }
+                        case "AC"://Accounting Partner
+                            {
+                                if (args.AccountingPartner != null)
+                                {
+                                    if (args.AccountingPartner.Id == null)
+                                    {
+                                        this.CreateAccountingPartner(args);
+                                    }
+
+                                    else
+                                    {
+                                        this.UpdateAccountingPartner(args);
                                     }
                                 }
 
@@ -2105,6 +2123,23 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 TruckerService myPartnerService = new TruckerService(objectContext, args.Tenant);
                 myPartnerService.Update(args.Trucker);
             }
+        }
+
+        private void CreateAccountingPartner(PartnerServicePM args)
+        {
+            ICommonDataContext objectContext = CommonDataContext.GetContext(args.Tenant);
+            AccountingPartnerService AccountingPartnerService = new AccountingPartnerService(objectContext, args.Tenant);
+            AccountingPartnerService.Create(args.AccountingPartner);
+            var xml = LogitudeXmlSerializer.SerializeObjectToUTF8XmlString(args.AccountingPartner);
+
+        }
+        private void UpdateAccountingPartner(PartnerServicePM args)
+        {
+            ICommonDataContext objectContext = CommonDataContext.GetContext(args.Tenant);
+            AccountingPartnerService AccountingPartnerService = new AccountingPartnerService(objectContext, args.Tenant);
+            AccountingPartnerService.Update(args.AccountingPartner);
+            var xml = LogitudeXmlSerializer.SerializeObjectToUTF8XmlString(args.AccountingPartner);
+
         }
 
         public HttpResponseMessage Put(PartnerExternalAccountsServicePM args)

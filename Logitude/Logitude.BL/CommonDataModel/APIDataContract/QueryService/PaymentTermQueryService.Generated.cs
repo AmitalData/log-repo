@@ -118,7 +118,17 @@ using Simplog.Data.CommonDataModel;
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
-						temp.Id = MyEntity.Id;
+					   
+					    if(!string.IsNullOrEmpty(MyEntity.Id))
+					    {
+					        throw new ApplicationException("PaymentTerm with provided key doesn't exist");
+						
+						}
+						//else
+						//{
+						//    temp.Id = MyEntity.Id;
+
+						//}
 					}
 					temp.EnglishName = MyEntity.EnglishName;
 					temp.LocalName = MyEntity.LocalName;

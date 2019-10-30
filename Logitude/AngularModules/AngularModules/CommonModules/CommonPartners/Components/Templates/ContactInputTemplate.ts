@@ -10,7 +10,9 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import { CardContactProductPM } from '../../../../Common/EntityPMs/CardContactProductPM';
-//import { CardContactProductPM } from '../../../../Common/EntityPMs/CardContactProductPM';
+import { CardContactAdditionalServicePM } from '../../../../Common/EntityPMs/CardContactAdditionalServicePM';
+import { AdditionalServiceListService } from '../../../../Common/Services/StandardLists/AdditionalServiceListService';
+import { AdditionalServiceList } from '../../../../Common/EntityLists/AdditionalServiceList';
 
 @Component({
     moduleId: module.id,
@@ -33,7 +35,9 @@ export class ContactInputTemplate extends BaseComponent {
     public ShowSecondPartOfWindow: boolean = true;
     private CurrentSession = SessionLocator.SelectedSession;
     public ProductsList: Array<ProductItem> = [];
+    public ServicesList: Array<AdditionalServiceItem> = [];
     public IsProductsAreaVisible: boolean = false;
+    public IsAdditionalServicesAreaVisible: boolean = false;
     constructor() {
         super();
         this.EntityPM = new ContactPM();
@@ -102,6 +106,7 @@ export class ContactInputTemplate extends BaseComponent {
         }
 
         var isProductsAreaVisible = false;
+        var isAdditionalServicesAreaVisible = false;
 
         if (FeatureLocator.HasFeaturePermession("Contact", "ViewContactProducts")) {
             if (!AppTool.IsNullOrEmpty(this.CardId) && !this.IsNewEntity) {
@@ -109,10 +114,18 @@ export class ContactInputTemplate extends BaseComponent {
             }
         }
 
+        if (FeatureLocator.HasFeaturePermession("Contact", "ContactAdditionalServices")) {
+            if (!AppTool.IsNullOrEmpty(this.CardId)) {
+                isAdditionalServicesAreaVisible = true;
+            }
+        }
+
         this.IsProductsAreaVisible = isProductsAreaVisible;
+        this.IsAdditionalServicesAreaVisible = isAdditionalServicesAreaVisible;
 
         this.SetUIProperties();
         this.BuildProductsList();
+        this.BuildServicesList();
     }
 
     public IsEditingEnabled: boolean = false;
@@ -170,6 +183,19 @@ export class ContactInputTemplate extends BaseComponent {
 
             products.forEach(item => {
                 this.ProductsList.push(new ProductItem(item));
+            });
+        });
+    }
+
+    private BuildServicesList() {
+        this.ServicesList = [];
+
+        var service: AdditionalServiceListService = new AdditionalServiceListService();
+        service.getAllFromCache().subscribe(result => {
+            var fullServicesList = result.Result;
+
+            fullServicesList.filter(i => i.InActive == false).sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 }).forEach(item => {
+                this.ServicesList.push(new AdditionalServiceItem(item, this.EntityPM));
             });
         });
     }
@@ -498,5 +524,68 @@ export class ProductItem {
 
     constructor(itemList: CardContactProductPM) {
         this.entityList = itemList;        
+    }
+}
+
+export class AdditionalServiceItem {
+    private entityPM: ContactPM;
+    private entityList: AdditionalServiceList;
+    public get Name() { return this.entityList.Name; }
+
+    public get Foreground() { return this.IsChecked ? "#6E7172" : "#282E30"; }
+
+    constructor(itemList: AdditionalServiceList, itemPM: ContactPM) {
+        this.entityPM = itemPM;
+        this.entityList = itemList;
+
+        var servicePM = this.entityPM.CardContactAdditionalServices.filter(d => d.AdditionalServiceId == this.entityList.Id)[0];
+        this.isChecked = false;
+        if (servicePM != null) {
+            this.isChecked = true;
+        }
+    }
+
+    private isChecked: boolean;
+    public get IsChecked() { return this.isChecked; }
+    public set IsChecked(value: boolean) {
+        if (this.isChecked != value) {
+            this.isChecked = value;
+
+            if (value) {
+                var name = null;
+                var service: AdditionalServiceListService = new AdditionalServiceListService();
+                service.getSingleFromCache(this.entityList.Id).subscribe(myResult => {
+                    var myResponse: ServiceResponse = myResult;
+                    if (!myResponse.HasError) {
+                        var list: AdditionalServiceList = myResponse.Result;
+                        if (list != null) {
+                            name = list.Name
+                        }
+                    }
+                });
+
+                var newItem: CardContactAdditionalServicePM = new CardContactAdditionalServicePM(null);
+                newItem.Tenant = SessionLocator.Tenant;
+                newItem.CardId = this.entityPM.CardId;
+                newItem.ContactId = this.entityPM.Id;
+                newItem.AdditionalServiceId = this.entityList.Id;
+                newItem.AdditionalServiceName = name;
+
+                var itemIndex = this.entityPM.CardContactAdditionalServices.indexOf(newItem);
+                if (itemIndex == -1) {
+                    this.entityPM.AddCardContactAdditionalServicePM(newItem);
+                }
+            }
+
+            else {
+                var item: CardContactAdditionalServicePM = this.entityPM.CardContactAdditionalServices.filter(d => d.AdditionalServiceId == this.entityList.Id)[0];
+                if (item != null) {
+                    var itemIndex = this.entityPM.CardContactAdditionalServices.indexOf(item);
+                    if (itemIndex > -1) {
+                        this.entityPM.RemoveCardContactAdditionalServicePM(item);
+                    }
+                }
+            }
+        }
     }
 }

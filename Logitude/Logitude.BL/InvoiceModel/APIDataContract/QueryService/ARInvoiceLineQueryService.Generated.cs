@@ -124,7 +124,17 @@ using Simplog.Data.InvoiceModel;
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
-						temp.Id = item.Id;
+					   
+					    if(!string.IsNullOrEmpty(item.Id))
+					    {
+					        throw new ApplicationException("ARInvoiceLine with provided key doesn't exist");
+						
+						}
+						//else
+						//{
+						//    temp.Id = item.Id;
+
+						//}
 					}
 					temp.LineNumber = item.LineNumber;
 					ChargesTypeQueryService ChargesTypeChargesTypeService = new ChargesTypeQueryService(Tenant);

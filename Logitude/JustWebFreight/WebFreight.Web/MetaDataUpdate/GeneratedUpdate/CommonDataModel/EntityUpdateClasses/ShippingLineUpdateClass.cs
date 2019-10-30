@@ -124,7 +124,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ClientModuleName =  "Common",
 			      				    NewWizardComponentPath =  "./CommonModules/CommonPartners/Components/NewEntity/NewShippingLineComponent",
 			      				    NoTS =  false,
-			      				    HasMenuButtons =  false,
+			      				    HasMenuButtons =  true,
 			      				    AllowedForComputingPartners =  false,
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
@@ -3167,6 +3167,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
+		   FeatureRepository featureRepository = new FeatureRepository(0); 
+		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
+		   ObjectTable ShippingLineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ShippingLine" && d.Tenant == 0).FirstOrDefault(); 			   Feature ShippingLineFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Disconnect", ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, NameTextCodeCode = "ShippingLine.Features.DisconnectGLAccount", NameTextCodeDefaultText = "Disconnect GLAccount", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+              
+
+		   TextCodeRepository.SubmitChanges();
+		   FeaturesRepository.SubmitChanges();
+		   MenuButtonGroup ShippingLineMenuButtonGroup = AddMenuButtonGroupAndMenuButtons.AddMenuButtonGroup(new MenuButtonGroupDetails()
+				{
+					MenuButtonGroupType = "ShippingLineEdit",
+					Name = "ShippingLineEditButtonsGroup",
+					ObjectTableId = ShippingLineObjectTable.Id,
+					Tenant = 0
+				}, menuButtonGroupRepository, tenantMenuButtonGroups);        
+   
+			   MenuButton ShippingLineMenuButton0 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "More",
+						Index = 100, 
+						IsActive = false,
+						LabelTextCodeCode = "ShippingLine.B.More",
+						LabelTextCodeDefaultText = "More",
+						Tenant = 0,
+						MenuButtonGroupId = ShippingLineMenuButtonGroup.Id,
+						ObjectTableId = ShippingLineObjectTable.Id,
+						MenuButtonType = "dropdownbutton",
+						FeatureId = null,
+						Style = null,
+						LocalDefaultText = "More",
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+
+			   MenuButton ShippingLineMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "Disconnect",
+						Index = 0, 
+						IsActive = true,
+						LabelTextCodeCode = "ShippingLine.B.DisconnectGLAccount",
+						LabelTextCodeDefaultText = "Disconnect GLAccount",
+						Tenant = 0,
+						MenuButtonGroupId = ShippingLineMenuButtonGroup.Id,
+						ParentMenuButtonId = ShippingLineMenuButton0.Id,
+						ObjectTableId = ShippingLineObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  ShippingLineFeature_MB00.Id,
+						Style = null,
+						LocalDefaultText = "נתק כרטיס",
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)

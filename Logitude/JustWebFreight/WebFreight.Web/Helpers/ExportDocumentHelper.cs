@@ -206,28 +206,33 @@ namespace WebFreight.Web.Helpers
             }
             catch (Exception ex)
             {
-                string authenticateduser = "";
+                if (string.IsNullOrEmpty(AuthenticationUtil.AuthenticatedUserEmail))
+                {
+                    string authenticateduser = "";
 
-                try
-                {
-                    authenticateduser = Security.SecurityUtility.GetAuthenticatedUser();
-                }
-
-                catch
-                {
-                    authenticateduser = "UnKnown";
-                }
-                string ip = "";
-                if (HttpContext.Current != null && HttpContext.Current.Request != null)
-                {
-                    string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
-                    if (string.IsNullOrEmpty(currentIP))
+                    try
                     {
-                        currentIP = HttpContext.Current.Request.UserHostAddress;
+                        authenticateduser = Security.SecurityUtility.GetAuthenticatedUser();
                     }
-                    ip = currentIP;
+
+                    catch
+                    {
+                        authenticateduser = "UnKnown";
+                    }
+
+                    string ip = "";
+                    if (HttpContext.Current != null && HttpContext.Current.Request != null)
+                    {
+                        string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
+                        if (string.IsNullOrEmpty(currentIP))
+                        {
+                            currentIP = HttpContext.Current.Request.UserHostAddress;
+                        }
+                        ip = currentIP;
+                    }
+                    ExceptionHandler.HandleException(new Exception(ex.Message), DateTime.Now, 0, "", authenticateduser, "", ip);
                 }
-                ExceptionHandler.HandleException(new Exception(ex.Message), DateTime.Now, 0, "", authenticateduser, "", ip);
+
                 throw new Exception(ex.Message);
             }
 
@@ -2083,6 +2088,26 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
 
         }
 
+        public DocumentsExecutionLog GetNewInStanceFromDocumentsExecutionLog(ExportDocumentArgs exportDocumentArgs)
+        {
+            DocumentsExecutionLogRepository documentsExecutionLogRepository = new DocumentsExecutionLogRepository(exportDocumentArgs.Tenant);
+            DocumentsExecutionLog documentsExecutionLog = new DocumentsExecutionLog()
+            {
+                Id = IdCounter.GetNumber("DocumentsExecutionLog", exportDocumentArgs.Tenant).ToString(),
+                Tenant = exportDocumentArgs.Tenant,
+                CreateDate = DateTime.Now,
+                CreatedByUserId = exportDocumentArgs.LoggedContactId,
+                RequestXML = LogitudeXmlSerializer.SerializeObjectToXmlString(exportDocumentArgs),
+                StatusCode = "W",
+                DocumentTypeId = exportDocumentArgs.DocumentTypeId,
+                DocumentTypeTemplateId = exportDocumentArgs.DocumentTypeTemplateId,
+                Subject = exportDocumentArgs.DocumentTypeName,
+            };
+            documentsExecutionLogRepository.Add(documentsExecutionLog);
+            documentsExecutionLogRepository.SubmitChanges();
+
+            return documentsExecutionLog;
+        }
 
     }
 
@@ -2103,5 +2128,6 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
         public long TheT2 { get; set; }
         public string DocumentOutId { get; set; }
     }
+
 
 }

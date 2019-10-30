@@ -113,6 +113,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         instance.IsOceanImport = cardContact.IsOceanImport;
                         instance.IsInlandDomestic = cardContact.IsInlandDomestic;
                         instance.IsCustomsImport = cardContact.IsCustomsImport;
+
+                        //CardContactAdditionalServiceRepository cardContactAdditionalServiceRepository = new CardContactAdditionalServiceRepository(repository.context);
+                        //CardContactAdditionalServiceQuery cardContactAdditionalServiceQuery = new CardContactAdditionalServiceQuery(cardContactAdditionalServiceRepository);
+                        //instance.CardContactAdditionalServices = cardContactAdditionalServiceQuery.GetCardContactAdditionalServicePMsByCardContactId(cardContact.Id, tenant).ToList();
                     }
                 }
 
@@ -919,40 +923,55 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public IQueryable<ContactPM> GetContactsbyCardId(string id, int tenant)
         {
             CardContactRepository cardContactRepository = new CardContactRepository(tenant);
+            CardContactAdditionalServiceQuery cardContactAdditionalServiceQuery = new CardContactAdditionalServiceQuery(tenant);
+            IQueryable<CardContact> cardContacts = cardContactRepository.GetCardContacts(tenant);
 
-            var contacts = cardContactRepository.GetCardContacts(tenant).Where(c => c.CardId == id && c.ContactId == c.ContactId && c.Tenant == tenant).Select(a => new ContactPM
+            IQueryable<ContactPM> contacts = from a in cardContacts
+                                             where a.CardId == id && a.Tenant == tenant
+                                             select new ContactPM()
+                                             {
+                                                 Anniversary = a.Contact.Anniversary,
+                                                 Birthday = a.Contact.Birthday,
+                                                 BusinessPhone = a.Contact.BusinessPhone,
+                                                 Email = a.Contact.Email,
+                                                 EnglishName = a.Contact.EnglishName,
+                                                 FacebookId = a.Contact.FacebookId,
+                                                 Fax = a.Contact.Fax,
+                                                 Id = a.Contact.Id,
+                                                 InActive = a.Contact.InActive,
+                                                 LocalName = a.Contact.LocalName,
+                                                 Mobile = a.Contact.Mobile,
+                                                 Notes = a.Contact.Notes,
+                                                 Tenant = a.Contact.Tenant,
+                                                 CardId = id,
+                                                 Position = a.Contact.Position,
+                                                 IsAirExport = a.IsAirExport,
+                                                 IsAirImport = a.IsAirImport,
+                                                 IsOceanExport = a.IsOceanExport,
+                                                 IsOceanImport = a.IsOceanImport,
+                                                 IsAll = a.IsAll,
+                                                 IsInlandDomestic = a.IsInlandDomestic,
+                                                 IsCustomsImport = a.IsCustomsImport,
+                                                 IsInlandExport = a.IsInlandExport,
+                                                 IsInlandImport = a.IsInlandImport,
+                                                 ExternalId = a.Contact.ExternalId,
+                                                 IndexColor = a.Contact.IndexColor,
+                                                 CompanyName = a.Contact.CompanyName,
+                                                 CreateDate = a.Contact.CreateDate,
+                                             };
+
+            List<ContactPM> entityList = contacts.ToList();
+
+            foreach (ContactPM contact in entityList)
             {
-                Anniversary = a.Contact.Anniversary,
-                Birthday = a.Contact.Birthday,
-                BusinessPhone = a.Contact.BusinessPhone,
-                Email = a.Contact.Email,
-                EnglishName = a.Contact.EnglishName,
-                FacebookId = a.Contact.FacebookId,
-                Fax = a.Contact.Fax,
-                Id = a.Contact.Id,
-                InActive = a.Contact.InActive,
-                LocalName = a.Contact.LocalName,
-                Mobile = a.Contact.Mobile,
-                Notes = a.Contact.Notes,
-                Tenant = a.Contact.Tenant,
-                CardId = id,
-                Position = a.Contact.Position,
-                IsAirExport = a.IsAirExport,
-                IsAirImport = a.IsAirImport,
-                IsOceanExport = a.IsOceanExport,
-                IsOceanImport = a.IsOceanImport,
-                IsAll = a.IsAll,
-                IsInlandDomestic = a.IsInlandDomestic,
-                IsCustomsImport = a.IsCustomsImport,
-                IsInlandExport = a.IsInlandExport,
-                IsInlandImport = a.IsInlandImport,
-                ExternalId = a.Contact.ExternalId,
-                IndexColor = a.Contact.IndexColor,
-                CompanyName = a.Contact.CompanyName,
-                CreateDate = a.Contact.CreateDate,
-            });
+                CardContact cardContact = cardContacts.Where(d => d.CardId == id && d.ContactId == contact.Id).FirstOrDefault();
+                if (cardContact != null)
+                {
+                    contact.CardContactAdditionalServices = cardContactAdditionalServiceQuery.GetCardContactAdditionalServicePMsByCardContactId(cardContact.Id, tenant);
+                }
+            }
 
-            return contacts;
+            return entityList.AsQueryable();
         }
 
         public IQueryable<ContactList> GetContactListsbyCardId(string id, int tenant)

@@ -573,7 +573,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         private List<QueueTask> CreateQueueTasks(GLAccountPM glaccounPM)
         {
-            string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(glaccounPM);
+            Logitude.Accounting.BL.APIDataContract.ApiV1.GLAccount gLAccount = GetMappedGLAccountDataContract(glaccounPM);
+
+            string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(gLAccount);
 
             List<QueueTask> queue1Tasks = new List<QueueTask>
                 {
@@ -588,6 +590,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 };
             return queue1Tasks;
         }
+        private Logitude.Accounting.BL.APIDataContract.ApiV1.GLAccount GetMappedGLAccountDataContract(GLAccountPM gLAccountPM)
+        {
+            Logitude.Accounting.BL.APIDataContract.ApiV1.GLAccountQueryService gLAccountQueryService = new APIDataContract.ApiV1.GLAccountQueryService(gLAccountPM.Tenant);
+            Logitude.Accounting.BL.APIDataContract.ApiV1.GLAccount glAccount = gLAccountQueryService.GLAccountDataMapping(gLAccountPM, gLAccountPM.Tenant);
+            return glAccount;
+        }
+
 
         private CommunicationsParams CreateCommunicationParamsForGLAccount(GLAccountPM glaccounPM)
         {

@@ -25,7 +25,7 @@ export class ReconcileExternalPageExtendedPMService
     }
 
 
-    GetBankPageByPageNo(pageNumber: string, bankAccountId: string)
+    GetPageByNumber(pageNumber: string, entityId: string,objectTableName: string)
     {
 
         return Observable.defer(() =>
@@ -38,7 +38,7 @@ export class ReconcileExternalPageExtendedPMService
 
             return Observable.defer(() =>
             {
-                return this._http.get(this._apiUrl + '/GetBankPageByPageNo?pageNumber=' + pageNumber + '&bankAccountId=' + bankAccountId, { headers: authHeader })
+                return this._http.get(this._apiUrl + '/GetPageByNumber?pageNumber=' + pageNumber + '&entityId=' + entityId + '&objectTableName=' + objectTableName, { headers: authHeader })
                     .map(response =>
                     {
                         var res = response.json();
@@ -63,7 +63,7 @@ export class ReconcileExternalPageExtendedPMService
     }
 
 
-    GetPrevPageByPageNo(pageNumber: number, bankAccountId: string)
+    GetPreviousPageByNumber(pageNumber: number, entityId: string,objectTableName: string)
     {
 
         return Observable.defer(() =>
@@ -76,7 +76,7 @@ export class ReconcileExternalPageExtendedPMService
 
             return Observable.defer(() =>
             {
-                return this._http.get(this._apiUrl + '/GetPrevPageByPageNo?pageNumber=' + pageNumber + '&bankAccountId=' + bankAccountId, { headers: authHeader })
+                return this._http.get(this._apiUrl + '/GetPreviousPageByNumber?pageNumber=' + pageNumber + '&entityId=' + entityId + '&objectTableName=' + objectTableName, { headers: authHeader })
                     .map(response =>
                     {
                         var res = response.json();
@@ -127,7 +127,7 @@ export class ReconcileExternalPageExtendedPMService
     }
 
 
-    CheckLastApprovedBankPageAndReconciledLine(reconcileExternalPageId: string)
+    CheckLastApprovedBankPageAndReconciledLine(reconcileExternalPageId: string, objectTableName: string)
     {
 
         return Observable.defer(() =>
@@ -140,7 +140,7 @@ export class ReconcileExternalPageExtendedPMService
 
             return Observable.defer(() =>
             {
-                return this._http.get(this._apiUrl + '/GetCheckLastApprovedBankPageAndReconciledLine?reconcileExternalPageId=' + reconcileExternalPageId, { headers: authHeader })
+                return this._http.get(this._apiUrl + '/GetCheckLastApprovedBankPageAndReconciledLine?reconcileExternalPageId=' + reconcileExternalPageId+ '&objectTableName=' + objectTableName, { headers: authHeader })
                     .map(response =>
                     {
                         var res = response.json();
@@ -177,7 +177,7 @@ export class ReconcileExternalPageExtendedPMService
 
 
     }
-    GetDraftPage(bankAccountId: string)
+    GetDraftPage(entityId: string,objectTableName: string)
     {
 
         return Observable.defer(() =>
@@ -190,7 +190,7 @@ export class ReconcileExternalPageExtendedPMService
 
             return Observable.defer(() =>
             {
-                return this._http.get(this._apiUrl + '/GetDraftPage?bankAccountId=' + bankAccountId, { headers: authHeader })
+                return this._http.get(this._apiUrl + '/GetDraftPage?entityId=' + entityId + '&objectTableName=' + objectTableName, { headers: authHeader })
                     .map(response =>
                     {
                         var res = response.json();
