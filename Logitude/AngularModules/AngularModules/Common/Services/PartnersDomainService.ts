@@ -39,6 +39,7 @@ import {CustomerSalesNotePM} from '../EntityPMs/CustomerSalesNotePM';
 import {CardExternalAccountsByProductPMService} from './StandardPMs/CardExternalAccountsByProductPMService';
 import {Guid} from '../../Infrastructure/Utilities/Guid';
 import {SessionInfo} from '../../Infrastructure/Utilities/SessionInfo';
+import { CardContactAdditionalServicePM } from '../EntityPMs/CardContactAdditionalServicePM';
 
 @Injectable()
 
@@ -725,7 +726,7 @@ export class PartnersDomainService {
         
         return entityPM;
     }
-    MapContactPM(jsonList: any) {
+    MapContactPM(jsonList: any, mapParent: boolean = true) {
         var entityPM: ContactPM = null;
 
         if (jsonList) {
@@ -743,7 +744,91 @@ export class PartnersDomainService {
                 entityPM[property] = jsonList[property];
             }
 
+            if (!AppTool.IsNullOrEmpty(entityPM.CardId)) {
+                var oldContactServices: CardContactAdditionalServicePM[] = [];
+                if (entityPM.OldEntityPM && !mapParent) {
+                    oldContactServices = entityPM.OldEntityPM.CardContactAdditionalServices;
+                }
+
+                entityPM.CardContactAdditionalServices = new Array<CardContactAdditionalServicePM>();
+                for (var item in jsonList.CardContactAdditionalServices) {
+
+                    var jItem = jsonList.CardContactAdditionalServices[item];
+                    if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                        continue;
+                    }
+                    var newServicePM: CardContactAdditionalServicePM;
+                    if (mapParent) {
+                        newServicePM = new CardContactAdditionalServicePM(entityPM);
+                    }
+                    else {
+                        newServicePM = new CardContactAdditionalServicePM(null);
+                    }
+
+                    var pmKeysArray = Object.keys(jItem);
+                    for (var pmKey in pmKeysArray) {
+
+                        if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties") {
+                            continue;
+                        }
+                        var pmProperty = pmKeysArray[pmKey];
+                        newServicePM[pmProperty] = jItem[pmProperty];
+                    }
+
+                    newServicePM.IsDirty = false;
+
+                    if (mapParent) {
+                        newServicePM.OldEntityPM = this.clone(newServicePM);
+                        newServicePM.UniqueKey = Guid.newGuid();
+                        newServicePM.ChangeSetOp = "None";
+                        jItem.ChangeSetOp = "None";
+
+                    }
+                    else {
+
+                        if (newServicePM.UniqueKey) {
+
+                            if (jItem.IsDirty)
+                                newServicePM.ChangeSetOp = "Update";
+                        }
+                        else {
+                            newServicePM.ChangeSetOp = "Insert";
+                        }
+
+                        newServicePM.OldEntityPM = null;
+                        newServicePM.EntityParentPM = null;
+                    }
+
+
+                    entityPM.CardContactAdditionalServices.push(newServicePM);
+                }
+
+                if (oldContactServices) {
+
+                    for (var itemKey in oldContactServices) {
+                        if (entityPM.CardContactAdditionalServices.filter(p => p.UniqueKey === oldContactServices[itemKey].UniqueKey).length === 0) {
+
+                            if (oldContactServices[itemKey]) {
+                                oldContactServices[itemKey].ChangeSetOp = "Delete";
+                                entityPM.CardContactAdditionalServices.push(oldContactServices[itemKey]);
+                            }
+                        }
+                    }
+                }
+            }
+            
             entityPM.IsDirty = false;
+
+            if (mapParent) {
+                entityPM.OldEntityPM = this.clone(entityPM);
+                entityPM.OldEntityPM.CardContactAdditionalServices = [];
+                for (var m in entityPM.CardContactAdditionalServices) {
+                    entityPM.OldEntityPM.CardContactAdditionalServices.push(this.clone(entityPM.CardContactAdditionalServices[m]));
+                }
+            }
+            else {
+                entityPM.OldEntityPM = null;
+            }
         }
         
         return entityPM;
@@ -1054,7 +1139,7 @@ export class PartnersDomainService {
 
             else if (property === "Contact") {
                 if (jsonPM[property]) {
-                    entity[property] = this.MapContactPM(jsonPM[property]);
+                    entity[property] = this.MapContactPM(jsonPM[property], getCallMap);
                 }
             }
 
