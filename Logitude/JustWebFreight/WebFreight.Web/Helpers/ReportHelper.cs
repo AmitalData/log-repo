@@ -682,7 +682,6 @@ namespace WebFreight.Web.Helpers
             ICommonDataContext context = CommonDataContext.GetContext(reportFliter.tenant);
             CommonDataDomainService commonService = new CommonDataDomainService();
             Tenant currentTenant = context.Tenants.Where(t => t.Id == reportFliter.tenant).FirstOrDefault();
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             string datetimeformat = @"dd\/MM\/yyyy";
             if (!string.IsNullOrEmpty(currentTenant.DateTimeFormat)) datetimeformat = currentTenant.DateTimeFormat;
             return datetimeformat;
