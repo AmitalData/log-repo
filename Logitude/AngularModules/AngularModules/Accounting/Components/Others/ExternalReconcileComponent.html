@@ -775,7 +775,7 @@
                         <td colspan="3">
                             <div class="SubTitle">
                                 {{ExternalPagesTitle}}
-                                ({{IsAutoReconcile ? BankSelectedLines.Length : bankCount}})</div>
+                                ({{IsAutoReconcile ? ExtPageSelectedLines.Length : extPageCount}})</div>
                         </td>
                     </tr>
 
@@ -784,13 +784,13 @@
                         <td colspan="3" style="height: 100%; padding-bottom: 3px; vertical-align: top;">
                             <div class="GeneratedGridContainer" style="height: calc(100% - 20px)" *ngIf="LoadGrids">
                                 <logitude-grid GridWidth="100%" GridHeight="100%"
-                                    [ObjectTable]="'ReconcileExternalPageLine'" [dataSource]="BankDataSource"
-                                    [FireCheckBoxChecked]="BankFireCheckBoxChecked"
-                                    [MenuHeaderchangeevent]="BankMenuHeaderchangeevent" [columns]="BankColumns"
-                                    [autoLoad]="true" [QueryChangeEvent]="BankonQueryChangeEvent"
+                                    [ObjectTable]="'ReconcileExternalPageLine'" [dataSource]="ExtPageDataSource"
+                                    [FireCheckBoxChecked]="ExtPageFireCheckBoxChecked"
+                                    [MenuHeaderchangeevent]="ExtPageMenuHeaderchangeevent" [columns]="ExtPageColumns"
+                                    [autoLoad]="true" [QueryChangeEvent]="ExtPageonQueryChangeEvent"
                                     [IsCustomTemplate]="true" [PassAdditionalDataToTemplates]="true"
-                                    (CountReady)="onCountReadyBank($event)" [ColumnsReady]="BankColumnsReady"
-                                    [MarkIsChecked]="BankMarkIsChecked" (DataLoaded)="BankonDataLoaded()">
+                                    (CountReady)="onCountReadyExtPage($event)" [ColumnsReady]="ExtPageColumnsReady"
+                                    [MarkIsChecked]="ExtPageMarkIsChecked" (DataLoaded)="ExtPageonDataLoaded()">
                                 </logitude-grid>
                             </div>
                         </td>
@@ -802,12 +802,12 @@
                             [style.height]="IsAutoReconcile ? '100%' : ( getScreenHeight() < 670 ? '120px' : '160px')"
                             style="height: 160px;">
                             <div class="CellContent">
-                                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="BankSelectedLines"
+                                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ExtPageSelectedLines"
                                     [UseVirtuallization]="true">
 
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'30'">
                                         <log-cell-template template="let item" [IgnoreMods]="true">
-                                            <img (click)="BankCheckBoxValueChanged(item)" class="trashIcon"
+                                            <img (click)="ExtPageCheckBoxValueChanged(item)" class="trashIcon"
                                                 title="Remove" style="cursor: pointer;" src="./Images/Trash-can.png" />
                                         </log-cell-template>
                                     </log-column>
@@ -880,10 +880,10 @@
                     <tr>
                         <td style="width: 100px;height: 60px;color: #00b1e9;">
                             <div>
-                                {{ getTotalText('bank') }}
+                                {{ getTotalText('ExtPage') }}
                             </div>
-                            <div style="font-size: 15px;color:#0a7d4c;" [class.red]="bankTransactionsTotal<0">
-                                {{bankTransactionsTotal | NumbersPipe: 'N2'}} {{ openAmountCurrency }}
+                            <div style="font-size: 15px;color:#0a7d4c;" [class.red]="extPageTransactionsTotal<0">
+                                {{extPageTransactionsTotal | NumbersPipe: 'N2'}} {{ openAmountCurrency }}
                             </div>
                         </td>
 
