@@ -53,7 +53,7 @@ import {CashBookManageDepoTabComponent} from './Components/EditTabs/CashBook/Cas
 import {ChartOfAccountGeneralTabComponent} from './Components/EditTabs/ChartOfAccount/ChartOfAccountGeneralTabComponent';
 import {BankDepositDetailsTabComponent} from './Components/EditTabs/BankDeposit/BankDepositDetailsTabComponent';
 import {BankAccountGeneralTabComponent} from './Components/EditTabs/BankAccount/BankAccountGeneralTabComponent';
-import {BankPagesTabComponent} from './Components/EditTabs/BankAccount/BankPagesTabComponent';
+import {ExternalPagesTabComponent} from './Components/Others/ReconcileExternalPage/ExternalPagesTabComponent';
 import {ManageRecoTabComponent} from './Components/EditTabs/BankAccount/ManageRecoTabComponent';
 import {ReconciliationDetailsTabComponent} from './Components/EditTabs/Reconciliation/ReconciliationDetailsTabComponent';
 import {RevaluationDetailsComponent} from './Components/EditTabs/Revaluation/RevaluationDetailsComponent';
@@ -112,7 +112,7 @@ export const Components =
         PayablePageComponent,
         BanksPageComponent,
         MiscPageComponent,
-       
+
         //New Entites
         NewGLAccountComponent,
         NewChartOfAccountComponent,
@@ -156,7 +156,7 @@ export const Components =
         ChartOfAccountGeneralTabComponent,
         BankDepositDetailsTabComponent,
         BankAccountGeneralTabComponent,
-        BankPagesTabComponent,
+        ExternalPagesTabComponent,
         ManageRecoTabComponent,
         ReconciliationDetailsTabComponent,
         RevaluationDetailsComponent,
@@ -220,7 +220,7 @@ export class ModuleDeclarations {
             case "PayablePageComponent": { myResult = PayablePageComponent; break; }
             case "BanksPageComponent": { myResult = BanksPageComponent; break; }
             case "MiscPageComponent": { myResult = MiscPageComponent; break; }
-            
+
             //New Entites
             case "NewGLAccountComponent": { myResult = NewGLAccountComponent; break; }
             case "NewChartOfAccountComponent": { myResult = NewChartOfAccountComponent; break; }
@@ -255,7 +255,7 @@ export class ModuleDeclarations {
             case "Generate1000Component": { myResult = Generate1000Component; break; }
             case "Receiving1000Component": { myResult = Receiving1000Component; break; }
             case "AccountingFunctionalTestComponent": { myResult = AccountingFunctionalTestComponent; break; }
-                
+
             //Edit Tabs
             case "GLAccountGeneralTabComponent": { myResult = GLAccountGeneralTabComponent; break; }
             case "GLAccountOverviewComponent": { myResult = GLAccountOverviewComponent; break; }
@@ -267,7 +267,7 @@ export class ModuleDeclarations {
             case "ChartOfAccountGeneralTabComponent": { myResult = ChartOfAccountGeneralTabComponent; break; }
             case "BankDepositDetailsTabComponent": { myResult = BankDepositDetailsTabComponent; break; }
             case "BankAccountGeneralTabComponent": { myResult = BankAccountGeneralTabComponent; break; }
-            case "BankPagesTabComponent": { myResult = BankPagesTabComponent; break; }
+            case "ExternalPagesTabComponent": { myResult = ExternalPagesTabComponent; break; }
             case "ManageRecoTabComponent": { myResult = ManageRecoTabComponent; break; }
             case "ReconciliationDetailsTabComponent": { myResult = ReconciliationDetailsTabComponent; break; }
             case "RevaluationDetailsComponent": { myResult = RevaluationDetailsComponent; break; }

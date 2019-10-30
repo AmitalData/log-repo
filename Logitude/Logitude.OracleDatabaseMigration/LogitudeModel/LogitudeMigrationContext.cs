@@ -542,6 +542,11 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             get;
             set;
         }
+        public IDbSet<SharedLogisticsContactLastLogin> SharedLogisticsContactLastLogins
+        {
+            get;
+            set;
+        }
         public IDbSet<ContactLoginLog> ContactLoginLogs
         {
             get;
@@ -4351,6 +4356,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new WarehouseMap());
             modelBuilder.Configurations.Add(new WeightUnitMap());
             modelBuilder.Configurations.Add(new ContactLastLoginMap());
+            modelBuilder.Configurations.Add(new SharedLogisticsContactLastLoginMap());
             modelBuilder.Configurations.Add(new SmallDocumentMap());
             modelBuilder.Configurations.Add(new CommunicationLogStepMap());
             modelBuilder.Configurations.Add(new ShipmentPackageItemMap());

@@ -716,10 +716,9 @@ namespace WebFreight.Web.ReportsWebServices
                         invoiceDataProvider.APInvoiceMultipleEntityList.Add(singleRecord);
                     }
                 }
-                if (FeatureToggleHelper.HasFeatureToggle("MAP", currentTenant))
-                {
+
                     CalculateMAPTotals(invoiceDataProvider);                   
-                }
+                
 
                 #endregion
 
@@ -776,15 +775,14 @@ namespace WebFreight.Web.ReportsWebServices
                 TotalVAT = item.TotalVATAmount!=null?item.TotalVATAmount:0,
             };
             
-            if (FeatureToggleHelper.HasFeatureToggle("MAP", currentTenant))
-            {
+           
                 APInvoiceFreights aPInvoiceFreights = new APInvoiceFreights();
                 aPInvoiceFreights.FrieghtChargesIds = frieghtChargesIds;
                 aPInvoiceFreights.OtherChargesIds = otherChargesIds;
                 singleRecord.OperationalDate = item.OperationalDate;
                 CalculateMAPFields(singleRecord, item);               
                 CalculateFreight(singleRecord, item, aPInvoiceFreights);              
-            }
+            
             return singleRecord;
         }
 

@@ -10,7 +10,7 @@ using Simplog.Server.Infrastructure.Helpers;
 
 namespace Simplog.Data.CommonDataModel.Mocks
 {
-    public class MockCommonContext:ICommonDataContext
+    public class MockCommonContext : ICommonDataContext
     {
         List<Country> countries;
         MockObjectSet<Country> countryObjectSet;
@@ -2702,6 +2702,19 @@ namespace Simplog.Data.CommonDataModel.Mocks
         }
 
         public IDbSet<CardContactAdditionalService> CardContactAdditionalServices
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public IDbSet<SharedLogisticsContactLastLogin> SharedLogisticsContactLastLogins
         {
             get
             {
