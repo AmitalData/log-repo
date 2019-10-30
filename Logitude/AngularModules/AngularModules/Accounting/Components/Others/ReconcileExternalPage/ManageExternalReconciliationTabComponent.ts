@@ -28,24 +28,22 @@ export class ManageExternalReconciliationTabComponent extends BaseComponent impl
     public isRTL: boolean = false;
     public CurrentEditComponentId: string;
 
-    // Events
     @Output() onQueryChangeEvent = new EventEmitter();
     @Output() MenuHeaderchangeevent = new EventEmitter();
-
-    // Filters
     dateFilter: FilterItem;
     searchFieldFilter: FilterItem;
-
-    // Services
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private _entityListService: EntityListService = new EntityListService();
-    //_ReconcileExternalPageExtendedPMService: ReconcileExternalPageExtendedPMService = new ReconcileExternalPageExtendedPMService();
-    //_ReconcileExternalPagePMService: ReconcileExternalPagePMService = new ReconcileExternalPagePMService();
-    //_BankAccountPMService: BankAccountPMService = new BankAccountPMService();
     private CurrentSession = SessionLocator.SelectedSession;
+    private SaveCompletedEvent: any = null;
+    private LoadCompletedEvent: any = null;
+    private TabSelectedEvent: any = null;
+    Title: string;
+
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+        this.SetTitles();
 
         // Set Entity
         this.EntityPM = entityArgs.EntityPM;
@@ -61,9 +59,25 @@ export class ManageExternalReconciliationTabComponent extends BaseComponent impl
         this.Listen();
     }
 
-    private SaveCompletedEvent: any = null;
-    private LoadCompletedEvent: any = null;
-    private TabSelectedEvent: any = null;
+    SetTitles(){
+        switch (this.entityArgs.ObjectTableName) {
+            case "BankAccount": {
+                this.Title = TextCodeTranslator.Translate("Accounting.General.O.ManageReconciliation");
+                break;
+            }
+            case "GLAccount": {
+                this.Title = TextCodeTranslator.Translate("GLAccount.TH.ManageExternalReco");
+
+                break;
+            }
+            default: {
+                this.Title = TextCodeTranslator.Translate("Accounting.General.O.ManageReconciliation");
+
+                break;
+            }
+        }
+    }
+
     Listen() {
 
 
