@@ -25,6 +25,10 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string ReportId { get; set; }
         public string ReportTemplateId { get; set; }
 
+        public int RetryNumber { get; set; }
+        public DateTime? StartDate { get; set; }
+        public string ExecutedByServerName { get; set; }
+
         [ForeignKey("StatusCode")]
         public virtual CommunicationStatusType CommunicationStatusType { get; set; }
 
