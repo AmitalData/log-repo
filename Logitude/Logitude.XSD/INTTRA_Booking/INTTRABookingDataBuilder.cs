@@ -66,7 +66,7 @@ namespace Logitude.XSD.INTTRA_Booking
                 MovementType = this.Context.MovementType,
                 MovementTypeSpecified = true,
                 Location = this.Context.Locations.ToArray<INTTRA_Booking.LocationDateTimeType>(),
-                ReferenceInformation = this.Context.ReferenceInformations.ToArray<INTTRA_Booking.ReferenceInformationType>(),
+                ReferenceInformation = this.Context.ReferenceInformations != null ? this.Context.ReferenceInformations.ToArray<INTTRA_Booking.ReferenceInformationType>(): null,
                 TransportationDetails = this.Context.TransportationDetails.ToArray(),
                 Party = this.Context.MessagePropertiesParties.ToArray(),
 
