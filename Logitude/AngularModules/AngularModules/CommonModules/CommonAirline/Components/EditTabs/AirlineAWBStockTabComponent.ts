@@ -36,7 +36,7 @@ export class AirlineAWBStockTabComponent {
     }
 
     private LoadData() {
-        this.CurrentSession.StartBusyIndicatorLoading();
+        //this.CurrentSession.StartBusyIndicatorLoading();
 
         this.SelectedItem = null;
 

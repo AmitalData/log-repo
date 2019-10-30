@@ -31,7 +31,7 @@
     </tr>-->
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList != ''" style="height:1px;">
         <td>
-            <div [style.direction]="Language == 'HB' ? 'rtl' : 'ltr'" class="ValidationSummary" style="margin-bottom: 3px;">{{ValidationWarningsList}}</div>
+            <div [style.direction]="Language == 'HB' ? 'rtl' : 'ltr'" class="ValidationSummary" style="margin-bottom: 3px;">{{ValidationErrorsList}}</div>
         </td>
     </tr>
     <tr style="height:4px;">
