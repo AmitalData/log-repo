@@ -58,7 +58,7 @@ namespace CommunicationWorkerRole
 {
     class DocumentsExecutionWorkerRole : WorkerEntryPoint
     {
-        private DbQueueService queueservice;
+        private DbQueueService queueService;
         public override bool OnStart()
         {
             ThreadId = Guid.NewGuid().ToString();
@@ -93,17 +93,20 @@ namespace CommunicationWorkerRole
 
         private void ExecuteQueue()
         {
-            queueservice = new DbQueueService("DocumentsExecutionQueue", 0);
-            var queueresponse = queueservice.Receive(new TimeSpan(0, 0, 1));
-            if (queueresponse != null && queueresponse.MessageId != null)
+            queueService = new DbQueueService("DocumentsExecutionQueue", 0);
+            var queueResponse = queueService.Receive(new TimeSpan(0, 0, 1));
+            if (queueResponse != null && queueResponse.MessageId != null)
             {
-                ThreadStart executeDocumentsThreadStart = (() => new DocumentsExecutionService(queueservice, queueresponse).ExecuteDocumentsExecutionQueue());
+                ThreadStart executeDocumentsThreadStart = (() => new DocumentsExecutionService(queueService, queueResponse).ExecuteDocumentsExecutionQueue());
                 executeDocumentsThreadStart += () => { LogDoneItemInMemory(); };
                 new Thread(executeDocumentsThreadStart) { IsBackground = true }.Start();
-                queueservice.Complete();
+                queueService.Complete();
 
             }
-            else Thread.Sleep(new TimeSpan(0, 0, 1));
+            else
+            {
+                Thread.Sleep(new TimeSpan(0, 0, 1));
+            }
         }
 
 
@@ -112,8 +115,8 @@ namespace CommunicationWorkerRole
         {
             try
             {
-                queueservice = new DbQueueService();
-                queueservice.InitializeQueue("DocumentsExecutionQueue", 0);
+                queueService = new DbQueueService();
+                queueService.InitializeQueue("DocumentsExecutionQueue", 0);
 
             }
             catch (Exception ex)
