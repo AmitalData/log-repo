@@ -83,7 +83,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             if (theCountOf_DeclarationPaymentProtest_Changed)
             {
-                //please do not set the ischanged
+                bool fake_until_you_make_it = false;
+                if (fake_until_you_make_it)
+                {
+                    (new Declaration()).IsPaymentProtested = true;//HOW IS CHANGING IsPaymentProtested>LOOK DOWN
+                }
+                //55160	עדכון סימון הצהרה כהוגשה אגב מחאה
+                //please do not set the ischanged>DUE THAT IS SP 
                 CustomsStoredProcedures.Declaration_SetIsPaymentProtested(entityPM.DeclarationId, entityPM.Tenant);
 
             }
