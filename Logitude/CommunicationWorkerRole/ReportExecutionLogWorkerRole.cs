@@ -58,8 +58,6 @@ namespace CommunicationWorkerRole
     {
 
         DbQueueService queueservice;
-        int tenant = 0;
-
 
         public ReportExecutionLogWorkerRole()
         {
@@ -82,23 +80,29 @@ namespace CommunicationWorkerRole
             {
                 if (!General.IsUpdating())
                 {
-                    queueservice = new DbQueueService("ReportExecutionLogQueue", 0);
-                    var queueresponse = queueservice.Receive(new TimeSpan(0, 0, 1));
-                    if (queueresponse != null && queueresponse.MessageId != null)
+                    try
                     {
-                        ThreadStart reportExecutionServiceThreadStart = (() => new ReportExecutionService(queueservice, queueresponse).ExecuteReportExecutionQueue());
-                        reportExecutionServiceThreadStart += () => { LogDoneItemInMemory(); };
-                        new Thread(reportExecutionServiceThreadStart) { IsBackground = true }.Start();
-                        queueservice.Complete();
+                        queueservice = new DbQueueService("ReportExecutionLogQueue", 0);
+                        var queueresponse = queueservice.Receive(new TimeSpan(0, 0, 1));
+                        if (queueresponse != null && queueresponse.MessageId != null) ExecuteQueue(queueresponse);
+                        else Thread.Sleep(new TimeSpan(0, 0, 1));
                     }
-                    else Thread.Sleep(new TimeSpan(0, 0, 1));
-                }
-                else Thread.Sleep(new TimeSpan(0, 0, 1));
+                    catch (Exception exception)
+                    {
+                        ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Report execution log queue worker role start", null, null);
+                        Thread.Sleep(new TimeSpan(0, 0, 1));
+                    }
+                } else Thread.Sleep(new TimeSpan(0, 0, 1));
             }
         }
 
-
-
+        private void ExecuteQueue(QueueResponse queueresponse)
+        {
+            ThreadStart reportExecutionServiceThreadStart = (() => new ReportExecutionService(queueservice, queueresponse).ExecuteReportExecutionQueue());
+            reportExecutionServiceThreadStart += () => { LogDoneItemInMemory(); };
+            new Thread(reportExecutionServiceThreadStart) { IsBackground = true }.Start();
+            queueservice.Complete();
+        }
 
         private void ConnectClient()
         {

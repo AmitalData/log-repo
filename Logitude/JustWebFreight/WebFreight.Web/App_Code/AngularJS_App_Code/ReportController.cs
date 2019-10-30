@@ -80,8 +80,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
               
                 ReportHelper reportHelper = new ReportHelper();
                 reportHelper.ReportAuthentication(reportFliter, authToken.Tenant);
-               // Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern = reportHelper.GetReportDateTimeFormat(reportFliter);
-               // Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortTimePattern = "HH:mm";
+                Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+                Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern = reportHelper.GetReportDateTimeFormat(reportFliter);
+                Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortTimePattern = "HH:mm";
                 if (string.IsNullOrEmpty(reportFliter.ReportKey) || reportFliter.ProcessType == "GenerateReport")
                 {
                     if (reportFliter.ReportCode == "CUPA")
