@@ -549,6 +549,11 @@ export class GLAccountPM {
     public set UpdatedByLocalName(newValue: string) { if (this.updatedByLocalName != newValue) { this.updatedByLocalName = newValue; this.MarkAsDirty("UpdatedByLocalName"); } }
        
 	 
+    private isDisconnectedFromCard: boolean;
+    public get IsDisconnectedFromCard() { return this.isDisconnectedFromCard; }
+    public set IsDisconnectedFromCard(newValue: boolean) { if (this.isDisconnectedFromCard != newValue) { this.isDisconnectedFromCard = newValue; this.MarkAsDirty("IsDisconnectedFromCard"); } }
+       
+	 
 
     public OldEntityPM: GLAccountPM;
 		
