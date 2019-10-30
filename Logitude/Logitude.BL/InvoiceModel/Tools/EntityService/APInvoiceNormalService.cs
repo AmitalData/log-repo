@@ -2018,6 +2018,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 JournalEntity journal = rep.GetJournalByAccountingEntityId(entityPM.Id, tenant);
                 if (journal != null)
                 {
+                    entityPM.JournalId = journal.JournalId;
                     entityPM.JournalNumber = journal.JournalNumber;
                 }
             }
