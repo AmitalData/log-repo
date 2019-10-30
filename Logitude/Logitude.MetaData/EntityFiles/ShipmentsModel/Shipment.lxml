@@ -2365,7 +2365,7 @@
     <TextCode Code="&quot;Shipment.O.StatementWasApproved&quot;" DefaultText="&quot;Statement was approved&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Shipment.O.ConfirmationSentTo&quot;" DefaultText="&quot;Statement confirmation sent to -&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Shipment.O.VersionAlreadyApproved&quot;" DefaultText="&quot;This version has already been approved by another user&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;Shipment.O.VersionApprovedBy&quot;" DefaultText="&quot;This version of this statement has already been approved by&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Shipment.O.VersionApprovedBy&quot;" DefaultText="&quot;This Version (*VersionID*) was already Approved by *ApprovedByUserName* at *ApproveDateTime*&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Shipment.O.OnDate&quot;" DefaultText="&quot;on the date&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
