@@ -1779,7 +1779,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentComponent\DocsOut\Filters\AttachmentsList.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentComponent\DocsOut\Filters\DocumentCustomFieldsArgs.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentComponent\DocsOut\Filters\DocumentTypeTemplateFilter.ts" />
-    <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentComponent\DocsOut\Filters\EditableFieldPosition.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentComponent\DocsOut\Filters\BuildStimulReportResultArgs.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentComponent\DocsOut\Filters\FroalaEditorFilters.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentComponent\DocsOut\Filters\SendHtmlDocumentFilter.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentComponent\DocsOut\FroalaEditorSetting.ts" />

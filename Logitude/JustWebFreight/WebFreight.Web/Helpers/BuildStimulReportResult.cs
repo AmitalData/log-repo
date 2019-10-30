@@ -5,6 +5,16 @@ using System.Web;
 
 namespace WebFreight.Web.Helpers
 {
+
+    public class BuildStimulReportResult
+    {
+        public int PageCount { get; set; }
+        public string ReportKey { get; set; }
+        public string StimulImageBase64 { get; set; }
+        public List<EditableFieldPosition> EditableFieldPositionLists { get; set; }
+    }
+
+     
     public class EditableFieldPosition
     {
         
@@ -25,8 +35,7 @@ namespace WebFreight.Web.Helpers
         public string FontFamily { get; set; }
         public string NewValue { get; set; }
         public string Status { get; set; }
-        public int PageCount { get; set; }
-        public string ReportKey { get; set; }
+
         public double WidthPagePrecentage { get; set; }
         public double HeightPagePrecentage { get; set; }
 
@@ -37,7 +46,6 @@ namespace WebFreight.Web.Helpers
         public string OldValue { get; set; }
         public bool ReturnToOriginValue { get; set; }
         public string ControlType { get; set; }
-        public int NumberOfRequest { get; set; }
         public bool IsEditField { get; set; }
 
 

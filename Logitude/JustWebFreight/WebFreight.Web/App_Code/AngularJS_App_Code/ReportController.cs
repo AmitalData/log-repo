@@ -155,9 +155,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                         return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(new Exception(exceptionMessage)));
                     }
 
-                    List<EditableFieldPosition> editableFieldPositionList = new List<EditableFieldPosition>();
-                    editableFieldPositionList.Add(new EditableFieldPosition() {NumberOfRequest = reportFliter.NumberOfRequests,  FieldName =  "Image", FieldValue = urlImage, PageCount = reportFliter.PageCount, ReportKey = reportFliter.ReportKey });
-                    return Request.CreateResponse(HttpStatusCode.OK, editableFieldPositionList);
+                    BuildStimulReportResult resultBuildStimulReportArgs = new BuildStimulReportResult();
+                    resultBuildStimulReportArgs.StimulImageBase64 = urlImage;
+                    resultBuildStimulReportArgs.PageCount = reportFliter.PageCount;
+                    resultBuildStimulReportArgs.ReportKey = reportFliter.ReportKey;
+
+                    return Request.CreateResponse(HttpStatusCode.OK, resultBuildStimulReportArgs);
                 }
             }
 

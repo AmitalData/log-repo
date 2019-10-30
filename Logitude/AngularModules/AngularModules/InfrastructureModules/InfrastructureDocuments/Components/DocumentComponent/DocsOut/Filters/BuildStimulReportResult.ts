@@ -1,4 +1,10 @@
 ﻿
+export class BuildStimulReportResult {
+    ReportKey: string;
+    PageCount: number;
+    StimulImageBase64: string;
+    EditableFieldPositionLists: EditableFieldPosition[];
+}
 
 export class EditableFieldPosition {
     Left: number;
@@ -16,9 +22,6 @@ export class EditableFieldPosition {
     FontFamily: string;
     Status: string;
     NewValue: string;
-    PageCount: number;
-    Key: string;
-    ReportKey: string;
     WidthPagePrecentage: number;
     HeightPagePrecentage: number;
     TextAligh: string;
@@ -29,7 +32,7 @@ export class EditableFieldPosition {
     ReturnToOriginValue: boolean;
     ControlType: string = "";
     NumberOfRequest: number;
-       
+    Key: string;
     constructor() {
 
     }
