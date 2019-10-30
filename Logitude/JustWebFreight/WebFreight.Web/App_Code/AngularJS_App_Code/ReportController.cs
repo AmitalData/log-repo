@@ -70,98 +70,36 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             }
         }
         
-        public HttpResponseMessage PutReportData(ReportFliter reportFliter)
+        public HttpResponseMessage PutBuildStimulReport(ReportFliter reportFliter)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
-
-                if(authToken.Tenant!= reportFliter.tenant)
-                {
-                    throw new Exception("Sorry you’re not authenticated to view this report");
-                }
-
-
-                if (!string.IsNullOrEmpty(reportFliter.UserId))
-                {
-                    UserQuery userQuery = new UserQuery(authToken.Tenant);
-                    bool isExist = userQuery.CheckIfUserExistInTenant(reportFliter.UserId, authToken.Tenant);
-                    if (!isExist)
-                    {
-                        throw new Exception("Sorry you’re not authenticated to view this report");
-                    }
-                }
-
-
-                ICommonDataContext context = CommonDataContext.GetContext(reportFliter.tenant);
-                CommonDataDomainService commonService = new CommonDataDomainService();
-                Tenant currentTenant = context.Tenants.Where(t => t.Id == reportFliter.tenant).FirstOrDefault();
-                Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
-                string datetimeformat = @"dd\/MM\/yyyy";
-
-                if (!string.IsNullOrEmpty(currentTenant.DateTimeFormat))
-                {
-                    datetimeformat = currentTenant.DateTimeFormat;
-                }
-
-                Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern = datetimeformat;
-                Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortTimePattern = "HH:mm";
+              
                 ReportHelper reportHelper = new ReportHelper();
-
-                CustomerPotentialActualDataProvider myData = null;
-                string urlImage = "";
-
+                reportHelper.ReportAuthentication(reportFliter, authToken.Tenant);
+                Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern = reportHelper.GetReportDateTimeFormat(reportFliter);
+                Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortTimePattern = "HH:mm";
                 if (string.IsNullOrEmpty(reportFliter.ReportKey) || reportFliter.ProcessType == "GenerateReport")
                 {
-                    if (reportFliter.ReportCode == "CUPA" || !reportFliter.ReportsRunUsingWR)
+                    if (reportFliter.ReportCode == "CUPA")
                     {
-                        BuildReportDataResult buildReportDataResult = reportHelper.BuildReport(reportFliter);
-
-                        if (buildReportDataResult.Exception != null)
-                        {
-                            return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(buildReportDataResult.Exception));
-                        }
-                        else
-                        {
-                            urlImage = buildReportDataResult.UrlImage;
-                            myData = buildReportDataResult.myData;
-                        }
-
+                        return Request.CreateResponse(HttpStatusCode.OK, reportHelper.BuildCustomerPotentialActualDataProvider(reportFliter));
                     }
                     else
                     {
                         return Request.CreateResponse(HttpStatusCode.OK, reportHelper.BuildReportDataViewWorkerRole(reportFliter));
                     }
-
                 }
                 else
                 {
-                    urlImage = GetReportAsImageFromStorage(reportFliter);
+                    string urlImage = GetReportAsImageFromStorage(reportFliter);
+                    if (string.IsNullOrEmpty(urlImage)) throw new Exception("Can't find file (" + reportFliter.ReportKey + "@" + reportFliter.ReportName + ")");
+                    return Request.CreateResponse(HttpStatusCode.OK, GetBuildStimulReportResult(reportFliter, urlImage));
                 }
 
-
-                if (reportFliter.ReportCode == "CUPA")
-                {
-                    return Request.CreateResponse(HttpStatusCode.OK, myData);
-                }
-                else
-                {
-                    if (string.IsNullOrEmpty(urlImage))
-                    {
-                        string exceptionMessage = "Can't find file (" + reportFliter.ReportKey + "@" + reportFliter.ReportName + ")";
-                        return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(new Exception(exceptionMessage)));
-                    }
-
-                    BuildStimulReportResult resultBuildStimulReportArgs = new BuildStimulReportResult();
-                    resultBuildStimulReportArgs.StimulImageBase64 = urlImage;
-                    resultBuildStimulReportArgs.PageCount = reportFliter.PageCount;
-                    resultBuildStimulReportArgs.ReportKey = reportFliter.ReportKey;
-
-                    return Request.CreateResponse(HttpStatusCode.OK, resultBuildStimulReportArgs);
-                }
             }
 
             catch (Exception ex)
@@ -169,6 +107,19 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+    
+
+
+
+        private static BuildStimulReportResult GetBuildStimulReportResult(ReportFliter reportFliter, string urlImage)
+        {
+            BuildStimulReportResult resultBuildStimulReportArgs = new BuildStimulReportResult();
+            resultBuildStimulReportArgs.StimulImageBase64 = urlImage;
+            resultBuildStimulReportArgs.PageCount = reportFliter.PageCount;
+            resultBuildStimulReportArgs.ReportKey = reportFliter.ReportKey;
+            return resultBuildStimulReportArgs;
         }
 
         public HttpResponseMessage GetPrepareSendReport(string type , string fileName , int tenant)
