@@ -334,7 +334,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             catch (Exception ex)
             {
-                if (email == "maheera@logitudeworld.com")
+                if (email == "maheera@logitudeworld.com" || email == "ahmada@logitudeworld.com")
                 {
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ex);
                 }

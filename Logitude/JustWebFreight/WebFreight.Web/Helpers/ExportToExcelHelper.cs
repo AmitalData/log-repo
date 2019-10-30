@@ -646,6 +646,8 @@ namespace WebFreight.Web.Helpers
             }
             workbook.Version = ExcelVersion.Excel2007;
             workbook.SaveAs(memory);
+            //workbook.Close();
+            //excelEngine.Dispose();
             return memory.ToArray();
         }
 
