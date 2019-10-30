@@ -186,7 +186,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
                         this.openAmountFilter = new FilterItem("ForeignAmount", -1 * num, +num, null, "Between", false, false, false, "number", false);
                     }
                     else {
-                        this.openAmountFilter = new FilterItem("ForeignAmount", num, null, null, OpenAmountFilterOperator, false, false, false, "number", false);
+                        this.openAmountFilter = new FilterItem("ForeignAmount", Math.abs(num), null, null, OpenAmountFilterOperator, false, false, false, "number", false);
                     }
                     this.ReloadScreen();
                     this.BankReloadScreen();
