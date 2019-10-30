@@ -678,7 +678,7 @@ namespace WebFreight.Web.Helpers
         {
             BuildReportDataResult buildReportDataResult = new BuildReportDataResult();
 
-            try
+           // try
             {
                 if (reportFliter != null)
                 {
@@ -728,10 +728,10 @@ namespace WebFreight.Web.Helpers
                 }
                 return buildReportDataResult;
             }
-            catch (Exception ex)
+           // catch (Exception ex)
             {
-                buildReportDataResult.Exception = ex;
-                return buildReportDataResult;
+                //buildReportDataResult.Exception = ex;
+                //return buildReportDataResult;
             }
           
         }

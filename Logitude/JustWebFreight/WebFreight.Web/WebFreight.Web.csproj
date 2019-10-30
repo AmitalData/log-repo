@@ -1073,6 +1073,7 @@
     <Compile Include="Controllers\AccountingModel\TaxReportController.cs" />
     <Compile Include="Controllers\BookingModel\Extended\BookingProductsExtendedController.cs" />
     <Compile Include="Controllers\BookingModel\Generated\PMControllers\BookingProductController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Extended\CardExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\AutomationExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\AutomationHistoryExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\AutomationResultEmailRecipientExtendedController.cs" />
