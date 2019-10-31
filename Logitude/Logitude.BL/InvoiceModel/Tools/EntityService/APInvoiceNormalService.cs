@@ -287,7 +287,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             List<APInvoiceLinePM> invoiceLines = entityPM.InvoiceLines.ToList();
             Shipment shipment = shipmentRepository.GetSingleShipment(entityPM.MainEntityId, tenant);
-            List<ShipmentPayable> payables = shipmentPayableRepository.GetShipemntPayablesByShipmentId(shipment.Id, tenant).Where(a => a.ShipmentPayableLineStatusCode != "ACCT" && a.ShipmentPayableLineStatusCode != "OAMT" && a.ShipmentPayableAmountTypeCode != "ACCU").ToList();
+            List<ShipmentPayable> payables = shipmentPayableRepository.GetShipemntPayablesByShipmentId(shipment.Id, tenant).ToList();
+            payables = payables.Where(a => a.ShipmentPayableLineStatusCode != "ACCT").ToList();
+
+            //if (this.)
+            //{
+            //    payables = payables.Where(a => a.ShipmentPayableLineStatusCode != "ACCT" && a.ShipmentPayableLineStatusCode != "OAMT" && a.ShipmentPayableAmountTypeCode != "ACCU").ToList();
+
+            //}
 
             foreach (APInvoiceLinePM line in invoiceLines)
             {
@@ -317,6 +324,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 ShipmentPayable shipmentPayableLine = shipmentPayable.FirstOrDefault();
                 // connect payable line to invoice line
                 aPInvoiceLine.EntityPayableId = shipmentPayableLine.Id;
+
             }
             else
             {

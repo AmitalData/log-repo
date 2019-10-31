@@ -16,7 +16,7 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
 {
     public class ReportExecutionService
     {
-        private DbQueueService queueservice;
+        private DbQueueService queueService = null;
         private QueueResponse queueResponse = null;
         private int? tenant = null;
         private string reportExecutionLogId = string.Empty;
@@ -24,11 +24,11 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
         private ReportExecutionLog reportExecutionLog = null;
         private DateTime startDate = DateTime.Now;
 
-        public ReportExecutionService(DbQueueService queueservice, QueueResponse queueResponse)
+        public ReportExecutionService(DbQueueService queueService, QueueResponse queueResponse)
         {
-            this.queueservice = queueservice;
+            this.queueService = queueService;
             this.queueResponse = queueResponse;
-            if (queueservice != null && queueResponse != null)
+            if (queueService != null && queueResponse != null)
             {
                 reportExecutionLogId = queueResponse.MessageValues != null && queueResponse.MessageValues.Keys.Contains("ReportExecutionLogId") ? queueResponse.MessageValues["ReportExecutionLogId"].ToString() : "";
                 tenant = GetTenantValueFromQueueResponse(queueResponse);
@@ -39,7 +39,7 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
         {
             try
             {
-                if (queueservice != null && queueResponse != null)
+                if (queueService != null && queueResponse != null)
                 {
                     reportExecutionLog = GetReportExecutionLog();
                     if (reportExecutionLog != null && (reportExecutionLog.StatusCode != "D" || reportExecutionLog.StatusCode != "F"))
@@ -47,7 +47,7 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
                         UpdateReportExecutionLog(new ReportExecutionLogArgs() { StartDate = startDate, StatusCode = "P", ExecutedByServerName = System.Environment.MachineName });
                         BuildStimulReport();
                     }
-                    else queueservice.Complete();
+                    else queueService.Complete();
                 }
             }
             catch (Exception ex)
@@ -65,12 +65,12 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
                 ReportHelper reportHelper = new ReportHelper();
                 reportHelper.BuildStimulReport(reportFliter);
                 UpdateReportExecutionLog(new ReportExecutionLogArgs() { StatusCode = "D", DoneDate = DateTime.Now });
-                queueservice.Complete();
+                queueService.Complete();
             }
             else
             {
                 UpdateReportExecutionLog(new ReportExecutionLogArgs() { Exception = new Exception("Report Fliter is null"), DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });
-                queueservice.Complete();
+                queueService.Complete();
             }
         }
 
@@ -101,14 +101,14 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
             {
                 if (queueResponse.RetryNumber <= 1)
                 {
-                    queueservice.DelayAndReturnBackToQueue(new TimeSpan(0, 0, 0, 5), queueResponse.MessageId);
+                    queueService.DelayAndReturnBackToQueue(new TimeSpan(0, 0, 0, 5), queueResponse.MessageId);
                 }
                 if (queueResponse.RetryNumber >= 2)
                 {
-                    queueservice.CompleteAsFailed();
+                    queueService.CompleteAsFailed();
                 }
             }
-            else queueservice.CompleteAsFailed();
+            else queueService.CompleteAsFailed();
 
             UpdateReportExecutionLog(new ReportExecutionLogArgs() { Exception = exception});
         }
@@ -167,9 +167,6 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
         }
 
     }
-
-
-
 
 
     public class ReportExecutionLogArgs
