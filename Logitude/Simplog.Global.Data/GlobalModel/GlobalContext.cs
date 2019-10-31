@@ -138,6 +138,7 @@ namespace Simplog.Global.Data.GlobalModel
             modelBuilder.Configurations.Add(new PaymentCurrencyMap());
             modelBuilder.Configurations.Add(new AutoSignupEmailMap());
             modelBuilder.Configurations.Add(new BluesnapContractMap());
+            modelBuilder.Configurations.Add(new BluesnapTransactionMap());
             modelBuilder.Configurations.Add(new BluesnapContractTypeMap());
             modelBuilder.Configurations.Add(new AWBMessagesCCSTypeMap());
             modelBuilder.Configurations.Add(new MobileNotificationLogMap());
@@ -203,6 +204,7 @@ namespace Simplog.Global.Data.GlobalModel
         public IDbSet<PasswordResetRequest> PasswordResetRequests { get; set; }
         public IDbSet<PaymentCurrency> PaymentCurrencies { get; set; }
         public IDbSet<BluesnapContract> BluesnapContracts { get; set; }
+        public IDbSet<BluesnapTransaction> BluesnapTransactions { get; set; }
         public IDbSet<BluesnapContractType> BluesnapContractTypes { get; set; }
         public IDbSet<AutoSignupEmail> AutoSignupEmails { get; set; }
         public IDbSet<AWBMessagesCCSType> AWBMessagesCCSTypes { get; set; }
