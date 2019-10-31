@@ -569,10 +569,10 @@ export class TaskSchedulerComponent implements OnInit {
             this.filterAgrs.addAdditionalFilter("InActive", false, null, null, "Equals", true, false, false, "Boolean");
         }
 
-        if (filters.AdditionalFilters.filter(a => a.FieldName == "Type").length > 0) {
-            filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "Type");
+        if (this.filterAgrs.AdditionalFilters.filter(a => a.FieldName == "Type").length > 0) {
+            this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != "Type");
         }
-        filters.addAdditionalFilter("Type", this.SchedulerType, null, null, "Equals", true, false, false, "String");
+        this.filterAgrs.addAdditionalFilter("Type", this.SchedulerType, null, null, "Equals", true, false, false, "String");
 
         this.MenuHeaderchangeeventTasks.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
     }
