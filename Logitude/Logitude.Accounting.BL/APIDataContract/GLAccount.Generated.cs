@@ -164,5 +164,11 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
     public RevenueExpenseType RevenueExpenseType { get; set; }
     
     public string Parent { get; set; }
+    
+    public string CardCode { get; set; }
+    
+    public string PartnerTypeId { get; set; }
+    
+    public bool IsDisconnectedFromCard { get; set; }
     }
 } 

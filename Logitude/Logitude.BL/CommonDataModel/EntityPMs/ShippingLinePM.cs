@@ -263,5 +263,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string CAAT { get; set; }
+
+        [DataMember]
+        public string GLAccountId { get; set; }
     }
 }

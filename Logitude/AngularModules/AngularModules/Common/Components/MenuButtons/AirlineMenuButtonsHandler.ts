@@ -26,8 +26,25 @@ export class AirlineMenuButtonsHandler {
                     switch (menuButton.EventCode) {
                         case "Disconnect": {
 
-                            menuButton.IsDisabled = false;
+                            if (this.EntityPM.GLAccountId) {
+                                menuButton.IsDisabled = false;
+                            }
+                            else {
+                                menuButton.IsDisabled = true;
+                            }
 
+
+
+
+                            break;
+                        }
+                        case "More": {
+                            if (!SessionLocator.TenantPM.AccountingActivated) {
+                                menuButton.IsHidden = true;
+                            }
+                            else {
+                                menuButton.IsHidden = false;
+                            }
                             break;
                         }
 
@@ -58,8 +75,9 @@ export class AirlineMenuButtonsHandler {
 
     private DisconnectGLAccount() {
 
-        this.cardExtendedPMService.DisconnectGLAccountFromCard(this.EntityPM.Id, "AL").subscribe((myResponse: ServiceResponse) => {
+        this.cardExtendedPMService.DisconnectGLAccountFromCard(this.EntityPM.Id, "AL", "DISC").subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
 
             }
         });

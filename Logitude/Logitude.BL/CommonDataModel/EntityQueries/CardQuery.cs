@@ -208,7 +208,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       MetodoPagoCode = a.MetodoPagoCode,
                                       UsoCFDICode = a.UsoCFDICode,
                                       StateName = a.StateName,
-
+                                      
                                       IsInternationalPartner = a.IsInternationalPartner,
                                       IsAutonomy = a.IsAutonomy,
                                   }).FirstOrDefault();

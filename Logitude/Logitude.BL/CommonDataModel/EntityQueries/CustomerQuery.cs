@@ -173,7 +173,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   ActivatedByUserId = a.ActivatedByUserId,
                                   SetAsInactiveByUserId = a.SetAsInactiveByUserId,
                                   ActivationRequestedByUserId = a.ActivationRequestedByUserId,
-
+                                  GLAccountId = a.Card.GLAccountId,
                                   Card = new CardPM()
                                   {
                                       Id = a.Id,
@@ -325,6 +325,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               ActivatedByUserId = a.ActivatedByUserId,
                               SetAsInactiveByUserId = a.SetAsInactiveByUserId,
                               ActivationRequestedByUserId = a.ActivationRequestedByUserId,
+                              GLAccountId = a.Card.GLAccountId,
                               Card = new CardPM
                               {
                                   Id = a.Id,

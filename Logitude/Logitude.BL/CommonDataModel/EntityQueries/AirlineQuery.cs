@@ -118,6 +118,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                MetodoPagoCode = a.Card.MetodoPagoCode,
                                UsoCFDICode = a.Card.UsoCFDICode,
                                ImageDetailId = a.Card.ImageDetailId,
+                               GLAccountId = a.Card.GLAccountId,
                                Card = new CardPM()
                                {
                                    Id = a.Id,

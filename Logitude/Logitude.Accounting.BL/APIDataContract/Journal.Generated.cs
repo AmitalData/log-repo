@@ -20,7 +20,6 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
     {
 
 	    
-	[XmlAttribute]
     public string Id { get; set; }
     
     public int Tenant { get; set; }
@@ -58,6 +57,5 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
     public List<JournalLine> JournalLines { get; set; }
     
     public string JournalNumber { get; set; }
-        public bool IsLedgerCreated { get; set; }
     }
 } 
