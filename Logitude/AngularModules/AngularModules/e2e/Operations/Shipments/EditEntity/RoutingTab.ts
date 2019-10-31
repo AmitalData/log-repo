@@ -73,7 +73,7 @@ export class RoutingTabComponent {
                 this.Helper.WaitByIdAndFill('date_Shipment_MainCarriageATD', '1');
                 this.Helper.WaitByIdAndFill('date_Shipment_MainCarriageATA', '1');
 
-                this.shipHelper.AddAirlineStock('edit');
+                //this.shipHelper.AddAirlineStock('edit');
 
                 this.Helper.WaitByIdAndClick('MainCarriageOKBtn');
             }
