@@ -48,6 +48,16 @@ export class CardContactAdditionalServicePM {
     public set AdditionalServiceId(newValue: string) { if (this.additionalServiceId != newValue) { this.additionalServiceId = newValue; this.MarkAsDirty("AdditionalServiceId"); } }
        
 	 
+    private cardId: string;
+    public get CardId() { return this.cardId; }
+    public set CardId(newValue: string) { if (this.cardId != newValue) { this.cardId = newValue; this.MarkAsDirty("CardId"); } }
+       
+	 
+    private contactId: string;
+    public get ContactId() { return this.contactId; }
+    public set ContactId(newValue: string) { if (this.contactId != newValue) { this.contactId = newValue; this.MarkAsDirty("ContactId"); } }
+       
+	 
     private additionalServiceName: string;
     public get AdditionalServiceName() { return this.additionalServiceName; }
     public set AdditionalServiceName(newValue: string) { if (this.additionalServiceName != newValue) { this.additionalServiceName = newValue; this.MarkAsDirty("AdditionalServiceName"); } }

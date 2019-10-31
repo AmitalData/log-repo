@@ -185,10 +185,10 @@ namespace WebFreight.Web.App_Code
                 long theA1 = new long();
                 long theA2 = new long();
 
-                List<EditableFieldPosition> editableFieldPositionList = new List<EditableFieldPosition>();
+                BuildStimulReportResult buildStimulReportResult = new BuildStimulReportResult() { EditableFieldPositionLists = new List<EditableFieldPosition>()};
                 List<string> result = new List<string>();
 
-
+                ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
                 ICommonDataContext context = CommonDataContext.GetContext(filter.Tenant);
                 CommonDataDomainService commonService = new CommonDataDomainService();
                 Tenant currentTenant = context.Tenants.Where(t => t.Id == filter.Tenant).FirstOrDefault();
@@ -226,8 +226,6 @@ namespace WebFreight.Web.App_Code
                     DocumentTypeCopy documentTypeCopy = documentTypeCopyRep.GetSingleDocumentTypeCopy(filter.DocumentTypeCopyId);
                     DocumentType documentType = repository.GetSingleDocumentTypes(template.DocumentTypeId, filter.Tenant);
                     DocumentsFilingRepository documentsFilingRepository = new DocumentsFilingRepository(filter.Tenant);
-                    ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
-
 
                     if (template != null) templatedata = template.TemplateBody;
 
@@ -263,20 +261,15 @@ namespace WebFreight.Web.App_Code
 
                         }
                     }
-
-                    editableFieldPositionList = BulidEditableFieldPositionList(filter.IsDisplayOnly, result, ReportKey, filter.PageNumber);
-
                 }
                 else
                 {
                     result = GetReportAsImageFromStorage(filter.ReportKey, filter.Tenant, filter.PageNumber, documentOut);
-
-                    editableFieldPositionList = BulidEditableFieldPositionList(filter.IsDisplayOnly, result, ReportKey, filter.PageNumber);
-
                 }
 
+                buildStimulReportResult = GetBuildStimulReportResult(filter, result);
 
-                return Request.CreateResponse(HttpStatusCode.OK, editableFieldPositionList);
+                return Request.CreateResponse(HttpStatusCode.OK, buildStimulReportResult);
 
             }
 
@@ -287,20 +280,25 @@ namespace WebFreight.Web.App_Code
 
         }
 
-        private List<EditableFieldPosition> BulidEditableFieldPositionList(bool isDisplayOnly, List<string> result, string reportKey, int pagenumber)
+        private BuildStimulReportResult GetBuildStimulReportResult(ExportDocumentArgs filter ,  List<string> stimulReportResult)
+        {
+            BuildStimulReportResult buildStimulReportResult = new BuildStimulReportResult() { EditableFieldPositionLists = new List<EditableFieldPosition>() };
+            buildStimulReportResult.StimulImageBase64 = stimulReportResult != null && stimulReportResult.Count > 0 ? stimulReportResult[0] : null;
+            buildStimulReportResult.ReportKey = ReportKey;
+            buildStimulReportResult.PageCount = PageCount;
+            if (!filter.IsDisplayOnly)
+            {
+                buildStimulReportResult.EditableFieldPositionLists = BulidEditableFieldPositionList( stimulReportResult, filter.PageNumber);
+            }
+
+            return buildStimulReportResult;
+        }
+
+        private List<EditableFieldPosition> BulidEditableFieldPositionList(List<string> result, int pagenumber)
         {
 
             List<EditableFieldPosition> editableFieldPositionList = new List<EditableFieldPosition>();
-            if (isDisplayOnly)
-            {
-                if (result.Count > 0)
-                {
-                    editableFieldPositionList.Add(new EditableFieldPosition() { FieldName = "Image", FieldValue = result[0], PageCount = PageCount, ReportKey = reportKey });
-                }
-            }
-
-            else
-            {
+       
                 if (result != null && result.Count > 1)
                 {
                     string xmal = "";
@@ -337,16 +335,9 @@ namespace WebFreight.Web.App_Code
                     int numberOfEditedField = 0;
 
                     editableFieldPositionList = GetEditableFieldPosition(xmal, reportunit, childFieldNodes, pagenumber, ref numberOfEditedField);
-
-                    editableFieldPositionList.Add(new EditableFieldPosition() { FieldName = "NumberOfEditedField", FieldValue = numberOfEditedField.ToString(), PageCount = PageCount, ReportKey = reportKey });
-
-                    if (result.Count > 0)
-                    {
-                        editableFieldPositionList.Add(new EditableFieldPosition() { FieldName = "Image", FieldValue = result[0], PageCount = PageCount, ReportKey = reportKey });
-                    }
+                    editableFieldPositionList.Add(new EditableFieldPosition() { FieldName = "NumberOfEditedField", FieldValue = numberOfEditedField.ToString()});
                 }
 
-            }
             return editableFieldPositionList;
         }
 
@@ -452,6 +443,7 @@ namespace WebFreight.Web.App_Code
 
 
             List<EditableFieldPosition> editableFieldPositionLists = new List<EditableFieldPosition>();
+
             if (!string.IsNullOrEmpty(xmal))
             {
                 XmlReader reader = XmlReader.Create(new StringReader(xmal));

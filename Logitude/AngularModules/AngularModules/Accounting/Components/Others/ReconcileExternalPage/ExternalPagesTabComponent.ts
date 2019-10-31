@@ -1,3 +1,5 @@
+import { LedgerTransactionExtendedListService } from './../../../Services/ExtendedLists/LedgerTransactionExtendedListService';
+import { ServiceResponse } from './../../../../Infrastructure/DataContracts/ServiceResponse';
 declare var window: any;
 import {Component, OnInit, Output, EventEmitter, AfterViewInit, OnDestroy, ChangeDetectorRef}  from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -19,57 +21,109 @@ import {BankAccountPMService} from '../../../Services/StandardPMs/BankAccountPMS
 
 @Component({
     moduleId: module.id,
-    templateUrl: './BankPagesTabComponent.html'
+    templateUrl: './ExternalPagesTabComponent.html'
 })
 
-export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDestroy {
-    public EntityPM: BankAccountPM = null;
-    public ObjectTableName = "ReconcileExternalPage";
-    public DataContext = this;
+export class ExternalPagesTabComponent extends BaseComponent implements OnInit, OnDestroy {
 
-    // Events
+    public DataContext = this;
+    public ObjectTableName: string;
+    public ObjectTable: any;
+    public EntityPM: any = null;
+    public ReconcilePageTable = "ReconcileExternalPage";
+
     @Output() onQueryChangeEvent = new EventEmitter();
     @Output() MenuHeaderchangeevent = new EventEmitter();
-
-    // Filters
-    dateFilter: FilterItem;
-    searchFieldFilter: FilterItem;
-     preventSelect:boolean = false;
-    // Services
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private _entityListService: EntityListService = new EntityListService();
     _ReconcileExternalPageExtendedPMService: ReconcileExternalPageExtendedPMService = new ReconcileExternalPageExtendedPMService();
     _ReconcileExternalPagePMService: ReconcileExternalPagePMService = new ReconcileExternalPagePMService();
     _BankAccountPMService: BankAccountPMService = new BankAccountPMService();
-
-    public isRTL: boolean = false;
+    _LedgerTransactionExtendedListService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
 
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
+    private SaveCompletedEvent: any = null;
+    private LoadCompletedEvent: any = null;
+    dateFilter: FilterItem;
+    searchFieldFilter: FilterItem;
+    preventSelect: boolean = false;
+    public isRTL: boolean = false;
+    public Title: string = "";
+
+
+
+    constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef)
+    {
         super();
+
+        this.LoadResources();
+
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
-        this._entityResourceService.getEntityResourceByTableName("ReconcileExternalPage").subscribe((response: any) => { });
-        this._entityResourceService.getEntityResourceByTableName("ReconcileExternalPageLine").subscribe((response: any) => { });
+        this.SetComponentArgs(entityArgs);
 
-        // Set Entity
-        this.EntityPM = entityArgs.EntityPM;
         this.SetUIProperties();
+        this.InitializeDates();
+        this.Listen();
+    }
 
-        //#region Fill Date Default Values
+
+
+
+    private SetComponentArgs(entityArgs: EntityArgs)
+    {
+        console.log("[ExternalPagesTabComponent.Args] ", entityArgs);
+
+        this.EntityPM = entityArgs.EntityPM;
+        this.ObjectTableName = entityArgs.ObjectTableName;
+
+        this.ObjectTable = window.ObjectTables.filter(d => d.Name === this.ObjectTableName)[0];
+
+        if (!this.ObjectTable)
+            console.log("[ERROR] no object table found! ");
+
+        this.SetTitles();
+
+
+    }
+
+    private SetTitles()
+    {
+        var title = "";
+
+        switch (this.ObjectTableName) {
+            case "BankAccount":
+                title = TextCodeTranslator.Translate("BankAccount.TH.BankPages");
+                break;
+            case "GLAccount":
+                title = TextCodeTranslator.Translate("GLAccount.TH.ExternalTransactions");
+                break;
+            default:
+                title = "External Pages";
+                break;
+        }
+
+        this.Title = title;
+    }
+
+    private InitializeDates()
+    {
         var today = new Date();
         this.ToDate = new Date();
         this.oldToDate = new Date();
         var lastmonth = today.setMonth(today.getMonth() - 1);
         this.FromDate = new Date(lastmonth);
         this.oldFromDate = new Date(lastmonth);
-        //#endregion
-
-        this.Listen();
     }
 
-    private SaveCompletedEvent: any = null;
-    private LoadCompletedEvent: any = null;
+    private LoadResources()
+    {
+        this._entityResourceService.getEntityResourceByTableName("ReconcileExternalPage").subscribe((response: any) => { });
+        this._entityResourceService.getEntityResourceByTableName("ReconcileExternalPageLine").subscribe((response: any) => { });
+        this._entityResourceService.getEntityResourceByTableName("BankAccount").subscribe((response: any) => { });
+        this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => { });
+    }
+
     Listen() {
         if (this.CurrentSession.CurrentEditComponent != null) {
             if (this.SaveCompletedEvent == null) {
@@ -168,16 +222,16 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
         if (this.FromDate >= this.ToDate) {
 
             this.timerToken = setTimeout(() => {
-                this.UIProperties.SetValidity("ToDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.ToDateMustGreaterFromDate"));
-                this.UIProperties.SetValidity("FromDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.FromDateMustSmallerToDate"));
+                this.UIProperties.SetValidity("ToDate", this.ReconcilePageTable, false, TextCodeTranslator.Translate("Accounting.General.O.ToDateMustGreaterFromDate"));
+                this.UIProperties.SetValidity("FromDate", this.ReconcilePageTable, false, TextCodeTranslator.Translate("Accounting.General.O.FromDateMustSmallerToDate"));
                 this.CD.detectChanges();
             }, 200);
 
 
         } else {
             this.timerToken = setTimeout(() => {
-                this.UIProperties.SetValidity("ToDate", this.ObjectTableName, true, "");
-                this.UIProperties.SetValidity("FromDate", this.ObjectTableName, true, "");
+                this.UIProperties.SetValidity("ToDate", this.ReconcilePageTable, true, "");
+                this.UIProperties.SetValidity("FromDate", this.ReconcilePageTable, true, "");
                 this.CD.detectChanges();
             }, 200);
 
@@ -347,9 +401,7 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
         filters.SortBy = "PageNo"; //FromDate
         filters.SortDirection = "Descending";
 
-        var bankAccountOO = window.ObjectTables.filter(d => d.Name === "BankAccount")[0];
-
-        filters.addAdditionalFilter("ObjectTableId", bankAccountOO.Id, null, null, "Equals", false, false, false, "string");
+        filters.addAdditionalFilter("ObjectTableId", this.ObjectTable.Id, null, null, "Equals", false, false, false, "string");
         filters.addAdditionalFilter("EntityId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
         //filters.addAdditionalFilter("IsCancelled", false, null, null, "Equals", false, false, false, "boolean");
 
@@ -399,7 +451,7 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
             this._ReconcileExternalPagePMService.get(entity.Id).subscribe((myResult) => {
                 entityPM = myResult.Result;
 
-                this._ReconcileExternalPageExtendedPMService.CheckLastApprovedBankPageAndReconciledLine(entity.Id).subscribe((myResult) => {
+                this._ReconcileExternalPageExtendedPMService.CheckLastApprovedBankPageAndReconciledLine(entity.Id, this.ObjectTableName).subscribe((myResult) => {
                     if (!myResult.HasError) {
                         if (myResult.Result == null) {
                             this.EnableReconcileEditButton = true;
@@ -417,6 +469,7 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
                             this.IsRestoreButtonVisibile = false;
                             this.RestoreToolTipMessage = null;
                             this.ShowWindow(entityPM);
+                            this.CurrentSession.StopBusyIndicator();
 
                         }
                     }
@@ -431,7 +484,7 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
         else
         {
             this.EnableReconcileEditButton = false;
-            this._ReconcileExternalPageExtendedPMService.GetDraftPage(this.EntityPM.Id).subscribe((myResult) =>
+            this._ReconcileExternalPageExtendedPMService.GetDraftPage(this.EntityPM.Id, this.ObjectTableName).subscribe((myResult) =>
             {
                 var draftPage = myResult.Result;
                 if (!AppTool.IsNullOrEmpty(draftPage))
@@ -447,6 +500,7 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
                 }
                 else {
                     this.ShowWindow(entity);
+                    this.CurrentSession.StopBusyIndicator();
 
                 }
             });
@@ -481,48 +535,120 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
     }
     IsRestoreButtonEnabled: boolean;
     EnableReconcileEditButton: boolean = false;
-    ShowWindow(entity: any = null) {
+    ShowWindow(externalPage: any = null) {
 
-        // get bank account, then open window
-        this.CurrentSession.StartBusyIndicatorLoading();
-        this._BankAccountPMService.get(this.EntityPM.Id).subscribe((myResult) =>
-        {
-            this.CurrentSession.StopBusyIndicator();
-            var bankAccount = myResult.Result;
+        // if (this.ObjectTableName == 'BankAccount') {
+
+        //     // get bank account, then open window
+        //     this.CurrentSession.StartBusyIndicatorLoading();
+        //     this._BankAccountPMService.get(this.EntityPM.Id).subscribe((myResult) =>
+        //     {
+        //         this.CurrentSession.StopBusyIndicator();
+        //         var bankAccount = myResult.Result;
 
 
-            if (!AppTool.IsNullOrEmpty(bankAccount))
-            {
+        //         if (!AppTool.IsNullOrEmpty(bankAccount)) {
 
-                //SHOW WNIDOW
-                var windowTitle = entity ? (TextCodeTranslator.Translate("ReconcileExternalPage.F.PageNo") + " " + entity.PageNo) : TextCodeTranslator.Translate("Accounting.General.O.NewPage");
-                var windowArgs: any = {};
-                windowArgs.entity = entity;
-                windowArgs.BankAccountId = this.EntityPM.Id;
-                windowArgs.IsRestoreButtonEnabled = this.IsRestoreButtonEnabled;
-                windowArgs.IsRestoreButtonVisibile = this.IsRestoreButtonVisibile;
-                windowArgs.RestoreToolTipMessage = this.RestoreToolTipMessage;
-                windowArgs.EnableReconcileEditButton = this.EnableReconcileEditButton;
-                windowArgs.GLAccountId = bankAccount.GLAccountId;
-                windowArgs.BankAccount = bankAccount;
-                windowArgs.message = this.message;
-                var logWindow = new LogitudeWindow();
-                logWindow.Width = 1000;
-                logWindow.Height = 600;
-                logWindow.Title = windowTitle;
-                logWindow.WindowArgs = windowArgs;
-                logWindow.WindowClosed.subscribe(($event: any) => this.ReloadData());
-                logWindow.Show('./Accounting/Components/NewEntity/AddEditRecoExPageComponent');
-                //
 
-            }
+        //             this.showNewExternalPage(externalPage, bankAccount);
+
+
+        //         }
+        //         else {
+        //             console.error("ERROR!! no bank account found!!!!");
+        //         }
+        //     });
+
+        // } else {
+        //     this.showNewExternalPage(externalPage, this.EntityPM);
+
+        // }
+
+        this.showNewExternalPage(externalPage, this.EntityPM);
+
+
+    }
+
+    private showNewExternalPage(externalPage: any, entity: any)
+    {
+        var windowArgs: any = {};
+        var windowTitle = externalPage ? (TextCodeTranslator.Translate("ReconcileExternalPage.F.PageNo") + " " + externalPage.PageNo) : TextCodeTranslator.Translate("Accounting.General.O.NewPage");
+
+        if (this.ObjectTableName == "BankAccount") {
+            windowArgs.GLAccountId = entity.GLAccountId;
+        }
+        else if (this.ObjectTableName == "GLAccount") {
+            windowArgs.GLAccountId = entity.Id;
+
+            if (externalPage)
+                windowTitle = TextCodeTranslator.Translate("GLAccount.O.ExternalTransaction") + " " + externalPage.PageNo;
             else
-            {
-                console.error("ERROR!! no bank account found!!!!");
+                windowTitle = TextCodeTranslator.Translate("GLAccount.O.NewExternalTransaction");
+
+        }
+
+        windowArgs.externalPage = externalPage;
+        windowArgs.PageObjectTableName = this.ObjectTableName;
+        windowArgs.EntityPM = entity;
+        windowArgs.BankAccountId = this.EntityPM.Id;
+        windowArgs.IsRestoreButtonEnabled = this.IsRestoreButtonEnabled;
+        windowArgs.IsRestoreButtonVisibile = this.IsRestoreButtonVisibile;
+        windowArgs.RestoreToolTipMessage = this.RestoreToolTipMessage;
+        windowArgs.EnableReconcileEditButton = this.EnableReconcileEditButton;
+
+
+
+        windowArgs.message = this.message;
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 1000;
+        logWindow.Height = 600;
+        logWindow.Title = windowTitle;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(() => this.ReloadData());
+        logWindow.Show('./Accounting/Components/NewEntity/AddEditRecoExPageComponent');
+    }
+
+    ExternalAdjustButtonClicked()
+    {
+        if(this.ObjectTableName != 'GLAccount')
+            console.error("[ExternalAdjustButtonClicked] table is not glaccount !!!!!!!");
+
+        this._LedgerTransactionExtendedListService.GetFirstLedgerTransaction(this.EntityPM.GLAccountId).subscribe((serviceResponse: ServiceResponse) =>
+        {
+            if (serviceResponse.Result) {
+                var result = serviceResponse.Result;
+                var transaction = result.Result;
+                var openAmountCurrency = transaction ? transaction.OpenAmountCurrencySign : "";
+                this.showReconcileWindow(openAmountCurrency);
+
             }
+            this.CurrentSession.StopBusyIndicator();
         });
+    }
 
+    showReconcileWindow(currency: any)
+    {
 
+        var windowArgs: any = {};
+        windowArgs.BankAccountPM = this.EntityPM;
+        windowArgs.openAmountCurrency = currency; // CurrencySign
+        windowArgs.ObjectTableName = this.ObjectTableName;
+
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 900;
+        logitudeWindow.Height = 800;
+        logitudeWindow.IsFullScreen = true;
+
+        logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.ExternalReconcile");
+
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.Show('./Accounting/Components/Others/ExternalReconcileComponent');
+        logitudeWindow.WindowClosed.subscribe(($event: any) =>
+        {
+            // show alert
+            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        });
     }
 
 }

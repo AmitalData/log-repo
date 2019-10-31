@@ -51,8 +51,9 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 temp.UpdatedByUserId = myUser.Id;
                 temp.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                 temp.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                temp.SubTotalInLocalCurrency = 0;
-                temp.SubTotalInInvoiceCurrency = 0;
+                
+                //temp.SubTotalInLocalCurrency = 0;
+                //temp.SubTotalInInvoiceCurrency = 0;
 
                 if (string.IsNullOrEmpty(temp.BranchId))
                 {
@@ -115,6 +116,20 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                     throw new ApplicationException("Invoice Currency is required");
                 }
 
+                else
+                {
+                    if(temp.InvoiceCurrencyId == temp.LocalCurrencyId)
+                    {
+                        if (temp.InvoiceCurrencyExchangeRate != null && temp.InvoiceCurrencyExchangeRate != 0)
+                        {
+                            if(temp.InvoiceCurrencyExchangeRate != 1)
+                            {
+                                throw new ApplicationException("Invoice Currency Exchange Rate should be 1 when Invoice Currency same as Local Currency");
+                            }
+                        }
+                    }
+                }
+
                 if (accountingSetting != null && accountingSetting.IsVatNumberMandatoryInAP)
                 {
                     if (string.IsNullOrEmpty(temp.VATNumber))
@@ -156,6 +171,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                             throw new ApplicationException("The Shipment is Accounting Closed");
                         }
 
+                        temp.ShipmentTransportModeId = shipment.TransportModeId;
                         temp.MainEntityId = shipment.Id;
                         temp.HouseNumber = shipment.House;
                         temp.MasterNumber = shipment.LongMaster;
