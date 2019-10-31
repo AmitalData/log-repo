@@ -287,7 +287,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             List<APInvoiceLinePM> invoiceLines = entityPM.InvoiceLines.ToList();
             Shipment shipment = shipmentRepository.GetSingleShipment(entityPM.MainEntityId, tenant);
-            List<ShipmentPayable> payables = shipmentPayableRepository.GetShipemntPayablesByShipmentId(shipment.Id, tenant).Where(a => a.ShipmentPayableLineStatusCode != "ACCT" && a.ShipmentPayableLineStatusCode != "OAMT" && a.ShipmentPayableAmountTypeCode != "ACCU").ToList();
+            List<ShipmentPayable> payables = shipmentPayableRepository.GetShipemntPayablesByShipmentId(shipment.Id, tenant).ToList();
+            payables = payables.Where(a => a.ShipmentPayableLineStatusCode != "ACCT").ToList();
+
+            //if (this.)
+            //{
+            //    payables = payables.Where(a => a.ShipmentPayableLineStatusCode != "ACCT" && a.ShipmentPayableLineStatusCode != "OAMT" && a.ShipmentPayableAmountTypeCode != "ACCU").ToList();
+
+            //}
 
             foreach (APInvoiceLinePM line in invoiceLines)
             {
@@ -317,6 +324,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 ShipmentPayable shipmentPayableLine = shipmentPayable.FirstOrDefault();
                 // connect payable line to invoice line
                 aPInvoiceLine.EntityPayableId = shipmentPayableLine.Id;
+
             }
             else
             {
@@ -600,27 +608,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 entityPM.StatusCode = "WA";
             }
 
-            if (entityPM.CreatedFromAPI)
-            {
-                this.InitializeCreatedFromAPI();
-            }
-
             this.InitializeVATs();
             this.InitializeTransferComponents();
             this.InitializeAmountDueFields();
-        }
-
-        private void InitializeCreatedFromAPI()
-        {
-            if (this.isNewEntity)
-            {
-                if (entityPM.ProfitCurrencyId == null)
-                {
-                    TenantRepository tenantRepository = new TenantRepository(this.myCommonContext);
-                    Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
-                    entityPM.ProfitCurrencyId = tenantPOCO.ProfitCurrencyId;
-                }
-            }
         }
 
         private List<VatType> allVatTypes = new List<VatType>();
@@ -1074,8 +1064,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             if (shipment != null)
             {
-                entityPM.ShipmentTransportModeId = shipment.TransportModeId;
-
                 shipment.ConcurrencyGUID = Guid.NewGuid().ToString();
 
                 if (string.IsNullOrEmpty(entityPM.MainEntityReference))

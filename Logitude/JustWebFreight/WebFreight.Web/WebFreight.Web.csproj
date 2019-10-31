@@ -2390,7 +2390,8 @@
     <Compile Include="Helpers\TFSParseWebhook.cs" />
     <Compile Include="Helpers\TimeClock\TMClockAnalyze.cs" />
     <Compile Include="Helpers\TMMessageBuilderAnalyzer.cs" />
-    <Compile Include="Helpers\WorkerRoleHelpers\DocumentsExecutionService.cs" />
+    <Compile Include="Helpers\WorkerRole\DocumentsExecutionService.cs" />
+    <Compile Include="Helpers\WorkerRole\ReportExecutionService.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.APPaymentTransferStatus.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.ARInvoiceStocksStatus.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.ARPaymentTransferStatus.cs" />

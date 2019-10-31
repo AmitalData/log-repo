@@ -527,7 +527,7 @@ export class TaskSchedulerComponent implements OnInit {
             if (filters.AdditionalFilters.filter(a => a.FieldName == "InActive").length > 0) {
                 filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "InActive");
             }
-            filters.addAdditionalFilter("InActive", true, null, null, "Equals", true, false, false, "StrBooleaning");
+            filters.addAdditionalFilter("InActive", true, null, null, "Equals", true, false, false, "Boolean");
         }
         else {
             if (filters.AdditionalFilters.filter(a => a.FieldName == "InActive").length > 0) {
@@ -535,6 +535,10 @@ export class TaskSchedulerComponent implements OnInit {
             }
             filters.addAdditionalFilter("InActive", false, null, null, "Equals", true, false, false, "Boolean");
         }
+        if (filters.AdditionalFilters.filter(a => a.FieldName == "Type").length > 0) {
+            filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "Type");
+        }
+        filters.addAdditionalFilter("Type", this.SchedulerType, null, null, "Equals", true, false, false, "String");
         filters.GetCount = getCount;
         filters.PageIndex = skip;
         filters.PageSize = take;
@@ -564,6 +568,11 @@ export class TaskSchedulerComponent implements OnInit {
         else {
             this.filterAgrs.addAdditionalFilter("InActive", false, null, null, "Equals", true, false, false, "Boolean");
         }
+
+        if (this.filterAgrs.AdditionalFilters.filter(a => a.FieldName == "Type").length > 0) {
+            this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != "Type");
+        }
+        this.filterAgrs.addAdditionalFilter("Type", this.SchedulerType, null, null, "Equals", true, false, false, "String");
 
         this.MenuHeaderchangeeventTasks.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
     }

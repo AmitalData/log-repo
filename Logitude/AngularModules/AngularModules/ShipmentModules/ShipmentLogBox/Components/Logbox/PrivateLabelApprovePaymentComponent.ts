@@ -220,10 +220,10 @@ export class PrivateLabelApprovePaymentComponent extends BaseComponent implement
     }
 
     DenyButtonClicked() {
-        this.CurrentSession.CurrentWindow.StartBusyIndicator("...");
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Sending ...");
         var newWindow = new LogitudeWindow();
         newWindow.Width = 350;
-        newWindow.Height = 250;
+        newWindow.Height = 280;
         newWindow.RTL = true;
         
         this._ShipmentAdditionalCloudDataService.getsingledata(this.EntityPm.Id).subscribe(AdditionalResult => {

@@ -34,7 +34,7 @@ export class AddEditLCLChargeComponent {
     public ChargeTypesQueryFilters: ApiQueryFilters;
     public IsVATVisible: boolean = false;
     public ValidationErrorsList: string[] = [];
-    private CurrentSession = SessionLocator.SelectedSession;
+    private CurrentSession = SessionLocator.SelectedSession;    
     constructor() {
         this.ItemsSource = new ObservableCollection([]);
     }
@@ -48,6 +48,7 @@ export class AddEditLCLChargeComponent {
         this.IsRoutingRate = this.DataContext.fatherComponent.IsRoutingRate;
         this.IsEditingEnabled = this.DataContext.fatherComponent.IsEditingEnabled;
         this.IsVATVisible = this.IsAdhoc && this.QuotePM.IsChargesByVAT ? true : false;
+        
         this.DataContext.SetUIProperties();
         this.BuildItemsSource();
         this.BuildQueryFilters();
