@@ -73,7 +73,7 @@ export class RoutingTabComponent {
                 this.Helper.WaitByIdAndFill('date_Shipment_MainCarriageATD', '1');
                 this.Helper.WaitByIdAndFill('date_Shipment_MainCarriageATA', '1');
 
-                //this.shipHelper.AddAirlineStock();
+                this.shipHelper.AddAirlineStock('edit');
 
                 this.Helper.WaitByIdAndClick('MainCarriageOKBtn');
             }
@@ -195,8 +195,8 @@ export class RoutingTabComponent {
         this.Helper.WaitByIdAndClick('Add');
         this.Helper.WaitByIdAndFill('ShipmentPickUpDeliveryPackage_Quantity', '10');
         this.Helper.WaitByIdAndFill('ShipmentPickUpDeliveryPackage_Weight', '100');
-       // this.Helper.WaitByCssButtonClick('.RedButton', 'Ok');
-         this.Helper.WaitByIdAndClick('AddPickupPackage');
+        // this.Helper.WaitByCssButtonClick('.RedButton', 'Ok');
+        this.Helper.WaitByIdAndClick('AddPickupPackage');
 
         this.Helper.WaitByIdAndClick('SaveBtn');
         this.Helper.WaitEditComponentBusyIndicator();
