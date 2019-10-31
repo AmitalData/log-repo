@@ -555,7 +555,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 entityPM.PackageType5Id = null;
                 entityPM.PackageType5Quantity = null;
                 entityPM.TEU = null;
-                entityPM.NumberOfPackages = null;
+                entityPM.NumberOfContainers = null;
                 entityPM.GrossWeight = null;
                 entityPM.ChargeableWeight = null;
                 entityPM.VolumetricWeight = null;
