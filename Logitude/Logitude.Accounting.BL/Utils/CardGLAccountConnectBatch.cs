@@ -15,6 +15,7 @@ using Logitude.Accounting.BL.CoreBL;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Logitude.BL.CommonDataModel.EntityLists;
 
 namespace Logitude.Accounting.BL.Utils
 {
@@ -110,16 +111,16 @@ namespace Logitude.Accounting.BL.Utils
 
         private void TryAllOthers(CardQuery cardQueryService, GLAccountQueryService gLAccountQueryService, IAccountingContext context, int tenant)
         {
-            List<CardPM> cards = cardQueryService.GetAllOtherCardPMsWithoutGLAccount(tenant);
+            List<CardList> cards = cardQueryService.GetAllOtherCardsWithoutGLAccount(tenant);
             if (cards != null)
             {
-                foreach (CardPM cardPM in cards)
+                foreach (CardList cardList in cards)
                 {
-                    if (cardPM != null)
+                    if (cardList != null)
                     {
-                        if (!String.IsNullOrEmpty(cardPM.PayablesAccountingCard))
+                        if (!String.IsNullOrEmpty(cardList.PayablesAccountingCard))
                         {
-                            List<GLAccount> gLAccountList = gLAccountQueryService.GetByDisplayNumberAndAccType(cardPM.PayablesAccountingCard, "3", tenant);
+                            List<GLAccount> gLAccountList = gLAccountQueryService.GetByDisplayNumberAndAccType(cardList.PayablesAccountingCard, "3", tenant);
                             if (gLAccountList != null)
                             {
                                 GLAccount gLAccount = gLAccountList.FirstOrDefault();
@@ -127,7 +128,7 @@ namespace Logitude.Accounting.BL.Utils
                                 {
                                     try
                                     {
-                                        ConnectCardToGLAccount(gLAccount.Id, cardPM.Id, context, tenant);
+                                        ConnectCardToGLAccount(gLAccount.Id, cardList.Id, context, tenant);
                                         _AllOthersMade++;
                                     }
                                     catch (Exception ex)
@@ -138,19 +139,19 @@ namespace Logitude.Accounting.BL.Utils
                                 }
                                 else
                                 {
-                                    string errorText = $"Card {cardPM.Id} has PayablesAccountingCard {cardPM.PayablesAccountingCard} that doesn't exist in the cloud";
+                                    string errorText = $"Card {cardList.Id} has PayablesAccountingCard {cardList.PayablesAccountingCard} that doesn't exist in the cloud";
                                     _badList.Add(errorText);
                                 }
                             }
                             else
                             {
-                                string errorText = $"Card {cardPM.Id} has PayablesAccountingCard {cardPM.PayablesAccountingCard} that does not exist in the cloud";
+                                string errorText = $"Card {cardList.Id} has PayablesAccountingCard {cardList.PayablesAccountingCard} that does not exist in the cloud";
                                 _badList.Add(errorText);
                             }
                         }
-                        else if (!String.IsNullOrEmpty(cardPM.ReceivablesAccountingCard))
+                        else if (!String.IsNullOrEmpty(cardList.ReceivablesAccountingCard))
                         {
-                            List<GLAccount> gLAccountList = gLAccountQueryService.GetByDisplayNumberAndAccType(cardPM.ReceivablesAccountingCard, "3", tenant);
+                            List<GLAccount> gLAccountList = gLAccountQueryService.GetByDisplayNumberAndAccType(cardList.ReceivablesAccountingCard, "3", tenant);
                             if (gLAccountList != null)
                             {
                                 GLAccount gLAccount = gLAccountList.FirstOrDefault();
@@ -158,7 +159,7 @@ namespace Logitude.Accounting.BL.Utils
                                 {
                                     try
                                     {
-                                        ConnectCardToGLAccount(gLAccount.Id, cardPM.Id, context, tenant);
+                                        ConnectCardToGLAccount(gLAccount.Id, cardList.Id, context, tenant);
                                         _AllOthersMade++;
                                     }
                                     catch (Exception ex)
@@ -169,19 +170,19 @@ namespace Logitude.Accounting.BL.Utils
                                 }
                                 else
                                 {
-                                    string errorText = $"Card {cardPM.Id} has ReceivablesAccountingCard {cardPM.ReceivablesAccountingCard} that doesn't exist in the cloud";
+                                    string errorText = $"Card {cardList.Id} has ReceivablesAccountingCard {cardList.ReceivablesAccountingCard} that doesn't exist in the cloud";
                                     _badList.Add(errorText);
                                 }
                             }
                             else
                             {
-                                string errorText = $"Card {cardPM.Id} has ReceivablesAccountingCard {cardPM.ReceivablesAccountingCard} that does not exist in the cloud";
+                                string errorText = $"Card {cardList.Id} has ReceivablesAccountingCard {cardList.ReceivablesAccountingCard} that does not exist in the cloud";
                                 _badList.Add(errorText);
                             }
                         }
                         else
                         {
-                            string errorText = $"Card {cardPM.Id} has empty PayablesAccountingCard and ReceivablesAccountingCard";
+                            string errorText = $"Card {cardList.Id} has empty PayablesAccountingCard and ReceivablesAccountingCard";
                             _badList.Add(errorText);
                         }
                     }
@@ -191,16 +192,16 @@ namespace Logitude.Accounting.BL.Utils
 
         private void TryVendors(CardQuery cardQueryService, GLAccountQueryService gLAccountQueryService, IAccountingContext context, int tenant)
         {
-            List<CardPM> vendors = cardQueryService.GetVendorCardPMsWithoutGLAccount(tenant);
+            List<CardList> vendors = cardQueryService.GetVendorCardsWithoutGLAccount(tenant);
             if (vendors != null)
             {
-                foreach (CardPM cardPM in vendors)
+                foreach (CardList cardList in vendors)
                 {
-                    if (cardPM != null)
+                    if (cardList != null)
                     {
-                        if (!String.IsNullOrEmpty(cardPM.PayablesAccountingCard))
+                        if (!String.IsNullOrEmpty(cardList.PayablesAccountingCard))
                         {
-                            List<GLAccount> gLAccountList = gLAccountQueryService.GetByDisplayNumberAndAccType(cardPM.PayablesAccountingCard, "3", tenant);
+                            List<GLAccount> gLAccountList = gLAccountQueryService.GetByDisplayNumberAndAccType(cardList.PayablesAccountingCard, "3", tenant);
                             if (gLAccountList != null)
                             {
                                 GLAccount gLAccount = gLAccountList.FirstOrDefault();
@@ -208,7 +209,7 @@ namespace Logitude.Accounting.BL.Utils
                                 {
                                     try
                                     {
-                                        ConnectCardToGLAccount(gLAccount.Id, cardPM.Id, context, tenant);
+                                        ConnectCardToGLAccount(gLAccount.Id, cardList.Id, context, tenant);
                                         _VendorsMade++;
                                     }
                                     catch (Exception ex)
@@ -219,19 +220,19 @@ namespace Logitude.Accounting.BL.Utils
                                 }
                                 else
                                 {
-                                    string errorText = $"Vendor Card {cardPM.Id} has PayablesAccountingCard {cardPM.PayablesAccountingCard} that doesn't exist in the cloud";
+                                    string errorText = $"Vendor Card {cardList.Id} has PayablesAccountingCard {cardList.PayablesAccountingCard} that doesn't exist in the cloud";
                                     _badList.Add(errorText);
                                 }
                             }
                             else
                             {
-                                string errorText = $"Vendor Card {cardPM.Id} has PayablesAccountingCard {cardPM.PayablesAccountingCard} that does not exist in the cloud";
+                                string errorText = $"Vendor Card {cardList.Id} has PayablesAccountingCard {cardList.PayablesAccountingCard} that does not exist in the cloud";
                                 _badList.Add(errorText);
                             }
                         }
                         else
                         {
-                            string errorText = $"Vendor Card {cardPM.Id} has empty PayablesAccountingCard";
+                            string errorText = $"Vendor Card {cardList.Id} has empty PayablesAccountingCard";
                             _badList.Add(errorText);
                         }
                     }
@@ -241,16 +242,16 @@ namespace Logitude.Accounting.BL.Utils
 
         private void TryCustomers(CardQuery cardQueryService, GLAccountQueryService gLAccountQueryService, IAccountingContext context, int tenant)
         {
-            List<CardPM> customers = cardQueryService.GetCustomerCardPMsWithoutGLAccount(tenant);
+            List<CardList> customers = cardQueryService.GetCustomerCardsWithoutGLAccount(tenant);
             if (customers != null)
             {
-                foreach (CardPM cardPM in customers)
+                foreach (CardList cardList in customers)
                 {
-                    if (cardPM != null)
+                    if (cardList != null)
                     {
-                        if (!String.IsNullOrEmpty(cardPM.ReceivablesAccountingCard))
+                        if (!String.IsNullOrEmpty(cardList.ReceivablesAccountingCard))
                         {
-                            List<GLAccount> gLAccountList = gLAccountQueryService.GetByDisplayNumberAndAccType(cardPM.ReceivablesAccountingCard, "2", tenant);
+                            List<GLAccount> gLAccountList = gLAccountQueryService.GetByDisplayNumberAndAccType(cardList.ReceivablesAccountingCard, "2", tenant);
                             if (gLAccountList != null)
                             {
                                 GLAccount gLAccount = gLAccountList.FirstOrDefault();
@@ -258,7 +259,7 @@ namespace Logitude.Accounting.BL.Utils
                                 {
                                     try
                                     { 
-                                        ConnectCardToGLAccount(gLAccount.Id, cardPM.Id, context, tenant);
+                                        ConnectCardToGLAccount(gLAccount.Id, cardList.Id, context, tenant);
                                         _CustomersMade++;
                                     }
                                     catch (Exception ex)
@@ -269,19 +270,19 @@ namespace Logitude.Accounting.BL.Utils
                                 }
                                 else
                                 {
-                                    string errorText = $"Customer Card {cardPM.Id} has ReceivablesAccountingCard {cardPM.ReceivablesAccountingCard} that doesn't exist in the cloud";
+                                    string errorText = $"Customer Card {cardList.Id} has ReceivablesAccountingCard {cardList.ReceivablesAccountingCard} that doesn't exist in the cloud";
                                     _badList.Add(errorText);
                                 }
                             }
                             else
                             {
-                                string errorText = $"Customer Card {cardPM.Id} has ReceivablesAccountingCard {cardPM.ReceivablesAccountingCard} that does not exist in the cloud";
+                                string errorText = $"Customer Card {cardList.Id} has ReceivablesAccountingCard {cardList.ReceivablesAccountingCard} that does not exist in the cloud";
                                 _badList.Add(errorText);
                             }
                         }
                         else
                         {
-                            string errorText = $"Customer Card {cardPM.Id} has empty ReceivablesAccountingCard";
+                            string errorText = $"Customer Card {cardList.Id} has empty ReceivablesAccountingCard";
                             _badList.Add(errorText);
                         }
                     }
