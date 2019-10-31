@@ -50,11 +50,13 @@ namespace WebFreight.Web
             }
         }
 
+
+
         private void InsertNewAnalyzeQueue(string xmlfileText)
         {
 
-            byte[] messageBytes = Encoding.ASCII.GetBytes(xmlfileText);
-
+            byte[] messageBytes = Encoding.ASCII.GetBytes(xmlfileText);           
+            
             AnalyzeQueueRepository analyzeQueueReposiory = new AnalyzeQueueRepository();
             AnalyzeQueue analyzeQueue = new AnalyzeQueue()
             {
@@ -62,7 +64,7 @@ namespace WebFreight.Web
                 From = "Bluesnap",
                 Id = IdCounter.GetNumber("AnalyzeQueue", 0),
                 MessageBody = messageBytes,
-                Status = "D",
+                Status = "W",
                 Retries = 0,
                 ConnectedToEntity = false,
                 ConnectedToTenant = true,

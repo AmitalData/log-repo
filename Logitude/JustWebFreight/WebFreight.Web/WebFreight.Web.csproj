@@ -1656,6 +1656,7 @@
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\BatchServicesDefinitionViewsController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\BluesnapContractTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\BluesnapContractViewsController.Generated.cs" />
+    <Compile Include="Controllers\GlobalModel\Generated\ListControllers\BluesnapTransactionViewsController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\PaymentChannelViewsController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\PaymentCurrencyViewsController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\PaymentMethodViewsController.Generated.cs" />
@@ -2328,6 +2329,8 @@
     <Compile Include="Helpers\APIHelpers\TariffGeneratorFromExcel.cs" />
     <Compile Include="Helpers\APIHelpers\TMMBProjectsHelper.cs" />
     <Compile Include="Helpers\APIHelpers\TMProjectsHelper.cs" />
+    <Compile Include="Helpers\BluesnapAnalyzer.cs" />
+    <Compile Include="Helpers\BluesnapExecutionService.cs" />
     <Compile Include="Helpers\DataProviderHelpers\AutomationTestReportDataProvider.cs" />
     <Compile Include="Helpers\DataProviderHelpers\ShipmentsEventsListDataProvider.cs" />
     <Compile Include="Helpers\DWQueryBuilderHelper.cs" />
@@ -2745,6 +2748,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\BatchServicesDefinitionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\BluesnapContractTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\BluesnapContractUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\BluesnapTransactionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\PaymentChannelUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\PaymentCurrencyUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\PaymentMethodUpdateClass.cs" />
