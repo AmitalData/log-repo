@@ -7,11 +7,13 @@ import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTr
 import { PasswordChangeService } from '../../Services/Others/PasswordChangeService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
-
+import { CardExtendedPMService } from '../../Services/ExtendedPMs/CardExtendedPMService';
 export class AgentMenuButtonsHandler {
     public EntityPM: AgentPM;
     public entityArgs: EntityArgs
     private CurrentSession = SessionLocator.SelectedSession;
+    cardExtendedPMService: CardExtendedPMService = new CardExtendedPMService();
+
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
@@ -40,7 +42,7 @@ export class AgentMenuButtonsHandler {
             if (this.entityArgs.EditComponent != null) {
                 switch (menuButton.EventCode) {
                     case "Disconnect": {
-                      
+                        this.DisconnectGLAccount();
                         break;
                     }
 
@@ -53,7 +55,20 @@ export class AgentMenuButtonsHandler {
     }
 
    
+    private  DisconnectGLAccount() {
 
+        this.cardExtendedPMService.DisconnectGLAccountFromCard(this.EntityPM.Id, this.EntityPM.PartnerTypeId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError)
+            {
+
+            }
+        });
+
+
+
+
+
+    }
 
 
 

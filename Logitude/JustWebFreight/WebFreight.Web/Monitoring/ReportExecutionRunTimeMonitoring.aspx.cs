@@ -52,8 +52,9 @@ namespace WebFreight.Web.Monitoring
             {
                 try
                 {
+                    DateTime oneDaysBefore = DateTime.Now.AddDays(-1);
                     ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
-                    isWaitingStatus = (from d in commonDataContext.ReportExecutionLogs where d.StatusCode == "P" && (EntityFunctions.DiffMinutes(d.CreateDate, DateTime.Now) > 60) select d).Any();
+                    isWaitingStatus = (from d in commonDataContext.ReportExecutionLogs where d.StatusCode == "P" && d.CreateDate > oneDaysBefore && (EntityFunctions.DiffMinutes(d.CreateDate, DateTime.Now) > 60) select d).Any();
                 }
                 catch (Exception errorInfo)
                 {

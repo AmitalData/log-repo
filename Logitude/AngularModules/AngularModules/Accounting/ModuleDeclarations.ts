@@ -54,7 +54,7 @@ import {ChartOfAccountGeneralTabComponent} from './Components/EditTabs/ChartOfAc
 import {BankDepositDetailsTabComponent} from './Components/EditTabs/BankDeposit/BankDepositDetailsTabComponent';
 import {BankAccountGeneralTabComponent} from './Components/EditTabs/BankAccount/BankAccountGeneralTabComponent';
 import {ExternalPagesTabComponent} from './Components/Others/ReconcileExternalPage/ExternalPagesTabComponent';
-import {ManageRecoTabComponent} from './Components/EditTabs/BankAccount/ManageRecoTabComponent';
+import {ManageExternalReconciliationTabComponent} from './Components/Others/ReconcileExternalPage/ManageExternalReconciliationTabComponent';
 import {ReconciliationDetailsTabComponent} from './Components/EditTabs/Reconciliation/ReconciliationDetailsTabComponent';
 import {RevaluationDetailsComponent} from './Components/EditTabs/Revaluation/RevaluationDetailsComponent';
 import {GLAccountTaxWithholdingTabComponent} from './Components/EditTabs/GLAccount/GLAccountTaxWithholdingTabComponent';
@@ -157,7 +157,7 @@ export const Components =
         BankDepositDetailsTabComponent,
         BankAccountGeneralTabComponent,
         ExternalPagesTabComponent,
-        ManageRecoTabComponent,
+        ManageExternalReconciliationTabComponent,
         ReconciliationDetailsTabComponent,
         RevaluationDetailsComponent,
         ExternalRecoDetailsTabComponent,
@@ -268,7 +268,7 @@ export class ModuleDeclarations {
             case "BankDepositDetailsTabComponent": { myResult = BankDepositDetailsTabComponent; break; }
             case "BankAccountGeneralTabComponent": { myResult = BankAccountGeneralTabComponent; break; }
             case "ExternalPagesTabComponent": { myResult = ExternalPagesTabComponent; break; }
-            case "ManageRecoTabComponent": { myResult = ManageRecoTabComponent; break; }
+            case "ManageExternalReconciliationTabComponent": { myResult = ManageExternalReconciliationTabComponent; break; }
             case "ReconciliationDetailsTabComponent": { myResult = ReconciliationDetailsTabComponent; break; }
             case "RevaluationDetailsComponent": { myResult = RevaluationDetailsComponent; break; }
             case "ExternalRecoDetailsTabComponent": { myResult = ExternalRecoDetailsTabComponent; break; }

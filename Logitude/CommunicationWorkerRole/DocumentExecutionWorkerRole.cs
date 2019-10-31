@@ -58,7 +58,7 @@ namespace CommunicationWorkerRole
 {
     class DocumentsExecutionWorkerRole : WorkerEntryPoint
     {
-        private DbQueueService queueservice;
+        private DbQueueService queueService;
         public override bool OnStart()
         {
             ThreadId = Guid.NewGuid().ToString();
@@ -67,34 +67,56 @@ namespace CommunicationWorkerRole
             ConnectClient();
             return base.OnStart();
         }
+
+
         public override void Run()
         {
             while (IsRunning)
             {
                 if (!General.IsUpdating())
                 {
-                    queueservice = new DbQueueService("DocumentsExecutionQueue", 0);
-                    var queueresponse = queueservice.Receive(new TimeSpan(0, 0, 1));
-                    if (queueresponse != null && queueresponse.MessageId != null)
+                    try
                     {
-                        ThreadStart executeDocumentsThreadStart = (() => new DocumentsExecutionService(queueservice, queueresponse).ExecuteDocumentsExecutionQueue());
-                        executeDocumentsThreadStart += () => { LogDoneItemInMemory();};
-                        new Thread(executeDocumentsThreadStart) { IsBackground = true }.Start();
-                        queueservice.Complete();
+                        ExecuteQueue();
                     }
-                    else Thread.Sleep(new TimeSpan(0, 0, 1));
+                    catch (Exception exception)
+                    {
+                        ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Document execution queue worker role start", null, null);
+                        Thread.Sleep(new TimeSpan(0, 0, 1));
+                    }
                 }
                 else Thread.Sleep(new TimeSpan(0, 0, 1));
             }
         }
 
 
+
+        private void ExecuteQueue()
+        {
+            queueService = new DbQueueService("DocumentsExecutionQueue", 0);
+            var queueResponse = queueService.Receive(new TimeSpan(0, 0, 1));
+            if (queueResponse != null && queueResponse.MessageId != null)
+            {
+                ThreadStart executeDocumentsThreadStart = (() => new DocumentsExecutionService(queueService, queueResponse).ExecuteDocumentsExecutionQueue());
+                executeDocumentsThreadStart += () => { LogDoneItemInMemory(); };
+                new Thread(executeDocumentsThreadStart) { IsBackground = true }.Start();
+                queueService.Complete();
+
+            }
+            else
+            {
+                Thread.Sleep(new TimeSpan(0, 0, 1));
+            }
+        }
+
+
+
         private void ConnectClient()
         {
             try
             {
-                queueservice = new DbQueueService();
-                queueservice.InitializeQueue("DocumentsExecutionQueue", 0);
+                queueService = new DbQueueService();
+                queueService.InitializeQueue("DocumentsExecutionQueue", 0);
 
             }
             catch (Exception ex)
