@@ -74,11 +74,15 @@ export class AirlineMenuButtonsHandler {
 
 
     private DisconnectGLAccount() {
-
+        this.CurrentSession.StartBusyIndicator("Loading...");
         this.cardExtendedPMService.DisconnectGLAccountFromCard(this.EntityPM.Id, "AL", "DISC").subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-
+                this.CurrentSession.StopBusyIndicator();
+            }
+            else {
+                this.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResponse.ErrorsArray;
             }
         });
 

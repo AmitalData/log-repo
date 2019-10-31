@@ -318,6 +318,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                SATForeignRFC = a.Card.ExternalId2,
                                MetodoPagoCode = a.Card.MetodoPagoCode,
                                UsoCFDICode = a.Card.UsoCFDICode,
+                               GLAccountId = a.Card.GLAccountId,
                                ImageDetailId = a.Card.ImageDetailId,
                                Card = new CardPM()
                                {

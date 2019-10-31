@@ -52,6 +52,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
         {
 
             partnerObjectTableName = GetPartnerObjectTableName(partnerTypeId);
+            partnerObjectTableName = partnerObjectTableName.Replace(" ", String.Empty);
             CheckObjectTableContactFeature(partnerObjectTableName);
         }
 
@@ -136,7 +137,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 EntityId = id,
                 Tenant = authToken.Tenant,
                 UserId = contact.Id,
-                ObjectTableName = partnerObjectTableName,
+                ObjectTableName = objecttableName,
                 IsAddedManually = false,
                 EventTypeCode = eventTypeCode,
 
