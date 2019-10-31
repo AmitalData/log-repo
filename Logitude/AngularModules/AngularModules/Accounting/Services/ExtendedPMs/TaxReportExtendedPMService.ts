@@ -32,10 +32,10 @@ export class TaxReportExtendedPMService {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-            var mappedEntity: TaxReportPM;
-            mappedEntity = this.MapJsonToEntityPM(taxReportPM, false);
+            //var mappedEntity: TaxReportPM;
+            //mappedEntity = this.MapJsonToEntityPM(taxReportPM, false);
 
-            return this._http.post(this._apiUrl + "/PostDownloadPNC874File", JSON.stringify(mappedEntity), { headers: authHeader })
+            return this._http.post(this._apiUrl + "/PostDownloadPNC874File", JSON.stringify(taxReportPM), { headers: authHeader })
                 .map((res) => {
 
                     var result = res.json();
@@ -59,10 +59,10 @@ export class TaxReportExtendedPMService {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-            var mappedEntity: TaxReportPM;
-            mappedEntity = this.MapJsonToEntityPM(taxReportPM, false);
+            //var mappedEntity: TaxReportPM;
+            //mappedEntity = this.MapJsonToEntityPM(taxReportPM, false);
 
-            return this._http.post(this._apiUrl + "/PostDownloadPNC874FileInBatch", JSON.stringify(mappedEntity), { headers: authHeader })
+            return this._http.post(this._apiUrl + "/PostDownloadPNC874FileInBatch", JSON.stringify(taxReportPM), { headers: authHeader })
                 .map((res) => {
 
                     var result = res.json();
@@ -87,10 +87,10 @@ export class TaxReportExtendedPMService {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-            var mappedEntity: TaxReportPM;
-            mappedEntity = this.MapJsonToEntityPM(taxReportPM, false);
+            //var mappedEntity: TaxReportPM;
+            //mappedEntity = this.MapJsonToEntityPM(taxReportPM, false);
 
-            return this._http.post(this._apiUrl + "/PostCreateTaxReportInBatch", JSON.stringify(mappedEntity), { headers: authHeader })
+            return this._http.post(this._apiUrl + "/PostCreateTaxReportInBatch", JSON.stringify(taxReportPM), { headers: authHeader })
                 .map((res) => {
 
                     var result = res.json();

@@ -114,7 +114,11 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
                     mm = m.toString();
                 }
                 var to = dd + '/' + mm + '/' + yyyy;
-                this.ValidationWarningsList = TextCodeTranslator.Translate("Shipment.O.VersionApprovedBy") + " " + this.AdditionalData.ApprovedByUserName + " " + TextCodeTranslator.Translate("Shipment.O.OnDate") + " " + to;//"גרסת הצהרה זו כבר אושרה על ידי " + this.AdditionalData.ApprovedByUserName + " בתאריך " + to + "";
+                var tempMessage = TextCodeTranslator.Translate("Shipment.O.VersionApprovedBy");
+                tempMessage = tempMessage.replace("*VersionID*", this.AdditionalData.VersionId);
+                tempMessage = tempMessage.replace("*ApprovedByUserName*", this.AdditionalData.ApprovedByUserName);
+                tempMessage = tempMessage.replace("*ApproveDateTime*", to);
+                this.ValidationWarningsList = tempMessage;//TextCodeTranslator.Translate("Shipment.O.VersionApprovedBy") + " " + this.AdditionalData.ApprovedByUserName + " " + TextCodeTranslator.Translate("Shipment.O.OnDate") + " " + to;//"גרסת הצהרה זו כבר אושרה על ידי " + this.AdditionalData.ApprovedByUserName + " בתאריך " + to + "";
 
                 this.DimApproveButton = true;
             }
@@ -237,10 +241,10 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
     }
 
     DenyButtonClicked() {
-        this.CurrentSession.CurrentWindow.StartBusyIndicator("...");
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Sending ...");
         var newWindow = new LogitudeWindow();
         newWindow.Width = 350;
-        newWindow.Height = 250;
+        newWindow.Height = 280;
         newWindow.RTL = true;
 
         this._ShipmentAdditionalCloudDataService.getsingledata(this.EntityPm.Id).subscribe(AdditionalResult => {

@@ -3,7 +3,7 @@ import {StimulsoftViewerComponent} from '../../../../Infrastructure/Components/S
 import {ReportFliter} from '../../../../Report/Components/Filters/ReportFliter';
 import {ReportsTemplateList} from '../../../../Common/EntityLists/ReportsTemplateList';
 import {EntityPartner} from '../../../../Infrastructure/DataContracts/EntityPartner';
-import {EditableFieldPosition} from './DocsOut/Filters/EditableFieldPosition';
+import {BuildStimulReportResult} from './DocsOut/Filters/BuildStimulReportResult';
 
 export class StimulsoftArg {
     public DocumenttypeCode: string;
@@ -16,7 +16,10 @@ export class StimulsoftArg {
     EditDocumentComponent: EditDocumentComponent;
     public DocumentTypeId: string;
     public ReportsPreviewComponent: any;
-    EditableFieldLists: EditableFieldPosition[];
+    public BuildStimulReportResult: BuildStimulReportResult;
+
+
+
     public StimulsoftViewerComponent: StimulsoftViewerComponent;
     IsShowShiftToolbar: boolean;
     IsShowExportPrinttoPDF: boolean = false;
