@@ -600,27 +600,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 entityPM.StatusCode = "WA";
             }
 
-            if (entityPM.CreatedFromAPI)
-            {
-                this.InitializeCreatedFromAPI();
-            }
-
             this.InitializeVATs();
             this.InitializeTransferComponents();
             this.InitializeAmountDueFields();
-        }
-
-        private void InitializeCreatedFromAPI()
-        {
-            if (this.isNewEntity)
-            {
-                if (entityPM.ProfitCurrencyId == null)
-                {
-                    TenantRepository tenantRepository = new TenantRepository(this.myCommonContext);
-                    Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
-                    entityPM.ProfitCurrencyId = tenantPOCO.ProfitCurrencyId;
-                }
-            }
         }
 
         private List<VatType> allVatTypes = new List<VatType>();
@@ -1074,8 +1056,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             if (shipment != null)
             {
-                entityPM.ShipmentTransportModeId = shipment.TransportModeId;
-
                 shipment.ConcurrencyGUID = Guid.NewGuid().ToString();
 
                 if (string.IsNullOrEmpty(entityPM.MainEntityReference))
@@ -2072,6 +2052,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 JournalEntity journal = rep.GetJournalByAccountingEntityId(entityPM.Id, tenant);
                 if (journal != null)
                 {
+                    entityPM.JournalId = journal.JournalId;
                     entityPM.JournalNumber = journal.JournalNumber;
                 }
             }

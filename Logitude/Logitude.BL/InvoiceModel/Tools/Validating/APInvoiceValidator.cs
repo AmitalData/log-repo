@@ -43,7 +43,6 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             APInvoiceRepository aPInvoiceRepository = new APInvoiceRepository(myContext);
             ICommonDataContext myCommonContext = CommonDataContext.GetContext(entityPM.Tenant);
 
-            ValidateExternalAPI(entityPM, myCommonContext);
 
             AccountingSetting myAccountingSetting = (from d in myCommonContext.AccountingSettings
                                                      where d.Id == entityPM.Tenant
@@ -190,6 +189,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             ValidateOnVoid(entityPM);
             ValidateAirlineRestriction(entityPM.VendorId, entityPM.Tenant);
             ValidateFullAccounting(entityPM.Tenant, entityPM.VendorId, entityPM.InvoiceCurrencyId, entityPM.AccountingDate);
+            ValidateExternalAPI(entityPM, myCommonContext);
         }
 
         private static void ValidateExternalAPI(APInvoicePM entityPM, ICommonDataContext myCommonContext)

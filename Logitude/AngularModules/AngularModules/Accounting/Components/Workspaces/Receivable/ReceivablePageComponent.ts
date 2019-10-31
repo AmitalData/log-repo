@@ -61,6 +61,7 @@ export class ReceivablePageComponent {
 
     public isRTL: boolean = false;
     isReady: boolean = false;
+    IsNewARInvoiceEnabled: boolean = false;
 
     chartId: string = "";
     private CurrentSession = SessionLocator.SelectedSession;
@@ -69,6 +70,8 @@ export class ReceivablePageComponent {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
         this.LoadResources();
+
+        this.IsNewARInvoiceEnabled = FeatureLocator.HasFeaturePermession("ARInvoice", "NEW");
 
 
         //this.LoadAllScreenData();

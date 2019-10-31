@@ -34,7 +34,7 @@ export class AddEditRecoExPageComponent extends BaseComponent
     public PageObjectTableName: string;
     public ReconcileExternalPagePM: ReconcileExternalPagePM;
     public EntityPM: any;
-    public PrevBankPagePM: ReconcileExternalPagePM;
+    public PreviousPagePM: ReconcileExternalPagePM;
     public DataContext: AddEditRecoExPageComponent = this;
     public ExternalPageTable: string = "ReconcileExternalPage";
 
@@ -67,6 +67,9 @@ export class AddEditRecoExPageComponent extends BaseComponent
     EditWindowToolTip: string = null;
     IsRestoreButtonEnabled: boolean;
 
+
+
+
     constructor(private CD: ChangeDetectorRef, public entityListService: EntityListService)
     {
         super();
@@ -79,10 +82,11 @@ export class AddEditRecoExPageComponent extends BaseComponent
 
 
 
+
     SetWindowArgs(args)
     {
-        if (args != null) {
-            var prevPageNo;
+        if (args != null)
+        {
             this.PageObjectTableName = args.PageObjectTableName;
             this.EntityPM = args.EntityPM;
             this.IsRestoreButtonEnabled = args.IsRestoreButtonEnabled;
@@ -90,70 +94,84 @@ export class AddEditRecoExPageComponent extends BaseComponent
             this.IsRestoreButtonVisibile = args.IsRestoreButtonVisibile;
             this.EditWindowToolTip = args.message;
             this.RestoreToolTipMessage = args.RestoreToolTipMessage;
+
             this.GetDefaultValues();
-            if (args.entity) {
-                // EDIT Mode
-                this.ReconcileExternalPagePM = args.entity;
-                this.isNewEntity = false;
-                this.GetPrevPage(this.ReconcileExternalPagePM.PageNo);
-                if (this.ReconcileExternalPagePM.StatusCode == "2" || this.ReconcileExternalPagePM.StatusCode == "3")
-                    this.IsDisplayOnly = true;
-                this.SetUIProperties();
 
-            }
-            else {
-                // NEW Entity
+            if (args.externalPage)
+                this.SetEditMode(args);
+            else
+                this.SetNewEntityMode(args);
 
-                //get prev page
-                prevPageNo = this.EntityPM.LastPageNumber;
-                this.GetPage(prevPageNo);
-
-                this.isNewEntity = true;
-                var newEntity = new ReconcileExternalPagePM();
-                newEntity.Tenant = SessionLocator.Tenant;
-                //newEntity.CreateDate = new Date();
-                //if (SessionLocator.LoggedUserPM)
-                //{
-                //    newEntity.CreatedByUserId = SessionLocator.LoggedUserPM.Id;
-                //    newEntity.CreatedByUserName = SessionLocator.LoggedUserPM.LocalName;
-                //}
-
-                if (args.EntityPM.LastPageEndDate) {
-                    var lastDate: Date = new Date(args.EntityPM.LastPageEndDate);
-                    var lastDatePlusOne = new Date(lastDate.setDate(lastDate.getDate() + 1));
-                    var date = DateTool.GetDate(lastDatePlusOne.getFullYear(), lastDatePlusOne.getMonth(), lastDatePlusOne.getDate(), 0, 0, 0);
-                    newEntity.FromDate = date;
-                }
-
-                var bankAccountOO = window.ObjectTables.filter(d => d.Name === "BankAccount")[0];
-
-                newEntity.StatusCode = "1"; // 1- Draft
-                newEntity.PageNo = 0;
-                newEntity.EntityId = args.BankAccountId;
-                newEntity.ObjectTableId = bankAccountOO.Id;
-                newEntity.GLAccountId = args.GLAccountId;
-                newEntity.EntryTypeCode = "1"; // 1- Manual
-
-                this.ReconcileExternalPagePM = newEntity;
-            }
-
-            if (this.isNewEntity) {
-                this.IsCancelApprovedEnabled = false;
-            } else if (this.ReconcileExternalPagePM.StatusCode == "3") { // 3- Cancelled
-                this.IsCancelApprovedEnabled = false;
-            }
-            else if (this.ReconcileExternalPagePM.StatusCode == "2" || this.ReconcileExternalPagePM.StatusCode == "1") { // 1- Draft, 2- Approved
-                this.IsCancelApprovedEnabled = true;
-            }
-
+            this.SetCancelApprovalEditablilty();
             this.CalculateTotals();
             this.FillGridsData();
 
-
-
-
-
         }
+    }
+
+    private SetCancelApprovalEditablilty()
+    {
+        if (this.isNewEntity) {
+            this.IsCancelApprovedEnabled = false;
+        }
+        else if (this.ReconcileExternalPagePM.StatusCode == "3") { // 3- Cancelled
+            this.IsCancelApprovedEnabled = false;
+        }
+        else if (this.ReconcileExternalPagePM.StatusCode == "2" || this.ReconcileExternalPagePM.StatusCode == "1") { // 1- Draft, 2- Approved
+            this.IsCancelApprovedEnabled = true;
+        }
+    }
+
+    private SetNewEntityMode(args: any)
+    {
+        this.isNewEntity = true;
+        this.GetPreviousPageByNumber(this.EntityPM.LastPageNumber);
+        this.ReconcileExternalPagePM = this.InitializeNewPage(args);
+    }
+
+    private InitializeNewPage(args: any)
+    {
+        var newEntity = new ReconcileExternalPagePM();
+        var objectTableId = window.ObjectTables.filter(d => d.Name === this.PageObjectTableName)[0];
+        newEntity.Tenant = SessionLocator.Tenant;
+        newEntity.StatusCode = "1"; // 1- Draft
+        newEntity.PageNo = 0;
+        newEntity.EntityId = args.BankAccountId;
+        newEntity.ObjectTableId = objectTableId.Id;
+        newEntity.GLAccountId = args.GLAccountId;
+        newEntity.EntryTypeCode = "1"; // 1- Manual
+
+        if (args.EntityPM.LastPageEndDate) {
+            newEntity.FromDate = this.GetLastPageDatePlusOneDay(args);
+        }
+
+        return newEntity;
+    }
+
+    private GetLastPageDatePlusOneDay(args: any)
+    {
+        var lastDate: Date = new Date(args.EntityPM.LastPageEndDate);
+        var lastDatePlusOne = new Date(lastDate.setDate(lastDate.getDate() + 1));
+        var date = DateTool.GetDate(lastDatePlusOne.getFullYear(), lastDatePlusOne.getMonth(), lastDatePlusOne.getDate(), 0, 0, 0);
+        return date;
+    }
+
+    private SetEditMode(args: any)
+    {
+        this.ReconcileExternalPagePM = args.externalPage;
+        this.isNewEntity = false;
+        this.GetPreviousPageForExternalPage(this.ReconcileExternalPagePM.PageNo);
+        this.SetComponentEditablity();
+
+        this.SetUIProperties();
+    }
+
+    private SetComponentEditablity()
+    {
+        if (this.ReconcileExternalPagePM.StatusCode == "2" || this.ReconcileExternalPagePM.StatusCode == "3")
+            this.IsDisplayOnly = true;
+        else
+            this.IsDisplayOnly = false;
     }
 
     //#region Properties
@@ -295,7 +313,9 @@ export class AddEditRecoExPageComponent extends BaseComponent
     EditButtonClicked()
     {
         this.ReconcileExternalPagePM.StatusCode = "1";
-        this.IsDisplayOnly = false;
+
+        this.SetComponentEditablity();
+
         this.SetUIProperties();
         this.closeScreen = false;
 
@@ -447,48 +467,66 @@ export class AddEditRecoExPageComponent extends BaseComponent
         }
     }
 
-    GetCurrency()
+    SetCurrency()
     {
-        if (this.EntityPM.GLAccountCurrencyId && this.EntityPM.GLAccountCurrencyId == "multi") {
-            this.IsMultiCurrency = true;
-            this.AmountColHeader = this.AMOUNT_TEXT + " (" + this.TenantCurrency.Code + ")";
-            this.CreditAmountColHeader = this.CreditAMOUNT_TEXT + " (" + this.TenantCurrency.Code + ")";
-            this.DebitAmountColHeader = this.DebitAMOUNT_TEXT + " (" + this.TenantCurrency.Code + ")";
+        if (this.PageObjectTableName == "BankAccount")
+        {
+            if (this.EntityPM.GLAccountCurrencyId && this.EntityPM.GLAccountCurrencyId == "multi")
+                this.SetMultiCurrencyAmountHeader();
+            else if (this.EntityPM.GLAccountCurrencyId)
+                this.GetCurrency(this.EntityPM.GLAccountCurrencyId);
         }
-        else if (this.EntityPM.GLAccountCurrencyId) {
-            this._CurrencyPMService.get(this.EntityPM.GLAccountCurrencyId).subscribe((myResult) =>
-            {
-                var currency = myResult.Result;
-                if (!AppTool.IsNullOrEmpty(currency)) {
-                    this.currency = currency;
-                    this.AmountColHeader = this.AMOUNT_TEXT + " (" + this.currency.Code + ")"
-                    this.CreditAmountColHeader = this.CreditAMOUNT_TEXT + " (" + this.currency.Code + ")";
-                    this.DebitAmountColHeader = this.DebitAMOUNT_TEXT + " (" + this.currency.Code + ")";
-                }
-                else {
-                    console.log("[!] Cannot find the currency !!");
-                    this.AmountColHeader = this.AMOUNT_TEXT;
-                    this.CreditAmountColHeader = this.CreditAMOUNT_TEXT;
-                    this.DebitAmountColHeader = this.DebitAMOUNT_TEXT;
-                }
-            });
+        else if (this.PageObjectTableName == "GLAccount")
+        {
+            if (this.EntityPM.IsMultiCurrency == true)
+                this.SetMultiCurrencyAmountHeader();
+            else
+                this.GetCurrency(this.EntityPM.CurrencyId);
         }
+    }
+
+    private SetMultiCurrencyAmountHeader()
+    {
+        this.IsMultiCurrency = true;
+        this.AmountColHeader = this.AMOUNT_TEXT + " (" + this.TenantCurrency.Code + ")";
+        this.CreditAmountColHeader = this.CreditAMOUNT_TEXT + " (" + this.TenantCurrency.Code + ")";
+        this.DebitAmountColHeader = this.DebitAMOUNT_TEXT + " (" + this.TenantCurrency.Code + ")";
+    }
+
+    private GetCurrency(currencyId: any)
+    {
+        this._CurrencyPMService.get(currencyId).subscribe((myResult) =>
+        {
+            var currency = myResult.Result;
+            if (!AppTool.IsNullOrEmpty(currency)) {
+                this.currency = currency;
+                this.AmountColHeader = this.AMOUNT_TEXT + " (" + this.currency.Code + ")";
+                this.CreditAmountColHeader = this.CreditAMOUNT_TEXT + " (" + this.currency.Code + ")";
+                this.DebitAmountColHeader = this.DebitAMOUNT_TEXT + " (" + this.currency.Code + ")";
+            }
+            else {
+                console.log("[!] Cannot find the currency !!");
+                this.AmountColHeader = this.AMOUNT_TEXT;
+                this.CreditAmountColHeader = this.CreditAMOUNT_TEXT;
+                this.DebitAmountColHeader = this.DebitAMOUNT_TEXT;
+            }
+        });
     }
 
     //#region Prev Bank Page
     OpenPrevPage()
     {
-        console.log(this.PrevBankPagePM);
-        this.OpenBankPageWindow(this.PrevBankPagePM);
+        console.log(this.PreviousPagePM);
+        this.OpenBankPageWindow(this.PreviousPagePM);
     }
-    OpenBankPageWindow(entity: any = null)
+    OpenBankPageWindow(externalPage: any = null)
     {
 
-        var windowTitle = entity ? (TextCodeTranslator.Translate("ReconcileExternalPage.F.PageNo") + " " + entity.PageNo) : TextCodeTranslator.Translate("Accounting.General.O.NewPage");
+        var windowTitle = externalPage ? (TextCodeTranslator.Translate("ReconcileExternalPage.F.PageNo") + " " + externalPage.PageNo) : TextCodeTranslator.Translate("Accounting.General.O.NewPage");
 
         var windowArgs: any = {};
         windowArgs.PageObjectTableName = this.PageObjectTableName;
-        windowArgs.entity = entity;
+        windowArgs.externalPage = externalPage;
         windowArgs.EntityPM = this.EntityPM;
         windowArgs.BankAccountId = this.EntityPM.Id;
         windowArgs.GLAccountId = this.EntityPM.GLAccountId;
@@ -506,16 +544,16 @@ export class AddEditRecoExPageComponent extends BaseComponent
         logWindow.Show('./Accounting/Components/NewEntity/AddEditRecoExPageComponent');
 
     }
-    GetPage(pageNo: string)
+    GetPreviousPageByNumber(previousPageNo: string)
     {
 
-        if (pageNo) {
+        if (previousPageNo) {
             //get last page
-            this._ReconcileExternalPageExtendedPMService.GetPageByNumber(pageNo, this.EntityPM.Id, this.PageObjectTableName).subscribe((myResult) =>
+            this._ReconcileExternalPageExtendedPMService.GetPageByNumber(previousPageNo, this.EntityPM.Id, this.PageObjectTableName).subscribe((myResult) =>
             {
                 var bankPage = myResult.Result;
                 if (!AppTool.IsNullOrEmpty(bankPage)) {
-                    this.PrevBankPagePM = bankPage;
+                    this.PreviousPagePM = bankPage;
                 }
                 else {
                     console.log("[!] Cannot find the Prev Bank Page !!");
@@ -527,16 +565,16 @@ export class AddEditRecoExPageComponent extends BaseComponent
         }
     }
 
-    GetPrevPage(prevPageNo: number)
+    GetPreviousPageForExternalPage(extPageNumber: number)
     {
 
-        if (prevPageNo) {
+        if (extPageNumber) {
             //get last page
-            this._ReconcileExternalPageExtendedPMService.GetPreviousPageByNumber(prevPageNo, this.EntityPM.Id, this.PageObjectTableName).subscribe((myResult) =>
+            this._ReconcileExternalPageExtendedPMService.GetPreviousPageByNumber(extPageNumber, this.EntityPM.Id, this.PageObjectTableName).subscribe((myResult) =>
             {
                 var bankPage = myResult.Result;
                 if (!AppTool.IsNullOrEmpty(bankPage)) {
-                    this.PrevBankPagePM = bankPage;
+                    this.PreviousPagePM = bankPage;
                 }
                 else {
                     console.log("[!] Cannot find the Prev Bank Page !!");
@@ -647,13 +685,13 @@ export class AddEditRecoExPageComponent extends BaseComponent
                 if (!myResponse.HasError) {
                     this.TenantCurrency = myResponse.Result;
                     console.log(">>Tenant Currency: ", myResponse.Result);
-                    this.GetCurrency();
+                    this.SetCurrency();
 
                 } else
-                    this.GetCurrency();
+                    this.SetCurrency();
 
             } else
-                this.GetCurrency();
+                this.SetCurrency();
 
         });
     }
