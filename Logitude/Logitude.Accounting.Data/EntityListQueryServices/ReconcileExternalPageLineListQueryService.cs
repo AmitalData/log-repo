@@ -91,7 +91,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                             iQueryable = iQueryable.Where(pageLine =>
                             amount <= (pageLine.CreditAmount != 0 ? pageLine.CreditAmount : pageLine.DebitAmount)
                             ||
-                            amount >= (pageLine.CreditAmount != 0 ? pageLine.CreditAmount : pageLine.DebitAmount));
+                            -1*amount >= (pageLine.CreditAmount != 0 ? pageLine.CreditAmount : pageLine.DebitAmount));
                             break;
                         }
 
