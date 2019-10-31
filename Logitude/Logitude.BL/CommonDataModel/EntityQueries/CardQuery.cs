@@ -2000,37 +2000,65 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return cards.ToList();
         }
 
-        public List<CardPM> GetCustomerCardPMsWithoutGLAccount(int tenant)
+        public List<CardList> GetCustomerCardsWithoutGLAccount(int tenant)
         {
-            List<CardPM> pms = null;
-            List<Card> cardPOCOs = repository.GetAllCustomerCardsWithoutGLAccount(tenant);
-            if (cardPOCOs != null)
-            {
-                pms = cardPOCOs.Select(poco => this.GetSinglePM(poco.Id, tenant)).ToList();
-            }
-            return pms;
+            IQueryable<CardList> cards = from a in repository.context.Cards
+                                         where a.Tenant == tenant && (a.GLAccountId == null || a.GLAccountId == "") 
+                                            && (a.PartnerTypeId == "CS" || a.PartnerTypeId == "PO" || a.PartnerTypeId == "AG")
+                                         select new CardList()
+                                         {
+                                             Id = a.Id,
+                                             Code = a.Code,
+                                             EnglishName = a.EnglishName,
+                                             LocalName = a.LocalName,
+                                             PartnerTypeId = a.PartnerTypeId,
+                                             PayablesAccountingCard = a.PayablesAccountingCard,
+                                             ReceivablesAccountingCard = a.ReceivablesAccountingCard,
+                                             GLAccountId = a.GLAccountId,
+                                         };
+
+            return cards.ToList();
         }
 
-        public List<CardPM> GetVendorCardPMsWithoutGLAccount(int tenant)
+        public List<CardList> GetVendorCardsWithoutGLAccount(int tenant)
         {
-            List<CardPM> pms = null;
-            List<Card> cardPOCOs = repository.GetAllVendorCardsWithoutGLAccount(tenant);
-            if (cardPOCOs != null)
-            {
-                pms = cardPOCOs.Select(poco => this.GetSinglePM(poco.Id, tenant)).ToList();
-            }
-            return pms;
+            IQueryable<CardList> cards = from a in repository.context.Cards
+                                         where a.Tenant == tenant && (a.GLAccountId == null || a.GLAccountId == "")
+                                            && (a.PartnerTypeId == "VD" || a.PartnerTypeId == "DR" || a.PartnerTypeId == "LL" || a.PartnerTypeId == "WA")
+                                         select new CardList()
+                                         {
+                                             Id = a.Id,
+                                             Code = a.Code,
+                                             EnglishName = a.EnglishName,
+                                             LocalName = a.LocalName,
+                                             PartnerTypeId = a.PartnerTypeId,
+                                             PayablesAccountingCard = a.PayablesAccountingCard,
+                                             ReceivablesAccountingCard = a.ReceivablesAccountingCard,
+                                             GLAccountId = a.GLAccountId,
+                                         };
+
+            return cards.ToList();
         }
 
-        public List<CardPM> GetAllOtherCardPMsWithoutGLAccount(int tenant)
+        public List<CardList> GetAllOtherCardsWithoutGLAccount(int tenant)
         {
-            List<CardPM> pms = null;
-            List<Card> cardPOCOs = repository.GetAllOtherCardsWithoutGLAccount(tenant);
-            if (cardPOCOs != null)
-            {
-                pms = cardPOCOs.Select(poco => this.GetSinglePM(poco.Id, tenant)).ToList();
-            }
-            return pms;
+            IQueryable<CardList> cards = from a in repository.context.Cards
+                                         where a.Tenant == tenant && (a.GLAccountId == null || a.GLAccountId == "")
+                                            && (a.PartnerTypeId != "CS" && a.PartnerTypeId != "PO" && a.PartnerTypeId != "AG")
+                                            && (a.PartnerTypeId != "VD" && a.PartnerTypeId != "DR" && a.PartnerTypeId != "LL" && a.PartnerTypeId != "WA")
+                                         select new CardList()
+                                         {
+                                             Id = a.Id,
+                                             Code = a.Code,
+                                             EnglishName = a.EnglishName,
+                                             LocalName = a.LocalName,
+                                             PartnerTypeId = a.PartnerTypeId,
+                                             PayablesAccountingCard = a.PayablesAccountingCard,
+                                             ReceivablesAccountingCard = a.ReceivablesAccountingCard,
+                                             GLAccountId = a.GLAccountId,
+                                         };
+
+            return cards.ToList();
         }
 
 
