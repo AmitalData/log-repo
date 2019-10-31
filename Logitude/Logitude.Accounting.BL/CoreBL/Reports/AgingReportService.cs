@@ -35,6 +35,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         private GLAccountQueryService _myGLAccountQueryService;
         private GLAccountRepository _myGLAccountRepository;
         private List<GLAccount> _GLAccountChildren_UseToAggregateAsLocalAmount;
+        private bool _TESTIT;
+
         //private bool _TryGetAllThenAggregate = true;
 
         public AgingReportService(AgingReportParam param)
@@ -45,6 +47,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             {
                 TestIt();
             }
+            _TESTIT = false;
 
         }
 
@@ -129,7 +132,10 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                         _AccountingCurrencyId,
                         _Param.GroupByDate == AgingReportParam.DateEnum.AccountingDate
                         );
-
+                    if (_TESTIT)
+                    {
+                        var ss=qTotalByMonthAcc.ToList();
+                    }
                     GLAccountReconcileDefintionChanged(qTotalByMonthAcc);
                 }
                 else
@@ -197,6 +203,9 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          AccountId = totalByMonth.AccountId,
                          CurrencyId = _AccountingCurrencyId,///GLAccount that is multi Currency LocalAmount 
                          Total = (totalByMonth.LocalAmountDebit - totalByMonth.LocalAmountCredit),
+                         OpenCredit = totalByMonth.LocalAmountCredit,
+                         OpenDebit = totalByMonth.LocalAmountDebit,
+
                      });
 
 
@@ -215,10 +224,13 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          AccountId = totalByMonth.AccountId,
                          CurrencyId = totalByMonth.CurrencyId,///GLAccount that is not multi Currency Get Foreign 
                          Total = ((decimal)totalByMonth.ForeignAmountDebit - (decimal)totalByMonth.ForeignAmountCredit),
+                         OpenCredit = (decimal?)totalByMonth.ForeignAmountCredit ?? 0,
+                         OpenDebit = (decimal?)totalByMonth.ForeignAmountDebit ?? 0,
                      });
-
-
-
+                if (_TESTIT)
+                {
+                    var _222 = qPeriodInForeign.ToList();
+                }
 
                 var qLessThanExclusiveBasicInLocal =
                     (from rec in /*qTotalByMonthAcc*/ qTotalByMonthAcc_ISMultiCurrencySooGet_LocalAmount
@@ -236,6 +248,9 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          AccountId = groupByAccCurrr.Key.AccountId,
                          CurrencyId = _AccountingCurrencyId,
                          Total = groupByAccCurrr.Sum(rec => rec.LocalAmountDebit - rec.LocalAmountCredit),
+                         OpenCredit = groupByAccCurrr.Sum(rec => rec.LocalAmountCredit),
+                         OpenDebit = groupByAccCurrr.Sum(rec => rec.LocalAmountCredit),
+
                      });
 
 
@@ -255,12 +270,18 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          AccountId = groupByAccCurrr.Key.AccountId,
                          CurrencyId = groupByAccCurrr.Key.CurrencyId,///GLAccount that is not multi Currency Get Foreign 
                          Total = groupByAccCurrr.Sum(rec => (decimal)rec.ForeignAmountDebit - (decimal)rec.ForeignAmountCredit),
+                         OpenCredit = groupByAccCurrr.Sum(rec => rec.ForeignAmountCredit),
+                         OpenDebit = groupByAccCurrr.Sum(rec => rec.ForeignAmountDebit)
                      });
 
 
-
-
-
+                if (_TESTIT)
+                {
+                    var _1 = qPeriodInLocalAmount.ToList();
+                    var _2 = qLessThanExclusiveBasicInLocal.ToList();
+                    var _3 = qPeriodInForeign.ToList();
+                    var _4 = qLessThanExclusiveBasicInForeign.ToList();
+                }
                 var theDBList =
                     qPeriodInLocalAmount.Union(qLessThanExclusiveBasicInLocal)
                     .Union(qPeriodInForeign).Union(qLessThanExclusiveBasicInForeign).ToList();
@@ -287,7 +308,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                      AccountId = (accRelatedCurrency!=null) ? accRelatedCurrency.MainGLAccountId : left_TotDB.AccountId,
                      
                      CurrencyId = left_TotDB.CurrencyId,
-                     Total = left_TotDB.Total
+                     Total = left_TotDB.Total,
+
                  }).ToList();
 
 
@@ -375,7 +397,10 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                       OrderDateB4 = groupby.Key.OrderDateB4,
                                       AccountId = groupby.Key.AccountId,
                                       CurrencyId = groupby.Key.CurrencyId,
-                                      Total = groupby.Sum(rec => rec.Total)
+                                      Total = groupby.Sum(rec => rec.Total),
+                                      OpenCredit = groupby.Sum(rec => rec.OpenCredit),
+                                      OpenDebit = groupby.Sum(rec => rec.OpenDebit),
+
                                   }
                  ).ToList();
 
@@ -1011,6 +1036,8 @@ Period	Acc	Currency	Total
 
         public decimal Total { get; set; }
 
+        public decimal OpenCredit { get; set; }
+        public decimal OpenDebit { get; set; }
 
         public string PeriodName
         {
