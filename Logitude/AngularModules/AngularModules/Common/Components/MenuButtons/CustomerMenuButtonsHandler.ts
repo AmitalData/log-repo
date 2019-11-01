@@ -246,27 +246,32 @@ export class CustomerMenuButtonsHandler {
                             }
                         case "Disconnect": {
 
-                            if (this.EntityPM.GLAccountId) {
-                                button.IsDisabled = false;
-                            }
-                            else {
-                                button.IsDisabled = true;
-                            }
-
-
-
-
-                            break;
-                        }
-                        case "More": {
                             if (!SessionLocator.TenantPM.AccountingActivated) {
                                 button.IsHidden = true;
                             }
                             else {
-                                button.IsHidden = false;
+                                if (this.EntityPM.Card.GLAccountId) {
+                                    button.IsDisabled = false;
+                                }
+                                else {
+                                    button.IsDisabled = true;
+                                }
                             }
+
+
+
+
                             break;
                         }
+                        //case "More": {
+                        //    if (!SessionLocator.TenantPM.AccountingActivated) {
+                        //        button.IsHidden = true;
+                        //    }
+                        //    else {
+                        //        button.IsHidden = false;
+                        //    }
+                        //    break;
+                        //}
                     }
                 }
             }

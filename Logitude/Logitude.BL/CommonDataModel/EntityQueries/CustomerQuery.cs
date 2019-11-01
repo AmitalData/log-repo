@@ -185,6 +185,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       PrimaryContactId = a.Card.PrimaryContactId,
                                       ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                       PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                      GLAccountId = a.Card.GLAccountId,
                                   },
 
                               }).FirstOrDefault();
@@ -334,6 +335,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   PrimaryContactId = a.Card.PrimaryContactId,
                                   ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
                                   PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                  GLAccountId = a.Card.GLAccountId,
                               },
 
                           }).FirstOrDefault();
