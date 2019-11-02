@@ -1995,6 +1995,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              CountryName = a.CountryName,
                                              CityName = a.CityName,
                                              GLAccountId = a.GLAccountId,
+                                             PartnerTypeId = a.PartnerTypeId,
                                          };
 
             return cards.ToList();

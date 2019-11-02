@@ -27,6 +27,7 @@ using Logitude.Accounting.Data;
 using Logitude.Accounting.BL.APIDataContract.ApiV1;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Accounting.BL.EntityQueryServiceExt;
+using Logitude.BL.CommonDataModel.EntityLists;
 
 namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 {
@@ -378,7 +379,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                 temp.Occupation = MyEntity.Occupation;
                 temp.DeductionTypeId = MyEntity.DeductionTypeId;
                 temp.ConsolidationVat = MyEntity.ConsolidationVat;
-
+              
                 if (MyEntity.Parent != null)
                 {
 
@@ -528,6 +529,36 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 
 
 
+
+        }
+        public List<Card> GetGLAccountCards(GLAccount gLAccount)
+        {
+        return MapGLAccountCardFields(gLAccount);
+         
+        }
+        private List<Card> MapGLAccountCardFields(GLAccount gLAccount)
+        {
+            List<CardList> cardLists = GetCardsByGLAccountId(gLAccount.Id, gLAccount.Tenant);
+
+            List<Card> cards = new List<Card>();
+            foreach (CardList card in cardLists)
+            {
+                Card connectedCard = new Card();
+                connectedCard.Code = card.Code;
+                connectedCard.PartnerCode = card.PartnerTypeId;
+                connectedCard.LocalName = card.LocalName;
+                cards.Add(connectedCard);
+
+            }
+            return cards;
+        
+
+        }
+        private List<CardList> GetCardsByGLAccountId(string id, int tenant)
+        {
+
+            CardQuery cardQuery = new CardQuery(tenant);
+            return cardQuery.GetCardPMsByGLAccountId(id, tenant);
 
         }
 
