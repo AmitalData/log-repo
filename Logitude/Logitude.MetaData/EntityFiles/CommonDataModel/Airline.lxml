@@ -182,12 +182,12 @@
     <EventType Code="&quot;AWBR&quot;" ObjectTableName="&quot;Airline&quot;" EnglishName="&quot;AWB Stack Removed&quot;" LocalName="&quot;AWB Stack Removed&quot;" IsManualEntry="false" ShortView="true" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
     <EventType Code="&quot;AWBD&quot;" ObjectTableName="&quot;Airline&quot;" EnglishName="&quot;AWB Stack Removed By Date&quot;" LocalName="&quot;AWB Stack Removed By Date&quot;" IsManualEntry="false" ShortView="true" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
     <EventType Code="&quot;AWBF&quot;" ObjectTableName="&quot;Airline&quot;" EnglishName="&quot;AWB Stack Returned By Shipment&quot;" LocalName="&quot;AWB Stack Returned By Shipment&quot;" IsManualEntry="false" ShortView="true" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
-    <EventType Code="&quot;DISC&quot;" ObjectTableName="&quot;Airline&quot;" EnglishName="&quot;GLAccount was disconnected&quot;" LocalName="&quot;נותק כרטיס הנהח\&quot;ש&quot;" IsManualEntry="false" ShortView="false" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
+    <EventType Code="&quot;DIST&quot;" ObjectTableName="&quot;Airline&quot;" EnglishName="&quot;GLAccount was disconnected&quot;" LocalName="&quot;נותק כרטיס הנהח\&quot;ש&quot;" IsManualEntry="false" ShortView="false" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
   </EventTypes>
   <Records />
   <MenuButtons MenuButtonGroupType="&quot;AirlineEdit&quot;" MenuButtonGroupName="&quot;AirlineEditButtonsGroup&quot;">
-    <MenuButton EventCode="&quot;More&quot;" DefaultText="&quot;More&quot;" MenuButtonType="&quot;dropdownbutton&quot;" IndexOrder="0" LocalDefaultText="&quot;More&quot;" IsPackagable="false">
-      <MenuItem EventCode="&quot;Disconnect&quot;" DefaultText="&quot;Disconnect GLAccount&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="0" LocalDefaultText="&quot;נתק כרטיס&quot;" IsPackagable="false" />
+    <MenuButton EventCode="&quot;More&quot;" DefaultText="&quot;More&quot;" MenuButtonType="&quot;dropdownbutton&quot;" IndexOrder="0" LocalDefaultText="&quot;More&quot;">
+      <MenuItem EventCode="&quot;Disconnect&quot;" DefaultText="&quot;Disconnect GLAccount&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="0" LocalDefaultText="&quot;נתק כרטיס&quot;" />
     </MenuButton>
   </MenuButtons>
   <DataContracts />
