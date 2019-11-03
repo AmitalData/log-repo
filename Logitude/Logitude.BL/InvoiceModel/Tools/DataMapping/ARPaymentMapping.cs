@@ -29,6 +29,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                         entityPM.CreatedByUserId = loggedContact.Id;
                     }
                     entityPM.OpenAmount = entityPM.AmountInPaymentCurrency;
+                    entityPM.OpenAmountInLocalCurrency = entityPM.AmountInLocalCurrency;
 
                     entity.Id = entityPM.Id;
                     entity.PaymentNo = entityPM.PaymentNo;
