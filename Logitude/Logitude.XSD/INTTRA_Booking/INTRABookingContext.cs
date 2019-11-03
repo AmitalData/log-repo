@@ -423,13 +423,15 @@ namespace Logitude.XSD.INTTRA_Booking
         }
         private void BuildMessageProperties_ReferenceInformations()
         {
-            this.ReferenceInformations = new List<INTTRA_Booking.ReferenceInformationType>();
-
-            this.ReferenceInformations.Add(new INTTRA_Booking.ReferenceInformationType()
+            if (this.MasterData.BookingConfirmationNumber != null)
             {
-                Type = INTTRA_Booking.ReferenceTypeValues.BookingNumber,
-                Value = this.MasterData.BookingConfirmationNumber,
-            });
+                this.ReferenceInformations = new List<INTTRA_Booking.ReferenceInformationType>();
+                this.ReferenceInformations.Add(new INTTRA_Booking.ReferenceInformationType()
+                {
+                    Type = INTTRA_Booking.ReferenceTypeValues.BookingNumber,
+                    Value = this.MasterData.BookingConfirmationNumber,
+                });
+            }
         }
         private void BuildMessageProperties_Locations()
         {

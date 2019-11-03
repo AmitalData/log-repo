@@ -42,7 +42,7 @@ namespace WebFreight.Web.DataProviders
         public double? TotalAmount { get; set; }
         public string TotalAmountInWordsEnglish { get; set; }
         public string TotalAmountInWordsSpanish { get; set; }
-
+        public string ReceivedFromInLocal { get; set; }
         public string CopyName { get; set; }
         public string ChequeOrPaymentRef { get; set; }
         public double Amount { get; set; }
@@ -66,7 +66,7 @@ namespace WebFreight.Web.DataProviders
         public string AccountNumber { get; set; }
         public string BankAccountLocalName { get; set; }
         public string BankAccountEnglishName { get; set; }
-
+  
         public string IRSPlace { get; set; }
         public string IRSNumber { get; set; }
         public string BranchAddress { get; set; }
