@@ -79,6 +79,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.UpdateDate = entityPM.UpdateDate;
             entity.UpdatedByUserId = entityPM.UpdatedByUserId;
             entity.OpenAmount = entityPM.OpenAmount;
+            entity.OpenAmountInLocalCurrency = entityPM.OpenAmountInLocalCurrency;
             entity.PrintByUserId = entityPM.PrintByUserId;
             entity.PrintDate = entityPM.PrintDate;
             entity.PrintNotes = entityPM.PrintNotes;
