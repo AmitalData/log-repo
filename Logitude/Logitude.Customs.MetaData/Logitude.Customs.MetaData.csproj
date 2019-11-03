@@ -104,6 +104,7 @@
     <None Include="EntityFiles\ApprovedProfession.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\ConsignmentPackDanger.lxml" />
     <None Include="EntityFiles\RequestType.lxml">
       <SubType>Designer</SubType>
     </None>

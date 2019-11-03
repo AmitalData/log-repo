@@ -73,6 +73,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<Consignment> Consignments { get; }
 		 IDbSet<ConsignmentInternalTransition> ConsignmentInternalTransitions { get; }
 		 IDbSet<ConsignmentPackage> ConsignmentPackages { get; }
+		 IDbSet<ConsignmentPackDanger> ConsignmentPackDangers { get; }
 		 IDbSet<ConstraintApprovalDecision> ConstraintApprovalDecisions { get; }
 		 IDbSet<ConstraintProcessType> ConstraintProcessTypes { get; }
 		 IDbSet<ConstraintStatus> ConstraintStatuses { get; }

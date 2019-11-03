@@ -180,6 +180,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new ConsignmentPackageMap());
 	
+            modelBuilder.Configurations.Add(new ConsignmentPackDangerMap());
+	
             modelBuilder.Configurations.Add(new ConstraintApprovalDecisionMap());
 	
             modelBuilder.Configurations.Add(new ConstraintProcessTypeMap());
@@ -1432,6 +1434,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<ConsignmentPackage> ConsignmentPackages 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ConsignmentPackDanger> ConsignmentPackDangers 
 	 {
 	      get; set;
 	 

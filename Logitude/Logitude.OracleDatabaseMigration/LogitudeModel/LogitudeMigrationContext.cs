@@ -2083,6 +2083,12 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
 
         }
 
+        public IDbSet<ConsignmentPackDanger> ConsignmentPackDangers
+        {
+            get; set;
+
+        }
+
         public IDbSet<ConstraintStatus> ConstraintStatuses
         {
             get;
@@ -3636,6 +3642,8 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new ConsignmentInternalTransitionMap());
 
             modelBuilder.Configurations.Add(new ConsignmentPackageMap());
+
+            modelBuilder.Configurations.Add(new ConsignmentPackDangerMap());
 
             modelBuilder.Configurations.Add(new ConstraintApprovalDecisionMap());
 
