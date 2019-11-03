@@ -345,9 +345,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     }
                 }
 
-                AirlineAreaRepository airlineAreaRepository = new AirlineAreaRepository(repository.context);
-                AirlineAreaQuery airlineAreaQuery = new AirlineAreaQuery(airlineAreaRepository);
-                airline.AirlineAreas = airlineAreaQuery.GetAirlineAreasPMsByAirlineId(airline.Id, airline.Tenant);
+                //AirlineAreaRepository airlineAreaRepository = new AirlineAreaRepository(repository.context);
+                //AirlineAreaQuery airlineAreaQuery = new AirlineAreaQuery(airlineAreaRepository);
+                //airline.AirlineAreas = airlineAreaQuery.GetAirlineAreasPMsByAirlineId(airline.Id, airline.Tenant);
 
             }
 

@@ -28,8 +28,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             commonDataContext = CommonDataContext.GetContext(tenant);
         }
-      
- 
+
+        public IQueryable<AirlineArea> GetAirlineAreas(int tenant)
+        {
+            return (from record in context.AirlineAreas where record.Tenant == tenant select record);
+        }
 
         public AirlineArea GetSingleAirlineArea(string id, int tenant)
         {

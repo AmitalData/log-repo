@@ -1093,6 +1093,7 @@
     <Compile Include="Controllers\CommonDataModel\Extended\WarehouseExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\AccountingPartnerViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\AgentSharedDocumentViewsController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\AirlineAreaViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\AirlineMessagingRuleViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\ChargesExternalAccountsByProductViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\CustomerDepositionViewsController.Generated.cs" />
@@ -1116,6 +1117,7 @@
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\UsoCFDIViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\AccountingPartnerController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\AgentSharedDocumentController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\AirlineAreaController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\AirlineMessagingRuleController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\CustomerTenantAccessStatusTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\MetodoPagoViewsController.Generated.cs" />

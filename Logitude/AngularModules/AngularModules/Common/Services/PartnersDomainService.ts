@@ -833,8 +833,7 @@ export class PartnersDomainService {
         
         return entityPM;
     }
-
-
+    
     MapCustomerSalesNotePM(jsonList: any) {
         var entityPM: CustomerSalesNotePM = null;
 
@@ -858,8 +857,7 @@ export class PartnersDomainService {
 
         return entityPM;
     }
-
-
+    
     MapTarrifHeaderPM(jsonPM: any, mapParent: boolean = true, entityPM: TarrifHeaderPM = null) {
 
 
@@ -1611,6 +1609,22 @@ export class PartnersDomainService {
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = done;
                 return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
+    GetAllArilineAreasByAirlineId(airlineId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetAllArilineAreasByAirlineId?airlineId=' + airlineId;
+
+        return Observable.defer(() => {
+            return this._http.get(url, {
+                headers: authHeader
+            }).map(response => {
+                var listJason = response.json();
+                return listJason;
             }).catch(ServiceHelper.HandleServiceError);
         });
     }

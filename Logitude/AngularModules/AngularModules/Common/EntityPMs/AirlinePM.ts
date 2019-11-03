@@ -495,28 +495,7 @@ export class AirlinePM {
             this.airlineAreas = newValue;
         }
     }
-    public AddAirlineAreaPM(item: AirlineAreaPM) {
-        if (item != null) {
-            var index = this.AirlineAreas.indexOf(item);
-            if (index == -1) {
-
-                item.EntityParentPM = this;
-
-                this. AirlineAreas.push(item);
-                this.MarkAsDirty();
-            }
-        }
-    }
-    public RemoveAirlineAreaPM(item: AirlineAreaPM) {
-        if (item != null) {
-            var index = this.AirlineAreas.indexOf(item);
-            if (index > -1) {
-                this. AirlineAreas.splice(index, 1);
-                this.MarkAsDirty();
-            }
-        }
-    }
-	    //public AirlineAreas: Array<AirlineAreaPMPM>= [];
+    //public AirlineAreas: Array<AirlineAreaPMPM>= [];
      private externalAccountingBusinessArea: string;
     public get ExternalAccountingBusinessArea() { return this.externalAccountingBusinessArea; }
     public set ExternalAccountingBusinessArea(newValue: string) { if (this.externalAccountingBusinessArea != newValue) { this.externalAccountingBusinessArea = newValue; this.MarkAsDirty("ExternalAccountingBusinessArea"); } }
