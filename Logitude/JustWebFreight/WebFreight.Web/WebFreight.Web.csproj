@@ -1926,6 +1926,7 @@
     <Compile Include="Controllers\WebDomainControllers\BusinessProcessDomainController.cs" />
     <Compile Include="Controllers\WebDomainControllers\ChargesTypeByProductsController.cs" />
     <Compile Include="Controllers\WebDomainControllers\CommonDomainController.cs" />
+    <Compile Include="Controllers\WebDomainControllers\ConsilidationInvoiceDomainController.cs" />
     <Compile Include="Controllers\WebDomainControllers\ContainersFUDomainController.cs" />
     <Compile Include="Controllers\WebDomainControllers\CountersDomainController.cs" />
     <Compile Include="Controllers\WebDomainControllers\CRMDomainController.cs" />
