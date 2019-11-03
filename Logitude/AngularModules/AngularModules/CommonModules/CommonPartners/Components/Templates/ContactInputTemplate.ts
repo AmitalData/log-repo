@@ -573,7 +573,7 @@ export class AdditionalServiceItem {
 
                 var itemIndex = this.entityPM.CardContactAdditionalServices.indexOf(newItem);
                 if (itemIndex == -1) {
-                    this.entityPM.AddCardContactAdditionalServicePM(newItem);
+                    //this.entityPM.AddCardContactAdditionalServicePM(newItem);
                 }
             }
 
@@ -582,7 +582,7 @@ export class AdditionalServiceItem {
                 if (item != null) {
                     var itemIndex = this.entityPM.CardContactAdditionalServices.indexOf(item);
                     if (itemIndex > -1) {
-                        this.entityPM.RemoveCardContactAdditionalServicePM(item);
+                        //this.entityPM.RemoveCardContactAdditionalServicePM(item);
                     }
                 }
             }
