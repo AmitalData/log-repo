@@ -237,7 +237,10 @@ using Logitude.Accounting.Data;
 			       
 					   				   }
 				   
-				   temp.Parent = MyEntityPM.Parent;					
+				   temp.Parent = MyEntityPM.Parent;
+				   temp.CardCode = MyEntityPM.CardCode;
+				   temp.PartnerTypeId = MyEntityPM.PartnerTypeId;
+				   temp.IsDisconnectedFromCard = MyEntityPM.IsDisconnectedFromCard;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -525,7 +528,10 @@ using Logitude.Accounting.Data;
 					}
 			
 					
-					temp.Parent = MyEntity.Parent;					   
+					temp.Parent = MyEntity.Parent;
+					temp.CardCode = MyEntity.CardCode;
+					temp.PartnerTypeId = MyEntity.PartnerTypeId;
+					temp.IsDisconnectedFromCard = MyEntity.IsDisconnectedFromCard;					   
 					   return temp;
 		    }
             catch (Exception ex)

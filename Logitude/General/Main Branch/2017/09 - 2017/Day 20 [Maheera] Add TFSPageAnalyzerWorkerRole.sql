@@ -4,8 +4,8 @@ INSERT INTO [dbo].[BatchServicesDefinitions]
            ,[Parameter1]
            ,[Parameter2])
      VALUES
-           ('TFSPageAnalyzer'
-           ,'TFSPageAnalyzerWorkerRole'
+           ('BluesnapPageAnalyzer'
+           ,'BluesnapPageAnalyzerWorkerRole'
            ,NULL
            ,NULL)
 
@@ -14,6 +14,14 @@ INSERT INTO [dbo].[BatchServicesDefinitionMods]
            ,[InActive]
            ,[NumberOfThreads])
      VALUES
-           ('TFSPageAnalyzer'
+           ('BluesnapPageAnalyzer'
            ,0
            ,1)
+
+
+
+
+
+
+
+		   

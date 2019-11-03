@@ -208,7 +208,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       MetodoPagoCode = a.MetodoPagoCode,
                                       UsoCFDICode = a.UsoCFDICode,
                                       StateName = a.StateName,
-
+                                      
                                       IsInternationalPartner = a.IsInternationalPartner,
                                       IsAutonomy = a.IsAutonomy,
                                   }).FirstOrDefault();
@@ -1995,6 +1995,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              CountryName = a.CountryName,
                                              CityName = a.CityName,
                                              GLAccountId = a.GLAccountId,
+                                             PartnerTypeId = a.PartnerTypeId,
                                          };
 
             return cards.ToList();
