@@ -66,12 +66,13 @@ export class ReceivablesTabComponent {
         this.Helper.WaitByIdAndFill('ShipmentReceivable_UnitPrice', unitPrice);
 
         this.Helper.WaitByIdAndClick('Ok-AddReceivableBtn');
-        this.Helper.WaitByIdAndClick('Shipment-Save');
+        
         
        
     }
 
     CreatARInvoicewithVoid(Voided :boolean) {
+        this.Helper.WaitEditComponentBusyIndicator();
         this.Helper.WaitByIdAndClick('CreateARInvoice');
         this.Helper.WaitByIdAndFill('ARInvoice_PaymentTermId','cash');
         this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'ARInvoice_PaymentTermId','cash');
@@ -82,10 +83,10 @@ export class ReceivablesTabComponent {
        
         this.Helper.WaitByIdAndClick('Ok-CreateARInvoice');
 
-        this.Helper.WaitBusyIndicator();
+        this.WaitBusyIndicatorToShowandHide();
     }
     EditAPInvoice(Voided :boolean){
-        this.Helper.WaitEditComponentBusyIndicator();
+        this.WaitBusyIndicatorToShowandHide();
         this.Helper.WaitByIdAndClick('ARInvoice.B.SaveAsDraft');
         this.WaitBusyIndicatorToShowandHide();
         this.Helper.WaitByIdAndClick('ARInvoice.B.Approve');

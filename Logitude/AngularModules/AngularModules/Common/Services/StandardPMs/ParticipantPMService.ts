@@ -22,6 +22,8 @@ import {ParticipantPM} from '../../EntityPMs/ParticipantPM';
 import {AddressPM} from '../../EntityPMs/AddressPM';
 import {ContactPM} from '../../EntityPMs/ContactPM';
 
+import {CardContactAdditionalServicePM} from '../../EntityPMs/CardContactAdditionalServicePM';
+
 @Injectable()
 
 export class ParticipantPMService {
@@ -233,6 +235,13 @@ export class ParticipantPMService {
             var myContactPM = entityPM.Contacts[item];
             var newContactPM: ContactPM = this.clone(myContactPM);
 						
+                newContactPM.CardContactAdditionalServices = [];
+                for (var k in myContactPM.CardContactAdditionalServices) {
+				    var myCardContactAdditionalServicePM =myContactPM.CardContactAdditionalServices[k];
+				    var newCardContactAdditionalServicePM=this.clone(myContactPM.CardContactAdditionalServices[k]);
+                    newContactPM.CardContactAdditionalServices.push(newCardContactAdditionalServicePM);
+
+					                 }
 							 
             entityPM.OldEntityPM.Contacts.push(newContactPM);
             }

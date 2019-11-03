@@ -51,8 +51,9 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 temp.UpdatedByUserId = myUser.Id;
                 temp.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                 temp.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                temp.SubTotalInLocalCurrency = 0;
-                temp.SubTotalInInvoiceCurrency = 0;
+
+                //temp.SubTotalInLocalCurrency = 0;
+                //temp.SubTotalInInvoiceCurrency = 0;
 
                 if (string.IsNullOrEmpty(temp.BranchId))
                 {
@@ -101,7 +102,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                     throw new ApplicationException("Invoice Number is required");
                 }
 
-                if(temp.AmountInInvoiceCurrency == null || temp.AmountInInvoiceCurrency == 0)
+                if (temp.AmountInInvoiceCurrency == null || temp.AmountInInvoiceCurrency == 0)
                 {
                     throw new ApplicationException("Invoice Amount is required");
                 }
@@ -117,11 +118,11 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
                 else
                 {
-                    if(temp.InvoiceCurrencyId == temp.LocalCurrencyId)
+                    if (temp.InvoiceCurrencyId == temp.LocalCurrencyId)
                     {
                         if (temp.InvoiceCurrencyExchangeRate != null && temp.InvoiceCurrencyExchangeRate != 0)
                         {
-                            if(temp.InvoiceCurrencyExchangeRate != 1)
+                            if (temp.InvoiceCurrencyExchangeRate != 1)
                             {
                                 throw new ApplicationException("Invoice Currency Exchange Rate should be 1 when Invoice Currency same as Local Currency");
                             }
@@ -149,7 +150,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                     throw new ApplicationException("Invoice Currency Exchange Rate is required");
                 }
 
-                if(temp.InvoiceDate != null)
+                if (temp.InvoiceDate != null)
                 {
                     this.ComputeAPInvoiceDueDate(temp);
                 }
@@ -158,18 +159,19 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 {
                     throw new ApplicationException("Invoice Date is required");
                 }
-                
+
                 if (!string.IsNullOrEmpty(temp.MainEntityReference))
                 {
                     ShipmentQuery shipmentRepository = new ShipmentQuery(tenant);
                     ShipmentPM shipment = shipmentRepository.GetSinglePMByShipmentNumber(temp.MainEntityReference, tenant, false);
-                    if(shipment != null)
+                    if (shipment != null)
                     {
-                        if(shipment.IsAccountingClosed)
+                        if (shipment.IsAccountingClosed)
                         {
                             throw new ApplicationException("The Shipment is Accounting Closed");
                         }
 
+                        temp.ShipmentTransportModeId = shipment.TransportModeId;
                         temp.MainEntityId = shipment.Id;
                         temp.HouseNumber = shipment.House;
                         temp.MasterNumber = shipment.LongMaster;
@@ -183,7 +185,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                             case "I": { temp.Description = "Import from " + shipment.MainCarriageFromPortCode; break; }
                             case "D": { temp.Description = "Ship to " + shipment.ToPartnerCity; break; }
                         }
-                        
+
                         if (string.IsNullOrEmpty(temp.BranchId))
                         {
                             temp.BranchId = shipment.BranchId;
@@ -198,14 +200,14 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
                 foreach (APInvoiceLinePM line in temp.InvoiceLines)
                 {
-                    if(string.IsNullOrEmpty(line.ForiegnCurrencyId))
+                    if (string.IsNullOrEmpty(line.ForiegnCurrencyId))
                     {
                         line.ForiegnCurrencyId = temp.InvoiceCurrencyId;
                     }
 
                     else
                     {
-                        if(line.ForiegnCurrencyId != temp.InvoiceCurrencyId)
+                        if (line.ForiegnCurrencyId != temp.InvoiceCurrencyId)
                         {
                             throw new ApplicationException("Line Currency is Different than Invoice Currency");
                         }
@@ -213,6 +215,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
                     line.EntityReference = temp.MainEntityReference;
                     line.EntityId = temp.MainEntityId;
+                    ComputeOpenAmount(line);
                 }
 
                 return temp;
@@ -223,6 +226,24 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 throw ex;
             }
         }
+
+        private void ComputeOpenAmount(APInvoiceLinePM invoiceLine)
+        {
+            if (invoiceLine.AmountTypeCode == "NEXP")
+            {
+                invoiceLine.OpenAmount = null;
+            }
+            else
+            {
+                var expect = invoiceLine.ExpectedAmount == null ? 0 : invoiceLine.ExpectedAmount;
+                var amount = invoiceLine.ForiegnCurrencyAmount == null ? 0 : invoiceLine.ForiegnCurrencyAmount;
+                var others = invoiceLine.OtherInvoicesAmounts == null ? 0 : invoiceLine.OtherInvoicesAmounts;
+                var corre = invoiceLine.CorrectionAmount == null ? 0 : invoiceLine.CorrectionAmount;
+                double? open = expect - others - amount - corre;
+                invoiceLine.OpenAmount = Math.Round(open.Value, 2);
+            }
+        }
+
         private void SetCurrencyRateData(APInvoicePM invoice)
         {
             if (!string.IsNullOrEmpty(invoice.InvoiceCurrencyId))

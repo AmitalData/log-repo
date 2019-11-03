@@ -16,7 +16,7 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
 {
     public class DocumentsExecutionService
     {
-        private DbQueueService queueservice;
+        private DbQueueService queueService = null;
         private QueueResponse queueResponse = null;
         private int? tenant =null;
         private string documentsExecutionLogId = string.Empty;
@@ -24,11 +24,11 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
         private DocumentsExecutionLog documentsExecutionLog = null;
         private DateTime startDate = DateTime.Now;
  
-        public DocumentsExecutionService(DbQueueService queueservice , QueueResponse queueResponse)
+        public DocumentsExecutionService(DbQueueService queueService, QueueResponse queueResponse)
         {
-            this.queueservice = queueservice;
+            this.queueService = queueService;
             this.queueResponse = queueResponse;
-            if (queueservice != null && queueResponse != null)
+            if (queueService != null && queueResponse != null)
             {
                 documentsExecutionLogId = queueResponse.MessageValues != null && queueResponse.MessageValues.Keys.Contains("DocumentsExecutionLogId") ? queueResponse.MessageValues["DocumentsExecutionLogId"].ToString() : "";
                 tenant = GetTenantValueFromQueueResponse(queueResponse);
@@ -39,7 +39,7 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
         {
             try
             {
-                if (queueservice != null && queueResponse!=null)
+                if (queueService != null && queueResponse!=null)
                 {
                     documentsExecutionLog = GetDocumentsExecutionLog();
                     if (documentsExecutionLog != null && (documentsExecutionLog.StatusCode != "D" || documentsExecutionLog.StatusCode != "F"))
@@ -47,7 +47,7 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
                         UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { StartDate = startDate, StatusCode = "P" });
                         ExportStimulDocumentToPDF();
                     }
-                    else queueservice.Complete();
+                    else queueService.Complete();
                 }
             }
             catch (Exception ex)
@@ -68,12 +68,12 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
                     string result = exportDocumentHelper.ExportDocument2Pdf(exportDocumentArgs, documentTypeCopyId);
                 });
                 UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() {StatusCode = "D", DoneDate = DateTime.Now });
-                queueservice.Complete();
+                queueService.Complete();
             }
             else
             {
                 UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { Exception = new Exception("RequestXML is null"), DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });
-                queueservice.Complete();
+                queueService.Complete();
             }
         }
 
@@ -103,14 +103,14 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
             {
                 if (queueResponse.RetryNumber <= 1)
                 {
-                    queueservice.DelayAndReturnBackToQueue(new TimeSpan(0, 0, 0, 5), queueResponse.MessageId);
+                    queueService.DelayAndReturnBackToQueue(new TimeSpan(0, 0, 0, 5), queueResponse.MessageId);
                 }
                 if (queueResponse.RetryNumber >= 2)
                 {
-                    queueservice.CompleteAsFailed();
+                    queueService.CompleteAsFailed();
                 }
             }
-            else queueservice.CompleteAsFailed();
+            else queueService.CompleteAsFailed();
 
             UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { Exception = exception.InnerException != null ? exception.InnerException : exception });
         }
@@ -169,9 +169,6 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
         }
 
     }
-
-
-
 
 
     public class DocumentsExecutionLogArgs

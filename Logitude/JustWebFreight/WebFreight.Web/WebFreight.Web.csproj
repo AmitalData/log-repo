@@ -1074,6 +1074,7 @@
     <Compile Include="Controllers\AccountingModel\TaxReportController.cs" />
     <Compile Include="Controllers\BookingModel\Extended\BookingProductsExtendedController.cs" />
     <Compile Include="Controllers\BookingModel\Generated\PMControllers\BookingProductController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Extended\CardExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\AutomationExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\AutomationHistoryExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\AutomationResultEmailRecipientExtendedController.cs" />
@@ -1092,6 +1093,7 @@
     <Compile Include="Controllers\CommonDataModel\Extended\WarehouseExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\AccountingPartnerViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\AgentSharedDocumentViewsController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\AirlineAreaViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\AirlineMessagingRuleViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\ChargesExternalAccountsByProductViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\CustomerDepositionViewsController.Generated.cs" />
@@ -1115,6 +1117,7 @@
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\UsoCFDIViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\AccountingPartnerController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\AgentSharedDocumentController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\AirlineAreaController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\AirlineMessagingRuleController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\CustomerTenantAccessStatusTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\MetodoPagoViewsController.Generated.cs" />
@@ -1655,6 +1658,7 @@
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\BatchServicesDefinitionViewsController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\BluesnapContractTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\BluesnapContractViewsController.Generated.cs" />
+    <Compile Include="Controllers\GlobalModel\Generated\ListControllers\BluesnapTransactionViewsController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\PaymentChannelViewsController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\PaymentCurrencyViewsController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\PaymentMethodViewsController.Generated.cs" />
@@ -2328,6 +2332,8 @@
     <Compile Include="Helpers\APIHelpers\TariffGeneratorFromExcel.cs" />
     <Compile Include="Helpers\APIHelpers\TMMBProjectsHelper.cs" />
     <Compile Include="Helpers\APIHelpers\TMProjectsHelper.cs" />
+    <Compile Include="Helpers\BluesnapAnalyzer.cs" />
+    <Compile Include="Helpers\BluesnapExecutionService.cs" />
     <Compile Include="Helpers\DataProviderHelpers\AutomationTestReportDataProvider.cs" />
     <Compile Include="Helpers\DataProviderHelpers\ShipmentsEventsListDataProvider.cs" />
     <Compile Include="Helpers\DWQueryBuilderHelper.cs" />
@@ -2390,7 +2396,8 @@
     <Compile Include="Helpers\TFSParseWebhook.cs" />
     <Compile Include="Helpers\TimeClock\TMClockAnalyze.cs" />
     <Compile Include="Helpers\TMMessageBuilderAnalyzer.cs" />
-    <Compile Include="Helpers\WorkerRoleHelpers\DocumentsExecutionService.cs" />
+    <Compile Include="Helpers\WorkerRole\DocumentsExecutionService.cs" />
+    <Compile Include="Helpers\WorkerRole\ReportExecutionService.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.APPaymentTransferStatus.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.ARInvoiceStocksStatus.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.ARPaymentTransferStatus.cs" />
@@ -2744,6 +2751,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\BatchServicesDefinitionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\BluesnapContractTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\BluesnapContractUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\BluesnapTransactionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\PaymentChannelUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\PaymentCurrencyUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\PaymentMethodUpdateClass.cs" />
@@ -2954,6 +2962,7 @@
     <Content Include="Monitoring\INTTRAMonitoring.aspx" />
     <Content Include="Monitoring\QuickbooksOnlineQueue.aspx" />
     <Content Include="Monitoring\ReportExecutionLogWaitingStatus.aspx" />
+    <Content Include="Monitoring\ReportExecutionRunTimeMonitoring.aspx" />
     <Content Include="Monitoring\StorageBackup.aspx" />
     <Content Include="QuickbooksOnline.aspx" />
     <EmbeddedResource Include="Properties\webfreight.web.dll.licenses" />
@@ -3849,7 +3858,7 @@
     <Compile Include="Helpers\DeparturesArivalsActivityFilter.cs" />
     <Compile Include="Helpers\DocumentFileUploadHelper.cs" />
     <Compile Include="Helpers\DocumentTypeTemplateFilter.cs" />
-    <Compile Include="Helpers\EditableFieldPosition.cs" />
+    <Compile Include="Helpers\BuildStimulReportResult.cs" />
     <Compile Include="Helpers\EntityTrackingFilter.cs" />
     <Compile Include="Helpers\ExportDocumentHelper.cs" />
     <Compile Include="Helpers\FroalaEditorFilters.cs" />
@@ -5106,6 +5115,13 @@
     </Compile>
     <Compile Include="Monitoring\ReportExecutionLogWaitingStatus.aspx.designer.cs">
       <DependentUpon>ReportExecutionLogWaitingStatus.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Monitoring\ReportExecutionRunTimeMonitoring.aspx.cs">
+      <DependentUpon>ReportExecutionRunTimeMonitoring.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\ReportExecutionRunTimeMonitoring.aspx.designer.cs">
+      <DependentUpon>ReportExecutionRunTimeMonitoring.aspx</DependentUpon>
     </Compile>
     <Compile Include="Monitoring\StorageBackup.aspx.cs">
       <DependentUpon>StorageBackup.aspx</DependentUpon>

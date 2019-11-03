@@ -2575,5 +2575,27 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        public HttpResponseMessage GetAllArilineAreasByAirlineId(string airlineId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                AirlineAreaQuery airlineAreaQuery = new AirlineAreaQuery(tenant);
+                List<AirlineAreaPM> airlineAreas = airlineAreaQuery.GetAirlineAreasPMsByAirlineId(airlineId, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, airlineAreas);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }

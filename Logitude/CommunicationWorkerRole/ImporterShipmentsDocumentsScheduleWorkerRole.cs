@@ -211,6 +211,12 @@ namespace CommunicationWorkerRole
 
                                         if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && tenantPM.IsCustomerTenantShare && (ForwarderShipment.DirectionId.ToUpper() == "C" || IsImportShipmentsAllowedForLogBox(tenantPM, ForwarderShipment) || IsExportShipmentsAllowedForLogBox(tenantPM,ForwarderShipment)))
                                         {
+                                            var customerTenantAccess = customerTenantAccessQuery.GetCustomerTenantAccessPMsByTenantCustomerTenant(tenant, customerTenantAccessInfo.CustomerTenant);
+
+                                            if (customerTenantAccess != null)
+                                            {
+                                                LogPM.PartnerName = customerTenantAccess.CompanyName + " ( " + customerTenantAccess.CustomerTenant + " )";
+                                            }
                                             importerTenant = customerTenantAccessInfo.CustomerTenant;
                                             ShipmentPM ImporterShipment = null;
                                             //DocumentsFilingPM DocumentFilingPM = documentsFilingQuery.GetSinglePM(DocumentFilingId, tenant);
