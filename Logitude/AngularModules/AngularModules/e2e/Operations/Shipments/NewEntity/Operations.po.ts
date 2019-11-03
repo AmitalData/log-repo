@@ -37,13 +37,28 @@ export class OperationsComp {
         if (actionType == 'OC') {
             this.ShipmentActions.OperationalCloseShipment(browser.params.ShipParams.ShipmentLevelCode);
         }
-        else if (actionType == 'copy') {
-            this.ShipmentActions.CopyShipment();
-
+        else if (actionType == 'OR') {
+            this.ShipmentActions.OperationalReopenShipment(browser.params.ShipParams.ShipmentLevelCode);
         }
-        else if (actionType == 'copycancel') {
-            this.ShipmentActions.CopyShipment();
-            this.Helper.WaitByIdAndClick('Shipment.TH.Overview');
+        else if (actionType == 'AC') {
+            this.ShipmentActions.AccountingCloseShipment(browser.params.ShipParams.ShipmentLevelCode);
+        }
+        else if (actionType == 'AR') {
+            this.ShipmentActions.AccountedReopenShipment(browser.params.ShipParams.ShipmentLevelCode);
+        }
+        else if (actionType == 'copy') {
+            this.ShipmentActions.CopyShipment(browser.params.ShipParams.ShipmentLevelCode);
+        }
+        else if (actionType == 'cancel') {
+            this.ShipmentActions.CopyShipment(browser.params.ShipParams.ShipmentLevelCode);
+        }
+        else if (actionType == 'multiActions') {
+            this.ShipmentActions.OperationalCloseShipment(browser.params.ShipParams.ShipmentLevelCode);
+            this.ShipmentActions.AccountingCloseShipment(browser.params.ShipParams.ShipmentLevelCode);
+            this.ShipmentActions.AccountedReopenShipment(browser.params.ShipParams.ShipmentLevelCode);
+            this.ShipmentActions.OperationalReopenShipment(browser.params.ShipParams.ShipmentLevelCode);
+            this.ShipmentActions.CopyShipment(browser.params.ShipParams.ShipmentLevelCode);
+            this.Helper.WaitByIdAndClick('Shipment.TH.Overview_1');
             this.ShipmentActions.CancelShipment();
         }
     }

@@ -211,7 +211,7 @@ namespace CommunicationWorkerRole
 
                                         if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && tenantPM.IsCustomerTenantShare && (ForwarderShipment.DirectionId.ToUpper() == "C" || IsImportShipmentsAllowedForLogBox(tenantPM, ForwarderShipment) || IsExportShipmentsAllowedForLogBox(tenantPM,ForwarderShipment)))
                                         {
-                                            var customerTenantAccess = customerTenantAccessQuery.GetCustomerTenantAccessPMsByTenantCustomerTenant(tenant, importerTenant);
+                                            var customerTenantAccess = customerTenantAccessQuery.GetCustomerTenantAccessPMsByTenantCustomerTenant(tenant, customerTenantAccessInfo.CustomerTenant);
 
                                             if (customerTenantAccess != null)
                                             {

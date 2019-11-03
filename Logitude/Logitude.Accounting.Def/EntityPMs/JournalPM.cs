@@ -17,7 +17,7 @@ namespace Logitude.Accounting.Def.EntityPMs
         {
 
         }
-        
+       
         public int LineCounter { get; set; }
         public JournalStatusTypePM.StatusCodeEnum StatusCodeEnum
         {

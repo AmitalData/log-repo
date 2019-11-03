@@ -220,7 +220,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         private List<CardContactAdditionalServicePM> cardContactAdditionalServices;
         [Include]
         [Association("CardContactAdditionalServiceContact", "Id", "ContactId")]
-        //[Composition]
+        [Composition]
         [DataMember]
         public virtual List<CardContactAdditionalServicePM> CardContactAdditionalServices
         {

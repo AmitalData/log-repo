@@ -118,6 +118,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                MetodoPagoCode = a.Card.MetodoPagoCode,
                                UsoCFDICode = a.Card.UsoCFDICode,
                                ImageDetailId = a.Card.ImageDetailId,
+                               GLAccountId = a.Card.GLAccountId,
                                Card = new CardPM()
                                {
                                    Id = a.Id,
@@ -317,6 +318,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                SATForeignRFC = a.Card.ExternalId2,
                                MetodoPagoCode = a.Card.MetodoPagoCode,
                                UsoCFDICode = a.Card.UsoCFDICode,
+                               GLAccountId = a.Card.GLAccountId,
                                ImageDetailId = a.Card.ImageDetailId,
                                Card = new CardPM()
                                {
@@ -345,9 +347,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     }
                 }
 
-                AirlineAreaRepository airlineAreaRepository = new AirlineAreaRepository(repository.context);
-                AirlineAreaQuery airlineAreaQuery = new AirlineAreaQuery(airlineAreaRepository);
-                airline.AirlineAreas = airlineAreaQuery.GetAirlineAreasPMsByAirlineId(airline.Id, airline.Tenant);
+                //AirlineAreaRepository airlineAreaRepository = new AirlineAreaRepository(repository.context);
+                //AirlineAreaQuery airlineAreaQuery = new AirlineAreaQuery(airlineAreaRepository);
+                //airline.AirlineAreas = airlineAreaQuery.GetAirlineAreasPMsByAirlineId(airline.Id, airline.Tenant);
 
             }
 

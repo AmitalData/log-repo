@@ -36,9 +36,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         {
             repository = AirlineAreaRepositoryRepository;
         }
-
-
-
+        
         public AirlineAreaPM GetSinglePM(string id, int tenant)
         {
             AirlineAreaPM myResult
@@ -62,9 +60,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return myResult;
         }
-
-
-
+        
         internal List<AirlineAreaPM> GetAirlineAreasPMsByAirlineId(string airlineId, int tenant)
         {
 
@@ -146,6 +142,24 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  }).ToList();
 
             return myResult;
+        }
+
+        public IQueryable<AirlineAreaList> GetIQueryableEntityList(IQueryable<AirlineArea> iQueryable)
+        {
+            IQueryable<AirlineAreaList> result = from a in iQueryable
+                                           select new AirlineAreaList()
+                                           {
+                                               CreateDate = a.CreateDate,
+                                               Id = a.Id,
+                                               AirlineId = a.AirlineId,
+                                               CreatedByUserId = a.CreatedByUserId,
+                                               Description = a.Description,
+                                               Name = a.Name,
+                                               Tenant = a.Tenant,
+                                               UpdateDate = a.UpdateDate,
+                                               UpdatedByUserId = a.UpdatedByUserId,
+                                           };
+            return result;
         }
     }
 }
