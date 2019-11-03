@@ -919,9 +919,9 @@ export class DWQueryBuilderComponent extends BaseComponent {
         }
         var Valid = true;
         MyFilter.FilterItems.forEach((field) => {
-
+            
             if (field.FilterItems.length == 0) {
-                if (field.DataTypeCode && field.TextValue) {
+                if (field.DataTypeCode && field.TextValue && field.TextValue != "IsNull" && field.TextValue != "IsNotNull" && field.TextValue.indexOf(';') < 0) {
                     switch (field.DataTypeCode.toLowerCase()) {
                         case 'integer':
                         case 'double':

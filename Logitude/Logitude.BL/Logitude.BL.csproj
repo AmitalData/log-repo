@@ -367,11 +367,13 @@
     <Compile Include="CommonDataModel\Tools\DataMapping\PaymentGatewayPartnerMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\TenantAdditionalDataMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\AccountingPartnerMapping.cs" />
+    <Compile Include="CommonDataModel\Tools\EntityService\AirlineAreaService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\DocumentsExecutionLogService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\NumberOfUsersService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\TenantAdditionalDataService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\AccountingPartnerService.cs" />
     <Compile Include="CommonDataModel\Tools\TraceEvents\AccountingPartnerTracing.cs" />
+    <Compile Include="CommonDataModel\Tools\TraceEvents\AirlineAreaTracing.cs" />
     <Compile Include="CommonDataModel\Tools\Validating\VATValidating.cs" />
     <Compile Include="CommonDataModel\Tools\Validating\AccountingPartnerValidating.cs" />
     <Compile Include="GlobalModel\EntityLists\BluesnapTransactionList.cs" />
