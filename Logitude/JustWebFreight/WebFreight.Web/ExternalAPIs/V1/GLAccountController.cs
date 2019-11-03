@@ -43,10 +43,13 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 else if (!string.IsNullOrEmpty(DisplayNumber)){
                     Result = Service.GetGLAccountByDisplayNumber(DisplayNumber, tenant);
                 }
+
                 else if (!string.IsNullOrEmpty(InternalNumber))
                 {
                     Result = Service.GetGLAccountByInternalNumber(InternalNumber, tenant);
                 }
+                GLAccountQueryService mappingService = new GLAccountQueryService(tenant);
+                Result.Cards = mappingService.GetGLAccountCards(Result);
                 string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
             }

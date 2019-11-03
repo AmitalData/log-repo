@@ -75,6 +75,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     CAAT = a.CAAT,
                                     CBSA = a.CBSA,
                                     INTTRARegistrationNotes = a.INTTRARegistrationNotes,
+                                    GLAccountId = a.Card.GLAccountId,
                                     Card = new CardPM()
                                     {
                                         Id = a.Id,

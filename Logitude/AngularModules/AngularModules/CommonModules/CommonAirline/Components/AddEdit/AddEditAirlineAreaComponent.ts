@@ -69,47 +69,47 @@ export class AddEditAirlineAreaComponent extends BaseComponent {
     
     public IsResourcesReady: boolean = false;
     SetWindowArgs(windowArgs: any) {
-        this.AirlinePM = windowArgs['EntityPM'];
-        this.AirlinePM.CloneMe();
-        this.AirlinePM.AirlineAreas.forEach(item => {
-            item.CloneMe();
-        });
-        this.IsNew = windowArgs['IsNew'];
-        if (this.IsNew) {
-            this.EntityPM = new AirlineAreaPM(this.AirlinePM);
-            this.EntityPM.CloneMe();
-            this.Clone();
-            this.IsResourcesReady = true;
-        }
+        //this.AirlinePM = windowArgs['EntityPM'];
+        //this.AirlinePM.CloneMe();
+        //this.AirlinePM.AirlineAreas.forEach(item => {
+        //    item.CloneMe();
+        //});
+        //this.IsNew = windowArgs['IsNew'];
+        //if (this.IsNew) {
+        //    this.EntityPM = new AirlineAreaPM(this.AirlinePM);
+        //    this.EntityPM.CloneMe();
+        //    this.Clone();
+        //    this.IsResourcesReady = true;
+        //}
         
-        else {
-            this.EntityPM = windowArgs['Entity'];
-            this.EntityPM.CloneMe();
-            this.Clone();
-            if (AppTool.IsNullOrEmpty(this.EntityPM.Description)) {
-                this.ISNullDescription = true;
-            }
-            this.EntityPM.AirlineAreasPorts.forEach(item => {
-                this.CurrentSession.StartBusyIndicatorLoading();
-                this.AddedAirlineAreas.push(item);
-                this.myCloner.AddEntity(item);
-                this.portListService.getSingleFromCache(item.PortId).subscribe(p => {
-                    if (!p.HasError) {
-                        if (p.Result) {
-                            item.CloneMe();
-                            this.ItemList.push(new DestinationClass(this, p.Result,false));
-                        }
-                    }
-                    else {
-                        this.ValidationErrorsList = p.ErrorsArray;
-                    }
-                });
-            });
+        //else {
+        //    this.EntityPM = windowArgs['Entity'];
+        //    this.EntityPM.CloneMe();
+        //    this.Clone();
+        //    if (AppTool.IsNullOrEmpty(this.EntityPM.Description)) {
+        //        this.ISNullDescription = true;
+        //    }
+        //    this.EntityPM.AirlineAreasPorts.forEach(item => {
+        //        this.CurrentSession.StartBusyIndicatorLoading();
+        //        this.AddedAirlineAreas.push(item);
+        //        this.myCloner.AddEntity(item);
+        //        this.portListService.getSingleFromCache(item.PortId).subscribe(p => {
+        //            if (!p.HasError) {
+        //                if (p.Result) {
+        //                    item.CloneMe();
+        //                    this.ItemList.push(new DestinationClass(this, p.Result,false));
+        //                }
+        //            }
+        //            else {
+        //                this.ValidationErrorsList = p.ErrorsArray;
+        //            }
+        //        });
+        //    });
 
-            this.ItemList = this.ItemList.sort((a, b) => { return (a.CountryCode === b.CountryCode) ? 0 : (a.CountryCode < b.CountryCode) ? -1 : 1 });
-            this.CurrentSession.StopBusyIndicator();
-            this.IsResourcesReady = true;
-        }
+        //    this.ItemList = this.ItemList.sort((a, b) => { return (a.CountryCode === b.CountryCode) ? 0 : (a.CountryCode < b.CountryCode) ? -1 : 1 });
+        //    this.CurrentSession.StopBusyIndicator();
+        //    this.IsResourcesReady = true;
+        //}
     }
 
     ChoosePort() {
@@ -179,7 +179,7 @@ export class AddEditAirlineAreaComponent extends BaseComponent {
                 this.EntityPM.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
                 this.EntityPM.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
                 this.EntityPM.AirlineId = this.AirlinePM.Id;
-                this.AirlinePM.AddAirlineAreaPM(this.EntityPM);
+                //this.AirlinePM.AddAirlineAreaPM(this.EntityPM);
 
             }
             this.CurrentSession.StopBusyIndicator();

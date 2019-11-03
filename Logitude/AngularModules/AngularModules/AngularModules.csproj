@@ -30,7 +30,7 @@
     <Content Include="Accounting\Components\EditTabs\AccountingIntegrityCheck\IntegrityCheckTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\BankAccount\BankPageEventsComponent.html" />
     <Content Include="Accounting\Components\EditTabs\BankAccount\ManageRecoTabComponent.html" />
-    <Content Include="Accounting\Components\EditTabs\BankAccount\ExternalPagesTabComponent.html" />
+    <Content Include="Accounting\Components\EditTabs\BankAccount\BankPagesTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\BankCode\BankCodeGeneralTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\BankDeposit\BankDepositDetailsTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\GLAccount\AddEditTaxWithholdingLineComponent.html" />
@@ -482,15 +482,16 @@
     <TypeScriptCompile Include="Common\EntityPMs\CustomsShipperPM.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedLists\CustomerDepositionListExtendedService.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedLists\UserExtendedListService.ts" />
-    <TypeScriptCompile Include="Common\Services\ExtendedPMs\AgentExtendedPMService.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedPMs\AutomationResultEmailRecipientExtendedService.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedPMs\CardExtendedPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\AccountingPartnerListService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardLists\AirlineAreaListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\CheckDigitControlAlgorithmListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\CustomerDepositionListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\CustomsShipperListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\NumberFormatListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\AccountingPartnerPMService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardPMs\AirlineAreaPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CustomerDepositionPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CustomsShipperPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\LogBoxTenantSettingPMService.ts" />
@@ -1781,7 +1782,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentComponent\DocsOut\Filters\AttachmentsList.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentComponent\DocsOut\Filters\DocumentCustomFieldsArgs.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentComponent\DocsOut\Filters\DocumentTypeTemplateFilter.ts" />
-    <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentComponent\DocsOut\Filters\BuildStimulReportResultArgs.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentComponent\DocsOut\Filters\EditableFieldPosition.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentComponent\DocsOut\Filters\FroalaEditorFilters.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentComponent\DocsOut\Filters\SendHtmlDocumentFilter.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\DocumentComponent\DocsOut\FroalaEditorSetting.ts" />
@@ -3208,7 +3209,7 @@
     <Content Include="_Resources\js\jszip.js" />
     <Content Include="_Resources\js\Reflect.js" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\BankAccount\ManageRecoTabComponent.ts" />
-    <TypeScriptCompile Include="Accounting\Components\EditTabs\BankAccount\ExternalPagesTabComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\EditTabs\BankAccount\BankPagesTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\BankDeposit\BankDepositDetailsTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\GLAccount\AddEditTaxWithholdingLineComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\GLAccount\GLAccountAdditionalDataTabComponent.ts" />

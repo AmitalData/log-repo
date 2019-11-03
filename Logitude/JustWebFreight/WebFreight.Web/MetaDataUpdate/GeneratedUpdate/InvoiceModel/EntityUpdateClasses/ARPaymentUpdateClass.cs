@@ -1429,7 +1429,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						DisplayInDocumentReferences =  false,
 					  						NumberOfDigits =  0,
-					  						DigitsAfterPoint =  0,
+					  						DigitsAfterPoint =  2,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AmountInPaymentCurrency",
@@ -5717,10 +5717,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
          	
 		    ARPaymentObjectTable.HeaderScreenId = ARPaymentHeaderScreenScreen2.Id;
 	   		  
-	      
-
-	         Screen ARPaymentNewARPaymentScreen3 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "NewARPayment", Name = "New AR Payment", ObjectTableId = ARPaymentObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = false }, screensRepository, tenantScreens);
-        
 
 	    }
 

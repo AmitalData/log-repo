@@ -330,7 +330,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         private List<AirlineAreaPM> airlineAreas;
         [Include]
         [Association("AirlineAreaPM", "Id", "AirlineId")]
-        [Composition]
         [DataMember]
         public virtual List<AirlineAreaPM> AirlineAreas
         {
@@ -379,5 +378,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ImageDetailId { get; set; }
+
+        [DataMember]
+        public string GLAccountId { get; set; }
     }
 }
