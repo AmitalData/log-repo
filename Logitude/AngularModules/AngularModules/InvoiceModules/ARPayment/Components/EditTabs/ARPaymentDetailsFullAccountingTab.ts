@@ -1701,6 +1701,14 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     set OpenAmount(value: number) {
         if (this.EntityPM.OpenAmount != value) {
             this.EntityPM.OpenAmount = AppTool.Round(value, 2);
+            this.ComputeOpenAmountInLocalCurrency();
+        }
+    }
+
+    get OpenAmountInLocalCurrency() { return this.EntityPM.OpenAmountInLocalCurrency == null ? 0 : this.EntityPM.OpenAmountInLocalCurrency; }
+    set OpenAmountInLocalCurrency(value: number) {
+        if (this.EntityPM.OpenAmountInLocalCurrency != value) {
+            this.EntityPM.OpenAmountInLocalCurrency = AppTool.Round(value, 2);
         }
     }
 
@@ -1714,9 +1722,15 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     ComputeOpenAmount() {
         this.OpenAmount = this.AmountInPaymentCurrency - this.Summary_AmountPaid;
     }
+
     ComputeLocalAmount() {
         this.AmountInLocalCurrency = this.AmountInPaymentCurrency * this.PaymentCurrencyExchangeRate;
     }
+
+    ComputeOpenAmountInLocalCurrency() {
+        this.OpenAmountInLocalCurrency = this.OpenAmount * this.PaymentCurrencyExchangeRate;
+    }
+
 
     // Summary
     public Summary_Amount: number = 0;
