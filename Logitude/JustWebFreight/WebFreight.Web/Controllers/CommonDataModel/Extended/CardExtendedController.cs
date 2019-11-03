@@ -123,7 +123,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
         }
         private void CreateEvents(string cardId, string eventTypeCode)
         {
-            CreateTraceEvent(glaccount.Id, "GLAccount", "DISC");
+            CreateTraceEvent(glaccount.Id, "GLAccount", "DIST");
             CreateTraceEvent(cardId, partnerObjectTableName, eventTypeCode);
         }
         private void CreateTraceEvent(string id,string objecttableName,  string eventTypeCode)

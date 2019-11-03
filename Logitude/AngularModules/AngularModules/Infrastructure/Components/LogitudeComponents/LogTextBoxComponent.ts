@@ -1236,9 +1236,17 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                             }
                             else {
                                 if (!this.DisableZeroPadding) {
-                                    if (AppTool.IsNullOrEmpty(this.DigitsAfterPoint)) {
+                                    if (AppTool.IsNullOrZero(this.DigitsAfterPoint)) {
                                         this.DigitsAfterPoint = 3;
                                     }
+                                    else {
+                                        this.DigitsAfterPoint = this.ObjectField.DigitsAfterPoint;
+                                    }
+                                    
+                                    //if (AppTool.IsNullOrEmpty(this.DigitsAfterPoint)) {
+                                    //    this.DigitsAfterPoint = 3;
+                                    //}
+
                                     this.TextValue = val.toFixed(this.DigitsAfterPoint);
                                     if (this.TextValue.indexOf('.') > -1 && this.decimalSeparator != '.') {
                                         this.TextValue = this.TextValue.split('.').join(this.decimalSeparator);//.replace(new RegExp('.', 'g'), this.decimalSeparator);
