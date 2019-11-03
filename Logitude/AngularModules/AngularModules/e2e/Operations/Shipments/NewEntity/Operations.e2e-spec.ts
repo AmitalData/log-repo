@@ -12,9 +12,7 @@ describe('Operations Module', () => {
     var shipperRef1;
     afterEach(() => {
         // browser.switchTo().alert().accept();
-
     })
-
     it('Create Shipment .. ', function () {
         browser.ignoreSynchronization = true;
         shipperRef1 = page.DoOperations();
@@ -29,6 +27,9 @@ describe('Operations Module', () => {
         browser.ignoreSynchronization = true;
         page.EditShipment(shipperRef1);
         page.SaveShip();
-        //page.DoShipmentAction('OC');
     });
+    //it('Shipment Actions .. ', function () {
+    //    browser.ignoreSynchronization = true;
+    //    page.DoShipmentAction('multiActions');
+    //});
 });
