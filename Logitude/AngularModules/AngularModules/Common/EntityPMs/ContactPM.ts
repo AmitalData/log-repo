@@ -341,7 +341,28 @@ export class ContactPM {
             this.cardContactAdditionalServices = newValue;
         }
     }
-    //public CardContactAdditionalServices: Array<CardContactAdditionalServicePMPM>= [];
+    public AddCardContactAdditionalServicePM(item: CardContactAdditionalServicePM) {
+        if (item != null) {
+            var index = this.CardContactAdditionalServices.indexOf(item);
+            if (index == -1) {
+
+                item.EntityParentPM = this;
+
+                this. CardContactAdditionalServices.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveCardContactAdditionalServicePM(item: CardContactAdditionalServicePM) {
+        if (item != null) {
+            var index = this.CardContactAdditionalServices.indexOf(item);
+            if (index > -1) {
+                this. CardContactAdditionalServices.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+	    //public CardContactAdditionalServices: Array<CardContactAdditionalServicePMPM>= [];
  
     public OldEntityPM: ContactPM;
 		
