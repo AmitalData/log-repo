@@ -574,7 +574,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         private List<QueueTask> CreateQueueTasks(GLAccountPM glaccounPM)
         {
-            Logitude.Accounting.BL.APIDataContract.ApiV1.GLAccount gLAccount = GetMappedGLAccountDataContract(glaccounPM);
+           APIDataContract.ApiV1.GLAccount gLAccount = GetMappedGLAccountDataContract(glaccounPM);
 
             string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(gLAccount);
 
@@ -591,14 +591,14 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 };
             return queue1Tasks;
         }
-        private Logitude.Accounting.BL.APIDataContract.ApiV1.GLAccount GetMappedGLAccountDataContract(GLAccountPM gLAccountPM)
+        private APIDataContract.ApiV1.GLAccount GetMappedGLAccountDataContract(GLAccountPM gLAccountPM)
         {
-            Logitude.Accounting.BL.APIDataContract.ApiV1.GLAccountQueryService gLAccountQueryService = new APIDataContract.ApiV1.GLAccountQueryService(gLAccountPM.Tenant);
-            Logitude.Accounting.BL.APIDataContract.ApiV1.GLAccount glAccount = gLAccountQueryService.GLAccountDataMapping(gLAccountPM, gLAccountPM.Tenant);
+            APIDataContract.ApiV1.GLAccountQueryService gLAccountQueryService = new APIDataContract.ApiV1.GLAccountQueryService(gLAccountPM.Tenant);
+            APIDataContract.ApiV1.GLAccount glAccount = gLAccountQueryService.GLAccountDataMapping(gLAccountPM, gLAccountPM.Tenant);
             glAccount = MapGLAccountCardFields(glAccount);
             return glAccount;
         }
-        private Logitude.Accounting.BL.APIDataContract.ApiV1.GLAccount MapGLAccountCardFields(Logitude.Accounting.BL.APIDataContract.ApiV1.GLAccount gLAccount)
+        private APIDataContract.ApiV1.GLAccount MapGLAccountCardFields(APIDataContract.ApiV1.GLAccount gLAccount)
         {
             List<CardList> cardLists = GetCardsByGLAccountId(gLAccount.Id, gLAccount.Tenant);
           

@@ -7723,7 +7723,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "DIST",
-                EnglishName =  "Disconnected from card",
+                EnglishName =  "Card was disconnected",
                 LocalName =  "נותק מכרטיס תפעולי",
                 IsManualEntry =  false,
                 ShortView =  false,
