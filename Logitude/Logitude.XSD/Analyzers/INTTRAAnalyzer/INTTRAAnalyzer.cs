@@ -604,14 +604,14 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                 {
                                     if (iMessageBody.MessageProperties.Party != null)
                                     {
-                                        INTTRABooking2Confirm.PartiesType forwarder = iMessageBody.MessageProperties.Party.Where(d => d.Role == INTTRABooking2Confirm.PartyTypeValues.Forwarder).FirstOrDefault();
-                                        if (forwarder != null)
+                                        INTTRABooking2Confirm.PartiesType booker = iMessageBody.MessageProperties.Party.Where(d => d.Role == INTTRABooking2Confirm.PartyTypeValues.Booker).FirstOrDefault();
+                                        if (booker != null)
                                         {
-                                            if (forwarder.Identifier != null)
+                                            if (booker.Identifier != null)
                                             {
-                                                if (forwarder.Identifier.Value != null)
+                                                if (booker.Identifier.Value != null)
                                                 {
-                                                    Branch iBranch = this.myCommonContext.Branches.Where(d => d.INTTRAAlias == forwarder.Identifier.Value).FirstOrDefault();
+                                                    Branch iBranch = this.myCommonContext.Branches.Where(d => d.INTTRAAlias == booker.Identifier.Value).FirstOrDefault();
                                                     if (iBranch != null)
                                                     {
                                                         iMessageTenant = iBranch.Tenant;
