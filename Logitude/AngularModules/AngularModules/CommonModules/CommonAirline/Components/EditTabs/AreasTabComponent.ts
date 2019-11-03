@@ -12,6 +12,7 @@ import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 import { AirlineAreaPM } from '../../../../Common/EntityPMs/AirlineAreaPM';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
+import { AirlineAreasPortPM } from '../../../../Common/EntityPMs/AirlineAreasPortPM';
 
 @Component({
     moduleId: module.id,
@@ -68,14 +69,11 @@ export class AreasTabComponent extends BaseComponent implements OnDestroy {
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
 
-    private LoadData() {
+    public LoadData() {
         this.CurrentSession.StartBusyIndicatorLoading();
 
-        this.DomainService.GetAllArilineAreasByAirlineId(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                this.BuildItemsSource(myResponse.Result);
-            }
-            
+        this.DomainService.GetAllArilineAreasByAirlineId(this.EntityPM.Id).subscribe((myResult: any) => {
+            this.BuildItemsSource(myResult);
             this.CurrentSession.StopBusyIndicator();
         });
     }
@@ -88,11 +86,9 @@ export class AreasTabComponent extends BaseComponent implements OnDestroy {
 
         items.forEach(item => {
             this.ItemsSource.push(new AreaItemClass(item, this, false));
-        });
-
-        //this.SetIsNoDataVisible();
+        });               
     }
-
+    
     AddAirlineAreaClicked() {
         var item = new AirlineAreaPM();
         item.Tenant = this.EntityPM.Tenant;
@@ -101,7 +97,9 @@ export class AreasTabComponent extends BaseComponent implements OnDestroy {
         item.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
         item.CreatedByUserId = SessionInfo.LoggedUserId;
         item.UpdatedByUserId = SessionInfo.LoggedUserId;
-
+        item.CreatedByUserName = SessionInfo.LoggedUserPM.EnglishName;
+        item.UpdatedByUserName = SessionInfo.LoggedUserPM.EnglishName;       
+        
         var itemComponent = new AreaItemClass(item, this, true);
         this.RunWindow(itemComponent, "New Area");        
     }
@@ -134,21 +132,80 @@ export class AreasTabComponent extends BaseComponent implements OnDestroy {
 
 }
 
-export class AreaItemClass {
+export class AreaItemClass extends BaseComponent {
     public ObjectTableName = "AirlineArea";
     public EntityPM: AirlineAreaPM;
     public IsNewEntity: boolean = false;
-
+    public PortItemsList: AirlineAreasPortPM[];
     constructor(item: AirlineAreaPM, public fatherComponent: AreasTabComponent, isNewEntity: boolean) {
-        this.EntityPM = item;
+        super();
+        this.EntityPM = item;        
         this.IsNewEntity = isNewEntity;
+
+        this.SetUIProperties();
+        this.BuildPortItemsList();
     }
 
-    get Id() { return this.EntityPM.Id; }
-    get Name() { return this.EntityPM.Name; }
-    get Description() { return this.EntityPM.Description; }
+    public SetUIProperties() {
+        this.UIProperties.SetRequired("Name", this.ObjectTableName, AppTool.IsNullOrEmpty(this.Name));
+    }
+
+    public BuildPortItemsList() {
+        this.PortItemsList = [];
+        this.PortItemsList = this.EntityPM.AirlineAreasPorts;
+        this.PortItemsList = this.PortItemsList.sort((a, b) => { return (a.CountryCode === b.CountryCode) ? 0 : (a.CountryCode < b.CountryCode) ? -1 : 1 });
+    }
+
+    public get Name() { return this.EntityPM.Name; }
+    public set Name(value: string) {
+        if (this.EntityPM.Name != value) {
+            this.EntityPM.Name = value;
+
+            this.SetUIProperties();
+        }
+    }
+
+    public get Description() { return this.EntityPM.Description; }
+    public set Description(value: string) {
+        if (this.EntityPM.Description != value) {
+            this.EntityPM.Description = value;
+        }
+    }
+
+    get Id() { return this.EntityPM.Id; }    
     get CreatedByUserName() { return this.EntityPM.CreatedByUserName; }
     get CreateDate() { return this.EntityPM.CreateDate; }
     get UpdatedByUserName() { return this.EntityPM.UpdatedByUserName; }
-    get UpdateDate() { return this.EntityPM.UpdateDate; }    
+    get UpdateDate() { return this.EntityPM.UpdateDate; }
+
+    ChoosePort() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 320;
+        logWindow.Height = 170;        
+        logWindow.DataContext = this;
+        logWindow.Title = "Choose Ports";
+        logWindow.Show('./CommonModules/CommonAirline/Components/AddEdit/ChoosePortComponent');
+    }
+
+    ChooseCountry() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 320;
+        logWindow.Height = 170;
+        logWindow.DataContext = this;
+        logWindow.Title = "Choose Country Ports";
+        logWindow.Show('./CommonModules/CommonAirline/Components/AddEdit/ChooseCountryPortComponent');
+    }
+
+    DeletePort(item: AirlineAreasPortPM) {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Show("Delete this item ?");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                if (this.EntityPM.AirlineAreasPorts.indexOf(item) != -1) {
+                    this.EntityPM.RemoveAirlineAreasPortPM(item);
+                    this.BuildPortItemsList();
+                }                
+            }
+        });        
+    }
 }

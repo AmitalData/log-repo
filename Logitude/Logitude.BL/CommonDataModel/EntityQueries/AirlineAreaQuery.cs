@@ -61,9 +61,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return myResult;
         }
         
-        internal List<AirlineAreaPM> GetAirlineAreasPMsByAirlineId(string airlineId, int tenant)
+        public List<AirlineAreaPM> GetAirlineAreasPMsByAirlineId(string airlineId, int tenant)
         {
-
             IQueryable<AirlineArea> iQueryable = (from a in repository.context.AirlineAreas.Include("User").Include("User.Contact")
                                                   where a.AirlineId == airlineId && a.Tenant == tenant
                                                          select a);
@@ -72,7 +71,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             foreach (AirlineAreaPM item in airlineAreas)
             {
-                IQueryable<AirlineAreasPort> iQueryableChilds = (from a in repository.context.AirlineAreasPorts
+                IQueryable<AirlineAreasPort> iQueryableChilds = (from a in repository.context.AirlineAreasPorts.Include("Port").Include("Port.Country")
                                                                    where a.AirlineAreaId == item.Id && a.Tenant == tenant
                                                                    select a);
 
@@ -80,9 +79,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             }
 
             return airlineAreas.OrderBy(d => d.CreateDate).ToList();
-
-
-
         }
 
         private List<AirlineAreaPM> MapPocoToPM(IQueryable<AirlineArea> iQueryable)
@@ -101,7 +97,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                        CreatedByUserId = a.CreatedByUserId,
                                                        CreatedByUserName = a.CreatedByUser == null ? null : a.CreatedByUser.Contact.EnglishName,
                                                        UpdatedByUserName = a.UpdatedByUser == null ? null : a.UpdatedByUser.Contact.EnglishName,
-
                                                    }).ToList();
             return myResult;
         }
@@ -118,7 +113,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 AddedByUserId = a.AddedByUserId,
                                                 AddedDate = a.AddedDate,
                                                 PortId = a.PortId,
-
+                                                Code = a.Port == null? null : a.Port.Code,
+                                                CountryCode = a.Port == null ? null : (a.Port.Country == null ? null : a.Port.Country.Code),
                                             }).ToList();
 
             return myResult;

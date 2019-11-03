@@ -21,9 +21,6 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 import {AirlinePM} from '../../EntityPMs/AirlinePM';
 
 import {CardExternalCodeByCurrencyPM} from '../../EntityPMs/CardExternalCodeByCurrencyPM';
-import {AirlineAreaPM} from '../../EntityPMs/AirlineAreaPM';
-
-import {AirlineAreasPortPM} from '../../EntityPMs/AirlineAreasPortPM';
 import {AirlinePMInitService} from '../../EntityPMInitServices/AirlinePMInitService';
 
 @Injectable()
@@ -218,7 +215,6 @@ export class AirlinePMService {
             }
 			
                this.MapCardExternalCodeByCurrencies(entityPM, jsonPM, mapParent); // Call composition tables map methods
-               this.MapAirlineAreas(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
@@ -232,22 +228,6 @@ export class AirlinePMService {
 						
 							 
             entityPM.OldEntityPM.CardExternalCodeByCurrencies.push(newCardExternalCodeByCurrencyPM);
-            }
-			   			   			   
-            entityPM.OldEntityPM.AirlineAreas = [];
-            for (var item in entityPM.AirlineAreas) {
-            var myAirlineAreaPM = entityPM.AirlineAreas[item];
-            var newAirlineAreaPM: AirlineAreaPM = this.clone(myAirlineAreaPM);
-						
-                newAirlineAreaPM.AirlineAreasPorts = [];
-                for (var k in myAirlineAreaPM.AirlineAreasPorts) {
-				    var myAirlineAreasPortPM =myAirlineAreaPM.AirlineAreasPorts[k];
-				    var newAirlineAreasPortPM=this.clone(myAirlineAreaPM.AirlineAreasPorts[k]);
-                    newAirlineAreaPM.AirlineAreasPorts.push(newAirlineAreasPortPM);
-
-					                 }
-							 
-            entityPM.OldEntityPM.AirlineAreas.push(newAirlineAreaPM);
             }
 			   
 		}
@@ -353,31 +333,6 @@ export class AirlinePMService {
         }
     }
 //file not found! for child composition CardExternalCodeByCurrency
-    MapAirlineAreas(entityPM: AirlinePM, jsonPM: any, mapParent: boolean = true) {
-
-        entityPM.AirlineAreas = new Array<AirlineAreaPM>();
-        for (var item in jsonPM.AirlineAreas) {
-
-            var jItem = jsonPM.AirlineAreas[item];
-            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
-                continue;
-            }
-            var newAirlineAreaPM: AirlineAreaPM;
-            newAirlineAreaPM = new AirlineAreaPM();
-				                
-            var pmKeysArray = Object.keys(jItem);
-            for (var pmKey in pmKeysArray) {
-			
-                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
-                    continue;
-                }
-                var pmProperty = pmKeysArray[pmKey];
-                newAirlineAreaPM[pmProperty] = jItem[pmProperty];
-            }
-            newAirlineAreaPM.IsDirty = false;
-            entityPM.AirlineAreas.push(newAirlineAreaPM);
-        }
-    }
 
 	  public clone(jsonPM: any) {
         var entityPM: any;

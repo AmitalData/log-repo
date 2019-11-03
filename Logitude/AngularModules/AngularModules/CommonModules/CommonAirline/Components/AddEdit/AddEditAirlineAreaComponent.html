@@ -1,5 +1,4 @@
-
-<table *ngIf="IsResourcesReady">
+<table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
             <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
@@ -15,13 +14,10 @@
                             <tr class="FormFieldRow">
                                 <td style="width: 70px;">
                                     <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-
                                 </td>
 
                                 <td style="width: 120px;">
-                                    <div style="width: 120px;">
-                                        <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                                    </div>
+                                    <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>                                    
                                 </td>
 
                                 <td>
@@ -74,7 +70,7 @@
                                                             <table>
                                                                 <tr>
                                                                     <td style="width: 80px;">
-                                                                        <button style="height:20px;" class="Button" (click)="ChooseCountry()">
+                                                                        <button style="height:20px;" class="Button" (click)="DataContext.ChooseCountry()">
                                                                             <img style="left:5px;" src="./Images/Buttons/Add.over.png" />
                                                                             Country Ports
                                                                         </button>
@@ -83,7 +79,7 @@
                                                                         <div></div>
                                                                     </td>
                                                                     <td style="width: 50px;">
-                                                                        <button style="height:20px;" class="Button" (click)="ChoosePort()">
+                                                                        <button style="height:20px;" class="Button" (click)="DataContext.ChoosePort()">
                                                                             <img style="left:5px;" src="./Images/Buttons/Add.over.png" />
                                                                             Port
                                                                         </button>
@@ -118,10 +114,9 @@
 
                                                         <div class="SimpleGridViewBody" style="overflow-y:auto">
                                                             <table>
-                                                                <tr class="SimpleGridViewRow RowHover RowSelected" *ngFor="let item of ItemList" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
+                                                                <tr class="SimpleGridViewRow RowHover RowSelected" *ngFor="let item of DataContext.PortItemsList" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
                                                                     <td class="GridViewCell" style="width:80px; min-width: 80px;max-width:80px">
                                                                         <div>{{item.Code}}</div>
-
                                                                     </td>
 
                                                                     <td class="GridViewCell" style="width:170px; min-width: 170px;max-width:170px">
@@ -134,8 +129,7 @@
 
                                                                     <td class="GridViewCell">
                                                                         <div>
-                                                                            <IconButton [IsSmall]="true"
-                                                                                        [Name]="'Delete'" (click)="DeletePort(item)"></IconButton>
+                                                                            <IconButton [IsSmall]="true" [Name]="'Delete'" (click)="DataContext.DeletePort(item)"></IconButton>
                                                                         </div>
                                                                     </td>
 
