@@ -24,21 +24,8 @@ namespace WebFreight.Web.Helpers.APIHelpers
             XmlSerializer serializer = new XmlSerializer(typeof(ConsolidationServiceArgs));
             ConsolidationServiceArgs args = serializer.Deserialize(stringReader) as ConsolidationServiceArgs;
 
-            if (args.Items.Count > 0)
-            {
-                foreach (ConsolidationServiceArgsItem item in args.Items)
-                {
-                    UpdateShipmentProfitClass.UpdateConstituentShipment(args.ConsolidationId, item.ConstituentId, args.Tenant);
-                }
-
-                List<string> allShipmentsIds = (from d in args.Items group d by d.ShipmentId into g select g.Key).ToList();
-
-                foreach (string iShipmentId in allShipmentsIds)
-                {
-                    UpdateShipmentProfitClass.UpdateShipmentARInvoices(iShipmentId, args.Tenant, args.ConsolidationNumber);
-                    UpdateShipmentProfitClass.UpdateProfit(iShipmentId, args.Tenant);
-                }
-            }
+            ConsolidationService iConsolidationService = new ConsolidationService();
+            iConsolidationService.RunBatchService(args);
         }
 
     }

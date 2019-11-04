@@ -30,7 +30,11 @@ import {RankListService} from '../../../../Common/Services/StandardLists/RankLis
 import {FormatTool, DateTool} from '../../../../Infrastructure/Tools';
 import {LastFilterClass} from '../../../../Infrastructure/Utilities/LastFilterClass';
 import {ServiceHelper} from '../../../../Infrastructure/Utilities/ServiceHelper';
-import {AppTool} from '../../../../Infrastructure/Tools';
+import { AppTool } from '../../../../Infrastructure/Tools';
+import { NumbersPipe } from '../../../../Infrastructure/Pipes/NumbersPipe';
+
+
+
 declare var UploadLogoFile, HideImage, SetImage, ArrayBufferToBase64, makeAMLineChart,window: any;  
 
 @Component({
@@ -57,8 +61,11 @@ export class CustomerOverviewTabComponent extends BaseComponent implements OnIni
     public DataContext: CustomerOverviewTabComponent = this;
     public TenantPM: TenantPM;
     private CurrentSession = SessionLocator.SelectedSession;
+    private NumbersPipe: NumbersPipe;
+    
     constructor(public entityArgs: EntityArgs, public _imageLibraryService: ImageLibraryService) {
         super();
+        this.NumbersPipe= new NumbersPipe();
         this.EntityPM = entityArgs.EntityPM;
         this.ImageId = this.EntityPM.ImageDetailId;
         this.EntityId = this.EntityPM.Id;
@@ -579,13 +586,13 @@ export class CustomerOverviewTabComponent extends BaseComponent implements OnIni
 
         this.lineChartLabels = [];
         data.getAll().forEach(element => {
-            this.lineChartData[0].data[index] = element.YField + "";
+            this.lineChartData[0].data[index] = this.NumbersPipe.transform( element.YField, "N2") + "";
             this.lineChartLabels.push(element.XField);
             index++;
 
             this.AmLineChartTest.push({
                 date: element.XField,
-                visits: element.YField + ""
+                visits: this.NumbersPipe.transform(element.YField, "N2") + ""
             });
         });
     }
