@@ -124,6 +124,7 @@
     <Compile Include="EntityKeys\DecCargoSplitConsItemKeys.cs" />
     <Compile Include="EntityKeys\DecCargoSplitConKeys.cs" />
     <Compile Include="EntityKeys\DecCargoSplitConsPackDetKeys.cs" />
+    <Compile Include="EntityKeys\DecDangersContactsKeys.cs" />
     <Compile Include="EntityKeys\DecisionTypeKeys.cs" />
     <Compile Include="EntityKeys\DeclarationCargoSplitKeys.cs" />
     <Compile Include="EntityKeys\DeclarationConsAcceptanceKeys.cs" />
@@ -181,6 +182,7 @@
     <Compile Include="EntityListQueryServices\DecCargoSplitConListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DecCargoSplitConsItemListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DecCargoSplitConsPackDetListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\DecDangersContactsListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DecisionTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeclarationCargoSplitListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeclarationConsAcceptanceListQueryService.cs" />
@@ -219,6 +221,7 @@
     <Compile Include="EntityListQueryServices\Generated\DecCargoSplitConListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DecCargoSplitConsItemListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DecCargoSplitConsPackDetListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\DecDangersContactsListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DecisionTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeclarationCargoSplitListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeclarationConsAcceptanceListQueryService.Generated.cs" />
@@ -295,6 +298,7 @@
     <Compile Include="EntityLists\Generated\DecCargoSplitConList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DecCargoSplitConsItemList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DecCargoSplitConsPackDetList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\DecDangersContactsList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DecisionTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeclarationCargoSplitList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeclarationConsAcceptanceList.Generated.cs" />
@@ -353,6 +357,7 @@
     <Compile Include="EntityMapping\DecCargoSplitConMap.cs" />
     <Compile Include="EntityMapping\DecCargoSplitConsItemMap.cs" />
     <Compile Include="EntityMapping\DecCargoSplitConsPackDetMap.cs" />
+    <Compile Include="EntityMapping\DecDangersContactsMap.cs" />
     <Compile Include="EntityMapping\DecisionTypeMap.cs" />
     <Compile Include="EntityMapping\DeclarationCargoSplitMap.cs" />
     <Compile Include="EntityMapping\DeclarationConsAcceptanceMap.cs" />
@@ -410,6 +415,7 @@
     <Compile Include="EntityPOCOs\DecCargoSplitCon.cs" />
     <Compile Include="EntityPOCOs\DecCargoSplitConsItem.cs" />
     <Compile Include="EntityPOCOs\DecCargoSplitConsPackDet.cs" />
+    <Compile Include="EntityPOCOs\DecDangersContacts.cs" />
     <Compile Include="EntityPOCOs\DecisionType.cs" />
     <Compile Include="EntityPOCOs\DeclarationCargoSplit.cs" />
     <Compile Include="EntityPOCOs\DeclarationConsAcceptance.cs" />
@@ -468,6 +474,7 @@
     <Compile Include="Repsitories\DecCargoSplitConRepository.cs" />
     <Compile Include="Repsitories\DecCargoSplitConsItemRepository.cs" />
     <Compile Include="Repsitories\DecCargoSplitConsPackDetRepository.cs" />
+    <Compile Include="Repsitories\DecDangersContactsRepository.cs" />
     <Compile Include="Repsitories\DecisionTypeRepository.cs" />
     <Compile Include="Repsitories\DeclarationCargoSplitRepository.cs" />
     <Compile Include="Repsitories\DeclarationConsAcceptanceRepository.cs" />
@@ -506,6 +513,7 @@
     <Compile Include="Repsitories\Generated\DecCargoSplitConRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DecCargoSplitConsItemRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DecCargoSplitConsPackDetRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\DecDangersContactsRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DecisionTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeclarationCargoSplitRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeclarationConsAcceptanceRepository.Generated.cs" />

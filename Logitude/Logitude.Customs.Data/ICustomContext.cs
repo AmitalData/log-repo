@@ -142,6 +142,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<DecCargoSplitCon> DecCargoSplitCons { get; }
 		 IDbSet<DecCargoSplitConsItem> DecCargoSplitConsItems { get; }
 		 IDbSet<DecCargoSplitConsPackDet> DecCargoSplitConsPackDets { get; }
+		 IDbSet<DecDangersContact> DecDangersContacts { get; }
 		 IDbSet<DecisionType> DecisionTypes { get; }
 		 IDbSet<Declaration> Declarations { get; }
 		 IDbSet<DeclarationCargoSplit> DeclarationCargoSplits { get; }
