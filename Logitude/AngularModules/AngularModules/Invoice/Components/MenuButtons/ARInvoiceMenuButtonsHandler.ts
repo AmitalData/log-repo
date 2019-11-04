@@ -22,6 +22,7 @@ import { BatchTaskExecutionList } from '../../../Infrastructure/EntityLists/Batc
 import { BatchTaskExecutionListService } from '../../../Infrastructure/Services/StandardLists/BatchTaskExecutionListService';
 import { DocumentsFilingExtendedPMService } from '../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
 import { DownloadManager } from '../../../Infrastructure/Utilities/DownloadManager';
+import { ConsilidationInvoiceDomainService } from '../../Services/ConsilidationInvoiceDomainService';
 
 export class ARInvoiceMenuButtonsHandler {
     private CurrentSession = SessionLocator.SelectedSession;
@@ -492,41 +493,6 @@ export class ARInvoiceMenuButtonsHandler {
         });
     }
 
-    CheckBatchTaskExecution(BatchTaskExecutionId: string) {
-
-        var iBatchService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
-
-        iBatchService.getSingle(BatchTaskExecutionId).subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                var list: BatchTaskExecutionList = myResponse.Result;
-
-                if (list.StatusCode == "D") {
-                    this.CurrentSession.StopBusyIndicator();
-
-                    var window = new MessageWindow();
-                    window.Show("Shipments updated successfully");
-                }
-
-                else if (list.StatusCode == "F") {
-                    this.CurrentSession.StopBusyIndicator();
-
-                    var window = new MessageWindow();
-                    window.Show("There was an error updating shipments and saving the invoice. Please try again later");
-                }
-
-                else {
-                    this.CheckBatchTaskExecution(BatchTaskExecutionId);
-                }
-            }
-
-            else {
-                this.CurrentSession.StopBusyIndicator();
-                var window = new MessageWindow();
-                window.Show(myResponse.ErrorsArray[0]);
-            }
-        });
-    }
-
     SaveDraftClicked() {
         if (!FeatureLocator.HasEntityPermessions("ARInvoice", "UPDT", true)) {
             this.StopFlags();
@@ -659,14 +625,6 @@ export class ARInvoiceMenuButtonsHandler {
 
                 else {
                     this.ApplyApproveClicked();
-
-                    if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
-                        var notes = "Ayman.!!!TST45@";
-
-                        if (this.EntityPM.InternalNotes == notes && this.EntityPM.PrintNotes == notes) {
-                            this.ApplyApproveClicked();
-                        }
-                    }
                 }
             }
 
@@ -699,10 +657,13 @@ export class ARInvoiceMenuButtonsHandler {
         this.EntityPM.SetReSendQBO = false;
 
         if (this.EntityPM.IsConsolidationInvoice) {
-            this.isRunningBatchTaskExecution = true;
+            this.SaveConsolidation(msg);
+            //this.isRunningBatchTaskExecution = true;
         }
 
-        this.entityArgs.EditComponent.SaveChanges(msg);
+        else {
+            this.entityArgs.EditComponent.SaveChanges(msg);
+        }
     }
 
     CancelDraftClicked() {
@@ -848,10 +809,13 @@ export class ARInvoiceMenuButtonsHandler {
                 this.EntityPM.SetReSendQBO = false;
 
                 if (this.EntityPM.IsConsolidationInvoice) {
-                    this.isRunningBatchTaskExecution = true;
+                    this.SaveConsolidation("Voiding...");
+                    //this.isRunningBatchTaskExecution = true;
                 }
 
-                this.entityArgs.EditComponent.SaveChanges("Voiding...");
+                else {
+                    this.entityArgs.EditComponent.SaveChanges("Voiding...");
+                }
             }
         });
     }
@@ -953,6 +917,12 @@ export class ARInvoiceMenuButtonsHandler {
                         this.entityArgs.EditComponent.IsReloadNeeded = true;
                         this.entityArgs.EditComponent.ReloadEntityPM();
                     }
+
+                    else if (cmpRef.instance.NeedRefresh) {
+                        this.entityArgs.EditComponent.IsReloadNeeded = true;
+                        this.entityArgs.EditComponent.ReloadEntityPM();
+                    }
+
                     else {
                         this.StopFlags();
                     }
@@ -1180,5 +1150,75 @@ export class ARInvoiceMenuButtonsHandler {
         });
 
 
+    }
+
+    private savedConsolidationEntity;
+    SaveConsolidation(msg: string) {
+
+        this.entityArgs.EditComponent.StartBusyIndicator(msg);
+
+        var myService = new ConsilidationInvoiceDomainService();
+
+        myService.post(this.EntityPM).subscribe((response: ServiceResponse) => {
+
+            this.entityArgs.EditComponent.StopBusyIndicator();
+
+            if (response.HasError) {
+                this.entityArgs.EditComponent.ValidationErrorsList = response.ErrorsArray;
+            }
+
+            else {
+                this.savedConsolidationEntity = response.Result;
+                this.StopFlags();
+
+                if (response.Result['BatchTaskExecutionId']) {
+
+                    this.entityArgs.EditComponent.StartBusyIndicator("Updating Shipments...");
+
+                    this.CheckBatchTaskExecution(this.EntityPM.BatchTaskExecutionId);
+                }                
+            }
+        });
+    }
+    CheckBatchTaskExecution(BatchTaskExecutionId: string) {
+
+        var iBatchService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
+
+        iBatchService.getSingle(BatchTaskExecutionId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var list: BatchTaskExecutionList = myResponse.Result;
+
+                if (list.StatusCode == "D") {
+
+                    this.EntityPM = this.savedConsolidationEntity;
+
+                    this.entityArgs.EditComponent.EntityId = this.EntityPM.Id;
+                    this.entityArgs.EditComponent.EntityPM = this.EntityPM;
+                    this.entityArgs.EditComponent.NeedRefresh = true;
+                    this.entityArgs.EditComponent.StopBusyIndicator();
+                    this.entityArgs.EditComponent.ReloadEntityPM();
+
+                    var window = new MessageWindow();
+                    window.Show("Shipments updated successfully");
+                }
+
+                else if (list.StatusCode == "F") {
+                    this.entityArgs.EditComponent.StopBusyIndicator();
+
+                    var window = new MessageWindow();
+                    window.Show("There was an error updating shipments and saving the invoice. Please try again later");
+                }
+
+                else {
+                    this.CheckBatchTaskExecution(BatchTaskExecutionId);
+                }
+            }
+
+            else {
+                this.entityArgs.EditComponent.StopBusyIndicator();
+                var window = new MessageWindow();
+                window.Show(myResponse.ErrorsArray[0]);
+            }
+        });
     }
 }

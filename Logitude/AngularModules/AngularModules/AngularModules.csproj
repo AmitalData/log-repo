@@ -1947,6 +1947,7 @@
     <TypeScriptCompile Include="InvoiceModules\Transfer\ModuleTransfer.ts" />
     <TypeScriptCompile Include="Invoice\Components\AccountingTab\AccountingTab_AccountingPaymentMethod.ts" />
     <TypeScriptCompile Include="Invoice\Components\MenuButtons\ARInvoiceStockMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Invoice\Services\ConsilidationInvoiceDomainService.ts" />
     <TypeScriptCompile Include="Invoice\EntityLists\AccountingPaymentMethodList.ts" />
     <TypeScriptCompile Include="Invoice\EntityLists\APPaymentTransferStatusList.ts" />
     <TypeScriptCompile Include="Invoice\EntityLists\ARInvoiceStockList.ts" />
