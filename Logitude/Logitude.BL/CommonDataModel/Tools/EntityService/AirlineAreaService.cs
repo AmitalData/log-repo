@@ -53,13 +53,16 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
             this.isNewEntity = true;
             this.entityPM = entityPM;
-
-            InitializeComponent();
             
             this.entityPM.Id = IdCounter.GetNumber("AirlineArea", tenant).ToString();
             this.Poco = new AirlineArea();
             this.Poco.Id = this.entityPM.Id;
-            
+
+            foreach (AirlineAreasPortPM item in entityPM.AirlineAreasPorts)
+            {
+                this.CreateAirlineAreasPort(item);
+            }
+
             AirlineAreaTracing.Trace(entityPM, Poco, isNewEntity);
             AirlineAreaMapping.MapEntity(entityPM, Poco, isNewEntity);
 
@@ -72,9 +75,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.isNewEntity = false;
             this.entityPM = entityPM;
             this.Poco = entityRepository.GetSingleAirlineArea(entityPM.Id, entityPM.Tenant);
-
-            InitializeComponent();
-
+            
             if (mapComposition)
             {
                 this.SetChangeSet(this.entityPM.AirlineAreasPorts);
@@ -88,23 +89,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
         }
-
-        private void InitializeComponent()
-        {
-            
-        }
-
+        
         private void UpdateAirlineAreasPortCollection()
         {
             if (airlineAreasPortChangeSet != null)
             {
                 foreach (AirlineAreasPortPM itemPM in airlineAreasPortChangeSet)
                 {
-                    //if (string.IsNullOrEmpty(itemPM.AirlineAreaId))
-                    //{
-                    //    itemPM.AirlineAreaId = entityPM.Id;
-                    //}
-
                     switch (itemPM.ChangeSetOp)
                     {
                         case ChangeSetOperation.Insert:
@@ -133,7 +124,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private void CreateAirlineAreasPort(AirlineAreasPortPM itemPM)
         {
             itemPM.Id = IdCounter.GetNumber("AirlineAreasPort", tenant).ToString();
-            itemPM.AirlineAreaId = itemPM.AirlineAreaId;
+            itemPM.AirlineAreaId = this.entityPM.Id;
             itemPM.Tenant = tenant;
             itemPM.AddedByUserId = loggedContact.Id;
 

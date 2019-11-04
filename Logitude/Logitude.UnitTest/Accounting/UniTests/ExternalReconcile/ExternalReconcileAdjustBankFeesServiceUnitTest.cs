@@ -47,7 +47,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.ExternalReconcile
             myExternalReconcileAdjustBankFeesService.MustInit(fakeExternalReconcileDataProvider);
             var reconcileExternalPageLineIdList = reconcileExternalPageLineLists.Select(r => r.Id).ToList();
             
-            myExternalReconcileAdjustBankFeesService.CreateJournalWithExtReconcile(_Tenant, reconcileExternalPageLineIdList, _AdjustGLAccountId, _screenNotes);
+            myExternalReconcileAdjustBankFeesService.CreateJournalWithExtReconcile(_Tenant, reconcileExternalPageLineIdList, _AdjustGLAccountId, _screenNotes,new DateTime(2019,1,4));
 
             string myNewLedgerTransactionId = "myNewLedgerTransactionId";
             var newJournal = myExternalReconcileAdjustBankFeesService.TheNewJournal;
@@ -104,7 +104,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.ExternalReconcile
             myExternalReconcileAdjustBankFeesService.MustInit(fakeExternalReconcileDataProvider);
             var reconcileExternalPageLineIdList = reconcileExternalPageLineLists.Select(r => r.Id).ToList();
             
-            myExternalReconcileAdjustBankFeesService.CreateJournalWithExtReconcile(_Tenant, reconcileExternalPageLineIdList, _AdjustGLAccountId, _screenNotes);
+            myExternalReconcileAdjustBankFeesService.CreateJournalWithExtReconcile(_Tenant, reconcileExternalPageLineIdList, _AdjustGLAccountId, _screenNotes, new DateTime(2019, 1, 4));
 
 
 
@@ -256,7 +256,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.ExternalReconcile
                 new ReconcileExternalPageList()
                 {
                       Tenant= _Tenant,
-                       BankAccountId =_BankAccountId,
+                       //BankAccountId =_BankAccountId,
                         GLAccountId= _GLAccountId
                 }
             };

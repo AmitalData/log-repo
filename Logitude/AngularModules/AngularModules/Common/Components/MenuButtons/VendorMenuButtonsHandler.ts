@@ -74,7 +74,7 @@ export class VendorMenuButtonsHandler {
     private DisconnectGLAccount() {
         this.CurrentSession.StartBusyIndicator("Loading...");
 
-        this.cardExtendedPMService.DisconnectGLAccountFromCard(this.EntityPM.Id, "VD", "DIST").subscribe((myResponse: ServiceResponse) => {
+        this.cardExtendedPMService.DisconnectGLAccountFromCard(this.EntityPM.Id, "VD", "VDDS").subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                 this.CurrentSession.StopBusyIndicator();

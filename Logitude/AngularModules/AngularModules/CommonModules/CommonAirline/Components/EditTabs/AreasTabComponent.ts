@@ -114,7 +114,9 @@ export class AreasTabComponent extends BaseComponent implements OnDestroy {
             window.Show("Are you sure you want to delete this area?");
             window.WindowClosed.subscribe((event: any) => {
                 if (window.Yes) {
-                    //this.EntityPM.RemoveAirlineAreaPM(EditedEntity);
+                    this.DomainService.RemoveAreaFromAirline(EditedEntity.Id).subscribe((myResult: any) => {
+                        this.LoadData();
+                    });
                 }
             });
             
