@@ -2522,6 +2522,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LineCreditAccountTypeCode",
+					  						OldFieldName =  "LineCreditAccountTypeCode",
 					  						ObjectTableName =  "Journal",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2541,6 +2542,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "LineCreditAccountTypeCode",
 					  						ListPropertyPath =  "LineCreditAccountTypeCode",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

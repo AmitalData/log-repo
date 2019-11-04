@@ -23,14 +23,14 @@ export class CardExtendedPMService {
     }
 
 
-    DisconnectGLAccountFromCard(id: string, partnerTypeId:string) {
+    DisconnectGLAccountFromCard(id: string, partnerTypeId: string, eventTypeCode:string) {
 
 
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetDisconnectGLAccountFromCard?' + 'id=' + id + '&partnerTypeId=' + partnerTypeId, {
+            return this._http.get(this._apiUrl + '/GetDisconnectGLAccountFromCard?' + 'id=' + id + '&partnerTypeId=' + partnerTypeId + '&eventTypeCode=' + eventTypeCode, {
                 headers: authHeader
             }).map(response => {
                 var result = response.json();

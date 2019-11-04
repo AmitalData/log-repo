@@ -24,9 +24,26 @@ export class AgentMenuButtonsHandler {
                 menuButtons.forEach(menuButton => {
                     switch (menuButton.EventCode) {
                         case "Disconnect": {
-                          
-                                menuButton.IsDisabled = false;
+                            
+                                if (this.EntityPM.GLAccountId) {
+                                    menuButton.IsDisabled = false;
+                                }
+                                else {
+                                    menuButton.IsDisabled = true;
+                                }
+                            
                            
+                           
+                           
+                            break;
+                        }
+                        case "More": {
+                            if (!SessionLocator.TenantPM.AccountingActivated) {
+                                menuButton.IsHidden = true;
+                            }
+                            else {
+                                menuButton.IsHidden = false;
+                            }
                             break;
                         }
                        
@@ -56,11 +73,15 @@ export class AgentMenuButtonsHandler {
 
    
     private  DisconnectGLAccount() {
-
-        this.cardExtendedPMService.DisconnectGLAccountFromCard(this.EntityPM.Id, this.EntityPM.PartnerTypeId).subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError)
-            {
-
+        this.CurrentSession.StartBusyIndicator("Loading...");
+        this.cardExtendedPMService.DisconnectGLAccountFromCard(this.EntityPM.Id, this.EntityPM.PartnerTypeId,"DIST").subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                this.CurrentSession.StopBusyIndicator();
+            }
+            else {
+                this.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResponse.ErrorsArray;
             }
         });
 

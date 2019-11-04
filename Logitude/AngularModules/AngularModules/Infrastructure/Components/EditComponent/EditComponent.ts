@@ -59,6 +59,8 @@ export class EditComponent implements OnDestroy {
     public IsEditValid: boolean = true;
     public IsSaveBtnVisible: boolean = true;
     public IsSaveBtnDisable: boolean = false;
+    public NeedRefresh: boolean = false;
+
     EntityParentPM: any;
     ShowWindowsOverEditComponent: boolean = false;
 

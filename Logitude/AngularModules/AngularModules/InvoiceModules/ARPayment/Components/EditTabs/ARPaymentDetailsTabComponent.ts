@@ -1272,7 +1272,20 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
     set OpenAmount(value: number) {
         if (this.EntityPM.OpenAmount != value) {
             this.EntityPM.OpenAmount = AppTool.Round(value, 2);
+            this.ComputeOpenAmountInLocal();
+
         }
+    }
+
+    get OpenAmountInLocalCurrency() { return this.EntityPM.OpenAmountInLocalCurrency == null ? 0 : this.EntityPM.OpenAmountInLocalCurrency; }
+    set OpenAmountInLocalCurrency(value: number) {
+        if (this.EntityPM.OpenAmountInLocalCurrency != value) {
+            this.EntityPM.OpenAmountInLocalCurrency = AppTool.Round(value, 2);
+        }
+    }
+
+    ComputeOpenAmountInLocal() {
+        this.OpenAmountInLocalCurrency = this.OpenAmount * this.PaymentCurrencyExchangeRate;
     }
 
     get PrintNotes() { return this.EntityPM.PrintNotes; }

@@ -1751,7 +1751,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                     IsChecked = true,
                                     Width = 150,
                                     DataTypeCode = item.DataTypeCode,
-                                    Index = bITabularViewSettings.Columns.Max(a => a.Index) + 1,
+                                    Index = bITabularViewSettings.Columns.Count == 0 ? 0 : bITabularViewSettings.Columns.Max(a => a.Index) + 1,
                                 });
                             }
                         }
