@@ -69,7 +69,7 @@ export class ChoosePortComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
         
         if (errors.length == 0) {
-            var newPort: AirlineAreasPortPM = new AirlineAreasPortPM(this.ParentClass.fatherComponent.EntityPM);
+            var newPort: AirlineAreasPortPM = new AirlineAreasPortPM(this.ParentClass.EntityPM);
             newPort.Tenant = SessionLocator.Tenant;
             newPort.AirlineAreaId = this.ParentClass.EntityPM.Id;
             newPort.Name = this.Port.EnglishName;

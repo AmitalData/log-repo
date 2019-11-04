@@ -1742,6 +1742,24 @@ export class PartnersDomainService {
 
         return entityPM;
     }
+
+    RemoveAreaFromAirline(areaId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetRemoveAirlineAreaFromAirline?areaId=' + areaId;
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var done: string = response.json();
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = done;
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
 }
 export class AirlineMessagingRuleList {
     Id: string;

@@ -17,7 +17,7 @@
                                 </td>
 
                                 <td style="width: 120px;">
-                                    <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>                                    
+                                    <LogTextBox [ObjectFieldName]="'Name'" [Text]="DataContext.Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>                                    
                                 </td>
 
                                 <td>
@@ -35,7 +35,7 @@
                                 </td>
                                 <td style="width: 200px;">
                                     <div style="width: 200px;height:70px;">
-                                        <LogTextBox [ObjectFieldName]="'Description'" [IsMultiline]="true" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                        <LogTextBox [ObjectFieldName]="'Description'" [IsMultiline]="true" [Text]="DataContext.Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                     </div>
                                 </td>
                                 <td><div></div></td>

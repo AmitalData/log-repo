@@ -80,7 +80,9 @@ import {GLAccountSearchWindowComponent} from './Components/EditTabs/GLAccount/GL
 import {PaymentChequeGeneralTabComponent} from './Components/EditTabs/PaymentCheque/PaymentChequeGeneralTabComponent';
 import {CancelChequeComponent} from './Components/Others/CancelChequeComponent';
 import {DropdownButtonComponent} from './Components/Others/DropdownButtonComponent';
-import {JournalReconcileComponent} from './Components/Others/JournalReconcileComponent';
+import { JournalReconcileComponent } from './Components/Others/JournalReconcileComponent';
+import { ExtReconcileAdjustBankFeeComponent } from './Components/Others/ExtReconcileAdjustBankFeeComponent';
+
 import {ExternalReconcileComponent} from './Components/Others/ExternalReconcileComponent';
 import {AddEditTaxWithholdingLineComponent} from './Components/EditTabs/GLAccount/AddEditTaxWithholdingLineComponent';
 import {TaxReportDetailsTabComponent} from './Components/EditTabs/TaxReport/TaxReportDetailsTabComponent';
@@ -194,6 +196,7 @@ export const Components =
         CancelChequeComponent,
         DropdownButtonComponent,
         JournalReconcileComponent,
+        ExtReconcileAdjustBankFeeComponent,
         ExternalReconcileComponent,
         AddEditTaxWithholdingLineComponent,
         NewTaxReportComponent,
@@ -307,6 +310,7 @@ export class ModuleDeclarations {
             case "CancelChequeComponent": { myResult = CancelChequeComponent; break; }
             case "DropdownButtonComponent": { myResult = DropdownButtonComponent; break; }
             case "JournalReconcileComponent": { myResult = JournalReconcileComponent; break; }
+            case "ExtReconcileAdjustBankFeeComponent": { myResult = ExtReconcileAdjustBankFeeComponent; break; }
             case "ExternalReconcileComponent": { myResult = ExternalReconcileComponent; break; }
             case "AddEditTaxWithholdingLineComponent": { myResult = AddEditTaxWithholdingLineComponent; break; }
             case "AccountingFlatFileDownloadComponent": { myResult = AccountingFlatFileDownloadComponent; break; }
