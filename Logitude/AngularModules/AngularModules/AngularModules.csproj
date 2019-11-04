@@ -981,6 +981,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BIReportListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BIReportsTypeListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BluesnapContractTypeListService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BluesnapTransactionListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BusinessProcessQueueListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BusinessRoleListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\DWObjectFieldExtendedPMService.ts" />
