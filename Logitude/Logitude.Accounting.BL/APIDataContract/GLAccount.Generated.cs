@@ -168,7 +168,5 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
     public string CardCode { get; set; }
     
     public string PartnerTypeId { get; set; }
-    
-    public bool IsDisconnectedFromCard { get; set; }
     }
 } 
