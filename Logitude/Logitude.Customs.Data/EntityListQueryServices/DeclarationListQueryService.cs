@@ -418,7 +418,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      CargoDescription = myJoinConsignment != null ? myJoinConsignment.CargoDescription : null,
 
 
-
+                                                     IsPaymentProtested = a.IsPaymentProtested,
                                                  });
 
 

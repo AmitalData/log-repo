@@ -285,6 +285,8 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string CargoDescription  { get; set; }
        [DataMember]
+       public bool IsPaymentProtested  { get; set; }
+       [DataMember]
        public string FastIndividualProcessName  { get; set; }
    }
 
