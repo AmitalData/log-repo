@@ -13,12 +13,12 @@ namespace WebFreight.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            string source = "HealthProb";
+            string source = "ASP.NET 4.0.30319.0";
             string log = "Application";
-            if (!EventLog.SourceExists(source))
-            {
-                EventLog.CreateEventSource(source, log);
-            }
+            //if (!EventLog.SourceExists(source))
+            //{
+            //    EventLog.CreateEventSource(source, log);
+            //}
             try
             {
                 
