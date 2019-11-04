@@ -207,7 +207,7 @@
                                                 </td>
 
                                                 <td>
-                                                    <LogTextBox [ObjectFieldName]="'AmountInPaymentCurrency'"
+                                                    <LogTextBox [ObjectFieldName]="'AmountInPaymentCurrency'" [DigitsAfterPoint]="2"
                                                                 [InputType]="IsNegativeAmountEnabled ? 'sigdouble':'double'"
                                                                 [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
                                                     </LogTextBox>
@@ -499,7 +499,7 @@
 
                                             <tr class="customtrclass">
                                                 <td style="width:150px;">
-                                                    <LogTextBox [ObjectFieldName]="'AmountInPaymentCurrency'"
+                                                    <LogTextBox [ObjectFieldName]="'AmountInPaymentCurrency'" [DigitsAfterPoint]="2"
                                                                 [Text]="AmountInPaymentCurrency" [InputType]="'double'"
                                                                 [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
                                                     </LogTextBox>

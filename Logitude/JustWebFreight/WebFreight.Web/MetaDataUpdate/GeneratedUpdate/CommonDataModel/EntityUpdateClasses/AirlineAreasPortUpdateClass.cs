@@ -116,7 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "",
 			      				    DefaultText =  "Airline Areas Port",
-			      				    Code =  "6491",
+			      				    Code =  "8d51",
 			      				    Name =  "Airlines",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",

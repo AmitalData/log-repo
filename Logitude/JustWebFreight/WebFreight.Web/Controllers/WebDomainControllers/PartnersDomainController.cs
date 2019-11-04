@@ -2585,18 +2585,17 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 int tenant = authToken.Tenant;
                 string loggedUserEmail = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(tenant);
-                //PartnersDomainService domainService = new PartnersDomainService();
-                //List<AirlineAreaPM> myResult = domainService.GetCustomerProducts(airlineId, tenant);
-                return Request.CreateResponse(HttpStatusCode.OK, true);
+
+                AirlineAreaQuery airlineAreaQuery = new AirlineAreaQuery(tenant);
+                List<AirlineAreaPM> airlineAreas = airlineAreaQuery.GetAirlineAreasPMsByAirlineId(airlineId, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, airlineAreas);
             }
 
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-
-
-
         }
     }
 }

@@ -353,5 +353,8 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool IsInvoiceNumberFromStock { get; set; }
         public string DocumentFilingId { get; set; }
         public string BatchTaskExecutionId { get; set; }
+
+        public bool IsCreatingConsolidation { get; set; }
+        public bool IsFromConsolidationBatch { get; set; }
     }
 }

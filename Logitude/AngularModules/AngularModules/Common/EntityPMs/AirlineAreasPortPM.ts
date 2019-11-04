@@ -73,6 +73,16 @@ export class AirlineAreasPortPM {
     public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
        
 	 
+    private code: string;
+    public get Code() { return this.code; }
+    public set Code(newValue: string) { if (this.code != newValue) { this.code = newValue; this.MarkAsDirty("Code"); } }
+       
+	 
+    private countryCode: string;
+    public get CountryCode() { return this.countryCode; }
+    public set CountryCode(newValue: string) { if (this.countryCode != newValue) { this.countryCode = newValue; this.MarkAsDirty("CountryCode"); } }
+       
+	 
 
     public OldEntityPM: AirlineAreasPortPM;
 	    

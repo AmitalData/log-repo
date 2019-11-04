@@ -36,10 +36,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         {
             repository = airlineRepositoryRepository;
         }
-
-
-
-
+        
         public AirlinePM GetSinglePMByCode(string code, int tenant)
         {
             var airline = (from a in repository.context.Airlines.Include("Card")
@@ -346,14 +343,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         airline.IsExternal = true;
                     }
                 }
-
-                //AirlineAreaRepository airlineAreaRepository = new AirlineAreaRepository(repository.context);
-                //AirlineAreaQuery airlineAreaQuery = new AirlineAreaQuery(airlineAreaRepository);
-                //airline.AirlineAreas = airlineAreaQuery.GetAirlineAreasPMsByAirlineId(airline.Id, airline.Tenant);
-
             }
-
-
 
             AirlinePM securedPm = new AirlinePM();
             SecuredMapping.GetMappedPM(airline, securedPm, "Airline", tenant);
@@ -366,8 +356,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             bool addedManually = (from a in repository.context.Airlines
                                   where a.Tenant == tenant && a.Id == id
                                   select a.AddedManually).FirstOrDefault();
-
-
+            
             return addedManually;
         }
 
