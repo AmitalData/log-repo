@@ -247,7 +247,6 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
                     line.EntityReference = temp.MainEntityReference;
                     line.EntityId = temp.MainEntityId;
-                    ComputeOpenAmount(line);
                 }
 
                 return temp;
@@ -256,23 +255,6 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             catch (Exception ex)
             {
                 throw ex;
-            }
-        }
-
-        private void ComputeOpenAmount(APInvoiceLinePM invoiceLine)
-        {
-            if (invoiceLine.AmountTypeCode == "NEXP")
-            {
-                invoiceLine.OpenAmount = null;
-            }
-            else
-            {
-                var expect = invoiceLine.ExpectedAmount == null ? 0 : invoiceLine.ExpectedAmount;
-                var amount = invoiceLine.ForiegnCurrencyAmount == null ? 0 : invoiceLine.ForiegnCurrencyAmount;
-                var others = invoiceLine.OtherInvoicesAmounts == null ? 0 : invoiceLine.OtherInvoicesAmounts;
-                var corre = invoiceLine.CorrectionAmount == null ? 0 : invoiceLine.CorrectionAmount;
-                double? open = expect - others - amount - corre;
-                invoiceLine.OpenAmount = Math.Round(open.Value, 2);
             }
         }
 

@@ -718,7 +718,7 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 this.EntityPM.PaymentCurrencyExchangeRate = AppTool.Round(value, 5);
                 this.GetRateIsEnabled();
                 this.ComputeLocalAmount();
-
+                this.ComputeOpenAmountInLocal();
                 this.ItemsSource.Collection.forEach(item => {
                     item.InitExchangeRate();
                 });
@@ -1253,6 +1253,7 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
             this.EntityPM.AmountInPaymentCurrency = AppTool.Round(value, 2);
             this.ComputeLocalAmount();
             this.ComputeOpenAmount();
+            this.ComputeOpenAmountInLocal();
             this.UpdateSummary();
 
             this.ItemsSource.Collection.forEach(item => {
