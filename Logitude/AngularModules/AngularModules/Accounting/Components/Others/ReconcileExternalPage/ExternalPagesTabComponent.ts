@@ -632,6 +632,7 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
 
         var windowArgs: any = {};
         windowArgs.BankAccountPM = this.EntityPM;
+        windowArgs.EntityPM = this.EntityPM;
         windowArgs.openAmountCurrency = currency; // CurrencySign
         windowArgs.ObjectTableName = this.ObjectTableName;
 
