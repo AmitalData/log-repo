@@ -340,7 +340,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 // saving report
                 taxReport.ChangeSetOp = ChangeSetOperation.Update;
                
-                updateService.Update(taxReport, true);
+                updateService.Update(taxReport, true, TimeSpan.FromMinutes(60));
 
                // saving lines
                 int count = 0;
@@ -351,7 +351,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     linePM.ChangeSetOp = ChangeSetOperation.Insert;
                     linePM.UpdatedByUserId = taxReport.UpdatedByUserId;
                     
-                    lineUpdateService.Update(linePM, true);//the problem is here it loops on more than 3000  lines and updates them one by one ,each update will have to get single tenant and get single currency along with multible db gets which make the db to time out for the opened transaction
+                    lineUpdateService.Update(linePM, true,TimeSpan.FromMinutes(60));//the problem is here it loops on more than 3000  lines and updates them one by one ,each update will have to get single tenant and get single currency along with multible db gets which make the db to time out for the opened transaction
                 }
 
 
