@@ -12,11 +12,9 @@
                             <table>
                                 <tr>
                                     <td style="width:100px">
-                                        <button class="Button" (click)="AddEditAirlineAreaClicked()">New Area</button>
+                                        <button class="Button" (click)="AddAirlineAreaClicked()">New Area</button>
                                     </td>
-                                    <td>
-
-                                    </td>
+                                    <td></td>
                                 </tr>
                             </table>
                         </td>
@@ -47,9 +45,13 @@
 
                                             <div class="SimpleGridViewBody">
                                                 <table>
-                                                    <tr class="SimpleGridViewRow RowHover" *ngFor="let item of EntityPM.AirlineAreas" >
-                                                        <td class="GridViewCell" style="width: 150px;"><div class="TextTrimming" style="width: 150px;">{{item.Name}}</div></td>
-                                                        <td class="GridViewCell" style="width: 170px;"><div class="TextTrimming" style="width: 170px;">{{item.Description}}</div></td>
+                                                    <tr class="SimpleGridViewRow RowHover" *ngFor="let item of ItemsSource">
+                                                        <td class="GridViewCell" style="width: 150px;">
+                                                            <div class="TextTrimming" style="width: 150px;">{{item.Name}}</div>
+                                                        </td>
+                                                        <td class="GridViewCell" style="width: 170px;">
+                                                            <div class="TextTrimming" style="width: 170px;">{{item.Description}}</div>
+                                                        </td>
                                                         <td class="GridViewCell" style="width: 150px;">{{item.CreatedByUserName}}</td>
                                                         <td class="GridViewCell" style="width: 150px;">{{item.CreateDate | DateTimePipe:'SD'}}</td>
                                                         <td class="GridViewCell" style="width: 150px;">{{item.UpdatedByUserName}}</td>
@@ -59,38 +61,40 @@
                                                                 <tr>
                                                                     <td style="width:5px"></td>
                                                                     <td style="width:20px">
-                                                                        <IconButton (click)="AddEditAirlineAreaClicked(item)" [IsSmall]="true"
+                                                                        <IconButton (click)="EditAirlineAreaClicked(item)" [IsSmall]="true"
                                                                                     [Name]="'Edit'"></IconButton>
                                                                     </td>
                                                                     <td style="width:20px">
                                                                         <IconButton (click)="DeleteAirlineAreaClicked(item)" [IsSmall]="true"
                                                                                     [Name]="'Delete'"></IconButton>
                                                                     </td>
-                                                                    <td><div></div></td>
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
                                                                 </tr>
                                                             </table>
-                                                           
+
                                                         </td>
 
                                                     </tr>
                                                 </table>
                                             </div>
                                         </div>
-                                    </td>                                    
+                                    </td>
                                 </tr>
                             </table>
-                           
-                            
-                                 </td>
-                            </tr>
-                       </table>
-                 </td>
-            </tr>
-        <tr>
-            <td>
-<div></div>
+
+
+                        </td>
+                    </tr>
+                </table>
             </td>
         </tr>
-        </table>
+        <tr>
+            <td>
+                <div></div>
+            </td>
+        </tr>
+    </table>
 
-    </div>
+</div>

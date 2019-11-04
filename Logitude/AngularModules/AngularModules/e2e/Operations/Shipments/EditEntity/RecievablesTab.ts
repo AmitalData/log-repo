@@ -83,10 +83,10 @@ export class ReceivablesTabComponent {
        
         this.Helper.WaitByIdAndClick('Ok-CreateARInvoice');
 
-        this.Helper.WaitBusyIndicator();
+        this.WaitBusyIndicatorToShowandHide();
     }
     EditAPInvoice(Voided :boolean){
-        this.Helper.WaitBusyIndicator();
+        this.WaitBusyIndicatorToShowandHide();
         this.Helper.WaitByIdAndClick('ARInvoice.B.SaveAsDraft');
         this.WaitBusyIndicatorToShowandHide();
         this.Helper.WaitByIdAndClick('ARInvoice.B.Approve');

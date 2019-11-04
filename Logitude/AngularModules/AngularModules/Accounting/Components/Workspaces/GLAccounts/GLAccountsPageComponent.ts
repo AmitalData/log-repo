@@ -53,14 +53,23 @@ export class GLAccountsPageComponent implements AfterViewInit {
         this.CurrentSession.StartBusyIndicatorLoading();
         this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) =>
         {
-            this._entityResourceService.getEntityResourceByTableName("Journal").subscribe((response: any) =>{
-                this._entityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe((response: any) =>{
-                    this._entityResourceService.getEntityResourceByTableName("BankAccount").subscribe((response: any) =>{
-                        this._entityResourceService.getEntityResourceByTableName("ReconcileExternalPage").subscribe((response: any) =>{
-                            this._entityResourceService.getEntityResourceByTableName("ReconcileExternalPageLine").subscribe((response: any) =>{
-                                this._entityResourceService.getEntityResourceByTableName("Reconciliation").subscribe((response: any) =>{
-                                    this.isScreenLoaded = true;
-                                    this.CurrentSession.StopBusyIndicator();
+            this._entityResourceService.getEntityResourceByTableName("Journal").subscribe((response: any) =>
+            {
+                this._entityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe((response: any) =>
+                {
+                    this._entityResourceService.getEntityResourceByTableName("BankAccount").subscribe((response: any) =>
+                    {
+                        this._entityResourceService.getEntityResourceByTableName("ReconcileExternalPage").subscribe((response: any) =>
+                        {
+                            this._entityResourceService.getEntityResourceByTableName("ReconcileExternalPageLine").subscribe((response: any) =>
+                            {
+                                this._entityResourceService.getEntityResourceByTableName("Reconciliation").subscribe((response: any) =>
+                                {
+                                    this._entityResourceService.getEntityResourceByTableName("ExternalReconciliation").subscribe((response: any) =>
+                                    {
+                                        this.isScreenLoaded = true;
+                                        this.CurrentSession.StopBusyIndicator();
+                                    });
                                 });
                             });
                         });

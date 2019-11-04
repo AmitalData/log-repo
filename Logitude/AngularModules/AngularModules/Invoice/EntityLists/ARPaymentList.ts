@@ -49,6 +49,7 @@ export class ARPaymentList {
 		ARAccountName: string;
 		CreditAccountName: string;
 		OpenAmount: number;
+		OpenAmountInLocalCurrency: number;
 		ChequeOrPaymentRef: string;
 		Bank: string;
 		BankBranch: string;

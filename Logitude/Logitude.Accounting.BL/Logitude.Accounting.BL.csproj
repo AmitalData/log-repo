@@ -102,6 +102,7 @@
     <Compile Include="APIDataContract\Category5.Generated.cs" />
     <Compile Include="APIDataContract\ChartOfAccount.Generated.cs" />
     <Compile Include="APIDataContract\ChartOfAccountsType.Generated.cs" />
+    <Compile Include="APIDataContract\GLAccount.cs" />
     <Compile Include="APIDataContract\GLAccount.Generated.cs" />
     <Compile Include="APIDataContract\GLAccountType.Generated.cs" />
     <Compile Include="APIDataContract\Journal.Generated.cs" />
@@ -200,6 +201,8 @@
     <Compile Include="CoreBL\BuildTenant\DummyTenantProvider.cs" />
     <Compile Include="CoreBL\BuildTenant\FullAccountingProvider.cs" />
     <Compile Include="CoreBL\BuildTenant\IFullAccountingGenerator.cs" />
+    <Compile Include="CoreBL\ExternalReconcile\CreateAutoExternalReconcileMoveBankCheckFromTransferService.cs" />
+    <Compile Include="CoreBL\ExternalReconcile\CreateAutoExternalReconcileWhileStreamingFeesService.cs" />
     <Compile Include="CoreBL\ExternalReconcile\ExternalReconcileAdjustBankFeesService.cs" />
     <Compile Include="CoreBL\ExternalReconcile\TransferTransactionsExternalReconciliationService.cs" />
     <Compile Include="CoreBL\GLAccountCounterService.cs" />

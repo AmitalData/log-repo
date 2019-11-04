@@ -38,6 +38,7 @@ using Simplog.Data.CommonDataModel;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.Accounting.Data.Repositories;
 using Simplog.Data.ShipmentsModel;
+using Logitude.BL.InfrastructureModel.EntityQueries;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -287,7 +288,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             List<APInvoiceLinePM> invoiceLines = entityPM.InvoiceLines.ToList();
             Shipment shipment = shipmentRepository.GetSingleShipment(entityPM.MainEntityId, tenant);
-            List<ShipmentPayable> payables = shipmentPayableRepository.GetShipemntPayablesByShipmentId(shipment.Id, tenant).Where(a => a.ShipmentPayableLineStatusCode != "ACCT" && a.ShipmentPayableLineStatusCode != "OAMT" && a.ShipmentPayableAmountTypeCode != "ACCU").ToList();
+            List<ShipmentPayable> payables = shipmentPayableRepository.GetShipemntPayablesByShipmentId(shipment.Id, tenant).ToList();
+          
+            if(shipment.ShipmentLevelCode == "H")
+            {
+                payables = payables.Where(a => a.ShipmentPayableLineStatusCode != "ACCT" && a.ShipmentPayableLineStatusCode != "OAMT" && a.ShipmentPayableAmountTypeCode != "ACCU").ToList();
+            }
+            else
+            {
+                payables = payables.Where(a => a.ShipmentPayableLineStatusCode != "ACCT").ToList();
+            }
 
             foreach (APInvoiceLinePM line in invoiceLines)
             {
@@ -317,11 +327,45 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 ShipmentPayable shipmentPayableLine = shipmentPayable.FirstOrDefault();
                 // connect payable line to invoice line
                 aPInvoiceLine.EntityPayableId = shipmentPayableLine.Id;
+                this.ComputeOpenAmount(aPInvoiceLine, shipmentPayableLine);
             }
             else
             {
                 this.UnexpectedPayablesInvoiceLines.Add(aPInvoiceLine);
             }
+        }
+
+        private void ComputeOpenAmount(APInvoiceLinePM invoiceLine, ShipmentPayable shipmentPayableLine)
+        {
+            if (invoiceLine.AmountTypeCode == "NEXP")
+            {
+                invoiceLine.OpenAmount = null;
+            }
+            else
+            {
+                var expect = shipmentPayableLine.ExpectedAmount == null ? 0 : shipmentPayableLine.ExpectedAmount;
+                var amount = invoiceLine.InvoiceCurrencyAmount == null ? 0 : invoiceLine.InvoiceCurrencyAmount;
+                var others = invoiceLine.OtherInvoicesAmounts == null ? 0 : invoiceLine.OtherInvoicesAmounts;
+                var corre = invoiceLine.CorrectionAmount == null ? 0 : invoiceLine.CorrectionAmount;
+                double? open = expect - others - amount - corre;
+                invoiceLine.OpenAmount = Math.Round(open.Value, 2);
+            }
+        }
+
+        private LastRate GetCurrencysExchangeRate(int tenant, string localCurrencyId, string foriegnCurrencyId, DateTime rateDate)
+        {
+            LastRate result = null;
+
+            RatesTableQuery ratesTableQuery = new RatesTableQuery(tenant);
+            CurrencyRepository currencyRepository = new CurrencyRepository(tenant);
+
+            LastRate lastRate = ratesTableQuery.GetLastRecordByValueDate(tenant, foriegnCurrencyId, localCurrencyId, rateDate);
+            if (lastRate != null)
+            {
+                result = lastRate;
+            }
+
+            return result;
         }
 
         private void VoidAPInvoiceInFullAccounting(APInvoicePM entityPM, bool setVoided)
