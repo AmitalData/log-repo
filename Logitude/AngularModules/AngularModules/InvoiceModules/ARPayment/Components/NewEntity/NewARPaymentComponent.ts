@@ -721,6 +721,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
                 this.SetUIProperties();
                 this.SetCurrencyCode();
                 this.SetCurrencyRateData();
+                this.ComputeTotals();
             }
         }
     }
@@ -730,6 +731,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         if (this.IsCreatedFromInvoiceSide == false) {
             if (this.newARPaymentPM.PaymentCurrencyExchangeRate != newValue) {
                 this.newARPaymentPM.PaymentCurrencyExchangeRate = AppTool.Round(newValue, 5);
+                this.ComputeTotals();
             }
         }
     }
