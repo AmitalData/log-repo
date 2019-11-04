@@ -124,7 +124,7 @@
   <EventTypes>
     <EventType Code="&quot;UPSA&quot;" ObjectTableName="&quot;ShippingAgent&quot;" EnglishName="&quot;Shipping Agent Updated&quot;" LocalName="&quot;Shipping Agent Updated&quot;" IsManualEntry="false" ShortView="false" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
     <EventType Code="&quot;CRSA&quot;" ObjectTableName="&quot;ShippingAgent&quot;" EnglishName="&quot;Created&quot;" LocalName="&quot;Created&quot;" IsManualEntry="false" ShortView="true" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
-    <EventType Code="&quot;DIST&quot;" ObjectTableName="&quot;ShippingAgent&quot;" EnglishName="&quot;GLAccount was disconnected&quot;" LocalName="&quot;נותק כרטיס הנהח\&quot;ש&quot;" IsManualEntry="false" ShortView="false" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
+    <EventType Code="&quot;SADS&quot;" ObjectTableName="&quot;ShippingAgent&quot;" EnglishName="&quot;GLAccount was disconnected&quot;" LocalName="&quot;נותק כרטיס הנהח\&quot;ש&quot;" IsManualEntry="false" ShortView="false" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
   </EventTypes>
   <Records />
   <MenuButtons MenuButtonGroupType="&quot;ShippingAgentEdit&quot;" MenuButtonGroupName="&quot;ShippingAgentEditButtonsGroup&quot;">

@@ -38,6 +38,7 @@ using Simplog.Data.CommonDataModel;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.Accounting.Data.Repositories;
 using Simplog.Data.ShipmentsModel;
+using Logitude.BL.InfrastructureModel.EntityQueries;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -326,12 +327,49 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 ShipmentPayable shipmentPayableLine = shipmentPayable.FirstOrDefault();
                 // connect payable line to invoice line
                 aPInvoiceLine.EntityPayableId = shipmentPayableLine.Id;
-
+                // if the Same Currency no problem / Else convert the Expected amount 
+                if(aPInvoiceLine.ForiegnCurrencyId != shipmentPayableLine.CurrencyId)
+                {
+                    this.ComputeOpenAmount(aPInvoiceLine, shipmentPayableLine);
+                }
             }
             else
             {
                 this.UnexpectedPayablesInvoiceLines.Add(aPInvoiceLine);
             }
+        }
+
+        private void ComputeOpenAmount(APInvoiceLinePM invoiceLine, ShipmentPayable shipmentPayableLine)
+        {
+            if (invoiceLine.AmountTypeCode == "NEXP")
+            {
+                invoiceLine.OpenAmount = null;
+            }
+            else
+            {
+                var expect = shipmentPayableLine.ExpectedAmount == null ? 0 : shipmentPayableLine.ExpectedAmount;
+                var amount = invoiceLine.ForiegnCurrencyAmount == null ? 0 : invoiceLine.ForiegnCurrencyAmount * invoiceLine.ForiegnExchangeRate;
+                var others = invoiceLine.OtherInvoicesAmounts == null ? 0 : invoiceLine.OtherInvoicesAmounts;
+                var corre = invoiceLine.CorrectionAmount == null ? 0 : invoiceLine.CorrectionAmount;
+                double? open = expect - others - amount - corre;
+                invoiceLine.OpenAmount = Math.Round(open.Value, 2);
+            }
+        }
+
+        private LastRate GetCurrencysExchangeRate(int tenant, string localCurrencyId, string foriegnCurrencyId, DateTime rateDate)
+        {
+            LastRate result = null;
+
+            RatesTableQuery ratesTableQuery = new RatesTableQuery(tenant);
+            CurrencyRepository currencyRepository = new CurrencyRepository(tenant);
+
+            LastRate lastRate = ratesTableQuery.GetLastRecordByValueDate(tenant, foriegnCurrencyId, localCurrencyId, rateDate);
+            if (lastRate != null)
+            {
+                result = lastRate;
+            }
+
+            return result;
         }
 
         private void VoidAPInvoiceInFullAccounting(APInvoicePM entityPM, bool setVoided)
