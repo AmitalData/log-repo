@@ -372,9 +372,12 @@
                 <tr class="FormFieldRow">
                     <td>
 
-                        <!-- First List -->
-                        <ul class="horizontal-list" [style.padding]="isRTL ? '0 15px 0 0' : '0 0 0 15px'" [style.float]="isRTL ? 'right' : 'left'">
-                            <li float-start [style.padding-left]="isRTL ? '40px' : 'initial'" [style.padding-right]="isRTL ? 'initial' : '40px'" style="padding-top: 4px;" (click)="LabelClicked()">{{'Accounting.O.ReconcileAccordingTo' | TextCodeTranslationPipe}}:</li>
+                            <!-- First List -->
+                            <ul class="horizontal-list" [style.padding]="isRTL ? '0 15px 0 0' : '0 0 0 15px'" float-start>
+                                <li float-start [style.padding-left]="isRTL ? '40px' : 'initial'"
+                                    [style.padding-right]="isRTL ? 'initial' : '40px'" style="padding-top: 4px;"
+                                    (click)="LabelClicked()">
+                                    {{'Accounting.O.ReconcileAccordingTo' | TextCodeTranslationPipe}}:</li>
 
                             <!-- Amount Checkbox -->
                             <li float-start style="padding: 0 8px;padding-top: 5px;"><CheckBox [IsEnabled]="false" [IsChecked]="AmountCheckBoxChecked" (Checked)="AmountCheckBoxChecked = $event"></CheckBox></li>
