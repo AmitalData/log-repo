@@ -2309,29 +2309,6 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private bool isDisconnectedFromCard ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsDisconnectedFromCard  
-	   {
-	    
-	     get
-		{
-		   return isDisconnectedFromCard;
-		 }
-		 set
-		 {
-		   if(isDisconnectedFromCard != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsDisconnectedFromCard",OldValue=isDisconnectedFromCard,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   isDisconnectedFromCard=value;
-		   }
-			
-		 }
-	   }
 	  private string cardCode ;
 	  	  
        

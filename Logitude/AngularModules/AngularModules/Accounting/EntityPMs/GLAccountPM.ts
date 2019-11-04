@@ -549,11 +549,6 @@ export class GLAccountPM {
     public set UpdatedByLocalName(newValue: string) { if (this.updatedByLocalName != newValue) { this.updatedByLocalName = newValue; this.MarkAsDirty("UpdatedByLocalName"); } }
        
 	 
-    private isDisconnectedFromCard: boolean;
-    public get IsDisconnectedFromCard() { return this.isDisconnectedFromCard; }
-    public set IsDisconnectedFromCard(newValue: boolean) { if (this.isDisconnectedFromCard != newValue) { this.isDisconnectedFromCard = newValue; this.MarkAsDirty("IsDisconnectedFromCard"); } }
-       
-	 
     private cardCode: string;
     public get CardCode() { return this.cardCode; }
     public set CardCode(newValue: string) { if (this.cardCode != newValue) { this.cardCode = newValue; this.MarkAsDirty("CardCode"); } }
