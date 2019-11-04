@@ -979,6 +979,11 @@ export class DeclarationPM {
     public set CargoDescription(newValue: string) { if (this.cargoDescription != newValue) { this.cargoDescription = newValue; this.MarkAsDirty("CargoDescription"); } }
        
 	 
+    private fastIndividualProcessName: string;
+    public get FastIndividualProcessName() { return this.fastIndividualProcessName; }
+    public set FastIndividualProcessName(newValue: string) { if (this.fastIndividualProcessName != newValue) { this.fastIndividualProcessName = newValue; this.MarkAsDirty("FastIndividualProcessName"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		
