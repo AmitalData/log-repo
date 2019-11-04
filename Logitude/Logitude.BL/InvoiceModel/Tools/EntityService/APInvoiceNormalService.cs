@@ -330,12 +330,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 // if the Same Currency no problem / Else convert the Expected amount 
                 if(aPInvoiceLine.ForiegnCurrencyId != shipmentPayableLine.CurrencyId)
                 {
-                    this.ComputeOpenAmount(aPInvoiceLine);
+                    this.ComputeOpenAmount(aPInvoiceLine, shipmentPayableLine);
                 }
             }
             else
             {
-                this.UnexpectedPayablesInvoiceLines.Add(aPInvoiceLine, shipmentPayableLine);
+                this.UnexpectedPayablesInvoiceLines.Add(aPInvoiceLine);
             }
         }
 
