@@ -17,7 +17,7 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
 {
    
-    public class MoveType
+    public partial class MoveType
     {
 
 	    

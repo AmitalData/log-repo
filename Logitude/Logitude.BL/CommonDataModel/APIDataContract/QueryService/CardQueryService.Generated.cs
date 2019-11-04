@@ -97,7 +97,8 @@ using Simplog.Data.CommonDataModel;
 				   
 				   temp.VatNumber = MyEntityPM.VatNumber;
 				   ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant); 
-				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Code,ComputingPartnerName,"Card");  					
+				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Code,ComputingPartnerName,"Card");  
+				   temp.IsDisconnectedFromGLAccount = MyEntityPM.IsDisconnectedFromGLAccount;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -179,7 +180,8 @@ using Simplog.Data.CommonDataModel;
 					{
 					   
 						temp.Code = MyEntity.PartnerCode;
-					}					   
+					}
+					temp.IsDisconnectedFromGLAccount = MyEntity.IsDisconnectedFromGLAccount;					   
 					   return temp;
 		    }
             catch (Exception ex)

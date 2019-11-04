@@ -329,7 +329,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
                             });
                     });
                 });
-                    
+
             }
         });
 
@@ -559,7 +559,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         var glaccountId;
         if (this.ObjectTableName == "GLAccount")
             glaccountId = this.EntityPM.Id;
-        else if (this.ObjectTableName == "GLAccount")
+        else if (this.ObjectTableName == "BankAccount")
             glaccountId = this.BankAccountPM.GLAccountId;
         return glaccountId;
     }
@@ -1172,7 +1172,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         var newEntity: ExternalReconciliationPM = new ExternalReconciliationPM();
 
         newEntity.Id = "new";
-        newEntity.GLAccountId = this.BankAccountPM.GLAccountId;
+        newEntity.GLAccountId = this.getGLAccountId();
         newEntity.BankAccountId = this.BankAccountPM.Id;
         newEntity.Tenant = this.BankAccountPM.Tenant;
         newEntity.CreateDate = new Date();

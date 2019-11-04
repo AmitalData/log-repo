@@ -1116,7 +1116,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 this.EntityPM.PaymentCurrencyExchangeRate = AppTool.Round(value, 5);
                 this.GetRateIsEnabled();
                 this.ComputeLocalAmount();
-
+                this.ComputeOpenAmountInLocalCurrency();
                 this.ItemsSource.Collection.forEach(item => {
                     item.InitExchangeRate();
                 });
@@ -1676,6 +1676,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             this.EntityPM.AmountInPaymentCurrency = AppTool.Round(value, 2);
             this.ComputeLocalAmount();
             this.ComputeOpenAmount();
+            this.ComputeOpenAmountInLocalCurrency();
             this.UpdateSummary();
 
             this.originalPaymentOpenAmount = this.EntityPM.AmountInPaymentCurrency;

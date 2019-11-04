@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Web;
 using System.Xml.Serialization;
@@ -49,17 +50,31 @@ namespace WebFreight.Web.Helpers
 
                 string Stringdetails = Encoding.UTF8.GetString(myAnalyzeQueue.MessageBody);
 
-                dynamic data = JObject.Parse(Stringdetails);
-                if (data != null)
+                Dictionary<string,string> queryParameters = new Dictionary<string, string>();
+                string[] querySegments = Stringdetails.Split('&');
+                foreach (string segment in querySegments)
+                {
+                    string[] parts = segment.Split('=');
+                    if (parts.Length > 0)
+                    {
+                        string key = parts[0].Trim(new char[] { '?', ' ' });
+                        string val = parts[1].Trim();
+
+                        queryParameters.Add(WebUtility.UrlDecode(key), WebUtility.UrlDecode(val));
+                    }
+                }
+
+                if (queryParameters.Count>0)
                 {
                     BluesnapExecutionService bluesnapExecutionService = new BluesnapExecutionService(0);
-
-                    int TransactionTenant = bluesnapExecutionService.GetUserTenantByEmail(data.invoiceEmail);
-                    if (TransactionTenant != 0)
+                    TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
+                    TenantManagement tenantManagement = tenantManagementRepository.GetSingleTenantManagementByBluesnapAccountId(queryParameters["accountId"]);
+                    if (tenantManagement != null)
                     {
-                        bluesnapExecutionService.Tenant = TransactionTenant;
+                        bluesnapExecutionService.Tenant = tenantManagement.Id;
                         string subject = myAnalyzeQueue.Subject == "Bluesnap Payment - Amital" ? "Amital" : "Logitude";
-                        bluesnapExecutionService.SaveBluesnapTransaction(Stringdetails, subject, data.transactionDate);
+                        DateTime? transactionDate= DateTime.Parse(queryParameters["transactionDate"]);
+                        bluesnapExecutionService.SaveBluesnapTransaction(Stringdetails, subject, transactionDate);
                     }
                 }        
 

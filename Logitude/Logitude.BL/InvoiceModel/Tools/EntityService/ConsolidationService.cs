@@ -14,12 +14,14 @@ using Simplog.Data.Helpers;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using System.Web;
 using System.Xml;
 using System.Xml.Serialization;
@@ -169,31 +171,36 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         public void RunBatchService(ConsolidationServiceArgs serviceArgs)
         {
-            this.RetrieveInvoicePM(serviceArgs);
-            
-            if (entityPM != null)
+            using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
-                if (entityPM.IsConsolidationInvoice)
+                this.RetrieveInvoicePM(serviceArgs);
+
+                if (entityPM != null)
                 {
-                    bool isVoiding = entityPM.SetVoided;
-                    bool isApproving = entityPM.SetApproved;
-                    
-                    IInvoiceContext invoiceContext = InvoiceContext.GetContext(entityPM.Tenant);
-                    ARInvoiceService service = new ARInvoiceService(invoiceContext, entityPM.Tenant);
-
-                    if (entityPM.IsCreatingConsolidation)
+                    if (entityPM.IsConsolidationInvoice)
                     {
-                        service.Create(entityPM);
-                    }
+                        bool isVoiding = entityPM.SetVoided;
+                        bool isApproving = entityPM.SetApproved;
 
-                    else
-                    {
-                        service.Update(entityPM);
-                    }
+                        IInvoiceContext invoiceContext = InvoiceContext.GetContext(entityPM.Tenant);
+                        ARInvoiceService service = new ARInvoiceService(invoiceContext, entityPM.Tenant);
 
-                    invoiceContext.SaveChanges();
-                    service.UpdateConsolidationShipments();
+                        if (entityPM.IsCreatingConsolidation)
+                        {
+                            service.Create(entityPM);
+                        }
+
+                        else
+                        {
+                            service.Update(entityPM);
+                        }
+
+                        invoiceContext.SaveChanges();
+                        service.UpdateConsolidationShipments();
+                    }
                 }
+
+                scope.Complete();
             }
         }
         private void RetrieveInvoicePM(ConsolidationServiceArgs serviceArgs)
