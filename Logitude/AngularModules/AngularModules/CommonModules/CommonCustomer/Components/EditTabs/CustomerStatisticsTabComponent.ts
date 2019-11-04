@@ -36,6 +36,7 @@ import {CustomerProductPM} from '../../../../Common/EntityPMs/CustomerProductPM'
 import {LastFilterClass} from '../../../../Infrastructure/Utilities/LastFilterClass';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {ServiceHelper} from '../../../../Infrastructure/Utilities/ServiceHelper';
+import { NumbersPipe } from '../../../../Infrastructure/Pipes/NumbersPipe';
 
 declare var window, UploadLogoFile, HideImage, SetImage, ArrayBufferToBase64, makeAmBarChart, BarClick, ResetItem, makeAMLineChart: any;
 
@@ -70,6 +71,8 @@ export class CustomerStatisticsTabComponent extends BaseComponent {
     public barChartData: any[] = [{ data: [], label: '' }, { data: [], label: '' }];
     public NewActualVsPotential: Array<any> = [];
     private CurrentSession = SessionLocator.SelectedSession;
+    private NumbersPipe: NumbersPipe;
+
     CompareComboBoxItemsChange(item) {
         this.SelectedCompareComboBoxItems = item;
         this.LoadActuals();
@@ -719,14 +722,14 @@ export class CustomerStatisticsTabComponent extends BaseComponent {
         this.lineChartLabels = [];
         data.getAll().forEach(element => {
 
-            this.lineChartData[0].data[index] = element.YField + "";
+            this.lineChartData[0].data[index] = this.NumbersPipe.transform(element.YField, "N2") + "";
             this.lineChartLabels.push(element.XField);
             index++;
 
 
             this.AmLineChartTest.push({
                 date: element.XField,
-                visits: element.YField + ""
+                visits: this.NumbersPipe.transform( element.YField,"N2")+ ""
             });
 
         });        
@@ -946,6 +949,7 @@ export class CustomerStatisticsTabComponent extends BaseComponent {
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
+        this.NumbersPipe = new NumbersPipe();
         this.EntityId = this.EntityPM.Id;
         this.EntityName = "Customer";
         this.TenantPM = SessionLocator.TenantPM;

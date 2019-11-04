@@ -347,8 +347,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
             else
             {
-                var expect = shipmentPayableLine.ExpectedAmountLocal == null ? 0 : shipmentPayableLine.ExpectedAmountLocal;
-                var amount = invoiceLine.ForiegnCurrencyAmount == null ? 0 : invoiceLine.ForiegnCurrencyAmount;
+                var expect = shipmentPayableLine.ExpectedAmount == null ? 0 : shipmentPayableLine.ExpectedAmount;
+                var amount = invoiceLine.ForiegnCurrencyAmount == null ? 0 : invoiceLine.ForiegnCurrencyAmount * invoiceLine.ForiegnExchangeRate;
                 var others = invoiceLine.OtherInvoicesAmounts == null ? 0 : invoiceLine.OtherInvoicesAmounts;
                 var corre = invoiceLine.CorrectionAmount == null ? 0 : invoiceLine.CorrectionAmount;
                 double? open = expect - others - amount - corre;
