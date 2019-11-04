@@ -125,11 +125,12 @@ namespace WebFreight.Web.Helpers
                         if (filter.DataTypeCode!="Date" && filter.DataTypeCode != "DateTime"){
                             if (filter.Operation.Code == "Equals")
                             {
-                                if (filter.DataTypeCode == "Integer" || filter.DataTypeCode == "Double" || filter.DataTypeCode == "Decimal")
-                                {
-                                    OperationSimpol = " =  " + parameterName;
-                                }
-                                else if (filter.DataTypeCode == "Boolean")
+                                //if (filter.DataTypeCode == "Integer" || filter.DataTypeCode == "Double" || filter.DataTypeCode == "Decimal")
+                                //{
+                                //    OperationSimpol = " =  " + parameterName;
+                                //}
+                                //else
+                                if (filter.DataTypeCode == "Boolean")
                                 {
                                     parameterValue = filter.TextValue.ToString().ToLower() == "true" ? "1" : "0";
                                     OperationSimpol = " IN (" + parameterName + ")";
@@ -147,11 +148,12 @@ namespace WebFreight.Web.Helpers
                             }
                             else if (filter.Operation.Code == "NotEqual")
                             {
-                                if (filter.DataTypeCode == "Integer" || filter.DataTypeCode == "Double" || filter.DataTypeCode == "Decimal")
-                                {
-                                    OperationSimpol = " <>  " + parameterName;
-                                }
-                                else if (filter.DataTypeCode == "Boolean")
+                                //if (filter.DataTypeCode == "Integer" || filter.DataTypeCode == "Double" || filter.DataTypeCode == "Decimal")
+                                //{
+                                //    OperationSimpol = " <>  " + parameterName;
+                                //}
+                                //else
+                                if (filter.DataTypeCode == "Boolean")
                                 {
                                     parameterValue = filter.TextValue.ToString().ToLower() == "true" ? "1" : "0";
                                     OperationSimpol = " not IN (" + parameterName + ")";

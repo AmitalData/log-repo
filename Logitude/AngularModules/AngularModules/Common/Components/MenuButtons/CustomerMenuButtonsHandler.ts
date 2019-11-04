@@ -20,12 +20,14 @@ import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {TenantManagementPMService} from '../../../Infrastructure/Services/StandardPMs/TenantManagementPMService';
 import {TenantManagementPM} from '../../../Infrastructure/EntityPMs/TenantManagementPM';
 import {DownloadManager} from '../../../Infrastructure/Utilities/DownloadManager';
+import { CardExtendedPMService } from '../../Services/ExtendedPMs/CardExtendedPMService';
 
 export class CustomerMenuButtonsHandler {
     public EntityPM: CustomerPM;
     public entityArgs: EntityArgs
     public TenantPM: TenantPM;
     public ObjectTableName: string = "Customer"
+    cardExtendedPMService: CardExtendedPMService = new CardExtendedPMService();
     public SetEntityPM(entityArgs: EntityArgs) {
         this.TenantPM = SessionLocator.TenantPM;
         this.entityArgs = entityArgs;
@@ -242,6 +244,34 @@ export class CustomerMenuButtonsHandler {
                                 else button.IsHidden = false;
                                 break;
                             }
+                        case "Disconnect": {
+
+                            if (!SessionLocator.TenantPM.AccountingActivated) {
+                                button.IsHidden = true;
+                            }
+                            else {
+                                if (this.EntityPM.Card.GLAccountId) {
+                                    button.IsDisabled = false;
+                                }
+                                else {
+                                    button.IsDisabled = true;
+                                }
+                            }
+
+
+
+
+                            break;
+                        }
+                        //case "More": {
+                        //    if (!SessionLocator.TenantPM.AccountingActivated) {
+                        //        button.IsHidden = true;
+                        //    }
+                        //    else {
+                        //        button.IsHidden = false;
+                        //    }
+                        //    break;
+                        //}
                     }
                 }
             }
@@ -330,6 +360,11 @@ export class CustomerMenuButtonsHandler {
                     this.CreateTenantMethod();
                     break;
                 }
+
+            case "Disconnect": {
+                this.DisconnectGLAccount();
+                break;
+            }
         }
     }
 
@@ -571,6 +606,20 @@ export class CustomerMenuButtonsHandler {
         }
     }
 
+    private DisconnectGLAccount() {
+        this.CurrentSession.StartBusyIndicator("Loading...");
+        this.cardExtendedPMService.DisconnectGLAccountFromCard(this.EntityPM.Id, "CS", "DIST").subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                this.CurrentSession.StopBusyIndicator();
+            }
+            else {
+                this.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResponse.ErrorsArray;
+            }
+        });
+
+    }
 
     StartEditing(id) {
         var editWindow: LogitudeWindow = new LogitudeWindow();

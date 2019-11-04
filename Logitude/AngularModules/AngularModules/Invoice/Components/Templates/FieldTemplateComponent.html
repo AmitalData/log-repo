@@ -337,6 +337,22 @@
                                         </tr>
                                     </table>
                                 </div>
+
+                                <!-- OpenAmountInLocalCurrency -->
+                                <div *ngIf="FieldName == 'OpenAmountInLocalCurrency'">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 1px;padding-right:5px;">
+                                                <span>{{Entity[FieldName] | NumbersPipe:'N2'}}</span>
+                                                <span>({{Entity.LocalCurrencyCode}})</span>
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
                                 <div *ngIf="FieldName == 'JournalNumber' && IsHeaderScreenTemplate">
                                     <div>
                                         <a href="#" (click)="OpenJournal(Entity.JournalId)">{{Entity.JournalNumber}}</a>

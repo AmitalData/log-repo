@@ -1,3 +1,4 @@
+import { IdGeneratorPipe } from './../../../Controls/Pipes/IdGeneratorPipe';
 import { AccountingEntityHelper } from './../../Utilities/AccountingEntityHelper';
 import {Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef}  from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -120,6 +121,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     SetWindowArgs(args: any) {
         if (args != null) {
             this.BankAccountPM = args.BankAccountPM;
+            this.EntityPM = args.EntityPM;
             this.ObjectTableName = args.ObjectTableName;
             this.openAmountCurrency = args.openAmountCurrency;
             this.SetTitles();
@@ -543,9 +545,23 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         filters.addAdditionalFilter("IsExternalReconcile", false, null, null, "Equals", false, false, false, "Boolean");
         // filters.addAdditionalFilter("SourceTypeCode", "5,9", null, null, "InList", false, false, false, "String");
         filters.addAdditionalFilter("DueDate", new Date(), null, null, "LessThanOrEqual", false, false, false, "Date"); // value will be override in server, to avoid edging problem!
-        filters.addAdditionalFilter("DUMMY_TransferAccountId", this.BankAccountPM.TransferGLAcccountId, null, null, "Equals", false, false, false, "String");
 
-        return this.entityListService.getReconciliationsByFilter("LedgerTransaction", this.BankAccountPM.GLAccountId, filters);
+        if(this.ObjectTableName == "BankAccount")
+            filters.addAdditionalFilter("DUMMY_TransferAccountId", this.BankAccountPM.TransferGLAcccountId, null, null, "Equals", false, false, false, "String");
+
+        var glaccountId = this.getGLAccountId();
+
+        return this.entityListService.getReconciliationsByFilter("LedgerTransaction", glaccountId, filters);
+    }
+
+    private getGLAccountId()
+    {
+        var glaccountId;
+        if (this.ObjectTableName == "GLAccount")
+            glaccountId = this.EntityPM.Id;
+        else if (this.ObjectTableName == "GLAccount")
+            glaccountId = this.BankAccountPM.GLAccountId;
+        return glaccountId;
     }
 
     PushLine(row, RowIndex) {
