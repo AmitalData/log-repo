@@ -21,7 +21,7 @@
                                 <tr >
                                     <td>
                                         <table>
-                                          
+
                                             <!-- PayToGlAccountId -->
                                             <tr class="FormFieldRow">
                                                 <td>
@@ -34,7 +34,7 @@
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'GLAccount'"
-                                                    
+
                                                             [QueryFilterItems]="filterAgrs"
                                                             (SelectedItemChanged)="Account = $event"
                                                             [HideColumns]="true">
@@ -56,7 +56,7 @@
                                                 <td><div></div></td>
                                             </tr>
 
-                                          
+
                                             <!-- Bank Account -->
                                             <tr class="FormFieldRow">
                                                 <td>
@@ -135,7 +135,7 @@
                                                 <td  width="170px;">
                                                 <table>
                                                     <tr>
-                                                
+
                                                         <td>
                                                             <LogLabel [ObjectFieldName]="'LocalAmount'" [ObjectTableName]="ObjectTableName"
                                                                       [DataContext]="DataContext"></LogLabel>
@@ -143,7 +143,7 @@
                                                  </tr>
                                                     </table>
                                                 </td>
-                                              
+
                                                 <td width="180px;">
                                                     <LogTextBox [ObjectFieldName]="'LocalAmount'" [InputType]="'double'" [DataContext]="DataContext" [Text]="LocalAmount"
                                                                 [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
@@ -165,7 +165,7 @@
                                                 <td><div></div></td>
                                             </tr>
 
-                                           
+
                                             <tr ><td><div></div></td></tr>
                                         </table>
                                     </td>
@@ -182,8 +182,8 @@
                         <td colspan="3">
                             <table>
                                 <tr>
-                                    <td style="width: 25px;height: 20px;padding: 5px;padding-bottom: 3px;">
-                                        <div><IconButton [IsSmall]="true" [Name]="'Add'" (click)="Add()" [IsEnabled]="AddLineEnabled" style="float:left;"></IconButton></div>
+                                    <td style="width: 25px;height: 20px;padding: 5px 3px;">
+                                        <div><IconButton [Name]="'Add'" (click)="Add()" [IsEnabled]="AddLineEnabled" float-start></IconButton></div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -205,11 +205,11 @@
                                                 </log-column>
 
 
-                                                <log-column [header]="'PaymentChequeLine.F.Notes' | TextCodeTranslationPipe" [width]="'110'" [Editable]="true" [Alignment]="'center'">
+                                                <log-column [header]="'PaymentChequeLine.F.Notes' | TextCodeTranslationPipe" [width]="'680'" [Editable]="true" [Alignment]="isRTL ? 'right' : 'left'">
 
                                                     <log-cell-template template="let item" #logcelltemplate>
                                                         <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right">
-                                                            <span>{{item.Note}}</span>
+                                                            <span title="{{item.Note}}">{{item.Note}}</span>
                                                         </div>
                                                         <div *ngIf="logcelltemplate.IsEditMode">
                                                             <LogTextBox [ObjectFieldName]="'Note'" [DataContext]="item" [FocusOnMe]="true" [InputType]="'ntext'"
@@ -268,6 +268,6 @@
         </td>
     </tr>
 
- 
+
 
 </table>
