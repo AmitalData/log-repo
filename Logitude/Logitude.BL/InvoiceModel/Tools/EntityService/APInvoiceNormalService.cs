@@ -330,17 +330,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 // if the Same Currency no problem / Else convert the Expected amount 
                 if(aPInvoiceLine.ForiegnCurrencyId != shipmentPayableLine.CurrencyId)
                 {
-                    aPInvoiceLine.ExpectedAmount = aPInvoiceLine.InvoiceCurrencyAmount * aPInvoiceLine.ForiegnExchangeRate;
                     this.ComputeOpenAmount(aPInvoiceLine);
                 }
             }
             else
             {
-                this.UnexpectedPayablesInvoiceLines.Add(aPInvoiceLine);
+                this.UnexpectedPayablesInvoiceLines.Add(aPInvoiceLine, shipmentPayableLine);
             }
         }
 
-        private void ComputeOpenAmount(APInvoiceLinePM invoiceLine)
+        private void ComputeOpenAmount(APInvoiceLinePM invoiceLine, ShipmentPayable shipmentPayableLine)
         {
             if (invoiceLine.AmountTypeCode == "NEXP")
             {
@@ -348,7 +347,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
             else
             {
-                var expect = invoiceLine.ExpectedAmount == null ? 0 : invoiceLine.ExpectedAmount;
+                var expect = shipmentPayableLine.ExpectedAmountLocal == null ? 0 : shipmentPayableLine.ExpectedAmountLocal;
                 var amount = invoiceLine.ForiegnCurrencyAmount == null ? 0 : invoiceLine.ForiegnCurrencyAmount;
                 var others = invoiceLine.OtherInvoicesAmounts == null ? 0 : invoiceLine.OtherInvoicesAmounts;
                 var corre = invoiceLine.CorrectionAmount == null ? 0 : invoiceLine.CorrectionAmount;
