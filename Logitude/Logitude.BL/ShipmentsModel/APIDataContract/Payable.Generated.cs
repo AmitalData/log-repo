@@ -17,7 +17,7 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
 {
    
-    public class Payable
+    public partial class Payable
     {
 
 	    

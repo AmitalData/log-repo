@@ -116,7 +116,7 @@
   <EventTypes>
     <EventType Code="&quot;UPCA&quot;" ObjectTableName="&quot;CustomAgent&quot;" EnglishName="&quot;Custom Agent Updated&quot;" LocalName="&quot;Custom Agent Updated&quot;" IsManualEntry="false" ShortView="false" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
     <EventType Code="&quot;CRCA&quot;" ObjectTableName="&quot;CustomAgent&quot;" EnglishName="&quot;Created&quot;" LocalName="&quot;Created&quot;" IsManualEntry="false" ShortView="true" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
-    <EventType Code="&quot;DIST&quot;" ObjectTableName="&quot;CustomAgent&quot;" EnglishName="&quot;GLAccount was disconnected&quot;" LocalName="&quot;נותק כרטיס הנהח\&quot;ש&quot;" IsManualEntry="false" ShortView="false" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
+    <EventType Code="&quot;CGDS&quot;" ObjectTableName="&quot;CustomAgent&quot;" EnglishName="&quot;GLAccount was disconnected&quot;" LocalName="&quot;נותק כרטיס הנהח\&quot;ש&quot;" IsManualEntry="false" ShortView="false" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
   </EventTypes>
   <Records />
   <MenuButtons MenuButtonGroupType="&quot;CustomAgentEdit&quot;" MenuButtonGroupName="&quot;CustomAgentEditButtonsGroup&quot;">

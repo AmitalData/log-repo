@@ -119,7 +119,7 @@
   <EventTypes>
     <EventType Code="&quot;UPTR&quot;" ObjectTableName="&quot;Trucker&quot;" EnglishName="&quot;Trucker Updated&quot;" LocalName="&quot;Trucker Updated&quot;" IsManualEntry="false" ShortView="false" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
     <EventType Code="&quot;CRTR&quot;" ObjectTableName="&quot;Trucker&quot;" EnglishName="&quot;Created&quot;" LocalName="&quot;Created&quot;" IsManualEntry="false" ShortView="true" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
-    <EventType Code="&quot;DIST&quot;" ObjectTableName="&quot;Trucker&quot;" EnglishName="&quot;GLAccount was disconnected&quot;" LocalName="&quot;נותק כרטיס הנהח\&quot;ש&quot;" IsManualEntry="false" ShortView="false" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
+    <EventType Code="&quot;TRDS&quot;" ObjectTableName="&quot;Trucker&quot;" EnglishName="&quot;GLAccount was disconnected&quot;" LocalName="&quot;נותק כרטיס הנהח\&quot;ש&quot;" IsManualEntry="false" ShortView="false" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
   </EventTypes>
   <Records />
   <MenuButtons MenuButtonGroupType="&quot;TruckerEdit&quot;" MenuButtonGroupName="&quot;TruckerEditButtonsGroup&quot;">

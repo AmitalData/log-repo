@@ -39,6 +39,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 AccountingSettingRepository accountingSettingRepository = new AccountingSettingRepository(commonDataContext);
                 UserRepository userRepository = new UserRepository(commonDataContext);
                 TenantRepository tenantRepository = new TenantRepository(commonDataContext);
+                VatTypePercentageRepository vatTypePercentageRepository = new VatTypePercentageRepository(commonDataContext);
 
                 AccountingSetting accountingSetting = accountingSettingRepository.GetSingleAccountingSetting(tenant);
                 Tenant myTenant = tenantRepository.GetSingleTenant(tenant);
@@ -149,7 +150,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 {
                     throw new ApplicationException("Invoice Currency Exchange Rate is required");
                 }
-
+                
                 if (temp.InvoiceDate != null)
                 {
                     this.ComputeAPInvoiceDueDate(temp);
@@ -197,25 +198,55 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                         throw new ApplicationException("No Shipment Found");
                     }
                 }
-
+                
                 foreach (APInvoiceLinePM line in temp.InvoiceLines)
                 {
-                    if (string.IsNullOrEmpty(line.ForiegnCurrencyId))
+                    if (string.IsNullOrEmpty(line.ChargesTypeId))
                     {
-                        line.ForiegnCurrencyId = temp.InvoiceCurrencyId;
+                        throw new ApplicationException("Line Charges Type is Missing");
                     }
 
                     else
                     {
-                        if (line.ForiegnCurrencyId != temp.InvoiceCurrencyId)
+                        Simplog.Data.CommonDataModel.EntityPOCOs.ChargesType chargesType = ChargesTypeRepository.GetSingleChargesType(line.ChargesTypeId, tenant, true);
+                        if(chargesType != null)
                         {
-                            throw new ApplicationException("Line Currency is Different than Invoice Currency");
+                            line.Description = chargesType.EnglishName;
+                            line.LocalDescription = chargesType.LocalName;
+
+                            if (string.IsNullOrEmpty(line.VatTypeId))
+                            {
+                                line.VatTypeId = chargesType.VatTypeId;
+                            }
+
+                            if (!string.IsNullOrEmpty(line.VatTypeId))
+                            {
+                                Simplog.Data.CommonDataModel.EntityPOCOs.VatType vatType = VatTypeRepository.GetSingleVatType(line.VatTypeId, tenant, true);
+                                if (vatType != null)
+                                {
+                                    line.VatTypeName = vatType.EnglishName;
+                                    line.VatIsMultiPercentage = vatType.IsMultiPercentage;
+
+                                    if (!vatType.IsMultiPercentage)
+                                    {
+                                        VatTypePercentage vatTypePercentage = vatTypePercentageRepository.GetVatTypePercentageByDate(vatType.Id, tenant, temp.InvoiceDate);
+                                        if (vatTypePercentage != null)
+                                        {
+                                            line.VatPercentage = vatTypePercentage.Percentage;
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
 
+                    if (string.IsNullOrEmpty(line.ForiegnCurrencyId))
+                    {
+                        line.ForiegnCurrencyId = temp.InvoiceCurrencyId;
+                    }                    
+
                     line.EntityReference = temp.MainEntityReference;
                     line.EntityId = temp.MainEntityId;
-                    ComputeOpenAmount(line);
                 }
 
                 return temp;
@@ -224,23 +255,6 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             catch (Exception ex)
             {
                 throw ex;
-            }
-        }
-
-        private void ComputeOpenAmount(APInvoiceLinePM invoiceLine)
-        {
-            if (invoiceLine.AmountTypeCode == "NEXP")
-            {
-                invoiceLine.OpenAmount = null;
-            }
-            else
-            {
-                var expect = invoiceLine.ExpectedAmount == null ? 0 : invoiceLine.ExpectedAmount;
-                var amount = invoiceLine.ForiegnCurrencyAmount == null ? 0 : invoiceLine.ForiegnCurrencyAmount;
-                var others = invoiceLine.OtherInvoicesAmounts == null ? 0 : invoiceLine.OtherInvoicesAmounts;
-                var corre = invoiceLine.CorrectionAmount == null ? 0 : invoiceLine.CorrectionAmount;
-                double? open = expect - others - amount - corre;
-                invoiceLine.OpenAmount = Math.Round(open.Value, 2);
             }
         }
 
@@ -300,7 +314,10 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 {
                     if (paymentTerm.IsManuallySet)
                     {
-                        invoice.DueDate = null;
+                        if(invoice.DueDate == null)
+                        {
+                            throw new ApplicationException("Due Date is Required when Payment Term is Manually Set");
+                        }
                     }
 
                     else if (paymentTerm.Days == 0)

@@ -142,7 +142,7 @@
   <EventTypes>
     <EventType Code="&quot;UPAG&quot;" ObjectTableName="&quot;Agent&quot;" EnglishName="&quot;Agent Updated&quot;" LocalName="&quot;Agent Updated&quot;" IsManualEntry="false" ShortView="false" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
     <EventType Code="&quot;CRAG&quot;" ObjectTableName="&quot;Agent&quot;" EnglishName="&quot;Created&quot;" LocalName="&quot;Created&quot;" IsManualEntry="false" ShortView="true" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
-    <EventType Code="&quot;DIST&quot;" ObjectTableName="&quot;Agent&quot;" EnglishName="&quot;GLAccount was disconnected&quot;" LocalName="&quot;נותק כרטיס הנהח\&quot;ש&quot;" IsManualEntry="false" ShortView="false" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
+    <EventType Code="&quot;AGDS&quot;" ObjectTableName="&quot;Agent&quot;" EnglishName="&quot;GLAccount was disconnected&quot;" LocalName="&quot;נותק כרטיס הנהח\&quot;ש&quot;" IsManualEntry="false" ShortView="false" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
   </EventTypes>
   <Records />
   <MenuButtons MenuButtonGroupType="&quot;AgentEdit&quot;" MenuButtonGroupName="&quot;AgentEditButtonsGroup&quot;">

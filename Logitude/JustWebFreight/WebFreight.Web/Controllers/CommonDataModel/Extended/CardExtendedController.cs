@@ -97,10 +97,10 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
         GLAccountPM glaccount;
         private GLAccountPM UpdateGLAccountFields(CardPM card)
         {
-             glaccount = GetGLAccountById(card.GLAccountId);
+            glaccount = GetGLAccountById(card.GLAccountId);
             if (glaccount != null)
             {
-                glaccount.IsDisconnectedFromCard = true;
+              
                 glaccount.PartnerTypeId = card.PartnerTypeId;
                 glaccount.CardCode = card.Code;
             }

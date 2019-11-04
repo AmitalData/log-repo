@@ -595,7 +595,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             APIDataContract.ApiV1.GLAccountQueryService gLAccountQueryService = new APIDataContract.ApiV1.GLAccountQueryService(gLAccountPM.Tenant);
             APIDataContract.ApiV1.GLAccount glAccount = gLAccountQueryService.GLAccountDataMapping(gLAccountPM, gLAccountPM.Tenant);
+           
             glAccount = MapGLAccountCardFields(glAccount);
+            glAccount.CardCode = null;
+            glAccount.PartnerTypeId = null;
+
             return glAccount;
         }
         private APIDataContract.ApiV1.GLAccount MapGLAccountCardFields(APIDataContract.ApiV1.GLAccount gLAccount)
@@ -608,6 +612,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Card connectedCard = new Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Card();
                 connectedCard.Code = card.Code;
                 connectedCard.PartnerCode = card.PartnerTypeId;
+                if (gLAccount.CardCode == connectedCard.Code)
+                {
+                    connectedCard.IsDisconnectedFromGLAccount = true;
+                }
+                else { connectedCard.IsDisconnectedFromGLAccount = false; }
                 cards.Add(connectedCard);
 
             }
