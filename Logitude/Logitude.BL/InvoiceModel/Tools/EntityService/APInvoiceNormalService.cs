@@ -327,11 +327,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 ShipmentPayable shipmentPayableLine = shipmentPayable.FirstOrDefault();
                 // connect payable line to invoice line
                 aPInvoiceLine.EntityPayableId = shipmentPayableLine.Id;
-                // if the Same Currency no problem / Else convert the Expected amount 
-                if(aPInvoiceLine.ForiegnCurrencyId != shipmentPayableLine.CurrencyId)
-                {
-                    this.ComputeOpenAmount(aPInvoiceLine, shipmentPayableLine);
-                }
+                this.ComputeOpenAmount(aPInvoiceLine, shipmentPayableLine);
             }
             else
             {
@@ -348,7 +344,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             else
             {
                 var expect = shipmentPayableLine.ExpectedAmount == null ? 0 : shipmentPayableLine.ExpectedAmount;
-                var amount = invoiceLine.ForiegnCurrencyAmount == null ? 0 : invoiceLine.ForiegnCurrencyAmount * invoiceLine.ForiegnExchangeRate;
+                var amount = invoiceLine.InvoiceCurrencyAmount == null ? 0 : invoiceLine.InvoiceCurrencyAmount;
                 var others = invoiceLine.OtherInvoicesAmounts == null ? 0 : invoiceLine.OtherInvoicesAmounts;
                 var corre = invoiceLine.CorrectionAmount == null ? 0 : invoiceLine.CorrectionAmount;
                 double? open = expect - others - amount - corre;
