@@ -1172,7 +1172,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         var newEntity: ExternalReconciliationPM = new ExternalReconciliationPM();
 
         newEntity.Id = "new";
-        newEntity.GLAccountId = this.BankAccountPM.GLAccountId;
+        newEntity.GLAccountId = this.getGLAccountId();
         newEntity.BankAccountId = this.BankAccountPM.Id;
         newEntity.Tenant = this.BankAccountPM.Tenant;
         newEntity.CreateDate = new Date();

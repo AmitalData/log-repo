@@ -270,9 +270,9 @@ export class ManageExternalReconciliationTabComponent extends BaseComponent impl
     private getGLAccountId()
     {
         var glaccountId;
-        if (this.ObjectTableName == "GLAccount")
+        if (this.entityArgs.ObjectTableName == "GLAccount")
             glaccountId = this.EntityPM.Id;
-        else if (this.ObjectTableName == "BankAccount")
+        else if (this.entityArgs.ObjectTableName == "BankAccount")
             glaccountId = this.EntityPM.GLAccountId;
         return glaccountId;
     }
