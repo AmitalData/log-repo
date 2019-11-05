@@ -1,12 +1,12 @@
-
 SETLOCAL enabledelayedexpansion
-SET err=0
+SET NumberErrors=0
 SET TotalErrors
 
 cd /
 cd windows
 c:
 cd C:\Program Files (x86)\Jenkins\workspace\2019.R3.DevOps\Logitude\AngularModules\AngularModules
+
 
 
 FOR /L %%A IN (1,1,1) DO (
@@ -43,19 +43,15 @@ rem  CALL :CheckError "NewShipper"
 
 )
 
-
 cd /
 cd C:\Automation e2e\TeamIslam\Prod
-
 >test.txt echo Errors in : %TotalErrors%
 >>test.txt echo Total Errors :%NumberErrors% 
-
 
 IF %NumberErrors% NEQ 0 ( 
   exit 1
 )
-
-pause
+Pause
 
 SETLOCAL
 :CheckError
@@ -63,7 +59,7 @@ SETLOCAL
     cd /
     cd windows
     c:
-    cd C:\Automation e2e\TeamIslam\Prod\screenshots
+    cd C:\Automation e2e\TeamIslam\prod\screenshots
 
     IF EXIST images (
         cd /
