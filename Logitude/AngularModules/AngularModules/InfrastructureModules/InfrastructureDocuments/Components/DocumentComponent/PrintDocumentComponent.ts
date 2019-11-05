@@ -1104,6 +1104,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
             this._exportDocumentService.BuildDocumentViaWorkerRole(exportDocumentArgs).subscribe((myResponse: ServiceResponse) => {
                 var result: any = myResponse.Result;
                 if (!myResponse.HasError && result) {
+                    this.NmuberOfReadBuildDocumentStatus = 1;
                     this.StartCheckDocumentBuildViaWorkerRoleTimer(result, documentTypeCopyLists);
                 } else {
 
@@ -1119,9 +1120,9 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     }
 
 
-
+    NmuberOfReadBuildDocumentStatus: number = 1;
     initializeStartCheckDocumentBuildViaWorkerRoleTimer() {
-        return Observable.interval(2000).timeInterval();
+        return Observable.interval(250 * this.NmuberOfReadBuildDocumentStatus).timeInterval();
     }
 
 
@@ -1129,10 +1130,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     private StartCheckDocumentBuildViaWorkerRoleTimerTimersub: any = null;
     IsStartCheckDocumentBuildViaWorkerRoleTimer: boolean = false;
     StartCheckDocumentBuildViaWorkerRoleTimer(documentExecutionLogId, documentTypeCopyLists) {
-        if (this.IsStartCheckDocumentBuildViaWorkerRoleTimer) {
-            this.StartCheckDocumentBuildViaWorkerRoleTimerTimersub.unsubscribe();
-        }
-
+        if (this.IsStartCheckDocumentBuildViaWorkerRoleTimer) this.StartCheckDocumentBuildViaWorkerRoleTimerTimersub.unsubscribe();
         this.IsStartCheckDocumentBuildViaWorkerRoleTimer = true;
         this.StartCheckDocumentBuildViaWorkerRoleTimerTimersub = this.initializeStartCheckDocumentBuildViaWorkerRoleTimer().subscribe(respose => {
 
@@ -1146,11 +1144,8 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
             if (this.IsStartCheckDocumentBuildViaWorkerRoleTimer) {
 
-                if (this.documentsExecutionLogListExtendedService == null) {
-                    this.documentsExecutionLogListExtendedService = new DocumentsExecutionLogListExtendedService();
-                }
-
-
+                if (this.documentsExecutionLogListExtendedService == null) this.documentsExecutionLogListExtendedService = new DocumentsExecutionLogListExtendedService();
+                this.NmuberOfReadBuildDocumentStatus += 1;
                 this.documentsExecutionLogListExtendedService.GetDocumentsExecutionLogList(documentExecutionLogId).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
                     var documentsExecutionLogList: DocumentsExecutionLogList = res.Result;
