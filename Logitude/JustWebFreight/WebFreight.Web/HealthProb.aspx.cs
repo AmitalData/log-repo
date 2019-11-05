@@ -1,4 +1,5 @@
 ﻿using Microsoft.Web.Administration;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -6,14 +7,16 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using WebFreight.Web.WebServices;
 
 namespace WebFreight.Web
 {
     public partial class HealthProb : System.Web.UI.Page
     {
+        string source = "ASP.NET 4.0.30319.0";
         protected void Page_Load(object sender, EventArgs e)
         {
-            string source = "ASP.NET 4.0.30319.0";
+            
             string log = "Application";
             //if (!EventLog.SourceExists(source))
             //{
@@ -21,32 +24,56 @@ namespace WebFreight.Web
             //}
             try
             {
-                
-                EventLog.WriteEntry(source, "This is a call from HealthProb Check",
-                    EventLogEntryType.Information);
+
+                //EventLog.WriteEntry(source, "This is a call from HealthProb Check : " + LogitudeAppSettings.StartDateTime,EventLogEntryType.Information);
 
                 //EventLog eventLog = new EventLog("Application");
                 //eventLog.Source = "Application";
                 //eventLog.WriteEntry("HealthProb Check", EventLogEntryType.Information);
 
-                var yourAppPool = new ServerManager().ApplicationPools["DefaultAppPool"];
-                if (yourAppPool != null)
+                //var yourAppPool = new ServerManager().ApplicationPools["DefaultAppPool"];
+                //if (yourAppPool != null)
+                //{
+                //    while (yourAppPool.State != ObjectState.Started)
+                //    {
+                //        EventLog.WriteEntry(source, "DefaultAppPool Not Started", EventLogEntryType.Warning);
+
+                //    }
+                //}
+
+                if (LogitudeAppSettings.IsRecycled)
                 {
-                    while (yourAppPool.State != ObjectState.Started)
-                    {
-                        EventLog.WriteEntry(source, "DefaultAppPool Not Started", EventLogEntryType.Warning);
-
-                    }
+                    LogitudeAppSettings.IsRecycled = false;
+                    EventLog.WriteEntry(source, "the system app bool Recycled, the warming is starting", EventLogEntryType.Warning);
+                    CallWarmingScenario();
                 }
-
 
             }
             catch (Exception ex)
             {
+                string errorMessage = ex.Message + Environment.NewLine;
 
-                EventLog.WriteEntry(source, "HealthProb Check : " + ex.Message, EventLogEntryType.Error);
+                if (ex.InnerException != null)
+                {
+
+                    errorMessage = errorMessage + " (" + (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) + ")" + Environment.NewLine;
+
+                }
+
+                errorMessage = errorMessage + ex.StackTrace + Environment.NewLine;
+
+                EventLog.WriteEntry(source, "HealthProb Check Exception : " + errorMessage, EventLogEntryType.Error);
                // throw ex;
             }
+
+        }
+
+        private void CallWarmingScenario()
+        {
+            EventLog.WriteEntry(source, "Start Warming Scenarios",EventLogEntryType.Information);
+            WarmWebService WarmService = new WarmWebService();
+            WarmService.StartWarming();
+            EventLog.WriteEntry(source, "Warming Scenarios are Finished", EventLogEntryType.Information);
 
         }
     }
