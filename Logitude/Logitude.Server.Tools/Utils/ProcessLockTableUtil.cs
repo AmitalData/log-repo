@@ -92,6 +92,12 @@ namespace Logitude.Server.Tools.Utils
                        tenant.ToString();
             return key;
         }
+        public string GetKey4UCBUD2LT(string fileNo, int tenant)
+        {
+            string key = "UCBUD2LT:" + fileNo + ",tenant:" +
+                       tenant.ToString();
+            return key;
+        }
         public string GetKey4InProggressCustomsRequestsSheet(string CustomsRequestsSheetId)
         {
             string key = "InProggressCustomsRequestsSheet:" + CustomsRequestsSheetId;
@@ -110,9 +116,10 @@ namespace Logitude.Server.Tools.Utils
 
 
 
-        public IDisposable GetProcessLockTableDisposable(int tenant, bool lockit, string key, string requestLog)
+        public IDisposable GetProcessLockTableDisposable(int tenant, bool lockit, string key, string requestLog,
+            bool? forceAsMultiProcess= null)
         {
-            bool multiProcess = !string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings.Get("MultiProcess"));
+            bool multiProcess = forceAsMultiProcess??!string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings.Get("MultiProcess"));
 
             if (lockit)
             {

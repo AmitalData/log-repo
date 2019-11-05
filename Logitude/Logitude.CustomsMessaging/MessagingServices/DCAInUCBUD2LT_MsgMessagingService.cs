@@ -12,6 +12,7 @@ using Logitude.CustomsMessaging.RequestServices;
 using Logitude.CustomsMessaging.ResponseServices;
 using Logitude.CustomsMessaging.Testers.Messages;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.Utils;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -336,13 +337,23 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 }
 
 
-
+                
                 Debug.WriteLine("CreateCRS");
 
                 string loggingUserId = AuthenticationUtil.ResolveUserId(tenant);
-                var myDCAInUCBUD2LT_MsgMessagingService = new DCAInUCBUD2LT_MsgMessagingService();
-                string crs=myDCAInUCBUD2LT_MsgMessagingService.CreateCRS(tenant, loggingUserId,_DocumentsFilingPM);
-                LogitudeSettings.HandleLogMe(crs +" " + jsonPM, false, "CreateUD2LTService.OK", stopLogAt);
+
+
+                string key = ProcessLockTableUtil.Instance.GetKey4UCBUD2LT(declarationPM.CustomFileNo, _DocumentsFilingPM.Tenant);
+                using (var disposableToken =
+                    //ProcessLockTableUtil.Instance.LockItAndGetReleaseToken(key, "5117ResponseService.Update")
+                    ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(_DocumentsFilingPM.Tenant, true, key, "UCBUD2LT.CRS",true)
+                    )
+                {
+                    var myDCAInUCBUD2LT_MsgMessagingService = new DCAInUCBUD2LT_MsgMessagingService();
+                    string crs = myDCAInUCBUD2LT_MsgMessagingService.CreateCRS(tenant, loggingUserId, _DocumentsFilingPM);
+                    LogitudeSettings.HandleLogMe(crs + " " + jsonPM, false, "CreateUD2LTService.OK", stopLogAt);
+
+                }
 
             }
             catch (Exception E)
