@@ -1298,6 +1298,8 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
     ComputeOpenAmount() {
         this.OpenAmount = this.AmountInPaymentCurrency - this.Summary_AmountPaid;
+        this.ComputeOpenAmountInLocal();
+
     }
     ComputeLocalAmount() {
         this.AmountInLocalCurrency = this.AmountInPaymentCurrency * this.PaymentCurrencyExchangeRate;

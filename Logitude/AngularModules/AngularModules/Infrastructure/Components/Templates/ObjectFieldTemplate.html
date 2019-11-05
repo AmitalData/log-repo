@@ -68,14 +68,21 @@
                             <div class="MediaFillRelative" *ngIf="CustomField">
                                 <div class="MediaFillRelative" *ngIf="IsHeaderScreenTemplate">
                                     <div class="TextTrimming" *ngIf="DataTypeCode == 'Integer'" [style.textAlign]="NumberFieldTextAlign">{{CustomField['ResolvedValue']}}</div>
-                                    <div class="TextTrimming" *ngIf="DataTypeCode == 'Decimal' || DataTypeCode == 'Double'" [style.textAlign]="NumberFieldTextAlign">{{CustomField['Value']}}</div>
-                                    <div class="TextTrimming" *ngIf="DataTypeCode == 'Date' || DataTypeCode == 'DateTime'" [style.textAlign]="TextAlign">{{CustomField['Value']}}</div>
+                                    <div class="TextTrimming" *ngIf="DataTypeCode == 'Decimal' || DataTypeCode == 'Double'" [style.textAlign]="NumberFieldTextAlign">{{CustomField['ResolvedValue']}}</div>
+                                    <div class="TextTrimming" *ngIf="DataTypeCode == 'Date' || DataTypeCode == 'DateTime'" [style.textAlign]="TextAlign">{{CustomField['ResolvedValue'] | DateTimeToDatePipe}}</div>
 
                                     <div *ngIf="DataTypeCode == 'Boolean'">
 
                                         <div *ngIf=IsHeaderScreenTemplate>
-                                            <img *ngIf="FieldValue" src="./Images/CheckBoxIcon.png" [className]="isRTL ? 'RightCenter' : 'LeftCenter'" />
-                                            <div *ngIf="!FieldValue">{{FieldValue}}</div>
+
+                                            <div *ngIf="FieldValue">{{'General.O.Yes' | TextCodeTranslationPipe}}</div>
+                                            <div *ngIf="!FieldValue">{{'General.O.No' | TextCodeTranslationPipe}}</div>
+
+                                            <!--
+        <img *ngIf="FieldValue" src="./Images/CheckBoxIcon.png" [className]="isRTL ? 'RightCenter' : 'LeftCenter'" />
+        <div *ngIf="!FieldValue">{{'General.O.False' | TextCodeTranslationPipe}}</div>
+        -->
+
                                         </div>
 
                                         <div *ngIf=!IsHeaderScreenTemplate [style.textAlign]="TextAlign">
