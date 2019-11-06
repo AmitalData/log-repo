@@ -3927,6 +3927,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isPaymentProtested ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsPaymentProtested  
+	   {
+	    
+	     get
+		{
+		   return isPaymentProtested;
+		 }
+		 set
+		 {
+		   if(isPaymentProtested != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsPaymentProtested",OldValue=isPaymentProtested,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isPaymentProtested=value;
+		   }
+			
+		 }
+	   }
+	  private string fastIndividualProcessName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FastIndividualProcessName  
+	   {
+	    
+	     get
+		{
+		   return fastIndividualProcessName;
+		 }
+		 set
+		 {
+		   if(fastIndividualProcessName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FastIndividualProcessName",OldValue=fastIndividualProcessName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   fastIndividualProcessName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -171,7 +171,7 @@ namespace CustomsWorkerRole
                 {
 
                     ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "DownloadDcaMessageSheetWR :DownloadAll" + costomSetting.DCAPartnerVault, null);
-
+                    Thread.Sleep(TimeSpan.FromMinutes(1));
                 }
 
             }

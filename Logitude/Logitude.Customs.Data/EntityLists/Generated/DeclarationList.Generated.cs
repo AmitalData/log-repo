@@ -284,6 +284,10 @@ namespace Logitude.Customs.Data.EntityLists
        public string CourierPendingReasonList  { get; set; }
        [DataMember]
        public string CargoDescription  { get; set; }
+       [DataMember]
+       public bool IsPaymentProtested  { get; set; }
+       [DataMember]
+       public string FastIndividualProcessName  { get; set; }
    }
 
 }

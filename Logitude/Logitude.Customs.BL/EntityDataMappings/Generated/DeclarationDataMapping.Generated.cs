@@ -123,7 +123,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ItemsProcessTypesList, 
 	         IsClose, 
 	         CourierSuspentionCode, 
-	         DepositionStatusCode,
+	         DepositionStatusCode, 
+	         IsPaymentProtested,
 	      }
 
 
@@ -290,7 +291,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         MAWB, 
 	         IsPending900, 
 	         CourierPendingReasonList, 
-	         CargoDescription,
+	         CargoDescription, 
+	         IsPaymentProtested,
+             FastIndividualProcessName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -802,6 +805,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DepositionStatusCode))
             {
 				entityPOCO.DepositionStatusCode = entityPM.DepositionStatusCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsPaymentProtested))
+            {
+				entityPOCO.IsPaymentProtested = entityPM.IsPaymentProtested;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -1320,6 +1328,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.DepositionStatusCode = entityPOCO.DepositionStatusCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsPaymentProtested))
+            {
+					entityPM.IsPaymentProtested = entityPOCO.IsPaymentProtested;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationPM entityPM, DeclarationPM oldEntityPM)
@@ -1829,6 +1842,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DepositionStatusCode))
             {
                 oldEntityPM.DepositionStatusCode = entityPM.DepositionStatusCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsPaymentProtested))
+            {
+                oldEntityPM.IsPaymentProtested = entityPM.IsPaymentProtested;
             }
 			
 		}
