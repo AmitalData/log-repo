@@ -160,14 +160,14 @@ export class ConsigmentTabContentComponent
 
         //**
         //this.SetDateVisibilty(); // this make entity dirty on tab loaded, the following should solve it
-        if (this.CargoTypeCode == "17") {
-            this.UIProperties.SetVisibility("ThirdCargoID", this.ObjectTableName, false);
-            this.UIProperties.SetVisibility("CargoDate", this.ObjectTableName, true);
-        }
-        else {
-            this.UIProperties.SetVisibility("ThirdCargoID", this.ObjectTableName, true);
-            this.UIProperties.SetVisibility("CargoDate", this.ObjectTableName, false);
-        }
+        //if (this.CargoTypeCode == "17") {
+        //    this.UIProperties.SetVisibility("ThirdCargoID", this.ObjectTableName, false);
+        //    this.UIProperties.SetVisibility("CargoDate", this.ObjectTableName, true);
+        //}
+        //else {
+        //    this.UIProperties.SetVisibility("ThirdCargoID", this.ObjectTableName, true);
+        //    this.UIProperties.SetVisibility("CargoDate", this.ObjectTableName, false);
+        //}
         //**
 
 
@@ -186,16 +186,16 @@ export class ConsigmentTabContentComponent
     }
 
     SetDateVisibilty() {
-        if (this.CargoTypeCode == "17") {
-            this.ThirdCargoID = null;
-            this.UIProperties.SetVisibility("ThirdCargoID", this.ObjectTableName, false);
-            this.UIProperties.SetVisibility("CargoDate", this.ObjectTableName, true);
-        }
-        else {
-            this.CargoDate = null;
-            this.UIProperties.SetVisibility("ThirdCargoID", this.ObjectTableName, true);
-            this.UIProperties.SetVisibility("CargoDate", this.ObjectTableName, false);
-        }
+        //if (this.CargoTypeCode == "17") {
+        //    this.ThirdCargoID = null;
+        //    this.UIProperties.SetVisibility("ThirdCargoID", this.ObjectTableName, false);
+        //    this.UIProperties.SetVisibility("CargoDate", this.ObjectTableName, true);
+        //}
+        //else {
+        //    this.CargoDate = null;
+        //    this.UIProperties.SetVisibility("ThirdCargoID", this.ObjectTableName, true);
+        //    this.UIProperties.SetVisibility("CargoDate", this.ObjectTableName, false);
+        //}
     }
 
     SetScreenFieldsEditability() {

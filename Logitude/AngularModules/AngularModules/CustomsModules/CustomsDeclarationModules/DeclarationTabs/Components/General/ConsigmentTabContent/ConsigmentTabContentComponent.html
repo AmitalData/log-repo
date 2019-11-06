@@ -116,19 +116,27 @@
 
                                             <!-- ThirdCargoID -->
                                             <td>
-                                                <LogLabel [ObjectFieldName]="'ThirdCargoID'" [ObjectTableName]="'Customs.Consignment'"
-                                                          [DataContext]="DataContext"></LogLabel>
-                                                <LogLabel [ObjectFieldName]="'CargoDate'" [ObjectTableName]="'Customs.Consignment'"
-                                                          [DataContext]="DataContext"></LogLabel>
+                                                <div [hidden]="CargoTypeCode=='17'"> 
+                                                    <LogLabel [ObjectFieldName]="'ThirdCargoID'" [ObjectTableName]="'Customs.Consignment'"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </div>
+                                                <div [hidden]="CargoTypeCode!='17'"> 
+
+                                                    <LogLabel [ObjectFieldName]="'CargoDate'" [ObjectTableName]="'Customs.Consignment'"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                     </div> 
                                             </td>
                                             <td>
-                                                <LogTextBox [ObjectFieldName]="'ThirdCargoID'" [Placeholder]="ThirdCargoIdPlaceholder" [ObjectTableName]="'Customs.Consignment'"
-                                                            [HideColumns]="true" [Text]="ThirdCargoID"
-                                                            [DataContext]="DataContext"></LogTextBox>
-
-                                                <LogDatePicker [ObjectFieldName]="'CargoDate'" [ObjectTableName]="'Customs.Consignment'"
-                                                               [SelectedDateValue]="CargoDate"
-                                                               [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                              <div [hidden] ="CargoTypeCode=='17'"> 
+                                                    <LogTextBox [ObjectFieldName]="'ThirdCargoID'" [Placeholder]="ThirdCargoIdPlaceholder" [ObjectTableName]="'Customs.Consignment'"
+                                                                [HideColumns]="true" [Text]="ThirdCargoID"
+                                                                [DataContext]="DataContext"></LogTextBox>
+                                               </div>
+                                                <div [hidden] ="CargoTypeCode!='17'"> 
+                                                    <LogDatePicker [ObjectFieldName]="'CargoDate'" [ObjectTableName]="'Customs.Consignment'"
+                                                                   [SelectedDateValue]="CargoDate"
+                                                                   [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                     </div> 
                                             </td>
 
                                             <td style="width: 20px;">

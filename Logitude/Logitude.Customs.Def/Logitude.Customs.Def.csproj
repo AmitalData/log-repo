@@ -152,6 +152,7 @@
     <Compile Include="EntityPMs\Generated\ConfirmationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ConsignmentInternalTransitionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ConsignmentPackagePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ConsignmentPackDangerPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ConsignmentPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ConstraintApprovalDecisionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ConstraintProcessTypePM.Generated.cs" />
@@ -221,6 +222,7 @@
     <Compile Include="EntityPMs\Generated\DecCargoSplitConPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DecCargoSplitConsItemPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DecCargoSplitConsPackDetPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DecDangersContactsPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DecisionTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeclarationCargoSplitPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeclarationConsAcceptancePM.Generated.cs" />

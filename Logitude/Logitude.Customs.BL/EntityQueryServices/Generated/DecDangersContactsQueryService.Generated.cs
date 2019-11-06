@@ -1,0 +1,69 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.BL.EntityDataMappings;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Data.EntityKeys;
+using Logitude.Customs.Data;
+using Simplog.Server.Infrastructure;
+namespace Logitude.Customs.BL.EntityQueryServices
+{ 
+   public partial class DecDangersContactQueryService: EntityQueryService<DecDangersContact,DecDangersContactKeys,DecDangersContactPM,DeclarationPM,DeclarationKeys>
+   {
+   
+        DecDangersContactRepository repository;
+		ICustomContext  context;
+        public DecDangersContactQueryService(int tenant)
+        {
+		    context = CustomContext.GetContext(tenant);
+            MainContext = context;
+            repository = new DecDangersContactRepository(context);
+            Repository = repository;
+            mapping = new DecDangersContactDataMapping();
+        }
+
+        public DecDangersContactQueryService(DecDangersContactRepository repository)
+        {
+            this.repository = repository;
+            Repository = repository;
+            mapping = new DecDangersContactDataMapping();
+        }
+
+        public DecDangersContactQueryService(ICustomContext context)
+        {
+            this.repository = new DecDangersContactRepository(context);
+            this.context = context;
+
+            MainContext = context;
+            Repository = repository;
+            mapping = new DecDangersContactDataMapping();
+        }
+		 
+		public  DecDangersContactPM GetSingle(string declarationid,bool getComposition, bool getFromCache)
+        {
+             EntityKeys = new DecDangersContactKeys(){ DeclarationId = declarationid };
+
+			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
+        }
+
+       
+	    protected override EntityKeyFields GetKeys(DecDangersContact entityPOCO)
+        {
+            DecDangersContactKeys entityKeys = new DecDangersContactKeys() { DeclarationId = entityPOCO.DeclarationId,  };
+            return entityKeys;
+        }
+     
+	 
+   }
+   
+}
+	 

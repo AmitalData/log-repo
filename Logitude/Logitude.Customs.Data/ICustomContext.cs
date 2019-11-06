@@ -73,6 +73,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<Consignment> Consignments { get; }
 		 IDbSet<ConsignmentInternalTransition> ConsignmentInternalTransitions { get; }
 		 IDbSet<ConsignmentPackage> ConsignmentPackages { get; }
+		 IDbSet<ConsignmentPackDanger> ConsignmentPackDangers { get; }
 		 IDbSet<ConstraintApprovalDecision> ConstraintApprovalDecisions { get; }
 		 IDbSet<ConstraintProcessType> ConstraintProcessTypes { get; }
 		 IDbSet<ConstraintStatus> ConstraintStatuses { get; }
@@ -141,6 +142,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<DecCargoSplitCon> DecCargoSplitCons { get; }
 		 IDbSet<DecCargoSplitConsItem> DecCargoSplitConsItems { get; }
 		 IDbSet<DecCargoSplitConsPackDet> DecCargoSplitConsPackDets { get; }
+		 IDbSet<DecDangersContact> DecDangersContacts { get; }
 		 IDbSet<DecisionType> DecisionTypes { get; }
 		 IDbSet<Declaration> Declarations { get; }
 		 IDbSet<DeclarationCargoSplit> DeclarationCargoSplits { get; }
