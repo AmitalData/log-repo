@@ -133,7 +133,7 @@
                                              <td>
                                                  <label style="color:#282E30">{{'Customs.CustomsCollateral.O.TapagFile' |TextCodeTranslationPipe}}</label>
                                              </td>
-                                             <td style="color:#282E30"> 
+                                             <td style="color:#282E30">
                                                  {{TapagFile}}
                                              </td>
                                          </tr>
@@ -230,13 +230,19 @@
                                  <table style="width:140px">
                                      <tr>
                                          <td style="width:140px">
-                                             <LogTextBox [ObjectFieldName]="'CustomsTapgFile'" [ObjectTableName]="ObjectTableName"  [Text]="CustomsTapgFile" 
+                                             <LogTextBox [ObjectFieldName]="'CustomsTapgFile'" [ObjectTableName]="ObjectTableName" [Text]="CustomsTapgFile"
                                                          [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                                         </td>
+                                         <!-- *ngIf="IsGuaranteeDefaultList" -->
+                                         <td style="width: 20px; padding-right: 4px; padding-top: 3px;">
+                                             <div *ngIf="IsGuaranteeDefaultShow" style="width: 18px; float: right; height:20px;">
+                                                 <img [ngStyle]="imgNgStyle" src="./Images/LOVSearch.png" (click)="OpenGuaranteeDefaultListScreen()" title="רשימת מספרי ערבות" />
+                                             </div>
                                          </td>
                                      </tr>
                                  </table>
                              </td>
-
+                             
                          </tr>
 
                          <tr style="height:25px">
