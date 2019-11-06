@@ -10014,20 +10014,65 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                           && allCarriersIds.Contains(d.Id)
                                           select d).ToList();
 
-                foreach (FlightSummary item in myResult.Where(d => d.CarrierId != null))
+                foreach (FlightSummary item in myResult)
                 {
-                    Card myCarrier = allCarriers.Where(d => d.Id == item.CarrierId).FirstOrDefault();
-                    if (myCarrier != null)
-                    {
-                        item.CarrierCode = myCarrier.Code;
-                        item.CarrierName = myCarrier.EnglishName;
-                    }
+                    item.ActualDateCode = this.GetFlightSummaryDateCode(item.ActualDate, tenant);
+                    item.ExpectedDateCode = this.GetFlightSummaryDateCode(item.ExpectedDate, tenant);
 
-                    else
+                    if (item.CarrierId != null)
                     {
-                        item.CarrierCode = "No_Data";
-                        item.CarrierName = "No_Data";
+                        Card myCarrier = allCarriers.Where(d => d.Id == item.CarrierId).FirstOrDefault();
+                        if (myCarrier != null)
+                        {
+                            item.CarrierCode = myCarrier.Code;
+                            item.CarrierName = myCarrier.EnglishName;
+                        }
+
+                        else
+                        {
+                            item.CarrierCode = "No_Data";
+                            item.CarrierName = "No_Data";
+                        }
                     }
+                }
+            }
+
+            return myResult;
+        }
+
+        private string GetFlightSummaryDateCode(DateTime? date, int tenant)
+        {
+            string myResult = null;
+
+            if (date != null)
+            {
+                DateTime? todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+                DateTime? yesterdayDate = todayDate.Value.AddDays(-1);
+                DateTime? tomorrowDate = todayDate.Value.AddDays(1);
+                DateTime? afterTomorrowDate = todayDate.Value.AddDays(2);
+
+                DateTime? lastWeekDate = todayDate.Value.AddDays(-7);
+                DateTime? nextWeekDate = todayDate.Value.AddDays(7);
+
+                //queryableData.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.MainCarriageATD) >= date1 && System.Data.Entity.DbFunctions.TruncateTime(d.MainCarriageATD) <= date2);
+                if (date.Value.Date == todayDate)
+                {
+                    myResult = "TOD";
+                }
+                
+                else if(date.Value.Date == tomorrowDate)
+                {
+                    myResult = "TOM";
+                }
+
+                else if (date.Value.Date >= lastWeekDate && date.Value.Date <= yesterdayDate)
+                {
+                    myResult = "LSW";
+                }
+
+                else if (date.Value.Date >= afterTomorrowDate && date.Value.Date <= nextWeekDate)
+                {
+                    myResult = "NXW";
                 }
             }
 
