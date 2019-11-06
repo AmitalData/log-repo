@@ -38,6 +38,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private _DeclarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
     _CourierMasterService: CourierMasterService = new CourierMasterService();
+    _EntityListService: EntityListService = new EntityListService();
 
     // Queries Features
     public OpenCourierMasterVisibility: boolean = true;
@@ -60,6 +61,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
                 {
                     this.isScreenLoaded = true;
                     this.CurrentSession.StopBusyIndicator();
+                    this.BuildColumns();
                 }
             });
         });
@@ -434,4 +436,120 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
         });
     }
     */
+
+    public columns: any[] = null;
+    BuildColumns() {
+        this.columns = [];
+
+        this.columns.push({
+            FieldName: 'MAWBP',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Customs.CourierMaster.F.MAWB"),
+            Styles: { width: '120px' },
+            IsCustomTemplate: true,
+            HtmlListComponentName: 'CourierWorksheetListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+        });
+
+        this.columns.push({
+            FieldName: 'EstimatedArrivalDate',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Customs.CourierMaster.F.EstimatedArrivalDate"),
+            Styles: { width: '100px' },
+            IsCustomTemplate: true,
+            ServerSideSortable: false,
+        });
+
+        this.columns.push({
+            FieldName: 'CalcClosedForFollowUp',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Customs.CourierMaster.F.CalcClosedForFollowUp"),
+            Styles: { width: '70px' },
+            IsCustomTemplate: true,
+            //HtmlListComponentName: 'CourierWorksheetListTemplate',
+            //HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+            ServerSideSortable: false,
+        });
+
+        this.columns.push({
+            FieldName: 'CalcMissingImporterId',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Customs.CourierMaster.F.CalcMissingImporterId"),
+            Styles: { width: '160px' },
+            IsCustomTemplate: true,
+            ServerSideSortable: false,
+        });
+
+        this.columns.push({
+            FieldName: 'CalcMissingClassification',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Customs.CourierMaster.F.CalcMissingClassification"),
+            Styles: { width: '160px' },
+            IsCustomTemplate: true,
+            ServerSideSortable: false,
+        });
+
+        this.columns.push({
+            FieldName: 'CalcPendingCustoms',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Customs.CourierMaster.F.CalcPendingCustoms"),
+            Styles: { width: '160px' },
+            IsCustomTemplate: true,
+            ServerSideSortable: false,
+        });
+
+    }
+
+    DataSource = {
+
+        pageSize: 30,
+        rowCount: null,
+        //sortingCol: "CourierHawb",
+        //sortingDir: "Descending",
+        getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
+            var tempo = this.getRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
+            return tempo;
+
+        },
+    };
+
+    filterAgrs: ApiQueryFilters;
+    getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
+
+        if (filters == null) {
+            filters = new ApiQueryFilters();
+        }
+
+        filters.PageSize = take;
+        filters.PageIndex = skip;
+        filters.GetAll = false;
+        filters.GetCount = true;
+        filters.SortBy = sortingCol;
+        filters.SortDirection = sortingDir;
+        this.BuildFiltersForCourierMasterQuery(filters);
+
+        var myout = this._EntityListService.getExtendedByFilters("Customs.CourierMaster", filters);
+
+        return myout;
+    }
+
+    BuildFiltersForCourierMasterQuery(filters: ApiQueryFilters = null) {
+
+        if (filters == null) {
+            filters = new ApiQueryFilters();
+        }
+        filters.addAdditionalFilter("IsOpen", true, null, null, "Equals", false, false, false, "boolean");
+        filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
+
+        if (AppTool.IsNullOrEmpty(filters.SortBy)) {
+            filters.SortBy = "EstimatedArrivalDate";
+        }
+        if (AppTool.IsNullOrEmpty(filters.SortDirection)) {
+            filters.SortDirection = "Descending";
+        }
+    }
+
+    ViewInitCompleted($event) {
+    }
+
 }
