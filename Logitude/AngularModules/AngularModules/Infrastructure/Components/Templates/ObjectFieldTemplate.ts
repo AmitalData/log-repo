@@ -170,17 +170,17 @@ export class ObjectFieldTemplate implements OnInit, OnDestroy  {
 
                                 if (this.ObjectField.DataTypeCode == 'Boolean') {
                                     if (this.IsHeaderScreenTemplate) {
-                                        this.FieldValue = (this.CustomField.Value == "True" || this.CustomField.Value == "true") ? true : false;
+                                        this.FieldValue = (this.CustomField.ResolvedValue == true || this.CustomField.Value == "true") ? true : false;
                                     }
 
                                     else {
-                                        this.FieldValue = (this.CustomField == "True" || this.CustomField == "true") ? true : false;
+                                        this.FieldValue = (this.CustomField.ResolvedValue == true || this.CustomField.Value == "true") ? true : false;
                                     }
                                 }
 
                                 else {
                                     if (this.IsHeaderScreenTemplate) {
-                                        this.FieldValue = this.CustomField['Value'];
+                                        this.FieldValue = this.CustomField.ResolvedValue;
                                     }
 
                                     else {

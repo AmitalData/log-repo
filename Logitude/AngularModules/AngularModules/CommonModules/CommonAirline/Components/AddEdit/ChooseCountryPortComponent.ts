@@ -92,7 +92,7 @@ export class ChooseCountryPortComponent extends BaseComponent {
                 var counter = 0;
                 portsList.forEach(item => {
                     if (this.ParentClass.PortItemsList.filter(d => d.Code == item.Code).length == 0) {
-                        var newPort: AirlineAreasPortPM = new AirlineAreasPortPM(this.ParentClass.fatherComponent.EntityPM);
+                        var newPort: AirlineAreasPortPM = new AirlineAreasPortPM(this.ParentClass.EntityPM);
                         newPort.Tenant = SessionLocator.Tenant;
                         newPort.AirlineAreaId = this.ParentClass.EntityPM.Id;
                         newPort.Name = item.EnglishName;

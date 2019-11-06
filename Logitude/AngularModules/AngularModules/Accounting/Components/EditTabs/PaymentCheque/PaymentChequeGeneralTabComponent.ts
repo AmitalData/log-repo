@@ -42,8 +42,13 @@ export class PaymentChequeGeneralTabComponent extends BaseComponent implements  
     BankAccountPMService: BankAccountPMService = new BankAccountPMService();
     private CurrentSession = SessionLocator.SelectedSession;
     PayToGLAccountIdOldValue: string;
-    constructor(private entityArgs: EntityArgs) {
+    public isRTL: boolean = false;
+    constructor(private entityArgs: EntityArgs)
+    {
         super();
+
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+
         this.entityPM = entityArgs.EntityPM;
         this.SetFilters();
         this.LayoutDirection=ObjectsLocator.GlobalSetting.LayoutDirection
@@ -56,16 +61,16 @@ export class PaymentChequeGeneralTabComponent extends BaseComponent implements  
                 });
             });
         });
-       
+
                 if (this.entityPM.BankLocalName) {
                     this.BankName = "LocalName";
                 }
                 else {
                     this.BankName = "EnglishName";
                 }
-          
 
-       
+
+
 
         this.BuildPaymentChequeLinesList();
         if (this.entityPM.PaymentChequeStatusCode == "2" || this.entityPM.IsCancelled) {
@@ -162,8 +167,8 @@ export class PaymentChequeGeneralTabComponent extends BaseComponent implements  
             this.bankName = value;
         }
     }
-    
- 
+
+
     private bankAccount: BankAccountPM;
     get BankAccount() { return this.bankAccount; }
     set BankAccount(value: BankAccountPM) {
@@ -179,7 +184,7 @@ export class PaymentChequeGeneralTabComponent extends BaseComponent implements  
             }
         }
     }
-   
+
     private account: GLAccountPM;
     get Account() { return this.account; }
     set Account(value: GLAccountPM) {
@@ -195,15 +200,15 @@ export class PaymentChequeGeneralTabComponent extends BaseComponent implements  
                 else {
                     this.UIProperties.SetValidity("PayToGLAccountId", this.ObjectTableName, true, null);
 
-                  
+
                         this.PayToName = value.LocalName;
-                   
+
                 }
             }
             }
         }
     }
-   
+
     Add() {
         if (this.AddLineEnabled) {
             var line: number = 0;
@@ -293,7 +298,7 @@ export class PaymentChequeLine extends BaseComponent {
     DeleteButtonClicked() {
         var sequence = 1;
         this.parent.Lines.Remove(this);
-        this.parent.entityPM.RemovePaymentChequeLine(this.entity); 
+        this.parent.entityPM.RemovePaymentChequeLine(this.entity);
         this.parent.Lines.Collection.forEach((item: PaymentChequeLine) => {
             item.SequenceNumeric = sequence;
             sequence++;

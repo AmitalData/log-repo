@@ -256,8 +256,9 @@ export class ManageExternalReconciliationTabComponent extends BaseComponent impl
 
         filters.SortBy = "CreateDate";
         filters.SortDirection = "Descending";
+        var glaccountId = this.getGLAccountId();
 
-        filters.addAdditionalFilter("GLAccountId", this.EntityPM.GLAccountId, null, null, "Equals", false, false, false, "string");
+        filters.addAdditionalFilter("GLAccountId", glaccountId, null, null, "Equals", false, false, false, "string");
         //filters.addAdditionalFilter("IsCancelled", false, null, null, "Equals", false, false, false, "boolean");
 
         //#endregion
@@ -266,6 +267,15 @@ export class ManageExternalReconciliationTabComponent extends BaseComponent impl
 
     }
 
+    private getGLAccountId()
+    {
+        var glaccountId;
+        if (this.entityArgs.ObjectTableName == "GLAccount")
+            glaccountId = this.EntityPM.Id;
+        else if (this.entityArgs.ObjectTableName == "BankAccount")
+            glaccountId = this.EntityPM.GLAccountId;
+        return glaccountId;
+    }
     //#endregion
 
     //#region Buttons

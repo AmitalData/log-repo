@@ -57,6 +57,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
         }
         //const string MyNotes = "פרעון שיק מהתאמה";
         public void CreateJournalWithExtReconcile(int tenant ,List<string> reconcileExternalPageLineIdList,string adjustGLAccountId,string screenNotes
+            , DateTime accountingDate
             )
         {
             if (string.IsNullOrWhiteSpace(screenNotes))
@@ -74,7 +75,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 
             List<GLAccountList> ListOfGLAccountList = _ExternalReconcileDataProvider.GetListOfGLAccountList(tenant, listOfAccId);
             var bankGLAccountList = ListOfGLAccountList.First();//must have 
-            CreateJournal(tenant, adjustGLAccountId, listOfpageLineList, listOfpageList, bankGLAccountList, accountingCurrencyId, screenNotes);
+            CreateJournal(tenant, adjustGLAccountId, listOfpageLineList, listOfpageList, bankGLAccountList, accountingCurrencyId, screenNotes, accountingDate);
 
         }
 
@@ -92,9 +93,9 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             }
         }
 
-        private void CreateJournal(int tenant, string adjustGLAccountId, List<Data.EntityLists.ReconcileExternalPageLineList> listOfpageLineList, List<Data.EntityLists.ReconcileExternalPageList> listOfpageList, GLAccountList bankGLAccountList, string accountingCurrencyId, string screenNotes)
+        private void CreateJournal(int tenant, string adjustGLAccountId, List<Data.EntityLists.ReconcileExternalPageLineList> listOfpageLineList, List<Data.EntityLists.ReconcileExternalPageList> listOfpageList, GLAccountList bankGLAccountList, string accountingCurrencyId, string screenNotes, DateTime accountingDate)
         {
-            CreateJournalHeader(tenant);
+            CreateJournalHeader(tenant, accountingDate);
             CreateJournalLinesFromPageLines(listOfpageLineList, bankGLAccountList, adjustGLAccountId, accountingCurrencyId, screenNotes);
 
 
@@ -238,7 +239,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             return local;
         }
 
-        private void CreateJournalHeader(int tenant)
+        private void CreateJournalHeader(int tenant,DateTime accountingDate)
         {
             TheNewJournal/*_TheNewJournal */= new JournalPM();
             TheNewJournal.Tenant = tenant;
@@ -246,10 +247,10 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             TheNewJournal.JournalNumber = "1";
             TheNewJournal.CreateDate = _ExternalReconcileDataProvider.GetCurrentDateTime(tenant);
             TheNewJournal.AccountingDate = //theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : 
-                _ExternalReconcileDataProvider.GetCurrentDateTime(tenant);
+                accountingDate;//_ExternalReconcileDataProvider.GetCurrentDateTime(tenant);
             TheNewJournal.TypeCode = "0";
 
-            bool testedAndFoundAllOK = false;
+            bool testedAndFoundAllOK = true;
             if (testedAndFoundAllOK)
             {
                 TheNewJournal.StatusCodeEnum = JournalStatusTypePM.StatusCodeEnum.Approved;
@@ -336,7 +337,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             {
                 _ErrorList.Add(M_NotAllPageLineIdsFoundInDB);
             }
-            if (listOfpageList.Select(r=>r.GLAccountId).Count()!=1)
+            if (listOfpageList.Select(r=>r.GLAccountId).Distinct().Count()!=1)
             {
                 _ErrorList.Add(M_NotAllPageLineIdsInTheSameBankAccount);
             }
@@ -345,7 +346,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
     }
     public interface IExternalReconcileAdjustBankFeesService
     {
-        void CreateJournalWithExtReconcile(int tenant, List<string> reconcileExternalPageLineIdList, string adjustGLAccountId, string screenNotes);
+        void CreateJournalWithExtReconcile(int tenant, List<string> reconcileExternalPageLineIdList, string adjustGLAccountId, string screenNotes, DateTime accountingDate);
         void MustInit(IExternalReconcileDataProvider externalReconcileDataProvider);
         JournalPM TheNewJournal { get; }
     }

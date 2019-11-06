@@ -10,6 +10,8 @@ using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Microsoft.Practices.Unity;
+using System.Text;
 
 namespace WebFreight.Web.Helpers
 {
@@ -40,6 +42,7 @@ namespace WebFreight.Web.Helpers
                         Tenant = Convert.ToInt32(tenant),
                         Id = IdCounter.GetNumber("BluesnapTransaction", tenant),
                         TransactionDate = TransactionDate,
+                        
                     };
 
                     bluesnapTransactionRepository.Add(transaction);
@@ -70,10 +73,29 @@ namespace WebFreight.Web.Helpers
                 Id = IdCounter.GetNumber("Document", tenant),
                 HasFile = true,
                 Folder = "bluesnap",
+                
+                
             };
+
+
+
+
             documentId = document.Id;
             documentRepository.Add(document);
             documentRepository.SubmitChanges();
+            byte[] myByteArray = Encoding.ASCII.GetBytes(file);
+
+            Logitude.Server.Tools.BlobFileInfo fileInfo = new Logitude.Server.Tools.BlobFileInfo()
+            {
+                FileName = documentId,
+                FolderName = "bluesnap",
+                Extension = "xml",
+                Tenant = tenant,
+                FileSize = myByteArray.Length,
+            };
+
+            Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
+            storageservice.Write(myByteArray, fileInfo);
 
         }
 

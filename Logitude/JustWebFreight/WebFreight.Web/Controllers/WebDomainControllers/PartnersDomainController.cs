@@ -2597,5 +2597,45 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        public HttpResponseMessage GetRemoveAirlineAreaFromAirline(string areaId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
+                AirlineAreaRepository airlineAreaRepository = new AirlineAreaRepository(commonDataContext);
+                AirlineAreasPortRepository airlineAreasPortRepository = new AirlineAreasPortRepository(commonDataContext);
+
+                AirlineArea airlineArea = airlineAreaRepository.GetSingleAirlineArea(areaId, tenant);
+
+                if(airlineArea != null)
+                {
+                    List<AirlineAreasPort> areasPorts = airlineAreasPortRepository.GetAirlineAreasPortByAreaId(areaId, tenant);
+                    if(areasPorts != null && areasPorts.Count > 0)
+                    {
+                        foreach (AirlineAreasPort item in areasPorts)
+                        {
+                            airlineAreasPortRepository.Remove(item);
+                        }
+                    }
+
+                    airlineAreaRepository.Remove(airlineArea);
+                    commonDataContext.SaveChanges();
+                }               
+
+                return Request.CreateResponse(HttpStatusCode.OK, "ok");
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }

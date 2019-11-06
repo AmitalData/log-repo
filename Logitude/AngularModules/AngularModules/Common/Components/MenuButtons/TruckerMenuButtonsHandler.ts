@@ -74,7 +74,7 @@ export class TruckerMenuButtonsHandler {
 
     private DisconnectGLAccount() {
         this.CurrentSession.StartBusyIndicator("Loading...");
-        this.cardExtendedPMService.DisconnectGLAccountFromCard(this.EntityPM.Id, "TR", "DIST").subscribe((myResponse: ServiceResponse) => {
+        this.cardExtendedPMService.DisconnectGLAccountFromCard(this.EntityPM.Id, "TR", "TRDS").subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                 this.CurrentSession.StopBusyIndicator();

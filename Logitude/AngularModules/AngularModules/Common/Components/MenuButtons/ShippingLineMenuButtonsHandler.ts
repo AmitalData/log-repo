@@ -74,7 +74,7 @@ export class ShippingLineMenuButtonsHandler {
 
     private DisconnectGLAccount() {
         this.CurrentSession.StartBusyIndicator("Loading...");
-        this.cardExtendedPMService.DisconnectGLAccountFromCard(this.EntityPM.Id, "SL", "DIST").subscribe((myResponse: ServiceResponse) => {
+        this.cardExtendedPMService.DisconnectGLAccountFromCard(this.EntityPM.Id, "SL", "SLDS").subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                 this.CurrentSession.StopBusyIndicator();

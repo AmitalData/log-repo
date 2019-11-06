@@ -1,3 +1,4 @@
+import { IdGeneratorPipe } from './../../../Controls/Pipes/IdGeneratorPipe';
 import { AccountingEntityHelper } from './../../Utilities/AccountingEntityHelper';
 import {Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef}  from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -36,6 +37,7 @@ import {ExternalReconciliationPMService} from '../../Services/StandardPMs/Extern
 import {ExternalReconciliationExtendedPMService} from '../../Services/ExtendedPMs/ExternalReconciliationExtendedPMService';
 import {LedgerTransactionExtendedListService} from '../../Services/ExtendedLists/LedgerTransactionExtendedListService';
 import {ExternalReconciliationExtendedListService} from '../../Services/ExtendedLists/ExternalReconciliationExtendedListService';
+import { retry } from 'rxjs/operators';
 
 
 
@@ -119,6 +121,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     SetWindowArgs(args: any) {
         if (args != null) {
             this.BankAccountPM = args.BankAccountPM;
+            this.EntityPM = args.EntityPM;
             this.ObjectTableName = args.ObjectTableName;
             this.openAmountCurrency = args.openAmountCurrency;
             this.SetTitles();
@@ -237,6 +240,11 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
         // Local Validate
         if (this.totalDifference != 0) {
+            if (this.ExtPageSelectedLines.Length > 0 && this.TransactionSelectedLines.Length == 0) {
+                //errors.push(TextCodeTranslator.Translate("Accounting.O.SelectTwoTransactionAtLeast"));
+                this.AdjustBankFeeWithNewJournalScreen();
+                return;
+            }
             //errors.push(TextCodeTranslator.Translate("Accounting.General.O.DifferenceMustEqual0"));//"The difference must be equal to zero"
         } else {
             //Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
@@ -299,6 +307,35 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         if (this.IsAutoReconcile) {
             this.AutoReco();
         }
+    }
+    AdjustBankFeeWithNewJournalScreen(): void {
+        //throw new Error("Method not implemented.");
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 390;
+        confirmWindow.Show(TextCodeTranslator.Translate("Accounting.O.NewReconcileWithAdjusment"));
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.CurrentSession.entityResourceService.getEntityResourceByTableName("Journal").subscribe(response => {
+                    this.CurrentSession.entityResourceService.getEntityResourceByTableName("JournalLine").subscribe(response => {
+                        var logitudeWindow = new LogitudeWindow();
+                        logitudeWindow.Width = 500;
+                        logitudeWindow.Height = 400;
+                        logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.B.Adjust");
+                        logitudeWindow.WindowArgs = { "SelectedLines": this.ExtPageSelectedLines, "BankAccountPMId": this.BankAccountPM.Id };
+                        logitudeWindow.Show('./Accounting/Components/Others/ExtReconcileAdjustBankFeeComponent');
+                        logitudeWindow.WindowClosed
+                            .subscribe(($event: any) => {
+                                this.RefreshButtonClicked();
+                            });
+                    });
+                });
+
+            }
+        });
+
+
+
+
     }
     //#endregion
 
@@ -508,9 +545,23 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         filters.addAdditionalFilter("IsExternalReconcile", false, null, null, "Equals", false, false, false, "Boolean");
         // filters.addAdditionalFilter("SourceTypeCode", "5,9", null, null, "InList", false, false, false, "String");
         filters.addAdditionalFilter("DueDate", new Date(), null, null, "LessThanOrEqual", false, false, false, "Date"); // value will be override in server, to avoid edging problem!
-        filters.addAdditionalFilter("DUMMY_TransferAccountId", this.BankAccountPM.TransferGLAcccountId, null, null, "Equals", false, false, false, "String");
 
-        return this.entityListService.getReconciliationsByFilter("LedgerTransaction", this.BankAccountPM.GLAccountId, filters);
+        if(this.ObjectTableName == "BankAccount")
+            filters.addAdditionalFilter("DUMMY_TransferAccountId", this.BankAccountPM.TransferGLAcccountId, null, null, "Equals", false, false, false, "String");
+
+        var glaccountId = this.getGLAccountId();
+
+        return this.entityListService.getReconciliationsByFilter("LedgerTransaction", glaccountId, filters);
+    }
+
+    private getGLAccountId()
+    {
+        var glaccountId;
+        if (this.ObjectTableName == "GLAccount")
+            glaccountId = this.EntityPM.Id;
+        else if (this.ObjectTableName == "BankAccount")
+            glaccountId = this.BankAccountPM.GLAccountId;
+        return glaccountId;
     }
 
     PushLine(row, RowIndex) {
@@ -1121,7 +1172,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         var newEntity: ExternalReconciliationPM = new ExternalReconciliationPM();
 
         newEntity.Id = "new";
-        newEntity.GLAccountId = this.BankAccountPM.GLAccountId;
+        newEntity.GLAccountId = this.getGLAccountId();
         newEntity.BankAccountId = this.BankAccountPM.Id;
         newEntity.Tenant = this.BankAccountPM.Tenant;
         newEntity.CreateDate = new Date();

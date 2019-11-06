@@ -2627,7 +2627,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code =  "DIST",
+                Code =  "CGDS",
                 EnglishName =  "GLAccount was disconnected",
                 LocalName =  "נותק כרטיס הנהח\"ש",
                 IsManualEntry =  false,
