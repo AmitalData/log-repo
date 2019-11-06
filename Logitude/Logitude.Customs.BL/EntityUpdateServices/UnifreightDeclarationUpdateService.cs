@@ -2294,7 +2294,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (top!=0 && top < list.Count())
             {
                 list =list.Take(top).ToList();
-            }
+            }//
             return string.Join(",", list).TrimEnd(',');
         }
 
