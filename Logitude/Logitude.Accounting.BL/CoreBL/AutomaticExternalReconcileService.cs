@@ -518,6 +518,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 //StatusLocalName = xxxx,
 
             };
+            ObjectTable bankAccountObjectTable = GetBankAccountObjectTable(tenant);
 
             ReconcileExternalPagePM bankPage = new ReconcileExternalPagePM()
             {
@@ -528,7 +529,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 CreateDate = DateTime.Now,
 
                 GLAccountId = glAccountId,
-                BankAccountId = bankAccountId,
+                EntityId = bankAccountId,
+                ObjectTableId = bankAccountObjectTable.Id,
                 EntryTypeCode = "1", // 1- Manual
 
                 StartBalance = lastPageClosedAmount.Value,
@@ -815,7 +817,14 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
         }
-
+        private ObjectTable GetBankAccountObjectTable(int tenant)
+        {
+            ObjectTableRepository objectTableRepository = new ObjectTableRepository(tenant);
+            ObjectTable bankAccountObjectTable = objectTableRepository.GetObjectTableByName("BankAccount", tenant, false);
+            if (bankAccountObjectTable == null)
+                throw new ApplicationException("No objectfield for BankAccount!");
+            return bankAccountObjectTable;
+        }
     }
 
 

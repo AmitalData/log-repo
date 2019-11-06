@@ -44,5 +44,10 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         public ChangeSetOperation ChangeSetOp { get; set; }
 
+        [DataMember]
+        public string Code { get; set; }
+
+        [DataMember]
+        public string CountryCode { get; set; }
     }
 }

@@ -721,6 +721,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
                 this.SetUIProperties();
                 this.SetCurrencyCode();
                 this.SetCurrencyRateData();
+                this.ComputeTotals();
             }
         }
     }
@@ -730,6 +731,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         if (this.IsCreatedFromInvoiceSide == false) {
             if (this.newARPaymentPM.PaymentCurrencyExchangeRate != newValue) {
                 this.newARPaymentPM.PaymentCurrencyExchangeRate = AppTool.Round(newValue, 5);
+                this.ComputeTotals();
             }
         }
     }
@@ -812,8 +814,17 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
     set OpenAmount(newValue: number) {
         if (this.newARPaymentPM.OpenAmount != newValue) {
             this.newARPaymentPM.OpenAmount = AppTool.Round(newValue, 2);
+
         }
     }
+
+    get OpenAmountInLocalCurrency() { return this.EntityPM.OpenAmountInLocalCurrency == null ? 0 : this.EntityPM.OpenAmountInLocalCurrency; }
+    set OpenAmountInLocalCurrency(value: number) {
+        if (this.EntityPM.OpenAmountInLocalCurrency != value) {
+            this.EntityPM.OpenAmountInLocalCurrency = AppTool.Round(value, 2);
+        }
+    }
+
 
     get BankAccountLiteId() { return this.newARPaymentPM.BankAccountLiteId; }
     set BankAccountLiteId(newValue: string) {
@@ -831,6 +842,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
 
     ComputeTotals() {
         this.OpenAmount = this.AmountInPaymentCurrency;
+        this.OpenAmountInLocalCurrency = this.PaymentCurrencyExchangeRate == null ? 0 : this.OpenAmount * this.PaymentCurrencyExchangeRate;
         this.AmountInLocalCurrency = this.PaymentCurrencyExchangeRate == null ? 0 : this.AmountInPaymentCurrency * this.PaymentCurrencyExchangeRate;
     }
 

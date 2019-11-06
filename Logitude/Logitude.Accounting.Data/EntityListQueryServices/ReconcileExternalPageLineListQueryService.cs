@@ -13,6 +13,7 @@ using System.Xml.Serialization;
 
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityLists;
+using System.Linq.Expressions;
 
 namespace Logitude.Accounting.Data.EntityListQueryServices
 {
@@ -69,14 +70,94 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
         public IQueryable<ReconcileExternalPageLine> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<ReconcileExternalPageLine> iQueryable, int tenant)
         {
+            QueryFilterItem amountFilter = queryOperations.QueryFilterItems.Where(d=>d.FieldName == "Amount2Filter").FirstOrDefault();
+
+
+            if (amountFilter != null)
+            {
+                decimal amount;
+                decimal amount2;
+                decimal.TryParse(amountFilter.FieldValue.ToString(), out amount);
+                decimal.TryParse(amountFilter.FieldValue2?.ToString(), out amount2);
+
+                switch (amountFilter.Operator)
+                {
+                    case "LargerThan":
+                        {
+                            iQueryable = iQueryable.Where(pageLine =>
+                            amount < (pageLine.CreditAmount != 0 ? pageLine.CreditAmount : pageLine.DebitAmount)
+                            ||
+                            -1*amount > (pageLine.CreditAmount != 0 ? pageLine.CreditAmount : pageLine.DebitAmount));
+                            break;
+                        }
+
+                    case "GreaterThanOrEqual":
+                        {
+                            iQueryable = iQueryable.Where(pageLine =>
+                            amount <= (pageLine.CreditAmount != 0 ? pageLine.CreditAmount : pageLine.DebitAmount)
+                            ||
+                            -1*amount >= (pageLine.CreditAmount != 0 ? pageLine.CreditAmount : pageLine.DebitAmount));
+                            break;
+                        }
+
+                    case "LessThan":
+                        {
+                            iQueryable = iQueryable.Where(pageLine => 
+                            (amount > (pageLine.CreditAmount != 0 ? pageLine.CreditAmount : pageLine.DebitAmount)));
+                            break;
+                        }
+
+                    case "LessThanOrEqual":
+                        {
+                            iQueryable = iQueryable.Where(pageLine => 
+                            (amount >= (pageLine.CreditAmount != 0 ? pageLine.CreditAmount : pageLine.DebitAmount)));
+                            break;
+                        }
+
+                    case "NotEqual":
+                        {
+                            iQueryable = iQueryable.Where(pageLine =>
+                            (amount != (pageLine.CreditAmount != 0 ? pageLine.CreditAmount : pageLine.DebitAmount))
+                            &&
+                            (-1 * amount != (pageLine.CreditAmount != 0 ? pageLine.CreditAmount : pageLine.DebitAmount))
+                            );
+                            break;
+                        }
+
+                    case "Between":
+                        {
+                            iQueryable = iQueryable.Where(pageLine =>
+                            (amount <= (pageLine.CreditAmount != 0 ? pageLine.CreditAmount : pageLine.DebitAmount))
+                            &&
+                            (amount2 >= (pageLine.CreditAmount != 0 ? pageLine.CreditAmount : pageLine.DebitAmount)));
+                            break;
+                        }
+                    case "Equals":
+                    default:
+                        {
+                            iQueryable = iQueryable.Where(pageLine =>
+                            (amount == (pageLine.CreditAmount != 0 ? pageLine.CreditAmount : pageLine.DebitAmount))
+                            ||
+                            (amount2 == (pageLine.CreditAmount != 0 ? pageLine.CreditAmount : pageLine.DebitAmount))
+                            );
+                            break;
+                        }
+                }
+
+            }
+
             return iQueryable;
         }
+        
+
         public IQueryable<ReconcileExternalPageLine> ApplyBusinessUnitFilters(QueryOperations queryOperations, IQueryable<ReconcileExternalPageLine> iQueryable, int tenant)
         {
             return iQueryable;
         }
 
     }
+    
+  
 
 
 }

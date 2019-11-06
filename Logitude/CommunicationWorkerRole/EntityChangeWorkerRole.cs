@@ -59,7 +59,7 @@ namespace CommunicationWorkerRole
                     {
                         queueservice = new DbQueueService();
                         queueservice.InitializeQueue("entitychangequeue", 0);
-                        var response = queueservice.Receive();
+                        var response = queueservice.Receive(new TimeSpan(0, 0, 1));
                         string tenantString = null;
                         if (response != null && response.MessageId != null)
                         {

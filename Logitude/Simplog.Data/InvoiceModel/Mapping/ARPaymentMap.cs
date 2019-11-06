@@ -84,6 +84,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.BillToId).HasColumnName("BillToId");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.OpenAmount).HasColumnName("OpenAmount");
+            this.Property(t => t.OpenAmountInLocalCurrency).HasColumnName("OpenAmountInLocalCurrency");
             this.Property(t => t.ChequeOrPaymentRef).HasColumnName("ChequeOrPaymentRef");
             this.Property(t => t.Bank).HasColumnName("Bank");
             this.Property(t => t.BankBranch).HasColumnName("BankBranch");

@@ -30,13 +30,13 @@ namespace WebFreight.Web.Security
 		public static void AuthenticateAPICall(int tenant)
 		{
 			if (LogitudeSettings.WorkEnvironment != "logbox" && LogitudeSettings.WorkEnvironment != "cloud")
-			{
-				bool exist = CheckUserTableFeature("General", "EXTERNALAPIS", tenant, true);
-				if (!exist)
-				{
-					throw new AutenticationException("API is not activated. Please contact your system administrator");
-				}
-			}
+            {
+                bool exist = CheckUserTableFeature("General", "EXTERNALAPIS", tenant, true);
+                if (!exist)
+                {
+                    throw new AutenticationException("API is not activated. Please contact your system administrator");
+                }
+            }
 		}
 
 		private static bool CheckUserTableFeature(string objectTableName, string featureCode, int tenant, bool forceAPIFeaturesCheck)

@@ -670,6 +670,9 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
                     }
                 });
             }
+            else {
+                this.CompleteSubmission();
+            }
         }
     }
     CompleteSubmission() {

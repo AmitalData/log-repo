@@ -1064,6 +1064,10 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
                         else if (cmpRef.instance.IsReloadNeeded) {
                             this.entityArgs.EditComponent.ReloadEntityPM();
                         }
+
+                        else if (cmpRef.instance.NeedRefresh) {
+                            this.entityArgs.EditComponent.ReloadEntityPM();
+                        }
                     });
 
                     cmpRef.instance.SaveCompleted.subscribe((isSaveSuccess: boolean) => {

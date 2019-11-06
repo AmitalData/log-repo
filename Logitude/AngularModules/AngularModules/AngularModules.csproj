@@ -95,6 +95,7 @@
     <Content Include="Accounting\Components\Others\AccountingFlatFileDownloadComponent.html" />
     <Content Include="Accounting\Components\Others\CancelChequeComponent.html" />
     <Content Include="Accounting\Components\Others\DropdownButtonComponent.html" />
+    <Content Include="Accounting\Components\Others\ExtReconcileAdjustBankFeeComponent.html" />
     <Content Include="Accounting\Components\Others\JournalReconcileComponent.html" />
     <Content Include="Accounting\Components\Others\ExternalReconcileComponent.html" />
     <Content Include="Accounting\Components\Others\ReconcileComponent.html" />
@@ -410,6 +411,7 @@
     <TypeScriptCompile Include="Accounting\Components\NewEntity\NewIntegrityCheckComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\NewEntity\NewOpenFormatReportComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\AccountingNoteComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\Others\ExtReconcileAdjustBankFeeComponent.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\AccountingIntegrityCheckList.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\IntegrityCheckStatusList.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\JournalAdditionalDataList.ts" />
@@ -453,7 +455,14 @@
     <TypeScriptCompile Include="Common\Components\FiltersMenu\CustomsShipperFiltersMenuComponent.ts" />
     <TypeScriptCompile Include="Common\Components\Maintenance\CustomsInterface\CustomsInterfaceStartDatesComponent.ts" />
     <TypeScriptCompile Include="Common\Components\Maintenance\CustomsInterface\LocalCustomsInterfaceDetailsComponent.ts" />
+    <TypeScriptCompile Include="Common\Components\MenuButtons\AgentMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Common\Components\MenuButtons\AirlineMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Common\Components\MenuButtons\ContactMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Common\Components\MenuButtons\CustomAgentMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Common\Components\MenuButtons\ShippingAgentMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Common\Components\MenuButtons\ShippingLineMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Common\Components\MenuButtons\TruckerMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Common\Components\MenuButtons\VendorMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Common\CustomFilters\WarehouseCustomFilter.ts" />
     <TypeScriptCompile Include="Common\DataContracts\DWQueryData.ts" />
     <TypeScriptCompile Include="Common\DataContracts\ShipmentPickUpDeliverySL.ts" />
@@ -469,17 +478,22 @@
     <TypeScriptCompile Include="Common\EntityPMs\AccountingPartnerPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\AirlineAreaPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\AirlineAreasPortPM.ts" />
+    <TypeScriptCompile Include="Common\EntityPMs\CardContactAdditionalServicePM.ts" />
+    <TypeScriptCompile Include="Common\EntityPMs\CardContactProductPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CustomerDepositionPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CustomsShipperPM.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedLists\CustomerDepositionListExtendedService.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedLists\UserExtendedListService.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedPMs\AutomationResultEmailRecipientExtendedService.ts" />
+    <TypeScriptCompile Include="Common\Services\ExtendedPMs\CardExtendedPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\AccountingPartnerListService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardLists\AirlineAreaListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\CheckDigitControlAlgorithmListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\CustomerDepositionListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\CustomsShipperListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\NumberFormatListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\AccountingPartnerPMService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardPMs\AirlineAreaPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CustomerDepositionPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CustomsShipperPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\LogBoxTenantSettingPMService.ts" />
@@ -967,6 +981,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BIReportListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BIReportsTypeListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BluesnapContractTypeListService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BluesnapTransactionListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BusinessProcessQueueListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BusinessRoleListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\DWObjectFieldExtendedPMService.ts" />
@@ -1935,6 +1950,7 @@
     <TypeScriptCompile Include="InvoiceModules\Transfer\ModuleTransfer.ts" />
     <TypeScriptCompile Include="Invoice\Components\AccountingTab\AccountingTab_AccountingPaymentMethod.ts" />
     <TypeScriptCompile Include="Invoice\Components\MenuButtons\ARInvoiceStockMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Invoice\Services\ConsilidationInvoiceDomainService.ts" />
     <TypeScriptCompile Include="Invoice\EntityLists\AccountingPaymentMethodList.ts" />
     <TypeScriptCompile Include="Invoice\EntityLists\APPaymentTransferStatusList.ts" />
     <TypeScriptCompile Include="Invoice\EntityLists\ARInvoiceStockList.ts" />
@@ -6761,6 +6777,7 @@
     <Content Include="e2e\Testing Scenarios\Master\Team Islam\RunTestCases.bat" />
     <Content Include="e2e\Testing Scenarios\Master\Team Mohammad\TeamMohammadCases.bat" />
     <Content Include="e2e\Testing Scenarios\Master\Team Ayman\ProtractorMasterStaging.bat" />
+    <Content Include="e2e\Testing Scenarios\Master\Team Islam\RunTestCasesStaging.bat" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Common\EntityLists\AddressList.ts" />

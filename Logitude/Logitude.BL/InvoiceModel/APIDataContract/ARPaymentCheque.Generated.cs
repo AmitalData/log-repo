@@ -17,7 +17,7 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 {
    
-    public class ARPaymentCheque
+    public partial class ARPaymentCheque
     {
 
 	    

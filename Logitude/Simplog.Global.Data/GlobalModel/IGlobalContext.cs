@@ -25,6 +25,7 @@ namespace Simplog.Global.Data.GlobalModel
         IDbSet<PaymentCurrency> PaymentCurrencies { get; }
         IDbSet<AutoSignupEmail> AutoSignupEmails { get; }
         IDbSet<BluesnapContract> BluesnapContracts { get; }
+        IDbSet<BluesnapTransaction> BluesnapTransactions { get; }
         IDbSet<AWBMessagesCCSType> AWBMessagesCCSTypes { get; }
         IDbSet<ContactMobileDevice> ContactMobileDevices { get; }
         IDbSet<MobileNotificationLog> MobileNotificationLogs { get; }

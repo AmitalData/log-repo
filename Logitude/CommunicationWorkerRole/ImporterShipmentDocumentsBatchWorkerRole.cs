@@ -213,7 +213,7 @@ namespace CommunicationWorkerRole
                                         TenantPM currentTenant = TenantQuery.GetSingleTenantPM(tenant, false);
                                         if (customerTenantAccessInfo != null)
                                         {
-                                            var customerTenantAccess = customerTenantAccessQuery.GetCustomerTenantAccessPMsByTenantCustomerTenant(tenant, importerTenant);
+                                            var customerTenantAccess = customerTenantAccessQuery.GetCustomerTenantAccessPMsByTenantCustomerTenant(tenant, customerTenantAccessInfo.CustomerTenant);
                                             if (customerTenantAccess != null)
                                             {
                                                 LogPM.PartnerName = customerTenantAccess.CompanyName + " ( " + customerTenantAccess.CustomerTenant + " )";

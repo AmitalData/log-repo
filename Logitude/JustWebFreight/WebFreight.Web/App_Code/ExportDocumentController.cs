@@ -3,6 +3,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Helpers;
 using Logitude.Server.Tools;
+using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.StorageService;
 using Logitude.SystemLogs;
@@ -144,26 +145,27 @@ namespace WebFreight.Web.App_Code
         bool IsDisplayOnly = false;
 
 
+  
 
-        public HttpResponseMessage PostBuildDocumentViaWorkerRole(ExportDocumentArgs filter)
+        private DocumentsExecutionLog GetNewInStanceFromDocumentsExecutionLog(ExportDocumentArgs exportDocumentArgs)
         {
-            try
+            DocumentsExecutionLogRepository documentsExecutionLogRepository = new DocumentsExecutionLogRepository(exportDocumentArgs.Tenant);
+            DocumentsExecutionLog documentsExecutionLog = new DocumentsExecutionLog()
             {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
-                IQueueService queueservice = new DbQueueService();
-                queueservice.InitializeQueue("DocumentExecutionQueue", filter.Tenant);
-                queueservice.Send(new Dictionary<string, string>() { { "ExportDocumentArgsXmal", LogitudeXmlSerializer.SerializeObjectToXmlString(filter) } }, null, null, null, null);
-                return Request.CreateResponse(HttpStatusCode.OK, "");
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
+                Id = IdCounter.GetNumber("DocumentsExecutionLog", exportDocumentArgs.Tenant).ToString(),
+                Tenant = exportDocumentArgs.Tenant,
+                CreateDate = DateTime.Now,
+                CreatedByUserId = exportDocumentArgs.LoggedContactId,
+                RequestXML = LogitudeXmlSerializer.SerializeObjectToXmlString(exportDocumentArgs),
+                StatusCode = "W",
+                DocumentTypeId = exportDocumentArgs.DocumentTypeId,
+                DocumentTypeTemplateId = exportDocumentArgs.DocumentTypeTemplateId,
+                Subject = exportDocumentArgs.DocumentTypeName,
+            };
+            documentsExecutionLogRepository.Add(documentsExecutionLog);
+            documentsExecutionLogRepository.SubmitChanges();
+            return documentsExecutionLog;
         }
-
 
         public HttpResponseMessage PostReportStimulsoftViewer(ExportDocumentArgs filter)
         {
@@ -183,10 +185,10 @@ namespace WebFreight.Web.App_Code
                 long theA1 = new long();
                 long theA2 = new long();
 
-                List<EditableFieldPosition> editableFieldPositionList = new List<EditableFieldPosition>();
+                BuildStimulReportResult buildStimulReportResult = new BuildStimulReportResult() { EditableFieldPositionLists = new List<EditableFieldPosition>()};
                 List<string> result = new List<string>();
 
-
+                ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
                 ICommonDataContext context = CommonDataContext.GetContext(filter.Tenant);
                 CommonDataDomainService commonService = new CommonDataDomainService();
                 Tenant currentTenant = context.Tenants.Where(t => t.Id == filter.Tenant).FirstOrDefault();
@@ -224,8 +226,6 @@ namespace WebFreight.Web.App_Code
                     DocumentTypeCopy documentTypeCopy = documentTypeCopyRep.GetSingleDocumentTypeCopy(filter.DocumentTypeCopyId);
                     DocumentType documentType = repository.GetSingleDocumentTypes(template.DocumentTypeId, filter.Tenant);
                     DocumentsFilingRepository documentsFilingRepository = new DocumentsFilingRepository(filter.Tenant);
-                    ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
-
 
                     if (template != null) templatedata = template.TemplateBody;
 
@@ -261,20 +261,15 @@ namespace WebFreight.Web.App_Code
 
                         }
                     }
-
-                    editableFieldPositionList = BulidEditableFieldPositionList(filter.IsDisplayOnly, result, ReportKey, filter.PageNumber);
-
                 }
                 else
                 {
                     result = GetReportAsImageFromStorage(filter.ReportKey, filter.Tenant, filter.PageNumber, documentOut);
-
-                    editableFieldPositionList = BulidEditableFieldPositionList(filter.IsDisplayOnly, result, ReportKey, filter.PageNumber);
-
                 }
 
+                buildStimulReportResult = GetBuildStimulReportResult(filter, result);
 
-                return Request.CreateResponse(HttpStatusCode.OK, editableFieldPositionList);
+                return Request.CreateResponse(HttpStatusCode.OK, buildStimulReportResult);
 
             }
 
@@ -285,20 +280,25 @@ namespace WebFreight.Web.App_Code
 
         }
 
-        private List<EditableFieldPosition> BulidEditableFieldPositionList(bool isDisplayOnly, List<string> result, string reportKey, int pagenumber)
+        private BuildStimulReportResult GetBuildStimulReportResult(ExportDocumentArgs filter ,  List<string> stimulReportResult)
+        {
+            BuildStimulReportResult buildStimulReportResult = new BuildStimulReportResult() { EditableFieldPositionLists = new List<EditableFieldPosition>() };
+            buildStimulReportResult.StimulImageBase64 = stimulReportResult != null && stimulReportResult.Count > 0 ? stimulReportResult[0] : null;
+            buildStimulReportResult.ReportKey = ReportKey;
+            buildStimulReportResult.PageCount = PageCount;
+            if (!filter.IsDisplayOnly)
+            {
+                buildStimulReportResult.EditableFieldPositionLists = BulidEditableFieldPositionList( stimulReportResult, filter.PageNumber);
+            }
+
+            return buildStimulReportResult;
+        }
+
+        private List<EditableFieldPosition> BulidEditableFieldPositionList(List<string> result, int pagenumber)
         {
 
             List<EditableFieldPosition> editableFieldPositionList = new List<EditableFieldPosition>();
-            if (isDisplayOnly)
-            {
-                if (result.Count > 0)
-                {
-                    editableFieldPositionList.Add(new EditableFieldPosition() { FieldName = "Image", FieldValue = result[0], PageCount = PageCount, ReportKey = reportKey });
-                }
-            }
-
-            else
-            {
+       
                 if (result != null && result.Count > 1)
                 {
                     string xmal = "";
@@ -335,16 +335,9 @@ namespace WebFreight.Web.App_Code
                     int numberOfEditedField = 0;
 
                     editableFieldPositionList = GetEditableFieldPosition(xmal, reportunit, childFieldNodes, pagenumber, ref numberOfEditedField);
-
-                    editableFieldPositionList.Add(new EditableFieldPosition() { FieldName = "NumberOfEditedField", FieldValue = numberOfEditedField.ToString(), PageCount = PageCount, ReportKey = reportKey });
-
-                    if (result.Count > 0)
-                    {
-                        editableFieldPositionList.Add(new EditableFieldPosition() { FieldName = "Image", FieldValue = result[0], PageCount = PageCount, ReportKey = reportKey });
-                    }
+                    editableFieldPositionList.Add(new EditableFieldPosition() { FieldName = "NumberOfEditedField", FieldValue = numberOfEditedField.ToString()});
                 }
 
-            }
             return editableFieldPositionList;
         }
 
@@ -450,6 +443,7 @@ namespace WebFreight.Web.App_Code
 
 
             List<EditableFieldPosition> editableFieldPositionLists = new List<EditableFieldPosition>();
+
             if (!string.IsNullOrEmpty(xmal))
             {
                 XmlReader reader = XmlReader.Create(new StringReader(xmal));
@@ -859,6 +853,28 @@ namespace WebFreight.Web.App_Code
             return pixels;
         }
 
+        public HttpResponseMessage PostBuildDocumentViaWorkerRole(ExportDocumentArgs exportDocumentArgs)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
+                DocumentsExecutionLog documentsExecutionLog = exportDocumentHelper.GetNewInStanceFromDocumentsExecutionLog(exportDocumentArgs);
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue("DocumentsExecutionQueue", documentsExecutionLog.Tenant);
+                queueservice.Send(new Dictionary<string, string>() { { "DocumentsExecutionLogId", documentsExecutionLog.Id }, { "Tenant", documentsExecutionLog.Tenant.ToString() } }, null, null, null, null);
+                return Request.CreateResponse(HttpStatusCode.OK, documentsExecutionLog.Id);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
 
     }
+
+ 
 }

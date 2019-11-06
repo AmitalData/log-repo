@@ -500,7 +500,22 @@ using <#=myspacestring#>
 
 					if(string.IsNullOrEmpty(temp.<#=FieldName#>))
 					{
-						temp.<#=FieldName#> = <#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#>;
+					   <#+ if(FieldName == "Id"){ #>
+
+					    if(!string.IsNullOrEmpty(<#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#>))
+					    {
+					        throw new ApplicationException("<#=ObjectTableName#> with provided key doesn't exist");
+						
+						}
+						//else
+						//{
+						//    temp.<#=FieldName#> = <#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#>;
+
+						//}<#+
+						}else{#>
+
+						temp.<#=FieldName#> = <#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#>;<#+}#>
+
 					}<#+}
 								 else{
 								  if(!string.IsNullOrEmpty(FieldName)){#>
@@ -554,7 +569,7 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 namespace <#= NSString #>.<#=DCVersion#>
 {
    
-    public class <#=DCName #>
+    public partial class <#=DCName #>
     {
 
 	<#+  foreach(var field in ((XElement)entity).Elements("DCField"))  //get all classes

@@ -8,6 +8,7 @@ using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -950,6 +951,23 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                     else
                                     {
                                         this.UpdateContact(args);
+                                    }
+                                }
+
+                                break;
+                            }
+                        case "AC"://Accounting Partner
+                            {
+                                if (args.AccountingPartner != null)
+                                {
+                                    if (args.AccountingPartner.Id == null)
+                                    {
+                                        this.CreateAccountingPartner(args);
+                                    }
+
+                                    else
+                                    {
+                                        this.UpdateAccountingPartner(args);
                                     }
                                 }
 
@@ -2107,6 +2125,23 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
+        private void CreateAccountingPartner(PartnerServicePM args)
+        {
+            ICommonDataContext objectContext = CommonDataContext.GetContext(args.Tenant);
+            AccountingPartnerService AccountingPartnerService = new AccountingPartnerService(objectContext, args.Tenant);
+            AccountingPartnerService.Create(args.AccountingPartner);
+            var xml = LogitudeXmlSerializer.SerializeObjectToUTF8XmlString(args.AccountingPartner);
+
+        }
+        private void UpdateAccountingPartner(PartnerServicePM args)
+        {
+            ICommonDataContext objectContext = CommonDataContext.GetContext(args.Tenant);
+            AccountingPartnerService AccountingPartnerService = new AccountingPartnerService(objectContext, args.Tenant);
+            AccountingPartnerService.Update(args.AccountingPartner);
+            var xml = LogitudeXmlSerializer.SerializeObjectToUTF8XmlString(args.AccountingPartner);
+
+        }
+
         public HttpResponseMessage Put(PartnerExternalAccountsServicePM args)
         {
             try
@@ -2533,6 +2568,68 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, cardContactProducts);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetAllArilineAreasByAirlineId(string airlineId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                AirlineAreaQuery airlineAreaQuery = new AirlineAreaQuery(tenant);
+                List<AirlineAreaPM> airlineAreas = airlineAreaQuery.GetAirlineAreasPMsByAirlineId(airlineId, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, airlineAreas);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetRemoveAirlineAreaFromAirline(string areaId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
+                AirlineAreaRepository airlineAreaRepository = new AirlineAreaRepository(commonDataContext);
+                AirlineAreasPortRepository airlineAreasPortRepository = new AirlineAreasPortRepository(commonDataContext);
+
+                AirlineArea airlineArea = airlineAreaRepository.GetSingleAirlineArea(areaId, tenant);
+
+                if(airlineArea != null)
+                {
+                    List<AirlineAreasPort> areasPorts = airlineAreasPortRepository.GetAirlineAreasPortByAreaId(areaId, tenant);
+                    if(areasPorts != null && areasPorts.Count > 0)
+                    {
+                        foreach (AirlineAreasPort item in areasPorts)
+                        {
+                            airlineAreasPortRepository.Remove(item);
+                        }
+                    }
+
+                    airlineAreaRepository.Remove(airlineArea);
+                    commonDataContext.SaveChanges();
+                }               
+
+                return Request.CreateResponse(HttpStatusCode.OK, "ok");
             }
 
             catch (Exception ex)

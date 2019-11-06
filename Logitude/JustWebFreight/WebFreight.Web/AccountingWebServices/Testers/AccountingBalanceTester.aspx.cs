@@ -158,7 +158,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             IExternalReconcileDataProvider externalReconcileDataProvider = new ExternalReconcileDataProvider(accountingContext);
             var a = new ExternalReconcileAdjustBankFeesService();
             a.MustInit(externalReconcileDataProvider);
-            a.CreateJournalWithExtReconcile(1071, new List<string>() { "1-12487" }, "1-216674", "Notes ");
+            a.CreateJournalWithExtReconcile(1071, new List<string>() { "1-12487" }, "1-216674", "Notes ",DateTime.Now);
             var aa = a.TheNewJournal;
 
             var us = new JournalUpdateService(AccountingContext.GetContext(a.TheNewJournal.Tenant), new Dictionary<string, IContext>(), a.TheNewJournal.Tenant);
@@ -2326,6 +2326,8 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 
             }
         }
+
+
         private void SetHttpAuth(int tenant)
         {
             var email = AuthenticationUtil.SystemIdentityName(tenant);

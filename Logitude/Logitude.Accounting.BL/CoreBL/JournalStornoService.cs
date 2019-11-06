@@ -126,12 +126,20 @@ namespace Logitude.Accounting.BL.CoreBL
 
             Storno.StatusCodeEnum = JournalStatusTypePM.StatusCodeEnum.Approved; //Storno.StatusCode = "2";
             Storno.VoidedByJournalId = null;
-            Storno.CreatedByUserId = _JournalPM.UpdatedByUserId;//irrelevant UpdateService>oncreate Supress it
-            Storno.UpdatedByUserId = _JournalPM.UpdatedByUserId;//irrelevant UpdateService>oncreate Supress it
+            string updatedByUserId = _JournalPM.UpdatedByUserId;
+            if (!AuthenticationUtil.IsResolveUserIdentityNameEqualSystem(_JournalPM.Tenant))
+            {
+                updatedByUserId= AuthenticationUtil.ResolveUserId(_JournalPM.Tenant);
+            }
+            Storno.CreatedByUserId = //_JournalPM.UpdatedByUserId;//irrelevant UpdateService>oncreate Supress it
+                updatedByUserId;
+            Storno.UpdatedByUserId = //_JournalPM.UpdatedByUserId;//irrelevant UpdateService>oncreate Supress it
+                updatedByUserId;
             Storno.Tenant = _JournalPM.Tenant;
             Storno.TypeCode = _JournalPM.TypeCode;
             Storno.UpdateDate = DateTime.Now;
-            Storno.UpdatedByUserId = _JournalPM.UpdatedByUserId;
+            Storno.UpdatedByUserId = //_JournalPM.UpdatedByUserId;
+                updatedByUserId;
             Storno.OriginalJournalId = _JournalPM.Id;
             var maybeTrue = true;
             if (maybeTrue)

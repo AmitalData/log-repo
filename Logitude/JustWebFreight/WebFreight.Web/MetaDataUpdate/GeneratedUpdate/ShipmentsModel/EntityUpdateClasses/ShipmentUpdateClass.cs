@@ -41800,9 +41800,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code =  "SNOC",
-                EnglishName =  "Shipment Number Changed",
-                LocalName =  "Shipment Number Changed",
+                Code =  "PDFT",
+                EnglishName =  "Payable Disconnected from Tariff",
+                LocalName =  "Payable Disconnected from Tariff",
                 IsManualEntry =  false,
                 ShortView =  true,
                 IsAgentView =  false,
@@ -41818,9 +41818,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code =  "PDFT",
-                EnglishName =  "Payable Disconnected from Tariff",
-                LocalName =  "Payable Disconnected from Tariff",
+                Code =  "SNOC",
+                EnglishName =  "Shipment Number Changed",
+                LocalName =  "Shipment Number Changed",
                 IsManualEntry =  false,
                 ShortView =  true,
                 IsAgentView =  false,
@@ -43354,7 +43354,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
  		   TextCode ShipmentTextCode_ShipmentOVersionAlreadyApproved = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.VersionAlreadyApproved", DefaultText = "This version has already been approved by another user",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ShipmentTextCode_ShipmentOVersionApprovedBy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.VersionApprovedBy", DefaultText = "This version of this statement has already been approved by",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ShipmentTextCode_ShipmentOVersionApprovedBy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.VersionApprovedBy", DefaultText = "This Version (*VersionID*) was already Approved by *ApprovedByUserName* at *ApproveDateTime*",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ShipmentTextCode_ShipmentOOnDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.OnDate", DefaultText = "on the date",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

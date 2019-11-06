@@ -54,6 +54,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private bool isUpdateTotalVats;
         private bool isVoidingInvoice;
         private bool isApprovingInvoice;
+        private bool isAutoCreditingInvoice;
         public ARInvoice invoice { get; set; }
         private ARInvoicePM entityPM;
         private string loggedContactId;
@@ -109,7 +110,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             shipmentReceivableRepository = new ShipmentReceivableRepository(myShipmentContext);
 
             this.TenantObject = (from d in myCommonContext.Tenants where d.Id == tenant select d).FirstOrDefault();
-            this.GetLoggedContact();
             this.GetAccountingSystem();
         }
         public ARInvoiceService(IInvoiceContext objectContext, int tenant, string loggedUserEmail)
@@ -170,15 +170,25 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.TenantObject = (from d in commonMockContext.Tenants where d.Id == tenant select d).FirstOrDefault();
 
-            this.GetLoggedContact();
             this.GetAccountingSystem();
         }
-        private ContactPM loggedContact;
 
         private void GetLoggedContact()
         {
-            loggedContact = LoggedContactResolver.GetLoggedContact(tenant);
-            
+            ContactPM loggedContact = null;
+
+            if (entityPM.IsFromConsolidationBatch)
+            {
+                ContactRepository contactRepository = new ContactRepository(myCommonContext);
+                ContactQuery contactQuery = new ContactQuery(contactRepository);
+                loggedContact = contactQuery.GetSinglePM(entityPM.UpdatedByUserId, tenant);
+            }
+
+            else
+            {
+                loggedContact = LoggedContactResolver.GetLoggedContact(tenant);
+            }
+
             if (loggedContact != null)
             {
                 loggedContactId = loggedContact.Id;
@@ -207,14 +217,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             this.isNewEntity = true;
             this.entityPM = theEntityPM;
+            this.GetLoggedContact();
             this.isVoidingInvoice = this.entityPM.SetVoided;
-
-            //if(entityPM.IsAutoCredit)
-            //{
-            //    entityPM.SetApproved = false;
-            //}
-
             this.isApprovingInvoice = entityPM.SetApproved;
+            
+
             this.invoice = new ARInvoice();
 
             if (entityPM.IssuedByUserId == null)
@@ -342,6 +349,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             this.isNewEntity = false;
             this.entityPM = theEntityPM;
+            this.GetLoggedContact();
+
             this.isVoidingInvoice = entityPM.SetVoided;
 
             if (entityPM.IsAutoCredit)
@@ -536,7 +545,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             stockLine.IsUsed = true;
                             stockLine.ARInvoiceId = entityPM.Id;
                             stockLine.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                            stockLine.UpdatedByUserId = this.loggedContact.Id;
+                            stockLine.UpdatedByUserId = this.loggedContactId;
                             stockLine.ShipmentNumber = entityPM.MainEntityReference;
                             aRInvoiceStockLineRepository.Update(stockLine);
                             aRInvoiceStockLineRepository.SubmitChanges();
@@ -559,7 +568,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             stockLine.ARInvoiceId = null;
                             stockLine.ShipmentNumber = null;
                             stockLine.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                            stockLine.UpdatedByUserId = this.loggedContact.Id;
+                            stockLine.UpdatedByUserId = this.loggedContactId;
                             aRInvoiceStockLineRepository.Update(stockLine);
                             aRInvoiceStockLineRepository.SubmitChanges();
                             stock = aRInvoiceStockQuery.GetSinglePM(stockLine.ARInvoiceStockId, tenant);
@@ -574,7 +583,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             stockLine.ARInvoiceId = entityPM.Id;
                             stockLine.ShipmentNumber = entityPM.MainEntityReference;
                             stockLine.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                            stockLine.UpdatedByUserId = this.loggedContact.Id;
+                            stockLine.UpdatedByUserId = this.loggedContactId;
                             aRInvoiceStockLineRepository.Update(stockLine);
                             aRInvoiceStockLineRepository.SubmitChanges();
                             stock = aRInvoiceStockQuery.GetSinglePM(stockLine.ARInvoiceStockId, tenant);
@@ -809,6 +818,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             else
             {
+                this.isAutoCreditingInvoice = true;
+
                 ARInvoiceQuery entityQuery = new ARInvoiceQuery(invoiceRepository);
                 ARInvoicePM oldEntityPM = entityQuery.GetSinglePM(this.entityPM.CreditedByARInvoiceId, tenant);
                 
@@ -816,7 +827,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 // Update Old Invoice
                 if (oldEntityPM.IsConsolidationInvoice)
-                {
+                {                    
                     #region
                     this.allConnectedInvoices = invoiceRepository.GetConnectedInvoices(tenant, this.entityPM.CreditedByARInvoiceId).ToList();
 
@@ -835,15 +846,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             EventTypeCode = "INDS",
                         });
                     }
-
-                    if (this.entityPM.IsConsolidationInvoice)
-                    {
-
-                    }
-
-                    //ConsolidationService iConsolidationService = new ConsolidationService(this.entityPM, this.objectContext);
-                    //iConsolidationService.OnCreatingAutoCredit(this.allConnectedInvoices);
-
                     #endregion
                 }
 
@@ -1948,7 +1950,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             if (entityPM.IsConstituentInvoice)
             {
-                myResult = "ACCT";
+                myResult = "OAMT";
             }
 
             else
@@ -3644,12 +3646,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             if (this.isVoidingInvoice)
             {
-                //if (this.entityPM.IsConsolidationInvoice)
-                //{
-                //    ConsolidationService iConsolidationService = new ConsolidationService(this.entityPM, this.objectContext);
-                //    iConsolidationService.OnVoid(this.allConnectedInvoices);
-                //}
-
                 this.UpdateShipmentRegistryDate();
             }
         }
@@ -3671,12 +3667,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     // Approval on Create is handled inside the Create Method
                     this.sATInterfaceHelper.SendSATRequestFile(entityPM, invoice);
                 }
-
-                //if (this.entityPM.IsConsolidationInvoice)
-                //{
-                //    ConsolidationService iConsolidationService = new ConsolidationService(this.entityPM, this.objectContext);
-                //    iConsolidationService.OnApprove();
-                //}
 
                 this.UpdateShipmentRegistryDate();
             }
@@ -3737,8 +3727,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
         }
 
-        //ChargesTypePM chargeTypePM = GetChargeTypeById(tenant, line.ChargesTypeId);
-
         private void CheckLineVatExcempt(int tenant, ARInvoiceLinePM line)
         {
             GLAccountPM glaccount = GetGLAccountById(tenant, line.GLAccountId);
@@ -3786,6 +3774,64 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
             bool isFullAccountingActivated = tenantPOCO.AccountingActivated;
             return isFullAccountingActivated;
+        }
+
+        public void UpdateConsolidationShipments()
+        {
+            if (this.entityPM.IsConsolidationInvoice)
+            {
+                List<ConsolidationServiceArgsItem> items = new List<ConsolidationServiceArgsItem>();
+
+                if (this.isVoidingInvoice || this.isAutoCreditingInvoice)
+                {
+                    items = (from a in allConnectedInvoices
+                             select new ConsolidationServiceArgsItem()
+                             {
+                                 ShipmentId = a.MainEntityId,
+                                 ConstituentId = a.Id,
+                             }).ToList();
+                }
+
+                else if (isApprovingInvoice)
+                {
+                    items = (from a in objectContext.ARInvoices
+                             where
+                             a.Tenant == tenant
+                             && a.IsConstituentInvoice == true
+                             && a.ConsolidationInvoiceId == entityPM.Id
+                             && a.MainEntityId != null
+                             select new ConsolidationServiceArgsItem()
+                             {
+                                 ShipmentId = a.MainEntityId,
+                                 ConstituentId = a.Id,
+                             }).ToList();
+                } 
+
+                if (items.Count > 0)
+                {
+                    string ConsolidationNumber = this.entityPM.InvoiceNumber;
+
+                    if (this.entityPM.StatusCode == "DR" || this.entityPM.StatusCode == "VD" || this.isAutoCreditingInvoice)
+                    {
+                        ConsolidationNumber = null;
+                    }
+
+                    foreach (ConsolidationServiceArgsItem item in items)
+                    {
+                        UpdateShipmentProfitClass.UpdateConstituentShipment(this.entityPM.Id, item.ConstituentId, this.tenant);
+                    }
+
+                    List<string> allShipmentsIds = (from d in items group d by d.ShipmentId into g select g.Key).ToList();
+
+                    foreach (string iShipmentId in allShipmentsIds)
+                    {
+                        
+
+                        UpdateShipmentProfitClass.UpdateShipmentARInvoices(iShipmentId, this.tenant, ConsolidationNumber);
+                        UpdateShipmentProfitClass.UpdateProfit(iShipmentId, this.tenant);
+                    }
+                }
+            }
         }
     }
 }

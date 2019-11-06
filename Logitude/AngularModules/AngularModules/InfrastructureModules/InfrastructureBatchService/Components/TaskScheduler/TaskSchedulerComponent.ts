@@ -215,7 +215,8 @@ export class TaskSchedulerComponent implements OnInit {
             Display: 'Task Name',
             Styles: { width: '200px' },
             IsCustomTemplate: true,
-            ServerSideSortable: false
+            ServerSideSortable: true,
+            SortByName: "Name"
         });
         if (this.ShowUTCTimeEnabled == false) {
             this.Taskscolumns.push({
@@ -231,7 +232,7 @@ export class TaskSchedulerComponent implements OnInit {
             });
 
             this.Taskscolumns.push({
-                FieldName: "LastRunTime",
+                FieldName: "LastRunStartTime",
                 DataTypeCode: 'String',
                 Display: 'Last Run Start Time',
                 Styles: { width: '160px' },
@@ -239,7 +240,7 @@ export class TaskSchedulerComponent implements OnInit {
                 HtmlListComponentUrl: '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/ListTemplates/SchedulerDateListTemplate',
                 IsCustomTemplate: true,
                 ServerSideSortable: true,
-                SortByName: "LastRunTime"
+                SortByName: "LastRunStartTime"
             });
             this.Taskscolumns.push({
                 FieldName: "LastRunEndTime",
@@ -268,7 +269,7 @@ export class TaskSchedulerComponent implements OnInit {
             });
 
             this.Taskscolumns.push({
-                FieldName: "LastRunTimeUTC",
+                FieldName: "LastRunStartTimeUTC",
                 DataTypeCode: 'String',
                 Display: 'Last Run Start Time UTC',
                 Styles: { width: '160px' },
@@ -276,7 +277,7 @@ export class TaskSchedulerComponent implements OnInit {
                 HtmlListComponentUrl: '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/ListTemplates/SchedulerDateListTemplate',
                 IsCustomTemplate: true,
                 ServerSideSortable: true,
-                SortByName: "LastRunTimeUTC"
+                SortByName: "LastRunStartTimeUTC"
             });
             this.Taskscolumns.push({
                 FieldName: "LastRunEndTimeUTC",
@@ -384,7 +385,7 @@ export class TaskSchedulerComponent implements OnInit {
                 HtmlListComponentUrl: '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/ListTemplates/SchedulerDateListTemplate',
                 IsCustomTemplate: true,
                 ServerSideSortable: true,
-                SortByName: "StartDateTime"
+                SortByName: "StartDateTimeUTC"
             });
             this.columns.push({
                 FieldName: "EndDateTimeUTC",
@@ -395,7 +396,7 @@ export class TaskSchedulerComponent implements OnInit {
                 HtmlListComponentUrl: '../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/ListTemplates/SchedulerDateListTemplate',
                 IsCustomTemplate: true,
                 ServerSideSortable: true,
-                SortByName: "EndDateTime"
+                SortByName: "EndDateTimeUTC"
             });
         }
         this.columns.push({
@@ -526,7 +527,7 @@ export class TaskSchedulerComponent implements OnInit {
             if (filters.AdditionalFilters.filter(a => a.FieldName == "InActive").length > 0) {
                 filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "InActive");
             }
-            filters.addAdditionalFilter("InActive", true, null, null, "Equals", true, false, false, "StrBooleaning");
+            filters.addAdditionalFilter("InActive", true, null, null, "Equals", true, false, false, "Boolean");
         }
         else {
             if (filters.AdditionalFilters.filter(a => a.FieldName == "InActive").length > 0) {
@@ -534,6 +535,10 @@ export class TaskSchedulerComponent implements OnInit {
             }
             filters.addAdditionalFilter("InActive", false, null, null, "Equals", true, false, false, "Boolean");
         }
+        if (filters.AdditionalFilters.filter(a => a.FieldName == "Type").length > 0) {
+            filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "Type");
+        }
+        filters.addAdditionalFilter("Type", this.SchedulerType, null, null, "Equals", true, false, false, "String");
         filters.GetCount = getCount;
         filters.PageIndex = skip;
         filters.PageSize = take;
@@ -563,6 +568,11 @@ export class TaskSchedulerComponent implements OnInit {
         else {
             this.filterAgrs.addAdditionalFilter("InActive", false, null, null, "Equals", true, false, false, "Boolean");
         }
+
+        if (this.filterAgrs.AdditionalFilters.filter(a => a.FieldName == "Type").length > 0) {
+            this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != "Type");
+        }
+        this.filterAgrs.addAdditionalFilter("Type", this.SchedulerType, null, null, "Equals", true, false, false, "String");
 
         this.MenuHeaderchangeeventTasks.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
     }

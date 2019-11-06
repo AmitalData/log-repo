@@ -97,7 +97,8 @@ using Simplog.Data.CommonDataModel;
 				   
 				   temp.VatNumber = MyEntityPM.VatNumber;
 				   ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant); 
-				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Code,ComputingPartnerName,"Card");  					
+				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Code,ComputingPartnerName,"Card");  
+				   temp.IsDisconnectedFromGLAccount = MyEntityPM.IsDisconnectedFromGLAccount;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -143,12 +144,23 @@ using Simplog.Data.CommonDataModel;
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
-						temp.Id = MyEntity.Id;
+					   
+					    if(!string.IsNullOrEmpty(MyEntity.Id))
+					    {
+					        throw new ApplicationException("Card with provided key doesn't exist");
+						
+						}
+						//else
+						//{
+						//    temp.Id = MyEntity.Id;
+
+						//}
 					}
 					temp.EnglishName = MyEntity.EnglishName;
 					temp.LocalName = MyEntity.LocalName;
 					if(string.IsNullOrEmpty(temp.Code))
 					{
+					   
 						temp.Code = MyEntity.Code;
 					}
 					AddressQueryService MainAddressAddressService = new AddressQueryService(Tenant);
@@ -166,8 +178,10 @@ using Simplog.Data.CommonDataModel;
 					temp.VatNumber = MyEntity.VatNumber;
 					if(string.IsNullOrEmpty(temp.Code))
 					{
+					   
 						temp.Code = MyEntity.PartnerCode;
-					}					   
+					}
+					temp.IsDisconnectedFromGLAccount = MyEntity.IsDisconnectedFromGLAccount;					   
 					   return temp;
 		    }
             catch (Exception ex)

@@ -429,6 +429,11 @@ export class CardPM {
     public set CalculatedEnglishName(newValue: string) { if (this.calculatedEnglishName != newValue) { this.calculatedEnglishName = newValue; this.MarkAsDirty("CalculatedEnglishName"); } }
        
 	 
+    private isDisconnectedFromGLAccount: boolean;
+    public get IsDisconnectedFromGLAccount() { return this.isDisconnectedFromGLAccount; }
+    public set IsDisconnectedFromGLAccount(newValue: boolean) { if (this.isDisconnectedFromGLAccount != newValue) { this.isDisconnectedFromGLAccount = newValue; this.MarkAsDirty("IsDisconnectedFromGLAccount"); } }
+       
+	 
 
     public OldEntityPM: CardPM;
 		

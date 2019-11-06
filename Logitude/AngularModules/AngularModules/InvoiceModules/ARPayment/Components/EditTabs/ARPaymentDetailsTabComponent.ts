@@ -718,7 +718,7 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 this.EntityPM.PaymentCurrencyExchangeRate = AppTool.Round(value, 5);
                 this.GetRateIsEnabled();
                 this.ComputeLocalAmount();
-
+                this.ComputeOpenAmountInLocal();
                 this.ItemsSource.Collection.forEach(item => {
                     item.InitExchangeRate();
                 });
@@ -1253,6 +1253,7 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
             this.EntityPM.AmountInPaymentCurrency = AppTool.Round(value, 2);
             this.ComputeLocalAmount();
             this.ComputeOpenAmount();
+            this.ComputeOpenAmountInLocal();
             this.UpdateSummary();
 
             this.ItemsSource.Collection.forEach(item => {
@@ -1272,7 +1273,20 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
     set OpenAmount(value: number) {
         if (this.EntityPM.OpenAmount != value) {
             this.EntityPM.OpenAmount = AppTool.Round(value, 2);
+            this.ComputeOpenAmountInLocal();
+
         }
+    }
+
+    get OpenAmountInLocalCurrency() { return this.EntityPM.OpenAmountInLocalCurrency == null ? 0 : this.EntityPM.OpenAmountInLocalCurrency; }
+    set OpenAmountInLocalCurrency(value: number) {
+        if (this.EntityPM.OpenAmountInLocalCurrency != value) {
+            this.EntityPM.OpenAmountInLocalCurrency = AppTool.Round(value, 2);
+        }
+    }
+
+    ComputeOpenAmountInLocal() {
+        this.OpenAmountInLocalCurrency = this.OpenAmount * this.PaymentCurrencyExchangeRate;
     }
 
     get PrintNotes() { return this.EntityPM.PrintNotes; }
@@ -1284,6 +1298,8 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
     ComputeOpenAmount() {
         this.OpenAmount = this.AmountInPaymentCurrency - this.Summary_AmountPaid;
+        this.ComputeOpenAmountInLocal();
+
     }
     ComputeLocalAmount() {
         this.AmountInLocalCurrency = this.AmountInPaymentCurrency * this.PaymentCurrencyExchangeRate;

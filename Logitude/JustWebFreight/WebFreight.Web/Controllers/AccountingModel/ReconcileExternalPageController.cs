@@ -55,7 +55,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     public partial class ReconcileExternalPagesExtendedController : ApiController
     {
         
-        public HttpResponseMessage GetBankPageByPageNo(int pageNumber, string bankAccountId)
+        public HttpResponseMessage GetPageByNumber(int pageNumber, string entityId, string objectTableName)
         {
             try
             {
@@ -68,7 +68,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 var accountingContext = AccountingContext.GetContext(tenant);
                 ReconcileExternalPageQueryService query = new ReconcileExternalPageQueryService(accountingContext);
-                var myPage = query.GetBankPageByPageNo(pageNumber, bankAccountId, tenant);
+                var myPage = query.GetPageByNumber(pageNumber, entityId, objectTableName, tenant);
         
                 ServiceResponse response = new ServiceResponse();
                 response.Result = myPage;
@@ -84,7 +84,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
         }
 
-        public HttpResponseMessage GetPrevPageByPageNo(int pageNumber, string bankAccountId)
+        public HttpResponseMessage GetPreviousPageByNumber(int pageNumber, string entityId, string objectTableName)
         {
             try
             {
@@ -97,7 +97,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 var accountingContext = AccountingContext.GetContext(tenant);
                 ReconcileExternalPageQueryService query = new ReconcileExternalPageQueryService(accountingContext);
-                var myPage = query.GetPrevPageNoByPageNo(pageNumber, bankAccountId, tenant);
+                var myPage = query.GetPreviousPageByNumber(pageNumber, entityId, objectTableName, tenant);
 
                 ServiceResponse response = new ServiceResponse();
                 response.Result = myPage;
@@ -113,7 +113,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
         }
 
-        public HttpResponseMessage GetDraftPage(string bankAccountId)
+        public HttpResponseMessage GetDraftPage(string entityId, string objectTableName)
         {
             try
             {
@@ -126,7 +126,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 var accountingContext = AccountingContext.GetContext(tenant);
                 ReconcileExternalPageQueryService query = new ReconcileExternalPageQueryService(accountingContext);
-                var myPage = query.GetDraftPage(bankAccountId, tenant);
+                var myPage = query.GetDraftPage(entityId, objectTableName, tenant);
 
                 ServiceResponse response = new ServiceResponse();
                 response.Result = myPage;
@@ -291,7 +291,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
         }
         [HttpGet]
-        public HttpResponseMessage GetCheckLastApprovedBankPageAndReconciledLine(string reconcileExternalPageId)
+        public HttpResponseMessage GetCheckLastApprovedBankPageAndReconciledLine(string reconcileExternalPageId, string objectTableName)
         {
             try
             {
@@ -302,7 +302,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 ReconcileExternalPageQueryService reconcileExternalPageQueryService = new ReconcileExternalPageQueryService(tenant);
                 ReconcileExternalPagePM reconcileExternalPage = reconcileExternalPageQueryService.GetSingle(reconcileExternalPageId, false, false);
-                bool islastAppprovedPage = reconcileExternalPageQueryService.CheckLastApprovedBankPage(reconcileExternalPage, tenant);
+                bool islastAppprovedPage = reconcileExternalPageQueryService.CheckLastApprovedPage(reconcileExternalPage, objectTableName, tenant);
                 ServiceResponse response = new ServiceResponse();
                 ContactPM loggedContact = GetLoggedContact(authToken.Email, tenant);
                 bool showlocal = !loggedContact.DontShowLocal;
@@ -347,7 +347,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 bool uncancelledPageExist = false;
                 if (reconcileExternalPage.StatusCode == "3")
                 {
-                    uncancelledPageExist = reconcileExternalPageQueryService.CheckNextUnCancelledBankPage(reconcileExternalPage.BankAccountId, reconcileExternalPage.PageNo, tenant);
+                    uncancelledPageExist = reconcileExternalPageQueryService.CheckNextUnCancelledPage(reconcileExternalPage.EntityId,"BankAccount", reconcileExternalPage.PageNo, tenant);
                 }
                 ServiceResponse response = new ServiceResponse();
                 response.Result = SetResponseResult(uncancelledPageExist, response, authToken);             
