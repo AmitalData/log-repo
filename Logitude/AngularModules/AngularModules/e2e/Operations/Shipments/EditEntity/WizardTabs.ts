@@ -74,7 +74,8 @@ export class WizardTabComponent {
             this.Helper.WaitByIdAndFill('Shipment_MainCarriageFinalDestinationPortId', 'JFK');
             this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Shipment_MainCarriageFromPortId', 'JFK');
 
-            this.shipHelper.AddAirlineStock('wizard');
+            this.shipHelper.AddAirlineStock(LogitudeWizardType);
+
         }
         else if (LogitudeWizardType == 'H') {
             this.Helper.WaitByIdAndFill('Shipment_MainCarriageFromPortId', 'eze');
@@ -117,7 +118,7 @@ export class WizardTabComponent {
             this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Master_MainCarriageFinalDestinationPortId', 'JFK');
 
             // ------------------------------------------------------ Stocks -------------------------------------------------------------
-            this.shipHelper.AddAirlineStock('wizard');
+            this.shipHelper.AddAirlineStock(LogitudeWizardType);
             // --------------------------------------------------- End of Stocks ---------------------------------------------------------
         }
     }

@@ -3176,6 +3176,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.TransportModeId = shipment.TransportModeId;
             shipmentPM.IncotermId = shipment.IncotermId;
             shipmentPM.ShipmentTypeId = shipment.ShipmentTypeId;
+            shipmentPM.IsCancelled = shipment.IsCancelled;
             if (masterData != null)
             {
                 shipmentPM.MainCarriageFinalDestinationETA = masterData.MainCarriageFinalDestinationETA;

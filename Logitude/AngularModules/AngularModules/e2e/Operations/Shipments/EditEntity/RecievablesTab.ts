@@ -56,7 +56,7 @@ export class ReceivablesTabComponent {
      
         this.Helper.WaitEditComponentBusyIndicator();
 
-        this.Helper.WaitByIdAndClick('Add');
+        this.Helper.WaitByIdAndClick('Add_5');
 
         this.Helper.WaitByIdAndFill('ShipmentReceivable_ChargesTypeId', ChargeType);
         this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'ShipmentReceivable_ChargesTypeId', ChargeType);
@@ -87,7 +87,13 @@ export class ReceivablesTabComponent {
 
         this.Helper.WaitBusyIndicator();
     }
+    
     EditAPInvoice(Voided :boolean){
+        this.Helper.WaitEditComponentBusyIndicator();
+        this.Helper.WaitByIdAndFill('ARInvoice_VatTypeId', 'Zero');
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'ARInvoice_VatTypeId', 'Zero');
+        this.Helper.WaitEditComponentBusyIndicator();
+        this.Helper.WaitByIdAndClick('VATApplyToAll');
         this.Helper.WaitEditComponentBusyIndicator();
         this.Helper.WaitByIdAndFill('ARInvoice_VatNumber','TestVatNumber');
         this.Helper.WaitByIdAndClick('ARInvoice.B.SaveAsDraft');
@@ -96,18 +102,19 @@ export class ReceivablesTabComponent {
         this.WaitBusyIndicatorToShowandHide();
         this.Helper.WaitBusyIndicator();
         if(Voided==true){
-        this.Helper.WaitByIdAndClick('MenuButtons_1');
+        this.Helper.WaitByIdAndClick('MenuButtons_3');
         this.Helper.WaitByIdAndClick('ARInvoice.B.Void');
         this.Helper.WaitByIdAndClick('ConfirmWindow_Yes_0');
         this.Helper.WaitEditComponentBusyIndicator();
-        this.Helper.WaitByIdAndClick('EditBackbutton_1');
+        this.Helper.WaitByIdAndClick('EditBackbutton_3');
         }
         else{
            
-                this.Helper.WaitByIdAndClick('EditBackbutton_2');
+                this.Helper.WaitByIdAndClick('EditBackbutton_4');
                 
             
         }
+        this.Helper.WaitEditComponentBusyIndicator();
        
     }
 

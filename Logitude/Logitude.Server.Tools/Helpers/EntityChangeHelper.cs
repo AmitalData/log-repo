@@ -854,10 +854,25 @@ namespace Logitude.Server.Tools.Helpers
                             {
                                 int days = 0;
                                 if (!string.IsNullOrEmpty(datearray[1])) days = Int32.Parse(datearray[1]);
+                                int dateEscalationTime = 0;
                                 DateTime date = TenantServerConfigration.GetCurrentDateTime(automationCondition.Tenant);
-                                int dateEscalationTime = datearray[0] == "@today+" ? days : days * -1;
-                                date = date.AddDays(dateEscalationTime);
                                 CustomFieldClass customFieldClass = new CustomFieldClass();
+                                if (datearray[0].Contains("@old value"))
+                                {
+                                    DateTime? oldValue = FieldValueResolver.ConvertToDate(datearray[2]);
+                                    if (oldValue != null)
+                                    {
+                                        date = oldValue.Value;
+                                        dateEscalationTime = datearray[0] == "@old value+" ? days : days * -1;
+                                    }
+                                }
+                                else
+                                {
+                                    dateEscalationTime = datearray[0] == "@today+" ? days : days * -1;
+                                }
+
+                                date = date.AddDays(dateEscalationTime);
+                               
                                 automationConditionvalue = customFieldClass.ConvertToString(Convert.ToDateTime(date));
                             }
                         }
