@@ -564,6 +564,8 @@ module.exports = {
           //"outputTemplate": "C:\\GIT\\log-repo\\Logitude\\AngularModules\\AngularModules\\node_modules\\license-webpack-plugin\\output.template.ejs",
           ///moran 
           //"outputTemplate": "C:\\LW\\log-repo\\Logitude\\AngularModules\\AngularModules\\node_modules\\license-webpack-plugin\\output.template.ejs",
+         ///elisheva 
+          //"outputTemplate": "C:\\LWC\\Logitude\\AngularModules\\AngularModules\\node_modules\\license-webpack-plugin\\output.template.ejs",
 
           "outputFilename": "3rdpartylicenses.txt",
           "suppressErrors": true,
