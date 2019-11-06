@@ -96,6 +96,12 @@
 </style>
 
 <div>
+    <div class="TextTrimming" *ngIf="fieldName == 'MAWBP'">
+        <span>{{entityPM.AirlinePrefix}}-{{entityPM.MAWB}}</span>
+    </div>
+
+
+
     <div class="TextTrimming" *ngIf="fieldName == 'DocumentStatusCode'">
         <img *ngIf="IsDocumentStatusGreen" src="./Images/Icons/GreenV.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
         <img *ngIf="IsDocumentStatusRed" src="./Images/Icons/RedX.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px " />
@@ -183,16 +189,16 @@
                             <span>Pending</span>
                         </li>
                         <!--
-    <li *ngIf="_CourierWorksheet['CourierPendingReasonList'] == null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Insert');">
-        <span>הזנת Pending</span>
-    </li>
-    <li *ngIf="_CourierWorksheet['CourierPendingReasonList'] != null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Update');">
-        <span>עדכון Pending</span>
-    </li>
-    <li *ngIf="_CourierWorksheet['CourierPendingReasonList'] != null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Delete');">
-        <span>מחיקת Pending</span>
-    </li>
-        -->
+                        <li *ngIf="_CourierWorksheet['CourierPendingReasonList'] == null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Insert');">
+                            <span>הזנת Pending</span>
+                        </li>
+                        <li *ngIf="_CourierWorksheet['CourierPendingReasonList'] != null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Update');">
+                            <span>עדכון Pending</span>
+                        </li>
+                        <li *ngIf="_CourierWorksheet['CourierPendingReasonList'] != null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Delete');">
+                            <span>מחיקת Pending</span>
+                        </li>
+                            -->
                         <li style="text-align: center; border-bottom: 1px solid #555;"></li>
 
                         <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true && !IsReceivingDelayCertificate" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); SendMamanSpecialAction(_CourierWorksheet['DeclarationId'],'U','2');">
@@ -287,7 +293,7 @@
         <span style="color:red" *ngIf="_CourierWorksheet['CourierCustomStatusCode']=='2'">{{SuspentionReasonText}}</span><!--Task 44091-->
         <span style="color:green" *ngIf="_CourierWorksheet['CourierCustomStatusCode']=='1'">{{SuspentionReasonText}}</span><!--Task 44091-->
     </div>
-    
+
     <div class="TextTrimming" *ngIf="fieldName == 'LastMileStatusCode' " style="text-align:right;">
         <span data-toggle="tooltip" data-placement="bottom" title="{{_CourierWorksheet['LastMileStatusDate']}}">{{_CourierWorksheet.LastMileStatusCode}}</span>
     </div>

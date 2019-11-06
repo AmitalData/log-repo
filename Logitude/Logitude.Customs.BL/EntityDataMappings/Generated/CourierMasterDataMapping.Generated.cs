@@ -98,7 +98,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IntegratorName, 
 	         IntegratorNumber, 
 	         IsReadyForInvoice, 
-	         IsAllDecClosedForFollowUp,
+	         IsAllDecClosedForFollowUp, 
+	         CalcClosedForFollowUp, 
+	         CalcMissingClassification, 
+	         CalcMissingImporterId, 
+	         CalcPendingCustoms, 
+	         CalcPending900,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
