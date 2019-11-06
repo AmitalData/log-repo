@@ -203,7 +203,6 @@ namespace WebFreight.Web.WebServices
                         myDataProvider.CreatedBy = createdByUser.EnglishName;
                     }
 
-                    var test = 2;
                 }
                 #endregion
 
