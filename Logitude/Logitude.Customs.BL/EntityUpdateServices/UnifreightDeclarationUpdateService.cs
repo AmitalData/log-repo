@@ -2218,7 +2218,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             _CCUFILEMPM.INSURANCEPERCENT = 0;
             _CCUFILEMPM.INSURANCECURR = "";
             _CCUFILEMPM.INSURANCECURRN = "";
-            _TotalCCUTRANSPVALs = new List<CCUTRANSPVALPM>();
+
+
+    _TotalCCUTRANSPVALs = new List<CCUTRANSPVALPM>();
 
             //In case need to save fields from SupplierInvoices to CCUFILEM without saving SupplierInvoices
             if (_UpdateCCUFILEMFromSupplerInvoice)
@@ -2252,6 +2254,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
 
+
+            _CCUFILEMPM.NOOFINVOICES = _DirtyDeclarationPM.SupplierInvoices.Count();
+            _CCUFILEMPM.TOTALINVOICELINESNO = GetCountSupplierInvoicesItems();
+            _CCUFILEMPM.PRATMEHESLIST = GetAllPratMehesList();
+            _CCUFILEMPM.ALLPRATMEHESLIST = GetAllPratMehesList(2);
+
+
             CreateCCUTRANSPVAL();
 
             //<--- This is to be done in a full saving mode ONLY (Moved from befor the call to DoSupplierInvoices())
@@ -2261,6 +2270,32 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 _CCUFILEMPM.FEEPLATFORM = _CCUFILEMPMSupplierInvoiceModificationsI01;
             }
             //This is to be done in a full saving mode ONLY  --->
+        }
+
+        private int GetCountSupplierInvoicesItems()
+        {
+            int countInvoiceItems=0;
+            foreach (var invoice in _DirtyDeclarationPM.SupplierInvoices )
+            {
+                countInvoiceItems += invoice.SupplierInvoiceItems.Count();
+            }
+
+            return countInvoiceItems;
+        }
+
+        private string GetAllPratMehesList(int top=0)
+        {
+            List<string> list = new List<string>();
+            foreach (var invoice in _DirtyDeclarationPM.SupplierInvoices)
+            {
+                list.AddRange(invoice.SupplierInvoiceItems.Select(x=>x.ClassificationCode));
+            }
+            list = list.Where(x => x != null).OrderBy(x => x).Distinct().ToList();
+            if (top!=0 && top < list.Count())
+            {
+                list =list.Take(top).ToList();
+            }
+            return string.Join(",", list).TrimEnd(',');
         }
 
         private Unifreight.BL.EntityPMs.SupplierInvoicePM SetSupplierInvoice(Def.EntityPMs.SupplierInvoicePM decSupplierInvoice)
@@ -2385,8 +2420,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             supplierInvoicePM.COUNTRYID = GetTranslationP2L("IIGC", "CTBCOUNTRY", decSupplierInvoice.IssueCountryCode);
             supplierInvoicePM.INCOTERMID = GetTranslationP2L("IIGC", "CTBINCOTERMS", decSupplierInvoice.IncotermCode);
             supplierInvoicePM.CURRENCYID = GetTranslationP2L("IIGC", "CTBCURRENCY", decSupplierInvoice.InvoiceCurrencyTypeCode);
-
-            CalculateSupplierInvoiceModifications(_CCUFILEMPM, supplierInvoicePM, decSupplierInvoice);
+             CalculateSupplierInvoiceModifications(_CCUFILEMPM, supplierInvoicePM, decSupplierInvoice);
 
             supplierInvoicePM.CHANGINGVALUE = supplierInvoicePM.CHANGINGVALUE.GetValueOrDefault() + supplierInvoicePM.VALUE;
             _CCUFILEMPM.CHANGINGVALUE = _CCUFILEMPM.INDEXVALUE.ToNullableDouble("_CCUFILEMPM.INDEXVALUE");  // += supplierInvoicePM.CHANGINGVALUE; // moran 23.11.16 - Bug 21746 - change handle to get the same value as index
