@@ -877,7 +877,7 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.ARInvoices).HasColumnName("ARInvoices");
             this.Property(t => t.ReleasingAgentId).HasColumnName("ReleasingAgentId");
             this.Property(t => t.ReleasingAgentName).HasColumnName("ReleasingAgentName");
-            this.Property(t => t.OpenReceivablesLines).HasColumnName("OpenReceivablesLines");
+            this.Property(t => t.NotInvoicedReceivablesAmount).HasColumnName("NotInvoicedReceivablesAmount");
 
         }
     }

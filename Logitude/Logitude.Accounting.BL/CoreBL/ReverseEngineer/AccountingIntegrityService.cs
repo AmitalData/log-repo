@@ -181,6 +181,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
             {
 
                 sb.AppendLine(eee.ToString());
+                throw new Exception(eee.ToString(),eee);// Itzik the exceptions is not thrown so i threw them
             }
             finally
             {

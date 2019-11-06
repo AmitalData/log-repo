@@ -59,6 +59,8 @@ export class EditComponent implements OnDestroy {
     public IsEditValid: boolean = true;
     public IsSaveBtnVisible: boolean = true;
     public IsSaveBtnDisable: boolean = false;
+    public NeedRefresh: boolean = false;
+
     EntityParentPM: any;
     ShowWindowsOverEditComponent: boolean = false;
 
@@ -84,7 +86,7 @@ export class EditComponent implements OnDestroy {
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
         this.WorkEnvironment = ObjectsLocator.GlobalSetting == undefined ? "logitude" : ObjectsLocator.GlobalSetting.WorkEnvironment;
     }
-  
+
     private EntityFields: any[] = null;
     public Run(args: any) {
         this.EntityId = args['EntityId'];
@@ -101,7 +103,7 @@ export class EditComponent implements OnDestroy {
         this.IsTabsHidden = this.ObjectTable.IsTabsHidden;
         this.NavigationIds = args['NavigationIds'];
         this.EntityFields = args['EntityFields'];
-      
+
         if (this.NavigationIds) {
             this.NextPreviousVisible = true;
         }
@@ -131,10 +133,10 @@ export class EditComponent implements OnDestroy {
         if (this.ObjectTableName == "CommunicationLog") {
             this.IsSaveBtnDisable = true;
         }
-        
-       
+
+
         this.IsSaveBtnVisible = this.ObjectTable.IsSaveButtonVisible;
-        
+
         // Split Component
         var feature = FeatureLocator.Features.filter(d => d.Code == "SPLIT")[0];
         if (!AppTool.IsNullOrEmpty(feature)) { // granted
@@ -395,21 +397,43 @@ export class EditComponent implements OnDestroy {
 
             //get f. acc. Settings
             if (SessionLocator.TenantPM.AccountingActivated) {
-              
+
                 myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === myObjectTableId && d.Code == "ARPayment.FullACCHeaderScreen")[0];
                 myObjectFields = window.ObjectFields.filter(d => d.ObjectTableId === myObjectTableId);
                 this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
             }
             else {
-               
+
                 myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === myObjectTableId && d.Code == "ARPayment.HeaderScreen")[0];
 
                 this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
             }
         }
+        else if (this.ObjectTableName == "APPayment") {
+            var myObjectTable = window.ObjectTables.filter(x => x.Name === "APPayment")[0];
+            var myObjectTableId = myObjectTable.Id;
 
+            //get f. acc. Settings
+            if (SessionLocator.TenantPM.AccountingActivated) {
+
+                myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === myObjectTableId && d.Code == "APPayment.FullACCHeaderScreen")[0];
+                myObjectFields = window.ObjectFields.filter(d => d.ObjectTableId === myObjectTableId);
+                this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
+            }
+            else {
+
+                myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === myObjectTableId && d.Code == "APPayment.HeaderScreen")[0];
+
+                this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
+            }
+        }
+        else if (this.ObjectTableName == "APInvoice") {
+            this.GenerateAPInvoiceHeader(myHeaderScreen,myObjectFields);
+
+
+        }
         else if (this.ObjectTableName == "Tariff") {
-            if (this.EntityPM.TypeCode == "ASC") {
+            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC") {
                 myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === this.ObjectTableId && d.Code == "Tariff.SurchagesHeaderScreen")[0];
                 myObjectFields = window.ObjectFields.filter(d => d.ObjectTableId === this.ObjectTableId);
                 this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
@@ -440,7 +464,21 @@ export class EditComponent implements OnDestroy {
             this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
         }
     }
+    private GenerateAPInvoiceHeader(headerScreen:any, objectFields:any) {
 
+
+        if (SessionLocator.TenantPM.AccountingActivated) {
+            var myObjectTable = window.ObjectTables.filter(x => x.Name === "APInvoice")[0];
+            var myObjectTableId = myObjectTable.Id;
+
+            headerScreen = window.Screens.filter(d => d.ObjectTableId === myObjectTableId && d.Code == "APInvoice.FullACCHeaderScreen")[0];
+            objectFields = window.ObjectFields.filter(d => d.ObjectTableId === myObjectTableId);
+            this.GenerateHeaderScreen(headerScreen,objectFields);
+        }
+        else {
+            this.GenerateHeaderScreen(headerScreen, objectFields);
+        }
+    }
 
     private FindHeaderRetries: number = 0;
     private FindHeaderTimerToken: any;
@@ -537,7 +575,7 @@ export class EditComponent implements OnDestroy {
                             if (myObjectField != null) {
 
                                 myRow.Label = TextCodeTranslator.Translate(myObjectField.FullNameTextCodeCode);
-                                myRow.ObjectField = myObjectField;                                
+                                myRow.ObjectField = myObjectField;
 
                                 if (!AppTool.IsNullOrEmpty(myRow.Label)) {
                                     myRow.Label += ":";

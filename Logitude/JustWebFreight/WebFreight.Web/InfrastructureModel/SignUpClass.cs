@@ -1075,6 +1075,7 @@ namespace WebFreight.Web.InfrastructureModel
                 {
                     Tenant = theTenant,
                     Id = theTenant.ToString(),
+                    IsShowAmountLocalCurrency = true,
                 };
 
                 theSharedLogisticsSettingRepository.Add(settings);
@@ -2153,7 +2154,7 @@ namespace WebFreight.Web.InfrastructureModel
             {
                 ObjectTableRule zeroRule = tenantZeroObjectTableRules.Where(d => d.Id == ruleField.ObjectTableRuleId).FirstOrDefault();
                 ObjectTableRule rule = currentTenantObjectTableRules.Where(r => r.RuleCode == zeroRule.RuleCode && r.Tenant == theTenant).FirstOrDefault();
-                ObjectFieldPM zeroObjectField = tenantZeroObjectFields.Where(d => d.Id == ruleField.ObjectFieldId).FirstOrDefault();
+                ObjectFieldPM zeroObjectField = null;//tenantZeroObjectFields.Where(d => d.Id == ruleField.ObjectFieldId).FirstOrDefault();
                 ObjectField objectField = currentTenantObjectFields.Where(d => d.ObjectTableId == rule.ObjectTableId && d.Tenant == theTenant && d.FieldName == zeroObjectField.FieldName).FirstOrDefault();
 
                 ObjectTableRuleField newRuleField = new ObjectTableRuleField()
@@ -2385,119 +2386,96 @@ namespace WebFreight.Web.InfrastructureModel
             List<string> automationDocumentTypeIds = automationHelper.GetAutomationDocumentTypeIds(tenant);
 
             documentTypeTemplateList = documentTypeTemplateList.Where(d => (d.IsCopiedAtSignup && d.IsEnabledForCustomers) || automationDocumentTypeIds.Contains(d.Id)).ToList();
-
-
-            #region Defult Template
-          
             
-            //TenantQuery query = new TenantQuery(theTenant);
-            //AddressRepository addressRepository = new AddressRepository(theTenant);
-            //CountryRepository countryRepository = new CountryRepository(theTenant);
-
-            //var newTenant = query.GetSinglePM(theTenant);
-            //if (newTenant != null && !string.IsNullOrEmpty(newTenant.AddressId))
-            //{
-            //    Address address = addressRepository.GetSingleAddress(newTenant.AddressId, theTenant);
-            //    if (address != null && !string.IsNullOrEmpty(address.CountryId))
-            //    {
-            //        Country country = countryRepository.GetSingleCountry(address.CountryId, theTenant);
-            //        if(country!=null && !string.IsNullOrEmpty(country.Code))
-            //        {
-            //            coutryCode = country.Code;
-            //        }
-            //    }
-            //}
-            #endregion
-
-            foreach (DocumentTypeTemplatePM a in documentTypeTemplateList)
+            foreach (DocumentTypePM documenttype in tenantZeroDocumentType)
             {
-                DocumentTypePM documenttype = tenantZeroDocumentType.Where(d => d.Id == a.DocumentTypeId && d.Tenant == 0).FirstOrDefault();
                 DocumentType usedDocumenttype = currentTenantDocumentType.Where(d => d.Code == documenttype.Code && d.Tenant == theTenant && !d.InActive && d.IsCopiedAtSignup).FirstOrDefault();
-
                 if (usedDocumenttype != null)
                 {
-                    DocumentTypeTemplate newtemplate = new DocumentTypeTemplate()
+                    List<DocumentTypeTemplate> documentTypeTemplates = new List<DocumentTypeTemplate>();
+                    foreach (DocumentTypeTemplatePM documentTypeTemplatePM in documentTypeTemplateList.Where(d => d.DocumentTypeId == documenttype.Id))
                     {
-                        Id = IdCounter.GetNumber("DocumentTypeTemplate", theTenant).ToString(),
-                        Tenant = theTenant,
-                        TemplateBody = a.TemplateBody,
-                        TemplateBodyHtml = a.TemplateBodyHtml,
-                        TemplateFooterHeight = a.TemplateFooterHeight,
-                        TemplateHeaderHeight = a.TemplateHeaderHeight,
-                        TemplateFooterHtml = a.TemplateFooterHtml,
-                        TemplateHeaderHtml = a.TemplateHeaderHtml,
-                        TemplateType = a.TemplateType,
-                        HorizontalShift = a.HorizontalShift,
-                        InActive = a.InActive,
-                        Description = a.Description,
-                        DocumentTypeId = usedDocumenttype.Id,
-                        EditorTool = a.EditorTool,
-                        VerticalShift = a.VerticalShift,
-                        IsEnabledForCustomers = true,
-                        IsCopiedAtSignup = true,
-                        CountryCode = a.CountryCode,
-                        Language = a.Language,
-                        OriginalTemplateId = a.Id,
-                        InternalRemarks = a.InternalRemarks,
-                        Subject = a.Subject,
-                        From = a.From,
-                        CC = a.CC,
-                        ReplyTo =a.ReplyTo,
-
-                    };
-
-                    #region Set Defult as Country Tenant
-                    DocumentTypeTemplatePM documentTypeDefaultReportTemplate = documentTypeTemplateList.Where(d => d.CountryCode == coutryCode && d.DocumentTypeCode == usedDocumenttype.Code && d.TemplateType == "P" && d.Id == documenttype.DocumentTypeDefaultReportTemplateId).FirstOrDefault();
-                    DocumentTypeTemplatePM documentTypeDefaultHTMLTemplate = documentTypeTemplateList.Where(d => d.CountryCode == coutryCode && d.DocumentTypeCode == usedDocumenttype.Code && d.TemplateType == "M" && d.Id == documenttype.DocumentTypeDefaultHTMLTemplateId).FirstOrDefault();
-
-
-                    if(documentTypeDefaultReportTemplate == null)
-                    {
-                        documentTypeDefaultReportTemplate = documentTypeTemplateList.Where(d => d.CountryCode == coutryCode && d.DocumentTypeCode == usedDocumenttype.Code && d.TemplateType == "P" ).FirstOrDefault();
+                        DocumentTypeTemplate newDocumentTypeTemplate = GetInstanceFromDocumentTypeTemplate(theTenant, usedDocumenttype, documentTypeTemplatePM);
+                        theDocumentTypeTemplateRepository.Add(newDocumentTypeTemplate);
+                        documentTypeTemplates.Add(newDocumentTypeTemplate);
                     }
-                    if (documentTypeDefaultHTMLTemplate == null)
-                    {
-                        documentTypeDefaultHTMLTemplate = documentTypeTemplateList.Where(d => d.CountryCode == coutryCode && d.DocumentTypeCode == usedDocumenttype.Code && d.TemplateType == "M" ).FirstOrDefault();
-                    }
+                    usedDocumenttype.DocumentTypeDefaultReportTemplateId = GetDocumentTypeDefaultReportTemplateId(documentTypeTemplates, documenttype, coutryCode);
+                    usedDocumenttype.DocumentTypeDefaultHTMLTemplateId = GetDocumentTypeDefaultHTMLTemplateId(documentTypeTemplates, documenttype, coutryCode);
 
-                    if (documentTypeDefaultReportTemplate == null)
-                    {
-                        documentTypeDefaultReportTemplate = documentTypeTemplateList.Where(d => documenttype.DocumentTypeDefaultReportTemplateId == d.Id).FirstOrDefault();
-                    }
-                    if (documentTypeDefaultHTMLTemplate == null)
-                    {
-                        documentTypeDefaultHTMLTemplate = documentTypeTemplateList.Where(d => documenttype.DocumentTypeDefaultHTMLTemplateId == d.Id).FirstOrDefault();
-                    }
-
-
-                    if (documentTypeDefaultReportTemplate != null || documentTypeDefaultHTMLTemplate != null)
-                    {
-                        if (documentTypeDefaultReportTemplate != null && string.IsNullOrEmpty(usedDocumenttype.DocumentTypeDefaultReportTemplateId))
-                        {
-                            if (a.Id == documentTypeDefaultReportTemplate.Id)
-                            {
-                                usedDocumenttype.DocumentTypeDefaultReportTemplateId = newtemplate.Id;
-                            }
-                        }
-
-                        if (documentTypeDefaultHTMLTemplate != null && string.IsNullOrEmpty(usedDocumenttype.DocumentTypeDefaultHTMLTemplateId))
-                        {
-                            if (a.Id == documentTypeDefaultHTMLTemplate.Id)
-                            {
-                                usedDocumenttype.DocumentTypeDefaultHTMLTemplateId = newtemplate.Id;
-                            }
-                        }
-                    }
-                    #endregion
-
-          
                     usedDocumenttype.IsDocOut = documenttype.IsDocOut;
                     theDocumentTypeRepository.Update(usedDocumenttype);
-                    theDocumentTypeTemplateRepository.Add(newtemplate);
                 }
             }
+
             theDocumentTypeTemplateRepository.SubmitChanges();
             theDocumentTypeRepository.SubmitChanges();
+        }
+
+        private static string GetDocumentTypeDefaultHTMLTemplateId(List<DocumentTypeTemplate> documentTypeTemplates, DocumentTypePM documenttype, string coutryCode)
+        {
+            DocumentTypeTemplate documentTypeDefaultHTMLTemplate = documentTypeTemplates.Where(d => d.CountryCode == coutryCode && d.TemplateType == "M" && d.OriginalTemplateId == documenttype.DocumentTypeDefaultHTMLTemplateId).FirstOrDefault();
+
+            if (documentTypeDefaultHTMLTemplate == null)
+            {
+                documentTypeDefaultHTMLTemplate = documentTypeTemplates.Where(d => d.TemplateType == "M" && d.OriginalTemplateId == documenttype.DocumentTypeDefaultHTMLTemplateId).FirstOrDefault();
+            }
+
+            if (documentTypeDefaultHTMLTemplate == null)
+            {
+                documentTypeDefaultHTMLTemplate = documentTypeTemplates.Where(d => d.TemplateType == "M").FirstOrDefault();
+            }
+
+            return documentTypeDefaultHTMLTemplate != null ? documentTypeDefaultHTMLTemplate.Id : null;
+        }
+
+        private static string GetDocumentTypeDefaultReportTemplateId(List<DocumentTypeTemplate> documentTypeTemplates, DocumentTypePM documenttype, string coutryCode)
+        {
+            DocumentTypeTemplate documentTypeDefaultReportTemplate = documentTypeTemplates.Where(d => d.CountryCode == coutryCode && d.TemplateType == "P" && d.OriginalTemplateId == documenttype.DocumentTypeDefaultReportTemplateId).FirstOrDefault();
+
+            if (documentTypeDefaultReportTemplate == null)
+            {
+                documentTypeDefaultReportTemplate = documentTypeTemplates.Where(d => d.TemplateType == "P" && d.OriginalTemplateId == documenttype.DocumentTypeDefaultReportTemplateId).FirstOrDefault();
+            }
+
+            if (documentTypeDefaultReportTemplate == null)
+            {
+                documentTypeDefaultReportTemplate = documentTypeTemplates.Where(d => d.TemplateType == "P").FirstOrDefault();
+            }
+
+            return documentTypeDefaultReportTemplate!=null? documentTypeDefaultReportTemplate.Id:null;
+        }
+
+        private static  DocumentTypeTemplate GetInstanceFromDocumentTypeTemplate(int theTenant, DocumentType documenttype, DocumentTypeTemplatePM documentTypeTemplatePM)
+        {
+            return  new DocumentTypeTemplate()
+            {
+                Id = IdCounter.GetNumber("DocumentTypeTemplate", theTenant).ToString(),
+                Tenant = theTenant,
+                TemplateBody = documentTypeTemplatePM.TemplateBody,
+                TemplateBodyHtml = documentTypeTemplatePM.TemplateBodyHtml,
+                TemplateFooterHeight = documentTypeTemplatePM.TemplateFooterHeight,
+                TemplateHeaderHeight = documentTypeTemplatePM.TemplateHeaderHeight,
+                TemplateFooterHtml = documentTypeTemplatePM.TemplateFooterHtml,
+                TemplateHeaderHtml = documentTypeTemplatePM.TemplateHeaderHtml,
+                TemplateType = documentTypeTemplatePM.TemplateType,
+                HorizontalShift = documentTypeTemplatePM.HorizontalShift,
+                InActive = documentTypeTemplatePM.InActive,
+                Description = documentTypeTemplatePM.Description,
+                DocumentTypeId = documenttype.Id,
+                EditorTool = documentTypeTemplatePM.EditorTool,
+                VerticalShift = documentTypeTemplatePM.VerticalShift,
+                IsEnabledForCustomers = true,
+                IsCopiedAtSignup = true,
+                CountryCode = documentTypeTemplatePM.CountryCode,
+                Language = documentTypeTemplatePM.Language,
+                OriginalTemplateId = documentTypeTemplatePM.Id,
+                InternalRemarks = documentTypeTemplatePM.InternalRemarks,
+                Subject = documentTypeTemplatePM.Subject,
+                From = documentTypeTemplatePM.From,
+                CC = documentTypeTemplatePM.CC,
+                ReplyTo = documentTypeTemplatePM.ReplyTo,
+
+            };
         }
 
         public static void AddMenusTables(int theTenant, MenusTableRepository theMenusTableRepository, List<ObjectTable> currentTenantObjectTables, List<MenusTablePM> tenantZeroMenusTables, List<Feature> currentTenantFeatures)

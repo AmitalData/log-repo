@@ -213,21 +213,21 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                             }
                         }                        
                     }
-                    //  by alaa  Task: 52715
-                    //List<string> gr1 = activeLines.GroupBy(g => new { g.ForiegnCurrencyId }).Select(s => s.Key.ForiegnCurrencyId).ToList();
-                    //foreach (string ob in gr1)
-                    //{
-                    //    string ob1 = ob;
-                    //    var gr2 = activeLines.Where(w => w.ForiegnCurrencyId == ob1).GroupBy(g => new { g.ForiegnExchangeRate }).Select(s => s.Key.ForiegnExchangeRate);
-                    //    if (gr2.Count() > 1)
-                    //    {
-                    //        Currency curr = CurrencyRepository.GetSingleCurrency(ob, entityPM.Tenant, true);
 
-                    //        string msg = TranslateTextsClass.Translate("ARInvoice.M.InvoiceLinesHaveDifferentExchangeRates", entityPM.Tenant, useLocal);
-                    //        msg = msg.Replace("%Currency", curr.Code);
-                    //        throw new ApplicationException(msg);
-                    //    }
-                    //}
+                    List<string> gr1 = activeLines.GroupBy(g => new { g.ForiegnCurrencyId }).Select(s => s.Key.ForiegnCurrencyId).ToList();
+                    foreach (string ob in gr1)
+                    {
+                        string ob1 = ob;
+                        var gr2 = activeLines.Where(w => w.ForiegnCurrencyId == ob1).GroupBy(g => new { g.ForiegnExchangeRate }).Select(s => s.Key.ForiegnExchangeRate);
+                        if (gr2.Count() > 1)
+                        {
+                            Currency curr = CurrencyRepository.GetSingleCurrency(ob, entityPM.Tenant, true);
+
+                            string msg = TranslateTextsClass.Translate("ARInvoice.M.InvoiceLinesHaveDifferentExchangeRates", entityPM.Tenant, useLocal);
+                            msg = msg.Replace("%Currency", curr.Code);
+                            throw new ApplicationException(msg);
+                        }
+                    }
                 }
                 #endregion
             }
@@ -475,6 +475,12 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     if (entityPM.InvoiceDate != entityPOCO.InvoiceDate)
                     {
                         string fieldLabel = TranslateTextsClass.Translate("ARInvoice.F.InvoiceCurrencyExchangeRate", entityPM.Tenant);
+                        throw new ApplicationException("Can't update " + fieldLabel);
+                    }
+
+                    if (entityPM.AmountInInvoiceCurrency != entityPOCO.AmountInInvoiceCurrency)
+                    {
+                        string fieldLabel = TranslateTextsClass.Translate("ARInvoice.F.AmountInInvoiceCurrency", entityPM.Tenant);
                         throw new ApplicationException("Can't update " + fieldLabel);
                     }
                 }
@@ -1024,70 +1030,87 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 }
             }
         }
+        private static List<string> errorsList = new List<string>();
         public static void ValidateFullAccounting(int tenant, string billToId, string invoiceCurrencyId, DateTime? accountingDate, bool isNew)
         {
-            if (isNew)
+            errorsList = new List<string>();
+            if (IsFullAccountingActivated(tenant) && isNew)
             {
-                var errors = "";
-                TenantRepository tenantRepository = new TenantRepository(tenant);
-                Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
-                if (tenantPOCO != null && tenantPOCO.AccountingActivated)
-                {
-                    bool useLocal = true;
-                    var user = GetLoggedContact(tenant);
-                    if (user != null) useLocal = !(GetLoggedContact(tenant).DontShowLocal);
+                CheckCardConnectedGLAccount(tenant, billToId);
+                CheckInvoiceCurrency(tenant, billToId, invoiceCurrencyId);
+                CheckClosedMonth(accountingDate, tenant);
 
-                    GLAccountPM glAccount = getGLAccount(billToId, tenant);
-
-                    if (glAccount == null)
-                    {
-                        string msg = TranslateTextsClass.Translate("ARInvoice.M.BillToGLAccount", tenant, useLocal);
-                        errors += msg + ";";
-                        //throw new ApplicationException(msg);
-                    }
-                    if (glAccount != null && (glAccount.IsMultiCurrency == null || glAccount.IsMultiCurrency == false))
-                    {
-                        if (glAccount.CurrencyId != invoiceCurrencyId)
-                        {
-                            string msg = TranslateTextsClass.Translate("ARInvoice.M.InvoiceCurrencyGLAccount", tenant, useLocal) + " " + glAccount.CurrencyCode;
-                            errors += msg + ";";
-                            //throw new ApplicationException(msg);
-                        }
-                    }
-
-                    IAccountingContext myContext = AccountingContext.GetContext(tenant);
-                    AccountingPeriodListQueryService accountingPeriodQuery = new AccountingPeriodListQueryService(myContext);
-                    var now = TenantServerConfigration.GetCurrentDateTime(tenant);
-                    //if (now != null)
-                    //{
-                    AccountingPeriodList accountingPeriodList = accountingPeriodQuery.GetByYear(accountingDate.Value.Year, "1", tenant);
-                    if (accountingPeriodList != null && accountingDate != null)
-                    {
-                        var month = accountingDate.Value.Month;
-                        if (month > accountingPeriodList.OpenMonth || month < accountingPeriodList.ClosedMonth)
-                        {
-                            string msg = TranslateTextsClass.Translate("ARInvoice.M.ClosedMonth", tenant, useLocal);
-                            errors += msg + ";";
-                            //throw new ApplicationException(msg);
-                        }
-                    }
-                    else
-                    {
-                        string msg = TranslateTextsClass.Translate("ARInvoice.M.ClosedMonth", tenant, useLocal);
-                        errors += msg + ";";
-                        //throw new ApplicationException(msg);
-                    }
-                    // }
-
-
-                    if (!string.IsNullOrEmpty(errors))
-                    {
-                        errors = errors.TrimEnd(';');
-                        throw new ApplicationException(errors);
-                    }
-                }
+                if (errorsList.Count > 0)
+                    throw new ApplicationException(string.Join(";", errorsList));
             }
         }
+
+        private static bool IsFullAccountingActivated(int tenant)
+        {
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+            Tenant tenantPoco = tenantRepository.GetSingleTenant(tenant);
+            return (tenantPoco != null && tenantPoco.AccountingActivated);
+        }
+
+        private static void CheckInvoiceCurrency(int tenant, string billToId, string invoiceCurrencyId)
+        {
+            GLAccountPM glAccount = getGLAccount(billToId, tenant);
+            if (glAccount != null && (glAccount.IsMultiCurrency == null || glAccount.IsMultiCurrency == false))
+            {
+                if (glAccount.CurrencyId != invoiceCurrencyId)
+                {
+                    bool useLocal = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
+                    string msg = TranslateTextsClass.Translate("ARInvoice.M.InvoiceCurrencyGLAccount", tenant, useLocal) + " " + glAccount.CurrencyCode;
+                    errorsList.Add(msg);
+                }
+            }
+            
+        }
+
+        private static void CheckCardConnectedGLAccount(int tenant, string billToId)
+        {
+            GLAccountPM glAccount = getGLAccount(billToId, tenant);
+
+            if (glAccount == null)
+            {
+                bool useLocal = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
+                string msg = TranslateTextsClass.Translate("ARInvoice.M.BillToGLAccount", tenant, useLocal);
+                errorsList.Add(msg);
+            }
+            
+        }
+
+        private static void CheckClosedMonth(DateTime? accountingDate, int tenant)
+        {
+            AccountingPeriodList period = GetInvoiceAccountPeriodByYear(tenant, accountingDate.Value.Year);
+
+            if (period != null && accountingDate != null)
+            {
+                var month = accountingDate.Value.Month;
+                if (month > period.OpenMonth || month < period.ClosedMonth)
+                    errorsList.Add(GetClosedMonthErrorMessage(tenant));
+            }
+            else
+            {
+                errorsList.Add(GetClosedMonthErrorMessage(tenant));
+            }
+        }
+
+        private static string GetClosedMonthErrorMessage(int tenant)
+        {
+            bool useLocal = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
+            string msg = TranslateTextsClass.Translate("ARInvoice.M.ClosedMonth", tenant, useLocal) + ";";
+            return msg;
+        }
+
+        private static AccountingPeriodList GetInvoiceAccountPeriodByYear(int tenant, int year)
+        {
+            IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
+            AccountingPeriodListQueryService accountingPeriodQuery = new AccountingPeriodListQueryService(accountingContext);
+            AccountingPeriodList accountingPeriod = accountingPeriodQuery.GetByYear(year, "2", tenant); // 2- Invoice
+            return accountingPeriod;
+        }
+
         private static GLAccountPM getGLAccount(string billToId, int tenant)
         {
             GLAccountPM glaAccount = null;

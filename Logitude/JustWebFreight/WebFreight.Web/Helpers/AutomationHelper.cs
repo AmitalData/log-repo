@@ -15,6 +15,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Azure;
 using System;
 using System.Collections.Generic;
@@ -54,13 +55,14 @@ namespace WebFreight.Web.Helpers
                         string from = template.From;
                         string replyTo = template.ReplyTo;
                         string cc = template.CC;
+                        string bcc = template.BCC;
                         string userId = template.LastUpdatedByUserId;
                         if (!string.IsNullOrEmpty(entityChange.CreateByUserId)) userId = entityChange.CreateByUserId;
                         byte[] htmldata = null;
                         try
                         {
 
-                            string html = htmlEditorHelper.GetEditorHtmlData("", entityChange.EntityId, entityChange.ObjectTableId, "", "", entityChange.Tenant, userId, true, template.Id, ref subject, ref from, ref replyTo, ref cc, "", template);
+                            string html = htmlEditorHelper.GetEditorHtmlData("", entityChange.EntityId, entityChange.ObjectTableId, "", "", entityChange.Tenant, userId, true, template.Id, ref subject, ref from, ref replyTo, ref cc, ref bcc, "", template);
 
                             if (!string.IsNullOrEmpty(html))
                             {
@@ -140,7 +142,7 @@ namespace WebFreight.Web.Helpers
 
                         if (!string.IsNullOrEmpty(Emails) && htmldata != null)
                         {
-                            string communicationLog = AddAutomationToQueue(automation, entityChange, htmldata, Emails, from, replyTo, cc, subject);
+                            string communicationLog = AddAutomationToQueue(automation, entityChange, htmldata, Emails, from, replyTo, cc,bcc, subject);
                             entityChangesAutomation.ComunicationLogId = communicationLog;
                         }
                     }
@@ -158,7 +160,7 @@ namespace WebFreight.Web.Helpers
             //  #endregion
         }
 
-        public string AddAutomationToQueue(Automation automation , EntityChange  entityChange ,  byte[] htmlData, string toEmail,  string from, string replyTo, string cc,  string subject, string objectTableName = null)
+        public string AddAutomationToQueue(Automation automation , EntityChange  entityChange ,  byte[] htmlData, string toEmail,  string from, string replyTo, string cc, string bcc, string subject, string objectTableName = null)
         {
             string entityId = entityChange.EntityId;
             string objectTableId = entityChange.ObjectTableId;
@@ -224,7 +226,7 @@ namespace WebFreight.Web.Helpers
                 InOut = "O",
                 To = toEmail,
                 CC = cc,
-                BCC = "",
+                BCC = bcc,
                 CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                 DocumentId = document.Id,
                 CreatedByUserId = userId,
@@ -544,6 +546,7 @@ namespace WebFreight.Web.Helpers
             List<string> automationdocumentTypeIds = automationRepository.GetAutomations(0).Where(d => d.ResultCode == "EMAIL" && !string.IsNullOrEmpty(d.Code) && !myAutomationListsCodes.Contains(d.Code)).Select(d => d.DocumentTypeId).ToList();
             return automationdocumentTypeIds;
         }
+
 
 
 

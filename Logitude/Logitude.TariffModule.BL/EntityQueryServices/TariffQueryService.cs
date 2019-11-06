@@ -43,6 +43,8 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
             TariffsSummary tariffsSummary = new TariffsSummary() { Id = tenant };
             tariffsSummary.AirFreightCount = this.repository.GetAll(tenant).Where(p => p.TypeCode == "AFC").Count();
             tariffsSummary.AirSurchargeCount = this.repository.GetAll(tenant).Where(p => p.TypeCode == "ASC").Count();
+            tariffsSummary.OceanSurchargeCount = this.repository.GetAll(tenant).Where(p => p.TypeCode == "OSC").Count();
+            tariffsSummary.OceanLCLFreightCount = this.repository.GetAll(tenant).Where(p => p.TypeCode == "OLC").Count();
             return tariffsSummary;
         }
 
@@ -362,9 +364,6 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                 SurchargeTariffLinesFiltered.Add(entry.Key, filteredLines);
             }
 
-
-
-
             foreach (Tariff result in TariffList)
             {
                 List<TariffResult> resultItems = items.Where(x => x.tariffid == result.Id && TariffVersionList.Where(a => a.Version == x.TariffVersion && a.TariffId == result.Id).FirstOrDefault() != null).ToList();
@@ -400,7 +399,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                         if ((item.Price * (decimal)weight) < minprice)
                         {
                             item.Price = minprice;
-
+                            tariffsSummary.IsMinIconVisible = true;
                         }
                         else
                         {
@@ -409,9 +408,17 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                     }
                     else
                     {
-                        item.Price = minprice != null ? minprice : 0;
-
+                        if (minprice != null)
+                        {
+                            item.Price = minprice;
+                            tariffsSummary.IsMinIconVisible = true;
+                        }
+                        else
+                        {
+                            item.Price = 0;
+                        }
                     }
+
                     //tariffsSummary.price = Math.Round((double)item.price, 2).ToString("0.00");
                     tariffsSummary.Price = Math.Round((double)CalculateLocalAmount(item.Price != null ? item.Price.Value : 0, currencyId, result.CurrencyId, tenant), 2).ToString("0.00");
                     tariffsSummary.ActualPrice = item.Price;
@@ -423,6 +430,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                         tariffsSummary.AllIn = string.Join(", ", AllInChargesNames);
                     }
                     Tariff CurrentSurcharge = SurchargeTariffList.Where(p => p.SellerId == result.SellerId).FirstOrDefault();
+                    AirlinePM airline = airlineQuery.GetSinglePM(result.SellerId, tenant);
                     if (CurrentSurcharge != null)
                     {
                         if (SurchargeTariffLinesFiltered.ContainsKey(CurrentSurcharge.Id))
@@ -506,12 +514,16 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                                                     string CurrencyId = ChargesfilteredLines.CurrencyId != null ? ChargesfilteredLines.CurrencyId : CurrentSurcharge.CurrencyId;
                                                     var LinePrice = CalculateLocalAmount(CurrentSurchargePriceCalculation.Value, currencyId, CurrencyId, tenant);
 
+                                                    decimal? minPriceSurcharge = null;
                                                     if (valueofSurchargeMin != null)
                                                     {
                                                         decimal minimumPrice = (decimal)valueofSurchargeMin;
-                                                        var minPrice = CalculateLocalAmount(minimumPrice, currencyId, CurrencyId, tenant);
-                                                        if (minPrice > LinePrice)
-                                                            LinePrice = minPrice;
+                                                        minPriceSurcharge = CalculateLocalAmount(minimumPrice, currencyId, CurrencyId, tenant);
+                                                        if (minPriceSurcharge > LinePrice)
+                                                        {
+                                                            LinePrice = minPriceSurcharge.Value;
+                                                            SurchargeItem.IsMinIconVisible = true;
+                                                        }
                                                     }
 
                                                     SurchargeItem.Price = LinePrice;
@@ -521,11 +533,11 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                                                     SurchargeItem.CurrencyId = CurrentSurcharge.CurrencyId;
                                                     SurchargeItem.TariffNumber = CurrentSurcharge.TariffNumber;
                                                     SurchargeItem.VersionId = ChargesfilteredLines.Version + "";
+                                                    SurchargeItem.SellerId = CurrentSurcharge.SellerId;
+                                                    SurchargeItem.SellerName= airline.Card != null ? airline.Card.EnglishName : "";
+                                                    SurchargeItem.MinPrice = minPriceSurcharge;
                                                     tariffsSummary.Surcharges.Add(SurchargeItem);
                                                 }
-
-
-
                                             }
                                         }
                                         else
@@ -542,8 +554,8 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                     }
 
 
-                    AirlinePM airline = airlineQuery.GetSinglePM(result.SellerId, tenant);
-                    tariffsSummary.Name = airline.Card != null ? airline.Card.EnglishName : "";
+                  
+                    tariffsSummary.SellerName = airline.Card != null ? airline.Card.EnglishName : "";
                     tariffsSummary.EffictiveDate = result.ExpirationDate;
                     tariffsSummary.Remarks = result.Notes;
                     var calculatedLocalAmount = item.Price != null ? CalculateLocalAmount((item.Price).Value, currencyId, result.CurrencyId, tenant): 0;
@@ -556,8 +568,9 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                     tariffsSummary.TotalSurcharge = Sum + "";
                     tariffsSummary.WholePrice = (decimal?)Sum + calculatedLocalAmount + "";
                     tariffsSummary.UnitOfMesurmentId = airChrageType.MeasurementId;
-                    tariffsSummary.UnitOfMesurmentCode = UsedMeasurements.Where(p => p.Id == airChrageType.MeasurementId).Select(p => p.Code).FirstOrDefault(); 
-
+                    tariffsSummary.UnitOfMesurmentCode = UsedMeasurements.Where(p => p.Id == airChrageType.MeasurementId).Select(p => p.Code).FirstOrDefault();
+                    tariffsSummary.SellerId = result.SellerId;
+                    tariffsSummary.MinPrice = minprice;
                     byte[] filedata = DownloadFile(airline.ImageDetailId, "jpg", tenant, "images");
                     string resultImage = "";
                     if (filedata != null)
@@ -695,7 +708,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
         {
            TariffPM entityPM = this.GetSingle(TariffId, true, false);
             TariffLineRepository iTariffLineRepository = new TariffLineRepository(entityPM.Tenant);
-            if (entityPM.TypeCode == "ASC")
+            if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC")
             {
                 TariffVersionPM iPreviousVersion = entityPM.ActiveVersions.OrderByDescending(o => o.CreateDate).FirstOrDefault();
                 if (iPreviousVersion != null)

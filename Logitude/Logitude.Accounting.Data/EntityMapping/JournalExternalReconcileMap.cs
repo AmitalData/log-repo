@@ -29,9 +29,9 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.Tenant).HasColumnName("Tenant");
 
-            this.Property(t => t.LedgerTransactionId).HasColumnName("LedgerTransactionId").IsRequired().HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.LedgerTransactionId).HasColumnName("LedgerTransactionId").HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.ReconcileExternalPageLineId).HasColumnName("ReconcileExternalPageLineId").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ReconcileExternalPageLineId).HasColumnName("ReconcileExternalPageLineId").IsRequired().HasMaxLength(15).IsUnicode(false);
         }
     }
 }

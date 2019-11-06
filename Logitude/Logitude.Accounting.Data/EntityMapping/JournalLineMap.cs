@@ -59,7 +59,7 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.Reference3).HasColumnName("Reference3").HasMaxLength(30).IsUnicode(true);
 
-            this.Property(t => t.Notes).HasColumnName("Notes").HasMaxLength(60).IsUnicode(true);
+            this.Property(t => t.Notes).HasColumnName("Notes").HasMaxLength(1000).IsUnicode(true);
 
             this.Property(t => t.ExternalOpenAmount).HasColumnName("ExternalOpenAmount").HasPrecision(16, 2);
 

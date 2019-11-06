@@ -126,7 +126,19 @@ export class BankAccountGeneralTabComponent extends BaseComponent {
             this.EntityPM.BranchNumber = value;
         }
     }
-    
+    get PrintingBranchNumber() { return this.EntityPM.PrintingBranchNumber; }
+    set PrintingBranchNumber(value: string) {
+        if (this.EntityPM.PrintingBranchNumber != value) {
+            this.EntityPM.PrintingBranchNumber = value;
+        }
+    }
+    get PrintingAccountNumber() { return this.EntityPM.PrintingAccountNumber; }
+    set PrintingAccountNumber(value: string) {
+        if (this.EntityPM.PrintingAccountNumber != value) {
+            this.EntityPM.PrintingAccountNumber = value;
+        }
+    }
+
     get ChequeCounter() { return this.EntityPM.ChequeCounter; }
     set ChequeCounter(value: number) {
         if (this.EntityPM.ChequeCounter != value) {

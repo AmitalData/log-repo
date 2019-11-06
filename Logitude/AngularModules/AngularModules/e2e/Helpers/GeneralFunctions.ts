@@ -31,8 +31,20 @@ export class GeneralFunctions {
         var randomNumber = Math.floor(Math.random() * 10000).toString();
         return randomNumber;
     }
+    public RandomNumACCWithChars() {
+        var result = '';
+        var characters = '0A1BC2DE3F4G5HI6J7KL8M9NOP1Q0R3S9T6U4V7W5X8Y2Z';
+        var charactersLength = characters.length;
+        for (var i = 0; i < 5; i++) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        return result;
+    }
+    public StockNumbers() {
+        var randomNumber = Math.floor(Math.random() * 10000000).toString();
+        return randomNumber;
+    }
     UseSearchBox(searchFeildId: string, searchByRef: string, listItemCss: string) {
-
         this.Helper.WaitByIdAndFill(searchFeildId, searchByRef);
         this.Helper.WaitByCssAndClick_FromTagInsideList('.'+listItemCss, 0);
     }

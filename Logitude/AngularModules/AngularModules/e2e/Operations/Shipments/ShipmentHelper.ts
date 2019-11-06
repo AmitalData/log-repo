@@ -1,9 +1,11 @@
 import { browser, by, element, WebDriver, protractor } from 'protractor';
 import { FieldsHelper } from './../../Helpers/FieldsHelper';
+import { GeneralFunctions } from './../../Helpers/GeneralFunctions';
+
 
 export class ShipmentHelper {
     private Helper: FieldsHelper;
-
+    private generalFun: GeneralFunctions = new GeneralFunctions();
 
     constructor() {
         this.Helper = new FieldsHelper();
@@ -17,36 +19,6 @@ export class ShipmentHelper {
         var EC = protractor.ExpectedConditions;
         var directionID: string;
         var shipmentTypeID: string;
-
-        // if (Direction == 'Export') {
-        //   directionID = "DirectionRadio_0E";
-        // }
-        // else if (Direction == 'Import') {
-        //   directionID == 'DirectionRadio_0I';
-        // }
-        // else if (Direction == 'Domestic') {
-        //   directionID = 'DirectionRadio_0D';
-        // }
-        // else if (Direction == 'Drop') {
-        //   directionID = 'DirectionRadio_0R';
-        // }
-
-        // if (ShipmentType == 'FCL') {
-        //   shipmentTypeID = 'ShipmentTypeRadio_0FCLD';
-        // }
-        // else if (ShipmentType == 'LCL') {
-        //   shipmentTypeID == 'ShipmentTypeRadio_0LCLD';
-        // }
-        // else if (ShipmentType == 'FTL') {
-        //   shipmentTypeID = 'ShipmentTypeRadio_0FTL';
-        // }
-        // else if (ShipmentType == 'LTL') {
-        //   shipmentTypeID = 'ShipmentTypeRadio_0LTL';
-        // }
-        // else
-        //   shipmentTypeID = 'ShipmentTypeRadio_0MyGO';
-
-
 
         if (TransportMode == 'A' && ShipmentType == '') {
 
@@ -157,50 +129,62 @@ export class ShipmentHelper {
         this.Helper.WaitByIdAndClick(CancelBtnId);
     }
 
-    OperationalCloseShipment() {
-        this.Helper.WaitByIdAndClick('MenuButtons');
-        this.Helper.WaitByIdAndClick('Shipment.B.OperationalClose');
-
-        this.Helper.WaitByCssStringAndClick('.RedButton', 'Confirm');
+    AddAirlineStock(usedIn: string) {
+        var numbertest = this.generalFun.StockNumbers();
+        this.Helper.WaitByIdAndClick('AddStock');
         this.Helper.WaitBusyIndicator();
-    }
-    OperationalReopenShipment() {
-        this.Helper.WaitByIdAndClick('MenuButtons');
-        this.Helper.WaitByIdAndClick('Shipment.B.OperationalReopen');
-        this.Helper.WaitByIdAndFill('EventNotes', 'Operational ReOpen - Protractor Testing .. ')
 
-        this.Helper.WaitByCssStringAndClick('.RedButton', 'Confirm');
+        var EC = protractor.ExpectedConditions;
+        browser.wait(EC.visibilityOf(element(by.id("AirlineSimpleGridBodyId"))), 100000).then(a => {
+            browser.wait(EC.elementToBeClickable(element(by.id("AddStocks"))), 100000).then(a => {
+            });
+        });
+        this.Helper.WaitByIdAndClick('AddStocks');
         this.Helper.WaitBusyIndicator();
-    }
-    AccountingCloseShipment() {
-        this.Helper.WaitByIdAndClick('MenuButtons');
-        this.Helper.WaitByIdAndClick('Shipment.B.AccountingClose');
 
-        this.Helper.WaitByCssStringAndClick('.RedButton', 'Confirm');
+        this.Helper.WaitByIdAndFill('StartNumber', numbertest);
+
+        var byAmount = element(by.id('ByAmountRadio'));
+        browser.executeScript("arguments[0].click();", byAmount.getWebElement());
+
+        this.Helper.WaitByIdAndFill('Amount', '1');
+
+        this.Helper.WaitByIdAndClick('OkAddStock');
+
         this.Helper.WaitBusyIndicator();
-    }
-    AccountedReopenShipment() {
-        this.Helper.WaitByIdAndClick('MenuButtons');
-        this.Helper.WaitByIdAndClick('Shipment.B.AccountedReopen');
-        this.Helper.WaitByIdAndFill('EventNotes', 'Accounting ReOpen - Protractor Testing .. ');
 
-        this.Helper.WaitByCssStringAndClick('.RedButton', 'Confirm');
+        if (usedIn == 'edit') {
+            browser.wait(EC.invisibilityOf(element(by.id("OkAddStock"))), 100000).then(a => {
+                browser.wait(EC.visibilityOf(element(by.id("AirlineSimpleGridBodyId"))), 100000).then(a => {
+                });
+            });
+            this.Helper.WaitByIdAndClick('EditBackbutton_1');
+        } else if (usedIn == 'wizard') {
+            browser.wait(EC.invisibilityOf(element(by.id("OkAddStock"))), 100000).then(a => {
+                browser.wait(EC.visibilityOf(element(by.id("AirlineSimpleGridBodyId"))), 100000).then(a => {
+                });
+            });
+            this.Helper.WaitByIdAndClick('EditBackbutton');
+        }
+
+        this.Helper.WaitByIdAndClick('GetFromStockBtn');
         this.Helper.WaitBusyIndicator();
-    }
-    CopyShipment() {
 
-        this.Helper.WaitByIdAndClick('MenuButtons');
-        this.Helper.WaitByIdAndClick('Shipment.B.CopyShipment');
-        // this.Helper.WaitByIdAndClick('Shipment.B.CopyShipment');
-        // this.Helper.WaitByIdAndClick('CheckBox_0_5');//Include pickup
-        this.Helper.WaitByCssStringAndClick('.LogitudeCheckBox', 'Include PickUp')
+        if (usedIn == 'edit') {
+            browser.wait(EC.elementToBeClickable(element(by.id("StockSelectionID")))).then(a => {
+            });
+            element(by.cssContainingText('.GridViewCell', numbertest)).click();
+            this.Helper.WaitByIdAndClick('OkBtn');
+            this.Helper.WaitByIdAndClick('ConfirmWindow_Yes_0');
+            this.Helper.WaitEditComponentBusyIndicator();
 
-        // this.Helper.WaitByIdAndClick('CheckBox_0_6');//Include Delivery
-        // this.Helper.WaitByIdAndClick('CheckBox_0_7');//Include Flight
-        // this.Helper.WaitByIdAndClick('CheckBox_0_8');//Include PreCarriage
-        // this.Helper.WaitByIdAndClick('CheckBox_0_9');//Include OnCarriage
-
-        this.Helper.WaitByIdAndClick('ShipmentCreatebtn');
-        this.Helper.WaitBusyIndicator();
+        } else if (usedIn == 'wizard') {
+            browser.wait(EC.elementToBeClickable(element(by.id("StockSelectionID"))), 100000).then(a => {
+            });
+            element(by.cssContainingText('.GridViewCell', numbertest)).click();
+            this.Helper.WaitByIdAndClick('OkBtn');
+            this.Helper.WaitByIdAndClick('ConfirmWindow_Yes_0');
+            this.Helper.WaitBusyIndicator();
+        }
     }
 }

@@ -59,6 +59,16 @@ export class SharedLogisticsMoneyPermissiosComponent extends BaseComponent imple
         }
     }
 
+
+    get IsShowAmountLocalCurrency() { return this.EntityPM.IsShowAmountLocalCurrency; }
+    set IsShowAmountLocalCurrency(value: boolean) {
+        if (this.EntityPM.IsShowAmountLocalCurrency != value) {
+            this.EntityPM.IsShowAmountLocalCurrency = value;
+        }
+    }
+
+
+
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }

@@ -32,6 +32,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
         private string AccountingType = null;
         private string Direction = null;
         private string TransportMode = null;
+        private string ShipmentNumber = null;
 
         public VendorChargesAnalysisManager(byte[] xmlFilters, int tenant)
         {
@@ -59,6 +60,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             QueryFilterItem filterItem_AccountingType = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "AccountingType").FirstOrDefault();
             QueryFilterItem filterItem_Direction = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "Direction").FirstOrDefault();
             QueryFilterItem filterItem_TransportMode = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "TransportMode").FirstOrDefault();
+            QueryFilterItem filterItem_ShipmentNumber = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "ShipmentNumber").FirstOrDefault();
 
             if (filterItem_VendorId != null)
             {
@@ -149,6 +151,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     TransportMode = filterItem_TransportMode.FieldValue.ToString();
                 }
             }
+
+            if (filterItem_ShipmentNumber != null)
+            {
+                if (filterItem_ShipmentNumber.FieldValue != null)
+                {
+                    ShipmentNumber = filterItem_ShipmentNumber.FieldValue.ToString();
+                }
+            }
         }
 
         public byte[] GetData()
@@ -190,6 +200,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 if (!string.IsNullOrEmpty(TransportMode) && TransportMode != "All")
                 {
                     iQueryable_shipments = iQueryable_shipments.Where(d => d.TransportModeId == TransportMode);
+                }
+
+                if (!string.IsNullOrEmpty(ShipmentNumber))
+                {
+                    iQueryable_shipments = iQueryable_shipments.Where(d => d.ShipmentNumber == ShipmentNumber);
                 }
 
                 switch (DateType)
@@ -318,6 +333,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                                                     Notes = myItem.Notes,
                                                                     Payables_OPEN = IsLocalCurrency ? myItem.OpenAmountInLocalCurrency : myItem.OpenAmountInProfitCurrency,
                                                                     Payables_ACCT = IsLocalCurrency ? myItem.AccountedAmountInLocalCurrency : myItem.AccountedAmountInProfitCurrency,
+                                                                    FinalArrivalDate = myShipment.ActualFinalArrivalDate,
                                                                 }).ToList();
 
                     if (myResult.Count > 0)
@@ -338,6 +354,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             myRecord.Carrier = item.VendorName;
                             myRecord.ChargesTypeId = item.ChargeTypeId;
                             myRecord.ChargesType = item.ChargeTypeName;
+                            myRecord.FinalArrivalDate = item.FinalArrivalDate;
 
                             if (IncludeAccountedOnly)
                             {
@@ -596,5 +613,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
         public double? Payables_OPEN { get; set; }
         public double? Payables_ACCT { get; set; }
         public string Notes { get; set; }
+        public DateTime? FinalArrivalDate { get; set; }
     }
 }

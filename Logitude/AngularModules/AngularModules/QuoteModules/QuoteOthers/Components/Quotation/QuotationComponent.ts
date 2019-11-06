@@ -1009,7 +1009,6 @@ export class QuotationComponent extends BaseComponent implements OnInit {
                         this.GeneralEmailSender.ToSpecificeEmail = this.QuoteCustomerEmail;
                     }
 
-                    this.GeneralEmailSender.ExportQuotationsToIntegratedSystem = SessionLocator.TenantPM.ExportQuotationsToIntegratedSystem && !this.QuotePM.IsQuoteDataExternal && !this.QuotePM.IsQuoteDataExternal ? true : false;
                     this.GeneralEmailSender.ShowFullSendControll();
                 }
 

@@ -234,100 +234,6 @@
 			"response": []
 		},
 		{
-			"name": "GetAccountingSettingsFromNotMyTenant",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "21513698-73d9-410c-bed5-40eb5e0112e8",
-						"exec": [
-							"pm.test(\"Sorry you’re not authenticated to view AccountingSetting data for this tenant\", function () {",
-							"     pm.response.to.have.status(400);",
-							"     ",
-							"",
-							"         pm.test(\"GetAccountingSettingsFromNotMyTenant Fail\", function () {",
-							"          pm.expect(pm.response.json().ErrorMessage).to.include(\"Sorry you’re not authenticated to view AccountingSetting data for this tenant\");",
-							"          ",
-							"         });",
-							"",
-							"});",
-							"",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Accept-Encoding",
-						"value": "gzip, deflate"
-					},
-					{
-						"key": "Accept-Language",
-						"value": "en-US,en;q=0.9"
-					},
-					{
-						"key": "User-Agent",
-						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 OPR/62.0.3331.116"
-					},
-					{
-						"key": "Accept",
-						"value": "application/json, text/plain, */*"
-					},
-					{
-						"key": "Referer",
-						"value": "http://test.logitudeworld.com/test/Angular19280810/index.html"
-					},
-					{
-						"key": "Cookie",
-						"value": "email_cookie=ahmadb@test.com; ASP.NET_SessionId=bcnhxmem2y11pnejrrx2yktb"
-					},
-					{
-						"key": "Connection",
-						"value": "keep-alive"
-					},
-					{
-						"key": "Token",
-						"value": "{{Token}}"
-					},
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "{{URL}}/api/accountingsettings/getsingle?id={{Tenant2}}",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
-						"api",
-						"accountingsettings",
-						"getsingle"
-					],
-					"query": [
-						{
-							"key": "id",
-							"value": "{{Tenant2}}"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "GetAPICredintialsFromMyTenant",
 			"event": [
 				{
@@ -546,18 +452,22 @@
 							"      var idvalue10 = pm.response.json().OtherChargesCurrencyId;",
 							"      var idvalue11 = pm.response.json().QuoteSaleCurrencyId;",
 							"      var idvalue12 = pm.response.json().DefaultSLAId;",
+							"      var idvalue13 = pm.response.json().Company;",
+							"      var idvalue14 = pm.response.json().VatNumber;",
 							"",
 							"      pm.environment.set(\"TenantId\",idvalue1);",
 							"      pm.environment.set(\"TenantAddressId\",idvalue3);",
 							"      pm.environment.set(\"TenantLocalAddressId\",idvalue4);",
-							"      pm.environment.set(\"TenantPaymentTermId\",idvalue5);",
+							"      pm.environment.set(\"PaymentTermId\",idvalue5);",
 							"      pm.environment.set(\"TenantAgentId\",idvalue6);",
-							"      pm.environment.set(\"TenantCurrencyId\",idvalue7);",
-							"      pm.environment.set(\"TenantProfitCurrencyId\",idvalue8);",
+							"      pm.environment.set(\"AccCurrencyId\",idvalue7);",
+							"      pm.environment.set(\"ProftCurrencyId\",idvalue8);",
 							"      pm.environment.set(\"TenantFreightCurrencyId\",idvalue9);",
 							"      pm.environment.set(\"TenantOtherChargesCurrencyId\",idvalue10);",
 							"      pm.environment.set(\"TenantQuoteSaleCurrencyId\",idvalue11);",
 							"      pm.environment.set(\"TenantDefaultSLAId\",idvalue12);",
+							"      pm.environment.set(\"CompanyName\",idvalue13);",
+							"      pm.environment.set(\"VatNumber\",idvalue14);",
 							"",
 							"      ",
 							"      ",
@@ -786,7 +696,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"PropertyChanged\": {\n    \"_isScalar\": false,\n    \"observers\": [],\n    \"closed\": false,\n    \"isStopped\": false,\n    \"hasError\": false,\n    \"thrownError\": null,\n    \"__isAsync\": false\n  },\n  \"UIProperties\": {\n    \"UIPropertyList\": []\n  },\n  \"IsDirty\": false,\n  \"$id\": \"1\",\n  \"id\": \"{{Tenant}}\",\n  \"addressId\": \"{{TenantAddressId}}\",\n  \"localAddressId\": \"{{TenantLocalAddressId}}\",\n  \"companyAddress\": \"Te\",\n  \"company\": \"Integration Test\",\n  \"iATA\": \"\",\n  \"vatNumber\": \"11111\",\n  \"searchFields\": \"Integration Test,EN,11111\",\n  \"paymentTermId\": \"{{TenantPaymentTermId}}\",\n  \"paymentTermName\": \"Net 30\",\n  \"isHybrid\": false,\n  \"isQuoteSubjectEdited\": false,\n  \"agentId\": \"{{TenantAgentId}}\",\n  \"agentName\": \"Integration Test\",\n  \"cASSCode\": \"\",\n  \"currencyId\": \"{{TenantCurrencyId}}\",\n  \"accountingCurrencyCode\": \"USD\",\n  \"accountingCurrencyName\": \"United States Of America Dollar\",\n  \"profitCurrencyId\": \"{{TenantProfitCurrencyId}}\",\n  \"profitCurrencyCode\": \"EUR\",\n  \"profitCurrencyRate\": 1,\n  \"freightCurrencyId\": \"{{TenantFreightCurrencyId}}\",\n  \"freightCurrencyCode\": \"USD\",\n  \"otherChargesCurrencyId\": \"{{TenantOtherChargesCurrencyId}}\",\n  \"otherChargesCurrencyCode\": \"EUR\",\n  \"quoteSaleCurrencyId\": \"{{TenantQuoteSaleCurrencyId}}\",\n  \"quoteSaleCurrencyCode\": \"EUR\",\n  \"volumeUnitCode\": \"CBM\",\n  \"dimensionsUnitCode\": \"Cm\",\n  \"grossWeightUnitCode\": \"KG\",\n  \"chargeableWeightUnitCode\": \"KG\",\n  \"weightMeasurementUnitCode\": \"MT\",\n  \"exportFreightPrepaidCollectId\": \"P\",\n  \"importFreightPrepaidCollectId\": \"P\",\n  \"exportOtherPrepaidCollectId\": \"P\",\n  \"importOtherPrepaidCollectId\": \"P\",\n  \"masterExportFreightPrepaidCollectId\": \"P\",\n  \"masterImportFreightPrepaidCollectId\": \"P\",\n  \"masterExportOtherPrepaidCollectId\": \"P\",\n  \"masterImportOtherPrepaidCollectId\": \"P\",\n  \"timeZoneOffset\": 2,\n  \"language\": \"EN\",\n  \"dateTimeFormat\": \"dd\\\\/MM\\\\/yyyy\",\n  \"email\": \"\",\n  \"dayLightOffset\": 0,\n  \"passwordPolicyCode\": \"MEDU\",\n  \"passwordStrength\": \"Meduim\",\n  \"isDataBackupBuilt\": false,\n  \"countryCode\": \"US\",\n  \"countryName\": \"United States of America\",\n  \"packageCode\": \"DVMT\",\n  \"currencyCode\": \"USD\",\n  \"invoiceSection1\": \"Integration Test\\r\\nRamallah-PS\\r\\n\",\n  \"invoiceSection2\": \"Integration Test\",\n  \"isSharedLogisticsActivated\": false,\n  \"isWebAccessActivated\": false,\n  \"isMobileActivated\": false,\n  \"sharedLogisticsMessageLink\": false,\n  \"vatUniqueTypeCode\": \"UNT\",\n  \"vatMandatoryTypeCode\": \"MNT\",\n  \"vatMandatoryForPotentialCustomers\": false,\n  \"isCustomerTelRequired\": false,\n  \"isCustomerFaxRequired\": false,\n  \"isPickDelAdrsRequired\": false,\n  \"isCustomerAddress1Required\": false,\n  \"hasPrimaryContact\": false,\n  \"allowEAWBMoreThanTenPackages\": false,\n  \"regulatedAgentRegimeActivated\": false,\n  \"isDocumentsArchive\": false,\n  \"isCustomerTenantShare\": false,\n  \"customerTenantShareImportFile\": false,\n  \"customerTenantShareExportFile\": false,\n  \"allowAgentInCustomersLOV\": false,\n  \"isPotentialTelRequired\": false,\n  \"isPotentialFaxRequired\": false,\n  \"isNumeric\": false,\n  \"createTenantFromSignUp\": false,\n  \"isCorrespondenceRightToLeftEnabled\": false,\n  \"isNotesRightToLeftEnabled\": false,\n  \"accountingActivated\": false,\n  \"isInternalTicketByDefault\": false,\n  \"prorateMasterReceivables\": false,\n  \"exportQuotationsToIntegratedSystem\": false,\n  \"tenantVATManagement\": true,\n  \"documentShareAsDefault\": false,\n  \"numberFormatCode\": \"CD\",\n  \"defaultSLAId\": \"{{TenantDefaultSLAId}}\",\n  \"autoArchiveOnInvoice\": false,\n  \"isTestTenant\": false,\n  \"checkDigitControlAlgorithmCode\": \"NONE\",\n  \"applyVATForAllPartners\": false,\n  \"OldEntityPM\": null,\n  \"temperatureUnitCode\": \"FAH\"\n}"
+					"raw": "{\n  \"PropertyChanged\": {\n    \"_isScalar\": false,\n    \"observers\": [],\n    \"closed\": false,\n    \"isStopped\": false,\n    \"hasError\": false,\n    \"thrownError\": null,\n    \"__isAsync\": false\n  },\n  \"UIProperties\": {\n    \"UIPropertyList\": []\n  },\n  \"IsDirty\": false,\n  \"$id\": \"1\",\n  \"id\": \"{{Tenant}}\",\n  \"addressId\": \"{{TenantAddressId}}\",\n  \"localAddressId\": \"{{TenantLocalAddressId}}\",\n\n  \"company\": \"{{CompanyName}}\",\n  \"iATA\": \"\",\n  \"vatNumber\": \"{{VatNumber}}\",\n \n  \"paymentTermId\": \"{{PaymentTermId}}\",\n  \"paymentTermName\": \"Net 30\",\n  \"isHybrid\": false,\n  \"isQuoteSubjectEdited\": false,\n  \"agentId\": \"{{TenantAgentId}}\",\n\n  \"cASSCode\": \"\",\n  \"currencyId\": \"{{AccCurrencyId}}\",\n  \"accountingCurrencyCode\": \"USD\",\n  \"accountingCurrencyName\": \"United States Of America Dollar\",\n  \"profitCurrencyId\": \"{{ProftCurrencyId}}\",\n  \"profitCurrencyCode\": \"EUR\",\n  \"profitCurrencyRate\": 1,\n  \"freightCurrencyId\": \"{{TenantFreightCurrencyId}}\",\n  \"freightCurrencyCode\": \"USD\",\n  \"otherChargesCurrencyId\": \"{{TenantOtherChargesCurrencyId}}\",\n  \"otherChargesCurrencyCode\": \"EUR\",\n  \"quoteSaleCurrencyId\": \"{{TenantQuoteSaleCurrencyId}}\",\n  \"quoteSaleCurrencyCode\": \"EUR\",\n  \"volumeUnitCode\": \"CBM\",\n  \"dimensionsUnitCode\": \"Cm\",\n  \"grossWeightUnitCode\": \"KG\",\n  \"chargeableWeightUnitCode\": \"KG\",\n  \"weightMeasurementUnitCode\": \"MT\",\n  \"exportFreightPrepaidCollectId\": \"P\",\n  \"importFreightPrepaidCollectId\": \"P\",\n  \"exportOtherPrepaidCollectId\": \"P\",\n  \"importOtherPrepaidCollectId\": \"P\",\n  \"masterExportFreightPrepaidCollectId\": \"P\",\n  \"masterImportFreightPrepaidCollectId\": \"P\",\n  \"masterExportOtherPrepaidCollectId\": \"P\",\n  \"masterImportOtherPrepaidCollectId\": \"P\",\n  \"timeZoneOffset\": 2,\n  \"language\": \"EN\",\n  \"dateTimeFormat\": \"dd\\\\/MM\\\\/yyyy\",\n  \"email\": \"\",\n  \"dayLightOffset\": 0,\n  \"passwordPolicyCode\": \"MEDU\",\n  \"passwordStrength\": \"Meduim\",\n  \"isDataBackupBuilt\": false,\n  \"countryCode\": \"US\",\n  \"countryName\": \"United States of America\",\n  \"packageCode\": \"DVMT\",\n  \"currencyCode\": \"USD\",\n  \"invoiceSection1\": \"Integration Test\\r\\nRamallah-PS\\r\\n\",\n  \"invoiceSection2\": \"Integration Test\",\n  \"isSharedLogisticsActivated\": false,\n  \"isWebAccessActivated\": false,\n  \"isMobileActivated\": false,\n  \"sharedLogisticsMessageLink\": false,\n  \"vatUniqueTypeCode\": \"UNT\",\n  \"vatMandatoryTypeCode\": \"MNT\",\n  \"vatMandatoryForPotentialCustomers\": false,\n  \"isCustomerTelRequired\": false,\n  \"isCustomerFaxRequired\": false,\n  \"isPickDelAdrsRequired\": false,\n  \"isCustomerAddress1Required\": false,\n  \"hasPrimaryContact\": false,\n  \"allowEAWBMoreThanTenPackages\": false,\n  \"regulatedAgentRegimeActivated\": false,\n  \"isDocumentsArchive\": false,\n  \"isCustomerTenantShare\": false,\n  \"customerTenantShareImportFile\": false,\n  \"customerTenantShareExportFile\": false,\n  \"allowAgentInCustomersLOV\": false,\n  \"isPotentialTelRequired\": false,\n  \"isPotentialFaxRequired\": false,\n  \"isNumeric\": false,\n  \"createTenantFromSignUp\": false,\n  \"isCorrespondenceRightToLeftEnabled\": false,\n  \"isNotesRightToLeftEnabled\": false,\n  \"accountingActivated\": false,\n  \"isInternalTicketByDefault\": false,\n  \"prorateMasterReceivables\": false,\n  \"exportQuotationsToIntegratedSystem\": false,\n  \"tenantVATManagement\": true,\n  \"documentShareAsDefault\": false,\n  \"numberFormatCode\": \"CD\",\n  \"defaultSLAId\": \"{{TenantDefaultSLAId}}\",\n  \"autoArchiveOnInvoice\": false,\n  \"isTestTenant\": false,\n  \"checkDigitControlAlgorithmCode\": \"NONE\",\n  \"applyVATForAllPartners\": false,\n  \"OldEntityPM\": null,\n  \"temperatureUnitCode\": \"FAH\"\n}"
 				},
 				"url": {
 					"raw": "{{URL}}/api/tenants",
@@ -881,7 +791,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"PropertyChanged\": {\n    \"_isScalar\": false,\n    \"observers\": [],\n    \"closed\": false,\n    \"isStopped\": false,\n    \"hasError\": false,\n    \"thrownError\": null,\n    \"__isAsync\": false\n  },\n  \"UIProperties\": {\n    \"UIPropertyList\": []\n  },\n  \"IsDirty\": false,\n  \"$id\": \"1\",\n  \"id\": \"{{Tenant2}}\",\n  \"addressId\": \"{{TenantAddressId}}\",\n  \"localAddressId\": \"{{TenantLocalAddressId}}\",\n  \"companyAddress\": \"Te\",\n  \"company\": \"Integration Test\",\n  \"iATA\": \"\",\n  \"vatNumber\": \"11111\",\n  \"searchFields\": \"Integration Test,EN,11111\",\n  \"paymentTermId\": \"{{TenantPaymentTermId}}\",\n  \"paymentTermName\": \"Net 30\",\n  \"isHybrid\": false,\n  \"isQuoteSubjectEdited\": false,\n  \"agentId\": \"{{TenantAgentId}}\",\n  \"agentName\": \"Integration Test\",\n  \"cASSCode\": \"\",\n  \"currencyId\": \"{{TenantCurrencyId}}\",\n  \"accountingCurrencyCode\": \"USD\",\n  \"accountingCurrencyName\": \"United States Of America Dollar\",\n  \"profitCurrencyId\": \"{{TenantProfitCurrencyId}}\",\n  \"profitCurrencyCode\": \"EUR\",\n  \"profitCurrencyRate\": 1,\n  \"freightCurrencyId\": \"{{TenantFreightCurrencyId}}\",\n  \"freightCurrencyCode\": \"USD\",\n  \"otherChargesCurrencyId\": \"{{TenantOtherChargesCurrencyId}}\",\n  \"otherChargesCurrencyCode\": \"EUR\",\n  \"quoteSaleCurrencyId\": \"{{TenantQuoteSaleCurrencyId}}\",\n  \"quoteSaleCurrencyCode\": \"EUR\",\n  \"volumeUnitCode\": \"CBM\",\n  \"dimensionsUnitCode\": \"Cm\",\n  \"grossWeightUnitCode\": \"KG\",\n  \"chargeableWeightUnitCode\": \"KG\",\n  \"weightMeasurementUnitCode\": \"MT\",\n  \"exportFreightPrepaidCollectId\": \"P\",\n  \"importFreightPrepaidCollectId\": \"P\",\n  \"exportOtherPrepaidCollectId\": \"P\",\n  \"importOtherPrepaidCollectId\": \"P\",\n  \"masterExportFreightPrepaidCollectId\": \"P\",\n  \"masterImportFreightPrepaidCollectId\": \"P\",\n  \"masterExportOtherPrepaidCollectId\": \"P\",\n  \"masterImportOtherPrepaidCollectId\": \"P\",\n  \"timeZoneOffset\": 2,\n  \"language\": \"EN\",\n  \"dateTimeFormat\": \"dd\\\\/MM\\\\/yyyy\",\n  \"email\": \"\",\n  \"dayLightOffset\": 0,\n  \"passwordPolicyCode\": \"MEDU\",\n  \"passwordStrength\": \"Meduim\",\n  \"isDataBackupBuilt\": false,\n  \"countryCode\": \"US\",\n  \"countryName\": \"United States of America\",\n  \"packageCode\": \"DVMT\",\n  \"currencyCode\": \"USD\",\n  \"invoiceSection1\": \"Integration Test\\r\\nRamallah-PS\\r\\n\",\n  \"invoiceSection2\": \"Integration Test\",\n  \"isSharedLogisticsActivated\": false,\n  \"isWebAccessActivated\": false,\n  \"isMobileActivated\": false,\n  \"sharedLogisticsMessageLink\": false,\n  \"vatUniqueTypeCode\": \"UNT\",\n  \"vatMandatoryTypeCode\": \"MNT\",\n  \"vatMandatoryForPotentialCustomers\": false,\n  \"isCustomerTelRequired\": false,\n  \"isCustomerFaxRequired\": false,\n  \"isPickDelAdrsRequired\": false,\n  \"isCustomerAddress1Required\": false,\n  \"hasPrimaryContact\": false,\n  \"allowEAWBMoreThanTenPackages\": false,\n  \"regulatedAgentRegimeActivated\": false,\n  \"isDocumentsArchive\": false,\n  \"isCustomerTenantShare\": false,\n  \"customerTenantShareImportFile\": false,\n  \"customerTenantShareExportFile\": false,\n  \"allowAgentInCustomersLOV\": false,\n  \"isPotentialTelRequired\": false,\n  \"isPotentialFaxRequired\": false,\n  \"isNumeric\": false,\n  \"createTenantFromSignUp\": false,\n  \"isCorrespondenceRightToLeftEnabled\": false,\n  \"isNotesRightToLeftEnabled\": false,\n  \"accountingActivated\": false,\n  \"isInternalTicketByDefault\": false,\n  \"prorateMasterReceivables\": false,\n  \"exportQuotationsToIntegratedSystem\": false,\n  \"tenantVATManagement\": true,\n  \"documentShareAsDefault\": false,\n  \"numberFormatCode\": \"CD\",\n  \"defaultSLAId\": \"{{TenantDefaultSLAId}}\",\n  \"autoArchiveOnInvoice\": false,\n  \"isTestTenant\": false,\n  \"checkDigitControlAlgorithmCode\": \"NONE\",\n  \"applyVATForAllPartners\": false,\n  \"OldEntityPM\": null,\n  \"temperatureUnitCode\": \"FAH\"\n}"
+					"raw": "{\n  \"PropertyChanged\": {\n    \"_isScalar\": false,\n    \"observers\": [],\n    \"closed\": false,\n    \"isStopped\": false,\n    \"hasError\": false,\n    \"thrownError\": null,\n    \"__isAsync\": false\n  },\n  \"UIProperties\": {\n    \"UIPropertyList\": []\n  },\n  \"IsDirty\": false,\n  \"$id\": \"1\",\n  \"id\": \"{{Tenant2}}\",\n  \"addressId\": \"{{TenantAddressId}}\",\n  \"localAddressId\": \"{{TenantLocalAddressId}}\",\n\n  \"company\": \"{{CompanyName}}\",\n  \"iATA\": \"\",\n  \"vatNumber\": \"{{VatNumber}}\",\n\n  \"paymentTermId\": \"{{PaymentTermId}}\",\n  \"paymentTermName\": \"Net 30\",\n  \"isHybrid\": false,\n  \"isQuoteSubjectEdited\": false,\n  \"agentId\": \"{{TenantAgentId}}\",\n \n  \"cASSCode\": \"\",\n  \"currencyId\": \"{{AccCurrencyId}}\",\n  \"accountingCurrencyCode\": \"USD\",\n  \"accountingCurrencyName\": \"United States Of America Dollar\",\n  \"profitCurrencyId\": \"{{ProftCurrencyId}}\",\n  \"profitCurrencyCode\": \"EUR\",\n  \"profitCurrencyRate\": 1,\n  \"freightCurrencyId\": \"{{TenantFreightCurrencyId}}\",\n  \"freightCurrencyCode\": \"USD\",\n  \"otherChargesCurrencyId\": \"{{TenantOtherChargesCurrencyId}}\",\n  \"otherChargesCurrencyCode\": \"EUR\",\n  \"quoteSaleCurrencyId\": \"{{TenantQuoteSaleCurrencyId}}\",\n  \"quoteSaleCurrencyCode\": \"EUR\",\n  \"volumeUnitCode\": \"CBM\",\n  \"dimensionsUnitCode\": \"Cm\",\n  \"grossWeightUnitCode\": \"KG\",\n  \"chargeableWeightUnitCode\": \"KG\",\n  \"weightMeasurementUnitCode\": \"MT\",\n  \"exportFreightPrepaidCollectId\": \"P\",\n  \"importFreightPrepaidCollectId\": \"P\",\n  \"exportOtherPrepaidCollectId\": \"P\",\n  \"importOtherPrepaidCollectId\": \"P\",\n  \"masterExportFreightPrepaidCollectId\": \"P\",\n  \"masterImportFreightPrepaidCollectId\": \"P\",\n  \"masterExportOtherPrepaidCollectId\": \"P\",\n  \"masterImportOtherPrepaidCollectId\": \"P\",\n  \"timeZoneOffset\": 2,\n  \"language\": \"EN\",\n  \"dateTimeFormat\": \"dd\\\\/MM\\\\/yyyy\",\n  \"email\": \"\",\n  \"dayLightOffset\": 0,\n  \"passwordPolicyCode\": \"MEDU\",\n  \"passwordStrength\": \"Meduim\",\n  \"isDataBackupBuilt\": false,\n  \"countryCode\": \"US\",\n  \"countryName\": \"United States of America\",\n  \"packageCode\": \"DVMT\",\n  \"currencyCode\": \"USD\",\n  \"invoiceSection1\": \"Integration Test\\r\\nRamallah-PS\\r\\n\",\n  \"invoiceSection2\": \"Integration Test\",\n  \"isSharedLogisticsActivated\": false,\n  \"isWebAccessActivated\": false,\n  \"isMobileActivated\": false,\n  \"sharedLogisticsMessageLink\": false,\n  \"vatUniqueTypeCode\": \"UNT\",\n  \"vatMandatoryTypeCode\": \"MNT\",\n  \"vatMandatoryForPotentialCustomers\": false,\n  \"isCustomerTelRequired\": false,\n  \"isCustomerFaxRequired\": false,\n  \"isPickDelAdrsRequired\": false,\n  \"isCustomerAddress1Required\": false,\n  \"hasPrimaryContact\": false,\n  \"allowEAWBMoreThanTenPackages\": false,\n  \"regulatedAgentRegimeActivated\": false,\n  \"isDocumentsArchive\": false,\n  \"isCustomerTenantShare\": false,\n  \"customerTenantShareImportFile\": false,\n  \"customerTenantShareExportFile\": false,\n  \"allowAgentInCustomersLOV\": false,\n  \"isPotentialTelRequired\": false,\n  \"isPotentialFaxRequired\": false,\n  \"isNumeric\": false,\n  \"createTenantFromSignUp\": false,\n  \"isCorrespondenceRightToLeftEnabled\": false,\n  \"isNotesRightToLeftEnabled\": false,\n  \"accountingActivated\": false,\n  \"isInternalTicketByDefault\": false,\n  \"prorateMasterReceivables\": false,\n  \"exportQuotationsToIntegratedSystem\": false,\n  \"tenantVATManagement\": true,\n  \"documentShareAsDefault\": false,\n  \"numberFormatCode\": \"CD\",\n  \"defaultSLAId\": \"{{TenantDefaultSLAId}}\",\n  \"autoArchiveOnInvoice\": false,\n  \"isTestTenant\": false,\n  \"checkDigitControlAlgorithmCode\": \"NONE\",\n  \"applyVATForAllPartners\": false,\n  \"OldEntityPM\": null,\n  \"temperatureUnitCode\": \"FAH\"\n}"
 				},
 				"url": {
 					"raw": "{{URL}}/api/tenants",

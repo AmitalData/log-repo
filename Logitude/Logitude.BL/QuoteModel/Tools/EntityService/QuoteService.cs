@@ -209,6 +209,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     SentQuoteStatusMessageToUnifreight(objecttable.Id);
                 }
 
+                SendQuoteToIntegratedSystem(objecttable.Id);
+
                 QuoteMapping.MapEntity(entityPM, entityPoco, isNewEntity);
 
                 entityRepository.Update(entityPoco);
@@ -376,6 +378,58 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             }
         }
 
+
+        private void SendQuoteToIntegratedSystem(string objectTableId)
+        {
+            if (IsSendQuoteToIntegratedSystem())
+            {
+                Logitude.BL.QuoteModel.APIDataContract.ApiV1.QuoteQueryService quoteQueryService = new Logitude.BL.QuoteModel.APIDataContract.ApiV1.QuoteQueryService(entityPM.Tenant);
+                Logitude.BL.QuoteModel.APIDataContract.ApiV1.Quote quote = quoteQueryService.GetQuoteById(entityPM.Id, entityPM.Tenant);
+                string xmlstring = "";
+                if (quote != null)
+                {
+                    xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(quote);
+                }
+                CommunicationsParams tasklogParams = GetCommunicationsParams(objectTableId);
+                List<QueueTask> queue2Tasks = new List<QueueTask>();
+                queue2Tasks.Add(new QueueTask(){Action = "ExportQuotationsToIntegratedSystem",Parameters = new List<Parameter>() { new Parameter { Name = "QuoteMetaData", Order = 1, Value = xmlstring }, }});
+                tasklogParams.ByteData = LogitudeXmlSerializer.SerializeObject(queue2Tasks);
+                Communications.AddCommunicationLog(tasklogParams);
+            }
+        }
+
+
+        private bool IsSendQuoteToIntegratedSystem()
+        {
+            bool isSendQuote = false;
+            QuoteStageRepository myQuoteStageRepository = new QuoteStageRepository(tenant);
+            QuoteStage quoteStageSend = myQuoteStageRepository.GetQuoteStages(tenant).Where(d => d.Code == "QTST").FirstOrDefault();
+            if (quoteStageSend != null && quoteStageSend.Id == entityPM.StageId && this.entityPoco.StageId != quoteStageSend.Id)
+            {
+                TenantQuery tenantQuery = new TenantQuery(tenant);
+                TenantPM tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
+                if (tenantPM.ExportQuotationsToIntegratedSystem) isSendQuote = true;
+            }
+            return isSendQuote;
+        }
+        private CommunicationsParams GetCommunicationsParams(string objectTableId)
+        {
+            return new CommunicationsParams()
+            {
+                Tenant = entityPM.Tenant,
+                CommunicationLogTypeCode = "Q",
+                QueueName = "externaltasksqueue" + entityPM.Tenant + 1,
+                Priority = 1,
+                InOut = "O",
+                Status = "W",
+                LoggingUserId = entityPM.UpdatedByUserId,
+                LoggingObjectTableId = objectTableId,
+                LoggingEntityId = entityPM.Id,
+                Subject = "Quotation Document",
+                FolderName = "ExternalTasksQueue",
+            };
+        }
+
         public void GetForeignFields(QuotePM quotepm, Quote quote)
         {
             quotepm.LastModified = quote.LastModified;
@@ -501,7 +555,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 entityPM.PackageType5Id = null;
                 entityPM.PackageType5Quantity = null;
                 entityPM.TEU = null;
-                entityPM.NumberOfPackages = null;
+                entityPM.NumberOfContainers = null;
                 entityPM.GrossWeight = null;
                 entityPM.ChargeableWeight = null;
                 entityPM.VolumetricWeight = null;

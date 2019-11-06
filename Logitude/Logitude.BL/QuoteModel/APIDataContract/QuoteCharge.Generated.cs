@@ -17,7 +17,7 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 namespace Logitude.BL.QuoteModel.APIDataContract.ApiV1
 {
    
-    public class QuoteCharge
+    public partial class QuoteCharge
     {
 
 	    

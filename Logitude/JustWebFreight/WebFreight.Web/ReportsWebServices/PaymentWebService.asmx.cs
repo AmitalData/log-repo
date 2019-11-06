@@ -31,6 +31,8 @@ using Logitude.Server.Tools;
 using System.Drawing;
 using System.Xml;
 using System.Text;
+using System.Web;
+using Logitude.Server.Tools.Helpers;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -176,7 +178,7 @@ namespace WebFreight.Web.ReportsWebServices
                     //payment number
                     paymentDataProvider.PaymentNo = currentPayment.PaymentNo != null ? currentPayment.PaymentNo : "";
 
-                  
+                    Contact loggedContact = GetLoggedContact(currentPayment.Tenant);
 
                     if (billToCard != null)
                     {
@@ -189,7 +191,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                         if (address != null)
                         {
-                            if (address.IsLocalLanguage)
+                            if (!loggedContact.DontShowLocalLabels)
                             {
                                 if (!string.IsNullOrEmpty(billToCard.LocalName))
                                 {
@@ -454,11 +456,20 @@ namespace WebFreight.Web.ReportsWebServices
                 {
 					this.MapPaymentProfact33Fields(currentPayment, paymentDataProvider, tenantSettings, invoiceCotnext, billToCard);
                 }
+
+                paymentDataProvider.AmountInLocalCurrency =  currentPayment.AmountInLocalCurrency;
+
             }
 
             return paymentDataProvider;
         }
-
+        private Contact GetLoggedContact(int tenant)
+        {
+            string email = AuthenticationUtil.GetLoggedUserEmail(tenant);
+            ContactRepository contactRepository = new ContactRepository(tenant);
+            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, tenant);
+            return loggedContact;
+        }
         private void PrintTotalAmountInEnglishAndSpanish(PaymentDataProvider paymentDataProvider, string paymentCurrencyLocalName)
         {
             NumbersConverterToWords numbersConverterToWords = new NumbersConverterToWords();
@@ -509,7 +520,8 @@ namespace WebFreight.Web.ReportsWebServices
 			if (billToCard != null)
 			{
 				paymentDataProvider.SAT.SATForeignRFC = (billToCard.SATForeignRFC ?? null);
-			}
+                paymentDataProvider.ForeignRFC = (billToCard.SATForeignRFC ?? null);
+            }
 
 			if (!string.IsNullOrEmpty(currentPayment.SATXML))
             {

@@ -174,7 +174,8 @@ using Simplog.Data.InvoiceModel;
 
 							 
 				   temp.AmountInInvoiceCurrency = MyEntityPM.AmountInInvoiceCurrency;
-				   temp.InvoiceExpectedAmount = MyEntityPM.InvoiceExpectedAmount;					
+				   temp.InvoiceExpectedAmount = MyEntityPM.InvoiceExpectedAmount;
+				   temp.EntityReference = MyEntityPM.MainEntityReference;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -350,7 +351,17 @@ using Simplog.Data.InvoiceModel;
 					temp.ExternalAccountingEntityId = MyEntity.ExternalAccountingEntityId;
 					if(string.IsNullOrEmpty(temp.Id))
 					{
-						temp.Id = MyEntity.Id;
+					   
+					    if(!string.IsNullOrEmpty(MyEntity.Id))
+					    {
+					        throw new ApplicationException("APInvoice with provided key doesn't exist");
+						
+						}
+						//else
+						//{
+						//    temp.Id = MyEntity.Id;
+
+						//}
 					} 
 
 					if(MyEntity.InvoiceLines != null && MyEntity.InvoiceLines.Count > 0)
@@ -361,7 +372,8 @@ using Simplog.Data.InvoiceModel;
 
 								 
 					temp.AmountInInvoiceCurrency = MyEntity.AmountInInvoiceCurrency;
-					temp.InvoiceExpectedAmount = MyEntity.InvoiceExpectedAmount;					   
+					temp.InvoiceExpectedAmount = MyEntity.InvoiceExpectedAmount;
+					temp.MainEntityReference = MyEntity.EntityReference;					   
 					   return temp;
 		    }
             catch (Exception ex)

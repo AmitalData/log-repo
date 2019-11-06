@@ -138,7 +138,7 @@
                                             [DisplayMemberPath]="'Code'"
                                             [FocusOnMe]="true"
                                             [SelectedValue]="item.OriginPortId"
-                                            [DependencyFilter1Value]="'A'">
+                                            [DependencyFilter1Value]="OriginDependencyFilterValue">
                                     </LogLov>
                                 </div>
                             </log-cell-template>
@@ -165,7 +165,7 @@
                                             [DisplayMemberPath]="'Code'"
                                             [FocusOnMe]="true"
                                             [SelectedValue]="item.DestinationPortId"
-                                            [DependencyFilter1Value]="'A'">
+                                            [DependencyFilter1Value]="DestinationDependencyFilterValue">
                                     </LogLov>
 
                                 </div>
@@ -209,12 +209,12 @@
                         </log-column>
 
                         <!-- Surcharge1MinPrice -->
-                        <log-column *ngIf="Surcharge1PriceVisibility" [Alignment]="'center'" [header]="Surcharge1MinPriceLabel" [width]="'100'">
-                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsSurcharge1MinPriceEditEnabled">
+                        <log-column *ngIf="Surcharge1MinPriceVisibility" [Alignment]="'center'" [header]="Surcharge1MinPriceLabel" [width]="'100'">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                     <table>
                                         <tr>
-                                            <td style="width: 1px;">
+                                            <td [ngStyle]="{color: item.Surcharge1PriceColor}" style="width: 1px;">
                                                 <span>{{item.Surcharge1MinPriceValue}}</span>
                                             </td>
                                         </tr>
@@ -257,12 +257,12 @@
                         </log-column>
 
                         <!-- Surcharge2MinPrice -->
-                        <log-column *ngIf="Surcharge2PriceVisibility" [Alignment]="'center'" [header]="Surcharge2MinPriceLabel" [width]="'100'">
-                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsSurcharge2MinPriceEditEnabled">
+                        <log-column *ngIf="Surcharge2MinPriceVisibility" [Alignment]="'center'" [header]="Surcharge2MinPriceLabel" [width]="'100'">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                     <table>
                                         <tr>
-                                            <td style="width: 1px;">
+                                            <td [ngStyle]="{color: item.Surcharge2PriceColor}" style="width: 1px;">
                                                 <span>{{item.Surcharge2MinPriceValue}}</span>
                                             </td>
                                         </tr>
@@ -304,12 +304,12 @@
                         </log-column>
 
                         <!-- Surcharge3MinPrice -->
-                        <log-column *ngIf="Surcharge3PriceVisibility" [Alignment]="'center'" [header]="Surcharge3MinPriceLabel" [width]="'100'">
-                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsSurcharge3MinPriceEditEnabled">
+                        <log-column *ngIf="Surcharge3MinPriceVisibility" [Alignment]="'center'" [header]="Surcharge3MinPriceLabel" [width]="'100'">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                     <table>
                                         <tr>
-                                            <td style="width: 1px;">
+                                            <td [ngStyle]="{color: item.Surcharge3PriceColor}" style="width: 1px;">
                                                 <span>{{item.Surcharge3MinPriceValue}}</span>
                                             </td>
                                         </tr>
@@ -351,12 +351,12 @@
                         </log-column>
 
                         <!-- Surcharge4MinPrice -->
-                        <log-column *ngIf="Surcharge4PriceVisibility" [Alignment]="'center'" [header]="Surcharge4MinPriceLabel" [width]="'100'">
-                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsSurcharge4MinPriceEditEnabled">
+                        <log-column *ngIf="Surcharge4MinPriceVisibility" [Alignment]="'center'" [header]="Surcharge4MinPriceLabel" [width]="'100'">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                     <table>
                                         <tr>
-                                            <td style="width: 1px;">
+                                            <td [ngStyle]="{color: item.Surcharge4PriceColor}" style="width: 1px;">
                                                 <span>{{item.Surcharge4MinPriceValue}}</span>
                                             </td>
                                         </tr>
@@ -398,12 +398,12 @@
                         </log-column>
 
                         <!-- Surcharge5MinPrice -->
-                        <log-column *ngIf="Surcharge5PriceVisibility" [Alignment]="'center'" [header]="Surcharge5MinPriceLabel" [width]="'100'">
-                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsSurcharge5MinPriceEditEnabled">
+                        <log-column *ngIf="Surcharge5MinPriceVisibility" [Alignment]="'center'" [header]="Surcharge5MinPriceLabel" [width]="'100'">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                     <table>
                                         <tr>
-                                            <td style="width: 1px;">
+                                            <td [ngStyle]="{color: item.Surcharge5PriceColor}" style="width: 1px;">
                                                 <span>{{item.Surcharge5MinPriceValue}}</span>
                                             </td>
                                         </tr>
@@ -445,12 +445,12 @@
                         </log-column>
 
                         <!-- Surcharge6MinPrice -->
-                        <log-column *ngIf="Surcharge6PriceVisibility" [Alignment]="'center'" [header]="Surcharge6MinPriceLabel" [width]="'100'">
-                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsSurcharge6MinPriceEditEnabled">
+                        <log-column *ngIf="Surcharge6MinPriceVisibility" [Alignment]="'center'" [header]="Surcharge6MinPriceLabel" [width]="'100'">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                     <table>
                                         <tr>
-                                            <td style="width: 1px;">
+                                            <td [ngStyle]="{color: item.Surcharge6PriceColor}" style="width: 1px;">
                                                 <span>{{item.Surcharge6MinPriceValue}}</span>
                                             </td>
                                         </tr>
@@ -492,12 +492,12 @@
                         </log-column>
 
                         <!-- Surcharge7MinPrice -->
-                        <log-column *ngIf="Surcharge7PriceVisibility" [Alignment]="'center'" [header]="Surcharge7MinPriceLabel" [width]="'100'">
-                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsSurcharge7MinPriceEditEnabled">
+                        <log-column *ngIf="Surcharge7MinPriceVisibility" [Alignment]="'center'" [header]="Surcharge7MinPriceLabel" [width]="'100'">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                     <table>
                                         <tr>
-                                            <td style="width: 1px;">
+                                            <td [ngStyle]="{color: item.Surcharge7PriceColor}" style="width: 1px;">
                                                 <span>{{item.Surcharge7MinPriceValue}}</span>
                                             </td>
                                         </tr>
@@ -539,12 +539,12 @@
                         </log-column>
 
                         <!-- Surcharge8MinPrice -->
-                        <log-column *ngIf="Surcharge8PriceVisibility" [Alignment]="'center'" [header]="Surcharge8MinPriceLabel" [width]="'100'">
-                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsSurcharge8MinPriceEditEnabled">
+                        <log-column *ngIf="Surcharge8MinPriceVisibility" [Alignment]="'center'" [header]="Surcharge8MinPriceLabel" [width]="'100'">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                     <table>
                                         <tr>
-                                            <td style="width: 1px;">
+                                            <td [ngStyle]="{color: item.Surcharge8PriceColor}" style="width: 1px;">
                                                 <span>{{item.Surcharge8MinPriceValue}}</span>
                                             </td>
                                         </tr>
@@ -586,12 +586,12 @@
                         </log-column>
 
                         <!-- Surcharge9MinPrice -->
-                        <log-column *ngIf="Surcharge9PriceVisibility" [Alignment]="'center'" [header]="Surcharge9MinPriceLabel" [width]="'100'">
-                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsSurcharge9MinPriceEditEnabled">
+                        <log-column *ngIf="Surcharge9MinPriceVisibility" [Alignment]="'center'" [header]="Surcharge9MinPriceLabel" [width]="'100'">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                     <table>
                                         <tr>
-                                            <td style="width: 1px;">
+                                            <td [ngStyle]="{color: item.Surcharge9PriceColor}" style="width: 1px;">
                                                 <span>{{item.Surcharge9MinPriceValue}}</span>
                                             </td>
                                         </tr>
@@ -633,12 +633,12 @@
                         </log-column>
 
                         <!-- Surcharge10MinPrice -->
-                        <log-column *ngIf="Surcharge10PriceVisibility" [Alignment]="'center'" [header]="Surcharge10MinPriceLabel" [width]="'100'">
-                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsSurcharge10MinPriceEditEnabled">
+                        <log-column *ngIf="Surcharge10MinPriceVisibility" [Alignment]="'center'" [header]="Surcharge10MinPriceLabel" [width]="'100'">
+                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                     <table>
                                         <tr>
-                                            <td style="width: 1px;">
+                                            <td [ngStyle]="{color: item.Surcharge10PriceColor}" style="width: 1px;">
                                                 <span>{{item.Surcharge10MinPriceValue}}</span>
                                             </td>
                                         </tr>
@@ -762,61 +762,61 @@
                                                 <td class="CellDisabled" style="width: 120px; min-width:120px; max-width:120px; text-align: left;">
                                                     {{item.StartDate | DateTimePipe:'SD'}}
                                                 </td>
-                                                <td *ngIf="Surcharge1PriceVisibility" class="CellDisabled" style="width: 100px; min-width:100px; max-width:100px; text-align: right;">
+                                                <td *ngIf="Surcharge1MinPriceVisibility" class="CellDisabled" style="width: 100px; min-width:100px; max-width:100px; text-align: right;">
                                                     {{item.Surcharge1MinPriceValue}}
                                                 </td>
                                                 <td *ngIf="Surcharge1PriceVisibility" class="CellDisabled" style="width: 120px; min-width:120px; max-width:120px; text-align: right;">
                                                     {{item.Surcharge1PriceValue}}
                                                 </td>
-                                                <td *ngIf="Surcharge2PriceVisibility" class="CellDisabled" style="width: 100px; min-width:100px; max-width:100px; text-align: right;">
+                                                <td *ngIf="Surcharge2MinPriceVisibility" class="CellDisabled" style="width: 100px; min-width:100px; max-width:100px; text-align: right;">
                                                     {{item.Surcharge2MinPriceValue}}
                                                 </td>
                                                 <td *ngIf="Surcharge2PriceVisibility" class="CellDisabled" style="width: 120px; min-width:120px; max-width:120px; text-align: right;">
                                                     {{item.Surcharge2PriceValue}}
                                                 </td>
-                                                <td *ngIf="Surcharge3PriceVisibility" class="CellDisabled" style="width: 100px; min-width:100px; max-width:100px; text-align: right;">
+                                                <td *ngIf="Surcharge3MinPriceVisibility" class="CellDisabled" style="width: 100px; min-width:100px; max-width:100px; text-align: right;">
                                                     {{item.Surcharge3MinPriceValue}}
                                                 </td>
                                                 <td *ngIf="Surcharge3PriceVisibility" class="CellDisabled" style="width: 120px; min-width:120px; max-width:120px; text-align: right;">
                                                     {{item.Surcharge3PriceValue}}
                                                 </td>
-                                                <td *ngIf="Surcharge4PriceVisibility" class="CellDisabled" style="width: 100px; min-width:100px; max-width:100px; text-align: right;">
+                                                <td *ngIf="Surcharge4MinPriceVisibility" class="CellDisabled" style="width: 100px; min-width:100px; max-width:100px; text-align: right;">
                                                     {{item.Surcharge4MinPriceValue}}
                                                 </td>
                                                 <td *ngIf="Surcharge4PriceVisibility" class="CellDisabled" style="width: 120px; min-width:120px; max-width:120px; text-align: right;">
                                                     {{item.Surcharge4PriceValue}}
                                                 </td>
-                                                <td *ngIf="Surcharge5PriceVisibility" class="CellDisabled" style="width: 100px; min-width:100px; max-width:100px; text-align: right;">
+                                                <td *ngIf="Surcharge5MinPriceVisibility" class="CellDisabled" style="width: 100px; min-width:100px; max-width:100px; text-align: right;">
                                                     {{item.Surcharge5MinPriceValue}}
                                                 </td>
                                                 <td *ngIf="Surcharge5PriceVisibility" class="CellDisabled" style="width: 120px; min-width:120px; max-width:120px; text-align: right;">
                                                     {{item.Surcharge5PriceValue}}
                                                 </td>
-                                                <td *ngIf="Surcharge6PriceVisibility" class="CellDisabled" style="width: 100px; min-width:100px; max-width:100px; text-align: right;">
+                                                <td *ngIf="Surcharge6MinPriceVisibility" class="CellDisabled" style="width: 100px; min-width:100px; max-width:100px; text-align: right;">
                                                     {{item.Surcharge6MinPriceValue}}
                                                 </td>
                                                 <td *ngIf="Surcharge6PriceVisibility" class="CellDisabled" style="width: 120px; min-width:120px; max-width:120px; text-align: right;">
                                                     {{item.Surcharge6PriceValue}}
                                                 </td>
-                                                <td *ngIf="Surcharge7PriceVisibility" class="CellDisabled" style="width: 100px; min-width:100px; max-width:100px; text-align: right;">
+                                                <td *ngIf="Surcharge7MinPriceVisibility" class="CellDisabled" style="width: 100px; min-width:100px; max-width:100px; text-align: right;">
                                                     {{item.Surcharge7MinPriceValue}}
                                                 </td>
                                                 <td *ngIf="Surcharge7PriceVisibility" class="CellDisabled" style="width: 120px; min-width:120px; max-width:120px; text-align: right;">
                                                     {{item.Surcharge7PriceValue}}
                                                 </td>
-                                                <td *ngIf="Surcharge8PriceVisibility" class="CellDisabled" style="width: 100px; min-width:100px; max-width:100px; text-align: right;">
+                                                <td *ngIf="Surcharge8MinPriceVisibility" class="CellDisabled" style="width: 100px; min-width:100px; max-width:100px; text-align: right;">
                                                     {{item.Surcharge8MinPriceValue}}
                                                 </td>
                                                 <td *ngIf="Surcharge8PriceVisibility" class="CellDisabled" style="width: 120px; min-width:120px; max-width:120px; text-align: right;">
                                                     {{item.Surcharge8PriceValue}}
                                                 </td>
-                                                <td *ngIf="Surcharge9PriceVisibility" class="CellDisabled" style="width: 100px; min-width:100px; max-width:100px; text-align: right;">
+                                                <td *ngIf="Surcharge9MinPriceVisibility" class="CellDisabled" style="width: 100px; min-width:100px; max-width:100px; text-align: right;">
                                                     {{item.Surcharge9MinPriceValue}}
                                                 </td>
                                                 <td *ngIf="Surcharge9PriceVisibility" class="CellDisabled" style="width: 120px; min-width:120px; max-width:120px; text-align: right;">
                                                     {{item.Surcharge9PriceValue}}
                                                 </td>
-                                                <td *ngIf="Surcharge10PriceVisibility" class="CellDisabled" style="width: 100px; min-width:100px; max-width:100px; text-align: right;">
+                                                <td *ngIf="Surcharge10MinPriceVisibility" class="CellDisabled" style="width: 100px; min-width:100px; max-width:100px; text-align: right;">
                                                     {{item.Surcharge10MinPriceValue}}
                                                 </td>
                                                 <td *ngIf="Surcharge10PriceVisibility" class="CellDisabled" style="width: 120px; min-width:120px; max-width:120px; text-align: right;">

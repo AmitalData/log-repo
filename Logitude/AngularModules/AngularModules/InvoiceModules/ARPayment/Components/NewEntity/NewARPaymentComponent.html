@@ -1,4 +1,24 @@
+<style type="text/css">
+      .SectionTitle > span {
+        font-size: 14px;
+        user-select: text;
+        -webkit-user-select: auto;
+    }
 
+    .SectionTitle td {
+        font-size: 14px;
+        user-select: text;
+    }
+
+    .SectionTitle {
+        height: 20px;
+        line-height: 20px;
+        font-size: 14px;
+        color: #1B90CB;
+        user-select: text;
+        -webkit-user-select: text;
+    }
+</style>
 <table *ngIf="IsVisible">
 
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
@@ -150,9 +170,6 @@
                                     </td>
                                 </tr>
 
-
-
-
                                 <!-- AmountInPaymentCurrency -->
                                 <tr class="FormFieldRow">
                                     <td>
@@ -167,15 +184,35 @@
                                         <div></div>
                                     </td>
                                 </tr>
-                                <!--InternalNotes-->
 
+                                <!-- BranchId -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'BranchId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'BranchId'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [SelectedValue]="BranchId"
+                                                [LookUpTableName]="'Branch'">
+                                        </LogLov>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <!--InternalNotes-->
                                 <tr class="FormFieldRow" style="height: 75px;">
                                     <td>
                                         <table>
                                             <tr style="height:5px"></tr>
                                             <tr>
                                                 <td style="vertical-align:top;">
-                                                    <LogLabel [ObjectFieldName]="'InternalNotes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                    <LogLabel [ObjectFieldName]="'PrintNotes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
                                             </tr>
                                         </table>
@@ -186,7 +223,7 @@
                                             <tr style="height:10px"></tr>
                                             <tr>
                                                 <td style="width:50px">
-                                                    <LogTextBox [ObjectFieldName]="'InternalNotes'" [IsMultiline]="true" [InputType]="'ntext'" [Text]="InternalNotes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="false"></LogTextBox>
+                                                    <LogTextBox [ObjectFieldName]="'PrintNotes'" [IsMultiline]="true" [InputType]="'ntext'" [Text]="PrintNotes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="false"></LogTextBox>
                                                 </td>
                                             </tr>
                                         </table>
@@ -196,6 +233,7 @@
                                         <div></div>
                                     </td>
                                 </tr>
+
                                 <!-- BankAccountLiteId -->
                                 <tr class="FormFieldRow" *ngIf="!accountingActivated">
                                     <td>
@@ -216,7 +254,8 @@
                                     </td>
                                 </tr>
 
-                                <tr>
+
+                                <tr style="height:5px;">
                                     <td>
                                         <div></div>
                                     </td>
@@ -370,7 +409,7 @@
 
                                 </tr>
 
-                                <tr>
+                                <tr style="height:5px;">
                                     <td colspan="7">
                                         <div></div>
                                     </td>
@@ -378,6 +417,35 @@
                             </table>
                         </td>
                     </tr>
+
+                    <tr>
+                        <td colspan="3">
+                            <!-- Additional Fields -->
+                            <div *ngIf="ShowAdditionalFieldsScreen">
+                                <div class="SectionTitle">{{'ARPayment.S.NewARPayment.AdditionalFields' | TextCodeTranslationPipe}}</div>
+
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <div>
+                                                <div class="LocationDirective" #Child></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="3">
+                            <div></div>
+                        </td>
+                    </tr>
+
+
                 </table>
             </ScrollViewer>
         </td>

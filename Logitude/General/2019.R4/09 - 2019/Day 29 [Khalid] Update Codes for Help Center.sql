@@ -1,0 +1,1 @@
+update HelpResources set Name='INTTRA Connection Tutorial',SearchFields='INTTRA Connection Tutorial',[FileName]='inttra_connection_tutorial.pdf' where Code='71'

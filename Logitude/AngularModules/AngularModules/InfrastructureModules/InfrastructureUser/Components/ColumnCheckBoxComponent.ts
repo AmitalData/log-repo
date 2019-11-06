@@ -44,62 +44,88 @@ export class ColumnCheckBoxComponent {
             case "1":
                 {
                     this.isChecked = this.rowData.IsChecked1;
+                    this.SetIsEnabled(this.rowData.IsChecked1);
                     break;
                 }
 
             case "2":
                 {
                     this.isChecked = this.rowData.IsChecked2;
+                    this.SetIsEnabled(this.rowData.IsChecked2);
                     break;
                 }
 
             case "3":
                 {
                     this.isChecked = this.rowData.IsChecked3;
+                    this.SetIsEnabled(this.rowData.IsChecked3);
                     break;
                 }
 
             case "4":
                 {
                     this.isChecked = this.rowData.IsChecked4;
+                    this.SetIsEnabled(this.rowData.IsChecked4);
                     break;
                 }
 
             case "5":
                 {
                     this.isChecked = this.rowData.IsChecked5;
+                    this.SetIsEnabled(this.rowData.IsChecked5);
                     break;
                 }
 
             case "6":
                 {
                     this.isChecked = this.rowData.IsChecked6;
+                    this.SetIsEnabled(this.rowData.IsChecked6);
                     break;
                 }
 
             case "7":
                 {
                     this.isChecked = this.rowData.IsChecked7;
+                    this.SetIsEnabled(this.rowData.IsChecked7);
                     break;
                 }
 
             case "8":
                 {
                     this.isChecked = this.rowData.IsChecked8;
+                    this.SetIsEnabled(this.rowData.IsChecked8);
                     break;
                 }
 
             case "9":
                 {
                     this.isChecked = this.rowData.IsChecked9;
+                    this.SetIsEnabled(this.rowData.IsChecked9);
                     break;
                 }
 
             case "10":
                 {
                     this.isChecked = this.rowData.IsChecked10;
+                    this.SetIsEnabled(this.rowData.IsChecked10);
                     break;
                 }
+        }
+    }
+
+    private SetIsEnabled(isChecked: boolean) {
+        if (this.rowData.InActive) {
+            if (isChecked) {
+                this.IsEnabled = true;
+            }
+
+            else {
+                this.IsEnabled = false;
+            }
+        }
+
+        else {
+            this.IsEnabled = true;
         }
     }
 
@@ -109,12 +135,20 @@ export class ColumnCheckBoxComponent {
         if (this.isChecked != newValue) {
             this.isChecked = newValue;
 
+            var refreshAfterRemove: boolean = false;
+            if (this.rowData.InActive) {
+                if (!newValue) {
+                    this.IsEnabled = false;
+                    refreshAfterRemove = true;
+                }
+            }
+
             if (newValue) {
                 this.CurrentSession.PseventRowSelectEvent.emit({ Name: "Add", User: this.rowData, PackageCode: this.packageCode });
             }
 
             else {
-                this.CurrentSession.PseventRowSelectEvent.emit({ Name: "Remove", User: this.rowData, PackageCode: this.packageCode });
+                this.CurrentSession.PseventRowSelectEvent.emit({ Name: "Remove", User: this.rowData, PackageCode: this.packageCode, Refresh: refreshAfterRemove });
             }
         }
     }

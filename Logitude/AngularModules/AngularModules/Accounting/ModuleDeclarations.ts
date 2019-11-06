@@ -53,8 +53,8 @@ import {CashBookManageDepoTabComponent} from './Components/EditTabs/CashBook/Cas
 import {ChartOfAccountGeneralTabComponent} from './Components/EditTabs/ChartOfAccount/ChartOfAccountGeneralTabComponent';
 import {BankDepositDetailsTabComponent} from './Components/EditTabs/BankDeposit/BankDepositDetailsTabComponent';
 import {BankAccountGeneralTabComponent} from './Components/EditTabs/BankAccount/BankAccountGeneralTabComponent';
-import {BankPagesTabComponent} from './Components/EditTabs/BankAccount/BankPagesTabComponent';
-import {ManageRecoTabComponent} from './Components/EditTabs/BankAccount/ManageRecoTabComponent';
+import {ExternalPagesTabComponent} from './Components/Others/ReconcileExternalPage/ExternalPagesTabComponent';
+import {ManageExternalReconciliationTabComponent} from './Components/Others/ReconcileExternalPage/ManageExternalReconciliationTabComponent';
 import {ReconciliationDetailsTabComponent} from './Components/EditTabs/Reconciliation/ReconciliationDetailsTabComponent';
 import {RevaluationDetailsComponent} from './Components/EditTabs/Revaluation/RevaluationDetailsComponent';
 import {GLAccountTaxWithholdingTabComponent} from './Components/EditTabs/GLAccount/GLAccountTaxWithholdingTabComponent';
@@ -80,7 +80,9 @@ import {GLAccountSearchWindowComponent} from './Components/EditTabs/GLAccount/GL
 import {PaymentChequeGeneralTabComponent} from './Components/EditTabs/PaymentCheque/PaymentChequeGeneralTabComponent';
 import {CancelChequeComponent} from './Components/Others/CancelChequeComponent';
 import {DropdownButtonComponent} from './Components/Others/DropdownButtonComponent';
-import {JournalReconcileComponent} from './Components/Others/JournalReconcileComponent';
+import { JournalReconcileComponent } from './Components/Others/JournalReconcileComponent';
+import { ExtReconcileAdjustBankFeeComponent } from './Components/Others/ExtReconcileAdjustBankFeeComponent';
+
 import {ExternalReconcileComponent} from './Components/Others/ExternalReconcileComponent';
 import {AddEditTaxWithholdingLineComponent} from './Components/EditTabs/GLAccount/AddEditTaxWithholdingLineComponent';
 import {TaxReportDetailsTabComponent} from './Components/EditTabs/TaxReport/TaxReportDetailsTabComponent';
@@ -112,7 +114,7 @@ export const Components =
         PayablePageComponent,
         BanksPageComponent,
         MiscPageComponent,
-       
+
         //New Entites
         NewGLAccountComponent,
         NewChartOfAccountComponent,
@@ -156,8 +158,8 @@ export const Components =
         ChartOfAccountGeneralTabComponent,
         BankDepositDetailsTabComponent,
         BankAccountGeneralTabComponent,
-        BankPagesTabComponent,
-        ManageRecoTabComponent,
+        ExternalPagesTabComponent,
+        ManageExternalReconciliationTabComponent,
         ReconciliationDetailsTabComponent,
         RevaluationDetailsComponent,
         ExternalRecoDetailsTabComponent,
@@ -194,6 +196,7 @@ export const Components =
         CancelChequeComponent,
         DropdownButtonComponent,
         JournalReconcileComponent,
+        ExtReconcileAdjustBankFeeComponent,
         ExternalReconcileComponent,
         AddEditTaxWithholdingLineComponent,
         NewTaxReportComponent,
@@ -220,7 +223,7 @@ export class ModuleDeclarations {
             case "PayablePageComponent": { myResult = PayablePageComponent; break; }
             case "BanksPageComponent": { myResult = BanksPageComponent; break; }
             case "MiscPageComponent": { myResult = MiscPageComponent; break; }
-            
+
             //New Entites
             case "NewGLAccountComponent": { myResult = NewGLAccountComponent; break; }
             case "NewChartOfAccountComponent": { myResult = NewChartOfAccountComponent; break; }
@@ -255,7 +258,7 @@ export class ModuleDeclarations {
             case "Generate1000Component": { myResult = Generate1000Component; break; }
             case "Receiving1000Component": { myResult = Receiving1000Component; break; }
             case "AccountingFunctionalTestComponent": { myResult = AccountingFunctionalTestComponent; break; }
-                
+
             //Edit Tabs
             case "GLAccountGeneralTabComponent": { myResult = GLAccountGeneralTabComponent; break; }
             case "GLAccountOverviewComponent": { myResult = GLAccountOverviewComponent; break; }
@@ -267,8 +270,8 @@ export class ModuleDeclarations {
             case "ChartOfAccountGeneralTabComponent": { myResult = ChartOfAccountGeneralTabComponent; break; }
             case "BankDepositDetailsTabComponent": { myResult = BankDepositDetailsTabComponent; break; }
             case "BankAccountGeneralTabComponent": { myResult = BankAccountGeneralTabComponent; break; }
-            case "BankPagesTabComponent": { myResult = BankPagesTabComponent; break; }
-            case "ManageRecoTabComponent": { myResult = ManageRecoTabComponent; break; }
+            case "ExternalPagesTabComponent": { myResult = ExternalPagesTabComponent; break; }
+            case "ManageExternalReconciliationTabComponent": { myResult = ManageExternalReconciliationTabComponent; break; }
             case "ReconciliationDetailsTabComponent": { myResult = ReconciliationDetailsTabComponent; break; }
             case "RevaluationDetailsComponent": { myResult = RevaluationDetailsComponent; break; }
             case "ExternalRecoDetailsTabComponent": { myResult = ExternalRecoDetailsTabComponent; break; }
@@ -307,6 +310,7 @@ export class ModuleDeclarations {
             case "CancelChequeComponent": { myResult = CancelChequeComponent; break; }
             case "DropdownButtonComponent": { myResult = DropdownButtonComponent; break; }
             case "JournalReconcileComponent": { myResult = JournalReconcileComponent; break; }
+            case "ExtReconcileAdjustBankFeeComponent": { myResult = ExtReconcileAdjustBankFeeComponent; break; }
             case "ExternalReconcileComponent": { myResult = ExternalReconcileComponent; break; }
             case "AddEditTaxWithholdingLineComponent": { myResult = AddEditTaxWithholdingLineComponent; break; }
             case "AccountingFlatFileDownloadComponent": { myResult = AccountingFlatFileDownloadComponent; break; }

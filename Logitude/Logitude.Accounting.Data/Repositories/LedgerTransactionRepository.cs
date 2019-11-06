@@ -770,12 +770,18 @@ on record.JournalId equals j.Id
                                         LocalAmountCredit = 0,//groupByAccountCurrency.Sum(x => x.OpenAmount),
                                         LocalAmountDebit = 0 , //0,//groupByAccountCurrency.Sum(x => x.LocalAmountDebit),
 
-                                        ///accountingCurrencyId != groupByAccountCurrency.Key.CurrencyId ? 0 : groupByAccountCurrency.Sum(x => x.LedgerTransaction.OpenAmount),
+                      ///accountingCurrencyId != groupByAccountCurrency.Key.CurrencyId ? 0 : groupByAccountCurrency.Sum(x => x.LedgerTransaction.OpenAmount),
+#if supress_OpenCreditAndDebit
+                      ForeignAmountCredit = 0,
+                      ForeignAmountDebit = groupByAccountCurrency.Sum(x => x.LedgerTransaction.OpenAmount),
+#else
+                      ForeignAmountCredit = -1*((decimal?)(groupByAccountCurrency.Where(r => r.LedgerTransaction.LocalAmountCredit != 0).Sum(x => x.LedgerTransaction.OpenAmount)) ?? 0),
+                      ForeignAmountDebit = (decimal?)(groupByAccountCurrency.Where(r => r.LedgerTransaction.LocalAmountCredit == 0).Sum(x => x.LedgerTransaction.OpenAmount)) ?? 0,
+#endif
 
-                                        ForeignAmountCredit = 0,//groupByAccountCurrency.Sum(x => x.ForeignAmountCredit),
-                                        ForeignAmountDebit = groupByAccountCurrency.Sum(x => x.LedgerTransaction.OpenAmount),
 
-                                        CHANGE_TYPE = ""
+
+                      CHANGE_TYPE = ""
                                     });
 
 #if NotOnlyInForeign_B4_201810
@@ -1099,7 +1105,10 @@ on record.JournalId equals j.Id
         public int getRecoCount(string glAccountId)
         {
             return (from a in context.LedgerTransactions
-                    where a.AccountId == glAccountId && a.IsReconciled == false
+                    where 
+                    a.AccountId == glAccountId 
+                    && a.InReconcileProgress == false
+                    && a.IsReconciled == false
                     select a).Count();
         }
 
@@ -1119,7 +1128,7 @@ on record.JournalId equals j.Id
                     join m in context.JournalAdditionalDatas on j.Id equals m.JournalId
                     where (m.TaxReportId == null || m.TaxReportTransmitStatusCode == "2" || m.TaxReportTransmitStatusCode==null) && a.AccountingDate <= taxdate
                    // && a.DocumentDate >= last180days
-                    && a.AccountId == setting.VATInputsGLAccountId
+                    && a.AccountId == setting.VATInputsGLAccountId && a.Tenant == tenant
                     select new TaxReportData()
                     {
                         Id = Guid.NewGuid().ToString(),

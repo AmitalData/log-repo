@@ -1413,7 +1413,7 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.DeclarationDate).HasColumnName("DeclarationDate");
             this.Property(t => t.DeclarationNumber).HasColumnName("DeclarationNumber");
             this.Property(t => t.ARInvoices).HasColumnName("ARInvoices");
-            this.Property(t => t.OpenReceivablesLines).HasColumnName("OpenReceivablesLines");
+            this.Property(t => t.NotInvoicedReceivablesAmount).HasColumnName("NotInvoicedReceivablesAmount");
 
         }
     }

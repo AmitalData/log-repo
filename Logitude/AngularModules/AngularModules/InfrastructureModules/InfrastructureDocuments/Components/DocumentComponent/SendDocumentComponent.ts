@@ -551,9 +551,10 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
             this.ReplyTo = this.SelectedDocumentTypeTemplateViewModel.ReplyTo;
             this.Subject = this.SelectedDocumentTypeTemplateViewModel.TemplateSubject;
             this.Cc = this.SelectedDocumentTypeTemplateViewModel.TemplateCc;
+            this.Bcc = this.SelectedDocumentTypeTemplateViewModel.TemplateBcc;
 
             if (!AppTool.IsNullOrEmpty(this.Cc)) this.AddCcClick();
-
+            if (!AppTool.IsNullOrEmpty(this.Bcc)) this.AddBccClick();
             this.ReloadFroalaEditor();
         }
         else {
@@ -565,12 +566,14 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                 this.From = !AppTool.IsNullOrEmpty(this.SelectedDocumentTypeTemplateViewModel.Entity.From) ? this.SelectedDocumentTypeTemplateViewModel.Entity.From : "";
                 this.ReplyTo = !AppTool.IsNullOrEmpty(this.SelectedDocumentTypeTemplateViewModel.Entity.ReplyTo) ? this.SelectedDocumentTypeTemplateViewModel.Entity.ReplyTo : "";
                 this.Cc = !AppTool.IsNullOrEmpty(this.SelectedDocumentTypeTemplateViewModel.Entity.CC) ? this.SelectedDocumentTypeTemplateViewModel.Entity.CC : "";
+                this.Bcc = !AppTool.IsNullOrEmpty(this.SelectedDocumentTypeTemplateViewModel.Entity.BCC) ? this.SelectedDocumentTypeTemplateViewModel.Entity.BCC : "";
+
 
             }
 
 
 
-            this._htmlEditorService.getEditorHtmlData(docoutId, this.EntityId, this.ObjectTableId, this.ChildEntityId, this.ChildObjectTableId, SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, true, templateId, "", "", this.From, this.ReplyTo, this.Cc).subscribe(res => {
+            this._htmlEditorService.getEditorHtmlData(docoutId, this.EntityId, this.ObjectTableId, this.ChildEntityId, this.ChildObjectTableId, SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, true, templateId, "", "", this.From, this.ReplyTo, this.Cc, this.Bcc).subscribe(res => {
 
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
@@ -584,6 +587,9 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                             this.SelectedDocumentTypeTemplateViewModel.From = !AppTool.IsNullOrEmpty(myResult.From) ? myResult.From : "";
                             this.SelectedDocumentTypeTemplateViewModel.ReplyTo = !AppTool.IsNullOrEmpty(myResult.ReplyTo) ? myResult.ReplyTo : "";
                             this.SelectedDocumentTypeTemplateViewModel.TemplateCc = !AppTool.IsNullOrEmpty(myResult.Cc) ? myResult.Cc : "";
+                            this.SelectedDocumentTypeTemplateViewModel.TemplateBcc = !AppTool.IsNullOrEmpty(myResult.Bcc) ? myResult.Bcc : "";
+
+
 
                             if (!AppTool.IsNullOrEmpty(myResult.Subject)) {
                                 this.SelectedDocumentTypeTemplateViewModel.TemplateSubject = myResult.Subject;
@@ -598,7 +604,10 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                         this.From = !AppTool.IsNullOrEmpty(myResult.From) ? myResult.From : "";
                         this.ReplyTo = !AppTool.IsNullOrEmpty(myResult.ReplyTo) ? myResult.ReplyTo : "";
                         this.Cc = !AppTool.IsNullOrEmpty(myResult.Cc) ? myResult.Cc : "";
+                        this.Bcc = !AppTool.IsNullOrEmpty(myResult.Bcc) ? myResult.Bcc : "";
+
                         if (!AppTool.IsNullOrEmpty(this.Cc)) this.AddCcClick();
+                        if (!AppTool.IsNullOrEmpty(this.Bcc)) this.AddBccClick();
 
                         if (!AppTool.IsNullOrEmpty(myResult.Subject)) {
                             this.Subject = myResult.Subject;
@@ -829,7 +838,6 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         filter.Cc = this.Cc;
         filter.Bcc = this.Bcc;
         filter.Attachments = "";
-        filter.ExportQuotationsToIntegratedSystem = this.SelectedInternalDocument.ExportQuotationsToIntegratedSystem;
         filter.ObjectTableName = this.ObjecttableName;
         if (this.SelectedInternalDocument.IsCrm) {
             filter.EventTypeCode = this.SelectedInternalDocument.EventTypeCode;
@@ -893,8 +901,8 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         });
 
 
-        if (totalsize > 15) {
-            this.ShowMessage("The maximum size of documents you can attach is 15 MB. Please send the documents in separated emails", "Attachment Limit");
+        if (totalsize > 25) {
+            this.ShowMessage("The maximum size of documents you can attach is 25 MB. Please send the documents in separated emails", "Attachment Limit");
             //this.ShowMessage("The file you are trying to send exceeds the 15 MB attachment limit.", "Attachment Limit");
              this.CurrentSession.StopBusyIndicator();
             return;

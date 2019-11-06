@@ -258,6 +258,7 @@ foreach (string file in Directory.EnumerateFiles(sourceFilePath, "*.lxml"))
 			modelBuilder.Configurations.Add(new UserLastLoginMap());
 			modelBuilder.Configurations.Add(new ContactMap());
 			modelBuilder.Configurations.Add(new ContactLastLoginMap());
+			modelBuilder.Configurations.Add(new SharedLogisticsContactLastLoginMap());
             modelBuilder.Configurations.Add(new ObjectTableMap());
 
 			 modelBuilder.Configurations.Add(new AccountingSystemMap());

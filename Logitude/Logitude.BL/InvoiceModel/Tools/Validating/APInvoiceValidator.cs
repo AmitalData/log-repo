@@ -28,6 +28,9 @@ using Microsoft.Practices.Unity;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using System.Data.Entity.Core;
+using System.Web;
+using Simplog.Server.Infrastructure;
+using Logitude.BL.DataContracts;
 
 namespace Logitude.BL.InvoiceModel.Tools.Validating
 {
@@ -40,9 +43,11 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             APInvoiceRepository aPInvoiceRepository = new APInvoiceRepository(myContext);
             ICommonDataContext myCommonContext = CommonDataContext.GetContext(entityPM.Tenant);
 
+
             AccountingSetting myAccountingSetting = (from d in myCommonContext.AccountingSettings
                                                      where d.Id == entityPM.Tenant
                                                      select d).FirstOrDefault();
+
 
             bool isVatNumberMandatoryInAP = false;
             if (myAccountingSetting != null)
@@ -184,6 +189,287 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             ValidateOnVoid(entityPM);
             ValidateAirlineRestriction(entityPM.VendorId, entityPM.Tenant);
             ValidateFullAccounting(entityPM.Tenant, entityPM.VendorId, entityPM.InvoiceCurrencyId, entityPM.AccountingDate);
+            ValidateExternalAPI(entityPM, myCommonContext);
+        }
+
+        private static void ValidateExternalAPI(APInvoicePM entityPM, ICommonDataContext myCommonContext)
+        {
+            if (entityPM.CreatedFromAPI)
+            {
+                int tenant = entityPM.Tenant;
+                Tenant TenantObject = (from d in myCommonContext.Tenants where d.Id == tenant select d).FirstOrDefault();
+
+                if (entityPM.LocalCurrencyId != TenantObject.CurrencyId)
+                {
+                    throw new ApplicationException("The local currency is different from Tenant local currency");
+                }
+
+                #region Line Amounts
+                foreach (APInvoiceLinePM item in entityPM.InvoiceLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete))
+                {
+                    if (item.ChargesTypeId == null)
+                    {
+                        throw new ApplicationException("Charges type is required");
+                    }
+
+                    else
+                    {
+                        ChargesType chargesType = (from d in myCommonContext.ChargesTypes where d.Id == item.ChargesTypeId && d.Tenant == tenant select d).FirstOrDefault();
+                        if (chargesType == null)
+                        {
+                            throw new ApplicationException("Charges type is required");
+                        }
+
+                        else
+                        {
+                            bool isMatched = true;
+
+                            switch (entityPM.ShipmentTransportModeId)
+                            {
+                                case "A":
+                                    {
+                                        if (!chargesType.IsAir)
+                                        {
+                                            isMatched = false;
+                                        }
+
+                                        break;
+                                    }
+
+                                case "O":
+                                    {
+                                        if (!chargesType.IsOcean)
+                                        {
+                                            isMatched = false;
+                                        }
+
+                                        break;
+                                    }
+
+                                case "I":
+                                    {
+                                        if (!chargesType.IsInland)
+                                        {
+                                            isMatched = false;
+                                        }
+
+                                        break;
+                                    }
+                            }
+
+                            if (!isMatched)
+                            {
+                                throw new ApplicationException("Charge type isn't compatible with the shipment transport mode");
+                            }
+                        }
+                    }
+
+                    double? lineForiegnAmount = MethodHelper.Round(item.ForiegnCurrencyAmount, 2);
+                    //double? lineForiegnAmount_Computed = MethodHelper.Round(item.Quantity * item.UnitPrice, 2);
+                    //if (lineForiegnAmount != lineForiegnAmount_Computed)
+                    //{
+                    //    throw new ApplicationException("Wrong Line Foriegn Amount");
+                    //}
+
+
+                    double? lineLocalAmount = MethodHelper.Round(item.LocalCurrencyAmount, 2);
+                    double? lineLocalAmount_Computed = MethodHelper.Round(item.ForiegnCurrencyAmount * item.ForiegnExchangeRate, 2);
+                    if (lineLocalAmount != lineLocalAmount_Computed)
+                    {
+                        throw new ApplicationException("Wrong Line Local Amount");
+                    }
+
+                    double? lineInvoiceAmount = MethodHelper.Round(item.InvoiceCurrencyAmount, 2);
+                    double? exchangeRate = MethodHelper.Round(entityPM.InvoiceCurrencyExchangeRate, 2);
+                    double? lineInvoiceAmount_Computed = MethodHelper.Round((item.LocalCurrencyAmount / exchangeRate), 2);
+                    if (item.ForiegnCurrencyId == entityPM.InvoiceCurrencyId)
+                    {
+                        if (lineInvoiceAmount != lineForiegnAmount)
+                        {
+                            throw new ApplicationException("Wrong Line Invoice Amount");
+                        }
+                    }
+
+                    else
+                    {
+                        if (lineInvoiceAmount != lineInvoiceAmount_Computed)
+                        {
+                            throw new ApplicationException("Wrong Line Invoice Amount");
+                        }
+                    }
+                }
+                #endregion
+
+                #region Lines Amounts VS Invoice Amount
+                double? subTotal = 0;
+                double? subTotal_Local = 0;
+                double? sumOfVATsAmounts = 0;
+                double? sumOfVATsAmounts_Local = 0;
+                double? sumOfVATsAmounts_Profit = 0;
+                double? Amount = 0;
+                double? Amount_Local = 0;
+                double? Amount_Profit = 0;
+                List<APInvoiceLinePM> lines = entityPM.InvoiceLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete && d.VatTypeId != null).ToList();
+
+                if (lines.Count > 0)
+                {
+                    subTotal = MethodHelper.Round(lines.Sum(s => s.InvoiceCurrencyAmount), 2);
+                    subTotal_Local = MethodHelper.Round(lines.Sum(s => s.LocalCurrencyAmount), 2);
+
+                    #region
+                    DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+
+                    List<VatType> allVatTypes = (from d in myCommonContext.VatTypes where d.Tenant == tenant select d).ToList();
+                    List<VATTypesGroup> allVatGroups = (from d in myCommonContext.VATTypesGroups where d.Tenant == tenant select d).ToList();
+
+                    VatTypePercentageRepository vatTypePercentageRepository = new VatTypePercentageRepository(myCommonContext);
+                    VatTypePercentageQuery myVatTypePercentageQuery = new VatTypePercentageQuery(vatTypePercentageRepository);
+                    List<VatTypePercentagePM> allVatPercentages = myVatTypePercentageQuery.GetVatTypePercentagePMByDate(tenant, todayDate);
+
+                    List<InvoiceTotalsClass> group_Source = new List<InvoiceTotalsClass>();
+
+                    foreach (APInvoiceLinePM item in lines)
+                    {
+                        #region
+                        VatType lineVatType = allVatTypes.Where(d => d.Id == item.VatTypeId).FirstOrDefault();
+
+                        if (lineVatType != null)
+                        {
+                            if (!lineVatType.IsMultiPercentage)
+                            {
+                                InvoiceTotalsClass newItem = new InvoiceTotalsClass()
+                                {
+                                    Id = item.VatTypeId,
+                                    VatTypeId = item.VatTypeId,
+                                    VatTypePercentage = item.VatPercentage,
+                                    LocalCurrencyAmount = item.LocalCurrencyAmount,
+                                    InvoiceCurrencyAmount = item.InvoiceCurrencyAmount,
+                                    ProfitCurrencyAmount = item.ProfitCurrencyAmount,
+                                };
+
+                                group_Source.Add(newItem);
+                            }
+
+                            else
+                            {
+                                List<VATTypesGroup> myVatGroups = allVatGroups.Where(d => d.GroupVATTypeId == item.VatTypeId).ToList();
+                                foreach (VATTypesGroup itemGroup in myVatGroups)
+                                {
+                                    InvoiceTotalsClass newItem = new InvoiceTotalsClass()
+                                    {
+                                        Id = itemGroup.SingleVATTypeId,
+                                        VatTypeId = itemGroup.SingleVATTypeId,
+                                        LocalCurrencyAmount = item.LocalCurrencyAmount,
+                                        InvoiceCurrencyAmount = item.InvoiceCurrencyAmount,
+                                        ProfitCurrencyAmount = item.ProfitCurrencyAmount,
+                                    };
+
+                                    VatType vatType = allVatTypes.Where(d => d.Id == itemGroup.SingleVATTypeId).FirstOrDefault();
+                                    if (vatType != null)
+                                    {
+                                        newItem.ExternalTAXItemId = vatType.ExternalTAXItemId;
+                                    }
+
+                                    VatTypePercentagePM myPercentagePM = allVatPercentages.Where(d => d.VatTypeId == itemGroup.SingleVATTypeId).FirstOrDefault();
+                                    if (myPercentagePM != null)
+                                    {
+                                        newItem.VatTypePercentage = myPercentagePM.Percentage;
+                                    }
+
+                                    group_Source.Add(newItem);
+                                }
+                            }
+                        }
+                        #endregion
+                    }
+
+                    List<InvoiceTotalsClass> group_data
+                        = (from items in group_Source
+                           group items by new { items.VatTypeId, items.VatTypePercentage, items.ExternalVatCard, items.ExternalTAXItemId } into g
+                           select new InvoiceTotalsClass()
+                           {
+                               Id = g.Key.VatTypeId,
+                               VatTypeId = g.Key.VatTypeId,
+                               VatTypePercentage = g.Key.VatTypePercentage,
+                               LocalCurrencyAmount = g.Sum(s => s.LocalCurrencyAmount),
+                               InvoiceCurrencyAmount = g.Sum(s => s.InvoiceCurrencyAmount),
+                               ProfitCurrencyAmount = g.Sum(s => s.ProfitCurrencyAmount),
+                           }).ToList();
+
+                    foreach (InvoiceTotalsClass item in group_data)
+                    {
+                        ARInvoiceTotalVAT record = new ARInvoiceTotalVAT()
+                        {
+                            Tenant = entityPM.Tenant,
+                            ARInvoiceId = entityPM.Id,
+                            VatTypeId = item.Id,
+                            VatPercent = MethodHelper.Roundd(item.VatTypePercentage, 2),
+                            LocalVatableAmount = MethodHelper.Roundd(item.LocalCurrencyAmount, 2),
+                            InvoiceCurrencyVatableAmount = MethodHelper.Roundd(item.InvoiceCurrencyAmount, 2),
+                            ProfitVatableAmount = MethodHelper.Round(item.ProfitCurrencyAmount, 2),
+                        };
+
+                        record.LocalVATAmount = MethodHelper.Roundd((record.LocalVatableAmount * record.VatPercent / 100), 2);
+                        record.InvoiceCurrencyVATAmount = MethodHelper.Roundd((record.InvoiceCurrencyVatableAmount * record.VatPercent / 100), 2);
+                        record.ProfitCurrencyVATAmount = MethodHelper.Roundd((record.ProfitVatableAmount * record.VatPercent / 100), 2);
+
+                        sumOfVATsAmounts += record.InvoiceCurrencyVATAmount;
+                        sumOfVATsAmounts_Local += record.LocalVATAmount;
+                        sumOfVATsAmounts_Profit += record.ProfitCurrencyVATAmount;
+                    }
+
+                    Amount = MethodHelper.Round(subTotal + sumOfVATsAmounts, 2);
+                    Amount_Local = MethodHelper.Round(subTotal_Local + sumOfVATsAmounts_Local, 2);
+
+                    if (entityPM.ProfitCurrencyId == entityPM.InvoiceCurrencyId)
+                    {
+                        Amount_Profit = Amount;
+                    }
+
+                    else
+                    {
+                        Amount_Profit = MethodHelper.Round(Amount_Local / entityPM.ProfitCurrencyExchangeRate, 2);
+                    }
+                    #endregion
+                }
+
+                if (entityPM.SubTotalInInvoiceCurrency != subTotal)
+                {
+                    throw new ApplicationException("Wrong Sub Total Amount");
+                }
+
+                if (entityPM.SubTotalInLocalCurrency != subTotal_Local)
+                {
+                    throw new ApplicationException("Wrong Sub Total Local Amount");
+                }
+
+                if (entityPM.AmountInInvoiceCurrency != Amount)
+                {
+                    throw new ApplicationException("Wrong Invoice Total Amount");
+                }
+
+                if (entityPM.AmountInLocalCurrency != Amount_Local)
+                {
+                    throw new ApplicationException("Wrong Invoice Total Local Amount");
+                }
+
+                //entityPM.SubTotalInInvoiceCurrency = subTotal;
+                //entityPM.SubTotalInLocalCurrency = subTotal_Local;
+                //entityPM.AmountInInvoiceCurrency = Amount;
+                //entityPM.AmountInLocalCurrency = Amount_Local;
+                //entityPM.AmountInProfitCurrency = Amount_Profit;
+                #endregion
+
+                #region Local Amount
+                double? localAmount = MethodHelper.Round(entityPM.AmountInLocalCurrency, 2);
+                //   double? rate = MethodHelper.Round(entityPM.InvoiceCurrencyExchangeRate, 2);
+                double? localAmount_Computed = MethodHelper.Round(entityPM.AmountInInvoiceCurrency * entityPM.InvoiceCurrencyExchangeRate, 2);
+                if (localAmount != localAmount_Computed)
+                {
+                    throw new ApplicationException("Wrong Invoice Local Amount");
+                }
+                #endregion
+            }
         }
 
         private static void ValidateAirlineRestriction(string myCardId, int tenant)
@@ -293,6 +579,28 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 }
             }
         }
+
+        public static string ValidateFullAccountingInvoiceDate(DateTime? invoiceDate, int tenant, string email)
+        {
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+            Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
+            if (tenantPOCO != null && tenantPOCO.AccountingActivated)
+            {
+              
+                bool useLocal = !(GetLoggedContact(tenant,email).DontShowLocal);
+            
+                DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                DateTime last180days = date.AddDays(-180);
+                if (invoiceDate < last180days)
+                {
+                    return TranslateTextsClass.Translate("Accounting.General.O.InvoiceDateValidation", tenant, useLocal);
+                }
+                else return null;
+            }
+            else return null;
+        }
+
+
         private static GLAccountPM getGLAccount(string vendorId, int tenant)
         {
             GLAccountPM glaAccount = null;
@@ -307,18 +615,24 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             return glaAccount;
         }
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
-        private static ContactPM GetLoggedContact(int tenant)
+        private static ContactPM GetLoggedContact( int tenant, string email = null)
         {
             if (OverrideGetLoggedContactFunc != null)
             {
                 return OverrideGetLoggedContactFunc(tenant);
             }
-            ContactPM loggedContact = new ContactQuery(tenant).GetContactByEmailOnly(
-                AuthenticationUtil.ResolveUserIdentityName(tenant)
-                , tenant);
+            ContactPM loggedContact = null;
+            if (email != null)
+            {
+                loggedContact= GetLoggedContactByAuthTokenEmail(email, tenant);
+            }
+            else
+            {
+                loggedContact = new ContactQuery(tenant).GetSingleByEmail( AuthenticationUtil.ResolveUserIdentityName(tenant) , tenant);
+            }
             if (loggedContact == null)
             {
-                loggedContact = new ContactQuery(tenant).GetContactByEmailOnly("system@tenant" + tenant + ".com", tenant);
+                loggedContact = new ContactQuery(tenant).GetSingleByEmail("system@tenant" + tenant + ".com", tenant);
             }
             loggedContact = loggedContact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM() {  };
             return loggedContact;
@@ -335,14 +649,27 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             }
         }
 
+        private static ContactPM GetLoggedContactByAuthTokenEmail(string email, int tenant)
+        {
+            ContactPM loggedContact = null;
+            loggedContact = new ContactQuery(tenant).GetSingleByEmail(email, tenant);
+            if (loggedContact == null)
+            {
+                loggedContact = new ContactQuery(tenant).GetSingleByEmail(email, 0);
+            }
+            return loggedContact;
+        }
         private static void ValidateShipmentConcurrencyGUID(APInvoicePM entityPM, string MainShipmentConcurrencyGUID)
         {
-            if (!string.IsNullOrEmpty(entityPM.ShipmentConcurrencyGUID) && !string.IsNullOrEmpty(entityPM.ShipmentNewConcurrencyGUID) && !string.IsNullOrEmpty(MainShipmentConcurrencyGUID))
+            if (!entityPM.CreatedFromAPI)
             {
-                if (!entityPM.ShipmentConcurrencyGUID.Equals(MainShipmentConcurrencyGUID) && !entityPM.ShipmentNewConcurrencyGUID.Equals(MainShipmentConcurrencyGUID))
+                if (!string.IsNullOrEmpty(entityPM.ShipmentConcurrencyGUID) && !string.IsNullOrEmpty(entityPM.ShipmentNewConcurrencyGUID) && !string.IsNullOrEmpty(MainShipmentConcurrencyGUID))
                 {
-                    string msg = TranslateTextsClass.Translate("General.M.CantUpdateRecord", entityPM.Tenant);
-                    throw new OptimisticConcurrencyException(msg);
+                    if (!entityPM.ShipmentConcurrencyGUID.Equals(MainShipmentConcurrencyGUID) && !entityPM.ShipmentNewConcurrencyGUID.Equals(MainShipmentConcurrencyGUID))
+                    {
+                        string msg = TranslateTextsClass.Translate("General.M.CantUpdateRecord", entityPM.Tenant);
+                        throw new OptimisticConcurrencyException(msg);
+                    }
                 }
             }
         }

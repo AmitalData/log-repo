@@ -50,11 +50,13 @@ namespace WebFreight.Web
             }
         }
 
+
+
         private void InsertNewAnalyzeQueue(string xmlfileText)
         {
 
-            byte[] messageBytes = Encoding.ASCII.GetBytes(xmlfileText);
-
+            byte[] messageBytes = Encoding.ASCII.GetBytes(xmlfileText);           
+            
             AnalyzeQueueRepository analyzeQueueReposiory = new AnalyzeQueueRepository();
             AnalyzeQueue analyzeQueue = new AnalyzeQueue()
             {

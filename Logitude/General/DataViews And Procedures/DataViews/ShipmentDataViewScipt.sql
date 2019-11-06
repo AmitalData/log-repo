@@ -84,6 +84,7 @@ SELECT        dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumb
                          dbo.Shipments.IncotermId, dbo.Shipments.BranchId, dbo.Shipments.House, dbo.Shipments.ConsigneeReference2, dbo.Shipments.ConsigneeReference1, 
 						 dbo.Shipments.ConsolidatorId,dbo.Shipments.ConsolidatorAddressId,dbo.Shipments.ConsolidatorContactId,dbo.Shipments.ConsolidatorReference,
 						 dbo.Shipments.ARInvoices,
+						 dbo.Shipments.NotInvoicedReceivablesAmount,
 						 dbo.Shipments.ReleasingAgentId,
 						 dbo.Shipments.ContainerLastStatusDate,
 						 dbo.Shipments.Notify1Reference,
@@ -103,7 +104,6 @@ SELECT        dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumb
 						 dbo.Shipments.INTTRABookingTransStatusCode,
 						 dbo.INTTRABookingTransStatuses.Name AS INTTRABookingTransStatusName,
 
-						 dbo.Shipments.OpenReceivablesLines,
 						 dbo.Shipments.AccountManagerUserId,
 						 dbo.Shipments.CustomsDeclarationNumber,
 						 dbo.Shipments.ShipperName,dbo.Shipments.FBLIsFromStock,

@@ -436,6 +436,10 @@ namespace Logitude.BL.InvoiceModel.Tools
                 throw new ApplicationException("Company Vat Number is required");
             }
 
+            if (entityPM.InvoiceDate == null)
+            {
+                throw new ApplicationException("Invoice Date is required");
+            }
 
             //if (string.IsNullOrEmpty(billToCard.VatNumber))
             //{
@@ -530,9 +534,10 @@ namespace Logitude.BL.InvoiceModel.Tools
             comprobante.Version = "3.3";
             comprobante.Folio = folio;
             DateTime currentDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
-            comprobante.Fecha = entityPM.InvoiceDate != null ? entityPM.InvoiceDate.Value : currentDateTime;
+           // var invoiceDate = entityPM.InvoiceDate.Value.ToUniversalTime();
+            comprobante.Fecha = entityPM.InvoiceDate.Value;//entityPM.InvoiceDate != null ? entityPM.InvoiceDate.Value : currentDateTime;c
             comprobante.Fecha = new DateTime(comprobante.Fecha.Year, comprobante.Fecha.Month, comprobante.Fecha.Day, currentDateTime.Hour, currentDateTime.Minute, currentDateTime.Second);
-
+            //comprobante.Fecha = comprobante.Fecha.ToUniversalTime();
             //comprobante.formaDePago = "una sola exhibición";
 
             comprobante.FormaPago = satPaymentMethod.Code;
@@ -640,7 +645,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                     concepto.Descripcion = line.Description;
                     concepto.Importe = GetDecimalWith2DigitsAfterPoint(Math.Abs((line.InvoiceCurrencyAmount != null ? ((decimal)line.InvoiceCurrencyAmount.Value) : 0)));
                     decimal valorUnitario = Math.Abs(concepto.Cantidad != 0 ? (concepto.Importe / concepto.Cantidad) : 0);
-                    concepto.ValorUnitario = GetDecimalWith2DigitsAfterPoint(Math.Abs(Math.Truncate(valorUnitario * 1000000m) / 1000000m));
+                    concepto.ValorUnitario = GetDecimalWith3DigitsAfterPointIfZero(Math.Abs(Math.Truncate(valorUnitario * 1000000m) / 1000000m));
 
                     concepto.ClaveProdServ = allChargesTypes.FirstOrDefault(c => c.Id == line.ChargesTypeId).SATExternalId;
                     concepto.ClaveUnidad = computingPartnerHelper.GetComputingPartnerCodeTranslation(line.MeasurementCode, "G-Profact", "Measurement");//"C81";
@@ -1958,7 +1963,7 @@ namespace Logitude.BL.InvoiceModel.Tools
             TimeSpan time = new TimeSpan(12, 00, 00);
             DateTime resultdate = pagoItem.FechaPago.Date + time;
             pagoItem.FechaPago = resultdate;
-            if (entityPM.FechaPago != null && FeatureToggleHelper.HasFeatureToggle("FPG", tenant))
+            if (entityPM.FechaPago != null)// && FeatureToggleHelper.HasFeatureToggle("FPG", tenant))
             {
                 pagoItem.FechaPago = entityPM.FechaPago.Value;
             }
@@ -2296,7 +2301,13 @@ namespace Logitude.BL.InvoiceModel.Tools
         }
 
 
-
+        private decimal GetDecimalWith3DigitsAfterPointIfZero(decimal dNumber)
+        {
+            decimal result = decimal.Parse(dNumber.ToString("0.00"));
+            if (result == 0 && dNumber != 0)
+                result = decimal.Parse(dNumber.ToString("0.000"));
+            return result;
+        }
         private decimal GetDecimalWith2DigitsAfterPoint(decimal dNumber)
         {
             return decimal.Parse(dNumber.ToString("0.00"));

@@ -17,7 +17,7 @@
                                     <span>({{BlockedOceanShipmentsCount}})</span>
                                 </HyperlinkQuery>
 
-                                <HyperlinkQuery>Transfer History </HyperlinkQuery>
+                                <HyperlinkQuery (click)="ViewQueryClicked('AMOS')">Transfer History</HyperlinkQuery>
                             </div>
                         </div>
                     </td>
@@ -52,7 +52,7 @@
                                     <span>({{BlockedAirShipmentsCount}})</span>
                                 </HyperlinkQuery>
 
-                                <HyperlinkQuery>Transfer History </HyperlinkQuery>
+                                <HyperlinkQuery (click)="ViewQueryClicked('AMAS')">Transfer History</HyperlinkQuery>
                             </div>
                         </div>
                     </td>

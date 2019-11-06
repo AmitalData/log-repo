@@ -86,6 +86,8 @@ import { FeatureToggleListService } from './Services/StandardLists/FeatureToggle
 import { FeatureTogglePMService } from './Services/StandardPMs/FeatureTogglePMService';
 import { TaskSchedulerHistoryListService } from './Services/StandardLists/TaskSchedulerHistoryListService';
 import { SchedulerProcedureListService } from './Services/StandardLists/SchedulerProcedureListService';
+import { TasksSchedulerListService } from './Services/StandardLists/TasksSchedulerListService';
+import { BluesnapTransactionListService } from './Services/StandardLists/BluesnapTransactionListService';
 
 export class ModuleProviders {
     
@@ -178,6 +180,10 @@ export class ModuleProviders {
             case "ToggleListService": { myResult = new ToggleListService(); break; }
             case "TaskSchedulerHistoryListService": { myResult = new TaskSchedulerHistoryListService(); break; }
             case "SchedulerProcedureListService": { myResult = new SchedulerProcedureListService(); break; }
+            case "TasksSchedulerListService": { myResult = new TasksSchedulerListService(); break; }
+            case "BluesnapTransactionListService": { myResult = new BluesnapTransactionListService(); break; }
+
+                
         }
 
         return myResult;

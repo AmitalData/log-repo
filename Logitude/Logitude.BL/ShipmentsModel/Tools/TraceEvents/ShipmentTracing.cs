@@ -87,7 +87,28 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                 else
                 {
-                    if(entityPM.PackagesDeleted)
+                    if (entityPM.ShipmentPayables.Where(d => d.PayablesDisconnectedFromTariff).Any())
+                    {
+                        string eventNote = "";
+                        foreach (ShipmentPayablePM payable in entityPM.ShipmentPayables.Where(d => d.PayablesDisconnectedFromTariff))
+                        {
+                            if(string.IsNullOrEmpty(eventNote))
+                            {
+                                eventNote = payable.ChargesTypeName;
+                            }
+
+                            else
+                            {
+                                eventNote = eventNote + ", " + payable.ChargesTypeName;
+                            }
+
+                            payable.PayablesDisconnectedFromTariff = false;
+                        }
+
+                        this.CreateTraceEvent("PDFT", eventNote);
+                    }
+
+                    if (entityPM.PackagesDeleted)
                     {
                         this.CreateTraceEvent("PADL", entityPM.EventNote);
                     }

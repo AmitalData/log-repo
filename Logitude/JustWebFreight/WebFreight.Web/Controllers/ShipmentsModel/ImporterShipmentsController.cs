@@ -551,7 +551,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
         {
             APIException Responce = new APIException();
             TenantPM currentTenant = TenantQuery.GetSingleTenantPM(entityAM.ImporterTenant, false);
-            LogBoxTenantSettingPM currentLBtenant = LogBoxTenantSettingQuery.GetSingleLogBoxTenantSettingPM(entityAM.ImporterTenant);
             ICommonDataContext commoncontext = CommonDataContext.GetContext(entityAM.ImporterTenant);
             HybridPartnerRepository hybridPartnerRepository = new HybridPartnerRepository(commoncontext);
             HybridPartnerQuery HybridPartnerQuerey = new HybridPartnerQuery(hybridPartnerRepository);
@@ -902,7 +901,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
 
             entityPM.IsImporterApprovalRequired = entityAM.IsImporterApprovalRequired;
             
-            if (currentLBtenant.AutoArchiveOnInvoice == true && entityAM.OriginalStatusCode == "INPR" && entityAM.CustomsClearanceDate != null && entityPM.IsOperationalClosed == false)
+            if (currentTenant.AutoArchiveOnInvoice == true && entityAM.OriginalStatusCode == "INPR" && entityAM.CustomsClearanceDate != null && entityPM.IsOperationalClosed == false)
             {
                 entityPM.IsOperationalClosed = true;
             }

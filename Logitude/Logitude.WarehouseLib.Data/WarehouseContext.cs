@@ -95,8 +95,6 @@ namespace Logitude.WarehouseLib.Data
 				
 			modelBuilder.Entity<WarehouseRelease>().Property(x => x.TotalVolume).HasPrecision(18, 3);
 				
-			modelBuilder.Entity<WarehouseRelease>().Property(x => x.TotalVolumetricWeight).HasPrecision(18, 3);
-				
 			modelBuilder.Entity<WarehouseReleasePackage>().Property(x => x.Weight).HasPrecision(16, 3);
 				
 			modelBuilder.Entity<WarehouseReleasePackage>().Property(x => x.Volume).HasPrecision(16, 3);
@@ -315,6 +313,7 @@ namespace Logitude.WarehouseLib.Data
             modelBuilder.Configurations.Add(new ChargeTypeAccountingMap());
             modelBuilder.Configurations.Add(new ReportMap());
             modelBuilder.Configurations.Add(new ContactLastLoginMap());
+            modelBuilder.Configurations.Add(new SharedLogisticsContactLastLoginMap());
             modelBuilder.Configurations.Add(new ContactLoginLogMap());
             modelBuilder.Configurations.Add(new SmallDocumentMap());
             modelBuilder.Configurations.Add(new CommunicationLogStepMap());

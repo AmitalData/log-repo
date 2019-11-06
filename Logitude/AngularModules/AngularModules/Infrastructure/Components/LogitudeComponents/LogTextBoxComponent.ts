@@ -100,7 +100,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
         }
 
         this.textValue = newValue;
-        //this.textValue = this.FormatTextValueNumbers(newValue);
+        this.textValue = this.FormatTextValueNumbers(newValue);
         if (this.IsPasted) {
             this.IsPasted = false;
             switch (this.InputType && this.InputType.toLowerCase()) {
@@ -133,11 +133,11 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
     IdentityKey: string;
     public isRTL: boolean = false;
     private isRTLNumberTxt: boolean = false;
-    public get IsRTLNumberText(){
-        this.isRTLNumberTxt= this.isRTL && (this.InputType.toLowerCase()!="text" && this.InputType.toLowerCase()!="ntext");
+    public get IsRTLNumberText() {
+        this.isRTLNumberTxt = this.isRTL && (this.InputType.toLowerCase() != "text" && this.InputType.toLowerCase() != "ntext");
         return this.isRTLNumberTxt;
     }
-    
+
     private CurrentSession = SessionLocator.SelectedSession;
     keydown: boolean;
     isCtrlKeyDown: boolean = false;
@@ -149,6 +149,8 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
     Detach: boolean;
     isMouseOver: boolean = false;
     isExpanded: boolean = false;
+    private StaticPlaceHolder = '';
+
 
     @Output() KeyUp = new EventEmitter();
     @Output() ValueChanged = new EventEmitter();
@@ -228,6 +230,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
 
     ngOnInit() {
 
+        this.StaticPlaceHolder = this.Placeholder;
         if (this.IsRatioBox == true) {
             this.DigitsAfterPoint = 1;
             this.InputDivStyle = {};
@@ -259,6 +262,8 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                     //this.CurrentSession.CopiedCell = this.DataContext[this.ObjectFieldName];
                     this.DataContext[this.ObjectFieldName] = this.CurrentSession.CopiedCell;
                     this.CurrentSession.CopiedCell = null;
+                    this.TextValue = this.DataContext[this.ObjectFieldName] != undefined && this.DataContext[this.ObjectFieldName] != null ? this.DataContext[this.ObjectFieldName] + '' : this.DataContext[this.ObjectFieldName];
+                    this.GetValueFormatted(this.TextValue);
                 }
             });
 
@@ -442,7 +447,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                         if (result != null || which == 13 || key == '-') {
                             var applyTextValue = true;
                             this.ngzone.run(() => {
-                                if ((which == 9 || which == 13) && this.AllowPercentage) {
+                                if ((which == 9 || which == 13) && (this.AllowPercentage || SessionLocator.TenantPM.NumberFormatCode == "DC")) {
                                     applyTextValue = false;
                                 }
                                 if (applyTextValue) {
@@ -498,13 +503,14 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
     public ngxBeforeOnDestroy() {
         //console.log('1. BEFORE ONDESTROY INVOKE METHOD (await 2 sec)');
         return new Promise((resolve) => {
-            setTimeout(() => this.WaitFunction(resolve), 2000);
+            setTimeout(() => this.WaitFunction(resolve), 100);
         });
     }
 
 
-    @BeforeOnDestroy
-    ngOnDestroy() {
+    //@BeforeOnDestroy
+    async ngOnDestroy() {
+        await this.ngxBeforeOnDestroy();
         console.log("LogTextBox:ngOnDestroy");
         this.cd = null;
         if (this._debounceTimeSub) {
@@ -519,7 +525,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
     private WaitFunction(resolve) {
         //console.log('2. EXECUTE HEAVY FUNCTION (3 sec)');
 
-        const sourcef = timer(3000)
+        const sourcef = timer(100)
             .pipe(take(1))
             .subscribe(() => {
                 resolve();
@@ -581,6 +587,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
         this.Detach = false;
         //this.DetectChanges();
         this.show = true;
+        this.Placeholder = '';
         if (this.uiProperty.ValidValue) {
             this.timerToken = setTimeout(() => {
                 if (this.IsRatioBox) {
@@ -613,6 +620,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
     }
 
     onBlur() {
+        this.Placeholder = this.StaticPlaceHolder;
         this.timerToken = setTimeout(() => {
             this.ShowErrorPopup = false;
             if (this.uiProperty.ValidValue) {
@@ -1227,10 +1235,11 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                                 this.SetValidity(false, TextCodeTranslator.Translate("General.O.InvalidInput"));//"Invalid Input");
                             }
                             else {
-                                if (!this.DisableZeroPadding) {
+                                if (!this.DisableZeroPadding) {                                    
                                     if (AppTool.IsNullOrEmpty(this.DigitsAfterPoint)) {
                                         this.DigitsAfterPoint = 3;
                                     }
+
                                     this.TextValue = val.toFixed(this.DigitsAfterPoint);
                                     if (this.TextValue.indexOf('.') > -1 && this.decimalSeparator != '.') {
                                         this.TextValue = this.TextValue.split('.').join(this.decimalSeparator);//.replace(new RegExp('.', 'g'), this.decimalSeparator);
@@ -1575,27 +1584,20 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                 default: {
                     var val: number;
 
-                    // if ((this.TextValue + "").indexOf(this.thousandsSeparator) == -1) {
-                    val = this.GetNumber(this.TextValue);
-                    // }
-                    // if (this.AddCommasToNumbers) {
-                    //     if ((this.TextValue + "").indexOf(this.thousandsSeparator) > -1) {
-                    //         //var txtval = this.TextValue.replace(/,/g, "");
-                    //         var txtval = this.TextValue.split(this.thousandsSeparator).join('');//replace(new RegExp(this.thousandsSeparator, 'g'), '');
-                    //         txtval = this.ReplaceDecimalSeparatorWithADot(txtval);
-                    //         val = this.GetNumber(txtval);
-                    //     }
-                    // }
+                    if (this.TextValue) {
+                        val = this.GetNumber(this.TextValue);
 
-                    if (this.InputType.toLowerCase() == 'sigdouble' && ((this.TextValue + "") == '-')) {
-                        // skip for minus only
-                    } else if (isNaN(val)) {
-                        this.SetValidity(false, TextCodeTranslator.Translate("General.O.InvalidInput"));
-                        suppressValidation = true;
-                    }
-                    else {
-                        this.SetValidity(true, null);
-                        suppressValidation = false;
+
+                        if (this.InputType.toLowerCase() == 'sigdouble' && ((this.TextValue + "") == '-')) {
+                            // skip for minus only
+                        } else if (isNaN(val)) {
+                            this.SetValidity(false, TextCodeTranslator.Translate("General.O.InvalidInput"));
+                            suppressValidation = true;
+                        }
+                        else {
+                            this.SetValidity(true, null);
+                            suppressValidation = false;
+                        }
                     }
                 }
 
@@ -1756,16 +1758,27 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
         }, 100);
     }
 
-    FormatTextValueNumbers(textValue: string) {
+    FormatTextValueNumbers(textValue: string) {//60,5 ---- 60.5   1.111-----1,111
         var formattedTxt = textValue;
-        if (this.InputType!="text"&&this.InputType!="ntext") {
-            if (!AppTool.IsNullOrEmpty(this.TextValue)) {
-                var value = Number(this.TextValue);
-                var textval = value + "";
+        var textnumber = Number(textValue);
+        if (this.DataContext[this.ObjectFieldName] == textnumber && SessionLocator.TenantPM.NumberFormatCode == "DC") {
 
-                if (textval.indexOf('.') > -1) {
-                    var textparts = textval.split('.');
-                    formattedTxt = textparts[0] + this.decimalSeparator + textparts[1];
+            if (this.InputType != "text" && this.InputType != "ntext") {
+                if (!AppTool.IsNullOrEmpty(this.TextValue)) {
+                    if (this.TextValue.indexOf('.') > -1) {
+                        var textparts = this.TextValue.split('.');
+                        formattedTxt = textparts[0] + this.decimalSeparator + textparts[1];
+                    }
+                    // var text=this.RemoveThousandsSeparator(this.TextValue)
+                    // text= this.ReplaceDecimalSeparatorWithADot(text);
+
+                    // var value = Number(this.TextValue);
+                    // var textval = value + "";
+
+                    // if (textval.indexOf('.') > -1) {
+                    //     var textparts = textval.split('.');
+                    //     formattedTxt = textparts[0] + this.decimalSeparator + textparts[1];
+                    // }
                 }
             }
         }

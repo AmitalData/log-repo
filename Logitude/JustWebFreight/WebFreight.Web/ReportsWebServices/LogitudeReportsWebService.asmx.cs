@@ -899,8 +899,8 @@ namespace WebFreight.Web.ReportsWebServices
         public StatementDataProvider LoadStatementDataProvider(byte[] xmlFilters, int tenant)
         {
             StatementDataProvider dataProvider = new StatementDataProvider();
-            dataProvider.StatementRecordList = new List<StatementDataProvider.StatementRecord>();
-            dataProvider.StatementAgingSummaryRecordList = new List<StatementDataProvider.StatmentAging>();
+            dataProvider.StatementRecordList = new List<StatementRecord>();
+            dataProvider.StatementAgingSummaryRecordList = new List<StatmentAging>();
 
             CustomFieldResolver customFieldResolver = new CustomFieldResolver();
             IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
@@ -1029,11 +1029,11 @@ namespace WebFreight.Web.ReportsWebServices
 
             #region Fill Statement Record Listc
 
-            List<StatementDataProvider.StatementRecord> list_ARInvoices = new List<StatementDataProvider.StatementRecord>();
+            List<StatementRecord> list_ARInvoices = new List<StatementRecord>();
             List<ARInvoice> iQueryableList = iQueryable_ARInvoice.ToList();
             foreach (ARInvoice d in iQueryableList)
             {
-                StatementDataProvider.StatementRecord item = new StatementDataProvider.StatementRecord();
+                StatementRecord item = new StatementRecord();
                 item.MasterNumber = d.MasterNumber;
                 item.Desicription = d.Description + " " + d.MainEntityReference;
                 item.ShipmentId = d.MainEntityId;
@@ -1051,14 +1051,15 @@ namespace WebFreight.Web.ReportsWebServices
                 item.InvoiceStatus = d.Status == null ? null : d.Status.Name;
                 item.InvoiceAmount = d.AmountInLocalCurrency;
                 item.AmountPaid = d.AmountInLocalCurrency - d.AmountDueInLocalCurrency;
+                item.BranchId = d.BranchId;
                 customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, d, item);
 
                 list_ARInvoices.Add(item);
             }
 
-            List<StatementDataProvider.StatementRecord> list_APInvoices =
+            List<StatementRecord> list_APInvoices =
                 (from d in iQueryable_APInvoice
-                 select new StatementDataProvider.StatementRecord()
+                 select new StatementRecord()
                  {
                      MasterNumber = d.MasterNumber,
                      Desicription = d.Description + " " + d.MainEntityReference,
@@ -1077,11 +1078,12 @@ namespace WebFreight.Web.ReportsWebServices
                      InvoiceStatus = d.Status == null ? null : d.Status.Name,
                      InvoiceAmount = d.AmountInLocalCurrency,
                      AmountPaid = d.AmountInLocalCurrency - d.AmountDueInLocalCurrency,
+                     BranchId = d.BranchId,
                  }).ToList();
 
-            List<StatementDataProvider.StatementRecord> list_ARPayments =
+            List<StatementRecord> list_ARPayments =
                 (from d in iQueryable_ARPayment
-                 select new StatementDataProvider.StatementRecord()
+                 select new StatementRecord()
                  {
                      Date = d.CreateDate.Value,
                      DueDate = d.ValueDate != null ? d.ValueDate.Value : d.CreateDate.Value,
@@ -1094,11 +1096,12 @@ namespace WebFreight.Web.ReportsWebServices
                      ValueDate = d.ValueDate,
                      PaymentMethod = d.AccountingPaymentMethod == null ? null : d.AccountingPaymentMethod.Name,
                      BillToVendorId = d.BillToId,
+                     BranchId = d.BranchId,
                  }).ToList();
 
-            List<StatementDataProvider.StatementRecord> list_APPayments =
+            List<StatementRecord> list_APPayments =
                 (from d in iQueryable_APPayment
-                 select new StatementDataProvider.StatementRecord()
+                 select new StatementRecord()
                  {
                      Date = d.CreateDate.Value,
                      DueDate = d.ValueDate != null ? d.ValueDate.Value : d.CreateDate.Value,
@@ -1111,9 +1114,10 @@ namespace WebFreight.Web.ReportsWebServices
                      ValueDate = d.ValueDate,
                      PaymentMethod = d.PaymentMethod == null ? null : d.PaymentMethod.Name,
                      BillToVendorId = d.VendorId,
+                     BranchId = d.BranchId,
                  }).ToList();
 
-            List<StatementDataProvider.StatementRecord> totalList = new List<StatementDataProvider.StatementRecord>();
+            List<StatementRecord> totalList = new List<StatementRecord>();
             totalList = list_ARInvoices.Concat(list_APInvoices).Concat(list_ARPayments).Concat(list_APPayments).ToList();
 
             List<string> allCardIds = totalList.Select(s => s.BillToVendorId).ToList();
@@ -1132,7 +1136,9 @@ namespace WebFreight.Web.ReportsWebServices
                                                              ConsigneeName = d.ConsigneeCard == null ? null : d.ConsigneeCard.EnglishName,
                                                          }).ToList();
 
-            foreach (StatementDataProvider.StatementRecord record in totalList)
+            List<Branch> branches = (from d in commonContext.Branches where d.Tenant == tenant select d).ToList();
+
+            foreach (StatementRecord record in totalList)
             {
                 if (!string.IsNullOrEmpty(record.CurrencyId))
                 {
@@ -1185,6 +1191,15 @@ namespace WebFreight.Web.ReportsWebServices
                     record.Shipper = shipmentEntity.ShipperName;
                     record.Consignee = shipmentEntity.ConsigneeName;
                 }
+
+                if (record.BranchId != null)
+                {
+                    Branch iBranch = branches.Where(d => d.Id == record.BranchId).FirstOrDefault();
+                    if (iBranch != null)
+                    {
+                        record.BranchName = iBranch.EnglishName;
+                    }
+                }
             }
 
             dataProvider.StatementRecordList = totalList;
@@ -1199,35 +1214,41 @@ namespace WebFreight.Web.ReportsWebServices
 
             foreach (var result in results)
             {
-                List<StatementDataProvider.StatementRecord> statementRecords = result.records.ToList();
+                List<StatementRecord> statementRecords = result.records.ToList();
 
-                List<StatementDataProvider.StatementRecord> currentDue = statementRecords.Where(d => d.DueDate >= todayDate).ToList();
-                List<StatementDataProvider.StatementRecord> Due1_30 = statementRecords.Where(d => (todayDate - d.DueDate).TotalDays >= 1 && (todayDate - d.DueDate).TotalDays <= 30).ToList();
-                List<StatementDataProvider.StatementRecord> Due31_60 = statementRecords.Where(d => (((todayDate - d.DueDate).TotalDays) > 30) && (((todayDate - d.DueDate).TotalDays) <= 60)).ToList();
-                List<StatementDataProvider.StatementRecord> Due61_90 = statementRecords.Where(d => (((todayDate - d.DueDate).TotalDays) > 60) && (((todayDate - d.DueDate).TotalDays) <= 90)).ToList();
-                List<StatementDataProvider.StatementRecord> Due90 = statementRecords.Where(d => (todayDate - d.DueDate).TotalDays > 90).ToList();
+                List<StatementRecord> currentDue = statementRecords.Where(d => d.DueDate >= todayDate).ToList();
+                List<StatementRecord> Due1_30 = statementRecords.Where(d => (todayDate - d.DueDate).TotalDays >= 1 && (todayDate - d.DueDate).TotalDays <= 30).ToList();
+                List<StatementRecord> Due31_60 = statementRecords.Where(d => (((todayDate - d.DueDate).TotalDays) > 30) && (((todayDate - d.DueDate).TotalDays) <= 60)).ToList();
+                List<StatementRecord> Due61_90 = statementRecords.Where(d => (((todayDate - d.DueDate).TotalDays) > 60) && (((todayDate - d.DueDate).TotalDays) <= 90)).ToList();
+                List<StatementRecord> Due90 = statementRecords.Where(d => (todayDate - d.DueDate).TotalDays > 90).ToList();
 
-                List<StatementDataProvider.StatementRecord> Due1_15 = statementRecords.Where(d => (todayDate - d.DueDate).TotalDays >= 1 && (todayDate - d.DueDate).TotalDays <= 15).ToList();
-                List<StatementDataProvider.StatementRecord> Due16_30 = statementRecords.Where(d => (((todayDate - d.DueDate).TotalDays) > 15) && (((todayDate - d.DueDate).TotalDays) <= 30)).ToList();
-                List<StatementDataProvider.StatementRecord> Due91_120 = statementRecords.Where(d => (((todayDate - d.DueDate).TotalDays) > 90) && (((todayDate - d.DueDate).TotalDays) <= 120)).ToList();
-                List<StatementDataProvider.StatementRecord> Due120 = statementRecords.Where(d => (todayDate - d.DueDate).TotalDays > 120).ToList();
+                List<StatementRecord> Due1_15 = statementRecords.Where(d => (todayDate - d.DueDate).TotalDays >= 1 && (todayDate - d.DueDate).TotalDays <= 15).ToList();
+                List<StatementRecord> Due16_30 = statementRecords.Where(d => (((todayDate - d.DueDate).TotalDays) > 15) && (((todayDate - d.DueDate).TotalDays) <= 30)).ToList();
+                List<StatementRecord> Due91_120 = statementRecords.Where(d => (((todayDate - d.DueDate).TotalDays) > 90) && (((todayDate - d.DueDate).TotalDays) <= 120)).ToList();
+                List<StatementRecord> Due120 = statementRecords.Where(d => (todayDate - d.DueDate).TotalDays > 120).ToList();
 
-
+                List<StatementRecord> Due31_45 = statementRecords.Where(d => (todayDate - d.DueDate).TotalDays >= 31 && (todayDate - d.DueDate).TotalDays <= 45).ToList();
+                List<StatementRecord> Due46_60 = statementRecords.Where(d => (((todayDate - d.DueDate).TotalDays) > 45) && (((todayDate - d.DueDate).TotalDays) <= 60)).ToList();
+                List<StatementRecord> Due61_75 = statementRecords.Where(d => (todayDate - d.DueDate).TotalDays > 60 && (todayDate - d.DueDate).TotalDays <= 75).ToList();
+                List<StatementRecord> Due76_90 = statementRecords.Where(d => (((todayDate - d.DueDate).TotalDays) > 75) && (((todayDate - d.DueDate).TotalDays) <= 90)).ToList();
 
                 double? currentResult = (currentDue.Sum(d => ((d.Debit != null ? d.Debit : 0) - (d.Credit != null ? d.Credit : 0))));
                 double? due1_30Result = (Due1_30.Sum(d => ((d.Debit != null ? d.Debit : 0) - (d.Credit != null ? d.Credit : 0))));
                 double? due31_60Result = (Due31_60.Sum(d => ((d.Debit != null ? d.Debit : 0) - (d.Credit != null ? d.Credit : 0))));
                 double? due61_90Result = (Due61_90.Sum(d => ((d.Debit != null ? d.Debit : 0) - (d.Credit != null ? d.Credit : 0))));
                 double? due90Result = (Due90.Sum(d => ((d.Debit != null ? d.Debit : 0) - (d.Credit != null ? d.Credit : 0))));
-
                
                 double? due1_15Result = (Due1_15.Sum(d => ((d.Debit != null ? d.Debit : 0) - (d.Credit != null ? d.Credit : 0))));
                 double? due16_30Result = (Due16_30.Sum(d => ((d.Debit != null ? d.Debit : 0) - (d.Credit != null ? d.Credit : 0))));
                 double? due91_120Result = (Due91_120.Sum(d => ((d.Debit != null ? d.Debit : 0) - (d.Credit != null ? d.Credit : 0))));
                 double? due120Result = (Due120.Sum(d => ((d.Debit != null ? d.Debit : 0) - (d.Credit != null ? d.Credit : 0))));
 
+                double? due31_45Result = (Due31_45.Sum(d => ((d.Debit != null ? d.Debit : 0) - (d.Credit != null ? d.Credit : 0))));
+                double? due46_60Result = (Due46_60.Sum(d => ((d.Debit != null ? d.Debit : 0) - (d.Credit != null ? d.Credit : 0))));
+                double? due61_75Result = (Due61_75.Sum(d => ((d.Debit != null ? d.Debit : 0) - (d.Credit != null ? d.Credit : 0))));
+                double? due76_90Result = (Due76_90.Sum(d => ((d.Debit != null ? d.Debit : 0) - (d.Credit != null ? d.Credit : 0))));
 
-                StatementDataProvider.StatmentAging agingRecord = new StatementDataProvider.StatmentAging()
+                StatmentAging agingRecord = new StatmentAging()
                 {
                     Currency = result.Currency,
                     currentDue = currentResult,
@@ -1239,6 +1260,10 @@ namespace WebFreight.Web.ReportsWebServices
                     Due16_30 = due16_30Result,
                     Due91_120 = due91_120Result,
                     Due120 = due120Result,
+                    Due31_45 = due31_45Result,
+                    Due46_60 = due46_60Result,
+                    Due61_75 = due61_75Result,
+                    Due76_90 = due76_90Result,
                 };
 
                 dataProvider.StatementAgingSummaryRecordList.Add(agingRecord);
@@ -1247,17 +1272,17 @@ namespace WebFreight.Web.ReportsWebServices
             dataProvider.StatementRecordList = dataProvider.StatementRecordList.OrderBy(or => or.Currency).ToList();
             dataProvider.StatementAgingSummaryRecordList = dataProvider.StatementAgingSummaryRecordList.OrderBy(d => d.Currency).ToList();
 
-            List<StatementDataProvider.StatementGroup> finalResults = (from p in dataProvider.StatementRecordList
+            List<StatementGroup> finalResults = (from p in dataProvider.StatementRecordList
                                                                        group p by p.Currency into g
-                                                                       select new StatementDataProvider.StatementGroup()
+                                                                       select new StatementGroup()
                                                                        {
                                                                            Currency = g.Key,
                                                                            StatementRecordList = g.ToList(),
                                                                        }).ToList();
 
-            foreach (StatementDataProvider.StatementGroup group in finalResults)
+            foreach (StatementGroup group in finalResults)
             {
-                List<StatementDataProvider.StatmentAging> agingList = dataProvider.StatementAgingSummaryRecordList.Where(d => d.Currency == group.Currency).ToList();
+                List<StatmentAging> agingList = dataProvider.StatementAgingSummaryRecordList.Where(d => d.Currency == group.Currency).ToList();
                 group.StatementAgingSummaryRecordList = agingList;
             }
 
@@ -1342,24 +1367,21 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-            dataProvider.StatementAgingSummaryRecordList = new List<StatementDataProvider.StatmentAging>();
+            dataProvider.StatementAgingSummaryRecordList = new List<StatmentAging>();
 
             TenantPM currentTenant = TenantQuery.GetSingleTenantPM(tenant, false);
             AddressQuery addressQuery = new AddressQuery(tenant);
             AddressPM address = addressQuery.GetSingleAddressPM(currentTenant.AddressId, currentTenant.Id, false);
             if (address != null)
             {
-
                 dataProvider.Address1 = address.Address1;
                 dataProvider.Address2 = address.Address2;
                 dataProvider.City = address.City;
                 dataProvider.Country = address.CountryName;
                 dataProvider.TenantFax = address.FaxNumber;
                 dataProvider.TenantPhone = address.PhoneNumber;
-
                 dataProvider.State = address.StateEnglishName;
                 dataProvider.ZipCode = address.ZipCode;
-
             }
 
             dataProvider.TenantName = currentTenant.Company;
@@ -1374,19 +1396,32 @@ namespace WebFreight.Web.ReportsWebServices
                 IQueryable<ARInvoiceList> Due61_90Invoices = invoicequery.Where(d => (((d.DueDate.Value - todayDate).TotalDays) > 60) && (((d.DueDate.Value - todayDate).TotalDays) < 90));
                 IQueryable<ARInvoiceList> Due90Invoices = invoicequery.Where(d => (((d.DueDate.Value - todayDate).TotalDays) > 90));
 
+                IQueryable<ARInvoiceList> Due31_45Invoices = invoicequery.Where(d => (((d.DueDate.Value - todayDate).TotalDays) > 30) && (((d.DueDate.Value - todayDate).TotalDays) <= 45));
+                IQueryable<ARInvoiceList> Due46_60Invoices = invoicequery.Where(d => (((d.DueDate.Value - todayDate).TotalDays) > 45) && (((d.DueDate.Value - todayDate).TotalDays) <= 60));
+                IQueryable<ARInvoiceList> Due61_75Invoices = invoicequery.Where(d => (((d.DueDate.Value - todayDate).TotalDays) > 60) && (((d.DueDate.Value - todayDate).TotalDays) <= 75));
+                IQueryable<ARInvoiceList> Due76_90Invoices = invoicequery.Where(d => (((d.DueDate.Value - todayDate).TotalDays) > 75) && (((d.DueDate.Value - todayDate).TotalDays) <= 90));
+                
                 dataProvider.CurrentDue = (currentDueInvoices.Sum(d => d.AmountDue));
                 dataProvider.DaysPastDue1_30 = Due1_30Invoices.Sum(d => d.AmountDue);
                 dataProvider.DaysPastDue31_60 = Due31_60Invoices.Sum(d => d.AmountDue);
                 dataProvider.DaysPastDue61_90 = Due61_90Invoices.Sum(d => d.AmountDue);
                 dataProvider.Over90DaysPastDue = Due90Invoices.Sum(d => d.AmountDue);
+                dataProvider.DaysPastDue31_45 = Due31_45Invoices.Sum(d => d.AmountDue);
+                dataProvider.DaysPastDue46_60 = Due46_60Invoices.Sum(d => d.AmountDue);
+                dataProvider.DaysPastDue61_75 = Due61_75Invoices.Sum(d => d.AmountDue);
+                dataProvider.DaysPastDue76_90 = Due76_90Invoices.Sum(d => d.AmountDue);
 
-                StatementDataProvider.StatmentAging statementAgingRecord = new StatementDataProvider.StatmentAging();
+                StatmentAging statementAgingRecord = new StatmentAging();
                 statementAgingRecord.Currency = a.InvoiceCurrencyCode;
                 statementAgingRecord.currentDue = dataProvider.CurrentDue;
                 statementAgingRecord.Due1_30 = dataProvider.DaysPastDue1_30;
                 statementAgingRecord.Due31_60 = dataProvider.DaysPastDue31_60;
                 statementAgingRecord.Due61_90 = dataProvider.DaysPastDue61_90;
                 statementAgingRecord.Due90 = dataProvider.Over90DaysPastDue;
+                statementAgingRecord.Due31_45 = dataProvider.DaysPastDue31_45;
+                statementAgingRecord.Due46_60 = dataProvider.DaysPastDue46_60;
+                statementAgingRecord.Due61_75 = dataProvider.DaysPastDue61_75;
+                statementAgingRecord.Due76_90 = dataProvider.DaysPastDue76_90;
 
                 dataProvider.StatementAgingSummaryRecordList.Add(statementAgingRecord);
             }
@@ -1399,28 +1434,39 @@ namespace WebFreight.Web.ReportsWebServices
                 IQueryable<ARPaymentList> Due61_90Payments = paymentquery.Where(d => (((d.RegisterDate.Value - todayDate).TotalDays) > 60) && (((d.RegisterDate.Value - todayDate).TotalDays) < 90));
                 IQueryable<ARPaymentList> Due90Payments = paymentquery.Where(d => (((d.RegisterDate.Value - todayDate).TotalDays) > 90));
 
+                IQueryable<ARPaymentList> Due31_45Payments = paymentquery.Where(d => (((d.RegisterDate.Value - todayDate).TotalDays) > 30) && (((d.RegisterDate.Value - todayDate).TotalDays) <= 45));
+                IQueryable<ARPaymentList> Due46_60Payments = paymentquery.Where(d => (((d.RegisterDate.Value - todayDate).TotalDays) > 45) && (((d.RegisterDate.Value - todayDate).TotalDays) <= 60));
+                IQueryable<ARPaymentList> Due61_75Payments = paymentquery.Where(d => (((d.RegisterDate.Value - todayDate).TotalDays) > 60) && (((d.RegisterDate.Value - todayDate).TotalDays) <= 75));
+                IQueryable<ARPaymentList> Due76_90Payments = paymentquery.Where(d => (((d.RegisterDate.Value - todayDate).TotalDays) > 75) && (((d.RegisterDate.Value - todayDate).TotalDays) <= 90));
+                
                 dataProvider.CurrentDue = (currentDuePayments.Sum(d => d.OpenAmount));
                 dataProvider.DaysPastDue1_30 = Due1_30Payments.Sum(d => d.OpenAmount);
                 dataProvider.DaysPastDue31_60 = Due31_60Payments.Sum(d => d.OpenAmount);
                 dataProvider.DaysPastDue61_90 = Due61_90Payments.Sum(d => d.OpenAmount);
                 dataProvider.Over90DaysPastDue = Due90Payments.Sum(d => d.OpenAmount);
+                dataProvider.DaysPastDue31_45 = Due31_45Payments.Sum(d => d.OpenAmount);
+                dataProvider.DaysPastDue46_60 = Due46_60Payments.Sum(d => d.OpenAmount);
+                dataProvider.DaysPastDue61_75 = Due61_75Payments.Sum(d => d.OpenAmount);
+                dataProvider.DaysPastDue76_90 = Due76_90Payments.Sum(d => d.OpenAmount);
 
-                StatementDataProvider.StatmentAging statementAgingRecord = new StatementDataProvider.StatmentAging();
+                StatmentAging statementAgingRecord = new StatmentAging();
                 statementAgingRecord.Currency = a.PaymentCurrencyCode;
                 statementAgingRecord.currentDue = dataProvider.CurrentDue;
                 statementAgingRecord.Due1_30 = dataProvider.DaysPastDue1_30;
                 statementAgingRecord.Due31_60 = dataProvider.DaysPastDue31_60;
                 statementAgingRecord.Due61_90 = dataProvider.DaysPastDue61_90;
                 statementAgingRecord.Due90 = dataProvider.Over90DaysPastDue;
+                statementAgingRecord.Due31_45 = dataProvider.DaysPastDue31_45;
+                statementAgingRecord.Due46_60 = dataProvider.DaysPastDue46_60;
+                statementAgingRecord.Due61_75 = dataProvider.DaysPastDue61_75;
+                statementAgingRecord.Due76_90 = dataProvider.DaysPastDue76_90;
 
                 dataProvider.StatementAgingSummaryRecordList.Add(statementAgingRecord);
-
             }
 
             dataProvider.Name = "Statement Aging Summary";
 
             return dataProvider;
-
         }
         #endregion
 
@@ -10636,8 +10682,7 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem filterItem_NoOfMonth = queryOperations.QueryFilterItems.Where(d => d.FieldName == "NumberOfMonths").FirstOrDefault();
             QueryFilterItem filterItem_CategoryIndex = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CategoryIndex").FirstOrDefault();
             QueryFilterItem filterItem_CategoryValue = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CategoryValue").FirstOrDefault();
-            //QueryFilterItem filterItem_CollectorId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CollectoId").FirstOrDefault();
-            QueryFilterItem filterItem_CollectorId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CollectorId").FirstOrDefault();
+            QueryFilterItem filterItem_CollectorId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CollectoId").FirstOrDefault();
             QueryFilterItem filterItem_SalesmanId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "SalesmanId").FirstOrDefault();
             QueryFilterItem filterItem_Detailed = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Detailed").FirstOrDefault();
 
@@ -12132,7 +12177,7 @@ namespace WebFreight.Web.ReportsWebServices
 
 
             };
-            List<CurrencyPM> Currencies = GetTenantCurrencies(tenant);
+
             switch (level)
             {
                 case "ChartOfAccountType":
@@ -12698,18 +12743,12 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     if (item != null)
                     {
-                        CurrencyPM accountCurrency = Currencies.Where(d => d.Id == item.CurrencyId).FirstOrDefault();
-                        string currencyCode = null;
-                       
-                        if (accountCurrency != null && item.IsMultiCurrency==true) {
 
-                            currencyCode = "/" + accountCurrency.Code;
-                        }
                         ResultList record = new ResultList()
                         {
                             Id = item.GLAccountId,
                             Name = item.GLAccountNumber + "-" + item.GLAccountName,
-                            CurrencyCode = currencyCode,
+
                             ParentId = item.ChartOfAccountId,
                             LocalCloseBalance = item.LocalCloseBalance != null ? item.LocalCloseBalance : 0,
                             LocalCredit = item.LocalCredit != null ? item.LocalCredit : 0,
@@ -12821,13 +12860,6 @@ namespace WebFreight.Web.ReportsWebServices
 
             return totalData;
         }
-
-        private List<CurrencyPM> GetTenantCurrencies(int tenant)
-        {
-            CurrencyQuery currencyQuery = new CurrencyQuery(tenant);
-            return currencyQuery.GetCurrencyPMsByTenant(tenant).ToList();
-        }
-
         #endregion
 
         #region Load Shipments Stocks

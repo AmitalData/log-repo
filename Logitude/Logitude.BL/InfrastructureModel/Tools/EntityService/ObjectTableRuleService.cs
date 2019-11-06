@@ -81,7 +81,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
 			ObjectTableRuleQuery objectTableRuleQuery = new ObjectTableRuleQuery(entityRepository);
 
-            if (objectTableRuleQuery.GetObjectTableRulePMsByTenant(theEntityPm.Tenant).Where(r => r.RuleCode == this.Poco.RuleCode).FirstOrDefault() == null)
+            if (objectTableRuleQuery.GetObjectTableRulePMsByTenant(theEntityPm.Tenant).Where(r => r.RuleCode == this.Poco.RuleCode && r.Tenant == theEntityPm.Tenant).FirstOrDefault() == null)
             {
                 entityRepository.Add(Poco);
                 entityRepository.SubmitChanges();
@@ -210,6 +210,62 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                         }
                 }
             }
+
+            ObjectContext.SaveChanges();
+
+
+        }
+
+
+        public void Delete(string ruleId)
+        {
+
+            string ruleslistName = "objecttablerulestenant" + tenant;
+            if (CacheManager.CacheWrapper.Get(ruleslistName) != null)
+            {
+                CacheManager.CacheWrapper.Invalidate(ruleslistName);
+            }
+            string pmslistName = "objecttablerulepmstenant" + tenant;
+            if (CacheManager.CacheWrapper.Get(pmslistName) != null)
+            {
+                CacheManager.CacheWrapper.Invalidate(pmslistName);
+            }
+
+            string objectRulesListName = ruleId + "DuplicationRules" + tenant;
+            if (CacheManager.CacheWrapper.Get(objectRulesListName) != null)
+            {
+                CacheManager.CacheWrapper.Invalidate(objectRulesListName);
+            }
+
+
+            this.isNewEntity = false;
+             
+            this.Poco = entityRepository.GetSingleObjectTableRule(ruleId, tenant);
+            if(this.Poco.Tenant == 0)
+            {
+                throw new Exception("You can not delete a system rule!");
+            }
+
+            ruleTypeRepository = new RuleTypeRepository(ObjectContext);
+            ruleConditionFieldRepository = new RuleConditionFieldRepository(ObjectContext);
+
+            ObjectTableRuleFieldRepository objectTableRuleFieldRepository = new ObjectTableRuleFieldRepository(ObjectContext);
+            List<ObjectTableRuleField> objectTableRuleFieldList = objectTableRuleFieldRepository.GetRuleFieldsByRuleId(ruleId, tenant).ToList();
+            foreach (var field in objectTableRuleFieldList)
+            {
+                objectTableRuleFieldRepository.Remove(field);
+            }
+
+             List<RuleConditionField> ruleConditionFieldsList = ruleConditionFieldRepository.GetRuleConditionFieldsByRuleId(ruleId, tenant).ToList();
+            foreach (var field in ruleConditionFieldsList)
+            {
+                ruleConditionFieldRepository.Remove(field);
+            }
+
+            entityRepository.Remove(this.Poco);
+
+         
+            
 
             ObjectContext.SaveChanges();
 

@@ -3,7 +3,7 @@ import {APPaymentPM} from '../../EntityPMs/APPaymentPM';
 import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
-import {AppTool} from '../../../Infrastructure/Tools';
+import {AppTool, DateTool} from '../../../Infrastructure/Tools';
 import {APPaymentValidator} from '../../Validators/APPaymentValidator';
 import {DocumentOutPM}  from '../../../Common/EntityPMs/DocumentOutPM';
 import {DocumentTypePM} from '../../../Common/EntityPMs/DocumentTypePM';
@@ -13,6 +13,10 @@ import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 import {GeneralPrintHelper} from '../../../Infrastructure/Helpers/GeneralPrintHelper';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
+import { FullAccountingSettingPM } from '../../../Accounting/EntityPMs/FullAccountingSettingPM';
+import { FullAccountingSettingPMService } from '../../../Accounting/Services/StandardPMs/FullAccountingSettingPMService';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 
 export class APPaymentMenuButtonsHandler {
     public EntityPM: APPaymentPM;
@@ -22,6 +26,9 @@ export class APPaymentMenuButtonsHandler {
     private isCancelApproval: boolean;
     private isVoided: boolean;
     private isPrintRequested: boolean;
+    private CurrentSession = SessionLocator.SelectedSession;
+    fullAccountingSettingPMService: FullAccountingSettingPMService = new FullAccountingSettingPMService();
+
     private isOerationInProgrees: boolean = false;
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
@@ -324,16 +331,9 @@ export class APPaymentMenuButtonsHandler {
         }
 
         if (isValid) {
-            this.EntityPM.SetVoided = false;
-            this.EntityPM.SetApproved = true;
-            this.EntityPM.SetCancelApproval = false;
+            this.entityArgs.EditComponent.ValidationErrorsList = [];
+            this.GetFullAccountingSettings();
 
-            if (this.CurrentDocument != null) {
-                this.CurrentDocument.NeedsRebuild = true;
-
-            }
-
-            this.entityArgs.EditComponent.SaveChanges();
         }
 
         else {
@@ -362,7 +362,87 @@ export class APPaymentMenuButtonsHandler {
             this.entityArgs.EditComponent.SaveChanges();
         }
     }
+    OpenEditPaymentChequeScreen() {
+        this.CurrentSession.StartBusyIndicatorLoading();
+   
+       
+        var windowTitle = TextCodeTranslator.Translate("PaymentCheque");
+        var logWindow = new LogitudeWindow();
+        var windowArgs: any = {};
+        windowArgs = this.SetPaymentChequeWindowArgs(windowArgs);
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Width = 520;
+        logWindow.Height = 450;
+        logWindow.Title = windowTitle;
+        logWindow.ShowCloseButton = true;
 
+        logWindow.WindowClosed.subscribe(($event: any) => this.ContinueSaving($event));
+        logWindow.Show('./InvoiceModules/APPayment/Components/EditTabs/EditPaymentChequeComponent');
+        this.CurrentSession.StopBusyIndicator();
+
+    }
+
+    public GetFullAccountingSettings() {
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.fullAccountingSettingPMService.get(SessionLocator.TenantPM.Id.toString()).subscribe(myResult => {
+            var myResponse: ServiceResponse = myResult;
+            this.CurrentSession.StopBusyIndicator();
+
+            if (myResponse != null) {
+
+                var res = myResponse.Result;
+                var fullAccountingSetting: FullAccountingSettingPM = res;
+                if (fullAccountingSetting != null) {
+                    if (fullAccountingSetting.IsPaymentChequesActivated && this.EntityPM.ExcludeFromDeductionReport && this.EntityPM.PaymentMethodCode == "CH") {
+                        this.OpenEditPaymentChequeScreen();
+                    }
+                    else {
+                        this.ContinueSaving(null);
+                    }
+                }
+                else {
+                    this.ContinueSaving(null);
+                }
+            }
+
+        });
+
+    }
+    
+    SetPaymentChequeWindowArgs(windowArgs: any) {
+        windowArgs.PayToGLAccountId = this.EntityPM.VendorGLAccountId;
+        windowArgs.BankAccountId = this.EntityPM.BankAccountId;
+        windowArgs.LocalAmount = this.EntityPM.TaxDeductionLocalAmount;
+        windowArgs.CurrencyId = this.EntityPM.PaymentCurrencyId;
+        windowArgs.ForeignAmount = this.EntityPM.AmountInPaymentCurrency;
+        windowArgs.ValueDate = this.EntityPM.ValueDate;
+        windowArgs.APPayment = this.EntityPM;
+        return windowArgs;
+    }
+     
+    ContinueSaving(event: string) {
+
+
+        if (event && event != "Cancel") {
+            var splittedstring = event.split(",");
+            this.EntityPM.PaymentChequeCreationPayToName = splittedstring[0];
+            this.EntityPM.PaymentChequeCreationNotes = splittedstring[1];
+        }
+        if (event != "Cancel") {
+            this.EntityPM.SetVoided = false;
+            this.EntityPM.SetApproved = true;
+            this.EntityPM.SetCancelApproval = false;
+
+            if (this.CurrentDocument != null) {
+                this.CurrentDocument.NeedsRebuild = true;
+
+            }
+
+            this.entityArgs.EditComponent.SaveChanges();
+         
+
+        }
+    }
     // [Print]
     CurrentDocument: DocumentOutPM;
     objectTableName: string;
@@ -399,6 +479,9 @@ export class APPaymentMenuButtonsHandler {
         if (myPrintHelper.IsLoadPrintControl) {
             ServiceLocator.SendTotangoUserActivity("APPayment", "PrintAPPayment");
             myPrintHelper.ShowPrintControl();
+            this.EntityPM.PrintDate=    DateTool.GetCurrentDateTimeAsUtc();
+            this.entityArgs.EditComponent.SaveChanges();
+
         }
     }
     PrintPaymentButtonLoaded() {

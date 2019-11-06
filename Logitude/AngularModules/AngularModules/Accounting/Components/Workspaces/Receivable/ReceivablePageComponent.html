@@ -12,6 +12,11 @@
     .red{
         color: #b91a1a !important;
     }
+    .dimmed{
+        pointer-events: none;
+        opacity: 0.65;
+
+    }
 </style>
 <div style="height: 100%;overflow: auto;">
 
@@ -127,19 +132,21 @@
                                             <div class="QueriesSection">
                                                 <div>{{'Accounting.General.O.ARInvoices' | TextCodeTranslationPipe}}</div>
                                                 <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; position: absolute; top:0px; text-align:left;">
-                                                    <div tabindex="0" id="{{'NewInvoice' | IdGeneratorPipe}}"  class="ToggleButton" style="margin: auto;text-align:left; width: 100% !important; height: 100% !important">
+                                                    <div  tabindex="0" id="{{'NewInvoice' | IdGeneratorPipe}}"  class="ToggleButton" style="margin: auto;text-align:left; width: 100% !important; height: 100% !important">
                                                         <label>{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</label>
                                                         <img src="./Images/ToggleIcon.png" />
-                                                        <div  [style.right]="isRTL ? 'initial' : '0'" [style.left]="isRTL ? '0' : 'initial'" class="ToggleButtonMenu" style="width: 120px;">
-                                                            <button  id="{{'NewGeneralInvoice' | IdGeneratorPipe}}" (click)="NewGeneralARInvoice('IN')">{{'Accounting.General.O.NewInvoice' | TextCodeTranslationPipe}} </button>
-                                                            <button  id="{{'NewCreditNote' | IdGeneratorPipe}}" *ngIf="IsNewCreditNoteVisibile" (click)="NewGeneralARInvoice('CD')">{{'Accounting.General.O.NewCreditNote' | TextCodeTranslationPipe}} </button>
+                                                        <div [style.right]="isRTL ? 'initial' : '0'" [style.left]="isRTL ? '0' : 'initial'" class="ToggleButtonMenu" style="width: 120px;">
+                                                            <button [disabled]="!IsNewARInvoiceEnabled"  id="{{'NewGeneralInvoice' | IdGeneratorPipe}}" (click)="NewGeneralARInvoice('IN')">{{'Accounting.General.O.NewInvoice' | TextCodeTranslationPipe}} </button>
+                                                            <button [disabled]="!IsNewARInvoiceEnabled"  id="{{'NewCreditNote' | IdGeneratorPipe}}" *ngIf="IsNewCreditNoteVisibile" (click)="NewGeneralARInvoice('CD')">{{'Accounting.General.O.NewCreditNote' | TextCodeTranslationPipe}} </button>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <!--<button class="Button" style="width:45px;" (click)="NewGeneralARInvoice()">New</button>-->
                                                 <div>
-                                                    <p class="QueryLink" (click)="ViewInvoiceQuery('ARInvoice:Draft Invoices')">{{'ARInvoice.Q.DraftGeneralInvoices' | TextCodeTranslationPipe}} ({{ARGeneralInvoiceDraftCount}})</p>
-                                                    <p class="QueryLink" (click)="ViewInvoiceQuery('ARInvoice:Approval General Invoices')">{{'ARInvoice.Q.ApprovalGeneralInvoices' | TextCodeTranslationPipe}}</p>
+                                                    <!--<p class="QueryLink" (click)="ViewInvoiceQuery('ARInvoice:Draft Invoices')">{{'ARInvoice.Q.DraftGeneralInvoices' | TextCodeTranslationPipe}} ({{ARGeneralInvoiceDraftCount}})</p>
+    <p class="QueryLink" (click)="ViewInvoiceQuery('ARInvoice:Approval General Invoices')">{{'ARInvoice.Q.ApprovalGeneralInvoices' | TextCodeTranslationPipe}}</p>-->
+                                                    <p class="QueryLink" (click)="ViewInvoiceQuery('ARInvoice:OpenInvoices')">{{'ARInvoice.Q.OpenInvoices' | TextCodeTranslationPipe}}</p>
+
                                                     <p class="QueryLink" (click)="ViewInvoiceQuery('ARInvoice:All General Invoices')">{{'ARInvoice.Q.AllGeneralInvoices' | TextCodeTranslationPipe}}</p>
                                                 </div>
                                             </div>
@@ -158,14 +165,14 @@
                                                         <tr>
                                                             <td>
                                                                 <table>
-                                                                    <tr>
+                                                                    <!--<tr>
                                                                         <td style="width:190px;">
                                                                           <p class="QueryLink" (click)="ViewInvoiceQuery('ARPayment:Draft Payments')"> {{'Accounting.General.O.DraftPayments' | TextCodeTranslationPipe}} ({{ARPaymentsDraftsCount}})</p>
                                                                         </td>
-                                                                    </tr>
+                                                                    </tr>-->
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" (click)="ViewInvoiceQuery('ARPayment:Open Payments')"> {{'Accounting.General.O.ApprovedPayments' | TextCodeTranslationPipe}} </p>
+                                                                            <p class="QueryLink" (click)="ViewInvoiceQuery('ARPayment:Open Payments')"> {{'Accounting.General.O.OpenPayments' | TextCodeTranslationPipe}} </p>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>

@@ -73,6 +73,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     public showLocal: boolean = false;
     public ARPaymentChequeStatus = "";
     public ARPaymentChequeStatusColor = "black";
+    BankFieldsVisibile: boolean;
     isMultipleCheques: boolean = false;
     get TextStore(){
         return TextStore;
@@ -667,9 +668,10 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 if (AppTool.IsNullOrEmpty(this.Bank)) {
                     this.UIProperties.SetRequired("Bank", this.ObjectTableName, true);
                 }
-                this.UIProperties.SetVisibility("Bank", this.ObjectTableName, true);
-                this.UIProperties.SetVisibility("BankBranch", this.ObjectTableName, true);
-                this.UIProperties.SetVisibility("Account", this.ObjectTableName, true);
+                //this.UIProperties.SetVisibility("Bank", this.ObjectTableName, true);
+                //this.UIProperties.SetVisibility("BankBranch", this.ObjectTableName, true);
+                //this.UIProperties.SetVisibility("Account", this.ObjectTableName, true);
+                this.BankFieldsVisibile = true;
             }
         }
     }
@@ -683,9 +685,10 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 this.UIProperties.SetRequired("CreditCardTypeId", this.ObjectTableName, true);
             }
             this.UIProperties.SetVisibility("CreditCardTypeId", this.ObjectTableName, true);
-            this.UIProperties.SetVisibility("Bank", this.ObjectTableName, true);
-            this.UIProperties.SetVisibility("BankBranch", this.ObjectTableName, true);
-            this.UIProperties.SetVisibility("Account", this.ObjectTableName, true);
+            //this.UIProperties.SetVisibility("Bank", this.ObjectTableName, true);
+            //this.UIProperties.SetVisibility("BankBranch", this.ObjectTableName, true);
+            //this.UIProperties.SetVisibility("Account", this.ObjectTableName, true);
+            this.BankFieldsVisibile = true;
             this.CreditCardTypeIdVisibility = true;
         }
     }
@@ -698,14 +701,16 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
             this.UIProperties.SetVisibility("BankAccountId", this.ObjectTableName, true);
             if (!this.isFullAccounting) {
-                this.UIProperties.SetVisibility("Bank", this.ObjectTableName, true);
-                this.UIProperties.SetVisibility("BankBranch", this.ObjectTableName, true);
-                this.UIProperties.SetVisibility("Account", this.ObjectTableName, true);
+                //this.UIProperties.SetVisibility("Bank", this.ObjectTableName, true);
+                //this.UIProperties.SetVisibility("BankBranch", this.ObjectTableName, true);
+                //this.UIProperties.SetVisibility("Account", this.ObjectTableName, true);
+                this.BankFieldsVisibile = true;
             }
             else {
-                this.UIProperties.SetVisibility("Bank", this.ObjectTableName, false);
-                this.UIProperties.SetVisibility("BankBranch", this.ObjectTableName, false);
-                this.UIProperties.SetVisibility("Account", this.ObjectTableName, false);
+                //this.UIProperties.SetVisibility("Bank", this.ObjectTableName, false);
+                //this.UIProperties.SetVisibility("BankBranch", this.ObjectTableName, false);
+                //this.UIProperties.SetVisibility("Account", this.ObjectTableName, false);
+                this.BankFieldsVisibile = false;
             }
             this.BankAccountIdVisibility = true;
         }
@@ -1111,7 +1116,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 this.EntityPM.PaymentCurrencyExchangeRate = AppTool.Round(value, 5);
                 this.GetRateIsEnabled();
                 this.ComputeLocalAmount();
-
+                this.ComputeOpenAmountInLocalCurrency();
                 this.ItemsSource.Collection.forEach(item => {
                     item.InitExchangeRate();
                 });
@@ -1382,7 +1387,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         this.BankBranch = null;
         this.Account = null;
         this.ChequeOrPaymentRef = null;
-        this.ValueDate = null;
+     //   this.ValueDate = null;
         this.CreditCardTypeId = null;
 
         var lists: AccountingPaymentMethodList[] = this.AllMethods.filter(d => d.Id == this.AccountingPaymentMethodId);
@@ -1671,6 +1676,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             this.EntityPM.AmountInPaymentCurrency = AppTool.Round(value, 2);
             this.ComputeLocalAmount();
             this.ComputeOpenAmount();
+            this.ComputeOpenAmountInLocalCurrency();
             this.UpdateSummary();
 
             this.originalPaymentOpenAmount = this.EntityPM.AmountInPaymentCurrency;
@@ -1696,6 +1702,14 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     set OpenAmount(value: number) {
         if (this.EntityPM.OpenAmount != value) {
             this.EntityPM.OpenAmount = AppTool.Round(value, 2);
+            this.ComputeOpenAmountInLocalCurrency();
+        }
+    }
+
+    get OpenAmountInLocalCurrency() { return this.EntityPM.OpenAmountInLocalCurrency == null ? 0 : this.EntityPM.OpenAmountInLocalCurrency; }
+    set OpenAmountInLocalCurrency(value: number) {
+        if (this.EntityPM.OpenAmountInLocalCurrency != value) {
+            this.EntityPM.OpenAmountInLocalCurrency = AppTool.Round(value, 2);
         }
     }
 
@@ -1709,9 +1723,15 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     ComputeOpenAmount() {
         this.OpenAmount = this.AmountInPaymentCurrency - this.Summary_AmountPaid;
     }
+
     ComputeLocalAmount() {
         this.AmountInLocalCurrency = this.AmountInPaymentCurrency * this.PaymentCurrencyExchangeRate;
     }
+
+    ComputeOpenAmountInLocalCurrency() {
+        this.OpenAmountInLocalCurrency = this.OpenAmount * this.PaymentCurrencyExchangeRate;
+    }
+
 
     // Summary
     public Summary_Amount: number = 0;

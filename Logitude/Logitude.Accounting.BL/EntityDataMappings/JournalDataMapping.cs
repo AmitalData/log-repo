@@ -122,7 +122,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 entityPM.StatusName = type.EnglishName;
 
                 ContactPM user = GetLoggedContact(entityPOCO.Tenant);
-                entityPM.StatusName = showLocal ? type.LocalName : type.EnglishName;
+                entityPM.StatusName =  type.EnglishName;
+                
                 entityPM.StatusLocalName = type.LocalName;
 
 
@@ -132,12 +133,14 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             if (entityPOCO.CreatedByUserId != null)
             {
                 ContactPM contact = GetLoggedContact(entityPOCO.Tenant);
-                Contact userContact = ContactRepository.GetSingleContact(entityPOCO.CreatedByUserId, entityPOCO.Tenant, true);
+                ContactRepository contactRepository = new ContactRepository(entityPOCO.Tenant);
+                Contact userContact = contactRepository.GetSingleContact(entityPOCO.CreatedByUserId, entityPOCO.Tenant);
                 contact = contact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM();
                 if (userContact != null)
                 {
                     entityPM.CreatedByUserName = contact.DontShowLocal ? userContact.EnglishName : userContact.LocalName;
                 }
+              
             }
 
 

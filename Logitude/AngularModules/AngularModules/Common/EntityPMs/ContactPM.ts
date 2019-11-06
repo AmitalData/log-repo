@@ -7,6 +7,8 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
+
+import {CardContactAdditionalServicePM} from './CardContactAdditionalServicePM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -315,7 +317,53 @@ export class ContactPM {
     public set CreateDate(newValue: Date) { if (this.createDate != newValue) { this.createDate = newValue; this.MarkAsDirty("CreateDate"); } }
        
 	 
+    private isUserAdditionalPackagesOnly: boolean;
+    public get IsUserAdditionalPackagesOnly() { return this.isUserAdditionalPackagesOnly; }
+    public set IsUserAdditionalPackagesOnly(newValue: boolean) { if (this.isUserAdditionalPackagesOnly != newValue) { this.isUserAdditionalPackagesOnly = newValue; this.MarkAsDirty("IsUserAdditionalPackagesOnly"); } }
+       
+	 
+    private isLicencedUser: boolean;
+    public get IsLicencedUser() { return this.isLicencedUser; }
+    public set IsLicencedUser(newValue: boolean) { if (this.isLicencedUser != newValue) { this.isLicencedUser = newValue; this.MarkAsDirty("IsLicencedUser"); } }
+       
+	 
+     
+	private cardContactAdditionalServices: CardContactAdditionalServicePM[];
+    get  CardContactAdditionalServices() {
+        if (this.cardContactAdditionalServices == null) {
+            this.cardContactAdditionalServices = [];
+        }
 
+        return this.cardContactAdditionalServices;
+    }
+    set  CardContactAdditionalServices(newValue: CardContactAdditionalServicePM[]) {
+        if (this.cardContactAdditionalServices != newValue) {
+            this.cardContactAdditionalServices = newValue;
+        }
+    }
+    public AddCardContactAdditionalServicePM(item: CardContactAdditionalServicePM) {
+        if (item != null) {
+            var index = this.CardContactAdditionalServices.indexOf(item);
+            if (index == -1) {
+
+                item.EntityParentPM = this;
+
+                this. CardContactAdditionalServices.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveCardContactAdditionalServicePM(item: CardContactAdditionalServicePM) {
+        if (item != null) {
+            var index = this.CardContactAdditionalServices.indexOf(item);
+            if (index > -1) {
+                this. CardContactAdditionalServices.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+	    //public CardContactAdditionalServices: Array<CardContactAdditionalServicePMPM>= [];
+ 
     public OldEntityPM: ContactPM;
 		
     public IsDirty: boolean;

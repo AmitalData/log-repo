@@ -1936,16 +1936,16 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         }
                     }
                 }
-                ServiceResponse response = new ServiceResponse();
-                FilingInboxQuery query = new FilingInboxQuery(tenant);
-                List<FilingInboxPM> result = new List<FilingInboxPM>();
-                IQueryable<FilingInboxPM> list = query.GetFilingInboxes_LastTwoMonths(userId, isShowDeleted, tenant);
-                response.Count = list.Count();
 
-                int skippedEntities = queryOperations.PageIndex;
-                list = list.Skip(skippedEntities);
-                list = list.Take(queryOperations.PageSize);
-                response.Result = list;
+                FilingInboxQuery query = new FilingInboxQuery(tenant);
+                FilingInboxQueryResult iQueryResult = query.GetFilingInboxes_LastTwoMonths(userId, isShowDeleted, queryOperations.PageIndex, queryOperations.PageSize, tenant);
+
+                ServiceResponse response = new ServiceResponse()
+                {
+                    Count = iQueryResult.Count,
+                    Result = iQueryResult.Data,
+                };
+
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
                 return reponseMessage;

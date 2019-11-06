@@ -101,6 +101,7 @@
     <Compile Include="GlobalModel\EntityPOCOs\AutoSignupEmail.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\AWBMessagesCCSType.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\BatchServicesDefinition.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\BluesnapTransaction.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\BluesnapContract.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\BluesnapContractType.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\WebhookKeys.cs" />
@@ -144,6 +145,7 @@
     <Compile Include="GlobalModel\Mapping\AutoSignupEmailMap.cs" />
     <Compile Include="GlobalModel\Mapping\AWBMessagesCCSTypeMap.cs" />
     <Compile Include="GlobalModel\Mapping\BatchServicesDefinitionMap.cs" />
+    <Compile Include="GlobalModel\Mapping\BluesnapTransactionMap.cs" />
     <Compile Include="GlobalModel\Mapping\BluesnapContractMap.cs" />
     <Compile Include="GlobalModel\Mapping\BluesnapContractTypeMap.cs" />
     <Compile Include="GlobalModel\Mapping\WebhookKeysMap.cs" />
@@ -184,6 +186,7 @@
     <Compile Include="GlobalModel\Repositories\AutoSignupEmailRepository.cs" />
     <Compile Include="GlobalModel\Repositories\AWBMessagesCCSTypeRepository.cs" />
     <Compile Include="GlobalModel\Repositories\BatchServicesDefinitionRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\BluesnapTransactionRepository.cs" />
     <Compile Include="GlobalModel\Repositories\BluesnapContractRepository.cs" />
     <Compile Include="GlobalModel\Repositories\BluesnapContractTypeRepository.cs" />
     <Compile Include="GlobalModel\Repositories\WebhookKeysRepository.cs" />
@@ -349,6 +352,10 @@
     <Compile Include="Migrations\201906120916074_AbedAddNewFieldCPUIntensiveWebServicesURLToSetting.Designer.cs">
       <DependentUpon>201906120916074_AbedAddNewFieldCPUIntensiveWebServicesURLToSetting.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906130619553_NewField_DebitAmount_ReconcileExternalPageLines.cs" />
+    <Compile Include="Migrations\201906130619553_NewField_DebitAmount_ReconcileExternalPageLines.Designer.cs">
+      <DependentUpon>201906130619553_NewField_DebitAmount_ReconcileExternalPageLines.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201906231629362_MakeTariffVersionDatesNullable.cs" />
     <Compile Include="Migrations\201906231629362_MakeTariffVersionDatesNullable.Designer.cs">
       <DependentUpon>201906231629362_MakeTariffVersionDatesNullable.cs</DependentUpon>
@@ -372,6 +379,14 @@
     <Compile Include="Migrations\201909151127227_AbedAddLastIncrementalDWUpdateDateToSettings.cs" />
     <Compile Include="Migrations\201909151127227_AbedAddLastIncrementalDWUpdateDateToSettings.Designer.cs">
       <DependentUpon>201909151127227_AbedAddLastIncrementalDWUpdateDateToSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909291254383_AbeddeleteDWFieldsFromSetting.cs" />
+    <Compile Include="Migrations\201909291254383_AbeddeleteDWFieldsFromSetting.Designer.cs">
+      <DependentUpon>201909291254383_AbeddeleteDWFieldsFromSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910301311300_BluesnapTransaction_table_khalid.cs" />
+    <Compile Include="Migrations\201910301311300_BluesnapTransaction_table_khalid.Designer.cs">
+      <DependentUpon>201910301311300_BluesnapTransaction_table_khalid.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -491,6 +506,9 @@
     <EmbeddedResource Include="Migrations\201906120916074_AbedAddNewFieldCPUIntensiveWebServicesURLToSetting.resx">
       <DependentUpon>201906120916074_AbedAddNewFieldCPUIntensiveWebServicesURLToSetting.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906130619553_NewField_DebitAmount_ReconcileExternalPageLines.resx">
+      <DependentUpon>201906130619553_NewField_DebitAmount_ReconcileExternalPageLines.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906231629362_MakeTariffVersionDatesNullable.resx">
       <DependentUpon>201906231629362_MakeTariffVersionDatesNullable.cs</DependentUpon>
     </EmbeddedResource>
@@ -508,6 +526,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909151127227_AbedAddLastIncrementalDWUpdateDateToSettings.resx">
       <DependentUpon>201909151127227_AbedAddLastIncrementalDWUpdateDateToSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909291254383_AbeddeleteDWFieldsFromSetting.resx">
+      <DependentUpon>201909291254383_AbeddeleteDWFieldsFromSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910301311300_BluesnapTransaction_table_khalid.resx">
+      <DependentUpon>201910301311300_BluesnapTransaction_table_khalid.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

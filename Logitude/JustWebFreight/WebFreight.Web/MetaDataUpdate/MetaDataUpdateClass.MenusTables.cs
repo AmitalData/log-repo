@@ -64,6 +64,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature quoteTtemplatesFeature = tenantFeatures.Where(d => d.Code == "QUOTETMPLATES" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature logitudeleadsFeature = tenantFeatures.Where(d => d.Code == "LOGITUDELEADS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature vendorsFeature = tenantFeatures.Where(d => d.Code == "VENDORS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+            Feature ACCOUNTINGPARTNERSFeature = tenantFeatures.Where(d => d.Code == "ACCOUNTINGPARTNERSMENU" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature mastersFeature = tenantFeatures.Where(d => d.Code == "MASTERS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature gettingStartedFeature = tenantFeatures.Where(d => d.Code == "GETTINGSTARTED" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature creditCardTypeFeature = tenantFeatures.Where(d => d.Code == "CREDITCARDTYPES" && d.FeatureTypeCode == "MENU").FirstOrDefault();
@@ -109,6 +110,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature AirlineStatisticsFeature = tenantFeatures.Where(d => d.Code == "AIRLINESTATISTICS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature LogitudeMessagesTransmissionLogFeature = tenantFeatures.Where(d => d.Code == "TRANSMISSIONLOG" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature ticketFeature = tenantFeatures.Where(d => d.Code == "TICKET" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+            Feature occasionFeature = tenantFeatures.Where(d => d.Code == "Menu.Occasions" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature chargesGroupFeature = tenantFeatures.Where(d => d.Code == "CHARGESGROUP" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature fblStockFeature = tenantFeatures.Where(d => d.Code == "FBLSTOCKS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature timeManagementFeature = tenantFeatures.Where(d => d.Code == "TimeManagement" && d.FeatureTypeCode == "MENU").FirstOrDefault();
@@ -140,6 +142,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CRMM", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 6, CategoryTypeCode = null, TextCode = "General.MH.CRM", Icon = "DashboardPath", FeatureId = cRMFeature.Id, }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "AWCR", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 6, CategoryTypeCode = null, TextCode = "General.MH.ActivationWizard", Icon = "OperationsPath", FeatureId = ActivationWizardFeature.Id }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "TKTS", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 7, CategoryTypeCode = null, TextCode = "General.MH.Ticket", Icon = "TicketPath", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Ticket").FirstOrDefault().Id, FeatureId = ticketFeature.Id, }, MenusTablesRepository, tenantMenusTables);
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "OSMT", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 7, CategoryTypeCode = null, TextCode = "General.MH.Occasions", Icon = "CustomersPath", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Occasion").FirstOrDefault().Id, FeatureId = occasionFeature.Id, }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "PART", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 8, CategoryTypeCode = null, TextCode = "General.MH.Participants", Icon = "CustomersPath", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Participant").FirstOrDefault().Id, FeatureId = ParticipantFeature.Id, }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "SOCI", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 9, CategoryTypeCode = null, TextCode = "General.MH.Social", Icon = "SocialPath", FeatureId = socialFeature.Id, }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "AIRS", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 9, CategoryTypeCode = null, TextCode = "General.MH.AirlineStatistics", Icon = "DashboardPath", ObjectTableId = tenantObjectTables.Where(o => o.Name == "AirlineStatistics").FirstOrDefault().Id, FeatureId = AirlineStatisticsFeature.Id, }, MenusTablesRepository, tenantMenusTables);
@@ -183,6 +186,8 @@ namespace WebFreight.Web.MetaDataUpdate
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTDS", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 9, CategoryTypeCode = "Par", TextCode = "General.MC.Partners.Distributor", Icon = "Agent.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Distributor").FirstOrDefault().Id, FeatureId = distributorFeature.Id }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTIE", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 10, CategoryTypeCode = "Par", TextCode = "General.MC.CRM.InboundEmail", Icon = "Industries.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "InboundEmail").FirstOrDefault().Id, FeatureId = InboundEmailsFeature.Id }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTPC", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 11, CategoryTypeCode = "Par", TextCode = "General.MC.Partners.Participants", Icon = "Participant.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Participant").FirstOrDefault().Id, FeatureId = ParticipantFeature.Id }, MenusTablesRepository, tenantMenusTables);
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTAC", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 3, CategoryTypeCode = "Par", TextCode = "General.MC.Partners.AccountingPartner", Icon = "Agent.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "AccountingPartner").FirstOrDefault().Id, FeatureId = ACCOUNTINGPARTNERSFeature.Id }, MenusTablesRepository, tenantMenusTables);
+
             #endregion
 
             #region Billing

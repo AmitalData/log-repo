@@ -20,7 +20,7 @@ exports.config = {
             Direction: null,
             TransportMode: null,
             ShipmentType: null,
-            ShipmentEditTabs:null,
+            ShipmentEditTabs: null,
         },
         QuoteParams: {
             Direction: null,
@@ -35,9 +35,9 @@ exports.config = {
         FullAccount: {
             FullAccountingType: null,
         },
-        CRM:{
-            CRMType:null,
-            ActivityType:null,
+        CRM: {
+            CRMType: null,
+            ActivityType: null,
         }
     },
     capabilities: {
@@ -70,6 +70,7 @@ exports.config = {
             savePath: 'C:/Program Files (x86)/Jenkins/workspace/TeamMohammadE2EScripts',
             consolidateAll: false
         });
+     
         if (browser.params.Env == "prod") {
             browser.params.Link = "https://system.logitudeworld.com";
             browser.params.Login.Email = "razantest@protractor.com";
@@ -77,11 +78,6 @@ exports.config = {
         }
         else if (browser.params.Env == "staging") {
             browser.params.Link = "https://staging.logitudeworld.com";
-            browser.params.Login.Email = "protractor@test.com";
-            browser.params.Login.Password = "!P123t456";
-        }
-        else if (browser.params.Env == "logitudepre") {
-            browser.params.Link = "https://pre.logitudeworld.com";
             browser.params.Login.Email = "protractor@test.com";
             browser.params.Login.Password = "!P123t456";
         }
@@ -114,6 +110,17 @@ exports.config = {
             browser.params.Link = "https://test.logitudeworld.com/test";
             browser.params.Login.Email = "raghad@protractor.com";
             browser.params.Login.Password = "!RS123Rs";
+
+        }
+        else if (browser.params.Env == "testStaging") {
+            browser.params.Link = "https://staging.logitudeworld.com";
+            browser.params.Login.Email = "Raghad@protractor.com";
+            browser.params.Login.Password = "!RS123Rs";
+        }
+        else if (browser.params.Env == "testEnvStaging") {
+            browser.params.Link = "https://test.logitudeworld.com/staging";
+            browser.params.Login.Email = "Raghad@protractor.com";
+            browser.params.Login.Password = "!RS123Rs";
         }
         else if (browser.params.Env == "prod_1") {
             browser.params.Link = "https://system.logitudeworld.com";
@@ -140,11 +147,6 @@ exports.config = {
             browser.params.Login.Email = "ahmadb@test.com";
             browser.params.Login.Password = "ahmed!A123";
         }
-        else if (browser.params.Env == "Pre_Cloud") {
-            browser.params.Link = "https://pre.amital.co.il/";
-            browser.params.Login.Email = "sgaumtomation@pre.com";
-            browser.params.Login.Password = "Sg0592463934!";
-        }
         else if (browser.params.Env == "test_1109") {
             browser.params.Link = "https://test.logitudeworld.com/test";
             browser.params.Login.Email = "sumaya@automation.com";
@@ -154,20 +156,27 @@ exports.config = {
         //------------------------------------- Reporter --------------------------------
         if (browser.params.Team == "ayman") {
             jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
-            jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/Automation e2e/TeamAyman/Test/screenshots' }).getJasmine2Reporter());
+            jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/Automation e2e/TeamAyman/Test/screenshots', takeScreenShotsOnlyForFailedSpecs: true, screenshotsSubfolder: 'images' }).getJasmine2Reporter());
             jasmine.getEnv().addReporter(junitReporterAyman);
 
         } else if (browser.params.Team == "islam") {
             jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
-            jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/E2ETeamIslam/screenshots' }).getJasmine2Reporter());
+            jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/Automation e2e/TeamIslam/Test/screenshots', takeScreenShotsOnlyForFailedSpecs: true, screenshotsSubfolder: 'images' }).getJasmine2Reporter());
             jasmine.getEnv().addReporter(junitReporterIslam);
 
         } else if (browser.params.Team == "mohammad") {
             jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
-            jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/E2ETeamMohammad/screenshots' }).getJasmine2Reporter());
+            jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/Automation e2e/TeamMohammad/Test/screenshots', takeScreenShotsOnlyForFailedSpecs: true, screenshotsSubfolder: 'images' }).getJasmine2Reporter());
             jasmine.getEnv().addReporter(junitReporterMohammad);
 
-        } else {
+        }
+        else if (browser.params.Team == "test") {
+            jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
+            jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/E2ETeamMohammad/test' }).getJasmine2Reporter());
+            jasmine.getEnv().addReporter(junitReporterMohammad);
+
+        }
+        else {
             jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
             jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/e2eTracking/screenshots' }).getJasmine2Reporter());
         }
@@ -181,38 +190,38 @@ exports.config = {
         // ********************* Login **********************************
         login: 'e2e/Login/**/Login.e2e-spec.ts',
         NewQuote: 'e2e/CRM/Quotes/NewEntity/**/NewQuote-spec.ts',
-       // CustomerGLA: 'e2e/FullAccounting/'
-      
+        // CustomerGLA: 'e2e/FullAccounting/'
+
         CRM: 'e2e/CRM/**/CRMModule-spec.ts',
-       //  'e2e/LogBox/Login/**/Login.e2e-spec.ts',
-       
+        //  'e2e/LogBox/Login/**/Login.e2e-spec.ts',
+
         NewShipment: 'e2e/Operations/Shipments/NewEntity/**/Operations.e2e-spec.ts',
+        NewEAWB: 'e2e/Operations/Shipments/NewEntity/**/OpEAWB-spec.ts',
         NewShipmentlogbox: 'e2e/LogBox/Shipments/**/ShipmentSearch.e2e-spec.ts',
         Contact: 'e2e/Contacts/**/Contacts-spec.ts',
         EditTabs: 'e2e/Operations/Shipments/EditEntity/**/EditShipmentTabs.e2e-spec.ts',
         ShipmentSearch: 'e2e/Operations/**/ShipmentSearch.e2e-spec.ts',
-        
+
 
         // ********************* FullAccounting **********************************
+        PaymentCheque:'e2e/FullAccounting/PaymentCheque/**/NewPaymentCheque-spec.ts',
         ARPayment: 'e2e/FullAccounting/**/ARPayment-spec.ts',
         NewChartOfAccount: 'e2e/FullAccounting/ChartOfAccount/**/ChartOfAccount-spec.ts',
-        
         FullAccProcess: 'e2e/FullAccounting/**/FullAccScenarios-spec.ts',
         ARInvoice: 'e2e/FullAccounting/ARInvoice/**/ARInvoice-spec.ts',
         BankAccount: 'e2e/FullAccounting/BankAccount/**/NewBank-spec.ts',
-        PaymentCheque: 'e2e/FullAccounting/PaymentCheque/**/NewPaymentCheque-spec.ts' ,
         VendorGLAccount: 'e2e/FullAccounting/GlAccounts/**/VendorGLAccount-spec.ts',
         CustomerGLAccount: 'e2e/FullAccounting/**/CustomerGLAccount-spec.ts',
         APInvoice: 'e2e/FullAccounting/APInvoice/**/APInvoice-spec.ts',
         RevGLAccount: 'e2e/FullAccounting/**/GlAccount-spec.ts',
-
+     //   CashDeposit: 'e2e/FullAccounting/**/Deposit/NewDposit-spec.ts',
         //*************Report********************
         Reports: 'e2e/Report/**/Report-spec.ts',
 
         //*************ShipmentView********************
         ShipmentView: 'e2e/**/ShipmentView-spec.ts',
 
-     //*************Maintenance********************
+        //*************Maintenance********************
         CompanyAddressSetting: 'e2e/Maintenance/**/CompanyAddressSetting-spec.ts',
         NewAgent: 'e2e/Maintenance/**/Agent-spec.ts',
         NewUser: 'e2e/Maintenance/**/Users-spec.ts',

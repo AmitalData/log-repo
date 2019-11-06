@@ -39,6 +39,26 @@
 	text-decoration:none;
 	text-shadow:0px -1px 0px #5b6178;
 }
+
+.InputShow{
+      margin: 0px;
+    height: 15px;
+    /*width: 200px;
+    padding: 3px;*/
+    border: 1px solid #D1D1D1;
+    outline-style: solid;
+    outline-width: 0px;
+    font: 11px "Lucida Sans Unicode";
+    color: #45494A;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -moz-box-shadow: inset 0 0 10px #D1D1D1;
+    -webkit-box-shadow: inset 0 0 10px #D1D1D1;
+    box-shadow: inset 0 0 10px #D1D1D1;
+    background: white;
+
+}
 .cmdSubmitVerifcation:hover {
 	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #0980ab), color-stop(1, #33bdef));
 	background:-moz-linear-gradient(top, #0980ab 5%, #33bdef 100%);
@@ -189,6 +209,25 @@
             margin-top: 15px;
             background-position: center;
         }
+
+
+
+
+            .BackgroundClass {
+            background: #dbdbdb; /* Old browsers */
+            /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+            background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2RiZGJkYiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjI4JSIgc3RvcC1jb2xvcj0iI2YyZjJmMiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjQxJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+            background: -moz-linear-gradient(top, #dbdbdb 0%, #f2f2f2 28%, #ffffff 41%, #ffffff 100%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#dbdbdb), color-stop(28%,#f2f2f2), color-stop(41%,#ffffff), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(top, #dbdbdb 0%,#f2f2f2 28%,#ffffff 41%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(top, #dbdbdb 0%,#f2f2f2 28%,#ffffff 41%,#ffffff 100%); /* Opera 11.10+ */
+            background: -ms-linear-gradient(top, #dbdbdb 0%,#f2f2f2 28%,#ffffff 41%,#ffffff 100%); /* IE10+ */
+            background: linear-gradient(to bottom, #dbdbdb 0%,#f2f2f2 28%,#ffffff 41%,#ffffff 100%); /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', endColorstr='#ffffff',GradientType=0 ); /* IE6-8 */
+
+        }
+
+
 
 
 
@@ -355,7 +394,6 @@
                                                 <br /> 
                                                                 <input autocomplete="on"  size="10"  class="auto-style1" id="Email" type="email" name="Email" runat="server"  placeholder="e.g. myname@example.net"  required data-email-msg="Email format is not valid"  onblur="onEmailBlur()"/>
                                                      
-                                                        <%-- <img id="busyIndicator" style="height:25px;width:25px;vertical-align:bottom;display:none" src="images/LoginScreen/indicator.gif" alt='loading' />--%>
                                             </td>
                                                
                                             
@@ -363,8 +401,17 @@
                                         
 
                                         <tr>
-                                                            <td class="column1">Password: <br /><input class="auto-style1" id="Password" type="password" autocomplete="off" runat="server" oninput="onPasswordChanged()" required data-email-msg="password is required!" onkeypress="capLock(event)"/>
-                                                            </td>                    
+                        
+                                            <td class="column1"> Password: <br />
+                                    <div  style="height:33px;width:267px;border:1px solid lightgray;border-radius:4px;" class="InputShow">
+                                                   <input  style="width:215px;border:0px" class="auto-style1" id="Password" type="password" autocomplete="off" runat="server" oninput="onPasswordChanged()" required data-email-msg="password is required!" onkeypress="capLock(event)"/>
+                                                           <span> <a id="ShowHidePasswordLinkId" style="padding-left:2px;font-size:12px;vertical-align:central;font-family:Arial; cursor:pointer;text-decoration:none" onclick="ShowHidePasswordClick()">Show</a></span>
+                                                    </div>
+                                            </td>
+
+                                                  <%--          <td class="column1">Password: <br /><input class="auto-style1" id="Password" type="password" autocomplete="off" runat="server" oninput="onPasswordChanged()" required data-email-msg="password is required!" onkeypress="capLock(event)"/>
+                                                            <a id="ShowHidePasswordLinkId" style="position:absolute;vertical-align:central;margin-left:-42px;margin-top:10px;font-family:Arial; cursor:pointer;" onclick="ShowHidePasswordClick()">Show</a>
+                                                            </td>               --%>     
                                         </tr>
 
                                           
@@ -1141,6 +1188,26 @@
             }
         }
 
+
+        function ShowHidePasswordClick() {
+            var showHidePasswordLink = document.getElementById("ShowHidePasswordLinkId");
+            showHidePasswordLink.innerText = showHidePasswordLink.innerText == "Hide" ? "Show" : "Hide";
+
+            var passwordInput = document.getElementById("Password");
+              if (passwordInput.type === "password") passwordInput.type = "text";
+            else passwordInput.type = "password";
+
+
+ 
+        };
+
+
+
+
+
+
+
+
         function setCaretToPos(id, cursorPosition) {
             document.getElementById(id).selectionStart = cursorPosition;
             document.getElementById(id).selectionEnd = cursorPosition;
@@ -1258,7 +1325,6 @@
                     filter: "contains",
                     suggest: false,
 
-
                     // template:
                     //     '<dd>${ CompanyName }</dd>'
                     //,
@@ -1275,18 +1341,19 @@
                 });
 
 
-
-
-
-
-
                 disableForm(false);
 
                 $("#loginForm").hide();
                 $("#comboForm").show();
-
                 $("#busyIndicator").hide();
                 $("#loginBusyindicator").hide();
+
+
+              //$("#cmbTenants").kendoComboBox();
+               var combobox = $("#cmbTenants").data("kendoComboBox");
+               combobox.focus();
+
+
                 //$("#busyIndicator").hide();
             }
 
@@ -1575,7 +1642,7 @@
         LoginToAngular = function (userdata) {
             var isTenantAllowed = false;
             var Tenant = userdata.CurrentTenant;
-            if (Tenant == 42 || Tenant == 1232 || Tenant == 1586 || Tenant == 1637 || Tenant == 1638) {
+            if (Tenant == 42 || Tenant == 1232 || Tenant == 1586 || Tenant == 1637 || Tenant == 1638 || Tenant == 341 ) {
                 isTenantAllowed = true;
             }
 

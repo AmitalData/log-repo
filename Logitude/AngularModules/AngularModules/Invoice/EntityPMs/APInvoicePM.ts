@@ -58,6 +58,11 @@ export class APInvoicePM {
     public set InternalNumber(newValue: string) { if (this.internalNumber != newValue) { this.internalNumber = newValue; this.MarkAsDirty("InternalNumber"); } }
        
 	 
+    private createdFromAPI: boolean;
+    public get CreatedFromAPI() { return this.createdFromAPI; }
+    public set CreatedFromAPI(newValue: boolean) { if (this.createdFromAPI != newValue) { this.createdFromAPI = newValue; this.MarkAsDirty("CreatedFromAPI"); } }
+       
+	 
     private invoiceNumber: string;
     public get InvoiceNumber() { return this.invoiceNumber; }
     public set InvoiceNumber(newValue: string) { if (this.invoiceNumber != newValue) { this.invoiceNumber = newValue; this.MarkAsDirty("InvoiceNumber"); } }
@@ -291,6 +296,11 @@ export class APInvoicePM {
     private branchId: string;
     public get BranchId() { return this.branchId; }
     public set BranchId(newValue: string) { if (this.branchId != newValue) { this.branchId = newValue; this.MarkAsDirty("BranchId"); } }
+       
+	 
+    private branchName: string;
+    public get BranchName() { return this.branchName; }
+    public set BranchName(newValue: string) { if (this.branchName != newValue) { this.branchName = newValue; this.MarkAsDirty("BranchName"); } }
        
 	 
     private connectedEntityReferences: string;

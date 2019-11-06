@@ -439,10 +439,22 @@ export class ListComponent implements OnInit, AfterViewInit {
     AdvanceQFiltersService: PubSubService;
     public TenantPM: TenantPM;
     MethodName: string = null;
+    ListComponentId: string;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     private SessionEvent: any = null;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _http: Http, private _entityListService: EntityListService, private _entityResourceService: EntityResourceService, public pubSubAdvanceQueryFiltersService: PubSubService, private temp: PubSubService1, private entityPMService: EntityPMService, private _totangoService: TotangoService, private CD: ChangeDetectorRef) {
+
+        if (this.CurrentSession == null) {
+            this.ListComponentId = "ListComponentId_-1_-1";
+           
+        }
+
+        else {
+            this.ListComponentId = "ListComponentId_" + this.CurrentSession.LogitudeGridHelper.GetLListComponentIndexId();
+           
+        }
+
         this.ComponentIndex = this.CurrentSession.GetNewListComponentIndex();
 
         this.serviceArgs = new ServiceArgs();
@@ -1407,7 +1419,8 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     filterAgrs.AdditionalFilters.push(filter);
                 });
             }
-            this.CurrentSession.PubSubFiltersChangeEventService.Stream.emit({ QueryId: query.Id, Filters: filterAgrs });
+            var ListComponentPostFex = this.ListComponentId.replace('ListComponentId_','');
+            this.CurrentSession.PubSubFiltersChangeEventService.Stream.emit({ QueryId: query.Id, Filters: filterAgrs, ListComponentPostFex: ListComponentPostFex });
         }
     }
     onMenuHeaderchanged(event) {
@@ -2562,14 +2575,30 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     logWindow.Width = 850;
                     logWindow.Height = 500;
 
-                    if (QueryCodeOriginal == "Air Freight Cost Tariffs") {
-                        logWindow.Title = "New Air Freight Cost";
-                        windowArgs.TypeCode = "AFC";
-                    }
-                    else {
-                        "Air Surcharges Cost Tariffs";
-                        logWindow.Title = "New Air Surcharges Cost";
-                        windowArgs.TypeCode = "ASC";
+                    switch (QueryCodeOriginal) {
+                        case "Air Freight Cost Tariffs": {
+                            logWindow.Title = "New Air Freight Cost";
+                            windowArgs.TypeCode = "AFC";
+                            break;
+                        }
+
+                        case "Air Surcharges Cost Tariffs": {
+                            logWindow.Title = "New Air Surcharges Cost";
+                            windowArgs.TypeCode = "ASC";
+                            break;
+                        }
+
+                        case "Ocean LCL Freight Cost": {
+                            logWindow.Title = "New Ocean LCL Freight Cost";
+                            windowArgs.TypeCode = "OLC";
+                            break;
+                        }
+
+                        case "Ocean.LCL.Surcharges.Cost": {
+                            logWindow.Title = "New " + TextCodeTranslator.TranslateTable("Tariff.Q.Ocean.LCL.Surcharges.Cost");
+                            windowArgs.TypeCode = "OSC";
+                            break;
+                        }
                     }
                  
                     logWindow.WindowArgs = windowArgs;

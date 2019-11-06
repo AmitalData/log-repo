@@ -4,7 +4,7 @@ import { GeneralFunctions } from '../../Helpers/GeneralFunctions';
 import{NewGLAccount } from './NewGLAccount';
 import {NewBankAccount} from './NewBankAccount';
 import {EditBankAccount} from './EditBankAccount';
-describe('Bank Module', function () {
+describe('BankAccount Module', function () {
   var gn1 = new GeneralFunctions();
   var h = new FieldsHelper();
   browser.driver.manage().window().maximize();
@@ -15,7 +15,7 @@ describe('Bank Module', function () {
 
 
 
-  it(' New Bank Account Was Created And Updated', function () {
+    it(' New BankAccount Was Created And Updated', function () {
 
       console.log('Khawlaaa check ')
     browser.ignoreSynchronization = true;

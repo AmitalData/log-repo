@@ -370,13 +370,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             using (SqlConnection DBConnection = new SqlConnection(connectionString))
             {
                 DBConnection.Open();
-                SqlCommand commandWaitingData = new SqlCommand("select Count(*) as FCount,QueueDefinitionCode from QueueMessageMoreDetails where Status = 0 and CreateDateTime >= " + filterByDate.Value.Date.ToShortDateString() + " group by QueueDefinitionCode ", DBConnection);
-                SqlCommand commandFaildData = new SqlCommand("select Count(*) as WCount,QueueDefinitionCode from QueueMessageMoreDetails where Status = -1 and CreateDateTime >= " + filterByDate.Value.Date.ToShortDateString() + " group by QueueDefinitionCode ", DBConnection);
+                SqlCommand commandWaitingData = new SqlCommand("select Count(*) as WCount,QueueDefinitionCode from QueueMessageMoreDetails where Status = 0 and CreateDateTime >= '" + filterByDate.Value.Date.ToShortDateString() + "' group by QueueDefinitionCode ", DBConnection);
+                SqlCommand commandFaildData = new SqlCommand("select Count(*) as FCount,QueueDefinitionCode from QueueMessageMoreDetails where Status = -1 and CreateDateTime >= '" + filterByDate.Value.Date.ToShortDateString() + "' group by QueueDefinitionCode ", DBConnection);
 
                 SqlDataReader reader = commandWaitingData.ExecuteReader();
-                FaildDataTable.Load(reader);
-                reader = commandFaildData.ExecuteReader();
                 WaitingDataTable.Load(reader);
+                reader = commandFaildData.ExecuteReader();
+                FaildDataTable.Load(reader);
                 reader.Close();
             }
             var FaildQueueMessageCounts = (from DataRow dr in FaildDataTable.Rows
@@ -414,8 +414,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         DoneItemsInFiveMinutes += Log.DoneItemsInFiveMinutes;
                         DoneItemsInOneHour += Log.DoneItemsInOneHour;
                         DoneItemsInOneMinute += Log.DoneItemsInOneMinute;
-                        WaitingItems += WaitingQueueMessage != null ? WaitingQueueMessage.Count : 0;//Log.WaitingItems;
-                        FailedItems += FaildQueueMessage != null ? FaildQueueMessage.Count : 0;//Log.FailedItems;
+                        WaitingItems = WaitingQueueMessage != null ? WaitingQueueMessage.Count : 0;//Log.WaitingItems;
+                        FailedItems = FaildQueueMessage != null ? FaildQueueMessage.Count : 0;//Log.FailedItems;
                         NumberOfDoneItems += Log.NumberOfDoneItems != null ? (int)Log.NumberOfDoneItems : 0;
 
                         if (Log.LastActivity > LActivity && LActivity != null)

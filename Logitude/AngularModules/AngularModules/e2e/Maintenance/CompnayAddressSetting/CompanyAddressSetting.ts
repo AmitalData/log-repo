@@ -9,15 +9,15 @@ export class CompanyAddressSetting {
 
     constructor() {
         this.helper = new FieldsHelper();
-    
+
 
     }
 
     QuickSearch() {
 
-      
+
         this.helper.WaitBusyIndicator();
-        this.helper.WaitByIdAndClick('General.MH.Maintenance');
+       // this.helper.WaitByIdAndClick('General.MH.Maintenance');
         this.helper.waitByCss('#null_Search');
     }
 

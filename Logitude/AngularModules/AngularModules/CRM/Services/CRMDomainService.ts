@@ -13,6 +13,7 @@ import {SLAEscalationPM} from '../EntityPMs/SLAEscalationPM';
 import {SLAEscalationRecepientPM} from '../EntityPMs/SLAEscalationRecepientPM';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass'; 
 import {Guid} from '../../Infrastructure/Utilities/Guid';
+import { PerformanceLogger } from '../../Infrastructure/Utilities/PerformanceLogger';
 
 @Injectable()
 
@@ -179,8 +180,7 @@ export class CRMDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-
-
+    
     GetActivitiesChartData(code: string, ownerId: string, businessUnitId: string, chartCode: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -197,8 +197,7 @@ export class CRMDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-
-
+    
     GetQuotesChartDataCustom(FromDate: Date, ToDate: Date, ownerId: string, businessUnitId: string, chartCode: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -434,9 +433,6 @@ export class CRMDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-
-    
-
     
     GetRecentTickets(myOwnerId: string, myEmployeeId: string) {
         var authHeader = new Headers();
@@ -537,7 +533,6 @@ export class CRMDomainService {
         });
     }
  
-
     GetUsersByEmployeeGroupIds(employeeIds: string) {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
@@ -1302,8 +1297,7 @@ export class CRMDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-
-
+    
     GetQuotesGroupBySalesmanCustom(FromDate: Date, ToDate: Date, ownerId: string, businessUnitId: string, fieldCode: string, isTopTen: boolean) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -1351,8 +1345,7 @@ export class CRMDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-
-
+    
     GetActivitiesGroupBySalesmanCustom(FromDate: Date,ToDate:Date, ownerId: string, businessUnitId: string, fieldCode: string, isTopTen: boolean) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -1368,8 +1361,7 @@ export class CRMDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-
-
+    
     GetActivitiesGroupBySalesman(code: string, ownerId: string, businessUnitId: string, fieldCode: string, isTopTen: boolean) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -1417,8 +1409,7 @@ export class CRMDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-
-
+    
     GetUpdateCorrespondence(entityId: string, rightToLeft: boolean) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -1450,8 +1441,7 @@ export class CRMDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-
-
+    
     GetTicketOwnerPermission(ownerId: string, ownerName:string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -1495,6 +1485,95 @@ export class CRMDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
+    
+    GetCountOfOccasionAllCustomers(contactIds: string) {
+
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        var url = this._apiUrl + '/GetCountOfOccasionAllCustomers?contactIds=' + contactIds;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var result = response.json();
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = result;
+                return serviceResponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }    
+
+    GetOccasionContactsByFilters(filters: ApiQueryFilters) {
+        var callTime = new Date();
+
+        var urlparameters = '/GetOccasionContactsByFilters?';
+        var mykeys = Object.keys(filters);
+        var addtionalFiltersValues = null;
+
+        for (var i in mykeys) {
+            var propName = mykeys[i];
+            var propValue = filters[propName];
+
+            var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
+
+            if (urlparameters != "?") {
+                urlparameters = urlparameters.concat('&');
+            }
+            if (!ignoreFilter) {
+                propValue = encodeURIComponent(propValue);
+                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+            }
+
+            if (propName == "AdditionalFilters" && propValue.length > 0)
+                addtionalFiltersValues = JSON.stringify(propValue);
+        }
+
+        if (addtionalFiltersValues) {
+            urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
+        }
+
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        var callUrl = this._apiUrl.concat(urlparameters);
+
+        return Observable.defer(() => {
+            return this._http.get(callUrl, {
+                headers: authHeader
+            }).map(response => {
+                var serviceResponse: ServiceResponse;
+                serviceResponse = response.json();
+
+                var _mappedListsArray: Array<OccasionContactSearchresult> = [];
+                if (serviceResponse.Result) {
+                    for (var key in serviceResponse.Result) {
+
+                        var entity: OccasionContactSearchresult;
+                        entity = this.MapOccasionContactSearchresult(serviceResponse.Result[key]);
+                        _mappedListsArray.push(entity);
+                    }
+                }
+
+                serviceResponse.Result = _mappedListsArray;
+                serviceResponse.CallTime = callTime;
+                var servertime = response.headers.get('ServerExecutionTime');
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "User", "GetByFilters", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll);
+
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+    MapOccasionContactSearchresult(jsonList: any) {
+        var entityList: OccasionContactSearchresult;
+        entityList = new OccasionContactSearchresult();
+        var jsonListKeys = Object.keys(jsonList);
+
+        for (var key in jsonListKeys) {
+            var property = jsonListKeys[key];
+            entityList[property] = jsonList[property];
+        }
+
+        return entityList;
+    }
 
 }
 
@@ -1532,4 +1611,20 @@ export class CRMSummary {
 export class OccasionSummary {
     public Id: number;
     public AllOccasionsCount: number;
+}
+
+export class OccasionContactSearchresult {
+    public ContactId: string;
+    public Name: string;
+    public Email: string;
+    public Company: string;
+    public Region: string;
+    public Industry: string;
+    public Product: string;
+    public CustomerSize: string;
+    public ContactMobile: string;
+    public ContactPhone: string;
+    public ContactPosition: string;
+    public ContactTel: string;
+
 }

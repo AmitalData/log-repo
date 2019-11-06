@@ -102,6 +102,7 @@
     <Compile Include="APIDataContract\Category5.Generated.cs" />
     <Compile Include="APIDataContract\ChartOfAccount.Generated.cs" />
     <Compile Include="APIDataContract\ChartOfAccountsType.Generated.cs" />
+    <Compile Include="APIDataContract\GLAccount.cs" />
     <Compile Include="APIDataContract\GLAccount.Generated.cs" />
     <Compile Include="APIDataContract\GLAccountType.Generated.cs" />
     <Compile Include="APIDataContract\Journal.Generated.cs" />
@@ -200,12 +201,14 @@
     <Compile Include="CoreBL\BuildTenant\DummyTenantProvider.cs" />
     <Compile Include="CoreBL\BuildTenant\FullAccountingProvider.cs" />
     <Compile Include="CoreBL\BuildTenant\IFullAccountingGenerator.cs" />
+    <Compile Include="CoreBL\ExternalReconcile\CreateAutoExternalReconcileMoveBankCheckFromTransferService.cs" />
+    <Compile Include="CoreBL\ExternalReconcile\CreateAutoExternalReconcileWhileStreamingFeesService.cs" />
     <Compile Include="CoreBL\ExternalReconcile\ExternalReconcileAdjustBankFeesService.cs" />
     <Compile Include="CoreBL\ExternalReconcile\TransferTransactionsExternalReconciliationService.cs" />
     <Compile Include="CoreBL\GLAccountCounterService.cs" />
     <Compile Include="CoreBL\ExternalReconcile\CreateAutoExternalReconcileWhileStreamingService.cs" />
     <Compile Include="CoreBL\ExternalReconcile\ExternalReconcileDataProvider.cs" />
-    <Compile Include="CoreBL\ExternalReconcile\ExternalReconcileJournalService.cs" />
+    <Compile Include="CoreBL\ExternalReconcile\ExternalReconcileMoveBankCheckFromTransfer2GLAccountService.cs" />
     <Compile Include="CoreBL\CreateJournalReconcileService.cs" />
     <Compile Include="CoreBL\CashbookService.cs" />
     <Compile Include="CoreBL\FunctionalTests\ClearAccountingDB.cs" />
@@ -231,6 +234,7 @@
     <Compile Include="CoreBL\JournalLineOnUpdate.cs" />
     <Compile Include="CoreBL\JournalUpdateOnUpdating.cs" />
     <Compile Include="CoreBL\Reconcile\CreateAutoReconcileWhileStreamingService.cs" />
+    <Compile Include="CoreBL\Reports\AgingReportV1Service.cs" />
     <Compile Include="CoreBL\Reports\ARPaymentChequeRedemptionService.cs" />
     <Compile Include="CoreBL\Reports\ITrailReportBase.cs" />
     <Compile Include="CoreBL\Reports\LedgerTransactionCardIndexService.cs" />
@@ -579,6 +583,7 @@
     <Compile Include="EntityUpdateServices\TaxWithholdingAssessOfficeUpdateService.cs" />
     <Compile Include="TestService\BatchTestService.cs" />
     <Compile Include="Utils\AccountingLogger.cs" />
+    <Compile Include="Utils\CardGLAccountConnectBatch.cs" />
     <Compile Include="Utils\FutureOpenChequesBatch.cs" />
     <Compile Include="Utils\PostDatedChequesRedemptionBatch.cs" />
     <Compile Include="Utils\ReconciliationAfterConversionBatch.cs" />
@@ -723,6 +728,7 @@
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">
       <Project>{a3799525-14a2-42fc-a2de-69ed3fd1c5d1}</Project>
       <Name>Logitude.Accounting.Data</Name>
+      <Aliases>global</Aliases>
     </ProjectReference>
     <ProjectReference Include="..\Logitude.Accounting.Def\Logitude.Accounting.Def.csproj">
       <Project>{91564685-7ee1-466d-afcd-183a1bf62259}</Project>

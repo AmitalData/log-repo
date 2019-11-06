@@ -71,6 +71,7 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public DateTime? UpdateDate { get; set; }
         public string UpdatedByUserId { get; set; }
         public string BranchId { get; set; }
+        public string BranchName { get; set; }
         public bool IsPrinted { get; set; }
         public string PaymentTermExternalId { get; set; }
         public bool IsConstituentInvoice { get; set; }

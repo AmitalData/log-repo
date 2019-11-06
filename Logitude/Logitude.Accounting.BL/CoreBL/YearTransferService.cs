@@ -36,16 +36,19 @@ namespace Logitude.Accounting.BL.CoreBL
 
         }
         
-        public string Check_CreateQBatchTaskYearTransfer(int YYyear, int tenant)
+        public string Check_CreateQBatchTaskYearTransfer(int YYyear, int tenant, string userId)
         {
+            
             var accountingContext = AccountingContext.GetContext(tenant);
             CheckThrowExceptionIfNeeded(accountingContext, YYyear, tenant);
+
+            
             var myBatchYearTransferService = new BatchYearTransferService(null);
-            return myBatchYearTransferService.CreateQBatchTaskExecution<BatchYearTransferParams>(new BatchYearTransferParams() { Tenant = tenant, YYyear = YYyear }, tenant, $"YearTransfer({YYyear})", false);
+            return myBatchYearTransferService.CreateQBatchTaskExecution<BatchYearTransferParams>(new BatchYearTransferParams() { Tenant = tenant, YYyear = YYyear, UserId= userId }, tenant, $"YearTransfer({YYyear})", false);
         }
 
 
-        public JournalPM ProccessJournal(IAccountingContext accountingContext, int YYyear, int tenant)
+        public JournalPM ProccessJournal(IAccountingContext accountingContext, int YYyear, int tenant,String usrid)
         {
             CheckThrowExceptionIfNeeded(accountingContext, YYyear, tenant);
 
@@ -70,7 +73,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 return null;
             }
-            var usrid = AuthenticationUtil.ResolveUserId(tenant);
+            //var usrid = AuthenticationUtil.ResolveUserId(tenant);
             DateTime @now = TenantServerConfigration.GetCurrentDateTime(tenant);
             var journalPM = CreateJournal(
                 _EndOfYearUserInput,

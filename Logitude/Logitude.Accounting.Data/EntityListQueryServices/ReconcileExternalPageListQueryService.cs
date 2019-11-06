@@ -19,7 +19,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
     public partial class ReconcileExternalPageListQueryService
     {
-	    private IQueryable<ReconcileExternalPageList> GetIqueryableList(IQueryable<ReconcileExternalPage> iQueryable)
+	    public IQueryable<ReconcileExternalPageList> GetIqueryableList(IQueryable<ReconcileExternalPage> iQueryable)
         {
 		IQueryable<ReconcileExternalPageList> query = (from a in iQueryable.Include("BankPageEntryType")
                                             select new ReconcileExternalPageList()
@@ -27,7 +27,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                 Id = a.Id,
                                                 Tenant = a.Tenant,
                                                 
-                                                BankAccountId = a.BankAccountId,
 					
 					                            GLAccountId = a.GLAccountId,
 					
@@ -58,7 +57,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                 EntryTypeCode = a.EntryTypeCode,
                                                 EntryTypeEnglishName = a.BankPageEntryType.EnglishName,
                                                 EntryTypeLocalName = a.BankPageEntryType.LocalName,
-
+                                                EntityId =a.EntityId,
+                                                ObjectTableId = a.ObjectTableId,
 
                                             });
             return query;
@@ -124,16 +124,29 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         }
         private IQueryable<ReconcileExternalPageLine> GetExternalReconciliationByBankAccount(string bankAccountId, int tenant)
         {
+            ObjectTable bankAccountObjectTable = GetBankAccountObjectTable(tenant);
 
             IQueryable<ReconcileExternalPageLine> accountQuery = (from page in context.ReconcileExternalPages
                                                                   join line in context.ReconcileExternalPageLines on page.Id equals line.ReconcileExternalPageId
                                                                   where page.Tenant == tenant
-                                                                        && page.BankAccountId == bankAccountId
+                                                                        && page.EntityId == bankAccountId
+                                                                        && page.ObjectTableId == bankAccountObjectTable.Id
                                                                         && page.StatusCode == "2"  // 2- Approved
                                                                         && line.IsReconciled == false
+                                                                  //&& line.InReconcileProgress == false
                                                                   select line);
             return accountQuery;
         }
+
+        private ObjectTable GetBankAccountObjectTable(int tenant)
+        {
+            ObjectTableRepository objectTableRepository = new ObjectTableRepository(tenant);
+            ObjectTable bankAccountObjectTable = objectTableRepository.GetObjectTableByName("BankAccount", tenant, false);
+            if (bankAccountObjectTable == null)
+                throw new ApplicationException("No objectfield for BankAccount!");
+            return bankAccountObjectTable;
+        }
+
         private IQueryable<ReconcileExternalPageLineList> BasicListFilter(IQueryable<ReconcileExternalPageLine> iQueryable, QueryOperations queryOperations, int tenant)
         {
 

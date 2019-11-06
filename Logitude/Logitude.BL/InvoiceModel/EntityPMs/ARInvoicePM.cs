@@ -105,7 +105,11 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public double? AmountDueInProfitCurrency { get; set; }
         public DateTime? UpdateDate { get; set; }
         public string UpdatedByUserId { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string BranchId { get; set; }
+        public string BranchName { get; set; }
+
         public bool IsPrinted { get; set; }
         public string ConnectedEntityReferences { get; set; }
         public CustomFieldClass Field1 { get; set; }
@@ -166,6 +170,9 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string SATInvoiceStatusName { get; set; }
         public bool Intercompany { get; set; }
         public DateTime? SATApprovalDate { get; set; }
+        public bool IsShowAmountLocalCurrencyColumnInSharedLogistics { get; set; }
+
+        
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string BankAccountLiteId { get; set; }
@@ -346,5 +353,8 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool IsInvoiceNumberFromStock { get; set; }
         public string DocumentFilingId { get; set; }
         public string BatchTaskExecutionId { get; set; }
+
+        public bool IsCreatingConsolidation { get; set; }
+        public bool IsFromConsolidationBatch { get; set; }
     }
 }

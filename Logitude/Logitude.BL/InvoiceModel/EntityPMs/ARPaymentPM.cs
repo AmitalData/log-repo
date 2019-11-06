@@ -25,7 +25,10 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public double? AmountInLocalCurrency { get; set; }
         public double? ProfitCurrencyExchangeRate { get; set; }
         public double? AmountInProfitCurrency { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string BranchId { get; set; }
+        public string BranchName { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string BillToId { get; set; }
@@ -61,6 +64,8 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string DebitAccountName { get; set; }
                 
         public double? OpenAmount { get; set; }
+        public double? OpenAmountInLocalCurrency { get; set; }
+
         public string ChequeOrPaymentRef { get; set; }
         public string Bank { get; set; }
         public string BankBranch { get; set; }
@@ -131,7 +136,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string CertPago { get; set; }
         public string CadPago { get; set; }
         public string SelloPago { get; set; }
-        public string BranchName { get; set; }
 
         public DateTime? ApprovedDate { get; set; }
         public string ApprovedByUserId { get; set; }

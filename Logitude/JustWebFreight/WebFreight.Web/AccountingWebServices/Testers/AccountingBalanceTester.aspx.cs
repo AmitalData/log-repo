@@ -45,6 +45,7 @@ using Logitude.Accounting.BL.CoreBL.FunctionalTests;
 using Logitude.Accounting.BL.CoreBL.Batch;
 using Logitude.Accounting.BL.CoreBL.ExternalReconcile;
 using Logitude.Accounting.BL.EntityUpdateServices;
+using Logitude.Accounting.BL.Validators;
 //using Logitude.Accounting.BL.CoreBL.ReverseEngineer;
 
 namespace WebFreight.Web.AccountingWebServices.Testers
@@ -98,8 +99,11 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             //s.ClearDB(1148);
             //var a = new ReconcileOpenAmountService();
             //var l = a.GetLedgerOpenAmountDiff(1106, 2019);
+            //externalPageLineId": "1 - 12487",
 
-
+            //ExternalReconcileAdjustBankFees();
+            //var myWorker = new JournalApproveService.JournalApproveWorker();
+            //myWorker.CreateBatchAccountingIntegrityCheck();
             try
             {
 
@@ -145,6 +149,21 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 //_TextBoxDate.Text = "0";
                 //_LabelDate.Text = _MyDate.ToString();
             }
+
+        }
+
+        private void ExternalReconcileAdjustBankFees()
+        {
+            var accountingContext = AccountingContext.GetContext(1071);
+            IExternalReconcileDataProvider externalReconcileDataProvider = new ExternalReconcileDataProvider(accountingContext);
+            var a = new ExternalReconcileAdjustBankFeesService();
+            a.MustInit(externalReconcileDataProvider);
+            a.CreateJournalWithExtReconcile(1071, new List<string>() { "1-12487" }, "1-216674", "Notes ",DateTime.Now);
+            var aa = a.TheNewJournal;
+
+            var us = new JournalUpdateService(AccountingContext.GetContext(a.TheNewJournal.Tenant), new Dictionary<string, IContext>(), a.TheNewJournal.Tenant);
+            us.Update(a.TheNewJournal, true);
+            _LabelResult.Text = JsonConvert.SerializeObject(a.TheNewJournal); ;
 
         }
 
@@ -1381,9 +1400,9 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
                         var accountingContext = AccountingContext.GetContext(tenant);
-
+                        string userId = AuthenticationUtil.ResolveUserId(tenant);
                         ICheckAndQYearTransferService yearTransferService = new YearTransferService();
-                        string taskiD = yearTransferService.Check_CreateQBatchTaskYearTransfer(YY, tenant);
+                        string taskiD = yearTransferService.Check_CreateQBatchTaskYearTransfer(YY, tenant, userId);
 
                         scope.Complete();
                     }
@@ -1416,9 +1435,9 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(10)))
             {
                 var accountingContext = AccountingContext.GetContext(tenant);
-
+                string userId = AuthenticationUtil.ResolveUserId(tenant);
                 IYearTransferService yearTransferService = new YearTransferService();
-                journal = yearTransferService.ProccessJournal(accountingContext, YY, tenant);
+                journal = yearTransferService.ProccessJournal(accountingContext, YY, tenant, userId);
                 if (journal != null)
                 {
                     //var parser = new JournalApproveParser(journal, false,
@@ -1473,11 +1492,13 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 int YY = param.YY;
                 int tenant = param.Tenant;
                 JournalPM journal = null;
+                
                 using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(10)))
                 {
                     var accountingContext = AccountingContext.GetContext(tenant);
+                    string userId = AuthenticationUtil.ResolveUserId(tenant);
                     ICancelYearTransferService yearTransferService = new YearTransferService();
-                    journal = yearTransferService.CancelYear(accountingContext, YY, tenant);
+                    journal = yearTransferService.CancelYear(accountingContext, YY, tenant/*, userId*/);
                     if (journal != null)
                     {
                         //var parser = new JournalApproveParser(journal, false,
@@ -2275,9 +2296,9 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 string ReconcileExternalPageLineId = param.ReconcileExternalPageLineId;
 
                 
-                var myExternalReconcileJournalService = new ExternalReconcileJournalService();
+                var myExternalReconcileJournalService = new ExternalReconcileMoveBankCheckFromTransfer2GLAccountService();
                 myExternalReconcileJournalService.MustInit(new ExternalReconcileDataProvider( AccountingContext.GetContext(Tenant)));
-                myExternalReconcileJournalService.MoveBankCheckFromTransfer2GLAccount(Tenant, LedgerTransactionId, ReconcileExternalPageLineId);
+                myExternalReconcileJournalService.CreateJournalWithExtReconcile(Tenant, LedgerTransactionId, ReconcileExternalPageLineId);
                 var us = new JournalUpdateService(AccountingContext.GetContext(Tenant), new Dictionary<string, IContext>(),Tenant);
                 us.Update(myExternalReconcileJournalService.TheJournalPM, true);
                 _LabelResult.Text = JsonConvert.SerializeObject(myExternalReconcileJournalService.TheJournalPM); ;
@@ -2305,6 +2326,8 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 
             }
         }
+
+
         private void SetHttpAuth(int tenant)
         {
             var email = AuthenticationUtil.SystemIdentityName(tenant);

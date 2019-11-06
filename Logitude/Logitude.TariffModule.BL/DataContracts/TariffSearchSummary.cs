@@ -17,7 +17,7 @@ namespace Logitude.TariffModule.BL.DataContracts
         public decimal? ActualPrice { get; set; }
         public DateTime? EffictiveDate { get; set; }
         public string Remarks { get; set; }
-        public string Name { get; set; }
+        public string SellerName { get; set; }
         public string ImageId { get; set; }
         public decimal? decimalprice { get; set; }
         public string CurrencyCode { get; set; }
@@ -29,7 +29,8 @@ namespace Logitude.TariffModule.BL.DataContracts
         public string UnitOfMesurmentCode { get; set; }
         public string UnitOfMesurmentId { get; set; }
         public List<SurchargeSummary> Surcharges { get; set; }
-
-
+        public string SellerId { get;  set; }
+        public decimal? MinPrice { get; set; }
+        public bool IsMinIconVisible { get; set; }
     }
 }

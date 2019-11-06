@@ -1,4 +1,4 @@
-﻿
+
 <table  *ngIf="IsResourcesReady">
     <tr>
         <td>
@@ -69,7 +69,7 @@
                                                 <img *ngIf="item.InActive" width="18" height="18" style="vertical-align: middle;" src="./Images/Icons/MiniGreenTick.png" />
                                             </td>
 
-                                         
+
                                             <td class="CellStretched" style="width:30px; min-width:30px; max-width:30px; position: relative;">
                                                 <div class="EditButton" (click)="OnEditRule(item)" style="display:inline;width:18px;">
                                                     <IconButton [Name]="'Edit'" [IsSmall]="true" style="display: block;margin-left:7px"></IconButton>
@@ -77,8 +77,13 @@
 
                                             </td>
 
+                                            <td class="CellStretched" style="width:100px; min-width:100px; max-width:100px; position: relative;" *ngIf="item.IsCreatedFromSystemRule">
+                                                <div>
+                                                    <button style="display: inline-block;width:100px;" class="Button"  (click)="OnRestoreRule(item)">Restore</button>
+                                                </div>
+                                            </td>
+
                                             <td class="CellStretched" style="width:100%;min-width:100%;max-width:100%;position:relative">
-                                                
                                             </td>
                                         </tr>
 

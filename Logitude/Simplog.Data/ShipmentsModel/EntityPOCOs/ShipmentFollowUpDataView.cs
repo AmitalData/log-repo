@@ -660,7 +660,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string DeclarationNumber { get; set; }
         public DateTime? DeclarationDate { get; set; }
         public string ARInvoices { get; set; }
-        public int OpenReceivablesLines { get; set; }
+        public double? NotInvoicedReceivablesAmount { get; set; }
 
     }
 }

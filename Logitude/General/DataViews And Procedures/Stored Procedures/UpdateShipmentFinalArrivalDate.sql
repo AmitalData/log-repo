@@ -9,67 +9,25 @@ Create PROCEDURE [dbo].[usp_UpdateShipmentFinalArrivalDate]
 )
 AS
 
-
-declare @Tenant as int
-declare @ShipmentLevelCode as varchar(1)
-declare @MasterShipmentDataId as varchar(15)
-declare @DirectionId as varchar(3)
-declare @TransportModeId as varchar(3)
-
---Delivery
-declare @ETA as datetime
-declare @ATA as datetime
-declare @DeliveryDate as datetime
-
---OnCarriage
-declare @OnCarriageFromPortId as varchar(15)
-declare @OnCarriageToPortId as varchar(15)
-declare @OnCarriageETA as datetime
-declare @OnCarriageATA as datetime
-
---Transshipment1
-declare @Transshipment1FromPortId as varchar(15)
-declare @Transshipment1ToPortId as varchar(15)
-declare @Transshipment1ETA as datetime
-declare @Transshipment1ATA as datetime
-
---Transshipment2
-declare @Transshipment2FromPortId as varchar(15)
-declare @Transshipment2ToPortId as varchar(15)
-declare @Transshipment2ETA as datetime
-declare @Transshipment2ATA as datetime
-
---Transshipment3
-declare @Transshipment3FromPortId as varchar(15)
-declare @Transshipment3ToPortId as varchar(15)
-declare @Transshipment3ETA as datetime
-declare @Transshipment3ATA as datetime
-
---MainCarriage (Inland demostic got no Ports)
-declare @MainCarriageFromPortId as varchar(15)
-declare @MainCarriageToPortId as varchar(15)
-declare @MainCarriageETA as datetime
-declare @MainCarriageATA as datetime
-
-declare @EstimatedDeliveriesDate as datetime
-declare @ActualDeliveriesDate as datetime
-declare @DeliveriesDate as datetime
-declare @OnCarriageDate as datetime
-declare @Transshipment1Date as datetime
-declare @Transshipment2Date as datetime
-declare @Transshipment3Date as datetime
-declare @MainCarriageDate as datetime
-declare @FinalArrivalDate as datetime
-declare @EstimatedFinalArrivalDate as datetime
-declare @ActualFinalArrivalDate as datetime
-
+if (@ShipmentId is not null)
 BEGIN
 
+	-- Shipment Fields
+	declare @Tenant as int
+	declare @DirectionId as varchar(3)
+	declare @TransportModeId as varchar(3)
+	declare @ShipmentLevelCode as varchar(1)
+	declare @MasterShipmentDataId as varchar(15)
+	declare @OnCarriageFromPortId as varchar(15)
+	declare @OnCarriageToPortId as varchar(15)
+	declare @OnCarriageETA as datetime
+	declare @OnCarriageATA as datetime
+	
 	SELECT
 	@Tenant = Tenant,
-	@ShipmentLevelCode = ShipmentLevelCode,
 	@DirectionId = DirectionId,
 	@TransportModeId = TransportModeId,
+	@ShipmentLevelCode = ShipmentLevelCode,	
 	@MasterShipmentDataId = MasterShipmentDataId,
 	@OnCarriageFromPortId = OnCarriageFromPortId,
 	@OnCarriageToPortId = OnCarriageToPortId,
@@ -77,21 +35,20 @@ BEGIN
 	@OnCarriageATA = OnCarriageATA
 	from Shipments where Id = @ShipmentId
 
-	set @EstimatedDeliveriesDate = null
-	set @ActualDeliveriesDate = null
-	set @DeliveriesDate = null
-	set @OnCarriageDate = null
-	set @Transshipment1Date = null
-	set @Transshipment2Date = null
-	set @Transshipment3Date = null
-	set @MainCarriageDate = null
-	set @FinalArrivalDate = null
-	set @EstimatedFinalArrivalDate = null
-	set @ActualFinalArrivalDate = null
+	declare @FinalArrivalDate as datetime	
+	declare @ActualFinalArrivalDate as datetime
+	declare @EstimatedFinalArrivalDate as datetime
 
 	-- @DeliveriesDate
 	if exists (select * from ShipmentPickUpDeliveries where ShipmentId = @ShipmentId and Tenant = @Tenant and PickUpDeliveryTypeCode = 'DELV')
 	BEGIN
+		declare @ETA as datetime
+		declare @ATA as datetime
+		declare @DeliveryDate as datetime
+		declare @DeliveriesDate as datetime	
+		declare @ActualDeliveriesDate as datetime
+		declare @EstimatedDeliveriesDate as datetime
+
 		DECLARE DeliveriesCursor CURSOR READ_ONLY
 		FOR
 		SELECT ETA, ATA
@@ -109,15 +66,6 @@ BEGIN
 			else if (@ETA is not null)
 			set @DeliveryDate = @ETA
 
-			if (@ETA is not null)
-			begin
-				if (@EstimatedDeliveriesDate is null)
-				set @EstimatedDeliveriesDate = @ETA
-
-				else if (@ETA > @EstimatedDeliveriesDate)
-				set @EstimatedDeliveriesDate = @ETA 
-			end
-
 			if (@ATA is not null)
 			begin
 				if (@ActualDeliveriesDate is null)
@@ -125,6 +73,15 @@ BEGIN
 
 				else if (@ATA > @ActualDeliveriesDate)
 				set @ActualDeliveriesDate = @ATA 
+			end
+
+			if (@ETA is not null)
+			begin
+				if (@EstimatedDeliveriesDate is null)
+				set @EstimatedDeliveriesDate = @ETA
+
+				else if (@ETA > @EstimatedDeliveriesDate)
+				set @EstimatedDeliveriesDate = @ETA 
 			end
 
 			if (@DeliveryDate is not null)
@@ -139,59 +96,91 @@ BEGIN
 		END
 		CLOSE DeliveriesCursor
 		DEALLOCATE DeliveriesCursor
+
+		set @FinalArrivalDate = @DeliveriesDate
+		set @ActualFinalArrivalDate = @ActualDeliveriesDate
+		set @EstimatedFinalArrivalDate = @EstimatedDeliveriesDate
 	END
 
-	-- @OnCarriageDate
+	-- @OnCarriageDate	
 	if (@OnCarriageFromPortId is not null and @OnCarriageToPortId is not null)
 	BEGIN
 		if (@OnCarriageATA is not null)
-		set @OnCarriageDate = @OnCarriageATA
+		begin
+			if (@ActualFinalArrivalDate is null)
+			set @ActualFinalArrivalDate = @OnCarriageATA
 
-		else if (@OnCarriageETA is not null)
-		set @OnCarriageDate = @OnCarriageETA	
-	END
+			if (@FinalArrivalDate is null)
+			set @FinalArrivalDate = @OnCarriageATA
+		end
 
-	--Estimated
-	if (@EstimatedDeliveriesDate is not null)
-	set @EstimatedFinalArrivalDate = @EstimatedDeliveriesDate
+		if (@OnCarriageETA is not null)
+		begin
+			if (@EstimatedFinalArrivalDate is null)
+			set @EstimatedFinalArrivalDate = @OnCarriageETA
 
-	else if (@OnCarriageETA is not null)
-	set @EstimatedFinalArrivalDate = @OnCarriageETA
-	
-	--Actual	
-	if (@ActualDeliveriesDate is not null)
-	set @ActualFinalArrivalDate = @ActualDeliveriesDate
-	
-	else if (@OnCarriageATA is not null)
-	set @ActualFinalArrivalDate = @OnCarriageATA
-
-	--Estimated Or ACtual
-	if (@DeliveriesDate is not null)
-	set @FinalArrivalDate = @DeliveriesDate
-
-	else if (@OnCarriageDate is not null)
-	set @FinalArrivalDate = @OnCarriageDate
-
-	if (@ShipmentLevelCode = 'H')
-	BEGIN
-		-- if not connected: then fiels is computed above
-		-- if connected but the master field is null while the house field is not (above computed field)
-		-- if connected but the master got no deliveries / on carriage while the house has (above computed field)
-		-- for now just take the field from the master
-		if(@MasterShipmentDataId is not null)
-		begin		
-			set @FinalArrivalDate = (select FinalArrivalDate from Shipments where Id = @MasterShipmentDataId and Tenant = @Tenant)		
-			set @EstimatedFinalArrivalDate = (select EstimatedFinalArrivalDate from Shipments where Id = @MasterShipmentDataId and Tenant = @Tenant)
-			set @ActualFinalArrivalDate = (select ActualFinalArrivalDate from Shipments where Id = @MasterShipmentDataId and Tenant = @Tenant)
+			if (@FinalArrivalDate is null)
+			set @FinalArrivalDate = @OnCarriageETA
 		end
 	END
 
-	else if (@FinalArrivalDate is null)
+	-- House
+	if (@ShipmentLevelCode = 'H' AND @MasterShipmentDataId is not null)
 	BEGIN
-		-- only if the above computed field is null then compute from legs
-		print 'ddd'
-	SELECT
-		
+		declare @MasterFinalArrivalDate as datetime
+		declare @MasterEstimatedFinalArrivalDate as datetime
+		declare @MasterActualFinalArrivalDate as datetime
+
+		SELECT
+		@MasterFinalArrivalDate = FinalArrivalDate,
+		@MasterEstimatedFinalArrivalDate = EstimatedFinalArrivalDate,
+		@MasterActualFinalArrivalDate = ActualFinalArrivalDate
+		from Shipments where Id = @MasterShipmentDataId and Tenant = @Tenant
+
+		if (@FinalArrivalDate is null)
+		set @FinalArrivalDate = @MasterFinalArrivalDate
+		else if (@MasterFinalArrivalDate is not null AND @MasterFinalArrivalDate > @FinalArrivalDate)
+		set @FinalArrivalDate = @MasterFinalArrivalDate
+
+		if (@EstimatedFinalArrivalDate is null)
+		set @EstimatedFinalArrivalDate = @MasterEstimatedFinalArrivalDate
+		else if (@MasterEstimatedFinalArrivalDate is not null AND @MasterEstimatedFinalArrivalDate > @EstimatedFinalArrivalDate)
+		set @EstimatedFinalArrivalDate = @MasterEstimatedFinalArrivalDate
+
+		if (@ActualFinalArrivalDate is null)
+		set @ActualFinalArrivalDate = @MasterActualFinalArrivalDate
+		else if (@MasterActualFinalArrivalDate is not null AND @MasterActualFinalArrivalDate > @ActualFinalArrivalDate)
+		set @ActualFinalArrivalDate = @MasterActualFinalArrivalDate
+	END
+
+	else if (@ActualFinalArrivalDate is null OR @EstimatedFinalArrivalDate is null)
+	BEGIN
+
+	--Transshipment1
+	declare @Transshipment1FromPortId as varchar(15)
+	declare @Transshipment1ToPortId as varchar(15)
+	declare @Transshipment1ETA as datetime
+	declare @Transshipment1ATA as datetime
+
+	--Transshipment2
+	declare @Transshipment2FromPortId as varchar(15)
+	declare @Transshipment2ToPortId as varchar(15)
+	declare @Transshipment2ETA as datetime
+	declare @Transshipment2ATA as datetime
+
+	--Transshipment3
+	declare @Transshipment3FromPortId as varchar(15)
+	declare @Transshipment3ToPortId as varchar(15)
+	declare @Transshipment3ETA as datetime
+	declare @Transshipment3ATA as datetime
+
+	--MainCarriage (Inland demostic got no Ports)
+	declare @MainCarriageFromPortId as varchar(15)
+	declare @MainCarriageToPortId as varchar(15)
+	declare @MainCarriageETA as datetime
+	declare @MainCarriageATA as datetime
+
+	select		
 		@MainCarriageFromPortId = MainCarriageFromPortId,
 		@Transshipment1FromPortId = Transshipment1FromPortId,
 		@Transshipment2FromPortId = Transshipment2FromPortId,
@@ -210,106 +199,121 @@ BEGIN
 		@MainCarriageATA = MainCarriageATA
 		from ShipmentMasterDatas where Id = @ShipmentId
 
-		-- @Transshipment3
+		-- @Transshipment3	
 		if (@Transshipment3FromPortId is not null and @Transshipment3ToPortId is not null)
 		BEGIN
-		
 			if (@Transshipment3ATA is not null)
-			set @Transshipment3Date = @Transshipment3ATA
+			begin
+				if (@ActualFinalArrivalDate is null)
+				set @ActualFinalArrivalDate = @Transshipment3ATA
 
-			else if (@Transshipment3ETA is not null)
-			set @Transshipment3Date = @Transshipment3ETA	
+				if (@FinalArrivalDate is null)
+				set @FinalArrivalDate = @Transshipment3ATA
+			end
+
+			if (@Transshipment3ETA is not null)
+			begin
+				if (@EstimatedFinalArrivalDate is null)
+				set @EstimatedFinalArrivalDate = @Transshipment3ETA
+
+				if (@FinalArrivalDate is null)
+				set @FinalArrivalDate = @Transshipment3ETA
+			end
 		END
 
-		-- @Transshipment2
+		-- @Transshipment2	
 		if (@Transshipment2FromPortId is not null and @Transshipment2ToPortId is not null)
 		BEGIN
-		
 			if (@Transshipment2ATA is not null)
-			set @Transshipment2Date = @Transshipment2ATA
+			begin
+				if (@ActualFinalArrivalDate is null)
+				set @ActualFinalArrivalDate = @Transshipment2ATA
 
-			else if (@Transshipment2ETA is not null)
-			set @Transshipment2Date = @Transshipment2ETA	
+				if (@FinalArrivalDate is null)
+				set @FinalArrivalDate = @Transshipment2ATA
+			end
+
+			if (@Transshipment2ETA is not null)
+			begin
+				if (@EstimatedFinalArrivalDate is null)
+				set @EstimatedFinalArrivalDate = @Transshipment2ETA
+
+				if (@FinalArrivalDate is null)
+				set @FinalArrivalDate = @Transshipment2ETA
+			end
 		END
 
-		-- @Transshipment1
+		-- @Transshipment1	
 		if (@Transshipment1FromPortId is not null and @Transshipment1ToPortId is not null)
 		BEGIN
-		
 			if (@Transshipment1ATA is not null)
-			set @Transshipment1Date = @Transshipment1ATA
+			begin
+				if (@ActualFinalArrivalDate is null)
+				set @ActualFinalArrivalDate = @Transshipment1ATA
 
-			else if (@Transshipment1ETA is not null)
-			set @Transshipment1Date = @Transshipment1ETA	
+				if (@FinalArrivalDate is null)
+				set @FinalArrivalDate = @Transshipment1ATA
+			end
+
+			if (@Transshipment1ETA is not null)
+			begin
+				if (@EstimatedFinalArrivalDate is null)
+				set @EstimatedFinalArrivalDate = @Transshipment1ETA
+
+				if (@FinalArrivalDate is null)
+				set @FinalArrivalDate = @Transshipment1ETA
+			end
 		END
 
-		-- @MainCarriage
-		else
+		-- @MainCarriage	
+		if (@MainCarriageFromPortId is not null and @MainCarriageToPortId is not null)
 		BEGIN
-		
 			if (@MainCarriageATA is not null)
-			set @MainCarriageDate = @MainCarriageATA
+			begin
+				if (@ActualFinalArrivalDate is null)
+				set @ActualFinalArrivalDate = @MainCarriageATA
 
-			else if (@MainCarriageETA is not null)
-			set @MainCarriageDate = @MainCarriageETA	
+				if (@FinalArrivalDate is null)
+				set @FinalArrivalDate = @MainCarriageATA
+			end
+
+			if (@MainCarriageETA is not null)
+			begin
+				if (@EstimatedFinalArrivalDate is null)
+				set @EstimatedFinalArrivalDate = @MainCarriageETA
+
+				if (@FinalArrivalDate is null)
+				set @FinalArrivalDate = @MainCarriageETA
+			end
 		END
 
-		--Estimated
-		if (@Transshipment3ETA is not null)
-		set @EstimatedFinalArrivalDate = @Transshipment3ETA
-
-		else if (@Transshipment2ETA is not null)
-		set @EstimatedFinalArrivalDate = @Transshipment2ETA
-
-		else if (@Transshipment1ETA is not null)
-		set @EstimatedFinalArrivalDate = @Transshipment1ETA
-
-		else
-		set @EstimatedFinalArrivalDate = @MainCarriageETA
-
-		--Actual
-		if (@Transshipment3ATA is not null)
-		set @ActualFinalArrivalDate = @Transshipment3ATA
-
-		else if (@Transshipment2ATA is not null)
-		set @ActualFinalArrivalDate = @Transshipment2ATA
-
-		else if (@Transshipment1ATA is not null)
-		set @ActualFinalArrivalDate = @Transshipment1ATA
-
-		else
-		set @ActualFinalArrivalDate = @MainCarriageATA
-
-		--Estimated or Actual
-		if (@Transshipment3Date is not null)
-		set @FinalArrivalDate = @Transshipment3Date
-
-		else if (@Transshipment2Date is not null)
-		set @FinalArrivalDate = @Transshipment2Date
-
-		else if (@Transshipment1Date is not null)
-		set @FinalArrivalDate = @Transshipment1Date
-
-		else
-		set @FinalArrivalDate = @MainCarriageDate
 	END
 
-	print @EstimatedFinalArrivalDate
-	update Shipments set FinalArrivalDate = @FinalArrivalDate, EstimatedFinalArrivalDate = @EstimatedFinalArrivalDate, ActualFinalArrivalDate = @ActualFinalArrivalDate 
+	update Shipments
+	set
+	FinalArrivalDate = @FinalArrivalDate,
+	EstimatedFinalArrivalDate = @EstimatedFinalArrivalDate,
+	ActualFinalArrivalDate = @ActualFinalArrivalDate 
 	where Id = @ShipmentId and Tenant = @Tenant
 
 	if (@ShipmentLevelCode = 'C')
-	begin
-	-- on connect / diconnect house we should compute
-	-- loop houses if maser daet bigger than house date
+	BEGIN
+		-- Loop Houses
+		declare @HouseId as varchar(15)
+		DECLARE HousesCursor CURSOR READ_ONLY
+		FOR
+		SELECT Id
+		FROM Shipments
+		WHERE ShipmentLevelCode = 'H' AND MasterShipmentDataId = @ShipmentId
+		OPEN HousesCursor FETCH NEXT FROM HousesCursor INTO @HouseId
+		WHILE @@FETCH_STATUS = 0
+		BEGIN
 
-                                --if (entityPoco.FinalArrivalDate != null && entityPoco.FinalArrivalDate > item.FinalArrivalDate)
-                                --{
-                                    --item.FinalArrivalDate = entityPoco.FinalArrivalDate;
-                                --}
+			EXECUTE usp_UpdateShipmentFinalArrivalDate @HouseId
 
-		update Shipments set FinalArrivalDate = @FinalArrivalDate , EstimatedFinalArrivalDate = @EstimatedFinalArrivalDate, ActualFinalArrivalDate = @ActualFinalArrivalDate
-	    where MasterShipmentDataId = @ShipmentId and Tenant = @Tenant and ShipmentLevelCode = 'H'
-	end
+		FETCH NEXT FROM HousesCursor INTO @HouseId
+		END
+		CLOSE HousesCursor
+		DEALLOCATE HousesCursor
+	END
 END
-

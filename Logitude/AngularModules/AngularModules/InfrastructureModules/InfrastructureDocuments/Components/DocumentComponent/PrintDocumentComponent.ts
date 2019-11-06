@@ -1,3 +1,4 @@
+
 declare var System: any;
 declare var window: any;
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -31,7 +32,11 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {Guid} from '../../../../Infrastructure/Utilities/Guid';
 import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
 import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadManager';
-
+import {ExportDocumentArgs} from '../../../../Infrastructure/DataContracts/ExportDocumentArgs';
+import {Observable}     from 'rxjs/Rx';
+import 'rxjs/add/operator/map';
+import {DocumentsExecutionLogList} from '../../../../Common/EntityLists/DocumentsExecutionLogList';
+import {DocumentsExecutionLogListExtendedService} from '../../../../Common/Services/ExtendedLists/DocumentsExecutionLogListExtendedService';
 @Component({
     moduleId: module.id,
     selector: 'PrintDocument',
@@ -78,10 +83,11 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     LastBuildDateVisible: boolean;
     public PrintAllCopiesBtnVisible: boolean;
     public PrintAllCopiesBtnDisable: boolean;
-
+    IsBuildDocumentViaWorkerRole: boolean = false;
 
     public SelectedAsDefaultBtnVisible: boolean;
     private CurrentSession = SessionLocator.SelectedSession;
+    private documentsExecutionLogListExtendedService: DocumentsExecutionLogListExtendedService;
     constructor(public _documentTypeCustomFieldService: DocumentTypeCustomFieldService, public _documentOutPMService: DocumentOutPMService, public _documentTypePMService: DocumentTypePMExtendedService, public _exportDocumentService: ExportDocumentService, public _documentTypeTemplateListExtendedService: DocumentTypeTemplateListExtendedService, public _htmlEditorService: HtmlEditorService) {
         super();
 
@@ -89,8 +95,11 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
 
     ngOnInit() {
- 
-      
+
+        var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "BDW" && d.TenantNumber == SessionLocator.Tenant)[0];
+        if (featureToggle) {
+            this.IsBuildDocumentViaWorkerRole = true;
+        }
 
 
     }
@@ -101,14 +110,14 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     InitializeCopeisControl() {
 
         if (!this.CurrentDocumentOut.DocumentTemplateEditorTool && !this.IsQuotationDocument) {
-                this.IsNoTemplateDefult = true;
+            this.IsNoTemplateDefult = true;
         }
 
         this.GetTemplates();
 
 
         // this.IsLoading = true;
-  
+
         if (this.CurrentDocumentOut.DocumentTemplateEditorTool == "R") {
             this.IsShowDocumentCustomFields = false;
             this.PrintAllCopiesBtnDisable = true;
@@ -118,14 +127,14 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
             this.PrintAllCopiesBtnDisable = false;
         }
 
-     
+
 
 
         if (this.DataContext.DocumentTypePM.IsDocumentOneTimePrintLimited) {
             this.SelectedAsDefaultBtnVisible = false;
             this.BuildButtonIsEnabled = false;
         }
-   
+
         this.LoadCopiesControl();
 
 
@@ -147,7 +156,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
 
 
-    
+
     public LoadDocumentCustomFields() {
 
         this.DocumentCustomFieldsArgs = new DocumentCustomFieldsArgs();
@@ -197,7 +206,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
             });
         }
         else {
-            if (!AppTool.IsNullOrEmpty(this.PrintingFieldsScreenCode)){
+            if (!AppTool.IsNullOrEmpty(this.PrintingFieldsScreenCode)) {
 
                 this.DocumentCustomFieldsArgs.ScreenCode = this.PrintingFieldsScreenCode;
                 this.DocumentCustomFieldsArgs.ObjectTableName = this.ObjectTableName;
@@ -287,7 +296,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                 case "CDR":
                 case "OPPB":
                 case "SOPI":
-                case "INVS":                    
+                case "INVS":
                 case "ETO":
                 case "ITO":
                 case "SSN":
@@ -301,6 +310,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                 case "WHL":
                 case "DESCH":
                 case "WESL":
+                case "SBOLP":
                     return true;
 
                 default:
@@ -308,7 +318,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
             }
         }
         else return false;
-}
+    }
 
     showDialog(pageScreen: string) {
 
@@ -319,7 +329,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
         if (!this.CheckDocumentTemplate() && this.CurrentDocumentOut.DocumentTemplateEditorTool == "S") {
             return;
         }
-        
+
 
         ServiceLocator.SendTotangoUserActivity(this.ObjectTableName, this.DocumentTypeload.Name + " Building");
 
@@ -345,15 +355,15 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
         } else {
             logWindow.Title = "Manage Template";
         }
-     
+
 
         windowArgs.PageType = pageScreen;
         windowArgs.DataViewModel = this;
         windowArgs.WindowHeight = window.innerHeight - 100;
-        windowArgs.WindowWidth = window.innerWidth  - 100;
+        windowArgs.WindowWidth = window.innerWidth - 100;
         windowArgs.CurrentDocument = this.CurrentDocumentOut;
         windowArgs.DocumentTypePM = this.DocumentTypeload;
-        var documentTypeTemplate = this.DocumentTypeTemplateLists.filter(d=> d.Id == this.DataContext.CurrentDocument.DocumentTemplateId)[0];
+        var documentTypeTemplate = this.DocumentTypeTemplateLists.filter(d => d.Id == this.DataContext.CurrentDocument.DocumentTemplateId)[0];
         windowArgs.Subject = documentTypeTemplate ? documentTypeTemplate.Subject : "";
         windowArgs.EntityId = this.EntityId;
         windowArgs.DocumentTypeCopyId = this.DataContext.documentOutCopyId;
@@ -370,10 +380,10 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
         logWindow.Show("./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/EditDocumentComponent");
         logWindow.WindowClosed.subscribe(($event: any) => {
             if (this.IsRefreshPrintConrol) {
-        
+
                 this.UpdateDocument();
                 this.IsRefreshPrintConrol = false;
-         
+
             }
         });
 
@@ -412,17 +422,17 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
             logWindow.IsShowCloseButton = true;
             logWindow.Show("./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/SendDocumentComponent");
             logWindow.WindowClosed.subscribe(($event: any) => {
-             
+
                 if ($event == "SendEnd") {
                     if (documentCopie.CurrentDocumentOutCopy.DocumentTypeCopyId == documentCopie.CurrentDocumentType.LimitedPrintCopyId && documentCopie.CurrentDocumentType.IsDocumentOneTimePrintLimited) {
                         documentCopie.IsPrintButtonEnabled = false;
-                       var loggedContactName = SessionLocator.LoggedUserPM.EnglishName;
-                       documentCopie.PrintedByMessage = "This document is already printed by " + loggedContactName;
+                        var loggedContactName = SessionLocator.LoggedUserPM.EnglishName;
+                        documentCopie.PrintedByMessage = "This document is already printed by " + loggedContactName;
                     }
-                        if (!this.IsSendClose) {
-                            this.IsSendClose = true;
-                            this.CurrentSession.FireEvent("RefreshDocumentOutSend");
-                        }
+                    if (!this.IsSendClose) {
+                        this.IsSendClose = true;
+                        this.CurrentSession.FireEvent("RefreshDocumentOutSend");
+                    }
 
                 }
             });
@@ -451,16 +461,16 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
     IsNoTemplateFound: boolean = false;
     GetTemplates() {
-       
+
         this.CurrentSession.StartBusyIndicatorLoading();
         this._documentTypeTemplateListExtendedService.getDocumentTypeTemplateListsForDocumentType(this.DataContext.DocumentTypePM.Id, this.DataContext.DocumentTypePM.Tenant).subscribe(res => {
             this.DocumentTypeTemplateLists = new Array<DocumentTypeTemplateViewModel>();
-  
+
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
                 if (myResult) {
-                    myResult.filter(d=> d.InActive == false).forEach((item) => {
+                    myResult.filter(d => d.InActive == false).forEach((item) => {
                         if (item.TemplateType == "P") {
                             this.DocumentTypeTemplateLists.push(new DocumentTypeTemplateViewModel(item));
                         }
@@ -473,12 +483,12 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                         }
                         else {
                             if (this.IsNoTemplateDefult) this.ShowMessage("Please select template as default");
-                       
+
                         }
                     }
 
                     if (this.DocumentTypeTemplateLists.length > 0) {
-              
+
                         this.CurrentDocumentOut.DocumentTemplateId
                         var item = this.DocumentTypeTemplateLists.filter(r => r.Id == this.CurrentDocumentOut.DocumentTemplateId)[0];
 
@@ -488,7 +498,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                         this.CurrentDocumentTypeTemplateList = item;
 
 
-                    } 
+                    }
                 }
 
             }
@@ -508,84 +518,84 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
     alertselected(selectedTemplate) {
 
-                this.CurrentDocumentTypeTemplateList = selectedTemplate;
-                //stimal start
-               
-                if (this.CurrentDocumentTypeTemplateList.EditorTool == "S" && this.CurrentDocumentTypeTemplateList.TemplateType == "P") {
+        this.CurrentDocumentTypeTemplateList = selectedTemplate;
+        //stimal start
 
-                    if (!this.IsCancelStimulDocumentBluid) {
+        if (this.CurrentDocumentTypeTemplateList.EditorTool == "S" && this.CurrentDocumentTypeTemplateList.TemplateType == "P") {
 
-                        if (this.CurrentDocumentOut != null) {
+            if (!this.IsCancelStimulDocumentBluid) {
 
-                            this.CurrentDocumentOut.DocumentTemplateId = this.CurrentDocumentTypeTemplateList.Id;
-                            this.CurrentDocumentOut.DocumentTemplateEditorTool = this.CurrentDocumentTypeTemplateList.EditorTool;
+                if (this.CurrentDocumentOut != null) {
 
-                        
-                            this._documentOutPMService.putDocumentOut(this.CurrentDocumentOut).subscribe(res=> {
-      
-                                var pmResponse: ServiceResponse = res;
-                                if (!pmResponse.HasError) {
-                                    var myResult = pmResponse.Result;
-                                    if (myResult) {
-                                        this.DataContext.CurrentDocument = this.CurrentDocumentOut = myResult;
-                                        ServiceLocator.SendTotangoUserActivity(this.ObjectTableName, this.DocumentTypeload.Name + " Building");
+                    this.CurrentDocumentOut.DocumentTemplateId = this.CurrentDocumentTypeTemplateList.Id;
+                    this.CurrentDocumentOut.DocumentTemplateEditorTool = this.CurrentDocumentTypeTemplateList.EditorTool;
 
-                                        this.BuildCurrentCopies(this.Items, "");
-                                    }
 
-                                }
+                    this._documentOutPMService.putDocumentOut(this.CurrentDocumentOut).subscribe(res => {
 
-                            });
+                        var pmResponse: ServiceResponse = res;
+                        if (!pmResponse.HasError) {
+                            var myResult = pmResponse.Result;
+                            if (myResult) {
+                                this.DataContext.CurrentDocument = this.CurrentDocumentOut = myResult;
+                                ServiceLocator.SendTotangoUserActivity(this.ObjectTableName, this.DocumentTypeload.Name + " Building");
+
+                                this.BuildCurrentCopies(this.Items, "");
+                            }
 
                         }
 
-
-                    }
-                    else {
-
-                        this.IsCancelStimulDocumentBluid = false;
-                    }
-
-                    //LoadDocumentCustomFieldsControl();
-                }
-
-
-                // html
-                if (this.CurrentDocumentTypeTemplateList.EditorTool == "R" && this.CurrentDocumentTypeTemplateList.TemplateType == "P") {
-
-                    if (!this.IsCancelHtmlDocumentBluid) {
-                        //  this.IsCancelCloseEditWindow = true;
-                       
-                        this.CurrentDocumentOut.DocumentTemplateId = this.CurrentDocumentTypeTemplateList.Id;
-                        this.DataContext.CurrentDocument = this.CurrentDocumentOut;
-                        this._documentOutPMService.putDocumentOut(this.CurrentDocumentOut).subscribe(res=> {
-
-                            var pmResponse: ServiceResponse = res;
-                            if (!pmResponse.HasError) {
-                                var myResult = pmResponse.Result;
-                                if (myResult) {
-                                    this.CurrentDocumentOut = myResult;
-                                    this.ReBluidHtmlDocument(this.DocumentTypeload.DocumentTypeCopies[0].Id);
-                                }
-
-                            } else this.StopBusyIndicator();
-                
-                        });
-
-                    }
-                    else {
-                        this.IsCancelHtmlDocumentBluid = false;
-                    }
+                    });
 
                 }
-            
 
- 
-}
-        
-  
+
+            }
+            else {
+
+                this.IsCancelStimulDocumentBluid = false;
+            }
+
+            //LoadDocumentCustomFieldsControl();
+        }
+
+
+        // html
+        if (this.CurrentDocumentTypeTemplateList.EditorTool == "R" && this.CurrentDocumentTypeTemplateList.TemplateType == "P") {
+
+            if (!this.IsCancelHtmlDocumentBluid) {
+                //  this.IsCancelCloseEditWindow = true;
+
+                this.CurrentDocumentOut.DocumentTemplateId = this.CurrentDocumentTypeTemplateList.Id;
+                this.DataContext.CurrentDocument = this.CurrentDocumentOut;
+                this._documentOutPMService.putDocumentOut(this.CurrentDocumentOut).subscribe(res => {
+
+                    var pmResponse: ServiceResponse = res;
+                    if (!pmResponse.HasError) {
+                        var myResult = pmResponse.Result;
+                        if (myResult) {
+                            this.CurrentDocumentOut = myResult;
+                            this.ReBluidHtmlDocument(this.DocumentTypeload.DocumentTypeCopies[0].Id);
+                        }
+
+                    } else this.StopBusyIndicator();
+
+                });
+
+            }
+            else {
+                this.IsCancelHtmlDocumentBluid = false;
+            }
+
+        }
+
+
+
+    }
+
+
     OnmMouseOver(item: DocumentCopiesViewModel) {
-  
+
         this.Items.forEach((item) => { item.VisiblePrint = false; });
         item.VisiblePrint = true;
 
@@ -593,25 +603,25 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
 
     OnmMouseleave(item: DocumentCopiesViewModel) {
-       
+
         this.Items.forEach((item) => { item.VisiblePrint = false; });
-        
+
 
     }
-    
+
 
 
 
     SortItemSource() {
 
         if (this.Items) {
-            this.Items = this.Items.sort(d=> d.IndexOrder);
+            this.Items = this.Items.sort(d => d.IndexOrder);
         }
     }
-   
+
     LoadCopiesControl() {
 
- 
+
         this.ItemsSource = new Array<DocumentCopiesViewModel>();
 
         this._documentTypePMService.getSingleDocumentType(this.DataContext.DocumentTypePM.Id, this.CurrentDocumentOut.Id, this.CurrentDocumentOut.Tenant).subscribe(res => {
@@ -629,7 +639,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                                 this.ItemsSource.push(new DocumentCopiesViewModel(item, this.CurrentDocumentOut, this.EntityId, this.ChildEntityId, this.ObjectTableId, this.ChildObjectTableId, this.DocumentTypeload, this.ChildReference));
                             });
 
-                            var item = this.ItemsSource.filter(d=> d.IsSelected)[0];
+                            var item = this.ItemsSource.filter(d => d.IsSelected)[0];
                             var anySelected = false;
                             if (!item) {
                                 this.ItemsSource.forEach((item) => {
@@ -673,10 +683,10 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
 
     CopiesControlLoaded(copies: Array<DocumentCopiesViewModel>) {
-   
+
 
         if (copies != null) {
-     
+
 
             if (copies.length == 1) {
                 this.PrintAllCopiesBtnVisible = false;
@@ -684,7 +694,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
             }
             else if (copies.length > 1) {
                 this.PrintAllCopiesBtnVisible = true;
-             
+
             }
 
 
@@ -693,15 +703,15 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                 copies.forEach(d => d.IsSelectedByDefault = true);
             }
 
-   
+
             if (this.DocumentTypeload.IsDocumentOneTimePrintLimited) {
                 copies.forEach((item) => { item.CurrentDocumentTypeCopy.IsSelectedByDefault = true; });
             }
-           
-            this.lastCount = copies.filter(d=> d.CurrentDocumentTypeCopy.IsSelectedByDefault).length;
+
+            this.lastCount = copies.filter(d => d.CurrentDocumentTypeCopy.IsSelectedByDefault).length;
 
             if ((this.CurrentDocumentOut.DocumentOutCopies.length == 0 || this.CurrentDocumentOut.NeedsRebuild)) {
-   
+
                 var editorToolCode = null;
 
 
@@ -710,11 +720,11 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
                 }
 
-        
+
                 else if (this.DataContext.DocumentTypePM.DocumentTypeDefaultEditorTool != null && this.DataContext.DocumentTypePM.DocumentTypeDefaultEditorTool != "") {
                     editorToolCode = this.DocumentTypeload.DocumentTypeDefaultEditorTool;
                 }
-                
+
                 if (editorToolCode) {
                     if (editorToolCode == "S") this.BuildCurrentCopies(copies, "New");
                     if (editorToolCode == "R") {
@@ -725,7 +735,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                     }
                 }
                 else {
-            
+
                     this.StopBusyIndicator();
                 }
             }
@@ -737,7 +747,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
             }
 
-         
+
 
             this.SortItemSource();
 
@@ -755,9 +765,9 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
         var documentTypeId = this.CurrentDocumentOut.DocumentTypeId;
         var shipmentId = this.CurrentDocumentOut.EntityId;
-    
+
         var item = null;
-        if (this.DocumentTypeTemplateLists) item = this.DocumentTypeTemplateLists.filter(d=> d.Id == this.CurrentDocumentOut.DocumentTemplateId)[0];
+        if (this.DocumentTypeTemplateLists) item = this.DocumentTypeTemplateLists.filter(d => d.Id == this.CurrentDocumentOut.DocumentTemplateId)[0];
 
         if (item && !AppTool.IsNullOrEmpty(item.HtmlResolve)) {
             this.HeaderHeight = item.TemplateHeaderHeight;
@@ -769,26 +779,26 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
         }
         else {
             this.CurrentSession.StartBusyIndicatorLoading();
-                this._htmlEditorService.getEditorHtmlData(this.CurrentDocumentOut.Id, shipmentId, this.ObjectTableId, this.ChildEntityId, this.ChildObjectTableId, SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, false, this.CurrentDocumentOut.DocumentTemplateId, "", "Edit").subscribe(res => {
-                    var pmResponse: ServiceResponse = res;
-                    if (!pmResponse.HasError) {
-                        var myResult = pmResponse.Result;
-                        if (myResult) {
-                            this.HtmlEditorData = "<header>" + "<height>" + "<div style='display:none'>" + myResult.HeaderHeight + "</div></height>" + myResult.HeaderHtml + "</header>" + myResult.Htmlstring + "<footer>" + "<height>" + "<div style='display:none'>" + myResult.FooterHeight + "</div></height>" + myResult.FooterHtml + "</footer>";
-                            this.HeaderHeight = myResult.HeaderHeight;
-                            this.FooterHeight = myResult.FooterHeight;
-                        }
-                        this.StopBusyIndicator();
-                        this.CurrentSession.StartBusyIndicator("Building document...");
-                        this.SaveReportData(documentTypeCopyId);
+            this._htmlEditorService.getEditorHtmlData(this.CurrentDocumentOut.Id, shipmentId, this.ObjectTableId, this.ChildEntityId, this.ChildObjectTableId, SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, false, this.CurrentDocumentOut.DocumentTemplateId, "", "Edit").subscribe(res => {
+                var pmResponse: ServiceResponse = res;
+                if (!pmResponse.HasError) {
+                    var myResult = pmResponse.Result;
+                    if (myResult) {
+                        this.HtmlEditorData = "<header>" + "<height>" + "<div style='display:none'>" + myResult.HeaderHeight + "</div></height>" + myResult.HeaderHtml + "</header>" + myResult.Htmlstring + "<footer>" + "<height>" + "<div style='display:none'>" + myResult.FooterHeight + "</div></height>" + myResult.FooterHtml + "</footer>";
+                        this.HeaderHeight = myResult.HeaderHeight;
+                        this.FooterHeight = myResult.FooterHeight;
+                    }
+                    this.StopBusyIndicator();
+                    this.CurrentSession.StartBusyIndicator("Building document...");
+                    this.SaveReportData(documentTypeCopyId);
 
-                    } else this.CurrentSession.StopBusyIndicator();
+                } else this.CurrentSession.StopBusyIndicator();
 
 
 
-                });
+            });
 
-            
+
 
         }
     }
@@ -796,7 +806,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     docIds: string;
 
     SaveReportData(documentTypeCopyId: string) {
-    
+
         var filter = new FroalaEditorFilters();
         filter.DocumentOutId = this.DataContext.CurrentDocument.Id;
         filter.DocumentTypeCopyId = documentTypeCopyId;
@@ -809,7 +819,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
         filter.DocumentTypeId = this.DataContext.DocumentTypePM.Id;
 
         this._htmlEditorService.saveEditedReportToServer(filter).subscribe(res => {
-         
+
             this.CurrentSession.StartBusyIndicator(this.BuildingDocumentText);
 
             var pmResponse: ServiceResponse = res;
@@ -867,17 +877,17 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
                 }
                 else {
-                  
+
                     this.StopBusyIndicator();
-             
-                 
+
+
                 }
 
             }
-             else this.StopBusyIndicator();
-     
-         
-         
+            else this.StopBusyIndicator();
+
+
+
         });
 
     }
@@ -894,7 +904,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
         var anySelected = false;
 
-        
+
         copies.forEach((copy) => {
             if (!this.DocumentTypeload.IsDocumentOneTimePrintLimited) {
                 if (copy.IsSelected || copies.length == 1) {
@@ -911,12 +921,12 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                     this.AddedDocumentTypeCopyViewModels.push(copy);
                 }
                 if (copy.Exists && !copy.IsSelected) {
-                  
+
                     var index = this.RemovedDocumentTypeCopyViewModels.indexOf(copy, 0);
                     if (index) {
                         this.RemovedDocumentTypeCopyViewModels.splice(index, 1);
                     }
-                
+
                 }
             }
 
@@ -929,12 +939,15 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
         });
         if (anySelected) {
-     
+
             this.lastCount = this.AddedDocumentTypeCopyViewModels.length;
 
             var numberOfCopy = this.AddedDocumentTypeCopyViewModels.filter(d => d.IsSelected).length;
             var count: number = 0;
+            var copiesIds: string[] = [];
+
             this.AddedDocumentTypeCopyViewModels.filter(d => d.IsSelected).forEach((copy) => {
+                if (!this.IsBuildDocumentViaWorkerRole) {
 
                     this._exportDocumentService.getDocumentPdfFile(this.DataContext.DocumentTypePM.Id, this.EntityId, this.ObjectTableId, this.ChildEntityId, this.ChildObjectTableId, this.CurrentDocumentOut.Id, this.CurrentDocumentOut.Tenant, copy.CurrentDocumentTypeCopy.Id, SessionLocator.LoggedUserId).subscribe(res => {
                         count += 1;
@@ -947,11 +960,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                                 copy.Exists = true;
 
                                 if (numberOfCopy == count) {
-                                    this.CurrentDocumentOut.Issued = true;
-                                    this.CurrentDocumentOut.NeedsRebuild = false;
-                                    this.DataContext.Issued = true;
-                                    this.CurrentDocumentOut.IssuedByUserId = SessionInfo.LoggedUserId;
-                                    this.CurrentDocumentOut.IsChangeIssuedDate = true;
+                                    this.UpdateDocumentOutData();
                                     this.SaveContext();
                                 }
                             }
@@ -963,29 +972,35 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                                 this.ShowMessage(pmResponse.ErrorsArray[0]);
                             }
                             this.StopBusyIndicator();
-                        }                
+                        }
 
                     });
-          
-             
-            });
-            if (mode == "New" && this.AddedDocumentTypeCopyViewModels) {
-           
-                    var copies = new Array<DocumentCopiesViewModel>();
-                    this.Items.forEach((copy) => {
-                            var item = this.AddedDocumentTypeCopyViewModels.filter(d=> d.Id == copy.Id)[0];
-                            if (item) copies.push(item);
-                            else copies.push(copy);
-
-                        });
-
-                    this.Items = copies;
-
-                    this.SortItemSource();
                 }
 
+            });
 
-            
+            if (this.IsBuildDocumentViaWorkerRole) {
+                this.BliudDocumentViewWorkerRole(this.AddedDocumentTypeCopyViewModels.filter(d => d.IsSelected));
+            }
+
+
+            if (mode == "New" && this.AddedDocumentTypeCopyViewModels) {
+
+                var copies = new Array<DocumentCopiesViewModel>();
+                this.Items.forEach((copy) => {
+                    var item = this.AddedDocumentTypeCopyViewModels.filter(d => d.Id == copy.Id)[0];
+                    if (item) copies.push(item);
+                    else copies.push(copy);
+
+                });
+
+                this.Items = copies;
+
+                this.SortItemSource();
+            }
+
+
+
 
         }
 
@@ -995,8 +1010,21 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
             this.ShowMessage(TextCodeTranslator.Translate("DocsOut.M.SelectCopyThenRebuild"));
         }
 
-      
+
     }
+
+
+
+    UpdateDocumentOutData() {
+        if (this.CurrentDocumentOut) {
+            this.CurrentDocumentOut.Issued = true;
+            this.CurrentDocumentOut.NeedsRebuild = false;
+            this.DataContext.Issued = true;
+            this.CurrentDocumentOut.IssuedByUserId = SessionInfo.LoggedUserId;
+            this.CurrentDocumentOut.IsChangeIssuedDate = true;
+        }
+    }
+
 
     IsDocumentBuildSucceeded: boolean = false;
     IsDocumentBuildFailed: boolean = false;
@@ -1004,60 +1032,181 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     SaveContext() {
 
 
-        this._documentOutPMService.putDocumentOut(this.CurrentDocumentOut).subscribe(res=> {
+        this._documentOutPMService.putDocumentOut(this.CurrentDocumentOut).subscribe(res => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError && pmResponse.Result) {
                 var myResult = pmResponse.Result;
-                    this._documentOutPMService.getSingleDocumentOutPM(this.DataContext.CurrentDocument.Id, this.DataContext.CurrentDocument.Tenant).subscribe(res => {
-                        this.StopBusyIndicator();
-                        var pmResponse: ServiceResponse = res;
-                        if (!pmResponse.HasError) {
-                            var myResult = pmResponse.Result;
-                            if (myResult) {
-                                myResult.HasFollowUp = this.DataContext.CurrentDocument.HasFollowUp;
-                                this.CurrentDocumentOut = myResult;
-                                this.DataContext.CurrentDocument = myResult;
-                                if (this.AddedDocumentTypeCopyViewModels != null) {
-                                    this.AddedDocumentTypeCopyViewModels.forEach((copy) => {
-                                        copy.RefereshDocumentOutCopies(this.CurrentDocumentOut);
-                                    });
+                this._documentOutPMService.getSingleDocumentOutPM(this.DataContext.CurrentDocument.Id, this.DataContext.CurrentDocument.Tenant).subscribe(res => {
+                    this.StopBusyIndicator();
+                    var pmResponse: ServiceResponse = res;
+                    if (!pmResponse.HasError) {
+                        var myResult = pmResponse.Result;
+                        if (myResult) {
+                            myResult.HasFollowUp = this.DataContext.CurrentDocument.HasFollowUp;
+                            this.CurrentDocumentOut = myResult;
+                            this.DataContext.CurrentDocument = myResult;
+                            if (this.AddedDocumentTypeCopyViewModels != null) {
+                                this.AddedDocumentTypeCopyViewModels.forEach((copy) => {
+                                    copy.RefereshDocumentOutCopies(this.CurrentDocumentOut);
+                                });
 
-                                    this.DataContext.HasFile = true;
-                                    if (this.DataContext.Issued != true) {
-                                        this.DataContext.Issued = true;
-                                    }
-                                    this.LastBuildDate = this.CurrentDocumentOut.IssuedDate;
-                                    this.DataContext.IssuedDate = this.CurrentDocumentOut.IssuedDate;
-                                    this.DataContext.IssuedByUserName = this.CurrentDocumentOut.IssuedByUserName;
-                                    ServiceLocator.SendTotangoUserActivity(this.ObjectTableName, this.DataContext.DocumentTypePM.Name + " Built");
-                                    
-                                    if (this.DataContext.IsNotFromDocsOutListOpenPrintControl) {
-                                        this.CurrentSession.FireEvent("RefreshDocumentOutPrint");
-                                    }
-
-                                    this.IsDocumentBuildSucceeded = true;
-
-
+                                this.DataContext.HasFile = true;
+                                if (this.DataContext.Issued != true) {
+                                    this.DataContext.Issued = true;
                                 }
+                                this.LastBuildDate = this.CurrentDocumentOut.IssuedDate;
+                                this.DataContext.IssuedDate = this.CurrentDocumentOut.IssuedDate;
+                                this.DataContext.IssuedByUserName = this.CurrentDocumentOut.IssuedByUserName;
+                                ServiceLocator.SendTotangoUserActivity(this.ObjectTableName, this.DataContext.DocumentTypePM.Name + " Built");
+
+                                if (this.DataContext.IsNotFromDocsOutListOpenPrintControl) {
+                                    this.CurrentSession.FireEvent("RefreshDocumentOutPrint");
+                                }
+
+                                this.IsDocumentBuildSucceeded = true;
+
+
                             }
-
                         }
-                        else this.StopBusyIndicator();
+
+                    }
+                    else this.StopBusyIndicator();
 
 
-                    });
+                });
 
-                
+
 
             } else this.StopBusyIndicator();
 
-                
-      
-            
+
+
+
         });
 
     }
+
+    BliudDocumentViewWorkerRole(documentTypeCopyLists: DocumentCopiesViewModel[]) {
+        if (documentTypeCopyLists.length > 0) {
+            var exportDocumentArgs = new ExportDocumentArgs();
+            exportDocumentArgs.DocumentTypeId = this.DataContext.DocumentTypePM.Id;
+            exportDocumentArgs.EntityId = this.EntityId;
+            exportDocumentArgs.ObjectTableId = this.ObjectTableId;
+            exportDocumentArgs.ChildEntityId = this.ChildEntityId;
+            exportDocumentArgs.ChildObjectTableId = this.ChildObjectTableId;
+            exportDocumentArgs.CurrentDocumentOutId = this.CurrentDocumentOut.Id;
+            exportDocumentArgs.LoggedContactId = SessionLocator.LoggedUserId;
+            exportDocumentArgs.Tenant = SessionLocator.Tenant;
+            exportDocumentArgs.DocumentTypeName = this.DataContext.DocumentTypePM.Name;
+            exportDocumentArgs.DocumentTypeTemplateId = this.CurrentDocumentTypeTemplateList != null ? this.CurrentDocumentTypeTemplateList.Id : "";
+            exportDocumentArgs.DocumentTypeCopyIdsList = documentTypeCopyLists.map(function (a) { return a.Id; });
+            this._exportDocumentService.BuildDocumentViaWorkerRole(exportDocumentArgs).subscribe((myResponse: ServiceResponse) => {
+                var result: any = myResponse.Result;
+                if (!myResponse.HasError && result) {
+                    this.StartCheckDocumentBuildViaWorkerRoleTimer(result, documentTypeCopyLists);
+                } else {
+
+                    this.StopBusyIndicator();
+                    if (myResponse.HasError && myResponse.ErrorsArray && myResponse.ErrorsArray.length > 0) {
+                        var messageWindow = new MessageWindow();
+                        messageWindow.Show(myResponse.ErrorsArray[0]);
+                    }
+                }
+
+            });
+        }
+    }
+
+
+
+    initializeStartCheckDocumentBuildViaWorkerRoleTimer() {
+        return Observable.interval(250).timeInterval();
+    }
+
+
+
+    private StartCheckDocumentBuildViaWorkerRoleTimerTimersub: any = null;
+    IsStartCheckDocumentBuildViaWorkerRoleTimer: boolean = false;
+    StartCheckDocumentBuildViaWorkerRoleTimer(documentExecutionLogId, documentTypeCopyLists) {
+        if (this.IsStartCheckDocumentBuildViaWorkerRoleTimer) {
+            this.StartCheckDocumentBuildViaWorkerRoleTimerTimersub.unsubscribe();
+        }
+
+        this.IsStartCheckDocumentBuildViaWorkerRoleTimer = true;
+        this.StartCheckDocumentBuildViaWorkerRoleTimerTimersub = this.initializeStartCheckDocumentBuildViaWorkerRoleTimer().subscribe(respose => {
+
+
+            if ((this.CurrentSession && this.CurrentSession.isDestroingSession) || !this.IsStartCheckDocumentBuildViaWorkerRoleTimer) {
+                this.StartCheckDocumentBuildViaWorkerRoleTimerTimersub.unsubscribe();
+                this.IsStartCheckDocumentBuildViaWorkerRoleTimer = false;
+                return;
+            }
+
+
+            if (this.IsStartCheckDocumentBuildViaWorkerRoleTimer) {
+
+                if (this.documentsExecutionLogListExtendedService == null) {
+                    this.documentsExecutionLogListExtendedService = new DocumentsExecutionLogListExtendedService();
+                }
+
+
+                this.documentsExecutionLogListExtendedService.GetDocumentsExecutionLogList(documentExecutionLogId).subscribe(res => {
+                    var pmResponse: ServiceResponse = res;
+                    var documentsExecutionLogList: DocumentsExecutionLogList = res.Result;
+
+                    if (this.IsStartCheckDocumentBuildViaWorkerRoleTimer) {
+                        if (pmResponse.HasError || !documentsExecutionLogList || (documentsExecutionLogList && (documentsExecutionLogList.StatusCode == "D" || documentsExecutionLogList.StatusCode == "F"))) {
+                            this.StartCheckDocumentBuildViaWorkerRoleTimerTimersub.unsubscribe();
+                            this.IsStartCheckDocumentBuildViaWorkerRoleTimer = false;
+                            this.StopBusyIndicator();
+                        }
+
+                        if (!pmResponse.HasError) {
+
+                            if (documentsExecutionLogList) {
+                                if (documentsExecutionLogList.StatusCode == "F") {
+                                    var messageWindow = new MessageWindow();
+                                    messageWindow.Show(documentsExecutionLogList.ExceptionMessage);
+                                }
+                                else if (documentsExecutionLogList.StatusCode == "D") {
+                                    documentTypeCopyLists.forEach((copy) => {
+                                        copy.Status = "Success";
+                                        copy.Exists = true;
+                                    });
+                                    this.CurrentDocumentOut.Issued = true;
+                                    this.CurrentDocumentOut.NeedsRebuild = false;
+                                    this.DataContext.Issued = true;
+                                    this.CurrentDocumentOut.IssuedByUserId = SessionInfo.LoggedUserId;
+                                    this.CurrentDocumentOut.IsChangeIssuedDate = true;
+                                    this.SaveContext();
+                                }
+                            }
+                            else {
+                                var messageWindow = new MessageWindow();
+                                messageWindow.Show("Documents execution Log not found");
+                            }
+
+                        }
+                        else {
+                            if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
+                                var messageWindow = new MessageWindow();
+                                messageWindow.Show(pmResponse.ErrorsArray[0]);
+                            }
+                        }
+
+                    }
+
+                });
+
+            }
+        });
+
+    }
+
+
+
+
 
 
 
@@ -1070,7 +1219,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
             var documentName = item.CurrentDocumentOutCopy.Tenant + "~" + item.CurrentDocumentOutCopy.Id;
             if (this.DocumentTypeload.IsDocumentOneTimePrintLimited && this.DataContext.DocumentTypePM.LimitedPrintCopyId == item.CurrentDocumentOutCopy.DocumentTypeCopyId) {
                 documentName = documentName + "~" + item.CurrentDocumentOutCopy.DocumentId + "~" + SessionInfo.LoggedUserId;
-             
+
             }
 
             this.ViewPage(item.CurrentDocumentOutCopy.DocoumentTypeCopyName, copyId);
@@ -1089,7 +1238,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
 
 
-    ViewPage(docoumentTypeCopyName: string , id:string) {
+    ViewPage(docoumentTypeCopyName: string, id: string) {
 
         ServiceLocator.SendTotangoUserActivity(this.ObjectTableName, docoumentTypeCopyName + " Viewing");
 
@@ -1099,7 +1248,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
 
     public setArguments(item: DocsOutDataViewModel) {
-    
+
         this._entityResourceService.getEntityResourceByTableName("DocsOut").subscribe(response => {
 
             if (!item.DocumentTypePM) {
@@ -1206,14 +1355,14 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
             this.InitializeCopeisControl();
         }
 
-    
+
 
     }
 
+
     public UpdateDocument() {
 
-
-        this.CurrentSession.CurrentWindow = this.CurrentSession.Windows.filter(d=> d.Title == "Print " + this.DataContext.DocumentTypePM.Name)[0];
+        this.CurrentSession.CurrentWindow = this.CurrentSession.Windows.filter(d => d.Title == "Print " + this.DataContext.DocumentTypePM.Name)[0];
 
         ServiceLocator.SendTotangoUserActivity(this.ObjectTableName, this.DocumentTypeload.Name + " Building");
 
@@ -1222,17 +1371,17 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
         if (this.CurrentDocumentOut.DocumentTemplateEditorTool == "S") {
             this.BuildCurrentCopies(this.Items, "");
         }
-     
+
         else if (this.CurrentDocumentOut.DocumentTemplateEditorTool == "R") {
-                this.ReBluidHtmlDocument(this.DocumentTypeload.DocumentTypeCopies[0].Id);
-                 
-            }
-    }   
+            this.ReBluidHtmlDocument(this.DocumentTypeload.DocumentTypeCopies[0].Id);
+
+        }
+    }
 
 
     private PrintAllCopiesBtnClick() {
 
-        var currentCount = this.Items.filter(d=> d.IsSelected).length;
+        var currentCount = this.Items.filter(d => d.IsSelected).length;
         if (this.DataContext.DocumentTypePM.IsDocumentOneTimePrintLimited) {
             this.Items.forEach((item) => {
 
@@ -1265,14 +1414,14 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     }
     private SetSelectedAsDefaultBtnClick() {
 
- 
+
         this.Items.forEach((item) => {
             item.CurrentDocumentTypeCopy.IsSelectedByDefault = item.IsSelected;
         });
 
 
-        
-        this._documentTypePMService.putDocumentType(this.DataContext.DocumentTypePM).subscribe(res=> {
+
+        this._documentTypePMService.putDocumentType(this.DataContext.DocumentTypePM).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
@@ -1283,7 +1432,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                 }
 
             }
-    
+
 
         });
 
@@ -1296,18 +1445,18 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
         window.open(ServiceHelper.GetLogitudeURL() + "WebPages/MergeAllPage.aspx?securityId=" + this.CurrentDocumentOut.SecurityId + "~" + SessionInfo.LoggedUserId + "&tempId=" + token);
     }
     IsSelect: boolean;
-    public DocumentCopySelectedChange(item: DocumentCopiesViewModel , value:any) {
+    public DocumentCopySelectedChange(item: DocumentCopiesViewModel, value: any) {
 
-            item.IsSelected = value;
-            
-             this.SelectedAsDefaultBtnVisible = true;
-             item.IsHideSetSelectedAsDefaultBtn = false; 
+        item.IsSelected = value;
+
+        this.SelectedAsDefaultBtnVisible = true;
+        item.IsHideSetSelectedAsDefaultBtn = false;
 
 
     }
 
     StopBusyIndicator() {
         this.CurrentSession.StopBusyIndicator();
-        
+
     }
 }

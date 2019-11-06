@@ -26,7 +26,7 @@ namespace WebFreight.Web.App_Code
     public class HtmlEditorController : ApiController
     {
 
-        public HttpResponseMessage GetEditorHtmlData(string docOutId, string entityId, string objectTableId, string childEntityId, string childEntityObjectTableId, int tenant, string userId, bool theIsSendMail, string documentTemplateId, string subject , string Mode=null ,string from = null, string replyTo = null, string cc = null)
+        public HttpResponseMessage GetEditorHtmlData(string docOutId, string entityId, string objectTableId, string childEntityId, string childEntityObjectTableId, int tenant, string userId, bool theIsSendMail, string documentTemplateId, string subject , string Mode=null ,string from = null, string replyTo = null, string cc = null,string bcc = null)
         {
             try
             {
@@ -41,7 +41,7 @@ namespace WebFreight.Web.App_Code
 
                 HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
 
-            string htmlstring = htmlEditorHelper.GetEditorHtmlData(docOutId, entityId, objectTableId, childEntityId, childEntityObjectTableId, tenant, userId, theIsSendMail, documentTemplateId, ref subject, ref from, ref replyTo,ref cc, Mode);
+            string htmlstring = htmlEditorHelper.GetEditorHtmlData(docOutId, entityId, objectTableId, childEntityId, childEntityObjectTableId, tenant, userId, theIsSendMail, documentTemplateId, ref subject, ref from, ref replyTo,ref cc,ref bcc, Mode);
             SendHtmlFilter reslutFilter = new SendHtmlFilter();
 
             if (!string.IsNullOrEmpty(htmlstring) && Mode == "Edit")
@@ -89,8 +89,9 @@ namespace WebFreight.Web.App_Code
             reslutFilter.From = from;
             reslutFilter.ReplyTo =replyTo;
             reslutFilter.Cc = cc;
+            reslutFilter.Bcc = bcc;
 
-            return Request.CreateResponse(HttpStatusCode.OK, reslutFilter);
+                return Request.CreateResponse(HttpStatusCode.OK, reslutFilter);
             }
 
             catch (Exception ex)
@@ -204,48 +205,6 @@ namespace WebFreight.Web.App_Code
                         byte[] bytePlainTextdata = enc.GetBytes(htmlPlainString);
 
                         reslut = htmlEditorHelper.SendEmailOutActivityForEntity(bytedata, bytePlainTextdata, filter.Tenant, filter.ToEmail, filter.Subject, filter.Cc, filter.Bcc, filter.UserId, filter.EntityId, filter.CustomerId, filter.ObjectTableId, filter.Attachments, filter.EntityReference, filter.DocumentTypeCode, filter.EventTypeCode);
-                    }
-
-                    if (filter.ExportQuotationsToIntegratedSystem && filter.ObjectTableName == "Quote")
-                    {
-                        QuoteQueryService quoteQueryService = new QuoteQueryService(filter.Tenant);
-                        Logitude.BL.QuoteModel.APIDataContract.ApiV1.Quote quote = quoteQueryService.GetQuoteById(filter.EntityId, filter.Tenant);
-                        string xmlstring = "";
-
-                        if (quote != null)
-                        {
-                            xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(quote);
-                        }
-                        CommunicationsParams tasklogParams = new CommunicationsParams()
-                        {
-                            Tenant = filter.Tenant,
-                            CommunicationLogTypeCode = "Q",
-                            QueueName = "externaltasksqueue" + filter.Tenant + 1,
-                            Priority = 1,
-                            InOut = "O",
-                            Status = "W",
-                            LoggingUserId = filter.UserId,
-                            LoggingObjectTableId = filter.ObjectTableId,
-                            LoggingEntityId = filter.EntityId,
-                            Subject = "Quotation Document",
-                            FolderName = "ExternalTasksQueue",
-                        };
-
-                        List<QueueTask> queue2Tasks = new List<QueueTask>();
-                        queue2Tasks.Add(
-                            new QueueTask()
-                            {
-                                Action = "ExportQuotationsToIntegratedSystem",
-                                Parameters = new List<Parameter>()
-                            {
-                                         new Parameter{ Name = "QuoteMetaData", Order = 1,Value =  xmlstring},
-
-                            }
-                            });
-
-                        tasklogParams.ByteData = LogitudeXmlSerializer.SerializeObject(queue2Tasks);
-                        Communications.AddCommunicationLog(tasklogParams);
-
                     }
                 }
                 else throw new Exception("Sorry you’re not authenticated to send this email");

@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
-import { DestinationClass } from './AddEditAirlineAreaComponent';
 import { PortList } from '../../../../Common/EntityLists/PortList';
+import { AirlineAreasPortPM } from '../../../../Common/EntityPMs/AirlineAreasPortPM';
+import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
+import { DateTool } from '../../../../Infrastructure/Tools';
+import { AreaItemClass } from '../EditTabs/AreasTabComponent';
 
 @Component({
     moduleId: module.id,
@@ -11,8 +14,8 @@ import { PortList } from '../../../../Common/EntityLists/PortList';
 
 export class ChoosePortComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
-    public DataContext: ChoosePortComponent= this;
-    public ParentClass: DestinationClass;
+    public DataContext: ChoosePortComponent = this;
+    public ParentClass: AreaItemClass;
     public ObjectTableName = "AirlineAreasPort";
     public ValidationErrorsList: string[] = [];
     public ForceFocus: any ;
@@ -20,7 +23,7 @@ export class ChoosePortComponent extends BaseComponent {
         super();
     }
 
-    SetDataContext(dataContext: DestinationClass) {
+    SetDataContext(dataContext: AreaItemClass) {
         this.ParentClass = dataContext;        
     }
 
@@ -59,22 +62,28 @@ export class ChoosePortComponent extends BaseComponent {
             errors.push("Please Choose port");
         }
 
-        else if (this.ParentClass.fatherComponent.ItemList.filter(d => d.Code == this.Port.Code).length > 0) {
+        else if (this.ParentClass.PortItemsList.filter(d => d.Code == this.Port.Code).length > 0) {
             errors.push("Port with the same code already added");
         }
-        
-
-    
-
+ 
         this.ValidationErrorsList = errors;
         
         if (errors.length == 0) {
-            var newItem: DestinationClass = new DestinationClass(this.ParentClass.fatherComponent, this.Port,true)
-            this.ParentClass.fatherComponent.ItemList.push(newItem);
+            var newPort: AirlineAreasPortPM = new AirlineAreasPortPM(this.ParentClass.EntityPM);
+            newPort.Tenant = SessionLocator.Tenant;
+            newPort.AirlineAreaId = this.ParentClass.EntityPM.Id;
+            newPort.Name = this.Port.EnglishName;
+            newPort.Code = this.Port.Code;
+            newPort.CountryCode = this.Port.CountryCode;
+            newPort.PortId = this.PortId;
+            newPort.AddedByUserId = SessionInfo.LoggedUserId;
+            newPort.AddedDate = DateTool.GetCurrentDateAsUtc();
+            this.ParentClass.EntityPM.AddAirlineAreasPortPM(newPort);
+            this.ParentClass.BuildPortItemsList();
+
             this.ForceFocus = this.PortId;
             this.Port = null;
             this.PortId = null;
-
         }
     }
 }

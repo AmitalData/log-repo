@@ -137,6 +137,7 @@
     <Compile Include="EntityDataMappings\Generated\EscalationActionTimeIndicatorDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\EscalationPreDefinitionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\OccasionDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\OccasionInviteeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\OccasionStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\OccasionTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\OpportunityAdditionalServiceDataMapping.Generated.cs" />
@@ -168,6 +169,7 @@
     <Compile Include="EntityDataMappings\Generated\TicketTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TimeUnitDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\OccasionDataMapping.cs" />
+    <Compile Include="EntityDataMappings\OccasionInviteeDataMapping.cs" />
     <Compile Include="EntityDataMappings\OccasionStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\OccasionTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\OpportunityAdditionalServiceDataMapping.cs" />
@@ -221,6 +223,7 @@
     <Compile Include="EntityPMs\Generated\EmployeeGroupPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\EscalationActionTimeIndicatorPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\EscalationPreDefinitionPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\OccasionInviteePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\OccasionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\OccasionStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\OccasionTypePM.Generated.cs" />
@@ -280,6 +283,7 @@
     <Compile Include="EntityQueryServices\Generated\EmployeeGroupQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\EscalationActionTimeIndicatorQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\EscalationPreDefinitionQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\OccasionInviteeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\OccasionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\OccasionStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\OccasionTypeQueryService.Generated.cs" />
@@ -311,6 +315,7 @@
     <Compile Include="EntityQueryServices\Generated\TicketStageQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TicketTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TimeUnitQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\OccasionQueryService.cs" />
     <Compile Include="EntityQueryServices\OpportunityAdditionalServiceQueryService.cs" />
     <Compile Include="EntityQueryServices\OpportunityProductLocationQueryService.cs" />
     <Compile Include="EntityQueryServices\OpportunityProductQueryService.cs" />
@@ -348,6 +353,7 @@
     <Compile Include="EntityUpdateServices\Generated\EmployeeGroupUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\EscalationActionTimeIndicatorUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\EscalationPreDefinitionUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\OccasionInviteeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\OccasionStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\OccasionTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\OccasionUpdateService.Generated.cs" />
@@ -379,6 +385,7 @@
     <Compile Include="EntityUpdateServices\Generated\TicketTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TicketUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TimeUnitUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\OccasionInviteeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\OccasionTypeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\OccasionUpdateService.cs" />
     <Compile Include="EntityUpdateServices\OpportunityClosingReasonUpdateService.cs" />

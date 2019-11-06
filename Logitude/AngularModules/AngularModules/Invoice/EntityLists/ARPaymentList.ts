@@ -18,6 +18,7 @@ export class ARPaymentList {
 		LocalCurrencyCode: string;
 		AmountInLocalCurrency: number;
 		BranchId: string;
+		BranchName: string;
 		BillToId: string;
 		ARAccountId: string;
 		StatusCode: string;
@@ -48,6 +49,7 @@ export class ARPaymentList {
 		ARAccountName: string;
 		CreditAccountName: string;
 		OpenAmount: number;
+		OpenAmountInLocalCurrency: number;
 		ChequeOrPaymentRef: string;
 		Bank: string;
 		BankBranch: string;
@@ -77,7 +79,6 @@ export class ARPaymentList {
 		CertPago: string;
 		CadPago: string;
 		SelloPago: string;
-		BranchName: string;
 		SATApprovalDate: Date;
 		ApprovedDate: Date;
 		ApprovedByUserId: string;

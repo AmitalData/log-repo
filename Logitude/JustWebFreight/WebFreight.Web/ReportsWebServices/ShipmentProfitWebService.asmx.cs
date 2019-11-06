@@ -398,10 +398,11 @@ namespace WebFreight.Web.ReportsWebServices
                 }
                 else
                 {
-                    if (User != null)
+                    string loggedUserEmail = AuthenticationUtil.GetLoggedUserEmail(tenant);
+                    if (!string.IsNullOrEmpty(loggedUserEmail))
                     {
                         Contact currentContact = (from a in commonContext.Contacts
-                                                  where a.Email == User.Identity.Name && a.Tenant == tenant
+                                                  where a.Email == loggedUserEmail && a.Tenant == tenant
                                                   select a).FirstOrDefault();
 
                         if (currentContact != null)
@@ -463,6 +464,9 @@ namespace WebFreight.Web.ReportsWebServices
                 #region Partners
 
                 provider.AgentName = ServiceStringConvertor(shipmentPM.AgentName);
+                provider.AgentRef1 = ServiceStringConvertor(shipmentPM.AgentReference1);
+                provider.AgentRef2 = ServiceStringConvertor(shipmentPM.AgentReference2);
+
                 provider.ShipperName = ServiceStringConvertor(shipmentPM.ShipperName);
                 provider.ConsigneeName = ServiceStringConvertor(shipmentPM.ConsigneeName);
 

@@ -102,7 +102,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
     private accountingPeriod: any;
     private GetClosedMonth() {
         return new Promise(resolve => {
-            var periodTypeCode = "1" // 1-Regular
+            var periodTypeCode = "2" // 2-Invoice
             this.myAccountingPeriodListService.getByYear(this.InvoiceDate.getFullYear(), periodTypeCode).subscribe((myResponse: ServiceResponse) => {
                 if (myResponse != null) {
                     if (!myResponse.HasError) {
@@ -253,7 +253,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         }
     }
 
-  
+
     public SelectedPartnerType: InvoicePartnerType = null;
     PartnersTypeSelectionMethod(selected: InvoicePartnerType) {
         if (this.SelectedPartnerType != selected) {
@@ -554,6 +554,13 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         if (this.EntityPM.SATPaymentMethodCode != newValue) {
             this.EntityPM.SATPaymentMethodCode = newValue;
             this.SetUIProperties_Payment();
+        }
+    }
+
+    get BranchId() { return this.EntityPM.BranchId; }
+    set BranchId(value: string) {
+        if (this.EntityPM.BranchId != value) {
+            this.EntityPM.BranchId = value;
         }
     }
 

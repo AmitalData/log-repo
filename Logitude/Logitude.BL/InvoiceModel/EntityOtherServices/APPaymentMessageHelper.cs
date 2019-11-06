@@ -95,7 +95,8 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
             List<string> allPaymentIds = allEntities.Select(s => s.Id).ToList();
             List<CreditCardType> creditCardTypes = (from d in invoiceContext.CreditCardTypes where d.Tenant == tenant select d).ToList();
-            List<APPaymentMethod> paymentMethods = (from d in invoiceContext.APPaymentMethods where d.Tenant == tenant select d).ToList();
+            //List<APPaymentMethod> paymentMethods = (from d in invoiceContext.APPaymentMethods where d.Tenant == tenant select d).ToList();
+            List<AccountingPaymentMethod> paymentMethods = (from d in invoiceContext.AccountingPaymentMethods where d.IsAP == true && d.Tenant == tenant select d).ToList();
             //List<APInvoiceType> invoiceTypes = (from d in invoiceContext.APInvoiceTypes select d).ToList();
 
             List<APInvoicePayment> allInvoicesPayments = (from d in invoiceContext.APInvoicePayments
@@ -130,7 +131,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 }
 
                 string myPaymentMethodCode = null;
-                APPaymentMethod myPaymentMethod = paymentMethods.Where(d => d.Id == item.PaymentMethodId).FirstOrDefault();
+                AccountingPaymentMethod myPaymentMethod = paymentMethods.Where(d => d.Id == item.AccountingPaymentMethodId).FirstOrDefault();
                 if (myPaymentMethod != null)
                 {
                     myPaymentMethodCode = myPaymentMethod.Code;
@@ -261,7 +262,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             }
             else
             {
-                Stream blbstr = null;
+                //Stream blbstr = null;
                 if (bytearray != null)
                 {
                     string[] fileProps = fileName.Split('.');

@@ -96,7 +96,9 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     awbDp.AWBComments = shipmentPM.AWBPrintingComments;
                 }
-                
+
+                awbDp.AccountManagerName = shipmentPM.AccountManagerUserName;
+
                 awbDp.MAWBShort = shipmentPM.Master == null ? "" : shipmentPM.Master;
                 awbDp.HAWB = shipmentPM.House == null ? "" : shipmentPM.House;
                 awbDp.LeadingCurrency = shipmentPM.AWBCurrencyCode == null ? "" : shipmentPM.AWBCurrencyCode;
@@ -230,10 +232,12 @@ namespace WebFreight.Web.ReportsWebServices
 
         private void GetLoggedContactData(AWBDataProvider awbDp, int tenant)
         {
-            if (User != null)
+           string contactEmail =  AuthenticationUtil.GetLoggedUserEmail(tenant);
+
+            if (!string.IsNullOrEmpty(contactEmail))
             {
                 ContactQuery contactQuery = new ContactQuery(tenant);
-                ContactPM contactPM = contactQuery.GetContactByEmailOnly(User.Identity.Name, tenant);
+                ContactPM contactPM = contactQuery.GetContactByEmailOnly(contactEmail, tenant);
 
                 if (contactPM != null)
                 {

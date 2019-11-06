@@ -447,11 +447,10 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
 
     ValidationErrorsList: any[];
 
-
+    ArchivedRecordNumber = 0;
     SaveData() {
-
-        if (this.SelectedRecords.length > 0 || this.IsAllRecordSelected == true) {
-            this.StartBusyIndicator("Archiving ...");
+        this.ArchivedRecordNumber = 0;
+        if (this.SelectedRecords.length > 0 || this.IsAllRecordSelected == true) { 
             //if (this.IsAllRecordSelected == true) {
             //    this._ShipmentPMService.ArchiveAllShipments(this.filterAgrs).subscribe(myResult => {
             //        if (!myResult.HasError) {
@@ -465,17 +464,35 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
             //    });
             //}
             //else {
-                this._ShipmentPMService.ArchiveShipments(this.SelectedRecords).subscribe(myResult => {
+            var NumberOfTimes = ((this.SelectedRecords.length % 10) == 0 ? (this.SelectedRecords.length / 10) : (this.SelectedRecords.length / 10) + 1)
+            for (var i = 0; i < NumberOfTimes; i++) {
+                var nextStart = (i * 10);
+                var TenSelectedRecords = this.SelectedRecords.slice(nextStart, nextStart + 10)
+                this.StartBusyIndicator("Archiving " + TenSelectedRecords.length + "/" + this.SelectedRecords.length  + " ...");
+                this._ShipmentPMService.ArchiveShipments(TenSelectedRecords).subscribe(myResult => {
                     if (!myResult.HasError) {
-                        this.StopBusyIndicator();
-                        this.LoadImporterShipments();
-                        this.CurrentSession.SessionEvent.emit({ Name: "CustomReloadShipments" });
+                        if ((this.ArchivedRecordNumber + 10) > this.SelectedRecords.length) {
+                            this.ArchivedRecordNumber = this.SelectedRecords.length;
+                        }
+                        else {
+                            this.ArchivedRecordNumber += 10;
+                        }
+                        this.StartBusyIndicator("Archiving " + this.ArchivedRecordNumber + "/" + this.SelectedRecords.length + " ...");
+                        if (this.SelectedRecords.length == this.ArchivedRecordNumber) {
+                            this.StopBusyIndicator();
+                            this.LoadImporterShipments();
+                            this.CurrentSession.SessionEvent.emit({ Name: "CustomReloadShipments" });
+                        }
                         //this.CurrentSession.CloseCurrentWindow();//.CurrentWindow.Close("");
                     }
                     else {
+                        this.StopBusyIndicator();
+                        this.LoadImporterShipments();
+                        this.CurrentSession.SessionEvent.emit({ Name: "CustomReloadShipments" });
                         this.ValidationErrorsList = myResult.ErrorsArray;
                     }
                 });
+            }
             //}
         }
 

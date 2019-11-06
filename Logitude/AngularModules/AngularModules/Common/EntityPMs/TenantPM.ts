@@ -465,9 +465,19 @@ export class TenantPM {
     public set CustomerPhone(newValue: string) { if (this.customerPhone != newValue) { this.customerPhone = newValue; this.MarkAsDirty("CustomerPhone"); } }
        
 	 
+    private isDocumentsArchive: boolean;
+    public get IsDocumentsArchive() { return this.isDocumentsArchive; }
+    public set IsDocumentsArchive(newValue: boolean) { if (this.isDocumentsArchive != newValue) { this.isDocumentsArchive = newValue; this.MarkAsDirty("IsDocumentsArchive"); } }
+       
+	 
     private isCustomerTenantShare: boolean;
     public get IsCustomerTenantShare() { return this.isCustomerTenantShare; }
     public set IsCustomerTenantShare(newValue: boolean) { if (this.isCustomerTenantShare != newValue) { this.isCustomerTenantShare = newValue; this.MarkAsDirty("IsCustomerTenantShare"); } }
+       
+	 
+    private customerTenantShareImportFile: boolean;
+    public get CustomerTenantShareImportFile() { return this.customerTenantShareImportFile; }
+    public set CustomerTenantShareImportFile(newValue: boolean) { if (this.customerTenantShareImportFile != newValue) { this.customerTenantShareImportFile = newValue; this.MarkAsDirty("CustomerTenantShareImportFile"); } }
        
 	 
     private customerTenantShareExportFile: boolean;
@@ -508,6 +518,11 @@ export class TenantPM {
     private vatSize: number;
     public get VatSize() { return this.vatSize; }
     public set VatSize(newValue: number) { if (this.vatSize != newValue) { this.vatSize = newValue; this.MarkAsDirty("VatSize"); } }
+       
+	 
+    private logBoxAdminUserId: string;
+    public get LogBoxAdminUserId() { return this.logBoxAdminUserId; }
+    public set LogBoxAdminUserId(newValue: string) { if (this.logBoxAdminUserId != newValue) { this.logBoxAdminUserId = newValue; this.MarkAsDirty("LogBoxAdminUserId"); } }
        
 	 
     private createTenantFromSignUp: boolean;
@@ -575,6 +590,11 @@ export class TenantPM {
     public set TenantVATManagement(newValue: boolean) { if (this.tenantVATManagement != newValue) { this.tenantVATManagement = newValue; this.MarkAsDirty("TenantVATManagement"); } }
        
 	 
+    private documentShareAsDefault: boolean;
+    public get DocumentShareAsDefault() { return this.documentShareAsDefault; }
+    public set DocumentShareAsDefault(newValue: boolean) { if (this.documentShareAsDefault != newValue) { this.documentShareAsDefault = newValue; this.MarkAsDirty("DocumentShareAsDefault"); } }
+       
+	 
     private storageEncryptionKey: string;
     public get StorageEncryptionKey() { return this.storageEncryptionKey; }
     public set StorageEncryptionKey(newValue: string) { if (this.storageEncryptionKey != newValue) { this.storageEncryptionKey = newValue; this.MarkAsDirty("StorageEncryptionKey"); } }
@@ -598,6 +618,16 @@ export class TenantPM {
     private defaultSLAId: string;
     public get DefaultSLAId() { return this.defaultSLAId; }
     public set DefaultSLAId(newValue: string) { if (this.defaultSLAId != newValue) { this.defaultSLAId = newValue; this.MarkAsDirty("DefaultSLAId"); } }
+       
+	 
+    private stockTypeCode: string;
+    public get StockTypeCode() { return this.stockTypeCode; }
+    public set StockTypeCode(newValue: string) { if (this.stockTypeCode != newValue) { this.stockTypeCode = newValue; this.MarkAsDirty("StockTypeCode"); } }
+       
+	 
+    private autoArchiveOnInvoice: boolean;
+    public get AutoArchiveOnInvoice() { return this.autoArchiveOnInvoice; }
+    public set AutoArchiveOnInvoice(newValue: boolean) { if (this.autoArchiveOnInvoice != newValue) { this.autoArchiveOnInvoice = newValue; this.MarkAsDirty("AutoArchiveOnInvoice"); } }
        
 	 
     private ecommerceSupportEmail: string;
@@ -628,36 +658,6 @@ export class TenantPM {
     private applyVATForAllPartners: boolean;
     public get ApplyVATForAllPartners() { return this.applyVATForAllPartners; }
     public set ApplyVATForAllPartners(newValue: boolean) { if (this.applyVATForAllPartners != newValue) { this.applyVATForAllPartners = newValue; this.MarkAsDirty("ApplyVATForAllPartners"); } }
-       
-	 
-    private isDocumentsArchive: boolean;
-    public get IsDocumentsArchive() { return this.isDocumentsArchive; }
-    public set IsDocumentsArchive(newValue: boolean) { if (this.isDocumentsArchive != newValue) { this.isDocumentsArchive = newValue; this.MarkAsDirty("IsDocumentsArchive"); } }
-       
-	 
-    private customerTenantShareImportFile: boolean;
-    public get CustomerTenantShareImportFile() { return this.customerTenantShareImportFile; }
-    public set CustomerTenantShareImportFile(newValue: boolean) { if (this.customerTenantShareImportFile != newValue) { this.customerTenantShareImportFile = newValue; this.MarkAsDirty("CustomerTenantShareImportFile"); } }
-       
-	 
-    private documentShareAsDefault: boolean;
-    public get DocumentShareAsDefault() { return this.documentShareAsDefault; }
-    public set DocumentShareAsDefault(newValue: boolean) { if (this.documentShareAsDefault != newValue) { this.documentShareAsDefault = newValue; this.MarkAsDirty("DocumentShareAsDefault"); } }
-       
-	 
-    private stockTypeCode: string;
-    public get StockTypeCode() { return this.stockTypeCode; }
-    public set StockTypeCode(newValue: string) { if (this.stockTypeCode != newValue) { this.stockTypeCode = newValue; this.MarkAsDirty("StockTypeCode"); } }
-       
-	 
-    private autoArchiveOnInvoice: boolean;
-    public get AutoArchiveOnInvoice() { return this.autoArchiveOnInvoice; }
-    public set AutoArchiveOnInvoice(newValue: boolean) { if (this.autoArchiveOnInvoice != newValue) { this.autoArchiveOnInvoice = newValue; this.MarkAsDirty("AutoArchiveOnInvoice"); } }
-       
-	 
-    private logBoxAdminUserId: string;
-    public get LogBoxAdminUserId() { return this.logBoxAdminUserId; }
-    public set LogBoxAdminUserId(newValue: string) { if (this.logBoxAdminUserId != newValue) { this.logBoxAdminUserId = newValue; this.MarkAsDirty("LogBoxAdminUserId"); } }
        
 	 
 

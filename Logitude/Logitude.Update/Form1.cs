@@ -3721,7 +3721,7 @@ User/Pass",
             //GlobalContact contact = null;
             IGlobalContext globalObjectContext = GlobalContext.GetContext();
             ContactPasswordRepository GCRepo = new ContactPasswordRepository(globalObjectContext);
-            var Tenants = new List<int>() { 415, 383, 1255, 388, 1256, 1326, 1405, 1212, 2035, 1182, 42, 1222 };// { 493, 839, 1177, 558, 570, 545, 286, 996, 1264, 1573, 1402, 1427, 1245, 1604, 796, 1275, 1326, 1333, 42, 1256, 877, 1423, 1293, 2043 };
+            var Tenants = new List<int>() { 493, 839, 1177, 558, 570, 545, 286, 996, 1264, 1573, 1402, 1427, 1245, 1604, 796, 1275, 1326, 1333, 42, 1256, 877, 1423, 1293, 2043 };
             foreach (var tenant in Tenants)
             {
                 var contacts = globalObjectContext.GlobalContacts.Where(c => c.GlobalTenantId == tenant && (c.IsUser == true) && c.InActive == false).ToList();
@@ -3924,6 +3924,12 @@ User/Pass",
             }
 
             return imagedetailid;
+        }
+
+        private void executeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BatchTaskTester batchTaskTester = new BatchTaskTester();
+            batchTaskTester.Show();
         }
     }
 

@@ -388,6 +388,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool inReconcileProgress ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool InReconcileProgress  
+	   {
+	    
+	     get
+		{
+		   return inReconcileProgress;
+		 }
+		 set
+		 {
+		   if(inReconcileProgress != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InReconcileProgress",OldValue=inReconcileProgress,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   inReconcileProgress=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

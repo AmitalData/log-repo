@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Credit Limit Setting",
-			      				    Code =  "274a",
+			      				    Code =  "8581",
 			      				    Name =  "CreditLimitSetting",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",

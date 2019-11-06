@@ -352,13 +352,62 @@ export class APInvoiceMenuButtonsHandler {
         this.Validate();
 
         if (this.isValid) {
-            this.CheckDuplication();
+            this.ValidateInvoiceDate();
+          
         }
 
         else {
             this.StopFlags();
         }
     }
+
+    ValidateInvoiceDate() {
+        //this.CurrentSession.StartBusyIndicatorLoading();
+
+        this.entityArgs.EditComponent.StartBusyIndicatorLoading();
+
+        var service: InvoiceDomainService = new InvoiceDomainService();
+        service.ValidateInvoiceDate(this.EntityPM.InvoiceDate).subscribe((response: ServiceResponse) => {
+
+
+if (response != null) {
+ this.CurrentSession.StopBusyIndicator();
+                if (!response.HasError) {
+                    if (response.Result != null) {
+                        this.ShowConfirmWindow(response.Result);
+                    }
+                    else {
+                        this.CheckDuplication();
+                    }
+                }
+                else {
+                    this.entityArgs.EditComponent.ValidationErrorsList  = response.ErrorsArray;
+                }
+            }
+           
+        });
+
+    }
+
+    private ShowConfirmWindow(warningMessage: string) {
+
+        let confirmWindow = new ConfirmWindow();
+        confirmWindow.ShowWarningImage = true;
+   
+        confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.Cancel");
+        confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.B.Ok");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.CheckDuplication();
+
+            }
+            if (confirmWindow.No)
+                this.StopFlags();
+        });
+        confirmWindow.Show(warningMessage);
+
+    }
+
     CheckDuplication() {
         var service: InvoiceDomainService = new InvoiceDomainService();
         service.CheckVendor_NumberDuplication(this.EntityPM.VendorId, this.EntityPM.InvoiceNumber, this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {

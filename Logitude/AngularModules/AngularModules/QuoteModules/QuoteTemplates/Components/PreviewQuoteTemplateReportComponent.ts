@@ -7,7 +7,7 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 import {QuoteTemplateSectionExtendedPMService} from '../../../Quote/Services/ExtendedPMs/QuoteTemplateSectionExtendedPMService';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
-
+import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 @Component({
     selector: 'PreviewQuoteTemplateReportComponent',
     moduleId: module.id,
@@ -57,7 +57,10 @@ export class PreviewQuoteTemplateReportComponent implements OnInit, AfterViewIni
 
             
             }
-
+            else if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
+                var messageWindow: MessageWindow = new MessageWindow();
+                messageWindow.Show(pmResponse.ErrorsArray[0]);
+            }
 
         });
 

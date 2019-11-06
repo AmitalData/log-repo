@@ -4,12 +4,10 @@ import { BaseComponent } from '../../../Infrastructure/Components/LogitudeCompon
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
-import { TariffDomainService, SurchargeSummary, TariffSummery } from '../../../TariffModule/Services/TariffDomainService';
+import { TariffDomainService} from '../../../TariffModule/Services/TariffDomainService';
 import { TariffSearchSummary } from '../../../TariffModule/Services/TariffDomainService';
-import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { CurrencyList } from '../../../Common/EntityLists/CurrencyList';
-import { CommonDomainService } from '../../../Common/Services/CommonDomainService';
 import { CurrencyListService } from '../../../Common/Services/StandardLists/CurrencyListService';
 import { ShipmentPM } from '../../../Shipment/EntityPMs/ShipmentPM';
 import { ShipmentPayablePM } from '../../../Shipment/EntityPMs/ShipmentPayablePM';
@@ -18,7 +16,7 @@ import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import {  ShipmentGenerator } from '../../../Shipment/Tools';
 import { ChargesTypeList } from '../../../Common/EntityLists/ChargesTypeList';
 import { ChargesTypeListService } from '../../../Common/Services/StandardLists/ChargesTypeListService';
-import { PayablesTabComponent, ShipmentPayableItem } from '../../../ShipmentModules/ShipmentTabs/Components/Payables/PayablesTabComponent';
+import { ShipmentPayableItem } from '../../../ShipmentModules/ShipmentTabs/Components/Payables/PayablesTabComponent';
 
 @Component({
     moduleId: module.id,
@@ -441,6 +439,18 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         }
     }
 
+    ViewSurchargesClicked(item: TariffSearchSummary) {
+        if (item && item.Surcharges != null) {
+            var surcharge = item.Surcharges[0];
+            var editWindow = new LogitudeWindow();
+            editWindow.ShowHeaderButtons = true;
+            editWindow.Title = "Price Check";
+            editWindow.Height = 770;
+            editWindow.Width = 1500;
+            editWindow.ShowEditComponent(surcharge.TariffId, "Tariff", surcharge.VersionId);
+        }
+    }
+
     private SetUIProperties() {
         this.UIProperties.SetRequired("OriginPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.OriginPortId));
         this.UIProperties.SetRequired("DestinationPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.DestinationPortId));
@@ -512,7 +522,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 }
                 else {
                     this.CurrentSession.StartBusyIndicatorLoading();
-                    this.AssignTariffPayablesToShipment();
+                   this.AssignTariffPayablesToShipment();
                 }
             }
         } 
@@ -527,8 +537,9 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         this.AssignTariffPayablesToShipment();
     }
     AssignTariffPayablesToShipment(): any {
-        this.TariffPayables.forEach(payable => {
-            this.ShipmentPM.AddPayable(payable);
+        this.TariffPayables.forEach(shipmentPayable => {
+            this.ShipmentPM.AddPayable(shipmentPayable);
+            
         });
         this.ReloadTariffPayables();
     }
@@ -569,8 +580,11 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 var profitCurrencyExchangeRate = this.Generator.GetCurrencyRate(this.ShipmentPM.ProfitCurrencyId);
                 var expectedAmountProfit = expectedAmountLocal / profitCurrencyExchangeRate;
 
-                shipmentPayable.UnitPrice = newRecord.ActualPrice != null ? AppTool.Round(newRecord.ActualPrice / nweQuantity, 3) : null;
-                shipmentPayable.Quantity = AppTool.Round(nweQuantity, 3);
+                if (nweQuantity != null) {
+                    shipmentPayable.UnitPrice = newRecord.ActualPrice != null ? AppTool.Round(newRecord.ActualPrice / nweQuantity, 3) : null;
+                    shipmentPayable.Quantity = AppTool.Round(nweQuantity, 3);
+                }
+
                 shipmentPayable.ExpectedAmount = AppTool.Round(expectedAmount, 2);
                 shipmentPayable.ExpectedAmountLocal = AppTool.Round(expectedAmountLocal, 2);
                 shipmentPayable.ExpectedAmountInProfitCurrency = AppTool.Round(expectedAmountProfit, 2);
@@ -590,7 +604,17 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
                 shipmentPayable.UpdateDate = DateTool.GetCurrentDateAsUtc();
                 shipmentPayable.UpdateByUserId = SessionLocator.LoggedUserId;
                 shipmentPayable.Notes = notes;
+                shipmentPayable.VendorId = newRecord.SellerId;
+                shipmentPayable.VendorName = newRecord.SellerName;
                 this.TariffPayables.push(shipmentPayable);
+
+                var payableItem = new ShipmentPayableItem(shipmentPayable, this.FatherComponent, false);
+                this.FatherComponent.ItemsSource.Insert(payableItem);
+                payableItem.ChargesTypeId = shipmentPayable.ChargesTypeId;
+                payableItem.MeasurementId = shipmentPayable.MeasurementId;
+                payableItem.CurrencyId = shipmentPayable.CurrencyId;
+                payableItem.UnitPrice = shipmentPayable.UnitPrice;
+                payableItem.MinAmount = newRecord.MinPrice;
             }
         });
     }
@@ -634,11 +658,11 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             case "BTEU": { myQuantity = this.ShipmentPM.TEU; break; }
             case "FIXD": { myQuantity = 1; break; }
             case "PRVL": { myQuantity = this.ShipmentPM.ValueOfGoods; break; }
-            case "PRFR": { myQuantity = ArrayTool.Sum(this.TariffPayables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentPayableParentId)), "ExpectedAmount"); break; }
+            case "PRFR": { myQuantity = ArrayTool.Sum(this.ShipmentPM.ShipmentPayables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentPayableParentId)), "ExpectedAmount"); break; }
             case "GWTN": { myQuantity = this.GrossWeightPerTon; break; }
             case "CWKG": { myQuantity = this.ChargeableWeightInKG; break; }
             case "GWKG": { myQuantity = this.GrossWeightInKG; break; }
-            case "QTY": { myQuantity = this.ShipmentPM.NumberOfPackages; break; }
+            case "QTY": { myQuantity = this.ShipmentPM.NumberOfPackages != null ? this.ShipmentPM.NumberOfPackages: null; break; }
             case "VCBM": { myQuantity = this.VolumeInCBM; break; }
             default: { break; }
         }

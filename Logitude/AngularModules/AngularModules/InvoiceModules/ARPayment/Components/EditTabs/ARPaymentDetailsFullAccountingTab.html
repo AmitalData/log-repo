@@ -207,7 +207,7 @@
                                                 </td>
 
                                                 <td>
-                                                    <LogTextBox [ObjectFieldName]="'AmountInPaymentCurrency'"
+                                                    <LogTextBox [ObjectFieldName]="'AmountInPaymentCurrency'" [DigitsAfterPoint]="2"
                                                                 [InputType]="IsNegativeAmountEnabled ? 'sigdouble':'double'"
                                                                 [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
                                                     </LogTextBox>
@@ -424,7 +424,7 @@
                                         <div></div>
                                     </td>
 
-                                    <td style="width:1000px;">
+                                    <td >
                                         <table>
                                             <tr class="TabTitleRow">
                                                 <td colspan="8">{{PaymentMethodDetailsLabel}}</td>
@@ -461,39 +461,45 @@
                                                               [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
                                                     </LogLabel>
                                                 </td>
+                                                <td style="width:450px" *ngIf="BankFieldsVisibile">
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width:150px; left: -10px;">
+                                                                <LogLabel [ObjectFieldName]="'Bank'"
+                                                                          [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                                </LogLabel>
+                                                            </td>
 
-                                                <td style="width:150px; left: -10px;">
-                                                    <LogLabel [ObjectFieldName]="'Bank'"
-                                                              [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
-                                                    </LogLabel>
+                                                            <td style="width:150px; left: -10px;">
+                                                                <LogLabel [ObjectFieldName]="'BankBranch'"
+                                                                          [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                                </LogLabel>
+                                                            </td>
+
+                                                            <td style="width:150px; left: -10px;">
+                                                                <LogLabel [ObjectFieldName]="'Account'"
+                                                                          [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                                </LogLabel>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </td>
 
-                                                <td style="width:150px; left: -10px;">
-                                                    <LogLabel [ObjectFieldName]="'BankBranch'"
-                                                              [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
-                                                    </LogLabel>
-                                                </td>
-
-                                                <td style="width:150px; left: -10px;">
-                                                    <LogLabel [ObjectFieldName]="'Account'"
-                                                              [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
-                                                    </LogLabel>
-                                                </td>
-
+                                             
                                                 <td *ngIf="isFullAccounting && AccountingPaymentMethodCode == 'CH'"
                                                     style="width:150px; left: -10px;">
                                                     <LogLabel [ObjectFieldName]="'StatusCode'" [ObjectTableName]="'ARPaymentCheque'"
                                                               [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
-                                                <td>
+                                                <td colspan="2">
                                                     <div></div>
                                                 </td>
                                             </tr>
 
                                             <tr class="customtrclass">
                                                 <td style="width:150px;">
-                                                    <LogTextBox [ObjectFieldName]="'AmountInPaymentCurrency'"
+                                                    <LogTextBox [ObjectFieldName]="'AmountInPaymentCurrency'" [DigitsAfterPoint]="2"
                                                                 [Text]="AmountInPaymentCurrency" [InputType]="'double'"
                                                                 [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
                                                     </LogTextBox>
@@ -529,25 +535,33 @@
                                                             [LookUpTableName]="'CreditCardType'">
                                                     </LogLov>
                                                 </td>
+                                                <td style="width:450px" *ngIf="BankFieldsVisibile">
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width:150px;">
+                                                                <LogTextBox [ObjectFieldName]="'Bank'" [Text]="Bank"
+                                                                            [InputType]="'text'" [ObjectTableName]="ObjectTableName"
+                                                                            [DataContext]="DataContext"></LogTextBox>
+                                                            </td>
 
-                                                <td style="width:150px;">
-                                                    <LogTextBox [ObjectFieldName]="'Bank'" [Text]="Bank"
-                                                                [InputType]="'text'" [ObjectTableName]="ObjectTableName"
-                                                                [DataContext]="DataContext"></LogTextBox>
+                                                            <td style="width:150px;">
+                                                                <LogTextBox [ObjectFieldName]="'BankBranch'" [Text]="BankBranch"
+                                                                            [InputType]="'text'" [ObjectTableName]="ObjectTableName"
+                                                                            [DataContext]="DataContext"></LogTextBox>
+                                                            </td>
+
+                                                            <td style="width:150px;">
+                                                                <LogTextBox [ObjectFieldName]="'Account'" [Text]="Account"
+                                                                            [InputType]="'text'" [ObjectTableName]="ObjectTableName"
+                                                                            [DataContext]="DataContext"></LogTextBox>
+                                                            </td>
+
+                                                        </tr>
+                                                    </table>
+
                                                 </td>
 
-                                                <td style="width:150px;">
-                                                    <LogTextBox [ObjectFieldName]="'BankBranch'" [Text]="BankBranch"
-                                                                [InputType]="'text'" [ObjectTableName]="ObjectTableName"
-                                                                [DataContext]="DataContext"></LogTextBox>
-                                                </td>
-
-                                                <td style="width:150px;">
-                                                    <LogTextBox [ObjectFieldName]="'Account'" [Text]="Account"
-                                                                [InputType]="'text'" [ObjectTableName]="ObjectTableName"
-                                                                [DataContext]="DataContext"></LogTextBox>
-                                                </td>
-
+                                               
                                                 <td *ngIf="isFullAccounting && AccountingPaymentMethodCode == 'CH'"
                                                     style="width:150px;text-align:center;">
                                                     <div class="MediaFill"
@@ -564,7 +578,7 @@
                                         </table>
                                     </td>
 
-                                    <td>
+                                    <td colspan="2">
                                         <div></div>
                                     </td>
                                 </tr>
@@ -798,7 +812,7 @@
                                 <div *ngIf="TransactionsList?.Length == 0 && !_loading" class="NoDataText">
                                     {{'ARPayment.S.NoInvoicesFound' | TextCodeTranslationPipe}}
                                 </div>
-                                <div *ngIf="_loading" class="NoDataText" id="{{'ARPaymentSpinner' | IdGeneratorPipe}}">
+                                <div *ngIf="_loading" class="NoDataText">
                                     <div class="spinner">
                                         <div class="rect1"></div>
                                         <div class="rect2"></div>

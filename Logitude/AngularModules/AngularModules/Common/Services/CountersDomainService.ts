@@ -1,4 +1,4 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
@@ -79,6 +79,24 @@ export class CountersDomainService {
 
                 var myResponse = new ServiceResponse();
                 myResponse.Result = mappedResult;
+                return myResponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+    GetCounterProperties(counterCode: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetCounterProperties?counterCode=' + counterCode;
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var myJsonResult = response.json();
+
+
+                var myResponse = new ServiceResponse();
+                myResponse.Result = myJsonResult;
                 return myResponse;
 
             }).catch(ServiceHelper.HandleServiceError);

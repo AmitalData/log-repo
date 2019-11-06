@@ -2309,6 +2309,52 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string cardCode ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CardCode  
+	   {
+	    
+	     get
+		{
+		   return cardCode;
+		 }
+		 set
+		 {
+		   if(cardCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CardCode",OldValue=cardCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   cardCode=value;
+		   }
+			
+		 }
+	   }
+	  private string partnerTypeId ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PartnerTypeId  
+	   {
+	    
+	     get
+		{
+		   return partnerTypeId;
+		 }
+		 set
+		 {
+		   if(partnerTypeId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PartnerTypeId",OldValue=partnerTypeId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   partnerTypeId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

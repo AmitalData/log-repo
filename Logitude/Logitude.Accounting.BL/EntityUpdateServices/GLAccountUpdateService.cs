@@ -38,6 +38,7 @@ using Logitude.Accounting.BL.CoreBL;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using System.Reflection;
+using Logitude.BL.CommonDataModel.EntityLists;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -52,9 +53,16 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
         protected override void OnCreating(GLAccountPM entityPM, EntityPM entityParentPM)
         {
-            if (entityPM.ChartOfAccountsTypeCode != "3" && entityPM.ChartOfAccountsTypeCode != "4" && entityPM.ChartOfAccountsTypeCode != "6")
-                SetDisplayNumber(entityPM);
+            if (!string.IsNullOrWhiteSpace(EntityPM.ExternalDisplayNumber))
+            {
+                entityPM.DisplayNumber = EntityPM.ExternalDisplayNumber;
+            }
+            else
+            {
+                if (entityPM.ChartOfAccountsTypeCode != "3" && entityPM.ChartOfAccountsTypeCode != "4" && entityPM.ChartOfAccountsTypeCode != "6")
+                    SetDisplayNumber(entityPM);
 
+            }
             AddAcitivityLog(entityPM, "N");
 
             FillSearchFields(entityPM);
@@ -524,7 +532,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             OnUpdatingCheckBalance(entityPM, entityPOCO);
             OnUpdatingCheckReconcileMethod(entityPM, entityPOCO);
 
-            ValidateCurrency(entityPM, entityPOCO);
+            ValidateCurrencyChange(entityPM, entityPOCO);
         }
         protected override void OnUpdating(GLAccountPM entityPM)
         {
@@ -536,7 +544,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         }
 
-        private void SendHybridTask(GLAccountPM glaccounPM)
+        public void SendHybridTask(GLAccountPM glaccounPM)
         {
             if (glaccounPM.AccountTypeCode != "4" && glaccounPM.AccountTypeCode != "5" && glaccounPM.IsControlAccount==false)
             {
@@ -566,7 +574,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         private List<QueueTask> CreateQueueTasks(GLAccountPM glaccounPM)
         {
-            string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(glaccounPM);
+           APIDataContract.ApiV1.GLAccount gLAccount = GetMappedGLAccountDataContract(glaccounPM);
+
+            string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(gLAccount);
 
             List<QueueTask> queue1Tasks = new List<QueueTask>
                 {
@@ -581,7 +591,46 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 };
             return queue1Tasks;
         }
+        private APIDataContract.ApiV1.GLAccount GetMappedGLAccountDataContract(GLAccountPM gLAccountPM)
+        {
+            APIDataContract.ApiV1.GLAccountQueryService gLAccountQueryService = new APIDataContract.ApiV1.GLAccountQueryService(gLAccountPM.Tenant);
+            APIDataContract.ApiV1.GLAccount glAccount = gLAccountQueryService.GLAccountDataMapping(gLAccountPM, gLAccountPM.Tenant);
+           
+            glAccount = MapGLAccountCardFields(glAccount);
+            glAccount.CardCode = null;
+            glAccount.PartnerTypeId = null;
 
+            return glAccount;
+        }
+        private APIDataContract.ApiV1.GLAccount MapGLAccountCardFields(APIDataContract.ApiV1.GLAccount gLAccount)
+        {
+            List<CardList> cardLists = GetCardsByGLAccountId(gLAccount.Id, gLAccount.Tenant);
+          
+            List<Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Card> cards = new List<Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Card>();
+            foreach (CardList card in cardLists.Where(d=> d.PartnerTypeId == gLAccount.PartnerTypeId ))
+            {
+                Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Card connectedCard = new Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Card();
+                connectedCard.Code = card.Code;
+                connectedCard.PartnerCode = card.PartnerTypeId;
+                if (gLAccount.CardCode == connectedCard.Code)
+                {
+                    connectedCard.IsDisconnectedFromGLAccount = true;
+                }
+                else { connectedCard.IsDisconnectedFromGLAccount = false; }
+                cards.Add(connectedCard);
+
+            }
+            gLAccount.Cards = cards;
+            return gLAccount;
+
+        }
+        private List<CardList> GetCardsByGLAccountId(string id, int tenant)
+        {
+
+            CardQuery cardQuery = new CardQuery(tenant);
+           return cardQuery.GetCardPMsByGLAccountId(id, tenant);
+
+        }
         private CommunicationsParams CreateCommunicationParamsForGLAccount(GLAccountPM glaccounPM)
         {
             int tenant = glaccounPM.Tenant;
@@ -793,7 +842,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                 ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
                 string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
-                Contact contact = contactRep.GetSingleContactByEmail(resolveLoggingUserId, entityPM.Tenant);
+                ContactPM contact = GetLoggedContact(entityPM.Tenant);// contactRep.get(resolveLoggingUserId, entityPM.Tenant);
+                showLocals = !contact.DontShowLocal;
                 CreateEventsForSomeFields();
                 if (entityPM.GLAccountWithholdingTaxes.Count > 0)
                 {
@@ -1329,376 +1379,468 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         // PRIVATE METHODS
         bool showLocals;
+        string notes = null;
+        string eventCode = null;
         private void CreateEventsForSomeFields()
         {
-           // List<string> properties = new List<string>() {"Category1Id","Category2Id","Category3Id","Category4Id","Category5Id","RevaluationEnabled", "IsMultiCurrency","ReconcileMethodCode" ,"AutomaticReconcileId"};
-        
-        
-           // PropertyInfo[] pmProperties = EntityPM.GetType().GetProperties();
-           //PropertyInfo[] pocoProperties = EntityPOCO.GetType().GetProperties();
-           // foreach (string property in properties)
-           // {
-           //     PropertyInfo pmProperty = pmProperties.Where(d => d.Name == property).FirstOrDefault();//[0];
-           //     PropertyInfo pocoProperty = pocoProperties.Where(d => d.Name == property).FirstOrDefault();//[0];
-           //     if (pmProperty != null)
-           //     {
-           //         var pmPropertyValue = pmProperty.GetValue(EntityPM, null);
-           //         var pocoPropertyValue = pocoProperty.GetValue(EntityPOCO, null);
-           //         if (pocoPropertyValue != pmPropertyValue)
-           //         {
+            List<string> properties = new List<string>() {"IsVatExempt", "Category1Id", "Category2Id", "Category3Id", "Category4Id", "Category5Id", "RevaluationEnabled", "IsMultiCurrency", "ReconcileMethodCode", "AutomaticReconcileId" };       
+            //PropertyInfo[] pmProperties = EntityPM.GetType().GetProperties();
+            //PropertyInfo[] pocoProperties = EntityPOCO.GetType().GetProperties();
+            foreach (string property in properties)
+            {
+                SetNotesAndEventCodeForTraceEvent(property);
+                if (notes != null)
+                {
+                    CreateUpdateTraceEvent(notes, eventCode);
+                }
+                //PropertyInfo pmProperty = pmProperties.Where(d => d.Name == property).FirstOrDefault();//[0];
+                //PropertyInfo pocoProperty = pocoProperties.Where(d => d.Name == property).FirstOrDefault();//[0];
+                //if (pmProperty != null)
+                //{
+                //    var pmPropertyValue = pmProperty.GetValue(EntityPM, null);
+                //    var pocoPropertyValue = pocoProperty.GetValue(EntityPOCO, null);
+                //    if (pocoPropertyValue != pmPropertyValue)
+                //    {
                       
-           //         }
+                //    }
+                //}
+            }
+           
+           
+          
 
-           //     }
+           
+            //if (EntityPOCO.Category1Id != EntityPM.Category1Id)
+            //{
+            //    string notes = GetTraceEventNotesForCategory1Field();
+            //    eventCode = "CAT1";
                
 
+            //}
+            //if (EntityPOCO.Category2Id != EntityPM.Category2Id)
+            //{
+            //    string notes = GetTraceEventNotesForCategory2Field();
+            //    eventCode = "CAT2";
+            //    CreateUpdateTraceEvent(notes, eventCode);
 
-           // }
-            string eventCode = "";
-           
-            ContactPM contact = GetLoggedContact(EntityPOCO.Tenant);
-            showLocals = !contact.DontShowLocal;
+            //}
+            //if (EntityPOCO.Category3Id != EntityPM.Category3Id)
+            //{
+            //    eventCode = "CAT3";
+            //    string oldValue = null;
+            //    string newValue = null;
+            //    Category3QueryService category3QueryService = new Category3QueryService(EntityPM.Tenant);
+            //    Category3PM category3 = category3QueryService.GetSinglePM(EntityPOCO.Category3Id, EntityPOCO.Tenant);
+            //    if (category3 != null)
+            //    {
+            //        if (showLocals)
+            //        {
+            //            oldValue = category3.LocalName;
+
+            //        }
+            //        else
+            //        {
+            //            oldValue = category3.EnglishName;
+
+            //        }
+            //    }
+            //    category3 = category3QueryService.GetSinglePM(EntityPM.Category3Id, EntityPM.Tenant);
+            //    if (category3 != null)
+            //    {
+            //        if (showLocals)
+            //        {
+            //            newValue = category3.LocalName;
+
+            //        }
+            //        else
+            //        {
+            //            newValue = category3.EnglishName;
+
+            //        }
+            //    }
+            //    CreateUpdateTraceEvent(oldValue, newValue, eventCode);
+
+            //}
+            //if (EntityPOCO.Category4Id != EntityPM.Category4Id)
+            //{
+            //    eventCode = "CAT4";
+            //    string oldValue = null;
+            //    string newValue = null;
+            //    Category4QueryService category4QueryService = new Category4QueryService(EntityPM.Tenant);
+            //    Category4PM category4 = category4QueryService.GetSinglePM(EntityPOCO.Category4Id, EntityPOCO.Tenant);
+            //    if (category4 != null)
+            //    {
+            //        if (showLocals)
+            //        {
+            //            oldValue = category4.LocalName;
+
+            //        }
+            //        else
+            //        {
+            //            oldValue = category4.EnglishName;
+
+            //        }
+            //    }
+            //    category4 = category4QueryService.GetSinglePM(EntityPM.Category4Id, EntityPM.Tenant);
+            //    if (category4 != null)
+            //    {
+            //        if (showLocals)
+            //        {
+            //            newValue = category4.LocalName;
+
+            //        }
+            //        else
+            //        {
+            //            newValue = category4.EnglishName;
+
+            //        }
+            //    }
+            //    CreateUpdateTraceEvent(oldValue, newValue, eventCode);
+
+            //}
+            //if (EntityPOCO.Category5Id != EntityPM.Category5Id)
+            //{
+            //    eventCode = "CAT5";
+            //    string oldValue = null;
+            //    string newValue = null;
+            //    Category5QueryService category5QueryService = new Category5QueryService(EntityPM.Tenant);
+            //    Category5PM category5 = category5QueryService.GetSinglePM(EntityPOCO.Category5Id, EntityPOCO.Tenant);
+            //    if (category5 != null)
+            //    {
+            //        if (showLocals)
+            //        {
+            //            oldValue = category5.LocalName;
+
+            //        }
+            //        else
+            //        {
+            //            oldValue = category5.EnglishName;
+
+            //        }
+            //    }
+            //    category5 = category5QueryService.GetSinglePM(EntityPM.Category5Id, EntityPM.Tenant);
+            //    if (category5 != null)
+            //    {
+            //        if (showLocals)
+            //        {
+            //            newValue = category5.LocalName;
+
+            //        }
+            //        else
+            //        {
+            //            newValue = category5.EnglishName;
+
+            //        }
+            //    }
+            //    CreateUpdateTraceEvent(oldValue, newValue, eventCode);
+
+            //}
+
+            //if (EntityPOCO.RevaluationEnabled != EntityPM.RevaluationEnabled)
+            //{
+            //    eventCode = "RVUP";
+            //    string oldValue = GetBooleanText(EntityPOCO.RevaluationEnabled);
+            //    string newValue = GetBooleanText(EntityPM.RevaluationEnabled);
+               
+            //    CreateUpdateTraceEvent(oldValue, newValue, eventCode);
+
+            //}
+            //if (EntityPOCO.IsMultiCurrency != EntityPM.IsMultiCurrency)
+            //{
+            //    eventCode = "MLUP";
+              
+            //    string oldValue = GetBooleanText(EntityPOCO.IsMultiCurrency);
+            //    string newValue = GetBooleanText(EntityPM.IsMultiCurrency);
+
+
+
+            //    //if (EntityPOCO.IsMultiCurrency == true)
+            //    //{
+            //    //    oldValue = TranslateTextsClass.Translate("Accounting.General.O.True", 0, showLocals);
+            //    //}
+            //    //else if (EntityPOCO.IsMultiCurrency == false || EntityPOCO.IsMultiCurrency == null)
+            //    //{
+            //    //    oldValue = TranslateTextsClass.Translate("Accounting.General.O.False", 0, showLocals);
+            //    //}
+
+            //    //if (EntityPM.IsMultiCurrency == true)
+            //    //{
+            //    //    newValue = TranslateTextsClass.Translate("Accounting.General.O.True", 0, showLocals);
+            //    //}
+            //    //else
+            //    //{
+            //    //    newValue = TranslateTextsClass.Translate("Accounting.General.O.False", 0, showLocals);
+            //    //}
+            //    CreateUpdateTraceEvent(oldValue, newValue, eventCode);
+
+            //}
+            //if (EntityPOCO.ReconcileMethodCode != EntityPM.ReconcileMethodCode)
+            //{
+            //    eventCode = "RMUP";
+                
+            //    CreateUpdateTraceEvent(oldValue, newValue, eventCode);
+
+
+            //}
+            //if (EntityPOCO.AutomaticReconcileId != EntityPM.AutomaticReconcileId)
+            //{
+            //    eventCode = "ARCP";
+                
+            //    CreateUpdateTraceEvent(oldValue, newValue, eventCode);
+
+            //}
+
+           // CreateEventForVatERxcempt();
+        }
+        
+        private void SetNotesAndEventCodeForTraceEvent(string FieldName)
+        {
+
+            switch (FieldName) {
+                case "Category1Id":
+                    {
+                        eventCode = "CAT1";
+                        notes = GetTraceEventNotesForCategory1Field();
+                        break;
+                    }
+                case "Category2Id":
+                    {
+                        eventCode = "CAT2";
+                        notes = GetTraceEventNotesForCategory2Field();
+                        break;
+                    }
+                case "Category3Id":
+                    {
+                        eventCode = "CAT3";
+                        notes = GetTraceEventNotesForCategory3Field();
+                        break;
+                    }
+                case "Category4Id":
+                    {
+                        eventCode = "CAT4";
+                        notes = GetTraceEventNotesForCategory4Field();
+                        break;
+                    }
+                case "Category5Id":
+                    {
+                        eventCode = "CAT5";
+                        notes = GetTraceEventNotesForCategory5Field();
+                        break;
+                    }
+                case "RevaluationEnabled":
+                    {
+                        if (EntityPOCO.RevaluationEnabled != EntityPM.RevaluationEnabled)
+                        {
+                            eventCode = "RVUP";
+                            notes = GetTraceEventNotesForBooleanField();
+                        }
+                        else notes = null;
+                        break;
+                    }
+                case "IsMultiCurrency":
+                    {
+                        if (EntityPOCO.IsMultiCurrency != EntityPM.IsMultiCurrency)
+                        {
+                            eventCode = "MLUP";
+                            notes = GetTraceEventNotesForBooleanField();
+                        }
+                        else notes = null;
+                        break;
+                    }
+                case "ReconcileMethodCode": {
+                        if (EntityPOCO.ReconcileMethodCode != EntityPM.ReconcileMethodCode)
+                        {
+                            eventCode = "RMUP";
+                            notes = GetTraceEventNotesFoReconcileMethodCodeField();
+                        }
+                        else notes = null;
+                        break;
+                    }
+                case "AutomaticReconcileId":
+                    {
+                        if (EntityPOCO.AutomaticReconcileId != EntityPM.AutomaticReconcileId)
+                        {
+                            eventCode = "ARCP";
+                            notes = GetTraceEventNotesForAutomaticReconcileIdField();
+                        }
+                        else notes = null;
+                        break;
+                    }
+                case "IsVatExempt":
+                    {
+                        if (EntityPOCO.IsVATExempt != EntityPM.IsVATExempt)
+                        {
+                            eventCode = "VAEX";
+                            notes = GetTraceEventNotesFordVatExcempt();
+                        }
+                        else notes = null;
+                        break;
+                    }
+            }
+
+        }
+        public string GetTraceEventNotesForCategory1Field()
+        {
             if (EntityPOCO.Category1Id != EntityPM.Category1Id)
             {
-                eventCode = "CAT1";
                 string oldValue = null;
                 string newValue = null;
                 Category1QueryService category1QueryService = new Category1QueryService(EntityPM.Tenant);
                 Category1PM category1 = category1QueryService.GetSinglePM(EntityPOCO.Category1Id, EntityPOCO.Tenant);
-                if(category1!= null)
-                {
-                    if (showLocals)
-                    {
-                        oldValue = category1.LocalName;
-
-                    }
-                    else
-                    {
-                        oldValue = category1.EnglishName;
-
-                    }
-                }
-                 category1 = category1QueryService.GetSinglePM(EntityPM.Category1Id, EntityPM.Tenant);
                 if (category1 != null)
                 {
-                    if (showLocals)
-                    {
-                        newValue = category1.LocalName;
-
-                    }
-                    else
-                    {
-                        newValue = category1.EnglishName;
-
-                    }
+                    oldValue = showLocals ? category1.LocalName : category1.EnglishName;
                 }
-                CreateUpdateTraceEvent(oldValue,newValue, eventCode);
-
+                category1 = category1QueryService.GetSinglePM(EntityPM.Category1Id, EntityPM.Tenant);
+                if (category1 != null)
+                {
+                    newValue = showLocals ? category1.LocalName : category1.EnglishName;
+                }
+                return TranslateTextsClass.Translate("Accounting.General.O.OldValue", 0, showLocals) + oldValue + TranslateTextsClass.Translate("Accounting.General.O.NewValue", 0, showLocals) + newValue;
             }
+            else return null;
+        }
+        public string GetTraceEventNotesForCategory2Field()
+        {
             if (EntityPOCO.Category2Id != EntityPM.Category2Id)
             {
-                eventCode = "CAT2";
                 string oldValue = null;
                 string newValue = null;
                 Category2QueryService category2QueryService = new Category2QueryService(EntityPM.Tenant);
                 Category2PM category2 = category2QueryService.GetSinglePM(EntityPOCO.Category2Id, EntityPOCO.Tenant);
                 if (category2 != null)
                 {
-                    if (showLocals)
-                    {
-                        oldValue = category2.LocalName;
-
-                    }
-                    else
-                    {
-                        oldValue = category2.EnglishName;
-
-                    }
+                    oldValue = showLocals ? category2.LocalName : category2.EnglishName;
                 }
-
                 category2 = category2QueryService.GetSinglePM(EntityPM.Category2Id, EntityPM.Tenant);
                 if (category2 != null)
                 {
-                    if (showLocals)
-                    {
-                        newValue = category2.LocalName;
-
-                    }
-                    else
-                    {
-                        newValue = category2.EnglishName;
-
-                    }
+                    newValue = showLocals ? category2.LocalName : category2.EnglishName;
                 }
-                CreateUpdateTraceEvent(oldValue, newValue, eventCode);
-
+                return TranslateTextsClass.Translate("Accounting.General.O.OldValue", 0, showLocals) + oldValue + TranslateTextsClass.Translate("Accounting.General.O.NewValue", 0, showLocals) + newValue;
             }
+            else return null;
+        }
+        public string GetTraceEventNotesForCategory3Field()
+        {
             if (EntityPOCO.Category3Id != EntityPM.Category3Id)
             {
-                eventCode = "CAT3";
                 string oldValue = null;
                 string newValue = null;
                 Category3QueryService category3QueryService = new Category3QueryService(EntityPM.Tenant);
                 Category3PM category3 = category3QueryService.GetSinglePM(EntityPOCO.Category3Id, EntityPOCO.Tenant);
                 if (category3 != null)
                 {
-                    if (showLocals)
-                    {
-                        oldValue = category3.LocalName;
-
-                    }
-                    else
-                    {
-                        oldValue = category3.EnglishName;
-
-                    }
+                    oldValue = showLocals ? category3.LocalName : category3.EnglishName;
                 }
                 category3 = category3QueryService.GetSinglePM(EntityPM.Category3Id, EntityPM.Tenant);
                 if (category3 != null)
                 {
-                    if (showLocals)
-                    {
-                        newValue = category3.LocalName;
-
-                    }
-                    else
-                    {
-                        newValue = category3.EnglishName;
-
-                    }
+                    newValue = showLocals ? category3.LocalName : category3.EnglishName;
                 }
-                CreateUpdateTraceEvent(oldValue, newValue, eventCode);
-
+                return TranslateTextsClass.Translate("Accounting.General.O.OldValue", 0, showLocals) + oldValue + TranslateTextsClass.Translate("Accounting.General.O.NewValue", 0, showLocals) + newValue;
             }
+            else return null;
+        }
+        public string GetTraceEventNotesForCategory4Field()
+        {
             if (EntityPOCO.Category4Id != EntityPM.Category4Id)
             {
-                eventCode = "CAT4";
                 string oldValue = null;
                 string newValue = null;
                 Category4QueryService category4QueryService = new Category4QueryService(EntityPM.Tenant);
                 Category4PM category4 = category4QueryService.GetSinglePM(EntityPOCO.Category4Id, EntityPOCO.Tenant);
                 if (category4 != null)
                 {
-                    if (showLocals)
-                    {
-                        oldValue = category4.LocalName;
-
-                    }
-                    else
-                    {
-                        oldValue = category4.EnglishName;
-
-                    }
+                    oldValue = showLocals ? category4.LocalName : category4.EnglishName;
                 }
                 category4 = category4QueryService.GetSinglePM(EntityPM.Category4Id, EntityPM.Tenant);
                 if (category4 != null)
                 {
-                    if (showLocals)
-                    {
-                        newValue = category4.LocalName;
-
-                    }
-                    else
-                    {
-                        newValue = category4.EnglishName;
-
-                    }
+                    newValue = showLocals ? category4.LocalName : category4.EnglishName;
                 }
-                CreateUpdateTraceEvent(oldValue, newValue, eventCode);
-
+                return TranslateTextsClass.Translate("Accounting.General.O.OldValue", 0, showLocals) + oldValue + TranslateTextsClass.Translate("Accounting.General.O.NewValue", 0, showLocals) + newValue;
             }
-            if (EntityPOCO.Category5Id != EntityPM.Category5Id)
+            else return null;
+        }
+        public string GetTraceEventNotesForCategory5Field()
+        {if (EntityPOCO.Category5Id != EntityPM.Category5Id)
             {
-                eventCode = "CAT5";
                 string oldValue = null;
                 string newValue = null;
                 Category5QueryService category5QueryService = new Category5QueryService(EntityPM.Tenant);
                 Category5PM category5 = category5QueryService.GetSinglePM(EntityPOCO.Category5Id, EntityPOCO.Tenant);
                 if (category5 != null)
                 {
-                    if (showLocals)
-                    {
-                        oldValue = category5.LocalName;
-
-                    }
-                    else
-                    {
-                        oldValue = category5.EnglishName;
-
-                    }
+                    oldValue = showLocals ? category5.LocalName : category5.EnglishName;
                 }
                 category5 = category5QueryService.GetSinglePM(EntityPM.Category5Id, EntityPM.Tenant);
                 if (category5 != null)
                 {
-                    if (showLocals)
-                    {
-                        newValue = category5.LocalName;
-
-                    }
-                    else
-                    {
-                        newValue = category5.EnglishName;
-
-                    }
+                    newValue = showLocals ? category5.LocalName : category5.EnglishName;
                 }
-                CreateUpdateTraceEvent(oldValue, newValue, eventCode);
-
+                return TranslateTextsClass.Translate("Accounting.General.O.OldValue", 0, showLocals) + oldValue + TranslateTextsClass.Translate("Accounting.General.O.NewValue", 0, showLocals) + newValue;
             }
-
-            if (EntityPOCO.RevaluationEnabled != EntityPM.RevaluationEnabled)
-            {
-                eventCode = "RVUP";
-                string oldValue = GetBooleanText(EntityPOCO.RevaluationEnabled);
-                string newValue = GetBooleanText(EntityPM.RevaluationEnabled);
-               
-               
-
-                //if (EntityPOCO.RevaluationEnabled == true)
-                //{
-                //    oldValue = TranslateTextsClass.Translate("Accounting.General.O.True", 0, showLocals);
-                //}
-                //else if(EntityPOCO.RevaluationEnabled == false || EntityPOCO.RevaluationEnabled== null)
-                //{
-                //    oldValue = TranslateTextsClass.Translate("Accounting.General.O.False", 0, showLocals);
-                //}
-               
-                //if(EntityPM.RevaluationEnabled == true)
-                //{
-                //    newValue = TranslateTextsClass.Translate("Accounting.General.O.True", 0, showLocals);
-                //}
-                //else
-                //{
-                //    newValue = TranslateTextsClass.Translate("Accounting.General.O.False", 0, showLocals);
-                //}
-                CreateUpdateTraceEvent(oldValue, newValue, eventCode);
-
-            }
-            if (EntityPOCO.IsMultiCurrency != EntityPM.IsMultiCurrency)
-            {
-                eventCode = "MLUP";
-              
-                string oldValue = GetBooleanText(EntityPOCO.IsMultiCurrency);
-                string newValue = GetBooleanText(EntityPM.IsMultiCurrency);
-
-
-
-                //if (EntityPOCO.IsMultiCurrency == true)
-                //{
-                //    oldValue = TranslateTextsClass.Translate("Accounting.General.O.True", 0, showLocals);
-                //}
-                //else if (EntityPOCO.IsMultiCurrency == false || EntityPOCO.IsMultiCurrency == null)
-                //{
-                //    oldValue = TranslateTextsClass.Translate("Accounting.General.O.False", 0, showLocals);
-                //}
-
-                //if (EntityPM.IsMultiCurrency == true)
-                //{
-                //    newValue = TranslateTextsClass.Translate("Accounting.General.O.True", 0, showLocals);
-                //}
-                //else
-                //{
-                //    newValue = TranslateTextsClass.Translate("Accounting.General.O.False", 0, showLocals);
-                //}
-                CreateUpdateTraceEvent(oldValue, newValue, eventCode);
-
-            }
-            if (EntityPOCO.ReconcileMethodCode != EntityPM.ReconcileMethodCode)
-            {
-                eventCode = "RMUP";
-                string oldValue = null;
-                string newValue = null;
-                ReconcileMethodQueryService reconcileMethodQueryService = new ReconcileMethodQueryService(EntityPM.Tenant);
-                ReconcileMethodPM reconcileMethod = reconcileMethodQueryService.GetSinglePM(EntityPOCO.ReconcileMethodCode, EntityPOCO.Tenant);
-                if (reconcileMethod != null)
-                {
-                    if (showLocals)
-                    {
-                        oldValue = reconcileMethod.LocalName;
-
-                    }
-                    else
-                    {
-                        oldValue = reconcileMethod.EnglishName;
-
-                    }
-                }
-                reconcileMethod = reconcileMethodQueryService.GetSinglePM(EntityPM.ReconcileMethodCode, EntityPM.Tenant);
-                if (reconcileMethod != null)
-                {
-                    if (showLocals)
-                    {
-                        newValue = reconcileMethod.LocalName;
-
-                    }
-                    else
-                    {
-                        newValue = reconcileMethod.EnglishName;
-
-                    }
-                }
-                CreateUpdateTraceEvent(oldValue, newValue, eventCode);
-
-
-            }
-            if (EntityPOCO.AutomaticReconcileId != EntityPM.AutomaticReconcileId)
-            {
-                eventCode = "ARCP";
-                string oldValue = null;
-                string newValue = null;
-                IAccountingContext accountingContext = AccountingContext.GetContext(EntityPOCO.Tenant);
-
-                AutomaticReconcileMethodListQueryService automaticReconcileMethodListQueryService = new AutomaticReconcileMethodListQueryService(accountingContext);
-                AutomaticReconcileMethodList automaticReconcileMethod = automaticReconcileMethodListQueryService.GetById(EntityPOCO.AutomaticReconcileId, EntityPOCO.Tenant);
-                if (automaticReconcileMethod != null)
-                {
-                    if (showLocals)
-                    {
-                        oldValue = automaticReconcileMethod.LocalName;
-
-                    }
-                    else
-                    {
-                        oldValue = automaticReconcileMethod.Name;
-
-                    }
-                }
-                automaticReconcileMethod = automaticReconcileMethodListQueryService.GetById(EntityPM.AutomaticReconcileId, EntityPM.Tenant);
-                if (automaticReconcileMethod != null)
-                {
-                    if (showLocals)
-                    {
-                        newValue = automaticReconcileMethod.LocalName;
-
-                    }
-                    else
-                    {
-                        newValue = automaticReconcileMethod.Name;
-
-                    }
-                }
-                CreateUpdateTraceEvent(oldValue, newValue, eventCode);
-
-            }
-
-            CreateEventForVatERxcempt();
+            else return null;
         }
-        private void CreateEventForVatERxcempt()
+        private string GetTraceEventNotesForBooleanField() {
+            string oldValue = GetBooleanText(EntityPOCO.RevaluationEnabled);
+            string newValue = GetBooleanText(EntityPM.RevaluationEnabled);
+            return TranslateTextsClass.Translate("Accounting.General.O.OldValue", 0, showLocals) + oldValue + TranslateTextsClass.Translate("Accounting.General.O.NewValue", 0, showLocals) + newValue;
+            
+        }
+        private string GetTraceEventNotesFoReconcileMethodCodeField()
+        {
+            string oldValue = null;
+            string newValue = null;
+            ReconcileMethodQueryService reconcileMethodQueryService = new ReconcileMethodQueryService(EntityPM.Tenant);
+            ReconcileMethodPM reconcileMethod = reconcileMethodQueryService.GetSinglePM(EntityPOCO.ReconcileMethodCode, EntityPOCO.Tenant);
+            if (reconcileMethod != null)
+            {
+                oldValue = showLocals ? reconcileMethod.LocalName : reconcileMethod.EnglishName;
+               
+            }
+            reconcileMethod = reconcileMethodQueryService.GetSinglePM(EntityPM.ReconcileMethodCode, EntityPM.Tenant);
+            if (reconcileMethod != null)
+            {
+                newValue = showLocals ? reconcileMethod.LocalName : reconcileMethod.EnglishName;
+                
+            }
+            return TranslateTextsClass.Translate("Accounting.General.O.OldValue", 0, showLocals) + oldValue + TranslateTextsClass.Translate("Accounting.General.O.NewValue", 0, showLocals) + newValue;
+
+        }
+        private string GetTraceEventNotesForAutomaticReconcileIdField()
+        {
+            string oldValue = null;
+            string newValue = null;
+            IAccountingContext accountingContext = AccountingContext.GetContext(EntityPOCO.Tenant);
+
+            AutomaticReconcileMethodListQueryService automaticReconcileMethodListQueryService = new AutomaticReconcileMethodListQueryService(accountingContext);
+            AutomaticReconcileMethodList automaticReconcileMethod = automaticReconcileMethodListQueryService.GetById(EntityPOCO.AutomaticReconcileId, EntityPOCO.Tenant);
+            if (automaticReconcileMethod != null)
+            {
+                oldValue = showLocals ? automaticReconcileMethod.LocalName : automaticReconcileMethod.Name;
+              
+            }
+            automaticReconcileMethod = automaticReconcileMethodListQueryService.GetById(EntityPM.AutomaticReconcileId, EntityPM.Tenant);
+            if (automaticReconcileMethod != null)
+            {
+               newValue = showLocals ? automaticReconcileMethod.LocalName : automaticReconcileMethod.Name;
+
+            }
+            return TranslateTextsClass.Translate("Accounting.General.O.OldValue", 0, showLocals) + oldValue + TranslateTextsClass.Translate("Accounting.General.O.NewValue", 0, showLocals) + newValue;
+
+        }
+        private string GetTraceEventNotesFordVatExcempt()
         {
             if (EntityPOCO.IsVATExempt != EntityPM.IsVATExempt)
             {
-                
                 string oldValue = GetBooleanText(EntityPOCO.IsVATExempt);
                 string newValue = GetBooleanText(EntityPM.IsVATExempt);
-
-
-
-                CreateUpdateTraceEvent(oldValue, newValue, "VAEX");
+                return TranslateTextsClass.Translate("Accounting.General.O.OldValue", 0, showLocals) + oldValue + TranslateTextsClass.Translate("Accounting.General.O.NewValue", 0, showLocals) + newValue;
 
             }
-
-
-
-
+            else return null;
         }
         private string GetBooleanText(bool? value)
         {
@@ -1712,9 +1854,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             else return TranslateTextsClass.Translate("Accounting.General.O.False", 0, showLocals);
         }
-        private void CreateUpdateTraceEvent(string oldValue, string newValue, string eventCode)
+        private void CreateUpdateTraceEvent(string notes, string eventCode)
         {
-            String notes = TranslateTextsClass.Translate("Accounting.General.O.OldValue", 0,showLocals) + oldValue + TranslateTextsClass.Translate("Accounting.General.O.NewValue", 0,showLocals) + newValue;
+          //  String notes = TranslateTextsClass.Translate("Accounting.General.O.OldValue", 0,showLocals) + oldValue + TranslateTextsClass.Translate("Accounting.General.O.NewValue", 0,showLocals) + newValue;
             EventTracer.CreateTraceEvent(new EventTracerArgs()
             {
                 EntityId = EntityPM.Id,
@@ -1874,35 +2016,35 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
 
 
-        private void ValidateCurrency(GLAccountPM entityPM, GLAccount entityPOCO)
+        private void ValidateCurrencyChange(GLAccountPM entityPM, GLAccount entityPOCO)
         {
-            IAccountingContext MyContext = AccountingContext.GetContext(entityPOCO.Tenant);
-            LedgerTransactionListQueryService transactionListQuery = new LedgerTransactionListQueryService(MyContext);
-            ContactPM currenctUser = GetLoggedContact(entityPM.Tenant);
-            bool useLocal = true;
-            if(currenctUser != null)
-                useLocal= !currenctUser.DontShowLocal;
+            CheckMultiToSingleCurrencyChanged(entityPM, entityPOCO);
+            CheckSingleToSingleCurrencyChanged(entityPM, entityPOCO);
+        }
 
-            // CASES: currency changed
-            // 1- from single to multi
-            // 2- from multi to single
-            // 3- from single to single
-            //
-
-            // [1] from single to multi
-            if (entityPOCO.IsMultiCurrency == false && entityPM.IsMultiCurrency == true)
+        private static void CheckSplittedGLAccount(GLAccountPM entityPM)
+        {
+            IAccountingContext ccc = AccountingContext.GetContext(entityPM.Tenant);
+            GLAccountCurrencyListQueryService GLAccountCurrencyQuery = new GLAccountCurrencyListQueryService(ccc);
+            GLAccountCurrencyList glAccountCurrencyList = GLAccountCurrencyQuery.GetByAccountNumber(entityPM.Id, entityPM.Tenant);
+            if (glAccountCurrencyList != null)
             {
-                // Allow to change 
+                throw new ApplicationException("This GLAccount have splitted GLAccounts by currency, Deactivate these GLAccounts before doing these action");
             }
+        }
 
-            // [2] from multi to single
-            else if(entityPOCO.IsMultiCurrency == true && entityPM.IsMultiCurrency == false)
+        private void CheckSingleToSingleCurrencyChanged(GLAccountPM entityPM, GLAccount entityPOCO)
+        {
+
+
+            if ((entityPOCO.IsMultiCurrency == false && entityPM.IsMultiCurrency == false) && entityPOCO.CurrencyId != entityPM.CurrencyId)
             {
-                List<LedgerTransactionList> openTransactions = transactionListQuery.GetOpenByAccountId(entityPM.Id, entityPM.Tenant);
+                List<LedgerTransactionList> openTransactions = GetOpenTransactionsForAccount(entityPM.Id, entityPM.Tenant);
 
-                if(openTransactions.Count > 0)
+                if (openTransactions.Count > 0)
                 {
-                    //check currency, if all transaction have same currency, continu, otherwise throw error
+
+                    // check if the currenct account transaction have only one currency or more?
                     bool isOneCurrency = false;
 
                     var groupedByCurrencyTrans = (from trans in openTransactions
@@ -1914,95 +2056,109 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     if (isOneCurrency)
                     {
                         // check if the transactions currency same as entered account currency
+
                         var transactionsCurrencyId = groupedByCurrencyTrans.First().CurrencyId;
 
                         if (transactionsCurrencyId != entityPM.CurrencyId)
                         {
-                            // throw error 
+                            // throw error
                             // the transactions currency does not equal entered account currency 
-                            throw new ApplicationException(TranslateTextsClass.Translate("Accounting.General.O.ThereOpenTransaction", 0, useLocal));
+                            bool useLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
+                            throw new ApplicationException(TranslateTextsClass.Translate("Accounting.General.O.ThereTransactions4GLAwithexistingCurrency", 0, useLocal));
                         }
                         else
                         {
                             //same currency, continue
 
                         }
+
                     }
                     else
                     {
-                        // throw error
-                        // not all with same currency
-                        throw new ApplicationException(TranslateTextsClass.Translate("Accounting.General.O.ThereOpenTransaction", 0, useLocal));
+                        // [!] this case shouldn't be entered, why? because the account now is single currency, so can't add different currencies transactions
+                        ThrowOpenTransactionMessage(entityPM.Tenant);
                     }
                 }
-                else
-                {
-                    // no transactions
-                    // so we can continue
-                }
-
             }
+        }
 
-            // [3] from single to single
-            else if( (entityPOCO.IsMultiCurrency == false && entityPM.IsMultiCurrency == false) && entityPOCO.CurrencyId != entityPM.CurrencyId)
+        private void ThrowOpenTransactionMessage(int tenant)
+        {
+            // not all transaction have same currency, the transactions have different currencies
+            bool useLocal = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
+            throw new ApplicationException(TranslateTextsClass.Translate("Accounting.General.O.ThereOpenTransaction", 0, useLocal));
+        }
+
+        private List<LedgerTransactionList> GetOpenTransactionsForAccount(string accountId, int tenant)
+        {
+            IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
+            LedgerTransactionListQueryService transactionListQuery = new LedgerTransactionListQueryService(accountingContext);
+            List<LedgerTransactionList> openTransactions = transactionListQuery.GetOpenByAccountId(accountId, tenant);
+            return openTransactions;
+        }
+
+        private void CheckMultiToSingleCurrencyChanged(GLAccountPM entityPM, GLAccount entityPOCO)
+        {
+            if (entityPOCO.IsMultiCurrency == true && entityPM.IsMultiCurrency == false)
             {
-                List<LedgerTransactionList> openTransactions = transactionListQuery.GetOpenByAccountId(entityPM.Id, entityPM.Tenant);
+                CheckAccountTransactions(entityPM);
+                CheckSplittedGLAccount(entityPM);
+            }
+        }
 
-                // check if the currenct account transaction have only one currency or more?
+        private void CheckAccountTransactions(GLAccountPM entityPM)
+        {
+
+            IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
+            LedgerTransactionListQueryService transactionListQuery = new LedgerTransactionListQueryService(MyContext);
+            bool useLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
+            List<LedgerTransactionList> openTransactions = transactionListQuery.GetOpenByAccountId(entityPM.Id, entityPM.Tenant);
+
+            if (openTransactions.Count > 0)
+            {
+                //check currency, if all transaction have same currency, continu, otherwise throw error
                 bool isOneCurrency = false;
-                
+
                 var groupedByCurrencyTrans = (from trans in openTransactions
-                           group trans by trans.CurrencyId into g
-                           select new { CurrencyId = g.Key, Res = g.ToList() });
+                                              group trans by trans.CurrencyId into g
+                                              select new { CurrencyId = g.Key, Res = g.ToList() });
 
                 isOneCurrency = groupedByCurrencyTrans.Count() == 1;
 
                 if (isOneCurrency)
                 {
                     // check if the transactions currency same as entered account currency
-                    
                     var transactionsCurrencyId = groupedByCurrencyTrans.First().CurrencyId;
 
-                    if(transactionsCurrencyId != entityPM.CurrencyId)
+                    if (transactionsCurrencyId != entityPM.CurrencyId)
                     {
-                        // throw error
-                        // the transactions currency does not equal entered account currency 
-                        throw new ApplicationException(TranslateTextsClass.Translate("Accounting.General.O.ThereTransactions4GLAwithexistingCurrency", 0, useLocal));
+                        ThrowOpenTransactionMessage(entityPM.Tenant);
                     }
                     else
                     {
                         //same currency, continue
 
                     }
-
                 }
                 else
                 {
-                    // [!] this case shouldn't be entered, why? because the account now is single currency, so can't add different currencies transactions
-                    //
-                    // throw error
-                    // not all transaction have same currency, the transactions have different currencies
-                    throw new ApplicationException(TranslateTextsClass.Translate("Accounting.General.O.ThereOpenTransaction", 0, useLocal));
+                    ThrowOpenTransactionMessage(entityPM.Tenant);
                 }
-
-
             }
-
-            // splitted glaccount validation
-            if (entityPOCO.IsMultiCurrency == true && entityPM.IsMultiCurrency == false)
+            else
             {
-                IAccountingContext ccc = AccountingContext.GetContext(entityPM.Tenant);
-                GLAccountCurrencyListQueryService GLAccountCurrencyQuery = new GLAccountCurrencyListQueryService(ccc);
-                GLAccountCurrencyList glAccountCurrencyList = GLAccountCurrencyQuery.GetByAccountNumber(entityPM.Id, entityPM.Tenant);
-                if(glAccountCurrencyList != null)
-                {
-                    throw new ApplicationException("This GLAccount have splitted GLAccounts by currency, Deactivate these GLAccounts before doing these action");
-                }
+                // no transactions
+                // so we can continue
             }
-
-
         }
 
+        private void CheckCurrencyChangedFromSingleToMulti(GLAccountPM entityPM, GLAccount entityPOCO)
+        {
+            if (entityPOCO.IsMultiCurrency == false && entityPM.IsMultiCurrency == true)
+            {
+                // Allow to change 
+            }
+        }
     }
 
 

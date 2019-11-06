@@ -27,8 +27,6 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public string TypeCode  { get; set; }
        [DataMember]
-       public string StatusCode  { get; set; }
-       [DataMember]
        public string AccountingEntityCode  { get; set; }
        [DataMember]
        public string ExternalNo  { get; set; }

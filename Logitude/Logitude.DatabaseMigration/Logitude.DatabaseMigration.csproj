@@ -1469,14 +1469,6 @@
     <Compile Include="Migrations\201909091017333_VatTypeRecognizedPercentageMigration.Designer.cs">
       <DependentUpon>201909091017333_VatTypeRecognizedPercentageMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201909111259248_Nawras_CreateLogBoxTenantSettingTable.cs" />
-    <Compile Include="Migrations\201909111259248_Nawras_CreateLogBoxTenantSettingTable.Designer.cs">
-      <DependentUpon>201909111259248_Nawras_CreateLogBoxTenantSettingTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201909111400134_Nawras_Delete7FieldsFromTenantTable.cs" />
-    <Compile Include="Migrations\201909111400134_Nawras_Delete7FieldsFromTenantTable.Designer.cs">
-      <DependentUpon>201909111400134_Nawras_Delete7FieldsFromTenantTable.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201909110732513_RenameDescriptionFieldToNotesInTariff_Samar.cs" />
     <Compile Include="Migrations\201909110732513_RenameDescriptionFieldToNotesInTariff_Samar.Designer.cs">
       <DependentUpon>201909110732513_RenameDescriptionFieldToNotesInTariff_Samar.cs</DependentUpon>
@@ -1489,25 +1481,129 @@
     <Compile Include="Migrations\201909150859476_PaymentChequeLocalNameMigration.Designer.cs">
       <DependentUpon>201909150859476_PaymentChequeLocalNameMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201909151332019_AddOpenReceivablesLinesField.cs" />
-    <Compile Include="Migrations\201909151332019_AddOpenReceivablesLinesField.Designer.cs">
-      <DependentUpon>201909151332019_AddOpenReceivablesLinesField.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201909161137037_AddCreditLimitPartnersSettings.cs" />
-    <Compile Include="Migrations\201909161137037_AddCreditLimitPartnersSettings.Designer.cs">
-      <DependentUpon>201909161137037_AddCreditLimitPartnersSettings.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201909151004078_Nawras_AddFieldsToWarehouseReleaseTable.cs" />
-    <Compile Include="Migrations\201909151004078_Nawras_AddFieldsToWarehouseReleaseTable.Designer.cs">
-      <DependentUpon>201909151004078_Nawras_AddFieldsToWarehouseReleaseTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201909180751302_Nawras_Add2FieldsToWarehouseRelaeaseTable.cs" />
-    <Compile Include="Migrations\201909180751302_Nawras_Add2FieldsToWarehouseRelaeaseTable.Designer.cs">
-      <DependentUpon>201909180751302_Nawras_Add2FieldsToWarehouseRelaeaseTable.cs</DependentUpon>
+    <Compile Include="Migrations\201909250807022_ReconcileExternalPageLineIdNullable.cs" />
+    <Compile Include="Migrations\201909250807022_ReconcileExternalPageLineIdNullable.Designer.cs">
+      <DependentUpon>201909250807022_ReconcileExternalPageLineIdNullable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201909260744531_AbedAddToPortFieldsToWarehouseRelease.cs" />
     <Compile Include="Migrations\201909260744531_AbedAddToPortFieldsToWarehouseRelease.Designer.cs">
       <DependentUpon>201909260744531_AbedAddToPortFieldsToWarehouseRelease.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909290617489_AbedAddToAddressCountryToWarehouseRelease.cs" />
+    <Compile Include="Migrations\201909290617489_AbedAddToAddressCountryToWarehouseRelease.Designer.cs">
+      <DependentUpon>201909290617489_AbedAddToAddressCountryToWarehouseRelease.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909291246046_AbedAddDWHBuildStatusTable.cs" />
+    <Compile Include="Migrations\201909291246046_AbedAddDWHBuildStatusTable.Designer.cs">
+      <DependentUpon>201909291246046_AbedAddDWHBuildStatusTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909300620491_AbedAddBCCFieldToDocumentTypeTemplate.cs" />
+    <Compile Include="Migrations\201909300620491_AbedAddBCCFieldToDocumentTypeTemplate.Designer.cs">
+      <DependentUpon>201909300620491_AbedAddBCCFieldToDocumentTypeTemplate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909301617282_addNotInvoicedReceivablesAmount.cs" />
+    <Compile Include="Migrations\201909301617282_addNotInvoicedReceivablesAmount.Designer.cs">
+      <DependentUpon>201909301617282_addNotInvoicedReceivablesAmount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910010723488_RemoveOpenReceivablesLines.cs" />
+    <Compile Include="Migrations\201910010723488_RemoveOpenReceivablesLines.Designer.cs">
+      <DependentUpon>201910010723488_RemoveOpenReceivablesLines.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910021422593_AbedAddIsShowAmountLocalCurrencyToSharedLogisticsSetting.cs" />
+    <Compile Include="Migrations\201910021422593_AbedAddIsShowAmountLocalCurrencyToSharedLogisticsSetting.Designer.cs">
+      <DependentUpon>201910021422593_AbedAddIsShowAmountLocalCurrencyToSharedLogisticsSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910060731551_Occaisions_Invitee_Khalid.cs" />
+    <Compile Include="Migrations\201910060731551_Occaisions_Invitee_Khalid.Designer.cs">
+      <DependentUpon>201910060731551_Occaisions_Invitee_Khalid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910061056415_OccasionInvitee_Participated_Invited_Columns_Khalid.cs" />
+    <Compile Include="Migrations\201910061056415_OccasionInvitee_Participated_Invited_Columns_Khalid.Designer.cs">
+      <DependentUpon>201910061056415_OccasionInvitee_Participated_Invited_Columns_Khalid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910062227078_AddOccasionCountsFields_Maheera.cs" />
+    <Compile Include="Migrations\201910062227078_AddOccasionCountsFields_Maheera.Designer.cs">
+      <DependentUpon>201910062227078_AddOccasionCountsFields_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910021307487_NewField_InReconcileProgress.cs" />
+    <Compile Include="Migrations\201910021307487_NewField_InReconcileProgress.Designer.cs">
+      <DependentUpon>201910021307487_NewField_InReconcileProgress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910130954120_AddTransportModeCodeToTariffTypesTable_Maheera.cs" />
+    <Compile Include="Migrations\201910130954120_AddTransportModeCodeToTariffTypesTable_Maheera.Designer.cs">
+      <DependentUpon>201910130954120_AddTransportModeCodeToTariffTypesTable_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910140542591_DropSchedulerLogsTable_Rabaia.cs" />
+    <Compile Include="Migrations\201910140542591_DropSchedulerLogsTable_Rabaia.Designer.cs">
+      <DependentUpon>201910140542591_DropSchedulerLogsTable_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910131134436_AddShipmentCustomsTransferTables_Samar.cs" />
+    <Compile Include="Migrations\201910131134436_AddShipmentCustomsTransferTables_Samar.Designer.cs">
+      <DependentUpon>201910131134436_AddShipmentCustomsTransferTables_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910151744432_AddDetectingChanges.cs" />
+    <Compile Include="Migrations\201910151744432_AddDetectingChanges.Designer.cs">
+      <DependentUpon>201910151744432_AddDetectingChanges.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910171345073_BankAccountPrintFieldsMigration.cs" />
+    <Compile Include="Migrations\201910171345073_BankAccountPrintFieldsMigration.Designer.cs">
+      <DependentUpon>201910171345073_BankAccountPrintFieldsMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910170619476_DropSearchFieldColumnFromCustomsTransferLine_Samar.cs" />
+    <Compile Include="Migrations\201910170619476_DropSearchFieldColumnFromCustomsTransferLine_Samar.Designer.cs">
+      <DependentUpon>201910170619476_DropSearchFieldColumnFromCustomsTransferLine_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910211551152_UpdateField_JournalLine_IncreaseLength3.cs" />
+    <Compile Include="Migrations\201910211551152_UpdateField_JournalLine_IncreaseLength3.Designer.cs">
+      <DependentUpon>201910211551152_UpdateField_JournalLine_IncreaseLength3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910231231109_CardFieldsMappingMigration.cs" />
+    <Compile Include="Migrations\201910231231109_CardFieldsMappingMigration.Designer.cs">
+      <DependentUpon>201910231231109_CardFieldsMappingMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910231127147_AddingAccountingPartnerTable_Rabaia.cs" />
+    <Compile Include="Migrations\201910231127147_AddingAccountingPartnerTable_Rabaia.Designer.cs">
+      <DependentUpon>201910231127147_AddingAccountingPartnerTable_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910261310088_FixingPrincipleError_Rabaia.cs" />
+    <Compile Include="Migrations\201910261310088_FixingPrincipleError_Rabaia.Designer.cs">
+      <DependentUpon>201910261310088_FixingPrincipleError_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910270847485_ReconcileExternalPageLineIdNullabletk2.cs" />
+    <Compile Include="Migrations\201910270847485_ReconcileExternalPageLineIdNullabletk2.Designer.cs">
+      <DependentUpon>201910270847485_ReconcileExternalPageLineIdNullabletk2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910241030000_AbedAddNewTableDocumentsExecutionLog.cs" />
+    <Compile Include="Migrations\201910241030000_AbedAddNewTableDocumentsExecutionLog.Designer.cs">
+      <DependentUpon>201910241030000_AbedAddNewTableDocumentsExecutionLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910281120097_AddCardContactAdditionalService_Samar.cs" />
+    <Compile Include="Migrations\201910281120097_AddCardContactAdditionalService_Samar.Designer.cs">
+      <DependentUpon>201910281120097_AddCardContactAdditionalService_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910280855435_NewFields_ReconcileExternalPage.cs" />
+    <Compile Include="Migrations\201910280855435_NewFields_ReconcileExternalPage.Designer.cs">
+      <DependentUpon>201910280855435_NewFields_ReconcileExternalPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910271443526_SharedLogisticsContactLastLogin_table.cs" />
+    <Compile Include="Migrations\201910271443526_SharedLogisticsContactLastLogin_table.Designer.cs">
+      <DependentUpon>201910271443526_SharedLogisticsContactLastLogin_table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910271453256_SharedLogisticsContactLastLogin_table_mod.cs" />
+    <Compile Include="Migrations\201910271453256_SharedLogisticsContactLastLogin_table_mod.Designer.cs">
+      <DependentUpon>201910271453256_SharedLogisticsContactLastLogin_table_mod.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910281423569_SharedLogisticsContactLastLogin_modifications.cs" />
+    <Compile Include="Migrations\201910281423569_SharedLogisticsContactLastLogin_modifications.Designer.cs">
+      <DependentUpon>201910281423569_SharedLogisticsContactLastLogin_modifications.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910301304030_AbedAddNewFieldToReportExecutionLogs.cs" />
+    <Compile Include="Migrations\201910301304030_AbedAddNewFieldToReportExecutionLogs.Designer.cs">
+      <DependentUpon>201910301304030_AbedAddNewFieldToReportExecutionLogs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911031015425_AddOpenAmountLocalCurrency_Maheera.cs" />
+    <Compile Include="Migrations\201911031015425_AddOpenAmountLocalCurrency_Maheera.Designer.cs">
+      <DependentUpon>201911031015425_AddOpenAmountLocalCurrency_Maheera.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
@@ -2553,12 +2649,6 @@
     <EmbeddedResource Include="Migrations\201909091017333_VatTypeRecognizedPercentageMigration.resx">
       <DependentUpon>201909091017333_VatTypeRecognizedPercentageMigration.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909111259248_Nawras_CreateLogBoxTenantSettingTable.resx">
-      <DependentUpon>201909111259248_Nawras_CreateLogBoxTenantSettingTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909111400134_Nawras_Delete7FieldsFromTenantTable.resx">
-      <DependentUpon>201909111400134_Nawras_Delete7FieldsFromTenantTable.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909110732513_RenameDescriptionFieldToNotesInTariff_Samar.resx">
       <DependentUpon>201909110732513_RenameDescriptionFieldToNotesInTariff_Samar.cs</DependentUpon>
     </EmbeddedResource>
@@ -2568,20 +2658,98 @@
     <EmbeddedResource Include="Migrations\201909150859476_PaymentChequeLocalNameMigration.resx">
       <DependentUpon>201909150859476_PaymentChequeLocalNameMigration.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909151332019_AddOpenReceivablesLinesField.resx">
-      <DependentUpon>201909151332019_AddOpenReceivablesLinesField.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909161137037_AddCreditLimitPartnersSettings.resx">
-      <DependentUpon>201909161137037_AddCreditLimitPartnersSettings.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909151004078_Nawras_AddFieldsToWarehouseReleaseTable.resx">
-      <DependentUpon>201909151004078_Nawras_AddFieldsToWarehouseReleaseTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201909180751302_Nawras_Add2FieldsToWarehouseRelaeaseTable.resx">
-      <DependentUpon>201909180751302_Nawras_Add2FieldsToWarehouseRelaeaseTable.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201909250807022_ReconcileExternalPageLineIdNullable.resx">
+      <DependentUpon>201909250807022_ReconcileExternalPageLineIdNullable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909260744531_AbedAddToPortFieldsToWarehouseRelease.resx">
       <DependentUpon>201909260744531_AbedAddToPortFieldsToWarehouseRelease.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909290617489_AbedAddToAddressCountryToWarehouseRelease.resx">
+      <DependentUpon>201909290617489_AbedAddToAddressCountryToWarehouseRelease.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909291246046_AbedAddDWHBuildStatusTable.resx">
+      <DependentUpon>201909291246046_AbedAddDWHBuildStatusTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909300620491_AbedAddBCCFieldToDocumentTypeTemplate.resx">
+      <DependentUpon>201909300620491_AbedAddBCCFieldToDocumentTypeTemplate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909301617282_addNotInvoicedReceivablesAmount.resx">
+      <DependentUpon>201909301617282_addNotInvoicedReceivablesAmount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910010723488_RemoveOpenReceivablesLines.resx">
+      <DependentUpon>201910010723488_RemoveOpenReceivablesLines.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910021422593_AbedAddIsShowAmountLocalCurrencyToSharedLogisticsSetting.resx">
+      <DependentUpon>201910021422593_AbedAddIsShowAmountLocalCurrencyToSharedLogisticsSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910060731551_Occaisions_Invitee_Khalid.resx">
+      <DependentUpon>201910060731551_Occaisions_Invitee_Khalid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910061056415_OccasionInvitee_Participated_Invited_Columns_Khalid.resx">
+      <DependentUpon>201910061056415_OccasionInvitee_Participated_Invited_Columns_Khalid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910062227078_AddOccasionCountsFields_Maheera.resx">
+      <DependentUpon>201910062227078_AddOccasionCountsFields_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910021307487_NewField_InReconcileProgress.resx">
+      <DependentUpon>201910021307487_NewField_InReconcileProgress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910130954120_AddTransportModeCodeToTariffTypesTable_Maheera.resx">
+      <DependentUpon>201910130954120_AddTransportModeCodeToTariffTypesTable_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910140542591_DropSchedulerLogsTable_Rabaia.resx">
+      <DependentUpon>201910140542591_DropSchedulerLogsTable_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910131134436_AddShipmentCustomsTransferTables_Samar.resx">
+      <DependentUpon>201910131134436_AddShipmentCustomsTransferTables_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910151744432_AddDetectingChanges.resx">
+      <DependentUpon>201910151744432_AddDetectingChanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910171345073_BankAccountPrintFieldsMigration.resx">
+      <DependentUpon>201910171345073_BankAccountPrintFieldsMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910170619476_DropSearchFieldColumnFromCustomsTransferLine_Samar.resx">
+      <DependentUpon>201910170619476_DropSearchFieldColumnFromCustomsTransferLine_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910231127147_AddingAccountingPartnerTable_Rabaia.resx">
+      <DependentUpon>201910231127147_AddingAccountingPartnerTable_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910211551152_UpdateField_JournalLine_IncreaseLength3.resx">
+      <DependentUpon>201910211551152_UpdateField_JournalLine_IncreaseLength3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910231231109_CardFieldsMappingMigration.resx">
+      <DependentUpon>201910231231109_CardFieldsMappingMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910261310088_FixingPrincipleError_Rabaia.resx">
+      <DependentUpon>201910261310088_FixingPrincipleError_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910270847485_ReconcileExternalPageLineIdNullabletk2.resx">
+      <DependentUpon>201910270847485_ReconcileExternalPageLineIdNullabletk2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910241030000_AbedAddNewTableDocumentsExecutionLog.resx">
+      <DependentUpon>201910241030000_AbedAddNewTableDocumentsExecutionLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910281120097_AddCardContactAdditionalService_Samar.resx">
+      <DependentUpon>201910281120097_AddCardContactAdditionalService_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910280855435_NewFields_ReconcileExternalPage.resx">
+      <DependentUpon>201910280855435_NewFields_ReconcileExternalPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910271443526_SharedLogisticsContactLastLogin_table.resx">
+      <DependentUpon>201910271443526_SharedLogisticsContactLastLogin_table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910271453256_SharedLogisticsContactLastLogin_table_mod.resx">
+      <DependentUpon>201910271453256_SharedLogisticsContactLastLogin_table_mod.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910281423569_SharedLogisticsContactLastLogin_modifications.resx">
+      <DependentUpon>201910281423569_SharedLogisticsContactLastLogin_modifications.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910301304030_AbedAddNewFieldToReportExecutionLogs.resx">
+      <DependentUpon>201910301304030_AbedAddNewFieldToReportExecutionLogs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911031015425_AddOpenAmountLocalCurrency_Maheera.resx">
+      <DependentUpon>201911031015425_AddOpenAmountLocalCurrency_Maheera.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

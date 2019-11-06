@@ -18,6 +18,8 @@ using Microsoft.Practices.Unity;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Accounting.Data.Repositories;
+using Logitude.Accounting.Data.EntityPOCOs;
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {
@@ -47,7 +49,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             AccountingPaymentMethodRepository apPaymentMethodRep = new AccountingPaymentMethodRepository(repository.context);
             Contact loggedContact = GetLogContact(tenant);
 
-            APPaymentPM payment = (from a in repository.context.APPayments.Include("LocalCurrency").Include("TransferStatus").Include("Status")
+            APPaymentPM payment = (from a in repository.context.APPayments.Include("LocalCurrency").Include("TransferStatus").Include("Status").Include("Branch")
                                    where a.Id == id && a.Tenant == tenant
                                    select new APPaymentPM()
                                    {
@@ -82,7 +84,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        StatusName = a.Status.Name,
                                        CreditCardTypeId = a.CreditCardTypeId,
                                        BranchId = a.BranchId,
-                                       BranchName = a.Branch == null ? null : a.Branch.EnglishName,
                                        UpdateDate = a.UpdateDate,
                                        UpdatedByUserId = a.UpdatedByUserId,
                                        VendorName = a.VendorCard == null ? "" : (loggedContact.DontShowLocalLabels  ? a.VendorCard.EnglishName   : a.VendorCard.LocalName  ),
@@ -98,8 +99,9 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        ApprovedDateTime = a.ApprovedDateTime,
                                        BankAccountId = a.BankAccountId,
                                        FirstApproveDate = a.FirstApproveDate,
-                                       AutomaticPaymentCheque = a.AutomaticPaymentCheque
-                                     
+                                       AutomaticPaymentCheque = a.AutomaticPaymentCheque,
+                                       BranchName = a.Branch == null ? null : a.Branch.EnglishName,
+
                                    }).FirstOrDefault();
 
             payment.PaymentInvoices = apInvoicePaymentQuery.GetAPPaymentInvoicePMsForPayment(payment.Id, tenant);
@@ -114,9 +116,34 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             APPaymentPM securedPM = new APPaymentPM();
             SecuredMapping.GetMappedPM(payment, securedPM, "APPayment", tenant);
 
+            if (IsFullAccountingActivated(tenant))
+                MapJournalFields(securedPM);
+
             return BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);
         }
 
+
+        private void MapJournalFields(APPaymentPM entityPM)
+        {
+            Journal journal = GetJournalOfAPPayment(entityPM);
+            if (journal != null)
+            {
+                entityPM.JournalId = journal.Id;
+                entityPM.JournalNumber = journal.JournalNumber;
+            }
+        }
+        private Journal GetJournalOfAPPayment(APPaymentPM entityPM)
+        {
+            JournalRepository rep = new JournalRepository(entityPM.Tenant);
+            Journal journal = rep.GetByAccountingEntityId(entityPM.Id, "5", entityPM.Tenant); // 5- APPayment
+            return journal;
+        }
+        private bool IsFullAccountingActivated(int tenant)
+        {
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+            Tenant tenantPoco = tenantRepository.GetSingleTenant(tenant);
+            return (tenantPoco != null && tenantPoco.AccountingActivated);
+        }
         public Contact  GetLogContact(int tenant)
         {
             ContactRepository contactRep = new ContactRepository(tenant);
@@ -144,7 +171,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             APInvoicePaymentRepository apInvoicePaymentRepository = new APInvoicePaymentRepository(repository.context);
             APInvoicePaymentQuery apInvoicePaymentQuery = new APInvoicePaymentQuery(apInvoicePaymentRepository);
             AccountingPaymentMethodRepository apPaymentMethodRep = new AccountingPaymentMethodRepository(repository.context);
-            APPaymentPM payment = (from a in repository.context.APPayments.Include("LocalCurrency").Include("TransferStatus").Include("Status")
+            APPaymentPM payment = (from a in repository.context.APPayments.Include("LocalCurrency").Include("TransferStatus").Include("Status").Include("Branch")
                                    where a.Id == id && a.Tenant == tenant
                                    select new APPaymentPM()
                                    {
@@ -180,7 +207,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        StatusName = a.Status.Name,
                                        CreditCardTypeId = a.CreditCardTypeId,
                                        BranchId = a.BranchId,
-                                       BranchName = a.Branch == null ? null : a.Branch.EnglishName,
                                        UpdateDate = a.UpdateDate,
                                        UpdatedByUserId = a.UpdatedByUserId,
                                        ExternalAccountingEntityId = a.ExternalAccountingEntityId,
@@ -195,6 +221,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        ApprovedDateTime = a.ApprovedDateTime,
                                        BankAccountId = a.BankAccountId,
                                        FirstApproveDate = a.FirstApproveDate,
+                                       BranchName = a.Branch == null ? null : a.Branch.EnglishName,
                                    }).FirstOrDefault();
             if (payment != null)
             {
@@ -218,7 +245,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
         public IQueryable<APPaymentPM> GetAPPaymentPMsByTenant(int tenant)
         {
-            IQueryable<APPaymentPM> result = (from a in repository.context.APPayments.Include("LocalCurrency").Include("PaymentMethod").Include("TransferStatus").Include("Status")
+            IQueryable<APPaymentPM> result = (from a in repository.context.APPayments.Include("LocalCurrency").Include("PaymentMethod").Include("TransferStatus").Include("Status").Include("Branch")
                                               where a.Tenant == tenant
                     select new APPaymentPM()
                     {
@@ -252,7 +279,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         VendorId = a.VendorId,
                         ValueDate = a.ValueDate,
                         BranchId = a.BranchId,
-                        BranchName = a.Branch == null ? null : a.Branch.EnglishName,
                         UpdateDate = a.UpdateDate,
                         UpdatedByUserId = a.UpdatedByUserId,
                         //PaymentMethodName = a.PaymentMethod == null ? null : a.PaymentMethod.Name,
@@ -268,6 +294,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         ApprovedDateTime = a.ApprovedDateTime,
                         BankAccountId = a.BankAccountId,
                         FirstApproveDate = a.FirstApproveDate,
+                        BranchName = a.Branch == null ? null : a.Branch.EnglishName,
                     });
 
             result = BranchPermitionsFilter.AddUserBranchRestrictionFilters<APPaymentPM>(new QueryOperations(), result, tenant);
@@ -279,7 +306,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             APInvoicePaymentRepository invoicePaymentRep = new APInvoicePaymentRepository(repository.context);
             AccountingPaymentMethodRepository apPaymentMethodRep = new AccountingPaymentMethodRepository(repository.context);
             APInvoicePaymentQuery apInvoicePaymentQuery = new APInvoicePaymentQuery(invoicePaymentRep);
-            APPaymentPM payment = (from a in repository.context.APPayments.Include("LocalCurrency").Include("PaymentMethod").Include("TransferStatus").Include("Status")
+            APPaymentPM payment = (from a in repository.context.APPayments.Include("LocalCurrency").Include("PaymentMethod").Include("TransferStatus").Include("Status").Include("Branch")
                                    where a.PaymentNo == paymentNo && a.Tenant == tenant
                                    select new APPaymentPM()
                                    {
@@ -313,7 +340,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        VendorId = a.VendorId,
                                        ValueDate = a.ValueDate,
                                        BranchId = a.BranchId,
-                                       BranchName = a.Branch == null ? null : a.Branch.EnglishName,
                                        UpdateDate = a.UpdateDate,
                                        UpdatedByUserId = a.UpdatedByUserId,
                                        CreditCardTypeId = a.CreditCardTypeId,
@@ -328,6 +354,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        ApprovedDateTime = a.ApprovedDateTime,
                                        BankAccountId = a.BankAccountId,
                                        FirstApproveDate = a.FirstApproveDate,
+                                       BranchName = a.Branch == null ? null : a.Branch.EnglishName,
 
                                    }).FirstOrDefault();
             payment.PaymentInvoices = apInvoicePaymentQuery.GetAPPaymentInvoicePMsForPayment(payment.Id, tenant).ToList();
@@ -384,7 +411,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                    CreditCardTypeId = a.CreditCardTypeId,
                                                    AmountInProfitCurrency = a.AmountInProfitCurrency,
                                                    BranchId = a.BranchId,
-                                                   BranchName = a.Branch == null ? null : a.Branch.EnglishName,
                                                    ProfitCurrencyExchangeRate = a.ProfitCurrencyExchangeRate,
                                                    ExternalAccountingEntityId = a.ExternalAccountingEntityId,
                                                    TransferError = a.TransferError,
@@ -397,13 +423,14 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                    ApprovedDateTime = a.ApprovedDateTime,
                                                    BankAccountId = a.BankAccountId,
                                                    FirstApproveDate = a.FirstApproveDate,
+                                                   BranchName = a.Branch == null ? null : a.Branch.EnglishName,
                                                };
             return result;
         }
 
         public IQueryable<APPaymentList> GetOpenedAPPayments(int tenant)
         {
-            var query = from a in repository.context.APPayments.Include("LocalCurrency").Include("PaymentMethod").Include("PaymentCurrency").Include("VendorCard").Include("CreatedByUser.Contact").Include("Status").Include("TransferStatus")
+            var query = from a in repository.context.APPayments.Include("LocalCurrency").Include("PaymentMethod").Include("PaymentCurrency").Include("VendorCard").Include("CreatedByUser.Contact").Include("Status").Include("TransferStatus").Include("Branch")
                         where a.Tenant == tenant && a.StatusCode != "DR" && a.StatusCode != "VD" && a.StatusCode != "LL" && !a.IsClosed
                         select new APPaymentList()
                         {
@@ -439,7 +466,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             StatusName = a.Status.Name,
                             CreditCardTypeId = a.CreditCardTypeId,
                             BranchId = a.BranchId,
-                            BranchName = a.Branch == null ? null : a.Branch.EnglishName,
                             UpdateDate = a.UpdateDate,
                             UpdatedByUserId = a.UpdatedByUserId,
                             PaymentCurrencyCode = a.PaymentCurrency == null ? null : a.PaymentCurrency.Code,
@@ -459,6 +485,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             ApprovedDateTime = a.ApprovedDateTime,
                             BankAccountId = a.BankAccountId,
                             FirstApproveDate = a.FirstApproveDate,
+                            BranchName = a.Branch == null ? null : a.Branch.EnglishName,
                         };
 
             return query;

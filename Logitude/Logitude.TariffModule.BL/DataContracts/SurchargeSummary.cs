@@ -19,5 +19,9 @@ namespace Logitude.TariffModule.BL.DataContracts
         public string VersionId { get; set; }
         public decimal? Price { get; set; }
         public decimal? ActualPrice { get; set; }
+        public string SellerId { get; set; }
+        public string SellerName { get; set; }
+        public decimal? MinPrice { get; set; }
+        public bool IsMinIconVisible { get; set; }
     }
 }

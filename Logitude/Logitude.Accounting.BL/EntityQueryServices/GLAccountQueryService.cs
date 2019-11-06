@@ -527,6 +527,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return pocos.Select(rec => this.GetEntityPM(rec)).ToList();
         }
 
+        public List<GLAccount> GetByDisplayNumberAndAccType(string displayNumber, string accTypeCode, int tenant)
+        {
+            List<GLAccount> pocos = this.repository.GetByDisplayNumberAndAccType(displayNumber, accTypeCode, tenant);
+            return pocos;
+        }
+
         public IQueryable<GLAccountPM> GetSplittedByCurrencyGLAccounts(string accountId, int tenant)
         {
           
@@ -707,55 +713,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                  }).ToList();
             DateTime fromdate = new DateTime((int)reportYear,1, 1);
             DateTime todate= new DateTime((int)reportYear,12, 31 );
-            //var trailReportParam = new TrailReportParam()
-            //{
-            //    Tenant = tenant,
-               
-            //    ToDate = (DateTime)todate,
-            //    FromDate = (DateTime)fromdate,
-            //    CurrenciesDetailed = false,
-            //    DetailedControlVendors = true,
-            //    DetailedControlClients = false,
-            //    Category1 = null,
-            //    Category5 = null,
-            //    Suppress_DoNotShowCardWithoutActivity = false,
-            //    IsRevenueExpenseReport = false,
-            //    MyTrailReportLevel = ReportLevel.GLAccount,
 
-            //};
-
-
-            //var typeservice = TrailReportFactory.CreateNew(trailReportParam);
-            //List<TrailReportM> res1 = typeservice.Execute();
-            //typeservice.Dispose();
-
-            //IEnumerable<IGrouping<string, TrailReportM>> res = res1.GroupBy(d => d.GLAccountId);
-            //var result = res.Where(d => d.Key != null).ToDictionary(x => x.Key, x => x);
-
-            //foreach (DBVendorsList item in DBVendorsList)
-            //{
-            //    LedgerTransactionBalanceFilter LTBFilter = new LedgerTransactionBalanceFilter();
-
-
-            //    LTBFilter.PageSize = 10;
-            //    LTBFilter.PageStartAtRecordIndex = 0;
-            //    LTBFilter.Tenant = tenant;
-
-
-
-            //    LTBFilter.GLAccountId = item.GlAccountId;
-            //    LTBFilter.From = new DateTime((int)reportYear, 1, 1);
-            //    LTBFilter.To = new DateTime((int)reportYear, 12, 31);
-            //    LTBFilter.IncludeRelatedCurrenciesAccount = false;
-            //    LTBFilter.IncludeChildAccounts = false;
-
-            //    var ledgerTransactionBalanceService = new LedgerTransactionBalanceService(context, LTBFilter);
-            //    ledgerTransactionBalanceService.Run();
-
-            //    item.EndYearBalance = ledgerTransactionBalanceService.Response.EndBalanceLocal != null ? ledgerTransactionBalanceService.Response.EndBalanceLocal : 0;
-
-
-            //}
 
             List<APPaymentList> groupedpayments = (from a in payments
                                                    join v in vendors on a.VendorId equals v.Id
@@ -928,7 +886,10 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             taxDeduction.TotalDeductionInLocalCurrency = Math.Round(DBVendorsList.Sum(d => d.TaxDeductionLocalAmount).Value,0);
             taxDeduction.TotalAmountInLocalCurrency08 = Math.Round(DBVendorsList.Where(d => d.DeductionFileTypeCode == "08").Sum(d => d.AmountInLocalCurrency).Value,0);
             taxDeduction.TotalTaxDeductionInLocalCurrency08 = Math.Round(DBVendorsList.Where(d => d.DeductionFileTypeCode == "08").Sum(d => d.TaxDeductionLocalAmount).Value,0);
-            taxDeduction.TotalEndBalance = Math.Round(DBVendorsList.Sum(d => d.EndYearBalance).Value, 0);//  DBVendorsList.Sum(d => d.EndYearBalance).Value,0);
+            if (taxDeduction.ByVendorList != null)
+            {
+                taxDeduction.TotalEndBalance = Math.Round(taxDeduction.ByVendorList.Sum(d => d.EndYearBalance).Value, 0);//  DBVendorsList.Sum(d => d.EndYearBalance).Value,0);
+            }
 
             //if (result.ContainsKey(item.GLAccountId))
             //{
@@ -1052,14 +1013,14 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                    }).FirstOrDefault();
         }
 
-        public void ConnectCardToGLAccount(string accountId, string cardId,bool skipConnectedCardsValidation, int tenant)
+        public void ConnectCardToGLAccount(CardGLAccountConnectionArgs args)
         {
-            CardPM cardPM = GetCardById(cardId, tenant);
+            CardPM cardPM = GetCardById(args.CardId, args.Tenant);
 
-            if (!skipConnectedCardsValidation)
-                CheckConnectCards(accountId, cardId, tenant);
+            if (!args.SkipConnectedCardsValidation)
+                CheckConnectCards(args.AccountId, args.CardId, args.Tenant);
 
-            cardPM.GLAccountId = accountId;
+            cardPM.GLAccountId = args.AccountId;
             SubmitCard(cardPM);
 
 
@@ -1122,7 +1083,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return msg;
         }
 
-        private List<CardList> GetConnectedCards(string accountId, int tenant)
+        public List<CardList> GetConnectedCards(string accountId, int tenant)
         {
             CardQuery cardQuery = new CardQuery(tenant);
             List<CardList> connectCards = cardQuery.GetCardPMsByGLAccountId(accountId, tenant);
@@ -1141,6 +1102,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             CardPM cardPM = query.GetSinglePM(cardId, tenant);
             return cardPM;
         }
+
     }
     public class GLAccountCurrencyBalance
     {
@@ -1149,6 +1111,14 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public string CurrencyId { get; set; }
         public string AccountId { get; set; }
         //public string LocalName { get; set; }
+    }
+
+    public class CardGLAccountConnectionArgs
+    {
+        public string AccountId { get; set; }
+        public string CardId { get; set; }
+        public int Tenant { get; set; }
+        public bool SkipConnectedCardsValidation { get; set; }
     }
 
     public interface IGLAccountQueryService

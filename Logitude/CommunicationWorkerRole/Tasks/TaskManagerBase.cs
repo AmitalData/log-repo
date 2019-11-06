@@ -167,9 +167,9 @@ namespace CommunicationWorkerRole.Tasks
         {
             IWebFreightContext objectContext = WebFreightContext.GetContext(Tenant);
             TaskSchedulerHistoryService TaskSchedulerHistoryService = new TaskSchedulerHistoryService(objectContext, Tenant);
-            SchedulerLogsService SchedulerLogsService = new SchedulerLogsService(objectContext, Tenant);
+            //SchedulerLogsService SchedulerLogsService = new SchedulerLogsService(objectContext, Tenant);
             TaskSchedulerHistoryQuery TaskSchedulerHistoryQuery = new TaskSchedulerHistoryQuery(Tenant);
-            SchedulerLogsQuery SchedulerLogsQuery = new SchedulerLogsQuery(Tenant);
+            //SchedulerLogsQuery SchedulerLogsQuery = new SchedulerLogsQuery(Tenant);
             var TaskSchedulerHistory = TaskSchedulerHistoryQuery.GetSingleTaskSchedulerHistoryPM(TaskHistoryId);
             if (TaskSchedulerHistory != null)
             {
@@ -231,9 +231,9 @@ namespace CommunicationWorkerRole.Tasks
             {
                 IWebFreightContext objectContext = WebFreightContext.GetContext(Tenant);
                 TaskSchedulerHistoryService TaskSchedulerHistoryService = new TaskSchedulerHistoryService(objectContext, Tenant);
-                SchedulerLogsService SchedulerLogsService = new SchedulerLogsService(objectContext, Tenant);
+                //SchedulerLogsService SchedulerLogsService = new SchedulerLogsService(objectContext, Tenant);
                 TaskSchedulerHistoryQuery TaskSchedulerHistoryQuery = new TaskSchedulerHistoryQuery(Tenant);
-                SchedulerLogsQuery SchedulerLogsQuery = new SchedulerLogsQuery(Tenant);
+                //SchedulerLogsQuery SchedulerLogsQuery = new SchedulerLogsQuery(Tenant);
                 var TaskSchedulerHistory = TaskSchedulerHistoryQuery.GetSingleTaskSchedulerHistoryPM(TaskHistoryId);
                 if (TaskSchedulerHistory != null)
                 {

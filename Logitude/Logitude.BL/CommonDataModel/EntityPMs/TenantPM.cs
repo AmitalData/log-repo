@@ -274,12 +274,13 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string CustomerPhone { get; set; }
 
-       
+        public bool IsDocumentsArchive { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public bool IsCustomerTenantShare { get; set; }
 
-       
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public bool CustomerTenantShareImportFile { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public bool CustomerTenantShareExportFile { get; set; }
@@ -306,7 +307,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public int? VatSize { get; set; }
 
-       
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string LogBoxAdminUserId { get; set; }
 
         public bool CreateTenantFromSignUp { get; set; }
 
@@ -346,7 +348,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         public bool TenantVATManagement { get; set; }
 
-        
+        public bool DocumentShareAsDefault { get; set; }
         public string StorageEncryptionKey { get; set; }
         public string LayoutDirection { get; set; }
 
@@ -360,7 +362,9 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string DefaultSLAId { get; set; }
-       
+        public string StockTypeCode { get; set; }
+
+        public bool AutoArchiveOnInvoice { get; set; }
         public string EcommerceSupportEmail { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -375,23 +379,5 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public bool ApplyVATForAllPartners { get; set; }
-
-
-
-        //LogBoxTenantSetting Fields For use
-        public bool IsDocumentsArchive { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public bool CustomerTenantShareImportFile { get; set; }
-
-
-        public bool DocumentShareAsDefault { get; set; }
-
-        public string StockTypeCode { get; set; }
-
-        public bool AutoArchiveOnInvoice { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string LogBoxAdminUserId { get; set; }
     }
 }

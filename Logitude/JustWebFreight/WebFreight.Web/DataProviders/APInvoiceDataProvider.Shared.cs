@@ -74,6 +74,14 @@ namespace WebFreight.Web.DataProviders
         public double? ExchangeRate { get; set; }
         public string MasterNumber { get; set; }
 
+        public double? TotalChargeableWeight { get; set; }
+        public double? TotalReceivablesSum { get; set; }
+        public double? TotalProfit { get; set; }
+        public double? TotalVat { get; set; }
+        public double? TotalPayable { get; set; }
+        public double? TotalFreight { get; set; }
+        public double? TotalOtherCharges { get; set; }
+
         public List<APReportInvoiceLine> APInvoiceLinesList { get; set; }
         public List<APTotalVat> APTotalVatList { get; set; }
         public List<APInvoiceMultipleEntity> APInvoiceMultipleEntityList { get; set; }
@@ -111,5 +119,20 @@ namespace WebFreight.Web.DataProviders
         public double? OpenAmount { get; set; }
         public double? Total { get; set; }
         public double? TotalVAT { get; set; }
+        public string LongMaster { get; set; }
+
+        public DateTime? OperationalDate { get; set; }
+        public string MainCarriageOrigin { get; set; }
+        public string MainCarriageFinalDestination { get; set; }
+        public double? ChargeableWeight { get; set; }
+        public string Currency { get; set; }
+        public double? TotalReceivables { get; set; }
+        public double? Profit { get; set; }
+        public double? FreightAccounted { get; set; }
+        public double? OtherChargesAccounted { get; set; }
+        public double? PayablesAccounted { get; set; }
+
+
+
     }
 }

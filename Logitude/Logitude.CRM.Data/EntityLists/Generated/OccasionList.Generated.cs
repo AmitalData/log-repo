@@ -58,6 +58,14 @@ namespace Logitude.CRM.Data.EntityLists
        public string OccasionStatusName  { get; set; }
        [DataMember]
        public string IndustryName  { get; set; }
+       [DataMember]
+       public int ParticipatedCustomers  { get; set; }
+       [DataMember]
+       public int ParticipatedContacts  { get; set; }
+       [DataMember]
+       public int InvitedCustomers  { get; set; }
+       [DataMember]
+       public int InvitedContacts  { get; set; }
    }
 
 }

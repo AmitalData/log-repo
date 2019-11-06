@@ -210,5 +210,36 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public DateTime? CreateDate { get; set; }
+
+        [DataMember]
+        public bool IsUserAdditionalPackagesOnly { get; set; }
+
+        [DataMember]
+        public bool IsLicencedUser { get; set; }
+
+        private List<CardContactAdditionalServicePM> cardContactAdditionalServices;
+        [Include]
+        [Association("CardContactAdditionalServiceContact", "Id", "ContactId")]
+        [Composition]
+        [DataMember]
+        public virtual List<CardContactAdditionalServicePM> CardContactAdditionalServices
+        {
+            get
+            {
+
+                if (this.cardContactAdditionalServices == null)
+                {
+                    cardContactAdditionalServices = new List<CardContactAdditionalServicePM>();
+                }
+                return this.cardContactAdditionalServices;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    cardContactAdditionalServices = value;
+                }
+            }
+        }
     }
 }

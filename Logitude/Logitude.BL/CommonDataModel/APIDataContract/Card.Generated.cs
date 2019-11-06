@@ -17,7 +17,7 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 {
    
-    public class Card
+    public partial class Card
     {
 
 	    
@@ -36,6 +36,8 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
     
 	[XmlAttribute]
     public string PartnerCode { get; set; }
+    
+    public bool IsDisconnectedFromGLAccount { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

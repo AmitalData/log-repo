@@ -6,12 +6,15 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Helpers;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.Security;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Logitude.Accounting.Data.Repositories;
 
 namespace Logitude.BL.InvoiceModel.Tools.DataMapping
 {
     public class APPaymentMapping
     {
-        public static void MapEntity(APPaymentPM entityPM, APPayment entity, bool isNewState)       
+        public static void MapEntity(APPaymentPM entityPM, APPayment entity, bool isNewState)
         {
             ContactPM loggedContact = new ContactQuery(entityPM.Tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), entityPM.Tenant);
 
@@ -28,17 +31,17 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                     entity.PaymentNo = entityPM.PaymentNo;
                     entity.Tenant = entityPM.Tenant;
                     entity.CreatedByUserId = entityPM.CreatedByUserId;
-                    entity.CreateDate = entityPM.CreateDate;                    
+                    entity.CreateDate = entityPM.CreateDate;
                     entity.LocalCurrencyId = entityPM.LocalCurrencyId;
                 }
 
                 entity.BranchId = entityPM.BranchId;
-               entity.PaymentMethodId = entityPM.AccountingPaymentMethodId;
+                entity.PaymentMethodId = entityPM.AccountingPaymentMethodId;
                 entity.AccountingPaymentMethodId = entityPM.AccountingPaymentMethodId;
                 entity.VendorAddressId = entityPM.VendorAddressId;
                 entity.VendorId = entityPM.VendorId;
                 entity.AmountInLocalCurrency = entityPM.AmountInLocalCurrency;
-                entity.AmountInPaymentCurrency = entityPM.AmountInPaymentCurrency;                
+                entity.AmountInPaymentCurrency = entityPM.AmountInPaymentCurrency;
                 entity.PaymentCurrencyId = entityPM.PaymentCurrencyId;
                 entity.PaymentCurrencyExchangeRate = entityPM.PaymentCurrencyExchangeRate;
                 entity.PaymentCurrencyExchangeRateDate = entityPM.PaymentCurrencyExchangeRateDate;
@@ -59,12 +62,17 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.OpenAmount = entityPM.OpenAmount;
             entity.PrintDate = entityPM.PrintDate;
             entity.PrintNotes = entityPM.PrintNotes;
-            entity.PrintedByUserId = entityPM.PrintedByUserId;            
+            entity.PrintedByUserId = entityPM.PrintedByUserId;
             entity.InternalNotes = entityPM.InternalNotes;
             entity.ExternalAccountingEntityId = entity.ExternalAccountingEntityId;
             entity.TransferStatusCode = entityPM.TransferStatusCode;
             entity.TaxDeductionLocalAmount = entityPM.TaxDeductionLocalAmount;
             entity.TaxDeductionPercentage = entityPM.TaxDeductionPercentage;
+            if (entityPM.SetApproved)
+            {
+                entityPM.ApprovedByUserId = loggedContact.Id;
+                entityPM.ApprovedDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+            }
             entity.ApprovedByUserId = entityPM.ApprovedByUserId;
             entity.ApprovedDateTime = entityPM.ApprovedDateTime;
             entity.BankAccountId = entityPM.BankAccountId;
@@ -97,6 +105,34 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entityPM.SetVoided = false;
             entityPM.SetApproved = false;
             entityPM.SetCancelApproval = false;
+            
+            if (IsFullAccountingActivated(entityPM.Tenant))
+                MapJournalFields(entityPM);
+
+        }
+
+        private static void MapJournalFields(APPaymentPM entityPM)
+        {
+            JournalEntity journal = GetJournalOfAPPayment(entityPM);
+            if (journal != null)
+            {
+                entityPM.JournalId = journal.JournalId;
+                entityPM.JournalNumber = journal.JournalNumber;
+            }
+        }
+
+        private static JournalEntity GetJournalOfAPPayment(APPaymentPM entityPM)
+        {
+            JournalRepository rep = new JournalRepository(entityPM.Tenant);
+            JournalEntity journal = rep.GetJournalByAccountingEntityId(entityPM.Id, entityPM.Tenant);
+            return journal;
+        }
+
+        private static bool IsFullAccountingActivated(int tenant)
+        {
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+            Tenant tenantPoco = tenantRepository.GetSingleTenant(tenant);
+            return (tenantPoco != null && tenantPoco.AccountingActivated);
         }
 
         public static void MapEntityInvoicePyament(APPaymentInvoicePM entityPM, APInvoicePayment entity, bool isNewState)

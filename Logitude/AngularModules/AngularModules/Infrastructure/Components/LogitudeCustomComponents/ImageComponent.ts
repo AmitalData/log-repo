@@ -181,14 +181,14 @@ export class ImageComponent implements AfterViewInit, OnInit {
 
         var height: number = this.ImageResizeHeight ? this.ImageResizeHeight : 150;
         var width: number = this.ImageResizeWidth ? this.ImageResizeWidth : 150;
-
         var file: any = UploadLogoFile(this.ImageFileHtmlId);
 
         if (file) {
 
-            if (file.type == "image/jpeg" || file.type == "image/jpg") {
+            var imageType: string = file.type ? file.type.toLowerCase() : "";
+            if (imageType == "image/jpeg" || imageType == "image/jpg") {
                 this.ArrayBufferToBase64(file, "images", width, height, this);
-            } else if (this.EntityName == "Quotation" && (file.type == "image/png" || file.type == "image/PNG")) {
+            } else if (this.EntityName == "Quotation" && file.type && imageType == "image/png") {
                 this.ArrayBufferToBase64(file, "images", width, height, this);
             }
         }
@@ -208,7 +208,9 @@ export class ImageComponent implements AfterViewInit, OnInit {
             }
             else extension = fileInfo[1];
 
-
+            if (extension) {
+                extension = extension.toLowerCase();
+            }
             var reader = new FileReader();
             reader.onload = function (e) {
                 var binary = '';

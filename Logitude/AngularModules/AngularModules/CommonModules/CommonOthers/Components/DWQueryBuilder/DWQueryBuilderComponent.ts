@@ -97,8 +97,23 @@ export class DWQueryBuilderComponent extends BaseComponent {
         }
     }
     private CurrentSession = SessionLocator.SelectedSession;
+
+
+    HeightFilterArea: number;
+    HeightPreviewArea: number;
     constructor(private CD: ChangeDetectorRef) {
         super();
+    
+        var heightScreen = 548;
+
+        this.HeightFilterArea = window.innerHeight / 2.86;
+        this.HeightPreviewArea = heightScreen - this.HeightFilterArea; 
+
+
+        console.log("AbedHeightX", this.HeightFilterArea);
+        console.log("AbedHeighty", this.HeightPreviewArea);
+
+
         this._DWObjectTablePMService = new DWObjectTablePMService();
         this._DWQueryPMService = new DWQueryPMService();
         this._DWObjectFieldPMService = new DWObjectFieldExtendedPMService();
@@ -904,9 +919,9 @@ export class DWQueryBuilderComponent extends BaseComponent {
         }
         var Valid = true;
         MyFilter.FilterItems.forEach((field) => {
-
+            
             if (field.FilterItems.length == 0) {
-                if (field.DataTypeCode && field.TextValue) {
+                if (field.DataTypeCode && field.TextValue && field.TextValue != "IsNull" && field.TextValue != "IsNotNull" && field.TextValue.indexOf(';') < 0) {
                     switch (field.DataTypeCode.toLowerCase()) {
                         case 'integer':
                         case 'double':

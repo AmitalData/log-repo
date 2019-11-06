@@ -61,96 +61,50 @@ namespace WebFreight.Web
                 FillAppSettings();
 
 
-				
-				//SessionContextConfiguration conf = new SessionContextConfiguration();
+
+                //SessionContextConfiguration conf = new SessionContextConfiguration();
 
 
-				////SettingRepository settingRepository = new SettingRepository();
-				////Setting setting = settingRepository.GetSingleSetting("1");
-				////LogitudeSettings.Id = setting.Id;
-				////LogitudeSettings.ChampEnv = setting.ChampEnv;
-				////LogitudeSettings.ChampURL = setting.ChampURL;
-				////LogitudeSettings.CustomerCareIP = setting.CustomerCareIP;
-				////LogitudeSettings.DeploymentStage = setting.DeploymentStage;
-				////LogitudeSettings.IsLogEnabled = setting.IsLogEnabled;
-				////LogitudeSettings.LogitudeURL = setting.LogitudeURL;
-				////LogitudeSettings.TotangoServiceId = setting.TotangoServiceId;
-				////LogitudeSettings.UsingAzure = setting.UsingAzure;
-				////LogitudeSettings.StorageAccountKey = setting.StorageAccountKey;
-				////LogitudeSettings.StorageAccountName = setting.StorageAccountName;
-				////LogitudeSettings.StorageType = setting.StorageType;
-				////LogitudeSettings.LogitudeCRMTenantNumber = setting.LogitudeCRMTenantNumber;
-				////LogitudeSettings.AutoSignupEmail = setting.AutoSignupEmail;
-				////LogitudeSettings.AutoSignupPassword = setting.AutoSignupPassword;
-				////LogitudeSettings.ForceHttps = setting.ForceHttps;
-				////LogitudeSettings.CheckConnectionURL = setting.CheckConnectionURL;
-				////LogitudeSettings.AndroidSharedAppMinimumVersion = setting.AndroidSharedAppMinimumVersion;
-				////LogitudeSettings.IOSSharedAppMinimumVersion = setting.IOSSharedAppMinimumVersion;
-				////LogitudeSettings.WorkEnvironment = setting.WorkEnvironment;
-				////LogitudeSettings.LogoCode = setting.LogoCode;
-				////LogitudeSettings.EnableHybridQueue = setting.EnableHybridQueue;
-				////LogitudeSettings.EmailAlertSignature = setting.EmailAlertSignature;
-				////LogitudeSettings.IOSAppLink = setting.IOSAppLink;
-				////LogitudeSettings.AndroidAppLink = setting.AndroidAppLink;
-				////LogitudeSettings.AndroidPodAppMinimumVersion = setting.AndroidPodAppMinimumVersion;
-				////LogitudeSettings.IOSPodAppMinimumVersion = setting.IOSPodAppMinimumVersion;
-				////LogitudeSettings.MinimumOutlookVersion = setting.MinimumOutlookVersion;
-				////LogitudeSettings.ABMProductId = setting.ABMProductId;
-				////LogitudeSettings.AzureFolderName = setting.AzureFolderName;
-				////LogitudeSettings.SignAppVersion = setting.SignAppVersion;
-				////LogitudeSettings.ReportsRunUsingWR = setting.ReportsRunUsingWR;
-				////LogitudeSettings.SMSServiceUserId = setting.SMSServiceUserId;
-				////LogitudeSettings.SMSServiceAuthToken = setting.SMSServiceAuthToken;
-				////LogitudeSettings.SMSServicePhoneNumber = setting.SMSServicePhoneNumber;
+                ////SettingRepository settingRepository = new SettingRepository();
+                ////Setting setting = settingRepository.GetSingleSetting("1");
+                ////LogitudeSettings.Id = setting.Id;
+                ////LogitudeSettings.ChampEnv = setting.ChampEnv;
+                ////LogitudeSettings.ChampURL = setting.ChampURL;
+                ////LogitudeSettings.CustomerCareIP = setting.CustomerCareIP;
+                ////LogitudeSettings.DeploymentStage = setting.DeploymentStage;
+                ////LogitudeSettings.IsLogEnabled = setting.IsLogEnabled;
+                ////LogitudeSettings.LogitudeURL = setting.LogitudeURL;
+                ////LogitudeSettings.TotangoServiceId = setting.TotangoServiceId;
+                ////LogitudeSettings.UsingAzure = setting.UsingAzure;
+                ////LogitudeSettings.StorageAccountKey = setting.StorageAccountKey;
+                ////LogitudeSettings.StorageAccountName = setting.StorageAccountName;
+                ////LogitudeSettings.StorageType = setting.StorageType;
+                ////LogitudeSettings.LogitudeCRMTenantNumber = setting.LogitudeCRMTenantNumber;
+                ////LogitudeSettings.AutoSignupEmail = setting.AutoSignupEmail;
+                ////LogitudeSettings.AutoSignupPassword = setting.AutoSignupPassword;
+                ////LogitudeSettings.ForceHttps = setting.ForceHttps;
+                ////LogitudeSettings.CheckConnectionURL = setting.CheckConnectionURL;
+                ////LogitudeSettings.AndroidSharedAppMinimumVersion = setting.AndroidSharedAppMinimumVersion;
+                ////LogitudeSettings.IOSSharedAppMinimumVersion = setting.IOSSharedAppMinimumVersion;
+                ////LogitudeSettings.WorkEnvironment = setting.WorkEnvironment;
+                ////LogitudeSettings.LogoCode = setting.LogoCode;
+                ////LogitudeSettings.EnableHybridQueue = setting.EnableHybridQueue;
+                ////LogitudeSettings.EmailAlertSignature = setting.EmailAlertSignature;
+                ////LogitudeSettings.IOSAppLink = setting.IOSAppLink;
+                ////LogitudeSettings.AndroidAppLink = setting.AndroidAppLink;
+                ////LogitudeSettings.AndroidPodAppMinimumVersion = setting.AndroidPodAppMinimumVersion;
+                ////LogitudeSettings.IOSPodAppMinimumVersion = setting.IOSPodAppMinimumVersion;
+                ////LogitudeSettings.MinimumOutlookVersion = setting.MinimumOutlookVersion;
+                ////LogitudeSettings.ABMProductId = setting.ABMProductId;
+                ////LogitudeSettings.AzureFolderName = setting.AzureFolderName;
+                ////LogitudeSettings.SignAppVersion = setting.SignAppVersion;
+                ////LogitudeSettings.ReportsRunUsingWR = setting.ReportsRunUsingWR;
+                ////LogitudeSettings.SMSServiceUserId = setting.SMSServiceUserId;
+                ////LogitudeSettings.SMSServiceAuthToken = setting.SMSServiceAuthToken;
+                ////LogitudeSettings.SMSServicePhoneNumber = setting.SMSServicePhoneNumber;
 
-				//LogitudeSettings.IsCostomsDeploy = Logitude.Customs.BL.Utils.CustomsSettingUtil.ForceDownloadXapFromIIS();
-				Func<IAmitalRestrictOwnerService> createAmitalRestrictOwnerModelService = null;
-                
-                if (LogitudeSettings.IsCostomsDeploy)
-                {
-                    /// itzik : can use/convert to    !!!ContainerAccessor !!!! // ContainerAccessor.Container.RegisterType<ICustomsDocumentQueryServiceExt, CustomsDocumentQueryServiceExt>("CustomsDocumentQueryServiceExt", new InjectionFactory(c => new CustomsDocumentQueryServiceExt()));
-                    var assemblyUtil = new Logitude.Server.Tools.Helpers.AssemblyUtil();
-                    LogitudeSettings.ProductInfo = assemblyUtil.GetProductInfo(typeof(Global).Assembly);
-
-                    // this project no need but in FilingManager is must 
-                    LogitudeSettings.GetUnfDBConnectionInfoFromTenantInject = CustomsSettingQueryService.GetUnfDBConnectionInfo;// this project no need but in FilingManager is must 
-                    LogitudeSettings.GetLogitudeCustomsSettingsMInject = CustomsSettingQueryService.GetLogitudeCustomsSettingsM;
-
-                    Logger.OverrideExecutablePath = HttpContext.Current.Server.MapPath("App_Data");
-                    LogitudeSettings.HandleLogMe = new Action<string, bool, string,DateTime>((mess, err, suffix, stopLogAt) =>
-                    {
-                        if (DateTime.Now > stopLogAt) return;
-                        Logger.LogMe(mess, err, suffix);
-                        });
-                    LogitudeSettings.GetLogitudeCustomsSettingsMInject = CustomsSettingQueryService.GetLogitudeCustomsSettingsM;
-
-                    createAmitalRestrictOwnerModelService = () =>
-                      {
-                          var amitalRestrictOwnerService = new AmitalRestrictOwnerService();
-                          return amitalRestrictOwnerService;
-                      };
-                }
-                
-                LogitudeSettings.HandleDbExceptionInject = ExceptionHandler.HandleDbException;
-                LogitudeSettings.HandleBuildObjectTablesZipFilesData_Inject = MetaDataUpdate.TenantsUpdateClass.BuildObjectTablesZipFilesData;
-
-                Func<int> getTenantFromToken = () =>
-                {
-                    string token = HttpContext.Current.Request.Headers["Token"];
-                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    return authToken.Tenant;
-                    
-                };
-                InjectionUtil.Init(createAmitalRestrictOwnerModelService, getTenantFromToken, SecurityUtility.CheckContactFeature, 
-                    () => (new ByteCompressorUtil()) as IByteCompressorUtil, 
-                    new IISManager(),
-                    () => (new HtmlEditorHelper()) as IHtmlEditorHelper
-                    );
-                ProxyUtil.SecurityUtilityCheckFeature = SecurityUtility.CheckFeature;
-
-
-
-                LogitudeSettings.GetUserNameInject = AuthenticationUtil.ResolveUserIdentityName;
+                //LogitudeSettings.IsCostomsDeploy = Logitude.Customs.BL.Utils.CustomsSettingUtil.ForceDownloadXapFromIIS();
+                LogitudeSettings_AmitalInit();
                 ////LogitudeSettings.GLSHKEnv = setting.GLSHKEnv;
                 ////LogitudeSettings.GLSHKURL = setting.GLSHKURL;
                 ////LogitudeSettings.NotificationHubName = setting.NotificationHubName;
@@ -161,7 +115,7 @@ namespace WebFreight.Web
                 ////LogitudeSettings.StorageServiceMode = setting.StorageServiceMode;
                 ////LogitudeSettings.DropboxAppKey = setting.DropboxAppKey;
                 ////LogitudeSettings.DropboxAppSecret = setting.DropboxAppSecret;
-                
+
                 //aTimer.Elapsed += new ElapsedEventHandler(OnSettingsCheckTimedEvent);
                 //aTimer.Interval = 60000;
                 //aTimer.Enabled = true;
@@ -340,8 +294,59 @@ namespace WebFreight.Web
 			};
 
 		}
-		 
-		private void OnSettingsCheckTimedEvent(object source, ElapsedEventArgs e)
+
+        private static void LogitudeSettings_AmitalInit()//itzik:CleanCode when is possible -should convert 2 ContainerAccessor
+        {
+            Func<IAmitalRestrictOwnerService> createAmitalRestrictOwnerModelService = null;
+
+            if (LogitudeSettings.IsCostomsDeploy)
+            {
+                /// itzik : can use/convert to    !!!ContainerAccessor !!!! // ContainerAccessor.Container.RegisterType<ICustomsDocumentQueryServiceExt, CustomsDocumentQueryServiceExt>("CustomsDocumentQueryServiceExt", new InjectionFactory(c => new CustomsDocumentQueryServiceExt()));
+                var assemblyUtil = new Logitude.Server.Tools.Helpers.AssemblyUtil();
+                LogitudeSettings.ProductInfo = assemblyUtil.GetProductInfo(typeof(Global).Assembly);
+
+                // this project no need but in FilingManager is must 
+                LogitudeSettings.GetUnfDBConnectionInfoFromTenantInject = CustomsSettingQueryService.GetUnfDBConnectionInfo;// this project no need but in FilingManager is must 
+                LogitudeSettings.GetLogitudeCustomsSettingsMInject = CustomsSettingQueryService.GetLogitudeCustomsSettingsM;
+
+                Logger.OverrideExecutablePath = HttpContext.Current.Server.MapPath("App_Data");
+                LogitudeSettings.HandleLogMe = new Action<string, bool, string, DateTime>((mess, err, suffix, stopLogAt) =>
+                {
+                    if (DateTime.Now > stopLogAt) return;
+                    Logger.LogMe(mess, err, suffix);
+                });
+                LogitudeSettings.GetLogitudeCustomsSettingsMInject = CustomsSettingQueryService.GetLogitudeCustomsSettingsM;
+
+                createAmitalRestrictOwnerModelService = () =>
+                {
+                    var amitalRestrictOwnerService = new AmitalRestrictOwnerService();
+                    return amitalRestrictOwnerService;
+                };
+            }
+
+            LogitudeSettings.HandleDbExceptionInject = ExceptionHandler.HandleDbException;
+            LogitudeSettings.HandleBuildObjectTablesZipFilesData_Inject = MetaDataUpdate.TenantsUpdateClass.BuildObjectTablesZipFilesData;
+
+            Func<int> getTenantFromToken = () =>
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                return authToken.Tenant;
+
+            };
+            InjectionUtil.Init(createAmitalRestrictOwnerModelService, getTenantFromToken, SecurityUtility.CheckContactFeature,
+                () => (new ByteCompressorUtil()) as IByteCompressorUtil,
+                new IISManager(),
+                () => (new HtmlEditorHelper()) as IHtmlEditorHelper
+                );
+            ProxyUtil.SecurityUtilityCheckFeature = SecurityUtility.CheckFeature;
+
+
+
+            LogitudeSettings.GetUserNameInject = AuthenticationUtil.ResolveUserIdentityName;
+        }
+
+        private void OnSettingsCheckTimedEvent(object source, ElapsedEventArgs e)
         {
             FillAppSettings();
         }
@@ -455,10 +460,7 @@ namespace WebFreight.Web
         bool _IAmDebuging_StopOpenNewThreads = false;
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
-            if (LogitudeSettings.ForceHttps)
-            {
-              //  SecurityUtility.RedirectToHttps();
-            }
+
             if (LogitudeSettings.IsCostomsDeploy)
             {
                 var he = new CultureInfo("he-IL");// '("en-US") '    "he-IL")
