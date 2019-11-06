@@ -164,6 +164,7 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
 
         public TenantManagement GetSingleTenantManagementPMByListOfEmails(List<string> emails)
         {
+
             TenantManagement myTenant = new TenantManagement();
             List<TenantManagement> tenants = new List<TenantManagement>();
             if (emails.Count > 0)
