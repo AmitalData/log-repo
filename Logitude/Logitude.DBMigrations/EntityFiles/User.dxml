@@ -1,0 +1,27 @@
+<Table Name="Users">
+
+  <Column Name="Id" Type="Text" Size="15">
+    <Constraint PrimaryKey="true" Nullable="false"/>
+  </Column>
+
+  <Column Name="Tenant" Type="Integer">
+    <Constraint Nullable="false"/>
+  </Column>
+
+  <Column Name="FirstName" Type="nText" Size="30">
+    <Constraint Nullable="false"/>
+  </Column>
+
+  <Column Name="LastName" Type="nText" Size="20">
+    <Constraint Nullable="false"/>
+  </Column>
+
+  <Column Name="Inactive" Type="Boolean">
+    <Constraint Nullable="false"/>
+  </Column>
+
+  <Column Name="BirthDate" Type="DateTime">
+    
+  </Column>
+
+</Table>
