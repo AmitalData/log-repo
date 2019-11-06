@@ -1707,6 +1707,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void ValidateVoidedARPaymentFullAccounting(ARPaymentPM entityPm)
         {
+
             var errors = "";
             IAccountingContext myContext = AccountingContext.GetContext(tenant);
             AccountingPeriodListQueryService accountingPeriodQuery = new AccountingPeriodListQueryService(myContext);
