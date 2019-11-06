@@ -10,7 +10,9 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import { CourierMasterList } from '../../EntityLists/CourierMasterList';
 //import { CourierMasterFiltersDataCount } from '../../DataContract/CourierMasterFiltersDataCount';
-import { CourierMasterPM } from  '../../EntityPMs/CourierMasterPM';
+import { CourierMasterPM } from '../../EntityPMs/CourierMasterPM';
+import { NotificationList } from '../../EntityLists/NotificationList';
+import { NotificationFiltersDataCount } from '../../DataContract/NotificationFiltersDataCount';
 
 export class CourierMasterExtendedListService{
 
@@ -67,7 +69,7 @@ export class CourierMasterExtendedListService{
                     for (var key in serviceResponse.Result) {
 
                         var entity: NotificationList;
-                        entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
+                        //entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
                         _mappedListsArray.push(entity);
 
                     }
