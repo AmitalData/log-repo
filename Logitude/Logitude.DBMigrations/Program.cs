@@ -22,7 +22,8 @@ namespace Logitude.DBMigrations
 
             foreach (var DXMLFile in DXMLFiles)
             {
-                Console.WriteLine("Getting Script For " + Path.GetFileName(DXMLFile).Split('.')[0] + " Entity ...");
+                var fileName = Path.GetFileName(DXMLFile).Split('.')[0];
+                Console.WriteLine("Generating Script For " + fileName + " Entity ...");
                 string xmlString = File.ReadAllText(DXMLFile);
                 TableDefinition DXMLTable = xmlString.ParseXML<TableDefinition>();
                 TableMigrations tableMigrations = new TableMigrations(DXMLTable);
@@ -30,9 +31,10 @@ namespace Logitude.DBMigrations
                 generatedScript += "\n-------------------------------------------------------\n";
             }
 
-            Console.WriteLine("Saving Script To GeneratedScript/Script.sql ...");
+            Console.WriteLine("Saving The Generated Script ...");
             string generatedScriptFilePath = Path.Combine(projectDirectory, @"GeneratedScript\Script.sql");
             File.WriteAllText(generatedScriptFilePath, generatedScript);
+            Console.WriteLine("The Generated Script Saved Successfully To GeneratedScript/Script.sql");
 
             if (Array.IndexOf(arguments, "-exe") != -1)
             {
@@ -40,18 +42,16 @@ namespace Logitude.DBMigrations
                 try
                 {
                     string connectionString = ConfigurationManager.AppSettings["ConnectionString"];
-
                     SqlConnection mySqlConnection = new SqlConnection(connectionString);
                     SqlCommand mySqlCommand = mySqlConnection.CreateCommand();
                     mySqlCommand.CommandText = generatedScript;
                     mySqlConnection.Open();
                     mySqlCommand.ExecuteNonQuery();
-
-                    Console.WriteLine("The Generated Script Executed Successfully ...");
+                    Console.WriteLine("The Generated Script Executed Successfully");
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Error While Executing The Generated Script ...");
+                    Console.WriteLine("Error While Executing The Generated Script:");
                     Console.WriteLine(e.ToString());
                 }
             }
