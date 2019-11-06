@@ -49,6 +49,11 @@ export class CourierMasterList {
 	IntegratorNumber: string;
 	IsReadyForInvoice: boolean;
 	IsAllDecClosedForFollowUp: boolean;
+	CalcClosedForFollowUp: number;
+	CalcMissingClassification: number;
+	CalcMissingImporterId: number;
+	CalcPendingCustoms: number;
+	CalcPending900: number;
 	
 }
  

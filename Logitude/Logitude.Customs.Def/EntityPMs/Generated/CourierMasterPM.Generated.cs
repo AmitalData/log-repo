@@ -1032,6 +1032,121 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private int calcClosedForFollowUp ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int CalcClosedForFollowUp  
+	   {
+	    
+	     get
+		{
+		   return calcClosedForFollowUp;
+		 }
+		 set
+		 {
+		   if(calcClosedForFollowUp != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CalcClosedForFollowUp",OldValue=calcClosedForFollowUp,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   calcClosedForFollowUp=value;
+		   }
+			
+		 }
+	   }
+	  private int calcMissingClassification ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int CalcMissingClassification  
+	   {
+	    
+	     get
+		{
+		   return calcMissingClassification;
+		 }
+		 set
+		 {
+		   if(calcMissingClassification != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CalcMissingClassification",OldValue=calcMissingClassification,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   calcMissingClassification=value;
+		   }
+			
+		 }
+	   }
+	  private int calcMissingImporterId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int CalcMissingImporterId  
+	   {
+	    
+	     get
+		{
+		   return calcMissingImporterId;
+		 }
+		 set
+		 {
+		   if(calcMissingImporterId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CalcMissingImporterId",OldValue=calcMissingImporterId,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   calcMissingImporterId=value;
+		   }
+			
+		 }
+	   }
+	  private int calcPendingCustoms ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int CalcPendingCustoms  
+	   {
+	    
+	     get
+		{
+		   return calcPendingCustoms;
+		 }
+		 set
+		 {
+		   if(calcPendingCustoms != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CalcPendingCustoms",OldValue=calcPendingCustoms,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   calcPendingCustoms=value;
+		   }
+			
+		 }
+	   }
+	  private int calcPending900 ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int CalcPending900  
+	   {
+	    
+	     get
+		{
+		   return calcPending900;
+		 }
+		 set
+		 {
+		   if(calcPending900 != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CalcPending900",OldValue=calcPending900,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   calcPending900=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

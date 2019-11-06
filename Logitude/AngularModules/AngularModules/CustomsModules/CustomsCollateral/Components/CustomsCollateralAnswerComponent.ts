@@ -327,7 +327,7 @@ export class CustomsCollateralAnswerComponent extends BaseComponent {
                 this.UIProperties.SetEnabled("AnswerEntityTypeCode", this.ObjectTableName, true);
                 this.UIProperties.SetEnabled("AllocatedAmount", this.ObjectTableName, true);
                 this.UIProperties.SetEnabled("CustomsTapgFile", this.ObjectTableName, true);
-                if (this.IsGuaranteeDefaultList) this.IsGuaranteeDefaultShow = true;
+                if (this.IsGuaranteeDefaultList && this.AnswerEntityTypeCode == "2") this.IsGuaranteeDefaultShow = true;
                 this.UIProperties.SetEnabled("Remarks", this.ObjectTableName, true);
                 this.UIProperties.SetEnabled("CustomsNumeral", this.ObjectTableName, true);
 
@@ -508,7 +508,7 @@ export class CustomsCollateralAnswerComponent extends BaseComponent {
              this.UIProperties.SetEnabled("AnswerEntityTypeCode", this.ObjectTableName, true);
              this.UIProperties.SetEnabled("AllocatedAmount", this.ObjectTableName, true);
              this.UIProperties.SetEnabled("CustomsTapgFile", this.ObjectTableName, true);
-             if (this.IsGuaranteeDefaultList) this.IsGuaranteeDefaultShow = true;
+             if (this.IsGuaranteeDefaultList && this.AnswerEntityTypeCode == "2") this.IsGuaranteeDefaultShow = true;
              this.UIProperties.SetEnabled("Remarks", this.ObjectTableName, true);
              this.UIProperties.SetEnabled("CustomsNumeral", this.ObjectTableName, true);
              this.EntityPM.NewFileRequest = false;
@@ -560,6 +560,14 @@ export class CustomsCollateralAnswerComponent extends BaseComponent {
         }
         else {
             this.AnswerEntityRedIconVisibility = false;
+        }
+        if (newValue == "2") {
+            if (this.IsGuaranteeDefaultList) {
+                this.IsGuaranteeDefaultShow = true;
+            }
+        }
+        else {
+            this.IsGuaranteeDefaultShow = false;
         }
     }
 

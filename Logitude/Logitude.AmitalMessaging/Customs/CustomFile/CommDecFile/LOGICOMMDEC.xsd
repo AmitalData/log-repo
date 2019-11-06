@@ -149,6 +149,8 @@
         <xs:element minOccurs="0" maxOccurs="1" ref="CURRENCY" />
         <xs:element minOccurs="0" maxOccurs="1" ref="ITEM_COUNTERKEY" />
         <xs:element minOccurs="0" maxOccurs="1" ref="PREFERENCEDOCUMENTNUMBER" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="TAXEXEMPTCODE" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="PROCESSTYPE" />
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="CERTIFICATES" />
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="POINTERS" />
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="CARS" />
@@ -169,6 +171,8 @@
   <xs:element name="CURRENCY" type="xs:string" />
   <xs:element name="ITEM_COUNTERKEY" type="xs:string" />
   <xs:element name="PREFERENCEDOCUMENTNUMBER" type="xs:string" />
+  <xs:element name="TAXEXEMPTCODE" type="xs:string" />
+  <xs:element name="PROCESSTYPE" type="xs:string" />
   <xs:element name="CERTIFICATES">
     <xs:complexType>
       <xs:sequence>
