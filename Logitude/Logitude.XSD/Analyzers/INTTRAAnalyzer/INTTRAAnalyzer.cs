@@ -780,15 +780,22 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                 }
             }
         }
+
         private void Analyze_Booking()
         {
             this.shipmentPM.IsUpdatedByINTTRAAnalyzer = true;
             string systemEmail = "system@tenant" + this.Tenant + ".com";
             SetINTTRABookingStatusCodeAndTransStatusCode();
+
+            this.FillShipmentConfirmedBy();
+            this.FillShipmentBookingConfirmationNumber();
+            this.FillShipmentMainCarriageCarrierNumber();
+
             shipmentPM.INTTRASIStatusDate = TenantServerConfigration.GetCurrentDateTime(this.Tenant);
             ShipmentService service = new ShipmentService(myShipmentContext, shipmentPM, systemEmail);
             service.Update();
         }
+
         private void SetINTTRABookingStatusCodeAndTransStatusCode()
         {
             INTTRABooking2Confirm.HeaderType iMessageHeader = this.iMessage_Booking.Header;
@@ -831,6 +838,50 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
             }
             shipmentPM.INTTRABookingStatusCode = iNTTRABookingStatusCode;
             shipmentPM.INTTRABookingTransStatusCode = iNTTRABookingTransStatusCode;
+        }
+
+        private void FillShipmentConfirmedBy()
+        {
+            INTTRABooking2Confirm.MessageBodyType iMessageBody = iMessage_Booking.MessageBody;
+            INTTRABooking2Confirm.MessagePropertiesType iMessageProperties = iMessageBody.MessageProperties;
+            if (iMessageBody != null && iMessageBody.MessageProperties != null)
+            {
+                shipmentPM.BookingConfirmedBy = iMessageBody.MessageProperties.ConfirmedWith != null ? iMessageBody.MessageProperties.ConfirmedWith.Name : null;
+
+            }
+        }
+
+        private void FillShipmentBookingConfirmationNumber ()
+        {
+            INTTRABooking2Confirm.MessageBodyType iMessageBody = iMessage_Booking.MessageBody;
+            INTTRABooking2Confirm.MessagePropertiesType iMessageProperties = iMessageBody.MessageProperties;
+            if (iMessageBody != null && iMessageBody.MessageProperties != null && iMessageBody.MessageProperties.TransportationDetails != null)
+            {
+                var booking = iMessageBody.MessageProperties.ReferenceInformation.Where(d => d.Type ==INTTRABooking2Confirm.ReferenceTypeValues.BookingNumber).FirstOrDefault();
+                if (booking != null)
+                {
+                    shipmentPM.BookingConfirmationNumber = booking.Value;
+                }
+            }
+        }
+
+        private void FillShipmentMainCarriageCarrierNumber()
+        {
+            INTTRABooking2Confirm.MessageBodyType iMessageBody = iMessage_Booking.MessageBody;
+            INTTRABooking2Confirm.MessagePropertiesType iMessageProperties = iMessageBody.MessageProperties;
+            if (iMessageBody != null && iMessageBody.MessageProperties != null && iMessageBody.MessageProperties.TransportationDetails != null)
+            {
+               var transport = iMessageBody.MessageProperties.TransportationDetails.Where(d => d.TransportMode == INTTRABooking2Confirm.TransportModeTypeValues.MaritimeTransport).FirstOrDefault();
+
+                if(transport != null && transport.ConveyanceInformation != null && transport.ConveyanceInformation.Identifier != null)
+                {
+                    var voyage = transport.ConveyanceInformation.Identifier.Where(a => a.Type == INTTRABooking2Confirm.ConveyanceIdentifierTypeValues.VoyageNumber).FirstOrDefault();
+                    if(voyage != null)
+                    {
+                        shipmentPM.MainCarriageCarrierNumber = voyage.Value;
+                    }
+                }
+            }
         }
 
         private string CreateCommunicationLogForTenant(string from, int fileSize)
