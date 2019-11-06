@@ -29,6 +29,7 @@ namespace Logitude.DBMigrations
                 TableMigrations tableMigrations = new TableMigrations(DXMLTable);
                 generatedScript += tableMigrations.GetScript();
                 generatedScript += "\n-------------------------------------------------------\n";
+
             }
 
             Console.WriteLine("Saving The Generated Script ...");
