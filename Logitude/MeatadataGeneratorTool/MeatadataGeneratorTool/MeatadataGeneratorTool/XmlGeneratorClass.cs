@@ -48,7 +48,7 @@ namespace MeatadataGeneratorTool
             return builder.ToString();
         }
 
-        public static bool GenerateSqlXmlFileFromTool(ObjectTableViewModel table, bool FromOut = false)
+        public static bool GenerateSqlXmlFileFromTool(ObjectTableViewModel table, bool FromOut = false)//execute when click Generate Create Table Sql
         {
             string[] strArray = new string[8];
             strArray[0] = DateTime.Now.Year.ToString();
@@ -84,6 +84,8 @@ namespace MeatadataGeneratorTool
             XmlElement element3 = document.CreateElement("createTable");
             element2.AppendChild(element3);
             SetAttribute("tableName", table.DBTableName, element3);
+
+
             foreach (ObjectFieldsViewModel model in table.ObsList.Where(a => a.IsDeleted == false))
             {
                 if (!model.IsDBField)
@@ -921,7 +923,7 @@ namespace MeatadataGeneratorTool
         #region GenerateXmlFileFromTool
 
 
-        public static void GenerateXmlFileFromTool(ObjectTableViewModel table)
+        public static void GenerateXmlFileFromTool(ObjectTableViewModel table)//execute when click ok button
         {
 
 

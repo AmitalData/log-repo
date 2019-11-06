@@ -149,6 +149,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                   Subject = a.Subject,
                                                   StatusCode = a.StatusCode,
                                                   ExceptionMessage = a.ExceptionMessage,
+                                                  CreateDate = a.CreateDate,
                                               }).FirstOrDefault();
 
             if (documentsExecutionLogList != null) documentsExecutionLogList.ExceptionMessage = GetUnderStandableMessageFromMessageException(documentsExecutionLogList.ExceptionMessage);

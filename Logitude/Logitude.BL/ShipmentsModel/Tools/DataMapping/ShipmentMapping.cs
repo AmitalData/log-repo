@@ -2599,6 +2599,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             AddFieldChangedProperties(changeTrackingPM, "MainCarriageFinalDestinationETA", changeTrackingPM.MainCarriageFinalDestinationETA, pm.MainCarriageFinalDestinationETA, "DateTime?", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "MainCarriageFinalDestinationATA", changeTrackingPM.MainCarriageFinalDestinationATA, pm.MainCarriageFinalDestinationATA, "DateTime?", notifyPropertyChangeValuesList);
             AddFieldChangedProperties(changeTrackingPM, "CutoffDate", changeTrackingPM.CutoffDate, pm.CutoffDate, "DateTime?", notifyPropertyChangeValuesList);
+            AddFieldChangedProperties(changeTrackingPM, "IsCancelled", changeTrackingPM.IsCancelled, pm.IsCancelled, "bool", notifyPropertyChangeValuesList);
 
 
             AddCustomFieldChangedProperties(changeTrackingPM, changeTrackingPM.Field1, pm.Field1, "Field1", notifyPropertyChangeValuesList);
@@ -2706,7 +2707,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             shipmentPM.IncotermId = houseShipment.IncotermId;
             shipmentPM.CustomerContactId = houseShipment.CustomerContactId;
             shipmentPM.AgentContactId = houseShipment.AgentContactId;
-
+            shipmentPM.IsCancelled = houseShipment.IsCancelled;
             if (EntityChangeHelper.IsShowLogBoxAutomationFields())
             {
                 shipmentPM.IsDepositionRequired = houseShipment.IsDepositionRequired;
