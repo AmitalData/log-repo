@@ -246,6 +246,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
 
                 _DocumentsFilingPM = documentsFilingPM as DocumentsFilingPM;
+
                 if (_DocumentsFilingPM == null)
                 {
                     LogitudeSettings.HandleLogMe("_DocumentsFilingPM == null", false, "CreateUD2LTService", stopLogAt);
@@ -253,6 +254,13 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     return;
                 }
                 jsonPM = Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(_DocumentsFilingPM);
+                if (String.IsNullOrWhiteSpace(_DocumentsFilingPM.DocumentTypeCode))
+                {
+                    LogitudeSettings.HandleLogMe("_DocumentsFilingPM.DocumentTypeCode" + jsonPM, false, "CreateUD2LTService.DOC_ID", stopLogAt);
+                    Debug.WriteLine("CreateUD2LTService.DOC_ID== null");
+                    return;
+                }
+
                 int tenant = _DocumentsFilingPM.Tenant;
                 if (!IsConnected2Declaration())
                 {
