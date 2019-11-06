@@ -515,6 +515,12 @@ namespace WebFreight.Web.DataProviders
         public string CarrierCBSA { get; set; }
         public string CarrierCAAT { get; set; }
         public string AccountDisplayNumber { get; set; }
+        
+        public string ShipperNotExporter { get; set; }
+        public string ShipperNotExporterAddress { get; set; }
+        public string ConsigneeNotImporter { get; set; }
+        public string ConsigneeNotImporterAddress { get; set; }
+        
     }
 
     public class SAT
