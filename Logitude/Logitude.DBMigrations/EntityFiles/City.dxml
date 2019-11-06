@@ -8,8 +8,8 @@
     <Constraint Nullable="false"/>
   </Column>
 
-  <Column Name="SearchFields" Type="nText" Size="max">
-
+  <Column Name="SearchFields" Type="nText" Size="MAX">
+    <Constraint Nullable="true"/>
   </Column>
 
 </Table>

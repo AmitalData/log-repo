@@ -21,7 +21,7 @@
   </Column>
 
   <Column Name="BirthDate" Type="DateTime">
-    
+    <Constraint Nullable="false"/>
   </Column>
 
 </Table>
