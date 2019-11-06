@@ -54,6 +54,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     private timerToken: any;
     public BIReportXMLData: BIReportXMLData = null;
     public HasDeletionFeature = false;
+    public HasCopyFeature = false;
     public columnTypes;
     public context;
     public CountText: string;
@@ -68,6 +69,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         });
     }
     ngOnInit() {
+        this.HasCopyFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportCopy");
         this.HasDeletionFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportDelete");
         this._DWSubQueryPMService.getByQueryId(this.DWQueryId).subscribe(myResult => {
             if (!myResult.HasError) {
@@ -708,6 +710,24 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
             });
         }
     }
+
+    onCopyBIReportClick() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Copy BI Report";
+        var windowArgs: any = {};
+        windowArgs.Name = this.EntityPM.Name;
+        windowArgs.Description = this.EntityPM.Description;
+        windowArgs.DWQueryId = this.EntityPM.DWQueryId;
+        windowArgs.BIReportFolderId = this.EntityPM.BIReportFolderId;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Show('./InfrastructureModules/InfrastructureBIReport/Components/NewEntity/NewBIReport');
+        logWindow.WindowClosed.subscribe(d => {
+            if (d) {
+                //this.LoadData();
+            }
+        });
+    }
+
     onDeleteBIReportClick() {
         if (!this.IsNewEntity) {
             var confirmWindow = new ConfirmWindow();

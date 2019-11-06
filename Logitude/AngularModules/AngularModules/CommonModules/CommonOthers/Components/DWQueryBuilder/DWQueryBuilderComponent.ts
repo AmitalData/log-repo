@@ -66,6 +66,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
     public Width: number = 200;
     public Height: number = 110;
     public IconSize: number = 17;
+    private IsCopy: boolean = false;
     mouseover(MyItem) {
         if (MyItem.HelpText) {
             var item = document.getElementById(MyItem.TooltipId);
@@ -238,6 +239,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
         this.IsBIReportWorkspace = args.IsBIReportWorkspace;
         this.IsBIReportEditScreen = args.IsBIReportEditScreen;
         this.FolderId = args.FolderId;
+        this.IsCopy = args.IsCopy;
         //this.AllFieldsWithChildrenDataSource = args.DWObjectFieldsWithChildren;
         if (this.QID) {
             this._DWSubQueryPMService.getByQueryId(this.QID).subscribe(myResult => {
@@ -959,7 +961,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
 
     SampleData: any[] = [];
     CancelButtonClicked() {
-        this.CurrentSession.CloseCurrentWindowEmit("cancel");
+            this.CurrentSession.CloseCurrentWindowEmit("cancel");
     }
     IsPreview: boolean = true;
     IsDataReturened: boolean = true;
@@ -1075,7 +1077,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
                 this.QueryData.SubQueryData = MySubQuery;
                 this.QueryData.Columns = this.SelectedFieldsDataSource;
                 this.QueryData.Filters = this.SelectedFiltersDataSource[0];
-                if (AppTool.IsNullOrEmpty(this.ID)) {
+                if (AppTool.IsNullOrEmpty(this.ID) || this.IsCopy) {
                     this._DWSubQueryPMService.insertDWQueryData(this.QueryData).subscribe(myResult => {
                         //if (!myResult.HasError) {
 

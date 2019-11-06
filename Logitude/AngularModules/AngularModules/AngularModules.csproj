@@ -277,6 +277,7 @@
     <Content Include="Customs\Components\ListTemplates\EndDateComponent.html" />
     <Content Include="Customs\Components\ListTemplates\SupplierInvoiceItemListTemplate.html" />
     <Content Include="e2e\dist\out-tsc\Shipment\EntityPMs\ShipmentPickUpDeliveryPackagePM.js" />
+    <Content Include="Images\Buttons\copy.report.png" />
     <Content Include="Images\Buttons\downarrow.png" />
     <Content Include="Images\Buttons\uparrow.png" />
     <Content Include="Images\Error.png" />
@@ -974,6 +975,7 @@
     <TypeScriptCompile Include="Infrastructure\Helpers\DWQueryBuilderHelper.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\BusinessProcessDomainService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedLists\BusinessRoleExtendedListService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\BIReportExtendedPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\DWQueryBuilderService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\SchedulerExtendedPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\WebhookKeysExtendedPMService.ts" />
