@@ -129,7 +129,7 @@ export class ShipmentHelper {
         this.Helper.WaitByIdAndClick(CancelBtnId);
     }
 
-    AddAirlineStock(usedIn: string) {
+    AddSelectAirlineStock(usedIn: string) {
         var numbertest = this.generalFun.StockNumbers();
         this.Helper.WaitByIdAndClick('AddStock');
         this.Helper.WaitBusyIndicator();
@@ -185,6 +185,19 @@ export class ShipmentHelper {
             this.Helper.WaitByIdAndClick('OkBtn');
             this.Helper.WaitByIdAndClick('ConfirmWindow_Yes_0');
             this.Helper.WaitBusyIndicator();
+        }
+    }
+
+    AddAirlineStock(LogitudeWizardType: string) {
+        console.log(LogitudeWizardType);
+        var numbertest = this.generalFun.StockNumbers();
+        if (LogitudeWizardType == 'M') {
+            this.Helper.WaitByIdAndFill('Master_Master', numbertest);
+            console.log('Stock Number is : ' + numbertest);
+
+        } else {
+            this.Helper.WaitByIdAndFill('Shipment_Master', numbertest);
+            console.log('Stock Number is : ' + numbertest);
         }
     }
 }

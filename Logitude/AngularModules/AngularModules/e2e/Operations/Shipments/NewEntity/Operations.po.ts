@@ -58,8 +58,8 @@ export class OperationsComp {
             this.ShipmentActions.AccountedReopenShipment(browser.params.ShipParams.ShipmentLevelCode);
             this.ShipmentActions.OperationalReopenShipment(browser.params.ShipParams.ShipmentLevelCode);
             this.ShipmentActions.CopyShipment(browser.params.ShipParams.ShipmentLevelCode);
-            this.Helper.WaitByIdAndClick('Shipment.TH.Overview_1');
-            this.ShipmentActions.CancelShipment();
+            //this.Helper.WaitByIdAndClick('Shipment.TH.Overview_1');
+            //this.ShipmentActions.CancelShipment();
         }
     }
 }
