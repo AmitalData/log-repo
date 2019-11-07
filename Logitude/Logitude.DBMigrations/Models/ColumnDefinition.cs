@@ -20,7 +20,7 @@ namespace Logitude.DBMigrations.Models
         [XmlAttribute()]
         public string Size { get; set; }
 
-        [XmlElement("Constraint")]
-        public List<ConstraintDefinition> Constraints { get; set; }
+        [XmlElement]
+        public ConstraintDefinition Constraints { get; set; }
     }
 }

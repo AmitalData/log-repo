@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\AppHelper.cs" />
     <Compile Include="Models\ColumnDefinition.cs" />
     <Compile Include="Models\ConstraintDefinition.cs" />
     <Compile Include="Models\TableDefinition.cs" />
