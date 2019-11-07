@@ -161,17 +161,18 @@ export class CourierMasterExtendedListService{
 
     MapJsonToEntity(json: any) {
 
-        var entity: NotificationFiltersDataCount;
-        entity = new NotificationFiltersDataCount();
-        var jsonListKeys = Object.keys(json);
+        //var entity: NotificationFiltersDataCount;
+        //entity = new NotificationFiltersDataCount();
+        //var jsonListKeys = Object.keys(json);
 
-        for (var key in jsonListKeys) {
-            var property = jsonListKeys[key];
-            entity[property] = json[property];
-        }
+        //for (var key in jsonListKeys) {
+        //    var property = jsonListKeys[key];
+        //    entity[property] = json[property];
+        //}
 
 
-        return entity;
+        //return entity;
+        return null;
     }
 
 }
