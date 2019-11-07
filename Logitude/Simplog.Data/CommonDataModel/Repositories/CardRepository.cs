@@ -582,6 +582,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return context.Cards.Where(a=>a.PrimaryContactId == contactId && a.Tenant==tenant).ToList();
         }
 
+
         public IQueryable<Card> GetWarehouseCards(int tenant)
         {
             return (from record in context.Cards.Include("PartnerType").Include("PaymentTerm").Include("Customer").Include("Customer.SalesmanUser").Include("Airline").Include("SharedLogisticsInvitationStatus").Include("Agent")

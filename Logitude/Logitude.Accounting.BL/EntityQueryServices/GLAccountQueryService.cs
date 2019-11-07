@@ -527,6 +527,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return pocos.Select(rec => this.GetEntityPM(rec)).ToList();
         }
 
+        public List<GLAccount> GetByDisplayNumberAndAccType(string displayNumber, string accTypeCode, int tenant)
+        {
+            List<GLAccount> pocos = this.repository.GetByDisplayNumberAndAccType(displayNumber, accTypeCode, tenant);
+            return pocos;
+        }
+
         public IQueryable<GLAccountPM> GetSplittedByCurrencyGLAccounts(string accountId, int tenant)
         {
           
@@ -880,7 +886,10 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             taxDeduction.TotalDeductionInLocalCurrency = Math.Round(DBVendorsList.Sum(d => d.TaxDeductionLocalAmount).Value,0);
             taxDeduction.TotalAmountInLocalCurrency08 = Math.Round(DBVendorsList.Where(d => d.DeductionFileTypeCode == "08").Sum(d => d.AmountInLocalCurrency).Value,0);
             taxDeduction.TotalTaxDeductionInLocalCurrency08 = Math.Round(DBVendorsList.Where(d => d.DeductionFileTypeCode == "08").Sum(d => d.TaxDeductionLocalAmount).Value,0);
-            taxDeduction.TotalEndBalance = Math.Round(DBVendorsList.Sum(d => d.EndYearBalance).Value, 0);//  DBVendorsList.Sum(d => d.EndYearBalance).Value,0);
+            if (taxDeduction.ByVendorList != null)
+            {
+                taxDeduction.TotalEndBalance = Math.Round(taxDeduction.ByVendorList.Sum(d => d.EndYearBalance).Value, 0);//  DBVendorsList.Sum(d => d.EndYearBalance).Value,0);
+            }
 
             //if (result.ContainsKey(item.GLAccountId))
             //{

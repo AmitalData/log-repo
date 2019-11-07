@@ -290,6 +290,16 @@ namespace WebFreight.Web.GlobalModelDB
             {
                 throw new NotImplementedException();
             }
-        } 
+        }
+
+        public IDbSet<BluesnapTransaction> BluesnapTransactions
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+
     }
 }

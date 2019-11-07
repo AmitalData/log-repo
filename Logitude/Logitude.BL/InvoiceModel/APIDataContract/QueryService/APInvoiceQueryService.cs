@@ -39,6 +39,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 AccountingSettingRepository accountingSettingRepository = new AccountingSettingRepository(commonDataContext);
                 UserRepository userRepository = new UserRepository(commonDataContext);
                 TenantRepository tenantRepository = new TenantRepository(commonDataContext);
+                VatTypePercentageRepository vatTypePercentageRepository = new VatTypePercentageRepository(commonDataContext);
 
                 AccountingSetting accountingSetting = accountingSettingRepository.GetSingleAccountingSetting(tenant);
                 Tenant myTenant = tenantRepository.GetSingleTenant(tenant);
@@ -51,8 +52,9 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 temp.UpdatedByUserId = myUser.Id;
                 temp.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                 temp.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                temp.SubTotalInLocalCurrency = 0;
-                temp.SubTotalInInvoiceCurrency = 0;
+
+                //temp.SubTotalInLocalCurrency = 0;
+                //temp.SubTotalInInvoiceCurrency = 0;
 
                 if (string.IsNullOrEmpty(temp.BranchId))
                 {
@@ -101,7 +103,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                     throw new ApplicationException("Invoice Number is required");
                 }
 
-                if(temp.AmountInInvoiceCurrency == null || temp.AmountInInvoiceCurrency == 0)
+                if (temp.AmountInInvoiceCurrency == null || temp.AmountInInvoiceCurrency == 0)
                 {
                     throw new ApplicationException("Invoice Amount is required");
                 }
@@ -113,6 +115,20 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 if (string.IsNullOrEmpty(temp.InvoiceCurrencyId))
                 {
                     throw new ApplicationException("Invoice Currency is required");
+                }
+
+                else
+                {
+                    if (temp.InvoiceCurrencyId == temp.LocalCurrencyId)
+                    {
+                        if (temp.InvoiceCurrencyExchangeRate != null && temp.InvoiceCurrencyExchangeRate != 0)
+                        {
+                            if (temp.InvoiceCurrencyExchangeRate != 1)
+                            {
+                                throw new ApplicationException("Invoice Currency Exchange Rate should be 1 when Invoice Currency same as Local Currency");
+                            }
+                        }
+                    }
                 }
 
                 if (accountingSetting != null && accountingSetting.IsVatNumberMandatoryInAP)
@@ -134,8 +150,8 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 {
                     throw new ApplicationException("Invoice Currency Exchange Rate is required");
                 }
-
-                if(temp.InvoiceDate != null)
+                
+                if (temp.InvoiceDate != null)
                 {
                     this.ComputeAPInvoiceDueDate(temp);
                 }
@@ -144,18 +160,19 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 {
                     throw new ApplicationException("Invoice Date is required");
                 }
-                
+
                 if (!string.IsNullOrEmpty(temp.MainEntityReference))
                 {
                     ShipmentQuery shipmentRepository = new ShipmentQuery(tenant);
                     ShipmentPM shipment = shipmentRepository.GetSinglePMByShipmentNumber(temp.MainEntityReference, tenant, false);
-                    if(shipment != null)
+                    if (shipment != null)
                     {
-                        if(shipment.IsAccountingClosed)
+                        if (shipment.IsAccountingClosed)
                         {
                             throw new ApplicationException("The Shipment is Accounting Closed");
                         }
 
+                        temp.ShipmentTransportModeId = shipment.TransportModeId;
                         temp.MainEntityId = shipment.Id;
                         temp.HouseNumber = shipment.House;
                         temp.MasterNumber = shipment.LongMaster;
@@ -169,7 +186,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                             case "I": { temp.Description = "Import from " + shipment.MainCarriageFromPortCode; break; }
                             case "D": { temp.Description = "Ship to " + shipment.ToPartnerCity; break; }
                         }
-                        
+
                         if (string.IsNullOrEmpty(temp.BranchId))
                         {
                             temp.BranchId = shipment.BranchId;
@@ -181,21 +198,52 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                         throw new ApplicationException("No Shipment Found");
                     }
                 }
-
+                
                 foreach (APInvoiceLinePM line in temp.InvoiceLines)
                 {
-                    if(string.IsNullOrEmpty(line.ForiegnCurrencyId))
+                    if (string.IsNullOrEmpty(line.ChargesTypeId))
                     {
-                        line.ForiegnCurrencyId = temp.InvoiceCurrencyId;
+                        throw new ApplicationException("Line Charges Type is Missing");
                     }
 
                     else
                     {
-                        if(line.ForiegnCurrencyId != temp.InvoiceCurrencyId)
+                        Simplog.Data.CommonDataModel.EntityPOCOs.ChargesType chargesType = ChargesTypeRepository.GetSingleChargesType(line.ChargesTypeId, tenant, true);
+                        if(chargesType != null)
                         {
-                            throw new ApplicationException("Line Currency is Different than Invoice Currency");
+                            line.Description = chargesType.EnglishName;
+                            line.LocalDescription = chargesType.LocalName;
+
+                            if (string.IsNullOrEmpty(line.VatTypeId))
+                            {
+                                line.VatTypeId = chargesType.VatTypeId;
+                            }
+
+                            if (!string.IsNullOrEmpty(line.VatTypeId))
+                            {
+                                Simplog.Data.CommonDataModel.EntityPOCOs.VatType vatType = VatTypeRepository.GetSingleVatType(line.VatTypeId, tenant, true);
+                                if (vatType != null)
+                                {
+                                    line.VatTypeName = vatType.EnglishName;
+                                    line.VatIsMultiPercentage = vatType.IsMultiPercentage;
+
+                                    if (!vatType.IsMultiPercentage)
+                                    {
+                                        VatTypePercentage vatTypePercentage = vatTypePercentageRepository.GetVatTypePercentageByDate(vatType.Id, tenant, temp.InvoiceDate);
+                                        if (vatTypePercentage != null)
+                                        {
+                                            line.VatPercentage = vatTypePercentage.Percentage;
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
+
+                    if (string.IsNullOrEmpty(line.ForiegnCurrencyId))
+                    {
+                        line.ForiegnCurrencyId = temp.InvoiceCurrencyId;
+                    }                    
 
                     line.EntityReference = temp.MainEntityReference;
                     line.EntityId = temp.MainEntityId;
@@ -209,6 +257,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 throw ex;
             }
         }
+
         private void SetCurrencyRateData(APInvoicePM invoice)
         {
             if (!string.IsNullOrEmpty(invoice.InvoiceCurrencyId))
@@ -265,7 +314,10 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 {
                     if (paymentTerm.IsManuallySet)
                     {
-                        invoice.DueDate = null;
+                        if(invoice.DueDate == null)
+                        {
+                            throw new ApplicationException("Due Date is Required when Payment Term is Manually Set");
+                        }
                     }
 
                     else if (paymentTerm.Days == 0)

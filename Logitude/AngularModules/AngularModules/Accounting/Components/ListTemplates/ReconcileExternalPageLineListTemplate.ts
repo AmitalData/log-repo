@@ -1,4 +1,4 @@
-﻿import {Component,ChangeDetectorRef} from '@angular/core'; 
+﻿import {Component,ChangeDetectorRef} from '@angular/core';
 import {WebFreightDomainService} from '../../../Infrastructure/Services/WebFreightDomainService';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {OnInit, Output, EventEmitter, ComponentRef, QueryList} from '@angular/core';
@@ -52,10 +52,10 @@ export class ReconcileExternalPageLineListTemplate {
         ReconcileEventManager.CheckBoxChecked.emit({ line: this.rowData, isChecked: checked, RowIndex: this.AdditionalData.rowIndex });
 
     }
-    BankCheckBoxClicked(checked: boolean) {
+    ExtPageCheckBoxClicked(checked: boolean) {
         console.log("clicked: ", checked);
         this.rowData['IsChecked'] = checked;
-        ReconcileEventManager.BankCheckBoxChecked.emit({ line: this.rowData, isChecked: checked, RowIndex: this.AdditionalData.rowIndex });
+        ReconcileEventManager.ExtPageCheckBoxChecked.emit({ line: this.rowData, isChecked: checked, RowIndex: this.AdditionalData.rowIndex });
 
     }
 

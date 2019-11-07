@@ -1032,6 +1032,7 @@ export class QuoteChargeItem extends BaseComponent {
     public TransportModeId: string;
     public IsAdhoc: boolean = false;
     public IsRoutingRate: boolean = false;
+    public IsAddPricestepsEnabled: boolean = false;
     constructor(entity: QuoteChargePM, public fatherComponent: LCLChargesComponent, isNew: boolean) {
         super(); 
         this.IsNew = isNew;
@@ -1058,12 +1059,11 @@ export class QuoteChargeItem extends BaseComponent {
         this.SetUIProperties_SaleFields();
         this.SetUIProperties_CellsColors();
         this.SetUIProperties_VAT();
-
+        
         this.UIProperties.SetEnabled("ChargesTypeId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("VendorId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Notes", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("IsChargeBySteps", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("CostCurrencyId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("CostIsFixedRate", this.ObjectTableName, this.IsEditingEnabled);
     }
 
@@ -1088,6 +1088,25 @@ export class QuoteChargeItem extends BaseComponent {
         }
 
         this.IsAllInCheckBoxVisible = isAllInCheckBoxVisible;
+        this.SetUIProperties_AllIn_CostCurrency();
+    }
+    SetUIProperties_AllIn_CostCurrency() {
+
+        var isEnabled_CostCurrencyId = false;
+
+        if (this.IsEditingEnabled) {
+            isEnabled_CostCurrencyId = true;
+
+            if (this.IsAllIN) {
+                isEnabled_CostCurrencyId = false;
+            }
+
+            else if (this.ChargesGroupCode == "FRT" && this.QuotePM.QuoteCharges.filter(d => d.IsAllIN).length > 0) {
+                isEnabled_CostCurrencyId = false;
+            }
+        }
+
+        this.UIProperties.SetEnabled("CostCurrencyId", this.ObjectTableName, isEnabled_CostCurrencyId);
     }
 
     public IsEnabled_CostQuantity: boolean = false;
@@ -1099,6 +1118,7 @@ export class QuoteChargeItem extends BaseComponent {
         var isEnabled_CostUnitPrice = false;
         var isEnabled_CostMinAmount = false;
         var isEnabled_CostMeasurement = false;
+        var isEnabled_AddPriceSteps = false;
 
         if (this.IsEditingEnabled) {
             isEnabled_CostQuantity = true;
@@ -1116,9 +1136,9 @@ export class QuoteChargeItem extends BaseComponent {
                 case "FIXD":
                 case "BCNT":
                 case "PRVL":
-                case "PRFR":   
-                case "GWTN":     
-                case "QTY":        
+                case "PRFR":
+                case "GWTN":
+                case "QTY":
                     {
                         isEnabled_CostQuantity = false;
                         break;
@@ -1141,8 +1161,13 @@ export class QuoteChargeItem extends BaseComponent {
                 isEnabled_CostMinAmount = false;
                 //isEnabled_CostMeasurement = false;
             }
+
+            if (this.CostMeasurementCode != "FIXD") {
+                isEnabled_AddPriceSteps = true;
+            }
         }
 
+        this.IsAddPricestepsEnabled = isEnabled_AddPriceSteps;
         this.IsEnabled_CostQuantity = isEnabled_CostQuantity;
         this.IsEnabled_CostUnitPrice = isEnabled_CostUnitPrice;
         this.IsEnabled_CostMinAmount = isEnabled_CostMinAmount;
@@ -1468,6 +1493,8 @@ export class QuoteChargeItem extends BaseComponent {
             this.CostCurrencyId = null;
             this.EntityPM.IsBackToBack = false;
         }
+
+        this.SetUIProperties();
     }
 
     get ChargesTypeCode() { return this.EntityPM.ChargesTypeCode; }

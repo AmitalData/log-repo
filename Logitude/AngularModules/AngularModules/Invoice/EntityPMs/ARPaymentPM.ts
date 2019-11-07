@@ -242,6 +242,11 @@ export class ARPaymentPM {
     public set OpenAmount(newValue: number) { if (this.openAmount != newValue) { this.openAmount = newValue; this.MarkAsDirty("OpenAmount"); } }
        
 	 
+    private openAmountInLocalCurrency: number;
+    public get OpenAmountInLocalCurrency() { return this.openAmountInLocalCurrency; }
+    public set OpenAmountInLocalCurrency(newValue: number) { if (this.openAmountInLocalCurrency != newValue) { this.openAmountInLocalCurrency = newValue; this.MarkAsDirty("OpenAmountInLocalCurrency"); } }
+       
+	 
     private chequeOrPaymentRef: string;
     public get ChequeOrPaymentRef() { return this.chequeOrPaymentRef; }
     public set ChequeOrPaymentRef(newValue: string) { if (this.chequeOrPaymentRef != newValue) { this.chequeOrPaymentRef = newValue; this.MarkAsDirty("ChequeOrPaymentRef"); } }

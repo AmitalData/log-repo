@@ -91,6 +91,11 @@ export class ARInvoiceShortTitleComponent {
                         if (isEditComponentSaved) {
                             this.entityArgs.EditComponent.ReloadEntityPM();
                         }
+
+                        else if (cmpRef.instance.NeedRefresh) {
+                            this.entityArgs.EditComponent.NeedRefresh = true;
+                            this.entityArgs.EditComponent.ReloadEntityPM();
+                        }
                     });
 
                     cmpRef.instance.SaveCompleted.subscribe((isSaveSuccess: boolean) => {

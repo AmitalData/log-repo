@@ -1,4 +1,3 @@
-/// <reference path="../../infrastructure/utilities/amitalgatewayutil.ts" />
 import { Component, OnInit } from '@angular/core';
 import {AmitalGatewayUtil} from '../../Infrastructure/Utilities/AmitalGatewayUtil';
 import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
@@ -104,6 +103,8 @@ export class BusyIndicator implements OnInit {
     }
 
     ngOnInit() {
+        var idIndex = this.CurrentSession.GetNewId("BusyIndicator");
+
         if (this.IdPrefix) {
             this.BusyIndicatorId = this.IdPrefix + "BusyIndicator";
         }

@@ -37,6 +37,8 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public DateTime? RegisterDate { get; set; }
         public string SearchFields { get; set; }
         public double? OpenAmount { get; set; }
+        public double? OpenAmountInLocalCurrency { get; set; }
+
         public string ChequeOrPaymentRef { get; set; }
         public string Bank { get; set; }
         public string BankBranch { get; set; }

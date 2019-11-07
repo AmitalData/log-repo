@@ -4,6 +4,7 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -20,21 +21,22 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
         {
             try
             {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(HttpContext.Current.Request.Headers["Token"]);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                int tenant = authToken.Tenant;
-
-                DocumentsExecutionLogQuery documentsExecutionLogQuery = new DocumentsExecutionLogQuery(tenant);
-                DocumentsExecutionLogList documentsExecutionLogList = documentsExecutionLogQuery.GetDocumentsExecutionLogList(id, tenant);
-
+                DocumentsExecutionLogQuery documentsExecutionLogQuery = new DocumentsExecutionLogQuery(authToken.Tenant);
+                DocumentsExecutionLogList documentsExecutionLogList = documentsExecutionLogQuery.GetDocumentsExecutionLogList(id, authToken.Tenant);
+                if (documentsExecutionLogList != null && (documentsExecutionLogList.StatusCode == "P" || documentsExecutionLogList.StatusCode == "W") && documentsExecutionLogList.CreateDate < DateTime.Now.AddMinutes(-5))
+                {
+                    documentsExecutionLogList.StatusCode = "F";
+                    documentsExecutionLogList.ExceptionMessage = "The document failed to build.Please try again.";
+                }
                 return Request.CreateResponse(HttpStatusCode.OK, documentsExecutionLogList);
             }
-
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
     }
 }

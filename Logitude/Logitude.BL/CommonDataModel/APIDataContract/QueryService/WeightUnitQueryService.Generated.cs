@@ -87,6 +87,7 @@ using Simplog.Data.CommonDataModel;
 					} 
 					if(string.IsNullOrEmpty(temp.Code))
 					{
+					   
 						temp.Code = MyEntity.Code;
 					}
 					temp.Name = MyEntity.Name;					   

@@ -77,6 +77,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
 		BatchServicesDefinitionUpdateClass  BatchServicesDefinitionUpdateClass = new BatchServicesDefinitionUpdateClass();
 		BluesnapContractUpdateClass  BluesnapContractUpdateClass = new BluesnapContractUpdateClass();
 		BluesnapContractTypeUpdateClass  BluesnapContractTypeUpdateClass = new BluesnapContractTypeUpdateClass();
+		BluesnapTransactionUpdateClass  BluesnapTransactionUpdateClass = new BluesnapTransactionUpdateClass();
 		PaymentChannelUpdateClass  PaymentChannelUpdateClass = new PaymentChannelUpdateClass();
 		PaymentCurrencyUpdateClass  PaymentCurrencyUpdateClass = new PaymentCurrencyUpdateClass();
 		PaymentMethodUpdateClass  PaymentMethodUpdateClass = new PaymentMethodUpdateClass();
@@ -171,6 +172,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
 	
 	   	   BluesnapContractTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
+	   	   BluesnapTransactionUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+	
 	   	   PaymentChannelUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
 	   	   PaymentCurrencyUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
@@ -209,6 +212,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
 	
 	   	   BluesnapContractTypeUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
+	   	   BluesnapTransactionUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
+	
 	   	   PaymentChannelUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
 	   	   PaymentCurrencyUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
@@ -245,6 +250,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
 	   	   BluesnapContractUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
 	
 	   	   BluesnapContractTypeUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
+	
+	   	   BluesnapTransactionUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
 	
 	   	   PaymentChannelUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
 	
@@ -283,6 +290,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
 	
 	   	   BluesnapContractTypeUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
+	   	   BluesnapTransactionUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
+	
 	   	   PaymentChannelUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
 	   	   PaymentCurrencyUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
@@ -319,6 +328,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
 	   	   BluesnapContractUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
 	   	   BluesnapContractTypeUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
+	
+	   	   BluesnapTransactionUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
 	   	   PaymentChannelUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
@@ -357,6 +368,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
 	
 	   	   BluesnapContractTypeUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
 	
+	   	   BluesnapTransactionUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
+	
 	   	   PaymentChannelUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
 	
 	   	   PaymentCurrencyUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
@@ -394,6 +407,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
 	
 	   	   BluesnapContractTypeUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
+	   	   BluesnapTransactionUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+	
 	   	   PaymentChannelUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
 	   	   PaymentCurrencyUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
@@ -429,6 +444,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
 	   	   BluesnapContractUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
 	   	   BluesnapContractTypeUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+	
+	   	   BluesnapTransactionUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
 	   	   PaymentChannelUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
@@ -466,6 +483,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
 	
 	   	   BluesnapContractTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
+	   	   BluesnapTransactionUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
+	
 	   	   PaymentChannelUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
 	   	   PaymentCurrencyUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
@@ -499,6 +518,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel
 	   
 	   	   BluesnapContractTypeUpdateClass.FillBluesnapContractType();
 	
+	   
 	   	   PaymentChannelUpdateClass.FillPaymentChannel();
 	
 	   	   PaymentCurrencyUpdateClass.FillPaymentCurrency();

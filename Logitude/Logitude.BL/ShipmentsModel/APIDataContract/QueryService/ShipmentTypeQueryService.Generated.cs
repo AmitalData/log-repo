@@ -88,7 +88,17 @@ using Simplog.Data.ShipmentsModel;
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
-						temp.Id = MyEntity.Code;
+					   
+					    if(!string.IsNullOrEmpty(MyEntity.Code))
+					    {
+					        throw new ApplicationException("ShipmentType with provided key doesn't exist");
+						
+						}
+						//else
+						//{
+						//    temp.Id = MyEntity.Code;
+
+						//}
 					}
 					temp.Name = MyEntity.Name;					   
 					   return temp;

@@ -204,6 +204,12 @@
     <Compile Include="AddStates.Designer.cs">
       <DependentUpon>AddStates.cs</DependentUpon>
     </Compile>
+    <Compile Include="BatchTaskTester.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BatchTaskTester.Designer.cs">
+      <DependentUpon>BatchTaskTester.cs</DependentUpon>
+    </Compile>
     <Compile Include="CopyData.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -256,6 +262,9 @@
     <Compile Include="SqlFilesExecuter.cs" />
     <EmbeddedResource Include="AddStates.resx">
       <DependentUpon>AddStates.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BatchTaskTester.resx">
+      <DependentUpon>BatchTaskTester.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CopyData.resx">
       <DependentUpon>CopyData.cs</DependentUpon>
@@ -354,6 +363,14 @@
     <ProjectReference Include="..\Logitude.CustomsMessaging\Logitude.CustomsMessaging.csproj">
       <Project>{7994d6f2-00a7-4c0d-a7d3-fd7d5304b665}</Project>
       <Name>Logitude.CustomsMessaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Infrastructure.BL\Logitude.Infrastructure.BL.csproj">
+      <Project>{bd959ab6-4476-48b3-aa4d-cfd7ed120e55}</Project>
+      <Name>Logitude.Infrastructure.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Infrastructure.Data\Logitude.Infrastructure.Data.csproj">
+      <Project>{b02e4d92-9226-4f3f-990f-66c7f66e9316}</Project>
+      <Name>Logitude.Infrastructure.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
       <Project>{9b477a08-8ee2-4457-88fe-17e8a6ec4d00}</Project>

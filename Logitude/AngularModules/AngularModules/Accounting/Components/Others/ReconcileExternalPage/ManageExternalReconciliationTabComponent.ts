@@ -18,34 +18,32 @@ import {BankAccountPMService} from '../../../Services/StandardPMs/BankAccountPMS
 
 @Component({
     moduleId: module.id,
-    templateUrl: './ManageRecoTabComponent.html'
+    templateUrl: './ManageExternalReconciliationTabComponent.html'
 })
 
-export class ManageRecoTabComponent extends BaseComponent implements OnInit, OnDestroy {
+export class ManageExternalReconciliationTabComponent extends BaseComponent implements OnInit, OnDestroy {
     public EntityPM: BankAccountPM = null;
     public ObjectTableName = "ExternalReconciliation";
     public DataContext = this;
     public isRTL: boolean = false;
     public CurrentEditComponentId: string;
 
-    // Events
     @Output() onQueryChangeEvent = new EventEmitter();
     @Output() MenuHeaderchangeevent = new EventEmitter();
-
-    // Filters
     dateFilter: FilterItem;
     searchFieldFilter: FilterItem;
-
-    // Services
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private _entityListService: EntityListService = new EntityListService();
-    //_ReconcileExternalPageExtendedPMService: ReconcileExternalPageExtendedPMService = new ReconcileExternalPageExtendedPMService();
-    //_ReconcileExternalPagePMService: ReconcileExternalPagePMService = new ReconcileExternalPagePMService();
-    //_BankAccountPMService: BankAccountPMService = new BankAccountPMService();
     private CurrentSession = SessionLocator.SelectedSession;
+    private SaveCompletedEvent: any = null;
+    private LoadCompletedEvent: any = null;
+    private TabSelectedEvent: any = null;
+    Title: string;
+
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+        this.SetTitles();
 
         // Set Entity
         this.EntityPM = entityArgs.EntityPM;
@@ -54,16 +52,32 @@ export class ManageRecoTabComponent extends BaseComponent implements OnInit, OnD
         //#region Default date filter value
         var today = new Date();
         this.ToDate = new Date();
-        var lastmonth = today.setMonth(today.getMonth() - 1); // month backward 
+        var lastmonth = today.setMonth(today.getMonth() - 1); // month backward
         this.FromDate = new Date(lastmonth);
         //#endregion
 
         this.Listen();
     }
 
-    private SaveCompletedEvent: any = null;
-    private LoadCompletedEvent: any = null;
-    private TabSelectedEvent: any = null;
+    SetTitles(){
+        switch (this.entityArgs.ObjectTableName) {
+            case "BankAccount": {
+                this.Title = TextCodeTranslator.Translate("Accounting.General.O.ManageReconciliation");
+                break;
+            }
+            case "GLAccount": {
+                this.Title = TextCodeTranslator.Translate("GLAccount.TH.ManageExternalReco");
+
+                break;
+            }
+            default: {
+                this.Title = TextCodeTranslator.Translate("Accounting.General.O.ManageReconciliation");
+
+                break;
+            }
+        }
+    }
+
     Listen() {
 
 
@@ -77,7 +91,7 @@ export class ManageRecoTabComponent extends BaseComponent implements OnInit, OnD
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 });
-            } 
+            }
 
             //
             if (this.LoadCompletedEvent == null) {
@@ -148,7 +162,7 @@ export class ManageRecoTabComponent extends BaseComponent implements OnInit, OnD
     }
     //#endregion
 
-    //#region Search 
+    //#region Search
     private timerToken: any;
     TextChanged(searchtext) {
         if (!AppTool.IsNullOrEmpty(searchtext)) {
@@ -242,8 +256,9 @@ export class ManageRecoTabComponent extends BaseComponent implements OnInit, OnD
 
         filters.SortBy = "CreateDate";
         filters.SortDirection = "Descending";
+        var glaccountId = this.getGLAccountId();
 
-        filters.addAdditionalFilter("GLAccountId", this.EntityPM.GLAccountId, null, null, "Equals", false, false, false, "string");
+        filters.addAdditionalFilter("GLAccountId", glaccountId, null, null, "Equals", false, false, false, "string");
         //filters.addAdditionalFilter("IsCancelled", false, null, null, "Equals", false, false, false, "boolean");
 
         //#endregion
@@ -252,6 +267,15 @@ export class ManageRecoTabComponent extends BaseComponent implements OnInit, OnD
 
     }
 
+    private getGLAccountId()
+    {
+        var glaccountId;
+        if (this.entityArgs.ObjectTableName == "GLAccount")
+            glaccountId = this.EntityPM.Id;
+        else if (this.entityArgs.ObjectTableName == "BankAccount")
+            glaccountId = this.EntityPM.GLAccountId;
+        return glaccountId;
+    }
     //#endregion
 
     //#region Buttons

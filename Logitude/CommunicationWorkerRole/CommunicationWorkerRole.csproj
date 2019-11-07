@@ -345,6 +345,7 @@
     <Compile Include="AutoSignUpWorkerRole.cs" />
     <Compile Include="BatchTaskExecutionWR.cs" />
     <Compile Include="BIReportsExecutionLogWorkerRole.cs" />
+    <Compile Include="BluesnapPageAnalyzerWorkerRole.cs" />
     <Compile Include="ChampMessageInWR.cs" />
     <Compile Include="CheckandUpdateWorkerRole.cs" />
     <Compile Include="CommunicationLogWorkerRole.cs" />

@@ -39,6 +39,10 @@ import {CustomerSalesNotePM} from '../EntityPMs/CustomerSalesNotePM';
 import {CardExternalAccountsByProductPMService} from './StandardPMs/CardExternalAccountsByProductPMService';
 import {Guid} from '../../Infrastructure/Utilities/Guid';
 import {SessionInfo} from '../../Infrastructure/Utilities/SessionInfo';
+import { CardContactAdditionalServicePM } from '../EntityPMs/CardContactAdditionalServicePM';
+import { AirlineAreaList } from '../EntityLists/AirlineAreaList';
+import { AirlineAreaPM } from '../EntityPMs/AirlineAreaPM';
+import { AirlineAreasPortPM } from '../EntityPMs/AirlineAreasPortPM';
 
 @Injectable()
 
@@ -725,7 +729,7 @@ export class PartnersDomainService {
         
         return entityPM;
     }
-    MapContactPM(jsonList: any) {
+    MapContactPM(jsonList: any, mapParent: boolean = true) {
         var entityPM: ContactPM = null;
 
         if (jsonList) {
@@ -743,13 +747,96 @@ export class PartnersDomainService {
                 entityPM[property] = jsonList[property];
             }
 
+            if (!AppTool.IsNullOrEmpty(entityPM.CardId)) {
+                var oldContactServices: CardContactAdditionalServicePM[] = [];
+                if (entityPM.OldEntityPM && !mapParent) {
+                    oldContactServices = entityPM.OldEntityPM.CardContactAdditionalServices;
+                }
+
+                entityPM.CardContactAdditionalServices = new Array<CardContactAdditionalServicePM>();
+                for (var item in jsonList.CardContactAdditionalServices) {
+
+                    var jItem = jsonList.CardContactAdditionalServices[item];
+                    if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                        continue;
+                    }
+                    var newServicePM: CardContactAdditionalServicePM;
+                    if (mapParent) {
+                        newServicePM = new CardContactAdditionalServicePM(entityPM);
+                    }
+                    else {
+                        newServicePM = new CardContactAdditionalServicePM(null);
+                    }
+
+                    var pmKeysArray = Object.keys(jItem);
+                    for (var pmKey in pmKeysArray) {
+
+                        if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties") {
+                            continue;
+                        }
+                        var pmProperty = pmKeysArray[pmKey];
+                        newServicePM[pmProperty] = jItem[pmProperty];
+                    }
+
+                    newServicePM.IsDirty = false;
+
+                    if (mapParent) {
+                        newServicePM.OldEntityPM = this.clone(newServicePM);
+                        newServicePM.UniqueKey = Guid.newGuid();
+                        newServicePM.ChangeSetOp = "None";
+                        jItem.ChangeSetOp = "None";
+
+                    }
+                    else {
+
+                        if (newServicePM.UniqueKey) {
+
+                            if (jItem.IsDirty)
+                                newServicePM.ChangeSetOp = "Update";
+                        }
+                        else {
+                            newServicePM.ChangeSetOp = "Insert";
+                        }
+
+                        newServicePM.OldEntityPM = null;
+                        newServicePM.EntityParentPM = null;
+                    }
+
+
+                    entityPM.CardContactAdditionalServices.push(newServicePM);
+                }
+
+                if (oldContactServices) {
+
+                    for (var itemKey in oldContactServices) {
+                        if (entityPM.CardContactAdditionalServices.filter(p => p.UniqueKey === oldContactServices[itemKey].UniqueKey).length === 0) {
+
+                            if (oldContactServices[itemKey]) {
+                                oldContactServices[itemKey].ChangeSetOp = "Delete";
+                                entityPM.CardContactAdditionalServices.push(oldContactServices[itemKey]);
+                            }
+                        }
+                    }
+                }
+            }
+            
             entityPM.IsDirty = false;
+
+            if (mapParent) {
+                entityPM.OldEntityPM = this.clone(entityPM);
+                entityPM.OldEntityPM.CardContactAdditionalServices = [];
+                for (var m in entityPM.CardContactAdditionalServices) {
+                    entityPM.OldEntityPM.CardContactAdditionalServices.push(this.clone(entityPM.CardContactAdditionalServices[m]));
+                }
+            }
+            else {
+                entityPM.OldEntityPM = null;
+            }
         }
         
         return entityPM;
     }
-
-
+    
     MapCustomerSalesNotePM(jsonList: any) {
         var entityPM: CustomerSalesNotePM = null;
 
@@ -773,8 +860,7 @@ export class PartnersDomainService {
 
         return entityPM;
     }
-
-
+    
     MapTarrifHeaderPM(jsonPM: any, mapParent: boolean = true, entityPM: TarrifHeaderPM = null) {
 
 
@@ -1054,7 +1140,7 @@ export class PartnersDomainService {
 
             else if (property === "Contact") {
                 if (jsonPM[property]) {
-                    entity[property] = this.MapContactPM(jsonPM[property]);
+                    entity[property] = this.MapContactPM(jsonPM[property], getCallMap);
                 }
             }
 
@@ -1517,6 +1603,151 @@ export class PartnersDomainService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetCardContactProducts?cardId=' + cardId + "&contactId=" + contactId;
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var done: string = response.json();
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = done;
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
+    GetAllArilineAreasByAirlineId(airlineId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetAllArilineAreasByAirlineId?airlineId=' + airlineId;
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+
+                var listJason = response.json();
+                var listMapped: Array<AirlineAreaPM> = [];
+
+                for (var itemJeson in listJason) {
+                    var itemMapped: AirlineAreaPM = this.MapAirlineAreaPM(listJason[itemJeson]);
+                    listMapped.push(itemMapped);
+                }
+
+                return listMapped;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+    MapAirlineAreaPM(jsonList: any, mapParent: boolean = true) {
+        var entityPM: AirlineAreaPM = null;
+
+        if (jsonList) {
+            entityPM = new AirlineAreaPM();
+
+            var jsonListKeys = Object.keys(jsonList);
+
+            for (var key in jsonListKeys) {
+                var property = jsonListKeys[key];
+
+                if (property === "UIProperties" || property === "entityParentPM") {
+                    continue;
+                }
+
+                entityPM[property] = jsonList[property];
+            }
+
+            var oldContactServices: AirlineAreasPortPM[] = [];
+            if (entityPM.OldEntityPM && !mapParent) {
+                oldContactServices = entityPM.OldEntityPM.AirlineAreasPorts;
+            }
+
+            entityPM.AirlineAreasPorts = new Array<AirlineAreasPortPM>();
+            for (var item in jsonList.AirlineAreasPorts) {
+
+                var jItem = jsonList.AirlineAreasPorts[item];
+                if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                    continue;
+                }
+                var newServicePM: AirlineAreasPortPM;
+                if (mapParent) {
+                    newServicePM = new AirlineAreasPortPM(entityPM);
+                }
+                else {
+                    newServicePM = new AirlineAreasPortPM(null);
+                }
+
+                var pmKeysArray = Object.keys(jItem);
+                for (var pmKey in pmKeysArray) {
+
+                    if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties") {
+                        continue;
+                    }
+                    var pmProperty = pmKeysArray[pmKey];
+                    newServicePM[pmProperty] = jItem[pmProperty];
+                }
+
+                newServicePM.IsDirty = false;
+
+                if (mapParent) {
+                    newServicePM.OldEntityPM = this.clone(newServicePM);
+                    newServicePM.UniqueKey = Guid.newGuid();
+                    newServicePM.ChangeSetOp = "None";
+                    jItem.ChangeSetOp = "None";
+
+                }
+                else {
+
+                    if (newServicePM.UniqueKey) {
+
+                        if (jItem.IsDirty)
+                            newServicePM.ChangeSetOp = "Update";
+                    }
+                    else {
+                        newServicePM.ChangeSetOp = "Insert";
+                    }
+
+                    newServicePM.OldEntityPM = null;
+                    newServicePM.EntityParentPM = null;
+                }
+
+
+                entityPM.AirlineAreasPorts.push(newServicePM);
+            }
+
+            if (oldContactServices) {
+
+                for (var itemKey in oldContactServices) {
+                    if (entityPM.AirlineAreasPorts.filter(p => p.UniqueKey === oldContactServices[itemKey].UniqueKey).length === 0) {
+
+                        if (oldContactServices[itemKey]) {
+                            oldContactServices[itemKey].ChangeSetOp = "Delete";
+                            entityPM.AirlineAreasPorts.push(oldContactServices[itemKey]);
+                        }
+                    }
+                }
+            }
+
+            entityPM.IsDirty = false;
+
+            if (mapParent) {
+                entityPM.OldEntityPM = this.clone(entityPM);
+                entityPM.OldEntityPM.AirlineAreasPorts = [];
+                for (var m in entityPM.AirlineAreasPorts) {
+                    entityPM.OldEntityPM.AirlineAreasPorts.push(this.clone(entityPM.AirlineAreasPorts[m]));
+                }
+            }
+            else {
+                entityPM.OldEntityPM = null;
+            }
+        }
+
+        return entityPM;
+    }
+
+    RemoveAreaFromAirline(areaId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetRemoveAirlineAreaFromAirline?areaId=' + areaId;
 
         return Observable.defer(() => {
             return this._http.get(url, { headers: authHeader }).map(response => {

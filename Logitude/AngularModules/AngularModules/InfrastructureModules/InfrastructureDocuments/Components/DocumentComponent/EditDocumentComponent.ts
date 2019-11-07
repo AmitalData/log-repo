@@ -490,9 +490,7 @@ export class EditDocumentComponent implements OnInit {
                     var myResult = pmResponse.Result;
                     if (myResult) {
 
-                        this.stimulsoftArg.EditableFieldLists = myResult;
-
-
+                        this.stimulsoftArg.BuildStimulReportResult = myResult;
                         if (this.SelectedDocumentTypeTemplateViewModel != null && pagenumber == 1) {
                             this.SelectedDocumentTypeTemplateViewModel.IsLoad = true;
                             this.SelectedDocumentTypeTemplateViewModel.StimulData = myResult;
@@ -647,7 +645,7 @@ export class EditDocumentComponent implements OnInit {
                 } else if (this.IsManageStimul) {
                     this.stimulsoftArg.NumberOfPage = 1;
                     this.stimulsoftArg.DocumenttypetemplateId = selectedItem.Id;
-                    this.stimulsoftArg.EditableFieldLists = this.SelectedDocumentTypeTemplateViewModel.StimulData;
+                    this.stimulsoftArg.BuildStimulReportResult = this.SelectedDocumentTypeTemplateViewModel.StimulData;
                     this.ReloadStimulsoftViewer();
                 }
             }
@@ -748,7 +746,7 @@ export class EditDocumentComponent implements OnInit {
                 var myResult = pmResponse.Result;
                 if (myResult) {
                     this.SelectedDocumentTypeTemplateViewModel.StimulData = myResult;
-                    this.stimulsoftArg.EditableFieldLists = myResult;
+                    this.stimulsoftArg.BuildStimulReportResult = myResult;
                     this.ReloadStimulsoftViewer();
                     this.SelectedDocumentTypeTemplateViewModel.IsLoad = true;
                 }

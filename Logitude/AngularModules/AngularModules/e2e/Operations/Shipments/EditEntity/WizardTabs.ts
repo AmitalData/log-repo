@@ -1,11 +1,12 @@
 import { browser, by, element, WebDriver, protractor } from 'protractor';
 import { FieldsHelper } from '../../../Helpers/FieldsHelper';
 import { GeneralFunctions } from '../../../Helpers/GeneralFunctions';
-
+import { ShipmentHelper } from '../ShipmentHelper';
 
 export class WizardTabComponent {
     private Helper: FieldsHelper;
     private generalFun: GeneralFunctions;
+    private shipHelper: ShipmentHelper = new ShipmentHelper();
     constructor() {
         this.Helper = new FieldsHelper();
         this.generalFun = new GeneralFunctions();
@@ -30,7 +31,7 @@ export class WizardTabComponent {
         else if (LogitudeWizardType == 'M') {
             this.Helper.WaitByIdAndFill('Master_ShipperId', 'TestAgentExport1');
             this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Master_ShipperId', 'TestAgentExport1');
-           
+
             this.Helper.WaitByIdAndFill('Master_ShipperReference1', shipperRef1);
 
             this.Helper.WaitByIdAndFill('Master_ConsigneeId', 'TestAgentExport1');
@@ -72,6 +73,8 @@ export class WizardTabComponent {
 
             this.Helper.WaitByIdAndFill('Shipment_MainCarriageFinalDestinationPortId', 'JFK');
             this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Shipment_MainCarriageFromPortId', 'JFK');
+
+            this.shipHelper.AddAirlineStock('wizard');
         }
         else if (LogitudeWizardType == 'H') {
             this.Helper.WaitByIdAndFill('Shipment_MainCarriageFromPortId', 'eze');
@@ -114,7 +117,7 @@ export class WizardTabComponent {
             this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Master_MainCarriageFinalDestinationPortId', 'JFK');
 
             // ------------------------------------------------------ Stocks -------------------------------------------------------------
-            //this.AddAirlineStock();
+            this.shipHelper.AddAirlineStock('wizard');
             // --------------------------------------------------- End of Stocks ---------------------------------------------------------
         }
     }
@@ -257,37 +260,6 @@ export class WizardTabComponent {
 
             this.Helper.WaitByIdAndFill('Master_OtherParticipantInformationReference1', 'Participant Ref');
         }
-    }
-    AddAirlineStock() {
-        var numbertest = this.generalFun.StockNumbers();
-        this.Helper.WaitByIdAndClick('AddStock');
-        this.Helper.WaitBusyIndicator();
-
-        this.Helper.WaitByIdAndClick('AddStocks');
-        this.Helper.WaitBusyIndicator();
-
-        this.Helper.WaitByIdAndFill('StartNumber', numbertest);
-
-        var byAmount = element(by.id('ByAmountRadio'));
-        browser.executeScript("arguments[0].click();", byAmount.getWebElement());
-
-        this.Helper.WaitByIdAndFill('Amount', '1');
-
-        this.Helper.WaitByIdAndClick('OkAddStock');
-
-        this.Helper.WaitBusyIndicator();
-        this.Helper.WaitByIdAndClick('EditBackbutton');
-
-        this.Helper.WaitByIdAndClick('GetFromStockBtn');
-        this.Helper.WaitBusyIndicator();
-
-        var EC = protractor.ExpectedConditions;
-        browser.wait(EC.elementToBeClickable(element(by.css(".SimpleGridViewRow "))), 100000).then(a => {
-        });
-        element.all(by.css('.SimpleGridViewRow')).get(0).click();
-        this.Helper.WaitByIdAndClick('OkBtn');
-        this.Helper.WaitByIdAndClick('ConfirmWindow_Yes_0');
-        this.Helper.WaitBusyIndicator();
     }
 }
 

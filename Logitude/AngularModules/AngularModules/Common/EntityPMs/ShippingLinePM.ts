@@ -363,6 +363,11 @@ export class ShippingLinePM {
     public set CAAT(newValue: string) { if (this.cAAT != newValue) { this.cAAT = newValue; this.MarkAsDirty("CAAT"); } }
        
 	 
+    private gLAccountId: string;
+    public get GLAccountId() { return this.gLAccountId; }
+    public set GLAccountId(newValue: string) { if (this.gLAccountId != newValue) { this.gLAccountId = newValue; this.MarkAsDirty("GLAccountId"); } }
+       
+	 
 
     public OldEntityPM: ShippingLinePM;
 		
