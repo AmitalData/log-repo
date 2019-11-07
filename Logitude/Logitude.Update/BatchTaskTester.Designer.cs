@@ -34,11 +34,12 @@
             this.label1 = new System.Windows.Forms.Label();
             this.TenantTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.MessagesTextBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // OkButton
             // 
-            this.OkButton.Location = new System.Drawing.Point(341, 201);
+            this.OkButton.Location = new System.Drawing.Point(548, 344);
             this.OkButton.Name = "OkButton";
             this.OkButton.Size = new System.Drawing.Size(75, 23);
             this.OkButton.TabIndex = 0;
@@ -48,12 +49,13 @@
             // 
             // CancelButton
             // 
-            this.CancelButton.Location = new System.Drawing.Point(260, 201);
+            this.CancelButton.Location = new System.Drawing.Point(467, 344);
             this.CancelButton.Name = "CancelButton";
             this.CancelButton.Size = new System.Drawing.Size(75, 23);
             this.CancelButton.TabIndex = 1;
             this.CancelButton.Text = "Cancel";
             this.CancelButton.UseVisualStyleBackColor = true;
+            this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
             // 
             // BatchTaskIdTextBox
             // 
@@ -87,11 +89,20 @@
             this.label2.TabIndex = 5;
             this.label2.Text = "Tenant";
             // 
+            // MessagesTextBox
+            // 
+            this.MessagesTextBox.Location = new System.Drawing.Point(25, 123);
+            this.MessagesTextBox.Multiline = true;
+            this.MessagesTextBox.Name = "MessagesTextBox";
+            this.MessagesTextBox.Size = new System.Drawing.Size(561, 215);
+            this.MessagesTextBox.TabIndex = 6;
+            // 
             // BatchTaskTester
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(430, 250);
+            this.ClientSize = new System.Drawing.Size(635, 379);
+            this.Controls.Add(this.MessagesTextBox);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.TenantTextBox);
             this.Controls.Add(this.label1);
@@ -113,5 +124,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox TenantTextBox;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox MessagesTextBox;
     }
 }
