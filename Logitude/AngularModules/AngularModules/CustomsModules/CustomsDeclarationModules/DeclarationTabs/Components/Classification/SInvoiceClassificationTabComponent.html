@@ -1,4 +1,4 @@
-﻿<style>
+<style>
     .disabled {
         pointer-events: none;
         opacity: 0.7;
@@ -87,17 +87,17 @@
 
                                     </log-column>
                                     <log-column [header]="'Customs.SupplierInvoiceItem.F.ClassificationCode' | TextCodeTranslationPipe" [binding]="'ClassificationCode'" [width]="'120'" [Editable]="true" [Alignment]="'right'">
-                                        <log-cell-template template="let item"  #logcelltemplate [RIndex]="item.rowIndex">
-                                            <div class="TextTrimming" style="text-align:right;width:120px" *ngIf="logcelltemplate.IsDisplayMode">
+                                        <log-cell-template template="let item"  #logcelltemplateOfClassificationCode [RIndex]="item.rowIndex">
+                                            <div class="TextTrimming" style="text-align:right;width:120px" *ngIf="logcelltemplateOfClassificationCode.IsDisplayMode">
                                                 <span>{{item.ClassificationCode}}</span>
                                                 <span style="font-size:10px">{{item.QunatityTypeCode}}</span>
                                             </div>
-                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                            <div *ngIf="logcelltemplateOfClassificationCode.IsEditMode">
                                                 <LogTextBox #ClassificationTextBox [ObjectFieldName]="'ClassificationCode'" [DataContext]="item" [FocusOnMe]="true" 
                                                             [InputType]="'integertext'"
                                                             [Text]="item.ClassificationCode" [ObjectTableName]="'Customs.SupplierInvoiceItem'" [HideColumns]="true"
-                                                            (LostFocus)="item.OnClassificationLostFocus(logcelltemplate,ClassificationTextBox)" [DebounceTime]="1" 
-                                                            (KeyUp)="item.ClassificationKeyUp($event,logcelltemplate,ClassificationTextBox)"></LogTextBox>
+                                                            (LostFocus)="item.OnClassificationLostFocus(logcelltemplateOfClassificationCode,ClassificationTextBox)" [DebounceTime]="1" 
+                                                            (KeyUp)="item.ClassificationKeyUp($event,logcelltemplateOfClassificationCode,ClassificationTextBox)"></LogTextBox>
 
 
                                             </div>
