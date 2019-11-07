@@ -12,6 +12,7 @@ using Logitude.CustomsMessaging.RequestServices;
 using Logitude.CustomsMessaging.ResponseServices;
 using Logitude.CustomsMessaging.Testers.Messages;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.Utils;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -62,12 +63,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                 LoggingObjectTableId = objectTableId,
                 LoggingEntityId = customsResponse.DeclarationId,
-                
+
 
                 LoggingUserId = customsResponse.LoggingUserId,
                 RequestName = $" UD2LT   קישור מסמך לטיקט" + customsResponse.DocumentsFilingCode + " "
             };
-            
+
             return genericRequestParams;
         }
 
@@ -98,8 +99,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
             }
             LogMessagingUtil.Instance.AppendLine("Build !!!Requestsheet  with Interface Type  = UCBUD2LT  !!!");
 
-            
-            
+
+
 
 
             string uniComm = null;
@@ -235,7 +236,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             DateTime stopLogAt = new DateTime(2020, 01, 01);
             DeclarationPM declarationPM;
             Debug.WriteLine("CreateUD2LTService");
-            string jsonPM="";
+            string jsonPM = "";
             try
             {
 
@@ -245,6 +246,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
 
                 _DocumentsFilingPM = documentsFilingPM as DocumentsFilingPM;
+
                 if (_DocumentsFilingPM == null)
                 {
                     LogitudeSettings.HandleLogMe("_DocumentsFilingPM == null", false, "CreateUD2LTService", stopLogAt);
@@ -252,10 +254,17 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     return;
                 }
                 jsonPM = Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(_DocumentsFilingPM);
+                if (String.IsNullOrWhiteSpace(_DocumentsFilingPM.DocumentTypeCode))
+                {
+                    LogitudeSettings.HandleLogMe("_DocumentsFilingPM.DocumentTypeCode" + jsonPM, false, "CreateUD2LTService.DOC_ID", stopLogAt);
+                    Debug.WriteLine("CreateUD2LTService.DOC_ID== null");
+                    return;
+                }
+
                 int tenant = _DocumentsFilingPM.Tenant;
                 if (!IsConnected2Declaration())
                 {
-                    LogitudeSettings.HandleLogMe("!IsConnected2Decalaration()"+ jsonPM, false, "CreateUD2LTService", stopLogAt);
+                    LogitudeSettings.HandleLogMe("!IsConnected2Decalaration()" + jsonPM, false, "CreateUD2LTService", stopLogAt);
                     Debug.WriteLine("!IsConnected2Decalaration()");
                     return;
                 }
@@ -274,7 +283,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 if (/*CourierENV() */ declarationPM.IsCourierDeclaration)
                 {
                     Debug.WriteLine("CourierENV");
-                    
+
                     shouldCreateDCAComm = true;
                 }
                 else
@@ -287,8 +296,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     if (!String.IsNullOrWhiteSpace(def.DEFDATA))
                     {
                         var listStorageDefault = new List<string>();//&& declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILOVL"
-                        
-                        if (!String.IsNullOrWhiteSpace(declarationPM.CustomerCode) &&def.DEFDATA.Contains(declarationPM.CustomerCode)) // Maman
+
+                        if (!String.IsNullOrWhiteSpace(declarationPM.CustomerCode) && def.DEFDATA.Contains(declarationPM.CustomerCode)) // Maman
                         {
                             Debug.WriteLine("def.DEFDATA.Contains(declarationPM.CustomerId)");
                             shouldCreateDCAComm = true;
@@ -340,8 +349,19 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 Debug.WriteLine("CreateCRS");
 
                 string loggingUserId = AuthenticationUtil.ResolveUserId(tenant);
-                var myDCAInUCBUD2LT_MsgMessagingService = new DCAInUCBUD2LT_MsgMessagingService();
-                myDCAInUCBUD2LT_MsgMessagingService.CreateCRS(tenant, loggingUserId,_DocumentsFilingPM);
+
+
+                string key = ProcessLockTableUtil.Instance.GetKey4UCBUD2LT(declarationPM.CustomFileNo, _DocumentsFilingPM.Tenant);
+                using (var disposableToken =
+                    //ProcessLockTableUtil.Instance.LockItAndGetReleaseToken(key, "5117ResponseService.Update")
+                    ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(_DocumentsFilingPM.Tenant, true, key, "UCBUD2LT.CRS", true)
+                    )
+                {
+                    var myDCAInUCBUD2LT_MsgMessagingService = new DCAInUCBUD2LT_MsgMessagingService();
+                    string crs = myDCAInUCBUD2LT_MsgMessagingService.CreateCRS(tenant, loggingUserId, _DocumentsFilingPM);
+                    LogitudeSettings.HandleLogMe(crs + " " + jsonPM, false, "CreateUD2LTService.OK", stopLogAt);
+
+                }
 
             }
             catch (Exception E)
