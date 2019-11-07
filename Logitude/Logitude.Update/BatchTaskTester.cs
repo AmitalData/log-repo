@@ -49,7 +49,13 @@ namespace Logitude.Update
                 Type executedClassType = Type.GetType(contextClassName);
                 var batchTaskService = System.Activator.CreateInstance(executedClassType, ArrArgs) as BatchTaskExecutionsService;
                 batchTaskService.Execute();
-                
+
+                BatchTaskExecutionPM finalResult= GetBatchTaskExecutionPM();
+                List<string> messages = new List<string>();
+                messages.Add(finalResult.StatusName);
+                messages.Add(finalResult.ErrorLog);
+                FillMessagesBox(messages);
+
             }
         }
 
