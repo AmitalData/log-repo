@@ -2726,12 +2726,7 @@ namespace WebFreight.Web
             {
                 SharedLogisticsSettingRepository settingRepository = new SharedLogisticsSettingRepository(shipment.Tenant);
                 SharedLogisticsSetting setting = settingRepository.GetSingle(shipment.Tenant.ToString(), shipment.Tenant);
-
-                if (!string.IsNullOrEmpty(shipment.ShipperId) && setting.IsShipperShared)
-                {
-                    CheckSharedContactAuthenticationForShipment(shipment.AgentId, shipment.CustomerId, tenant);
-                }
-
+                
                 SharedLogisticService service = new SharedLogisticService(shipment, setting);
                 service.BuildPartners();
                 result = service.Partners;                                              

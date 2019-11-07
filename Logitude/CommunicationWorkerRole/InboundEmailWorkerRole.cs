@@ -319,6 +319,8 @@ namespace CommunicationWorkerRole
                     case "s@test.unifreight.co.il":
                     case "support@ilcargo.com":
                     case "support@icl.unifreight.co.il":
+                    case "support@fritz.unifreight.co.il":
+                    case "ticket@fritz.unifreight.co.il":
                         {
                             myResult = true;
                             break;
