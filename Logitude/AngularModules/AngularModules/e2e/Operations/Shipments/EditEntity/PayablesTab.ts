@@ -149,13 +149,22 @@ export class PayablesTabComponent {
         this.Helper.WaitByIdAndClick('APInvoice.TH.General');
       
         this.Helper.WaitByIdAndClick('EditBackbutton_1');
+     
         }
         else{
             this.Helper.WaitByIdAndClick('EditBackbutton_2');
+            this.WaitBusyIndicatorToShowandHide();
+            this.Helper.WaitByIdAndClick('Delete');
+            this.Helper.WaitByIdAndClick('ConfirmWindow_Yes_0');
+            this.Helper.WaitByIdAndClick('Shipment-Save');
+         
+            
             
         }
        
         this.Helper.WaitEditComponentBusyIndicator();
+      
+
         
         
         
