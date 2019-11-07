@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Security;
+using Logitude.BL.Resolvers;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
@@ -138,7 +139,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private void GetLoggedContactId()
         {
             ContactQuery contactQuery = new ContactQuery(tenant);
-            ContactPM loggedContact = contactQuery.GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), 0);
+            ContactPM loggedContact = LoggedContactResolver.GetLoggedContact(tenant);
 
             if (loggedContact == null)
             {
