@@ -52,10 +52,10 @@ export class NewAPInvoiceComponent extends BaseComponent {
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.IsFullAccounting = SessionLocator.TenantPM.AccountingActivated;
-        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
         this.InitializeServices();
-        
+
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
         }
@@ -158,7 +158,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
         this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, AppTool.IsNullOrEmpty(this.AccountingDate));
 
         this.SetUIProperties_DueDate();
-        this.SetUIProperties_ExchangeRate();        
+        this.SetUIProperties_ExchangeRate();
     }
     SetUIProperties_DueDate() {
         var AllowManuallyDueDate: boolean = false;
@@ -188,7 +188,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
         this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", "APInvoice", isEnabled);
     }
 
-    // Load Data 
+    // Load Data
     private LastRatesList: LastRate[] = [];
     private VatTypePercentagesList: VatTypePercentagePM[] = [];
     LoadData() {
@@ -268,7 +268,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
 
         return myResult;
     }
-   
+
     // Vendor Properties
     get VendorDependencyProperty1() { return InvoiceTool.GetVendorPartnerTypes(); }
 
@@ -294,7 +294,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
                         var list: CardList = myResponse.Result;
                         if (list != null) {
                             this.VATNumber = list.VatNumber;
-                            this.VendorName = list.EnglishName;
+                            this.VendorName = list.LocalName || list.EnglishName;
                             this.EntityPM.VendorPartnerTypeId = list.PartnerTypeId;
                             this.VatTypeId = list.VatTypeId;
 
@@ -304,7 +304,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
 
                             if (!AppTool.IsNullOrEmpty(list.PaymentTermId)) {
                                 this.PaymentTermId = list.PaymentTermId;
-                            }                            
+                            }
                         }
                     }
                 });
@@ -332,10 +332,10 @@ export class NewAPInvoiceComponent extends BaseComponent {
         this.FillWarnings(warnings);
 
         if (!AppTool.IsNullOrEmpty(this.VendorId) && !AppTool.IsNullOrEmpty(this.InvoiceNumber)) {
-            
+
             this.myInvoiceDomainService.CheckVendor_NumberDuplication(this.EntityPM.VendorId, this.EntityPM.InvoiceNumber, this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
                 if (!myResponse.HasError) {
-                    
+
                     var isDuplicated: boolean = myResponse.Result;
 
                     if (isDuplicated) {
@@ -351,7 +351,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
     get InvoiceCurrencyId() { return this.EntityPM.InvoiceCurrencyId; }
     set InvoiceCurrencyId(value: string) {
         if (this.EntityPM.InvoiceCurrencyId != value) {
-            this.EntityPM.InvoiceCurrencyId = value;            
+            this.EntityPM.InvoiceCurrencyId = value;
             this.SetCurrencyRateData();
             this.SetUIProperties();
 
@@ -432,7 +432,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
     set ProfitCurrencyId(value: string) {
         if (this.EntityPM.ProfitCurrencyId != value) {
             this.EntityPM.ProfitCurrencyId = value;
-            this.InvoiceCurrencyExchangeRate = this.GetCurrencyRate(value);   
+            this.InvoiceCurrencyExchangeRate = this.GetCurrencyRate(value);
         }
     }
 
@@ -511,7 +511,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
                         var list: PaymentTermList = myResponse.Result;
                         if (list != null) {
                             this.PaymentTermName = list.EnglishName;
-                        }                        
+                        }
                     }
                 });
             }
@@ -556,7 +556,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
     set AccountingDate(value: Date) {
         if (this.EntityPM.AccountingDate != value) {
             this.EntityPM.AccountingDate = value;
-          
+
             if (value == null) {
                 this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, true);
             }
@@ -577,7 +577,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
         }
     }
 
-    // Commands    
+    // Commands
     FillWarnings(warnings: string[]) {
         this.ValidationWarningsList = [];
         if (warnings != null && warnings.length > 0) {
@@ -754,7 +754,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
 
                         if (list != null) {
                             invoiceLine.Description = list.EnglishName;
-                            invoiceLine.LocalDescription = list.LocalName;                            
+                            invoiceLine.LocalDescription = list.LocalName;
                         }
                     }
                 });
@@ -966,7 +966,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
             this.EntityPM.AmountDueInProfitCurrency = setValue;
         }
     }
-    
+
     get SubTotalInLocalCurrency() {
         return this.EntityPM.SubTotalInLocalCurrency;
     }
@@ -977,7 +977,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
             this.EntityPM.SubTotalInLocalCurrency = setValue;
         }
     }
-    
+
     get SubTotalInInvoiceCurrency() { return this.EntityPM.SubTotalInInvoiceCurrency; }
     set SubTotalInInvoiceCurrency(value: number) {
         var setValue = AppTool.Round(value, 2);
