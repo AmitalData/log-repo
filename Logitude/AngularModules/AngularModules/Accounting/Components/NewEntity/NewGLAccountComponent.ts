@@ -84,7 +84,9 @@ export class NewGLAccountComponent extends BaseComponent {
                 this.DisplayNumber = args.DisplayNo;
                 this.LocalName = args.LocalName;
                 this.EnglishName = args.EnglishName;
-                this.UIProperties.SetEnabled("LocalName", this.ObjectTableName, false);
+                if (!AppTool.IsNullOrEmpty(this.LocalName)) {
+                    this.UIProperties.SetEnabled("LocalName", this.ObjectTableName, false);
+                }
                 this.UIProperties.SetEnabled("EnglishName", this.ObjectTableName, false);
                 this.AccountTypeCode = args.AccountType;
                 this.EntityPM.NewGLAccountCardId = args.CardId;
@@ -97,7 +99,9 @@ export class NewGLAccountComponent extends BaseComponent {
                 this.LocalName = args.LocalName;
                 this.EnglishName = args.EnglishName;
                 this.AccountTypeCode = args.AccountType;
-                this.UIProperties.SetEnabled("LocalName", this.ObjectTableName, false);
+                if (!AppTool.IsNullOrEmpty(this.LocalName)) {
+                    this.UIProperties.SetEnabled("LocalName", this.ObjectTableName, false);
+                }
                 this.UIProperties.SetEnabled("EnglishName", this.ObjectTableName, false);
                 this.EntityPM.NewGLAccountCardId = args.CardId;
                 this.EntityPM.RevenueExpenseType = args.RevenueExpenseType;

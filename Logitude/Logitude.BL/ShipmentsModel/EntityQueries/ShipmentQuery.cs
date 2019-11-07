@@ -54,7 +54,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             this.repository = repository;
         }
 
-        public ShipmentPM GetSinglePMByShipmentNumber(string shipmentNumber, int tenant)
+        public ShipmentPM GetSinglePMByShipmentNumber(string shipmentNumber, int tenant, bool withComposition = true)
         {
             if (!string.IsNullOrEmpty(shipmentNumber))
             {
@@ -70,7 +70,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                     ShipmentPM shipmentPM = new ShipmentPM();
 
-                    shipmentPM = MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, true);
+                    shipmentPM = MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, withComposition);
                     //shipmentPM.ToCountryCode = !string.IsNullOrEmpty(shipmentPM.MainCarriageFinalDestinationPortCountryCode) ? shipmentPM.MainCarriageFinalDestinationPortCountryCode : shipmentPM.ToPortCountryCode,
                     //shipmentPM.FromCountryCode = f.ShipmentLevelCode == "H" && string.IsNullOrEmpty(f.MasterShipmentDataId) ? f.FromPortCountryCode : f.MainCarriageFromPortCountryCode,
                     ShipmentPM securedPM = new ShipmentPM();
@@ -3176,6 +3176,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.TransportModeId = shipment.TransportModeId;
             shipmentPM.IncotermId = shipment.IncotermId;
             shipmentPM.ShipmentTypeId = shipment.ShipmentTypeId;
+            shipmentPM.IsCancelled = shipment.IsCancelled;
             if (masterData != null)
             {
                 shipmentPM.MainCarriageFinalDestinationETA = masterData.MainCarriageFinalDestinationETA;
@@ -10563,7 +10564,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             IQueryable<ShipmentDataView> allAgentShipments = allShipments.Where(d => d.ForwarderShipmentNumber != null && d.ForwarderShipmentNumber != string.Empty);
             IQueryable<ShipmentDataView> allImporterShipments = allShipments.Where(d => d.ForwarderShipmentNumber == null || d.ForwarderShipmentNumber == string.Empty);
-            IQueryable<ShipmentDataView> allReqDocsShipments = allShipments.Where(d => d.IsRequestedDocuments == true || d.IsDigitalSignRequired == true || d.IsDepositionRequired == true);
+            IQueryable<ShipmentDataView> allReqDocsShipments = allShipments.Where(d => d.IsRequestedDocuments == true || d.IsDigitalSignRequired == true || d.IsDepositionRequired == true || (d.IsImporterApprovalRequried == true && string.IsNullOrEmpty(d.ApprovedByUserName)));
             IQueryable<ShipmentDataView> allReqActionsShipments = allShipments.Where(d => d.IsRequestedDocuments || d.IsDigitalSignRequired == true || d.IsDepositionRequired == true || (d.IsImporterApprovalRequried == true && string.IsNullOrEmpty(d.ApprovedByUserName)));
 
             myResult.AllShipmentsCount = allShipments.Take(1001).Count();

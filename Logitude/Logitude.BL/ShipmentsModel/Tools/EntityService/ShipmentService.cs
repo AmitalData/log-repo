@@ -2535,30 +2535,30 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     #region Houses
 
-                    if (entityPM.ShipmentLevelCode == "C" && notifyPropertyChangeValuesLists != null && notifyPropertyChangeValuesLists.Count > 0)
-                    {
-                        isHaveAutomation = entityChangeHelper.CheckIfEntityHaveAutomation("Shipment", "OnUpdate", entityPM.Tenant);
-                        if (isHaveAutomation)
-                        {
+                    //if (entityPM.ShipmentLevelCode == "C" && notifyPropertyChangeValuesLists != null && notifyPropertyChangeValuesLists.Count > 0)
+                    //{
+                    //    isHaveAutomation = entityChangeHelper.CheckIfEntityHaveAutomation("Shipment", "OnUpdate", entityPM.Tenant);
+                    //    if (isHaveAutomation)
+                    //    {
 
-                            string fields = "MainCarriageCarrierId,MainCarriageETD,MainCarriageATD,MainCarriageFinalDestinationETA,MainCarriageFinalDestinationATA,FinalDistenationPortId,StatusId,CutoffDate";
-                            List<NotifyPropertyChangeValues> changedProperties = notifyPropertyChangeValuesLists.Where(d => fields.Split(',').Contains(d.PropertyName)).ToList();
-                            if (changedProperties.Count > 0)
-                            {
-                                entityChangeFieldXml = EntityPMChangeTrackingHelper.GetChangesDetectedXml(changedProperties);
-                                ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-                                List<ShipmentPM> housesList = shipmentQuery.GetShipmentPMsByMasterIdAndTenantForAutomation(entityPM.Id, tenant);
-                                foreach (ShipmentPM oldHousePM in housesList)
-                                {
-                                    oldHousePM.StatusId = changeTrackingPM.StatusId;
-                                    dateBefore = DateTime.Now;
-                                    ShipmentPM shipmentPm = ShipmentMapping.MapShipmentPMToShipmentPMForAutomation(entityPM, oldHousePM);
-                                    var changeHelper = new EntityChangeHelper();
-                                    changeHelper.AddEntityChange(shipmentPm, oldHousePM, "OnUpdate", entityChangeFieldXml, "Shipment", dateBefore);
-                                }
-                            }
-                        }
-                    }
+                    //        string fields = "MainCarriageCarrierId,MainCarriageETD,MainCarriageATD,MainCarriageFinalDestinationETA,MainCarriageFinalDestinationATA,FinalDistenationPortId,StatusId,CutoffDate";
+                    //        List<NotifyPropertyChangeValues> changedProperties = notifyPropertyChangeValuesLists.Where(d => fields.Split(',').Contains(d.PropertyName)).ToList();
+                    //        if (changedProperties.Count > 0)
+                    //        {
+                    //            entityChangeFieldXml = EntityPMChangeTrackingHelper.GetChangesDetectedXml(changedProperties);
+                    //            ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+                    //            List<ShipmentPM> housesList = shipmentQuery.GetShipmentPMsByMasterIdAndTenantForAutomation(entityPM.Id, tenant);
+                    //            foreach (ShipmentPM oldHousePM in housesList)
+                    //            {
+                    //                oldHousePM.StatusId = changeTrackingPM.StatusId;
+                    //                dateBefore = DateTime.Now;
+                    //                ShipmentPM shipmentPm = ShipmentMapping.MapShipmentPMToShipmentPMForAutomation(entityPM, oldHousePM);
+                    //                var changeHelper = new EntityChangeHelper();
+                    //                changeHelper.AddEntityChange(shipmentPm, oldHousePM, "OnUpdate", entityChangeFieldXml, "Shipment", dateBefore);
+                    //            }
+                    //        }
+                    //    }
+                    //}
                     #endregion
                 }
             }

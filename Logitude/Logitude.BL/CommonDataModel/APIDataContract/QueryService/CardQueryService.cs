@@ -56,7 +56,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
             }
         }
 
-
+        
 
         public Card CardCustomDataMapping(string Id, int Tenant)
         {
@@ -72,5 +72,6 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                 throw ex;
             }
         }
+
     }
 }

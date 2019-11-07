@@ -1,4 +1,4 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -11,6 +11,7 @@ import {LedgerTransactionPM} from '../../EntityPMs/LedgerTransactionPM';
 import {JournalPM} from '../../EntityPMs/JournalPM';
 import {ReconciliationLinePM} from '../../EntityPMs/ReconciliationLinePM';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
+import { ExternalReconciliationLinePM } from '../../EntityPMs/ExternalReconciliationLinePM';
 
 @Injectable()
 
@@ -151,7 +152,64 @@ export class ExternalReconciliationExtendedPMService {
 
     //    return entityPM;
     //}
-    
+
+
+    CreateJournalReconcileAdjustBankFee(
+        reconcileExternalPageLineIdList: string[],
+        TheAccountId: string, AdjustAccountId: string, AccountDate: string,Remarks: string) {
+
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            //var validator: ClassLevelValidator;
+
+            //validator = new ClassLevelValidator();
+
+            //var errorsArray = validator.Validate("ReconciliationPM", entityPM);
+
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+            //if (errorsArray.length == 0) {
+            //var mappedEntity: ReconciliationPM[];
+
+
+            return this._http.post(this._apiUrl + "/PostCreateJournalReconcileAdjustBankFee?"
+                + "&TheAccountId=" + TheAccountId
+                + "&AdjustAccountId=" + AdjustAccountId
+                + "&AccountDate=" + AccountDate                
+                + "&Remarks=" + Remarks
+                , JSON.stringify(reconcileExternalPageLineIdList),
+                { headers: authHeader }).map((res) => {
+                    var pm = res.json();
+                    if (pm) {
+                        var mappedResult: JournalPM;
+                        //mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
+                        serviceResponse.Result = pm;
+                    }
+
+
+
+                    return serviceResponse;
+
+                }).catch(ServiceHelper.HandleServiceError);
+            //}
+            //else {
+
+            //    serviceResponse.HasError = true;
+            //    serviceResponse.ErrorsArray = errorsArray;
+
+            //    return Observable.of(serviceResponse);
+
+            //}
+        }
+
+        );
+
+    }
 
     public clone(jsonPM: any) {
         var entityPM: any;

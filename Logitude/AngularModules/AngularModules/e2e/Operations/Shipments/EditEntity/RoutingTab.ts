@@ -1,8 +1,12 @@
 import { browser, by, element, WebDriver, protractor } from 'protractor';
 import { FieldsHelper } from '../../../Helpers/FieldsHelper';
+import { ShipmentHelper } from '../ShipmentHelper';
+
 
 export class RoutingTabComponent {
     private Helper: FieldsHelper;
+    private shipHelper: ShipmentHelper = new ShipmentHelper();
+
 
     constructor() {
         this.Helper = new FieldsHelper();
@@ -32,30 +36,7 @@ export class RoutingTabComponent {
         this.Helper.WaitByIdAndClick('Edit-MainCarriage');
 
         if (ShipmentLevelCode == 'D' || ShipmentLevelCode == 'M') {
-
             if (ShipmentType == '') {
-                // this.Helper.WaitBusyIndicator();
-                //------------------------- GET FROM STOCK ------------------------------
-                //------------------------- GET FROM STOCK ------------------------------
-                // this.Helper.WaitByIdAndClick('GetFromStockBtn');
-                // // this.Helper.WaitByCssButtonClick('.Button','Get from stock')
-                // var EC = protractor.ExpectedConditions;
-                // // browser.wait(EC.elementToBeClickable(element(by.id('GetFromStockBtn'))), 40000).then(a => {
-                // //   browser.wait(EC.elementToBeClickable(element(by.id('GetFromStockBtn'))), 40000).then(a => {
-                // //     element(by.id('GetFromStockBtn')).click();
-                // //   });
-                // // });
-
-                // browser.wait(EC.elementToBeClickable(element(by.css(".SimpleGridViewRow"))), 100000).then(a => {
-                // });
-                // element.all(by.css('.SimpleGridViewRow')).get(1).click();
-
-                // this.Helper.WaitByIdAndClick('OkBtn');
-                // this.Helper.WaitByIdAndClick('ConfirmWindow_Yes_0');
-                // this.Helper.WaitBusyIndicator();
-                //------------------------- END GET FROM STOCK ------------------------------
-                //------------------------- END GET FROM STOCK ------------------------------
-
                 if (Direction == 'Domestic') {
                     var transshipment1FromPortId = this.Helper.WaitByIdAndFill('Shipment_Transshipment1FromPortId', 'eze');
                     this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Shipment_Transshipment1FromPortId', 'eze');
@@ -91,6 +72,8 @@ export class RoutingTabComponent {
 
                 this.Helper.WaitByIdAndFill('date_Shipment_MainCarriageATD', '1');
                 this.Helper.WaitByIdAndFill('date_Shipment_MainCarriageATA', '1');
+
+                this.shipHelper.AddAirlineStock(ShipmentLevelCode);
 
                 this.Helper.WaitByIdAndClick('MainCarriageOKBtn');
             }
@@ -212,8 +195,8 @@ export class RoutingTabComponent {
         this.Helper.WaitByIdAndClick('Add');
         this.Helper.WaitByIdAndFill('ShipmentPickUpDeliveryPackage_Quantity', '10');
         this.Helper.WaitByIdAndFill('ShipmentPickUpDeliveryPackage_Weight', '100');
-       // this.Helper.WaitByCssButtonClick('.RedButton', 'Ok');
-         this.Helper.WaitByIdAndClick('AddPickupPackage');
+        // this.Helper.WaitByCssButtonClick('.RedButton', 'Ok');
+        this.Helper.WaitByIdAndClick('AddPickupPackage');
 
         this.Helper.WaitByIdAndClick('SaveBtn');
         this.Helper.WaitEditComponentBusyIndicator();

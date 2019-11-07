@@ -100,7 +100,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         //{
                         //    ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
                         //}
-                        TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "RatesTable");
 
                         scope.Complete();
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -160,7 +159,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         //   ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
                         //}
 
-                        TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "RatesTable");
 
                         scope.Complete();
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);

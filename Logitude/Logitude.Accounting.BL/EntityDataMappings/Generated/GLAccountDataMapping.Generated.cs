@@ -172,7 +172,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         UpdateDate, 
 	         CreatedByUserName, 
 	         UpdatedByUserName, 
-	         UpdatedByLocalName,
+	         UpdatedByLocalName, 
+	         CardCode, 
+	         PartnerTypeId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

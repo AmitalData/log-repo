@@ -208,7 +208,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       MetodoPagoCode = a.MetodoPagoCode,
                                       UsoCFDICode = a.UsoCFDICode,
                                       StateName = a.StateName,
-
+                                      
                                       IsInternationalPartner = a.IsInternationalPartner,
                                       IsAutonomy = a.IsAutonomy,
                                   }).FirstOrDefault();
@@ -1995,10 +1995,74 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              CountryName = a.CountryName,
                                              CityName = a.CityName,
                                              GLAccountId = a.GLAccountId,
+                                             PartnerTypeId = a.PartnerTypeId,
                                          };
 
             return cards.ToList();
         }
+
+        public List<CardList> GetCustomerCardsWithoutGLAccount(int tenant)
+        {
+            IQueryable<CardList> cards = from a in repository.context.Cards
+                                         where a.Tenant == tenant && (a.GLAccountId == null || a.GLAccountId == "") 
+                                            && (a.PartnerTypeId == "CS" || a.PartnerTypeId == "PO" || a.PartnerTypeId == "AG")
+                                         select new CardList()
+                                         {
+                                             Id = a.Id,
+                                             Code = a.Code,
+                                             EnglishName = a.EnglishName,
+                                             LocalName = a.LocalName,
+                                             PartnerTypeId = a.PartnerTypeId,
+                                             PayablesAccountingCard = a.PayablesAccountingCard,
+                                             ReceivablesAccountingCard = a.ReceivablesAccountingCard,
+                                             GLAccountId = a.GLAccountId,
+                                         };
+
+            return cards.ToList();
+        }
+
+        public List<CardList> GetVendorCardsWithoutGLAccount(int tenant)
+        {
+            IQueryable<CardList> cards = from a in repository.context.Cards
+                                         where a.Tenant == tenant && (a.GLAccountId == null || a.GLAccountId == "")
+                                            && (a.PartnerTypeId == "VD" || a.PartnerTypeId == "DR" || a.PartnerTypeId == "LL" || a.PartnerTypeId == "WA")
+                                         select new CardList()
+                                         {
+                                             Id = a.Id,
+                                             Code = a.Code,
+                                             EnglishName = a.EnglishName,
+                                             LocalName = a.LocalName,
+                                             PartnerTypeId = a.PartnerTypeId,
+                                             PayablesAccountingCard = a.PayablesAccountingCard,
+                                             ReceivablesAccountingCard = a.ReceivablesAccountingCard,
+                                             GLAccountId = a.GLAccountId,
+                                         };
+
+            return cards.ToList();
+        }
+
+        public List<CardList> GetAllOtherCardsWithoutGLAccount(int tenant)
+        {
+            IQueryable<CardList> cards = from a in repository.context.Cards
+                                         where a.Tenant == tenant && (a.GLAccountId == null || a.GLAccountId == "")
+                                            && (a.PartnerTypeId != "CS" && a.PartnerTypeId != "PO" && a.PartnerTypeId != "AG")
+                                            && (a.PartnerTypeId != "VD" && a.PartnerTypeId != "DR" && a.PartnerTypeId != "LL" && a.PartnerTypeId != "WA")
+                                         select new CardList()
+                                         {
+                                             Id = a.Id,
+                                             Code = a.Code,
+                                             EnglishName = a.EnglishName,
+                                             LocalName = a.LocalName,
+                                             PartnerTypeId = a.PartnerTypeId,
+                                             PayablesAccountingCard = a.PayablesAccountingCard,
+                                             ReceivablesAccountingCard = a.ReceivablesAccountingCard,
+                                             GLAccountId = a.GLAccountId,
+                                         };
+
+            return cards.ToList();
+        }
+
+
 
 
     }

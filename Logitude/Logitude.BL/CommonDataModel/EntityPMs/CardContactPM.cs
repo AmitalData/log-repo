@@ -69,5 +69,30 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
                 }
             }
         }
+
+        private List<CardContactAdditionalServicePM> cardContactAdditionalServices;
+        [Include]
+        [Association("CardContactAdditionalServiceCardContact", "Id", "CardContactId")]
+        [Composition]
+        [DataMember]
+        public virtual List<CardContactAdditionalServicePM> CardContactAdditionalServices
+        {
+            get
+            {
+
+                if (this.cardContactAdditionalServices == null)
+                {
+                    cardContactAdditionalServices = new List<CardContactAdditionalServicePM>();
+                }
+                return this.cardContactAdditionalServices;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    cardContactAdditionalServices = value;
+                }
+            }
+        }
     }
 }

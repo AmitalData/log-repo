@@ -233,7 +233,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             }
 
             ValidateAirlineRestriction(entityPM, myCommonContext);
-            ValidateBillToCreditLimit(entityPM, myContext, myCommonContext, isNew);
+            ValidateBillToCreditLimit(entityPM, entityPOCO, myContext, myCommonContext, isNew);
             ValidateAccountingSetting(entityPM, myContext, myCommonContext, isNew);
             ValidateFullAccounting(entityPM.Tenant, entityPM.BillToId, entityPM.InvoiceCurrencyId, entityPM.InvoiceDate, isNew);
             ValidateMultiVatPercentages(entityPM, accountingSetting, allVats);
@@ -760,21 +760,23 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 }
             }
         }
-        private static void ValidateBillToCreditLimit(ARInvoicePM entityPM, IInvoiceContext myContext, ICommonDataContext myCommonContext, bool isNew)
+        private static void ValidateBillToCreditLimit(ARInvoicePM entityPM, ARInvoice entityPOCO, IInvoiceContext myContext, ICommonDataContext myCommonContext, bool isNew)
         {
-            if (isNew)
+            int tenant = entityPM.Tenant;
+            string id = tenant.ToString();
+            CreditLimitSetting mySettings = (from d in myCommonContext.CreditLimitSettings where d.Id == id select d).FirstOrDefault();
+            if (mySettings != null)
             {
-                if (!entityPM.HasCreditLimitOverrideFeature)
+                if (mySettings.IsCreditLimitEnabled)
                 {
-                    int tenant = entityPM.Tenant;
-                    string id = tenant.ToString();
-                    string myCustomerId = entityPM.BillToId;
+                    ValidateCreditLimitPartnersRestrictions(entityPM, entityPOCO, mySettings, isNew);
 
-                    CreditLimitSetting mySettings = (from d in myCommonContext.CreditLimitSettings where d.Id == id select d).FirstOrDefault();
-                    if (mySettings != null)
+                    if (isNew)
                     {
-                        if (mySettings.IsCreditLimitEnabled)
+                        if (!entityPM.HasCreditLimitOverrideFeature)
                         {
+                            string myCustomerId = entityPM.BillToId;
+
                             if (mySettings.InvoiceCreationBlock)
                             {
                                 // Bill to may be other partners. (not Customr)
@@ -823,6 +825,139 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 }
             }
         }
+
+        private static void ValidateCreditLimitPartnersRestrictions(ARInvoicePM entityPM, ARInvoice entityPOCO, CreditLimitSetting mySettings, bool isNewEntity)
+        {
+            if (entityPM.BillToId != null)
+            {
+                bool isValidating = false;
+
+                if (isNewEntity)
+                {
+                    isValidating = true;
+                }
+
+                else if (entityPM.BillToId != entityPOCO.BillToId)
+                {
+                    isValidating = true;
+                }
+
+                if (isValidating)
+                {
+                    Card iCard = CardRepository.GetSingleCard(entityPM.BillToId, entityPM.Tenant, true);
+
+                    if (iCard != null)
+                    {
+                        string errorText_Blocking = "Credit limit setting is blocking invoice for ";
+
+                        switch (iCard.PartnerTypeId)
+                        {
+                            case "CS":
+                                {
+                                    if (iCard.IsCustomer)
+                                    {
+                                        if (mySettings.CustomersInvoicesBlock)
+                                        {
+                                            throw new ApplicationException(errorText_Blocking + "Customers");
+                                        }
+                                    }
+
+                                    else
+                                    {
+                                        if (mySettings.ShipperConsigneeInvoiceBlock)
+                                        {
+                                            throw new ApplicationException(errorText_Blocking + "Shippers and Consignees");
+                                        }
+                                    }
+
+                                    break;
+                                }
+
+                            case "AG":
+                                {
+                                    if (mySettings.AgentsInvoicesBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Agents");
+                                    }
+
+                                    break;
+                                }
+
+                            case "CG":
+                                {
+                                    if (mySettings.CustomsAgentsInvoicesBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Customs Agents");
+                                    }
+
+                                    break;
+                                }
+
+                            case "SG":
+                                {
+                                    if (mySettings.ShippingAgentsInvoicesBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Shipping Agents");
+                                    }
+
+                                    break;
+                                }
+
+                            case "AL":
+                                {
+                                    if (mySettings.AirlinesInvoicesBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Airlines");
+                                    }
+
+                                    break;
+                                }
+
+                            case "SL":
+                                {
+                                    if (mySettings.ShippingLinesInvoicesBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Shipping Lines");
+                                    }
+
+                                    break;
+                                }
+
+                            case "TR":
+                                {
+                                    if (mySettings.TruckersInvoicesBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Truckers");
+                                    }
+
+                                    break;
+                                }
+
+                            case "VD":
+                                {
+                                    if (mySettings.VendorsInvoicesBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Vendors");
+                                    }
+
+                                    break;
+                                }
+
+                            case "WH":
+                                {
+                                    if (mySettings.WarehousesInvoicesBlock)
+                                    {
+                                        throw new ApplicationException(errorText_Blocking + "Warehouses");
+                                    }
+
+                                    break;
+                                }
+                        }
+                    }
+                }
+            }
+        }
+
         private static void ValidateAccountingSetting(ARInvoicePM entityPM, IInvoiceContext myContext, ICommonDataContext myCommonContext, bool isNew)
         {
             Tenant loggedTenant = (from a in myCommonContext.Tenants.Include("AccountingSetting")
@@ -895,70 +1030,87 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 }
             }
         }
+        private static List<string> errorsList = new List<string>();
         public static void ValidateFullAccounting(int tenant, string billToId, string invoiceCurrencyId, DateTime? accountingDate, bool isNew)
         {
-            if (isNew)
+            errorsList = new List<string>();
+            if (IsFullAccountingActivated(tenant) && isNew)
             {
-                var errors = "";
-                TenantRepository tenantRepository = new TenantRepository(tenant);
-                Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
-                if (tenantPOCO != null && tenantPOCO.AccountingActivated)
-                {
-                    bool useLocal = true;
-                    var user = GetLoggedContact(tenant);
-                    if (user != null) useLocal = !(GetLoggedContact(tenant).DontShowLocal);
+                CheckCardConnectedGLAccount(tenant, billToId);
+                CheckInvoiceCurrency(tenant, billToId, invoiceCurrencyId);
+                CheckClosedMonth(accountingDate, tenant);
 
-                    GLAccountPM glAccount = getGLAccount(billToId, tenant);
-
-                    if (glAccount == null)
-                    {
-                        string msg = TranslateTextsClass.Translate("ARInvoice.M.BillToGLAccount", tenant, useLocal);
-                        errors += msg + ";";
-                        //throw new ApplicationException(msg);
-                    }
-                    if (glAccount != null && (glAccount.IsMultiCurrency == null || glAccount.IsMultiCurrency == false))
-                    {
-                        if (glAccount.CurrencyId != invoiceCurrencyId)
-                        {
-                            string msg = TranslateTextsClass.Translate("ARInvoice.M.InvoiceCurrencyGLAccount", tenant, useLocal) + " " + glAccount.CurrencyCode;
-                            errors += msg + ";";
-                            //throw new ApplicationException(msg);
-                        }
-                    }
-
-                    IAccountingContext myContext = AccountingContext.GetContext(tenant);
-                    AccountingPeriodListQueryService accountingPeriodQuery = new AccountingPeriodListQueryService(myContext);
-                    var now = TenantServerConfigration.GetCurrentDateTime(tenant);
-                    //if (now != null)
-                    //{
-                    AccountingPeriodList accountingPeriodList = accountingPeriodQuery.GetByYear(accountingDate.Value.Year, "1", tenant);
-                    if (accountingPeriodList != null && accountingDate != null)
-                    {
-                        var month = accountingDate.Value.Month;
-                        if (month > accountingPeriodList.OpenMonth || month < accountingPeriodList.ClosedMonth)
-                        {
-                            string msg = TranslateTextsClass.Translate("ARInvoice.M.ClosedMonth", tenant, useLocal);
-                            errors += msg + ";";
-                            //throw new ApplicationException(msg);
-                        }
-                    }
-                    else
-                    {
-                        string msg = TranslateTextsClass.Translate("ARInvoice.M.ClosedMonth", tenant, useLocal);
-                        errors += msg + ";";
-                        //throw new ApplicationException(msg);
-                    }
-                    // }
-
-
-                    if (!string.IsNullOrEmpty(errors))
-                    {
-                        errors = errors.TrimEnd(';');
-                        throw new ApplicationException(errors);
-                    }
-                }
+                if (errorsList.Count > 0)
+                    throw new ApplicationException(string.Join(";", errorsList));
             }
         }
+
+        private static bool IsFullAccountingActivated(int tenant)
+        {
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+            Tenant tenantPoco = tenantRepository.GetSingleTenant(tenant);
+            return (tenantPoco != null && tenantPoco.AccountingActivated);
+        }
+
+        private static void CheckInvoiceCurrency(int tenant, string billToId, string invoiceCurrencyId)
+        {
+            GLAccountPM glAccount = getGLAccount(billToId, tenant);
+            if (glAccount != null && (glAccount.IsMultiCurrency == null || glAccount.IsMultiCurrency == false))
+            {
+                if (glAccount.CurrencyId != invoiceCurrencyId)
+                {
+                    bool useLocal = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
+                    string msg = TranslateTextsClass.Translate("ARInvoice.M.InvoiceCurrencyGLAccount", tenant, useLocal) + " " + glAccount.CurrencyCode;
+                    errorsList.Add(msg);
+                }
+            }
+            
+        }
+
+        private static void CheckCardConnectedGLAccount(int tenant, string billToId)
+        {
+            GLAccountPM glAccount = getGLAccount(billToId, tenant);
+
+            if (glAccount == null)
+            {
+                bool useLocal = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
+                string msg = TranslateTextsClass.Translate("ARInvoice.M.BillToGLAccount", tenant, useLocal);
+                errorsList.Add(msg);
+            }
+            
+        }
+
+        private static void CheckClosedMonth(DateTime? accountingDate, int tenant)
+        {
+            AccountingPeriodList period = GetInvoiceAccountPeriodByYear(tenant, accountingDate.Value.Year);
+
+            if (period != null && accountingDate != null)
+            {
+                var month = accountingDate.Value.Month;
+                if (month > period.OpenMonth || month < period.ClosedMonth)
+                    errorsList.Add(GetClosedMonthErrorMessage(tenant));
+            }
+            else
+            {
+                errorsList.Add(GetClosedMonthErrorMessage(tenant));
+            }
+        }
+
+        private static string GetClosedMonthErrorMessage(int tenant)
+        {
+            bool useLocal = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
+            string msg = TranslateTextsClass.Translate("ARInvoice.M.ClosedMonth", tenant, useLocal) + ";";
+            return msg;
+        }
+
+        private static AccountingPeriodList GetInvoiceAccountPeriodByYear(int tenant, int year)
+        {
+            IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
+            AccountingPeriodListQueryService accountingPeriodQuery = new AccountingPeriodListQueryService(accountingContext);
+            AccountingPeriodList accountingPeriod = accountingPeriodQuery.GetByYear(year, "2", tenant); // 2- Invoice
+            return accountingPeriod;
+        }
+
         private static GLAccountPM getGLAccount(string billToId, int tenant)
         {
             GLAccountPM glaAccount = null;

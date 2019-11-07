@@ -110,6 +110,17 @@ exports.config = {
             browser.params.Link = "https://test.logitudeworld.com/test";
             browser.params.Login.Email = "raghad@protractor.com";
             browser.params.Login.Password = "!RS123Rs";
+
+        }
+        else if (browser.params.Env == "testStaging") {
+            browser.params.Link = "https://staging.logitudeworld.com";
+            browser.params.Login.Email = "Raghad@protractor.com";
+            browser.params.Login.Password = "!RS123Rs";
+        }
+        else if (browser.params.Env == "testEnvStaging") {
+            browser.params.Link = "https://test.logitudeworld.com/staging";
+            browser.params.Login.Email = "Raghad@protractor.com";
+            browser.params.Login.Password = "!RS123Rs";
         }
         else if (browser.params.Env == "prod_1") {
             browser.params.Link = "https://system.logitudeworld.com";
@@ -150,7 +161,7 @@ exports.config = {
 
         } else if (browser.params.Team == "islam") {
             jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
-            jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/E2ETeamIslam/screenshots', takeScreenShotsOnlyForFailedSpecs: true, screenshotsSubfolder: 'images' }).getJasmine2Reporter());
+            jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/Automation e2e/TeamIslam/Test/screenshots', takeScreenShotsOnlyForFailedSpecs: true, screenshotsSubfolder: 'images' }).getJasmine2Reporter());
             jasmine.getEnv().addReporter(junitReporterIslam);
 
         } else if (browser.params.Team == "mohammad") {

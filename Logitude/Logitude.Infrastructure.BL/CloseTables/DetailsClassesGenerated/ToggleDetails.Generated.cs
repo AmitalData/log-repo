@@ -86,9 +86,9 @@ namespace Logitude.Infrastructure.BL
 			 
             all.Add(new ToggleDetails()
             {    
-                Code = "MAP", 
-                Name = "Multipile AP Shipment", 
-                SearchFields = "MAP,Multipile AP Shipment", 
+                Code = "BDW", 
+                Name = "Build Document Via WorkerRole", 
+                SearchFields = "BDW,Build Document Via WorkerRole", 
 			});
 			
             return all;

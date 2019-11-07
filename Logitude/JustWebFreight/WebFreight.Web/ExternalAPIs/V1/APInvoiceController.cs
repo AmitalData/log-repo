@@ -112,6 +112,42 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         APInvoiceQueryService apinvoiceQuery = new APInvoiceQueryService(tenant);
                         APInvoicePM apinvoicePM = null;
 
+                        if (apinvoice.Status != null && !string.IsNullOrEmpty(apinvoice.Status.Code))
+                        {
+                            if (apinvoice.Status.Code != "AD")
+                            {
+                                throw new ApplicationException("Invoice Status should be Approved");
+                            }
+                        }
+
+                        if (apinvoice.IsGeneralInvoice)
+                        {
+                            if(!string.IsNullOrEmpty(apinvoice.EntityType) || !string.IsNullOrEmpty(apinvoice.EntityReference))
+                            {
+                                throw new ApplicationException("A General invoice can't be connected to Entity");
+                            }
+                        }
+
+                        else
+                        {
+                            if (string.IsNullOrEmpty(apinvoice.EntityType))
+                            {
+                                throw new ApplicationException("Entity Type is missing");
+                            }
+                            else
+                            {
+                                if(apinvoice.EntityType.ToLower() != "shipment")
+                                {
+                                    throw new ApplicationException("Invalid Entity Type");
+                                }
+                            }
+
+                            if (string.IsNullOrEmpty(apinvoice.EntityReference))
+                            {
+                                throw new ApplicationException("Entity Reference is missing");
+                            }
+                        }
+
                         if (isFullAccounting)
                         {
                             apinvoice.Tenant = tenant;

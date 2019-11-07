@@ -38,6 +38,7 @@ export class AccountingTabComponent implements OnInit {
 
     ngOnInit() {
         this.LoadComponent();
+        this.Listen();
     }
 
     private AccountingSystemPM: any = null;
@@ -105,6 +106,18 @@ export class AccountingTabComponent implements OnInit {
 
         if (this.IsExternalCodesFromAPI && this.isQuickBooksOnlineEntity) {
             this.isQuickBooksOnline = true;
+        }
+    }
+    private LoadCompletedEvent: any = null;
+
+    private Listen() {
+        if (this.entityArgs.EditComponent != null) {
+        
+            this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                if (isLoadSuccess) {
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                }
+            });
         }
     }
     LoadComponent() {

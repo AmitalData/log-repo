@@ -10,7 +10,7 @@ using Simplog.Server.Infrastructure.Helpers;
 
 namespace Simplog.Data.CommonDataModel.Mocks
 {
-    public class MockCommonContext:ICommonDataContext
+    public class MockCommonContext : ICommonDataContext
     {
         List<Country> countries;
         MockObjectSet<Country> countryObjectSet;
@@ -2669,6 +2669,65 @@ namespace Simplog.Data.CommonDataModel.Mocks
                 throw new NotImplementedException();
             }
         }
+
+
+        public IDbSet<DocumentsExecutionLog> DocumentsExecutionLogs
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+
+
+
+
+        public IDbSet<AccountingPartner> AccountingPartners
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public IDbSet<CardContactAdditionalService> CardContactAdditionalServices
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public IDbSet<SharedLogisticsContactLastLogin> SharedLogisticsContactLastLogins
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        //public IDbSet<CardContactAdditionalService> CardContactAdditionalServices { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         //public IDbSet<UsersReleaseNotesDisplay>  { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }

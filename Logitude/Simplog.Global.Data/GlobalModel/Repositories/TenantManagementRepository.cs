@@ -45,6 +45,11 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
             return (from a in context.TenantManagements.Include("GlobalTenant") where a.Id == id select a).FirstOrDefault();
         }
 
+        public TenantManagement GetSingleTenantManagementByBluesnapAccountId(string bluesnapaccountId)
+        {
+            return (from a in context.TenantManagements.Include("GlobalTenant") where a.BluesnapAccount == bluesnapaccountId select a).FirstOrDefault();
+        }
+
         public List<TenantManagement> GetTenantManagementsForPackage(string packageCode)
         {
             return (from a in context.TenantManagements

@@ -31,6 +31,7 @@ using Microsoft.Practices.Unity;
 using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
 using Logitude.Accounting.BL.CloseTables;
+using Simplog.Data.InfrastructureModel.Repositories;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -61,7 +62,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
 
 
-            BankAccountPM bankAccountPM = GetBankAccountById(entityPM.BankAccountId, entityPM.Tenant);
+            BankAccountPM bankAccountPM = GetBankAccountById(entityPM.EntityId, entityPM.Tenant);
 
             entityPM.PageNo = GetNewPageNumber(bankAccountPM);
 
@@ -108,7 +109,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         private int GetLastPageNumberForBankAccount(string bankAccountId, int tenant)
         {
             ReconcileExternalPageQueryService pageQuery = new ReconcileExternalPageQueryService(tenant);
-            int lastPageNumber = pageQuery.GetLastPageNo(bankAccountId, tenant);
+            int lastPageNumber = pageQuery.GetLastPageNo(bankAccountId,"BankAccount", tenant);
             return lastPageNumber;
         }
 
@@ -133,14 +134,15 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (pagePOCO.StatusCode != null && (pagePM.StatusCode == "3" && pagePOCO.StatusCode != "3"))
             {
                 pagePM.ReconcileExternalPageLines.ForEach(a=>{ a.ChangeSetOp = ChangeSetOperation.None; });
+                ObjectTable objectTable = GetObjectTable(pagePM.ObjectTableId,pagePM.Tenant);
 
                 // canceled!!
                 //update bankaccount , last page fields
                 ReconcileExternalPageQueryService pageQuery = new ReconcileExternalPageQueryService(pagePOCO.Tenant);
-                ReconcileExternalPagePM prevPage = pageQuery.GetPrevPageNoByPageNo(pagePM.PageNo, pagePM.BankAccountId, pagePOCO.Tenant);
+                ReconcileExternalPagePM prevPage = pageQuery.GetPreviousPageByNumber(pagePM.PageNo, pagePM.EntityId, objectTable.Name, pagePOCO.Tenant);
 
                 BankAccountQueryService bankQuery = new BankAccountQueryService(pagePOCO.Tenant);
-                BankAccountPM bankAccount = bankQuery.GetSingle(pagePOCO.BankAccountId, false, false);
+                BankAccountPM bankAccount = bankQuery.GetSingle(pagePOCO.EntityId, false, false);
 
              
                 BankAccountUpdateService bankService = new BankAccountUpdateService(accountingContext, new Dictionary<string, IContext>(), pagePM.Tenant);
@@ -160,7 +162,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (pagePOCO.StatusCode != null && (pagePM.StatusCode == "1" && pagePOCO.StatusCode == "3"))
             {
                 // page restored!
-                BankAccountPM bankAccountPM = GetBankAccountById(pagePM.BankAccountId, pagePM.Tenant);
+                BankAccountPM bankAccountPM = GetBankAccountById(pagePM.EntityId, pagePM.Tenant);
                 SetBankAccountLastPage(pagePM, bankAccountPM);
 
             }
@@ -171,7 +173,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 foreach (var item in pagePM.ReconcileExternalPageLines)
                 {
-                    PaymentChequePM paymentCheque = paymentChequeService.GetPaymentChequeByChequeNoAndBankAccount(pagePM.BankAccountId, item.Reference, pagePM.Tenant);
+                    PaymentChequePM paymentCheque = paymentChequeService.GetPaymentChequeByChequeNoAndBankAccount(pagePM.EntityId, item.Reference, pagePM.Tenant);
                     if (paymentCheque != null)
                     {
                         paymentCheque.PaymentChequeStatusCode = "3";
@@ -271,9 +273,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     CheckPageBalance(entityPM, errors);
 
             }
+            ObjectTable objectTable = GetObjectTable(entityPM.ObjectTableId, entityPM.Tenant);
 
             ReconcileExternalPageQueryService query = new ReconcileExternalPageQueryService(entityPM.Tenant);
-            ReconcileExternalPagePM prevPage = query.GetPrevPageNoByPageNo(entityPM.PageNo, entityPM.BankAccountId, entityPM.Tenant);
+            ReconcileExternalPagePM prevPage = query.GetPreviousPageByNumber(entityPM.PageNo, entityPM.EntityId, objectTable.Name, entityPM.Tenant);
             if (prevPage != null)
             {
                 bool avoidCheckReferenceDate = true;//ohad+ eyal
@@ -357,8 +360,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         private void CheckPreviousPage(ReconcileExternalPagePM pagePM, List<string> errors)
         {
             bool useLocal = LoggedContactResolver.GetLoggedContactShowLocal(pagePM.Tenant);
+            ObjectTable objectTable = GetObjectTable(pagePM.ObjectTableId, pagePM.Tenant);
+
             ReconcileExternalPageQueryService query = new ReconcileExternalPageQueryService(pagePM.Tenant);
-            ReconcileExternalPagePM prevPage = query.GetPrevPageNoByPageNo(pagePM.PageNo, pagePM.BankAccountId, pagePM.Tenant);
+            ReconcileExternalPagePM prevPage = query.GetPreviousPageByNumber(pagePM.PageNo, pagePM.EntityId, objectTable.Name, pagePM.Tenant);
             bool isSamePage = prevPage?.Id == pagePM.Id;
             if (prevPage != null && !isSamePage)
             {
@@ -395,6 +400,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
 
             }
+        }
+
+        private static ObjectTable GetObjectTable(string id,int tenant)
+        {
+            ObjectTableRepository tableRepository = new ObjectTableRepository(tenant);
+            ObjectTable objectTable = tableRepository.GetSingleObjectTable(id, tenant, false);
+            return objectTable;
         }
     }
 }

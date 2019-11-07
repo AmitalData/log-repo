@@ -333,6 +333,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                                                     Notes = myItem.Notes,
                                                                     Payables_OPEN = IsLocalCurrency ? myItem.OpenAmountInLocalCurrency : myItem.OpenAmountInProfitCurrency,
                                                                     Payables_ACCT = IsLocalCurrency ? myItem.AccountedAmountInLocalCurrency : myItem.AccountedAmountInProfitCurrency,
+                                                                    FinalArrivalDate = myShipment.ActualFinalArrivalDate,
                                                                 }).ToList();
 
                     if (myResult.Count > 0)
@@ -353,6 +354,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             myRecord.Carrier = item.VendorName;
                             myRecord.ChargesTypeId = item.ChargeTypeId;
                             myRecord.ChargesType = item.ChargeTypeName;
+                            myRecord.FinalArrivalDate = item.FinalArrivalDate;
 
                             if (IncludeAccountedOnly)
                             {
@@ -611,5 +613,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
         public double? Payables_OPEN { get; set; }
         public double? Payables_ACCT { get; set; }
         public string Notes { get; set; }
+        public DateTime? FinalArrivalDate { get; set; }
     }
 }

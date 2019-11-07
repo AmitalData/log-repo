@@ -179,6 +179,8 @@
       <LastGenOutput>ControllersGenerator.cs</LastGenOutput>
       <LastOutputs>.\ControllersGenerator.cs</LastOutputs>
     </Content>
+    <None Include="EntityFiles\CommonDataModel\CardContactAdditionalService.lxml" />
+    <None Include="EntityFiles\CommonDataModel\DocumentsExecutionLog.lxml" />
     <None Include="EntityFiles\CommonDataModel\AirlineAreasPort.lxml">
       <SubType>Designer</SubType>
     </None>
@@ -394,6 +396,9 @@
     <None Include="EntityFiles\CommonDataModel\VatTypePercentage.lxml" />
     <None Include="EntityFiles\CommonDataModel\VATTypesGroup.lxml" />
     <None Include="EntityFiles\CommonDataModel\VatUniqueType.lxml" />
+    <None Include="EntityFiles\CommonDataModel\AccountingPartner.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\CommonDataModel\Vendor.lxml">
       <SubType>Designer</SubType>
     </None>
@@ -401,6 +406,9 @@
     <None Include="EntityFiles\CommonDataModel\Warehouse.lxml" />
     <None Include="EntityFiles\CommonDataModel\WarehouseType.lxml" />
     <None Include="EntityFiles\GlobalModel\AnalyzeQueue.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\GlobalModel\BluesnapTransaction.lxml">
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\GlobalModel\BluesnapContractType.lxml">

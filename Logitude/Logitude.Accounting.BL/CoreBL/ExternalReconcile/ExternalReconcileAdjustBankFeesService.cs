@@ -35,7 +35,8 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
     //מול כרטיס לבחירה כל הסוגים למעט 6- עובדים יצטבר לשורה 1 !
     //בהעברה ל הנה"ח יבוצע התאמה חיצונית 1 
     /// </summary>
-    public class ExternalReconcileAdjustBankFeesService
+    public class ExternalReconcileAdjustBankFeesService: 
+        IExternalReconcileAdjustBankFeesService, IExternalReconcileAdjustBankFees_Validate
     {
         private IExternalReconcileDataProvider _ExternalReconcileDataProvider;
         private List<string> _ErrorList;
@@ -44,7 +45,8 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
         public const string M_NotAllPageLineIdsInTheSameBankAccount="לא כל שורות הבנק שייכים לאותו בנק";
         public const string M_NotAllPageLineIdsFoundInDB = "לא כל השורות נמצאו בשרת ה DB";
 
-        public const string M_InProgressExternalReconcile = "אחת השורות בתהליך התאמה חצונית";
+        public const string M_WhileCreating_All_NotInProgressExternalReconcile = "אחת השורות בתהליך התאמה חצונית";
+        public const string M_WhileStreaming_All_InProgressExternalReconcile = "אחת השורות לא מסומנת -בתהליך התאמה חצונית";
 
         public JournalPM TheNewJournal { get; private set; }
         public ChangeSetOperation ChangeSetOp { get; private set; }
@@ -53,37 +55,47 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
         {
             _ExternalReconcileDataProvider = externalReconcileDataProvider;
         }
-        public void CreateJournalWithExtReconcile(int tenant ,List<string> reconcileExternalPageLineIdList,string adjustGLAccountId,string screenNotes)
+        //const string MyNotes = "פרעון שיק מהתאמה";
+        public void CreateJournalWithExtReconcile(int tenant ,List<string> reconcileExternalPageLineIdList,string adjustGLAccountId,string screenNotes
+            , DateTime accountingDate
+            )
         {
             if (string.IsNullOrWhiteSpace(screenNotes))
             {
                 screenNotes = "התאמת דף בנק (עמלה)";
             }
-            _ErrorList = new List<string>();
-            var listOfpageLineList = _ExternalReconcileDataProvider.GetReconcileExternalPageLineList(tenant, reconcileExternalPageLineIdList);
-
-            var reconcileExternalPageIdList =listOfpageLineList.Select(r => r.ReconcileExternalPageId).Distinct().ToList();
-            var listOfpageList = _ExternalReconcileDataProvider.GetReconcileExternalPageList(tenant, reconcileExternalPageIdList);
-            Validate(tenant, reconcileExternalPageLineIdList, adjustGLAccountId, listOfpageLineList, listOfpageList);
-            if (_ErrorList.Count()>0)
-            {
-                throw new Exception(string.Join(Environment.NewLine, _ErrorList.ToArray()));
-            }
-
+            List<ReconcileExternalPageLineList> listOfpageLineList;
+            List<ReconcileExternalPageList> listOfpageList;
+            bool CheckWhileStreaming = false;//we are in create mode !!
+            PrapareAndValid(tenant, reconcileExternalPageLineIdList, adjustGLAccountId, out listOfpageLineList, out listOfpageList, CheckWhileStreaming);
 
             string accountingCurrencyId = _ExternalReconcileDataProvider.GetaccountingCurrencyId(tenant);
 
-            var listOfAccId =listOfpageList.Select(r => r.GLAccountId).ToList();
+            var listOfAccId = listOfpageList.Select(r => r.GLAccountId).ToList();
 
             List<GLAccountList> ListOfGLAccountList = _ExternalReconcileDataProvider.GetListOfGLAccountList(tenant, listOfAccId);
             var bankGLAccountList = ListOfGLAccountList.First();//must have 
-            CreateJournal(tenant, adjustGLAccountId, listOfpageLineList, listOfpageList,  bankGLAccountList, accountingCurrencyId, screenNotes);
+            CreateJournal(tenant, adjustGLAccountId, listOfpageLineList, listOfpageList, bankGLAccountList, accountingCurrencyId, screenNotes, accountingDate);
 
         }
 
-        private void CreateJournal(int tenant, string adjustGLAccountId, List<Data.EntityLists.ReconcileExternalPageLineList> listOfpageLineList, List<Data.EntityLists.ReconcileExternalPageList> listOfpageList, GLAccountList bankGLAccountList, string accountingCurrencyId, string screenNotes)
+        public void PrapareAndValid(int tenant, List<string> reconcileExternalPageLineIdList, string adjustGLAccountId, out List<ReconcileExternalPageLineList> listOfpageLineList, out List<ReconcileExternalPageList> listOfpageList
+            ,bool CheckWhileStreaming)
         {
-            CreateJournalHeader(tenant);
+            _ErrorList = new List<string>();
+            listOfpageLineList = _ExternalReconcileDataProvider.GetReconcileExternalPageLineList(tenant, reconcileExternalPageLineIdList);
+            var reconcileExternalPageIdList = listOfpageLineList.Select(r => r.ReconcileExternalPageId).Distinct().ToList();
+            listOfpageList = _ExternalReconcileDataProvider.GetReconcileExternalPageList(tenant, reconcileExternalPageIdList);
+            Validate(tenant, reconcileExternalPageLineIdList, adjustGLAccountId, listOfpageLineList, listOfpageList, CheckWhileStreaming);
+            if (_ErrorList.Count() > 0)
+            {
+                throw new Exception(string.Join(Environment.NewLine, _ErrorList.ToArray()));
+            }
+        }
+
+        private void CreateJournal(int tenant, string adjustGLAccountId, List<Data.EntityLists.ReconcileExternalPageLineList> listOfpageLineList, List<Data.EntityLists.ReconcileExternalPageList> listOfpageList, GLAccountList bankGLAccountList, string accountingCurrencyId, string screenNotes, DateTime accountingDate)
+        {
+            CreateJournalHeader(tenant, accountingDate);
             CreateJournalLinesFromPageLines(listOfpageLineList, bankGLAccountList, adjustGLAccountId, accountingCurrencyId, screenNotes);
 
 
@@ -106,10 +118,18 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 
                 JournalId = TheNewJournal.Id,
                 Line = line++,
-                //IF EXISTS (SELECT name FROM sys.indexes WHERE name = N'IX_ReconcileExternalPageLineId' AND object_id = object_id(N'[dbo].[JournalExternalReconciles]', N'U'))
-                //DROP INDEX[IX_ReconcileExternalPageLineId] ON[dbo].[JournalExternalReconciles]
-                //ALTER TABLE[dbo].[JournalExternalReconciles] ALTER COLUMN[ReconcileExternalPageLineId][varchar](15) NULL
-                //CREATE INDEX[IX_ReconcileExternalPageLineId] ON[dbo].[JournalExternalReconciles]([ReconcileExternalPageLineId])
+
+
+//                DROP INDEX[IX_ReconcileExternalPageLineId] ON[dbo].[JournalExternalReconciles]
+//                ALTER TABLE[dbo].[JournalExternalReconciles] ALTER COLUMN[ReconcileExternalPageLineId][varchar](15) not null
+//                CREATE INDEX[IX_ReconcileExternalPageLineId] ON[dbo].[JournalExternalReconciles]([ReconcileExternalPageLineId])
+
+
+//IF EXISTS(SELECT name FROM sys.indexes WHERE name = N'IX_LedgerTransactionId' AND object_id = object_id(N'[dbo].[JournalExternalReconciles]', N'U'))
+//    DROP INDEX[IX_LedgerTransactionId] ON[dbo].[JournalExternalReconciles]
+//ALTER TABLE[dbo].[JournalExternalReconciles] ALTER COLUMN[LedgerTransactionId][varchar](15) NULL
+//CREATE INDEX[IX_LedgerTransactionId] ON[dbo].[JournalExternalReconciles]([LedgerTransactionId])
+
                 LedgerTransactionId = null,
                 ReconcileExternalPageLineId = r.Id
             };
@@ -125,16 +145,21 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             decimal totDebitForiegn = TheNewJournal.JournalLines.Where(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Debit).Sum(r => r.ForeignAmount);
             decimal totCreditForiegn = TheNewJournal.JournalLines.Where(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit).Sum(r => r.ForeignAmount);
             MyJournalActionTypeEnum myJournalActionTypeEnum = MyJournalActionTypeEnum.Credit;
+            string debitAccountId = bankGLAccountList.Id;
+            string creditAccountId = adjustGLAccountId;
             if (totDebitlocal - totCreditlocal < 0)
             {
                 myJournalActionTypeEnum =MyJournalActionTypeEnum.Debit;
+                debitAccountId = adjustGLAccountId;
+                creditAccountId = bankGLAccountList.Id;
+
             }
             var last=TheNewJournal.JournalLines.Last();
             TheNewJournal.JournalLines.Add(new JournalLinePM
             {
                 Tenant = last.Tenant,
                 JournalId = TheNewJournal.Id,
-                Line = last.Line+1,
+                Line = last.Line + 1,
 
 
                 DocumentDate = last.DocumentDate,
@@ -145,12 +170,12 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 
                 CurrencyId = last.CurrencyId,
 
-                ForeignAmount = Math.Abs (totDebitForiegn-totCreditForiegn),
+                ForeignAmount = Math.Abs(totDebitForiegn - totCreditForiegn),
 
-                
+
                 ActionTypeCodeEnum = myJournalActionTypeEnum,
-                DebitAccountId = bankGLAccountList.Id,
-                CreditAccountId = adjustGLAccountId,
+                DebitAccountId = debitAccountId,// bankGLAccountList.Id,
+                CreditAccountId = creditAccountId,// adjustGLAccountId,
                 LocalAmount = Math.Abs(totDebitlocal - totCreditlocal),
                 Notes = last.Notes ,
                 Reference1 = last.Reference1,
@@ -189,8 +214,8 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 
                 ///if r.DebitAmount != 0 then credit else debit 
                 ActionTypeCodeEnum = r.DebitAmount != 0 ? MyJournalActionTypeEnum.Credit : MyJournalActionTypeEnum.Debit,
-                DebitAccountId = r.DebitAmount != 0 ? bankGLAccountList.Id : adjustGLAccountId,
-                CreditAccountId = r.CreditAmount != 0 ? bankGLAccountList.Id : adjustGLAccountId,
+                DebitAccountId = r.DebitAmount != 0 ?  adjustGLAccountId: bankGLAccountList.Id,
+                CreditAccountId = r.DebitAmount != 0 ? bankGLAccountList.Id : adjustGLAccountId,
                 LocalAmount = Convert2LocalAmount(bankGLAccountList.CurrencyId, accountingCurrencyId, r),
                 Notes = screenNotes + Environment.NewLine+ r.Notes,
                 Reference1 =r.Reference,
@@ -214,7 +239,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             return local;
         }
 
-        private void CreateJournalHeader(int tenant)
+        private void CreateJournalHeader(int tenant,DateTime accountingDate)
         {
             TheNewJournal/*_TheNewJournal */= new JournalPM();
             TheNewJournal.Tenant = tenant;
@@ -222,7 +247,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             TheNewJournal.JournalNumber = "1";
             TheNewJournal.CreateDate = _ExternalReconcileDataProvider.GetCurrentDateTime(tenant);
             TheNewJournal.AccountingDate = //theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : 
-                _ExternalReconcileDataProvider.GetCurrentDateTime(tenant);
+                accountingDate;//_ExternalReconcileDataProvider.GetCurrentDateTime(tenant);
             TheNewJournal.TypeCode = "0";
 
             bool testedAndFoundAllOK = true;
@@ -247,15 +272,15 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             TheNewJournal.ApprovedByUserId = _ExternalReconcileDataProvider.ResolveUserId(tenant); ;
 
             TheNewJournal.ChangeSetOp = ChangeSetOperation.Insert;
-            const string MyNotes = "פרעון שיק מהתאמה";
+            
 
 
         }
 
-        private void Validate(int tenant, List<string> reconcileExternalPageLineIdList, string adjustGLAccountId, List<Data.EntityLists.ReconcileExternalPageLineList> listOfpageLineList, List<Data.EntityLists.ReconcileExternalPageList> listOfpageList)
+        private void Validate(int tenant, List<string> reconcileExternalPageLineIdList, string adjustGLAccountId, List<Data.EntityLists.ReconcileExternalPageLineList> listOfpageLineList, List<Data.EntityLists.ReconcileExternalPageList> listOfpageList, bool CheckWhileStreaming)
         {
             AllLineAreExistAndSameBankAccount(tenant, reconcileExternalPageLineIdList, listOfpageLineList, listOfpageList);
-            AllPageLineNotAlreadyReconcile(listOfpageLineList);
+            AllPageLineCheckInProgressByWhileStreaming(listOfpageLineList, CheckWhileStreaming);
             TotalPLineNotZero(listOfpageLineList);
 
             //AdjustGLAccountInMyTenant(tenant, listOfpageList);
@@ -265,11 +290,22 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 
         
 
-        private void AllPageLineNotAlreadyReconcile( List<Data.EntityLists.ReconcileExternalPageLineList> listOfpageLineList)
+        private void AllPageLineCheckInProgressByWhileStreaming( List<Data.EntityLists.ReconcileExternalPageLineList> listOfpageLineList,bool CheckWhileStreaming)
         {
-            if (listOfpageLineList.Any(r=>r.InProgressExternalReconcile))
+            if (!CheckWhileStreaming)
             {
-                _ErrorList.Add(M_InProgressExternalReconcile);
+                if (listOfpageLineList.Any(r => r.InProgressExternalReconcile))
+                {
+                    _ErrorList.Add(M_WhileCreating_All_NotInProgressExternalReconcile);
+                }
+
+            }
+            else
+            {
+                if (!listOfpageLineList.TrueForAll(r => r.InProgressExternalReconcile))
+                {
+                    _ErrorList.Add(M_WhileStreaming_All_InProgressExternalReconcile);
+                }
             }
             if (listOfpageLineList.Any(r => r.IsReconciled))
             {
@@ -301,11 +337,22 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             {
                 _ErrorList.Add(M_NotAllPageLineIdsFoundInDB);
             }
-            if (listOfpageList.Select(r=>r.GLAccountId).Count()!=1)
+            if (listOfpageList.Select(r=>r.GLAccountId).Distinct().Count()!=1)
             {
                 _ErrorList.Add(M_NotAllPageLineIdsInTheSameBankAccount);
             }
 
         }
+    }
+    public interface IExternalReconcileAdjustBankFeesService
+    {
+        void CreateJournalWithExtReconcile(int tenant, List<string> reconcileExternalPageLineIdList, string adjustGLAccountId, string screenNotes, DateTime accountingDate);
+        void MustInit(IExternalReconcileDataProvider externalReconcileDataProvider);
+        JournalPM TheNewJournal { get; }
+    }
+    public interface IExternalReconcileAdjustBankFees_Validate
+    {
+        void MustInit(IExternalReconcileDataProvider externalReconcileDataProvider);
+        void PrapareAndValid(int tenant, List<string> reconcileExternalPageLineIdList, string adjustGLAccountId, out List<ReconcileExternalPageLineList> listOfpageLineList, out List<ReconcileExternalPageList> listOfpageList, bool CheckWhileStreaming);
     }
 }
