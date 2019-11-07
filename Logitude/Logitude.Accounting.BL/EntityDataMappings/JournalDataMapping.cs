@@ -83,9 +83,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             if (entityPOCO.OriginalJournalId != null)
             {
                 accContext= accContext ??AccountingContext.GetContext(entityPOCO.Tenant);
-                JournalQueryService journalQueryService = new JournalQueryService(accContext);
-                JournalPM parent = journalQueryService.GetSingle(entityPOCO.OriginalJournalId, false, false);
-                entityPM.OriginalJournalName = parent.JournalNumber;
+
+                JournalRepository journalRepository = new JournalRepository(entityPOCO.Tenant);
+                Journal journal = journalRepository.GetSingle(entityPOCO.OriginalJournalId, entityPOCO.Tenant);
+                
+                entityPM.OriginalJournalName = journal.JournalNumber;
                
             }
                    
