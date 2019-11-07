@@ -302,21 +302,21 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     else
                     {
 
-                        //var commonContext = CommonDataContext.GetContext(declarationPM.Tenant);
-                        //var cardRepository = new CardRepository(commonContext);
-                        //var card = cardRepository.GetSingleCard(declarationPM.CustomerCode, declarationPM.Tenant);
-                        //if (card == null)
-                        //{
-                        //    LogitudeSettings.HandleLogMe("card = null" + declarationPM.CustomerCode  + " " + jsonPM, false, "CreateUD2LTService", stopLogAt);
-                        //    Debug.WriteLine("card = null");
-                        //    return;
-                        //}
-                        //if (String.IsNullOrWhiteSpace(card.Code))
-                        //{
-                        //    LogitudeSettings.HandleLogMe("card.Code=null" + declarationPM.CustomerCode + " " + jsonPM, false, "CreateUD2LTService", stopLogAt);
-                        //    Debug.WriteLine("card.Code=null");
-                        //    return;
-                        //}
+                        var commonContext = CommonDataContext.GetContext(declarationPM.Tenant);
+                        var cardRepository = new CardRepository(commonContext);
+                        var card = cardRepository.GetSingleCard(declarationPM.CustomerCode, declarationPM.Tenant);
+                        if (card == null)
+                        {
+                            LogitudeSettings.HandleLogMe("card = null" + declarationPM.CustomerCode  + " " + jsonPM, false, "CreateUD2LTService", stopLogAt);
+                            Debug.WriteLine("card = null");
+                            return;
+                        }
+                        if (String.IsNullOrWhiteSpace(card.Code))
+                        {
+                            LogitudeSettings.HandleLogMe("card.Code=null" + declarationPM.CustomerCode + " " + jsonPM, false, "CreateUD2LTService", stopLogAt);
+                            Debug.WriteLine("card.Code=null");
+                            return;
+                        }
                         //CGG_DEC_DOC_CLT
                         var amitalContext = AmitalContext.GetContext(tenant);
                         var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
@@ -327,14 +327,14 @@ namespace Logitude.CustomsMessaging.MessagingServices
                             var listStorageDefault = new List<string>();//&& declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILOVL"
 
                             //if (!String.IsNullOrWhiteSpace(declarationPM.CustomerCode) && def.DEFDATA.Contains(declarationPM.CustomerCode)) // Maman
-                            if (def.DEFDATA.Contains(declarationPM.CustomerCode)) // Maman
+                            if (def.DEFDATA.Contains(card.Code)) // Maman
                             {
                                 Debug.WriteLine("def.DEFDATA.Contains(declarationPM.CustomerId)");
                                 shouldCreateDCAComm = true;
                             }
                             else
                             {
-                                LogitudeSettings.HandleLogMe("!def.DEFDATA.Contains(declarationPM.CustomerCode)" + def.DEFDATA  +" " + declarationPM.CustomerCode + " " + jsonPM, false, "CreateUD2LTService", stopLogAt);
+                                LogitudeSettings.HandleLogMe("!def.DEFDATA.Contains(card.Code)" + def.DEFDATA  +" " + card.Code + " " + jsonPM, false, "CreateUD2LTService", stopLogAt);
                                 Debug.WriteLine("card.Code=null");
                                 return;
 
