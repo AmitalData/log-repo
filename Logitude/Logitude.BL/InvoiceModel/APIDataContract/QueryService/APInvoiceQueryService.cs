@@ -47,15 +47,12 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
                 APInvoicePM temp = APInvoiceDataMappingAndValidatin(MyEntity, tenant, ComputingPartnerCode);
                 temp.Tenant = tenant;
-                temp.StatusCode = "WA";
+                temp.StatusCode = "AD";
                 temp.CreatedByUserId = myUser.Id;
                 temp.UpdatedByUserId = myUser.Id;
                 temp.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                 temp.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-
-                //temp.SubTotalInLocalCurrency = 0;
-                //temp.SubTotalInInvoiceCurrency = 0;
-
+               
                 if (string.IsNullOrEmpty(temp.BranchId))
                 {
                     temp.BranchId = myUser.BranchId;

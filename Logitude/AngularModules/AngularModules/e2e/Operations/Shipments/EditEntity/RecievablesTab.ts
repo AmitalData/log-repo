@@ -19,7 +19,9 @@ export class ReceivablesTabComponent {
         this.AddRecievableLines(ShipmentLevelCode, shipmentType);
         
         this.CreatARInvoicewithVoid(true);
-        
+        this.EditAPInvoice(true);       
+        this.CreatARInvoicewithVoid(false);
+        this.EditAPInvoice(false);      
 
         
 
@@ -54,7 +56,7 @@ export class ReceivablesTabComponent {
      
         this.Helper.WaitEditComponentBusyIndicator();
 
-        this.Helper.WaitByIdAndClick('Add');
+        this.Helper.WaitByIdAndClick('Add_5');
 
         this.Helper.WaitByIdAndFill('ShipmentReceivable_ChargesTypeId', ChargeType);
         this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'ShipmentReceivable_ChargesTypeId', ChargeType);
@@ -83,16 +85,36 @@ export class ReceivablesTabComponent {
        
         this.Helper.WaitByIdAndClick('Ok-CreateARInvoice');
 
-        this.WaitBusyIndicatorToShowandHide();
+        this.Helper.WaitBusyIndicator();
     }
+    
     EditAPInvoice(Voided :boolean){
-        this.WaitBusyIndicatorToShowandHide();
+        this.Helper.WaitEditComponentBusyIndicator();
+        this.Helper.WaitByIdAndFill('ARInvoice_VatTypeId', 'Zero');
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'ARInvoice_VatTypeId', 'Zero');
+        this.Helper.WaitEditComponentBusyIndicator();
+        this.Helper.WaitByIdAndClick('VATApplyToAll');
+        this.Helper.WaitEditComponentBusyIndicator();
+        this.Helper.WaitByIdAndFill('ARInvoice_VatNumber','TestVatNumber');
         this.Helper.WaitByIdAndClick('ARInvoice.B.SaveAsDraft');
         this.WaitBusyIndicatorToShowandHide();
         this.Helper.WaitByIdAndClick('ARInvoice.B.Approve');
         this.WaitBusyIndicatorToShowandHide();
-        this.WaitBusyIndicatorToShowandHide();
-        
+        this.Helper.WaitBusyIndicator();
+        if(Voided==true){
+        this.Helper.WaitByIdAndClick('MenuButtons_3');
+        this.Helper.WaitByIdAndClick('ARInvoice.B.Void');
+        this.Helper.WaitByIdAndClick('ConfirmWindow_Yes_0');
+        this.Helper.WaitEditComponentBusyIndicator();
+        this.Helper.WaitByIdAndClick('EditBackbutton_3');
+        }
+        else{
+           
+                this.Helper.WaitByIdAndClick('EditBackbutton_4');
+                
+            
+        }
+        this.Helper.WaitEditComponentBusyIndicator();
        
     }
 
