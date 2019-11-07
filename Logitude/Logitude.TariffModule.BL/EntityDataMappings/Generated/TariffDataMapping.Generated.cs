@@ -63,7 +63,12 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         Surcharge8UOM, 
 	         Surcharge9UOM, 
 	         Surcharge10UOM, 
-	         ConcurrencyGUID,
+	         ConcurrencyGUID, 
+	         ContainerType1Id, 
+	         ContainerType2Id, 
+	         ContainerType3Id, 
+	         ContainerType4Id, 
+	         ContainerType5Id,
 	      }
 
 
@@ -124,7 +129,12 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         IsSurchargeUpdate, 
 	         IsFromUpdateScreen, 
 	         IsFromCopy, 
-	         IsUpdatingMissingPorts,
+	         IsUpdatingMissingPorts, 
+	         ContainerType1Id, 
+	         ContainerType2Id, 
+	         ContainerType3Id, 
+	         ContainerType4Id, 
+	         ContainerType5Id,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -336,6 +346,31 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConcurrencyGUID))
             {
 				entityPOCO.ConcurrencyGUID = entityPM.ConcurrencyGUID;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContainerType1Id))
+            {
+				entityPOCO.ContainerType1Id = entityPM.ContainerType1Id;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContainerType2Id))
+            {
+				entityPOCO.ContainerType2Id = entityPM.ContainerType2Id;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContainerType3Id))
+            {
+				entityPOCO.ContainerType3Id = entityPM.ContainerType3Id;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContainerType4Id))
+            {
+				entityPOCO.ContainerType4Id = entityPM.ContainerType4Id;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContainerType5Id))
+            {
+				entityPOCO.ContainerType5Id = entityPM.ContainerType5Id;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -554,6 +589,31 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 					entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ContainerType1Id))
+            {
+					entityPM.ContainerType1Id = entityPOCO.ContainerType1Id;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ContainerType2Id))
+            {
+					entityPM.ContainerType2Id = entityPOCO.ContainerType2Id;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ContainerType3Id))
+            {
+					entityPM.ContainerType3Id = entityPOCO.ContainerType3Id;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ContainerType4Id))
+            {
+					entityPM.ContainerType4Id = entityPOCO.ContainerType4Id;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ContainerType5Id))
+            {
+					entityPM.ContainerType5Id = entityPOCO.ContainerType5Id;
+            }
+
 		}
 
 		public void PMToOldPM(TariffPM entityPM, TariffPM oldEntityPM)
@@ -763,6 +823,31 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConcurrencyGUID))
             {
                 oldEntityPM.ConcurrencyGUID = entityPM.ConcurrencyGUID;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContainerType1Id))
+            {
+                oldEntityPM.ContainerType1Id = entityPM.ContainerType1Id;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContainerType2Id))
+            {
+                oldEntityPM.ContainerType2Id = entityPM.ContainerType2Id;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContainerType3Id))
+            {
+                oldEntityPM.ContainerType3Id = entityPM.ContainerType3Id;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContainerType4Id))
+            {
+                oldEntityPM.ContainerType4Id = entityPM.ContainerType4Id;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContainerType5Id))
+            {
+                oldEntityPM.ContainerType5Id = entityPM.ContainerType5Id;
             }
 			
 		}

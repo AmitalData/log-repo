@@ -1605,6 +1605,10 @@
     <Compile Include="Migrations\201911031015425_AddOpenAmountLocalCurrency_Maheera.Designer.cs">
       <DependentUpon>201911031015425_AddOpenAmountLocalCurrency_Maheera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911071143411_AddContainerTypesFieldsToTariffTable_Bisan.cs" />
+    <Compile Include="Migrations\201911071143411_AddContainerTypesFieldsToTariffTable_Bisan.Designer.cs">
+      <DependentUpon>201911071143411_AddContainerTypesFieldsToTariffTable_Bisan.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2750,6 +2754,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911031015425_AddOpenAmountLocalCurrency_Maheera.resx">
       <DependentUpon>201911031015425_AddOpenAmountLocalCurrency_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911071143411_AddContainerTypesFieldsToTariffTable_Bisan.resx">
+      <DependentUpon>201911071143411_AddContainerTypesFieldsToTariffTable_Bisan.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
