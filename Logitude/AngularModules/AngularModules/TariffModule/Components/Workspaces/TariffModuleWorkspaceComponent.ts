@@ -36,7 +36,7 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
     public AirSurchargeCount: string;
     public OceanSurchargeCount: string;
     public OceanLCLFreightCount: string;
-
+    public OceanFCLFreightCount: string;
 
     private isLoaderReady: boolean = false;
     RunComponent() {
@@ -82,6 +82,7 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
                         this.AirSurchargeCount = myResult.AirSurchargeCount > 1000 ? "1000+" : myResult.AirSurchargeCount.toString();
                         this.OceanSurchargeCount = myResult.OceanSurchargeCount > 1000 ? "1000+" : myResult.OceanSurchargeCount.toString();
                         this.OceanLCLFreightCount = myResult.OceanLCLFreightCount > 1000 ? "1000+" : myResult.OceanLCLFreightCount.toString();
+                        this.OceanFCLFreightCount = myResult.OceanFCLFreightCount > 1000 ? "1000+" : myResult.OceanFCLFreightCount.toString();
                     }
                 }
             }
@@ -101,6 +102,8 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
     public AirSurchargesCostVisibility: boolean = false;
     public OceanLCLFreightCostVisibility: boolean = false;
     public OceanLCLSurchargesCostVisibility: boolean = false;
+    public OceanFCLFreightCostVisibility: boolean = true;
+
     SetQueriesVisibility() {
 
         if (FeatureLocator.HasFeaturePermession("Tariff", "Tariff.Q.AirFreightCostTariffs")) {
@@ -145,6 +148,11 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
             case "OSC": {
                 windowTitle = "New " + TextCodeTranslator.Translate("Tariff.Q.Ocean.LCL.Surcharges.Cost");
                 typeCode = "OSC";
+                break;
+            }
+            case "OFC": {
+                windowTitle = "New Ocean FCL Freight Cost ";
+                typeCode = "OFC";
                 break;
             }
             default: {

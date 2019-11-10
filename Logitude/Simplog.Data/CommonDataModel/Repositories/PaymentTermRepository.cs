@@ -56,6 +56,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
             return query;
         }
+
+        public PaymentTerm GetSinglemanuallySetPaymentTerm(int tenant)
+        {
+            return (from record in context.PaymentTerms where record.IsManuallySet && record.Tenant == tenant select record).FirstOrDefault();
+        }
+
         public void Add(PaymentTerm entity)
         {
             context.PaymentTerms.Add(entity);

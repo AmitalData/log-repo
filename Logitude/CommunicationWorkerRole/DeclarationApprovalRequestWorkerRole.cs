@@ -179,7 +179,7 @@ namespace CommunicationWorkerRole
                                     DeclarationApprovalRequestPM ApprovalRequestPM = new DeclarationApprovalRequestPM()
                                     {
                                         Tenant = ImporterTenant,
-                                        ShipmentNumber = ShipmentPm.ShipmentNumber,
+                                        ForwarderShipmentNumber = ShipmentPm.ShipmentNumber,
                                         DeclarationXmlData = ShipmentPm.DeclarationXMLData
                                     };
                                     var serializedObject = JsonConvert.SerializeObject(ApprovalRequestPM);
@@ -299,7 +299,7 @@ namespace CommunicationWorkerRole
             {
                 Action = "StatusUpdate",
                 Parameters = new List<Logitude.Server.Tools.Parameter>() {
-                new Logitude.Server.Tools.Parameter { Name = "ShipmentNumber", Value = approvalRequestPM.ShipmentNumber},
+                new Logitude.Server.Tools.Parameter { Name = "ShipmentNumber", Value = approvalRequestPM.ForwarderShipmentNumber},
                 new Logitude.Server.Tools.Parameter { Name = "Code", Value = "VDK"},
                 new Logitude.Server.Tools.Parameter { Name = "Date", Value = TenantServerConfigration.GetCurrentDateTime(tenant).ToShortDateString()},
                 new Logitude.Server.Tools.Parameter { Name = "Time", Value = TenantServerConfigration.GetCurrentDateTime(tenant).ToShortTimeString()},
@@ -336,7 +336,7 @@ namespace CommunicationWorkerRole
                 LastStatusDateUTC = DateTime.UtcNow,
                 QueueName = "externaltasksqueue" + tenant + 1,
                 Priority = 1,
-                EntityReference = approvalRequestPM.ShipmentNumber
+                EntityReference = approvalRequestPM.ForwarderShipmentNumber
 
             };
 
