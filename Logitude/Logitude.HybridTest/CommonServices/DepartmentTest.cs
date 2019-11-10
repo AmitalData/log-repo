@@ -17,6 +17,7 @@ namespace Logitude.HybridTest.CommonServices
 
         public static Server.Tools.Response CallDepartmentUpsert()
         {
+
             DepartmentServiceReference.DepartmentWcfServiceClient serviceClient = new DepartmentServiceReference.DepartmentWcfServiceClient();
             string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
             serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);

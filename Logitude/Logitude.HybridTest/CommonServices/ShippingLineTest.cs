@@ -4,38 +4,36 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Logitude.HybridTest.CommonServices
 {
     [TestClass]
-    public class AgentTest
+    public class ShippingLineTest
     {
         [TestMethod]
-        public void Test_Agent_UPSERT()
+        public void Test_ShippingLine_UPSERT()
         {
             LoginService.GetLoginTokenByCredentials();
-            Server.Tools.Response countryServiceResponse = CountryTest.CallCountryUpsert();
-            Assert.IsFalse(countryServiceResponse.HasError, "Country Upsert Failed! " + countryServiceResponse.ErrorMessage);
-            Assert.IsNotNull(countryServiceResponse.Result, "Country Upsert Failed! " + countryServiceResponse.ErrorMessage);
-            Server.Tools.Response serviceResponse = CallAgentUpsert();
+            Server.Tools.Response serviceResponse = CallShippingLineUpsert();
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
          }
 
-        public static Server.Tools.Response CallAgentUpsert()
+        public static Server.Tools.Response CallShippingLineUpsert()
         {
 
-            AgentServiceReference.AgentWcfServiceClient serviceClient = new AgentServiceReference.AgentWcfServiceClient();
+            ShippingLineServiceReference.ShippingLineWcfServiceClient serviceClient = new ShippingLineServiceReference.ShippingLineWcfServiceClient();
             string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
             serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
             using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)serviceClient.InnerChannel))
             {
 
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
-                AgentServiceReference.AgentPM entityPM = new AgentServiceReference.AgentPM()
+                ShippingLineServiceReference.ShippingLinePM entityPM = new ShippingLineServiceReference.ShippingLinePM()
                 {
-                    Code = HybridCodes.AgentCode,
-                    EnglishName = "Hybrid Agent",
-                    LocalName = "Hybrid Agent",
+                    Code = HybridCodes.ShippingLineCode,
+                    SCACCode = HybridCodes.ShippingLineCode,
+                    EnglishName = "Hybrid ShippingLine",
+                    LocalName = "Hybrid ShippingLine",
                     CityName = "Hybrid City",
                     CountryCode = HybridCodes.CountryCode,
-                    PartnerTypeId = "AG",
+                    CarrierTypeId = "SL",
                     Tenant = TestEnvironmentGlobalParameters.Tenant,
                 };
 
