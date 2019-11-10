@@ -7,10 +7,10 @@ namespace Logitude.DBMigrations
         static void Main(string[] args)
         {
             string generatedScript = AppHelper.GenerateScriptFromDXMLFiles();
-            AppHelper.SaveGeneratedScript(generatedScript);
+            AppHelper.SaveScript(generatedScript);
             if (AppHelper.CheckAppArguments(args, "-exe"))
             {
-                AppHelper.ExecuteGeneratedScript(generatedScript);
+                AppHelper.ExecuteScript(generatedScript);
             }
         }
     }

@@ -87,7 +87,8 @@ using Simplog.Data.InvoiceModel;
 					   					   temp.PrepaidCollect = PrepaidCollectService3.GetPrepaidCollectById(item.PrepaidCollectId,Tenant); 
 			       
 					   				   }
-				   					
+				   
+				   temp.ExternalVATCard = item.ExternalVATCard;					
 					MyList.Add(temp);
 				}
 					
@@ -179,7 +180,8 @@ using Simplog.Data.InvoiceModel;
 						 
 					}
 			
-										   
+					
+					temp.ExternalVATCard = item.ExternalVATCard;					   
 						MyList.Add(temp);
 					}
 						
