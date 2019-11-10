@@ -318,12 +318,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         IsTestTenant = tt.IsTestTenant,
                         CheckDigitControlAlgorithmCode = tt.CheckDigitControlAlgorithmCode,
                         ApplyVATForAllPartners = tt.ApplyVATForAllPartners,
-                        IsDocumentsArchive = tt.LogBoxTenantSetting.IsDocumentsArchive,
-                        CustomerTenantShareImportFile = tt.LogBoxTenantSetting.CustomerTenantShareImportFile,
-                        AutoArchiveOnInvoice = tt.LogBoxTenantSetting.AutoArchiveOnInvoice,
-                        StockTypeCode = tt.LogBoxTenantSetting.StockTypeCode,
-                        DocumentShareAsDefault = tt.LogBoxTenantSetting.DocumentShareAsDefault,
-                        LogBoxAdminUserId = tt.LogBoxTenantSetting.LogBoxAdminUserId,
+                        IsDocumentsArchive = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.IsDocumentsArchive : false,
+                        CustomerTenantShareImportFile = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.CustomerTenantShareImportFile : false,
+                        AutoArchiveOnInvoice = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.AutoArchiveOnInvoice : false,
+                        StockTypeCode = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.StockTypeCode : null,
+                        DocumentShareAsDefault = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.DocumentShareAsDefault : false,
+                        LogBoxAdminUserId = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.LogBoxAdminUserId : null,
                     };
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -489,12 +489,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     IsTestTenant = tt.IsTestTenant,
                     CheckDigitControlAlgorithmCode = tt.CheckDigitControlAlgorithmCode,
                     ApplyVATForAllPartners = tt.ApplyVATForAllPartners,
-                    IsDocumentsArchive = tt.LogBoxTenantSetting.IsDocumentsArchive,
-                    CustomerTenantShareImportFile = tt.LogBoxTenantSetting.CustomerTenantShareImportFile,
-                    AutoArchiveOnInvoice = tt.LogBoxTenantSetting.AutoArchiveOnInvoice,
-                    StockTypeCode = tt.LogBoxTenantSetting.StockTypeCode,
-                    DocumentShareAsDefault = tt.LogBoxTenantSetting.DocumentShareAsDefault,
-                    LogBoxAdminUserId = tt.LogBoxTenantSetting.LogBoxAdminUserId,
+                    IsDocumentsArchive = tt.LogBoxTenantSetting!= null ? tt.LogBoxTenantSetting.IsDocumentsArchive : false,
+                    CustomerTenantShareImportFile = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.CustomerTenantShareImportFile:false,
+                    AutoArchiveOnInvoice = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.AutoArchiveOnInvoice : false,
+                    StockTypeCode = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.StockTypeCode : null,
+                    DocumentShareAsDefault = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.DocumentShareAsDefault : false,
+                    LogBoxAdminUserId = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.LogBoxAdminUserId : null,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1410,9 +1410,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     IsDocumentsArchive = myPOCO.LogBoxTenantSetting.IsDocumentsArchive,
                     CustomerTenantShareImportFile = myPOCO.LogBoxTenantSetting.CustomerTenantShareImportFile,
                     AutoArchiveOnInvoice = myPOCO.LogBoxTenantSetting.AutoArchiveOnInvoice,
-                    StockTypeCode = myPOCO.LogBoxTenantSetting.StockTypeCode,
+                    StockTypeCode = myPOCO.LogBoxTenantSetting != null ? myPOCO.LogBoxTenantSetting.StockTypeCode : null,
                     DocumentShareAsDefault = myPOCO.LogBoxTenantSetting.DocumentShareAsDefault,
-                    LogBoxAdminUserId = myPOCO.LogBoxTenantSetting.LogBoxAdminUserId,
+                    LogBoxAdminUserId = myPOCO.LogBoxTenantSetting != null ? myPOCO.LogBoxTenantSetting.LogBoxAdminUserId : null,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())

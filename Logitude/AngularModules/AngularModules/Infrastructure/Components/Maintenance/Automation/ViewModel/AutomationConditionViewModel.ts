@@ -59,6 +59,8 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
         this.DateTypeList = [];
         this.DateTypeList.push(new Operator("@Today-", "-"));
         this.DateTypeList.push(new Operator("@Today+", "+"));
+        this.DateTypeList.push(new Operator("@Old Value-", "-"));
+        this.DateTypeList.push(new Operator("@Old Value+", "+"));
         this.DateTypeList.push(new Operator("Date", "Date"));
         this.SelectedDateType = this.DateTypeList[0];
         this.CurrentEntityType = this.AddEditAutomationsViewModel.CurrentEntityPM.Type;
