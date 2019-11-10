@@ -18,10 +18,14 @@ export class ReceivablesTabComponent {
         this.Helper.ItemsVisibility('ATDS-Receivable');
         this.AddRecievableLines(ShipmentLevelCode, shipmentType);
         
-        this.CreatARInvoicewithVoid(true);
-        this.EditAPInvoice(true);       
-        this.CreatARInvoicewithVoid(false);
-        this.EditAPInvoice(false);      
+        this.CreatARInvoicewithVoid(true,'ARInvoice');
+        this.EditAPInvoice(true,'ARInvoice');       
+        this.CreatARInvoicewithVoid(false,'ARInvoice');
+        this.EditAPInvoice(false,'ARInvoice');  
+        this.CreatARInvoicewithVoid(true,'CreditNote');    
+        this.EditAPInvoice(true,'CreditNote'); 
+        this.CreatARInvoicewithVoid(false,'CreditNote');
+        this.EditAPInvoice(false,'CreditNote');    
 
         
 
@@ -33,13 +37,13 @@ export class ReceivablesTabComponent {
         
             if (ShipmentType == '') {
                 this.amount1 = this.AddReceivables('Air Frei', '10', '10', 'USD');
-                this.amount2 = this.AddReceivables('Order', '10', '20', 'USD');
+                this.amount2 = this.AddReceivables('Order', '10', '-20', 'USD');
             } else if (ShipmentType == 'FCL' || ShipmentType == 'LCL') {
                 this.amount1 = this.AddReceivables('ocean', '10', '10', 'USD');
-                this.amount2 = this.AddReceivables('Order', '10', '20', 'USD');
+                this.amount2 = this.AddReceivables('Order', '10', '-20', 'USD');
             } else {
                 this.amount1 = this.AddReceivables('Inland', '10', '10', 'USD');
-                this.amount2 = this.AddReceivables('Order', '10', '20', 'USD');
+                this.amount2 = this.AddReceivables('Order', '10', '-20', 'USD');
             }
            
         }
@@ -56,7 +60,7 @@ export class ReceivablesTabComponent {
      
         this.Helper.WaitEditComponentBusyIndicator();
 
-        this.Helper.WaitByIdAndClick('Add');
+        this.Helper.WaitByIdAndClick('Add_5');
 
         this.Helper.WaitByIdAndFill('ShipmentReceivable_ChargesTypeId', ChargeType);
         this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'ShipmentReceivable_ChargesTypeId', ChargeType);
@@ -73,9 +77,14 @@ export class ReceivablesTabComponent {
        
     }
 
-    CreatARInvoicewithVoid(Voided :boolean) {
+    CreatARInvoicewithVoid(Voided :boolean,type : string) {
         this.Helper.WaitEditComponentBusyIndicator();
+        if(type=="ARInvoice"){
         this.Helper.WaitByIdAndClick('CreateARInvoice');
+        }
+        else{
+        this.Helper.WaitByIdAndClick('CreateCreditNote');
+        }
         this.Helper.WaitByIdAndFill('ARInvoice_PaymentTermId','cash');
         this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'ARInvoice_PaymentTermId','cash');
         var TodayDate=new Date().getDate();
@@ -87,7 +96,17 @@ export class ReceivablesTabComponent {
 
         this.Helper.WaitBusyIndicator();
     }
-    EditAPInvoice(Voided :boolean){
+  //  CreateCreditNote(Voided :boolean){
+    //    this.Helper.WaitEditComponentBusyIndicator();
+    //    this.Helper.WaitByIdAndClick('CreateCreditNote');
+    //}
+    
+    EditAPInvoice(Voided :boolean,type :string){
+        this.Helper.WaitEditComponentBusyIndicator();
+        this.Helper.WaitByIdAndFill('ARInvoice_VatTypeId', 'Zero');
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'ARInvoice_VatTypeId', 'Zero');
+        this.Helper.WaitEditComponentBusyIndicator();
+        this.Helper.WaitByIdAndClick('VATApplyToAll');
         this.Helper.WaitEditComponentBusyIndicator();
         this.Helper.WaitByIdAndFill('ARInvoice_VatNumber','TestVatNumber');
         this.Helper.WaitByIdAndClick('ARInvoice.B.SaveAsDraft');
@@ -96,18 +115,27 @@ export class ReceivablesTabComponent {
         this.WaitBusyIndicatorToShowandHide();
         this.Helper.WaitBusyIndicator();
         if(Voided==true){
-        this.Helper.WaitByIdAndClick('MenuButtons_1');
+            if(type=='ARInvoice')
+               this.Helper.WaitByIdAndClick('MenuButtons_3');
+               else
+               this.Helper.WaitByIdAndClick('MenuButtons_5');      
         this.Helper.WaitByIdAndClick('ARInvoice.B.Void');
         this.Helper.WaitByIdAndClick('ConfirmWindow_Yes_0');
         this.Helper.WaitEditComponentBusyIndicator();
-        this.Helper.WaitByIdAndClick('EditBackbutton_1');
+        if(type=='ARInvoice')
+           this.Helper.WaitByIdAndClick('EditBackbutton_3');
+           else
+           this.Helper.WaitByIdAndClick('EditBackbutton_5');
         }
         else{
-           
-                this.Helper.WaitByIdAndClick('EditBackbutton_2');
+            if(type=='ARInvoice')
+                this.Helper.WaitByIdAndClick('EditBackbutton_4');
+            else
+                 this.Helper.WaitByIdAndClick('EditBackbutton_6');
                 
             
         }
+        this.Helper.WaitEditComponentBusyIndicator();
        
     }
 

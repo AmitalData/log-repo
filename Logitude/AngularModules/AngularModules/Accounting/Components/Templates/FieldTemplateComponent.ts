@@ -1,3 +1,4 @@
+import { AccountingEntityHelper } from './../../Utilities/AccountingEntityHelper';
 import { Component } from '@angular/core';
 import { AppTool } from '../../../Infrastructure/Tools';
 import { JournalPM } from '../../EntityPMs/JournalPM';
@@ -177,71 +178,7 @@ export class FieldTemplateComponent {
         // Id:      AccountingEntityId
         // Display: AccountingEntityReference
 
-        var tableName = "Journal";
-
-        switch (this.Entity.AccountingEntityCode) {
-
-            // 1-Journal
-            case '1': {
-                return;
-            }
-
-            // 2-ARInvoice
-            case '2': {
-                tableName = "ARInvoice";
-                break;
-            }
-
-            // 3-ARPayment
-            case '3': {
-                tableName = "ARPayment";
-
-                break;
-            }
-
-            // 4-APInvoice
-            case '4': {
-                tableName = "APInvoice";
-
-                break;
-            }
-
-            // 5-APPayment
-            case '5': {
-                tableName = "APPayment";
-
-                break;
-            }
-
-            // 6-Cheque Deposit
-            case '6': {
-                tableName = "BankDeposit";
-
-                break;
-            }
-
-            // 7-Cash Deposit
-            case '7': {
-                tableName = "BankDeposit";
-
-                break;
-            }
-
-            // 8-Revaluation
-            case '8': {
-                tableName = "Revaluation";
-
-                break;
-            }
-
-            // 9-PaymentCheque
-            case '9': {
-                tableName = "PaymentCheque";
-
-                break;
-            }
-        }
-
+        var tableName = AccountingEntityHelper.getEntityObjectTableName(this.Entity.AccountingEntityCode);
         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;

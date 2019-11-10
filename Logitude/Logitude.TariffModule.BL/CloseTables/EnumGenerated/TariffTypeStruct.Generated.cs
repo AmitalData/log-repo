@@ -14,6 +14,7 @@ namespace Logitude.TariffModule.BLs
        public const string AirSurchargesCost = "ASC";  
        public const string OceanSurchargesCost = "OSC";  
        public const string OceanLCLFreightCost = "OLC";  
+       public const string OceanFCLFreightCost = "OFC";  
     }
 }
 
