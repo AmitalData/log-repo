@@ -103,7 +103,7 @@ export class SInvoiceClassificationTabComponent
     //    let logCell = (this.myDiv as any);
     //    logCell.IsEditMode = true;
     //}
-    private CurrentSession = SessionLocator.SelectedSession;
+    public CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef) {
         super();
         //this.ConsimentPackages = new ObservableCollection([]);
@@ -174,10 +174,10 @@ export class SInvoiceClassificationTabComponent
 
     public DisplayOnlyMessage: string = "";
     DisplayOnlyCheck() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController) {
-            this.IsDisplayOnly = SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
+        if (this.CurrentSession.CurrentEditComponent.EditComponentController) {
+            this.IsDisplayOnly = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
             if (this.IsDisplayOnly) {
-                this.DisplayOnlyMessage = "לתצוגה בלבד - " + SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
+                this.DisplayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
                 this.SetScreenFieldsEditability();
                 DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
                 return;
