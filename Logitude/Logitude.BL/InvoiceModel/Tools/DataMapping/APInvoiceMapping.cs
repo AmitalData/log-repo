@@ -157,6 +157,8 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.ChargeTypeGLAccountId = entityPM.ChargeTypeGLAccountId;
             entity.AuthorizedSignatory = entityPM.AuthorizedSignatory;
             entity.PrepaidCollectId = entityPM.PrepaidCollectId;
+            entity.ContainerTypeId = entityPM.ContainerTypeId;
+            entity.Quantity = entityPM.Quantity;
         }
 
         public static void MapInvoicePayment(APInvoicePaymentPM entityPM, APInvoicePayment entity, bool isNewState)

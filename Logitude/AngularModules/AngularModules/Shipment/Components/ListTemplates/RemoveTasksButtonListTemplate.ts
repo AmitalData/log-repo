@@ -196,6 +196,7 @@ export class RemoveTasksButtonListTemplate {
                         //windowArgs.IsNew = false;
                         windowArgs.EntityPm = myResult.Result
                         windowArgs.AdditionalData = AdditionalResult.Result
+                        windowArgs.ForwarderPartnerId = this.rowData['ForwarderPartnerId'];
                         newWindow.WindowArgs = windowArgs;
                         //newWindow.Add(control); 
                         newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/LogBoxApprovePaymentComponent');
