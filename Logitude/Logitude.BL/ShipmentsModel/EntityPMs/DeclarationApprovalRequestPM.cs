@@ -8,7 +8,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 {
     public class DeclarationApprovalRequestPM
     {
-        public string ShipmentNumber { get; set; }
+        public string ForwarderShipmentNumber { get; set; }
         public string Remarks { get; set; }
         public int Tenant { get; set; }
         public string DeclarationXmlData { get; set; }

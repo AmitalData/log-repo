@@ -40,6 +40,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 UserRepository userRepository = new UserRepository(commonDataContext);
                 TenantRepository tenantRepository = new TenantRepository(commonDataContext);
                 VatTypePercentageRepository vatTypePercentageRepository = new VatTypePercentageRepository(commonDataContext);
+                PaymentTermRepository paymentTermRepository = new PaymentTermRepository(commonDataContext);
 
                 AccountingSetting accountingSetting = accountingSettingRepository.GetSingleAccountingSetting(tenant);
                 Tenant myTenant = tenantRepository.GetSingleTenant(tenant);
@@ -162,12 +163,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                         throw new ApplicationException("VAT Number is required");
                     }
                 }
-
-                if (string.IsNullOrEmpty(temp.PaymentTermId))
-                {
-                    throw new ApplicationException("Payment Term is required");
-                }
-
+                
                 this.SetCurrencyRateData(temp);
 
                 if (temp.InvoiceCurrencyExchangeRate == null || temp.InvoiceCurrencyExchangeRate == 0)
@@ -175,16 +171,6 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                     throw new ApplicationException("Invoice Currency Exchange Rate is required");
                 }
                 
-                if (temp.InvoiceDate != null)
-                {
-                    this.ComputeAPInvoiceDueDate(temp);
-                }
-
-                else
-                {
-                    throw new ApplicationException("Invoice Date is required");
-                }
-
                 if (!string.IsNullOrEmpty(temp.MainEntityReference))
                 {
                     ShipmentQuery shipmentRepository = new ShipmentQuery(tenant);
@@ -220,6 +206,46 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                     {
                         throw new ApplicationException("No Shipment Found");
                     }
+                }
+
+                if (temp.InvoiceDate == null)                
+                {
+                    throw new ApplicationException("Invoice Date is required");
+                }
+                
+                if(string.IsNullOrEmpty(temp.PaymentTermId))
+                {
+                    if (temp.DueDate != null)
+                    {
+                        Simplog.Data.CommonDataModel.EntityPOCOs.PaymentTerm manuallySetPaymentTerm = paymentTermRepository.GetSinglemanuallySetPaymentTerm(tenant);
+                        if (manuallySetPaymentTerm != null)
+                        {
+                            temp.PaymentTermId = manuallySetPaymentTerm.Id;
+                        }
+                    }
+                }
+
+                else
+                {
+                    DateTime? expectedDueDate = this.ComputeAPInvoiceDueDate(temp, paymentTermRepository);
+
+                    if (temp.DueDate != null)
+                    {
+                        if (temp.DueDate != expectedDueDate)
+                        {
+                            throw new ApplicationException("Wrong Due Date regarding Payment Term");
+                        }
+                    }
+
+                    else
+                    {
+                        temp.DueDate = expectedDueDate;
+                    }
+                }
+
+                if (string.IsNullOrEmpty(temp.PaymentTermId))
+                {
+                    throw new ApplicationException("Payment Term is required");
                 }
                 
                 foreach (APInvoiceLinePM line in temp.InvoiceLines)
@@ -396,87 +422,42 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
             return result;
         }
-        public void ComputeAPInvoiceDueDate(APInvoicePM invoice)
+        public DateTime? ComputeAPInvoiceDueDate(APInvoicePM invoice, PaymentTermRepository paymentTermRepository)
         {
-            if (string.IsNullOrEmpty(invoice.PaymentTermId))
-            {
-                invoice.DueDate = invoice.InvoiceDate;
-            }
+            DateTime? expectedDueDate = null;
 
-            else
+            Simplog.Data.CommonDataModel.EntityPOCOs.PaymentTerm paymentTerm = paymentTermRepository.GetSinglePaymentTerm(invoice.PaymentTermId, invoice.Tenant);
+            if (paymentTerm != null)
             {
-                PaymentTermRepository paymentTermRepository = new PaymentTermRepository(invoice.Tenant);
-                Simplog.Data.CommonDataModel.EntityPOCOs.PaymentTerm paymentTerm = paymentTermRepository.GetSinglePaymentTerm(invoice.PaymentTermId, invoice.Tenant);
-                if (paymentTerm != null)
+                if (paymentTerm.IsManuallySet)
                 {
-                    if (paymentTerm.IsManuallySet)
+                    if (invoice.DueDate == null)
                     {
-                        if(invoice.DueDate == null)
-                        {
-                            throw new ApplicationException("Due Date is Required when Payment Term is Manually Set");
-                        }
+                        throw new ApplicationException("Due Date is Required when Payment Term is Manually Set");
                     }
+                }
 
-                    else if (paymentTerm.Days == 0)
+                else
+                {
+                    DateTime? myComparativeDate = null;
+
+                    if (paymentTerm.FromDateTypeCode == "SHI")
                     {
-                        DateTime? myComparativeDate = null;
+                        myComparativeDate = invoice.OperationalDate;
 
-                        if (invoice.IsMultipleEntities)
+                        if (myComparativeDate == null)
                         {
                             myComparativeDate = invoice.InvoiceDate;
-                        }
-
-                        else
-                        {
-                            if (paymentTerm.FromDateTypeCode == "SHI")
-                            {
-                                myComparativeDate = invoice.OperationalDate;
-
-                                if (myComparativeDate == null)
-                                {
-                                    myComparativeDate = invoice.InvoiceDate;
-                                }
-                            }
-
-                            else
-                            {
-                                myComparativeDate = invoice.InvoiceDate;
-                            }
-                        }
-
-                        if (invoice.DueDate != myComparativeDate)
-                        {
-                            invoice.DueDate = myComparativeDate;
                         }
                     }
 
                     else
                     {
-                        DateTime? myComparativeDate = null;
+                        myComparativeDate = invoice.InvoiceDate;
+                    }
 
-                        if (invoice.IsMultipleEntities)
-                        {
-                            myComparativeDate = invoice.InvoiceDate;
-                        }
-
-                        else
-                        {
-                            if (paymentTerm.FromDateTypeCode == "SHI")
-                            {
-                                myComparativeDate = invoice.OperationalDate;
-
-                                if (myComparativeDate == null)
-                                {
-                                    myComparativeDate = invoice.InvoiceDate;
-                                }
-                            }
-
-                            else
-                            {
-                                myComparativeDate = invoice.InvoiceDate;
-                            }
-                        }
-
+                    if (paymentTerm.Days != 0)
+                    {
                         if (myComparativeDate != null)
                         {
                             int dateYear = myComparativeDate.Value.Year;
@@ -489,18 +470,20 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                                 dateDay = 1;
                             }
 
-                            var myDate = new DateTime(dateYear, dateMonth, dateDay, 0, 0, 0);                            
+                            var myDate = new DateTime(dateYear, dateMonth, dateDay, 0, 0, 0);
                             myComparativeDate = myDate;
                             myComparativeDate = myComparativeDate.Value.AddDays(paymentTerm.Days);
-
-                            if (invoice.DueDate != myComparativeDate)
-                            {
-                                invoice.DueDate = myComparativeDate;
-                            }
                         }
+                    }
+
+                    if (expectedDueDate != myComparativeDate)
+                    {
+                        expectedDueDate = myComparativeDate;
                     }
                 }
             }
+
+            return expectedDueDate;
         }
         
         public APInvoice GetAPInvoiceByInvoiceNumber(string number, int tenant)
