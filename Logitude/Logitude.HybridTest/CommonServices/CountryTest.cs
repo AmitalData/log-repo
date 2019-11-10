@@ -4,31 +4,37 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Logitude.HybridTest.CommonServices
 {
     [TestClass]
-    public class DepartmentTest
+    public class CountryTest
     {
         [TestMethod]
-        public void Test_Department_UPSERT()
+        public void Test_Country_UPSERT()
         {
             LoginService.GetLoginTokenByCredentials();
-            Server.Tools.Response serviceResponse = CallDepartmentUpsert();
-            Assert.AreEqual(serviceResponse.HasError, false, serviceResponse.ErrorMessage);
+            Server.Tools.Response globalZoneServiceResponse = GlobalZoneTest.CallGlobalZoneUpsert();
+            Assert.IsFalse(globalZoneServiceResponse.HasError, "Global Zone Upsert Failed! " + globalZoneServiceResponse.ErrorMessage);
+            Assert.IsNotNull(globalZoneServiceResponse.Result, "Global Zone Upsert Failed! " + globalZoneServiceResponse.ErrorMessage);
+            Server.Tools.Response serviceResponse = CallCountryUpsert();
+            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
          }
 
-        public static Server.Tools.Response CallDepartmentUpsert()
+        public static Server.Tools.Response CallCountryUpsert()
         {
-            DepartmentServiceReference.DepartmentWcfServiceClient serviceClient = new DepartmentServiceReference.DepartmentWcfServiceClient();
+
+            CountryServiceReference.CountryWcfServiceClient serviceClient = new CountryServiceReference.CountryWcfServiceClient();
             string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
             serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
             using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)serviceClient.InnerChannel))
             {
 
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
-                DepartmentServiceReference.DepartmentPM entityPM = new DepartmentServiceReference.DepartmentPM()
+                CountryServiceReference.CountryPM entityPM = new CountryServiceReference.CountryPM()
                 {
-                    Code = HybridCodes.DepartmentCode,
-                    EnglishName = "Hybrid Department",
-                    LocalName = "Hybrid Department",
+                    Code = HybridCodes.CountryCode,
+                    EnglishName = "Hybrid Country",
+                    LocalName = "Hybrid Country",
+                    GlobalZoneId = HybridCodes.GlobalZoneCode,
+                    AddedManually = true,
                     Tenant = TestEnvironmentGlobalParameters.Tenant,
                 };
 
