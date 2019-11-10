@@ -60,6 +60,7 @@ namespace WebFreight.Web.DataContracts
         public int InactiveGLAccountCount { get; set; }
         public int AllGLAccountCount { get; set; }
         public int OpenFilesCount { get; set; }
+        public int OpenMastersCount { get; set; }
         public int ClosedFilesGLAccountCount { get; set; }
         public int AllFilesCount { get; set; }
         public int AllJobsCount { get; set; }

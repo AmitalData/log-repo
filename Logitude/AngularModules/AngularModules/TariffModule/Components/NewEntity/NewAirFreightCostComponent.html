@@ -82,7 +82,7 @@
                                 </tr>
 
                                 <!-- Price Steps  -->
-                                <tr *ngIf="EntityPM.TypeCode != 'ASC' && EntityPM.TypeCode != 'OSC' " class="FormFieldRow">
+                                <tr *ngIf="EntityPM.TypeCode != 'ASC' && EntityPM.TypeCode != 'OSC' && EntityPM.TypeCode != 'OFC'" class="FormFieldRow">
                                     <td>
                                         <LogLabel [NoObjectField]="true" [Text]="'Price Steps'" [DataContext]="DataContext"></LogLabel>
                                     </td>
@@ -189,7 +189,7 @@
                                                 <td>
 
                                                     <LogLov [ObjectFieldName]="'Surcharge1Id'"
-                                                            [SelectedValue]="DataContext"
+                                                            [SelectedValue]="Surcharge1Id"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'ChargesType'"
@@ -223,7 +223,7 @@
 
                                                 <td>
                                                     <LogLov [ObjectFieldName]="'Surcharge2Id'"
-                                                            [SelectedValue]="DataContext"
+                                                            [SelectedValue]="Surcharge2Id"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'ChargesType'"
@@ -258,7 +258,7 @@
 
                                                 <td>
                                                     <LogLov [ObjectFieldName]="'Surcharge3Id'"
-                                                            [SelectedValue]="DataContext"
+                                                            [SelectedValue]="Surcharge3Id"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'ChargesType'"
@@ -292,7 +292,7 @@
 
                                                 <td>
                                                     <LogLov [ObjectFieldName]="'Surcharge4Id'"
-                                                            [SelectedValue]="DataContext"
+                                                            [SelectedValue]="Surcharge4Id"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'ChargesType'"
@@ -325,7 +325,7 @@
 
                                                 <td>
                                                     <LogLov [ObjectFieldName]="'Surcharge5Id'"
-                                                            [SelectedValue]="DataContext"
+                                                            [SelectedValue]="Surcharge5Id"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'ChargesType'"
@@ -359,7 +359,7 @@
 
                                                 <td>
                                                     <LogLov [ObjectFieldName]="'Surcharge6Id'"
-                                                            [SelectedValue]="DataContext"
+                                                            [SelectedValue]="Surcharge6Id"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'ChargesType'"
@@ -393,7 +393,7 @@
 
                                                 <td>
                                                     <LogLov [ObjectFieldName]="'Surcharge7Id'"
-                                                            [SelectedValue]="DataContext"
+                                                            [SelectedValue]="Surcharge7Id"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'ChargesType'"
@@ -426,7 +426,7 @@
 
                                                 <td>
                                                     <LogLov [ObjectFieldName]="'Surcharge8Id'"
-                                                            [SelectedValue]="DataContext"
+                                                            [SelectedValue]="Surcharge8Id"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'ChargesType'"
@@ -459,7 +459,7 @@
 
                                                 <td>
                                                     <LogLov [ObjectFieldName]="'Surcharge9Id'"
-                                                            [SelectedValue]="DataContext"
+                                                            [SelectedValue]="Surcharge9Id"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'ChargesType'"
@@ -492,7 +492,7 @@
                                                 </td>
                                                 <td>
                                                     <LogLov [ObjectFieldName]="'Surcharge10Id'"
-                                                            [SelectedValue]="DataContext"
+                                                            [SelectedValue]="Surcharge10Id"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'ChargesType'"
@@ -527,7 +527,109 @@
                                     </td>
                                 </tr>
                             </table>
+                            <table *ngIf="VisibleFCLFreightArea" style="width: 220px;">
+                                <tr class="TabTitleRow">
+                                    <td>
+                                        Container Types
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <table>
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'ContainerType1Id'"
+                                                            [SelectedValue]="ContainerType1Id"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'PackageType'"
+                                                            [HideLastColumn]="true"
+                                                            [RunToggleMode]="true"
+                                                            [DependencyFilter1Value]="'O'"
+                                                            [DependencyFilter2Value]="true">
+                                                    </LogLov>
+                                                </td>
+                                                <td style="width:5px">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'ContainerType2Id'"
+                                                            [SelectedValue]="DataContext.ContainerType2Id"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'PackageType'"
+                                                            [HideLastColumn]="true"
+                                                            [RunToggleMode]="true"
+                                                            [DependencyFilter1Value]="'O'"
+                                                            [DependencyFilter2Value]="true">
+                                                    </LogLov>
+                                                </td>
+                                                <td style="width:5px">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'ContainerType3Id'"
+                                                            [SelectedValue]="DataContext"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'PackageType'"
+                                                            [HideLastColumn]="true"
+                                                            [RunToggleMode]="true"
+                                                            [DependencyFilter1Value]="'O'"
+                                                            [DependencyFilter2Value]="true">
+                                                    </LogLov>
+                                                </td>
+                                                <td style="width:5px">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'ContainerType4Id'"
+                                                            [SelectedValue]="DataContext"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'PackageType'"
+                                                            [HideLastColumn]="true"
+                                                            [RunToggleMode]="true"
+                                                            [DependencyFilter1Value]="'O'"
+                                                            [DependencyFilter2Value]="true">
+                                                    </LogLov>
+                                                </td>
+                                                <td style="width:5px">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'ContainerType5Id'"
+                                                            [SelectedValue]="DataContext"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'PackageType'"
+                                                            [HideLastColumn]="true"
+                                                            [RunToggleMode]="true"
+                                                            [DependencyFilter1Value]="'O'"
+                                                            [DependencyFilter2Value]="true">
+                                                    </LogLov>
+                                                </td>
+                                                <td style="width:5px">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
                         </td>
+                        
                     </tr>
                 </table>
             </ScrollViewer>

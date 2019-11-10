@@ -1605,6 +1605,10 @@
     <Compile Include="Migrations\201911031015425_AddOpenAmountLocalCurrency_Maheera.Designer.cs">
       <DependentUpon>201911031015425_AddOpenAmountLocalCurrency_Maheera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911071143411_AddContainerTypesFieldsToTariffTable_Bisan.cs" />
+    <Compile Include="Migrations\201911071143411_AddContainerTypesFieldsToTariffTable_Bisan.Designer.cs">
+      <DependentUpon>201911071143411_AddContainerTypesFieldsToTariffTable_Bisan.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201911051319149_AbedAddRecordTypeAndDisplayInAutomationAsEnitityToObjectField.cs" />
     <Compile Include="Migrations\201911051319149_AbedAddRecordTypeAndDisplayInAutomationAsEnitityToObjectField.Designer.cs">
       <DependentUpon>201911051319149_AbedAddRecordTypeAndDisplayInAutomationAsEnitityToObjectField.cs</DependentUpon>
@@ -2754,6 +2758,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911031015425_AddOpenAmountLocalCurrency_Maheera.resx">
       <DependentUpon>201911031015425_AddOpenAmountLocalCurrency_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911071143411_AddContainerTypesFieldsToTariffTable_Bisan.resx">
+      <DependentUpon>201911071143411_AddContainerTypesFieldsToTariffTable_Bisan.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911051319149_AbedAddRecordTypeAndDisplayInAutomationAsEnitityToObjectField.resx">
       <DependentUpon>201911051319149_AbedAddRecordTypeAndDisplayInAutomationAsEnitityToObjectField.cs</DependentUpon>

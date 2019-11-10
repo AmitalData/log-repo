@@ -136,22 +136,8 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
 
                 var DRELID = "";
 
-                var Ticket = this.externalDocs[0];
-                if (Ticket && Ticket.HasFile == true && Ticket.FileExtension.toLowerCase() == "pdf") {
-                    this.IsPDF = true;
-                    this.myCommonDomainService.GetFilingAttachPdfReport(Ticket.DocumentId).subscribe((response: ServiceResponse) => {
-                        if (!response.HasError) {
-                            var buffer = EntityResourceService.base64ToBufferConvertor(response.Result);
-                            var blob = new Blob([buffer], { type: 'application/pdf' });
-                            var objectURL = URL.createObjectURL(blob);
-                            this.IFrameURI = objectURL;
-                        }
-                    });
-                }
-                else {
-                    this.IsPDF = false;
-                }
-                this.SelectedTicket = Ticket;
+              
+                
                 this._DocumentTypeMetaDataExtendedService.GetDocumentsMetaDataTypeByCode("DREL").subscribe(myResult => {
                     if (myResult.Result) {
                         var DRELDecFormDocs = [];
@@ -172,6 +158,22 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
                                 }
                             });
                             this.externalDocs = DRELDecFormDocs.concat(DRELOtherDocs);
+                            var Ticket = this.externalDocs[0];
+                            if (Ticket && Ticket.HasFile == true && Ticket.FileExtension.toLowerCase() == "pdf") {
+                                this.IsPDF = true;
+                                this.myCommonDomainService.GetFilingAttachPdfReport(Ticket.DocumentId).subscribe((response: ServiceResponse) => {
+                                    if (!response.HasError) {
+                                        var buffer = EntityResourceService.base64ToBufferConvertor(response.Result);
+                                        var blob = new Blob([buffer], { type: 'application/pdf' });
+                                        var objectURL = URL.createObjectURL(blob);
+                                        this.IFrameURI = objectURL;
+                                    }
+                                });
+                            }
+                            else {
+                                this.IsPDF = false;
+                            }
+                            this.SelectedTicket = Ticket;
                         }
                     }
                 });

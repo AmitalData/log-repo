@@ -3925,6 +3925,12 @@ User/Pass",
 
             return imagedetailid;
         }
+
+        private void executeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BatchTaskTester batchTaskTester = new BatchTaskTester();
+            batchTaskTester.Show();
+        }
     }
 
     public class MyFeature
