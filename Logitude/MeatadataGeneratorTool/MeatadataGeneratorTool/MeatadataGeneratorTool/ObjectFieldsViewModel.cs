@@ -1038,6 +1038,42 @@ namespace MeatadataGeneratorTool
             }
         }
 
+
+        private bool displayInAutomationAsEnitity;
+        public bool DisplayInAutomationAsEnitity
+        {
+            get
+            {
+                return displayInAutomationAsEnitity;
+            }
+            set
+            {
+                displayInAutomationAsEnitity = value;
+                FirePropertyChanged("DisplayInAutomationAsEnitity");
+            }
+        }
+
+
+        private string recordType;
+        public string RecordType
+        {
+            get
+            {
+                return recordType;
+            }
+            set
+            {
+                recordType = value;
+                FirePropertyChanged("RecordType");
+            }
+        }
+
+
+
+
+
+
+
         string hTMLListComponentURL;
         public string HtmlListComponentUrl
         {
