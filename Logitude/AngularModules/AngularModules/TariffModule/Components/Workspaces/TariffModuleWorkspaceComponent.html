@@ -180,6 +180,39 @@
 
     </tr>
 
+    <tr style="height:10px;" *ngIf="OceanFCLFreightCostVisibility">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr *ngIf="OceanFCLFreightCostVisibility">
+        <td>
+            <table>
+                <tr>
+                    <td style="width:190px">
+                        <div>
+                            <HyperlinkQuery>Ocean FCL Freight Cost ({{OceanFCLFreightCount}})</HyperlinkQuery>
+                        </div>
+                    </td>
+
+                    <td style="width:20px">
+                        <div></div>
+                    </td>
+
+                    <td style="width:20px">
+                        <button class="Button" (click)="NewTariff('OFC')">New</button>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+
+    </tr>
+
     <tr style="height:10px;">
         <td>
             <div></div>

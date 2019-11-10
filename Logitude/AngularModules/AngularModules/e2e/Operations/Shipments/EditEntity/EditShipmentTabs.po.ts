@@ -53,13 +53,13 @@ export class EditTabsComponent {
       this.DocsOutTabScenario.DocsOutTab();
     }
     else {
-     /* this.Helper.WaitByIdAndClick('Shipment.TH.Overview');
+      this.Helper.WaitByIdAndClick('Shipment.TH.Overview');
       this.GeneralTabScenario.GeneralTab(ShipmentLevelCode);
       this.OrderTabScenario.OrderTab(ShipmentLevelCode, ShipmentType);
       this.PartnersTabScenario.PartnersTab(ShipmentLevelCode);
       this.PackagesTabScenario.PackagesTab(ShipmentLevelCode, ShipmentType);
       this.RoutingTabScenario.RoutingTab(ShipmentLevelCode, ShipmentType, Direction);
-      //this.PayablesTabScenario.PayablesTab(shipperRef1, ShipmentType);
+      this.PayablesTabScenario.PayablesTab(shipperRef1, ShipmentType);
       //this.ReceivablesTabScenario.RecievablesTab(ShipmentLevelCode, ShipmentType);
 
       if (ShipmentLevelCode == 'M') {
