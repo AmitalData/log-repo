@@ -2257,8 +2257,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             _CCUFILEMPM.NOOFINVOICES = _DirtyDeclarationPM.SupplierInvoices.Count();
             _CCUFILEMPM.TOTALINVOICELINESNO = GetCountSupplierInvoicesItems();
-            _CCUFILEMPM.PRATMEHESLIST = GetAllPratMehesList();
-            _CCUFILEMPM.ALLPRATMEHESLIST = GetAllPratMehesList(2);
+         //   _CCUFILEMPM.PRATMEHESLIST = GetAllPratMehesList(3);
+            _CCUFILEMPM.ALLPRATMEHESLIST = GetAllPratMehesList();
 
 
             CreateCCUTRANSPVAL();
