@@ -20,7 +20,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             ConsignmentPackageKeys consignmentPackageKeys = entityKeys as ConsignmentPackageKeys;
             ConsignmentPackDangerQueryService consignmentPackDangerQueryService = new ConsignmentPackDangerQueryService(context);
 
-            entityPM.ConsignmentPackDangers = consignmentPackDangerQueryService.GetMulti(consignmentPackageKeys, true);
+            entityPM.ConsignmentPackDangers = consignmentPackDangerQueryService.GetMulti(consignmentPackageKeys, false);
 
         }
     } }

@@ -6,6 +6,8 @@ import {Validator} from '../../Infrastructure/Validators/Validator';
 import { LuhnAlgorithm } from '../../Customs/Utilities/LuhnAlgorithm';
 import {DeclarationPM}          from '../EntityPMs/DeclarationPM';
 import {SupplierInvoiceItemPM}  from '../EntityPMs/SupplierInvoiceItemPM';
+import { DecDangersContactPM } from '../EntityPMs/DecDangersContactPM';
+import { ConsignmentPackDangerPM } from '../EntityPMs/ConsignmentPackDangerPM';
 
 export class DeclarationValidator {
     private _DeclarationPM: DeclarationPM;
@@ -21,6 +23,15 @@ export class DeclarationValidator {
         this._DeclarationPM = declarationPM;
     }
 
+    public validatePackagesDanger(decDangersContactPM: DecDangersContactPM, consignmentPackDangerPM: ConsignmentPackDangerPM) {
+        var errors = [];
+
+        Validator.TryValidateObject(decDangersContactPM, "Customs.DecDangersContact", errors);
+        Validator.TryValidateObject(consignmentPackDangerPM, "Customs.ConsignmentPackDanger", errors);
+
+        return errors;
+
+    }
 
     public ValidateSupplierInvoiceItem(supplierInvoiceItemPM: SupplierInvoiceItemPM) {
         var errors = [];

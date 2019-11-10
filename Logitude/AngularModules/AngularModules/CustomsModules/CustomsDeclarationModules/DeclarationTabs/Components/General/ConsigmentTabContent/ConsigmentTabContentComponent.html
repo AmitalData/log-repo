@@ -542,8 +542,17 @@
                                     <log-column [width]="'50'" [visibility]="'visibile'" [Alignment]="'left'" [IgnoreColumn]="true">
                                         <log-cell-template template="let item" [IgnoreMods]="true" [TabIndex]="-1">
                                             <!--<span class="CellSeparator"></span>-->
-                                            <IconButton [Name]="'Delete'" [IsSmall]="true" [IsIconOnly]="true"
-                                                        style="display: block; float: right; margin: 3px;" (click)="RemovePackageButton(item)"></IconButton>
+                                            <table>
+                                                <tr><td>
+    <IconButton [Name]="'Delete'" [IsSmall]="true" [IsIconOnly]="true"
+                style="display: block; float: right; margin: 3px;" (click)="RemovePackageButton(item)"></IconButton>
+</td>
+                                                    <td>
+                                                        <IconButton [Name]="'Edit'" [IsSmall]="true" [IsIconOnly]="true"
+                                                                    style="display: block; float: right; margin: 3px;" (click)="OpenEditDangerWindow(item)"></IconButton>
+
+                                                    </td></tr>
+                                            </table>
                                         </log-cell-template>
                                     </log-column>
 

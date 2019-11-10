@@ -17,8 +17,12 @@ namespace Logitude.Customs.Data.Repsitories
         
 		public List<ConsignmentPackDanger> GetMulti(EntityKeyFields entityKeys)
         {
-            
-			throw new NotImplementedException();
+
+            ConsignmentPackageKeys consignmentPackageKeys = entityKeys as ConsignmentPackageKeys;
+
+            return (from a in context.ConsignmentPackDangers
+                    where a.DeclarationId == consignmentPackageKeys.DeclarationId
+                    select a).ToList();
         }
 
    }

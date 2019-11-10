@@ -91,14 +91,14 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private int lineNumber ;
+	  private int? lineNumber ;
 	  
        [Key]
 	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int LineNumber  
+       public int? LineNumber  
 	   {
 	    
 	     get
@@ -109,21 +109,21 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(lineNumber != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LineNumber",OldValue=lineNumber,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LineNumber",OldValue=lineNumber,NewValue=value,PropertyType="int?"};
 		    NotifyPropertyChanged(values);
 		   lineNumber=value;
 		   }
 			
 		 }
 	   }
-	  private int dangerousLineNo ;
+	  private int? dangerousLineNo ;
 	  
        [Key]
 	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int DangerousLineNo  
+       public int? DangerousLineNo  
 	   {
 	    
 	     get
@@ -134,7 +134,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(dangerousLineNo != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DangerousLineNo",OldValue=dangerousLineNo,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DangerousLineNo",OldValue=dangerousLineNo,NewValue=value,PropertyType="int?"};
 		    NotifyPropertyChanged(values);
 		   dangerousLineNo=value;
 		   }

@@ -20,11 +20,11 @@ namespace Logitude.Customs.Data.EntityKeys
 	  
 				 
 	    			   
-	  public int LineNumber  { get; set; }
+	  public int? LineNumber  { get; set; }
 	  
 				 
 	    			   
-	  public int DangerousLineNo  { get; set; }
+	  public int? DangerousLineNo  { get; set; }
 	  
 				 
 	    			   

@@ -375,8 +375,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewIni
     }
 
     ngOnInit() {
-
-        if (this.IsRatioBox == true) {
+         if (this.IsRatioBox == true) {
             this.DigitsAfterPoint = 1;
             this.InputDivStyle = {};
         }
@@ -439,7 +438,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewIni
             objectFieldAvailable = false;
         }
 
-        this.uiProperty = this.DataContext.UIProperties.GetUIProperty(this.ObjectFieldName, this.ObjectTableName, this.DataContext);
+         this.uiProperty = this.DataContext.UIProperties.GetUIProperty(this.ObjectFieldName, this.ObjectTableName, this.DataContext);
 
         this.IsDisabled = !this.uiProperty.IsEnabled;
 

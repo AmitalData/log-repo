@@ -51,7 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(string declarationid, int? consignmentnumber, int linenumber, int dangerouslineno)
+        public HttpResponseMessage GetSingle(string declarationid, int? consignmentnumber, int? linenumber, int? dangerouslineno)
         {
 		  try
             {

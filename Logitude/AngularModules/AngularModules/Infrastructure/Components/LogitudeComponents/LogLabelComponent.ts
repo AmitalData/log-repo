@@ -173,7 +173,7 @@ export class LogLabelComponent implements OnInit {
     }
 
     SetLabel() {
-        if (this.DataContext != null) {
+         if (this.DataContext != null) {
             var labelText = "";
 
             if (this.Text != null) {

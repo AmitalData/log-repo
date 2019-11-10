@@ -17,8 +17,12 @@ namespace Logitude.Customs.Data.Repsitories
         
 		public List<DecDangersContact> GetMulti(EntityKeyFields entityKeys)
         {
-            
-			throw new NotImplementedException();
+
+            DeclarationKeys declarationKeys = entityKeys as DeclarationKeys;
+
+            return (from a in context.DecDangersContacts
+                    where a.DeclarationId == declarationKeys.Id
+                    select a).ToList();
         }
 
    }

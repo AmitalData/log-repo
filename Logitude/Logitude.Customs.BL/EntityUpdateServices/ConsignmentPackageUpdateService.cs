@@ -61,5 +61,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
             (Repository as Logitude.Customs.Data.Repsitories.ConsignmentPackageRepository).FastDeleteMulti(entityKeyFields);
         }
+
+        protected override void UpdateComposition(ConsignmentPackagePM entityPM)
+        {
+            ConsignmentPackDangerUpdateService consignmentPackDangerUpdateService = new ConsignmentPackDangerUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
+            consignmentPackDangerUpdateService.UpdateMulti(entityPM.ConsignmentPackDangers, entityPM.DeletedConsignmentPackDangers, entityPM, false);
+
+            base.UpdateComposition(entityPM);
+        }
+
     }
 }

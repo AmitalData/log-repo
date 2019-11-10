@@ -33,10 +33,10 @@ namespace Logitude.Customs.Data.EntityPOCOs
      [Key]
         [ForeignKey("ConsignmentPackage")]
         [Column("LineNumber" ,Order = 3)]
-	    public int LineNumber { get; set; }
+	    public int? LineNumber { get; set; }
      [Key]
         [Column("DangerousLineNo" ,Order = 4)]
-	    public int DangerousLineNo { get; set; }
+	    public int? DangerousLineNo { get; set; }
         [Column("UNCode")]
 	    public string UNCode { get; set; }
         [ForeignKey("DangerousGoodsPackingReq")]

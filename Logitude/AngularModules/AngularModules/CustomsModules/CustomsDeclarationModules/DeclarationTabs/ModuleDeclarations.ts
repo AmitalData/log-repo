@@ -20,6 +20,7 @@ import { CertificateSelectionComponent } from './Components/Certificate/Certific
 import { DeclarationCargoSplitTabComponent } from './Components/CargoSplit/DeclarationCargoSplitTabComponent';
 import { ImporterDetailsComponent } from './Components/General/ImporterDetails/ImporterDetailsComponent';
 import { GuaranteeDataComponent } from './Components/Tapag/GuaranteeDataComponent';
+import { ConsigmentPackagesDangerComponent } from './Components/General/ConsigmentTabContent/ConsigmentPackagesDanger/ConsigmentPackagesDangerComponent';
 
 import { DeclarationClassificationComponent } from './Components/Classification/DeclarationClassificationComponent';
 import { SInvoiceClassificationTabComponent } from './Components/Classification/SInvoiceClassificationTabComponent';
@@ -49,7 +50,7 @@ export const Components =
         DeclarationCargoSplitTabComponent,
         ImporterDetailsComponent,
         GuaranteeDataComponent,
-
+        ConsigmentPackagesDangerComponent,
     DeclarationClassificationComponent,
     SInvoiceClassificationTabComponent,
         CasualSupplierDetailsComponent,
@@ -89,6 +90,8 @@ export class ModuleDeclarations {
           case "DeclarationClassificationComponent": { myResult = DeclarationClassificationComponent; break; }
             case "SInvoiceClassificationTabComponent": { myResult = SInvoiceClassificationTabComponent; break; }
             case "CasualSupplierDetailsComponent": { myResult = CasualSupplierDetailsComponent; break; }
+            case "ConsigmentPackagesDangerComponent": { myResult = ConsigmentPackagesDangerComponent; break; }
+
         }
 
         return myResult;

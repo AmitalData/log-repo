@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 declare var System: any;
 import {Directive, ElementRef, Renderer, Input, Output, Component, OnInit, OnChanges, Injector,  EventEmitter} from '@angular/core';
 import {BaseComponent} from './BaseComponent';
@@ -161,8 +161,7 @@ export class LogLovComponent implements OnInit {
     }
 
     InitializeControl() {
-
-        this.LogLOVControlClass = "LogLOVControl";
+         this.LogLOVControlClass = "LogLOVControl";
         this.counterId = ControlsIdCounter.GetNextIdCounter();
         this.DivLogLovId = 'LogLov - ' + this.ObjectFieldName + '-' + this.counterId.toString();
         this.ElementId = 'Search - ' + this.ObjectFieldName + '-' + this.counterId.toString();

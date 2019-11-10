@@ -28,7 +28,7 @@ namespace Logitude.Customs.Data.Repsitories
 
 		 
 		
-		public  ConsignmentPackDanger GetSingle(string declarationid, int? consignmentnumber, int linenumber, int dangerouslineno, int tenant)
+		public  ConsignmentPackDanger GetSingle(string declarationid, int? consignmentnumber, int? linenumber, int? dangerouslineno, int tenant)
         {
             return (from a in context.ConsignmentPackDangers
                     where a.DeclarationId == declarationid && a.ConsignmentNumber == consignmentnumber && a.LineNumber == linenumber && a.DangerousLineNo == dangerouslineno && a.Tenant == tenant
