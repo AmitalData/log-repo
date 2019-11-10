@@ -559,7 +559,24 @@
                                                                         <td *ngIf="_SelectedItems == null || (_SelectedItems != null && _SelectedItems.Collection.length == 0)" style="width:100px; text-align:right" dir="ltr"><button class="Button" (click)="SendReadyLOWPAYToBatch()" [disabled]="IsDisplayOnly"> {{ ' (' +this._PAYReadyNotFastindividual + ') ' + 'תשלום תהליך מהיר'}}</button></td>
                                                                         <td *ngIf="_SelectedItems != null && _SelectedItems.Collection.length > 0" style="width:100px; "><button class="Button" (click)="SendReadyLOWPAYToBatch()" [disabled]="IsDisplayOnly"> {{ 'תשלום תהליך מהיר מסומנים'}}</button></td>
                                                                         <td style="width:5px"></td>
+                                                                        <td style="width:100px"></td>
                                                                         <td></td>
+                                                                        <td style="width: 250px;">
+                                                                            <ul class="FiltersMenu" style="float:left; padding-left: 5px;">
+                                                                                <li (click)="PAYFilterClicked('I')" style="width:80px; height: 25px;" [class.SelectedFilter]="_SelectedPAYValue === 'I'">
+                                                                                    {{'Customs.CourierMaster.O.InProgress' | TextCodeTranslationPipe }}
+                                                                                    <span> {{' (' +this._PAY_I_Total + ')' }} </span>
+                                                                                </li>
+                                                                                <li (click)="PAYFilterClicked('R')" style="width:80px; height: 25px;" [class.SelectedFilter]="_SelectedPAYValue === 'R'">
+                                                                                    {{'Customs.CourierMaster.O.ReadyToSend' | TextCodeTranslationPipe }}
+                                                                                    <span> {{' (' +this._PAY_R_Total + ')' }} </span>
+                                                                                </li>
+                                                                                <li (click)="PAYFilterClicked('C')" style="width:70px; height: 25px;" [class.SelectedFilter]="_SelectedPAYValue === 'C'">
+                                                                                    {{'Customs.CourierMaster.O.Correct' | TextCodeTranslationPipe }}
+                                                                                    <span> {{' (' +this._PAY_C_Total + ')' }} </span>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </td>
                                                                     </tr>
                                                                 </table>
                                                                 <!--ACC-->
