@@ -363,6 +363,31 @@ export class TariffPM {
     public set IsUpdatingMissingPorts(newValue: boolean) { if (this.isUpdatingMissingPorts != newValue) { this.isUpdatingMissingPorts = newValue; this.MarkAsDirty("IsUpdatingMissingPorts"); } }
        
 	 
+    private containerType1Id: string;
+    public get ContainerType1Id() { return this.containerType1Id; }
+    public set ContainerType1Id(newValue: string) { if (this.containerType1Id != newValue) { this.containerType1Id = newValue; this.MarkAsDirty("ContainerType1Id"); } }
+       
+	 
+    private containerType2Id: string;
+    public get ContainerType2Id() { return this.containerType2Id; }
+    public set ContainerType2Id(newValue: string) { if (this.containerType2Id != newValue) { this.containerType2Id = newValue; this.MarkAsDirty("ContainerType2Id"); } }
+       
+	 
+    private containerType3Id: string;
+    public get ContainerType3Id() { return this.containerType3Id; }
+    public set ContainerType3Id(newValue: string) { if (this.containerType3Id != newValue) { this.containerType3Id = newValue; this.MarkAsDirty("ContainerType3Id"); } }
+       
+	 
+    private containerType4Id: string;
+    public get ContainerType4Id() { return this.containerType4Id; }
+    public set ContainerType4Id(newValue: string) { if (this.containerType4Id != newValue) { this.containerType4Id = newValue; this.MarkAsDirty("ContainerType4Id"); } }
+       
+	 
+    private containerType5Id: string;
+    public get ContainerType5Id() { return this.containerType5Id; }
+    public set ContainerType5Id(newValue: string) { if (this.containerType5Id != newValue) { this.containerType5Id = newValue; this.MarkAsDirty("ContainerType5Id"); } }
+       
+	 
 
     public OldEntityPM: TariffPM;
 		
