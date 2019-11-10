@@ -34,6 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -43,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\AppHelper.cs" />
     <Compile Include="Models\ColumnDefinition.cs" />
     <Compile Include="Models\ConstraintDefinition.cs" />
     <Compile Include="Models\TableDefinition.cs" />
@@ -56,6 +58,8 @@
     <None Include="EntityFiles\City.dxml" />
     <None Include="EntityFiles\User.dxml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="GeneratedScript\Script.sql" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
