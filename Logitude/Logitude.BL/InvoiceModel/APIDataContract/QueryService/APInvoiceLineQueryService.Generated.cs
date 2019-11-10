@@ -88,7 +88,15 @@ using Simplog.Data.InvoiceModel;
 			       
 					   				   }
 				   
-				   temp.ExternalVATCard = item.ExternalVATCard;					
+				   temp.ExternalVATCard = item.ExternalVATCard;			  
+				   if(item.ContainerTypeId != null)
+				   {
+					   PackageTypeQueryService PackageTypeService4 = new PackageTypeQueryService(Tenant);
+					   					   temp.ContainerType = PackageTypeService4.GetPackageTypeById(item.ContainerTypeId,Tenant); 
+			       
+					   				   }
+				   
+				   temp.Quantity = item.Quantity;					
 					MyList.Add(temp);
 				}
 					
@@ -181,7 +189,20 @@ using Simplog.Data.InvoiceModel;
 					}
 			
 					
-					temp.ExternalVATCard = item.ExternalVATCard;					   
+					temp.ExternalVATCard = item.ExternalVATCard;
+					PackageTypeQueryService ContainerTypePackageTypeService = new PackageTypeQueryService(Tenant);
+					if(item.ContainerType != null)
+					{
+						var myContainerTypePM = ContainerTypePackageTypeService.PackageTypeDataMappingAndValidatin(item.ContainerType,Tenant,ComputingPartnerName);
+												if(myContainerTypePM != null)
+						{
+							temp.ContainerTypeId = myContainerTypePM.Id;
+						}
+						 
+					}
+			
+					
+					temp.Quantity = item.Quantity;					   
 						MyList.Add(temp);
 					}
 						

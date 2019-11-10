@@ -1609,6 +1609,10 @@
     <Compile Include="Migrations\201911071143411_AddContainerTypesFieldsToTariffTable_Bisan.Designer.cs">
       <DependentUpon>201911071143411_AddContainerTypesFieldsToTariffTable_Bisan.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911101249049_AddContainerTypeAndQuantityToAPInvoiceLine_Samar.cs" />
+    <Compile Include="Migrations\201911101249049_AddContainerTypeAndQuantityToAPInvoiceLine_Samar.Designer.cs">
+      <DependentUpon>201911101249049_AddContainerTypeAndQuantityToAPInvoiceLine_Samar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201911051319149_AbedAddRecordTypeAndDisplayInAutomationAsEnitityToObjectField.cs" />
     <Compile Include="Migrations\201911051319149_AbedAddRecordTypeAndDisplayInAutomationAsEnitityToObjectField.Designer.cs">
       <DependentUpon>201911051319149_AbedAddRecordTypeAndDisplayInAutomationAsEnitityToObjectField.cs</DependentUpon>
@@ -2761,6 +2765,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911071143411_AddContainerTypesFieldsToTariffTable_Bisan.resx">
       <DependentUpon>201911071143411_AddContainerTypesFieldsToTariffTable_Bisan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911101249049_AddContainerTypeAndQuantityToAPInvoiceLine_Samar.resx">
+      <DependentUpon>201911101249049_AddContainerTypeAndQuantityToAPInvoiceLine_Samar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911051319149_AbedAddRecordTypeAndDisplayInAutomationAsEnitityToObjectField.resx">
       <DependentUpon>201911051319149_AbedAddRecordTypeAndDisplayInAutomationAsEnitityToObjectField.cs</DependentUpon>
