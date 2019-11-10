@@ -103,7 +103,7 @@ export class SInvoiceClassificationTabComponent
     //    let logCell = (this.myDiv as any);
     //    logCell.IsEditMode = true;
     //}
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef) {
         super();
         //this.ConsimentPackages = new ObservableCollection([]);
