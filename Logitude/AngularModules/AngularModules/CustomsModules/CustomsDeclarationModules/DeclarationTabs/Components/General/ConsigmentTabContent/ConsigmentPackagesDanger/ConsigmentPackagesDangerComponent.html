@@ -1,0 +1,120 @@
+<table>
+    <tr>
+        <td>
+            <table style="table-layout: fixed;">
+
+                <tr style="height: 25px;">
+
+                    <td>
+                        <LogLabel [ObjectFieldName]="'UNCode'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <!--<LogTextBox [ObjectFieldName]="'OriginalConsignmentPackDangerPM.UNCode'" [ObjectTableName]="ObjectTableName" [Text]="OriginalConsignmentPackDangerPM.UNCode"
+            [InputType]="'text'" [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>-->
+                        <LogTextBox [ObjectFieldName]="'UNCode'" [ObjectTableName]="ObjectTableName" [Text]="OriginalConsignmentPackDangerPM.UNCode"
+                                    [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+                    <td>
+                        <LogLabel [ObjectFieldName]="'dangerousGoodsPackingReqCode'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <!--<LogTextBox [ObjectFieldName]="'OriginalConsignmentPackDangerPM.UNCode'" [ObjectTableName]="ObjectTableName" [Text]="OriginalConsignmentPackDangerPM.UNCode"
+            [InputType]="'text'" [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>-->
+                        <LogTextBox [ObjectFieldName]="'dangerousGoodsPackingReqCode'" [ObjectTableName]="ObjectTableName" [Text]="OriginalConsignmentPackDangerPM.dangerousGoodsPackingReqCode"
+                                    [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+                </tr>
+                <tr style="height: 25px;">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'FlashpointTemperature'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <!--<LogTextBox [ObjectFieldName]="'OriginalConsignmentPackDangerPM.UNCode'" [ObjectTableName]="ObjectTableName" [Text]="OriginalConsignmentPackDangerPM.UNCode"
+            [InputType]="'text'" [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>-->
+                        <LogTextBox [ObjectFieldName]="'FlashpointTemperature'" [ObjectTableName]="ObjectTableName" [Text]="OriginalConsignmentPackDangerPM.FlashpointTemperature"
+                                    [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+                    <td>
+                        <LogLabel [ObjectFieldName]="'StorageTemperature'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <!--<LogTextBox [ObjectFieldName]="'OriginalConsignmentPackDangerPM.UNCode'" [ObjectTableName]="ObjectTableName" [Text]="OriginalConsignmentPackDangerPM.UNCode"
+            [InputType]="'text'" [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>-->
+                        <LogTextBox [ObjectFieldName]="'StorageTemperature'" [ObjectTableName]="ObjectTableName" [Text]="OriginalConsignmentPackDangerPM.StorageTemperature"
+                                    [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
+                </tr>
+                <tr style="height: 25px;">
+                    <td colspan="3">
+                        אנשי קשר
+                    </td>
+                </tr>
+                <tr >
+                    <td>
+                        <LogLabel [ObjectFieldName]="'CompanyName'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <!--<LogTextBox [ObjectFieldName]="'OriginalConsignmentPackDangerPM.UNCode'" [ObjectTableName]="ObjectTableName" [Text]="OriginalConsignmentPackDangerPM.UNCode"
+        [InputType]="'text'" [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>-->
+                        <LogTextBox [ObjectFieldName]="'CompanyName'" [ObjectTableName]="ObjectTableName" [Text]="ObjectTableNameContact.CompanyName"
+                                    [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+                    <td>
+                        <LogLabel [ObjectFieldName]="'CompanyCommNumber'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <!--<LogTextBox [ObjectFieldName]="'OriginalConsignmentPackDangerPM.UNCode'" [ObjectTableName]="ObjectTableName" [Text]="OriginalConsignmentPackDangerPM.UNCode"
+        [InputType]="'text'" [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>-->
+                        <LogTextBox [ObjectFieldName]="'CompanyCommNumber'" [ObjectTableName]="ObjectTableName" [Text]="ObjectTableNameContact.CompanyCommNumber"
+                                    [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
+                    <td>
+                        <LogLabel [ObjectFieldName]="'CompanyCommTypeCode'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <!--<LogTextBox [ObjectFieldName]="'OriginalConsignmentPackDangerPM.UNCode'" [ObjectTableName]="ObjectTableName" [Text]="OriginalConsignmentPackDangerPM.UNCode"
+        [InputType]="'text'" [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>-->
+                        <LogTextBox [ObjectFieldName]="'CompanyCommTypeCode'" [ObjectTableName]="ObjectTableName" [Text]="ObjectTableNameContact.CompanyCommTypeCode"
+                                    [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
+                </tr>
+
+                <!-- #region cancel and ok buttons -->
+                <tr style="height: 32px;">
+                    <td colspan="1" style="vertical-align: bottom">
+                        <table style="height: 22px;">
+                            <tr>
+                                <td>
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 57px;">
+                                    <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                                </td>
+
+                                <td style="width: 5px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 57px;">
+                                    <button class="RedButton" (click)="OkButtonClicked()" [disabled]="IsDisplayOnly">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

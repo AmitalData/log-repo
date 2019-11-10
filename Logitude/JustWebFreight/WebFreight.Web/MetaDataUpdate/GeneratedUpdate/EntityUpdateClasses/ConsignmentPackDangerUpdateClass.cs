@@ -105,7 +105,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "אריזות משגור מסוכנות",
 			      				    DefaultText =  "Declaration Consignment Packages Dangerous Goods details",
-			      				    Code =  "3f8d",
+			      				    Code =  "fabb",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",

@@ -13,6 +13,7 @@ import {DeclarationTaxPM} from './DeclarationTaxPM';
 import {DeclarationConstraintPM} from './DeclarationConstraintPM';
 import {DeclarationErrorViewPM} from './DeclarationErrorViewPM';
 import {DeclarationConsAcceptancePM} from './DeclarationConsAcceptancePM';
+import {DecDangersContactPM} from './DecDangersContactPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -984,7 +985,41 @@ export class DeclarationPM {
     public set IsPaymentProtested(newValue: boolean) { if (this.isPaymentProtested != newValue) { this.isPaymentProtested = newValue; this.MarkAsDirty("IsPaymentProtested"); } }
        
 	 
+     
+	private decDangersContacts: DecDangersContactPM[];
+    get  DecDangersContacts() {
+        if (this.decDangersContacts == null) {
+            this.decDangersContacts = [];
+        }
 
+        return this.decDangersContacts;
+    }
+    set  DecDangersContacts(newValue: DecDangersContactPM[]) {
+        if (this.decDangersContacts != newValue) {
+            this.decDangersContacts = newValue;
+        }
+    }
+    public AddDecDangersContact(item: DecDangersContactPM) {
+        if (item != null) {
+            var index = this. DecDangersContacts.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. DecDangersContacts.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveDecDangersContact(item: DecDangersContactPM) {
+        if (item != null) {
+            var index = this. DecDangersContacts.indexOf(item);
+            if (index > -1) {
+                this. DecDangersContacts.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public DecDangersContacts: Array<DecDangersContactPM>= [];
+ 
     public OldEntityPM: DeclarationPM;
 		
     public IsDirty: boolean;

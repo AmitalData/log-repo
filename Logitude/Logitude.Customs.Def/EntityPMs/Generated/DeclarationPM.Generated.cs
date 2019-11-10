@@ -3950,7 +3950,42 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-   }
+
+	   private List<DecDangersContactPM> decDangersContacts;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("DeclarationDecDangersContacts", "DeclarationId","DeclarationId")]
+	   [DataMember]
+	   public virtual List<DecDangersContactPM> DecDangersContacts  
+	   {
+	        get
+             {
+                 if (decDangersContacts == null)
+                 {
+                     decDangersContacts = new List<DecDangersContactPM>();
+                 }
+                 return decDangersContacts;
+              }
+             set { decDangersContacts = value; }
+	    }
+		   
+	   private List<DecDangersContactPM>  deletedDecDangersContacts;
+	   public virtual List<DecDangersContactPM> DeletedDecDangersContacts  
+	   {
+	        get
+             {
+                 if ( deletedDecDangersContacts == null)
+                 {
+                      deletedDecDangersContacts = new List<DecDangersContactPM>();
+                 }
+                 return  deletedDecDangersContacts;
+              }
+             set {  deletedDecDangersContacts = value; }
+	    }
+	     }
    
 }
 	 
