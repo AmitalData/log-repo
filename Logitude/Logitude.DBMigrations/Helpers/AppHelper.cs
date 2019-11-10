@@ -24,7 +24,7 @@ namespace Logitude.DBMigrations.Helpers
                 TableDefinition DXMLTable = xmlString.ParseXML<TableDefinition>();
                 DatabaseMigrations databaseMigrations = new DatabaseMigrations(DXMLTable);
                 generatedScript += databaseMigrations.GetScript();
-                generatedScript += "\n------------------------------------------------\n";
+                //generatedScript += "\n------------------------------------------------\n";
             }
 
             return generatedScript;

@@ -97,13 +97,13 @@ namespace Logitude.DBMigrations.Models
         private string GetColumnMigrationScript(string tableName, ColumnMigrations columnMigrations)
         {
             string columnMigrationScript = "ALTER TABLE " + tableName + " ";
-            if(columnMigrations.MigrationType == MigrationTypes.ADD)
+            if(columnMigrations.MigrationType == MigrationTypes.ADDCOLUMN)
             {
                 columnMigrationScript += "ADD " + columnMigrations.ColumnName + " ";
                 columnMigrationScript += GetDataTypeScript(columnMigrations.NewColumnType, columnMigrations.NewColumnSize);
                 columnMigrationScript += GetConstraintsScript(columnMigrations.NewConstraints);
             }
-            else if(columnMigrations.MigrationType == MigrationTypes.ALTER)
+            else if(columnMigrations.MigrationType == MigrationTypes.ALTERCOLUMN)
             {
                 columnMigrationScript += "ALTER COLUMN " + columnMigrations.ColumnName + " ";
                 columnMigrationScript += GetDataTypeScript(columnMigrations.NewColumnType, columnMigrations.NewColumnSize);
@@ -263,7 +263,7 @@ namespace Logitude.DBMigrations.Models
             {
                 if(!IsColumnInTableDefinition(currentTable, dxmlTableColumn.Name))
                 {
-                    ColumnMigrations columnMigrations = GetColumnMigrations(MigrationTypes.ADD, dxmlTableColumn);
+                    ColumnMigrations columnMigrations = GetColumnMigrations(MigrationTypes.ADDCOLUMN, dxmlTableColumn);
                     columnsMigrations.Add(columnMigrations);
                 }
                 else
@@ -271,7 +271,7 @@ namespace Logitude.DBMigrations.Models
                     ColumnDefinition currentTableColumn = currentTable.Columns.Where(c => c.Name == dxmlTableColumn.Name).First();
                     if(IsThereMigration(currentTableColumn, dxmlTableColumn))
                     {
-                        ColumnMigrations columnMigrations = GetColumnMigrations(MigrationTypes.ALTER, dxmlTableColumn);
+                        ColumnMigrations columnMigrations = GetColumnMigrations(MigrationTypes.ALTERCOLUMN, dxmlTableColumn);
                         columnsMigrations.Add(columnMigrations);
                     }
                 }
@@ -283,7 +283,7 @@ namespace Logitude.DBMigrations.Models
             foreach(var droppedColumn in droppedColumns)
             {
                 ColumnDefinition currentTableColumn = currentTable.Columns.Where(c => c.Name == droppedColumn.Name).First();
-                ColumnMigrations columnMigrations = GetColumnMigrations(MigrationTypes.DROP, currentTableColumn);
+                ColumnMigrations columnMigrations = GetColumnMigrations(MigrationTypes.DROPCOLUMN, currentTableColumn);
                 columnsMigrations.Add(columnMigrations);
             }
 
@@ -316,10 +316,6 @@ namespace Logitude.DBMigrations.Models
 
         private bool IsThereMigration(ColumnDefinition currentTableColumn, ColumnDefinition dxmlTableColumn)
         {
-            if((dxmlTableColumn.Name != dxmlTableColumn.NewName) && dxmlTableColumn.NewName != null)
-            {
-                return true;
-            }
             if(dxmlTableColumn.Type != currentTableColumn.Type)
             {
                 return true;
