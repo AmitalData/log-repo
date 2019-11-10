@@ -101,6 +101,10 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 
         public bool DisplayOnLookUpLocal { get; set; }
 
+
+        public bool DisplayInAutomationAsEnitity { get; set; }
+        public string RecordType { get; set; }
+
         [ForeignKey("CustomerPermissionTypeCode")]
         public PermissionType CustomerPermissionType { get; set; }
 

@@ -17,20 +17,19 @@ namespace Logitude.HybridTest.CommonServices
 
         public static Server.Tools.Response CallDepartmentUpsert()
         {
-
             DepartmentServiceReference.DepartmentWcfServiceClient serviceClient = new DepartmentServiceReference.DepartmentWcfServiceClient();
-            serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(TestEnvironmentGlobalParameters.ServerURL + "/WcfApi/DepartmentWcfService.svc");
+            string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
+            serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
             using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)serviceClient.InnerChannel))
             {
 
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
                 DepartmentServiceReference.DepartmentPM entityPM = new DepartmentServiceReference.DepartmentPM()
                 {
-                    Code = "HDEP",
+                    Code = HybridCodes.DepartmentCode,
                     EnglishName = "Hybrid Department",
                     LocalName = "Hybrid Department",
                     Tenant = TestEnvironmentGlobalParameters.Tenant,
-
                 };
 
                 Logitude.Server.Tools.Response serviceResponse = serviceClient.Upsert(entityPM, false);

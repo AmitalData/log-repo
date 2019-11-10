@@ -183,8 +183,10 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 if (createdJournal)
                 {
                     this.IsDisplayOnly = !createdJournal.IsLedgerCreated;
-                    if (!this.IsDisplayOnly)
-                        this.GetData();
+                    if (!this.IsDisplayOnly) {
+                        this.entityArgs.EditComponent.ReloadEntityPM();
+                        // this.GetData();
+                    }
                 }
                 else
                 {
@@ -1462,8 +1464,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         }
         return result;
     }
-    
-  
+
+
     get Bank() {
         if (this.EntityPM == null) {
             return null;
