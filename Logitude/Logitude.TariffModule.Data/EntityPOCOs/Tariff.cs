@@ -172,6 +172,31 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
         public virtual Measurement Surcharge10U { get; set; }
         [Column("ConcurrencyGUID")]
 	    public string ConcurrencyGUID { get; set; }
+        [ForeignKey("ContainerType1")]
+        [Column("ContainerType1Id")]
+	    public string ContainerType1Id { get; set; }
+	      
+        public virtual PackageType ContainerType1 { get; set; }
+        [ForeignKey("ContainerType2")]
+        [Column("ContainerType2Id")]
+	    public string ContainerType2Id { get; set; }
+	      
+        public virtual PackageType ContainerType2 { get; set; }
+        [ForeignKey("ContainerType3")]
+        [Column("ContainerType3Id")]
+	    public string ContainerType3Id { get; set; }
+	      
+        public virtual PackageType ContainerType3 { get; set; }
+        [ForeignKey("ContainerType4")]
+        [Column("ContainerType4Id")]
+	    public string ContainerType4Id { get; set; }
+	      
+        public virtual PackageType ContainerType4 { get; set; }
+        [ForeignKey("ContainerType5")]
+        [Column("ContainerType5Id")]
+	    public string ContainerType5Id { get; set; }
+	      
+        public virtual PackageType ContainerType5 { get; set; }
     }
 }
 	 

@@ -24,12 +24,14 @@ namespace Logitude.Update
 
         private void OkButton_Click(object sender, EventArgs e)
         {
-            string batchTaskId = BatchTaskIdTextBox.Text;
-            int tenant;
-            int.TryParse(BatchTaskIdTextBox.Text, out tenant);
+            List<string> textBoxesValidations = this.ValidateTextBoxes();
+            if (textBoxesValidations.Count > 0)
+            {
+                FillMessagesBox(textBoxesValidations);
+                return;
+            }
 
-            BatchTaskExecutionQueryService batchTaskExecutionQueryService = new BatchTaskExecutionQueryService(tenant);
-            BatchTaskExecutionPM batchTaskExecutionPM = batchTaskExecutionQueryService.GetSingle(batchTaskId, false, false);
+            BatchTaskExecutionPM batchTaskExecutionPM = GetBatchTaskExecutionPM();
 
             if (batchTaskExecutionPM != null)
             {
@@ -46,17 +48,56 @@ namespace Logitude.Update
                 string contextClassName = Assembly.CreateQualifiedName(assemblyName, className);
                 Type executedClassType = Type.GetType(contextClassName);
                 var batchTaskService = System.Activator.CreateInstance(executedClassType, ArrArgs) as BatchTaskExecutionsService;
-                //if (!this.SupressStartThread)
-                //{
-                //    // open a new thread and call the class runcode.
-                //    Thread thread = new Thread(batchTaskService.Execute);
-                //    thread.Start();
-                //}
-                //else
+                batchTaskService.Execute();
+
+                BatchTaskExecutionPM finalResult= GetBatchTaskExecutionPM();
+                List<string> messages = new List<string>();
+                messages.Add(finalResult.StatusName);
+                messages.Add(finalResult.ErrorLog);
+                FillMessagesBox(messages);
+
+            }
+        }
+
+        private BatchTaskExecutionPM GetBatchTaskExecutionPM()
+        {
+            string batchTaskId = BatchTaskIdTextBox.Text;
+            int tenant;
+            int.TryParse(TenantTextBox.Text, out tenant);
+
+            BatchTaskExecutionQueryService batchTaskExecutionQueryService = new BatchTaskExecutionQueryService(tenant);
+            BatchTaskExecutionPM batchTaskExecutionPM = batchTaskExecutionQueryService.GetSingle(batchTaskId, false, false);
+            return batchTaskExecutionPM;
+        }
+        private List<string> ValidateTextBoxes()
+        {
+            List<string> validationMessages = new List<string>();
+            if (string.IsNullOrEmpty(BatchTaskIdTextBox.Text))
+            {
+                validationMessages.Add("Please fill the batch task id");
+            }
+            if(string.IsNullOrEmpty(TenantTextBox.Text))
+            {
+                validationMessages.Add("Please fill the tenant");
+            }
+            return validationMessages;
+        }
+
+        private void FillMessagesBox(List<string> messages)
+        {
+            MessagesTextBox.Clear();
+            if (messages.Count > 0)
+            {
+                foreach (string message in messages)
                 {
-                    batchTaskService.Execute();
+                    MessagesTextBox.AppendText(message + Environment.NewLine);
                 }
             }
+        }
+
+        private void CancelButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

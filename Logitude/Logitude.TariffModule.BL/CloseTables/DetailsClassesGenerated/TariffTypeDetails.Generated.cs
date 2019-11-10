@@ -52,6 +52,14 @@ namespace Logitude.TariffModule.BL.CLoseTable
                 Code = "OLC", 
                 SearchFields = "OLC,Ocean LCL Freight Cost", 
 			});
+			 
+            all.Add(new TariffTypeDetails()
+            {    
+                TransportModeCode = "O", 
+                Name = "Ocean FCL Freight Cost", 
+                Code = "OFC", 
+                SearchFields = "OFC,Ocean FCL Freight Cost", 
+			});
 			
             return all;
        }
