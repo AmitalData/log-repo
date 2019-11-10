@@ -389,6 +389,10 @@
     <Compile Include="Migrations\201910301311300_BluesnapTransaction_table_khalid.Designer.cs">
       <DependentUpon>201910301311300_BluesnapTransaction_table_khalid.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911100712389_Settings_QBO_Fields_Khalid.cs" />
+    <Compile Include="Migrations\201911100712389_Settings_QBO_Fields_Khalid.Designer.cs">
+      <DependentUpon>201911100712389_Settings_QBO_Fields_Khalid.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
@@ -533,6 +537,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910301311300_BluesnapTransaction_table_khalid.resx">
       <DependentUpon>201910301311300_BluesnapTransaction_table_khalid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911100712389_Settings_QBO_Fields_Khalid.resx">
+      <DependentUpon>201911100712389_Settings_QBO_Fields_Khalid.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
