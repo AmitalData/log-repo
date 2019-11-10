@@ -46,7 +46,7 @@ namespace WebFreight.Web.WcfApi
                 if (declarationApprovalRequestPM != null)
                 {
                     string ShipmentAdditionalDataId = UpdateShipmentAdditionalDataFromIncomingApprovalRequest(declarationApprovalRequestPM, declarationApprovalRequestPM.Tenant);
-                    int ImporterTenant = GetImporterTenantByShipmentNumber(declarationApprovalRequestPM.Tenant, declarationApprovalRequestPM.ShipmentNumber);
+                    int ImporterTenant = GetImporterTenantByShipmentNumber(declarationApprovalRequestPM.Tenant, declarationApprovalRequestPM.ForwarderShipmentNumber);
                     AddQueueToSendApprovalRequestToLogBox(ShipmentAdditionalDataId, declarationApprovalRequestPM.Tenant, ImporterTenant);
                 }
 
@@ -82,7 +82,7 @@ namespace WebFreight.Web.WcfApi
         {
             string shipmentId = string.Empty;
             ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-            ShipmentPM shipmentPM = shipmentQuery.GetSingleShipmentPMByNumber(declarationApprovalRequestPM.ShipmentNumber, tenant);
+            ShipmentPM shipmentPM = shipmentQuery.GetSingleShipmentPMByNumber(declarationApprovalRequestPM.ForwarderShipmentNumber, tenant);
             if (shipmentPM!=null)
             {
                 shipmentPM.IsShipmentAdditionalCloudDataChange = true;

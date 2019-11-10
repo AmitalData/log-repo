@@ -183,6 +183,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\ChargesExternalAccountsByProduct.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CheckDigitControlAlgorithm.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CreditLimitSetting.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\UserLastSettings.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CustomerAdditional.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CustomerDeposition.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CustomsInterface.cs" />
