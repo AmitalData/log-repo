@@ -993,15 +993,15 @@
             if ($(".class_loginParameter").val() == "") {
                 var loginParameter =
                         {
-                            Email: "basel@amital.co.il",
-                            Password: "!B123456",
+                            Email: "yaronc@amital.co.il",
+                            Password: "!Y123456",
                             IsUser: true,
                             CardId: null,
                             CardType: null,
                             ByToken: false,
                             IsMobileLogin: false,
                             GetToken: true,
-                            Tenant: 989
+                            Tenant: 1064
 
                         };
                 $(".class_loginParameter").val(JSON.stringify(loginParameter));
