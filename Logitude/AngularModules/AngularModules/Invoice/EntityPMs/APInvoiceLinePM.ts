@@ -243,6 +243,16 @@ export class APInvoiceLinePM {
     public set PrepaidCollectId(newValue: string) { if (this.prepaidCollectId != newValue) { this.prepaidCollectId = newValue; this.MarkAsDirty("PrepaidCollectId"); } }
        
 	 
+    private containerTypeId: string;
+    public get ContainerTypeId() { return this.containerTypeId; }
+    public set ContainerTypeId(newValue: string) { if (this.containerTypeId != newValue) { this.containerTypeId = newValue; this.MarkAsDirty("ContainerTypeId"); } }
+       
+	 
+    private quantity: number;
+    public get Quantity() { return this.quantity; }
+    public set Quantity(newValue: number) { if (this.quantity != newValue) { this.quantity = newValue; this.MarkAsDirty("Quantity"); } }
+       
+	 
 
     public OldEntityPM: APInvoiceLinePM;
 	    
