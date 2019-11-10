@@ -90,7 +90,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 //55160	עדכון סימון הצהרה כהוגשה אגב מחאה
                 //please do not set the ischanged>DUE THAT IS SP 
-                CustomsStoredProcedures.Declaration_SetIsPaymentProtested(entityPM.DeclarationId, entityPM.Tenant);
+                var repoFast = new DeclarationPaymentProtestRepository(entityPM.Tenant);
+                bool anyDeclarationPaymentProtest = repoFast.AnyDeclarationPaymentProtest(entityPM.DeclarationId, entityPM.Tenant);
+                CustomsStoredProcedures.Declaration_SetIsPaymentProtested(entityPM.DeclarationId, entityPM.Tenant, anyDeclarationPaymentProtest);
 
             }
             //if (isDeclarationPaymentMethodInsert || isDeclarationPaymentMethodDelete)
