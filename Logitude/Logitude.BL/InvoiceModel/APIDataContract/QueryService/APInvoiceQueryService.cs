@@ -45,6 +45,14 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 Tenant myTenant = tenantRepository.GetSingleTenant(tenant);
                 User myUser = userRepository.GetSingleUserByEmail("system@tenant" + tenant + ".com", tenant, false);
 
+                string accountingSysytemCode = "";
+                string payableVATCard = "";
+                if (accountingSetting != null)
+                {
+                    accountingSysytemCode = accountingSetting.AccountingSystemCode;
+                    payableVATCard = accountingSetting.PayableVATCard;
+                }
+
                 APInvoicePM temp = APInvoiceDataMappingAndValidatin(MyEntity, tenant, ComputingPartnerCode);
                 temp.Tenant = tenant;
                 temp.StatusCode = "AD";
@@ -52,7 +60,9 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 temp.UpdatedByUserId = myUser.Id;
                 temp.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                 temp.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-               
+
+                List<TransferStatusCode> transferstatusCodes = new List<TransferStatusCode>();
+
                 if (string.IsNullOrEmpty(temp.BranchId))
                 {
                     temp.BranchId = myUser.BranchId;
@@ -68,6 +78,9 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                     temp.LocalCurrencyId = myTenant.CurrencyId;
                 }
 
+                string billToAccountingCard = temp.CreditAccount;
+                string currencyAccountingCard = temp.AccountingExternalCode;
+
                 if (string.IsNullOrEmpty(temp.VendorId))
                 {
                     throw new ApplicationException("Vendor is required");
@@ -78,6 +91,11 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                     Card vendor = cardRepository.GetSingleCard(temp.VendorId, tenant);
                     if (vendor != null)
                     {
+                        if (string.IsNullOrEmpty(billToAccountingCard))
+                        {
+                            billToAccountingCard = vendor.PayablesAccountingCard;
+                        }
+                        
                         if (string.IsNullOrEmpty(temp.VATNumber))
                         {
                             temp.VATNumber = vendor.VatNumber;
@@ -116,6 +134,15 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
                 else
                 {
+                    Currency invoiceCurrency = CurrencyRepository.GetSingleCurrency(temp.InvoiceCurrencyId, tenant, true);
+                    if(invoiceCurrency != null)
+                    {
+                        if (string.IsNullOrEmpty(currencyAccountingCard))
+                        {
+                            currencyAccountingCard = invoiceCurrency.AccountingExternalCode;
+                        }                        
+                    }
+
                     if (temp.InvoiceCurrencyId == temp.LocalCurrencyId)
                     {
                         if (temp.InvoiceCurrencyExchangeRate != null && temp.InvoiceCurrencyExchangeRate != 0)
@@ -174,7 +201,6 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                         temp.HouseNumber = shipment.House;
                         temp.MasterNumber = shipment.LongMaster;
                         temp.ProfitCurrencyId = shipment.ProfitCurrencyId;
-                        //temp.ProfitCurrencyExchangeRate = this.GetCurrencyRate(this.EntityPM.ProfitCurrencyId);
                         temp.OperationalDate = shipment.OperationalDate;
 
                         switch (shipment.DirectionId)
@@ -198,6 +224,8 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 
                 foreach (APInvoiceLinePM line in temp.InvoiceLines)
                 {
+                    string chargeDebitAccount = line.DebitAccount;                    
+
                     if (string.IsNullOrEmpty(line.ChargesTypeId))
                     {
                         throw new ApplicationException("Line Charges Type is Missing");
@@ -208,6 +236,11 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                         Simplog.Data.CommonDataModel.EntityPOCOs.ChargesType chargesType = ChargesTypeRepository.GetSingleChargesType(line.ChargesTypeId, tenant, true);
                         if(chargesType != null)
                         {
+                            if(string.IsNullOrEmpty(chargeDebitAccount))
+                            {
+                                chargeDebitAccount = chargesType.PayableDebitAccount;
+                            }
+                            
                             line.Description = chargesType.EnglishName;
                             line.LocalDescription = chargesType.LocalName;
 
@@ -237,13 +270,70 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                         }
                     }
 
+                    transferstatusCodes.Add(new TransferStatusCode("CHRGE", chargeDebitAccount));
+
                     if (string.IsNullOrEmpty(line.ForiegnCurrencyId))
                     {
                         line.ForiegnCurrencyId = temp.InvoiceCurrencyId;
                     }                    
 
                     line.EntityReference = temp.MainEntityReference;
-                    line.EntityId = temp.MainEntityId;
+                    line.EntityId = temp.MainEntityId;                    
+                }
+
+                var myGroup = (from a in temp.InvoiceLines
+                               where a.VatTypeId != null
+                               && a.VatPercentage != null
+                               && a.VatPercentage != 0
+                               group a by new { a.VatTypeId, a.ExternalVATCard, } into g
+                               select new
+                               {
+                                   VatTypeId = g.Key.VatTypeId,
+                                   ExternalVATCard = g.Key.ExternalVATCard,
+                               });
+
+                foreach (var g in myGroup)
+                {
+                    string externalVATCard = g.ExternalVATCard;
+
+                    if (string.IsNullOrEmpty(externalVATCard))
+                    {
+                        if (accountingSysytemCode == "HV" || accountingSysytemCode == "RH")
+                        {
+                            externalVATCard = payableVATCard;
+                        }
+                        else
+                        {
+                            Simplog.Data.CommonDataModel.EntityPOCOs.VatType vatType = VatTypeRepository.GetSingleVatType(g.VatTypeId, tenant, true);
+                            if (vatType != null)
+                            {
+                                externalVATCard = vatType.ExternalTAXItemId;
+                            }
+                        }                        
+                    }
+                    
+                    transferstatusCodes.Add(new TransferStatusCode("VAT", externalVATCard));                  
+                }
+                
+                transferstatusCodes.Add(new TransferStatusCode("BLTO", billToAccountingCard));
+                transferstatusCodes.Add(new TransferStatusCode("CURR", currencyAccountingCard));
+
+                string expectedStatus = this.ComputeTransferStatus(transferstatusCodes);    
+                
+                if(!string.IsNullOrEmpty(temp.TransferStatusCode))
+                {
+                    if (temp.TransferStatusCode == "RD" || temp.TransferStatusCode == "NR")
+                    {
+                        if (temp.TransferStatusCode != expectedStatus)
+                        {
+                            throw new ApplicationException("Wrong Transfer Status");
+                        }
+                    }
+                }
+
+                else
+                {
+                    temp.TransferStatusCode = expectedStatus;
                 }
 
                 return temp;
@@ -255,6 +345,16 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             }
         }
 
+        private string ComputeTransferStatus(List<TransferStatusCode> transferstatusCodes)
+        {
+            string expectedStatus = "";
+
+            bool isNotReady = transferstatusCodes.Where(d => string.IsNullOrEmpty(d.ExternalAccount)).Any();
+            expectedStatus = isNotReady ? "NR" : "RD";            
+
+            return expectedStatus;
+        }
+        
         private void SetCurrencyRateData(APInvoicePM invoice)
         {
             if (!string.IsNullOrEmpty(invoice.InvoiceCurrencyId))
@@ -701,5 +801,17 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             CommonDataModel.APIDataContract.ApiV1.Currency currency = currencyQuery.GetCurrencyById(id, tenant);
             return currency;
         }
+    }
+
+    public class TransferStatusCode
+    {
+        public TransferStatusCode(string itemCode, string externalAccount)
+        {
+            ItemCode = itemCode;
+            ExternalAccount = externalAccount;
+        }
+
+        public string ItemCode { get; set; }
+        public string ExternalAccount { get; set; }
     }
 }
