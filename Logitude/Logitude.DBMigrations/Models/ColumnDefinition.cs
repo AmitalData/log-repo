@@ -15,10 +15,13 @@ namespace Logitude.DBMigrations.Models
         public string Name { get; set; }
 
         [XmlAttribute()]
+        public string NewName { get; set; }
+
+        [XmlAttribute()]
         public string Type { get; set; }
 
         [XmlAttribute()]
-        public string Size { get; set; }
+        public int Size { get; set; }
 
         [XmlElement]
         public ConstraintDefinition Constraints { get; set; }

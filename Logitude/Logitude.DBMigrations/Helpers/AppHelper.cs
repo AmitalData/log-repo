@@ -22,15 +22,15 @@ namespace Logitude.DBMigrations.Helpers
                 Console.WriteLine("Generating Script For " + fileName + " Entity ...");
                 string xmlString = File.ReadAllText(DXMLFile);
                 TableDefinition DXMLTable = xmlString.ParseXML<TableDefinition>();
-                TableMigrations tableMigrations = new TableMigrations(DXMLTable);
-                generatedScript += tableMigrations.GetScript();
+                DatabaseMigrations databaseMigrations = new DatabaseMigrations(DXMLTable);
+                generatedScript += databaseMigrations.GetScript();
                 generatedScript += "\n------------------------------------------------\n";
             }
 
             return generatedScript;
         }
 
-        public static void SaveGeneratedScript(string generatedScript)
+        public static void SaveScript(string generatedScript)
         {
             Console.WriteLine("Saving The Generated Script ...");
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
@@ -38,8 +38,8 @@ namespace Logitude.DBMigrations.Helpers
             File.WriteAllText(generatedScriptFilePath, generatedScript);
             Console.WriteLine("The Generated Script Saved Successfully To GeneratedScript/Script.sql");
         }
-
-        public static void ExecuteGeneratedScript(string generatedScript)
+        
+        public static void ExecuteScript(string generatedScript)
         {
             Console.WriteLine("Executing The Generated Script To The Database ...");
             try
