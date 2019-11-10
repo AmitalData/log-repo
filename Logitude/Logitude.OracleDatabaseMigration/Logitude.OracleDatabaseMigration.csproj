@@ -380,6 +380,14 @@
     <Compile Include="Migrations\201910301122411_DecCreateIndex.Designer.cs">
       <DependentUpon>201910301122411_DecCreateIndex.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911031156127_ConsignmentPackDangers.cs" />
+    <Compile Include="Migrations\201911031156127_ConsignmentPackDangers.Designer.cs">
+      <DependentUpon>201911031156127_ConsignmentPackDangers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911040909433_AddDecDangersContact.cs" />
+    <Compile Include="Migrations\201911040909433_AddDecDangersContact.Designer.cs">
+      <DependentUpon>201911040909433_AddDecDangersContact.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -651,6 +659,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910301122411_DecCreateIndex.resx">
       <DependentUpon>201910301122411_DecCreateIndex.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911031156127_ConsignmentPackDangers.resx">
+      <DependentUpon>201911031156127_ConsignmentPackDangers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911040909433_AddDecDangersContact.resx">
+      <DependentUpon>201911040909433_AddDecDangersContact.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>

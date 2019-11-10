@@ -144,6 +144,7 @@ export class DeclarationList {
 	CourierPendingReasonList: string;
 	CargoDescription: string;
 	IsPaymentProtested: boolean;
+	FastIndividualProcessName: string;
 	
 }
  

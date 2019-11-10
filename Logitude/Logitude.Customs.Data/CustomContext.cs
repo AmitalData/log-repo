@@ -180,6 +180,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new ConsignmentPackageMap());
 	
+            modelBuilder.Configurations.Add(new ConsignmentPackDangerMap());
+	
             modelBuilder.Configurations.Add(new ConstraintApprovalDecisionMap());
 	
             modelBuilder.Configurations.Add(new ConstraintProcessTypeMap());
@@ -315,6 +317,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new DecCargoSplitConsItemMap());
 	
             modelBuilder.Configurations.Add(new DecCargoSplitConsPackDetMap());
+	
+            modelBuilder.Configurations.Add(new DecDangersContactMap());
 	
             modelBuilder.Configurations.Add(new DecisionTypeMap());
 	
@@ -1437,6 +1441,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<ConsignmentPackDanger> ConsignmentPackDangers 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<ConstraintApprovalDecision> ConstraintApprovalDecisions 
 	 {
 	      get; set;
@@ -1840,6 +1850,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<DecCargoSplitConsPackDet> DecCargoSplitConsPackDets 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<DecDangersContact> DecDangersContacts 
 	 {
 	      get; set;
 	 

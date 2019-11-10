@@ -703,6 +703,16 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
                     cargoIdentifireMetaData["100"] = this.declarationPM.Consignments[0].ManifestNumber;
                     cargoIdentifireMetaData["101"] = this.declarationPM.Consignments[0].SecondCargoID;
                     cargoIdentifireMetaData["102"] = this.declarationPM.Consignments[0].ThirdCargoID;
+                    if (this.declarationPM.Consignments[0].ManifestDate != null) {
+                        var manifestDate: string = null;
+                        var manifestDateValue: Date = DateTool.GetDateParts(this.declarationPM.Consignments[0].ManifestDate).DateObject;
+                        var day: string = AppTool.PadLeft(manifestDateValue.getUTCDate() + "", 2, '0');
+                        var month: string = AppTool.PadLeft(manifestDateValue.getUTCMonth() + 1 + "", 2, '0');
+                        var year: string = manifestDateValue.getUTCFullYear() + "";
+                        manifestDate = day + "." + month + "." + year.substr(2, 2);
+                        cargoIdentifireMetaData["57"] = manifestDate;
+                    }
+
                     item.SetCustomDocumentMetaData(cargoIdentifireMetaData);
                 }
             }

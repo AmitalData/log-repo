@@ -1093,6 +1093,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             var mySupplierInvoiceQueryService = new SupplierInvoiceQueryService(context);
             var supplierInvoiceFreightAmountQueryService = new SupplierInvoiceFreightAmountQueryService(context);
             var supplierInvoiceModificationQueryService = new SupplierInvoiceModificationQueryService(context);
+            var supplierInvoiceItemssQueryService = new SupplierInvoiceItemQueryService(context);
+
             //var unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(entityPM.Tenant);
             string unifreightUser = null;
             if (RequestSheetContext.Current != null)
@@ -1138,6 +1140,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 supplierInvoiceKeys.InvoiceCounterKey = supplierInvoicePM.InvoiceCounterKey;
                 supplierInvoicePM.SupplierInvoiceFreightAmounts = supplierInvoiceFreightAmountQueryService.GetMulti(supplierInvoiceKeys, false);
                 supplierInvoicePM.SupplierInvoiceModifications = supplierInvoiceModificationQueryService.GetMulti(supplierInvoiceKeys, false);
+                supplierInvoicePM.SupplierInvoiceItems = supplierInvoiceItemssQueryService.GetMulti(supplierInvoiceKeys, false);
             }
             if (this.Multi_LastSIWillUpdateCCU)
             {

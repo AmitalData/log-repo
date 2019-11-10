@@ -96,6 +96,16 @@ namespace Logitude.Customs.Data.EntityLists
        public bool IsReadyForInvoice  { get; set; }
        [DataMember]
        public bool IsAllDecClosedForFollowUp  { get; set; }
+       [DataMember]
+       public int CalcClosedForFollowUp  { get; set; }
+       [DataMember]
+       public int CalcMissingClassification  { get; set; }
+       [DataMember]
+       public int CalcMissingImporterId  { get; set; }
+       [DataMember]
+       public int CalcPendingCustoms  { get; set; }
+       [DataMember]
+       public int CalcPending900  { get; set; }
    }
 
 }

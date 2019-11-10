@@ -928,6 +928,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\SeizureMethodTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\TransferCargoMethodTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\UpdateCodePM.ts" />
+    <TypeScriptCompile Include="Customs\Services\ExtendedLists\CourierMasterExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\CourierPendingReasonExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\CustomsAirlineExtendedPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\CustomsPartnerFtpExtendedPMService.ts" />

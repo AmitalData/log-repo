@@ -2083,6 +2083,12 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
 
         }
 
+        public IDbSet<ConsignmentPackDanger> ConsignmentPackDangers
+        {
+            get; set;
+
+        }
+
         public IDbSet<ConstraintStatus> ConstraintStatuses
         {
             get;
@@ -2919,6 +2925,11 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         public IDbSet<TreatmentWay> TreatmentWays { get; set; }
         public IDbSet<DecCargoSplitConsItem> DecCargoSplitConsItems { get; set; }
         public IDbSet<DecCargoSplitConsPackDet> DecCargoSplitConsPackDets { get; set; }
+        public IDbSet<DecDangersContact> DecDangersContacts
+        {
+            get; set;
+
+        }
         public IDbSet<TPGFileType> TPGFileTypes { get; set; }
         public IDbSet<DecCargoSplitCargoIdentifier> DecCargoSplitCargoIdentifiers { get; set; }
 
@@ -3637,6 +3648,8 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
 
             modelBuilder.Configurations.Add(new ConsignmentPackageMap());
 
+            modelBuilder.Configurations.Add(new ConsignmentPackDangerMap());
+
             modelBuilder.Configurations.Add(new ConstraintApprovalDecisionMap());
 
             modelBuilder.Configurations.Add(new ConstraintProcessTypeMap());
@@ -4025,6 +4038,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new TreatmentWayMap());
             modelBuilder.Configurations.Add(new DecCargoSplitConsItemMap());
             modelBuilder.Configurations.Add(new DecCargoSplitConsPackDetMap());
+            modelBuilder.Configurations.Add(new DecDangersContactMap());
             modelBuilder.Configurations.Add(new TPGFileTypeMap());
             modelBuilder.Configurations.Add(new DecCargoSplitCargoIdentifierMap());
             modelBuilder.Configurations.Add(new PendingErrorPlaceMap());

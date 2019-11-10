@@ -984,6 +984,11 @@ export class DeclarationPM {
     public set IsPaymentProtested(newValue: boolean) { if (this.isPaymentProtested != newValue) { this.isPaymentProtested = newValue; this.MarkAsDirty("IsPaymentProtested"); } }
        
 	 
+    private fastIndividualProcessName: string;
+    public get FastIndividualProcessName() { return this.fastIndividualProcessName; }
+    public set FastIndividualProcessName(newValue: string) { if (this.fastIndividualProcessName != newValue) { this.fastIndividualProcessName = newValue; this.MarkAsDirty("FastIndividualProcessName"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		

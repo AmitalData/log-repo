@@ -244,6 +244,31 @@ export class CourierMasterPM {
     public set IsAllDecClosedForFollowUp(newValue: boolean) { if (this.isAllDecClosedForFollowUp != newValue) { this.isAllDecClosedForFollowUp = newValue; this.MarkAsDirty("IsAllDecClosedForFollowUp"); } }
        
 	 
+    private calcClosedForFollowUp: number;
+    public get CalcClosedForFollowUp() { return this.calcClosedForFollowUp; }
+    public set CalcClosedForFollowUp(newValue: number) { if (this.calcClosedForFollowUp != newValue) { this.calcClosedForFollowUp = newValue; this.MarkAsDirty("CalcClosedForFollowUp"); } }
+       
+	 
+    private calcMissingClassification: number;
+    public get CalcMissingClassification() { return this.calcMissingClassification; }
+    public set CalcMissingClassification(newValue: number) { if (this.calcMissingClassification != newValue) { this.calcMissingClassification = newValue; this.MarkAsDirty("CalcMissingClassification"); } }
+       
+	 
+    private calcMissingImporterId: number;
+    public get CalcMissingImporterId() { return this.calcMissingImporterId; }
+    public set CalcMissingImporterId(newValue: number) { if (this.calcMissingImporterId != newValue) { this.calcMissingImporterId = newValue; this.MarkAsDirty("CalcMissingImporterId"); } }
+       
+	 
+    private calcPendingCustoms: number;
+    public get CalcPendingCustoms() { return this.calcPendingCustoms; }
+    public set CalcPendingCustoms(newValue: number) { if (this.calcPendingCustoms != newValue) { this.calcPendingCustoms = newValue; this.MarkAsDirty("CalcPendingCustoms"); } }
+       
+	 
+    private calcPending900: number;
+    public get CalcPending900() { return this.calcPending900; }
+    public set CalcPending900(newValue: number) { if (this.calcPending900 != newValue) { this.calcPending900 = newValue; this.MarkAsDirty("CalcPending900"); } }
+       
+	 
 
     public OldEntityPM: CourierMasterPM;
 		
