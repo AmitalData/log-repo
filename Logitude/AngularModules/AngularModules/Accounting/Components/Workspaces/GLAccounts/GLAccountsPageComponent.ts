@@ -35,6 +35,7 @@ export class GLAccountsPageComponent implements AfterViewInit {
     public InactiveGLAccountsVisibility: boolean = false;
     public AllGLAccountsVisibility: boolean = false;
     public OpenFilesVisibility: boolean = false;
+    public OpenMastersVisibility: boolean = false;
     public ClosedFilesVisibility: boolean = false;
     public AllFilesVisibility: boolean = false;
     public AllJobsVisibility: boolean = false;
@@ -105,6 +106,8 @@ export class GLAccountsPageComponent implements AfterViewInit {
         this.InactiveGLAccountsVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "INACTIVEGLACCOUNTS") ? true : false;
         this.AllGLAccountsVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "ALLGLACCOUNTS") ? true : false;
         this.OpenFilesVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "OPENFILESGLACCOUNTS") ? true : false;
+        this.OpenMastersVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "GLAccount.Q.OpenMasters") ? true : false;
+ 
         this.ClosedFilesVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "CLOSEDFILESGLACCOUNTS") ? true : false;
         this.AllFilesVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "ALLFILESGLACCOUNTS") ? true : false;
         this.AllJobsVisibility = FeatureLocator.HasFeaturePermession("GLAccount", "ALLJOBSGLACCOUNTS") ? true : false;
@@ -132,6 +135,7 @@ export class GLAccountsPageComponent implements AfterViewInit {
                 this.glAccountSummary.InactiveGLAccountCount = myResult.InactiveGLAccountCount > 1000 ? "1000+" : myResult.InactiveGLAccountCount.toString();
                 this.glAccountSummary.AllGLAccountCount = myResult.AllGLAccountCount > 1000 ? "1000+" : myResult.AllGLAccountCount.toString();
                 this.glAccountSummary.OpenFilesCount = myResult.OpenFilesCount > 1000 ? "1000+" : myResult.OpenFilesCount.toString();
+                this.glAccountSummary.OpenMastersCount = myResult.OpenMastersCount > 1000 ? "1000+" : myResult.OpenMastersCount.toString();
                 this.glAccountSummary.ClosedFilesGLAccountCount = myResult.ClosedFilesGLAccountCount > 1000 ? "1000+" : myResult.ClosedFilesGLAccountCount.toString();
                 this.glAccountSummary.AllFilesCount = myResult.AllFilesCount > 1000 ? "1000+" : myResult.AllFilesCount.toString();
                 this.glAccountSummary.AllJobsCount = myResult.AllJobsCount > 1000 ? "1000+" : myResult.AllJobsCount.toString();
@@ -215,6 +219,15 @@ export class GLAccountsPageComponent implements AfterViewInit {
                     {
                         displayTitle = "Open Files";
                         displayTitle = TextCodeTranslator.Translate("GLAccounts.Q.OpenFiles");
+                        //filters.addAdditionalFilter("AccountTypeCode", "5", null, null, "Equals", false, false, false, "string");
+                        //filters.addAdditionalFilter("BalanceInLocalCurrency", "0", null, null, "NotEqual", true, false, false, "decimal");
+
+                        break;
+                    }
+                case "OpenMasters":
+                    {
+                        displayTitle = "Open Masters";
+                        displayTitle = TextCodeTranslator.Translate("GLAccount.Q.OpenMasters");
                         //filters.addAdditionalFilter("AccountTypeCode", "5", null, null, "Equals", false, false, false, "string");
                         //filters.addAdditionalFilter("BalanceInLocalCurrency", "0", null, null, "NotEqual", true, false, false, "decimal");
 

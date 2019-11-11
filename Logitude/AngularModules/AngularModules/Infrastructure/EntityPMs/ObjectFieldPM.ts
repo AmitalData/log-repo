@@ -477,6 +477,16 @@ export class ObjectFieldPM {
     public set DisplayOnLookUpLocal(newValue: boolean) { if (this.displayOnLookUpLocal != newValue) { this.displayOnLookUpLocal = newValue; this.MarkAsDirty("DisplayOnLookUpLocal"); } }
        
 	 
+    private displayInAutomationAsEnitity: boolean;
+    public get DisplayInAutomationAsEnitity() { return this.displayInAutomationAsEnitity; }
+    public set DisplayInAutomationAsEnitity(newValue: boolean) { if (this.displayInAutomationAsEnitity != newValue) { this.displayInAutomationAsEnitity = newValue; this.MarkAsDirty("DisplayInAutomationAsEnitity"); } }
+       
+	 
+    private recordType: string;
+    public get RecordType() { return this.recordType; }
+    public set RecordType(newValue: string) { if (this.recordType != newValue) { this.recordType = newValue; this.MarkAsDirty("RecordType"); } }
+       
+	 
      
 	private objectFieldValidations: ObjectFieldValidationPM[];
     get  ObjectFieldValidations() {

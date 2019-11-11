@@ -8,11 +8,11 @@
     <Constraints Nullable="false"/>
   </Column>
 
-  <Column Name="FirstName" Type="nText" Size="30">
+  <Column Name="FirstName" Type="Text" Size="35">
     <Constraints Nullable="false"/>
   </Column>
 
-  <Column Name="LastName" Type="nText" Size="20">
+  <Column Name="LastName" Type="Text" Size="25">
     <Constraints Nullable="false"/>
   </Column>
 

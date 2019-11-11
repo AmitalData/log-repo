@@ -1410,9 +1410,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     IsDocumentsArchive = myPOCO.LogBoxTenantSetting.IsDocumentsArchive,
                     CustomerTenantShareImportFile = myPOCO.LogBoxTenantSetting.CustomerTenantShareImportFile,
                     AutoArchiveOnInvoice = myPOCO.LogBoxTenantSetting.AutoArchiveOnInvoice,
-                    StockTypeCode = myPOCO.LogBoxTenantSetting.StockTypeCode,
+                    StockTypeCode = myPOCO.LogBoxTenantSetting != null ? myPOCO.LogBoxTenantSetting.StockTypeCode : null,
                     DocumentShareAsDefault = myPOCO.LogBoxTenantSetting.DocumentShareAsDefault,
-                    LogBoxAdminUserId = myPOCO.LogBoxTenantSetting.LogBoxAdminUserId,
+                    LogBoxAdminUserId = myPOCO.LogBoxTenantSetting != null ? myPOCO.LogBoxTenantSetting.LogBoxAdminUserId : null,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
