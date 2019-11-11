@@ -11256,6 +11256,9 @@ namespace WebFreight.Web.ReportsWebServices
                     GLAccountRecoMethodCode = glaccountPM.ReconcileMethodCode,
                     TenantCurrencySign = tenantPM.CurrencySign,
 
+                    CumulativeForeignAmount = transaction.CumulativeForeignAmount,
+                    CumulativeLocalAmount = transaction.CumulativeLocalAmount,
+
                 };
 
                 transactionsDataProvider.Transactions.Add(reportTransaction);
