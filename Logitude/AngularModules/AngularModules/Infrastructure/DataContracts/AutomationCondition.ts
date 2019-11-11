@@ -20,7 +20,7 @@ export class AutomationCondition {
 
     public UpdatedByUserId: string;
     public ObjectFieldType: string;
-
+    public PartnerObjectFieldId: string;
 
 }
 
