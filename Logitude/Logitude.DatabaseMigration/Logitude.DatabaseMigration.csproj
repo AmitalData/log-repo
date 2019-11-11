@@ -1609,6 +1609,10 @@
     <Compile Include="Migrations\201911071143411_AddContainerTypesFieldsToTariffTable_Bisan.Designer.cs">
       <DependentUpon>201911071143411_AddContainerTypesFieldsToTariffTable_Bisan.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911111425175_FixFieldInAPPayment.cs" />
+    <Compile Include="Migrations\201911111425175_FixFieldInAPPayment.Designer.cs">
+      <DependentUpon>201911111425175_FixFieldInAPPayment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2757,6 +2761,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911071143411_AddContainerTypesFieldsToTariffTable_Bisan.resx">
       <DependentUpon>201911071143411_AddContainerTypesFieldsToTariffTable_Bisan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911111425175_FixFieldInAPPayment.resx">
+      <DependentUpon>201911111425175_FixFieldInAPPayment.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

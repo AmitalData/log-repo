@@ -63,6 +63,11 @@ export class APInvoicePM {
     public set CreatedFromAPI(newValue: boolean) { if (this.createdFromAPI != newValue) { this.createdFromAPI = newValue; this.MarkAsDirty("CreatedFromAPI"); } }
        
 	 
+    private shipmentTransportModeId: string;
+    public get ShipmentTransportModeId() { return this.shipmentTransportModeId; }
+    public set ShipmentTransportModeId(newValue: string) { if (this.shipmentTransportModeId != newValue) { this.shipmentTransportModeId = newValue; this.MarkAsDirty("ShipmentTransportModeId"); } }
+       
+	 
     private invoiceNumber: string;
     public get InvoiceNumber() { return this.invoiceNumber; }
     public set InvoiceNumber(newValue: string) { if (this.invoiceNumber != newValue) { this.invoiceNumber = newValue; this.MarkAsDirty("InvoiceNumber"); } }
@@ -682,6 +687,11 @@ export class APInvoicePM {
     private journalNumber: string;
     public get JournalNumber() { return this.journalNumber; }
     public set JournalNumber(newValue: string) { if (this.journalNumber != newValue) { this.journalNumber = newValue; this.MarkAsDirty("JournalNumber"); } }
+       
+	 
+    private journalId: string;
+    public get JournalId() { return this.journalId; }
+    public set JournalId(newValue: string) { if (this.journalId != newValue) { this.journalId = newValue; this.MarkAsDirty("JournalId"); } }
        
 	 
     private shipmentConcurrencyGUID: string;
