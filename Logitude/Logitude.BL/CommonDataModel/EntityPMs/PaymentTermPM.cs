@@ -49,5 +49,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string CalculatedEnglishName { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string FromDateTypeCode { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string Code { get; set; }
     }
 }
