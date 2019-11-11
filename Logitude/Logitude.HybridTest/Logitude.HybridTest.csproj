@@ -55,6 +55,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommonServices\DocumentTypeTest.cs" />
+    <Compile Include="CommonServices\UserTest.cs" />
+    <Compile Include="CommonServices\SpecialServicesTypeTest.cs" />
+    <Compile Include="CommonServices\StateTest.cs" />
+    <Compile Include="CommonServices\VesselTest.cs" />
+    <Compile Include="CommonServices\ContactTest.cs" />
+    <Compile Include="CommonServices\PackageTypeTest.cs" />
+    <Compile Include="CommonServices\CurrencyTest.cs" />
+    <Compile Include="CommonServices\PortTest.cs" />
+    <Compile Include="CommonServices\QuoteTest.cs" />
+    <Compile Include="CommonServices\ShipmentTest.cs" />
+    <Compile Include="CommonServices\ShippingAgentTest.cs" />
+    <Compile Include="CommonServices\TruckerTest.cs" />
     <Compile Include="CommonServices\VendorTest.cs" />
     <Compile Include="CommonServices\ShippingLineTest.cs" />
     <Compile Include="CommonServices\AccountingPartnerTest.cs" />
@@ -87,7 +100,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Connected Services\ContactServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\CountryServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\CurrencyServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -107,6 +130,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Connected Services\DocumentTypeServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\GlobalZoneServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -122,12 +150,62 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Connected Services\PackageTypeServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\PortServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\QuoteServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\ShipmentServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\ShippingAgentServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\ShippingLineServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Connected Services\SpecialServicesTypeServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\StateServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\TruckerServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\UserServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\VendorServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\VesselServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -225,6 +303,46 @@
     <None Include="Connected Services\CityServiceReference\Logitude.HybridTest.CityServiceReference.GetCityListByCodeResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Connected Services\ContactServiceReference\ContactWcfService.wsdl" />
+    <None Include="Connected Services\ContactServiceReference\ContactWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ContactServiceReference\ContactWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ContactServiceReference\ContactWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ContactServiceReference\ContactWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ContactServiceReference\ContactWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ContactServiceReference\ContactWcfService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ContactServiceReference\ContactWcfService6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ContactServiceReference\ContactWcfService7.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ContactServiceReference\Logitude.HybridTest.ContactServiceReference.ContactList.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\ContactServiceReference\Logitude.HybridTest.ContactServiceReference.ContactPM.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\ContactServiceReference\Logitude.HybridTest.ContactServiceReference.GetContactByExternalIdResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\ContactServiceReference\Logitude.HybridTest.ContactServiceReference.GetContactListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\ContactServiceReference\Logitude.HybridTest.ContactServiceReference.GetContactPMByEmailResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\CountryServiceReference\CountryWcfService.wsdl" />
     <None Include="Connected Services\CountryServiceReference\CountryWcfService.xsd">
       <SubType>Designer</SubType>
@@ -248,6 +366,31 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\CountryServiceReference\Logitude.HybridTest.CountryServiceReference.GetListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CurrencyServiceReference\CurrencyWcfService.wsdl" />
+    <None Include="Connected Services\CurrencyServiceReference\CurrencyWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CurrencyServiceReference\CurrencyWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CurrencyServiceReference\CurrencyWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CurrencyServiceReference\CurrencyWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CurrencyServiceReference\CurrencyWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CurrencyServiceReference\CurrencyWcfService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CurrencyServiceReference\Logitude.HybridTest.CurrencyServiceReference.CurrencyList.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CurrencyServiceReference\Logitude.HybridTest.CurrencyServiceReference.GetListResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\CustomAgentServiceReference\CustomAgentWcfService.wsdl" />
@@ -349,6 +492,40 @@
     <None Include="Connected Services\DepartmentServiceReference\DepartmentWcfService4.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\DocumentTypeServiceReference\DocumentTypeWcfService.wsdl" />
+    <None Include="Connected Services\DocumentTypeServiceReference\DocumentTypeWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\DocumentTypeServiceReference\DocumentTypeWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\DocumentTypeServiceReference\DocumentTypeWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\DocumentTypeServiceReference\DocumentTypeWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\DocumentTypeServiceReference\DocumentTypeWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\DocumentTypeServiceReference\DocumentTypeWcfService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\DocumentTypeServiceReference\DocumentTypeWcfService6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\DocumentTypeServiceReference\Logitude.HybridTest.DocumentTypeServiceReference.DocumentTypeList.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\DocumentTypeServiceReference\Logitude.HybridTest.DocumentTypeServiceReference.DocumentTypePM.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\DocumentTypeServiceReference\Logitude.HybridTest.DocumentTypeServiceReference.GetDocumentTypeByCodeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\DocumentTypeServiceReference\Logitude.HybridTest.DocumentTypeServiceReference.GetDocumentTypesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\GlobalZoneServiceReference\GlobalZoneWcfService.wsdl" />
     <None Include="Connected Services\GlobalZoneServiceReference\GlobalZoneWcfService.xsd">
       <SubType>Designer</SubType>
@@ -406,6 +583,161 @@
     <None Include="Connected Services\LoginServiceReference\Logitude.HybridTest.LoginServiceReference.TenantInfo.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Connected Services\PackageTypeServiceReference\Logitude.HybridTest.PackageTypeServiceReference.GetPackageTypeListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PackageTypeServiceReference\Logitude.HybridTest.PackageTypeServiceReference.PackageTypeList.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PackageTypeServiceReference\PackageTypeWcfService.wsdl" />
+    <None Include="Connected Services\PackageTypeServiceReference\PackageTypeWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\PackageTypeServiceReference\PackageTypeWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\PackageTypeServiceReference\PackageTypeWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\PackageTypeServiceReference\PackageTypeWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\PackageTypeServiceReference\PackageTypeWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\PackageTypeServiceReference\PackageTypeWcfService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\PackageTypeServiceReference\PackageTypeWcfService6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\PortServiceReference\Logitude.HybridTest.PortServiceReference.GetListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PortServiceReference\Logitude.HybridTest.PortServiceReference.GetPortIdResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PortServiceReference\Logitude.HybridTest.PortServiceReference.PortList.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PortServiceReference\PortWcfService.wsdl" />
+    <None Include="Connected Services\PortServiceReference\PortWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\PortServiceReference\PortWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\PortServiceReference\PortWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\PortServiceReference\PortWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\PortServiceReference\PortWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\PortServiceReference\PortWcfService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\PortServiceReference\PortWcfService6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\QuoteServiceReference\Logitude.HybridTest.QuoteServiceReference.GetQuoteListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\QuoteServiceReference\Logitude.HybridTest.QuoteServiceReference.QuoteList.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\QuoteServiceReference\QuoteWcfService.wsdl" />
+    <None Include="Connected Services\QuoteServiceReference\QuoteWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\QuoteServiceReference\QuoteWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\QuoteServiceReference\QuoteWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\QuoteServiceReference\QuoteWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\QuoteServiceReference\QuoteWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\QuoteServiceReference\QuoteWcfService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\QuoteServiceReference\QuoteWcfService6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\QuoteServiceReference\QuoteWcfService7.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\QuoteServiceReference\QuoteWcfService8.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\QuoteServiceReference\QuoteWcfService9.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ShipmentServiceReference\Logitude.HybridTest.ShipmentServiceReference.GetShipmentListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\ShipmentServiceReference\Logitude.HybridTest.ShipmentServiceReference.ShipmentList.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\ShipmentServiceReference\ShipmentWcfService.wsdl" />
+    <None Include="Connected Services\ShipmentServiceReference\ShipmentWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ShipmentServiceReference\ShipmentWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ShipmentServiceReference\ShipmentWcfService10.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ShipmentServiceReference\ShipmentWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ShipmentServiceReference\ShipmentWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ShipmentServiceReference\ShipmentWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ShipmentServiceReference\ShipmentWcfService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ShipmentServiceReference\ShipmentWcfService6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ShipmentServiceReference\ShipmentWcfService7.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ShipmentServiceReference\ShipmentWcfService8.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ShipmentServiceReference\ShipmentWcfService9.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ShippingAgentServiceReference\ShippingAgentWcfService.wsdl" />
+    <None Include="Connected Services\ShippingAgentServiceReference\ShippingAgentWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ShippingAgentServiceReference\ShippingAgentWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ShippingAgentServiceReference\ShippingAgentWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ShippingAgentServiceReference\ShippingAgentWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ShippingAgentServiceReference\ShippingAgentWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ShippingAgentServiceReference\ShippingAgentWcfService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\ShippingLineServiceReference\ShippingLineWcfService.wsdl" />
     <None Include="Connected Services\ShippingLineServiceReference\ShippingLineWcfService.xsd">
       <SubType>Designer</SubType>
@@ -423,6 +755,85 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\ShippingLineServiceReference\ShippingLineWcfService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\SpecialServicesTypeServiceReference\SpecialServicesTypeWcfService.wsdl" />
+    <None Include="Connected Services\SpecialServicesTypeServiceReference\SpecialServicesTypeWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\SpecialServicesTypeServiceReference\SpecialServicesTypeWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\SpecialServicesTypeServiceReference\SpecialServicesTypeWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\SpecialServicesTypeServiceReference\SpecialServicesTypeWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\SpecialServicesTypeServiceReference\SpecialServicesTypeWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\StateServiceReference\StateWcfService.wsdl" />
+    <None Include="Connected Services\StateServiceReference\StateWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\StateServiceReference\StateWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\StateServiceReference\StateWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\StateServiceReference\StateWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\StateServiceReference\StateWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\TruckerServiceReference\TruckerWcfService.wsdl" />
+    <None Include="Connected Services\TruckerServiceReference\TruckerWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\TruckerServiceReference\TruckerWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\TruckerServiceReference\TruckerWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\TruckerServiceReference\TruckerWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\TruckerServiceReference\TruckerWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\TruckerServiceReference\TruckerWcfService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UserServiceReference\Logitude.HybridTest.UserServiceReference.GetUserResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\UserServiceReference\Logitude.HybridTest.UserServiceReference.UserPM.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\UserServiceReference\UserWcfService.wsdl" />
+    <None Include="Connected Services\UserServiceReference\UserWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UserServiceReference\UserWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UserServiceReference\UserWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UserServiceReference\UserWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UserServiceReference\UserWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UserServiceReference\UserWcfService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UserServiceReference\UserWcfService6.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\VendorServiceReference\VendorWcfService.wsdl" />
@@ -447,6 +858,22 @@
     <None Include="Connected Services\VendorServiceReference\VendorWcfService6.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\VesselServiceReference\VesselWcfServcie.wsdl" />
+    <None Include="Connected Services\VesselServiceReference\VesselWcfServcie.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\VesselServiceReference\VesselWcfServcie1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\VesselServiceReference\VesselWcfServcie2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\VesselServiceReference\VesselWcfServcie3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\VesselServiceReference\VesselWcfServcie4.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Logitude.Server.Tools.Response.datasource" />
   </ItemGroup>
@@ -464,15 +891,28 @@
     <WCFMetadataStorage Include="Connected Services\AgentServiceReference\" />
     <WCFMetadataStorage Include="Connected Services\BranchServiceReference\" />
     <WCFMetadataStorage Include="Connected Services\CityServiceReference\" />
+    <WCFMetadataStorage Include="Connected Services\ContactServiceReference\" />
     <WCFMetadataStorage Include="Connected Services\CountryServiceReference\" />
+    <WCFMetadataStorage Include="Connected Services\CurrencyServiceReference\" />
     <WCFMetadataStorage Include="Connected Services\CustomAgentServiceReference\" />
     <WCFMetadataStorage Include="Connected Services\CustomerServiceReference\" />
     <WCFMetadataStorage Include="Connected Services\DepartmentServiceReference\" />
+    <WCFMetadataStorage Include="Connected Services\DocumentTypeServiceReference\" />
     <WCFMetadataStorage Include="Connected Services\GlobalZoneServiceReference\" />
     <WCFMetadataStorage Include="Connected Services\AirlineServiceReference\" />
     <WCFMetadataStorage Include="Connected Services\LoginServiceReference\" />
+    <WCFMetadataStorage Include="Connected Services\PackageTypeServiceReference\" />
+    <WCFMetadataStorage Include="Connected Services\PortServiceReference\" />
+    <WCFMetadataStorage Include="Connected Services\QuoteServiceReference\" />
+    <WCFMetadataStorage Include="Connected Services\ShipmentServiceReference\" />
+    <WCFMetadataStorage Include="Connected Services\ShippingAgentServiceReference\" />
     <WCFMetadataStorage Include="Connected Services\ShippingLineServiceReference\" />
+    <WCFMetadataStorage Include="Connected Services\SpecialServicesTypeServiceReference\" />
+    <WCFMetadataStorage Include="Connected Services\StateServiceReference\" />
+    <WCFMetadataStorage Include="Connected Services\TruckerServiceReference\" />
+    <WCFMetadataStorage Include="Connected Services\UserServiceReference\" />
     <WCFMetadataStorage Include="Connected Services\VendorServiceReference\" />
+    <WCFMetadataStorage Include="Connected Services\VesselServiceReference\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\BranchServiceReference\BranchWcfService.disco" />
@@ -665,6 +1105,201 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\VendorServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\TruckerServiceReference\TruckerWcfService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\TruckerServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\TruckerServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\TruckerServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ShippingAgentServiceReference\ShippingAgentWcfService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ShippingAgentServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ShippingAgentServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ShippingAgentServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ShipmentServiceReference\ShipmentWcfService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ShipmentServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ShipmentServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ShipmentServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\PortServiceReference\PortWcfService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\PortServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\PortServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\PortServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\QuoteServiceReference\QuoteWcfService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\QuoteServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\QuoteServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\QuoteServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\CurrencyServiceReference\CurrencyWcfService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\CurrencyServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\CurrencyServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\CurrencyServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\PackageTypeServiceReference\PackageTypeWcfService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\PackageTypeServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\PackageTypeServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\PackageTypeServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ContactServiceReference\ContactWcfService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ContactServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ContactServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ContactServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\VesselServiceReference\VesselWcfServcie.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\VesselServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\VesselServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\VesselServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\StateServiceReference\StateWcfService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\StateServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\StateServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\StateServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\SpecialServicesTypeServiceReference\SpecialServicesTypeWcfService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\SpecialServicesTypeServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\SpecialServicesTypeServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\SpecialServicesTypeServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\DocumentTypeServiceReference\DocumentTypeWcfService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\DocumentTypeServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\DocumentTypeServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\DocumentTypeServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\UserServiceReference\UserWcfService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\UserServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\UserServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\UserServiceReference\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
