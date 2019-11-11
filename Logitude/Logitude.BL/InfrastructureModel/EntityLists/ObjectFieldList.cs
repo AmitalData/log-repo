@@ -74,6 +74,8 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public bool EnableFullscreenTextBox { get; set; }
         public bool DisplayInAutomationAsEnitity { get; set; }
         public string RecordType { get; set; }
+        public string ObjectTable_LookUpTableName { get; set; }
+        
 
     }
 }
