@@ -79,6 +79,7 @@ export class AWBWizardComponent {
         this.myPartnersDomainService = new PartnersDomainService();
 
         ServiceLocator.SendTotangoUserActivity("AWBWizard", "View");
+
     }
 
     SetWindowArgs(windowArgs: AWBWizardArgs) {
