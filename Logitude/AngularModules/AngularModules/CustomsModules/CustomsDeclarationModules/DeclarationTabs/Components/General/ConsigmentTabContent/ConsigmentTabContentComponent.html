@@ -422,17 +422,17 @@
                     <tr>
                         <td colspan="2" style="height: 100%;">
                             <div class="CellContent">
-
+                                <!--                                                     [Disabled]="IsDisplayOnly"
+     -->
                                 <logitude-edit-grid GridWidth="100%" GridHeight="100%"
                                                     [ItemSource]="ConsimentPackages"
-                                                    [Disabled]="IsDisplayOnly"
                                                     (RowEnded)="OnRowEnded($event)"
                                                     (Ondblclick)="OnFocus()"
                                                     (SelectedItemChanged)="OnRowSelected($event)"
                                                     [SelectedRow]="SelectedRow">
 
                                     <!-- PackageMeasureQualifierCode -->
-                                    <log-column [header]="'Customs.ConsignmentPackage.F.PackageMeasureQualifierCode' | TextCodeTranslationPipe" [width]="'200'" [Alignment]="'right'" [binding]="'PackageMeasureQualifierCode'">
+                                    <log-column [header]="'Customs.ConsignmentPackage.F.PackageMeasureQualifierCode' | TextCodeTranslationPipe"      [Disabled]="IsDisplayOnly" [width]="'200'" [Alignment]="'right'" [binding]="'PackageMeasureQualifierCode'">
                                         <log-cell-template template="let item" #logcelltemplate>
                                             <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.PackageMeasureQualifierName}}</span>
@@ -543,15 +543,17 @@
                                         <log-cell-template template="let item" [IgnoreMods]="true" [TabIndex]="-1">
                                             <!--<span class="CellSeparator"></span>-->
                                             <table>
-                                                <tr><td>
-    <IconButton [Name]="'Delete'" [IsSmall]="true" [IsIconOnly]="true"
-                style="display: block; float: right; margin: 3px;" (click)="RemovePackageButton(item)"></IconButton>
-</td>
+                                                <tr>
+                                                    <td>
+                                                        <IconButton [Name]="'Delete'" [IsSmall]="true" [IsIconOnly]="true"
+                                                                    style="display: block; float: right; margin: 3px;" (click)="RemovePackageButton(item)"></IconButton>
+                                                    </td>
                                                     <td>
                                                         <IconButton [Name]="'Edit'" [IsSmall]="true" [IsIconOnly]="true"
                                                                     style="display: block; float: right; margin: 3px;" (click)="OpenEditDangerWindow(item)"></IconButton>
 
-                                                    </td></tr>
+                                                    </td>
+                                                </tr>
                                             </table>
                                         </log-cell-template>
                                     </log-column>

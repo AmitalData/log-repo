@@ -1,4 +1,4 @@
-﻿import {ClassLevelValidator} from './ClassLevelValidator';
+import {ClassLevelValidator} from './ClassLevelValidator';
 
 export class Validator {
     public static TryValidateObject(instance: Object, tableName: string, errors: string[]) {

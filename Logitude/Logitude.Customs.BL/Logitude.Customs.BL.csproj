@@ -1269,6 +1269,7 @@
     <Compile Include="EntityUpdateServices\ClaimsRelatedEntsReasonsExpUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClientDrivingLicenseTypeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClientDrivingLicenseUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\DecDangersContactUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ConsignmentPackDangerUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CourierPendingReasonUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CustomsAirlineUpdateService.cs" />

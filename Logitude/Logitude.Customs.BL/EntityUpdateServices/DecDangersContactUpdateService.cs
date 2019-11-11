@@ -15,14 +15,12 @@ using System.ComponentModel;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
-    public partial class ConsignmentPackDangerUpdateService : EntityUpdateService<ConsignmentPackDanger, ConsignmentPackDangerPM, ConsignmentPackagePM >
+    public partial class DecDangersContactUpdateService : EntityUpdateService<DecDangersContact, DecDangersContactPM, DeclarationPM >
     {
-        protected override void OnCreating(ConsignmentPackDangerPM entityPM, ConsignmentPackagePM entityParentPM)
+        protected override void OnCreating(DecDangersContactPM entityPM, DeclarationPM entityParentPM)
         {
-            entityPM.DeclarationId = entityParentPM.DeclarationId;
-            entityPM.ConsignmentNumber = entityParentPM.ConsignmentNumber;
-            entityPM.LineNumber = entityParentPM.LineNumber;
-            entityPM.DangerousLineNo = 1;
+            entityPM.DeclarationId = entityParentPM.Id;
+  
          }
  
 

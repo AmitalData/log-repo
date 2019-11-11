@@ -457,10 +457,10 @@ export class ConsigmentTabContentComponent
              var windowArgs: any = {};
             windowArgs.ConsignmentPackagesDangerPM = item.EntityPM;
             windowArgs.Declaration = this.declarationPM;
-
+             
             windowArgs.Parent = item;
-            //windowArgs.IsDisplayOnly = this.Parent.IsReadOnly;
-
+            windowArgs.IsDisplayOnly = this.IsDisplayOnly;
+            debugger;
             var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ConsignmentPackagesDanger");
 
             var logWindow = new LogitudeWindow();

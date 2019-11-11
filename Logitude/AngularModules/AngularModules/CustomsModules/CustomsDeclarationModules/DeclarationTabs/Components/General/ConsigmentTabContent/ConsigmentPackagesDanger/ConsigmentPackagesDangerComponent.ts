@@ -6,6 +6,9 @@ import { DecDangersContactPM } from '../../../../../../../Customs/EntityPMs/DecD
 import { SessionLocator } from '../../../../../../../Infrastructure/Utilities/SessionLocator';
 import { Validator } from '../../../../../../../Infrastructure/Validators/Validator';
 import { DeclarationValidator } from '../../../../../../../Customs/Validators/DeclarationValidator';
+import { ConsignmentPackagePM } from '../../../../../../../Customs/EntityPMs/ConsignmentPackagePM';
+import { DeclarationPM } from '../../../../../../../Customs/EntityPMs/DeclarationPM';
+import { TextCodeTranslator } from '../../../../../../../Infrastructure/Utilities/TextCodeTranslator';
 
 
 @Component({
@@ -26,13 +29,15 @@ export class ConsigmentPackagesDangerComponent
     public ClonedConsignmentPackDangerPM: ConsignmentPackDangerPM; 
 
     public OriginalDecDangersContactPM: DecDangersContactPM;
-    public ClonedDecDangersContactPM: DecDangersContactPM; 
+    public ClonedDecDangersContactPM: DecDangersContactPM;
+    public IsDisplayOnly: boolean;
+    public IsDisplayOnlyContact: boolean;
 
     private CurrentSession = SessionLocator.SelectedSession;
     public ValidationErrorsList: any[] = [];
     public declarationValidator: DeclarationValidator = new DeclarationValidator();
-
-
+    public Package: ConsignmentPackagePM;
+    public Declaration: DeclarationPM;
 
     public get UNCode() { return this.OriginalConsignmentPackDangerPM ? this.OriginalConsignmentPackDangerPM.UNCode : null; }
     public set UNCode(newValue: string) { this.OriginalConsignmentPackDangerPM.UNCode = newValue; }
@@ -65,11 +70,7 @@ export class ConsigmentPackagesDangerComponent
     public get ContactCommTypeCode() { return this.OriginalDecDangersContactPM ? this.OriginalDecDangersContactPM.ContactCommTypeCode : null; }
     public set ContactCommTypeCode(newValue: string) { this.OriginalDecDangersContactPM.ContactCommTypeCode = newValue; }
 
-    //public get DeclarationId() { return this.OriginalDecDangersContactPM ? this.OriginalDecDangersContactPM.DeclarationId : null; }
-    //public set DeclarationId(newValue: string) {
-    //    debugger;
-    //    this.OriginalDecDangersContactPM.DeclarationId = this.args2.Parent.DeclarationId;
-    //}
+ 
 
     constructor() {
         super();
@@ -78,33 +79,39 @@ export class ConsigmentPackagesDangerComponent
 
     ngOnInit(): void {
     }
-    public args2: any;
-    SetWindowArgs(args: any) {
+     SetWindowArgs(args: any) {
 
         SessionLocator.SelectedSession.entityResourceService.getEntityResourceByTableName("Customs.DecDangersContact", 0).subscribe(response => {
 
             SessionLocator.SelectedSession.entityResourceService.getEntityResourceByTableName("Customs.ConsignmentPackDanger", 0).subscribe(response => {
                 if (!AppTool.IsNullOrEmpty(args)) {
-                    this.args2 = args;
-                    if (args.ConsignmentPackagesDangerPM.consignmentPackDangers != undefined) {
+
+                    this.IsDisplayOnly = args.IsDisplayOnly;
+
+                    if (args.ConsignmentPackagesDangerPM.consignmentPackDangers != undefined && args.ConsignmentPackagesDangerPM.consignmentPackDangers.length > 0) {
                         this.OriginalConsignmentPackDangerPM = args.ConsignmentPackagesDangerPM.consignmentPackDangers[0];
                         this.ClonedConsignmentPackDangerPM = this.CloneConsignmentPackDangerPM(args.ConsignmentPackagesDangerPM.consignmentPackDangers[0]);
                     }
                    else
 
                     {
-                         this.OriginalConsignmentPackDangerPM = new ConsignmentPackDangerPM(null);
-                        //this.OriginalConsignmentPackDangerPM.DeclarationId = args.Parent.declarationId;
-                        //this.OriginalConsignmentPackDangerPM.ConsignmentNumber = args.ConsignmentPackagesDangerPM.consignmentNumber;
-                        //this.OriginalConsignmentPackDangerPM.LineNumber = args.ConsignmentPackagesDangerPM.lineNumber;
-                   }
-                    if (args.Declaration.DecDangersContacts != undefined) {
+                         this.OriginalConsignmentPackDangerPM = new ConsignmentPackDangerPM(args.Parent.EntityPM);
+                         this.Package = args.Parent.EntityPM;
+                     }
+                    if (args.Declaration.DecDangersContacts != undefined && args.Declaration.DecDangersContacts.length > 0 ) {
 
                         this.OriginalDecDangersContactPM = args.Declaration.DecDangersContacts[0];
                         this.ClonedDecDangersContactPM = this.CloneDecDangersContactPM(args.Declaration.DecDangersContacts[0]);
                     }
-                   this. finishedLoad = true;
 
+                    else {
+                        debugger;
+                        this.OriginalDecDangersContactPM = new DecDangersContactPM(null);
+                        this.Declaration = args.Declaration;
+                    }
+                   this.finishedLoad = true;
+                    this.SetScreenFieldsEditability();
+                    this.SetContactFieldsEditability();
                 }
 
 
@@ -157,45 +164,84 @@ export class ConsigmentPackagesDangerComponent
     }
 
     OkButtonClicked() {
+
         var errors = [];
 
-        debugger;
-        errors = this.declarationValidator.validatePackagesDanger(this.OriginalDecDangersContactPM, this.OriginalConsignmentPackDangerPM);
+        if (this.OriginalConsignmentPackDangerPM.DeclarationId == undefined && this.Package != undefined) {
+            this.OriginalConsignmentPackDangerPM.DeclarationId = "-1";// this.Package.DeclarationId;
+            this.OriginalConsignmentPackDangerPM.LineNumber = -1 ;//this.Package.LineNumber;
+            this.OriginalConsignmentPackDangerPM.ConsignmentNumber =  -1 ;//this.Package.ConsignmentNumber;
+            this.OriginalConsignmentPackDangerPM.DangerousLineNo = 1;
+            this.Package.AddConsignmentPackDanger(this.OriginalConsignmentPackDangerPM);
 
-      //  errors = this.ValidateCustomsItemField();
+         }
+        if (this.OriginalDecDangersContactPM.DeclarationId == undefined && this.Declaration != undefined) {
+            this.OriginalDecDangersContactPM.DeclarationId = this.Declaration.Id;
+            this.Declaration.AddDecDangersContact(this.OriginalDecDangersContactPM);
+         }
+ 
+       errors = this.ValidateCustomsItemField();
+
 
         if (errors.length > 0) {
             this.ValidationErrorsList = errors;
         } else {
+
+
             this.CurrentSession.CloseCurrentWindow();
         }
 
-        //if (!isValid)
-        //    return;
-
- 
-
-      //  this.ValidationErrorsList = errors;
-      ////  errors = this.declarationValidator.ValidateSupplierInvoiceItem(this.OriginalConsignmentPackDangerPM);
-
-      //  if (errors.length > 0) {
-      //      this.ValidationErrorsList = errors;
-      //  } else {
-      //      this.CurrentSession.CloseCurrentWindow();
-      //  }
+    
     }
     ValidateCustomsItemField() {
         var errors = [];
+         Validator.TryValidateObject(this.OriginalDecDangersContactPM, this.ObjectTableNameContact, errors);
+         Validator.TryValidateObject(this.OriginalConsignmentPackDangerPM, this.ObjectTableName, errors);
 
-        Validator.TryValidateObject(this.OriginalDecDangersContactPM, this.ObjectTableNameContact, errors);
-        Validator.TryValidateObject(this.OriginalConsignmentPackDangerPM, this.ObjectTableName, errors);
+        if (!this.validationTemperature(this.OriginalConsignmentPackDangerPM.FlashpointTemperature))
+            errors.push(TextCodeTranslator.Translate("Customs.ConsignmentPackDanger.O.FlashpointTemperature") + "-" +TextCodeTranslator.Translate("Customs.General.O.PackageDangerTempValid"));
+        if (!this.validationTemperature(this.OriginalConsignmentPackDangerPM.StorageTemperature))
+            errors.push(TextCodeTranslator.Translate("Customs.ConsignmentPackDanger.O.StorageTemperature") + "-" +TextCodeTranslator.Translate("Customs.General.O.PackageDangerTempValid"));
 
         return errors;
-        // throw new Error("Method not implemented.");
-    }
+     }
 
     ngOnDestroy(): void {
-       // throw new Error("Method not implemented.");
     }
+
+
+    validationTemperature(temperature) {
+        var re = /^[\d\-+]+$/m;
+
+        if (re.exec(temperature) !== null && temperature != undefined) 
+             return true;
+ 
+         return false;
+    }
+
+
+    SetScreenFieldsEditability() {
+        this.UIProperties.SetEnabled("UNCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("DangerousGoodsPackingReqCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("FlashpointTemperature", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("StorageTemperature", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("CompanyName", this.ObjectTableNameContact, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("CompanyCommNumber", this.ObjectTableNameContact, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("CompanyCommTypeCode", this.ObjectTableNameContact, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("ContactCommNumber", this.ObjectTableNameContact, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("ContactName", this.ObjectTableNameContact, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("ContactCommTypeCode", this.ObjectTableNameContact, !this.IsDisplayOnly);
+
+     }
+
+    SetContactFieldsEditability() {
+        this.UIProperties.SetEnabled("CompanyName", this.ObjectTableNameContact, !this.IsDisplayOnlyContact);
+        this.UIProperties.SetEnabled("CompanyCommNumber", this.ObjectTableNameContact, !this.IsDisplayOnlyContact);
+        this.UIProperties.SetEnabled("CompanyCommTypeCode", this.ObjectTableNameContact, !this.IsDisplayOnlyContact);
+        this.UIProperties.SetEnabled("ContactCommNumber", this.ObjectTableNameContact, !this.IsDisplayOnlyContact);
+        this.UIProperties.SetEnabled("ContactName", this.ObjectTableNameContact, !this.IsDisplayOnlyContact);
+        this.UIProperties.SetEnabled("ContactCommTypeCode", this.ObjectTableNameContact, !this.IsDisplayOnlyContact);
+    }
+
 
 }

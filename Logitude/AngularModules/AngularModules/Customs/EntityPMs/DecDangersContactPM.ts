@@ -108,4 +108,4 @@ export class DecDangersContactPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

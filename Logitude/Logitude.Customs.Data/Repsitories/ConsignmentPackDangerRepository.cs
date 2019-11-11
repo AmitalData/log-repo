@@ -21,7 +21,7 @@ namespace Logitude.Customs.Data.Repsitories
             ConsignmentPackageKeys consignmentPackageKeys = entityKeys as ConsignmentPackageKeys;
 
             return (from a in context.ConsignmentPackDangers
-                    where a.DeclarationId == consignmentPackageKeys.DeclarationId
+                    where a.DeclarationId == consignmentPackageKeys.DeclarationId && a.LineNumber == consignmentPackageKeys.LineNumber && a.ConsignmentNumber ==consignmentPackageKeys.ConsignmentNumber
                     select a).ToList();
         }
 

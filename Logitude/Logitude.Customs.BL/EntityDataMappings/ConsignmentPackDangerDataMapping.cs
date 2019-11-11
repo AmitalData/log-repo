@@ -19,8 +19,14 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPMToPOCO(ConsignmentPackDangerPM entityPM, ConsignmentPackDanger entityPOCO)
         {
-            //throw new NotImplementedException();
-        }
+            if (entityPM != null)
+            {
+                entityPOCO.DeclarationId = entityPM.DeclarationId;
+                entityPOCO.DangerousLineNo = entityPM.DangerousLineNo;
+                entityPOCO.ConsignmentNumber = entityPM.ConsignmentNumber;
+                entityPOCO.LineNumber = entityPM.LineNumber;
+
+            }        }
 
         public void CustomPOCOToPM(ConsignmentPackDangerPM entityPM, ConsignmentPackDanger entityPOCO)
         {
