@@ -82,10 +82,10 @@ namespace CommunicationWorkerRole
                     catch (Exception exception)
                     {
                         ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Document execution queue worker role start", null, null);
-                        Thread.Sleep(new TimeSpan(0, 0, 1));
+                        Thread.Sleep(new TimeSpan(0, 0, 0, 0, 250));
                     }
                 }
-                else Thread.Sleep(new TimeSpan(0, 0, 1));
+                else Thread.Sleep(new TimeSpan(0, 0, 0, 0, 250));
             }
         }
 
@@ -94,7 +94,7 @@ namespace CommunicationWorkerRole
         private void ExecuteQueue()
         {
             queueService = new DbQueueService("DocumentsExecutionQueue", 0);
-            var queueResponse = queueService.Receive(new TimeSpan(0, 0, 1));
+            var queueResponse = queueService.Receive(new TimeSpan(0, 0, 0, 0 ,250));
             if (queueResponse != null && queueResponse.MessageId != null)
             {
                 ThreadStart executeDocumentsThreadStart = (() => new DocumentsExecutionService(queueService, queueResponse).ExecuteDocumentsExecutionQueue());
@@ -105,7 +105,7 @@ namespace CommunicationWorkerRole
             }
             else
             {
-                Thread.Sleep(new TimeSpan(0, 0, 1));
+                Thread.Sleep(new TimeSpan(0, 0, 0, 0, 250));
             }
         }
 

@@ -1,0 +1,19 @@
+﻿<Table Name="Packages">
+
+  <Column Name="Id" Type="Text" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false"/>
+  </Column>
+
+  <Column Name="Name" Type="nText" Size="50">
+    <Constraints Nullable="false"/>
+  </Column>
+
+  <Column Name="Type" Type="nText" Size="25">
+    <Constraints Nullable="false"/>
+  </Column>
+
+  <Column Name="Description" Type="nText" Size="100">
+    <Constraints Nullable="false"/>
+  </Column>
+
+</Table>

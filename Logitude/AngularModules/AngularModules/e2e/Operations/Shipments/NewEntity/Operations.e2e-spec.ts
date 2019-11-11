@@ -28,8 +28,8 @@ describe('Operations Module', () => {
         page.EditShipment(shipperRef1);
         page.SaveShip();
     });
-    //it('Shipment Actions .. ', function () {
-    //    browser.ignoreSynchronization = true;
-    //    page.DoShipmentAction('multiActions');
-    //});
+    it('Shipment Actions .. ', function () {
+        browser.ignoreSynchronization = true;
+        page.DoShipmentAction('multiActions');
+    });
 });

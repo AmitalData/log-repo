@@ -1383,6 +1383,121 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private string containerType1Id ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContainerType1Id  
+	   {
+	    
+	     get
+		{
+		   return containerType1Id;
+		 }
+		 set
+		 {
+		   if(containerType1Id != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContainerType1Id",OldValue=containerType1Id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   containerType1Id=value;
+		   }
+			
+		 }
+	   }
+	  private string containerType2Id ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContainerType2Id  
+	   {
+	    
+	     get
+		{
+		   return containerType2Id;
+		 }
+		 set
+		 {
+		   if(containerType2Id != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContainerType2Id",OldValue=containerType2Id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   containerType2Id=value;
+		   }
+			
+		 }
+	   }
+	  private string containerType3Id ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContainerType3Id  
+	   {
+	    
+	     get
+		{
+		   return containerType3Id;
+		 }
+		 set
+		 {
+		   if(containerType3Id != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContainerType3Id",OldValue=containerType3Id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   containerType3Id=value;
+		   }
+			
+		 }
+	   }
+	  private string containerType4Id ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContainerType4Id  
+	   {
+	    
+	     get
+		{
+		   return containerType4Id;
+		 }
+		 set
+		 {
+		   if(containerType4Id != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContainerType4Id",OldValue=containerType4Id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   containerType4Id=value;
+		   }
+			
+		 }
+	   }
+	  private string containerType5Id ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContainerType5Id  
+	   {
+	    
+	     get
+		{
+		   return containerType5Id;
+		 }
+		 set
+		 {
+		   if(containerType5Id != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContainerType5Id",OldValue=containerType5Id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   containerType5Id=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
+using System.Linq;
+
+namespace Logitude.DBMigrations.Models
+{
+    public class TableMigrations
+    {
+        public string TableName { get; set; }
+        public List<ColumnMigrations> ColumnsMigrations { get; set; }
+    }
+}

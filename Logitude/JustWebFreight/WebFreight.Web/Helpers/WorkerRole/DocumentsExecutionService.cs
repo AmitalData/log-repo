@@ -11,6 +11,7 @@ using WebFreight.Web.DataContracts;
 using Logitude.Server.Tools.Helpers;
 using System.Threading.Tasks;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using System.Threading;
 
 namespace WebFreight.Web.Helpers.WorkerRoleHelpers
 {
@@ -105,14 +106,12 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
                 {
                     queueService.DelayAndReturnBackToQueue(new TimeSpan(0, 0, 0, 5), queueResponse.MessageId);
                 }
-                if (queueResponse.RetryNumber >= 2)
-                {
-                    queueService.CompleteAsFailed();
-                }
+                if (queueResponse.RetryNumber >= 2) queueService.CompleteAsFailed();
             }
             else queueService.CompleteAsFailed();
 
             UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { Exception = exception.InnerException != null ? exception.InnerException : exception });
+            Thread.Sleep(new TimeSpan(0, 0, 0, 0, 250));
         }
 
         private DocumentsExecutionLog GetDocumentsExecutionLog()

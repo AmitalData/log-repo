@@ -94,7 +94,7 @@ namespace WebFreight.Web.App_Code
                 {
                     SecurityUtility.AuthenticationOnTenant(ApprovalRequest.Tenant);
                     ShipmentQuery ShipmentQuery = new ShipmentQuery(ApprovalRequest.Tenant);
-                    var LogBoxShipment = ShipmentQuery.GetSinglePMByForwarderShipmentNumber(ApprovalRequest.ShipmentNumber, ApprovalRequest.Tenant);
+                    var LogBoxShipment = ShipmentQuery.GetSinglePMByForwarderShipmentNumber(ApprovalRequest.ForwarderShipmentNumber, ApprovalRequest.Tenant);
                     if (LogBoxShipment != null)
                     {
                         LogBoxShipment.IsImporterApprovalRequired = true;
@@ -109,7 +109,7 @@ namespace WebFreight.Web.App_Code
                     {
                         APIException Responce = new APIException();
                         Responce.ErrorType = "Invalid Shipment";
-                        Responce.ErrorMessage = "can't find Shipment with Forwarder Number " + ApprovalRequest.ShipmentNumber;
+                        Responce.ErrorMessage = "can't find Shipment with Forwarder Number " + ApprovalRequest.ForwarderShipmentNumber;
                         return Request.CreateResponse(HttpStatusCode.BadRequest, Responce);
                     }
                 }

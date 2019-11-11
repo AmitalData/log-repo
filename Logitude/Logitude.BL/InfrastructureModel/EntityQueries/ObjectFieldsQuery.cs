@@ -137,6 +137,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              CopyToDW = a.CopyToDW,
                                              DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
                                              EnableFullscreenTextBox = a.EnableFullscreenTextBox,
+                                             RecordType =a.RecordType,
+                                             DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                          }).FirstOrDefault();
 
             ObjectFieldValidationQuery objectFieldValidationQuery = new ObjectFieldValidationQuery(tenant);
@@ -227,6 +229,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      CopyToDW = a.CopyToDW,
                                                      DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
                                                      EnableFullscreenTextBox = a.EnableFullscreenTextBox,
+                                                     RecordType = a.RecordType,
+                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                  };
             return result;
         }
@@ -325,6 +329,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     CopyToDW = a.CopyToDW,
                                                     DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
                                                     EnableFullscreenTextBox = a.EnableFullscreenTextBox,
+                                                    RecordType = a.RecordType,
+                                                    DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                 }).ToList();
 
             return Get_List_Of_ObjectFields_With_Modifications_And_Validations(objectFields, tenant);
@@ -435,6 +441,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              CopyToDW = a.CopyToDW,
                                              DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
                                              EnableFullscreenTextBox = a.EnableFullscreenTextBox,
+                                             RecordType = a.RecordType,
+                                             DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                          }).FirstOrDefault();
 
             ObjectFieldValidationQuery objectFieldValidationQuery = new ObjectFieldValidationQuery(tenant);
@@ -546,6 +554,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     CopyToDW = a.CopyToDW,
                                                     DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
                                                     EnableFullscreenTextBox = a.EnableFullscreenTextBox,
+                                                    RecordType = a.RecordType,
+                                                    DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                 }).OrderBy(o => o.FieldName).ToList();
 
             return Get_List_Of_ObjectFields_With_Modifications_And_Validations(objectFields, tenant);
@@ -658,6 +668,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              CopyToDW = a.CopyToDW,
                                              DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
                                              EnableFullscreenTextBox = a.EnableFullscreenTextBox,
+                                             RecordType = a.RecordType,
+                                             DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                          }).FirstOrDefault();
             if (mod != null)
             {
@@ -775,6 +787,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     CopyToDW = a.CopyToDW,
                                                     DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
                                                     EnableFullscreenTextBox = a.EnableFullscreenTextBox,
+                                                    RecordType = a.RecordType,
+                                                    DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                 }).ToList();
 
             return Get_List_Of_ObjectFields_With_Modifications_And_Validations(objectFields, tenant);
@@ -884,6 +898,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     CopyToDW = a.CopyToDW,
                                                     DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
                                                     EnableFullscreenTextBox = a.EnableFullscreenTextBox,
+                                                    RecordType = a.RecordType,
+                                                    DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                 }).ToList();
             return objectfields;
         }
@@ -991,6 +1007,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         CopyToDW = a.CopyToDW,
                         DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
                         EnableFullscreenTextBox = a.EnableFullscreenTextBox,
+                        RecordType = a.RecordType,
+                        DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                     }).ToList();
         }
 
@@ -1098,6 +1116,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     CopyToDW = a.CopyToDW,
                                                     DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
                                                     EnableFullscreenTextBox = a.EnableFullscreenTextBox,
+                                                    RecordType = a.RecordType,
+                                                    DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                 }).ToList();
             return objectfields;
         }
@@ -1202,6 +1222,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DependencyFilter3IsList = a.ObjectField.DependencyFilter3IsList,
                                                     CopyToDW = a.ObjectField.CopyToDW,
                                                     DisplayOnLookUpLocal = a.ObjectField.DisplayOnLookUpLocal,
+                                                    RecordType = a.ObjectField.RecordType,
+                                                    DisplayInAutomationAsEnitity = a.ObjectField.DisplayInAutomationAsEnitity,
                                                 }).ToList();
 
 
@@ -1311,6 +1333,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                               CopyToDW = a.CopyToDW,
                               DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
                               EnableFullscreenTextBox = a.EnableFullscreenTextBox,
+                              RecordType = a.RecordType,
+                              DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                           });
             return result;
         }
@@ -1417,7 +1441,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DependencyFilter3IsList = a.DependencyFilter3IsList,
                                                     CopyToDW = a.CopyToDW,
                                                     DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
-                                                    EnableFullscreenTextBox = a.EnableFullscreenTextBox
+                                                    EnableFullscreenTextBox = a.EnableFullscreenTextBox,
+                                                    RecordType = a.RecordType,
+                                                    DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                 }).ToList();
 
             return Get_List_Of_ObjectFields_With_Modifications_And_Validations(objectFields, tenant);//.Take(800).ToList();
@@ -1640,6 +1666,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     CopyToDW = a.CopyToDW,
                                                     DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
                                                     EnableFullscreenTextBox = a.EnableFullscreenTextBox,
+                                                    RecordType = a.RecordType,
+                                                    DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                 }).ToList();
 
             return Get_List_Of_ObjectFields_With_Modifications_And_Validations(objectFields, tenant);
@@ -1766,6 +1794,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                              CopyToDW = a.CopyToDW,
                                                              DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
                                                              EnableFullscreenTextBox = a.EnableFullscreenTextBox,
+                                                             RecordType = a.RecordType,
+                                                             DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                          }).ToList();
 
                             currentTenantObjectFields = Get_List_Of_ObjectFields_With_Modifications_And_Validations(currentTenantObjectFields, tenant);
@@ -1873,6 +1903,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                          CopyToDW = a.CopyToDW,
                                                          DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
                                                          EnableFullscreenTextBox = a.EnableFullscreenTextBox,
+                                                         RecordType = a.RecordType,
+                                                         DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                      }).ToList();
 
                         currentTenantObjectFields = Get_List_Of_ObjectFields_With_Modifications_And_Validations(currentTenantObjectFields, tenant);
@@ -1979,6 +2011,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                       CopyToDW = a.CopyToDW,
                                                       DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
                                                       EnableFullscreenTextBox = a.EnableFullscreenTextBox,
+                                                      RecordType = a.RecordType,
+                                                      DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                   }).ToList();
 
                         zeroTenantObjectFields = Get_List_Of_ObjectFields_With_Modifications_And_Validations(zeroTenantObjectFields, 0);
@@ -2087,6 +2121,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   CopyToDW = a.CopyToDW,
                                                   DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
                                                   EnableFullscreenTextBox = a.EnableFullscreenTextBox,
+                                                  RecordType = a.RecordType,
+                                                  DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                               }).ToList();
 
                     zeroTenantObjectFields = Get_List_Of_ObjectFields_With_Modifications_And_Validations(zeroTenantObjectFields, 0);
@@ -2178,6 +2214,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              FullNameTextCodeLocalDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.LocalDefaultText : null,
                                              DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
                                              EnableFullscreenTextBox = a.EnableFullscreenTextBox,
+                                             RecordType = a.RecordType,
+                                             DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                          }).FirstOrDefault();
 
             return objectField;
@@ -2211,6 +2249,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     ShortNameTextCodeCode = a.ShortNameTextCode != null ? a.ShortNameTextCode.Code : null,
                                                     DisplayLongName = a.DisplayLongName,
                                                     FullNameTextCodeLocalDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.LocalDefaultText : null,
+                                                    RecordType = a.RecordType,
+                                                    DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                     Code = a.Code,
                                             CustomPickListCode =a.CustomPickListCode,
                                                 }).ToList();
