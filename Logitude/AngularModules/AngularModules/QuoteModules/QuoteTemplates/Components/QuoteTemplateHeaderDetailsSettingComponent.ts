@@ -771,6 +771,11 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
         }
 
     }
+
+    TotalOfPercentages():number {
+        return this.TableColumn1LabelWidth +  this.TableColumn1ValueWidth + this.TableColumn2LabelWidth +  this.TableColumn2ValueWidth;
+    }
+
     SaveButtonClicked() {
 
         this.SaveObjectFieldTextList();
@@ -781,7 +786,7 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
         var textDesignPmLists = null;
         var textCodeDataLists: TextCodeData[] = null;
         
-        if (this.TableColumn1LabelWidth +  this.TableColumn2ValueWidth + this.TableColumn2LabelWidth +  this.TableColumn2ValueWidth > 100){
+        if (this.TotalOfPercentages() > 100){
             this.ValidationErrorsList.push("Total of percentages is greater than 100");
         }
     
