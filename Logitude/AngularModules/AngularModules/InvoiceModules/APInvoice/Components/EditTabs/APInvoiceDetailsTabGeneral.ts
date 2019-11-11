@@ -824,11 +824,13 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                     this.glaccount = null;
                     this.EntityPM.VendorGLAccountId = null;
                     this.EntityPM.VendorName = null;
+                    this.EntityPM.VendorLocalName = null;
                 }
 
                 else {
                     this.VATNumber = list.VatNumber;
-                    this.EntityPM.VendorName = list.LocalName || list.EnglishName;
+                    this.EntityPM.VendorName = list.EnglishName;
+                    this.EntityPM.VendorLocalName = list.LocalName || list.EnglishName;
                     if (!AppTool.IsNullOrEmpty(list.InvoiceCurrencyId)) {
                         this.InvoiceCurrencyId = list.InvoiceCurrencyId;
                     }
@@ -1079,7 +1081,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             if (!myResponse.HasError) {
                 var card: CardList = myResponse.Result;
                 if (card != null) {
-                    line.VendorName = card.LocalName || card.EnglishName;
+                    line.VendorName = card.EnglishName;
                 }
 
                 var addEditViewModel: APInvoiceLineItem = new APInvoiceLineItem(line, this, true);
@@ -1908,7 +1910,7 @@ export class APInvoiceLineItem extends BaseComponent {
                 if (!myResponse.HasError) {
                     var list: CardList = myResponse.Result;
                     if (list == null) {
-                        this.VendorName = list.LocalName || list.EnglishName;
+                        this.VendorName = list.EnglishName;
                     }
                 }
             });

@@ -259,7 +259,8 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
                         var list: CardList = myResponse.Result;
                         if (list != null) {
                             this.VATNumber = list.VatNumber;
-                            this.VendorName = list.LocalName || list.EnglishName;
+                            this.VendorName = list.EnglishName;
+                            this.VendorLocalName = list.LocalName || list.EnglishName;
                             this.EntityPM.VendorPartnerTypeId = list.PartnerTypeId;
                             if (!AppTool.IsNullOrEmpty(list.InvoiceCurrencyId)) {
                                 this.InvoiceCurrencyId = list.InvoiceCurrencyId;
@@ -294,6 +295,13 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
     set VendorName(value: string) {
         if (this.EntityPM.VendorName != value) {
             this.EntityPM.VendorName = value;
+        }
+    }
+
+    get VendorLocalName() { return this.EntityPM.VendorLocalName; }
+    set VendorLocalName(value: string) {
+        if (this.EntityPM.VendorLocalName != value) {
+            this.EntityPM.VendorLocalName = value;
         }
     }
 

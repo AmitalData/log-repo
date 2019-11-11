@@ -79,7 +79,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
         private IQueryable<APInvoicePM> GetAPInvoiceIQueryable()
         {
-            return (from a in repository.context.APInvoices.Include("Status").Include("LocalCurrency").Include("InvoiceCurrency").Include("TransferStatus").Include("VendorCard").Include("PaymentTerm").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("CreatedByUser").Include("CreatedByUser.Contact")
+            var query =  (from a in repository.context.APInvoices.Include("Status").Include("LocalCurrency").Include("InvoiceCurrency").Include("TransferStatus").Include("VendorCard").Include("PaymentTerm").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("CreatedByUser").Include("CreatedByUser.Contact")
                     select new APInvoicePM()
                     {
                         ProfitCurrencyExchangeRate = a.ProfitCurrencyExchangeRate,
@@ -126,7 +126,10 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         MasterNumber = a.MasterNumber,
                         HouseNumber = a.HouseNumber,
                         Description = a.Description,
-                        VendorName = a.VendorCard == null ? "" : (a.VendorCard.LocalName != null ? a.VendorCard.LocalName : a.VendorCard.EnglishName),
+
+                        VendorName = a.VendorCard == null ? "" : a.VendorCard.EnglishName,
+                        VendorLocalName = a.VendorCard == null ? "" : a.VendorCard.LocalName,
+
                         VendorCode = a.VendorCard == null ? "" : a.VendorCard.Code,
                         VendorPartnerTypeId = a.VendorCard == null ? "" : a.VendorCard.PartnerTypeId,
                         PaymentTermName = a.PaymentTerm == null ? "" : a.PaymentTerm.EnglishName,
@@ -152,6 +155,10 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         ExternalAccountingEntityId = a.ExternalAccountingEntityId,
                         FirstApproveDate = a.FirstApproveDate,
                     });
+            
+
+
+            return query;
         }
 
         private APInvoicePM GetMappedEntity(int tenant, APInvoicePM entityPM)

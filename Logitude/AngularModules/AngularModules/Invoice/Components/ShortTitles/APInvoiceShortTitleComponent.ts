@@ -13,6 +13,7 @@ export class APInvoiceShortTitleComponent {
     public EntityPM: APInvoicePM;
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
 
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = this.entityArgs.EntityPM;
