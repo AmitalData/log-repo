@@ -1,10 +1,10 @@
 ﻿<Table Name="Cities">
 
-  <Column Name="Code" NewName="YourCode" Type="Text" Size="6">
+  <Column Name="Code" Type="Text" Size="6">
     <Constraints PrimaryKey="true" Nullable="false"/>
   </Column>
 
-  <Column Name="MyCode" Type="Text" Size="12">
+  <Column Name="MyCode" Type="Text" Size="20">
     <Constraints Nullable="false"/>
   </Column>
 

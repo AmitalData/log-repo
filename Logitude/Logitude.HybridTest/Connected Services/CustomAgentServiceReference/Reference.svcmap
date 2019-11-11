@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="579851e9-255b-41f4-8d16-6443520c1a1b" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:9996/WcfApi/CustomAgentWcfService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="CustomAgentWcfService.wsdl" MetadataType="Wsdl" ID="22f850d1-382d-4104-8769-a8c4dca141f8" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/CustomAgentWcfService.svc?wsdl" />
+    <MetadataFile FileName="CustomAgentWcfService.xsd" MetadataType="Schema" ID="f95a3371-08a2-43c7-afcd-0e6c730c871b" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/CustomAgentWcfService.svc?xsd=xsd5" />
+    <MetadataFile FileName="CustomAgentWcfService1.xsd" MetadataType="Schema" ID="2da4845c-5358-45ad-bd4a-1e91d8584907" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/CustomAgentWcfService.svc?xsd=xsd2" />
+    <MetadataFile FileName="CustomAgentWcfService2.xsd" MetadataType="Schema" ID="22277b1e-2aba-4c82-882f-b6d46878ad29" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/CustomAgentWcfService.svc?xsd=xsd4" />
+    <MetadataFile FileName="CustomAgentWcfService3.xsd" MetadataType="Schema" ID="92df861d-86cc-49c4-8910-9d12d9f524c9" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/CustomAgentWcfService.svc?xsd=xsd6" />
+    <MetadataFile FileName="CustomAgentWcfService4.xsd" MetadataType="Schema" ID="37c50e64-cb67-4be2-804b-c35b95b89b8f" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/CustomAgentWcfService.svc?xsd=xsd1" />
+    <MetadataFile FileName="CustomAgentWcfService5.xsd" MetadataType="Schema" ID="cc0ac9a0-4220-4838-8f7e-c4edeb668ccb" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/CustomAgentWcfService.svc?xsd=xsd3" />
+    <MetadataFile FileName="CustomAgentWcfService.disco" MetadataType="Disco" ID="b59e4a7d-a25e-4ca1-a623-c139538c50c3" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/CustomAgentWcfService.svc?disco" />
+    <MetadataFile FileName="CustomAgentWcfService6.xsd" MetadataType="Schema" ID="a409a909-9575-416d-926b-04ca998c068c" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/CustomAgentWcfService.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

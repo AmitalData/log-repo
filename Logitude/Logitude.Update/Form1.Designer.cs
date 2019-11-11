@@ -187,6 +187,7 @@
             this.button46 = new System.Windows.Forms.Button();
             this.batchTaskExecutionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.executeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.button47 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -1578,6 +1579,7 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage2.Controls.Add(this.button47);
             this.tabPage2.Controls.Add(this.button44);
             this.tabPage2.Controls.Add(this.button43);
             this.tabPage2.Controls.Add(this.button42);
@@ -1806,6 +1808,16 @@
             this.executeToolStripMenuItem.Text = "Execute";
             this.executeToolStripMenuItem.Click += new System.EventHandler(this.executeToolStripMenuItem_Click);
             // 
+            // button47
+            // 
+            this.button47.Location = new System.Drawing.Point(522, 25);
+            this.button47.Name = "button47";
+            this.button47.Size = new System.Drawing.Size(184, 23);
+            this.button47.TabIndex = 97;
+            this.button47.Text = "tax report";
+            this.button47.UseVisualStyleBackColor = true;
+            this.button47.Click += new System.EventHandler(this.button47_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2011,6 +2023,7 @@
         private System.Windows.Forms.Label UpdateLogosLabel;
         private System.Windows.Forms.ToolStripMenuItem batchTaskExecutionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem executeToolStripMenuItem;
+        private System.Windows.Forms.Button button47;
     }
 }
 

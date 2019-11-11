@@ -631,7 +631,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
 
                         if (queryableData.Count() != 0)
                         {
-                            queryableData = queryableData.Where(d => d.IsRequestedDocuments == true || d.IsDigitalSignRequired == true || d.IsDepositionRequired == true || (d.IsImporterApprovalRequried == true && string.IsNullOrEmpty(d.ApprovedByUserName)));
+                            queryableData = queryableData.Where(d => d.IsRequestedDocuments == true || d.RequestedDocumentsCount > 0 || d.IsDigitalSignRequired == true || d.IsDepositionRequired == true || (d.IsImporterApprovalRequried == true && string.IsNullOrEmpty(d.ApprovedByUserName)));
                         }
                     }
 
@@ -641,7 +641,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
 
                         if (queryableData.Count() != 0)
                         {
-                            queryableData = queryableData.Where(d => d.IsRequestedDocuments == true || d.IsDigitalSignRequired == true || d.IsDepositionRequired == true || (d.IsImporterApprovalRequried == true && string.IsNullOrEmpty(d.ApprovedByUserName)));
+                            queryableData = queryableData.Where(d => d.IsRequestedDocuments == true || d.RequestedDocumentsCount > 0 || d.IsDigitalSignRequired == true || d.IsDepositionRequired == true || (d.IsImporterApprovalRequried == true && string.IsNullOrEmpty(d.ApprovedByUserName)));
                         }
                     }
                 }
