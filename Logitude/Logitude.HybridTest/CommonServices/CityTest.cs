@@ -10,7 +10,7 @@ namespace Logitude.HybridTest.CommonServices
         public void Test_City_UPSERT()
         {
             LoginService.GetLoginTokenByCredentials();
-            Server.Tools.Response countyServiceResponse = GlobalZoneTest.CallGlobalZoneUpsert();
+            Server.Tools.Response countyServiceResponse = CountryTest.CallCountryUpsert();
             Assert.IsFalse(countyServiceResponse.HasError, "Country Upsert Failed! " + countyServiceResponse.ErrorMessage);
             Assert.IsNotNull(countyServiceResponse.Result, "Country Upsert Failed! " + countyServiceResponse.ErrorMessage);
             Server.Tools.Response serviceResponse = CallCityUpsert();

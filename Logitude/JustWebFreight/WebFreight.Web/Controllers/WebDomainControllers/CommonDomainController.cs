@@ -990,7 +990,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     };
                     Repo.Add(currentTenant);
                 }
-                var URI = LogitudeSettings.LogitudeURL.Replace("http", "https");
+                var URI = "http://localhost:9996";// LogitudeSettings.LogitudeURL.Replace("http://", "https://");
                 if (URI.Contains("logitudepre.cloudapp.net"))
                 {
                     URI = "https://test.logitudeworld.com/Preproduction/";

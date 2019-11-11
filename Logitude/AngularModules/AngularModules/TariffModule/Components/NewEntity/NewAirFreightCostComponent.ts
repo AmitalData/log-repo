@@ -718,7 +718,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
 
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, this.ValidationErrorsList);
 
-        if (this.EntityPM.TypeCode == "AFC" || this.EntityPM.TypeCode == "OLC") {
+        if (this.EntityPM.TypeCode == "AFC" || this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OFC") {
             if (this.StartDate == null) {                
                 this.ValidationErrorsList.push("Satrt Date Field is Required");            
             }
