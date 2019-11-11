@@ -423,12 +423,15 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                                 line.VatTypeName = vatType.EnglishName;
                                 line.VatIsMultiPercentage = vatType.IsMultiPercentage;
 
-                                if (!vatType.IsMultiPercentage)
+                                if (line.VatPercentage == null || line.VatPercentage == 0)
                                 {
-                                    VatTypePercentage vatTypePercentage = vatTypePercentageRepository.GetVatTypePercentageByDate(vatType.Id, tenant, this.aPInvoicePM.InvoiceDate);
-                                    if (vatTypePercentage != null)
+                                    if (!vatType.IsMultiPercentage)
                                     {
-                                        line.VatPercentage = vatTypePercentage.Percentage;
+                                        VatTypePercentage vatTypePercentage = vatTypePercentageRepository.GetVatTypePercentageByDate(vatType.Id, tenant, this.aPInvoicePM.InvoiceDate);
+                                        if (vatTypePercentage != null)
+                                        {
+                                            line.VatPercentage = vatTypePercentage.Percentage;
+                                        }
                                     }
                                 }
                             }
