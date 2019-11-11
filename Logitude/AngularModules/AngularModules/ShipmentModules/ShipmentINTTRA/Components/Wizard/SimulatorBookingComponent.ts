@@ -123,7 +123,13 @@ export class SimulatorBookingComponent extends BaseComponent {
     get MainCarriageFromPortCountryName() { return this.EntityPM.MainCarriageFromPortCountryName; }
     get MainCarriageToPortCountryCode() { return this.EntityPM.MainCarriageToPortCountryCode; }
     get MainCarriageToPortCountryName() { return this.EntityPM.MainCarriageToPortCountryName; }
-
+    get MainCarriageVesselVoyage() {
+        var value = this.MainCarriageVesselName;
+        if (!AppTool.IsNullOrEmpty(this.MainCarriageCarrierNumber)) {
+            value = value + "/" + this.MainCarriageCarrierNumber;
+        }
+        return value;
+    }
 
     get Transshipment1FromPortId() { return this.EntityPM.Transshipment1FromPortId; }
     get Transshipment1CarrierName() { return this.EntityPM.Transshipment1CarrierName; }
@@ -134,7 +140,13 @@ export class SimulatorBookingComponent extends BaseComponent {
     get Transshipment1FromPortCountryName() { return this.EntityPM.Transshipment1FromPortCountryName; }
     get Transshipment1ToPortCountryCode() { return this.EntityPM.Transshipment1ToPortCountryCode; }
     get Transshipment1ToPortCountryName() { return this.EntityPM.Transshipment1ToPortCountryName; }
-
+    get Transshipment1VesselVoyage() {
+        var value = this.Transshipment1VesselName;
+        if (!AppTool.IsNullOrEmpty(this. Transshipment1CarrierNumber)) {
+            value = value + "/" + this. Transshipment1CarrierNumber;
+        }
+        return value;
+    }
 
 
     get Transshipment2FromPortId() { return this.EntityPM.Transshipment2FromPortId; }
@@ -146,7 +158,13 @@ export class SimulatorBookingComponent extends BaseComponent {
     get Transshipment2FromPortCountryName() { return this.EntityPM.Transshipment2FromPortCountryName; }
     get Transshipment2ToPortCountryCode() { return this.EntityPM.Transshipment2ToPortCountryCode; }
     get Transshipment2ToPortCountryName() { return this.EntityPM.Transshipment2ToPortCountryName; }
-
+    get Transshipment2VesselVoyage() {
+        var value = this.Transshipment2VesselName;
+        if (!AppTool.IsNullOrEmpty(this.Transshipment2CarrierNumber)) {
+            value = value + "/" + this.Transshipment2CarrierNumber;
+        }
+        return value;
+    }
 
     get Transshipment3FromPortId() { return this.EntityPM.Transshipment3FromPortId; }
     get Transshipment3CarrierName() { return this.EntityPM.Transshipment3CarrierName; }
@@ -157,7 +175,13 @@ export class SimulatorBookingComponent extends BaseComponent {
     get Transshipment3FromPortCountryName() { return this.EntityPM.Transshipment3FromPortCountryName; }
     get Transshipment3ToPortCountryCode() { return this.EntityPM.Transshipment3ToPortCountryCode; }
     get Transshipment3ToPortCountryName() { return this.EntityPM.Transshipment3ToPortCountryName; }
-   
+    get Transshipment3VesselVoyage() {
+        var value = this.Transshipment3VesselName;
+        if (!AppTool.IsNullOrEmpty(this.Transshipment3CarrierNumber)) {
+            value = value + "/" + this.Transshipment3CarrierNumber;
+        }
+        return value;
+    }
 
     CloseButtonClicked() {
         this.Close();
