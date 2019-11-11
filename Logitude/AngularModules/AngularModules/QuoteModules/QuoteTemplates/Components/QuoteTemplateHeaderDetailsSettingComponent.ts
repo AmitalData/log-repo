@@ -780,6 +780,12 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
         this.ValidationErrorsList = [];
         var textDesignPmLists = null;
         var textCodeDataLists: TextCodeData[] = null;
+        
+        if (this.TableColumn1LabelWidth +  this.TableColumn2ValueWidth + this.TableColumn2LabelWidth +  this.TableColumn2ValueWidth > 100){
+            this.ValidationErrorsList.push("Total of percentages is greater than 100");
+        }
+    
+        if (this.ValidationErrorsList.length == 0) {
         if (this.QuoteTemplateTextDesignPMLists) {
             textDesignPmLists = this.QuoteTemplateTextDesignPMLists.filter(d => d.IsDirty == true);
             if (textDesignPmLists.length > 0) this.IsSaveQuoteTemplateTextDesignRuning = true;
@@ -859,7 +865,7 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
 
 
 
-
+}
 
 
     }
