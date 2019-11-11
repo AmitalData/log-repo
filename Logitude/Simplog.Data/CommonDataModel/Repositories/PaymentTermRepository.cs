@@ -43,6 +43,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             return (from record in context.PaymentTerms where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();           
         }
+
+        public PaymentTerm GetSinglePaymentTermByCode(string code, int tenant)
+        {
+            return (from record in context.PaymentTerms where record.Code == code && record.Tenant == tenant select record).FirstOrDefault();
+        }
+
         public PaymentTerm GetSinglePaymentTermByExternalId(string externalId, int tenant)
         {
             return (from record in context.PaymentTerms where record.ExternalId == externalId && record.Tenant == tenant select record).FirstOrDefault();
@@ -56,6 +62,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
             return query;
         }
+
+        public PaymentTerm GetSinglemanuallySetPaymentTerm(int tenant)
+        {
+            return (from record in context.PaymentTerms where record.IsManuallySet && record.Tenant == tenant select record).FirstOrDefault();
+        }
+
         public void Add(PaymentTerm entity)
         {
             context.PaymentTerms.Add(entity);

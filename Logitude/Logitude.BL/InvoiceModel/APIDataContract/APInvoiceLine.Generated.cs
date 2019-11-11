@@ -58,6 +58,10 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
     public PrepaidCollect PrepaidCollect { get; set; }
     
     public string ExternalVATCard { get; set; }
+    
+    public PackageType ContainerType { get; set; }
+    
+    public int? Quantity { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

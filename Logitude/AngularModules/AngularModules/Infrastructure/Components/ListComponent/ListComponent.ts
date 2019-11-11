@@ -2599,6 +2599,18 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                             windowArgs.TypeCode = "OSC";
                             break;
                         }
+                            
+                        case "Ocean FCL Freight Cost": {
+                            logWindow.Title = "New " + TextCodeTranslator.TranslateTable("Tariff.Q.OceanFCLFreightCost");
+                            windowArgs.TypeCode = "OFC";
+                            break;
+                        }
+
+                        case "Ocean FCL Surcharges Cost": {
+                            logWindow.Title = "New " + TextCodeTranslator.TranslateTable("Tariff.Q.OceanFCLSurchargesCost");
+                            windowArgs.TypeCode = "OFS";
+                            break;
+                        }
                     }
                  
                     logWindow.WindowArgs = windowArgs;
