@@ -98,7 +98,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             //var s = new ClearAccountingDB();
             //s.ClearDB(1148);
             //var a = new ReconcileOpenAmountService();
-            //var l = a.GetLedgerOpenAmountDiff(1106, 2019);
+            //var l = a.GetLedgerOpenAmountDiff(69, 2019);
 
             //ExternalReconcileAdjustBankFees();
             //var myWorker = new JournalApproveService.JournalApproveWorker();
