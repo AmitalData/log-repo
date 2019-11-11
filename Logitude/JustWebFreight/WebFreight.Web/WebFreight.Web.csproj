@@ -1687,6 +1687,7 @@
     <Compile Include="Controllers\InfrastructureModel\Extended\FollowUpExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\IATACodesExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\LogitudeApplicationController.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Extended\ObjectFieldExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\ObjectTableLastUpdateController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\ObjectTableRuleFieldsController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\ObjectTableRulesController.cs" />
