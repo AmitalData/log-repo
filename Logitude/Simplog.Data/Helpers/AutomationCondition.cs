@@ -35,7 +35,9 @@ namespace Simplog.Data.Helpers
         [DataMember]
         public string ObjectFieldType { get; set; }
 
- 
+        [DataMember]
+        public string PartnerObjectFieldId{ get; set; }
+
     }
 }
 

@@ -56,6 +56,44 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     FromDateTypeCode = entityPOCO.FromDateTypeCode,
                     CalculatedEnglishName = string.IsNullOrEmpty(entityPOCO.EnglishName) ? entityPOCO.LocalName : entityPOCO.EnglishName,
                     CalculatedLocalName = string.IsNullOrEmpty(entityPOCO.LocalName) ? entityPOCO.EnglishName : entityPOCO.LocalName,
+                    Code = entityPOCO.Code,
+                };
+            }
+
+            PaymentTermPM securedPm = new PaymentTermPM();
+            SecuredMapping.GetMappedPM(entityPM, securedPm, "PaymentTerm", tenant);
+
+            return securedPm;
+        }
+
+        public PaymentTermPM GetSinglePMByCode(string Code, int tenant)
+        {
+            PaymentTermPM entityPM = null;
+            PaymentTerm entityPOCO = repository.GetSinglePaymentTermByCode(Code, tenant);
+
+            if (entityPOCO != null)
+            {
+                entityPM = new PaymentTermPM()
+                {
+                    AddedManually = entityPOCO.AddedManually,
+                    Days = entityPOCO.Days,
+                    EnglishName = entityPOCO.EnglishName,
+                    Id = entityPOCO.Id,
+                    InActive = entityPOCO.InActive,
+                    LocalName = entityPOCO.LocalName,
+                    Tenant = entityPOCO.Tenant,
+                    DisplayInLOV = entityPOCO.DisplayInLOV,
+                    Description = entityPOCO.Description,
+                    LocalDescription = entityPOCO.LocalDescription,
+                    SearchFields = entityPOCO.SearchFields,
+                    ComputedLocalName = string.IsNullOrEmpty(entityPOCO.LocalName) ? entityPOCO.EnglishName : entityPOCO.LocalName,
+                    IsManuallySet = entityPOCO.IsManuallySet,
+                    ExternalId = entityPOCO.ExternalId,
+                    CurrentMonth = entityPOCO.CurrentMonth,
+                    FromDateTypeCode = entityPOCO.FromDateTypeCode,
+                    CalculatedEnglishName = string.IsNullOrEmpty(entityPOCO.EnglishName) ? entityPOCO.LocalName : entityPOCO.EnglishName,
+                    CalculatedLocalName = string.IsNullOrEmpty(entityPOCO.LocalName) ? entityPOCO.EnglishName : entityPOCO.LocalName,
+                    Code = entityPOCO.Code,
                 };
             }
 
@@ -93,6 +131,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     FromDateTypeCode = entityPOCO.FromDateTypeCode,
                     CalculatedEnglishName = string.IsNullOrEmpty(entityPOCO.EnglishName) ? entityPOCO.LocalName : entityPOCO.EnglishName,
                     CalculatedLocalName = string.IsNullOrEmpty(entityPOCO.LocalName) ? entityPOCO.EnglishName : entityPOCO.LocalName,
+                    Code = entityPOCO.Code,
                 };
             }
 
@@ -133,6 +172,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                          FromDateTypeCode = a.FromDateTypeCode,
                                                          CalculatedEnglishName = string.IsNullOrEmpty(a.EnglishName) ? a.LocalName : a.EnglishName,
                                                          CalculatedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
+                                                         Code = a.Code,
                                                      };
             return paymentTerms;
         }
@@ -161,6 +201,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                          FromDateTypeCode = a.FromDateTypeCode,
                                                          CalculatedEnglishName = string.IsNullOrEmpty(a.EnglishName) ? a.LocalName : a.EnglishName,
                                                          CalculatedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
+                                                         Code = a.Code,
                                                      };
             return paymentTerms;
         }
@@ -195,6 +236,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              FromDateTypeCode = a.FromDateTypeCode,
                              CalculatedEnglishName = string.IsNullOrEmpty(a.EnglishName) ? a.LocalName : a.EnglishName,
                              CalculatedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
+                             Code = a.Code,
                          }).AsQueryable();
 
             IQueryable<PaymentTermPM> query2 = null;
@@ -247,6 +289,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              FromDateTypeCode = f.FromDateTypeCode,
                              CalculatedEnglishName = string.IsNullOrEmpty(f.EnglishName) ? f.LocalName : f.EnglishName,
                              CalculatedLocalName = string.IsNullOrEmpty(f.LocalName) ? f.EnglishName : f.LocalName,
+                             Code = f.Code,
                          };
 
           

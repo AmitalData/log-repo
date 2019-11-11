@@ -48,8 +48,8 @@
                                         <div class="SimpleGridViewHeader">
                                             <table>
                                                 <tr>
-
-                                                    <td style="width: 230px; min-width: 230px;">Field</td>
+                                                    <td style="width: 150px; min-width: 150px;">Entity</td>
+                                                    <td style="width: 200px; min-width: 200px;">Field</td>
                                                     <td style="width: 165px; min-width: 165px;">Operator</td>
                                                     <td style="width: 215px; min-width:215px">Value</td>
                                                     <td style="width: 100%; min-width:100%"></td>
@@ -69,11 +69,20 @@
 
 
 
-                                                                            <td style="width: 230px; min-width: 230px; max-width: 230px;">
+                                                                            <td style="width: 150px; min-width: 150px; max-width: 150px;">
 
-                                                                                <div style="width:225px;text-align:center">
+                                                                                <div style="text-align:left;width:145px">
+                                                                                    <ComboBox style="width:115px;" (SelectedItemChanged)="item.AutomationEntityListValueChanged($event)" [ItemsSource]="item.AutomationEntityLists" [SelectedItem]="item.SelectedAutomationEntity" [Binding]="'Name'"></ComboBox>
+                                                                                </div>
 
-                                                                                    <LogLov (SelectedItemChanged)="item.CustomFieldValueChanged($event)"
+                                                                            </td>
+
+
+                                                                            <td style="width: 200px; min-width: 200px; max-width: 200px;">
+
+                                                                                <div style="width:195px;text-align:center">
+
+                                                                                    <LogLov *ngIf="item.IsRefreshAutomationCondationField" (SelectedItemChanged)="item.CustomFieldValueChanged($event)"
                                                                                             [ObjectFieldName]="'ObjectFieldId'"
                                                                                             [QueryFilterItems]="item.AutomationCondationFieldListFilterItems"
                                                                                             [ObjectTableName]="'ObjectField'"
@@ -86,6 +95,21 @@
                                                                                             [HideLastColumn]="true"
                                                                                             [DisplayMemberPath]="'FullNameTextCodeDefaultText'">
                                                                                     </LogLov>
+
+                                                                                    <LogLov *ngIf="!item.IsRefreshAutomationCondationField" (SelectedItemChanged)="item.CustomFieldValueChanged($event)"
+                                                                                            [ObjectFieldName]="'ObjectFieldId'"
+                                                                                            [QueryFilterItems]="item.AutomationCondationFieldListFilterItems"
+                                                                                            [ObjectTableName]="'ObjectField'"
+                                                                                            [DataContext]="item"
+                                                                                            [LookUpTableName]="'ObjectField'"
+                                                                                            [NoValidation]="true"
+                                                                                            [IsFreeText]="true"
+                                                                                            [SelectedValue]="item.ObjectFieldId"
+                                                                                            [HideColumns]="true"
+                                                                                            [HideLastColumn]="true"
+                                                                                            [DisplayMemberPath]="'FullNameTextCodeDefaultText'">
+                                                                                    </LogLov>
+
 
                                                                                 </div>
 
