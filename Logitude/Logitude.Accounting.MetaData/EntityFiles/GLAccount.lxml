@@ -368,7 +368,24 @@
       <QueryFilter QueryCode="&quot;All GLAccounts&quot;" PredefinedValue="&quot;1&quot;" ObjectFieldName="&quot;AccountTypeCode&quot;" IsPredefined="true" Operator="&quot;Equals&quot;" IndexOrder="0" />
     </QueryFilters>
   </Query>
-  <Screen Name="&quot;Header Screen&quot;" ObjectTableName="&quot;GLAccount&quot;" NumberOfColumns="5" NumberOfRows="2" IsReadOnly="true" IsHeaderScreen="true" Code="&quot;GLAccount.HeaderScreen&quot;">
+  <Query Code="&quot;OpenMasters&quot;" TextCode="&quot;Open Masters&quot;" LocalTextCode="&quot;גו’בים פתוחים&quot;" QueryGroupCode="&quot;GLAC&quot;" IndexOrder="17" ObjectTableName="&quot;GLAccount&quot;" QuerySection="&quot;GLAccount&quot;" SystemLevel="true" IsAddNewEntity="false" IsPackagable="true" DefaultSortName="&quot;CreateDate&quot;" DefaultSortDirection="&quot;Desending&quot;" IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn QueryCode="&quot;OpenMasters&quot;" IndexOrder="0" ObjectFieldName="&quot;DisplayNumber&quot;" ColumnWidth="85" />
+      <QueryColumn QueryCode="&quot;OpenMasters&quot;" IndexOrder="1" ObjectFieldName="&quot;LocalName&quot;" ColumnWidth="160" />
+      <QueryColumn QueryCode="&quot;OpenMasters&quot;" IndexOrder="2" ObjectFieldName="&quot;EnglishName&quot;" ColumnWidth="160" />
+      <QueryColumn QueryCode="&quot;OpenMasters&quot;" IndexOrder="3" ObjectFieldName="&quot;CurrencyCode&quot;" ColumnWidth="80" />
+      <QueryColumn QueryCode="&quot;OpenMasters&quot;" IndexOrder="4" ObjectFieldName="&quot;IsMultiCurrency&quot;" ColumnWidth="110" />
+      <QueryColumn QueryCode="&quot;OpenMasters&quot;" IndexOrder="5" ObjectFieldName="&quot;BalanceInLocalCurrency&quot;" ColumnWidth="180" />
+      <QueryColumn QueryCode="&quot;OpenMasters&quot;" IndexOrder="6" ObjectFieldName="&quot;ChartOfAccountsName&quot;" ColumnWidth="140" />
+      <QueryColumn QueryCode="&quot;OpenMasters&quot;" IndexOrder="7" ObjectFieldName="&quot;ChartOfAccountsTypeName&quot;" ColumnWidth="160" />
+      <QueryColumn QueryCode="&quot;OpenMasters&quot;" IndexOrder="8" ObjectFieldName="&quot;Inactive&quot;" ColumnWidth="75" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter QueryCode="&quot;OpenMasters&quot;" PredefinedValue="&quot;4&quot;" ObjectFieldName="&quot;AccountTypeCode&quot;" IsPredefined="true" Operator="&quot;Equal&quot;" IndexOrder="0" />
+      <QueryFilter QueryCode="&quot;OpenMasters&quot;" PredefinedValue="&quot;0&quot;" ObjectFieldName="&quot;BalanceInLocalCurrency&quot;" IsPredefined="true" Operator="&quot;NotEqual&quot;" IndexOrder="0" />
+    </QueryFilters>
+  </Query>
+  <Screen Name="&quot;Header Screen&quot;" ObjectTableName="&quot;GLAccount&quot;" IsReadOnly="true" IsHeaderScreen="true" Code="&quot;GLAccount.HeaderScreen&quot;" NumberOfColumns="5" NumberOfRows="2">
     <ScreenFields>
       <ScreenField Column="0" Row="0" ObjectFieldName="&quot;DisplayNumber&quot;" ScreenName="Header Screen" />
       <ScreenField Column="0" Row="1" ObjectFieldName="&quot;BalanceInLocalCurrency&quot;" ScreenName="Header Screen" />
@@ -428,7 +445,7 @@
     <MenuButton EventCode="&quot;More&quot;" DefaultText="&quot;More&quot;" MenuButtonType="&quot;dropdownbutton&quot;" IndexOrder="1" LocalDefaultText="&quot;נוספים&quot;" FeatureCode="&quot;MOREGLACCOUNT&quot;" IsPackagable="false" TextCodeCode="&quot;GLAccount.B.More&quot;" FeatureTextCodeCode="&quot;GLAccount.Features.More&quot;" FeatureDefaultText="&quot;More Buttons&quot;">
       <MenuItem EventCode="&quot;GLAccountInactive&quot;" DefaultText="&quot;Inactive&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="0" LocalDefaultText="&quot;חסימה&quot;" FeatureCode="&quot;INACITVE&quot;" IsPackagable="false" TextCodeCode="&quot;GLAccount.B.Inactive&quot;" FeatureTextCodeCode="&quot;GLAccount.Features.Inactive&quot;" FeatureDefaultText="&quot;Inactive&quot;" />
       <MenuItem EventCode="&quot;GLAccountPrintCardIndex&quot;" DefaultText="&quot;Print Card Index&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="1" FeatureCode="&quot;PRINTCARDINDEX&quot;" IsPackagable="false" TextCodeCode="&quot;GLAccount.B.PrintCardIndex&quot;" FeatureTextCodeCode="&quot;GLAccount.Features.PrintCardIndex&quot;" FeatureDefaultText="&quot;Print Card Index&quot;" />
-      <MenuItem EventCode="&quot;GLAccountReactivate&quot;" DefaultText="&quot;Reactivate&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="0" LocalDefaultText="&quot;הפעל מחדש&quot;" />
+      <MenuItem EventCode="&quot;GLAccountReactivate&quot;" DefaultText="&quot;Reactivate&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="0" LocalDefaultText="&quot;הפעל מחדש&quot;" IsPackagable="false" />
     </MenuButton>
   </MenuButtons>
   <DataContracts>

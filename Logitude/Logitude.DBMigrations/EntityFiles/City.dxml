@@ -4,12 +4,12 @@
     <Constraints PrimaryKey="true" Nullable="false"/>
   </Column>
 
-  <Column Name="Name" Type="nText" Size="20">
+  <Column Name="MyCode" Type="Text" Size="20">
     <Constraints Nullable="false"/>
   </Column>
 
-  <Column Name="SearchFields" Type="nText" Size="MAX">
-    <Constraints Nullable="true"/>
+  <Column Name="Name" Type="nText" Size="40">
+    <Constraints Nullable="false"/>
   </Column>
 
 </Table>

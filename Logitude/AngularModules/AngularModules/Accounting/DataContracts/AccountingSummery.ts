@@ -3,11 +3,12 @@ export class GLAccountSummary {
     ActiveGLAccountCount : number;
     InactiveGLAccountCount : number;
     AllGLAccountCount : number;
-    OpenFilesCount : number;
+    OpenFilesCount: number;
+    OpenMastersCount: number;
     ClosedFilesGLAccountCount : number;
     AllFilesCount : number;
     AllJobsCount : number;
-
+    
     // Customers
     ActiveCustomersCount : number;
     InactiveCustomersCount : number;

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="7c6c4a0d-e913-474d-b193-c09f111a58f3" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:9996/WcfApi/AirlineWcfService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="AirlineWcfService.xsd" MetadataType="Schema" ID="1cd38f99-9a18-48bd-b48f-2d1aa3ea9bb5" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/AirlineWcfService.svc?xsd=xsd3" />
+    <MetadataFile FileName="AirlineWcfService1.xsd" MetadataType="Schema" ID="51ea3568-0373-443b-a78d-0346694c085c" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/AirlineWcfService.svc?xsd=xsd4" />
+    <MetadataFile FileName="AirlineWcfService.wsdl" MetadataType="Wsdl" ID="f77ec81c-99bb-4a7f-adc6-1cfdb49c90b6" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/AirlineWcfService.svc?wsdl" />
+    <MetadataFile FileName="AirlineWcfService.disco" MetadataType="Disco" ID="fd4b6bb5-6ac7-4c5c-88ef-10b5c69006dc" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/AirlineWcfService.svc?disco" />
+    <MetadataFile FileName="AirlineWcfService2.xsd" MetadataType="Schema" ID="c57ba1a5-a05e-4b54-9464-4eff13375c2f" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/AirlineWcfService.svc?xsd=xsd5" />
+    <MetadataFile FileName="AirlineWcfService3.xsd" MetadataType="Schema" ID="82aa4886-8f34-4f47-9b6a-f07387c26840" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/AirlineWcfService.svc?xsd=xsd2" />
+    <MetadataFile FileName="AirlineWcfService4.xsd" MetadataType="Schema" ID="826cada6-52fa-4e75-8e9d-233060ccd70d" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/AirlineWcfService.svc?xsd=xsd0" />
+    <MetadataFile FileName="AirlineWcfService5.xsd" MetadataType="Schema" ID="e71ad5e4-03e8-412e-a026-0a81da48435e" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/AirlineWcfService.svc?xsd=xsd1" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

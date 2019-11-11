@@ -42,7 +42,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private ICommonDataContext objectContext;
         private CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository;
         private ContactService contactService;
-        public AccountingPartnerService(ICommonDataContext objectContext,int tenant)
+        public AccountingPartnerService(ICommonDataContext objectContext, int tenant)
         {
             this.tenant = tenant;
             this.objectContext = objectContext;
@@ -86,18 +86,31 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
             this.entityPM = entityPM;
             this.isNewEntity = true;
-            this.entityPM.Id = IdCounter.GetNumber("Card", tenant).ToString();
 
-            this.entityCard = new Card()
+
+            this.entityCard = cardRepository.GetSingleCardByCode(entityPM.Code, entityPM.Tenant, false);
+            bool IsNewCard = true;
+            if (this.entityCard != null)
             {
-                Id = entityPM.Id,
-                Tenant = tenant,
-                PartnerTypeId = "AC",
-            };
+                this.entityPM.Id = this.entityCard.Id;
+                this.entityCard.PartnerTypeId = "AC";
+                IsNewCard = false;
+            }
+            else
+            {
+                this.entityPM.Id = IdCounter.GetNumber("Card", tenant).ToString();
+                this.entityCard = new Card()
+                {
+                    Id = entityPM.Id,
+                    Tenant = tenant,
+                    PartnerTypeId = "AC",
+                };
+            }
+
 
             this.entityPOCO = new AccountingPartner()
             {
-                Id = entityPM.Id,
+                Id = this.entityCard.Id,
                 Tenant = tenant,
             };
 
@@ -126,8 +139,14 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             AccountingPartnerMapping.MapEntity(entityPM, entityPOCO, isNewEntity, entityCard);
             AccountingPartnerValidating.Validate(entityPM, this.entityCard, objectContext, isNewEntity);
-
-            cardRepository.Add(entityCard);
+            if (IsNewCard)
+            {
+                cardRepository.Add(entityCard);
+            }
+            else
+            {
+                cardRepository.Update(entityCard);
+            }
             entityRepository.Add(entityPOCO);
             entityRepository.SubmitChanges();
 
@@ -159,31 +178,31 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             if (CacheManager.CacheWrapper != null)
             {
-            string entityName = "Card" + entityPM.Id + entityPM.Tenant;
-            string entityPmName = "CardPM" + entityPM.Id + entityPM.Tenant;
+                string entityName = "Card" + entityPM.Id + entityPM.Tenant;
+                string entityPmName = "CardPM" + entityPM.Id + entityPM.Tenant;
 
-            if (CacheManager.CacheWrapper.Get(entityName) != null)
-            {
-                CacheManager.CacheWrapper.Invalidate(entityName);
-            }
+                if (CacheManager.CacheWrapper.Get(entityName) != null)
+                {
+                    CacheManager.CacheWrapper.Invalidate(entityName);
+                }
 
-            if (CacheManager.CacheWrapper.Get(entityPmName) != null)
-            {
-                CacheManager.CacheWrapper.Invalidate(entityPmName);
-            }
+                if (CacheManager.CacheWrapper.Get(entityPmName) != null)
+                {
+                    CacheManager.CacheWrapper.Invalidate(entityPmName);
+                }
 
-            entityName = "AccountingPartner" + entityPM.Id + entityPM.Tenant;
-            entityPmName = "AccountingPartnerPM" + entityPM.Id + entityPM.Tenant;
+                entityName = "AccountingPartner" + entityPM.Id + entityPM.Tenant;
+                entityPmName = "AccountingPartnerPM" + entityPM.Id + entityPM.Tenant;
 
-            if (CacheManager.CacheWrapper.Get(entityName) != null)
-            {
-                CacheManager.CacheWrapper.Invalidate(entityName);
-            }
+                if (CacheManager.CacheWrapper.Get(entityName) != null)
+                {
+                    CacheManager.CacheWrapper.Invalidate(entityName);
+                }
 
-            if (CacheManager.CacheWrapper.Get(entityPmName) != null)
-            {
-                CacheManager.CacheWrapper.Invalidate(entityPmName);
-            }
+                if (CacheManager.CacheWrapper.Get(entityPmName) != null)
+                {
+                    CacheManager.CacheWrapper.Invalidate(entityPmName);
+                }
             }
 
             this.UpdateCardExternalCodeByCurrencyCollection();

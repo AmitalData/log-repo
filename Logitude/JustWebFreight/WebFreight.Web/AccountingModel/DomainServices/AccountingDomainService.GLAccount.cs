@@ -462,6 +462,7 @@ namespace WebFreight.Web.AccountingModel.DomainServices
                 result.InactiveGLAccountCount = iQueryable_Data.Where(d => d.AccountTypeCode == "1" && d.Inactive == true).Count();
                 result.AllGLAccountCount = iQueryable_Data.Where(d => d.AccountTypeCode == "1").Count();
                 result.OpenFilesCount = iQueryable_Data.Where(d => d.AccountTypeCode == "5" && d.BalanceInLocalCurrency != 0).Count();
+                result.OpenMastersCount = iQueryable_Data.Where(d => d.AccountTypeCode == "4" && d.BalanceInLocalCurrency != 0).Count();
                 result.ClosedFilesGLAccountCount = iQueryable_Data.Where(d => d.AccountTypeCode == "5" && d.BalanceInLocalCurrency == 0).Count();
                 result.AllFilesCount = iQueryable_Data.Where(d => d.AccountTypeCode == "5").Count();
                 result.AllJobsCount = iQueryable_Data.Where(d => d.AccountTypeCode == "4").Count();
