@@ -40,6 +40,7 @@ using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.Security;
+using Logitude.Customs.Def.EntityQueryServicesExt;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -380,6 +381,12 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     AddDocumentBackupLog();
                 }
             }
+
+        }
+        private void TryBuildUD2LT(DocumentsFilingPM extDocPM)
+        {
+            ICreateUD2LTService myICreateUD2LTService = ContainerAccessor.Container.Resolve(typeof(ICreateUD2LTService), "CreateUD2LTService", new ParameterOverride("", tenant)) as ICreateUD2LTService;
+            myICreateUD2LTService.JustDoIt(extDocPM);
 
         }
 
@@ -1092,7 +1099,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         public void AddToTasksQueue(DocumentsFilingPM extDocPM, bool isnew, string loggedUserId)
         {
 
-
+            TryBuildUD2LT(extDocPM);
             if (!string.IsNullOrWhiteSpace(this.MetaDataVersionValue))
             {
                 DocumentsFilingMetaDataValueQuery.UpSert(extDocPM, "VER", this.MetaDataVersionValue);
