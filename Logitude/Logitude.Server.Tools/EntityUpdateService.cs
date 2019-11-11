@@ -83,7 +83,7 @@ namespace Logitude.Server.Tools
             }
         }
 
-        public void Update(TEntityPM entityPM, bool commit)
+        public void Update(TEntityPM entityPM, bool commit,TimeSpan? transactionTimeout=null)
         {
             try
             {
@@ -94,7 +94,7 @@ namespace Logitude.Server.Tools
                 }
                 else
                 {
-                    using (TransactionScope scope = TransactionFactory.GetTransaction())//new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = IsolationLevel.Snapshot }))
+                    using (TransactionScope scope = TransactionFactory.GetTransaction(transactionTimeout))//new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = IsolationLevel.Snapshot }))
                     {
                         PerformUpdate(entityPM, commit);
                         scope.Complete();
