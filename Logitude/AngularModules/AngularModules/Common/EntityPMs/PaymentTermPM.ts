@@ -125,6 +125,11 @@ export class PaymentTermPM {
     public set FromDateTypeCode(newValue: string) { if (this.fromDateTypeCode != newValue) { this.fromDateTypeCode = newValue; this.MarkAsDirty("FromDateTypeCode"); } }
        
 	 
+    private code: string;
+    public get Code() { return this.code; }
+    public set Code(newValue: string) { if (this.code != newValue) { this.code = newValue; this.MarkAsDirty("Code"); } }
+       
+	 
 
     public OldEntityPM: PaymentTermPM;
 		
