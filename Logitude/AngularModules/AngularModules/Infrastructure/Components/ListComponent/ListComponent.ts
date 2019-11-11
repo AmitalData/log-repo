@@ -2605,6 +2605,12 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                             windowArgs.TypeCode = "OFC";
                             break;
                         }
+
+                        case "Ocean FCL Surcharges Cost": {
+                            logWindow.Title = "New " + TextCodeTranslator.TranslateTable("Tariff.Q.OceanFCLSurchargesCost");
+                            windowArgs.TypeCode = "OFS";
+                            break;
+                        }
                     }
                  
                     logWindow.WindowArgs = windowArgs;

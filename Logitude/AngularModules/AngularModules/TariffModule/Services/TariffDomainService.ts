@@ -321,6 +321,7 @@ export class TariffSummery {
     OceanSurchargeCount: number;
     OceanLCLFreightCount: number;
     OceanFCLFreightCount: number;
+    OceanFCLSurchargesCount: number;
 }
 
 export class TariffFilterParameter {
