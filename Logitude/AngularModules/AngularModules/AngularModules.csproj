@@ -789,6 +789,10 @@
     <TypeScriptCompile Include="Accounting\Services\StandardLists\VatReportStatusListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\TaxReportPMService.ts" />
     <TypeScriptCompile Include="Controls\Pipes\DateToMonthPipe.ts" />
+    <TypeScriptCompile Include="e2e\Accounting\AccountingModule-spec.ts" />
+    <TypeScriptCompile Include="e2e\Accounting\AccountingModule.ts" />
+    <TypeScriptCompile Include="e2e\Accounting\New\APPayment.ts" />
+    <TypeScriptCompile Include="e2e\Accounting\New\APShipmentMultipleInvoice.ts" />
     <TypeScriptCompile Include="e2e\Contacts\Contacts-spec.ts" />
     <TypeScriptCompile Include="e2e\Contacts\Contacts.ts" />
     <TypeScriptCompile Include="e2e\CRM\Activities\ActivitiesModule.ts" />
@@ -3794,10 +3798,7 @@
     <TypeScriptCompile Include="e2e\Helpers\GeneralFunctions.ts" />
     <TypeScriptCompile Include="e2e\Login\Login.e2e-spec.ts" />
     <TypeScriptCompile Include="e2e\Login\Login.po.ts" />
-    <TypeScriptCompile Include="e2e\Operations\ShipmentSearch.e2e-spec.ts" />
-    <TypeScriptCompile Include="e2e\Operations\ShipmentSearch.ts" />
     <TypeScriptCompile Include="e2e\Operations\Shipments\EditEntity\DocsOutTab.ts" />
-    <TypeScriptCompile Include="e2e\Operations\Shipments\EditEntity\EditShipmentTabs.e2e-spec.ts" />
     <TypeScriptCompile Include="e2e\Operations\Shipments\EditEntity\EditShipmentTabs.po.ts" />
     <TypeScriptCompile Include="e2e\Operations\Shipments\EditEntity\GeneralTab.ts" />
     <TypeScriptCompile Include="e2e\Operations\Shipments\EditEntity\OrdersTab.ts" />

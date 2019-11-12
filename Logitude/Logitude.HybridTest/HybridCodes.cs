@@ -19,7 +19,8 @@ namespace Logitude.HybridTest
         public const string ShippingLineCode = "HSLN"; 
         public const string VendorCode = "HVEN";
         public const string TruckerCode = "HTRU";
-        public const string PortCode = "HPO"; 
+        public const string FromPortCode = "HFP";
+        public const string ToPortCode = "HTP";
         public const string CurrencyCode = "HCR";
         public const string ShippingAgentCode = "HSAG";
         public const string DepartmentCode = "HDEP";
@@ -31,5 +32,6 @@ namespace Logitude.HybridTest
         public const string SpecialServicesTypeCode = "HSST"; 
         public const string DocumentTypeCode = "HDT";
         public const string UserCode = "HU";
+        public const string EventTypeCode = "HET";
     }
 }

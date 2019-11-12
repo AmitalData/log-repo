@@ -1,4 +1,5 @@
 ﻿using System;
+using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Logitude.HybridTest.CommonServices
@@ -10,20 +11,18 @@ namespace Logitude.HybridTest.CommonServices
         public void Test_GlobalZone_UPSERT()
         {
             LoginService.GetLoginTokenByCredentials();
-            Server.Tools.Response serviceResponse = CallGlobalZoneUpsert();
+            Response serviceResponse = CallGlobalZoneUpsert();
             Assert.AreEqual(serviceResponse.HasError, false, serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
          }
 
-        public static Server.Tools.Response CallGlobalZoneUpsert()
+        public static Response CallGlobalZoneUpsert()
         {
-
             GlobalZoneServiceReference.GlobalZoneWcfServiceClient serviceClient = new GlobalZoneServiceReference.GlobalZoneWcfServiceClient();
             string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
             serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
             using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)serviceClient.InnerChannel))
             {
-
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
                 GlobalZoneServiceReference.GlobalZonePM entityPM = new GlobalZoneServiceReference.GlobalZonePM()
                 {
@@ -31,9 +30,8 @@ namespace Logitude.HybridTest.CommonServices
                     EnglishName = "Hybrid GlobalZone",
                     LocalName = "Hybrid GlobalZone",
                     Tenant = TestEnvironmentGlobalParameters.Tenant,
-
                 };
-                Logitude.Server.Tools.Response serviceResponse = serviceClient.Upsert(entityPM, false);
+                Response serviceResponse = serviceClient.Upsert(entityPM, false);
                 return serviceResponse;
             }
         }

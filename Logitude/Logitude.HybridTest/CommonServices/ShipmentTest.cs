@@ -19,9 +19,12 @@ namespace Logitude.HybridTest.CommonServices
             Server.Tools.Response agentServiceResponse = AgentTest.CallAgentUpsert();
             Assert.IsFalse(agentServiceResponse.HasError, "Agent Upsert Failed! " + agentServiceResponse.ErrorMessage);
             Assert.IsNotNull(agentServiceResponse.Result, "Agent Upsert Failed! " + agentServiceResponse.ErrorMessage);
-            Server.Tools.Response portServiceResponse = PortTest.CallPortUpsert();
-            Assert.IsFalse(portServiceResponse.HasError, "Port Upsert Failed! " + portServiceResponse.ErrorMessage);
-            Assert.IsNotNull(portServiceResponse.Result, "Port Upsert Failed! " + portServiceResponse.ErrorMessage);
+            Server.Tools.Response fromPortServiceResponse = PortTest.CallFromPortUpsert();
+            Assert.IsFalse(fromPortServiceResponse.HasError, "From Port Upsert Failed! " + fromPortServiceResponse.ErrorMessage);
+            Assert.IsNotNull(fromPortServiceResponse.Result, "From Port Upsert Failed! " + fromPortServiceResponse.ErrorMessage);
+            Server.Tools.Response toPortServiceResponse = PortTest.CallToPortUpsert();
+            Assert.IsFalse(toPortServiceResponse.HasError, "To Port Upsert Failed! " + toPortServiceResponse.ErrorMessage);
+            Assert.IsNotNull(toPortServiceResponse.Result, "To Port Upsert Failed! " + toPortServiceResponse.ErrorMessage);
             Server.Tools.Response serviceResponse = CallDirectShipmentUpsert();
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
@@ -40,7 +43,7 @@ namespace Logitude.HybridTest.CommonServices
             Server.Tools.Response agentServiceResponse = AgentTest.CallAgentUpsert();
             Assert.IsFalse(agentServiceResponse.HasError, "Agent Upsert Failed! " + agentServiceResponse.ErrorMessage);
             Assert.IsNotNull(agentServiceResponse.Result, "Agent Upsert Failed! " + agentServiceResponse.ErrorMessage);
-            Server.Tools.Response portServiceResponse = PortTest.CallPortUpsert();
+            Server.Tools.Response portServiceResponse = PortTest.CallFromPortUpsert();
             Assert.IsFalse(portServiceResponse.HasError, "Port Upsert Failed! " + portServiceResponse.ErrorMessage);
             Assert.IsNotNull(portServiceResponse.Result, "Port Upsert Failed! " + portServiceResponse.ErrorMessage);
             Server.Tools.Response serviceResponse = CallHouseShipmentUpsert();
@@ -61,18 +64,18 @@ namespace Logitude.HybridTest.CommonServices
                 ShipmentServiceReference.ShipmentPM entityPM = new ShipmentServiceReference.ShipmentPM()
                 {
                     ShipmentNumber = "Hybrid Shipment",
-                    TransportModeId = "A",
-                    DirectionId = "E",
-                    FreightPrepaidCollectId = "P",
-                    OtherPrepaidCollectId = "P",
+                    TransportModeId = "A", //A:Air, O:Occean, I:Inland
+                    DirectionId = "E", //I:Import, E:Export, D:Drop, R:Drop, C:Customs Import
+                    FreightPrepaidCollectId = "P", //P:Prepaid, C:Collect, B:Both
+                    OtherPrepaidCollectId = "P", //P:Prepaid, C:Collect, B:Both
                     BranchId = HybridCodes.BranchCode,
                     DepartmentId = HybridCodes.DepartmentCode,
                     ConsigneeId = HybridCodes.AgentCode,
-                    ShipmentLevelCode = "D",
-                    FromPortId = HybridCodes.PortCode,
-                    ToPortId = HybridCodes.PortCode,
-                    MainCarriageFromPortId = HybridCodes.PortCode,
-                    MainCarriageToPortId = HybridCodes.PortCode,
+                    ShipmentLevelCode = "D", //D:Direct, H: House, C:Consol, A:Customs
+                    FromPortId = HybridCodes.FromPortCode,
+                    ToPortId = HybridCodes.ToPortCode,
+                    MainCarriageFromPortId = HybridCodes.FromPortCode,
+                    MainCarriageToPortId = HybridCodes.ToPortCode,
                     CreateDateTime = DateTime.Now,
                     LastUpdateDate = DateTime.Now,
                     Tenant = TestEnvironmentGlobalParameters.Tenant,
@@ -96,18 +99,18 @@ namespace Logitude.HybridTest.CommonServices
                 ShipmentServiceReference.ShipmentPM entityPM = new ShipmentServiceReference.ShipmentPM()
                 {
                     ShipmentNumber = "Hybrid Shipment",
-                    TransportModeId = "A",
-                    DirectionId = "E",
-                    FreightPrepaidCollectId = "P",
-                    OtherPrepaidCollectId = "P",
+                    TransportModeId = "A", //A:Air, O:Occean, I:Inland
+                    DirectionId = "E", //I:Import, E:Export, D:Drop, R:Drop, C:Customs Import
+                    FreightPrepaidCollectId = "P", //P:Prepaid, C:Collect, B:Both
+                    OtherPrepaidCollectId = "P", //P:Prepaid, C:Collect, B:Both
                     BranchId = HybridCodes.BranchCode,
                     DepartmentId = HybridCodes.DepartmentCode,
                     ConsigneeId = HybridCodes.AgentCode,
-                    ShipmentLevelCode = "H",
-                    FromPortId = HybridCodes.PortCode,
-                    ToPortId = HybridCodes.PortCode,
-                    MainCarriageFromPortId = HybridCodes.PortCode,
-                    MainCarriageToPortId = HybridCodes.PortCode,
+                    ShipmentLevelCode = "H", //D:Direct, H: House, C:Consol, A:Customs
+                    FromPortId = HybridCodes.FromPortCode,
+                    ToPortId = HybridCodes.ToPortCode,
+                    MainCarriageFromPortId = HybridCodes.FromPortCode,
+                    MainCarriageToPortId = HybridCodes.ToPortCode,
                     CreateDateTime = DateTime.Now,
                     LastUpdateDate = DateTime.Now,
                     Tenant = TestEnvironmentGlobalParameters.Tenant,

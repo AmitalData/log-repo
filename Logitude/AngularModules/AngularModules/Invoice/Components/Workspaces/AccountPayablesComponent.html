@@ -83,11 +83,11 @@
                                         </div>
 
                                         <div>
-                                            <p class="QueryLink" (click)="ViewInvoiceQuery('APPayment:Draft Payments')">{{'APPayment.Q.DraftAPPayments'|TextCodeTranslationPipe}} ({{APPaymentsDraftsCount}})</p>
-                                            <p class="QueryLink" (click)="ViewInvoiceQuery('APPayment:Open Payments')">{{'APPayment.Q.OpenAPPayments'|TextCodeTranslationPipe}} ({{APPaymentsOpenedCount}})</p>
-                                            <p class="QueryLink" (click)="ViewInvoiceQuery('APPayment:ErrorInTransfer')" *ngIf="APPaymentErrorInTransferVisibility">{{'APPayment.Q.ErrorInTransfer'|TextCodeTranslationPipe}} ({{APPaymentErrorInTransferCount}})</p>
-                                            <p class="QueryLink" (click)="ViewInvoiceQuery('APPayment:All Payments')">{{'APPayment.Q.AllAPPayments'|TextCodeTranslationPipe}}</p>
-                                            <p class="QueryLink" (click)="NewEntityClicked('APPayment')">{{'General.O.NewPayment'|TextCodeTranslationPipe}}</p>
+                                            <p id="{{'DraftAPPaymentsQ' | IdGeneratorPipe}}"  class="QueryLink" (click)="ViewInvoiceQuery('APPayment:Draft Payments')">{{'APPayment.Q.DraftAPPayments'|TextCodeTranslationPipe}} ({{APPaymentsDraftsCount}})</p>
+                                            <p id="{{'OpenAPPaymentsQ' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewInvoiceQuery('APPayment:Open Payments')">{{'APPayment.Q.OpenAPPayments'|TextCodeTranslationPipe}} ({{APPaymentsOpenedCount}})</p>
+                                            <p id="{{'ErrorInTransferQ' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewInvoiceQuery('APPayment:ErrorInTransfer')" *ngIf="APPaymentErrorInTransferVisibility">{{'APPayment.Q.ErrorInTransfer'|TextCodeTranslationPipe}} ({{APPaymentErrorInTransferCount}})</p>
+                                            <p id="{{'AllAPPaymentsQ' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewInvoiceQuery('APPayment:All Payments')">{{'APPayment.Q.AllAPPayments'|TextCodeTranslationPipe}}</p>
+                                            <p id="{{'NewAPPayment' | IdGeneratorPipe}}" class="QueryLink" (click)="NewEntityClicked('APPayment')">{{'General.O.NewPayment'|TextCodeTranslationPipe}}</p>
                                         </div>
                                     </div>
 
