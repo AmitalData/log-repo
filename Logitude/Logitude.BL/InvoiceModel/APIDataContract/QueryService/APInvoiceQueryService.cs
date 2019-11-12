@@ -436,7 +436,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                                 line.VatTypeName = vatType.EnglishName;
                                 line.VatIsMultiPercentage = vatType.IsMultiPercentage;
 
-                                if (line.VatPercentage == null || line.VatPercentage == 0)
+                                if (line.VatPercentage == null)
                                 {
                                     if (!vatType.IsMultiPercentage)
                                     {
