@@ -31,7 +31,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void OnUpdating(TaxReportLinePM entityPM, TaxReportLine entityPOCO)
         {
-            JournalQueryService journalQuery = new JournalQueryService(EntityPM.Tenant);
             JournalAdditionalDataQueryService additionalDataQueryService = new JournalAdditionalDataQueryService(entityPM.Tenant);
             IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
             JournalAdditionalDataUpdateService journalAdditionalDataUpdateService = new JournalAdditionalDataUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
@@ -51,9 +50,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
 
             // Update Journal
-            JournalPM journalPM = journalQuery.GetSingle(EntityPM.JournalId, false, false);
-            JournalAdditionalDataPM journalAdditionalDataPM = additionalDataQueryService.GetSingle(journalPM.Id, false, false);
-            if (journalPM != null)
+            //JournalPM journalPM = journalQuery.GetSingle(EntityPM.JournalId, false, false);
+            JournalAdditionalDataPM journalAdditionalDataPM = additionalDataQueryService.GetSingle(EntityPM.JournalId, false, false);
+            if (journalAdditionalDataPM != null)
             {
                 journalAdditionalDataPM.TaxReportTransmitStatusCode = entityPM.TransmitStatusCode;
                 journalAdditionalDataPM.TaxReportId = entityPM.TaxReportId;
@@ -67,9 +66,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         protected override void Validate(TaxReportLinePM entityPM)
         {
             //for output lines
-            CardRepository cardRepository = new CardRepository(entityPM.Tenant);
+            //CardRepository cardRepository = new CardRepository(entityPM.Tenant);
             TenantQuery tenantQuery = new TenantQuery(entityPM.Tenant);
-            TenantPM tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
+            //TenantPM tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
+            string vatNumber = tenantQuery.GetTenantVatNumber(entityPM.Tenant);
             //ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(entityPM.Tenant);
             entityPM.StatusCode = "6";
             entityPM.VatNumber = entityPM.VatNumber != null ? entityPM.VatNumber.Trim() : null;
@@ -80,7 +80,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
 
 
-                if (entityPM.VatNumber == tenantPM.VatNumber)
+                if (entityPM.VatNumber == vatNumber)
                 {
                     entityPM.LineTypeCode = "M";
 

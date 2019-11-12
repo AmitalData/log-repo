@@ -662,6 +662,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
         var ContainerTypeIdsProperties: string[] = [];
         var ContainerTypeNamesProperties: string[] = [];
         var EmptyIndex = 1;
+        var FirstLineEmpty: boolean = false;
         var emptyLines: boolean = false;
         var tempErrors: Array<string> = [];
         for (var firstIndex = 1; firstIndex <= 5; firstIndex++) {
@@ -685,8 +686,9 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
             }
         
             if (firstIndex == 1) {
-                if (AppTool.IsNullOrEmpty(this[comparedContainer])) {
+                if (AppTool.IsNullOrEmpty(this[ContainerTypeIdsProperties[firstIndex - 1]])) {
                     tempErrors.push(ContainerTypeNamesProperties[firstIndex - 1] + " is required");
+                    FirstLineEmpty = true;
                 }
             } else {
                 if (AppTool.IsNullOrEmpty(this[ContainerTypeIdsProperties[firstIndex - 1]])) {
@@ -694,12 +696,22 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
                         EmptyIndex = firstIndex;
                     }
                 }
+                
+                if (firstIndex == 2) {
+                    if (!AppTool.IsNullOrEmpty(this[ContainerTypeIdsProperties[firstIndex - 1]])) {
+                        if (FirstLineEmpty) {
+                            emptyLines = true;
+                            this.ValidationErrorsList.push("Empty Charge Lines aren't allowed between line 1 and line 2");
+                            EmptyIndex = 1;
+                        }
+                    }
+                }
 
                 if (firstIndex >= 3) {
                     if (!AppTool.IsNullOrEmpty(this[ContainerTypeIdsProperties[firstIndex - 1]])) {
                         if (EmptyIndex != 1) {
                             emptyLines = true;
-                            this.ValidationErrorsList.push("Empty Container Lines are nt allowed between line " + (EmptyIndex - 1) + " and line " + firstIndex);
+                            this.ValidationErrorsList.push("Empty Container Lines aren't allowed between line " + (EmptyIndex - 1) + " and line " + firstIndex);
                             EmptyIndex = 1;
                         }
                     }
@@ -720,7 +732,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
 
         if (this.EntityPM.TypeCode == "AFC" || this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OFC") {
             if (this.StartDate == null) {                
-                this.ValidationErrorsList.push("Satrt Date Field is Required");            
+                this.ValidationErrorsList.push("Start Date Field is Required");            
             }
 
             if (this.StartDate != null && this.ExpirationDate != null) {
@@ -737,10 +749,11 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
             this.ValidationErrorsList = errorsArray;
             this.ValidateSurcharge();
         }
-        else if (this.EntityPM.TypeCode == "OFC") {
+
+        if (this.EntityPM.TypeCode == "OFC") {
             var validator: ClassLevelValidator = new ClassLevelValidator();
             var errorsArray = validator.Validate("Tariff", this.EntityPM);
-            this.ValidationErrorsList = errorsArray;
+            this.ValidationErrorsList.concat(errorsArray);
             this.ValidateContainerTypes();
         }
 
