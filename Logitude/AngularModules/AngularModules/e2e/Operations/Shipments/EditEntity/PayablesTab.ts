@@ -117,7 +117,7 @@ export class PayablesTabComponent {
         this.Helper.WaitByIdAndClick('APInvoice.B.Approve');
         this.WaitBusyIndicatorToShowandHide();
         if (isFromAccounting == false) {
-            //this.WaitBusyIndicatorToShowandHide();
+            this.WaitBusyIndicatorToShowandHide();
             if (Voided == true) {
                 this.Helper.WaitByIdAndClick('MenuButtons_1');
                 this.Helper.WaitByIdAndClick('APInvoice.B.CancelApproval');
@@ -131,9 +131,9 @@ export class PayablesTabComponent {
                 this.Helper.WaitByIdAndClick('EditBackbutton_1');
             }
             else {
-                this.Helper.WaitByIdAndClick('APInvoice.TH.APPayments');
+                //this.Helper.WaitByIdAndClick('APInvoice.TH.APPayments');
                 //this.Helper.WaitByIdAndClick('Connect');
-                this.Helper.WaitEditComponentBusyIndicator();
+                //this.Helper.WaitEditComponentBusyIndicator();
 
                 this.Helper.WaitByIdAndClick('EditBackbutton_2');
                 this.WaitBusyIndicatorToShowandHide();
