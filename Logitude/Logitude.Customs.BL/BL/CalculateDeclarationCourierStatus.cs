@@ -416,7 +416,7 @@ namespace Logitude.Customs.BL.BL
                 if (declarationPendingPM_902 == null)
                 {
                     declarationPendingPM_902 = new DeclarationPendingPM();
-                    declarationPendingPM_902.CourierPendingReasonCode = "900";
+                    declarationPendingPM_902.CourierPendingReasonCode = "902";
                     declarationPendingPM_902.Status = "A";
                     declarationPendingPM_902.ChangeSetOp = ChangeSetOperation.Insert;
                     myDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM_902);
