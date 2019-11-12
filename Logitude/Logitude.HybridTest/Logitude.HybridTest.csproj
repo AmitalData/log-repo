@@ -55,7 +55,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommonServices\EventTypeTest.cs" />
+    <Compile Include="CommonServices\CardContactTest.cs" />
     <Compile Include="CommonServices\DocumentTypeTest.cs" />
+    <Compile Include="CommonServices\AddressTest.cs" />
     <Compile Include="CommonServices\UserTest.cs" />
     <Compile Include="CommonServices\SpecialServicesTypeTest.cs" />
     <Compile Include="CommonServices\StateTest.cs" />
@@ -85,12 +88,22 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Connected Services\AddressServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\AgentServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Connected Services\BranchServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\CardContactServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -131,6 +144,11 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Connected Services\DocumentTypeServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\EventTypeServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -243,6 +261,28 @@
     <None Include="Connected Services\AccountingPartnerServiceReference\AccountingPartnerWcfService6.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\AddressServiceReference\AddressWcfService.wsdl" />
+    <None Include="Connected Services\AddressServiceReference\AddressWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\AddressServiceReference\AddressWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\AddressServiceReference\AddressWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\AddressServiceReference\AddressWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\AddressServiceReference\AddressWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\AddressServiceReference\Logitude.HybridTest.AddressServiceReference.AddressPM.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\AddressServiceReference\Logitude.HybridTest.AddressServiceReference.GetAddressByExternalIdResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\AgentServiceReference\AgentWcfService.wsdl" />
     <None Include="Connected Services\AgentServiceReference\AgentWcfService.xsd">
       <SubType>Designer</SubType>
@@ -277,6 +317,31 @@
     </None>
     <None Include="Connected Services\BranchServiceReference\BranchWcfService4.xsd">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CardContactServiceReference\CardContactWcfService.wsdl" />
+    <None Include="Connected Services\CardContactServiceReference\CardContactWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CardContactServiceReference\CardContactWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CardContactServiceReference\CardContactWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CardContactServiceReference\CardContactWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CardContactServiceReference\CardContactWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CardContactServiceReference\CardContactWcfService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CardContactServiceReference\Logitude.HybridTest.CardContactServiceReference.CardContactPM.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CardContactServiceReference\Logitude.HybridTest.CardContactServiceReference.GetCardContactPMResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\CityServiceReference\CityWcfService.wsdl" />
     <None Include="Connected Services\CityServiceReference\CityWcfService.xsd">
@@ -525,6 +590,22 @@
     </None>
     <None Include="Connected Services\DocumentTypeServiceReference\Logitude.HybridTest.DocumentTypeServiceReference.GetDocumentTypesResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EventTypeServiceReference\EventTypeWcfService.wsdl" />
+    <None Include="Connected Services\EventTypeServiceReference\EventTypeWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EventTypeServiceReference\EventTypeWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EventTypeServiceReference\EventTypeWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EventTypeServiceReference\EventTypeWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EventTypeServiceReference\EventTypeWcfService4.xsd">
+      <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\GlobalZoneServiceReference\GlobalZoneWcfService.wsdl" />
     <None Include="Connected Services\GlobalZoneServiceReference\GlobalZoneWcfService.xsd">
@@ -888,8 +969,10 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\AccountingPartnerServiceReference\" />
+    <WCFMetadataStorage Include="Connected Services\AddressServiceReference\" />
     <WCFMetadataStorage Include="Connected Services\AgentServiceReference\" />
     <WCFMetadataStorage Include="Connected Services\BranchServiceReference\" />
+    <WCFMetadataStorage Include="Connected Services\CardContactServiceReference\" />
     <WCFMetadataStorage Include="Connected Services\CityServiceReference\" />
     <WCFMetadataStorage Include="Connected Services\ContactServiceReference\" />
     <WCFMetadataStorage Include="Connected Services\CountryServiceReference\" />
@@ -898,6 +981,7 @@
     <WCFMetadataStorage Include="Connected Services\CustomerServiceReference\" />
     <WCFMetadataStorage Include="Connected Services\DepartmentServiceReference\" />
     <WCFMetadataStorage Include="Connected Services\DocumentTypeServiceReference\" />
+    <WCFMetadataStorage Include="Connected Services\EventTypeServiceReference\" />
     <WCFMetadataStorage Include="Connected Services\GlobalZoneServiceReference\" />
     <WCFMetadataStorage Include="Connected Services\AirlineServiceReference\" />
     <WCFMetadataStorage Include="Connected Services\LoginServiceReference\" />
@@ -1300,6 +1384,51 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\UserServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\AddressServiceReference\AddressWcfService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\AddressServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\AddressServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\AddressServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\CardContactServiceReference\CardContactWcfService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\CardContactServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\CardContactServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\CardContactServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\EventTypeServiceReference\EventTypeWcfService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\EventTypeServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\EventTypeServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\EventTypeServiceReference\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
