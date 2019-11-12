@@ -30,14 +30,14 @@ export class PayablesTabComponent {
     AddPayableLines(shipperRef1: string, ShipmentType: string){
         if (ShipmentType == '') {
             this.AddPayables('Air Frei', '10', '10','Shipment');
-            this.AddPayables('Order', '10', '20','Shipment');
+            this.AddPayables('Order', '0', '0','Shipment');
 
         } else if (ShipmentType == 'FCL' || ShipmentType == 'LCL') {
             this.AddPayables('ocean', '10', '10','Shipment');
-            this.AddPayables('Order', '10', '20','Shipment');
+            this.AddPayables('Order', '0', '0','Shipment');
         } else {
             this.AddPayables('Inland', '10', '10','Shipment');
-            this.AddPayables('Order', '10', '20','Shipment');
+            this.AddPayables('Order', '0', '0','Shipment');
         }
 
         this.Helper.WaitByIdAndClick('Shipment-Save');
@@ -154,9 +154,9 @@ export class PayablesTabComponent {
         else{
             this.Helper.WaitByIdAndClick('EditBackbutton_2');
             this.WaitBusyIndicatorToShowandHide();
-            this.Helper.WaitByIdAndClick('Delete_52');
-            this.Helper.WaitByIdAndClick('ConfirmWindow_Yes_0');
-            this.Helper.WaitByIdAndClick('Shipment-Save');
+            //this.Helper.WaitByIdAndClick('Delete_52');
+            //this.Helper.WaitByIdAndClick('ConfirmWindow_Yes_0');
+           // this.Helper.WaitByIdAndClick('Shipment-Save');
          
             
             
