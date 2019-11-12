@@ -56,7 +56,7 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        protected string GetConstraintsScript(ConstraintDefinition constraints)
+        protected string GetConstraintsScript(ConstraintsDefinition constraints)
         {
             if (constraints != null)
             {
