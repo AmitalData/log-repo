@@ -692,7 +692,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                         if (myComparativeDate != null)
                         {
                             int dateYear = myComparativeDate.Value.Year;
-                            int dateMonth = myComparativeDate.Value.Month + 1;
+                            int dateMonth = myComparativeDate.Value.Month;
                             int dateDay = myComparativeDate.Value.Day;
 
                             if (paymentTerm.CurrentMonth)
