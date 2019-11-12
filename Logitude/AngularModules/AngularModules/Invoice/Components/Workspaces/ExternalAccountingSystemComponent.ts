@@ -106,7 +106,7 @@ export class ExternalAccountingSystemComponent extends BaseComponent {
         });
     }
     ViewXMLClicked() {
-        var link = AppTool.GetLogitudeURL() + "Quickbooksonline.aspx?connect=true&tenant=" + SessionLocator.Tenant;
+        var link = AppTool.GetLogitudeURL() + "QuickbooksOnlineAuth2.aspx?connect=true&tenant=" + SessionLocator.Tenant;
         window.open(link, '_blank', "location = 1, status = 1, scrollbars = 1, width = 400, height = 400");
         this.IsQuickBooksWindowOpened = true;
     }
