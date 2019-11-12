@@ -8,7 +8,7 @@ namespace Logitude.DBMigrations.Models
     [DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
     [XmlRoot("Constraints", Namespace = "", IsNullable = false)]
-    public class ConstraintDefinition
+    public class ConstraintsDefinition
     {
         [XmlAttribute()]
         public bool PrimaryKey { get; set; }

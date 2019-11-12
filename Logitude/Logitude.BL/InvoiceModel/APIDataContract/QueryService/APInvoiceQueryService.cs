@@ -9,6 +9,7 @@ using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -78,8 +79,9 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 this.InitAndValidatePaymentTerm_DueDate();
                 this.InitAndValidateInvoiceLines();
                 this.FillVATTransferExternalCodes(accountingSysytemCode, payableVATCard);
-                this.InitAndValidateTransferStatus();    
-                
+                this.InitAndValidateTransferStatus();
+                this.ComputeInvoiceAmounts();
+
                 return aPInvoicePM;
             }
 
@@ -273,8 +275,19 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                     this.aPInvoicePM.MainEntityId = shipment.Id;
                     this.aPInvoicePM.HouseNumber = shipment.House;
                     this.aPInvoicePM.MasterNumber = shipment.LongMaster;
-                    this.aPInvoicePM.ProfitCurrencyId = shipment.ProfitCurrencyId;
+                    this.aPInvoicePM.ProfitCurrencyId = shipment.ProfitCurrencyId;                    
                     this.aPInvoicePM.OperationalDate = shipment.OperationalDate;
+
+                    DateTime? loadingDate = this.aPInvoicePM.InvoiceDate;
+                    if (loadingDate == null)
+                    {
+                        loadingDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                    }
+                    LastRate myRate = this.GetCurrencysExchangeRate(tenant, this.aPInvoicePM.LocalCurrencyId, this.aPInvoicePM.ProfitCurrencyId, loadingDate.Value);
+                    if (myRate != null)
+                    {
+                        this.aPInvoicePM.ProfitCurrencyExchangeRate = myRate.Rate;                        
+                    }
 
                     switch (shipment.DirectionId)
                     {
@@ -423,7 +436,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                                 line.VatTypeName = vatType.EnglishName;
                                 line.VatIsMultiPercentage = vatType.IsMultiPercentage;
 
-                                if (line.VatPercentage == null || line.VatPercentage == 0)
+                                if (line.VatPercentage == null)
                                 {
                                     if (!vatType.IsMultiPercentage)
                                     {
@@ -441,6 +454,13 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                         {
                             throw new ApplicationException("Line VAT Type is Missing");
                         }
+
+                        if (string.IsNullOrEmpty(line.ForiegnCurrencyId))
+                        {
+                            line.ForiegnCurrencyId = this.aPInvoicePM.InvoiceCurrencyId;
+                        }
+
+                        this.ComputeInvoiceLineAmounts(line);
                     }
                 }
 
@@ -455,6 +475,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 line.EntityId = this.aPInvoicePM.MainEntityId;
             }
         }
+        
         private void FillVATTransferExternalCodes(string accountingSysytemCode, string payableVATCard)
         {
             var myGroup = (from a in this.aPInvoicePM.InvoiceLines
@@ -513,15 +534,118 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             {
                 this.aPInvoicePM.TransferStatusCode = expectedStatus;
             }
-        }      
-        private LastRate GetCurrencysExchangeRate(int tenant, string localCurrencyId, string invoiceCurrencyId, DateTime rateDate)
+        }
+        private void ComputeInvoiceAmounts()
+        {
+            if (!string.IsNullOrEmpty(this.aPInvoicePM.InvoiceCurrencyId)
+                && this.aPInvoicePM.InvoiceCurrencyExchangeRate != null && this.aPInvoicePM.InvoiceCurrencyExchangeRate != 0
+                && this.aPInvoicePM.AmountInInvoiceCurrency != null && this.aPInvoicePM.AmountInInvoiceCurrency != 0)
+            {
+                double? setValue = MethodHelper.Round(this.aPInvoicePM.AmountInInvoiceCurrency, 2);
+
+                //AmountInLocalCurrency
+                if (this.aPInvoicePM.AmountInLocalCurrency == null || this.aPInvoicePM.AmountInLocalCurrency == 0)
+                {
+                    if (this.aPInvoicePM.LocalCurrencyId == this.aPInvoicePM.InvoiceCurrencyId)
+                    {
+                        this.aPInvoicePM.AmountInLocalCurrency = setValue;
+                    }
+                    else
+                    {
+                        this.aPInvoicePM.AmountInLocalCurrency = MethodHelper.Round(setValue * this.aPInvoicePM.InvoiceCurrencyExchangeRate, 2);
+                    }
+                }
+
+                //AmountInProfitCurrency
+                if (this.aPInvoicePM.AmountInProfitCurrency == null || this.aPInvoicePM.AmountInProfitCurrency == 0)
+                {
+                    if (this.aPInvoicePM.ProfitCurrencyId == this.aPInvoicePM.InvoiceCurrencyId)
+                    {
+                        this.aPInvoicePM.AmountInProfitCurrency = setValue;
+                    }
+                    else if (this.aPInvoicePM.ProfitCurrencyId == this.aPInvoicePM.LocalCurrencyId)
+                    {
+                        this.aPInvoicePM.AmountInProfitCurrency = this.aPInvoicePM.AmountInLocalCurrency;
+                    }
+                    else
+                    {
+                        this.aPInvoicePM.AmountInProfitCurrency = MethodHelper.Round(this.aPInvoicePM.AmountInLocalCurrency / this.aPInvoicePM.ProfitCurrencyExchangeRate, 2);
+                    }
+                }
+
+                //SubTotalInLocalCurrency
+                if (this.aPInvoicePM.SubTotalInLocalCurrency == null || this.aPInvoicePM.SubTotalInLocalCurrency == 0)
+                {
+                    this.aPInvoicePM.SubTotalInLocalCurrency = MethodHelper.Round(this.aPInvoicePM.InvoiceLines.Sum(s => s.LocalCurrencyAmount), 2);
+                }
+
+                //SubTotalInInvoiceCurrency
+                if (this.aPInvoicePM.SubTotalInInvoiceCurrency == null || this.aPInvoicePM.SubTotalInInvoiceCurrency == 0)
+                {
+                    this.aPInvoicePM.SubTotalInInvoiceCurrency = MethodHelper.Round(this.aPInvoicePM.InvoiceLines.Sum(s => s.InvoiceCurrencyAmount), 2);
+                }
+            }
+        }
+        private void ComputeInvoiceLineAmounts(APInvoiceLinePM line)
+        {
+            //ForiegnExchangeRate
+            if (line.ForiegnExchangeRate == null || line.ForiegnExchangeRate == 0)
+            {
+                if (line.ForiegnCurrencyId == this.aPInvoicePM.InvoiceCurrencyId)
+                {
+                    line.ForiegnExchangeRate = this.aPInvoicePM.InvoiceCurrencyExchangeRate;
+                }
+
+                else
+                {
+                    DateTime? loadingDate = this.aPInvoicePM.InvoiceDate;
+                    if (loadingDate == null)
+                    {
+                        loadingDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                    }
+
+                    LastRate myRate = this.GetCurrencysExchangeRate(tenant, this.aPInvoicePM.LocalCurrencyId, line.ForiegnCurrencyId, loadingDate.Value);
+                    if (myRate != null)
+                    {
+                        line.ForiegnExchangeRate = myRate.Rate;
+                    }
+                }
+            }
+
+            //LocalCurrencyAmount
+            if (line.LocalCurrencyAmount == null || line.LocalCurrencyAmount == 0)
+            {
+                line.LocalCurrencyAmount = MethodHelper.Round(line.InvoiceCurrencyAmount * this.aPInvoicePM.InvoiceCurrencyExchangeRate, 2);
+            }
+
+            //ForiegnCurrencyAmount
+            if (line.ForiegnCurrencyAmount == null || line.ForiegnCurrencyAmount == 0)
+            {
+                line.ForiegnCurrencyAmount = line.LocalCurrencyAmount / line.ForiegnExchangeRate;
+            }
+
+            //ProfitCurrencyAmount
+            if (line.ProfitCurrencyAmount == null || line.ProfitCurrencyAmount == 0)
+            {
+                if (line.ForiegnCurrencyId == this.aPInvoicePM.ProfitCurrencyId)
+                {
+                    line.ProfitCurrencyAmount = line.ForiegnCurrencyAmount;
+                }
+
+                else
+                {
+                    line.ProfitCurrencyAmount = line.LocalCurrencyAmount / this.aPInvoicePM.ProfitCurrencyExchangeRate;
+                }
+            }
+        }
+        private LastRate GetCurrencysExchangeRate(int tenant, string localCurrencyId, string currencyId, DateTime rateDate)
         {
             LastRate result = null;
             
             RatesTableQuery ratesTableQuery = new RatesTableQuery(tenant);
             CurrencyRepository currencyRepository = new CurrencyRepository(tenant);
 
-            LastRate lastRate = ratesTableQuery.GetLastRecordByValueDate(tenant, invoiceCurrencyId, localCurrencyId, rateDate);
+            LastRate lastRate = ratesTableQuery.GetLastRecordByValueDate(tenant, currencyId, localCurrencyId, rateDate);
             if (lastRate != null)
             {
                 result = lastRate;
@@ -568,7 +692,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                         if (myComparativeDate != null)
                         {
                             int dateYear = myComparativeDate.Value.Year;
-                            int dateMonth = myComparativeDate.Value.Month + 1;
+                            int dateMonth = myComparativeDate.Value.Month;
                             int dateDay = myComparativeDate.Value.Day;
 
                             if (paymentTerm.CurrentMonth)

@@ -99,9 +99,9 @@ namespace Logitude.DBMigrations.Models
             switch (type)
             {
                 case "Text":
-                    return "VARCHAR(" + size + ")";
+                    return "VARCHAR(" + (size == -1 ? "MAX" : size.ToString()) + ")";
                 case "nText":
-                    return "NVARCHAR(" + size + ")";
+                    return "NVARCHAR(" + (size == -1 ? "MAX" : size.ToString()) + ")";
                 case "Integer":
                     return "INT";
                 case "Boolean":
@@ -140,7 +140,7 @@ namespace Logitude.DBMigrations.Models
                                 Name = reader["ColumnName"].ToString(),
                                 Type = GetDxmlDataType(reader["DataType"].ToString().ToUpper()),
                                 Size = !String.IsNullOrEmpty(reader["Size"].ToString()) ? (reader["Size"].ToString() == "-1" ? -1 : Convert.ToInt32(reader["Size"].ToString())) : 0,
-                                Constraints = new ConstraintDefinition
+                                Constraints = new ConstraintsDefinition
                                 {
                                     Nullable = (reader["Nullable"].ToString() == "YES")
                                 }

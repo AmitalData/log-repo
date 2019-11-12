@@ -1758,7 +1758,30 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         }
 
-
+        public string GetTenantVatNumber(int tenant)
+        {
+            string cacheKey = "TenantVatNumber" + tenant;
+            string vatNumber;
+            if (HttpContext.Current != null)
+            {
+                if (CacheManager.CacheWrapper.Get(cacheKey) == null)
+                {
+                    TenantRepository tenantRepository = new TenantRepository(tenant);
+                    vatNumber = tenantRepository.GetTenantVatNumberOnly(tenant);
+                    CacheManager.CacheWrapper.Insert(cacheKey, vatNumber, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                }
+                else
+                {
+                    vatNumber = (string)CacheManager.CacheWrapper.Get(cacheKey);
+                }
+            }
+            else
+            {
+                TenantRepository tenantRepository = new TenantRepository(tenant);
+                vatNumber = tenantRepository.GetTenantVatNumberOnly(tenant);
+            }
+            return vatNumber;
+        }
 
     }
 }
