@@ -136,9 +136,9 @@ export class PayablesTabComponent {
 
                 this.Helper.WaitByIdAndClick('EditBackbutton_2');
                 this.WaitBusyIndicatorToShowandHide();
-                this.Helper.WaitByIdAndClick('Delete_52');
-                this.Helper.WaitByIdAndClick('ConfirmWindow_Yes_0');
-                this.Helper.WaitByIdAndClick('Shipment-Save');
+                //this.Helper.WaitByIdAndClick('Delete_52');
+                //this.Helper.WaitByIdAndClick('ConfirmWindow_Yes_0');
+                //this.Helper.WaitByIdAndClick('Shipment-Save');
             }
             this.Helper.WaitEditComponentBusyIndicator();
         } else {//from accounting actions
