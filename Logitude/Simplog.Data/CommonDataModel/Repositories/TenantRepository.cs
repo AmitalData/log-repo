@@ -219,5 +219,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     select d).ToList();
       
         }
+
+        public string GetTenantVatNumberOnly(int id)
+        {
+            return (from a in context.Tenants where a.Id == id select a.VatNumber).FirstOrDefault();
+        }
     }
 }

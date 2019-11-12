@@ -18,7 +18,18 @@ namespace Logitude.HybridTest
         public const string AccountingPartnerCode = "HAPartner";
         public const string ShippingLineCode = "HSLN"; 
         public const string VendorCode = "HVEN";
+        public const string TruckerCode = "HTRU";
+        public const string PortCode = "HPO"; 
+        public const string CurrencyCode = "HCR";
+        public const string ShippingAgentCode = "HSAG";
         public const string DepartmentCode = "HDEP";
-        public const string BranchCode = "HBRA";
+        public const string BranchCode = "HBRA"; 
+        public const string PackageTypeCode = "HPT";
+        public const string ContactCode = "Hybrid Contact"; 
+        public const string VesselCode = "HV"; 
+        public const string StateCode = "HS";
+        public const string SpecialServicesTypeCode = "HSST"; 
+        public const string DocumentTypeCode = "HDT";
+        public const string UserCode = "HU";
     }
 }
