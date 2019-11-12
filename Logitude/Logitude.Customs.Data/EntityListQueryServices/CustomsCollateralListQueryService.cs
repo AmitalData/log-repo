@@ -26,6 +26,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<CustomsCollateralList> query = (from a in iQueryable.Include("CollateralRequestStatus").Include("EntityTypeLookup").Include("RequestedCollateralType")
                                                        select new CustomsCollateralList()
                                                          {
+                                                                DeclarationId =a.DeclarationId,
                                                              CollateralRequestNumber = a.CollateralRequestNumber,
                                                              CollateralRequestStatusCode = a.CollateralRequestStatusCode,
                                                              CollateralValidityDate = a.CollateralValidityDate,

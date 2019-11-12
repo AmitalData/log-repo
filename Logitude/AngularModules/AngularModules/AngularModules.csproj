@@ -211,6 +211,7 @@
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationSupplierInvoice\Components\SupplierInvoices\UpdateProcessCodeComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationSupplierInvoice\Components\SupplierInvoices\VendorExtendedSearchComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\CasualSupplierDetailsComponent.html" />
+    <Content Include="CustomsModules\CustomsListTemplates\Components\CustomsCollateralListTemplate.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\AddEditCustomsAirlineComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\AddEditInterfaceManagementComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\ClosedTableNotExistedComponent.html" />
@@ -820,6 +821,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\Components\SpecialActivityRequestComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\ModuleCustomsGeneralRequests.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\ModuleDeclarations.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\CustomsCollateralListTemplate.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\AddEditCustomsAirlineComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\AddEditInterfaceManagementComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\ClosedTableNotExistedComponent.ts" />
@@ -927,6 +929,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\TransferCargoMethodTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\UpdateCodePM.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\CourierPendingReasonExtendedListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\ExtendedLists\CustomsCollateralExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\CustomsAirlineExtendedPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\CustomsPartnerFtpExtendedPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\AgentTalkBackTypeListService.ts" />
