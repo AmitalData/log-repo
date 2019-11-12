@@ -7,18 +7,24 @@ export class PayablesTabComponent {
     constructor() {
         this.Helper = new FieldsHelper();
     }
-    public PayablesTab(shipperRef1: string, ShipmentType: string) {
+    public PayablesTab(shipperRef1: string, ShipmentType: string, isFromAccounting: boolean) {
         this.Helper.WaitEditComponentBusyIndicator();
         this.Helper.WaitByIdAndClick('Shipment.TH.Payables');
         this.Helper.WaitEditComponentBusyIndicator();
 
         this.Helper.ItemsVisibility('ATDSPayable-payable');
+        if (isFromAccounting == false) {
+            this.AddPayableLines(shipperRef1, ShipmentType);
+            this.CreatAPInvoicewithVoid(shipperRef1, true);
+            this.EditAPInvoice(shipperRef1, true, isFromAccounting);
+            this.CreatAPInvoicewithVoid(shipperRef1 + '1L1', false);
+            this.EditAPInvoice(shipperRef1 + '1L1', false, isFromAccounting);
+        } else {
+            this.AddPayableLines(shipperRef1, ShipmentType);
+            this.CreatAPInvoicewithVoid(shipperRef1, false);
+            this.EditAPInvoice(shipperRef1 + '1L1', false, isFromAccounting);
+        }
 
-        this.AddPayableLines(shipperRef1, ShipmentType);
-        this.CreatAPInvoicewithVoid(shipperRef1, true);
-        this.EditAPInvoice(shipperRef1, true);
-        this.CreatAPInvoicewithVoid(shipperRef1 + '1L1', false);
-        this.EditAPInvoice(shipperRef1 + '1L1', false);
     }
     AddPayableLines(shipperRef1: string, ShipmentType: string) {
         if (ShipmentType == '') {
@@ -89,7 +95,7 @@ export class PayablesTabComponent {
         this.Helper.WaitByIdAndClick('Ok-CreateAPInvoice');
         this.Helper.WaitBusyIndicator();
     }
-    EditAPInvoice(shipperRef1: string, Voided: boolean) {
+    EditAPInvoice(shipperRef1: string, Voided: boolean, isFromAccounting: boolean) {
         this.Helper.WaitEditComponentBusyIndicator();
         this.Helper.WaitByIdAndFill('APInvoice_VatTypeId', 'Zero');
         this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'APInvoice_VatTypeId', 'Zero');
@@ -109,28 +115,38 @@ export class PayablesTabComponent {
 
         this.Helper.WaitByIdAndClick('APInvoice.B.Approve');
         this.WaitBusyIndicatorToShowandHide();
-        this.WaitBusyIndicatorToShowandHide();
+        if (isFromAccounting == false) {
+            //this.WaitBusyIndicatorToShowandHide();
+            if (Voided == true) {
+                this.Helper.WaitByIdAndClick('MenuButtons_1');
+                this.Helper.WaitByIdAndClick('APInvoice.B.CancelApproval');
+                this.WaitBusyIndicatorToShowandHide();
 
-        if (Voided == true) {
-            this.Helper.WaitByIdAndClick('MenuButtons_1');
-            this.Helper.WaitByIdAndClick('APInvoice.B.CancelApproval');
-            this.WaitBusyIndicatorToShowandHide();
+                this.Helper.WaitByIdAndClick('MenuButtons_1');
+                this.Helper.WaitByIdAndClick('APInvoice.B.Void');
+                this.Helper.WaitByIdAndClick('ConfirmWindow_Yes_0');
+                this.Helper.WaitEditComponentBusyIndicator();
+                this.Helper.WaitByIdAndClick('APInvoice.TH.General');
+                this.Helper.WaitByIdAndClick('EditBackbutton_1');
+            }
+            else {
+                this.Helper.WaitByIdAndClick('APInvoice.TH.APPayments');
+                this.Helper.WaitByIdAndClick('Connect');
+                this.Helper.WaitEditComponentBusyIndicator();
 
-            this.Helper.WaitByIdAndClick('MenuButtons_1');
-            this.Helper.WaitByIdAndClick('APInvoice.B.Void');
-            this.Helper.WaitByIdAndClick('ConfirmWindow_Yes_0');
+                this.Helper.WaitByIdAndClick('EditBackbutton_2');
+                this.WaitBusyIndicatorToShowandHide();
+                this.Helper.WaitByIdAndClick('Delete_52');
+                this.Helper.WaitByIdAndClick('ConfirmWindow_Yes_0');
+                this.Helper.WaitByIdAndClick('Shipment-Save');
+            }
             this.Helper.WaitEditComponentBusyIndicator();
-            this.Helper.WaitByIdAndClick('APInvoice.TH.General');
+        } else {//from accounting actions
+
             this.Helper.WaitByIdAndClick('EditBackbutton_1');
-        }
-        else {
-            this.Helper.WaitByIdAndClick('EditBackbutton_2');
             this.WaitBusyIndicatorToShowandHide();
-            this.Helper.WaitByIdAndClick('Delete_52');
-            this.Helper.WaitByIdAndClick('ConfirmWindow_Yes_0');
-            this.Helper.WaitByIdAndClick('Shipment-Save');
+            this.Helper.WaitByIdAndClick('BackButton');
         }
-        this.Helper.WaitEditComponentBusyIndicator();
     }
     WaitBusyIndicatorToShowandHide() {
         this.Helper.WaitShowEditComponentBusyIndicator();

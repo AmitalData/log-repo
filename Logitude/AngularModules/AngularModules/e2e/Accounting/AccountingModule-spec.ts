@@ -1,35 +1,20 @@
 
 import { browser, by, element } from 'protractor';
-import { APPaymentComponent } from './NewFolder1/APPayment'
-
+import { AccountingComp } from './AccountingModule';
 describe('Accounting Module', () => {
+    let accountingComp: AccountingComp = new AccountingComp();
 
-    let paymentTab: APPaymentComponent = new APPaymentComponent();
-
-    beforeEach(() => {
-    });
-    afterEach(() => {
-    });
-
-    //if (browser.params.CRM.CRMType == 'overview') {
-        it('Payment Success', function () {
+    if (browser.params.Accounting.AccountingType == 'APP') {
+        it('AP Payment Success', function () {
             browser.ignoreSynchronization = true;
-            paymentTab.Shipment();
-
-            paymentTab.accounting();
+            accountingComp.DoAccounting(browser.params.Accounting.AccountingType);
+            
         });
-    //}
-    //else if (browser.params.CRM.CRMType == 'customer') {
-    //    it('Customers Success', function () {
+    }
+    //else if (browser.params.Accounting.AccountingType == 'ARP') {
+    //    it('AR Payment Success', function () {
     //        browser.ignoreSynchronization = true;
 
     //    });
-    //}
-    //else if (browser.params.CRM.CRMType == 'quote') {
-    //    it('Quotes Success', function () {
-    //        browser.ignoreSynchronization = true;
-
-    //    });
-    //}
-  
- });
+    //} 
+});

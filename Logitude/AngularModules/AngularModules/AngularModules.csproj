@@ -791,8 +791,8 @@
     <TypeScriptCompile Include="Controls\Pipes\DateToMonthPipe.ts" />
     <TypeScriptCompile Include="e2e\Accounting\AccountingModule-spec.ts" />
     <TypeScriptCompile Include="e2e\Accounting\AccountingModule.ts" />
-    <TypeScriptCompile Include="e2e\Accounting\NewFolder1\APPayment.ts" />
-    <TypeScriptCompile Include="e2e\Accounting\NewFolder1\APShipmentMultipleInvoice.ts" />
+    <TypeScriptCompile Include="e2e\Accounting\New\APPayment.ts" />
+    <TypeScriptCompile Include="e2e\Accounting\New\APShipmentMultipleInvoice.ts" />
     <TypeScriptCompile Include="e2e\Contacts\Contacts-spec.ts" />
     <TypeScriptCompile Include="e2e\Contacts\Contacts.ts" />
     <TypeScriptCompile Include="e2e\CRM\Activities\ActivitiesModule.ts" />

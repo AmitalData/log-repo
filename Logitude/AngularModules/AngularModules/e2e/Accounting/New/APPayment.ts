@@ -17,8 +17,10 @@ export class APPaymentComponent {
         var shipNumber;
         shipNumber = this.opp.DoOperations('D', 'Export', 'A', '');
         this.opp.SearchForShipment(shipNumber);
-        this.opp.EditShipment(shipNumber);
-        this.opp.SaveShip();
+        this.Helper.WaitByIdAndClick('Shipment.TH.Overview');
+        this.payablesComponent.PayablesTab(shipNumber,'',true);
+        //this.opp.EditShipment(shipNumber);
+        //this.opp.SaveShip();
         //this.Helper.WaitByIdAndClick('Shipment.TH.Overview');
         //this.Helper.WaitEditComponentBusyIndicator();
         //this.Helper.WaitByIdAndClick('Shipment.TH.Payables');
@@ -27,16 +29,11 @@ export class APPaymentComponent {
         //this.payablesComponent.CreatAPInvoicewithVoid(shipNumber + '1L1', false);
         //this.payablesComponent.EditAPInvoice(shipNumber + '1L1', false);
         
-        //this.Helper.WaitByIdAndClick('EditBackbutton_1');
-
-        this.Helper.WaitByIdAndClick('BackButton');
+ 
     }
-    accounting() {
-        this.AccountingTab.GoToMainMenu('General.MH.Accounting');
-        this.Helper.WaitByIdAndClick('PAYABLEAccounting');
+    CreatePayment() {
         this.Helper.WaitByIdAndClick('NewAPPayment');
 
-        
         this.Helper.WaitByIdAndFill('APPayment_VendorId', 'TestAgentExport1');
         this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'APPayment_VendorId', 'TestAgentExport1');
 
@@ -47,7 +44,14 @@ export class APPaymentComponent {
         this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'APPayment_PaymentCurrencyId', 'EU');
 
         this.Helper.WaitByIdAndFill('APPayment_AmountInPaymentCurrency', '500');
-        browser.driver.sleep(5000)
+        this.Helper.WaitByIdAndClick('APPayment-Save');
+        this.Helper.WaitEditComponentBusyIndicator();
+
+        this.Helper.WaitByIdAndFill('APInvoice_AmountPaid', '100');
+        this.Helper.WaitByIdAndClick('APPayment.B.Approve');
+        this.Helper.WaitEditComponentBusyIndicator();
+
+        this.Helper.WaitByIdAndClick('APPayment-SaveClose');
     }
 
 }
