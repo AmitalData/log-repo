@@ -140,7 +140,7 @@ namespace Logitude.DBMigrations.Models
                                 Name = reader["ColumnName"].ToString(),
                                 Type = GetDxmlDataType(reader["DataType"].ToString().ToUpper()),
                                 Size = !String.IsNullOrEmpty(reader["Size"].ToString()) ? (reader["Size"].ToString() == "-1" ? -1 : Convert.ToInt32(reader["Size"].ToString())) : 0,
-                                Constraints = new ConstraintDefinition
+                                Constraints = new ConstraintsDefinition
                                 {
                                     Nullable = (reader["Nullable"].ToString() == "YES")
                                 }

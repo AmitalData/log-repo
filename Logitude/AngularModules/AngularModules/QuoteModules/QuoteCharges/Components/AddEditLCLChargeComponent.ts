@@ -29,14 +29,23 @@ export class AddEditLCLChargeComponent {
     public IsRoutingRate: boolean = false;
     public IsEditingEnabled: boolean = false;
     public ObjectTableName: string = "QuoteCharge";
+    public QuotePriceObjectTableName: string = "QuotePriceSteps";
     public ItemsSource: ObservableCollection;
-    public StepsItemsSource: QuoteStepItem[] = [];
+    public StepsItemsSource: ObservableCollection;
     public ChargeTypesQueryFilters: ApiQueryFilters;
     public IsVATVisible: boolean = false;
     public ValidationErrorsList: string[] = [];
     private CurrentSession = SessionLocator.SelectedSession;    
     constructor() {
         this.ItemsSource = new ObservableCollection([]);
+        this.StepsItemsSource = new ObservableCollection([]);
+        this.CurrentSession.SessionEvent.subscribe((res) => {
+            if (res == "AddDefaultPriceStep") {
+                if (this.StepsItemsSource.Length == 0) {
+                    this.AddStepItemMethod();
+                }
+            }
+        })
     }
 
     SetDataContext(dataContext: QuoteChargeItem) {
@@ -54,6 +63,7 @@ export class AddEditLCLChargeComponent {
         this.BuildQueryFilters();
         this.BuildStepItemsSource();
         this.Clone();
+        
     }
 
     BuildItemsSource() {
@@ -82,11 +92,22 @@ export class AddEditLCLChargeComponent {
         }
     }
     BuildStepItemsSource() {
-        this.StepsItemsSource = [];
+        if (this.StepsItemsSource == null) {
+            this.StepsItemsSource = new ObservableCollection([]);
+        }
+        else {
+            this.StepsItemsSource.Collection.forEach(item => {
+                this.StepsItemsSource.Clear();
+            });
+        }
+
+        var itemsCollection: QuoteStepItem[] = [];
 
         this.EntityPM.QuoteChargePriceSteps.sort((a, b) => { return a.Step - b.Step }).forEach((item) => {
-            this.StepsItemsSource.push(new QuoteStepItem(item, this, false));
+            itemsCollection.push(new QuoteStepItem(item, this, false));
         });
+
+        this.StepsItemsSource.InsertCollection(itemsCollection);
     }
 
     public SelectedRow: QuoteChargeItem = null;
@@ -99,14 +120,17 @@ export class AddEditLCLChargeComponent {
         this.SelectedStepItem = item;   
     }
 
-    AddStepClicked() {
-        var newItem = new QuotePriceStepsPM(null);
+    AddStepItemMethod() {
+        var newItem: QuotePriceStepsPM = new QuotePriceStepsPM(null);
         newItem.Tenant = SessionLocator.Tenant;
         newItem.QuoteId = this.EntityPM.Id;
         newItem.MarkupValue = this.EntityPM.MarkUpValue;
         newItem.QuoteChargeId = this.EntityPM.Id;
-        var itemComponent = new QuoteStepItem(newItem, this, true);
-        this.RunAddEditStep(itemComponent, "Add Price Break");
+        this.StepsItemsSource.Insert(new QuoteStepItem(newItem, this, true));
+    }
+
+    AddStepClicked() {
+        this.AddStepItemMethod();
     }
     EditStepClicked() {
         if (this.SelectedStepItem != null) {
@@ -121,10 +145,17 @@ export class AddEditLCLChargeComponent {
         logitudeWindow.DataContext = itemComponent;
         logitudeWindow.Show('./QuoteModules/QuoteCharges/Components/AddEditPriceStepComponent');
     }
-    DeleteStepClicked() {
+    DeleteStepClicked(item: QuoteStepItem) {
         if (this.SelectedStepItem) {
-            this.EntityPM.RemoveQuotePriceStepsPM(this.SelectedStepItem.EntityPM);
+            this.EntityPM.RemoveQuotePriceStepsPM(item.EntityPM);
             this.BuildStepItemsSource();
+        }
+    }
+    OnRowEnded($event) {
+        var errors = [];
+        Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
+        if (($event) == this.StepsItemsSource.Length) {
+            this.AddStepItemMethod();
         }
     }
 
@@ -137,6 +168,22 @@ export class AddEditLCLChargeComponent {
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+
+       
+        this.StepsItemsSource.Collection.forEach(priceStep => {
+            Validator.TryValidateObject(priceStep, this.QuotePriceObjectTableName, errors);
+            this.DataContext.EntityPM.QuoteChargePriceSteps.filter(d => d.Step == priceStep.Step).forEach((item) => {
+                if (item != priceStep.EntityPM) {
+                    errors.push("Price Steps list already contains Step: " + AppTool.Round(priceStep.Step, 2));
+                }
+            });
+
+
+            var duplicates = this.StepsItemsSource.Collection.filter(d => d.Step == priceStep.Step);
+            if (duplicates && duplicates.length > 1) {
+                errors.push("Price Steps list already contains Step: " + AppTool.Round(priceStep.Step, 2));
+            }
+        });
 
         if (this.EntityPM.ChargesGroupCode == "FRT") {
             if (this.DataContext.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d != this.EntityPM).length > 0) {
@@ -166,6 +213,17 @@ export class AddEditLCLChargeComponent {
 
         if (errors.length == 0) {
 
+            this.StepsItemsSource.Collection.forEach(item => {
+                if (item != null) {
+                    if (item.IsNew) {
+                        if (this.DataContext.EntityPM.QuoteChargePriceSteps.indexOf(item.EntityPM) == -1) {
+                            item.IsNewEntity = false;
+                            this.DataContext.EntityPM.AddQuotePriceStepsPM(item.EntityPM);
+                        }
+                    }
+                }
+            });
+
             if (this.DataContext.IsNew) {
                 this.DataContext.QuotePM.AddQuoteChargePM(this.EntityPM);
                 this.DataContext.fatherComponent.BuildItemsSource();
@@ -185,7 +243,6 @@ export class AddEditLCLChargeComponent {
     private myCloner: Cloner;
     private oldPriceSteps: QuotePriceStepsPM[] = [];
     private Clone() {
-
         this.EntityPM.QuoteChargePriceSteps.forEach((item) => {
             var stepItem: QuotePriceStepsPM = new QuotePriceStepsPM(null);
             stepItem.Id = item.Id;
