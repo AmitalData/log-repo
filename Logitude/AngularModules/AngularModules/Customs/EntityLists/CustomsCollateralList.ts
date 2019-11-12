@@ -28,6 +28,7 @@ export class CustomsCollateralList {
 	RequestedCollateralTypeName: string;
 	CustomsEntityTypeName: string;
 	IncludingThirdPartyGuarantee: boolean;
+	DeclarationId: string;
 	SearchFields: string;
 	CustomsHouseTypeName: string;
 	OrganizationUnitTypeName: string;
