@@ -112,7 +112,15 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         APInvoiceQueryService apinvoiceQuery = new APInvoiceQueryService(tenant);
                         APInvoicePM apinvoicePM = null;
 
-                        if(apinvoice.IsGeneralInvoice)
+                        if (apinvoice.Status != null && !string.IsNullOrEmpty(apinvoice.Status.Code))
+                        {
+                            if (apinvoice.Status.Code != "AD")
+                            {
+                                throw new ApplicationException("Invoice Status should be Approved");
+                            }
+                        }
+
+                        if (apinvoice.IsGeneralInvoice)
                         {
                             if(!string.IsNullOrEmpty(apinvoice.EntityType) || !string.IsNullOrEmpty(apinvoice.EntityReference))
                             {

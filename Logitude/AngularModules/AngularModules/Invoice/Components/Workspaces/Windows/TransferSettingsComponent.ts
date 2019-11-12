@@ -1,18 +1,18 @@
-import {Component,OnDestroy} from '@angular/core';
-import {AppTool} from '../../../../Infrastructure/Tools';
-import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings';
-import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
-import {ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
-import {AccountingSettingPM} from '../../../../Common/EntityPMs/AccountingSettingPM';
-import {AccountingSettingPMService} from '../../../../Common/Services/StandardPMs/AccountingSettingPMService';
-import {GlobalDomainService} from '../../../../Common/Services/GlobalDomainService';
-import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
-import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import {CommonDomainService} from '../../../../Common/Services/CommonDomainService';
-import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import {ObjectsUpdater} from '../../../../Infrastructure/Locators/ObjectsUpdater';
+import { Component, OnDestroy } from '@angular/core';
+import { AppTool } from '../../../../Infrastructure/Tools';
+import { InfraSettings } from '../../../../Infrastructure/Utilities/InfraSettings';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
+import { AccountingSettingPM } from '../../../../Common/EntityPMs/AccountingSettingPM';
+import { AccountingSettingPMService } from '../../../../Common/Services/StandardPMs/AccountingSettingPMService';
+import { GlobalDomainService } from '../../../../Common/Services/GlobalDomainService';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
+import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { ObjectsUpdater } from '../../../../Infrastructure/Locators/ObjectsUpdater';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 
 @Component({
@@ -72,8 +72,10 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
             if (!myResponse.HasError) {
                 this.EntityPM.QBOAccessToken = myResponse.Result.QBOAccessToken;
                 this.EntityPM.QBOAccessTokenSecret = myResponse.Result.QBOAccessTokenSecret;
+                this.EntityPM.RefreshToken = myResponse.Result.RefreshToken;
+
                 var temp = this.EntityPM.QBOrealMeID;
-                this.EntityPM.QBOrealMeID = myResponse.Result.QBOrealMeID;               
+                this.EntityPM.QBOrealMeID = myResponse.Result.QBOrealMeID;
             }
 
             this.SetQuickBookProperties();
@@ -84,7 +86,7 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
                 window.ShowWarningIcon = true;
                 window.Show("You are connecting to a different QBO environment than the previously connected. Please notice that old QBO translations will be erased");
                 window.WindowClosed.subscribe((P: any) => {
-                    this.IsResourcesReady = true;                    
+                    this.IsResourcesReady = true;
                 });
             }
             else {
@@ -115,7 +117,7 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
     public IsAccountingSystem_NO: boolean = false;
     public IsAccountingSystem_HV_RH: boolean = false;
     public IsAccountingSystem_QB_QBO: boolean = false;
-    public IsAccountingSystem_AI_GI: boolean = false;    
+    public IsAccountingSystem_AI_GI: boolean = false;
     SetUIProperties() {
         var isAccountingSystem_NO: boolean = false;
         var isAccountingSystem_HV_RH: boolean = false;
@@ -142,7 +144,7 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
         this.IsAccountingSystem_HV_RH = isAccountingSystem_HV_RH;
         this.IsAccountingSystem_QB_QBO = isAccountingSystem_QB_QBO;
         this.IsAccountingSystem_AI_GI = isAccountingSystem_AI_GI;
-        
+
         var isDemoTenant = false;
         if (SessionLocator.Tenant == 65) {
             isDemoTenant = true;
@@ -180,12 +182,12 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
             this.UIProperties.SetEnabled("IsARPaymentsTransferEnabled", this.ObjectTableName, isARPaymentsTransferEnabled);
             this.UIProperties.SetEnabled("IsAPPaymentsTransferEnabled", this.ObjectTableName, isAPPaymentsTransferEnabled);
         }
-        
+
         this.UIProperties.SetEnabled("ARInvoiceTransferStartDate", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("APInvoiceTransferStartDate", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("TransferToDropboxActivated", this.ObjectTableName, this.IsDropBoxConnected);
-        
-        var isReceivableVATableTempCardRequired = false;        
+
+        var isReceivableVATableTempCardRequired = false;
         var isReceivableVATExemptTempCardRequired = false;
         var isPayableVATableTempCardRequired = false;
         var isPayableVATExemptTempCardRequired = false;
@@ -240,8 +242,8 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
     public isLogedInQBO: boolean = false;
     public isQBO: boolean = false;
     SetQuickBookProperties() {
-       
-        if (this.EntityPM.QBOAccessToken != null) {
+
+        if (this.EntityPM.RefreshToken != null) {
             this.isLogedInQBO = true;
         }
 
@@ -250,12 +252,12 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
         }
     }
 
-    QBOWindowCLosed(timer: any = null) {        
-          if (timer != null) {
+    QBOWindowCLosed(timer: any = null) {
+        if (timer != null) {
             clearInterval(timer);
         }
     }
-    
+
     public get AccountingSystemCode() { return this.EntityPM.AccountingSystemCode; }
     public set AccountingSystemCode(value: string) {
         if (this.EntityPM.AccountingSystemCode != value) {
@@ -288,7 +290,7 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
                         this.SetUIProperties();
                     }
                 });
-            } 
+            }
         }
     }
     SelectedItemChanged(AccountingSystem) {
@@ -315,7 +317,7 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
             this.EntityPM.APInvoiceTransferStartDate = value;
         }
     }
-    
+
     public get ReceivableVATableTempCard() { return this.EntityPM.ReceivableVATableTempCard }
     public set ReceivableVATableTempCard(value: string) {
         if (this.EntityPM.ReceivableVATableTempCard != value) {
@@ -398,7 +400,7 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
     }
 
 
-    
+
 
     public get TransferToDropboxActivated() { return this.EntityPM.TransferToDropboxActivated; }
     public set TransferToDropboxActivated(value: boolean) {
@@ -422,15 +424,17 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
         logWindow.Title = "";
         logWindow.Show('./Invoice/Components/Workspaces/QuickBooksLogin');
     }
-    
+
     DissConnectQBO(loadeding = true) {
         if (loadeding) {
             this.CurrentSession.StartBusyIndicator("Disconnecting..");
             this.EntityPM.QBOAccessToken = null;
             this.EntityPM.QBOAccessTokenSecret = null;
+            this.EntityPM.RefreshToken = null;
+
         }
 
-        if (this.EntityPM.AccountingSystemCode == "QBO" || this.EntityPM.AccountingSystemCode == "QBOG" ) {
+        if (this.EntityPM.AccountingSystemCode == "QBO" || this.EntityPM.AccountingSystemCode == "QBOG") {
             this.EntityPM.AccountingSystemCode = "NO";
             this.entityPMService.update(this.EntityPM).subscribe((myResponse1: ServiceResponse) => {
                 if (myResponse1.HasError) {
@@ -464,7 +468,7 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
 
         var left = ((width / 2) - (1000 / 2)) + dualScreenLeft;
         var top = ((height / 2) - (650 / 2)) + dualScreenTop;
-        var link = AppTool.GetLogitudeURL() + "Quickbooksonline.aspx?connect=true&tenant=" + SessionLocator.Tenant;
+        var link = AppTool.GetLogitudeURL() + "QuickbooksOnlineAuth2.aspx?connect=true&tenant=" + SessionLocator.Tenant;
 
         var new_window = window.open(link, "Authenticate with Quickbooks Online", 'scrollbars=yes, width=' + 1000 + ', height=' + 650 + ', top=' + top + ', left=' + left + ',directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no');
 
@@ -492,7 +496,7 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
             case "ARPayment": { logWindowTitle = "AR Payment"; break; }
         }
 
-        var logWindow = new LogitudeWindow();        
+        var logWindow = new LogitudeWindow();
         logWindow.Width = 550;
         logWindow.Height = 300;
         logWindow.WindowArgs = { EntityPM: this.EntityPM, Code: typeCode };
@@ -504,7 +508,7 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
         this.ResetQBOSettings();
         SessionLocator.AccountingSystemPM = this.OldSessionAccountingSystem;
         this.CurrentSession.CloseCurrentWindow();
-    }   
+    }
 
     ResetQBOSettings() {
         this.entityPMService.get(SessionLocator.Tenant).subscribe((myResponse: ServiceResponse) => {
@@ -512,11 +516,11 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
             if (myResponse.HasError) {
                 this.ValidationErrorsList = myResponse.ErrorsArray;
             }
-             if (loadedEntity.AccountingSystemCode != "QBO" && loadedEntity.AccountingSystemCode != "QBOG") {
+            if (loadedEntity.AccountingSystemCode != "QBO" && loadedEntity.AccountingSystemCode != "QBOG") {
                 this.EntityPM.AccountingSystemCode = loadedEntity.AccountingSystemCode;
                 this.EntityPM.QBOrealMeID = null;
                 this.EntityPM.QBOAccessToken = null;
-                 this.EntityPM.QBOAccessTokenSecret = null;
+                this.EntityPM.QBOAccessTokenSecret = null;
                 this.DissConnectQBO(false);
             }
         });

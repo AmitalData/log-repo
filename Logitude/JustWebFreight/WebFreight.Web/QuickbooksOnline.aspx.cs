@@ -142,6 +142,7 @@ namespace WebFreight.Web
                     entityPM.QBOAccessToken = accessToken.Token;
                     entityPM.QBOAccessTokenSecret = accessToken.TokenSecret;
                     entityPM.QBOrealMeID = HttpContext.Current.Session["realm"].ToString();
+                    entityPM.QBOOAuth = 1;
                     if (!String.IsNullOrEmpty(TempQBORealMeId) && entityPM.QBOrealMeID != TempQBORealMeId)
                     {
                         RunStoredProcedureClass.DeleteQBOTranslations(entityPM.Id);

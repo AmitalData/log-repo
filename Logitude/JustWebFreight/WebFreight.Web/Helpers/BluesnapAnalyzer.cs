@@ -67,15 +67,13 @@ namespace WebFreight.Web.Helpers
                 if (queryParameters.Count>0)
                 {
                     BluesnapExecutionService bluesnapExecutionService = new BluesnapExecutionService(0);
-
-                    int TransactionTenant = bluesnapExecutionService.GetUserTenantByEmail(queryParameters["invoiceEmail"]);
-                    if (TransactionTenant != 0)
-                    {
-                        bluesnapExecutionService.Tenant = TransactionTenant;
+                    TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
+                    TenantManagement tenantManagement = tenantManagementRepository.GetSingleTenantManagementByBluesnapAccountId(queryParameters["accountId"]);                 
+                        bluesnapExecutionService.Tenant = tenantManagement!=null? tenantManagement.Id:0;
                         string subject = myAnalyzeQueue.Subject == "Bluesnap Payment - Amital" ? "Amital" : "Logitude";
                         DateTime? transactionDate= DateTime.Parse(queryParameters["transactionDate"]);
                         bluesnapExecutionService.SaveBluesnapTransaction(Stringdetails, subject, transactionDate);
-                    }
+                   
                 }        
 
                     this.AnalyzeData(myAnalyzeQueue.From);                

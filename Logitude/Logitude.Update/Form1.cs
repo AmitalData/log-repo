@@ -3925,6 +3925,19 @@ User/Pass",
 
             return imagedetailid;
         }
+
+        private void executeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BatchTaskTester batchTaskTester = new BatchTaskTester();
+            batchTaskTester.Show();
+        }
+
+        private void button47_Click(object sender, EventArgs e)
+        {
+            TaxReportQueryService taxReportQueryService = new TaxReportQueryService(54);
+            TaxReportPM taxReport = taxReportQueryService.GetSingle("1-202", true, false);
+            TaxReportService.CreateTaxReportLines(taxReport, 54);
+        }
     }
 
     public class MyFeature

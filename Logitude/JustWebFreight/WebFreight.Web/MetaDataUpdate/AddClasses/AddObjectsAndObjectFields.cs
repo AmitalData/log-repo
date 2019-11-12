@@ -593,6 +593,11 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 newObjectField.DisplayInDocumentReferences = objectFieldDetails.DisplayInDocumentReferences;
                 newObjectField.AllowedInAirlineMessaging = objectFieldDetails.AllowedInAirlineMessaging;
                 newObjectField.EnableFullscreenTextBox = objectFieldDetails.EnableFullscreenTextBox;
+                newObjectField.DisplayInAutomationAsEnitity = objectFieldDetails.DisplayInAutomationAsEnitity;
+                newObjectField.RecordType = objectFieldDetails.RecordType;
+
+
+
                 if (newObjectField.IsCustomFilter)
                 {
                     //newObjectField.CanFilter = true;
@@ -681,6 +686,12 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 updatedObjectField.Code = objectFieldDetails.Code;
                 updatedObjectField.AllowedInAirlineMessaging = objectFieldDetails.AllowedInAirlineMessaging;
                 updatedObjectField.EnableFullscreenTextBox = objectFieldDetails.EnableFullscreenTextBox;
+                updatedObjectField.DisplayInAutomationAsEnitity = objectFieldDetails.DisplayInAutomationAsEnitity;
+                updatedObjectField.RecordType = objectFieldDetails.RecordType;
+
+
+
+
                 if (string.IsNullOrEmpty(objectFieldDetails.Code))
                 {
                     updatedObjectField.Code = objectFieldDetails.FieldName;

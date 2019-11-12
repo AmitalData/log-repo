@@ -70,7 +70,8 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.ChampProdAPIPassword).IsRequired().HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.ChampTestAPIURL).IsRequired().HasMaxLength(1000).IsUnicode(false);
             this.Property(t => t.ChampTestAPIPassword).IsRequired().HasMaxLength(40).IsUnicode(false);
-
+            this.Property(t => t.QBOClientID).HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.QBOClientSecret).HasMaxLength(100).IsUnicode(false);
 
 
 
@@ -123,9 +124,11 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.ChampProdAPIPassword).HasColumnName("ChampProdAPIPassword");
             this.Property(t => t.ChampTestAPIPassword).HasColumnName("ChampTestAPIPassword");
             this.Property(t => t.ChampTestAPIURL).HasColumnName("ChampTestAPIURL");
+            this.Property(t => t.QBOOAuthDefault).HasColumnName("QBOOAuthDefault");
+            this.Property(t => t.QBOClientID).HasColumnName("QBOClientID");
+            this.Property(t => t.QBOClientSecret).HasColumnName("QBOClientSecret");
 
 
-            
 
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")

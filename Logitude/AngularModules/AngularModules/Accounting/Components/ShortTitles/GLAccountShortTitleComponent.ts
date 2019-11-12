@@ -24,6 +24,7 @@ import { CardList } from '../../../Common/EntityLists/CardList';
 export class GLAccountShortTitleComponent {
     public EntityPM: GLAccountPM;
     public isRTL: boolean = false;
+    public IsConnectedCard: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     GLAccountPMService: GLAccountPMService = new GLAccountPMService();
     _GLAccountExtendedPMService: GLAccountExtendedPMService = new GLAccountExtendedPMService();
@@ -38,6 +39,7 @@ export class GLAccountShortTitleComponent {
         this.Listen();
 
         this.SetObjectTableNameAndTabCode();
+        this.CheckIsConnectedCard(this.EntityPM.CustomerGLAccountId || this.EntityPM.Id);
 
         console.log("[GLAccountShortTitleComponent]");
 
@@ -117,5 +119,13 @@ export class GLAccountShortTitleComponent {
         });
     }
 
-
+    CheckIsConnectedCard(accountId: string) {
+        this._GLAccountExtendedPMService.GetConnectedCardsForGLAccount(accountId).subscribe((myResponse: ServiceResponse) => {
+            var connectedCards = myResponse.Result;
+            if (connectedCards.length > 0) {
+                this.IsConnectedCard = true;
+            }    
+            });
+        
+    }
 }

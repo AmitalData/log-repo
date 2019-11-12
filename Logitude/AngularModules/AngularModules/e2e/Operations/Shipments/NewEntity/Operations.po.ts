@@ -17,17 +17,17 @@ export class OperationsComp {
         this.Operation = new GeneralFunctions();
         this.EditShipmentTabs = new EditTabsComponent();
     }
-    DoOperations() {
+    DoOperations(ShipmentLevelCode: string, Direction: string, TransportMode: string, ShipmentType: string) {
         this.Operation.GoToMainMenu('General.MH.Operations');
         this.Operation.SelectMenuWorkSpaceTabs('SHIP');
 
-        return this.ShipmentWorkSpace.CreateShipment(browser.params.ShipParams.ShipmentLevelCode, browser.params.ShipParams.Direction, browser.params.ShipParams.TransportMode, browser.params.ShipParams.ShipmentType);
+        return this.ShipmentWorkSpace.CreateShipment(ShipmentLevelCode, Direction, TransportMode, ShipmentType);
     }
     SearchForShipment(shipperRef1: string) {
         this.Operation.UseSearchBox('Shipment_Search', shipperRef1, 'ListBoxItem');
     }
-    EditShipment(shipperRef1: string) {
-        this.EditShipmentTabs.EditTabs(shipperRef1, browser.params.ShipParams.ShipmentLevelCode, browser.params.ShipParams.ShipmentType, browser.params.ShipParams.Direction);
+    EditShipment(shipperRef1: string, ShipmentLevelCode: string, ShipmentType: string, Direction: string) {
+        this.EditShipmentTabs.EditTabs(shipperRef1, ShipmentLevelCode, ShipmentType, Direction);
     }
     SaveShip() {
         this.Helper.WaitByIdAndClick('Shipment-Save');
@@ -58,8 +58,8 @@ export class OperationsComp {
             this.ShipmentActions.AccountedReopenShipment(browser.params.ShipParams.ShipmentLevelCode);
             this.ShipmentActions.OperationalReopenShipment(browser.params.ShipParams.ShipmentLevelCode);
             this.ShipmentActions.CopyShipment(browser.params.ShipParams.ShipmentLevelCode);
-            this.Helper.WaitByIdAndClick('Shipment.TH.Overview_1');
-            this.ShipmentActions.CancelShipment();
+            //this.Helper.WaitByIdAndClick('Shipment.TH.Overview_1');
+            //this.ShipmentActions.CancelShipment();
         }
     }
 }

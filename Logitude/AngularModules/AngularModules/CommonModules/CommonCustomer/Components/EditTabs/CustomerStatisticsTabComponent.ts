@@ -722,14 +722,14 @@ export class CustomerStatisticsTabComponent extends BaseComponent {
         this.lineChartLabels = [];
         data.getAll().forEach(element => {
 
-            this.lineChartData[0].data[index] = this.NumbersPipe.transform(element.YField, "N2") + "";
+            this.lineChartData[0].data[index] = element.YField.toFixed(2) + "";
             this.lineChartLabels.push(element.XField);
             index++;
 
 
             this.AmLineChartTest.push({
                 date: element.XField,
-                visits: this.NumbersPipe.transform( element.YField,"N2")+ ""
+                visits: element.YField.toFixed(2)+ ""
             });
 
         });        
