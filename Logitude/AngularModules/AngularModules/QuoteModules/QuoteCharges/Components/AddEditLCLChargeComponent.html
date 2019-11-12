@@ -226,7 +226,7 @@
                                 <td style="font-size:13px; color:#1B90CB">{{'Quote.O.Charges.Rates' | TextCodeTranslationPipe}}</td>
                             </tr>
 
-                            <tr style="height:20px;">
+                            <tr style="height:20px;" *ngIf="!DataContext.IsAdhoc">
                                 <td>
                                     <table>
                                         <tr>
