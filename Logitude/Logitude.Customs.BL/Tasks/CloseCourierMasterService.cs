@@ -23,10 +23,10 @@ namespace Logitude.Customs.BL.Tasks
             var customsSettingQueryService = new CustomsSettingQueryService(seedDefaultTenant);
             var allCustomsSetting = customsSettingQueryService.GetAll();
             allCustomsSetting.ForEach(t => RunPerTenant(t));
-            for (int i = 0; i <= 3; i++)
-            {
-                LogMessagingUtil.Instance.AppendLine("Log warning # " + i + " , Be careful !!");
-            }
+            //for (int i = 0; i <= 3; i++)
+            //{
+            //    LogMessagingUtil.Instance.AppendLine("Log warning # " + i + " , Be careful !!");
+            //}
 
 
         }
@@ -43,7 +43,7 @@ namespace Logitude.Customs.BL.Tasks
                 CourierMasterUpdateService CourierMasterUpdateService = new CourierMasterUpdateService(dbContext, new Dictionary<string, IContext>(), t.Tenant);
                 foreach (CourierMasterPM courierMasterPMItem in courierMasterPMList)
                 {
-                    LogMessagingUtil.Instance.AppendLine($"Close Courier Master({courierMasterPMItem.Id}) ");
+                    LogMessagingUtil.Instance.AppendLine($"Close Courier Master({courierMasterPMItem.MAWB}) ");
                     courierMasterPMItem.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                     courierMasterPMItem.IsOpen = false;
                     CourierMasterUpdateService.Update(courierMasterPMItem, true);

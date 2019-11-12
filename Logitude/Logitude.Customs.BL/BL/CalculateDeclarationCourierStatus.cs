@@ -431,11 +431,11 @@ namespace Logitude.Customs.BL.BL
             if (myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD > 150 && string.IsNullOrEmpty(declarationPM.ImporterId) && string.IsNullOrEmpty(declarationPM.ImporterCode))
             { 
                 // Set Pending 902- Missing ID
-                // LogMessagingUtil.Instance.AppendLine("Set Courier Pending Reason Code 900");
                 if (declarationPendingPM_902 == null)
                 {
+                    LogMessagingUtil.Instance.AppendLine("Set Courier Pending Reason Code 902");
                     declarationPendingPM_902 = new DeclarationPendingPM();
-                    declarationPendingPM_902.CourierPendingReasonCode = "900";
+                    declarationPendingPM_902.CourierPendingReasonCode = "902";
                     declarationPendingPM_902.Status = "A";
                     declarationPendingPM_902.ChangeSetOp = ChangeSetOperation.Insert;
                     myDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPendingPM_902);
