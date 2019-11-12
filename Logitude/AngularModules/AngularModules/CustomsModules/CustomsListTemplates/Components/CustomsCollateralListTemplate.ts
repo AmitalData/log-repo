@@ -24,7 +24,7 @@ import { CustomsCollateralList } from '../../../Customs/EntityLists/CustomsColla
 
 export class CustomsCollateralListTemplate {
 
-    _CustomsCollateralRecord: CustomsCollateralList;
+    public _CustomsCollateralRecord: CustomsCollateralList;
     public fieldName: any;
     TableUpdateButtonIsEnabled: boolean = false;
     UpdateButtonVisibility: boolean = false;

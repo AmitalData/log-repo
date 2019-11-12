@@ -204,10 +204,12 @@ export class DeclarationCollateralsComponent extends BaseComponent implements On
         this.columns.push({
 
             FieldName: 'RequestValidityDate',
-            DataTypeCode: 'String',//'Number',
+            DataTypeCode: 'Date',//'Number',
             Display: TextCodeTranslator.Translate("Customs.CustomsCollateral.F.RequestValidityDate"),
             Styles: { width: '120px' },
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            HtmlListComponentName: 'CustomsCollateralListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsCollateralListTemplate',
 
 
         });
@@ -240,6 +242,40 @@ export class DeclarationCollateralsComponent extends BaseComponent implements On
             Display: TextCodeTranslator.Translate("Customs.CustomsCollateral.F.EntityIdKey1"),
             Styles: { width: '120px' },
             IsCustomTemplate: true
+
+
+        });
+        this.columns.push({
+
+            FieldName: 'EntityIdKey2',
+            DataTypeCode: 'String',//'Number',
+            Display: TextCodeTranslator.Translate("Customs.CustomsCollateral.F.EntityIdKey2"),
+            Styles: { width: '120px' },
+            IsCustomTemplate: true
+
+
+        });
+        this.columns.push({
+
+            FieldName: 'EntityIdKey3',
+            DataTypeCode: 'String',//'Number',
+            Display: TextCodeTranslator.Translate("Customs.CustomsCollateral.F.EntityIdKey3"),
+            Styles: { width: '120px' },
+            IsCustomTemplate: true
+
+
+        });
+
+        this.columns.push({
+
+            FieldName: 'IsClosed',
+            DataTypeCode: 'String',//'Number',
+            Display: TextCodeTranslator.Translate("Customs.CustomsCollateral.F.IsClosed"),
+            Styles: { width: '120px' },
+            IsCustomTemplate: true,
+            HtmlListComponentName: 'CustomsCollateralListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsCollateralListTemplate',
+
 
 
         });
