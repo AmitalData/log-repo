@@ -80,6 +80,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
 
         public string CreatedByUserName { get; set; }
         public string VendorName { get; set; }
+        public string VendorLocalName { get; set; }
         public string StatusName { get; set; }
         public string PaymentCurrencyCode { get; set; }
         public string PaymentMethodName { get; set; }
