@@ -109,15 +109,7 @@ namespace Logitude.DBMigrations.Models
                 }
             }
 
-            List<string> dxmlTableColumns = dxmlTable.Columns.Select(c => c.Name).ToList();
-            List<ColumnDefinition> droppedColumns = currentTable.Columns.Where(c => !dxmlTableColumns.Contains(c.Name)).ToList();
-
-            foreach(var droppedColumn in droppedColumns)
-            {
-                ColumnDefinition currentTableColumn = currentTable.Columns.Where(c => c.Name == droppedColumn.Name).First();
-                ColumnMigrations columnMigrations = GetColumnMigrations(MigrationTypes.DROPCOLUMN, currentTableColumn);
-                columnsMigrations.Add(columnMigrations);
-            }
+            columnsMigrations = IncludeDropColumnsMigrations(currentTable, dxmlTable, columnsMigrations);
 
             TableMigrations tableMigrations = new TableMigrations
             {
@@ -125,6 +117,21 @@ namespace Logitude.DBMigrations.Models
                 ColumnsMigrations = columnsMigrations
             };
             return tableMigrations;
+        }
+        
+        protected List<ColumnMigrations> IncludeDropColumnsMigrations(TableDefinition currentTable, TableDefinition dxmlTable, List<ColumnMigrations> columnsMigrations)
+        {
+            List<string> dxmlTableColumns = dxmlTable.Columns.Select(c => c.Name).ToList();
+            List<ColumnDefinition> droppedColumns = currentTable.Columns.Where(c => !dxmlTableColumns.Contains(c.Name)).ToList();
+
+            foreach (var droppedColumn in droppedColumns)
+            {
+                ColumnDefinition currentTableColumn = currentTable.Columns.Where(c => c.Name == droppedColumn.Name).First();
+                ColumnMigrations columnMigrations = GetColumnMigrations(MigrationTypes.DROPCOLUMN, currentTableColumn);
+                columnsMigrations.Add(columnMigrations);
+            }
+
+            return columnsMigrations;
         }
 
         protected bool IsColumnInTableDefinition(TableDefinition tableDefinition, string columnName)
@@ -186,7 +193,6 @@ namespace Logitude.DBMigrations.Models
         protected abstract string GetDataTypeScript(string type, int? size);
 
         protected abstract TableDefinition GetCurrentTableDefinitionFromDB(string tableName);
-
 
     }
 }
