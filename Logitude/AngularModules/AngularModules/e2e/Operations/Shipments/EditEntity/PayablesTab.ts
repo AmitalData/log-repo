@@ -29,14 +29,14 @@ export class PayablesTabComponent {
     AddPayableLines(shipperRef1: string, ShipmentType: string) {
         if (ShipmentType == '') {
             this.AddPayables('Air Frei', '10', '10', 'Shipment');
-            this.AddPayables('Order', '10', '20', 'Shipment');
+            //this.AddPayables('Order', '0', '0', 'Shipment');
 
         } else if (ShipmentType == 'FCL' || ShipmentType == 'LCL') {
             this.AddPayables('ocean', '10', '10', 'Shipment');
-            this.AddPayables('Order', '10', '20', 'Shipment');
+            //this.AddPayables('Order', '0', '0', 'Shipment');
         } else {
             this.AddPayables('Inland', '10', '10', 'Shipment');
-            this.AddPayables('Order', '10', '20', 'Shipment');
+            //this.AddPayables('Order', '0', '0', 'Shipment');
         }
 
         this.Helper.WaitByIdAndClick('Shipment-Save');
@@ -67,7 +67,8 @@ export class PayablesTabComponent {
             this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'APInvoiceLine_ChargesTypeId', 'order');
             this.Helper.WaitByIdAndFill('APInvoiceLine_VatTypeId', 'zero');
             this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'APInvoiceLine_VatTypeId', 'zero');
-            this.Helper.WaitByIdAndFill('APInvoiceLine_InvoiceCurrencyAmount_2', '100');
+
+            this.Helper.WaitByIdAndFill('APInvoiceLine_InvoiceCurrencyAmount_1', '100');
             this.Helper.WaitByIdAndClick('Ok-AddInvoiceLine');
         }
     }
@@ -106,7 +107,7 @@ export class PayablesTabComponent {
         if (Voided == true) {
             this.AddPayables('Order', '10', '20', 'Invoice');
             /**/
-            this.Helper.WaitByIdAndClick('CheckBox_0_5_LBL');
+            this.Helper.WaitByIdAndClick('CheckBox_0_4_LBL');
             this.Helper.WaitEditComponentBusyIndicator();
             this.Helper.WaitByIdAndFill('APInvoice_VATNumber', 'Lana');
         }
@@ -131,7 +132,7 @@ export class PayablesTabComponent {
             }
             else {
                 this.Helper.WaitByIdAndClick('APInvoice.TH.APPayments');
-                this.Helper.WaitByIdAndClick('Connect');
+                //this.Helper.WaitByIdAndClick('Connect');
                 this.Helper.WaitEditComponentBusyIndicator();
 
                 this.Helper.WaitByIdAndClick('EditBackbutton_2');
@@ -142,7 +143,6 @@ export class PayablesTabComponent {
             }
             this.Helper.WaitEditComponentBusyIndicator();
         } else {//from accounting actions
-
             this.Helper.WaitByIdAndClick('EditBackbutton_1');
             this.WaitBusyIndicatorToShowandHide();
             this.Helper.WaitByIdAndClick('BackButton');
