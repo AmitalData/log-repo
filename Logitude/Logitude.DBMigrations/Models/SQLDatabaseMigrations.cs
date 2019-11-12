@@ -99,9 +99,9 @@ namespace Logitude.DBMigrations.Models
             switch (type)
             {
                 case "Text":
-                    return "VARCHAR(" + size + ")";
+                    return "VARCHAR(" + (size == -1 ? "MAX" : size.ToString()) + ")";
                 case "nText":
-                    return "NVARCHAR(" + size + ")";
+                    return "NVARCHAR(" + (size == -1 ? "MAX" : size.ToString()) + ")";
                 case "Integer":
                     return "INT";
                 case "Boolean":

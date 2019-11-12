@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="ff8935af-eb76-4637-bb8f-77d6bb51ae75" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:9996/WcfApi/QuoteWcfService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="QuoteWcfService.disco" MetadataType="Disco" ID="05297305-b10e-48b8-abde-8e4542dc484d" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/QuoteWcfService.svc?disco" />
+    <MetadataFile FileName="QuoteWcfService.wsdl" MetadataType="Wsdl" ID="5d24dcb0-c478-4241-98aa-8ffd6452d36d" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/QuoteWcfService.svc?wsdl" />
+    <MetadataFile FileName="QuoteWcfService.xsd" MetadataType="Schema" ID="b99c8d8a-93be-4f23-9fe5-f52c1c336328" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/QuoteWcfService.svc?xsd=xsd1" />
+    <MetadataFile FileName="QuoteWcfService1.xsd" MetadataType="Schema" ID="99b85ac7-de67-40f8-868a-385b59a13bd1" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/QuoteWcfService.svc?xsd=xsd0" />
+    <MetadataFile FileName="QuoteWcfService2.xsd" MetadataType="Schema" ID="296f2919-8d98-4261-b1b1-8eac525483ae" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/QuoteWcfService.svc?xsd=xsd3" />
+    <MetadataFile FileName="QuoteWcfService3.xsd" MetadataType="Schema" ID="2197aebe-bd46-4ffb-8046-1ed8851dbde0" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/QuoteWcfService.svc?xsd=xsd2" />
+    <MetadataFile FileName="QuoteWcfService4.xsd" MetadataType="Schema" ID="a3786dca-0ec8-4bdc-9ff5-a79fdd188ef5" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/QuoteWcfService.svc?xsd=xsd5" />
+    <MetadataFile FileName="QuoteWcfService5.xsd" MetadataType="Schema" ID="67717c1d-ac79-4c9e-9c4c-829def481240" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/QuoteWcfService.svc?xsd=xsd4" />
+    <MetadataFile FileName="QuoteWcfService6.xsd" MetadataType="Schema" ID="21bc0027-14a1-45ca-886b-367b99f7c726" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/QuoteWcfService.svc?xsd=xsd7" />
+    <MetadataFile FileName="QuoteWcfService7.xsd" MetadataType="Schema" ID="7c18da62-a259-4e7f-9c5a-fe7b81818511" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/QuoteWcfService.svc?xsd=xsd6" />
+    <MetadataFile FileName="QuoteWcfService8.xsd" MetadataType="Schema" ID="a72af1a0-abd2-47d1-9f97-5071e9b0655f" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/QuoteWcfService.svc?xsd=xsd9" />
+    <MetadataFile FileName="QuoteWcfService9.xsd" MetadataType="Schema" ID="530eb028-b7d3-475f-aab8-b9deda1f1eb8" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/QuoteWcfService.svc?xsd=xsd8" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

@@ -10,17 +10,19 @@ export class PrintDocOut {
     }
 
     isPrintingCompleted(expectedId, closePopup) {
-       // this.helper.WaitBusyIndicator();
+        this.helper.WaitBusyIndicator();
        this.helper.WaitEditComponentBusyIndicator();
         this.helper.ItemsPresent(expectedId);
         if (closePopup) {
-            this.helper.WaitByCssStringAndClick('.Button', 'Close');
-           // this.helper.WaitBusyIndicator();
+           this.helper.WaitByCssStringAndClick('.Button', 'Close');
+           this.helper.WaitBusyIndicator();
            this.helper.WaitEditComponentBusyIndicator();
             this.helper.WaitWindowClosed();
         } else {
-           
-            this.helper.WaitByIdAndClick('MessageWindow_Ok_0');
+            this.helper.WaitBusyIndicator();
+            this.helper.WaitEditComponentBusyIndicator();
+           this.helper.WaitByIdAndClick('MessageWindow_Ok_0');
+           // console.log('Try to click OK ');
         }
     }
 }
