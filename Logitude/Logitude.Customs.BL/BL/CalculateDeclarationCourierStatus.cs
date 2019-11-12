@@ -16,6 +16,7 @@ using Logitude.Customs.BL.Validators;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.BL.EntityPMs.UGenerated;
 using Logitude.Customs.BL.EntityUpdateServices;
+using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.Customs.BL.BL
 {
@@ -329,7 +330,27 @@ namespace Logitude.Customs.BL.BL
                     }
                 }
             }
+            CheckDocument(myDeclarationCourierStatusPM);
         }
+
+        private void CheckDocument(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
+        {
+            var customContext = CustomContext.GetContext(myDeclarationCourierStatusPM.Tenant);
+            CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(customContext);
+            string status = null;
+            List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationPM.Id, "", "", "", myDeclarationCourierStatusPM.Tenant, "Declaration").Where(r => r.DocumentTypeCode == "380" && r.DocumentStatusCode == "1").ToList();
+            if (customsDocumentsTicketPMList == null || customsDocumentsTicketPMList.Count() < 1)
+            {
+                status = "M";
+            }
+
+            if (!string.IsNullOrWhiteSpace(status) && myDeclarationCourierStatusPM.CourierCustomStatusCode != status)
+            {
+
+                myDeclarationCourierStatusPM.CourierCustomStatusCode = status;
+            }
+        }    
+        
 
         public void CalcTotalInvoiceAmountInUSD(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
         {
