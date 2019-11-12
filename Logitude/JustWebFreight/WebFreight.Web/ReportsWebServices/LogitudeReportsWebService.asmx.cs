@@ -12158,7 +12158,13 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
             #endregion
-
+            totalData.CurrencyDetailed = currency;
+            totalData.DetailedCustomersAccounts = customer;
+            totalData.DetailedVendorsAccounts = vendor;
+            // totalData.Category = ca
+            totalData.UseZeroFilter = useZeroFilter;
+            totalData.FromDate = fromDate;
+            totalData.ToDate = toDate;
 
             var trailReportParam = new TrailReportParam()
             {

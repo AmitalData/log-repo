@@ -33,8 +33,12 @@ namespace WebFreight.Web.DataProviders
 
         public decimal? TotalForeignCloseBalance { get; set; }
         public bool CurrencyDetailed { get; set; }
-
-
+        public bool DetailedVendorsAccounts { get; set; }
+        public bool DetailedCustomersAccounts { get; set; }
+        public string Category { get; set; }
+        public bool UseZeroFilter { get; set; }
+        public DateTime? FromDate { get; set; }
+        public DateTime? ToDate { get; set; }
     }
 
 
