@@ -256,10 +256,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                         if (_MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions != null
                             && _MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions.Count > 0
+                            && _MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions[0].SiteCode != null
                             && customResponse.CargoItem != null)
                         {
-                            LogMessagingUtil.Instance.AppendLine("Analyze Manifest response GetDeclarationConsignmentsPackagesPMForInternalTransitions");
+                            LogMessagingUtil.Instance.AppendLine("Analyze Manifest response GetDeclarationConsignmentsPackagesPMForInternalTransitions (MN_NG_8241_CargoResponseService)");
                             _MyDeclarationPM.Consignments[0].ConsignmentPackages = GetDeclarationConsignmentsPackagesPMForInternalTransitions(customResponse, _MyDeclarationPM.Consignments[0]);
+                            _MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
+                            if (!_IsChanged) _IsChanged = true;
                         }
                         else
                         {
