@@ -872,6 +872,9 @@
     <TypeScriptCompile Include="e2e\Maintenance\Users\UsersScenario.ts" />
     <TypeScriptCompile Include="e2e\Operations\PrintDocOut\PrintDocOut.ts" />
     <TypeScriptCompile Include="e2e\Operations\SendMailPopup\SendMailPopup.ts" />
+    <TypeScriptCompile Include="e2e\Operations\Shipments\DocOutSenario.ts" />
+    <TypeScriptCompile Include="e2e\Operations\Shipments\DocsOut.e2e-spec.ts" />
+    <TypeScriptCompile Include="e2e\Operations\Shipments\EditEntity\PrintOutDoc.ts" />
     <TypeScriptCompile Include="e2e\Operations\Shipments\EditEntity\ShipmentActions.ts" />
     <TypeScriptCompile Include="e2e\Operations\Shipments\NewEntity\OpEAWB-spec.ts" />
     <TypeScriptCompile Include="e2e\Operations\Shipments\NewEntity\OpEAWB.ts" />
