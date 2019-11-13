@@ -1072,11 +1072,11 @@ export class DWQueryBuilderComponent extends BaseComponent {
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ..");
         this._DWObjectTablePMService.get("Fact_Shipments").subscribe(myResult => {
             if (!myResult.HasError) {
-                if (this.IsCopy) {
-                    this.ComponentRef.destroy();
-                    this.BackCompleted.emit(false);
-                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
-                }
+                //if (this.IsCopy) {
+                //    this.ComponentRef.destroy();
+                //    this.BackCompleted.emit(false);
+                //    this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                //}
                 var MySubQuery = new DWSubQueryPM();
                 MySubQuery.Tenant = SessionLocator.Tenant;
                 MySubQuery.DWFactTableCode = myResult.Result.Code;

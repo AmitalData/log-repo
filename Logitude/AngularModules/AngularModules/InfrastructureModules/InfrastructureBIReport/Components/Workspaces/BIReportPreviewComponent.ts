@@ -35,6 +35,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     public DWQueryId: string;
     public FolderId: string;
     public DWQueryData: DWQueryData;
+    BackButtonLable: string = "BI Reports";
     SelectedFiltersDataSource: any[] = [];
     //SelectedDynamicFiltersDataSource: any[] = [];
     public _DWSubQueryPMService: DWSubQueryPMService;
@@ -91,6 +92,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         this.DWQueryId = args['DWQueryId'];
         this.EntityId = args['EntityId'];
         this.FolderId = args['FolderId'];
+        this.BackButtonLable = args['BacKButtonLable'] ? args['BacKButtonLable']:"BI Reports"; 
     }
     InitializeServices() {
         this._InfrastructureDomainService = new InfrastructureDomainService();
@@ -720,8 +722,8 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         windowArgs.Description = this.EntityPM.Description;
         windowArgs.DWQueryId = this.EntityPM.DWQueryId;
         windowArgs.BIReportFolderId = this.EntityPM.BIReportFolderId;
-        windowArgs.ComponentRef = this.ComponentRef;
-        windowArgs.BackCompleted = this.BackCompleted;
+        //windowArgs.ComponentRef = this.ComponentRef;
+        //windowArgs.BackCompleted = this.BackCompleted;
         logWindow.WindowArgs = windowArgs;
         logWindow.Show('./InfrastructureModules/InfrastructureBIReport/Components/NewEntity/NewBIReport');
         logWindow.WindowClosed.subscribe(d => {

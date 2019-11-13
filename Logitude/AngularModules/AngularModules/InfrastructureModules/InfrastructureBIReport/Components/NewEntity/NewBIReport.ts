@@ -39,6 +39,7 @@ export class NewBIReport extends BaseComponent {
         this.SetUIProperties();
     }
 
+
     SetWindowArgs(args: any) {
         if (args.Name != null) {
             this.EntityPM.DWQueryId = args.DWQueryId;
@@ -47,8 +48,8 @@ export class NewBIReport extends BaseComponent {
             this.OriginalName = args.Name;
             this.EntityPM.Description = args.Description;
             this.IsCopy = true;
-            this.ComponentRef = args.ComponentRef;
-            this.BackCompleted = args.BackCompleted;
+            //this.ComponentRef = args.ComponentRef;
+            //this.BackCompleted = args.BackCompleted;
         }
         else {
             this.DWQueryId = args.DWQueryId;
@@ -189,6 +190,7 @@ export class NewBIReport extends BaseComponent {
                                                         DWQueryId: s.QID,
                                                         ObjectTableName: 'BIReport',
                                                         EntityId: this.EntityPM.Id,
+                                                        BackButtonLable: this.IsCopy ? "BI Report :" + this.OriginalName : "BI Reports",
                                                     });
                                                 });
 
