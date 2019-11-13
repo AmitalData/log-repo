@@ -293,6 +293,10 @@ namespace Logitude.Customs.BL.BL
             {
                 myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "M";
             }
+            else if (IsDocumentMissing(myDeclarationCourierStatusPM))
+            {
+                myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "M";
+            }
             else
             {
                 if (string.IsNullOrWhiteSpace(declarationPM.DeclarationStatusTypeCode) || declarationPM.IsChanged == true && myDeclarationCourierStatusPM.CourierDeclarationStatusCode == "V")
@@ -330,25 +334,19 @@ namespace Logitude.Customs.BL.BL
                     }
                 }
             }
-            CheckDocument(myDeclarationCourierStatusPM);
         }
 
-        private void CheckDocument(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
+        private Boolean IsDocumentMissing(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
         {
             var customContext = CustomContext.GetContext(myDeclarationCourierStatusPM.Tenant);
             CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(customContext);
-            string status = null;
             List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationPM.Id, "", "", "", myDeclarationCourierStatusPM.Tenant, "Declaration").Where(r => r.DocumentTypeCode == "380" && r.DocumentStatusCode == "1").ToList();
             if (customsDocumentsTicketPMList == null || customsDocumentsTicketPMList.Count() < 1)
             {
-                status = "M";
+                return true;
             }
 
-            if (!string.IsNullOrWhiteSpace(status) && myDeclarationCourierStatusPM.CourierCustomStatusCode != status)
-            {
-
-                myDeclarationCourierStatusPM.CourierCustomStatusCode = status;
-            }
+            return false;
         }    
         
 
