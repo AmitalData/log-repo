@@ -506,7 +506,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                            {
                                CardId = g.Key.VendorId,
                                ShipmentId = g.Key.ShipmentId,
-                               ChargesTypeId = g.Key.ChargesTypeId,                               
+                               ChargesTypeId = g.Key.ChargesTypeId,
                                AmountInLocal = g.Sum(s => s.OpenAmountInLocalCurrency),
                                AmountInProfit = g.Sum(s => s.OpenAmountInProfitCurrency)
                            }).ToList();
@@ -593,7 +593,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 #endregion
 
                 Currency SelectedCurrency = allCurrencies.Where(d => d.Code == this.SelectedCurrencyCode).FirstOrDefault();
-                if(SelectedCurrency != null)
+                if (SelectedCurrency != null)
                 {
                     this.SelectedCurrencyId = SelectedCurrency.Id;
                 }
@@ -601,7 +601,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 foreach (ShipmentDataView myShipment in allShipments)
                 {
 
-                    
+
 
                     Branch myBranch = null;
                     if (!string.IsNullOrEmpty(myShipment.BranchId))
@@ -609,7 +609,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         myBranch = allBranchs.Where(d => d.Id == myShipment.BranchId).FirstOrDefault();
                     }
                     #region
-                    
+
                     string longMaster = this.GetLongMaster(myShipment);
                     string myCustomer = myShipment.CustomerName;
                     string myDirectionPartner = myShipment.DirectionId == "I" ? myShipment.ConsigneeName : myShipment.ShipperName;
@@ -659,7 +659,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     if (item.CardId != null)
                                     {
                                         Card myCard = allCards.Where(d => d.Id == item.CardId).FirstOrDefault();
-                                        if(myCard != null)
+                                        if (myCard != null)
                                         {
                                             myRecord.CardCode = myCard.Code;
                                             myRecord.CardName = myCard.EnglishName;
@@ -758,7 +758,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                                 myRecord.ShipperConsigneeExternalID = shipper.ReceivablesAccountingCard;
                                             }
                                         }
-                                    } 
+                                    }
                                     myDataProvider.Shipments.Add(myRecord);
                                 }
                             }
@@ -801,11 +801,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.Payables = this.IsLocalCurrency ? item.AmountInLocal : item.AmountInProfit;
                                 myRecord.InvoiceNumber = invoice.InvoiceNumber;
                                 myRecord.InvoiceDate = invoice.InvoiceDate;
-                                myRecord.InvoiceCurrencyRate = invoice.InvoiceCurrencyExchangeRate;                                
+                                myRecord.InvoiceCurrencyRate = invoice.InvoiceCurrencyExchangeRate;
 
                                 if (myCurrency != null)
                                 {
-                                    myRecord.InvoiceCurrencyCode = myCurrency.Code;                                    
+                                    myRecord.InvoiceCurrencyCode = myCurrency.Code;
                                 }
 
                                 myRecord.AccountedPayables = myRecord.Payables;
@@ -890,108 +890,128 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         ARInvoice invoice = allARInvoices.Where(d => d.Id == id).FirstOrDefault();
                         if (invoice != null)
                         {
-                            #region AR Invoices
-                            Card myCard = allCards.Where(d => d.Id == invoice.BillToId).FirstOrDefault();
-                            //Branch myBranch = allBranchs.Where(d => d.Id == invoice.BranchId).FirstOrDefault();
-                            Contact myContact = allContacts.Where(d => d.Id == invoice.CreatedByUserId).FirstOrDefault();
-                            Currency myCurrency = allCurrencies.Where(d => d.Id == invoice.InvoiceCurrencyId).FirstOrDefault();
+                            bool isAddingInvoice = true;
 
-                            List<ChargeTypeGroupClass> lines_Grouped = allARInvoiceLinesData.Where(d => d.InvoiceId == invoice.Id && d.ShipmentId == myShipment.Id).ToList();
-                            //List<ChargeTypeGroupClass> lines_Grouped2 = allARInvoiceLinesData.Where(d => d.InvoiceId == invoice.Id).ToList();
-
-                            foreach (ChargeTypeGroupClass item in lines_Grouped)
+                            if (invoice.IsConstituentInvoice)
                             {
-                                ArchivoExportadoShipmentItem myRecord = new ArchivoExportadoShipmentItem();
-                                myRecord.LineTypeCode = invoice.StatusCode == "DR" ? "FX" : "FC";
-                                myRecord.ShipmentNumber = myShipment.ShipmentNumber;
-                                myRecord.LongMaster = longMaster;
-                                myRecord.Customer = myCustomer;
-                                myRecord.DirectionPartner = myDirectionPartner;
-                                myRecord.DescriptionOfGoods = myShipment.DescriptionOfGoods;
-                                myRecord.Salesman = myShipment.SalesmanUserName;
-                                myRecord.Direction = myShipment.DirectionName;
+                                isAddingInvoice = false;
 
-                                myRecord.Receivables = this.IsLocalCurrency ? item.AmountInLocal : item.AmountInProfit;
-                                myRecord.InvoiceNumber = invoice.InvoiceNumber;
-                                myRecord.InvoiceDate = invoice.InvoiceDate;
-                                myRecord.InvoiceCurrencyRate = invoice.InvoiceCurrencyExchangeRate;
-
-                                if (myCurrency != null)
+                                if (invoice.ConsolidationInvoiceId != null)
                                 {
-                                    myRecord.InvoiceCurrencyCode = myCurrency.Code;
-                                }
+                                    string consolidationInvoiceStatus = (from d in myInvoiceContext.ARInvoices where d.Id == invoice.ConsolidationInvoiceId select d.StatusCode).FirstOrDefault();
 
-                                myRecord.AccountedReceivables = myRecord.Receivables;
-                                myRecord.AccountedReceivablesCurrencyCode = myRecord.InvoiceCurrencyCode;
-
-                                if (this.SelectedCurrencyId == invoice.InvoiceCurrencyId)
-                                {
-                                    myRecord.AccountedReceivablesCurrencyRate = 1;
-                                }
-
-                                else if (this.IsLocalCurrency)
-                                {
-                                    myRecord.AccountedReceivablesCurrencyRate = myRecord.InvoiceCurrencyRate;
-                                }
-
-                                else
-                                {
-                                    myRecord.AccountedReceivablesCurrencyRate = (1 / invoice.ProfitCurrencyExchangeRate) * myRecord.InvoiceCurrencyRate;
-                                    myRecord.AccountedReceivablesCurrencyRate = MethodHelper.Round(myRecord.AccountedReceivablesCurrencyRate, 2);
-                                }
-
-                                if (myCard != null)
-                                {
-                                    myRecord.CardCode = myCard.Code;
-                                    myRecord.CardName = myCard.EnglishName;
-                                    myRecord.CardExternal = myCard.ReceivablesAccountingCard;
-                                    myRecord.BillToName = myCard.EnglishName;
-                                }
-
-                                if (myContact != null)
-                                {
-                                    myRecord.CreatedByUser = myContact.EnglishName;
-                                }
-
-                                if (myBranch != null)
-                                {
-                                    myRecord.BranchCode = myBranch.Code;
-                                    myRecord.BranchName = myBranch.EnglishName;
-                                    myRecord.BranchLocalName = myBranch.LocalName;
-                                    myRecord.BranchExternalId = myBranch.ExternalId;
-                                }
-
-                                ChargesType myChargesType = allChargesTypes.Where(d => d.Id == item.ChargesTypeId).FirstOrDefault();
-                                if (myChargesType != null)
-                                {
-                                    myRecord.ChargeTypeCode = myChargesType.Code;
-                                    myRecord.ChargeTypeName = myChargesType.EnglishName;
-                                    myRecord.ChargeTypeLocalName = myChargesType.LocalName;
-                                }
-
-                                if (myShipment.DirectionId == "I")
-                                {
-                                    if (!string.IsNullOrEmpty(myShipment.ConsigneeId))
+                                    if (consolidationInvoiceStatus == "AD")
                                     {
-                                        Card consignee = myCommonContext.Cards.Where(d => d.Id == myShipment.ConsigneeId).FirstOrDefault();
-                                        if (consignee != null)
-                                        {
-                                            myRecord.ShipperConsigneeExternalID = consignee.ReceivablesAccountingCard;
-                                        }
+                                        isAddingInvoice = true;
                                     }
                                 }
-                                else
+                            }
+
+                            #region AR Invoices
+                            if (isAddingInvoice)
+                            {
+                                Card myCard = allCards.Where(d => d.Id == invoice.BillToId).FirstOrDefault();
+                                //Branch myBranch = allBranchs.Where(d => d.Id == invoice.BranchId).FirstOrDefault();
+                                Contact myContact = allContacts.Where(d => d.Id == invoice.CreatedByUserId).FirstOrDefault();
+                                Currency myCurrency = allCurrencies.Where(d => d.Id == invoice.InvoiceCurrencyId).FirstOrDefault();
+
+                                List<ChargeTypeGroupClass> lines_Grouped = allARInvoiceLinesData.Where(d => d.InvoiceId == invoice.Id && d.ShipmentId == myShipment.Id).ToList();
+                                //List<ChargeTypeGroupClass> lines_Grouped2 = allARInvoiceLinesData.Where(d => d.InvoiceId == invoice.Id).ToList();
+
+                                foreach (ChargeTypeGroupClass item in lines_Grouped)
                                 {
-                                    if (!string.IsNullOrEmpty(myShipment.ShipperId))
+                                    ArchivoExportadoShipmentItem myRecord = new ArchivoExportadoShipmentItem();
+                                    myRecord.LineTypeCode = invoice.StatusCode == "DR" ? "FX" : "FC";
+                                    myRecord.ShipmentNumber = myShipment.ShipmentNumber;
+                                    myRecord.LongMaster = longMaster;
+                                    myRecord.Customer = myCustomer;
+                                    myRecord.DirectionPartner = myDirectionPartner;
+                                    myRecord.DescriptionOfGoods = myShipment.DescriptionOfGoods;
+                                    myRecord.Salesman = myShipment.SalesmanUserName;
+                                    myRecord.Direction = myShipment.DirectionName;
+
+                                    myRecord.Receivables = this.IsLocalCurrency ? item.AmountInLocal : item.AmountInProfit;
+                                    myRecord.InvoiceNumber = invoice.InvoiceNumber;
+                                    myRecord.InvoiceDate = invoice.InvoiceDate;
+                                    myRecord.InvoiceCurrencyRate = invoice.InvoiceCurrencyExchangeRate;
+
+                                    if (myCurrency != null)
                                     {
-                                        Card shipper = myCommonContext.Cards.Where(d => d.Id == myShipment.ShipperId).FirstOrDefault();
-                                        if (shipper != null)
+                                        myRecord.InvoiceCurrencyCode = myCurrency.Code;
+                                    }
+
+                                    myRecord.AccountedReceivables = myRecord.Receivables;
+                                    myRecord.AccountedReceivablesCurrencyCode = myRecord.InvoiceCurrencyCode;
+
+                                    if (this.SelectedCurrencyId == invoice.InvoiceCurrencyId)
+                                    {
+                                        myRecord.AccountedReceivablesCurrencyRate = 1;
+                                    }
+
+                                    else if (this.IsLocalCurrency)
+                                    {
+                                        myRecord.AccountedReceivablesCurrencyRate = myRecord.InvoiceCurrencyRate;
+                                    }
+
+                                    else
+                                    {
+                                        myRecord.AccountedReceivablesCurrencyRate = (1 / invoice.ProfitCurrencyExchangeRate) * myRecord.InvoiceCurrencyRate;
+                                        myRecord.AccountedReceivablesCurrencyRate = MethodHelper.Round(myRecord.AccountedReceivablesCurrencyRate, 2);
+                                    }
+
+                                    if (myCard != null)
+                                    {
+                                        myRecord.CardCode = myCard.Code;
+                                        myRecord.CardName = myCard.EnglishName;
+                                        myRecord.CardExternal = myCard.ReceivablesAccountingCard;
+                                        myRecord.BillToName = myCard.EnglishName;
+                                    }
+
+                                    if (myContact != null)
+                                    {
+                                        myRecord.CreatedByUser = myContact.EnglishName;
+                                    }
+
+                                    if (myBranch != null)
+                                    {
+                                        myRecord.BranchCode = myBranch.Code;
+                                        myRecord.BranchName = myBranch.EnglishName;
+                                        myRecord.BranchLocalName = myBranch.LocalName;
+                                        myRecord.BranchExternalId = myBranch.ExternalId;
+                                    }
+
+                                    ChargesType myChargesType = allChargesTypes.Where(d => d.Id == item.ChargesTypeId).FirstOrDefault();
+                                    if (myChargesType != null)
+                                    {
+                                        myRecord.ChargeTypeCode = myChargesType.Code;
+                                        myRecord.ChargeTypeName = myChargesType.EnglishName;
+                                        myRecord.ChargeTypeLocalName = myChargesType.LocalName;
+                                    }
+
+                                    if (myShipment.DirectionId == "I")
+                                    {
+                                        if (!string.IsNullOrEmpty(myShipment.ConsigneeId))
                                         {
-                                            myRecord.ShipperConsigneeExternalID = shipper.ReceivablesAccountingCard;
+                                            Card consignee = myCommonContext.Cards.Where(d => d.Id == myShipment.ConsigneeId).FirstOrDefault();
+                                            if (consignee != null)
+                                            {
+                                                myRecord.ShipperConsigneeExternalID = consignee.ReceivablesAccountingCard;
+                                            }
                                         }
                                     }
+                                    else
+                                    {
+                                        if (!string.IsNullOrEmpty(myShipment.ShipperId))
+                                        {
+                                            Card shipper = myCommonContext.Cards.Where(d => d.Id == myShipment.ShipperId).FirstOrDefault();
+                                            if (shipper != null)
+                                            {
+                                                myRecord.ShipperConsigneeExternalID = shipper.ReceivablesAccountingCard;
+                                            }
+                                        }
+                                    }
+                                    myDataProvider.Shipments.Add(myRecord);
                                 }
-                                myDataProvider.Shipments.Add(myRecord);
                             }
                             #endregion
                         }
