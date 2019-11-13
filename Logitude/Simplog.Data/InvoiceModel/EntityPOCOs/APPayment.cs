@@ -53,13 +53,6 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string ApprovedByUserId { get; set; }
         public DateTime? ApprovedDateTime { get; set; }
 
-        public string VendorBankAddress { get; set; }
-        public string VendorBankName { get; set; }
-        public string VendorBankAccountNumber { get; set; }
-        public string VendorSwift { get; set; }
-        public string VendorIBANNumber { get; set; }
-
-
         [ForeignKey("ApprovedByUserId")]
         public User ApprovedByUser { get; set; }
 

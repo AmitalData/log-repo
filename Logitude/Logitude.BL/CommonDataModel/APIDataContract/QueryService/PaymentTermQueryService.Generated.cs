@@ -78,6 +78,25 @@ using Simplog.Data.CommonDataModel;
             }
         }
 		
+		public PaymentTerm GetPaymentTermByCode(string Code,int Tenant)
+        { 
+		    try
+            {
+
+				
+				var temp = query.GetSinglePMByCode(Code,Tenant);				
+				 if (temp == null)
+                    throw new ApplicationException("PaymentTerm with Code " + Code + " doesn't exist");
+
+				return PaymentTermDataMapping(temp,Tenant);
+			}
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+		
 		public PaymentTerm PaymentTermDataMapping(PaymentTermPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
         {
 		    try
@@ -88,7 +107,10 @@ using Simplog.Data.CommonDataModel;
 				   temp.EnglishName = MyEntityPM.EnglishName;
 				   temp.LocalName = MyEntityPM.LocalName;
 				   temp.Days = MyEntityPM.Days;
-				   temp.ExternalId = MyEntityPM.ExternalId;					
+				   temp.ExternalId = MyEntityPM.ExternalId;
+				   temp.Code = MyEntityPM.Code;
+				   ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant); 
+				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Code,ComputingPartnerName,"PaymentTerm");  					
 				   return temp;
 			}
             catch (Exception ex)
@@ -111,10 +133,30 @@ using Simplog.Data.CommonDataModel;
 					if (!string.IsNullOrEmpty(MyEntity.ExternalId))
 					{
 						temp = query.GetSinglePMByExternalId(MyEntity.ExternalId, Tenant);
-					} 					   
+					} 
+					if (!string.IsNullOrEmpty(MyEntity.Code))
+					{
+						temp = query.GetSinglePMByCode(MyEntity.Code, Tenant);
+					} 
+					if (!string.IsNullOrEmpty(MyEntity.PartnerCode))
+					{
+                        if(string.IsNullOrEmpty(ComputingPartnerName))
+                            throw new ApplicationException("ComputingPartnerCode is required");
+						ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant);
+						var MyCode = helper.GetLogitudeCodeTranslation(MyEntity.PartnerCode,ComputingPartnerName,"PaymentTerm");
+					    if(string.IsNullOrEmpty(MyCode))
+						{
+						  throw new ApplicationException("PaymentTerm with Partner Code " + MyEntity.PartnerCode + " doesn't match any record");
+						}
+						temp = query.GetSinglePMByCode(MyCode, Tenant);
+						
+						
+					}
+					
+					   					   
 					if(temp == null)
 					{   
-					    throw new ApplicationException("PaymentTerm with ExternalId " + MyEntity.ExternalId + " doesn't exist");
+					    throw new ApplicationException("PaymentTerm with Code " + MyEntity.Code + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
@@ -133,7 +175,17 @@ using Simplog.Data.CommonDataModel;
 					temp.EnglishName = MyEntity.EnglishName;
 					temp.LocalName = MyEntity.LocalName;
 					temp.Days = MyEntity.Days;
-					temp.ExternalId = MyEntity.ExternalId;					   
+					temp.ExternalId = MyEntity.ExternalId;
+					if(string.IsNullOrEmpty(temp.Code))
+					{
+					   
+						temp.Code = MyEntity.Code;
+					}
+					if(string.IsNullOrEmpty(temp.Code))
+					{
+					   
+						temp.Code = MyEntity.PartnerCode;
+					}					   
 					   return temp;
 		    }
             catch (Exception ex)

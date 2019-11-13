@@ -24,5 +24,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string FromDateTypeCode { get; set; }
         public string CalculatedLocalName { get; set; }
         public string CalculatedEnglishName { get; set; }
+        public string Code { get; set; }
     }
 }

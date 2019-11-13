@@ -1241,6 +1241,15 @@ namespace MeatadataGeneratorTool
                 SetAttribute("AllowedinAutomationConditions", f.AllowedinAutomationConditions.ToString().ToLower(), fieldElement, null);
                 SetAttribute("AutomationEmailRecipient", f.AutomationEmailRecipient.ToString().ToLower(), fieldElement, null);
                 SetAttribute("CanAutomateSetValue", f.CanAutomateSetValue.ToString().ToLower(), fieldElement, null);
+
+                SetAttribute("DisplayInAutomationAsEnitity", f.DisplayInAutomationAsEnitity.ToString().ToLower(), fieldElement, null);
+
+                if (!string.IsNullOrEmpty(f.RecordType))
+                {
+                    SetAttribute("RecordType", GetStringValue(f.RecordType), fieldElement, null);
+                }
+
+
                 if (!string.IsNullOrEmpty(f.HtmlListComponentUrl))
                 {
                     SetAttribute("HtmlListComponentUrl", GetStringValue(f.HtmlListComponentUrl), fieldElement, null);

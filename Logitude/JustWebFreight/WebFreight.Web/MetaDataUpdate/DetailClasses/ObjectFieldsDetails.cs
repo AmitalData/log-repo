@@ -121,5 +121,11 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
         public string DataTypeCode { get; set; }
         public bool AllowedInAirlineMessaging { get;  set; }
         public bool EnableFullscreenTextBox { get;  set; }
+
+
+
+        public bool DisplayInAutomationAsEnitity { get; set; }
+        public string RecordType { get; set; }
+
     }
 }

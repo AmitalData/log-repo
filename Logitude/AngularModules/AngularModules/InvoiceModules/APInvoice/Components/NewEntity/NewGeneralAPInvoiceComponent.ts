@@ -50,13 +50,13 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         super();
-        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
         this.InitializeServices();
 
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
-        }        
+        }
     }
 
     public AllVatTypes: VatTypeList[] = [];
@@ -115,9 +115,9 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
 
         this.UIProperties.SetRequired("VATNumber", "APInvoice", isVatNumberRequired);
         this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, AppTool.IsNullOrEmpty(this.AccountingDate));
-        
+
         this.SetUIProperties_DueDate();
-        this.SetUIProperties_ExchangeRate();        
+        this.SetUIProperties_ExchangeRate();
     }
     SetUIProperties_DueDate() {
         var AllowManuallyDueDate: boolean = false;
@@ -141,13 +141,13 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
                     isEnabled = true;
                 }
             }
-        }      
+        }
 
         this.RateIsEnabled = isEnabled;
-        this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", "APInvoice", isEnabled);        
+        this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", "APInvoice", isEnabled);
     }
 
-    // Load Data 
+    // Load Data
     private LastRatesList: LastRate[] = [];
     private VatTypePercentagesList: VatTypePercentagePM[] = [];
     LoadData() {
@@ -260,6 +260,7 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
                         if (list != null) {
                             this.VATNumber = list.VatNumber;
                             this.VendorName = list.EnglishName;
+                            this.VendorLocalName = list.LocalName || list.EnglishName;
                             this.EntityPM.VendorPartnerTypeId = list.PartnerTypeId;
                             if (!AppTool.IsNullOrEmpty(list.InvoiceCurrencyId)) {
                                 this.InvoiceCurrencyId = list.InvoiceCurrencyId;
@@ -294,6 +295,13 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
     set VendorName(value: string) {
         if (this.EntityPM.VendorName != value) {
             this.EntityPM.VendorName = value;
+        }
+    }
+
+    get VendorLocalName() { return this.EntityPM.VendorLocalName; }
+    set VendorLocalName(value: string) {
+        if (this.EntityPM.VendorLocalName != value) {
+            this.EntityPM.VendorLocalName = value;
         }
     }
 
@@ -579,7 +587,7 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
         }
     }
 
-    // Commands    
+    // Commands
     FillWarnings(warnings: string[]) {
         this.ValidationWarningsList = [];
         if (warnings != null && warnings.length > 0) {
@@ -717,7 +725,7 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 this.CompleteSubmission();
-              
+
             }
         });
         confirmWindow.Show(warningMessage);

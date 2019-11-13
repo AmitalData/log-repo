@@ -105,6 +105,10 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public bool AllowedInCustomerFieldsSettings { get; set; }
         public string GeneratedComponentPath { get; set; }
         public bool DisplayOnLookUpLocal { get; set; }
+
+        public bool DisplayInAutomationAsEnitity { get; set; }
+        public string RecordType { get; set; }
+
         private List<ObjectFieldValidationPM> objectFieldValidations;
         [Composition]
         [Include]
