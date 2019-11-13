@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { BIReportPM } from '../../../../Infrastructure/EntityPMs/BIReportPM';
 import { BIReportPMService } from '../../../../Infrastructure/Services/StandardPMs/BIReportPMService';
@@ -23,6 +23,8 @@ export class NewBIReport extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     private OriginalName: string = "";
     private IsCopy: boolean = false;
+    private ComponentRef;
+    @Output() BackCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
     constructor() {
         super();
         this.EntityPM = new BIReportPM();
@@ -45,6 +47,8 @@ export class NewBIReport extends BaseComponent {
             this.OriginalName = args.Name;
             this.EntityPM.Description = args.Description;
             this.IsCopy = true;
+            this.ComponentRef = args.ComponentRef;
+            this.BackCompleted = args.BackCompleted;
         }
         else {
             this.DWQueryId = args.DWQueryId;
@@ -151,6 +155,8 @@ export class NewBIReport extends BaseComponent {
                 var windowArgs: any = {};
                 windowArgs.DWQueryId = this.DWQueryId;
                 windowArgs.IsCopy = this.IsCopy;
+                windowArgs.ComponentRef = this.ComponentRef;
+                windowArgs.BackCompleted = this.BackCompleted;
                 windowArgs.IsBIReportWorkspace = true;
                 logWindow.WindowArgs = windowArgs;
                 logWindow.Width = 1200;

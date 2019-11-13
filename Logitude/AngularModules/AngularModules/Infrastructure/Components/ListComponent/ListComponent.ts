@@ -2024,6 +2024,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                 cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
                                     this.isEditControlOpened = false;
                                     this.OnBackFromEdit(selectedEntityId, $event)
+                                    this.RefreshBtnClick();
                                 });
                             });
                     }

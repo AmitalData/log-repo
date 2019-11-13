@@ -42,6 +42,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
     SelectedFieldsDataSource: DWObjectFieldsDetails[] = [];
     SelectedFiltersDataSource: DWObjectFieldsDetails[] = [];
     AllFieldsWithChildrenDataSource: DWObjectFieldsDetails[];
+    @Output() BackCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
     public ObsList: any[] = [];
     public ObsListAll: any[] = [];
     DataContext: any = this;
@@ -67,6 +68,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
     public Height: number = 110;
     public IconSize: number = 17;
     private IsCopy: boolean = false;
+    private ComponentRef;
     mouseover(MyItem) {
         if (MyItem.HelpText) {
             var item = document.getElementById(MyItem.TooltipId);
@@ -240,6 +242,8 @@ export class DWQueryBuilderComponent extends BaseComponent {
         this.IsBIReportEditScreen = args.IsBIReportEditScreen;
         this.FolderId = args.FolderId;
         this.IsCopy = args.IsCopy;
+        this.ComponentRef = args.ComponentRef;
+        this.BackCompleted = args.BackCompleted;
         //this.AllFieldsWithChildrenDataSource = args.DWObjectFieldsWithChildren;
         if (this.QID) {
             this._DWSubQueryPMService.getByQueryId(this.QID).subscribe(myResult => {
@@ -1068,6 +1072,11 @@ export class DWQueryBuilderComponent extends BaseComponent {
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ..");
         this._DWObjectTablePMService.get("Fact_Shipments").subscribe(myResult => {
             if (!myResult.HasError) {
+                if (this.IsCopy) {
+                    this.ComponentRef.destroy();
+                    this.BackCompleted.emit(false);
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                }
                 var MySubQuery = new DWSubQueryPM();
                 MySubQuery.Tenant = SessionLocator.Tenant;
                 MySubQuery.DWFactTableCode = myResult.Result.Code;

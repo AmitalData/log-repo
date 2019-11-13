@@ -502,6 +502,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
             }
         }
     }
+
     SaveBIReport(isBackBtn = false) {
         if (this.EntityId == null) {
             this.NewBIReport();
@@ -719,6 +720,8 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         windowArgs.Description = this.EntityPM.Description;
         windowArgs.DWQueryId = this.EntityPM.DWQueryId;
         windowArgs.BIReportFolderId = this.EntityPM.BIReportFolderId;
+        windowArgs.ComponentRef = this.ComponentRef;
+        windowArgs.BackCompleted = this.BackCompleted;
         logWindow.WindowArgs = windowArgs;
         logWindow.Show('./InfrastructureModules/InfrastructureBIReport/Components/NewEntity/NewBIReport');
         logWindow.WindowClosed.subscribe(d => {
