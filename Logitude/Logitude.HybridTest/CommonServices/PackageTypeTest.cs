@@ -1,4 +1,5 @@
 ﻿using System;
+using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Logitude.HybridTest.CommonServices
@@ -10,20 +11,40 @@ namespace Logitude.HybridTest.CommonServices
         public void Test_PackageType_UPSERT()
         {
             LoginService.GetLoginTokenByCredentials();
-            Server.Tools.Response serviceResponse = CallPackageTypeUpsert();
+            Response serviceResponse = CallPackageTypeUpsert();
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
          }
 
-        public static Server.Tools.Response CallPackageTypeUpsert()
+        [TestMethod]
+        public void Test_PackageType_GETPACKAGETYPELIST()
         {
-
+            LoginService.GetLoginTokenByCredentials();
             PackageTypeServiceReference.PackageTypeWcfServiceClient serviceClient = new PackageTypeServiceReference.PackageTypeWcfServiceClient();
             string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
             serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
-            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)serviceClient.InnerChannel))
+            using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
             {
+                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
+                Response serviceResponse = new Response();
+                PackageTypeServiceReference.PackageTypeApiFilters filters = new PackageTypeServiceReference.PackageTypeApiFilters();
+                filters.Take = 10;
+                filters.SearchFields = HybridCodes.PackageTypeCode;
+                PackageTypeServiceReference.PackageTypeList[] serviceResult = serviceClient.GetPackageTypeList(filters, TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
+                string packageTypeCode = serviceResult[0].Code;
+                Assert.IsTrue(packageTypeCode == "HPT", "Hybrid Package Type Doesn't Exist!");
+                Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
+                Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);
+            }
+        }
 
+        public static Response CallPackageTypeUpsert()
+        {
+            PackageTypeServiceReference.PackageTypeWcfServiceClient serviceClient = new PackageTypeServiceReference.PackageTypeWcfServiceClient();
+            string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
+            serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
+            using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
+            {
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
                 PackageTypeServiceReference.PackageTypePM entityPM = new PackageTypeServiceReference.PackageTypePM()
                 {
@@ -35,8 +56,7 @@ namespace Logitude.HybridTest.CommonServices
                     IsAir = true,
                     Tenant = TestEnvironmentGlobalParameters.Tenant,
                 };
-
-                Logitude.Server.Tools.Response serviceResponse = serviceClient.Upsert(entityPM, false);
+                Response serviceResponse = serviceClient.Upsert(entityPM, false);
                 return serviceResponse;
             }
         }
