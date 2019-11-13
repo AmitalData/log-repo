@@ -45,6 +45,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
         private string billToAccountingCard;
         private string currencyAccountingCard;
         private List<TransferStatusCodeItem> transferstatusCodes;
+        private string defaultPaymentTermId;
         public APInvoicePM APInvoiceCustomDataMappingAndValidating(APInvoice MyEntity, int tenant, string ComputingPartnerCode = "")
         {
             try
@@ -104,14 +105,16 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             aPInvoicePM.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
             aPInvoicePM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
+            this.defaultPaymentTermId = aPInvoicePM.PaymentTermId;
+
             if (string.IsNullOrEmpty(aPInvoicePM.BranchId))
             {
                 aPInvoicePM.BranchId = myUser.BranchId;
             }
 
-            if (string.IsNullOrEmpty(aPInvoicePM.PaymentTermId))
+            if (string.IsNullOrEmpty(this.defaultPaymentTermId))
             {
-                aPInvoicePM.PaymentTermId = myTenant.PaymentTermId;
+                this.defaultPaymentTermId = myTenant.PaymentTermId;
             }
 
             if (string.IsNullOrEmpty(aPInvoicePM.LocalCurrencyId))
@@ -149,9 +152,9 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                         this.aPInvoicePM.InvoiceCurrencyId = vendor.InvoiceCurrencyId;
                     }
 
-                    if (string.IsNullOrEmpty(this.aPInvoicePM.PaymentTermId))
+                    if (string.IsNullOrEmpty(this.defaultPaymentTermId))
                     {
-                        this.aPInvoicePM.PaymentTermId = vendor.PaymentTermId;
+                        defaultPaymentTermId = vendor.PaymentTermId;
                     }
                 }
             }
@@ -278,15 +281,23 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                     this.aPInvoicePM.ProfitCurrencyId = shipment.ProfitCurrencyId;                    
                     this.aPInvoicePM.OperationalDate = shipment.OperationalDate;
 
-                    DateTime? loadingDate = this.aPInvoicePM.InvoiceDate;
-                    if (loadingDate == null)
+                    if (this.aPInvoicePM.ProfitCurrencyId == this.aPInvoicePM.LocalCurrencyId)
                     {
-                        loadingDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        this.aPInvoicePM.ProfitCurrencyExchangeRate = 1;
                     }
-                    LastRate myRate = this.GetCurrencysExchangeRate(tenant, this.aPInvoicePM.LocalCurrencyId, this.aPInvoicePM.ProfitCurrencyId, loadingDate.Value);
-                    if (myRate != null)
+
+                    else
                     {
-                        this.aPInvoicePM.ProfitCurrencyExchangeRate = myRate.Rate;                        
+                        DateTime? loadingDate = this.aPInvoicePM.InvoiceDate;
+                        if (loadingDate == null)
+                        {
+                            loadingDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        }
+                        LastRate myRate = this.GetCurrencysExchangeRate(tenant, this.aPInvoicePM.LocalCurrencyId, this.aPInvoicePM.ProfitCurrencyId, loadingDate.Value);
+                        if (myRate != null)
+                        {
+                            this.aPInvoicePM.ProfitCurrencyExchangeRate = myRate.Rate;
+                        }
                     }
 
                     switch (shipment.DirectionId)
@@ -310,6 +321,8 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
         }
         private void InitAndValidatePaymentTerm_DueDate()
         {
+            bool calculateDueDate = false;
+
             if (string.IsNullOrEmpty(this.aPInvoicePM.PaymentTermId))
             {
                 if (this.aPInvoicePM.DueDate != null)
@@ -320,9 +333,15 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                         this.aPInvoicePM.PaymentTermId = manuallySetPaymentTerm.Id;
                     }
                 }
-            }
 
-            else
+                else
+                {
+                    this.aPInvoicePM.PaymentTermId = this.defaultPaymentTermId;
+                    calculateDueDate = true;
+                }
+            }
+            
+            if(calculateDueDate)
             {
                 DateTime? expectedDueDate = this.ComputeAPInvoiceDueDate(this.aPInvoicePM, paymentTermRepository);
 
@@ -395,7 +414,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
                                             if(!packageType.IsOcean)
                                             {
-                                                throw new ApplicationException("Line Container Type should be is Ocean");
+                                                throw new ApplicationException("Line Container Type should be Ocean");
                                             }
                                         }
                                     }
@@ -436,7 +455,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                                 line.VatTypeName = vatType.EnglishName;
                                 line.VatIsMultiPercentage = vatType.IsMultiPercentage;
 
-                                if (line.VatPercentage == null || line.VatPercentage == 0)
+                                if (line.VatPercentage == null)
                                 {
                                     if (!vatType.IsMultiPercentage)
                                     {

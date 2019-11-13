@@ -1,4 +1,5 @@
 ﻿using System;
+using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Logitude.HybridTest.CommonServices
@@ -10,23 +11,43 @@ namespace Logitude.HybridTest.CommonServices
         public void Test_Country_UPSERT()
         {
             LoginService.GetLoginTokenByCredentials();
-            Server.Tools.Response globalZoneServiceResponse = GlobalZoneTest.CallGlobalZoneUpsert();
+            Response globalZoneServiceResponse = GlobalZoneTest.CallGlobalZoneUpsert();
             Assert.IsFalse(globalZoneServiceResponse.HasError, "Global Zone Upsert Failed! " + globalZoneServiceResponse.ErrorMessage);
             Assert.IsNotNull(globalZoneServiceResponse.Result, "Global Zone Upsert Failed! " + globalZoneServiceResponse.ErrorMessage);
-            Server.Tools.Response serviceResponse = CallCountryUpsert();
+            Response serviceResponse = CallCountryUpsert();
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
          }
 
-        public static Server.Tools.Response CallCountryUpsert()
+        [TestMethod]
+        public void Test_Country_GETLIST()
         {
-
+            LoginService.GetLoginTokenByCredentials();
             CountryServiceReference.CountryWcfServiceClient serviceClient = new CountryServiceReference.CountryWcfServiceClient();
             string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
             serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
-            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)serviceClient.InnerChannel))
+            using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
             {
+                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
+                Response serviceResponse = new Response();
+                ApiSearchFilters filters = new ApiSearchFilters();
+                filters.Take = 10;
+                filters.SearchFields = HybridCodes.CountryCode;
+                CountryServiceReference.CountryList[] serviceResult = serviceClient.GetList(filters, TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
+                string countryCode = serviceResult[0].Code;
+                Assert.IsTrue(countryCode == "HC", "Hybrid Country Doesn't Exist!");
+                Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
+                Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);
+            }
+        }
 
+        public static Response CallCountryUpsert()
+        {
+            CountryServiceReference.CountryWcfServiceClient serviceClient = new CountryServiceReference.CountryWcfServiceClient();
+            string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
+            serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
+            using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
+            {
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
                 CountryServiceReference.CountryPM entityPM = new CountryServiceReference.CountryPM()
                 {
@@ -37,8 +58,7 @@ namespace Logitude.HybridTest.CommonServices
                     AddedManually = true,
                     Tenant = TestEnvironmentGlobalParameters.Tenant,
                 };
-
-                Logitude.Server.Tools.Response serviceResponse = serviceClient.Upsert(entityPM, false);
+                Response serviceResponse = serviceClient.Upsert(entityPM, false);
                 return serviceResponse;
             }
         }
