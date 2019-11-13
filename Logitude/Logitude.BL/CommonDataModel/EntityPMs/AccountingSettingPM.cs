@@ -53,5 +53,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool EnableNegativeOffsetARPayments { get; set; }
         public bool EnableNegativeOffsetAPPayments { get; set; }
         public bool EnableInvoiceStocksManagement { get; set; }
+        public string RefreshToken { get; set; }
+        public int QBOOAuth { get; set; }
+
     }
 }
