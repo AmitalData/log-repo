@@ -141,7 +141,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         if (customsRequestsSheetPMList.Count > 0)
                         {
                             var RequestInProgressInterfaceTypeName = customsRequestsSheetPMList.First().InterfaceTypeName;
-                            text = TranslateTextsClass.Translate("Customs.General.RequestInProgress", _MyDeclarationPM.Tenant,true);
+                            text = TranslateTextsClass.Translate("Customs.General.RequestInProgress", _MyDeclarationPM.Tenant, true);
                             text = String.Format(text, RequestInProgressInterfaceTypeName);
                         }
                     }
@@ -178,10 +178,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             text = text + " (המכולות בתיק העמילות עודכנו)";
                             this.MyResponseData.UserMessage = text;
                         }
-                        if (requestParams.IsAngularClient != true)requestParams.AutoSend = true; // temp - AutoSend implemented only in angular
+                        if (requestParams.IsAngularClient != true) requestParams.AutoSend = true; // temp - AutoSend implemented only in angular
                         string _status = null;
                         DateTime? _statusDate = DateTime.Now;
-                        if (customResponse.Cargo != null && 
+                        if (customResponse.Cargo != null &&
                             customResponse.Cargo.CargoAdditionalData != null && customResponse.Cargo.CargoAdditionalData.Count() > 0)
                         {
                             if (customResponse.Cargo.totalNumberOfPackeges == customResponse.Cargo.CargoAdditionalData[0].totalRecordNumberOfPackeges && customResponse.Cargo.CargoAdditionalData[0].StorageDate != null)
@@ -205,7 +205,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             CargoData = "",
                             StatusDate = _statusDate,
                             FileAdditionalData = _FileAdditionalData
-                    };
+                        };
                         _MyDeclarationPM.CurrentContextTag = _cargoContext;
 
                         OpenUnifreighTask();
@@ -215,7 +215,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                         return;
                     }
-                    
+
                     LogMessagingUtil.Instance.AppendLine("Analyze Manifest response " + requestParams.DeclarationNumber);
                     customResponse.Cargo = customResponse.Cargo ?? new MN_NG_8241_Cargo_MessageCargo();
                     customResponse.Cargo.CargoAdditionalData = customResponse.Cargo.CargoAdditionalData ?? new MN_NG_8241_Cargo_MessageCargoCargoAdditionalData[] { new MN_NG_8241_Cargo_MessageCargoCargoAdditionalData() };
@@ -254,12 +254,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             if (!_IsChanged) _IsChanged = true;
                         }
 
-                        if (_MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions != null 
-                            && _MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions.Count > 0 
+                        if (_MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions != null
+                            && _MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions.Count > 0
+                            && _MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions[0].SiteCode != null
                             && customResponse.CargoItem != null)
                         {
-                            LogMessagingUtil.Instance.AppendLine("Analyze Manifest response GetDeclarationConsignmentsPackagesPMForInternalTransitions");
+                            LogMessagingUtil.Instance.AppendLine("Analyze Manifest response GetDeclarationConsignmentsPackagesPMForInternalTransitions (MN_NG_8241_CargoResponseService)");
                             _MyDeclarationPM.Consignments[0].ConsignmentPackages = GetDeclarationConsignmentsPackagesPMForInternalTransitions(customResponse, _MyDeclarationPM.Consignments[0]);
+                            _MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
+                            if (!_IsChanged) _IsChanged = true;
                         }
                         else
                         {
@@ -302,14 +305,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         myDeclarationUpdateService.SuppressNewConcurrencyGUID = false;
                     }
                     _MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
-                    if (_IsChanged)this._MyDeclarationPM.MarkAsChanged = true;
+                    if (_IsChanged) this._MyDeclarationPM.MarkAsChanged = true;
                     //_MyDeclarationPM.CurrentContextTag = GetCFIPACKSXML(customResponse);
                     var myCFIPACKS = GetCFIPACKSXML(customResponse);
                     var myFileAdditionalData = GetFileAdditionalDataXML(customResponse);
                     if (requestParams.IsAngularClient != true) requestParams.AutoSend = true; // temp - AutoSend implemented only in angular
                     string status = null;
                     DateTime? statusDate = DateTime.Now;
-                    if (customResponse.Cargo != null && customResponse.Cargo.CargoAdditionalData != null && customResponse.Cargo.CargoAdditionalData.Count() > 0 && customResponse.Cargo.totalNumberOfPackeges == customResponse.Cargo.CargoAdditionalData[0].totalRecordNumberOfPackeges && customResponse.Cargo.CargoAdditionalData[0].StorageDate != null) 
+                    if (customResponse.Cargo != null && customResponse.Cargo.CargoAdditionalData != null && customResponse.Cargo.CargoAdditionalData.Count() > 0 && customResponse.Cargo.totalNumberOfPackeges == customResponse.Cargo.CargoAdditionalData[0].totalRecordNumberOfPackeges && customResponse.Cargo.CargoAdditionalData[0].StorageDate != null)
                     {
                         if (_MyDeclarationPM.TransportModeId == "A")
                         {
@@ -793,12 +796,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private FileAdditionalData GetFileAdditionalDataXML(MN_NG_8241_Cargo_Message customResponse)
         {
-           
+
             if (!_MyDeclarationPM.IsConnectedToUnifreight)
             {
                 return null;
             }
-            
+
             if (customResponse.Cargo == null)
             {
                 return null;
@@ -826,7 +829,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 return myFileAdditionalData;
                             }
                         }
-                        
+
                         return null;
                     }
 
@@ -992,7 +995,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     internalConsignmentPackagePM = consignmentPackageItem;
                 }
             }
-           
+
             customResponse.CargoItem.OrderBy(ci => ci.PackingType);
             //Array.Sort(customResponse.CargoItem);
             foreach (var package in customResponse.CargoItem)
