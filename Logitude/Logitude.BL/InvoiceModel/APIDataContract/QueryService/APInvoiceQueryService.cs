@@ -395,7 +395,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
                                             if(!packageType.IsOcean)
                                             {
-                                                throw new ApplicationException("Line Container Type should be is Ocean");
+                                                throw new ApplicationException("Line Container Type should be Ocean");
                                             }
                                         }
                                     }
