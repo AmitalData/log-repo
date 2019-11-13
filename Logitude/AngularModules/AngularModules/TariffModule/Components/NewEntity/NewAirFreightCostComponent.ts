@@ -31,7 +31,6 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
     public SelectedLocationFilter: any;
     public VisibileSurchargesArea: boolean = false;
     public VisibleFCLFreightArea: boolean = false;
-    public VisibleFCLSurchargesArea: boolean = false;
     public ChargeTypesQueryFilters: ApiQueryFilters;
     public MeasurmentQueryFilters: ApiQueryFilters;
     private chargesTypePMService: ChargesTypeListService;
@@ -44,7 +43,6 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
     public PriceStepsText: string;
     public TariffCurrencyTextCode: string;
     public SellerDependancy: string = "AL";
-    public MeasurmentDependancy: boolean = false;
 
     constructor() {
         super();
@@ -62,17 +60,12 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
 
     SetWindowArgs(args) {
         this.EntityPM.TypeCode = args.TypeCode;
-        if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode =="OSC") {
+        if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
             this.VisibileSurchargesArea = true;
             this.TariffCurrencyTextCode = "Tariff.O.DefaultCurrency";
         }
         else if (this.EntityPM.TypeCode == "OFC") {
             this.VisibleFCLFreightArea = true;
-            this.MeasurmentDependancy = null;
-        }
-        else if (this.EntityPM.TypeCode == "OFS") {
-            this.VisibileSurchargesArea = true;
-            this.VisibleFCLSurchargesArea = true;
         }
         else {
             this.VisibileSurchargesArea = false; 
@@ -120,7 +113,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
         this.ChargeTypesQueryFilters.addAdditionalFilter(EntityType, true, null, null, "Equals", false, false, false, "Boolean");
         this.ChargeTypesQueryFilters.addAdditionalFilter("ChargesGroupCode", "FRT", null, null, "NotEqual", false, false, false, "string");
         if (this.EntityPM.TypeCode != "OFS") {
-            this.ChargeTypesQueryFilters.addAdditionalFilter("IsContainer", false, null, null, "Equals", false, false, false, "Boolean");
+            this.MeasurmentQueryFilters.addAdditionalFilter("IsContainer", false, null, null, "Equals", false, false, false, "Boolean");
         }
         this.Validate(true);
         this.SetContainerTypeUIProperties(true);
