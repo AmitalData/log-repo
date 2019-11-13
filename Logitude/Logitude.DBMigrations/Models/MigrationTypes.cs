@@ -8,8 +8,14 @@ namespace Logitude.DBMigrations.Models
 {
     public static class MigrationTypes
     {
-        public const int ADDCOLUMN = 0;
-        public const int ALTERCOLUMN = 1;
-        public const int DROPCOLUMN = 2;
+        public const int ADD = 0;
+        public const int RENAME = 1;
+        public const int DROP = 2;
+        public const int ALTERTYPE = 3;
+        public const int ALTERSIZE = 4;
+        public const int ADDPRIMARYKEY = 5;
+        public const int DROPPRIMARYKEY = 6;
+        public const int SETNULLABLE = 7;
+        public const int UNSETNULLABLE = 8;
     }
 }
