@@ -13,6 +13,9 @@
     <Record TransportModeCode="&quot;A&quot;" Name="&quot;Air Surcharges Cost&quot;" Code="&quot;ASC&quot;" SearchFields="&quot;ASC,Air Surcharges Cost&quot;" />
     <Record TransportModeCode="&quot;O&quot;" Code="&quot;OSC&quot;" Name="&quot;Ocean Surcharges Cost&quot;" SearchFields="&quot;OSC,Ocean Surcharges Cost&quot;" />
     <Record TransportModeCode="&quot;O&quot;" Name="&quot;Ocean LCL Freight Cost&quot;" Code="&quot;OLC&quot;" SearchFields="&quot;OLC,Ocean LCL Freight Cost&quot;" />
+    <Record TransportModeCode="&quot;O&quot;" Name="&quot;Ocean FCL Freight Cost&quot;" Code="&quot;OFC&quot;" SearchFields="&quot;OFC,Ocean FCL Freight Cost&quot;"/>
+    <Record TransportModeCode="&quot;O&quot;" Name="&quot;Ocean FCL Surcharges Cost&quot;" Code="&quot;OFS&quot;" SearchFields="&quot;OFS,Ocean FCL Surcharges Cost&quot;"/>
+
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

@@ -39,7 +39,10 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool NotifyPastDateOnInvoiceEdit { get; set; }
         public bool IsAPPaymentsTransferEnabled { get; set; }
 
-        
+        public string RefreshToken { get; set; }
+        public int QBOOAuth { get; set; }
+
+
         public string ReceivableVATCard { get; set; }
         public string PayableVATCard { get; set; }
 

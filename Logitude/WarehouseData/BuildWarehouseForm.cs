@@ -1,8 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.Repositories;
-using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.Helpers;
+﻿
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

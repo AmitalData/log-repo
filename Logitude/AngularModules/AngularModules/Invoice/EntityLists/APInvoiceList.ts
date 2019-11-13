@@ -39,6 +39,7 @@ export class APInvoiceList {
 		UpdateDate: Date;
 		APInvoiceTypeCode: string;
 		VendorName: string;
+		VendorLocalName: string;
 		VendorCode: string;
 		PaymentTermName: string;
 		InvoiceCurrencyCode: string;
@@ -78,5 +79,5 @@ export class APInvoiceList {
 		IsExternalEntity: boolean;
 		IsGeneralInvoice: boolean;
 		FirstApproveDate: Date;
-	
-}
+
+}
