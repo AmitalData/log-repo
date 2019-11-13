@@ -169,6 +169,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 return;
 
             }
+            if (!String.IsNullOrWhiteSpace(entityPM.UNCode)) //T4 find type == nText 
+            {
+                entityPM.UNCode = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.UNCode));
+            }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
 

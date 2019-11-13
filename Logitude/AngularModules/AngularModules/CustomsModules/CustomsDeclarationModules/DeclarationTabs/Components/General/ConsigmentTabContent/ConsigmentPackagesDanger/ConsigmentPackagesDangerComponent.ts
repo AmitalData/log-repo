@@ -84,37 +84,36 @@ export class ConsigmentPackagesDangerComponent
         SessionLocator.SelectedSession.entityResourceService.getEntityResourceByTableName("Customs.DecDangersContact", 0).subscribe(response => {
 
             SessionLocator.SelectedSession.entityResourceService.getEntityResourceByTableName("Customs.ConsignmentPackDanger", 0).subscribe(response => {
-                if (!AppTool.IsNullOrEmpty(args)) {
+ 
+                    if (!AppTool.IsNullOrEmpty(args)) {
 
-                    this.IsDisplayOnly = args.IsDisplayOnly;
+                        this.IsDisplayOnly = args.IsDisplayOnly;
+                        this.IsDisplayOnlyContact = args.IsDisplayOnlyContact;
+                        if (args.ConsignmentPackagesDangerPM.consignmentPackDangers != undefined && args.ConsignmentPackagesDangerPM.consignmentPackDangers.length > 0) {
+                            this.OriginalConsignmentPackDangerPM = args.ConsignmentPackagesDangerPM.consignmentPackDangers[0];
+                            this.ClonedConsignmentPackDangerPM = this.CloneConsignmentPackDangerPM(args.ConsignmentPackagesDangerPM.consignmentPackDangers[0]);
+                        }
+                        else {
+                            this.OriginalConsignmentPackDangerPM = new ConsignmentPackDangerPM(args.Parent.EntityPM);
+                            this.Package = args.Parent.EntityPM;
+                        }
+                        if (args.Declaration.DecDangersContacts != undefined && args.Declaration.DecDangersContacts.length > 0) {
 
-                    if (args.ConsignmentPackagesDangerPM.consignmentPackDangers != undefined && args.ConsignmentPackagesDangerPM.consignmentPackDangers.length > 0) {
-                        this.OriginalConsignmentPackDangerPM = args.ConsignmentPackagesDangerPM.consignmentPackDangers[0];
-                        this.ClonedConsignmentPackDangerPM = this.CloneConsignmentPackDangerPM(args.ConsignmentPackagesDangerPM.consignmentPackDangers[0]);
+                            this.OriginalDecDangersContactPM = args.Declaration.DecDangersContacts[0];
+                            this.ClonedDecDangersContactPM = this.CloneDecDangersContactPM(args.Declaration.DecDangersContacts[0]);
+                        }
+
+                        else {
+                            this.OriginalDecDangersContactPM = new DecDangersContactPM(null);
+                            this.Declaration = args.Declaration;
+
+                        }
+                        this.finishedLoad = true;
+                        this.SetScreenFieldsEditability();
+                        this.SetContactFieldsEditability();
+                  
                     }
-                   else
-
-                    {
-                         this.OriginalConsignmentPackDangerPM = new ConsignmentPackDangerPM(args.Parent.EntityPM);
-                         this.Package = args.Parent.EntityPM;
-                     }
-                    if (args.Declaration.DecDangersContacts != undefined && args.Declaration.DecDangersContacts.length > 0 ) {
-
-                        this.OriginalDecDangersContactPM = args.Declaration.DecDangersContacts[0];
-                        this.ClonedDecDangersContactPM = this.CloneDecDangersContactPM(args.Declaration.DecDangersContacts[0]);
-                    }
-
-                    else {
-                        debugger;
-                        this.OriginalDecDangersContactPM = new DecDangersContactPM(null);
-                        this.Declaration = args.Declaration;
-                    }
-                   this.finishedLoad = true;
-                    this.SetScreenFieldsEditability();
-                    this.SetContactFieldsEditability();
-                }
-
-
+  
             });
 
         });
@@ -127,7 +126,7 @@ export class ConsigmentPackagesDangerComponent
     CloneDecDangersContactPM(entityToClone: DecDangersContactPM) {
 
         var clonedEntity: DecDangersContactPM;
-        clonedEntity = new DecDangersContactPM(entityToClone.EntityParentPM); // check it !!
+        clonedEntity = new DecDangersContactPM(entityToClone.EntityParentPM);  
 
         this.MapEntitytoEntity(entityToClone, clonedEntity);
         return clonedEntity;
@@ -137,7 +136,7 @@ export class ConsigmentPackagesDangerComponent
     CloneConsignmentPackDangerPM(entityToClone: ConsignmentPackDangerPM) {
 
         var clonedEntity: ConsignmentPackDangerPM;
-        clonedEntity = new ConsignmentPackDangerPM(entityToClone.EntityParentPM); // check it !!
+        clonedEntity = new ConsignmentPackDangerPM(entityToClone.EntityParentPM);  
 
         this.MapEntitytoEntity(entityToClone, clonedEntity);
         return clonedEntity;
@@ -168,9 +167,9 @@ export class ConsigmentPackagesDangerComponent
         var errors = [];
 
         if (this.OriginalConsignmentPackDangerPM.DeclarationId == undefined && this.Package != undefined) {
-            this.OriginalConsignmentPackDangerPM.DeclarationId = "-1";// this.Package.DeclarationId;
-            this.OriginalConsignmentPackDangerPM.LineNumber = -1 ;//this.Package.LineNumber;
-            this.OriginalConsignmentPackDangerPM.ConsignmentNumber =  -1 ;//this.Package.ConsignmentNumber;
+            this.OriginalConsignmentPackDangerPM.DeclarationId = "-1"; 
+            this.OriginalConsignmentPackDangerPM.LineNumber = -1 ; 
+            this.OriginalConsignmentPackDangerPM.ConsignmentNumber =  -1 ; 
             this.OriginalConsignmentPackDangerPM.DangerousLineNo = 1;
             this.Package.AddConsignmentPackDanger(this.OriginalConsignmentPackDangerPM);
 
@@ -195,13 +194,12 @@ export class ConsigmentPackagesDangerComponent
     }
     ValidateCustomsItemField() {
         var errors = [];
-         Validator.TryValidateObject(this.OriginalDecDangersContactPM, this.ObjectTableNameContact, errors);
-         Validator.TryValidateObject(this.OriginalConsignmentPackDangerPM, this.ObjectTableName, errors);
-
+         this.declarationValidator.validatePackagesDanger(this.OriginalDecDangersContactPM, this.OriginalConsignmentPackDangerPM);
+        debugger;
         if (!this.validationTemperature(this.OriginalConsignmentPackDangerPM.FlashpointTemperature))
-            errors.push(TextCodeTranslator.Translate("Customs.ConsignmentPackDanger.O.FlashpointTemperature") + "-" +TextCodeTranslator.Translate("Customs.General.O.PackageDangerTempValid"));
+            errors.push(TextCodeTranslator.Translate("Customs.ConsignmentPackDanger.O.FlashpointTemperature") + "-" + TextCodeTranslator.Translate("Customs.General.O.PackageDangerTempValid"));
         if (!this.validationTemperature(this.OriginalConsignmentPackDangerPM.StorageTemperature))
-            errors.push(TextCodeTranslator.Translate("Customs.ConsignmentPackDanger.O.StorageTemperature") + "-" +TextCodeTranslator.Translate("Customs.General.O.PackageDangerTempValid"));
+            errors.push(TextCodeTranslator.Translate("Customs.ConsignmentPackDanger.O.StorageTemperature") + "-" + TextCodeTranslator.Translate("Customs.General.O.PackageDangerTempValid"));
 
         return errors;
      }
@@ -213,7 +211,7 @@ export class ConsigmentPackagesDangerComponent
     validationTemperature(temperature) {
         var re = /^[\d\-+]+$/m;
 
-        if (re.exec(temperature) !== null && temperature != undefined) 
+        if (re.exec(temperature) !== null || temperature == null) 
              return true;
  
          return false;
@@ -235,12 +233,13 @@ export class ConsigmentPackagesDangerComponent
      }
 
     SetContactFieldsEditability() {
-        this.UIProperties.SetEnabled("CompanyName", this.ObjectTableNameContact, !this.IsDisplayOnlyContact);
-        this.UIProperties.SetEnabled("CompanyCommNumber", this.ObjectTableNameContact, !this.IsDisplayOnlyContact);
-        this.UIProperties.SetEnabled("CompanyCommTypeCode", this.ObjectTableNameContact, !this.IsDisplayOnlyContact);
-        this.UIProperties.SetEnabled("ContactCommNumber", this.ObjectTableNameContact, !this.IsDisplayOnlyContact);
-        this.UIProperties.SetEnabled("ContactName", this.ObjectTableNameContact, !this.IsDisplayOnlyContact);
-        this.UIProperties.SetEnabled("ContactCommTypeCode", this.ObjectTableNameContact, !this.IsDisplayOnlyContact);
+        if (this.IsDisplayOnly) this.IsDisplayOnlyContact = true;
+        this.UIProperties.SetEnabled("CompanyName", this.ObjectTableNameContact, !this.IsDisplayOnlyContact  );
+        this.UIProperties.SetEnabled("CompanyCommNumber", this.ObjectTableNameContact, !this.IsDisplayOnlyContact );
+        this.UIProperties.SetEnabled("CompanyCommTypeCode", this.ObjectTableNameContact, !this.IsDisplayOnlyContact  );
+        this.UIProperties.SetEnabled("ContactCommNumber", this.ObjectTableNameContact, !this.IsDisplayOnlyContact );
+        this.UIProperties.SetEnabled("ContactName", this.ObjectTableNameContact, !this.IsDisplayOnlyContact  );
+        this.UIProperties.SetEnabled("ContactCommTypeCode", this.ObjectTableNameContact, !this.IsDisplayOnlyContact  );
     }
 
 

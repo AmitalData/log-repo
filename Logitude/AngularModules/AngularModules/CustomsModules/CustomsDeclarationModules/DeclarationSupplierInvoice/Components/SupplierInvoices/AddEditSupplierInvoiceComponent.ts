@@ -2166,7 +2166,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                         exists = this.EntityPM.SupplierInvoiceModifications.filter(d => d.TypeCode == typeCode);
                     }
                     if (exists.length > 1) {
-                        validationErrors.push(TextCodeTranslator.Translate("Customs.Declaration.O.ExistingType"));
+                        validationErrors.push(TextCodeTranslator.Translate("Customs.Declaration.O.ExistingType") + " - מסך נוספים");
                     }
 
                 }

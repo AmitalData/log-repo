@@ -3694,7 +3694,7 @@ export class SupplierInvoiceFreightAmountLine extends BaseComponent {
           confirmWindow.Height = 200;
           confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
           confirmWindow.ShowNoButton = false;
-          confirmWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.ExistingType"));
+            confirmWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.ExistingType") + " - מסך נוספים");
           this.entityPM.CurrencyTypeCode = newValue;
           this.entityPM.CurrencyTypeCode = null;
           // this.entityPM.CurrencyTypeName = null;

@@ -460,7 +460,9 @@ export class ConsigmentTabContentComponent
              
             windowArgs.Parent = item;
             windowArgs.IsDisplayOnly = this.IsDisplayOnly;
-            debugger;
+             if (item.EntityPM.LineNumber != item.EntityPM.entityParentPM.consignmentPackages[0].LineNumber) {
+                windowArgs.IsDisplayOnlyContact = true;
+            }
             var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ConsignmentPackagesDanger");
 
             var logWindow = new LogitudeWindow();
@@ -469,7 +471,6 @@ export class ConsigmentTabContentComponent
             logWindow.Title = windowTitle;
             logWindow.ShowCloseButton = false;
             logWindow.WindowArgs = windowArgs;
-            //logWindow.WindowClosed.subscribe(($event: any) => this.SetStatusVisibility());
             logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/General/ConsigmentTabContent/ConsigmentPackagesDanger/ConsigmentPackagesDangerComponent');
 
 
