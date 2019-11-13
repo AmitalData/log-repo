@@ -94,7 +94,8 @@ class LastStatusItem {
                 this.SortingValue = DateTool.GetDateParts(this.EventDate).DateTicks;
             }
 
-            if (this.DepartureDate) {
+            var isDeparture = this.GetEventDirection(item.StatusCode);
+            if (isDeparture) {
                 this.DepartureArrivalDate = this.DepartureDate;
                 this.DepartureArrivalDateInfo = this.DepartureDateInfo;
             }
@@ -105,4 +106,45 @@ class LastStatusItem {
             }
         }
     }
+
+    GetEventDirection(statusCode: string) {
+        var isDeparture = false;
+
+        switch (statusCode) {
+            case "2":
+            case "3":
+            case "AA":
+            case "AC":
+            case "AE":
+            case "AF":
+            case "AI":
+            case "AW":
+            case "B":
+            case "BE":
+            case "BF":
+            case "BR":
+            case "C":
+            case "CA":
+            case "CD":
+            case "CO":
+            case "CS":
+            case "EE":
+            case "EP":
+            case "GI":
+            case "I":
+            case "VD":
+            case "X3":
+            case "X4":
+            case "X7":
+            case "X8":
+            case "XA":
+                {
+                    isDeparture = true;
+                    break;
+                }
+        }
+
+        return isDeparture;
+    }
+
 }
