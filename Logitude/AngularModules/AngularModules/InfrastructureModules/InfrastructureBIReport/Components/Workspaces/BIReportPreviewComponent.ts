@@ -92,7 +92,7 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
         this.DWQueryId = args['DWQueryId'];
         this.EntityId = args['EntityId'];
         this.FolderId = args['FolderId'];
-        this.BackButtonLable = args['BacKButtonLable'] ? args['BacKButtonLable']:"BI Reports"; 
+        this.BackButtonLable = args['BackButtonLable'] != undefined ? args['BackButtonLable'] : "BI Reports"; 
     }
     InitializeServices() {
         this._InfrastructureDomainService = new InfrastructureDomainService();
