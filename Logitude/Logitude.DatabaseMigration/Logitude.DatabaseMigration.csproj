@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Logitude.DatabaseMigration</RootNamespace>
     <AssemblyName>Logitude.DatabaseMigration</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -17,7 +17,6 @@
     <SccProvider>SAK</SccProvider>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -1610,21 +1609,13 @@
     <Compile Include="Migrations\201911071143411_AddContainerTypesFieldsToTariffTable_Bisan.Designer.cs">
       <DependentUpon>201911071143411_AddContainerTypesFieldsToTariffTable_Bisan.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201911101249049_AddContainerTypeAndQuantityToAPInvoiceLine_Samar.cs" />
-    <Compile Include="Migrations\201911101249049_AddContainerTypeAndQuantityToAPInvoiceLine_Samar.Designer.cs">
-      <DependentUpon>201911101249049_AddContainerTypeAndQuantityToAPInvoiceLine_Samar.cs</DependentUpon>
+    <Compile Include="Migrations\201911111425175_FixFieldInAPPayment.cs" />
+    <Compile Include="Migrations\201911111425175_FixFieldInAPPayment.Designer.cs">
+      <DependentUpon>201911111425175_FixFieldInAPPayment.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201911051319149_AbedAddRecordTypeAndDisplayInAutomationAsEnitityToObjectField.cs" />
-    <Compile Include="Migrations\201911051319149_AbedAddRecordTypeAndDisplayInAutomationAsEnitityToObjectField.Designer.cs">
-      <DependentUpon>201911051319149_AbedAddRecordTypeAndDisplayInAutomationAsEnitityToObjectField.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201911110938217_AddCodeToPaymentTerm_Samar.cs" />
-    <Compile Include="Migrations\201911110938217_AddCodeToPaymentTerm_Samar.Designer.cs">
-      <DependentUpon>201911110938217_AddCodeToPaymentTerm_Samar.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201911100708584_QBO_New_Fields.cs" />
-    <Compile Include="Migrations\201911100708584_QBO_New_Fields.Designer.cs">
-      <DependentUpon>201911100708584_QBO_New_Fields.cs</DependentUpon>
+    <Compile Include="Migrations\201911120714483_AddNewFieldToAPPayment.cs" />
+    <Compile Include="Migrations\201911120714483_AddNewFieldToAPPayment.Designer.cs">
+      <DependentUpon>201911120714483_AddNewFieldToAPPayment.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
@@ -2775,17 +2766,11 @@
     <EmbeddedResource Include="Migrations\201911071143411_AddContainerTypesFieldsToTariffTable_Bisan.resx">
       <DependentUpon>201911071143411_AddContainerTypesFieldsToTariffTable_Bisan.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201911101249049_AddContainerTypeAndQuantityToAPInvoiceLine_Samar.resx">
-      <DependentUpon>201911101249049_AddContainerTypeAndQuantityToAPInvoiceLine_Samar.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201911111425175_FixFieldInAPPayment.resx">
+      <DependentUpon>201911111425175_FixFieldInAPPayment.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201911051319149_AbedAddRecordTypeAndDisplayInAutomationAsEnitityToObjectField.resx">
-      <DependentUpon>201911051319149_AbedAddRecordTypeAndDisplayInAutomationAsEnitityToObjectField.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201911110938217_AddCodeToPaymentTerm_Samar.resx">
-      <DependentUpon>201911110938217_AddCodeToPaymentTerm_Samar.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201911100708584_QBO_New_Fields.resx">
-      <DependentUpon>201911100708584_QBO_New_Fields.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201911120714483_AddNewFieldToAPPayment.resx">
+      <DependentUpon>201911120714483_AddNewFieldToAPPayment.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

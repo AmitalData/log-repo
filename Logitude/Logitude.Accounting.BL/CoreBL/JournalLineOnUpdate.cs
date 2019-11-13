@@ -50,7 +50,7 @@ namespace Logitude.Accounting.BL.CoreBL
             journalLinePM.CreditControlAccountId = creditIVerifyGLAccountManager.ControlAccountId;
 
 
-            FullAccountingSettingPM accountingSettings = getFullAccountingSettings(journalPM.Tenant);
+
 
             var debitIVerifyGLAccountManager = GetIVerifyGLAccountManager();
             debitIVerifyGLAccountManager.Verify(
@@ -65,11 +65,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 haveChange = (journalLinePM.DebitAccountId != debitIVerifyGLAccountManager.AccountId ||
                     journalLinePM.DebitControlAccountId != debitIVerifyGLAccountManager.ControlAccountId);
             }
-            if (accountingSettings.VATOutputGLAccountId != journalLinePM.CreditAccountId)
-            {
-                journalLinePM.DebitAccountId = debitIVerifyGLAccountManager.AccountId;
-                journalLinePM.DebitControlAccountId = debitIVerifyGLAccountManager.ControlAccountId;
-            }
+            journalLinePM.DebitAccountId = debitIVerifyGLAccountManager.AccountId;
+            journalLinePM.DebitControlAccountId= debitIVerifyGLAccountManager.ControlAccountId;
 
 
 
@@ -125,13 +122,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
-        private FullAccountingSettingPM getFullAccountingSettings(int tenant)
-        {
-            FullAccountingSettingPM accountingSettings;
-            FullAccountingSettingQueryService query = new FullAccountingSettingQueryService(tenant);
-            accountingSettings = query.GetSingleFullAccountingSetting(tenant);
-            return accountingSettings;
-        }
+
 
 
 

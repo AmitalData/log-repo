@@ -48,8 +48,6 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
     public LocalCurrencyCode: string;
     public DisplayTariffs: boolean = false;
     public IsEditExchangeRateVisible: boolean = false;
-    public CurrentSession = SessionLocator.SelectedSession;
-
     constructor(private entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -2471,10 +2469,6 @@ export class QuoteChargeItem extends BaseComponent {
             else {
                 this.CostMinAmount = null;
                 this.SaleMinAmount = null;
-            }
-
-            if (newValue && (this.EntityPM.QuoteChargePriceSteps == null || (this.EntityPM.QuoteChargePriceSteps != null && this.EntityPM.QuoteChargePriceSteps.length == 0))) {
-                this.fatherComponent.CurrentSession.SessionEvent.emit("AddDefaultPriceStep");
             }
 
             this.SetUIProperties();

@@ -86,8 +86,5 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool AuthorizedSignatory { get; set; }
 
         public string PrepaidCollectId { get; set; }
-
-        public string ContainerTypeId { get; set; }
-        public int? Quantity { get; set; }
     }
 }

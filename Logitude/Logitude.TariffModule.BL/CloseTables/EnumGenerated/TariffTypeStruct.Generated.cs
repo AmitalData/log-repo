@@ -15,7 +15,6 @@ namespace Logitude.TariffModule.BLs
        public const string OceanSurchargesCost = "OSC";  
        public const string OceanLCLFreightCost = "OLC";  
        public const string OceanFCLFreightCost = "OFC";  
-       public const string OceanFCLSurchargesCost = "OFS";  
     }
 }
 

@@ -1,8 +1,6 @@
-﻿using Logitude.BL.Resolvers;
-using Logitude.Infrastructure.BL.EntityPMs;
+﻿using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityQueryServices;
 using Logitude.Infrastructure.BL.ExtendedServices;
-using Logitude.Server.Tools.Resolvers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,7 +12,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WebFreight.Web.AccountingModel;
 
 namespace Logitude.Update
 {
@@ -23,19 +20,6 @@ namespace Logitude.Update
         public BatchTaskTester()
         {
             InitializeComponent();
-            RegisterUtils();
-        }
-
-        private void RegisterUtils()
-        {
-            LoggedContactResolver.RegisterLoggedContactUtil();
-            DateTimeUtilResolver.RegisterDateTimeUtil();
-            TranslateTextsClassUtilResolver.RegisterTranslateTextsClassUtil();
-            IdCounterUtilResolver.RegisterIdCounterUtil();
-
-
-            AccountingRegistrations.Register();
-
         }
 
         private void OkButton_Click(object sender, EventArgs e)

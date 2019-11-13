@@ -1,12 +1,10 @@
 ﻿using Intuit.Ipp.Core;
 using Intuit.Ipp.Data;
 using Intuit.Ipp.DataService;
-using Intuit.Ipp.OAuth2PlatformClient;
 using Intuit.Ipp.QueryFilter;
 using Intuit.Ipp.Security;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools;
@@ -34,7 +32,6 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -120,6 +117,28 @@ namespace CommunicationWorkerRole
 
     
 
+        private  ServiceContext getServiceContext(String tenant)
+        {
+
+            Setting mySetting = null;
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                SettingRepository mySettingRepository = new SettingRepository();
+                mySetting = mySettingRepository.GetSingleSetting("1");
+
+                scope.Complete();
+            }
+
+            AccountingSettingQuery query = new AccountingSettingQuery(int.Parse(tenant));
+            AccountingSettingPM entityPM = query.GetSingleAccountingSettingPMById(int.Parse(tenant));
+            OAuthRequestValidator oauthValidator = new OAuthRequestValidator(entityPM.QBOAccessToken, entityPM.QBOAccessTokenSecret, mySetting.QBOConsumerKey, mySetting.QBOConsumerSecretKey);
+            ServiceContext context = new ServiceContext(mySetting.QBOAppToken, entityPM.QBOrealMeID, IntuitServicesType.QBO, oauthValidator);
+
+
+
+            return context;
+
+        }
 
 
         public override bool OnStart()
@@ -468,7 +487,7 @@ namespace CommunicationWorkerRole
 
         private void ARPaymentUpdate(string ARPaymentId,Payment payment, CommunicationLog waitingCommLog, CommunicationLogRepository communicationLogRep, int tenant, DataService service)
         {
-            ServiceContext serviceContext = GetServiceContext(tenant + "");
+            ServiceContext serviceContext = getServiceContext(tenant + "");
             QueryService<Payment> ARPaymentQueryService = new QueryService<Payment>(serviceContext);
             List<Payment> myResult = ARPaymentQueryService.ExecuteIdsQuery("Select * from payment where Id='" + ARPaymentId + "'").ToList();
             if (myResult.Count > 0)
@@ -488,7 +507,7 @@ namespace CommunicationWorkerRole
 
         private void APPaymentUpdate(string APPaymentId, BillPayment payment, CommunicationLog waitingCommLog, CommunicationLogRepository communicationLogRep, int tenant, DataService service)
         {
-            ServiceContext serviceContext = GetServiceContext(tenant + "");
+            ServiceContext serviceContext = getServiceContext(tenant + "");
             QueryService<BillPayment> APPaymentQueryService = new QueryService<BillPayment>(serviceContext);
             List<BillPayment> myResult = APPaymentQueryService.ExecuteIdsQuery("Select * from BillPayment where Id='" + APPaymentId + "'").ToList();
             if (myResult.Count > 0)
@@ -509,7 +528,7 @@ namespace CommunicationWorkerRole
 
         private void ARInvoiceVoid(string ARInvoiceId, CommunicationLog waitingCommLog, CommunicationLogRepository communicationLogRep, int tenant, DataService service)
         {
-            ServiceContext serviceContext = GetServiceContext(tenant + "");
+            ServiceContext serviceContext = getServiceContext(tenant + "");
             serviceContext.IppConfiguration.Message.Request.SerializationFormat = Intuit.Ipp.Core.Configuration.SerializationFormat.Json;
             QueryService<Invoice> ARInvoiceQueryService = new QueryService<Invoice>(serviceContext);
             List<Invoice> myResult = ARInvoiceQueryService.ExecuteIdsQuery("Select * from Invoice where Id='" + ARInvoiceId + "'").ToList();
@@ -532,7 +551,7 @@ namespace CommunicationWorkerRole
 
         private void ARPaymentVoid(string ARPaymentId, CommunicationLog waitingCommLog, CommunicationLogRepository communicationLogRep, int tenant, DataService service)
         {
-            ServiceContext serviceContext = GetServiceContext(tenant + "");
+            ServiceContext serviceContext = getServiceContext(tenant + "");
             serviceContext.IppConfiguration.Message.Request.SerializationFormat = Intuit.Ipp.Core.Configuration.SerializationFormat.Json;
             QueryService<Payment> ARInvoiceQueryService = new QueryService<Payment>(serviceContext);
             List<Payment> myResult = ARInvoiceQueryService.ExecuteIdsQuery("Select * from Payment where Id='" + ARPaymentId + "'").ToList();
@@ -588,7 +607,7 @@ namespace CommunicationWorkerRole
                     }
                     else
                     {
-                        ServiceContext serviceContext = GetServiceContext(tenant + "");
+                        ServiceContext serviceContext = getServiceContext(tenant + "");
                         DataService service = new DataService(serviceContext);
                         if (checkInvoiceExisitance(final.DocNumber, waitingCommLog, communicationLogRep, tenant))
                         {
@@ -636,7 +655,7 @@ namespace CommunicationWorkerRole
                     }
                     else
                     {
-                        ServiceContext serviceContext = GetServiceContext(tenant + "");
+                        ServiceContext serviceContext = getServiceContext(tenant + "");
                         DataService service = new DataService(serviceContext);
                         if (checkInvoiceExisitance(final.DocNumber, waitingCommLog, communicationLogRep, tenant))
                         {
@@ -690,7 +709,7 @@ namespace CommunicationWorkerRole
                     }
                     else
                     {
-                        ServiceContext serviceContext = GetServiceContext(tenant + "");
+                        ServiceContext serviceContext = getServiceContext(tenant + "");
                         DataService service = new DataService(serviceContext);
                         string Id = final.Id;
                         APInvoiceId = Id;
@@ -763,7 +782,7 @@ namespace CommunicationWorkerRole
                     }
                     else
                     {
-                        ServiceContext serviceContext = GetServiceContext(tenant + "");
+                        ServiceContext serviceContext = getServiceContext(tenant + "");
                         DataService service = new DataService(serviceContext);
                         string Id = final.Id;
                         final.Id = null;
@@ -808,7 +827,7 @@ namespace CommunicationWorkerRole
                     }
                     else
                     {
-                        ServiceContext serviceContext = GetServiceContext(tenant + "");
+                        ServiceContext serviceContext = getServiceContext(tenant + "");
                         DataService service = new DataService(serviceContext);
                         if (final.Id != null)
                             ARPaymentUpdate(final.Id, final, waitingCommLog, communicationLogRep, tenant, service);
@@ -856,7 +875,7 @@ namespace CommunicationWorkerRole
                 }
                 else
                 {
-                    ServiceContext serviceContext = GetServiceContext(tenant + "");
+                    ServiceContext serviceContext = getServiceContext(tenant + "");
                     DataService service = new DataService(serviceContext);
                     if (final.Id != null)
                         APPaymentUpdate(final.Id, final, waitingCommLog, communicationLogRep, tenant, service);
@@ -879,7 +898,7 @@ namespace CommunicationWorkerRole
                     MemoryStream memorystream = new MemoryStream(xmlfile);
                     XmlSerializer xmlSerializer = new XmlSerializer(typeof(string));
                     string externalId = (string)xmlSerializer.Deserialize(memorystream);
-                        ServiceContext serviceContext = GetServiceContext(tenant + "");
+                        ServiceContext serviceContext = getServiceContext(tenant + "");
                     serviceContext.IppConfiguration.Message.Request.SerializationFormat = Intuit.Ipp.Core.Configuration.SerializationFormat.Json;
                     DataService service = new DataService(serviceContext);
                             ARInvoiceVoid(externalId, waitingCommLog, communicationLogRep, tenant, service);
@@ -895,7 +914,7 @@ namespace CommunicationWorkerRole
                     MemoryStream memorystream = new MemoryStream(xmlfile);
                     XmlSerializer xmlSerializer = new XmlSerializer(typeof(string));
                     string externalId = (string)xmlSerializer.Deserialize(memorystream);
-                    ServiceContext serviceContext = GetServiceContext(tenant + "");
+                    ServiceContext serviceContext = getServiceContext(tenant + "");
                     serviceContext.IppConfiguration.Message.Request.SerializationFormat = Intuit.Ipp.Core.Configuration.SerializationFormat.Json;
                     DataService service = new DataService(serviceContext);
                     ARPaymentVoid(externalId, waitingCommLog, communicationLogRep, tenant, service);
@@ -1079,7 +1098,7 @@ namespace CommunicationWorkerRole
             {
                 if (type == "Invoice")
                 {
-                    ServiceContext serviceContext = GetServiceContext(tenant + "");
+                    ServiceContext serviceContext = getServiceContext(tenant + "");
                     QueryService<Invoice> invoiceQueryService = new QueryService<Invoice>(serviceContext);
                     List<Invoice> myResult = invoiceQueryService.ExecuteIdsQuery("Select * from Invoice where DocNumber='" + invoiceNumber + "'").ToList();
                     if (myResult.Count != 0)
@@ -1095,7 +1114,7 @@ namespace CommunicationWorkerRole
                 else if (type == "MEMO")
                 {
 
-                    ServiceContext serviceContext = GetServiceContext(tenant + "");
+                    ServiceContext serviceContext = getServiceContext(tenant + "");
                     QueryService<CreditMemo> invoiceQueryService = new QueryService<CreditMemo>(serviceContext);
                     List<CreditMemo> myResult = invoiceQueryService.ExecuteIdsQuery("Select * from CreditMemo where DocNumber='" + invoiceNumber + "'").ToList();
                     if (myResult.Count != 0)
@@ -1112,7 +1131,7 @@ namespace CommunicationWorkerRole
 
                 else if (type == "APInvoice")
                 {
-                    ServiceContext serviceContext = GetServiceContext(tenant + "");
+                    ServiceContext serviceContext = getServiceContext(tenant + "");
                     QueryService<Bill> invoiceQueryService = new QueryService<Bill>(serviceContext);
                     List<Bill> myResult = invoiceQueryService.ExecuteIdsQuery("Select * from Bill where DocNumber='" + invoiceNumber + "'").ToList();
                     if (myResult.Count != 0)
@@ -1128,7 +1147,7 @@ namespace CommunicationWorkerRole
 
                 else if (type == "VendorCredit")
                 {
-                    ServiceContext serviceContext = GetServiceContext(tenant + "");
+                    ServiceContext serviceContext = getServiceContext(tenant + "");
                     QueryService<VendorCredit> invoiceQueryService = new QueryService<VendorCredit>(serviceContext);
                     List<VendorCredit> myResult = invoiceQueryService.ExecuteIdsQuery("Select * from VendorCredit where DocNumber='" + invoiceNumber + "'").ToList();
                     if (myResult.Count != 0)
@@ -1184,79 +1203,7 @@ namespace CommunicationWorkerRole
         }
 
 
-        public  string GetAccessToken(string tenant, AccountingSettingPM entityPM, Setting mySetting)
-        {
 
-            var oauth2Client = new OAuth2Client(mySetting.QBOClientID,
-                    mySetting.QBOClientSecret,
-                    "https://developer.intuit.com/v2/OAuth2Playground/RedirectUrl",
-                    "sandbox"); // environment is “sandbox” or “production”
-
-            var previousRefreshToken = entityPM.RefreshToken;
-            var tokenResp = oauth2Client.RefreshTokenAsync(previousRefreshToken);
-            tokenResp.Wait();
-            var data = tokenResp.Result;
-
-            if (!String.IsNullOrEmpty(data.Error) || String.IsNullOrEmpty(data.RefreshToken) ||
-                  String.IsNullOrEmpty(data.AccessToken))
-            {
-                throw new Exception("Refresh token failed - " + data.Error);
-            }
-
-            if (previousRefreshToken != data.RefreshToken)
-            {
-                entityPM.RefreshToken = data.RefreshToken;
-                ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Id);
-                AccountingSettingService accountingService = new AccountingSettingService(MyContext, int.Parse(tenant));
-                accountingService.Update(entityPM);
-            }
-
-            return data.AccessToken;
-        }
-
-
-        private  ServiceContext GetServiceContextAuth2(String tenant, AccountingSettingPM entityPM, Setting mySetting)
-        {
-            OAuth2RequestValidator oauthValidator = new OAuth2RequestValidator(GetAccessToken(tenant, entityPM, mySetting));
-            ServiceContext serviceContext = new ServiceContext(entityPM.QBOrealMeID, IntuitServicesType.QBO, oauthValidator);
-            serviceContext.IppConfiguration.BaseUrl.Qbo = "https://sandbox-quickbooks.api.intuit.com/";
-
-            return serviceContext;
-
-        }
-
-
-        public  ServiceContext GetServiceContext(String tenant)
-        {
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-
-            Setting mySetting = null;
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            {
-                SettingRepository mySettingRepository = new SettingRepository();
-                mySetting = mySettingRepository.GetSingleSetting("1");
-
-                scope.Complete();
-            }
-
-            AccountingSettingQuery query = new AccountingSettingQuery(int.Parse(tenant));
-            AccountingSettingPM entityPM = query.GetSingleAccountingSettingPMById(int.Parse(tenant));
-
-            if (entityPM.QBOOAuth == 2 && mySetting.QBOOAuthDefault == 2)
-            {
-                return GetServiceContextAuth2(tenant, entityPM, mySetting);
-            }
-
-            else
-            {
-                OAuthRequestValidator oauthValidator = new OAuthRequestValidator(entityPM.QBOAccessToken, entityPM.QBOAccessTokenSecret, mySetting.QBOConsumerKey, mySetting.QBOConsumerSecretKey);
-                ServiceContext context = new ServiceContext(mySetting.QBOAppToken, entityPM.QBOrealMeID, IntuitServicesType.QBO, oauthValidator);
-
-
-
-                return context;
-            }
-        }
 
     }
 }

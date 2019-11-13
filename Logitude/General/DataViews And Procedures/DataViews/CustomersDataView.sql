@@ -67,4 +67,3 @@ FROM            dbo.Customers Inner join
 						 dbo.Contacts AS SetAsInactiveByUserContacts ON dbo.Customers.SetAsInactiveByUserId = SetAsInactiveByUserContacts.Id LEFT OUTER JOIN
 						 dbo.Contacts AS ActivationRequestedByUserContacts ON dbo.Customers.ActivationRequestedByUserId = ActivationRequestedByUserContacts.Id
 						 
-where dbo.Cards.PartnerTypeId <> 'AC'

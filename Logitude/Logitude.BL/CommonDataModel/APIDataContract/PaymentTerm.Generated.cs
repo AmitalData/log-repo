@@ -32,12 +32,6 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
     
 	[XmlAttribute]
     public string ExternalId { get; set; }
-    
-	[XmlAttribute]
-    public string Code { get; set; }
-    
-	[XmlAttribute]
-    public string PartnerCode { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

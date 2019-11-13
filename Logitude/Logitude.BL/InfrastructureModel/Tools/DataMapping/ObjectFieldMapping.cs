@@ -87,8 +87,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             objectField.DisplayInDocumentReferences = objectFieldPM.DisplayInDocumentReferences;
             objectField.CopyToDW = objectField.CopyToDW;
             objectField.EnableFullscreenTextBox = objectField.EnableFullscreenTextBox;
-            objectField.DisplayInAutomationAsEnitity = objectField.DisplayInAutomationAsEnitity;
-            objectField.RecordType = objectField.RecordType;
 
             if (objectFieldModification != null)
             {

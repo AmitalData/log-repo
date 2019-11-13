@@ -34,7 +34,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.ExternalId = entityPM.ExternalId;
             poco.CurrentMonth = entityPM.CurrentMonth;
             poco.FromDateTypeCode = entityPM.FromDateTypeCode;
-            poco.Code = entityPM.Code;
         }
     }
 }

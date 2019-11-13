@@ -192,7 +192,7 @@
                 <tr>
                     <td style="width:190px">
                         <div>
-                            <HyperlinkQuery (click)="ViewTariffs('OFC')">{{'Tariff.Q.OceanFCLFreightCost' | TextCodeTranslationPipe}} ({{OceanFCLFreightCount}})</HyperlinkQuery>
+                            <HyperlinkQuery>Ocean FCL Freight Cost ({{OceanFCLFreightCount}})</HyperlinkQuery>
                         </div>
                     </td>
 
@@ -202,39 +202,6 @@
 
                     <td style="width:20px">
                         <button class="Button" (click)="NewTariff('OFC')">New</button>
-                    </td>
-
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
-            </table>
-        </td>
-
-    </tr>
-
-    <tr style="height:10px;" *ngIf="OceanFCLSurchargesCostVisibility">
-        <td>
-            <div></div>
-        </td>
-    </tr>
-
-    <tr *ngIf="OceanFCLSurchargesCostVisibility">
-        <td>
-            <table>
-                <tr>
-                    <td style="width:190px">
-                        <div>
-                            <HyperlinkQuery (click)="ViewTariffs('OFS')">{{'Tariff.Q.OceanFCLSurchargesCost' | TextCodeTranslationPipe}} ({{OceanFCLSurchargesCount}})</HyperlinkQuery>
-                        </div>
-                    </td>
-
-                    <td style="width:20px">
-                        <div></div>
-                    </td>
-
-                    <td style="width:20px">
-                        <button class="Button" (click)="NewTariff('OFS')">New</button>
                     </td>
 
                     <td>

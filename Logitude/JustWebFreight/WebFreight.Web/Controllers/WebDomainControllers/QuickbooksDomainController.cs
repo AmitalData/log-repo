@@ -357,9 +357,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         }
 
 
-        public Boolean checkInvoiceNumber(string invoiceNumber,int Tenant)
+        public Boolean checkInvoiceNumber(string invoiceNumber)
         {
-            ServiceContext serviceContext = QuickbooksService.GetServiceContext(Tenant+"");
+            ServiceContext serviceContext = getServiceContext("qyprd6uIZeM8IamAy4dVcmEfoQj7UybHB2En9UJj4T6JCJD5", "OAqYF6R9XqqgCepXuqknhobCYaVZNZXZoxq3ia1c", "123145721330079");
             QueryService<Invoice> invoiceQueryService = new QueryService<Invoice>(serviceContext);
 
 
@@ -387,10 +387,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 ARInvoicePM invoice = aRInvoiceQuery.GetSinglePM(invoiceId, authToken.Tenant);
 
 
-                ServiceContext serviceContext = QuickbooksService.GetServiceContext(authToken.Tenant+"");
+                ServiceContext serviceContext = getServiceContext("qyprd6uIZeM8IamAy4dVcmEfoQj7UybHB2En9UJj4T6JCJD5", "OAqYF6R9XqqgCepXuqknhobCYaVZNZXZoxq3ia1c", "123145721330079");
                 QueryService<Customer> customerQueryService = new QueryService<Customer>(serviceContext);
                 Invoice final = null;
-                if (checkInvoiceNumber(invoice.InvoiceNumber,authToken.Tenant))
+                if (checkInvoiceNumber(invoice.InvoiceNumber))
                 {
                     Intuit.Ipp.Data.Invoice QBOInvoice = new Invoice();
                     QBOInvoice.CustomerRef = new ReferenceType { Value = Customerid };
@@ -448,7 +448,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
         }
 
-    
+        private static ServiceContext getServiceContext(String OAuthAccessToken, String OAuthAccessTokenSecret, String RealmId)
+        {
+            var consumerKey = "qyprdYKTUqQGAV8AudZJl40XhETBGd";
+            var consumerSecret = "Wy8bD4Q5TgyZpqME8XPdSdvIqCOJcdIfPmcfbVaB";
+            OAuthRequestValidator oauthValidator = new OAuthRequestValidator(OAuthAccessToken, OAuthAccessTokenSecret, consumerKey, consumerSecret);
+            return new ServiceContext(RealmId, (IntuitServicesType)(1), oauthValidator);
+        }
 
 
     }

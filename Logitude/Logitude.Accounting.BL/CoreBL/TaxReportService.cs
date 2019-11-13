@@ -58,13 +58,17 @@ namespace Logitude.Accounting.BL.CoreBL
 
         public static List<TaxReportLinePM> CreateTaxReportLines(TaxReportPM taxReport, int tenant)
         {
+            using (TransactionScope scope = TransactionFactory.GetTransaction())
+            {
 
                 JournalRepository journalRepository = new JournalRepository(tenant);
                 List<TaxReportData> TaxReportJournalData = journalRepository.GetARInvoiceJournals(taxReport.TaxReportMonth, tenant);
 
                 ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(tenant);
 
-              
+                IAccountingContext MyContext = AccountingContext.GetContext(taxReport.Tenant);
+                TaxReportUpdateService updateService = new TaxReportUpdateService(MyContext, new Dictionary<string, IContext>(), taxReport.Tenant);
+                TaxReportLineUpdateService lineUpdateService = new TaxReportLineUpdateService(MyContext, new Dictionary<string, IContext>(), taxReport.Tenant);
                 APInvoiceQuery aPInvoiceQueryService = new APInvoiceQuery(tenant);
                 CardRepository cardRepository = new CardRepository(tenant);
                 TenantQuery tenantQuery = new TenantQuery(tenant);
@@ -335,14 +339,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 // saving report
                 taxReport.ChangeSetOp = ChangeSetOperation.Update;
-
-            using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(60)))
-            {
-
-                IAccountingContext MyContext = AccountingContext.GetContext(taxReport.Tenant);
-                TaxReportUpdateService updateService = new TaxReportUpdateService(MyContext, new Dictionary<string, IContext>(), taxReport.Tenant);
-                TaxReportLineUpdateService lineUpdateService = new TaxReportLineUpdateService(MyContext, new Dictionary<string, IContext>(), taxReport.Tenant);
-                updateService.Update(taxReport, true, TimeSpan.FromMinutes(60));
+                updateService.Update(taxReport, true);
 
                 // saving lines
                 int count = 0;
@@ -351,8 +348,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     linePM.Line = ++count;
                     linePM.ChangeSetOp = ChangeSetOperation.Insert;
                     linePM.UpdatedByUserId = taxReport.UpdatedByUserId;
-                    
-                    lineUpdateService.Update(linePM, true,TimeSpan.FromMinutes(60));//the problem is here it loops on more than 3000  lines and updates them one by one ,each update will have to get single tenant and get single currency along with multible db gets which make the db to time out for the opened transaction
+                    lineUpdateService.Update(linePM, true);
                 }
 
 

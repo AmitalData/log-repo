@@ -110,9 +110,7 @@ using Simplog.Data.CommonDataModel;
 			       
 					   				   }
 				   
-				   temp.Code = MyEntityPM.Code;
-				   ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant); 
-				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Code,ComputingPartnerName,"Card");  					
+				   temp.Code = MyEntityPM.Code;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -135,23 +133,7 @@ using Simplog.Data.CommonDataModel;
 					if (!string.IsNullOrEmpty(MyEntity.Code))
 					{
 						temp = query.GetSinglePMByCode(MyEntity.Code, Tenant);
-					} 
-					if (!string.IsNullOrEmpty(MyEntity.PartnerCode))
-					{
-                        if(string.IsNullOrEmpty(ComputingPartnerName))
-                            throw new ApplicationException("ComputingPartnerCode is required");
-						ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant);
-						var MyCode = helper.GetLogitudeCodeTranslation(MyEntity.PartnerCode,ComputingPartnerName,"Card");
-					    if(string.IsNullOrEmpty(MyCode))
-						{
-						  throw new ApplicationException("Card with Partner Code " + MyEntity.PartnerCode + " doesn't match any record");
-						}
-						temp = query.GetSinglePMByCode(MyCode, Tenant);
-						
-						
-					}
-					
-					   					   
+					} 					   
 					if(temp == null)
 					{   
 					    throw new ApplicationException("Card with Code " + MyEntity.Code + " doesn't exist");
@@ -214,11 +196,6 @@ using Simplog.Data.CommonDataModel;
 					{
 					   
 						temp.Code = MyEntity.Code;
-					}
-					if(string.IsNullOrEmpty(temp.Code))
-					{
-					   
-						temp.Code = MyEntity.PartnerCode;
 					}					   
 					   return temp;
 		    }

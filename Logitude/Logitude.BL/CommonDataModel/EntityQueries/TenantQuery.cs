@@ -1410,9 +1410,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     IsDocumentsArchive = myPOCO.LogBoxTenantSetting.IsDocumentsArchive,
                     CustomerTenantShareImportFile = myPOCO.LogBoxTenantSetting.CustomerTenantShareImportFile,
                     AutoArchiveOnInvoice = myPOCO.LogBoxTenantSetting.AutoArchiveOnInvoice,
-                    StockTypeCode = myPOCO.LogBoxTenantSetting != null ? myPOCO.LogBoxTenantSetting.StockTypeCode : null,
+                    StockTypeCode = myPOCO.LogBoxTenantSetting.StockTypeCode,
                     DocumentShareAsDefault = myPOCO.LogBoxTenantSetting.DocumentShareAsDefault,
-                    LogBoxAdminUserId = myPOCO.LogBoxTenantSetting != null ? myPOCO.LogBoxTenantSetting.LogBoxAdminUserId : null,
+                    LogBoxAdminUserId = myPOCO.LogBoxTenantSetting.LogBoxAdminUserId,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1758,30 +1758,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         }
 
-        public string GetTenantVatNumber(int tenant)
-        {
-            string cacheKey = "TenantVatNumber" + tenant;
-            string vatNumber;
-            if (HttpContext.Current != null)
-            {
-                if (CacheManager.CacheWrapper.Get(cacheKey) == null)
-                {
-                    TenantRepository tenantRepository = new TenantRepository(tenant);
-                    vatNumber = tenantRepository.GetTenantVatNumberOnly(tenant);
-                    CacheManager.CacheWrapper.Insert(cacheKey, vatNumber, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                }
-                else
-                {
-                    vatNumber = (string)CacheManager.CacheWrapper.Get(cacheKey);
-                }
-            }
-            else
-            {
-                TenantRepository tenantRepository = new TenantRepository(tenant);
-                vatNumber = tenantRepository.GetTenantVatNumberOnly(tenant);
-            }
-            return vatNumber;
-        }
+
 
     }
 }

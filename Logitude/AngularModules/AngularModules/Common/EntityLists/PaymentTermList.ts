@@ -25,6 +25,5 @@ export class PaymentTermList {
 		FromDateTypeCode: string;
 		CalculatedLocalName: string;
 		CalculatedEnglishName: string;
-		Code: string;
 	
 }

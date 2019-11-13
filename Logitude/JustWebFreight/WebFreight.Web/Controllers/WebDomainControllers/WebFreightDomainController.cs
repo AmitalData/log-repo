@@ -341,12 +341,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticationOnTenant(tenant);
+
                 BIReportsExecutionLogRepository reportExecutionLogRepository = new BIReportsExecutionLogRepository(tenant);
-                var logId = IdCounter.GetNumber("BIReportsExecutionLog", tenant);
-                bIReportXMLData.BIReportKey = Guid.NewGuid() + logId;
                 BIReportsExecutionLog bIReportExecutionLog = new BIReportsExecutionLog()
                 {
-                    Id = logId,
+                    Id = IdCounter.GetNumber("BIReportsExecutionLog", tenant),
                     CreateDate = DateTime.Now,
                     CreatedByUserId = bIReportXMLData.UserId,
                     ReportFilterXML = LogitudeXmlSerializer.SerializeObjectToXmlString(bIReportXMLData),
@@ -354,10 +353,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     StatusCode = "W",
                     BIReportId = bIReportXMLData.BIReportId,
                 };
-               
-
                 reportExecutionLogRepository.Add(bIReportExecutionLog);
                 reportExecutionLogRepository.SubmitChanges();
+
+                bIReportXMLData.BIReportKey = Guid.NewGuid() + bIReportExecutionLog.Id;
 
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("BIReportsExecutionLogQueue", bIReportExecutionLog.Tenant);

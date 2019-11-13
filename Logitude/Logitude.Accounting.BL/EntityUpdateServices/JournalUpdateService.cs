@@ -517,7 +517,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
     public interface IJournalUpdateService 
     {
-        void Update(JournalPM entityPM, bool commit, TimeSpan? transactionTimeout = null);
+        void Update(JournalPM entityPM, bool commit);
     }
     
 }

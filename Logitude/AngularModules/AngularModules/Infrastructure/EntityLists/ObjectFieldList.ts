@@ -74,7 +74,5 @@ export class ObjectFieldList {
 		CopyToDW: boolean;
 		DisplayOnLookUpLocal: boolean;
 		EnableFullscreenTextBox: boolean;
-		DisplayInAutomationAsEnitity: boolean;
-		RecordType: string;
 	
 }

@@ -1002,6 +1002,16 @@ export class ARInvoicePM {
     public set BatchTaskExecutionId(newValue: string) { if (this.batchTaskExecutionId != newValue) { this.batchTaskExecutionId = newValue; this.MarkAsDirty("BatchTaskExecutionId"); } }
        
 	 
+    private isCreatingConsolidation: boolean;
+    public get IsCreatingConsolidation() { return this.isCreatingConsolidation; }
+    public set IsCreatingConsolidation(newValue: boolean) { if (this.isCreatingConsolidation != newValue) { this.isCreatingConsolidation = newValue; this.MarkAsDirty("IsCreatingConsolidation"); } }
+       
+	 
+    private isFromConsolidationBatch: boolean;
+    public get IsFromConsolidationBatch() { return this.isFromConsolidationBatch; }
+    public set IsFromConsolidationBatch(newValue: boolean) { if (this.isFromConsolidationBatch != newValue) { this.isFromConsolidationBatch = newValue; this.MarkAsDirty("IsFromConsolidationBatch"); } }
+       
+	 
 
     public OldEntityPM: ARInvoicePM;
 		

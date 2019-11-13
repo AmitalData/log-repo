@@ -16,8 +16,6 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {AutomationArgs} from '../../../../Infrastructure/DataContracts/AutomationArgs';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
-import {ObjectFieldPMExtendedService} from '../../../../Infrastructure/Services/ExtendedPMs/ObjectFieldPMExtendedService';
-
 @Component({
     moduleId: module.id,
 
@@ -30,10 +28,6 @@ export class AutomationsSettingsComponent implements OnInit {
 
     IsShowTabUpdate: boolean = false;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
-    private objectFieldPMExtendedService: ObjectFieldPMExtendedService;
-    
-
-
     SelectedTabCode: string = "";
     ObjectTableId: string;
     ObjectTableName: string;
@@ -58,7 +52,7 @@ export class AutomationsSettingsComponent implements OnInit {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _automationExtendedPMService: AutomationExtendedPMService, public _automationPMService: AutomationPMService) {
 
-        this.objectFieldPMExtendedService = new ObjectFieldPMExtendedService();
+
     }
 
     ngOnInit(
@@ -89,53 +83,17 @@ export class AutomationsSettingsComponent implements OnInit {
 
                     if (tableName == "Master") {
                         this._entityResourceService.getEntityResourceByTableName("Shipment").subscribe(response => {
-                            this.LoadEntityAuomationAllowedinAutomationConditionsObjectFields(tableName);
+                            this.Start();
 
                         });
-                    } else this.LoadEntityAuomationAllowedinAutomationConditionsObjectFields(tableName);
+                    } else this.Start();
                 });
             }
         }
     }
 
-    public EntityObjectAutomationFieldLists: any[];
-    LoadEntityAuomationAllowedinAutomationConditionsObjectFields(tableName: string) {
-        var entityObjectTableIds: string = "";
-
-        var tableId: string = this.ObjectTableId; 
-        if (this.ObjectTableName == "Master") {
-            var table = window.ObjectTables.filter(d => d.Name == "Shipment")[0];
-            if (table) {
-                tableId = table.Id;;
-            }
-        }
-
-
-
-        window.ObjectFields.filter(f => f.DisplayInAutomationAsEnitity == true && f.ObjectTableId == tableId && (!f.RecordType || (f.RecordType && f.RecordType.split(',').filter(d => d == tableName)[0]))).forEach((objectField) => {
-            if (objectField.LookUpTableId) {
-                if (entityObjectTableIds) entityObjectTableIds += ",";
-                entityObjectTableIds += objectField.LookUpTableId;
-            }
-        });
-
-        if (entityObjectTableIds) {
-            this.objectFieldPMExtendedService.GetEntityAuomationAllowedinAutomationConditionsObjectFieldPMsByEntityTableIds(entityObjectTableIds, SessionLocator.Tenant).subscribe(res => {
-                var pmResponse: ServiceResponse = res;
-                if (pmResponse.Result) {
-                    this.EntityObjectAutomationFieldLists = pmResponse.Result;//pmResponse.Result.filter(d => entityObjectTableIds.split(',').indexOf(d.ObjectTableId) != -1);
-                    this.Start();
-                }
-            });
-        } else this.Start();
-
-    }
-
-
-
 
     Start() {
-
         this.ShowIncludeInactiveOnCreateCheckBoxKey = Guid.newGuid();
         this.ShowIncludeInactiveOnUpDateCheckBoxKey = Guid.newGuid();
 
@@ -242,7 +200,7 @@ export class AutomationsSettingsComponent implements OnInit {
         newEntity.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
         newEntity.Description = "";
         newEntity.Version = 1,
-        newEntity.Inactive = false;
+            newEntity.Inactive = false;
         newEntity.ResultCode = "EMAIL";
         newEntity.DocumentTypeId = "";
         newEntity.TemplateId = "";
@@ -263,7 +221,7 @@ export class AutomationsSettingsComponent implements OnInit {
         windowArgs.Mode = "Add";
         windowArgs.IsNewEntity = true;
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 820;
+        logWindow.Width = 800;
         logWindow.Height = 815;
         logWindow.Title = "Add " + this.EntityDisplayName+" Automation";
         logWindow.IsShowCloseButton = true;
@@ -285,8 +243,8 @@ export class AutomationsSettingsComponent implements OnInit {
         windowArgs.IsNewEntity = false;
 
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 820;
-        logWindow.Height = 815;
+        logWindow.Width = 800;
+        logWindow.Height = 815;;
         logWindow.Title = "Edit " + this.EntityDisplayName + " Automation";
         logWindow.IsShowCloseButton = true;
         logWindow.WindowArgs = windowArgs;

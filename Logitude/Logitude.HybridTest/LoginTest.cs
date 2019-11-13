@@ -14,8 +14,7 @@ namespace Logitude.HybridTest
             //S:1dac32e1-84e4-496a-b4d2-687f16d04e3b
             var apiCred = new LoginServiceReference.APICredentialsParameters() { PrimaryKey = TestEnvironmentGlobalParameters.APICredential_PrimaryKey, SecondaryKey = TestEnvironmentGlobalParameters.APICredential_SecondaryKey, Tenant = TestEnvironmentGlobalParameters.Tenant };
             LoginServiceReference.LoginWcfServiceClient loginService = new LoginServiceReference.LoginWcfServiceClient();
-            string serviceAddress = loginService.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
-            loginService.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
+            loginService.Endpoint.Address = new System.ServiceModel.EndpointAddress(serverURL + "/WcfApi/LoginWcfService.svc");
             Logitude.Server.Tools.Response loginResponse = loginService.LoginByCredential("", apiCred);
             if (!loginResponse.HasError)
             {

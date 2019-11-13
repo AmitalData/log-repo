@@ -75,8 +75,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                EnableNegativeOffsetAPPayments = a.EnableNegativeOffsetAPPayments,
                                                EnableMultiCurrencyAPPayments = a.EnableMultiCurrencyAPPayments,
                                                EnableInvoiceStocksManagement = a.EnableInvoiceStocksManagement,
-                                               RefreshToken=a.RefreshToken,
-                                               QBOOAuth=a.QBOOAuth,
                                            }).FirstOrDefault();
 
             return account;
@@ -129,8 +127,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                EnableNegativeOffsetAPPayments = a.EnableNegativeOffsetAPPayments,
                                                EnableMultiCurrencyAPPayments = a.EnableMultiCurrencyAPPayments,
                                                EnableInvoiceStocksManagement = a.EnableInvoiceStocksManagement,
-                                               RefreshToken = a.RefreshToken,
-                                               QBOOAuth = a.QBOOAuth,
                                            }).FirstOrDefault();
 
             if (account != null)
@@ -197,8 +193,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        EnableNegativeOffsetAPPayments = a.EnableNegativeOffsetAPPayments,
                                        EnableMultiCurrencyAPPayments = a.EnableMultiCurrencyAPPayments,
                                        EnableInvoiceStocksManagement = a.EnableInvoiceStocksManagement,
-                                       RefreshToken = a.RefreshToken,
-                                       QBOOAuth = a.QBOOAuth,
                                    });
 
                     foreach (var c in systems)
@@ -266,8 +260,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               EnableNegativeOffsetAPPayments = a.EnableNegativeOffsetAPPayments,
                               EnableMultiCurrencyAPPayments = a.EnableMultiCurrencyAPPayments,
                               EnableInvoiceStocksManagement = a.EnableInvoiceStocksManagement,
-                              RefreshToken = a.RefreshToken,
-                              QBOOAuth = a.QBOOAuth,
                           }).FirstOrDefault();
             }
 
@@ -321,8 +313,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                             EnableNegativeOffsetAPPayments = a.EnableNegativeOffsetAPPayments,
                                                             EnableMultiCurrencyAPPayments = a.EnableMultiCurrencyAPPayments,
                                                             EnableInvoiceStocksManagement = a.EnableInvoiceStocksManagement,
-                                                            RefreshToken = a.RefreshToken,
-                                                            QBOOAuth = a.QBOOAuth,
                                                         });
 
             return accounts;
@@ -374,8 +364,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                            EnableNegativeOffsetAPPayments = a.EnableNegativeOffsetAPPayments,
                                                            EnableMultiCurrencyAPPayments = a.EnableMultiCurrencyAPPayments,
                                                            EnableInvoiceStocksManagement = a.EnableInvoiceStocksManagement,
-                                                           RefreshToken = a.RefreshToken,
-                                                           QBOOAuth = a.QBOOAuth,
                                                        };
             return result;
         }

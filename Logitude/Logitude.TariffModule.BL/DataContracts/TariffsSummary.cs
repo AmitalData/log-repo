@@ -16,6 +16,5 @@ namespace Logitude.TariffModule.BL.DataContracts
         public int OceanSurchargeCount { get; set; }
         public int OceanLCLFreightCount { get; set; }
         public int OceanFCLFreightCount { get; set; }
-        public int OceanFCLSurchargesCount { get; set; }
     }
 }

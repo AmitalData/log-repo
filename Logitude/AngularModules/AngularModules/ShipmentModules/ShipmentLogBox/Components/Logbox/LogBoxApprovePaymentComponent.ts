@@ -34,7 +34,6 @@ import { ServiceLocator } from '../../../../Infrastructure/Locators/ServiceLocat
 import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { HybridPartnerPMService } from '../../../../Common/Services/StandardPMs/HybridPartnerPMService';
 
 import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
 @Component({
@@ -50,17 +49,14 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
     SelectedTicket: any = null;
     EntityPm: ShipmentPM = new ShipmentPM();
     Language: string = 'HB';
-    PartnerName: string = "Agent";
     public RTL: boolean = true;
     AdditionalData: any;
     externalDocs: any[];
     public DimApproveButton: boolean = false;
     public DimDenyButton: boolean = false;
-    ForwarderPartnerId: string;
     public _DocumentTypeMetaDataExtendedService: DocumentTypeMetaDataExtendedService;
     public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService;
     public _ShipmentAdditionalCloudDataService: ShipmentAdditionalCloudDataService;
-    _HybridPartnerPMService: HybridPartnerPMService;
     _ImageLibraryService: ImageLibraryService;
     private CurrentSession = SessionLocator.SelectedSession;
     public IFrameURI: string = "";
@@ -74,8 +70,6 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
         this.Language = SessionLocator.TenantPM.Language;
         this.RTL = (this.Language == 'HB');
         this.myCommonDomainService = new CommonDomainService();
-        this._HybridPartnerPMService = new HybridPartnerPMService();
-
 
     }
 
@@ -93,7 +87,6 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
 
     }
     SetWindowArgs(args: any) {
-        this.ForwarderPartnerId = args.ForwarderPartnerId;
         if (args.EntityPm) {
             this.EntityPm = args.EntityPm;
             this.AdditionalData = args.AdditionalData;
@@ -131,11 +124,6 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
             }
             var ObjectTable = window.ObjectTables.filter(x => x.Name === "Shipment")[0];
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading ...");
-            this._HybridPartnerPMService.get(this.ForwarderPartnerId).subscribe(theResult => {
-                if (!theResult.HasError) {
-                    this.PartnerName = theResult.Result.Name;
-                }
-            });
             this._documentsFilingExtendedPMService.getAllDocumentsFilingsByEntityIdAndObjectTable(this.EntityPm.Id, ObjectTable.Id, "I", SessionLocator.Tenant).subscribe(res => {
                 var Result = [];
 
@@ -244,7 +232,7 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
                     this.messageWindow.Width = 300;
                     this.messageWindow.Height = 150;
                     this.messageWindow.Title = TextCodeTranslator.Translate("Shipment.O.StatementWasApproved");//"הצהרה אושרה";
-                    this.messageWindow.Message = TextCodeTranslator.Translate("Shipment.O.ConfirmationSentTo") + this.PartnerName;//"Agent";//"אישור הצהרה נשלח ל -" + SessionLocator.PrivateLableSettings.PrivateLabelShortName;
+                    this.messageWindow.Message = TextCodeTranslator.Translate("Shipment.O.ConfirmationSentTo") + "Agent";//"אישור הצהרה נשלח ל -" + SessionLocator.PrivateLableSettings.PrivateLabelShortName;
                     this.messageWindow.Show(this.messageWindow.Message);
                     //this.ValidationWarningsList = " גרסת הצהרה זו אושרה על ידי המשתמש " + entity.ApprovedByUserName + " בתאריך " + to;
                     this.CurrentSession.CurrentWindow.StopBusyIndicator();
@@ -290,7 +278,7 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
                         this.messageWindow.Width = 300;
                         this.messageWindow.Height = 150;
                         this.messageWindow.Title = TextCodeTranslator.Translate("Shipment.O.Astatementwasrejected");//"הצהרה נדחתה";
-                        this.messageWindow.Message = TextCodeTranslator.Translate("Shipment.O.TheRejectionStatementWasSentTo") + this.PartnerName;//"Agent";//"דחיית הצהרה נשלח ל -" + SessionLocator.PrivateLableSettings.PrivateLabelShortName;
+                        this.messageWindow.Message = TextCodeTranslator.Translate("Shipment.O.TheRejectionStatementWasSentTo") + "Agent";//"דחיית הצהרה נשלח ל -" + SessionLocator.PrivateLableSettings.PrivateLabelShortName;
                         this.messageWindow.Show(this.messageWindow.Message);
                     }
                 });

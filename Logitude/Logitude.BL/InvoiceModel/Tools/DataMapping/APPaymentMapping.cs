@@ -53,7 +53,16 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                 entity.CreditCardTypeId = entityPM.CreditCardTypeId;
             }
             #endregion
-
+            if (entityPM.SetApproved)
+            {
+                CardRepository cardRepository = new CardRepository(entityPM.Tenant);
+                Card card = cardRepository.GetSingleCard(entityPM.VendorId, entityPM.Tenant);
+                entity.VendorBankName = card.BankName;
+                entity.VendorBankAddress = card.BankAddress;
+                entity.VendorIBANNumber = card.IBANNumber;
+                entity.VendorSwift = card.IBANNumber;
+                entity.VendorBankAccountNumber = card.AccountNumber;
+            }
             entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
             entityPM.UpdatedByUserId = loggedContact.Id;
             entity.RegisterDate = entityPM.RegisterDate;

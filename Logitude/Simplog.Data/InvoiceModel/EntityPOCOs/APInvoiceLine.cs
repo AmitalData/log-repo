@@ -35,8 +35,6 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string ChargeTypeGLAccountId { get; set; }
         public bool AuthorizedSignatory { get; set; }
         public string PrepaidCollectId { get; set; }
-        public string ContainerTypeId { get; set; }
-        public int? Quantity { get; set; }
 
         [ForeignKey("ForiegnCurrencyId")]
         public virtual Currency Currency { get; set; }
@@ -52,8 +50,5 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
 
         [ForeignKey("PrepaidCollectId")]
         public virtual PrepaidCollect PrepaidCollect { get; set; }
-
-        [ForeignKey("ContainerTypeId")]
-        public virtual PackageType ContainerType { get; set; }
     }
 }

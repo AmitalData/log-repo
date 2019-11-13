@@ -22,9 +22,9 @@ namespace Logitude.DBMigrations.Helpers
                 Console.WriteLine("Generating Script For " + fileName + " Entity ...");
                 string xmlString = File.ReadAllText(DXMLFile);
                 TableDefinition DXMLTable = xmlString.ParseXML<TableDefinition>();
-                SQLDatabaseMigrations databaseMigrations = new SQLDatabaseMigrations(DXMLTable);
+                DatabaseMigrations databaseMigrations = new DatabaseMigrations(DXMLTable);
                 generatedScript += databaseMigrations.GetScript();
-                generatedScript += "\n----------------------------------------------\n";
+                generatedScript += "\n------------------------------------------------\n";
             }
 
             return generatedScript;

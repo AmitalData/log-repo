@@ -21,9 +21,6 @@ namespace Simplog.Data.Helpers
         public string Value { get; set; }
 
         [XmlAttribute]
-        public string OldValue { get; set; }
-
-        [XmlAttribute]
         public string PropertyName { get; set; }
         
     }

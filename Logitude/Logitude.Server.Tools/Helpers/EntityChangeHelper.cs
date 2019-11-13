@@ -175,10 +175,7 @@ namespace Logitude.Server.Tools.Helpers
                     #region Bluid EntityChanges
                     List<Field> automationFieldLists = new List<Field>();
                     AutomationConditionFields automationConditionFields = new AutomationConditionFields();
-
-
-
-                    foreach (ObjectField objectField in automationsObjectFieldLists.Where(d => d.ObjectTableId == tableId && !d.DisplayInAutomationAsEnitity))
+                    foreach (ObjectField objectField in automationsObjectFieldLists)
                     {
                         string objectTableName = shipmentobjectTable != null ? shipmentobjectTable.Name : objectTable != null ? objectTable.Name : "";
                         string currentvalue = GetValue(entityPM, objectField);
@@ -223,18 +220,11 @@ namespace Logitude.Server.Tools.Helpers
                         {
                             Id = objectField.Id,
                             Value = currentvalue != null ? currentvalue : "",
-                            OldValue = oldvalue != null ? oldvalue : "",
                             IsChange = ischange,
                             PropertyName = objectField.FieldName,
                         };
 
                         automationFieldLists.Add(automationConditionField);
-                    }
-
-                    foreach (ObjectField objectField in automationsObjectFieldLists.Where(d =>d.DisplayInAutomationAsEnitity).ToList())
-                    {
-                      
-
                     }
 
                     automationConditionFields.Fields = automationFieldLists;
@@ -458,13 +448,6 @@ namespace Logitude.Server.Tools.Helpers
                         {
                             customObjectFieldLists.Add(objectField);
                         }
-
-                        ObjectField partnerObjectField = objectFieldLists.Where(d => d.Id == automationCondition.PartnerObjectFieldId).FirstOrDefault();
-                        if (partnerObjectField != null && !customObjectFieldLists.Contains(partnerObjectField))
-                        {
-                            customObjectFieldLists.Add(partnerObjectField);
-                        }
-
                     }
                 }
                 #endregion
@@ -872,15 +855,25 @@ namespace Logitude.Server.Tools.Helpers
                                 int days = 0;
                                 if (!string.IsNullOrEmpty(datearray[1])) days = Int32.Parse(datearray[1]);
                                 int dateEscalationTime = 0;
-                                DateTime? date = datearray[0].Contains("old") ? FieldValueResolver.ConvertToDate(automationConditionField.OldValue)  :TenantServerConfigration.GetCurrentDateTime(automationCondition.Tenant);
+                                DateTime date = TenantServerConfigration.GetCurrentDateTime(automationCondition.Tenant);
                                 CustomFieldClass customFieldClass = new CustomFieldClass();
-
-                                dateEscalationTime = (datearray[0] == "@today+" || datearray[0] == "@old value+") ? days : days * -1;
-                                if (date != null)
+                                if (datearray[0].Contains("@old value"))
                                 {
-                                    date = date.Value.AddDays(dateEscalationTime);
-                                    automationConditionvalue = customFieldClass.ConvertToString(Convert.ToDateTime(date));
+                                    DateTime? oldValue = FieldValueResolver.ConvertToDate(datearray[2]);
+                                    if (oldValue != null)
+                                    {
+                                        date = oldValue.Value;
+                                        dateEscalationTime = datearray[0] == "@old value+" ? days : days * -1;
+                                    }
                                 }
+                                else
+                                {
+                                    dateEscalationTime = datearray[0] == "@today+" ? days : days * -1;
+                                }
+
+                                date = date.AddDays(dateEscalationTime);
+                               
+                                automationConditionvalue = customFieldClass.ConvertToString(Convert.ToDateTime(date));
                             }
                         }
 

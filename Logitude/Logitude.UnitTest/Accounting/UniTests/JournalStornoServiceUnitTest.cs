@@ -291,50 +291,6 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
 
         }
-
-
-        [TestMethod]
-        public void CreateStorno_WithStornoOverrideM_AccountingDate()
-        {
-
-            JournalPM entityPM = GetDefaultJournal();
-            JournalPM defaultJournal = GetDefaultJournal();
-
-            var stornoOverrideM = new StornoOverrideM()
-            {
-                AccountingEntityCode = "myAccountingEntityCode",
-                AccountingEntityId = "myAccountingEntityId",
-                AccountingEntityReference = "OverrideAccountingEntityId",
-
-                AccountingDate = new DateTime(2019, 11, 11),
-                LineNotes= "override Notes"
-            };
-            var fakeJournalStornoService = GetJournalStornoService(entityPM, stornoOverrideM);
-            var storno = fakeJournalStornoService.CreateStornoAndCommitUpdate();
-            //var storno = entityPM.CreateStorno(stornoOverrideM);
-            Assert.IsNotNull(storno);
-            Assert.IsNotNull(storno.JournalLines);
-
-            
-            Assert.AreEqual(defaultJournal.Tenant, storno.Tenant);
-
-
-
-            Assert.AreEqual(defaultJournal.TypeCode, storno.TypeCode);
-
-            Assert.AreEqual(2, defaultJournal.JournalLines.Count);
-
-            Assert.AreEqual(null, storno.JournalNumber);
-
-
-            Assert.AreEqual(stornoOverrideM.AccountingEntityReference, storno.AccountingEntityReference);
-            Assert.AreEqual(stornoOverrideM.AccountingEntityId, storno.AccountingEntityId);
-            Assert.AreEqual(stornoOverrideM.AccountingEntityCode, storno.AccountingEntityCode);
-            Assert.AreEqual(stornoOverrideM.AccountingDate, storno.AccountingDate);
-            Assert.IsTrue(storno.JournalLines.TrueForAll(r => r.Notes == stornoOverrideM.LineNotes));
-
-
-        }
         private JournalPM GetDefaultJournal()
         {
 

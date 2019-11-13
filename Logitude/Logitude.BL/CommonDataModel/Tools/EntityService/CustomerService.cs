@@ -63,8 +63,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private CustomerMediatorByProductRepository customerMediatorByProductRepository;
         private CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository;
         ContactService contactService;
-        HybridPartnerPM CurrentHybridPartner;
-
         public CustomerService(ICommonDataContext objectContext, CustomerPM entityPM)
         {
 
@@ -90,7 +88,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(objectContext);
             this.contactService = new ContactService(objectContext, tenant);
             this.GetLoggedContact();
-            this.SetHybridPartner(this.tenant);
         }
         public CustomerService(ICommonDataContext objectContext, CustomerPM entityPM, string loggedContactId)
         {
@@ -116,7 +113,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(objectContext);
             this.contactService = new ContactService(objectContext, tenant);
             this.loggedContact = contactRepository.GetSingleContact(loggedContactId, tenant);
-            this.SetHybridPartner(this.tenant);
         }
         private void GetLoggedContact()
         {
@@ -135,12 +131,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 this.loggedContact = contactRepository.GetSingleContactByEmail("system@tenant" + tenant + ".com", tenant);
             }
-        }
-
-        private void SetHybridPartner(int myTenant)
-        {
-            HybridPartnerQuery HybridPartnerQuery = new HybridPartnerQuery(myTenant);
-            CurrentHybridPartner = HybridPartnerQuery.GetSinglePMByPartnerTenant(myTenant);
         }
 
         private List<CustomerSalesNotePM> salesNotesChangeSet;
@@ -168,7 +158,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         }
 
         public void Create()
-        {
+        {            
             this.isNewEntity = true;
             this.entityPM.Id = IdCounter.GetNumber("Card", tenant).ToString();
 
@@ -275,7 +265,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             foreach (ContactPM itemPM in entityPM.Contacts)
             {
                 this.UpdateContactSearchField(itemPM);
-            }
+            } 
 
             if (!entityPM.IsHybrid)
             {
@@ -294,7 +284,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         public void Update()
         {
-
+            
             this.isNewEntity = false;
 
             this.entityPOCO = entityRepository.GetSingleCustomer(entityPM.Id, tenant, false);
@@ -378,18 +368,18 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                 if (productsChangeSet != null)
                 {
-                    myTracingClass.TraceProducts(productsChangeSet, isNewEntity);
+                myTracingClass.TraceProducts(productsChangeSet, isNewEntity);
                 }
 
                 if (competitorsChangeSet != null)
                 {
-                    myTracingClass.TraceCompetitors(competitorsChangeSet, isNewEntity);
+                myTracingClass.TraceCompetitors(competitorsChangeSet, isNewEntity);
                 }
 
                 if (servicesChangeSet != null)
                 {
-                    myTracingClass.TraceAdditionalServices(servicesChangeSet, isNewEntity);
-                }
+                myTracingClass.TraceAdditionalServices(servicesChangeSet, isNewEntity);
+            }
             }
 
             if (entityPM.SetReady && entityPOCO.CustomerStatusCode != "WAC")
@@ -472,7 +462,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private void UpdateGLAccount(CustomerPM entityPM, Customer entityPOCO)
         {
-            if ((entityPOCO.Card != null && entityPOCO.Card.EnglishName != entityPM.EnglishName) || (entityPOCO.Card != null && entityPOCO.Card.LocalName != entityPM.LocalName))
+            if((entityPOCO.Card != null && entityPOCO.Card.EnglishName != entityPM.EnglishName) || (entityPOCO.Card != null && entityPOCO.Card.LocalName != entityPM.LocalName))
             {
                 TenantRepository tenantRepository = new TenantRepository(tenant);
                 Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
@@ -486,7 +476,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     data.EntityId = entityPM.Id;
                     fullAccountingHelper.UpdateGLAccount(data);
                 }
-            }
+            }  
         }
 
         private void CreateGLAccount()
@@ -496,7 +486,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private void AddCustomerToQueue()
         {
-            if (LogitudeSettings.EnableHybridQueue && (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner))
+            if (LogitudeSettings.EnableHybridQueue)
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
@@ -533,7 +523,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private void AddLogboxCustomerToQueue()
         {
-            if (LogitudeSettings.EnableHybridQueue && (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner))
+            if (LogitudeSettings.EnableHybridQueue)
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
@@ -586,8 +576,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 {
                     entityPM.CreatedByUserId = loggedContact.Id;
                     entityPM.UpdatedByUserId = loggedContact.Id;
-                }
-
+                }                  
+                
                 if (!entityPM.IsHybrid && (string.IsNullOrEmpty(entityPM.Code) || entityPM.Code == "new"))
                 {
                     entityPM.Code = CodeCounter.GetNumber("Customer", tenant).ToString();
@@ -601,7 +591,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 entityPM.UpdateDate = (entityPM.IsHybrid && entityPM.UpdateDate != null) ? entityPM.UpdateDate : TenantServerConfigration.GetCurrentDateTime(tenant);
                 if (loggedContact != null)
-                    entityPM.UpdatedByUserId = loggedContact.Id;
+                entityPM.UpdatedByUserId = loggedContact.Id;
             }
 
             this.SetCustomerStatus();

@@ -62,8 +62,7 @@ export class ExportBI2ExcelControl {
         }
         this.WebFreightDomainService.GetExportBIReportToExcel(this.BIReportXMLData).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
-                this.FileName = myResponse.Result.BIReportKey;
-                this.StartCheckBIReportBliudViaWorkerRoleTimer();
+                this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer();
             } else {
                 this.StopBusyIndicator();
                 if (myResponse.HasError && myResponse.ErrorsArray && myResponse.ErrorsArray.length > 0) {
@@ -90,7 +89,7 @@ export class ExportBI2ExcelControl {
     }
 
     //Stimul Soft Report Timer
-    initializeStartCheckBIReportBliudViaWorkerRoleTimer() {
+    initializeStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer() {
         return Observable.interval(2000).timeInterval();
     }
 
@@ -119,33 +118,33 @@ export class ExportBI2ExcelControl {
         });
     }
 
-    private StartCheckBIReportBliudViaWorkerRoleTimersub: any = null;
-    IsStartCheckBIReportBliudViaWorkerRoleTimer: boolean = false;
-    StartCheckBIReportBliudViaWorkerRoleTimer() {
-        if (this.IsStartCheckBIReportBliudViaWorkerRoleTimer) {
-            this.StartCheckBIReportBliudViaWorkerRoleTimersub.unsubscribe();
+    private StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub: any = null;
+    IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer: boolean = false;
+    StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer() {
+        if (this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer) {
+            this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub.unsubscribe();
         }
 
-        this.IsStartCheckBIReportBliudViaWorkerRoleTimer = true;
-        this.StartCheckBIReportBliudViaWorkerRoleTimersub = this.initializeStartCheckBIReportBliudViaWorkerRoleTimer().subscribe(respose => {
+        this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer = true;
+        this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub = this.initializeStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer().subscribe(respose => {
 
-            if ((this.CurrentSession && this.CurrentSession.isDestroingSession) || !this.IsStartCheckBIReportBliudViaWorkerRoleTimer) {
-                this.StartCheckBIReportBliudViaWorkerRoleTimersub.unsubscribe();
-                this.IsStartCheckBIReportBliudViaWorkerRoleTimer = false;
+            if ((this.CurrentSession && this.CurrentSession.isDestroingSession) || !this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer) {
+                this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub.unsubscribe();
+                this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer = false;
                 return;
             }
 
-            if (this.IsStartCheckBIReportBliudViaWorkerRoleTimer) {
+            if (this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer) {
                 if (this.WebFreightDomainService == null) {
                     this.WebFreightDomainService = new WebFreightDomainService();
                 }
 
                 this.WebFreightDomainService.GetBIReportLogStatus(this.reportId).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
-                    if (this.IsStartCheckBIReportBliudViaWorkerRoleTimer) {
+                    if (this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer) {
                         if (pmResponse.HasError || (pmResponse.Result && pmResponse.Result.HasError) || (pmResponse.Result && pmResponse.Result.StatusCode == "D")) {
-                            this.StartCheckBIReportBliudViaWorkerRoleTimersub.unsubscribe();
-                            this.IsStartCheckBIReportBliudViaWorkerRoleTimer = false;
+                            this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub.unsubscribe();
+                            this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer = false;
                             this.StopBusyIndicator();
                         }
                         if (!pmResponse.HasError) {
@@ -223,9 +222,9 @@ export class ExportBI2ExcelControl {
             this.IsStartTimerChangeBusyIndicatorMessageAfter50SecsRunning = false;
         }
 
-        if (this.IsStartCheckBIReportBliudViaWorkerRoleTimer) {
-            this.StartCheckBIReportBliudViaWorkerRoleTimersub.unsubscribe();
-            this.IsStartCheckBIReportBliudViaWorkerRoleTimer = false;
+        if (this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer) {
+            this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub.unsubscribe();
+            this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer = false;
         }
         this.ShowBusyIndicator = false;
     }
@@ -257,6 +256,8 @@ export class ExportBI2ExcelControl {
                     this.busyExportingVisibile = false;
                     this.btnSaveToFileVisibile = true;
                 }
+                
+
             } else {
                 this.btnRetryVisibile = true;
                 this.busyExportingVisibile = false;

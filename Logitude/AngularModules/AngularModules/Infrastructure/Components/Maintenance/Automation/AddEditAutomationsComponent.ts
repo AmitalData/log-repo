@@ -693,13 +693,11 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
     }
 
     FillObjectField() {
-    
         this.AllowedinAutomationConditionsFieldLists = [];
         this.AutomationEmailRecipientFieldLists = [];
         this.AutomationSetValuebjectFieldLists = [];
         this.FollowUpOwnerObjectFieldLists = [];
         this.ObjectFieldsLists = [];
-
 
         this.ObjectFieldsLists = window.ObjectFields.filter(f => f.ObjectTableId == this.ObjectTableId);
         this.ObjectFieldsLists.forEach((objectField) => {
@@ -729,21 +727,6 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             }
         });
 
-
-
-        if (this.DataViewModel.EntityObjectAutomationFieldLists && this.DataViewModel.EntityObjectAutomationFieldLists.length > 0) {
-            this.DataViewModel.EntityObjectAutomationFieldLists.forEach((objectField) => {
-
-                if (!this.AllowedinAutomationConditionsFieldLists.filter(d => d.Id == objectField.Id)[0]) {
-                    this.AllowedinAutomationConditionsFieldLists.push(objectField);
-                }
-            });
-        }
-
-
-
-
-
         var specifiOwnerObjectField: ObjectFieldPM = new ObjectFieldPM();
         specifiOwnerObjectField.FullNameTextCodeDefaultText = "Specific";
         specifiOwnerObjectField.Id = "Specific";
@@ -762,7 +745,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         }
 
         this.FollowUpDateObjectFieldSelected = this.FollowUpDateObjectFieldLists.filter(d => d.Id == this.DateValue)[0];
-
+        
         if (this.AutomatedBackupClass) {
             this.BuildAutomationCondition();
             this.BuildAutomationSetValue();
@@ -776,13 +759,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         else {
             this.IsLoadAutomationResultEmailRecipient = true;
         }
-
-
-
-
-
     }
-    
+
     IsViewCondition: boolean;
     BuildAutomationCondition() {
         this.IsViewCondition = false;

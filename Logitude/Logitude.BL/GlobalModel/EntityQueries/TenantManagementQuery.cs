@@ -181,7 +181,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         Tenant ten = tenantRep.GetSingleTenant(tenant.Id);
                         LogBoxTenantSettingRepository tenantsettingRep = new LogBoxTenantSettingRepository(tenant.Id);
                         LogBoxTenantSetting tens = tenantsettingRep.GetSingleLBTenant(tenant.Id);
-                        if (ten != null && tens != null)
+                        if (ten != null)
                         {
                             //tenant.CountryName = ten.Address != null ? (ten.Address.Country != null ? ten.Address.Country.EnglishName : null) : null;
                             tenant.TimeZone = "(UTC) + " + ten.TimeZoneOffset;

@@ -37,7 +37,6 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
     public OceanSurchargeCount: string;
     public OceanLCLFreightCount: string;
     public OceanFCLFreightCount: string;
-    public OceanFCLSurchargesCount: string;
 
     private isLoaderReady: boolean = false;
     RunComponent() {
@@ -84,7 +83,6 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
                         this.OceanSurchargeCount = myResult.OceanSurchargeCount > 1000 ? "1000+" : myResult.OceanSurchargeCount.toString();
                         this.OceanLCLFreightCount = myResult.OceanLCLFreightCount > 1000 ? "1000+" : myResult.OceanLCLFreightCount.toString();
                         this.OceanFCLFreightCount = myResult.OceanFCLFreightCount > 1000 ? "1000+" : myResult.OceanFCLFreightCount.toString();
-                        this.OceanFCLSurchargesCount = myResult.OceanFCLSurchargesCount > 1000 ? "1000+" : myResult.OceanFCLSurchargesCount.toString();
                     }
                 }
             }
@@ -104,8 +102,7 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
     public AirSurchargesCostVisibility: boolean = false;
     public OceanLCLFreightCostVisibility: boolean = false;
     public OceanLCLSurchargesCostVisibility: boolean = false;
-    public OceanFCLFreightCostVisibility: boolean = false;
-    public OceanFCLSurchargesCostVisibility: boolean = false;
+    public OceanFCLFreightCostVisibility: boolean = true;
 
     SetQueriesVisibility() {
 
@@ -123,14 +120,6 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
 
         if (FeatureLocator.HasFeaturePermession("Tariff", "Tariff.Q.Ocean.LCL.Surcharges.Cost")) {
             this.OceanLCLSurchargesCostVisibility = true;
-        }
-
-        if (FeatureLocator.HasFeaturePermession("Tariff", "Tariff.Q.OceanFCLFreightCost")) {
-            this.OceanFCLFreightCostVisibility = true;
-        }
-
-        if (FeatureLocator.HasFeaturePermession("Tariff", "Tariff.Q.OceanFCLSurchargesCost")) {
-            this.OceanFCLSurchargesCostVisibility = true;
         }
     }
 
@@ -162,13 +151,8 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
                 break;
             }
             case "OFC": {
-                windowTitle = "New " + TextCodeTranslator.Translate("Tariff.Q.OceanFCLFreightCost");
+                windowTitle = "New Ocean FCL Freight Cost ";
                 typeCode = "OFC";
-                break;
-            }
-            case "OFS": {
-                windowTitle = "New " + TextCodeTranslator.Translate("Tariff.Q.OceanFCLSurchargesCost");
-                typeCode = "OFS";
                 break;
             }
             default: {
@@ -248,40 +232,6 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
                 listArgs.QueryCode = "Ocean LCL Freight Cost";
                 listArgs.ObjectTableName = "Tariff";
                 listArgs.DisplayTitle = "Ocean LCL Freight Cost";
-                listArgs.BackButtonTitle = "Tariff";
-                this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
-                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
-                        .then(cmpRef => {
-                            cmpRef.instance.ComponentRef = cmpRef;
-                            cmpRef.instance.Run(listArgs);
-                            cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
-                            this.CurrentSession.AddMenuReference(cmpRef);
-                        });
-                });
-                break;
-            }
-            case "OFC": {
-                var listArgs = new ListComponentArgs();
-                listArgs.QueryCode = "Ocean FCL Freight Cost";
-                listArgs.ObjectTableName = "Tariff";
-                listArgs.DisplayTitle = "Ocean FCL Freight Cost";
-                listArgs.BackButtonTitle = "Tariff";
-                this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
-                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
-                        .then(cmpRef => {
-                            cmpRef.instance.ComponentRef = cmpRef;
-                            cmpRef.instance.Run(listArgs);
-                            cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
-                            this.CurrentSession.AddMenuReference(cmpRef);
-                        });
-                });
-                break;
-            }
-            case "OFS": {
-                var listArgs = new ListComponentArgs();
-                listArgs.QueryCode = "Ocean FCL Surcharges Cost";
-                listArgs.ObjectTableName = "Tariff";
-                listArgs.DisplayTitle = "Ocean FCL Surcharges Cost";
                 listArgs.BackButtonTitle = "Tariff";
                 this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                     SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)

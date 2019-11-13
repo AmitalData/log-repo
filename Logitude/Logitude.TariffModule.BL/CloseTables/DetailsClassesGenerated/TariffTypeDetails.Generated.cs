@@ -60,14 +60,6 @@ namespace Logitude.TariffModule.BL.CLoseTable
                 Code = "OFC", 
                 SearchFields = "OFC,Ocean FCL Freight Cost", 
 			});
-			 
-            all.Add(new TariffTypeDetails()
-            {    
-                TransportModeCode = "O", 
-                Name = "Ocean FCL Surcharges Cost", 
-                Code = "OFS", 
-                SearchFields = "OFS,Ocean FCL Surcharges Cost", 
-			});
 			
             return all;
        }

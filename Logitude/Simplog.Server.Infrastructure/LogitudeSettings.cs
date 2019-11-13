@@ -51,10 +51,6 @@ namespace Simplog.Server.Infrastructure
         public static string QBOAppToken { get; set; }
         public static string ABMProductId { get; set; }
 
-        public static string QBOClientID { get; set; }
-        public static string QBOClientSecret { get; set; }
-        public static int QBOOAuthDefault { get; set; }
-
         public static string AndroidAppLink { get; set; }
         public static  string IOSAppLink { get; set; }
 

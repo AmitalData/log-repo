@@ -13,7 +13,7 @@
   </Column>
 
   <Column Name="Description" Type="nText" Size="100">
-    <Constraints Nullable="true"/>
+    <Constraints Nullable="false"/>
   </Column>
 
 </Table>

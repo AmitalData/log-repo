@@ -17,9 +17,5 @@ namespace Logitude.Accounting.Def.EntityUpdateServicesExt
         public string AccountingEntityCode { get; set; }
         public string AccountingEntityReference { get; set; }
         public string AccountingEntityId { get; set; }
-
-
-        public DateTime? AccountingDate { get; set; }
-        public string LineNotes { get; set; }
     }
 }

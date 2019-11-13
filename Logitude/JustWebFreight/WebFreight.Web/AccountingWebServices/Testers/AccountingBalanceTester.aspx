@@ -905,10 +905,7 @@
             });
             return false;
         }
-        function Clear_ResponseToken(){
-            _ResponseToken = null;
-            return false;
-        }
+
 
         function SendJornal() {
             if (!_ResponseToken) {
@@ -993,15 +990,15 @@
             if ($(".class_loginParameter").val() == "") {
                 var loginParameter =
                         {
-                            Email: "yaronc@amital.co.il",
-                            Password: "!Y123456",
+                            Email: "basel@amital.co.il",
+                            Password: "!B123456",
                             IsUser: true,
                             CardId: null,
                             CardType: null,
                             ByToken: false,
                             IsMobileLogin: false,
                             GetToken: true,
-                            Tenant: 1064
+                            Tenant: 989
 
                         };
                 $(".class_loginParameter").val(JSON.stringify(loginParameter));
@@ -1023,7 +1020,6 @@
             }
            
         });
-        
     </script>
   <%--  <script> alert(Date(-62135596800000));
         alert(Date(1461704400000));
@@ -1090,9 +1086,6 @@ div#two {
                 <li>JournalApproveService
                     <ul>
                         <li>
-                        <button id="btnClear_ResponseToken" onclick="javascript:return Clear_ResponseToken();" >Clear _ResponseToken</button>
-                            </li>
-                        <li>
                             <asp:Button ID="_ButtonJournalApproveQueue" runat="server" Text=".Queue" OnClick="_ButtonJournalApproveQueue_Click" /></li>
                         <li>
                             <asp:Button ID="_ButtonJournalApprove" runat="server" Text=".WorkWithoutQueue" OnClick="_ButtonJournalApprove_Click" /></li>
@@ -1105,7 +1098,6 @@ div#two {
                     <button id="_ButtonCreateNewJournal1" onclick="javascript: $('.classTextBoxParam').val(_DefaultJornalPM);  return false;" >example Journal</button>
                     
                     <a href="http://www.jsoneditoronline.org/" > format json</a>
-                    
                     <button id="btnSendJournal" onclick="javascript:return SendJornal();" >btnSendJournal</button>
                     <asp:Button ID="_ButtonCreateRandomJournal" runat="server" Text="Create RandomJournal" OnClick="_ButtonCreateRandomJournal_Click" />
                     <br />

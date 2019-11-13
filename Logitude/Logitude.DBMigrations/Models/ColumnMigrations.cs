@@ -13,6 +13,6 @@ namespace Logitude.DBMigrations.Models
         public string NewColumnName { get; set; }
         public string NewColumnType { get; set; }
         public int NewColumnSize { get; set; }
-        public ConstraintsDefinition NewConstraints { get; set; }
+        public ConstraintDefinition NewConstraints { get; set; }
     }
 }

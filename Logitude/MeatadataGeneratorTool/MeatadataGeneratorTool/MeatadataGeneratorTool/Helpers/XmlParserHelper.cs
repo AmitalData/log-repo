@@ -278,11 +278,6 @@ namespace MeatadataGeneratorTool.Helpers
             field.AllowedinAutomationConditions = GetAttributeBoolValue(fieldNode.Attributes["AllowedinAutomationConditions"]);
             field.AutomationEmailRecipient = GetAttributeBoolValue(fieldNode.Attributes["AutomationEmailRecipient"]);
             field.CanAutomateSetValue = GetAttributeBoolValue(fieldNode.Attributes["CanAutomateSetValue"]);
-            field.DisplayInAutomationAsEnitity = GetAttributeBoolValue(fieldNode.Attributes["DisplayInAutomationAsEnitity"]);
-            field.RecordType = GetAttributeStringValue(fieldNode.Attributes["RecordType"]);
-
-
-
             if (fieldNode.Attributes["HtmlListComponentName"] != null)
             {
                 // HtmlListComponentName

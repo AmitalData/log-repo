@@ -102,11 +102,6 @@ namespace Logitude.Accounting.BL.CoreBL
 
             Storno.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
             Storno.AccountingDate = _JournalPM.AccountingDate;
-            if (stornoOverrideM.AccountingDate.HasValue)
-            {
-                Storno.AccountingDate = stornoOverrideM.AccountingDate.Value;
-            }
-
             Storno.AccountingEntityCode = _JournalPM.AccountingEntityCode;
             if (!String.IsNullOrWhiteSpace(stornoOverrideM.AccountingEntityCode))
             {
@@ -184,10 +179,6 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 newStornoJournalLine.LocalAmount = -item.LocalAmount;
                 newStornoJournalLine.Notes = item.Notes;
-                if (!String.IsNullOrWhiteSpace(stornoOverrideM.LineNotes))
-                {
-                    newStornoJournalLine.Notes = stornoOverrideM.LineNotes;
-                }
                 newStornoJournalLine.Reference1 = item.Reference1;
                 newStornoJournalLine.Reference2 = item.Reference2;
                 newStornoJournalLine.Reference3 = item.Reference3;

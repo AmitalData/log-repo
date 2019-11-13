@@ -74,7 +74,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string MainEntityReference { get; set; }
         public string SearchFields { get; set; }
         public string VendorName { get; set; }
-        public string VendorLocalName { get; set; }
         public string VendorCode { get; set; }
         public string VendorType { get; set; }
         public string PaymentTermName { get; set; }

@@ -38,7 +38,6 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public DateTime? UpdateDate { get; set; }
         public string APInvoiceTypeCode { get; set; }
         public string VendorName { get; set; }
-        public string VendorLocalName { get; set; }
         public string VendorCode { get; set; }
         public string PaymentTermName { get; set; }
         public string InvoiceCurrencyCode { get; set; }

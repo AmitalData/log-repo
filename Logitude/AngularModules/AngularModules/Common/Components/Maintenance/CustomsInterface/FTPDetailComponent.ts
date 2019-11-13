@@ -149,6 +149,14 @@ export class FTPDetailComponent extends BaseComponent {
 
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 
+        if (!this.isINTTRA) {
+            var isValid = this.ValidateHost();
+
+            if (!isValid) {
+                errors.push("Invalid Host");
+            }
+        }
+
         this.ValidationErrorsList = errors;
 
         if (this.ValidationErrorsList.length == 0) {
@@ -185,6 +193,19 @@ export class FTPDetailComponent extends BaseComponent {
                 });
             }
         }
+    }
+
+    private ValidateHost() {
+        var isValid = false;
+
+        if (!AppTool.IsNullOrEmpty(this.Host)) {
+            var ipformat = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+            if (this.Host.match(ipformat)) {
+                isValid = true;
+            }
+        }
+
+        return isValid
     }
 
     private myCloner: Cloner;

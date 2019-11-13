@@ -22,13 +22,9 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                 var myGLAccountRepository = new GLAccountRepository(_AccountingContext);
                 var myLedgerTransactionRepository = new LedgerTransactionRepository(_AccountingContext);
                 var myJournalRepository = new JournalRepository(_AccountingContext);
-                var myReconciliationRepository = new ReconciliationRepository(_AccountingContext);
                 var myReconciliationLineRepository = new ReconciliationLineRepository(_AccountingContext);
 
                 var qTotalReconciliationAmountPerTranId = (from rl in myReconciliationLineRepository.GetAll(tenant)
-                                                           join r in myReconciliationRepository.GetAll(tenant).Where(r=>!r.IsCancelled)
-                                                           on rl.ReconciliationId equals r.Id
-
                                                            group rl by rl.TransactionId into grl
                                                            select new LedgerOpenAmountRecoDiffM
                                                            {

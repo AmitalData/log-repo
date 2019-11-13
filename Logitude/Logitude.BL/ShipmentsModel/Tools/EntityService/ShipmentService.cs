@@ -112,8 +112,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private bool IsLCLEntity;
         private bool IsFCLEntity;
         private ShipmentContainerStatusRepository shipmentContainerStatusRepository;
-        HybridPartnerPM CurrentHybridPartner;
-        
         public ShipmentService(IShipmentsContext objectContext, ShipmentPM entityPM, string serviceContextUser)
         {
             this.entityPM = entityPM;
@@ -148,7 +146,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.shipmentAssemblyRepository = new ShipmentAssemblyRepository(objectContext);
             this.shipmentContainerStatusRepository = new ShipmentContainerStatusRepository(objectContext);
             this.GetLoggedData();
-            this.SetHybridPartner(this.tenant);
         }
         private void GetLoggedData()
         {
@@ -163,11 +160,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.loggedTenant = TenantRepository.GetSingleTenant(tenant, true);
             this.loggedTenant.LogBoxTenantSetting = LogBoxTenantSettingRepository.GetSingleLBTenantSetting(tenant);
         }
-        private void SetHybridPartner(int myTenant)
-        {
-            HybridPartnerQuery HybridPartnerQuery = new HybridPartnerQuery(myTenant);
-            CurrentHybridPartner = HybridPartnerQuery.GetSinglePMByPartnerTenant(myTenant);
-        }
+
         private List<ShipmentPackagePM> shipmentPackagesChangeSet;
         private List<ShipmentOrderPackagePM> shipmentOrderPackagesChangeSet;
         private List<ShipmentPickUpPM> shipmentPickUpsChangeSet;
@@ -181,7 +174,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private List<AWBOCIPM> aWBOCIPMChangeSet;
         private List<ShipmentCommodityPM> shipmentCommoditiesChangeSet;
         private List<ShipmentAssemblyPM> shipmentAssembliesChangeSet;
-       
         public void SetChangeSet(List<ShipmentPackagePM> shipmentPackagesChangeSet, List<ShipmentOrderPackagePM> shipmentOrderPackagesChangeSet, List<ShipmentPickUpPM> shipmentPickUpsChangeSet, List<ShipmentDeliveryPM> shipmentDeliveriesChangeSet, List<ShipmentReceivablePM> shipmentReceivablesChangeSet, List<ShipmentPayablePM> shipmentPayablesChangeSet, List<ShipmentFollowUpPM> shipmentFollowUpsChangeSet, List<ShipmentAWBPrintOnlyPM> shipmentAWBPrintOnliesChangeSet, List<ConsoleShipmentPM> shipmentConsoleShipmentsChangeSet, List<ShipmentCarrierStatusPM> shipmentCarrierStatusesChangeSet, List<AWBOCIPM> aWBOCIPMChangeSet, List<ShipmentCommodityPM> shipmentCommoditiesChangeSet, List<ShipmentAssemblyPM> shipmentAssembliesChangeSet)
         {
             this.shipmentPackagesChangeSet = shipmentPackagesChangeSet;
@@ -3236,7 +3228,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private void AddPaymentReceivedToQueue()
         {
-            if (LogitudeSettings.EnableHybridQueue && (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner))
+            if (LogitudeSettings.EnableHybridQueue)
             {
                 //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 //{

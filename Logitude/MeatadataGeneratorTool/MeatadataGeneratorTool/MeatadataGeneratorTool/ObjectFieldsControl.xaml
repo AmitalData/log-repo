@@ -1082,7 +1082,6 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="220" />
@@ -1278,19 +1277,6 @@
                                   IsChecked="{Binding EnableFullscreenTextBox,
                                                       Mode=TwoWay}" />
 
-                        <TextBlock Grid.Row="24"
-                                   Grid.Column="0"
-                                   VerticalAlignment="Center"
-                                   Text="Display In Automation As Enitity:" />
-
-                        <TextBlock Grid.Row="25"
-                                   Grid.Column="0"
-                                   VerticalAlignment="Center"
-                                   Text="Record Type:" />
-
-
-
-
                         <TextBox Grid.Row="11"
                                  Grid.Column="1"
                                  Height="22"
@@ -1376,30 +1362,9 @@
                                   Margin="2"
                                   VerticalAlignment="Center"
                                   IsChecked="{Binding CanAutomateSetValue,
-                                 
-                     Mode=TwoWay}"  />
-
-
-
-                        <CheckBox Grid.Row="24"
-                                  Grid.Column="1"
-                                  Height="22"
-                                  Margin="2"
-                                  VerticalAlignment="Center"
-                                  IsChecked="{Binding DisplayInAutomationAsEnitity,
                                                       Mode=TwoWay}"  />
 
-
-                        <TextBox Grid.Row="25"
-                                 Grid.Column="1"
-                                 Height="22"
-                                 Margin="2"
-                                 VerticalAlignment="Center"
-                                 Text="{Binding RecordType,
-                                                Mode=TwoWay}" />
-
-
-                        <Border Grid.Row="26"
+                        <Border Grid.Row="24"
                                 Grid.Column="0"
                                 Grid.ColumnSpan="2"
                                 Height="25"
@@ -1414,15 +1379,15 @@
                                        Text="Angular html List Component" />
                         </Border>
 
-                        <TextBlock Grid.Row="27"
+                        <TextBlock Grid.Row="25"
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
                                    Text="HTML List Component Name:" />
-                        <TextBlock Grid.Row="28"
+                        <TextBlock Grid.Row="26"
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
                                    Text="HTML List Component URL:" />
-                        <Border Grid.Row="29"
+                        <Border Grid.Row="27"
                                 Grid.Column="0"
                                 Grid.ColumnSpan="2"
                                 Height="25"
@@ -1436,30 +1401,30 @@
                                        Foreground="#FF282E30"
                                        Text="Default Values" />
                         </Border>
-                        <TextBlock Grid.Row="30"
+                        <TextBlock Grid.Row="28"
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
                                    Text="Default Value:" />
 
-						<TextBlock Grid.Row="31"
+						<TextBlock Grid.Row="29"
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
                                    Text="Generated Component Path:" />
-						<TextBox Grid.Row="27"
+						<TextBox Grid.Row="25"
                                  Grid.Column="1"
                                  Height="22"
                                  Margin="2"
                                  VerticalAlignment="Center"
                                  Text="{Binding HtmlListComponentUrl,
                                                 Mode=TwoWay}" />
-                        <TextBox Grid.Row="28"
+                        <TextBox Grid.Row="26"
                                  Grid.Column="1"
                                  Height="22"
                                  Margin="2"
                                  VerticalAlignment="Center"
                                  Text="{Binding HtmlListComponentName,
                                                 Mode=TwoWay}" />
-                        <TextBox Grid.Row="30"
+                        <TextBox Grid.Row="28"
                                  Grid.Column="1"
                                  Height="22"
                                  Margin="2"
@@ -1467,7 +1432,7 @@
                                  Text="{Binding DefaultValue,
                                                 Mode=TwoWay}" />
 
-						<TextBox Grid.Row="31"
+						<TextBox Grid.Row="29"
                                  Grid.Column="1"
                                  Height="22"
                                  Margin="2"

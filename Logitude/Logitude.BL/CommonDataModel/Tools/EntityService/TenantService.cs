@@ -27,7 +27,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         bool isNewEntity;
         private int tenant;
         public Tenant Poco { get; set; }
-        public LogBoxTenantSetting LBtenantsettingPoco { get; set; }
+
         //public int Tenant
         //{
         //    get { return tenant; }
@@ -43,14 +43,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private TenantPM entityPM;
         private ICommonDataContext objectContext;
         private TenantRepository entityRepository;
-        private LogBoxTenantSettingPM LBTenantSettingentityPM;
-        private LogBoxTenantSettingRepository LBsettingentityRepository;
         public TenantService(ICommonDataContext objectContext, int tenant)
         {
             this.tenant = tenant;
             this.objectContext = objectContext;
             this.entityRepository = new TenantRepository(objectContext);
-            this.LBsettingentityRepository = new LogBoxTenantSettingRepository(objectContext);
         }
 
         public void Create(TenantPM theEntityPm)
@@ -145,8 +142,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             this.Poco = new Tenant();
             this.Poco.Id = this.entityPM.Id;
-            this.LBtenantsettingPoco = new LogBoxTenantSetting();
-            this.LBtenantsettingPoco.Id = this.entityPM.Id;
+
             this.InitializeComponent();
 
             TenantValidating.Validate(theEntityPm);
@@ -159,8 +155,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
 
-            LBsettingentityRepository.Add(LBtenantsettingPoco);
-            LBsettingentityRepository.SubmitChanges();
             //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             //{
             //    TenantManagementLicenseRepository tenantManagementLicenseRepository = new TenantManagementLicenseRepository();

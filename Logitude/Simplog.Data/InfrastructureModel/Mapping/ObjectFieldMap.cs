@@ -54,8 +54,6 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.DisplayInDocumentReferences);
             this.Property(t => t.Code).IsRequired().HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.EnableFullscreenTextBox);
-            this.Property(t => t.RecordType).HasMaxLength(100).IsUnicode(false);
-
 
             // Table & Column Mappings
             this.ToTable("ObjectFields");
@@ -131,8 +129,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.CopyToDW).HasColumnName("CopyToDW");
             this.Property(t => t.DisplayOnLookUpLocal).HasColumnName("DisplayOnLookUpLocal");
             this.Property(t => t.EnableFullscreenTextBox).HasColumnName("EnableFullscreenTextBox");
-            this.Property(t => t.DisplayInAutomationAsEnitity).HasColumnName("DisplayInAutomationAsEnitity");
-            this.Property(t => t.RecordType).HasColumnName("RecordType");
+
 
 
             //#if ORACLE_DB
