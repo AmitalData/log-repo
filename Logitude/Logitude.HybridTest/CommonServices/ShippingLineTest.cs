@@ -1,4 +1,5 @@
 ﻿using System;
+using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Logitude.HybridTest.CommonServices
@@ -15,15 +16,13 @@ namespace Logitude.HybridTest.CommonServices
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
          }
 
-        public static Server.Tools.Response CallShippingLineUpsert()
+        public static Response CallShippingLineUpsert()
         {
-
             ShippingLineServiceReference.ShippingLineWcfServiceClient serviceClient = new ShippingLineServiceReference.ShippingLineWcfServiceClient();
             string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
             serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
-            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)serviceClient.InnerChannel))
+            using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
             {
-
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
                 ShippingLineServiceReference.ShippingLinePM entityPM = new ShippingLineServiceReference.ShippingLinePM()
                 {
@@ -36,8 +35,7 @@ namespace Logitude.HybridTest.CommonServices
                     CarrierTypeId = "SL",
                     Tenant = TestEnvironmentGlobalParameters.Tenant,
                 };
-
-                Logitude.Server.Tools.Response serviceResponse = serviceClient.Upsert(entityPM, false);
+                Response serviceResponse = serviceClient.Upsert(entityPM, false);
                 return serviceResponse;
             }
         }

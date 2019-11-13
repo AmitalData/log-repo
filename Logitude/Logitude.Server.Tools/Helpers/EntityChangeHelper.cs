@@ -175,7 +175,10 @@ namespace Logitude.Server.Tools.Helpers
                     #region Bluid EntityChanges
                     List<Field> automationFieldLists = new List<Field>();
                     AutomationConditionFields automationConditionFields = new AutomationConditionFields();
-                    foreach (ObjectField objectField in automationsObjectFieldLists)
+
+
+
+                    foreach (ObjectField objectField in automationsObjectFieldLists.Where(d => d.ObjectTableId == tableId && !d.DisplayInAutomationAsEnitity))
                     {
                         string objectTableName = shipmentobjectTable != null ? shipmentobjectTable.Name : objectTable != null ? objectTable.Name : "";
                         string currentvalue = GetValue(entityPM, objectField);
@@ -226,6 +229,12 @@ namespace Logitude.Server.Tools.Helpers
                         };
 
                         automationFieldLists.Add(automationConditionField);
+                    }
+
+                    foreach (ObjectField objectField in automationsObjectFieldLists.Where(d =>d.DisplayInAutomationAsEnitity).ToList())
+                    {
+                      
+
                     }
 
                     automationConditionFields.Fields = automationFieldLists;
@@ -449,6 +458,13 @@ namespace Logitude.Server.Tools.Helpers
                         {
                             customObjectFieldLists.Add(objectField);
                         }
+
+                        ObjectField partnerObjectField = objectFieldLists.Where(d => d.Id == automationCondition.PartnerObjectFieldId).FirstOrDefault();
+                        if (partnerObjectField != null && !customObjectFieldLists.Contains(partnerObjectField))
+                        {
+                            customObjectFieldLists.Add(partnerObjectField);
+                        }
+
                     }
                 }
                 #endregion

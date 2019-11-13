@@ -1,4 +1,5 @@
 ﻿using System;
+using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Logitude.HybridTest.CommonServices
@@ -10,20 +11,18 @@ namespace Logitude.HybridTest.CommonServices
         public void Test_SpecialServicesType_UPSERT()
         {
             LoginService.GetLoginTokenByCredentials();
-            Server.Tools.Response serviceResponse = CallSpecialServicesTypeUpsert();
+            Response serviceResponse = CallSpecialServicesTypeUpsert();
             Assert.AreEqual(serviceResponse.HasError, false, serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
          }
 
-        public static Server.Tools.Response CallSpecialServicesTypeUpsert()
+        public static Response CallSpecialServicesTypeUpsert()
         {
-
             SpecialServicesTypeServiceReference.SpecialServicesTypeWcfServiceClient serviceClient = new SpecialServicesTypeServiceReference.SpecialServicesTypeWcfServiceClient();
             string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
             serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
-            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)serviceClient.InnerChannel))
+            using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
             {
-
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
                 SpecialServicesTypeServiceReference.SpecialServicesTypePM entityPM = new SpecialServicesTypeServiceReference.SpecialServicesTypePM()
                 {
@@ -31,9 +30,8 @@ namespace Logitude.HybridTest.CommonServices
                     EnglishName = "Hybrid SpecialServicesType",
                     LocalName = "Hybrid SpecialServicesType",
                     Tenant = TestEnvironmentGlobalParameters.Tenant,
-
                 };
-                Logitude.Server.Tools.Response serviceResponse = serviceClient.Upsert(entityPM, false);
+                Response serviceResponse = serviceClient.Upsert(entityPM, false);
                 return serviceResponse;
             }
         }
