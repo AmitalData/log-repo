@@ -35,7 +35,8 @@ namespace Logitude.HybridTest.CommonServices
                     LocalName = "Hybrid Customer",
                     CityName = "Hybrid City",
                     CountryCode = HybridCodes.CountryCode,
-                    PartnerTypeId = "AG",
+                    PartnerTypeId = "CS",
+                    IsCustomer = true,
                     Tenant = TestEnvironmentGlobalParameters.Tenant,
                 };
 

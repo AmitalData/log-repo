@@ -1,4 +1,5 @@
 ﻿using System;
+using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Logitude.HybridTest.CommonServices
@@ -10,23 +11,43 @@ namespace Logitude.HybridTest.CommonServices
         public void Test_City_UPSERT()
         {
             LoginService.GetLoginTokenByCredentials();
-            Server.Tools.Response countyServiceResponse = CountryTest.CallCountryUpsert();
+            Response countyServiceResponse = CountryTest.CallCountryUpsert();
             Assert.IsFalse(countyServiceResponse.HasError, "Country Upsert Failed! " + countyServiceResponse.ErrorMessage);
             Assert.IsNotNull(countyServiceResponse.Result, "Country Upsert Failed! " + countyServiceResponse.ErrorMessage);
-            Server.Tools.Response serviceResponse = CallCityUpsert();
+            Response serviceResponse = CallCityUpsert();
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
          }
 
-        public static Server.Tools.Response CallCityUpsert()
+        [TestMethod]
+        public void Test_City_GetCityListByCode()
         {
-
+            LoginService.GetLoginTokenByCredentials();
+            Test_City_UPSERT();
             CityServiceReference.CityWcfServiceClient serviceClient = new CityServiceReference.CityWcfServiceClient();
             string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
             serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
-            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)serviceClient.InnerChannel))
+            using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
             {
+                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
+                Response serviceResponse = new Response();
+                string countryCode = HybridCodes.CountryCode;
+                string cityCode = HybridCodes.CityCode;
+                CityServiceReference.CountryCityList serviceResult = serviceClient.GetCityListByCode(cityCode, countryCode, TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
+                string testCityCode = serviceResult.Code;
+                Assert.IsTrue(cityCode == testCityCode, "City Doesn't Exist In Country Cities!");
+                Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
+                Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);
+            }
+        }
 
+        public static Response CallCityUpsert()
+        {
+            CityServiceReference.CityWcfServiceClient serviceClient = new CityServiceReference.CityWcfServiceClient();
+            string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
+            serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
+            using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
+            {
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
                 CityServiceReference.CountryCityPM entityPM = new CityServiceReference.CountryCityPM()
                 {
@@ -37,8 +58,7 @@ namespace Logitude.HybridTest.CommonServices
                     AddedManually = true,
                     Tenant = TestEnvironmentGlobalParameters.Tenant,
                 };
-
-                Logitude.Server.Tools.Response serviceResponse = serviceClient.Upsert(entityPM, false);
+                Response serviceResponse = serviceClient.Upsert(entityPM, false);
                 return serviceResponse;
             }
         }

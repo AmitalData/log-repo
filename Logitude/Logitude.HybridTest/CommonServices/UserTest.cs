@@ -42,6 +42,7 @@ namespace Logitude.HybridTest.CommonServices
                     BranchId = HybridCodes.BranchCode,
                     DepartmentId = HybridCodes.DepartmentCode,
                     Tenant = TestEnvironmentGlobalParameters.Tenant,
+                    DocumentFilingInbox = "HybridInbox"
                 };
 
                 Logitude.Server.Tools.Response serviceResponse = serviceClient.Upsert(entityPM, false);

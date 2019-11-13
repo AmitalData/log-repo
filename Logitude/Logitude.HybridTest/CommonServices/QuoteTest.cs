@@ -19,9 +19,12 @@ namespace Logitude.HybridTest.CommonServices
             Server.Tools.Response agentServiceResponse = AgentTest.CallAgentUpsert();
             Assert.IsFalse(agentServiceResponse.HasError, "Agent Upsert Failed! " + agentServiceResponse.ErrorMessage);
             Assert.IsNotNull(agentServiceResponse.Result, "Agent Upsert Failed! " + agentServiceResponse.ErrorMessage);
-            Server.Tools.Response portServiceResponse = PortTest.CallPortUpsert();
-            Assert.IsFalse(portServiceResponse.HasError, "Port Upsert Failed! " + portServiceResponse.ErrorMessage);
-            Assert.IsNotNull(portServiceResponse.Result, "Port Upsert Failed! " + portServiceResponse.ErrorMessage);
+            Server.Tools.Response fromPortServiceResponse = PortTest.CallFromPortUpsert();
+            Assert.IsFalse(fromPortServiceResponse.HasError, "From Port Upsert Failed! " + fromPortServiceResponse.ErrorMessage);
+            Assert.IsNotNull(fromPortServiceResponse.Result, "From Port Upsert Failed! " + fromPortServiceResponse.ErrorMessage);
+            Server.Tools.Response toPortServiceResponse = PortTest.CallToPortUpsert();
+            Assert.IsFalse(toPortServiceResponse.HasError, "To Port Upsert Failed! " + toPortServiceResponse.ErrorMessage);
+            Assert.IsNotNull(toPortServiceResponse.Result, "To Port Upsert Failed! " + toPortServiceResponse.ErrorMessage);
             Server.Tools.Response userServiceResponse = UserTest.CallUserUpsert();
             Assert.IsFalse(userServiceResponse.HasError, "User Upsert Failed! " + userServiceResponse.ErrorMessage);
             Assert.IsNotNull(userServiceResponse.Result, "User Upsert Failed! " + userServiceResponse.ErrorMessage);
@@ -43,22 +46,23 @@ namespace Logitude.HybridTest.CommonServices
                 QuoteServiceReference.QuotePM entityPM = new QuoteServiceReference.QuotePM()
                 {
                     QuoteNumber = "Hybrid Quote",
-                    TransportModeId = "A",
-                    DirectionId = "I",
+                    TransportModeId = "A", //A:Air, O:Occean, I:Inland
+                    DirectionId = "I", //I:Import, E:Export, D:Drop, R:Drop, C:Customs Import
                     BranchId = HybridCodes.BranchCode,
                     DepartmentId = HybridCodes.DepartmentCode,
                     CustomerId = HybridCodes.AgentCode,
-                    FromPortId = HybridCodes.PortCode,
-                    ToPortId = HybridCodes.PortCode,
-                    QuoteTypeCode = "A",
+                    FromPortId = HybridCodes.FromPortCode,
+                    ToPortId = HybridCodes.ToPortCode,
+                    QuoteTypeCode = "A", //A:Spot Rate, P:Routing Rate
                     ExchangeRate = 1,
                     CreatedByUserId = HybridCodes.UserCode,
                     UpdatedByUserId = HybridCodes.UserCode,
                     OpenDate = DateTime.Now,
                     UpdateDate = DateTime.Now,
-                    QuoteCustomerTypeCode = "CON",
+                    QuoteCustomerTypeCode = "CON", //CON:Consignee, AGT:Agent, SHI:Shipper, NOT:Notify, OTH:Other
                     SaleCurrencyId = HybridCodes.CurrencyCode,
                     Tenant = TestEnvironmentGlobalParameters.Tenant,
+                    BusinessUnitId = TestEnvironmentGlobalParameters.Tenant.ToString(),
                 };
 
                 Logitude.Server.Tools.Response serviceResponse = serviceClient.Upsert(entityPM, false);
