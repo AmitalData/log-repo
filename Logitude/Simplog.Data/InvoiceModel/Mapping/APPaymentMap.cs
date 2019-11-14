@@ -124,6 +124,34 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.BankAccountId)
                 .HasMaxLength(15).IsUnicode(true);
 
+
+
+
+        //public string VendorBankAddress { get; set; }
+        //public string VendorBankName { get; set; }
+        //public string VendorBankAccountNumber { get; set; }
+        //public string VendorSwift { get; set; }
+        //public string VendorIBANNumber { get; set; }
+
+
+            this.Property(t => t.VendorBankAddress)
+                .HasMaxLength(100)
+                .IsUnicode(true);
+
+            this.Property(t => t.VendorBankName)
+                .HasMaxLength(40)
+                .IsUnicode(true);
+
+            this.Property(t => t.VendorBankAccountNumber)
+                .HasMaxLength(25)
+                .IsUnicode(false);
+
+            this.Property(t => t.VendorSwift)
+                .HasMaxLength(20).IsUnicode(false);
+
+            this.Property(t => t.VendorIBANNumber)
+                .HasMaxLength(30).IsUnicode(true);
+     
             // Table & Column Mappings
             this.ToTable("APPayments");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -169,6 +197,12 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.ApprovedDateTime).HasColumnName("ApprovedDateTime");
             this.Property(t => t.BankAccountId).HasColumnName("BankAccountId");
             this.Property(t => t.FirstApproveDate).HasColumnName("FirstApproveDate");
+
+            this.Property(t => t.VendorBankAddress).HasColumnName("VendorBankAddress");
+            this.Property(t => t.VendorBankName).HasColumnName("VendorBankName");
+            this.Property(t => t.VendorBankAccountNumber).HasColumnName("VendorBankAccountNumber");
+            this.Property(t => t.VendorSwift).HasColumnName("VendorSwift");
+            this.Property(t => t.VendorIBANNumber).HasColumnName("VendorIBANNumber");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

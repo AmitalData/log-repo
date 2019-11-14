@@ -71,8 +71,13 @@ namespace WebFreight.Web.ReportsWebServices
                                       where obj.Name == "APPayment" 
                                       select obj).FirstOrDefault();
                 apPaymentDataProvider.CreateDate = currentPayment.CreateDate;
-               
-                if(bankAccount != null)
+                apPaymentDataProvider.VendorBankName = currentPayment.VendorBankName;
+                apPaymentDataProvider.VendorBankAddress = currentPayment.VendorBankAddress;
+                apPaymentDataProvider.VendorSwift = currentPayment.VendorSwift;
+                apPaymentDataProvider.VendorBankAccountNumber = currentPayment.VendorBankAccountNumber;
+                apPaymentDataProvider.VendorIBANNo = currentPayment.VendorIBANNumber;
+
+                if (bankAccount != null)
                 {
                     if (loggedContact.DontShowLocalLabels)
                     {
@@ -143,11 +148,11 @@ namespace WebFreight.Web.ReportsWebServices
                         apPaymentDataProvider.PaidToVatNo = paidToCard.VatNumber != null ? paidToCard.VatNumber : "";
                         apPaymentDataProvider.IRSPlace = paidToCard.IRSPlace;
                         apPaymentDataProvider.IRSNumber = paidToCard.IRSNumber;
-                        apPaymentDataProvider.VendorBankName = paidToCard.BankName;
-                        apPaymentDataProvider.VendorBankAddress = paidToCard.BankAddress;
-                        apPaymentDataProvider.VendorSwift = paidToCard.Swift;
-                        apPaymentDataProvider.VendorBankAccountNumber = paidToCard.AccountNumber;
-                        apPaymentDataProvider.VendorIBANNo = paidToCard.IBANNumber;
+                        //apPaymentDataProvider.VendorBankName = paidToCard.BankName;
+                        //apPaymentDataProvider.VendorBankAddress = paidToCard.BankAddress;
+                        //apPaymentDataProvider.VendorSwift = paidToCard.Swift;
+                        //apPaymentDataProvider.VendorBankAccountNumber = paidToCard.AccountNumber;
+                        //apPaymentDataProvider.VendorIBANNo = paidToCard.IBANNumber;
                         apPaymentDataProvider.ClientNumber = paidToCard.Code; //client number
                         apPaymentDataProvider.PaidToName = paidToCard.EnglishName;
                         apPaymentDataProvider.BankAddress = paidToCard.BankAddress;

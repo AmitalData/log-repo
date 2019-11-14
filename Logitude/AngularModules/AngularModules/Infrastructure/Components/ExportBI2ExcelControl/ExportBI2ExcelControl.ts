@@ -42,7 +42,6 @@ export class ExportBI2ExcelControl {
     reportId: string;
     userid: string;
     BIReportXMLData: BIReportXMLData = null;
-
     SetWindowArgs(args: any) {
         this.queryId = args.queryId;
         this.reportId = args.reportId;
@@ -71,29 +70,13 @@ export class ExportBI2ExcelControl {
                     messageWindow.Show(myResponse.ErrorsArray[0]);
                 }
             }
-
-            //if (!myResponse.HasError) {
-            //    if (myResponse.Result == "Faild") {
-            //        this.btnRetryVisibile = true;
-            //        this.busyExportingVisibile = false;
-            //        this.btnSaveToFileVisibile = false;
-            //    }
-            //    else {
-            //        this.FileName = myResponse.Result;
-            //        this.btnRetryVisibile = false;
-            //        this.busyExportingVisibile = false;
-            //        this.btnSaveToFileVisibile = true;
-            //    }
-            //}
-
         });
     }
 
-    //Stimul Soft Report Timer
+    //BI Report Timer
     initializeStartCheckBIReportBliudViaWorkerRoleTimer() {
         return Observable.interval(2000).timeInterval();
     }
-
 
     IsStartTimerWaitingFirstStimulReportBuildRunning: boolean = false;
     initializeStartTimerWaitingFirstStimulReportBuild() {
@@ -264,7 +247,6 @@ export class ExportBI2ExcelControl {
             }
         });
     }
-
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }

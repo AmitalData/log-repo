@@ -35,6 +35,11 @@ import { FullAccountingSettingPMService } from '../../../../Accounting/Services/
 import { PaymentChequeExtendedPMService } from '../../../../Accounting/Services/ExtendedPMs/PaymentChequeExtendedPMService';
 import { GLAccountListService } from '../../../../Accounting/Services/StandardLists/GLAccountListService';
 import { GLAccountList } from '../../../../Accounting/EntityLists/GLAccountList';
+import { CardPMService } from '../../../../Common/Services/StandardPMs/CardPMService';
+import { CardPM } from '../../../../Common/EntityPMs/CardPM';
+import { AgentPM } from '../../../../Common/EntityPMs/AgentPM';
+import { AgentPMService } from '../../../../Common/Services/StandardPMs/AgentPMService';
+import { APPaymentPMService } from '../../../../Invoice/Services/StandardPMs/APPaymentPMService';
 
 @Component({
     moduleId: module.id,
@@ -701,7 +706,6 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 else {
                     this.UIProperties.SetEnabled("VendorAddressId", this.ObjectTableName, true);
                 }
-
                 this.GetCardProperties();
                 this.LoadData();
                 this.IsTaxUpdated = true;
@@ -736,9 +740,22 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             this.deductionFileNumber = null;
             this.VendorAddressId = null;
             this.PaymentCurrencyId = SessionLocator.TenantPM.CurrencyId;
+            this.VendorAddressId = null;
+            this.EntityPM.VendorBankAddress = null;
+            this.EntityPM.VendorIBANNumber = null;
+            this.EntityPM.VendorBankAccountNumber = null;
+            this.EntityPM.VendorSwift = null;
+            this.EntityPM.VendorBankName = null;
         }
         else {
             this.GLAccountId = list.GLAccountId;
+
+            this.EntityPM.VendorBankAddress = list.BankAddress;
+            this.EntityPM.VendorIBANNumber = list.IBANNumber;
+            this.EntityPM.VendorBankAccountNumber = list.AccountNumber;
+            this.EntityPM.VendorSwift = list.Swift;
+            this.EntityPM.VendorBankName = list.BankName;
+
             if (!AppTool.IsNullOrEmpty(list.InvoiceCurrencyId)) {
                 this.PaymentCurrencyId = list.InvoiceCurrencyId;
             }
@@ -749,7 +766,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 this.EntityPM.VendorName = list.LocalName;
             }
             this.EntityPM.VendorPartnerTypeId = list.PartnerTypeId;
-            this.LoadAddress();
+            this.LoadAddressAndGeneralTab();
 
 
             if(this.IsFullAccounting)
@@ -785,7 +802,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         }
     }
 
-    private LoadAddress() {
+    private LoadAddressAndGeneralTab() {
         this.PartnersDomainService.GetBillingOrMainAddressListByCardId(this.EntityPM.VendorId).subscribe((resp: any) => {
             if (resp != null) {
                 var address = resp;

@@ -48,6 +48,13 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string TransferStatusCode { get; set; }
         public string TransferError { get; set; }
 
+        public string VendorBankAddress { get; set; }
+        public string VendorBankName { get; set; }
+        public string VendorBankAccountNumber { get; set; }
+        public string VendorSwift { get; set; }
+        public string VendorIBANNumber { get; set; }
+
+
         public Decimal? TaxDeductionLocalAmount { get; set; }
         public int? TaxDeductionPercentage { get; set; }
         public string ApprovedByUserId { get; set; }
