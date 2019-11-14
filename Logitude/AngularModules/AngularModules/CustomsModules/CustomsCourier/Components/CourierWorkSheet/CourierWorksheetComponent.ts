@@ -1367,7 +1367,7 @@ implements OnDestroy
 
 
     getCourierPendingReasonName(courierPendingReason: string) {
-        var toolTip = courierPendingReason
+        var toolTip = courierPendingReason;
         if (!AppTool.IsNullOrEmpty(toolTip) && toolTip.indexOf(',') < 0) {
 
             var myCourierPendingReasonListService = new CourierPendingReasonListService();
