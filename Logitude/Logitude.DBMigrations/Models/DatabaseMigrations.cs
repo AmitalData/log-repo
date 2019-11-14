@@ -356,10 +356,7 @@ namespace Logitude.DBMigrations.Models
             return Regex.Replace(Convert.ToBase64String(Guid.NewGuid().ToByteArray()), "[/+=]", "").ToUpper();
         }
 
-
-
-
-        // abstract Classes 
+        // abstract methods
         protected abstract TableDefinition GetCurrentTableDefinitionFromDB();
 
         protected abstract string GetCreateTableScript();
@@ -371,6 +368,5 @@ namespace Logitude.DBMigrations.Models
         protected abstract string GetDataTypeScript(string type, int size);
 
         protected abstract TableDefinition GetCurrentTableDefinitionFromDB(string tableName);
-
     }
 }
