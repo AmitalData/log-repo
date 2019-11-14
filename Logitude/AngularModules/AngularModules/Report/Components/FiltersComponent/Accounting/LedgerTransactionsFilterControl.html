@@ -139,26 +139,43 @@
                                         <tr>
                                             <td style="width:120px">
                                                 <LogLabel [ObjectFieldName]="'GLAccountId'"
-                                                    [Text]="'GLTransactionReport.O.GLAccountNo' | TextCodeTranslationPipe"
-                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                          [Text]="'GLTransactionReport.O.GLAccountNo' | TextCodeTranslationPipe"
+                                                          [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
                                                 </LogLabel>
                                             </td>
 
                                             <td style="width:170px">
                                                 <LogLov [ObjectFieldName]="'GLAccountId'"
-                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                                    [LookUpTableName]="'GLAccount'"
-                                                    (SelectedItemChanged)="GLAccount = $event" [ForceShowAddLink]="true"
-                                                    [HideAddLink]="true" [HideColumns]="true">
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                                        [LookUpTableName]="'GLAccount'"
+                                                        (SelectedItemChanged)="GLAccount = $event" [ForceShowAddLink]="true"
+                                                        [HideAddLink]="true" [HideColumns]="true">
                                                 </LogLov>
                                             </td>
+
+
+                                            <td style="width:120px">
+                                                <LogLabel [ObjectFieldName]="'ChartOfAccountId'"
+                                                          [Text]="'GLTransactionReport.O.GLAccountNo' | TextCodeTranslationPipe"
+                                                          [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                </LogLabel>
+                                            </td>
+
+                                            <td style="width:170px">
+                                                <LogLov [ObjectFieldName]="'ChartOfAccountId'"
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                                        [LookUpTableName]="'ChartOfAccount'"
+                                                        (SelectedItemChanged)="ChartOfAccount = $event" [ForceShowAddLink]="true"
+                                                        [HideAddLink]="true" [HideColumns]="true">
+                                                </LogLov>
+                                            </td>
+
+
                                             <td>
                                                 <div></div>
                                             </td>
                                             <td>
-                                            <td>
-
-                                            </td>
+                                            <td></td>
 
                                         </tr>
                                     </table>
