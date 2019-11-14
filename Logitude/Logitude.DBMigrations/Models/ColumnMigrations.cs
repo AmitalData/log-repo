@@ -9,10 +9,7 @@ namespace Logitude.DBMigrations.Models
     public class ColumnMigrations
     {
         public int MigrationType { get; set; }
-        public string ColumnName { get; set; }
-        public string NewColumnName { get; set; }
-        public string NewColumnType { get; set; }
-        public int NewColumnSize { get; set; }
-        public ConstraintsDefinition NewConstraints { get; set; }
+        public ColumnMigrationsDefinition CurrentColumn { get; set; }
+        public ColumnMigrationsDefinition NewColumn { get; set; }//from dxml
     }
 }

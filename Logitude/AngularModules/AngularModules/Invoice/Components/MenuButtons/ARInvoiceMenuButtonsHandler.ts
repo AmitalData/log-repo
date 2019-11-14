@@ -1175,11 +1175,25 @@ export class ARInvoiceMenuButtonsHandler {
 
                     this.entityArgs.EditComponent.StartBusyIndicator("Updating Shipments...");
 
-                    this.CheckBatchTaskExecution(this.EntityPM.BatchTaskExecutionId);
+                    this.StopTimer();
+
+                    this.timer = setInterval(() => {
+                        this.CheckBatchTaskExecution(this.EntityPM.BatchTaskExecutionId);
+                    }, this.timerInterval);
+                    
                 }                
             }
         });
     }
+
+    timer: any;
+    timerInterval: number = 1000;
+    StopTimer() {
+        if (this.timer) {
+            clearInterval(this.timer);
+        }
+    }
+
     CheckBatchTaskExecution(BatchTaskExecutionId: string) {
 
         var iBatchService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
@@ -1189,6 +1203,8 @@ export class ARInvoiceMenuButtonsHandler {
                 var list: BatchTaskExecutionList = myResponse.Result;
 
                 if (list.StatusCode == "D") {
+
+                    this.StopTimer();
 
                     this.EntityPM = this.savedConsolidationEntity;
 
@@ -1203,18 +1219,20 @@ export class ARInvoiceMenuButtonsHandler {
                 }
 
                 else if (list.StatusCode == "F") {
+
+                    this.StopTimer();
+
                     this.entityArgs.EditComponent.StopBusyIndicator();
 
                     var window = new MessageWindow();
                     window.Show("There was an error updating shipments and saving the invoice. Please try again later");
                 }
-
-                else {
-                    this.CheckBatchTaskExecution(BatchTaskExecutionId);
-                }
             }
 
             else {
+
+                this.StopTimer();
+
                 this.entityArgs.EditComponent.StopBusyIndicator();
                 var window = new MessageWindow();
                 window.Show(myResponse.ErrorsArray[0]);

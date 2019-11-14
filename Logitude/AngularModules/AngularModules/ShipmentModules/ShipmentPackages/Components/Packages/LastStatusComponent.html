@@ -1,3 +1,4 @@
+
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -24,27 +25,6 @@
                         </log-cell-template>
                     </log-column>
 
-                    <!-- Departure -->
-                    <log-column [width]="'250'" [header]="'Departure'">
-                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                            {{item.DepartureDate | DateTimePipe:'DT'}} {{item.DepartureDateInfo}}
-                        </log-cell-template>
-                    </log-column>
-
-                    <!-- Arrival -->
-                    <log-column [width]="'250'" [header]="'Arrival'">
-                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                            {{item.ArrivalDate | DateTimePipe:'DT'}} {{item.ArrivalDateInfo}}
-                        </log-cell-template>
-                    </log-column>
-
-                    <!-- Vessel / Voyage -->
-                    <log-column [width]="'250'" [header]="'Vessel / Voyage'">
-                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                            {{item.VesselName}} / {{item.VoyageNumber}}
-                        </log-cell-template>
-                    </log-column>
-
                     <!-- Event Date -->
                     <log-column [width]="'140'" [header]="'Event Date'">
                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
@@ -58,6 +38,34 @@
                             {{item.ReceivingDate | DateTimePipe:'DT'}}
                         </log-cell-template>
                     </log-column>
+
+                    <!-- Vessel / Voyage -->
+                    <log-column [width]="'250'" [header]="'Vessel / Voyage'">
+                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                            {{item.VesselName}} / {{item.VoyageNumber}}
+                        </log-cell-template>
+                    </log-column>
+
+                    <!-- Departure / Arrival Date -->
+                    <log-column [width]="'250'" [header]="'Departure / Arrival Date'">
+                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                            {{item.DepartureArrivalDateInfo}} : {{item.DepartureArrivalDate | DateTimePipe:'DT'}}
+                        </log-cell-template>
+                    </log-column>
+
+                    <!-- Departure -->
+                    <!--<log-column [width]="'250'" [header]="'Departure'">
+                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                            {{item.DepartureDate | DateTimePipe:'DT'}} {{item.DepartureDateInfo}}
+                        </log-cell-template>
+                    </log-column>-->
+                    <!-- Arrival -->
+                    <!--<log-column [width]="'250'" [header]="'Arrival'">
+                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                            {{item.ArrivalDate | DateTimePipe:'DT'}} {{item.ArrivalDateInfo}}
+                        </log-cell-template>
+                    </log-column>-->
+
                 </logitude-edit-grid>
             </div>
         </td>

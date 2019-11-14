@@ -48,6 +48,7 @@
     <Compile Include="Helpers\AppHelper.cs" />
     <Compile Include="Models\ColumnDefinition.cs" />
     <Compile Include="Models\ColumnMigrations.cs" />
+    <Compile Include="Models\ColumnMigrationsDefinition.cs" />
     <Compile Include="Models\ConstraintsDefinition.cs" />
     <Compile Include="Models\SQLDatabaseMigrations.cs" />
     <Compile Include="Models\DatabaseMigrations.cs" />

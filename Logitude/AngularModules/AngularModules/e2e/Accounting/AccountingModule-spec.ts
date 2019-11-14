@@ -11,10 +11,11 @@ describe('Accounting Module', () => {
             
         });
     }
-    //else if (browser.params.Accounting.AccountingType == 'ARP') {
-    //    it('AR Payment Success', function () {
-    //        browser.ignoreSynchronization = true;
+    else if (browser.params.Accounting.AccountingType == 'ARP') {
+        it('AR Payment Success', function () {
+            browser.ignoreSynchronization = true;
+            accountingComp.DoAccounting(browser.params.Accounting.AccountingType);
 
-    //    });
-    //} 
+        });
+    } 
 });
