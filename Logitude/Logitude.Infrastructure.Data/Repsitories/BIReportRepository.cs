@@ -21,10 +21,15 @@ namespace Logitude.Infrastructure.Data.Repsitories
 			throw new NotImplementedException();
         }
 
+        public bool DoesReportExist(string name,string folderId, int tenant)
+        {
+            return (from a in context.BIReports
+                    where a.Name == name.ToLower() && a.BIReportFolderId == folderId && a.Tenant == tenant
+                    select a).Any();
+        }
 
 
-
-   }
+    }
 
 }
    
