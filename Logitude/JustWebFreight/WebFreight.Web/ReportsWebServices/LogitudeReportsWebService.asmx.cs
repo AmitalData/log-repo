@@ -10983,7 +10983,7 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
             QueryFilterItem filterItem_GLAccountId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "GLAccountId").FirstOrDefault();
             QueryFilterItem filterItem_AccountTypeCode = queryOperations.QueryFilterItems.Where(d => d.FieldName == "AccountTypeCode").FirstOrDefault();
-            QueryFilterItem filterItem_ChartOfAccountsId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ChartOfAccountsId").FirstOrDefault();
+            QueryFilterItem filterItem_ChartOfAccountsId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ChartOfAccountId").FirstOrDefault();
             QueryFilterItem filterItem_CurrencyId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CurrencyId").FirstOrDefault();
             QueryFilterItem filterItem_IsReconciled = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IsReconciled").FirstOrDefault();
             QueryFilterItem filterItem_IncludeChildAccounts = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeChildAccounts").FirstOrDefault();
