@@ -110,14 +110,22 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
 
         }
     }
+    private chartOfAccountId: string;
+    get ChartOfAccountId() { return this.chartOfAccountId; }
+    set ChartOfAccountId(value: string) {
+        if (this.chartOfAccountId != value) {
+            this.chartOfAccountId = value;
 
-    //private chartOfAccount: string;
-    //public get ChartOfAccount() { return this.chartOfAccount; }
-    //public set ChartOfAccount(value: string) {
-    //    if (this.chartOfAccount != value) {
-    //        this.chartOfAccount = value;
-    //    }
-    //}
+            this.UIProperties.SetRequired("GLAccountId", this.ObjectTableName, !value);
+        }
+    }
+    private chartOfAccount: string;
+    public get ChartOfAccount() { return this.chartOfAccount; }
+    public set ChartOfAccount(value: string) {
+        if (this.chartOfAccount != value) {
+            this.chartOfAccount = value;
+        }
+    }
 
     private numberOfMonths: number;
     public get NumberOfMonths() { return this.numberOfMonths; }
@@ -272,6 +280,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
             myFilterItems.push(new QueryFilterItem("FromDate", this.FromDate ? this.FromDate : null));
             myFilterItems.push(new QueryFilterItem("ToDate", this.ToDate ? this.ToDate : null));
             myFilterItems.push(new QueryFilterItem("GLAccountId", this.GLAccountId ? this.GLAccountId : null));
+            myFilterItems.push(new QueryFilterItem("ChartOfAccountId", this.ChartOfAccountId ? this.ChartOfAccountId : null));
             myFilterItems.push(new QueryFilterItem("CurrencyId", this.CurrencyId ? this.CurrencyId : null));
             if (!this.AttachedGLAccountCheckBox) {
                 this.IsReconciled = false;

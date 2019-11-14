@@ -431,7 +431,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
         windowArgs.AutomationHistoryPM = item;
 
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 700;
+        logWindow.Width = 820;
         logWindow.Height = 560;
         logWindow.IsShowCloseButton = true;
         logWindow.Title = "View Automation";
@@ -924,7 +924,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
 
     ViewDelayAutomationconditionsButtonClicked() {
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 700;
+        logWindow.Width = 820;
         logWindow.Height = 500;
         logWindow.IsShowCloseButton = true;
         logWindow.DataContext = this;

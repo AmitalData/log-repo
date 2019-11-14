@@ -725,8 +725,9 @@ namespace WebFreight.Web.Helpers
 
 
 
-        public void BuildStimulReport(ReportFliter reportFliter)
+        public string BuildStimulReport(ReportFliter reportFliter)
         {
+            string result = string.Empty;
             if (reportFliter != null)
             {
                 byte[] filters = GetReportFilters(reportFliter.QueryFilterItemLists);
@@ -738,9 +739,10 @@ namespace WebFreight.Web.Helpers
                 if (template == null) throw new Exception("Report Template is missing");
                 else
                 {
-                    GetReportStimulsoftViewer(reportDataProvider, template, reportFliter);
+                    result = GetReportStimulsoftViewer(reportDataProvider, template, reportFliter);
                 }
             }
+            return result;
         }
 
 

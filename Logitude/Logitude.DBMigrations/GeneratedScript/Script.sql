@@ -1,4 +1,3 @@
-ALTER TABLE Cities ADD MyCode VARCHAR(6) NOT NULL
 
 ----------------------------------------------
 

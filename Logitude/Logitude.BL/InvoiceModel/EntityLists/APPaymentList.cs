@@ -61,5 +61,11 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string BankAccountId { get; set; }
         public DateTime? FirstApproveDate { get; set; }
 
+        public string VendorBankAddress { get; set; }
+        public string VendorBankName { get; set; }
+        public string VendorBankAccountNumber { get; set; }
+        public string VendorSwift { get; set; }
+        public string VendorIBANNumber { get; set; }
+
     }
 }
