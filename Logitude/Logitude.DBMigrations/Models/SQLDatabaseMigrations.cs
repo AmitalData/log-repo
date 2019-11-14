@@ -70,7 +70,9 @@ namespace Logitude.DBMigrations.Models
             return alterTableScript;
         }
 
-        protected override string GetColumnMigrationScript(string tableName, ColumnMigrations columnMigration, List<ColumnMigrations> columnMigrations)
+        //
+
+        protected override string GetColumnMigrationScript(string tableName, ColumnMigration columnMigration, List<ColumnMigration> columnMigrations)
         {
             switch (columnMigration.MigrationType)
             {
@@ -125,28 +127,7 @@ namespace Logitude.DBMigrations.Models
                 default:
                     return null;
             }
-
-            //string columnMigrationScript = "ALTER TABLE " + tableName + " ";
-            //if(columnMigrations.MigrationType == MigrationTypes.ADDCOLUMN)
-            //{
-            //    columnMigrationScript += "ADD " + columnMigrations.ColumnName + " ";
-            //    columnMigrationScript += GetDataTypeScript(columnMigrations.NewColumnType, columnMigrations.NewColumnSize);
-            //    columnMigrationScript += GetConstraintsScript(columnMigrations.NewConstraints);
-            //}
-            //else if(columnMigrations.MigrationType == MigrationTypes.ALTERCOLUMN)
-            //{
-            //    columnMigrationScript += "ALTER COLUMN " + columnMigrations.ColumnName + " ";
-            //    columnMigrationScript += GetDataTypeScript(columnMigrations.NewColumnType, columnMigrations.NewColumnSize);
-            //    columnMigrationScript += GetConstraintsScript(columnMigrations.NewConstraints);
-            //}
-            //else
-            //{
-            //    columnMigrationScript += "DROP COLUMN " + columnMigrations.ColumnName;
-            //}
-            //columnMigrationScript += "\n";
-            //return columnMigrationScript;
         }
-
 
         protected override string GetDataTypeScript(string type, int size)
         {
