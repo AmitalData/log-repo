@@ -569,14 +569,14 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
 
         private void ValidateSurchargeUniqueSeller(TariffPM entityPM)
         {
-            if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC")
+            if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC" || entityPM.TypeCode == "OFS")
             {
                 ITariffModuleContext iContext = TariffModuleContext.GetContext(entityPM.Tenant);
                 int iCount = (from d in iContext.Tariffs
                               where d.Tenant == entityPM.Tenant
                               && d.Id != entityPM.Id
                               && d.SellerId == entityPM.SellerId
-                              && (d.TypeCode == "ASC" || d.TypeCode == "OSC")
+                              && (d.TypeCode == "ASC" || d.TypeCode == "OSC" || entityPM.TypeCode == "OFS")
                               select d).Count();
 
                 if (iCount >= 1)

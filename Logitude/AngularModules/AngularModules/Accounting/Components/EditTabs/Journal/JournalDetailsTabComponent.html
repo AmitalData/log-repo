@@ -465,7 +465,7 @@
                                                     <span>{{item.LocalAmount | NumbersPipe:'N2'}}</span>
                                                 </div>
                                                 <div *ngIf="logcelltemplate.IsEditMode">
-                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'LocalAmount'" [InputType]="'sigdouble'" [DataContext]="item"
+                                                    <LogTextBox [DigitsAfterPoint]="2" [FocusOnMe]="'true'" [ObjectFieldName]="'LocalAmount'" [InputType]="'sigdouble'" [DataContext]="item"
                                                                 [Text]="item.LocalAmount" [ObjectTableName]="'JournalLine'" [HideColumns]="true"></LogTextBox>
                                                 </div>
                                             </div>
@@ -513,7 +513,7 @@
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
 
-                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'ForeignAmount'" [InputType]="'sigdouble'" [DataContext]="item"
+                                                <LogTextBox [DigitsAfterPoint]="2" [FocusOnMe]="'true'" [ObjectFieldName]="'ForeignAmount'" [InputType]="'sigdouble'" [DataContext]="item"
                                                             [ObjectTableName]="'JournalLine'" [HideColumns]="true"></LogTextBox>
 
                                             </div>
