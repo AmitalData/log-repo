@@ -130,6 +130,14 @@ namespace Simplog.Server.Infrastructure.Helpers
             return res;
 
         }
+
+        public object GetEntityByObjectTableNameAndEntityId(string entityName, string entityId, int tenant)
+        {
+            return _HtmlEditorHelper().GetEntity(entityName, entityId, tenant);
+        }
+
+
+
     }
 
     public interface IByteCompressorUtil
@@ -148,6 +156,8 @@ namespace Simplog.Server.Infrastructure.Helpers
     {
         //string SendEmailOutActivityForEntity(byte[] htmlData, byte[] textData, int tenant, string toEmail, string subject, string cc, string bcc, string userId, string myEntityId, string customerId, string objectTableId, string attachments, string entityReference, string documentTypeCode, string eventTypeCode);
         string SendHtmlDocument(byte[] htmlData, string internalDocumentId, string externalDocumentId, int tenant, string toEmail, string subject, string cc, string bcc, string userId, string entityId, string objectTableId, string attachments, string entityReference, string from, string replyTo);
+        object GetEntity(string entityName, string entityId, int tenant);
+
     }
 }
 

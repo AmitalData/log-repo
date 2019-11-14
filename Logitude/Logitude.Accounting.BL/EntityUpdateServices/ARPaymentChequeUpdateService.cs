@@ -172,7 +172,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                       
                         moreDataPM.ChangeSetOp = ChangeSetOperation.Update;
                         updateService.Update(moreDataPM, true);
-                        SubmitChanges();
+                     //   SubmitChanges();
                     }
                 }
 
