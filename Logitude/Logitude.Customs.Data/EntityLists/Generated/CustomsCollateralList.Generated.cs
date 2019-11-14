@@ -55,6 +55,8 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public bool IncludingThirdPartyGuarantee  { get; set; }
        [DataMember]
+       public string DeclarationId  { get; set; }
+       [DataMember]
        public string SearchFields  { get; set; }
        [DataMember]
        public string CustomsHouseTypeName  { get; set; }

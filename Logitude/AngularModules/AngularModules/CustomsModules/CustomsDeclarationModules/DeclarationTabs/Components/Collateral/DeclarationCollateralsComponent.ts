@@ -1,6 +1,6 @@
 declare var System: any;
 declare var window: any;
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, EventEmitter } from '@angular/core';
 import { AppTool, ArrayTool } from '../../../../../Infrastructure/Tools';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { FeatureLocator } from '../../../../../Infrastructure/Utilities/FeatureLocator';
@@ -18,6 +18,9 @@ import { ObservableCollection } from '../../../../../Infrastructure/Utilities/Ob
 import { CustomsCollateralPM } from '../../../../../Customs/EntityPMs/CustomsCollateralPM';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 import { CustomsCollateralPMService } from '../../../../../Customs/Services/StandardPMs/CustomsCollateralPMService';
+import { EntityListService } from '../../../../../Infrastructure/Services/EntityListService';
+import { ApiQueryFilters } from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { CustomsCollateralList } from '../../../../../Customs/EntityLists/CustomsCollateralList';
 
 @Component({
   moduleId: module.id,
@@ -36,6 +39,8 @@ export class DeclarationCollateralsComponent extends BaseComponent implements On
 
   IsLoaded: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public NewView: boolean = true;
+    
   constructor(private entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
     super();
     this.collateralObslist = new ObservableCollection([]);
@@ -45,7 +50,15 @@ export class DeclarationCollateralsComponent extends BaseComponent implements On
         this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsCondition").subscribe((response: any) => {
           this.EntityPM = this.entityArgs.EntityPM;
           this.LoadDeclarationCollateralsList();
-          this.Listen();
+            this.Listen();
+
+            this.BuildColumns();
+            
+            setTimeout(() => {
+                this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+            }, 10);
+
+
           this.IsLoaded = true;
         });
       });
@@ -58,7 +71,8 @@ export class DeclarationCollateralsComponent extends BaseComponent implements On
 
   ngOnDestroy() {
     console.log("DeclarationCollateralsComponent:ngOnDestroy");
-    this.entityArgs = null;
+      this.entityArgs = null;
+      
   }
   private Listen() {
     if (this.CurrentSession.CurrentEditComponent != null) {
@@ -94,7 +108,11 @@ export class DeclarationCollateralsComponent extends BaseComponent implements On
     }
   }
 
-  private LoadDeclarationCollateralsList() {
+    private LoadDeclarationCollateralsList() {
+        if (this.NewView) {
+            //this._DeclarationCollateralsVListView.MenuHeaderchangeevent()
+            return; 
+        }
     this.collateralObslist = new ObservableCollection([]);
 
     this._DeclarationWebService.GetDeclarationCollateralsList(this.EntityPM.Id, this.EntityPM.Tenant)
@@ -116,7 +134,7 @@ export class DeclarationCollateralsComponent extends BaseComponent implements On
     this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
   }
 
-  EditButtonClicked(item: CustomsCollateralPM) {
+  EditButtonClicked(item: /*CustomsCollateralPM*/ any) {
     if (!AppTool.IsNullOrEmpty(item)) {
       this._CustomsCollateralPMService.get(item.Id).subscribe(response => {
         var windowArgs: any = {};
@@ -134,5 +152,193 @@ export class DeclarationCollateralsComponent extends BaseComponent implements On
       });
     }
 
-  }
+    }
+
+
+
+    ///xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    public DeclarationCollateralsVListViewObjectTableName: string = "Customs.CustomsCollateral";
+    public columns: any[] = null;
+
+    
+    
+
+    BackBtnTitle: string;
+    IsShowTipArea: boolean;
+
+    _stratSearch: boolean = true;
+    
+    MenuHeaderchangeevent = new EventEmitter();
+    
+    onQueryChangeEvent = new EventEmitter();
+
+    private _entityListService: EntityListService = new EntityListService();
+    
+    
+
+    BuildColumns() {
+        this.columns = [];
+        this.columns.push({
+
+            FieldName: 'CollateralRequestNumber',
+            DataTypeCode: 'String',//'Number',
+            Display: TextCodeTranslator.Translate("Customs.CustomsCollateral.F.CollateralRequestNumber"),
+            Styles: { width: '120px' },
+            IsCustomTemplate: true
+            , ServerSideSortable: true,
+            SortByName: 'CollateralRequestNumber'
+        });
+
+        this.columns.push({
+
+            FieldName: 'CollateralRequestStatusName',
+            DataTypeCode: 'String',//'Number',
+            Display: TextCodeTranslator.Translate("Customs.CustomsCollateral.F.CollateralRequestStatusName"),
+            Styles: { width: '120px' },
+            IsCustomTemplate: true
+
+
+        });
+
+
+        this.columns.push({
+
+            FieldName: 'RequestValidityDate',
+            DataTypeCode: 'Date',//'Number',
+            Display: TextCodeTranslator.Translate("Customs.CustomsCollateral.F.RequestValidityDate"),
+            Styles: { width: '120px' },
+            IsCustomTemplate: true,
+            HtmlListComponentName: 'CustomsCollateralListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsCollateralListTemplate',
+
+
+        });
+
+        this.columns.push({
+
+            FieldName: 'CustomsEntityTypeName',
+            DataTypeCode: 'String',//'Number',
+            Display: TextCodeTranslator.Translate("Customs.CustomsCollateral.F.CustomsEntityTypeName"),
+            Styles: { width: '120px' },
+            IsCustomTemplate: true
+
+
+        });
+
+        this.columns.push({
+
+            FieldName: 'CustomerName',
+            DataTypeCode: 'String',//'Number',
+            Display: TextCodeTranslator.Translate("Customs.CustomsCollateral.F.CustomerName"),
+            Styles: { width: '140px' },
+            IsCustomTemplate: true
+
+
+        });
+        this.columns.push({
+
+            FieldName: 'EntityIdKey1',
+            DataTypeCode: 'String',//'Number',
+            Display: TextCodeTranslator.Translate("Customs.CustomsCollateral.F.EntityIdKey1"),
+            Styles: { width: '120px' },
+            IsCustomTemplate: true
+
+
+        });
+        this.columns.push({
+
+            FieldName: 'EntityIdKey2',
+            DataTypeCode: 'String',//'Number',
+            Display: TextCodeTranslator.Translate("Customs.CustomsCollateral.F.EntityIdKey2"),
+            Styles: { width: '120px' },
+            IsCustomTemplate: true
+
+
+        });
+        this.columns.push({
+
+            FieldName: 'EntityIdKey3',
+            DataTypeCode: 'String',//'Number',
+            Display: TextCodeTranslator.Translate("Customs.CustomsCollateral.F.EntityIdKey3"),
+            Styles: { width: '120px' },
+            IsCustomTemplate: true
+
+
+        });
+
+        this.columns.push({
+
+            FieldName: 'IsClosed',
+            DataTypeCode: 'String',//'Number',
+            Display: TextCodeTranslator.Translate("Customs.CustomsCollateral.F.IsClosed"),
+            Styles: { width: '120px' },
+            IsCustomTemplate: true,
+            HtmlListComponentName: 'CustomsCollateralListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsCollateralListTemplate',
+
+
+
+        });
+
+    }
+
+
+
+    DataSource = {
+
+        pageSize: 10,
+        rowCount: null,
+        //SortData("RequestCreateDate", "Descending", false, false);
+        sortingCol: "",// "Id",
+        sortingDir: "",//"Descending",
+        getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
+
+            var tempo = this.getRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
+            return tempo;
+
+        },
+    };
+    filterAgrs: ApiQueryFilters;
+    getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
+
+
+
+        if (filters == null) {
+            filters = new ApiQueryFilters();
+        }
+
+        filters.PageSize = take;
+        filters.PageIndex = skip;
+        filters.GetAll = false;
+        filters.GetCount = true;
+
+        filters.SortBy = "Id";
+        filters.SortDirection = "Descending";
+
+        filters.SortBy = "CollateralRequestNumber";//"Id";
+        filters.SortDirection = "Descending";//"Descending";
+
+
+        
+        let declarationId = this.EntityPM.Id;
+        filters.addAdditionalFilter("DeclarationId", declarationId, null, null, "Equals", false, false, false, "string");
+         
+        /// filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
+
+        var myout = this._entityListService
+            .getExtendedByFilters("Customs.CustomsCollateral", filters);
+        myout.then(res => {
+            this._stratSearch = false;
+            //this.CurrentSession.StopBusyIndicator();
+        });
+
+        return myout;
+
+    }
+    OnRowSelected($event) {
+        let customsCollateralList: CustomsCollateralList= $event.rowData;
+        this.EditButtonClicked(customsCollateralList);
+    }
+   
+
 }
