@@ -1,15 +1,11 @@
 ﻿<Table Name="Cities">
 
-  <Column Name="Code" Type="Text" Size="4">
-    <Constraints PrimaryKey="true" Nullable="false"/>
+  <Column Name="MyCode" Type="Text" Size="6">
+    <Constraints Nullable="false"/>
   </Column>
 
   <Column Name="Name" Type="nText" Size="25">
     <Constraints Nullable="false"/>
-  </Column>
-
-  <Column Name="SearchFields" Type="nText" Size="-1">
-    <Constraints Nullable="true"/>
   </Column>
 
 </Table>

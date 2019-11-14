@@ -8,7 +8,7 @@
     <Constraints Nullable="false"/>
   </Column>
 
-  <Column Name="FirstName" Type="nText" Size="50">
+  <Column Name="FName" OldName="FirstName" Type="nText" Size="50">
     <Constraints Nullable="false"/>
   </Column>
 
@@ -21,7 +21,7 @@
   </Column>
 
   <Column Name="BirthDate" Type="DateTime">
-    <Constraints Nullable="false"/>
+    <Constraints Nullable="true"/>
   </Column>
 
 </Table>
