@@ -3623,7 +3623,8 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         } else {
             this.ShowTariffErrorInfo = false;
         }*/
-        if (this.OriginCountryName && this.CustomsCountry.TarriffCode && this.CustomsCountry.TarriffCode != this.TradeAgreementCode) {
+        if (!AppTool.IsNullOrEmpty(this.CustomsCountry) &&
+            this.OriginCountryName && this.CustomsCountry.TarriffCode && this.CustomsCountry.TarriffCode != this.TradeAgreementCode) {
             if (this.ShowValidatioIcon != true) {
                 this.ShowValidatioIcon = true;
                 this.Parent.Parent.tariffErrorItems += 1;

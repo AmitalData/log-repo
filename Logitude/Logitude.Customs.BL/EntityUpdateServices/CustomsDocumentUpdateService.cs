@@ -67,6 +67,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }).ToList();
 
                 AutoSetOriginalDocumentTrue(entityPM);
+                this._AddPerfectCustomsDocumentMetaDataValues_IsMetaDataReady = true;
             }
         }
         protected override void UpdateComposition(CustomsDocumentPM entityPM)
@@ -295,7 +296,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
                 }
             }
-            if (ready)
+            if (_AddPerfectCustomsDocumentMetaDataValues_IsMetaDataReady)
+            {
+                if (requireddocumentTypeMetaDatas.Count == 0)
+                {
+                    ready = true;
+                }
+            }
+                if (ready)
             {
                 entityPM.IsMetaDataReady = true;
 
@@ -408,6 +416,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         //protected override void AfterUpdating(CustomsDocumentPM entityPM, EntityPM entityParentPM)
 
         public bool IgnoreSendFailure = false;
+        private bool _AddPerfectCustomsDocumentMetaDataValues_IsMetaDataReady;
+
         void TrySendMessageToQueue(CustomsDocumentPM entityPM, bool forceDueLoadTest = false)
         {
             var send = false;

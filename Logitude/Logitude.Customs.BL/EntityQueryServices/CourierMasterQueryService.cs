@@ -123,13 +123,19 @@ namespace Logitude.Customs.BL.EntityQueryServices
             int DOC = 0;
             int DOC_U = 0;
             int DOC_C = 0;
+            int DOC_I = 0;
+            int DOC_V = 0;
             int SVG = 0;
             int MNF = 0;
             int MNF_C = 0;
             int MNF_W = 0;
+            int MNF_I = 0;
+            int MNF_V = 0;
             int DEC = 0;
             int DEC_C = 0;
             int DEC_W = 0;
+            int DEC_I = 0;
+            int DEC_V = 0;
             int PAY = 0;
             int MNFR = 0;
             int DECR = 0;
@@ -152,14 +158,22 @@ namespace Logitude.Customs.BL.EntityQueryServices
                  dOC = g.Count(r => r.DocumentStatusCode == "M" || r.DocumentStatusCode == "X"),
                  DOC_U = g.Count(r => r.DocumentStatusCode == "X"),
                  DOC_C = g.Count(r => r.DocumentStatusCode == "M"),
+                 DOC_I = g.Count(r => r.DocumentStatusCode == "I"),
+                 DOC_V = g.Count(r => r.DocumentStatusCode == "V"),
                  sVG = g.Count(r => (r.IsCourierMissingClassification == true)),
                  MNF = g.Count(r => (r.CourierManifestStatusCode == "M" || r.CourierManifestStatusCode == "X")),
                  MNF_C = g.Count(r => (r.CourierManifestStatusCode == "M")),
                  MNF_W = g.Count(r => (r.CourierManifestStatusCode == "X")),
+                 MNF_I = g.Count(r => (r.CourierManifestStatusCode == "I")),
+                 MNF_V = g.Count(r => (r.CourierManifestStatusCode == "V")),
                  dEC = g.Count(r => (r.CourierDeclarationStatusCode == "M" || r.CourierDeclarationStatusCode == "X")),
                  dEC_C = g.Count(r => (r.CourierDeclarationStatusCode == "M")),
                  dEC_W = g.Count(r => (r.CourierDeclarationStatusCode == "X")),
+                 dEC_I = g.Count(r => (r.CourierDeclarationStatusCode == "I")),
+                 dEC_V = g.Count(r => (r.CourierDeclarationStatusCode == "V")),
                  pAY = g.Count(r => (r.CourierPaymentStatusCode == "R")),
+                 pAY_I = g.Count(r => (r.CourierPaymentStatusCode == "I")),
+                 pAY_C = g.Count(r => (r.CourierPaymentStatusCode == "R") || (r.CourierPaymentStatusCode == "P")),
                  //PAY_RL = g.Count(r => (r.CourierPaymentStatusCode == "R" && r.HighLowValue=="L")),
                  PAYReadyNotFastindividual = g.Count(r => (r.CourierPaymentStatusCode == "R" && r.FastIndividualProcessCode == "F")),//Task 47220: שינוי לוגיקת תשלום מרוכז 
                  MNFR = g.Count(r => (r.CourierManifestStatusCode == "R")),
@@ -181,13 +195,19 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 DOC = tot.dOC;
                 DOC_U = tot.DOC_U;
                 DOC_C = tot.DOC_C;
+                DOC_I = tot.DOC_I;
+                DOC_V = tot.DOC_V;
                 SVG = tot.sVG;
                 MNF = tot.MNF;
                 MNF_C = tot.MNF_C;
                 MNF_W = tot.MNF_W;
+                MNF_I = tot.MNF_I;
+                MNF_V = tot.MNF_V;
                 DEC = tot.dEC;
                 DEC_C = tot.dEC_C;
                 DEC_W = tot.dEC_W;
+                DEC_I = tot.dEC_I;
+                DEC_V = tot.dEC_V;
                 PAY = tot.pAY;
                 MNFR = tot.MNFR;
                 DECR = tot.DECR;
@@ -197,20 +217,30 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 ACC = tot.ACC;
                 ACC_W = tot.ACC_W;
                 ACC_WS = tot.ACC_WS;
+                PAY_I = tot.pAY_I;
+                PAY_C = tot.pAY_C;
             }
 
             keyValuePairList.Add(new KeyValuePair<string, int>("ALL", ALL));
             keyValuePairList.Add(new KeyValuePair<string, int>("DOC", DOC));
             keyValuePairList.Add(new KeyValuePair<string, int>("DOC_U", DOC_U));
             keyValuePairList.Add(new KeyValuePair<string, int>("DOC_C", DOC_C));
+            keyValuePairList.Add(new KeyValuePair<string, int>("DOC_I", DOC_I));
+            keyValuePairList.Add(new KeyValuePair<string, int>("DOC_V", DOC_V));
             keyValuePairList.Add(new KeyValuePair<string, int>("SVG", SVG));
             keyValuePairList.Add(new KeyValuePair<string, int>("MNF", MNF));
             keyValuePairList.Add(new KeyValuePair<string, int>("MNF_C", MNF_C));
             keyValuePairList.Add(new KeyValuePair<string, int>("MNF_W", MNF_W));
+            keyValuePairList.Add(new KeyValuePair<string, int>("MNF_I", MNF_I));
+            keyValuePairList.Add(new KeyValuePair<string, int>("MNF_V", MNF_V));
             keyValuePairList.Add(new KeyValuePair<string, int>("DEC", DEC));
             keyValuePairList.Add(new KeyValuePair<string, int>("DEC_C", DEC_C));
             keyValuePairList.Add(new KeyValuePair<string, int>("DEC_W", DEC_W));
+            keyValuePairList.Add(new KeyValuePair<string, int>("DEC_I", DEC_I));
+            keyValuePairList.Add(new KeyValuePair<string, int>("DEC_V", DEC_V));
             keyValuePairList.Add(new KeyValuePair<string, int>("PAY", PAY));
+            keyValuePairList.Add(new KeyValuePair<string, int>("PAY_I", PAY_I));
+            keyValuePairList.Add(new KeyValuePair<string, int>("PAY_C", PAY_C));
             keyValuePairList.Add(new KeyValuePair<string, int>("HOLD", HOLD));
             keyValuePairList.Add(new KeyValuePair<string, int>("DECR", DECR));
             keyValuePairList.Add(new KeyValuePair<string, int>("MNFR", MNFR));
