@@ -67,7 +67,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit {
         this.TenantPM = SessionLocator.TenantPM;
         this.EntityPM = this.myShipmentPMService.GetNewEntityPM();
         this.OkButtonLabel = TextCodeTranslator.Translate("Shipment.B.Create");
-
+         
         if (this.TenantPM.AllowAgentInCustomersLOV) {
             this.CardDependencyProperty1 = "CS,AG";
             this.CardDependencyProperty1IsList = true;
@@ -340,7 +340,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit {
     public IsFCLEntity: boolean = false;
     public IsInlandDomestic: boolean = false;
     OnFiltersChanged() {
-       
+        
         if (!this.IsCreatedFromMasterHouses) {
             this.IsDirectionListEnabled = true;
             this.IsTransportModesListEnabled = AppTool.IsNullOrEmpty(this.DirectionId) ? false : true;
@@ -603,41 +603,41 @@ export class NewShipmentComponent extends BaseComponent implements OnInit {
         }
     }
     SetPartners() {
-        if (!this.IsBuildFromQuote && !this.IsCopyFromShipment) {
-            this.IsShipperMyCustomer = false;
-            this.IsConsigneeMyCustomer = false;
-            var myCRMCustomerId = null;
+        //if (!this.IsBuildFromQuote && !this.IsCopyFromShipment) {
+        //    this.IsShipperMyCustomer = false;
+        //    this.IsConsigneeMyCustomer = false;
+        //    var myCRMCustomerId = null;
 
-            switch (this.DirectionId) {
-                case "I": {
-                    this.ShipmentCustomerTypeCode = "CON";
-                    this.IsConsigneeMyCustomer = true;
+        //    switch (this.DirectionId) {
+        //        case "I": {
+        //            this.ShipmentCustomerTypeCode = "CON";
+        //            this.IsConsigneeMyCustomer = true;
 
-                    if (!AppTool.IsNullOrEmpty(myCRMCustomerId)) {
-                        this.ConsigneeId = myCRMCustomerId;
-                        if (this.ShipperId == myCRMCustomerId) {
-                            this.ShipperId = null;
-                        }
-                    }
+        //            if (!AppTool.IsNullOrEmpty(myCRMCustomerId)) {
+        //                this.ConsigneeId = myCRMCustomerId;
+        //                if (this.ShipperId == myCRMCustomerId) {
+        //                    this.ShipperId = null;
+        //                }
+        //            }
 
-                    break;
-                }
+        //            break;
+        //        }
 
-                default: {
-                    this.ShipmentCustomerTypeCode = "SHI";
-                    this.IsShipperMyCustomer = true;
+        //        default: {
+        //            this.ShipmentCustomerTypeCode = "SHI";
+        //            this.IsShipperMyCustomer = true;
 
-                    if (!AppTool.IsNullOrEmpty(myCRMCustomerId)) {
-                        this.ShipperId = myCRMCustomerId;
-                        if (this.ConsigneeId == myCRMCustomerId) {
-                            this.ConsigneeId = null;
-                        }
-                    }
+        //            if (!AppTool.IsNullOrEmpty(myCRMCustomerId)) {
+        //                this.ShipperId = myCRMCustomerId;
+        //                if (this.ConsigneeId == myCRMCustomerId) {
+        //                    this.ConsigneeId = null;
+        //                }
+        //            }
 
-                    break;
-                }
-            }
-        }
+        //            break;
+        //        }
+        //    }
+        //}
 
         if (this.IsCopyFromShipment) {
             this.CopyPartners();
