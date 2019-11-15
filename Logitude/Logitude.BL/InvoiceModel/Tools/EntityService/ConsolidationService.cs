@@ -154,7 +154,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             if (isLocalHost)
             {
-                this.RunBatchService(args);
+                this.RunBatchService(args, iBatchTaskExecution.Id);
             }
 
             else
@@ -169,21 +169,25 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
         }
 
-        public void RunBatchService(ConsolidationServiceArgs serviceArgs)
+        public void RunBatchService(ConsolidationServiceArgs serviceArgs, string batchTaskExecutionId)
         {
             using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
                 this.RetrieveInvoicePM(serviceArgs);
 
+                this.UpdateProgressPercentage(20, batchTaskExecutionId, serviceArgs.Tenant);
+
                 if (entityPM != null)
                 {
                     if (entityPM.IsConsolidationInvoice)
-                    {
-                        bool isVoiding = entityPM.SetVoided;
-                        bool isApproving = entityPM.SetApproved;
+                    {                        
+                        //bool isVoiding = entityPM.SetVoided;
+                        //bool isApproving = entityPM.SetApproved;
 
                         IInvoiceContext invoiceContext = InvoiceContext.GetContext(entityPM.Tenant);
                         ARInvoiceService service = new ARInvoiceService(invoiceContext, entityPM.Tenant);
+
+                        this.UpdateProgressPercentage(20, batchTaskExecutionId, serviceArgs.Tenant);
 
                         if (entityPM.IsCreatingConsolidation)
                         {
@@ -195,14 +199,22 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             service.Update(entityPM);
                         }
 
+                        this.UpdateProgressPercentage(20, batchTaskExecutionId, serviceArgs.Tenant);
+
                         invoiceContext.SaveChanges();
+
+                        this.UpdateProgressPercentage(20, batchTaskExecutionId, serviceArgs.Tenant);
+
                         service.UpdateConsolidationShipments();
+
+                        this.UpdateProgressPercentage(20, batchTaskExecutionId, serviceArgs.Tenant);
                     }
                 }
 
                 scope.Complete();
             }
         }
+
         private void RetrieveInvoicePM(ConsolidationServiceArgs serviceArgs)
         {
             IBlobService iBlobService = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
@@ -226,6 +238,37 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(ARInvoicePM));
             this.entityPM = (ARInvoicePM)xmlSerializer.Deserialize(memoryStream);
             this.tenant = this.entityPM.Tenant;
+        }
+
+        private void UpdateProgressPercentage(int step, string batchTaskExecutionId, int tenant)
+        {
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                BatchTaskExecutionRepository iRepository = new BatchTaskExecutionRepository(tenant);
+                BatchTaskExecution iBatchTaskExecution = iRepository.GetSingle(batchTaskExecutionId, tenant);
+                if (iBatchTaskExecution != null)
+                {
+                    if (iBatchTaskExecution.ProgressPercentage <= 1)
+                    {
+                        iBatchTaskExecution.ProgressPercentage = step;
+                    }
+
+                    else
+                    {
+                        iBatchTaskExecution.ProgressPercentage += step;
+                    }
+
+                    if (iBatchTaskExecution.ProgressPercentage > 100)
+                    {
+                        iBatchTaskExecution.ProgressPercentage = 100;
+                    }
+
+                    iRepository.Update(iBatchTaskExecution);
+                    iRepository.SubmitChanges();
+                }
+
+                scope.Complete();
+            }
         }
 
     }

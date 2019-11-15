@@ -758,6 +758,7 @@ namespace WebFreight.Web.MetaDataUpdate
             ObjectField MainCarriageATD = ObjectContext.ObjectFields.Where(d => d.FieldName == "MainCarriageATD" && d.ObjectTableId == ShipmentTable.Id).FirstOrDefault();
             ObjectField MainCarriageATA = ObjectContext.ObjectFields.Where(d => d.FieldName == "MainCarriageATA" && d.ObjectTableId == ShipmentTable.Id).FirstOrDefault();
             ObjectField AMSBL = ObjectContext.ObjectFields.Where(d => d.FieldName == "AMSBL" && d.ObjectTableId == ShipmentTable.Id).FirstOrDefault();
+            ObjectField ShipmentCustomerTypeCode = ObjectContext.ObjectFields.Where(d => d.FieldName == "ShipmentCustomerTypeCode" && d.ObjectTableId == ShipmentTable.Id).FirstOrDefault();
             #endregion
 
             #region ObjectTableRules
@@ -1508,6 +1509,146 @@ namespace WebFreight.Web.MetaDataUpdate
             }, ObjectTableRuleRepository, TenantObjectTableRule);
 
             AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = AMSBL.Id, ObjectTableRuleId = AMSBLBlockRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            #endregion
+
+            #region SetCustomer_Rules
+
+            #region Export Direction
+            ObjectTableRule SetExportCustomer_Rule = AddObjectTableRules.AddObjectTableRule(new ObjectTableRuleDetails()
+            {
+                RuleCode = "CUD1",
+                Name = "Set Customer on Export",
+                ObjectTableId = ShipmentTable.Id,
+                Tenant = 0,
+                RuleTypeCode = "SETV",
+                TriggerTypeCode = "COND",
+                SystemLevel = true,
+                ActiveForNew = true,
+                ActiveForUpdate = false,
+                RuleNotificationTypeCode = "WAR",
+            }, ObjectTableRuleRepository, TenantObjectTableRule);
+
+            RuleConditionField SetExportCustomer_Condition = AddObjectTableRules.AddRuleConditionField(new RuleConditionFieldDetails()
+            {
+                ObjectFieldId = DirectionId.Id,
+                ObjectTableRuleId = SetExportCustomer_Rule.Id,
+                Operator = "Equals",
+                Value = "E",
+                Tenant = 0
+            }, RuleConditionFieldRepository, TenantRuleConditionFields);
+
+            ObjectTableRuleField SetExportCustomer_Field = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails()
+            {
+                ObjectFieldId = ShipmentCustomerTypeCode.Id,
+                ObjectTableRuleId = SetExportCustomer_Rule.Id,
+                SystemLevel = true,
+                Tenant = 0,
+                Expression = "SHI",
+            }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            #endregion
+
+            #region Domestic Direction
+            ObjectTableRule SetDomesticCustomer_Rule = AddObjectTableRules.AddObjectTableRule(new ObjectTableRuleDetails()
+            {
+                RuleCode = "CUD2",
+                Name = "Set Customer on Domestic",
+                ObjectTableId = ShipmentTable.Id,
+                Tenant = 0,
+                RuleTypeCode = "SETV",
+                TriggerTypeCode = "COND",
+                SystemLevel = true,
+                ActiveForNew = true,
+                ActiveForUpdate = false,
+                RuleNotificationTypeCode = "WAR",
+            }, ObjectTableRuleRepository, TenantObjectTableRule);
+
+            RuleConditionField SetDomesticCustomer_Condition = AddObjectTableRules.AddRuleConditionField(new RuleConditionFieldDetails()
+            {
+                ObjectFieldId = DirectionId.Id,
+                ObjectTableRuleId = SetDomesticCustomer_Rule.Id,
+                Operator = "Equals",
+                Value = "D",
+                Tenant = 0
+            }, RuleConditionFieldRepository, TenantRuleConditionFields);
+
+            ObjectTableRuleField SetDomesticCustomer_Field = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails()
+            {
+                ObjectFieldId = ShipmentCustomerTypeCode.Id,
+                ObjectTableRuleId = SetDomesticCustomer_Rule.Id,
+                SystemLevel = true,
+                Tenant = 0,
+                Expression = "SHI",
+            }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            #endregion
+
+            #region Drop Direction
+            ObjectTableRule SetDropCustomer_Rule = AddObjectTableRules.AddObjectTableRule(new ObjectTableRuleDetails()
+            {
+                RuleCode = "CUD3",
+                Name = "Set Customer on Drop",
+                ObjectTableId = ShipmentTable.Id,
+                Tenant = 0,
+                RuleTypeCode = "SETV",
+                TriggerTypeCode = "COND",
+                SystemLevel = true,
+                ActiveForNew = true,
+                ActiveForUpdate = false,
+                RuleNotificationTypeCode = "WAR",
+            }, ObjectTableRuleRepository, TenantObjectTableRule);
+
+            RuleConditionField SetDropCustomer_Condition = AddObjectTableRules.AddRuleConditionField(new RuleConditionFieldDetails()
+            {
+                ObjectFieldId = DirectionId.Id,
+                ObjectTableRuleId = SetDropCustomer_Rule.Id,
+                Operator = "Equals",
+                Value = "R",
+                Tenant = 0
+            }, RuleConditionFieldRepository, TenantRuleConditionFields);
+
+            ObjectTableRuleField SetDropCustomer_Field = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails()
+            {
+                ObjectFieldId = ShipmentCustomerTypeCode.Id,
+                ObjectTableRuleId = SetDropCustomer_Rule.Id,
+                SystemLevel = true,
+                Tenant = 0,
+                Expression = "SHI",
+            }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            #endregion
+
+            #region Import Direction
+            ObjectTableRule SetImportCustomer_Rule = AddObjectTableRules.AddObjectTableRule(new ObjectTableRuleDetails()
+            {
+                RuleCode = "CUD4",
+                Name = "Set Customer on Import",
+                ObjectTableId = ShipmentTable.Id,
+                Tenant = 0,
+                RuleTypeCode = "SETV",
+                TriggerTypeCode = "COND",
+                SystemLevel = true,
+                ActiveForNew = true,
+                ActiveForUpdate = false,
+                RuleNotificationTypeCode = "WAR",
+            }, ObjectTableRuleRepository, TenantObjectTableRule);
+
+            RuleConditionField SetImportCustomer_Condition = AddObjectTableRules.AddRuleConditionField(new RuleConditionFieldDetails()
+            {
+                ObjectFieldId = DirectionId.Id,
+                ObjectTableRuleId = SetImportCustomer_Rule.Id,
+                Operator = "Equals",
+                Value = "I",
+                Tenant = 0
+            }, RuleConditionFieldRepository, TenantRuleConditionFields);
+
+            ObjectTableRuleField SetImportCustomer_Field = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails()
+            {
+                ObjectFieldId = ShipmentCustomerTypeCode.Id,
+                ObjectTableRuleId = SetImportCustomer_Rule.Id,
+                SystemLevel = true,
+                Tenant = 0,
+                Expression = "CON",
+            }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            #endregion
+
             #endregion
 
             #endregion
