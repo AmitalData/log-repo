@@ -106,6 +106,7 @@
     <Compile Include="EntityPMs\Generated\TeamMemberBusinessRolePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TeamPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TogglePM.Generated.cs" />
+    <Compile Include="EntityQueryServices\BIReportQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\BatchTaskExecutionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\BatchTaskExecutionStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\BIReportFolderQueryService.Generated.cs" />

@@ -278,6 +278,7 @@
     <Content Include="Customs\Components\ListTemplates\EndDateComponent.html" />
     <Content Include="Customs\Components\ListTemplates\SupplierInvoiceItemListTemplate.html" />
     <Content Include="e2e\dist\out-tsc\Shipment\EntityPMs\ShipmentPickUpDeliveryPackagePM.js" />
+    <Content Include="Images\Buttons\copy.report.png" />
     <Content Include="Images\Buttons\downarrow.png" />
     <Content Include="Images\Buttons\uparrow.png" />
     <Content Include="Images\Error.png" />
@@ -793,6 +794,7 @@
     <TypeScriptCompile Include="e2e\Accounting\AccountingModule.ts" />
     <TypeScriptCompile Include="e2e\Accounting\New\APPayment.ts" />
     <TypeScriptCompile Include="e2e\Accounting\New\APShipmentMultipleInvoice.ts" />
+    <TypeScriptCompile Include="e2e\Accounting\New\ARPayment.ts" />
     <TypeScriptCompile Include="e2e\Contacts\Contacts-spec.ts" />
     <TypeScriptCompile Include="e2e\Contacts\Contacts.ts" />
     <TypeScriptCompile Include="e2e\CRM\Activities\ActivitiesModule.ts" />
@@ -983,6 +985,7 @@
     <TypeScriptCompile Include="Infrastructure\Helpers\DWQueryBuilderHelper.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\BusinessProcessDomainService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedLists\BusinessRoleExtendedListService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\BIReportExtendedPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\DWQueryBuilderService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\ObjectFieldPMExtendedService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\SchedulerExtendedPMService.ts" />
@@ -1015,6 +1018,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\SharedLogisticsSettingPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\WebhookKeysPMService.ts" />
     <TypeScriptCompile Include="InvoiceModules\APInvoice\ModuleAPInvoice.ts" />
+    <TypeScriptCompile Include="InvoiceModules\APPayment\Components\EditTabs\APPaymentGeneralTabComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\Components\EditTabs\EditPaymentChequeComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\ModuleAPPayment.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\ModuleDeclarations.ts" />
@@ -1035,6 +1039,7 @@
     <Content Include="Infrastructure\Components\QueryColumnsComponents\DWLogSearchAddFieldsComponent.html" />
     <Content Include="Infrastructure\Components\QueryColumnsComponents\DWLogSearchWindowFieldsComponent.html" />
     <Content Include="InvoiceModules\APPayment\Components\EditTabs\APEditMultiCurrency.html" />
+    <Content Include="InvoiceModules\APPayment\Components\EditTabs\APPaymentGeneralTabComponent.html" />
     <Content Include="InvoiceModules\APPayment\Components\EditTabs\EditPaymentChequeComponent.html" />
     <Content Include="InvoiceModules\ARInvoice\Components\EditTabs\AddEditARGeneralInvoiceLineComponent.html" />
     <Content Include="InvoiceModules\ARInvoice\Components\EditTabs\AddEditARInvoiceLineComponent.html" />
@@ -1072,6 +1077,7 @@
     <Content Include="Report\Components\FilterReportComponent\ShipmentDetailsFilterComponent.html" />
     <Content Include="Report\Components\FilterReportComponent\ShipmentsStocksFiltersComponent.html" />
     <Content Include="Report\Components\FiltersComponent\Accounting\DetailedShipmentChargesAnalysisComponent.html" />
+    <Content Include="Report\Components\FiltersComponent\Accounting\LedgerTransactionsFilterControl.html" />
     <Content Include="Report\Components\FiltersComponent\Accounting\VendorChargesAnalysisFilterComponent.html" />
     <Content Include="Report\Components\FiltersComponent\CRM\UsersByTenantReportFilterComponent.html" />
     <Content Include="Report\Components\FiltersComponent\Operational\LicenseManagementFilterComponent.html" />
@@ -3529,6 +3535,7 @@
     <TypeScriptCompile Include="Report\Components\FilterReportComponent\ShipmentDetailsFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FilterReportComponent\ShipmentsStocksFiltersComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Accounting\DetailedShipmentChargesAnalysisComponent.ts" />
+    <TypeScriptCompile Include="Report\Components\FiltersComponent\Accounting\LedgerTransactionsFilterControl.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Accounting\VendorChargesAnalysisFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\CRM\UsersByTenantReportFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Operational\LicenseManagementFilterComponent.ts" />

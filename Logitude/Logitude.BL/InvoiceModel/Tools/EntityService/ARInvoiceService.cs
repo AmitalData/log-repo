@@ -3824,9 +3824,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     List<string> allShipmentsIds = (from d in items group d by d.ShipmentId into g select g.Key).ToList();
 
                     foreach (string iShipmentId in allShipmentsIds)
-                    {
-                        
-
+                    {                       
                         UpdateShipmentProfitClass.UpdateShipmentARInvoices(iShipmentId, this.tenant, ConsolidationNumber);
                         UpdateShipmentProfitClass.UpdateProfit(iShipmentId, this.tenant);
                     }
