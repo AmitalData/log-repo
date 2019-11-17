@@ -46,7 +46,7 @@ namespace WebFreight.Web
 
                 if (LogitudeSettings.DeploymentStage != "Dev")
                 {
-                    Security.SecurityUtility.RedirectToHttps();
+                    Security.SecurityUtility.RedirectToHttps(false);
                 }
                 if (Request.QueryString.Count > 0)
                 {

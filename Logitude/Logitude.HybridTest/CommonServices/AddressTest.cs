@@ -11,21 +11,20 @@ namespace Logitude.HybridTest.CommonServices
         public void Test_Address_UPSERT()
         {
             LoginService.GetLoginTokenByCredentials();
-            Server.Tools.Response countryServiceResponse = CountryTest.CallCountryUpsert();
+            Response countryServiceResponse = CountryTest.CallCountryUpsert();
             Assert.IsFalse(countryServiceResponse.HasError, "Country Upsert Failed! " + countryServiceResponse.ErrorMessage);
             Assert.IsNotNull(countryServiceResponse.Result, "Country Upsert Failed! " + countryServiceResponse.ErrorMessage);
-            Server.Tools.Response customerServiceResponse = CustomerTest.CallCustomerUpsert();
+            Response customerServiceResponse = CustomerTest.CallCustomerUpsert();
             Assert.IsFalse(customerServiceResponse.HasError, "Customer Upsert Failed! " + customerServiceResponse.ErrorMessage);
             Assert.IsNotNull(customerServiceResponse.Result, "customer Upsert Failed! " + customerServiceResponse.ErrorMessage);
-            Server.Tools.Response serviceResponse = CallAddressUpsert();
-            Assert.AreEqual(serviceResponse.HasError, false, serviceResponse.ErrorMessage);
+            Response serviceResponse = CallAddressUpsert();
+            Assert.IsFalse(serviceResponse.HasError, serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
         }
 
         [TestMethod]
-        public void Test_Address_GETADDRESSBYEXTERNALID()
+        public void Test_Address_GetAddressByExternalId()
         {
-            LoginService.GetLoginTokenByCredentials();
             Test_Address_UPSERT();
             AddressServiceReference.AddressWcfServiceClient serviceClient = new AddressServiceReference.AddressWcfServiceClient();
             string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
@@ -34,10 +33,17 @@ namespace Logitude.HybridTest.CommonServices
             {
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
                 Response serviceResponse = new Response();
-                AddressServiceReference.AddressPM serviceResult = serviceClient.GetAddressByExternalId(HybridCodes.AddressCode, TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
+                AddressServiceReference.AddressPM serviceResult = serviceClient.GetAddressByExternalId("?", TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
                 Assert.AreEqual(serviceResponse.HasError, false, serviceResponse.ErrorMessage);
                 Assert.IsNull(serviceResponse.Result, "Get Address By External Id Failed! " + serviceResponse.ErrorMessage);
-                Assert.AreEqual(serviceResult.ExternalId, HybridCodes.AddressCode, serviceResponse.ErrorMessage);
+                if (serviceResult != null)
+                {
+                    Assert.AreEqual(serviceResult.ExternalId, HybridCodes.AddressCode, serviceResponse.ErrorMessage);
+                }
+                else
+                {
+                    Assert.Inconclusive("There Isn't Address With That External Id");
+                }
             }
         }
 

@@ -70,6 +70,7 @@ import {ReconcileExternalPageLineListTemplate} from './Components/ListTemplates/
 import {FieldTemplateComponent} from './Components/Templates/FieldTemplateComponent';
 import {ManageReconciliationListTemplate} from './Components/ListTemplates/ManageReconciliationListTemplate';
 import {TaxReportListTemplate} from './Components/ListTemplates/TaxReportListTemplate';
+import {ReconciliationLineListTemplate} from './Components/ListTemplates/ReconciliationLineListTemplate';
 
 import {ReconcileComponent} from './Components/Others/ReconcileComponent';
 import {ReconciledMessage} from './Components/Others/ReconciledMessage';
@@ -180,6 +181,7 @@ export const Components =
         FieldTemplateComponent,
         ManageReconciliationListTemplate,
         TaxReportListTemplate,
+        ReconciliationLineListTemplate,
         //Others
         ReconcileComponent,
         ReconciledMessage,
@@ -292,6 +294,8 @@ export class ModuleDeclarations {
             case "FieldTemplateComponent": { myResult = FieldTemplateComponent; break; }
             case "ManageReconciliationListTemplate": { myResult = ManageReconciliationListTemplate; break; }
             case "TaxReportListTemplate": { myResult = TaxReportListTemplate; break; }
+            case "ReconciliationLineListTemplate": { myResult = ReconciliationLineListTemplate; break; }
+
             //Others
             case "ReconcileComponent": { myResult = ReconcileComponent; break; }
             case "ReconciledMessage": { myResult = ReconciledMessage; break; }

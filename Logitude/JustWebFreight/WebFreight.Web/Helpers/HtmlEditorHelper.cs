@@ -4232,7 +4232,7 @@ namespace WebFreight.Web.Helpers
                             resultValue = (newValue != null ? newValue.ToString() : " ");
                         }
 
-                        resultValue = ResolveFieldValue(resultValue, field);
+                        resultValue = ResolveFieldValue(resultValue, field,tenant);
                     }
 
                 }
@@ -4560,7 +4560,7 @@ namespace WebFreight.Web.Helpers
                                             else resultValue = string.Empty;
 
 
-                                            resultValue = ResolveFieldValue(resultValue, insideObjectField);
+                                            resultValue = ResolveFieldValue(resultValue, insideObjectField, tenant);
                                         }
                                         else
                                         {
@@ -4659,7 +4659,7 @@ namespace WebFreight.Web.Helpers
             return resultValue;
         }
 
-        private string ResolveFieldValue(string fieldValue, ObjectField field)
+        private string ResolveFieldValue(string fieldValue, ObjectField field,int tenant)
         {
             string result = string.Empty;
 
@@ -4678,7 +4678,8 @@ namespace WebFreight.Web.Helpers
                     {
                         result = FormatNumber(result, field);
                     }
-                    else if (field.DataTypeCode.ToLower() == "boolean") result = result.ToLower() == "false" ? "No" : "Yes";
+                    else if (field.DataTypeCode.ToLower() == "boolean")
+                        result = result.ToLower() == "false" ? TranslateTextsClass.Translate("General.O.No", tenant) : TranslateTextsClass.Translate("General.O.Yes", tenant);
                 }
             }
 

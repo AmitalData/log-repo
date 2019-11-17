@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Logitude.Customs.Def.EntityPMs" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Logitude.Customs.Def.EntityPMs" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:9996/WcfApi/CustomBankCardWcfService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Logitude.Server.Tools" />
+  <xs:complexType name="CustomBankPM">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/Logitude.Server.Tools" base="q1:EntityPM">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AccountNumber" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="BankAddress" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="BankCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="BankName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="BranchCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="BranchName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CardId" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ClientBank" type="xs:boolean" />
+          <xs:element minOccurs="0" name="CustomBanksCards" nillable="true" type="tns:ArrayOfCustomBanksCardPM" />
+          <xs:element minOccurs="0" name="CustomsBranchId" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="EnglishName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="InActive" type="xs:boolean" />
+          <xs:element minOccurs="0" name="InternalCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="InvalidInternalCode" type="xs:boolean" />
+          <xs:element minOccurs="0" name="LocalName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PayerTypeCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PayerTypeName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SearchFields" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Tenant" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CustomBankPM" nillable="true" type="tns:CustomBankPM" />
+  <xs:complexType name="ArrayOfCustomBanksCardPM">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CustomBanksCardPM" nillable="true" type="tns:CustomBanksCardPM" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCustomBanksCardPM" nillable="true" type="tns:ArrayOfCustomBanksCardPM" />
+  <xs:complexType name="CustomBanksCardPM">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q2="http://schemas.datacontract.org/2004/07/Logitude.Server.Tools" base="q2:EntityPM">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CardId" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CardName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CustomBankId" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CustomsBankName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Tenant" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CustomBanksCardPM" nillable="true" type="tns:CustomBanksCardPM" />
+</xs:schema>

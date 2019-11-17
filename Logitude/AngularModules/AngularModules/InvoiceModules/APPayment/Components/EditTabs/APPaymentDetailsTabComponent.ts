@@ -699,7 +699,8 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         if (this.EntityPM != null) {
             if (this.EntityPM.VendorId != value) {
                 this.EntityPM.VendorId = value;
-
+                this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, true);
+                this.PaymentCurrencyId = null;
                 if (AppTool.IsNullOrEmpty(this.EntityPM.VendorId)) {
                     this.UIProperties.SetEnabled("VendorAddressId", this.ObjectTableName, false);
                 }
@@ -792,6 +793,10 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                     this.deductionFileNumber = gla ? gla.DeductionFileNumber : null;
                     this.EntityPM.ExcludeFromDeductionReport = gla.ExcludeFromDeductionReport;
                     this.EntityPM.VendorGLAccountId = gla.Id;
+                    if (!gla.IsMultiCurrency) {
+                        this.PaymentCurrencyId = gla.CurrencyId;
+                        this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, false);
+                    }
                 }
             });
         }else{
