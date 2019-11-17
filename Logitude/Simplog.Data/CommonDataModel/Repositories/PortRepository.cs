@@ -415,7 +415,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public Port GetSinglePortIdByCombinedCode(string code, int tenant)
         {
             var entity = (from a in context.Ports.Include("Country").Include("State")
-                          where a.CombinedCode == code
+                          where a.CombinedCode == code && a.Tenant == tenant
                           select a).FirstOrDefault();
             return entity;
         }

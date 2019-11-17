@@ -2354,20 +2354,26 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 if (xn["Type"] != null && xn["Type"].InnerText== "PortOfLoad")
                 {
                     Port port = portsRep.GetSinglePortIdByCombinedCode(xn["Identifier"].InnerText, shipmentPM.Tenant);
-                    shipmentPM.INTTRABookingResponse_POFPort = port.Id;
-                    shipmentPM.INTTRABookingResponse_POFPortCode = port.Code;
-                    shipmentPM.INTTRABookingResponse_POFCCode = port.Country != null ? port.Country.Code : "";
-                    shipmentPM.INTTRABookingResponse_POFCName = port.Country != null ? port.Country.EnglishName : "";
+                    if (port != null)
+                    {
+                        shipmentPM.INTTRABookingResponse_POFPort = port.Id;
+                        shipmentPM.INTTRABookingResponse_POFPortCode = port.Code;
+                        shipmentPM.INTTRABookingResponse_POFCCode = port.Country != null ? port.Country.Code : "";
+                        shipmentPM.INTTRABookingResponse_POFCName = port.Country != null ? port.Country.EnglishName : "";
+                    }
                     shipmentPM.INTTRABookingResponse_POLDate = DateTime.Parse(xn["DateTime"].InnerText);
                 }
 
                 if (xn["Type"] != null && xn["Type"].InnerText == "PortOfDischarge")
                 {
                     Port port = portsRep.GetSinglePortIdByCombinedCode(xn["Identifier"].InnerText, shipmentPM.Tenant);
-                    shipmentPM.INTTRABookingResponse_PODPort = port.Id;
-                    shipmentPM.INTTRABookingResponse_PODPortCode = port.Code;
-                    shipmentPM.INTTRABookingResponse_PODCCode = port.Country != null ? port.Country.Code : "";
-                    shipmentPM.INTTRABookingResponse_PODCName = port.Country != null ? port.Country.EnglishName : "";
+                    if (port != null)
+                    {
+                        shipmentPM.INTTRABookingResponse_PODPort = port.Id;
+                        shipmentPM.INTTRABookingResponse_PODPortCode = port.Code;
+                        shipmentPM.INTTRABookingResponse_PODCCode = port.Country != null ? port.Country.Code : "";
+                        shipmentPM.INTTRABookingResponse_PODCName = port.Country != null ? port.Country.EnglishName : "";
+                    }
                     shipmentPM.INTTRABookingResponse_PODDate = DateTime.Parse(xn["DateTime"].InnerText);
                 }
             }

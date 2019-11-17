@@ -40,7 +40,10 @@ export class SimulatorBookingComponent extends BaseComponent {
         if (this.CurrentSession.CurrentEditComponent != null) {
             this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.CheckSendingBookingEnabled();
+                    this.CheckUpdatingBookingEnabled();
                 }
                 else {
                     this.ValidationErrorsList = this.CurrentSession.CurrentEditComponent.ValidationErrorsList;
@@ -50,6 +53,8 @@ export class SimulatorBookingComponent extends BaseComponent {
             this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.CheckSendingBookingEnabled();
+                    this.CheckUpdatingBookingEnabled();
                 }
             });
         } 
