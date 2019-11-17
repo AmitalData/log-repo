@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Logitude.BL.CommonDataModel.EntityLists" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Logitude.BL.CommonDataModel.EntityLists" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ArrayOfHybridPartnerList">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HybridPartnerList" nillable="true" type="tns:HybridPartnerList" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHybridPartnerList" nillable="true" type="tns:ArrayOfHybridPartnerList" />
+  <xs:complexType name="HybridPartnerList">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AllowSendingDocsToAgent" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsExternalPartner" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsHasRequest" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsMislakaActivated" type="xs:boolean" />
+      <xs:element minOccurs="0" name="LocalName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LogoId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PartnerTenant" type="xs:int" />
+      <xs:element minOccurs="0" name="ReceiveAllStatuses" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ReqId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SearchFields" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SmallLogoId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StatusName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HybridPartnerList" nillable="true" type="tns:HybridPartnerList" />
+</xs:schema>
