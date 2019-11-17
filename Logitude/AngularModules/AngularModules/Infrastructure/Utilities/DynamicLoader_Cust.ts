@@ -136,6 +136,7 @@ export class DynamicLoader_Cust {
             }
 
             else {
+                debugger;
               alert(instanceName + " is not declared in " + myModuleName);
             }
           }
@@ -153,6 +154,7 @@ export class DynamicLoader_Cust {
               }
 
               else {
+                  debugger;
                 alert(instanceName + " is not declared in " + myModuleName);
               }
             });

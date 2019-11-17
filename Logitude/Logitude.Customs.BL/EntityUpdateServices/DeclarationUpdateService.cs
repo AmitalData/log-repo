@@ -198,6 +198,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             DeclarationConstraintUpdateService declarationConstraintUpdateService = new DeclarationConstraintUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
             declarationConstraintUpdateService.UpdateMulti(entityPM.DeclarationConstraints, entityPM.DeletedDeclarationConstraints, entityPM, false);
 
+            DecDangersContactUpdateService decDangersContactUpdateService = new DecDangersContactUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+            decDangersContactUpdateService.UpdateMulti(entityPM.DecDangersContacts, entityPM.DeletedDecDangersContacts, entityPM, false);
+
+
+
             //DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
             //declarationCourierStatusUpdateService.UpdateMulti(entityPM.DeclarationCourierStatus, entityPM.DeletedDeclarationCourierStatus, entityPM, false);
 

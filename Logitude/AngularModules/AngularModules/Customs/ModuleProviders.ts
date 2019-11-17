@@ -218,6 +218,7 @@ import { UpdateCodeListService } from './Services/StandardLists/UpdateCodeListSe
 import { GatepassReturnCodeListService } from './Services/StandardLists/GatepassReturnCodeListService';
 import { CourierCustomStatusListService } from './Services/StandardLists/CourierCustomStatusListService';
 import { PendingByKeywordListService } from './Services/StandardLists/PendingByKeywordListService';
+import { HazardousSubstanceListService } from './Services/StandardLists/HazardousSubstanceListService';
 
 
 
@@ -570,7 +571,8 @@ export class ModuleProviders {
             case "ApprovedProfessionListService": { myResult = new ApprovedProfessionListService(); break; }
             case "RequestTypeListService": { myResult = new RequestTypeListService(); break; } 
             case "CourierCustomStatusListService": { myResult = new CourierCustomStatusListService(); break; }
-            //#endregion                
+            case "HazardousSubstanceListService": { myResult = new HazardousSubstanceListService(); break; }
+             //#endregion                
 
             //#region StandardPMs
             case "ClaimPMService": { myResult = new ClaimPMService(); break; }

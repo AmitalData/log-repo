@@ -25,11 +25,11 @@ namespace Logitude.Customs.Data.EntityLists
 
        [Key]
        [DataMember]
-       public int LineNumber  { get; set; }
+       public int? LineNumber  { get; set; }
 
        [Key]
        [DataMember]
-       public int DangerousLineNo  { get; set; }
+       public int? DangerousLineNo  { get; set; }
        [DataMember]
        public string UNCode  { get; set; }
        [DataMember]

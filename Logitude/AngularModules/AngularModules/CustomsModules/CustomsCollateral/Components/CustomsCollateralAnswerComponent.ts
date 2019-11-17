@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { CustomsCollateralsAnswerPM } from '../../../Customs/EntityPMs/CustomsCollateralsAnswerPM';
 import { CustomsCollateralPM } from '../../../Customs/EntityPMs/CustomsCollateralPM';
@@ -19,12 +19,16 @@ import { CardList } from '../../../Common/EntityLists/CardList';
 
 declare var window: any;
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
+import { CustomsCollateralPMService } from '../../../Customs/Services/StandardPMs/CustomsCollateralPMService';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
     moduleId: module.id,
     templateUrl: './CustomsCollateralAnswerComponent.html',
+    providers: [CustomsCollateralPMService]
 })
-export class CustomsCollateralAnswerComponent extends BaseComponent {
+export class CustomsCollateralAnswerComponent extends BaseComponent implements OnInit {
+
     public ObjectTableName: string = "Customs.CustomsCollateralsAnswer";
     public DataContext: any = this;
     public EntityPM: CustomsCollateralsAnswerPM;
@@ -36,11 +40,16 @@ export class CustomsCollateralAnswerComponent extends BaseComponent {
     private isGuaranteeDefaultShow: boolean = false;
     private GuaranteeDefaultList: string[] = [];
     cardListService: CardListService = new CardListService();
+    IsConcentrated: boolean;
+    collateralToSendlist: number[];
 
-    constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
+    constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService,private _customsCollateralPMService: CustomsCollateralPMService) {
         super();
-
     }
+
+    ngOnInit(): void {
+     }
+
     AnswerForCollateralStatusVisibility: boolean;
     SetTabArgs(args: any) {
         this.EntityPM = args.EntityPM;
@@ -709,6 +718,42 @@ export class CustomsCollateralAnswerComponent extends BaseComponent {
         });
 
     }
-    
+
+    SetWindowArgs(args: any) {
+
+        this.IsConcentrated = true;
+        this.collateralToSendlist = args.collateralToSendlist;
+        this.EntityPM = new CustomsCollateralsAnswerPM(null);
+ 
+    }
+
+
+    CancelButtonClicked() {
+
+
+        this.CurrentSession.CloseCurrentWindow();
+    }
+
+
+    OnCustomSendOptionsButtonClick() {
+
+        var currentEntity: CustomsCollateralPM; 
+        for (var i = 0; i < this.collateralToSendlist.length; i++) {
+            this._customsCollateralPMService.get(this.collateralToSendlist[i].toString()).subscribe(
+                data => {
+                    currentEntity = (data.Result as CustomsCollateralPM);
+                    this.EntityPM.RequestFileAmount = this.EntityPM.AllocatedAmount;
+                    currentEntity.AddCustomsCollateralsAnswer(this.EntityPM);
+                    this._customsCollateralPMService.update(currentEntity).subscribe()
+
+                }
+
+
+            );
+
+        }
+
+    }
+
     //#endregion
 }

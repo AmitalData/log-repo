@@ -33,6 +33,7 @@ export class DeclarationCollateralsComponent extends BaseComponent implements On
   public DataContext: DeclarationCollateralsComponent = this;
   public CurrentEditComponentId: string;
   public collateralObslist: ObservableCollection;
+  public collateralToSendlist: number[]=[];
 
   private _DeclarationWebService: DeclarationWebService = new DeclarationWebService;
   private _CustomsCollateralPMService: CustomsCollateralPMService = new CustomsCollateralPMService;
@@ -41,6 +42,8 @@ export class DeclarationCollateralsComponent extends BaseComponent implements On
     private CurrentSession = SessionLocator.SelectedSession;
     public NewView: boolean = true;
     
+    IsCollateralChecked: boolean;
+    IsDisplayButtonSend: boolean;
   constructor(private entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
     super();
     this.collateralObslist = new ObservableCollection([]);
@@ -340,5 +343,51 @@ export class DeclarationCollateralsComponent extends BaseComponent implements On
         this.EditButtonClicked(customsCollateralList);
     }
    
+ 
+
+    OnCheckedWithSystemEvent(eventM,id) {
+         eventM.stopPropagation();
+        if (!this.collateralToSendlist.includes(id)) {
+            this.collateralToSendlist.push(id);
+        }
+        else {
+                        var removedIndex = null;
+            for (var i = 0; i < this.collateralToSendlist.length; i++) {
+                if (id == this.collateralToSendlist[i]) {
+                    removedIndex = i;
+                    break;
+                }
+            }
+            if (removedIndex != null) {
+                this.collateralToSendlist.splice(removedIndex,1);
+            }
+
+        }
+
+        this.IsDisplayButtonSend = (this.collateralToSendlist.length > 1);
+
+        
+ 
+    }
+
+    OpenEditCollateralAnswerWindow() {
+      //   if (!AppTool.IsNullOrEmpty(item)) {
+            var windowArgs: any = {};
+
+        windowArgs.collateralToSendlist = this.collateralToSendlist;
+            var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.CollateralAnswer");
+
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 400;
+            logWindow.Height = 300;
+            logWindow.Title = windowTitle;
+            logWindow.ShowCloseButton = false;
+            logWindow.WindowArgs = windowArgs;
+            logWindow.Show('./CustomsModules/CustomsCollateral/Components/CustomsCollateralAnswerComponent');
+
+
+       // }
+    }
+
 
 }

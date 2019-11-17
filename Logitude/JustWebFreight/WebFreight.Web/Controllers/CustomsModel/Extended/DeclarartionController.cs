@@ -45,6 +45,7 @@ using System.Net.Http.Headers;
 using System.Xml.Linq;
 using Logitude.CustomsMessaging.Helpers;
 using Logitude.Server.Tools.Models;
+using Logitude.CustomsMessaging.Common.RequestParams;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
@@ -541,5 +542,30 @@ new XElement("FileStreamError",
             httpResponse.Content.Headers.ContentDisposition.FileName = responseDataDocumentId + ".xml";
             return httpResponse;
         }
+
+
+        //public HttpResponseMessage PostSendPayReadyLow2755(SendCollateralsRequestParams requestParamsData)
+        //{
+        //    try
+        //    {
+        //        string token = HttpContext.Current.Request.Headers["Token"];
+        //        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+        //        int tenant = authToken.Tenant;
+        //        string loggedUserEmail = authToken.Email;
+        //        SecurityUtility.AuthenticationOnTenant(tenant);
+
+        //        ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
+        //        var messagingService = new DCAInUCB2755_MsgMessagingService();
+        //        var sts = messagingService.CreateCRS(tenant, null, requestParamsData.CourierMasterId, requestParamsData.HAWB, requestParamsData.InternalBankId, requestParamsData.Declarations);
+
+        //        return Request.CreateResponse(HttpStatusCode.OK, sts);
+        //    }
+
+        //    catch (Exception ex)
+        //    {
+        //        return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+        //    }
+        //}
+
     }
 }

@@ -26,6 +26,7 @@ import { ApiQueryFilters, FilterItem } from '../../../../../../Infrastructure/Da
 import { CouriersVatPMService } from '../../../../../../Customs/Services/StandardPMs/CouriersVatPMService';
 import { CouriersVatExtendedPMService } from '../../../../../../Customs/Services/ExtendedPMs/CouriersVatExtendedPMService';
 import { MessageWindow } from '../../../../../../Controls/Windows/MessageWindow';
+import { LogitudeWindow } from '../../../../../../Controls/Windows/LogitudeWindow';
 
 @Component({
     selector: 'ConsigmentTabContent',
@@ -450,6 +451,33 @@ export class ConsigmentTabContentComponent
         this.ConsimentPackages.Insert(item);
         //this.CurrentSession.ResetRowIndex();
     }
+
+    OpenEditDangerWindow(item) {
+        if (!AppTool.IsNullOrEmpty(item)) {
+             var windowArgs: any = {};
+            windowArgs.ConsignmentPackagesDangerPM = item.EntityPM;
+            windowArgs.Declaration = this.declarationPM;
+             
+            windowArgs.Parent = item;
+            windowArgs.IsDisplayOnly = this.IsDisplayOnly;
+             if (item.EntityPM.LineNumber != item.EntityPM.entityParentPM.consignmentPackages[0].LineNumber) {
+                windowArgs.IsDisplayOnlyContact = true;
+            }
+            var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ConsignmentPackagesDanger");
+
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 800;
+            logWindow.Height = 300;
+            logWindow.Title = windowTitle;
+            logWindow.ShowCloseButton = false;
+            logWindow.WindowArgs = windowArgs;
+            logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/General/ConsigmentTabContent/ConsigmentPackagesDanger/ConsigmentPackagesDangerComponent');
+
+
+        }
+    }
+
+ 
     RemovePackageButton(item) {
 
         if (!AppTool.IsNullOrEmpty(item)) {

@@ -861,6 +861,7 @@
     <Compile Include="EntityQueryServices\ClientAddressQueryService.cs" />
     <Compile Include="EntityQueryServices\ClientDrivingLicenseQueryService.cs" />
     <Compile Include="EntityQueryServices\ClientQueryService.cs" />
+    <Compile Include="EntityQueryServices\ConsignmentPackageQueryService.cs" />
     <Compile Include="EntityQueryServices\DeclarationPendingQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\ApprovedProfessionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ConsignmentPackDangerQueryService.Generated.cs" />
@@ -1268,6 +1269,8 @@
     <Compile Include="EntityUpdateServices\ClaimsRelatedEntsReasonsExpUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClientDrivingLicenseTypeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClientDrivingLicenseUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\DecDangersContactUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\ConsignmentPackDangerUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CourierPendingReasonUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CustomsAirlineUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CustomsPartnerFtpUpdateService.cs" />

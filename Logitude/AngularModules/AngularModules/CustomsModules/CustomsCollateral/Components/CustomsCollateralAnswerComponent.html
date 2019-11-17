@@ -11,10 +11,10 @@
      <td>
          <table>
              <tr>
-               
+
                  <td>
 
-                     <table style="width:250px; ">
+                     <table style="width:250px; " *ngIf="!IsConcentrated">
                          <tr style="height:25px">
                              <td colspan="3">
                                  <table>
@@ -34,7 +34,7 @@
                          </tr>
 
                          <tr style="height:25px">
-                             <td width="10px;" >
+                             <td width="10px;">
                                  <div *ngIf="RequestFileCodeRedIconVisibility" style="width:7px;height:7px; border-radius:50%; background:red">
 
                                  </div>
@@ -52,13 +52,11 @@
                                                      [DataContext]="DataContext"
                                                      [LookUpTableName]="'Customs.CollateralAnswerType'"
                                                      [HideColumns]="true"
-                                                [DependencyFilter1Value]="'1,3'"
-                                                [DependencyFilter1IsList]="true"
-                                                 
-
-                                                       [SelectedValue]="RequestFileTypeCode">
+                                                     [DependencyFilter1Value]="'1,3'"
+                                                     [DependencyFilter1IsList]="true"
+                                                     [SelectedValue]="RequestFileTypeCode">
                                              </LogLov>
-                                                     
+
                                          </td>
                                      </tr>
                                  </table>
@@ -79,7 +77,7 @@
                                  <table>
                                      <tr>
                                          <td style="width:120px">
-                                             <LogTextBox [ObjectFieldName]="'RequestFileAmount'" [ObjectTableName]="ObjectTableName"  [Text]="RequestFileAmount" 
+                                             <LogTextBox [ObjectFieldName]="'RequestFileAmount'" [ObjectTableName]="ObjectTableName" [Text]="RequestFileAmount"
                                                          [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
                                          </td>
                                      </tr>
@@ -89,7 +87,7 @@
                      </table>
                  </td>
 
-                 
+
 
              </tr>
 
@@ -97,9 +95,9 @@
                  <td>
                      <table>
                          <tr style="height:25px">
-                             <td colspan="3">
+                             <td colspan="3" >
                                  <table>
-                                     <tr>
+                                     <tr *ngIf="!IsConcentrated">
 
                                          <td style="width:25px">
                                              <!--<RadioButton [Name]="'RequestNewFile'" [IsEnabled]="!IsClosed" [IsChecked]="IsTapag" (Checked)="UseExistingTapagFile('')"></RadioButton>-->
@@ -113,17 +111,17 @@
                                  </table>
                              </td>
                              <td rowspan="4">
-                                 <div  *ngIf="DisplayOnlyMessageVisibility" style="padding:10px;  background:#FFFADC;min-height:50px; height:auto; min-width:100px; border: 1px solid #8C8C8C;">
+                                 <div *ngIf="DisplayOnlyMessageVisibility" style="padding:10px;  background:#FFFADC;min-height:50px; height:auto; min-width:100px; border: 1px solid #8C8C8C;">
                                      <table>
-                                         <tr *ngIf="AnswerSentTextVisibility" >
-                                             <td colspan="2" >
+                                         <tr *ngIf="AnswerSentTextVisibility">
+                                             <td colspan="2">
                                                  <label style="color:#282E30">
                                                      {{'Customs.General.O.AnswerSent' |TextCodeTranslationPipe}}
                                                  </label>
                                              </td>
-                                             
+
                                          </tr>
-                                         <tr  *ngIf="RequestNumberLabelVisibility">
+                                         <tr *ngIf="RequestNumberLabelVisibility">
                                              <td>
                                                  <label style="color:#282E30">{{'Customs.Declaration.O.RequestNumber' | TextCodeTranslationPipe}}</label>
                                              </td>
@@ -155,10 +153,10 @@
                                              <td style="color:#282E30" width="100px"> {{'Customs.PaymentOrder.F.PaymentStatusCode' | TextCodeTranslationPipe}}</td>
                                              <td style="color:#282E30"> {{PaymentOrderStatus}}</td>
                                          </tr>
-                                        
+
                                      </table>
 
-                                   </div>
+                                 </div>
 
                              </td>
                              <td width="10px"></td>
@@ -182,10 +180,9 @@
                                                      [ObjectTableName]="ObjectTableName"
                                                      [DataContext]="DataContext"
                                                      [LookUpTableName]="'Customs.CollateralAnswerType'"
-                                                       [SelectedValue]="AnswerEntityTypeCode"
+                                                     [SelectedValue]="AnswerEntityTypeCode"
                                                      [DependencyFilter1Value]="'2,4'"
-                                                [DependencyFilter1IsList]="true"
-                                                      
+                                                     [DependencyFilter1IsList]="true"
                                                      [HideColumns]="true">
                                              </LogLov>
                                          </td>
@@ -194,7 +191,7 @@
                              </td>
                          </tr>
 
-                         <tr style="height:25px">
+                         <tr style="height:25px" *ngIf="!IsConcentrated">
                              <td width="10px;">
                                  <div *ngIf="AllocatedAmountRedIconVisibility" style="width:7px;height:7px; border-radius:50%; background:red">
 
@@ -208,7 +205,7 @@
                                  <table style="width:120px">
                                      <tr>
                                          <td style="width:120px">
-                                             <LogTextBox [ObjectFieldName]="'AllocatedAmount'" [ObjectTableName]="ObjectTableName"  [Text]="AllocatedAmount" 
+                                             <LogTextBox [ObjectFieldName]="'AllocatedAmount'" [ObjectTableName]="ObjectTableName" [Text]="AllocatedAmount"
                                                          [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
                                          </td>
                                      </tr>
@@ -242,7 +239,7 @@
                                      </tr>
                                  </table>
                              </td>
-                             
+
                          </tr>
 
                          <tr style="height:25px">
@@ -259,7 +256,7 @@
                                  <table style="width:140px">
                                      <tr>
                                          <td style="width:140px">
-                                             <LogTextBox [ObjectFieldName]="'CustomsNumeral'" [ObjectTableName]="ObjectTableName"  [Text]="CustomsNumeral" 
+                                             <LogTextBox [ObjectFieldName]="'CustomsNumeral'" [ObjectTableName]="ObjectTableName" [Text]="CustomsNumeral"
                                                          [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
                                          </td>
                                      </tr>
@@ -269,7 +266,7 @@
                          </tr>
 
 
-                         <tr  style="top:0px;height:50px">
+                         <tr style="top:0px;height:50px">
                              <td width="10px;">
                                  <div style="width:7px;height:7px;">
 
@@ -280,11 +277,54 @@
                                            [DataContext]="DataContext"></LogLabel>
                              </td>
                              <td rowspan="2" colspan="2" style="vertical-align:top;padding-left:20px;top:2px">
-                                 <LogTextBox [ObjectFieldName]="'Remarks'" [ObjectTableName]="ObjectTableName" [IsMultiline]="true"  [Text]="Remarks" 
+                                 <LogTextBox [ObjectFieldName]="'Remarks'" [ObjectTableName]="ObjectTableName" [IsMultiline]="true" [Text]="Remarks"
                                              [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
                              </td>
                          </tr>
                      </table>
+                 </td>
+             </tr>
+
+             <tr style="height: 35px;padding-bottom:5px" *ngIf="IsConcentrated">
+                 <td>
+                     <div>
+                         <table>
+                             <tr>
+
+                                 <td>
+                                     <table>
+                                         <tr>
+                                             <td >
+                                                 <div></div>
+                                             </td>
+
+                                             <td style="width: 57px;vertical-align: bottom;">
+                                                 <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel' |TextCodeTranslationPipe}}</button>
+                                             </td>
+
+                                             <td style="width: 10px;vertical-align:bottom">
+                                                 <div></div>
+                                             </td>
+
+
+                                             <td style="width:110px;  vertical-align: bottom;">
+                                                 <custom-send-options #MyCustomSendOptionsComponent [AvoidDoubleClick]="true" (SendButtonClicked)="OnCustomSendOptionsButtonClick($event)"></custom-send-options>
+                                             </td>
+
+                                         </tr>
+                                     </table>
+
+                                 </td>
+
+
+
+                             </tr>
+
+
+
+                         </table>
+                     </div>
+
                  </td>
              </tr>
          </table>

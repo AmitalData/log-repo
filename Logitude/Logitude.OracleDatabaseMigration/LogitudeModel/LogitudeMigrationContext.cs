@@ -2892,6 +2892,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         public IDbSet<SupplierInvoiceItemVehicleMod> SupplierInvoiceItemVehicleMods { get; set; }
         public IDbSet<VehicleSafetyAccessoryType> VehicleSafetyAccessoryTypes { get; set; }
         public IDbSet<GuaranteeCustomerActivity> GuaranteeCustomerActivities { get; set; }
+        public IDbSet<HazardousSubstance> HazardousSubstances { get; set;}
         public IDbSet<CheckTypeLookup> CheckTypeLookups { get; set; }
         public IDbSet<SupplierInvoiceItemModVehicle> SupplierInvoiceItemModVehicles { get; set; }
         public IDbSet<CertificatesStatus> CertificatesStatuses { get; set; }
@@ -4009,6 +4010,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new SupplierInvoiceItemVehicleModMap());
             modelBuilder.Configurations.Add(new VehicleSafetyAccessoryTypeMap());
             modelBuilder.Configurations.Add(new GuaranteeCustomerActivityMap());
+            modelBuilder.Configurations.Add(new HazardousSubstanceMap());
             modelBuilder.Configurations.Add(new CheckTypeLookupMap());
             modelBuilder.Configurations.Add(new SupplierInvoiceItemModVehicleMap());
             modelBuilder.Configurations.Add(new CertificatesStatusMap());

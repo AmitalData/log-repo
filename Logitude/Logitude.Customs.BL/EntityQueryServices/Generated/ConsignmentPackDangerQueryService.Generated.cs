@@ -48,7 +48,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             mapping = new ConsignmentPackDangerDataMapping();
         }
 		 
-		public  ConsignmentPackDangerPM GetSingle(string declarationid, int? consignmentnumber, int linenumber, int dangerouslineno,bool getComposition, bool getFromCache)
+		public  ConsignmentPackDangerPM GetSingle(string declarationid, int? consignmentnumber, int? linenumber, int? dangerouslineno,bool getComposition, bool getFromCache)
         {
              EntityKeys = new ConsignmentPackDangerKeys(){ DeclarationId = declarationid, ConsignmentNumber = consignmentnumber, LineNumber = linenumber, DangerousLineNo = dangerouslineno };
 

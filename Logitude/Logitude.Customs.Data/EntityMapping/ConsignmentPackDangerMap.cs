@@ -33,7 +33,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.DangerousLineNo).HasColumnName("DangerousLineNo").IsRequired().HasDatabaseGeneratedOption(null);
 
-            this.Property(t => t.UNCode).HasColumnName("UNCode").HasMaxLength(4).IsUnicode(false);
+            this.Property(t => t.UNCode).HasColumnName("UNCode").IsRequired().HasMaxLength(4).IsUnicode(false);
 
             this.Property(t => t.DangerousGoodsPackingReqCode).HasColumnName("DangerousGoodsPackingReqCode").HasMaxLength(3).IsUnicode(false);
 

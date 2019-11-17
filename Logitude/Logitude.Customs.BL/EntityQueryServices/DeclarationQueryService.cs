@@ -49,6 +49,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
             DeclarationTaxQueryService declarationTaxService = new DeclarationTaxQueryService(context);
             DeclarationConstraintQueryService declarationConstraintQueryService = new EntityQueryServices.DeclarationConstraintQueryService(context);
             DeclarationConsAcceptanceQueryService declarationConsAcceptanceQueryService = new DeclarationConsAcceptanceQueryService(context);
+           DecDangersContactQueryService decDangersContactQueryService = new DecDangersContactQueryService(context);
+
             //DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
 
             entityPM.InvoiceHasFreight = supplierInvoiceService.DoesAnyInvoiceHasFreight(entityPM.Id, entityPM.Tenant);
@@ -72,9 +74,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             entityPM.DeclarationTaxes = declarationTaxService.GetMulti(declarationKeys, true);
             entityPM.DeclarationConstraints = declarationConstraintQueryService.GetMulti(declarationKeys, true);
             entityPM.DeclarationConsAcceptances = declarationConsAcceptanceQueryService.GetMulti(declarationKeys, true);
-            
+            entityPM.DecDangersContacts = decDangersContactQueryService.GetMulti(declarationKeys, true);
             //entityPM.DclarationCourierStatus = declarationCourierStatusQueryService.GetMulti(declarationKeys, true);
-            
+
 
             //Stopwatch stopWatch = new Stopwatch();
             //stopWatch.Start();
