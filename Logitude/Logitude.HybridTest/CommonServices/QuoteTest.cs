@@ -97,5 +97,33 @@ namespace Logitude.HybridTest.CommonServices
                 }
             }
         }
+
+        [TestMethod]
+        public void Test_Quote_UploadQuotationDocument()
+        {
+            LoginService.GetLoginTokenByCredentials();
+            Assert.Inconclusive("Not Implemented !");
+        }
+
+        [TestMethod]
+        public void Test_Quote_CreateEvent()
+        {
+            LoginService.GetLoginTokenByCredentials();
+            Assert.Inconclusive("Not Implemented !");
+        }
+
+        [TestMethod]
+        public void Test_Quote_BuildEventsList()
+        {
+            LoginService.GetLoginTokenByCredentials();
+            Assert.Inconclusive("Not Implemented !");
+        }
+
+        [TestMethod]
+        public void Test_Quote_DeleteQuoteEvent()
+        {
+            LoginService.GetLoginTokenByCredentials();
+            Assert.Inconclusive("Not Implemented !");
+        }
     }
 }

@@ -41,5 +41,40 @@ namespace Logitude.HybridTest.CommonServices
                 return serviceResponse;
             }
         }
+
+        [TestMethod]
+        public void Test_CardContact_DELETE()
+        {
+            Assert.Inconclusive("Not Implemented !");
+            Test_CardContact_UPSERT();
+            CardContactServiceReference.CardContactWcfServiceClient serviceClient = new CardContactServiceReference.CardContactWcfServiceClient();
+            string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
+            serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
+            using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
+            {
+                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
+                Response serviceResponse = serviceClient.Delete("?", "?", TestEnvironmentGlobalParameters.Tenant, false);
+                Assert.IsFalse(serviceResponse.HasError, "Delete Failed! " + serviceResponse.ErrorMessage);
+                Assert.IsNull(serviceResponse.Result, "Delete Failed! " + serviceResponse.ErrorMessage);
+            }
+        }
+
+        [TestMethod]
+        public void Test_CardContact_GetCardContactPM()
+        {
+            Assert.Inconclusive("Not Implemented !");
+            Test_CardContact_UPSERT();
+            CardContactServiceReference.CardContactWcfServiceClient serviceClient = new CardContactServiceReference.CardContactWcfServiceClient();
+            string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
+            serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
+            using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
+            {
+                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
+                Response serviceResponse = new Response();
+                CardContactServiceReference.CardContactPM entityPM = serviceClient.GetCardContactPM("?", "?", TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
+                Assert.IsFalse(serviceResponse.HasError, "Get Card Contact PM! " + serviceResponse.ErrorMessage);
+                Assert.IsNull(serviceResponse.Result, "Get Card Contact PM! " + serviceResponse.ErrorMessage);
+            }
+        }
     }
 }
