@@ -132,6 +132,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityCard.SATPaymentMethodCode = entityPM.PaymentMethodCode;
             entityCard.ExternalId2 = entityPM.ExternalId2;
             entityCard.SATForeignRFC = entityPM.SATForeignRFC;
+            entityCard.ClassifierId = entityPM.ClassifierId;
 
             entityCard.MetodoPagoCode = entityPM.MetodoPagoCode;
             entityCard.UsoCFDICode = entityPM.UsoCFDICode;
