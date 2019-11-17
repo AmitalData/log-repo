@@ -1,4 +1,5 @@
 ﻿using System;
+using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Logitude.HybridTest.CommonServices
@@ -19,20 +20,38 @@ namespace Logitude.HybridTest.CommonServices
             Server.Tools.Response serviceResponse = CallAddressUpsert();
             Assert.AreEqual(serviceResponse.HasError, false, serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
-         }
+        }
 
-        public static Server.Tools.Response CallAddressUpsert()
+        [TestMethod]
+        public void Test_Address_GETADDRESSBYEXTERNALID()
         {
-
+            LoginService.GetLoginTokenByCredentials();
+            Test_Address_UPSERT();
             AddressServiceReference.AddressWcfServiceClient serviceClient = new AddressServiceReference.AddressWcfServiceClient();
             string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
             serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
-            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)serviceClient.InnerChannel))
+            using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
             {
+                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
+                Response serviceResponse = new Response();
+                AddressServiceReference.AddressPM serviceResult = serviceClient.GetAddressByExternalId(HybridCodes.AddressCode, TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
+                Assert.AreEqual(serviceResponse.HasError, false, serviceResponse.ErrorMessage);
+                Assert.IsNull(serviceResponse.Result, "Get Address By External Id Failed! " + serviceResponse.ErrorMessage);
+                Assert.AreEqual(serviceResult.ExternalId, HybridCodes.AddressCode, serviceResponse.ErrorMessage);
+            }
+        }
 
+        public static Response CallAddressUpsert()
+        {
+            AddressServiceReference.AddressWcfServiceClient serviceClient = new AddressServiceReference.AddressWcfServiceClient();
+            string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
+            serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
+            using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
+            {
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
                 AddressServiceReference.AddressPM entityPM = new AddressServiceReference.AddressPM()
                 {
+                    ExternalId = HybridCodes.AddressCode,
                     Name = "Hybrid Address",
                     City = "Hybrid City",
                     AddressTypeId = "M",
@@ -42,7 +61,7 @@ namespace Logitude.HybridTest.CommonServices
                     Tenant = TestEnvironmentGlobalParameters.Tenant,
 
                 };
-                Logitude.Server.Tools.Response serviceResponse = serviceClient.Upsert(entityPM, false);
+                Response serviceResponse = serviceClient.Upsert(entityPM, false);
                 return serviceResponse;
             }
         }

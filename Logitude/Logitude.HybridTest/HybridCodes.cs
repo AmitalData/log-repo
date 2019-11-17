@@ -33,5 +33,6 @@ namespace Logitude.HybridTest
         public const string DocumentTypeCode = "HDT";
         public const string UserCode = "HU";
         public const string EventTypeCode = "HET";
+        public const string AddressCode = "HA";
     }
 }

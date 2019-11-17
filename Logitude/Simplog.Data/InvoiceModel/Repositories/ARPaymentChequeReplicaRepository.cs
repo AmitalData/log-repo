@@ -33,7 +33,11 @@ namespace Simplog.Data.InvoiceModel.Repositories
             return (from a in context.ARPaymentChequeReplicas where a.Id == id && a.Tenant == tenant select a).FirstOrDefault();
         }
 
-     
+        public bool ChequeIfPaymentChequeReplicaExist(string paymentId, string chequeNumber,int lineNo, int tenant)
+        {
+            return (from a in context.ARPaymentChequeReplicas where a.PaymentId == paymentId && a.Tenant == tenant && a.ChequeNumber == chequeNumber && a.LineNumber == lineNo select a).Any();
+        }
+       
         public IQueryable<ARPaymentChequeReplica> GetARPaymentChequeReplicas(string paymentId, int tenant)
         {
             return (from a in context.ARPaymentChequeReplicas where a.PaymentId == paymentId && a.Tenant == tenant select a);

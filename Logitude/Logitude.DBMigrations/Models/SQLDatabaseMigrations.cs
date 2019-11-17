@@ -70,62 +70,40 @@ namespace Logitude.DBMigrations.Models
             return alterTableScript;
         }
 
-        //
-
         protected override string GetColumnMigrationScript(string tableName, ColumnMigration columnMigration, List<ColumnMigration> columnMigrations)
         {
+            string migrationScript = null;
             switch (columnMigration.MigrationType)
             {
                 case MigrationTypes.ADD:
-                    string addScript = "ALTER TABLE " + tableName + " ";
-                    addScript += "ADD " + columnMigration.NewColumn.Name + " ";
-                    addScript += GetDataTypeScript(columnMigration.NewColumn.Type, columnMigration.NewColumn.Size);
-                    addScript += GetConstraintsScript(columnMigration.NewColumn.Constraints);
-                    return addScript;
+                    migrationScript = GetAddColumnMigrationScript(tableName, columnMigration);
+                    return migrationScript;
                 case MigrationTypes.RENAME:
-                    string renameScript = "EXEC SP_RENAME '" + tableName + "." + columnMigration.CurrentColumn.Name + "', '" + columnMigration.NewColumn.Name + "', 'COLUMN'";
-                    return renameScript;
+                    migrationScript = GetRenameColumnMigrationScript(tableName, columnMigration);
+                    return migrationScript;
                 case MigrationTypes.DROP:
-                    string dropScript = "EXEC SP_RENAME '" + tableName + "." + columnMigration.CurrentColumn.Name + "', '" + "Drop_" + columnMigration.CurrentColumn.Name + "', 'COLUMN'";
-                    return dropScript;
+                    migrationScript = GetDropColumnMigrationScript(tableName, columnMigration);
+                    return migrationScript;
                 case MigrationTypes.ALTERTYPE:
-                    string alterTypeScript = "ALTER TABLE " + tableName + " ";
-                    alterTypeScript += "ALTER COLUMN " + columnMigration.CurrentColumn.Name + " ";
-                    alterTypeScript += GetDataTypeScript(columnMigration.NewColumn.Type, columnMigration.CurrentColumn.Size);
-                    if (!columnMigration.CurrentColumn.Constraints.Nullable)
-                    {
-                        alterTypeScript += " NOT NULL";
-                    }
-                    return alterTypeScript;
+                    migrationScript = GetAlterTypeColumnMigrationScript(tableName, columnMigration);
+                    return migrationScript;
                 case MigrationTypes.ALTERSIZE:
-                    string alterSizeScript = "ALTER TABLE " + tableName + " ";
-                    alterSizeScript += "ALTER COLUMN " + columnMigration.CurrentColumn.Name + " ";
-                    alterSizeScript += GetDataTypeScript((columnMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERTYPE).Any() ? columnMigration.NewColumn.Type : columnMigration.CurrentColumn.Type), columnMigration.NewColumn.Size);
-                    if (!columnMigration.CurrentColumn.Constraints.Nullable)
-                    {
-                        alterSizeScript += " NOT NULL";
-                    }
-                    return alterSizeScript;
+                    migrationScript = GetAlterSizeColumnMigrationScript(tableName, columnMigration, columnMigrations);
+                    return migrationScript;
                 case MigrationTypes.ADDPRIMARYKEY:
-                    string primaryKeyConstraintName = columnMigration.CurrentColumn.Constraints.PrimaryKeyConstraintName ?? "PK_" + tableName + "_" + GenerateIdForConstraint();
-                    string addPrimaryKeyScript = "ALTER TABLE " + tableName + " ADD CONSTRAINT " + primaryKeyConstraintName + " PRIMARY KEY (" + columnMigration.CurrentColumn.Name + ")";
-                    return addPrimaryKeyScript;
+                    migrationScript = GetAddPrimaryKeyColumnMigrationScript(tableName, columnMigration);
+                    return migrationScript;
                 case MigrationTypes.DROPPRIMARYKEY:
-                    string dropPrimaryKeyScript = "ALTER TABLE " + tableName + " DROP CONSTRAINT " + columnMigration.CurrentColumn.Constraints.PrimaryKeyConstraintName;
-                    return dropPrimaryKeyScript;
+                    migrationScript = GetDropPrimaryKeyColumnMigrationScript(tableName, columnMigration);
+                    return migrationScript;
                 case MigrationTypes.SETNULLABLE:
-                    string setNullableScript = "ALTER TABLE " + tableName + " ";
-                    setNullableScript += "ALTER COLUMN " + columnMigration.CurrentColumn.Name + " ";
-                    setNullableScript += GetDataTypeScript((columnMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERTYPE).Any() ? columnMigration.NewColumn.Type : columnMigration.CurrentColumn.Type), (columnMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERSIZE).Any() ? columnMigration.NewColumn.Size : columnMigration.CurrentColumn.Size));
-                    return setNullableScript;
+                    migrationScript = GetSetNullableColumnMigrationScript(tableName, columnMigration, columnMigrations);
+                    return migrationScript;
                 case MigrationTypes.UNSETNULLABLE:
-                    string UnsetNullableScript = "ALTER TABLE " + tableName + " ";
-                    UnsetNullableScript += "ALTER COLUMN " + columnMigration.CurrentColumn.Name + " ";
-                    UnsetNullableScript += GetDataTypeScript((columnMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERTYPE).Any() ? columnMigration.NewColumn.Type : columnMigration.CurrentColumn.Type), (columnMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERSIZE).Any() ? columnMigration.NewColumn.Size : columnMigration.CurrentColumn.Size));
-                    UnsetNullableScript += " NOT NULL";
-                    return UnsetNullableScript;
+                    migrationScript = GetUnsetNullableColumnMigrationScript(tableName, columnMigration, columnMigrations);
+                    return migrationScript;
                 default:
-                    return null;
+                    return migrationScript;
             }
         }
 
@@ -216,6 +194,85 @@ namespace Logitude.DBMigrations.Models
                 }
             }
         }
-          
+
+        protected string GetAddColumnMigrationScript(string tableName, ColumnMigration columnMigration)
+        {
+            string addScript = "ALTER TABLE " + tableName + " ";
+            addScript += "ADD " + columnMigration.NewColumn.Name + " ";
+            addScript += GetDataTypeScript(columnMigration.NewColumn.Type, columnMigration.NewColumn.Size);
+            addScript += GetConstraintsScript(columnMigration.NewColumn.Constraints);
+            return addScript;
+        }
+        
+        protected string GetRenameColumnMigrationScript(string tableName, ColumnMigration columnMigration)
+        {
+            string renameScript = "EXEC SP_RENAME '" + tableName + "." + columnMigration.CurrentColumn.Name + "', '" + columnMigration.NewColumn.Name + "', 'COLUMN'";
+            return renameScript;
+        }
+
+        protected string GetDropColumnMigrationScript(string tableName, ColumnMigration columnMigration)
+        {
+            string dropScript = "EXEC SP_RENAME '" + tableName + "." + columnMigration.CurrentColumn.Name + "', '" + "Drop_" + columnMigration.CurrentColumn.Name + "', 'COLUMN'";
+            return dropScript;
+        }
+
+        protected string GetAlterTypeColumnMigrationScript(string tableName, ColumnMigration columnMigration)
+        {
+            string alterTypeScript = "ALTER TABLE " + tableName + " ";
+            alterTypeScript += "ALTER COLUMN " + columnMigration.CurrentColumn.Name + " ";
+            alterTypeScript += GetDataTypeScript(columnMigration.NewColumn.Type, columnMigration.CurrentColumn.Size);
+            if (!columnMigration.CurrentColumn.Constraints.Nullable)
+            {
+                alterTypeScript += " NOT NULL";
+            }
+            return alterTypeScript;
+        }
+
+        protected string GetAlterSizeColumnMigrationScript(string tableName, ColumnMigration columnMigration, List<ColumnMigration> columnMigrations)
+        {
+            bool IsAlterTypeInMigrationsList = columnMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERTYPE).Any();
+            string alterSizeScript = "ALTER TABLE " + tableName + " ";
+            alterSizeScript += "ALTER COLUMN " + columnMigration.CurrentColumn.Name + " ";
+            alterSizeScript += GetDataTypeScript((IsAlterTypeInMigrationsList ? columnMigration.NewColumn.Type : columnMigration.CurrentColumn.Type), columnMigration.NewColumn.Size);
+            if (!columnMigration.CurrentColumn.Constraints.Nullable)
+            {
+                alterSizeScript += " NOT NULL";
+            }
+            return alterSizeScript;
+        }
+
+        protected string GetAddPrimaryKeyColumnMigrationScript(string tableName, ColumnMigration columnMigration)
+        {
+            string primaryKeyConstraintName = columnMigration.CurrentColumn.Constraints.PrimaryKeyConstraintName ?? "PK_" + tableName + "_" + GenerateIdForConstraint();
+            string addPrimaryKeyScript = "ALTER TABLE " + tableName + " ADD CONSTRAINT " + primaryKeyConstraintName + " PRIMARY KEY (" + columnMigration.CurrentColumn.Name + ")";
+            return addPrimaryKeyScript;
+        }
+
+        protected string GetDropPrimaryKeyColumnMigrationScript(string tableName, ColumnMigration columnMigration)
+        {
+            string dropPrimaryKeyScript = "ALTER TABLE " + tableName + " DROP CONSTRAINT " + columnMigration.CurrentColumn.Constraints.PrimaryKeyConstraintName;
+            return dropPrimaryKeyScript;
+        }
+
+        protected string GetSetNullableColumnMigrationScript(string tableName, ColumnMigration columnMigration, List<ColumnMigration> columnMigrations)
+        {
+            bool IsAlterTypeInMigrationsList = columnMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERTYPE).Any();
+            bool IsAlterSizeInMigrationsList = columnMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERSIZE).Any();
+            string setNullableScript = "ALTER TABLE " + tableName + " ";
+            setNullableScript += "ALTER COLUMN " + columnMigration.CurrentColumn.Name + " ";
+            setNullableScript += GetDataTypeScript((IsAlterTypeInMigrationsList ? columnMigration.NewColumn.Type : columnMigration.CurrentColumn.Type), (IsAlterSizeInMigrationsList ? columnMigration.NewColumn.Size : columnMigration.CurrentColumn.Size));
+            return setNullableScript;
+        }
+
+        protected string GetUnsetNullableColumnMigrationScript(string tableName, ColumnMigration columnMigration, List<ColumnMigration> columnMigrations)
+        {
+            bool IsAlterTypeInMigrationsList = columnMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERTYPE).Any();
+            bool IsAlterSizeInMigrationsList = columnMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERSIZE).Any();
+            string unsetNullableScript = "ALTER TABLE " + tableName + " ";
+            unsetNullableScript += "ALTER COLUMN " + columnMigration.CurrentColumn.Name + " ";
+            unsetNullableScript += GetDataTypeScript((IsAlterTypeInMigrationsList ? columnMigration.NewColumn.Type : columnMigration.CurrentColumn.Type), (IsAlterSizeInMigrationsList ? columnMigration.NewColumn.Size : columnMigration.CurrentColumn.Size));
+            unsetNullableScript += " NOT NULL";
+            return unsetNullableScript;
+        }
     }
 }
