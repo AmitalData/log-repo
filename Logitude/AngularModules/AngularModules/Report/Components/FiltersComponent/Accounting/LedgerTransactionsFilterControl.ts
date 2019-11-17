@@ -58,7 +58,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     SetUIProperties() {
         // this.UIProperties.SetRequired("AgingForDate", "GLAccount", true);
 
-        this.UIProperties.SetRequired("GLAccountId", this.ObjectTableName, !this.GLAccountId);
+        //this.UIProperties.SetRequired("GLAccountId", this.ObjectTableName, !this.GLAccountId);
         this.UIProperties.SetRequired("FromDate", this.ObjectTableName, !this.FromDate);
         this.UIProperties.SetRequired("ToDate", this.ObjectTableName, !this.ToDate);
         // this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
@@ -116,7 +116,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         if (this.chartOfAccountId != value) {
             this.chartOfAccountId = value;
 
-            this.UIProperties.SetRequired("GLAccountId", this.ObjectTableName, !value);
+        
         }
     }
     private chartOfAccount: string;
@@ -251,7 +251,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         this.ValidationErrorsList = [];
 
         //#region requierd fields
-        if (!this.GLAccountId) { errors.push(TextCodeTranslator.Translate("GLTransactionReport.O.GLAccountZrequierd")); }
+        if (!this.GLAccountId  && !this.ChartOfAccountId) { errors.push(TextCodeTranslator.Translate("GLTransactionReport.O.RequiredFields")); }
         //#endregion
 
         //#region Date validation
@@ -390,7 +390,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         if (this._GLAccountId != value) {
             this._GLAccountId = value;
 
-            this.UIProperties.SetRequired("GLAccountId", this.ObjectTableName, !value);
+        
         }
     }
 
@@ -399,14 +399,15 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     set GLAccount(value: any) {
         if (this.glaccountPM != value) {
             this.glaccountPM = value;
+            if (this.glaccountPM) {
+                if (this.glaccountPM.IsMultiCurrency) {
 
-            if (this.glaccountPM.IsMultiCurrency) {
-
-                this.CurrencyId = null;
-                this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);
-            } else {
-                this.CurrencyId = this.glaccountPM.CurrencyId;
-                this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
+                    this.CurrencyId = null;
+                    this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);
+                } else {
+                    this.CurrencyId = this.glaccountPM.CurrencyId;
+                    this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
+                }
             }
         }
     }
