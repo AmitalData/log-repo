@@ -23,7 +23,7 @@ namespace Logitude.HybridTest.CommonServices
         }
 
         [TestMethod]
-        public void Test_PORT_GETLIST()
+        public void Test_PORT_GetList()
         {
             LoginService.GetLoginTokenByCredentials();
             PortServiceReference.PortWcfServiceClient serviceClient = new PortServiceReference.PortWcfServiceClient();
@@ -33,19 +33,28 @@ namespace Logitude.HybridTest.CommonServices
             {
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
                 Response serviceResponse = new Response();
-                ApiSearchFilters filters = new ApiSearchFilters();
-                filters.Take = 10;
-                filters.SearchFields = HybridCodes.FromPortCode;
+                ApiSearchFilters filters = new ApiSearchFilters
+                {
+                    Take = 10,
+                    SearchFields = HybridCodes.FromPortCode
+                };
                 PortServiceReference.PortList[] serviceResult = serviceClient.GetList(filters, TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
-                string fromPortCode = serviceResult[0].Code;
                 Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
                 Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);
-                Assert.IsTrue(fromPortCode == HybridCodes.FromPortCode, "From Port Doesn't Exist!");
+                if (serviceResult.Length != 0)
+                {
+                    string fromPortCode = serviceResult[0].Code;
+                    Assert.IsTrue(fromPortCode == HybridCodes.FromPortCode, "From Port Doesn't Exist!");
+                }
+                else
+                {
+                    Assert.Inconclusive("There Isn't Port With This Code!");
+                }
             }
         }
 
         [TestMethod]
-        public void Test_PORT_GETPORTID()
+        public void Test_PORT_GetPortId()
         {
             LoginService.GetLoginTokenByCredentials();
             Test_PORT_UPSERT();
@@ -56,9 +65,11 @@ namespace Logitude.HybridTest.CommonServices
             {
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
                 Response serviceResponse = new Response();
-                PortServiceReference.PortApiFilters filters = new PortServiceReference.PortApiFilters();
-                filters.PortCode = "TLV";
-                filters.CountryCode = "IL";
+                PortServiceReference.PortApiFilters filters = new PortServiceReference.PortApiFilters
+                {
+                    PortCode = "TLV",
+                    CountryCode = "IL"
+                };
                 string serviceResult = serviceClient.GetPortId(filters, TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
                 Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
                 Assert.IsNotNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);
