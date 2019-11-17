@@ -165,7 +165,8 @@ export class EntityListService {
         });
     }
 
-    getExternalReoncilioationsByFilter(objectTableName: string, bankAccountId: string, filters: ApiQueryFilters) {
+    getExternalReoncilioationsByFilter(objectTableName: string, objectTableId: string, entityId: string, filters: ApiQueryFilters)
+    {
         var table = window.ObjectTables.filter(d => d.Name === objectTableName)[0];
         if (objectTableName.indexOf('Customs.') > -1) {
             objectTableName = objectTableName.split('.')[1];
@@ -175,7 +176,7 @@ export class EntityListService {
         var servicelink = './' + moduleName + '/Services/ExtendedLists/' + servicename;
         return new Promise((resolve, reject) => {
             SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
-                resolve(service.getExternalReoncilioationsByFilter(bankAccountId, filters));
+                resolve(service.getExternalReoncilioationsByFilter(objectTableId, entityId, filters));
             });
         });
     }

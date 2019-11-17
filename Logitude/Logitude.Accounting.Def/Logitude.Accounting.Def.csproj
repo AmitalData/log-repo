@@ -92,6 +92,7 @@
     <Compile Include="EntityPMs\Generated\Category5PM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ChartOfAccountPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ChartOfAccountsTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ExternalPageAdditionalDataPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExternalReconciliationLinePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExternalReconciliationPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\FullAccountingSettingPM.Generated.cs" />
