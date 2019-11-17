@@ -21,19 +21,36 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
     {
 	    private IQueryable<ReconciliationLineList> GetIqueryableList(IQueryable<ReconciliationLine> iQueryable)
         {
-            IQueryable<ReconciliationLineList> query = (from a in iQueryable
+            IQueryable<ReconciliationLineList> query = (from a in iQueryable.Include("LedgerTransaction").Include("LedgerTransaction.Journal")
                                                         select new ReconciliationLineList()
-                                                    {
-                                                        ReconciliationId = a.ReconciliationId,
-                                                        TransactionId = a.TransactionId,
-                                                        CurrencyId = a.CurrencyId,
-                                                        CurrencyName = a.Currency != null ? a.Currency.EnglishName : null,
-                                                        CurrencyCode = a.Currency != null ? a.Currency.Code : null,
-                                                        Line = a.Line,
-                                                        IsPartial = a.IsPartial,
-                                                        Tenant = a.Tenant,
-                                                        ReconciliationAmount = a.ReconciliationAmount,
-                                                    });
+                                                        {
+                                                            ReconciliationId = a.ReconciliationId,
+                                                            TransactionId = a.TransactionId,
+                                                            CurrencyId = a.CurrencyId,
+                                                            CurrencyName = a.Currency != null ? a.Currency.EnglishName : null,
+                                                            CurrencyCode = a.Currency != null ? a.Currency.Code : null,
+                                                            Line = a.Line,
+                                                            IsPartial = a.IsPartial,
+                                                            Tenant = a.Tenant,
+                                                            ReconciliationAmount = a.ReconciliationAmount,
+
+                                                            // ledger transaction fields
+                                                            CreateDate = a.LedgerTransaction != null ? a.LedgerTransaction.CreateDate : DateTime.Now,
+                                                            DueDate = (a.LedgerTransaction != null ? a.LedgerTransaction.DueDate : DateTime.Now),
+                                                            ForeignAmountCredit = (a.LedgerTransaction != null ? a.LedgerTransaction.ForeignAmountCredit : 0),
+                                                            ForeignAmountDebit = (a.LedgerTransaction != null ? a.LedgerTransaction.ForeignAmountDebit : 0),
+                                                            Reference1 = (a.LedgerTransaction != null ? a.LedgerTransaction.Reference1 : null),
+                                                            Reference2 = (a.LedgerTransaction != null ? a.LedgerTransaction.Reference2 : null),
+                                                            Reference3 = (a.LedgerTransaction != null ? a.LedgerTransaction.Reference3 : null),
+                                                            Notes = (a.LedgerTransaction != null ? a.LedgerTransaction.Notes : null),
+                                                            JournalNumber = (a.LedgerTransaction != null ? a.LedgerTransaction.JournalLine.Journal.JournalNumber : null),
+                                                            JournalId = (a.LedgerTransaction != null ? a.LedgerTransaction.JournalId : null),
+                                                            OpenAmountCurrencySign = (a.Currency != null ? a.Currency.Sign : null),
+                                                            SearchFields = (a.LedgerTransaction != null ? a.LedgerTransaction.SearchFields : null),
+                                                            CurrencySign = (a.Currency != null ? a.Currency.Sign : null),
+                                                            
+
+                                                        });
             return query;
         }
 
