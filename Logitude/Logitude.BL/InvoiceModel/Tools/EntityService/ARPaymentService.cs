@@ -1053,10 +1053,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                 if (theEntityPm.ARPaymentChequeReplicas.Count > 0)
                                 {
                                     int LineNumberCounter = 1;
+                                    DateTime? valueDate=null;
                                     foreach (ARPaymentChequeReplicaPM item in theEntityPm.ARPaymentChequeReplicas)
                                     {
                                         arPaymentcheque = new ARPaymentChequePM();
-
+                                       if(LineNumberCounter == 1)    valueDate = item.ValueDate;
+                                        if(valueDate!= null && valueDate!= item.ValueDate)
+                                        {
+                                            throw new ApplicationException("value date should be the same for all payment cheques");
+                                        }
                                         bool exist = CheckIfPaymentChequeExist(item.ChequeNumber, LineNumberCounter++, theEntityPm);
                                         if (!exist)
                                         {
