@@ -1,10 +1,10 @@
 ﻿<Table Name="Packages">
 
-  <Column Name="Id" Type="varchar" Size="15">
+  <Column Name="Id" Type="varchar" Size="20">
     <Constraints PrimaryKey="true" Nullable="false"/>
   </Column>
 
-  <Column Name="YourName" OldNames="Name,MyName" Type="nvarchar" Size="50">
+  <Column Name="YourName" OldNames="Name,MyName" Type="nvarchar" Size="60">
     <Constraints Nullable="false"/>
   </Column>
 

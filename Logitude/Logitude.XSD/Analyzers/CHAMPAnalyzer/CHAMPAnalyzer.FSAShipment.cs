@@ -242,6 +242,11 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                     {
                         iStatusArgs.LocationPortCode = item.AirportCityCodeOfDeparture;
                     }
+
+                    if (iStatusArgs.ToPortCode == null)
+                    {
+                        iStatusArgs.ToPortCode = item.AirportCityCodeOfDeparture;
+                    }
                 }
 
                 int day = item.Day;

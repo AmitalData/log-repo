@@ -12,7 +12,7 @@ namespace Logitude.HybridTest.CommonServices
         {
             LoginService.GetLoginTokenByCredentials();
             Response serviceResponse = CallCustomBankCardUpsert();
-            Assert.IsFalse(serviceResponse.HasError, serviceResponse.ErrorMessage);
+            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
         }
 
@@ -21,7 +21,7 @@ namespace Logitude.HybridTest.CommonServices
         {
             Test_CustomBankCard_UPSERT();
             Response serviceResponse = CallCustomBankCardUpsert();
-            Assert.IsFalse(serviceResponse.HasError, serviceResponse.ErrorMessage);
+            Assert.IsFalse(serviceResponse.HasError, "Delete Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Delete Failed! " + serviceResponse.ErrorMessage);
         }
 
