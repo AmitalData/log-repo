@@ -77,8 +77,8 @@ namespace Logitude.DBMigrations.Helpers
             }
             catch (Exception e)
             {
-                Console.WriteLine("Error While Executing The Generated Script:");
-                Console.WriteLine(e.ToString());
+                Console.Write("Error While Executing Script: ");
+                Console.WriteLine(e.Message);
             }
         }
 
