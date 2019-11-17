@@ -37,8 +37,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
      [Key]
         [Column("DangerousLineNo" ,Order = 4)]
 	    public int? DangerousLineNo { get; set; }
+        [ForeignKey("HazardousSubstance")]
         [Column("UNCode")]
 	    public string UNCode { get; set; }
+	      
+        public virtual HazardousSubstance HazardousSubstance { get; set; }
         [ForeignKey("DangerousGoodsPackingReq")]
         [Column("DangerousGoodsPackingReqCode")]
 	    public string DangerousGoodsPackingReqCode { get; set; }

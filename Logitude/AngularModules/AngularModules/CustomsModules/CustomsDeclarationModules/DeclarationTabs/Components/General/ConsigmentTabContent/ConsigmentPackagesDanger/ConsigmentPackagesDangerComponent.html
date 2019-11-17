@@ -15,8 +15,14 @@
                                   [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td>
-                        <LogTextBox [ObjectFieldName]="'UNCode'" [ObjectTableName]="ObjectTableName"
-                                    [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                        <LogLov [ObjectFieldName]="'UNCode'"
+                                [ObjectTableName]="ObjectTableNameContact"
+                                [DataContext]="DataContext"
+                                [HideColumns]="true"
+                                [LookUpTableName]="'Customs.HazardousSubstance'">
+                        </LogLov>
+                        <!--<LogTextBox [ObjectFieldName]="'UNCode'" [ObjectTableName]="ObjectTableName"
+                [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>-->
                     </td>
                     <td>
                         <LogLabel [ObjectFieldName]="'DangerousGoodsPackingReqCode'" [ObjectTableName]="ObjectTableName"

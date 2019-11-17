@@ -183,6 +183,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<GuaranteeCertificateType> GuaranteeCertificateTypes { get; }
 		 IDbSet<GuaranteeCondition> GuaranteeConditions { get; }
 		 IDbSet<GuaranteeCustomerActivity> GuaranteeCustomerActivities { get; }
+		 IDbSet<HazardousSubstance> HazardousSubstances { get; }
 		 IDbSet<ImporterDeclarationType> ImporterDeclarationTypes { get; }
 		 IDbSet<ImporterDesposition> ImporterDespositions { get; }
 		 IDbSet<ImporterPeriodicDeclarStatus> ImporterPeriodicDeclarStatuses { get; }

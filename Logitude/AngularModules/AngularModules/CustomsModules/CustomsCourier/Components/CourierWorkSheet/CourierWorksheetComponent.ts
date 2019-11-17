@@ -246,7 +246,6 @@ implements OnDestroy
     }
 
     SendALLCorrectManifest(courierDeclarationStatusCode: string) {
-
         if (this._ValidationErrors != null && this._ValidationErrors.length > 0) {
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
@@ -290,6 +289,8 @@ implements OnDestroy
 
         this._CourierMasterService.PostSendALLCorrectManifest(currRequestParams)
             .subscribe(res => {
+                debugger;
+
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
                 myMessageWindow.Show(res.Result);

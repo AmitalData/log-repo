@@ -113,7 +113,7 @@ export class CustomsClosedTablesListTemplate {
         
     }
     ShowDetails() {
-
+        debugger;
         if (!this._CustomsClosedTable.Existed) {
             this.ShowDetailsNotExistTable();
             return;

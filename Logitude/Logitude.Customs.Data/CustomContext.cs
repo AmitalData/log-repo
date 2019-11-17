@@ -400,6 +400,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new GuaranteeCustomerActivityMap());
 	
+            modelBuilder.Configurations.Add(new HazardousSubstanceMap());
+	
             modelBuilder.Configurations.Add(new ImporterDeclarationTypeMap());
 	
             modelBuilder.Configurations.Add(new ImporterDespositionMap());
@@ -2096,6 +2098,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<GuaranteeCustomerActivity> GuaranteeCustomerActivities 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<HazardousSubstance> HazardousSubstances 
 	 {
 	      get; set;
 	 
