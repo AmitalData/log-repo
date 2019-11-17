@@ -222,5 +222,26 @@ namespace Logitude.HybridTest.CommonServices
                 }
             }
         }
+
+        [TestMethod]
+        public void Test_Customer_GetReadyForActivationCustomer()
+        {
+            LoginService.GetLoginTokenByCredentials();
+            Assert.Inconclusive("Not Implemented !");
+        }
+
+        [TestMethod]
+        public void Test_Customer_RemoveFromCustomersQueue()
+        {
+            LoginService.GetLoginTokenByCredentials();
+            Assert.Inconclusive("Not Implemented !");
+        }
+
+        [TestMethod]
+        public void Test_Customer_GetActivationQuestionnaireAnswers()
+        {
+            LoginService.GetLoginTokenByCredentials();
+            Assert.Inconclusive("Not Implemented !");
+        }
     }
 }
