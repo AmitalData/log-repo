@@ -3,17 +3,35 @@ using System;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.IO;
+using System.Linq;
 
 namespace Logitude.DBMigrations.Helpers
 {
     public static class AppHelper
     {
-        public static string GenerateScriptFromDXMLFiles()
+        public static string[] GetDXMLFilesFromRoot(string root)
         {
-            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-            string DXMLFilesPath = Path.Combine(projectDirectory, @"EntityFiles");
-            string[] DXMLFiles = Directory.GetFiles(DXMLFilesPath, "*.dxml");
+            try
+            {
+                string DXMLFilesPath = Path.Combine(root);
+                string[] DXMLFiles = Directory.GetFiles(DXMLFilesPath, "*.dxml", SearchOption.AllDirectories);
+                if(DXMLFiles.Length > 0)
+                {
+                    return DXMLFiles;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
 
+        public static string GenerateScriptFromDXMLFiles(string[] DXMLFiles)
+        {
             string generatedScript = "";
 
             foreach (var DXMLFile in DXMLFiles)
@@ -21,10 +39,15 @@ namespace Logitude.DBMigrations.Helpers
                 var fileName = Path.GetFileName(DXMLFile).Split('.')[0];
                 Console.WriteLine("Generating Script For " + fileName + " Entity ...");
                 string xmlString = File.ReadAllText(DXMLFile);
-                TableDefinition DXMLTable = xmlString.ParseXML<TableDefinition>();
-                SQLDatabaseMigrations databaseMigrations = new SQLDatabaseMigrations(DXMLTable);
-                generatedScript += databaseMigrations.GetScript();
-                generatedScript += "\n----------------------------------------------\n";
+                TableDefinition DxmlTable = xmlString.ParseXML<TableDefinition>();
+                SQLDatabaseMigrations databaseMigrations = new SQLDatabaseMigrations(DxmlTable);
+                string DxmlTableScript = databaseMigrations.GetScript();
+                if (!String.IsNullOrEmpty(DxmlTableScript))
+                {
+                    generatedScript += "/* Generated Script For " + fileName + ".dxml */\n";
+                    generatedScript += DxmlTableScript;
+                    generatedScript += "\n";
+                }
             }
 
             return generatedScript;
@@ -63,6 +86,21 @@ namespace Logitude.DBMigrations.Helpers
         {
             string[] arguments = Array.ConvertAll(args, a => a.ToLower());
             return (Array.IndexOf(arguments, arg) != -1);
+        }
+
+        public static string GetRoot(string[] args)
+        {
+            string[] arguments = Array.ConvertAll(args, a => a.ToLower());
+            int indexOfRootArgument = Array.IndexOf(arguments, "-root") + 1;
+            if(indexOfRootArgument < args.Length && indexOfRootArgument >= 0)
+            {
+                string root = args[indexOfRootArgument];
+                return root;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

@@ -30,14 +30,23 @@ namespace Logitude.HybridTest.CommonServices
             {
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
                 Response serviceResponse = new Response();
-                ApiSearchFilters filters = new ApiSearchFilters();
-                filters.Take = 10;
-                filters.SearchFields = HybridCodes.CountryCode;
+                ApiSearchFilters filters = new ApiSearchFilters
+                {
+                    Take = 10,
+                    SearchFields = HybridCodes.CountryCode
+                };
                 CountryServiceReference.CountryList[] serviceResult = serviceClient.GetList(filters, TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
-                string countryCode = serviceResult[0].Code;
-                Assert.IsTrue(countryCode == "HC", "Hybrid Country Doesn't Exist!");
                 Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
                 Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);
+                if (serviceResult.Length != 0)
+                {
+                    string countryCode = serviceResult[0].Code;
+                    Assert.IsTrue(countryCode == "HC", "Hybrid Country Doesn't Exist!");
+                }
+                else
+                {
+                    Assert.Inconclusive("There Isn't Country With This Code!");
+                }
             }
         }
 
