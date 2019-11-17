@@ -497,6 +497,9 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public DateTime? FirstPickupETA { get; set; }
         public DateTime? INTTRALastStatusDate { get; set; }
 
+        public string INTTRABookingError { get; set; }
+        public string INTTRALastBookingResponse { get; set; }
+
         public string Notify1Reference { get; set; }
         public string Notify2Reference { get; set; }
         public string ShipperNotExporterReference { get; set; }

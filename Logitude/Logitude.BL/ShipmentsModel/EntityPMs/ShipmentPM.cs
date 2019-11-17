@@ -2228,6 +2228,24 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string INTTRABookingStatusName{ get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string INTTRABookingError { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string INTTRALastBookingResponse { get; set; }
+
+        public string INTTRABookingResponse_Voyage { get; set; }
+        public DateTime INTTRABookingResponse_POLDate { get; set; }
+        public string INTTRABookingResponse_POFPort { get; set; }
+        public string INTTRABookingResponse_POFPortCode { get; set; }
+        public string INTTRABookingResponse_POFCCode { get; set; }
+        public string INTTRABookingResponse_POFCName { get; set; }
+        public DateTime INTTRABookingResponse_PODDate { get; set; }
+        public string INTTRABookingResponse_PODPort { get; set; }
+        public string INTTRABookingResponse_PODPortCode { get; set; }
+        public string INTTRABookingResponse_PODCCode { get; set; }
+        public string INTTRABookingResponse_PODCName { get; set; }
+        public string INTTRABookingResponse_ShippingLine { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string LastFinalDestination { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]

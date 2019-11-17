@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
@@ -783,11 +784,10 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
 
         private void Analyze_Booking()
         {
+            this.shipmentPM.INTTRALastBookingResponse = "<?xml version='1.0' encoding='UTF - 8'?> " + LogitudeXmlSerializer.SerializeObjectToXmlElementString(xmlDocument);
             this.shipmentPM.IsUpdatedByINTTRAAnalyzer = true;
             string systemEmail = "system@tenant" + this.Tenant + ".com";
             SetINTTRABookingStatusCodeAndTransStatusCode();
-
-
             shipmentPM.INTTRASIStatusDate = TenantServerConfigration.GetCurrentDateTime(this.Tenant);
             ShipmentService service = new ShipmentService(myShipmentContext, shipmentPM, systemEmail);
             service.Update();
@@ -806,13 +806,14 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
             var iNTTRABookingTransStatusCode = shipmentPM.INTTRABookingTransStatusCode;
             switch (status)
             {
+                case INTTRABooking2Confirm.HeaderTypeTransactionStatus.Replaced:
                 case INTTRABooking2Confirm.HeaderTypeTransactionStatus.Confirmed:
                     {
-                        iNTTRABookingStatusCode = "CD";
+                        iNTTRABookingStatusCode = "WC";
                         iNTTRABookingTransStatusCode = "BCD";
                         this.FillShipmentConfirmedBy();
                         this.FillShipmentBookingConfirmationNumber();
-                        this.FillShipmentMainCarriageCarrierNumber();
+                        //this.FillShipmentMainCarriageCarrierNumber();
                         break;
                     }
                 case INTTRABooking2Confirm.HeaderTypeTransactionStatus.Declined:
@@ -826,11 +827,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                         iNTTRABookingStatusCode = "PG";
                         break;
                     }
-                case INTTRABooking2Confirm.HeaderTypeTransactionStatus.Replaced:
-                    {
-                        iNTTRABookingStatusCode = "RD";
-                        break;
-                    }
+               
                 default:
                     {
                         throw new ApplicationException("Transaction Status is not sent");

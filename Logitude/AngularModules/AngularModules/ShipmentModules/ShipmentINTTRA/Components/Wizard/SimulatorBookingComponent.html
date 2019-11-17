@@ -29,7 +29,7 @@
                 <div class="MarginAbsolute5">
                     <table>
                         <tr>
-                            <td style="width: 230px; max-width: 230px;">
+                            <td style="width: 240px; max-width: 240px;">
                                 <table>
                                     <!-- Messaging Status -->
                                     <tr>
@@ -237,8 +237,8 @@
                                                                                                                     <td style="width: 75px; font-size: 10px;" class="Label">Shipping line:</td>
 
                                                                                                                     <td style="width: 90px;">
-                                                                                                                        <div  style="width: 90px;max-width: 90px; font-size: 11px;" class="Value TextTrimming">
-                                                                                                                            {{MainCarriageCarrierName}}
+                                                                                                                        <div style="width: 90px;max-width: 90px; font-size: 11px;" class="Value TextTrimming">
+                                                                                                                            {{MainCarriageCarrierCode}}
                                                                                                                         </div>
                                                                                                                     </td>
                                                                                                                 </tr>
@@ -278,10 +278,10 @@
                                                                                                                 <tr style="height:23px;">
                                                                                                                     <td style="width:130px; " colspan="2">
                                                                                                                         <img style="margin-bottom: -4px; width: 16px; height: 16px;" [attr.src]="EntityPM.MainCarriageFromPortCountryCode | CountryFlagPipe" [attr.title]="EntityPM.MainCarriageFromPortCountryName" />
-                                                                                                                        <span style="font-size: 10px;" class="Value">{{EntityPM.MainCarriageFromPortCountryCode}}</span>
+                                                                                                                        <span style="font-size: 10px;" class="Value">{{EntityPM.MainCarriageFromPortCode}}</span>
                                                                                                                         <span class="Value" style="font-size: 10px; padding-left: 5px; padding-right: 5px; text-align: center;">{{'Shipment.O.Routings.To' | TextCodeTranslationPipe}}</span>
                                                                                                                         <img style="margin-bottom: -4px; width: 16px; height: 16px;" [attr.src]="EntityPM.MainCarriageToPortCountryCode | CountryFlagPipe" [attr.title]="EntityPM.MainCarriageToPortCountryName" />
-                                                                                                                        <span style="font-size: 10px;" class="Value">{{EntityPM.MainCarriageToPortCountryCode}}</span>
+                                                                                                                        <span style="font-size: 10px;" class="Value">{{EntityPM.MainCarriageToPortCode}}</span>
                                                                                                                     </td>
                                                                                                                 </tr>
 
@@ -340,7 +340,7 @@
                                                                                                                     <td style="width: 55px;min-width: 55px; font-size: 10px;" class="Label">Shipping line:</td>
                                                                                                                     <td style="width: 90px;min-width: 90px;">
                                                                                                                         <div style="width: 90px;min-width: 90px; font-size: 11px;" class="Value TextTrimming">
-                                                                                                                            {{Transshipment1CarrierName}}
+                                                                                                                            {{Transshipment1CarrierCode}}
                                                                                                                         </div>
                                                                                                                     </td>
 
@@ -358,7 +358,7 @@
                                                                                                                             {{Transshipment1VesselVoyage}}
                                                                                                                         </div>
                                                                                                                     </td>
-                  
+
                                                                                                                 </tr>
 
                                                                                                                 <tr style="height:23px;">
@@ -382,10 +382,10 @@
                                                                                                                 <tr style="height:23px;">
                                                                                                                     <td style="width:130px; " colspan="2">
                                                                                                                         <img style="margin-bottom: -4px; width: 16px; height: 16px;" [attr.src]="EntityPM.Transshipment1FromPortCountryCode | CountryFlagPipe" [attr.title]="EntityPM.Transshipment1FromPortCountryName" />
-                                                                                                                        <span style="font-size: 10px;" class="Value">{{EntityPM.Transshipment1FromPortCountryCode}}</span>
+                                                                                                                        <span style="font-size: 10px;" class="Value">{{EntityPM.Transshipment1FromPortCode}}</span>
                                                                                                                         <span class="Value" style="font-size: 10px; padding-left: 5px; padding-right: 5px; text-align: center;">{{'Shipment.O.Routings.To' | TextCodeTranslationPipe}}</span>
                                                                                                                         <img style="margin-bottom: -4px; width: 16px; height: 16px;" [attr.src]="EntityPM.Transshipment1ToPortCountryCode | CountryFlagPipe" [attr.title]="EntityPM.Transshipment1ToPortCountryName" />
-                                                                                                                        <span style="font-size: 10px;" class="Value">{{EntityPM.Transshipment1ToPortCountryCode}}</span>
+                                                                                                                        <span style="font-size: 10px;" class="Value">{{EntityPM.Transshipment1ToPortCode}}</span>
                                                                                                                     </td>
                                                                                                                 </tr>
 
@@ -445,7 +445,7 @@
                                                                                                                     <td style="width: 55px;min-width: 55px; font-size: 10px;" class="Label">Shipping line:</td>
                                                                                                                     <td style="width: 90px;min-width: 90px;">
                                                                                                                         <div style="width: 90px;min-width: 90px; font-size: 11px;" class="Value TextTrimming">
-                                                                                                                            {{Transshipment2CarrierName}}
+                                                                                                                            {{Transshipment2CarrierCode}}
                                                                                                                         </div>
                                                                                                                     </td>
 
@@ -487,10 +487,10 @@
                                                                                                                 <tr style="height:23px;">
                                                                                                                     <td style="width:130px; " colspan="2">
                                                                                                                         <img style="margin-bottom: -4px; width: 16px; height: 16px;" [attr.src]="EntityPM.Transshipment2FromPortCountryCode | CountryFlagPipe" [attr.title]="EntityPM.Transshipment2FromPortCountryName" />
-                                                                                                                        <span style="font-size: 10px;" class="Value">{{EntityPM.Transshipment2FromPortCountryCode}}</span>
+                                                                                                                        <span style="font-size: 10px;" class="Value">{{EntityPM.Transshipment2FromPortCode}}</span>
                                                                                                                         <span class="Value" style="font-size: 10px; padding-left: 5px; padding-right: 5px; text-align: center;">{{'Shipment.O.Routings.To' | TextCodeTranslationPipe}}</span>
                                                                                                                         <img style="margin-bottom: -4px; width: 16px; height: 16px;" [attr.src]="EntityPM.Transshipment2ToPortCountryCode | CountryFlagPipe" [attr.title]="EntityPM.Transshipment2ToPortCountryName" />
-                                                                                                                        <span style="font-size: 10px;" class="Value">{{EntityPM.Transshipment2ToPortCountryCode}}</span>
+                                                                                                                        <span style="font-size: 10px;" class="Value">{{EntityPM.Transshipment2ToPortCode}}</span>
                                                                                                                     </td>
                                                                                                                 </tr>
 
@@ -549,7 +549,7 @@
                                                                                                                     <td style="width: 55px;min-width: 55px; font-size: 10px;" class="Label">Shipping line:</td>
                                                                                                                     <td style="width: 90px;min-width: 90px;">
                                                                                                                         <div style="width: 90px;min-width: 90px; font-size: 11px;" class="Value TextTrimming">
-                                                                                                                            {{Transshipment3CarrierName}}
+                                                                                                                            {{Transshipment3CarrierCode}}
                                                                                                                         </div>
                                                                                                                     </td>
 
@@ -591,10 +591,10 @@
                                                                                                                 <tr style="height:23px;">
                                                                                                                     <td style="width:130px; " colspan="2">
                                                                                                                         <img style="margin-bottom: -4px; width: 16px; height: 16px;" [attr.src]="EntityPM.Transshipment3FromPortCountryCode | CountryFlagPipe" [attr.title]="EntityPM.Transshipment3FromPortCountryName" />
-                                                                                                                        <span style="font-size: 10px;" class="Value">{{EntityPM.Transshipment3FromPortCountryCode}}</span>
+                                                                                                                        <span style="font-size: 10px;" class="Value">{{EntityPM.Transshipment3FromPortCode}}</span>
                                                                                                                         <span class="Value" style="font-size: 10px; padding-left: 5px; padding-right: 5px; text-align: center;">{{'Shipment.O.Routings.To' | TextCodeTranslationPipe}}</span>
                                                                                                                         <img style="margin-bottom: -4px; width: 16px; height: 16px;" [attr.src]="EntityPM.Transshipment3ToPortCountryCode | CountryFlagPipe" [attr.title]="EntityPM.Transshipment3ToPortCountryName" />
-                                                                                                                        <span style="font-size: 10px;" class="Value">{{EntityPM.Transshipment3ToPortCountryCode}}</span>
+                                                                                                                        <span style="font-size: 10px;" class="Value">{{EntityPM.Transshipment3ToPortCode}}</span>
                                                                                                                     </td>
                                                                                                                 </tr>
 
@@ -656,14 +656,125 @@
                                                                     </td>
                                                                 </tr>
 
-                                                                <tr style="height:5px;">
-                                                                    <td>
-                                                                        <div></div>
-                                                                    </td>
-                                                                </tr>
-
                                                                 <tr>
-                                                                    <td></td>
+                                                                    <td>
+                                                                        <div class="MediaFill" style="top:5px;">
+                                                                            <ScrollViewer [Small]="true">
+                                                                                <table>
+                                                                                    <!-- Leg 1 -->
+                                                                                    <tr style="height:125px;" *ngIf="INTTRABookingResponse_POFPort">
+                                                                                        <td>
+                                                                                            <div class="RequestItem">
+                                                                                                <table>
+                                                                                                    <tr style="height:10px;">
+                                                                                                        <td colspan="5">
+                                                                                                            <div></div>
+                                                                                                        </td>
+                                                                                                    </tr>
+
+                                                                                                    <tr>
+                                                                                                        <td style="width:5px;min-width:5px;">
+                                                                                                            <div></div>
+                                                                                                        </td>
+
+                                                                                                        <td colspan="4" style="vertical-align: middle;">
+                                                                                                            <span class="BlueTitle">Leg 1</span>
+                                                                                                        </td>
+                                                                                                    </tr>
+
+                                                                                                    <tr>
+                                                                                                        <td style="width:5px;min-width:5px;">
+                                                                                                            <div></div>
+                                                                                                        </td>
+
+                                                                                                        <td>
+                                                                                                            <table>
+                                                                                                                <tr style="height:23px;">
+                                                                                                                    <td style="width:10px;">
+                                                                                                                        <div></div>
+                                                                                                                    </td>
+
+                                                                                                                    <td style="width: 75px; font-size: 10px;" class="Label">Shipping line:</td>
+
+                                                                                                                    <td style="width: 90px;">
+                                                                                                                        <div style="width: 90px;max-width: 90px; font-size: 11px;" class="Value TextTrimming">
+                                                                                                                            {{INTTRABookingResponse_ShippingLine}}
+                                                                                                                        </div>
+                                                                                                                    </td>
+                                                                                                                </tr>
+
+                                                                                                                <tr style="height:23px;">
+                                                                                                                    <td>
+                                                                                                                        <div></div>
+                                                                                                                    </td>
+
+                                                                                                                    <td style="font-size: 10px;" class="Label">Vessel/Voyage:</td>
+
+                                                                                                                    <td>
+                                                                                                                        <div style="width: 90px;max-width: 90px; font-size: 11px;" class="Value TextTrimming">
+                                                                                                                            {{INTTRABookingResponse_Voyage}}
+                                                                                                                        </div>
+                                                                                                                    </td>
+                                                                                                                </tr>
+
+                                                                                                                <tr style="height:23px;">
+                                                                                                                    <td style="">
+                                                                                                                        <div></div>
+                                                                                                                    </td>
+
+                                                                                                                    <td style="font-size: 10px;" class="Label">ETD:</td>
+
+                                                                                                                    <td style="font-size: 11px;" class="Value">{{INTTRABookingResponse_POLDate | DateTimeToDatePipe}}</td>
+                                                                                                                </tr>
+                                                                                                            </table>
+                                                                                                        </td>
+
+                                                                                                        <td style="width:10px;">
+                                                                                                            <div></div>
+                                                                                                        </td>
+
+                                                                                                        <td style="width:130px;">
+                                                                                                            <table>
+                                                                                                                <tr style="height:23px;">
+                                                                                                                    <td style="width:130px; " colspan="2">
+                                                                                                                        <img style="margin-bottom: -4px; width: 16px; height: 16px;" [attr.src]="EntityPM.INTTRABookingResponse_POFCCode | CountryFlagPipe" [attr.title]="EntityPM.INTTRABookingResponse_POFCName" />
+                                                                                                                        <span style="font-size: 10px;" class="Value">{{EntityPM.INTTRABookingResponse_POFPortCode}}</span>
+                                                                                                                        <span class="Value" style="font-size: 10px; padding-left: 5px; padding-right: 5px; text-align: center;">{{'Shipment.O.Routings.To' | TextCodeTranslationPipe}}</span>
+                                                                                                                        <img style="margin-bottom: -4px; width: 16px; height: 16px;" [attr.src]="EntityPM.INTTRABookingResponse_PODCCode | CountryFlagPipe" [attr.title]="EntityPM.INTTRABookingResponse_PODCName" />
+                                                                                                                        <span style="font-size: 10px;" class="Value">{{EntityPM.INTTRABookingResponse_PODPortCode}}</span>
+                                                                                                                    </td>
+                                                                                                                </tr>
+
+                                                                                                                <tr>
+                                                                                                                    <td colspan="2">
+                                                                                                                        <div></div>
+                                                                                                                    </td>
+                                                                                                                </tr>
+                                                                                                            </table>
+                                                                                                        </td>
+                                                                                                    </tr>
+
+                                                                                                    <tr style="height:10px;">
+                                                                                                        <td colspan="5">
+                                                                                                            <div></div>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </table>
+
+                                                                                            </div>
+                                                                                        </td>
+                                                                                    </tr>
+
+
+                                                                                    <tr>
+                                                                                        <td>
+                                                                                            <div></div>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </ScrollViewer>
+                                                                        </div>
+                                                                    </td>
                                                                 </tr>
                                                             </table>
                                                         </td>
@@ -693,8 +804,17 @@
                     <td>
                         <div></div>
                     </td>
+
                     <td style="width: 57px;">
-                        <button class="Button" (click)="SendButtonClicked()">Request Booking</button>
+                        <button class="Button" [disabled]="!IsSendingBookingEnabled"  (click)="SendButtonClicked()">Request Booking</button>
+                    </td>
+
+                    <td style="width: 15px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" [disabled]="!IsUpdatingBookingEnabled" (click)="UpdateButtonClicked()">Update Routing</button>
                     </td>
 
                     <td style="width: 15px;">

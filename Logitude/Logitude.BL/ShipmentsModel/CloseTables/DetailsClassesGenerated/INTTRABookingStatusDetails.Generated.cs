@@ -76,6 +76,13 @@ namespace Logitude.BL.ShipmentsModel
                 Name = "Error", 
                 SearchFields = "ER,Error", 
 			});
+			 
+            all.Add(new INTTRABookingStatusDetails()
+            {    
+                Name = "Waiting For Confirmation", 
+                Code = "WC", 
+                SearchFields = "Waiting For Confirmation,WC", 
+			});
 			
             return all;
        }
