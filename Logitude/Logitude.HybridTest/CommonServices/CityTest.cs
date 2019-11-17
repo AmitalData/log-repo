@@ -34,10 +34,17 @@ namespace Logitude.HybridTest.CommonServices
                 string countryCode = HybridCodes.CountryCode;
                 string cityCode = HybridCodes.CityCode;
                 CityServiceReference.CountryCityList serviceResult = serviceClient.GetCityListByCode(cityCode, countryCode, TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
-                string testCityCode = serviceResult.Code;
-                Assert.IsTrue(cityCode == testCityCode, "City Doesn't Exist In Country Cities!");
                 Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
                 Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);
+                if (serviceResult != null)
+                {
+                    string testCityCode = serviceResult.Code;
+                    Assert.IsTrue(cityCode == testCityCode, "City Doesn't Exist In Country Cities!");
+                }
+                else
+                {
+                    Assert.Inconclusive("City Doesn't Exist In Country Cities!");
+                }
             }
         }
 
