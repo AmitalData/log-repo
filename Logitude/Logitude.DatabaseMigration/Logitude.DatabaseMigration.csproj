@@ -1626,6 +1626,10 @@
     <Compile Include="Migrations\201911100708584_QBO_New_Fields.Designer.cs">
       <DependentUpon>201911100708584_QBO_New_Fields.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911170836404_somecolumns.cs" />
+    <Compile Include="Migrations\201911170836404_somecolumns.Designer.cs">
+      <DependentUpon>201911170836404_somecolumns.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2786,6 +2790,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911100708584_QBO_New_Fields.resx">
       <DependentUpon>201911100708584_QBO_New_Fields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911170836404_somecolumns.resx">
+      <DependentUpon>201911170836404_somecolumns.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
