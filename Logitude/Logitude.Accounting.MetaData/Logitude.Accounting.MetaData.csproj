@@ -80,6 +80,7 @@
     </None>
     <None Include="EntityFiles\GLAccountMoreData.lxml" />
     <None Include="EntityFiles\GLAccountWithholdingTax.lxml" />
+    <None Include="EntityFiles\ExternalPageAdditionalData.lxml" />
     <None Include="EntityFiles\JournalAdditionalData.lxml" />
     <None Include="EntityFiles\JournalExternalReconcile.lxml">
       <SubType>Designer</SubType>

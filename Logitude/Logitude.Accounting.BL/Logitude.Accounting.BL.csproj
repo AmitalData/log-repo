@@ -303,6 +303,7 @@
     <Compile Include="EntityDataMappings\CashBookTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ChartOfAccountDataMapping.cs" />
     <Compile Include="EntityDataMappings\ChartOfAccountsTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ExternalPageAdditionalDataDataMapping.cs" />
     <Compile Include="EntityDataMappings\ExternalReconciliationDataMapping.cs" />
     <Compile Include="EntityDataMappings\ExternalReconciliationLineDataMapping.cs" />
     <Compile Include="EntityDataMappings\FullAccountingSettingDataMapping.cs" />
@@ -331,6 +332,7 @@
     <Compile Include="EntityDataMappings\Generated\CashBookTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ChartOfAccountDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ChartOfAccountsTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ExternalPageAdditionalDataDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ExternalReconciliationDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ExternalReconciliationLineDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\FullAccountingSettingDataMapping.Generated.cs" />
@@ -458,6 +460,7 @@
     <Compile Include="EntityQueryServices\Generated\ARPaymentChequeStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AutomaticExternalReconcileMethodQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\BankPageEntryTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ExternalPageAdditionalDataQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ExternalReconciliationLineQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ExternalReconciliationQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\GLAccountCounterQueryService.Generated.cs" />
@@ -535,6 +538,7 @@
     <Compile Include="EntityUpdateServices\Generated\ARPaymentChequeStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\AutomaticExternalReconcileMethodUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\BankPageEntryTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ExternalPageAdditionalDataUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ExternalReconciliationLineUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ExternalReconciliationUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\GLAccountCounterUpdateService.Generated.cs" />

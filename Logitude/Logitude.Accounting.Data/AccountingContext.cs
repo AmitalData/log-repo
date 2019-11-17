@@ -118,6 +118,8 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new ChartOfAccountsTypeMap());
 	
+            modelBuilder.Configurations.Add(new ExternalPageAdditionalDataMap());
+	
             modelBuilder.Configurations.Add(new ExternalReconciliationMap());
 	
             modelBuilder.Configurations.Add(new ExternalReconciliationLineMap());
@@ -230,6 +232,8 @@ namespace Logitude.Accounting.Data
 			modelBuilder.Entity<BankDeposit>().Property(x => x.ForeignAmount).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<CashBook>().Property(x => x.TotalAmount).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<ExternalPageAdditionalData>().Property(x => x.LastPageCloseBalance).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<FullAccountingSetting>().Property(x => x.DefaultTaxWithholdPercentage).HasPrecision(16, 2);
 				
@@ -729,6 +733,12 @@ namespace Logitude.Accounting.Data
 	 }
 	
 	 public IDbSet<ChartOfAccountsType> ChartOfAccountsTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ExternalPageAdditionalData> ExternalPageAdditionalDatas 
 	 {
 	      get; set;
 	 

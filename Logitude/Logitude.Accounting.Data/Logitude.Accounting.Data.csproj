@@ -84,6 +84,7 @@
     <Compile Include="EntityKeys\AccountingNoteKeys.cs" />
     <Compile Include="EntityKeys\AutomaticExternalReconcileMethodKeys.cs" />
     <Compile Include="EntityKeys\BankPageEntryTypeKeys.cs" />
+    <Compile Include="EntityKeys\ExternalPageAdditionalDataKeys.cs" />
     <Compile Include="EntityKeys\GLAccountCounterKeys.cs" />
     <Compile Include="EntityKeys\IntegrityCheckStatusKeys.cs" />
     <Compile Include="EntityKeys\JournalAdditionalDataKeys.cs" />
@@ -105,10 +106,12 @@
     <Compile Include="EntityListQueryServices\AccountingNoteListQueryService.cs" />
     <Compile Include="EntityListQueryServices\AutomaticExternalReconcileMethodListQueryService.cs" />
     <Compile Include="EntityListQueryServices\BankPageEntryTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ExternalPageAdditionalDataListQueryService.cs" />
     <Compile Include="EntityListQueryServices\Generated\AccountingIntegrityCheckListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\AccountingNoteListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\AutomaticExternalReconcileMethodListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\BankPageEntryTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ExternalPageAdditionalDataListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\GLAccountCounterListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\IntegrityCheckStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\JournalAdditionalDataListQueryService.Generated.cs" />
@@ -145,6 +148,7 @@
     <Compile Include="EntityLists\Generated\AccountingNoteList.Generated.cs" />
     <Compile Include="EntityLists\Generated\AutomaticExternalReconcileMethodList.Generated.cs" />
     <Compile Include="EntityLists\Generated\BankPageEntryTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ExternalPageAdditionalDataList.Generated.cs" />
     <Compile Include="EntityLists\Generated\GLAccountCounterList.Generated.cs" />
     <Compile Include="EntityLists\Generated\IntegrityCheckStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\JournalAdditionalDataList.Generated.cs" />
@@ -165,6 +169,7 @@
     <Compile Include="EntityMapping\AccountingNoteMap.cs" />
     <Compile Include="EntityMapping\AutomaticExternalReconcileMethodMap.cs" />
     <Compile Include="EntityMapping\BankPageEntryTypeMap.cs" />
+    <Compile Include="EntityMapping\ExternalPageAdditionalDataMap.cs" />
     <Compile Include="EntityMapping\GLAccountCounterMap.cs" />
     <Compile Include="EntityMapping\IntegrityCheckStatusMap.cs" />
     <Compile Include="EntityMapping\JournalAdditionalDataMap.cs" />
@@ -186,6 +191,7 @@
     <Compile Include="EntityPOCOs\AccountingNote.cs" />
     <Compile Include="EntityPOCOs\AutomaticExternalReconcileMethod.cs" />
     <Compile Include="EntityPOCOs\BankPageEntryType.cs" />
+    <Compile Include="EntityPOCOs\ExternalPageAdditionalData.cs" />
     <Compile Include="EntityPOCOs\GLAccountCounter.cs" />
     <Compile Include="EntityPOCOs\IntegrityCheckStatus.cs" />
     <Compile Include="EntityPOCOs\JournalAdditionalData.cs" />
@@ -207,11 +213,13 @@
     <Compile Include="Repositories\AccountingNoteRepository.cs" />
     <Compile Include="Repositories\AutomaticExternalReconcileMethodRepository.cs" />
     <Compile Include="Repositories\BankPageEntryTypeRepository.cs" />
+    <Compile Include="Repositories\ExternalPageAdditionalDataRepository.cs" />
     <Compile Include="Repositories\Generated\AccountingIntegrityCheckRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\AccountingNoteRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\AutomaticExternalReconcileMethodRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\BankPageEntryTypeRepository.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\GLAccountWithholdingTaxListQueryService.Generated.cs" />
+    <Compile Include="Repositories\Generated\ExternalPageAdditionalDataRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\GLAccountCounterRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\IntegrityCheckStatusRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\JournalAdditionalDataRepository.Generated.cs" />
