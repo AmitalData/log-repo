@@ -266,7 +266,8 @@ namespace Logitude.DBMigrations.Models
             return columnMigrations;
         }
 
-        protected bool IsNotInCurrentTable(ColumnDefinition currentTableColumn) {
+        protected bool IsNotInCurrentTable(ColumnDefinition currentTableColumn)
+        {
             return currentTableColumn == null;
         }
 
@@ -411,11 +412,11 @@ namespace Logitude.DBMigrations.Models
             return columnMigrations;
         }
 
-        protected string GenerateIdForConstraint()
+        protected string GenerateRandomString()
         {
             return Regex.Replace(Convert.ToBase64String(Guid.NewGuid().ToByteArray()), "[/+=]", "").ToUpper();
         }
-
+        
         // abstract methods
         protected abstract TableDefinition GetCurrentTableDefinitionFromDB();
 

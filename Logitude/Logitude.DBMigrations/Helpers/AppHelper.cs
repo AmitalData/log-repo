@@ -36,15 +36,15 @@ namespace Logitude.DBMigrations.Helpers
 
             foreach (var DXMLFile in DXMLFiles)
             {
-                var fileName = Path.GetFileName(DXMLFile).Split('.')[0];
-                Console.WriteLine("Generating Script For " + fileName + " Entity ...");
+                var fileName = Path.GetFileName(DXMLFile);
+                Console.WriteLine("Generating Script For " + fileName + " ...");
                 string xmlString = File.ReadAllText(DXMLFile);
                 TableDefinition DxmlTable = xmlString.ParseXML<TableDefinition>();
                 SQLDatabaseMigrations databaseMigrations = new SQLDatabaseMigrations(DxmlTable);
                 string DxmlTableScript = databaseMigrations.GetScript();
                 if (!String.IsNullOrEmpty(DxmlTableScript))
                 {
-                    generatedScript += "/* Generated Script For " + fileName + ".dxml */\n";
+                    generatedScript += "/* Generated Script For " + fileName + " */\n";
                     generatedScript += DxmlTableScript;
                     generatedScript += "\n";
                 }
@@ -55,11 +55,11 @@ namespace Logitude.DBMigrations.Helpers
 
         public static void SaveScript(string generatedScript)
         {
-            Console.WriteLine("Saving The Generated Script ...");
+            Console.WriteLine("Saving The Generated Scripts ...");
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
             string generatedScriptFilePath = Path.Combine(projectDirectory, @"GeneratedScript\Script.sql");
             File.WriteAllText(generatedScriptFilePath, generatedScript);
-            Console.WriteLine("The Generated Script Saved Successfully To GeneratedScript/Script.sql");
+            Console.WriteLine("The Generated Scripts Saved Successfully To /GeneratedScript/Script.sql");
         }
         
         public static void ExecuteScript(string generatedScript)
@@ -75,10 +75,32 @@ namespace Logitude.DBMigrations.Helpers
                 command.ExecuteNonQuery();
                 Console.WriteLine("The Generated Script Executed Successfully");
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
                 Console.Write("Error While Executing Script: ");
-                Console.WriteLine(e.Message);
+                Console.WriteLine(exception.Message);
+            }
+        }
+
+        public static bool IsConnectionStringValid()
+        {
+            Console.WriteLine("Checking If The Connection String Is Valid ...");
+            string connectionString = ConfigurationManager.AppSettings["ConnectionString"];
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                bool isConnectionStringValid;
+                try
+                {
+                    connection.Open();
+                    isConnectionStringValid = true;
+                    connection.Close();
+                }
+                catch (Exception)
+                {
+                    isConnectionStringValid = false;
+                    connection.Close();
+                }
+                return isConnectionStringValid;
             }
         }
 

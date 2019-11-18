@@ -1,4 +1,5 @@
 ﻿using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
@@ -40,6 +41,19 @@ namespace Logitude.Accounting.Data.CustomFilters
                         if (!string.IsNullOrEmpty(tString))
                         {
                             queryableData = queryableData.Where(c => c.EnglishName.StartsWith(tString) || c.LocalName.StartsWith(tString));
+                        }
+                    }
+
+                    if (item.FieldName == "BalanceInLocalCurrencyNotNull")
+                    {
+                        string tString = item.FieldValue as string;
+                        GLAccountMoreDataRepository MoreDataRepository = new GLAccountMoreDataRepository(tenant);
+                        List<string> MoreDataIds = (from a in MoreDataRepository.GetAll(tenant)
+                                                    where a.BalanceInLocalCurrency != null && a.BalanceInLocalCurrency != 0
+                                                    select a.AccountId).ToList();
+                        if (!string.IsNullOrEmpty(tString))
+                        {
+                            queryableData = queryableData.Where(c => MoreDataIds.Contains(c.Id) && c.AccountTypeCode == tString);
                         }
                     }
 

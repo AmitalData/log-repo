@@ -57,7 +57,7 @@ export class AddEditAllInChargesComponent {
 
     BuildQueryFilters() {
         var entityType: string = "IsAir";
-        if (this.TariffPM.TypeCode == "OSC" || this.TariffPM.TypeCode == "OLC") {
+        if (this.TariffPM.TypeCode == "OSC" || this.TariffPM.TypeCode == "OLC" || this.TariffPM.TypeCode == "OFC") {
             entityType = "IsOcean";
         }
 
