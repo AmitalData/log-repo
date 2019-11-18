@@ -33,7 +33,7 @@ namespace Logitude.HybridTest.CommonServices
             {
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
                 Response serviceResponse = new Response();
-                AddressServiceReference.AddressPM serviceResult = serviceClient.GetAddressByExternalId(HybridCodes.AddressCode, TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
+                AddressServiceReference.AddressPM serviceResult = serviceClient.GetAddressByExternalId("?", TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
                 Assert.AreEqual(serviceResponse.HasError, false, serviceResponse.ErrorMessage);
                 Assert.IsNull(serviceResponse.Result, "Get Address By External Id Failed! " + serviceResponse.ErrorMessage);
                 if (serviceResult != null)

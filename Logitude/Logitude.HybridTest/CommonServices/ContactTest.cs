@@ -105,7 +105,7 @@ namespace Logitude.HybridTest.CommonServices
             {
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
                 Response serviceResponse = new Response();
-                ContactServiceReference.ContactPM entityPM = serviceClient.GetContactByExternalId("HybridContact@logitudeworld.com", TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
+                ContactServiceReference.ContactPM entityPM = serviceClient.GetContactByExternalId("?", TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
                 Assert.IsFalse(serviceResponse.HasError, "Get Contact By External Id Failed! " + serviceResponse.ErrorMessage);
                 Assert.IsNull(serviceResponse.Result, "Get Contact By External Id Failed! " + serviceResponse.ErrorMessage);
                 if (entityPM != null)
