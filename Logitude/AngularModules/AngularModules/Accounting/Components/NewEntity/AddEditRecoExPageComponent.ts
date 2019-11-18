@@ -21,6 +21,8 @@ import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryF
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
+import { ExternalPageAdditionalDataPMService } from '../../Services/StandardPMs/ExternalPageAdditionalDataPMService';
+import { ExternalPageAdditionalDataPM } from '../../EntityPMs/ExternalPageAdditionalDataPM';
 
 @Component({
     selector: 'AddEditRecoExPageComponent',
@@ -44,6 +46,7 @@ export class AddEditRecoExPageComponent extends BaseComponent
     _entityResourceService: EntityResourceService = new EntityResourceService();
     _ReconcileExternalPagePMService: ReconcileExternalPagePMService = new ReconcileExternalPagePMService();
     _ReconcileExternalPageExtendedPMService: ReconcileExternalPageExtendedPMService = new ReconcileExternalPageExtendedPMService();
+    _ExternalPageAdditionalDataPMService: ExternalPageAdditionalDataPMService = new ExternalPageAdditionalDataPMService();
     _CurrencyPMService: CurrencyPMService = new CurrencyPMService();
     currencyListService: CurrencyListService = new CurrencyListService();
 
@@ -95,6 +98,10 @@ export class AddEditRecoExPageComponent extends BaseComponent
             this.EditWindowToolTip = args.message;
             this.RestoreToolTipMessage = args.RestoreToolTipMessage;
 
+            var objectTable = window.ObjectTables.filter(d => d.Name === this.PageObjectTableName)[0];
+
+            this.GetAdditionalData(objectTable.Id, this.EntityPM.Id);
+
             this.GetDefaultValues();
 
             if (args.externalPage)
@@ -106,7 +113,31 @@ export class AddEditRecoExPageComponent extends BaseComponent
             this.CalculateTotals();
             this.FillGridsData();
 
+
         }
+    }
+
+    additionalDataPM: ExternalPageAdditionalDataPM;
+    GetAdditionalData(objectTableId: string, entityId: string)
+    {
+        this._ExternalPageAdditionalDataPMService.get(objectTableId, entityId)
+            .subscribe(response =>
+            {
+                console.log("[ReconcileExternalPage]", response);
+
+                if (!response.HasError) {
+                    this.additionalDataPM = response.Result
+                    if(this.isNewEntity){
+                        this.GetPreviousPageByNumber(this.additionalDataPM.LastPageNumber);
+                    }else{
+
+                    }
+                }
+                else {
+                    this.ValidationErrorsList = response.ErrorsArray;
+                }
+            });
+
     }
 
     private SetCancelApprovalEditablilty()
@@ -125,7 +156,7 @@ export class AddEditRecoExPageComponent extends BaseComponent
     private SetNewEntityMode(args: any)
     {
         this.isNewEntity = true;
-        this.GetPreviousPageByNumber(this.EntityPM.LastPageNumber);
+
         this.ReconcileExternalPagePM = this.InitializeNewPage(args);
     }
 
@@ -159,6 +190,8 @@ export class AddEditRecoExPageComponent extends BaseComponent
     private SetEditMode(args: any)
     {
         this.ReconcileExternalPagePM = args.externalPage;
+
+
         this.isNewEntity = false;
         this.GetPreviousPageForExternalPage(this.ReconcileExternalPagePM.PageNo);
         this.SetComponentEditablity();

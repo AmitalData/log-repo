@@ -19,12 +19,15 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
         public void CustomPMToPOCO(ExternalPageAdditionalDataPM entityPM, ExternalPageAdditionalData entityPOCO)
         {
-            //throw new NotImplementedException();
+            entityPOCO.ObjectTableId = entityPM.ObjectTableId;
+            entityPOCO.EntityId = entityPM.EntityId;
+
+
         }
 
         public void CustomPOCOToPM(ExternalPageAdditionalDataPM entityPM, ExternalPageAdditionalData entityPOCO)
         {
-            //throw new NotImplementedException();
+
         }
    }
 
