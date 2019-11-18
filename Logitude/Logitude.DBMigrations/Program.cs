@@ -1,5 +1,6 @@
 ﻿using Logitude.DBMigrations.Helpers;
 using System;
+using System.Configuration;
 
 namespace Logitude.DBMigrations
 {
@@ -7,26 +8,34 @@ namespace Logitude.DBMigrations
     {
         static void Main(string[] args)
         {
-            if(AppHelper.CheckAppArguments(args, "-root"))
+            if (AppHelper.CheckAppArguments(args, "-root"))
             {
                 string root = AppHelper.GetRoot(args);
                 if (!String.IsNullOrEmpty(root))
                 {
                     string[] DXMLFiles = AppHelper.GetDXMLFilesFromRoot(root);
-                    if(DXMLFiles != null)
+                    if (DXMLFiles != null)
                     {
-                        string generatedScript = AppHelper.GenerateScriptFromDXMLFiles(DXMLFiles);
-                        AppHelper.SaveScript(generatedScript);
-                        if (AppHelper.CheckAppArguments(args, "-exe"))
+                        if (AppHelper.IsConnectionStringValid())
                         {
-                            if (string.IsNullOrEmpty(generatedScript))
+                            string generatedScript = AppHelper.GenerateScriptFromDXMLFiles(DXMLFiles);
+                            AppHelper.SaveScript(generatedScript);
+                            if (AppHelper.CheckAppArguments(args, "-exe"))
                             {
-                                Console.WriteLine("There Are No Changes To Execute");
+                                if (string.IsNullOrEmpty(generatedScript))
+                                {
+                                    Console.WriteLine("There Are No Changes To Execute");
+                                }
+                                else
+                                {
+                                    AppHelper.ExecuteScript(generatedScript);
+                                }
                             }
-                            else
-                            {
-                                AppHelper.ExecuteScript(generatedScript);
-                            }
+                        }
+                        else
+                        {
+                            string connectionString = ConfigurationManager.AppSettings["ConnectionString"];
+                            Console.WriteLine("Cannot Connect To Database Using The Connection String: " + connectionString);
                         }
                     }
                     else

@@ -19,20 +19,18 @@ namespace Logitude.DBMigrations.Models
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                TableDefinition currentTable;
+                TableDefinition currentTable = null;
                 SqlCommand command = new SqlCommand(queryString, connection);
+                SqlDataReader reader = null;
                 command.Parameters.AddWithValue("@name", DXMLTable.Name);
                 command.Parameters.AddWithValue("@oldName", DXMLTable.OldName ?? DXMLTable.Name);
-
+                
                 try
                 {
                     connection.Open();
-                    SqlDataReader reader = command.ExecuteReader();
-                    if (!reader.HasRows)
-                    {
-                        currentTable = null;
-                    }
-                    else
+                    reader = command.ExecuteReader();
+
+                    if (reader.HasRows)
                     {
                         reader.Read();
                         string tableName = reader["TABLE_NAME"].ToString();
@@ -44,8 +42,8 @@ namespace Logitude.DBMigrations.Models
                 }
                 catch (Exception)
                 {
+                    reader.Close();
                     connection.Close();
-                    currentTable = null;//throw an exception to console window
                 }
 
                 return currentTable;
@@ -280,7 +278,7 @@ namespace Logitude.DBMigrations.Models
 
         protected string GetAddPrimaryKeyColumnMigrationScript(string tableName, ColumnMigration columnMigration)
         {
-            string primaryKeyConstraintName = columnMigration.CurrentColumn.Constraints.PrimaryKeyConstraintName ?? "PK_" + tableName + "_" + GenerateIdForConstraint();
+            string primaryKeyConstraintName = columnMigration.CurrentColumn.Constraints.PrimaryKeyConstraintName ?? "PK_" + tableName + "_" + GenerateRandomString();
             string addPrimaryKeyScript = "-- Add Primary Key To Column " + columnMigration.CurrentColumn.Name + "\n";
             addPrimaryKeyScript += "ALTER TABLE " + tableName + " ADD CONSTRAINT " + primaryKeyConstraintName + " PRIMARY KEY (" + columnMigration.CurrentColumn.Name + ")";
             return addPrimaryKeyScript;
