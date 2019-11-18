@@ -27,21 +27,24 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
     public ValidationErrorsList: string[] = [];
     private chargesTypePMService: ChargesTypeListService;
     public SellerDependancy: string = "AL";
-
-    public TariffCurrencyTextCode: string;
+    public TariffCurrencyTextCode: string = "Tariff.F.CurrencyId";
+    public IsContainersAreaVisible: boolean = false;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
         this.chargesTypePMService = new ChargesTypeListService();
-        this.FillChargesIDsAndUOMS();
+        
         this.BuildQueryFilters();
+
         if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC") {
+            this.FillChargesIDsAndUOMS();
             this.VisibileSurchargesArea = true;
             this.TariffCurrencyTextCode = "Tariff.O.DefaultCurrency";
         }
-        else {
-            this.VisibileSurchargesArea = false;
-            this.TariffCurrencyTextCode = "Tariff.F.CurrencyId";
+
+        else if (this.EntityPM.TypeCode == "OFC") {
+            this.FillContainersIDs();
+            this.IsContainersAreaVisible = true;
         }
 
         this.Listen();
@@ -57,7 +60,7 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
         service.GetAllVersionsWithLinesForTariff(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
                var versions = response.Result;
-                if (this.EntityPM.TypeCode == "AFC" || this.EntityPM.TypeCode == "OLC") {
+                if (this.EntityPM.TypeCode == "AFC" || this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OFC") {
                     this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);
                     if (versions != null) {
                         if (versions != null && versions.length > 1) {
@@ -88,7 +91,7 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
 
     BuildQueryFilters() {
         var EntityType: string = "IsAir";
-        if (this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OLC") {
+        if (this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OFC") {
             EntityType = "IsOcean";
             this.SellerDependancy = "SL";
         }
@@ -103,6 +106,11 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
         for (var index = 1; index <= 10; index++) {
             this.IdProps.push("Surcharge" + index + "Id");
             this.UOMProps.push("Surcharge" + index + "UOM");
+        }
+    }
+    FillContainersIDs() {
+        for (var index = 1; index <= 5; index++) {
+            this.IdProps.push("ContainerType" + index + "Id");
         }
     }
 
@@ -287,7 +295,6 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
         }
     }
 
-
     get Surcharge5UOM() {
         return this.EntityPM.Surcharge5UOM;
     }
@@ -345,6 +352,62 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
         if (this.EntityPM.Surcharge10UOM != value) {
             this.EntityPM.Surcharge10UOM = value;
             this.Validate();
+        }
+    }
+
+    //Containers
+    get ContainerType1Id() {
+        return this.EntityPM.ContainerType1Id;
+    }
+    set ContainerType1Id(value: string) {
+        if (this.EntityPM.ContainerType1Id != value) {
+            this.EntityPM.ContainerType1Id = value;
+
+            this.ValidateContainers();
+        }
+    }
+
+    get ContainerType2Id() {
+        return this.EntityPM.ContainerType2Id;
+    }
+    set ContainerType2Id(value: string) {
+        if (this.EntityPM.ContainerType2Id != value) {
+            this.EntityPM.ContainerType2Id = value;
+
+            this.ValidateContainers();
+        }
+    }
+
+    get ContainerType3Id() {
+        return this.EntityPM.ContainerType3Id;
+    }
+    set ContainerType3Id(value: string) {
+        if (this.EntityPM.ContainerType3Id != value) {
+            this.EntityPM.ContainerType3Id = value;
+
+            this.ValidateContainers();
+        }
+    }
+
+    get ContainerType4Id() {
+        return this.EntityPM.ContainerType4Id;
+    }
+    set ContainerType4Id(value: string) {
+        if (this.EntityPM.ContainerType4Id != value) {
+            this.EntityPM.ContainerType4Id = value;
+
+            this.ValidateContainers();
+        }
+    }
+
+    get ContainerType5Id() {
+        return this.EntityPM.ContainerType5Id;
+    }
+    set ContainerType5Id(value: string) {
+        if (this.EntityPM.ContainerType5Id != value) {
+            this.EntityPM.ContainerType5Id = value;
+
+            this.ValidateContainers();
         }
     }
 
@@ -433,7 +496,13 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
     }
 
     ngAfterViewInit() {
-        this.Validate(true);
+        if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC") {
+            this.Validate(true);
+        }
+
+        else if (this.EntityPM.TypeCode == "OFC") {
+            this.ValidateContainers(true);
+        }        
     }
 
     private firstIndex: number = 0;
@@ -497,13 +566,63 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
         }
     }
 
+    ValidateContainers(initial: boolean = false) {
+        var entered = false;
+        for (var index = 1; index <= 5; index++) {
+            if (initial) {
+                if (!AppTool.IsNullOrEmpty(this[this.IdProps[index - 1]])) {
+                    this.UIProperties.SetEnabled(this.IdProps[index - 1], this.ObjectTableName, false);
+                }
+
+                else {
+                    if (!entered) {
+                        entered = true;
+                        this.firstIndex = index;
+                        this.UIProperties.SetEnabled(this.IdProps[index - 1], this.ObjectTableName, true);
+                    }
+                    else {
+                        this.UIProperties.SetEnabled(this.IdProps[index - 1], this.ObjectTableName, false);
+                    }
+                }
+            }
+
+            else {
+                if (index >= this.firstIndex) {
+                    if (AppTool.IsNullOrEmpty(this[this.IdProps[index - 1]])) {
+                        
+                        if (index > 1) {
+                                this.UIProperties.SetEnabled(this.IdProps[index - 1], this.ObjectTableName, true);
+                        }
+                        else {
+                            this.UIProperties.SetRequired(this.IdProps[index - 1], this.ObjectTableName, true);
+                        }
+                    }
+
+                    else {
+                        if (index == 1) {
+                            this.UIProperties.SetRequired(this.IdProps[index - 1], this.ObjectTableName, false);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     private SaveCompletedEvent: any = null;
     private Listen() {
         if (this.entityArgs.EditComponent != null) {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    this.Validate(true);
+
+                    if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC") {
+                        this.Validate(true);
+                    }
+
+                    else if (this.EntityPM.TypeCode == "OFC") {
+                        this.ValidateContainers(true);
+                    }
+                    
                     this.CheckCurrancyEnabledProperty();
                 }
             });

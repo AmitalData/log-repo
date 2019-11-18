@@ -354,7 +354,7 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                     row[30] = "1";
                     row[31] = "";
                     row[32] = "";
-                    row[33] = "";
+                    row[33] = marksAndNumbers;
                     row[34] = totalInsidePackages;
                     row[35] = grossWeight;
                     row[36] = "";
