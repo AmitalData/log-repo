@@ -64,8 +64,7 @@ namespace WebFreight.Web
                     }
                     if (queryKeys.Contains("code"))
                     {
-                        ReadToken();// Hello World\
-                        //hello
+                        ReadToken();//KISS => Keep it simple stupid
                     }
                 }
 
