@@ -237,7 +237,7 @@ export class TariffValidator {
                 }
 
                 else if (this.entityPM.TypeCode == "AFC" || this.entityPM.TypeCode == "OLC" || this.entityPM.TypeCode == "OFC") {
-                    if (!this.entityPM.TariffLinesAddedFromExcel) {
+                    if (!this.entityPM.TariffLinesAddedFromExcel && !this.entityPM.IsUpdatingMissingPorts) {
                         if (AppTool.IsNullOrEmpty(item.DestinationPortId)) {
                             this.Errors.push(msg.replace("%FieldName", "To"));
                         }
