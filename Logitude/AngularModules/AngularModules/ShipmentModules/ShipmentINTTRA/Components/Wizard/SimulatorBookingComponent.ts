@@ -63,6 +63,7 @@ export class SimulatorBookingComponent extends BaseComponent {
     SetWindowArgs(args) {
         this.EntityPM = args['Shipment'];
         this.entityArgs.EntityPM = this.EntityPM;
+        this.entityArgs.EntityPM.IsForINTTRA = true;
         this.entityArgs.ObjectTableName = this.ObjectTableName;
         this.ShipmentId = this.EntityPM.Id;
         this.INTRAWebService = new INTRAWebService();
@@ -149,8 +150,7 @@ export class SimulatorBookingComponent extends BaseComponent {
                             SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureCommunications/Components/Communications/CommunicationsTabComponent", myLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     this.CommunicationsPage = cmpRef.instance;
-                                    this.CommunicationsPage.IsTitleHidden = true;
-                                    this.CommunicationsPage.IsForINTTRA = true;
+                                    this.CommunicationsPage.IsTitleHidden = true;                               
                                 });
                         });
                     }

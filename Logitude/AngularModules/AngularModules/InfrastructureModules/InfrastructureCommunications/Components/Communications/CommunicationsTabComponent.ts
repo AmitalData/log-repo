@@ -90,7 +90,7 @@ export class CommunicationsTabComponent implements OnDestroy {
             filters.Filter2Name = "ObjectTableId";
             filters.Filter2Value = this.ObjectTableId;
             filters.Filter2Operator = "Equals";
-            if (this.IsForINTTRA == true) {
+            if (this.EntityPM != null && this.EntityPM.IsForINTTRA == true) {
                 filters.addAdditionalFilter("FromTo", "true", null, null, "Contains", true, false, false, "string");
             }
 
