@@ -393,8 +393,11 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ngOnInit() {
+        debugger;
         this.LookUpTable = window.ObjectTables.filter(d => d.Name === this.LookUpTableName)[0];
         this._entityResourceService.getEntityResourceByTableName(this.LookUpTableName, 0).subscribe((res: any) => {
+            debugger;
+
             if (this.LookUpTable.CacheOnClient) {
                 var filters: ApiQueryFilters;
                 filters = new ApiQueryFilters();
@@ -407,6 +410,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 });
             }
             else {
+                debugger;
+
                 var filters: ApiQueryFilters;
                 filters = new ApiQueryFilters();
                 //filters.PageSize = 50;
@@ -463,7 +468,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
     SetIsDisabledTimer: any;
     InitializeControl() {
-        this.Widths = [];
+         this.Widths = [];
         this.MinWidths = [];
         this.ItemsNgStyles = [];
         this.LogLOVControlClass = "LogLOVControl";

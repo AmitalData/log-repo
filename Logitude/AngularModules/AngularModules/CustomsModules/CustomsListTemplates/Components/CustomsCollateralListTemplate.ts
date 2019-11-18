@@ -15,23 +15,27 @@ import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { ListComponentArgs } from '../../../Infrastructure/Args';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 import { CustomsCollateralList } from '../../../Customs/EntityLists/CustomsCollateralList';
+import { CustomsCollateralAnswerSharedDataService } from '../../../Customs/Services/DataChange/CustomsCollateralAnswerSharedDataService'
+import { debug } from 'util';
 
 
 @Component({
     moduleId: module.id,
     templateUrl: 'CustomsCollateralListTemplate.html',
+ 
 })
 
 export class CustomsCollateralListTemplate {
 
     public _CustomsCollateralRecord: CustomsCollateralList;
     public fieldName: any;
+    //@Output() selectItem: EventEmitter<any> = new EventEmitter();
     TableUpdateButtonIsEnabled: boolean = false;
     UpdateButtonVisibility: boolean = false;
     TableUpdateButtonOpacity: string = "1";
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(private CD: ChangeDetectorRef) {
+    constructor(private CD: ChangeDetectorRef, private _customsCollateralAnswerSharedDataService: CustomsCollateralAnswerSharedDataService ) {
         //        this.TenantCurrencySign = SessionLocator.TenantPM.CurrencySign;
 
 
@@ -44,6 +48,33 @@ export class CustomsCollateralListTemplate {
         this.fieldName = fieldName;
 
     }
+
+
+    OnCheckedWithSystemEvent(eventM, id) {
+        eventM.stopPropagation();
+        debugger;
+        if (!this._customsCollateralAnswerSharedDataService._SelectedItems.Collection.includes(id)) {
+            this._customsCollateralAnswerSharedDataService._SelectedItems.Insert(id);
+        }
+        else {
+            var removedIndex = null;
+            for (var i = 0; i < this._customsCollateralAnswerSharedDataService._SelectedItems.Collection.length; i++) {
+                if (id == this._customsCollateralAnswerSharedDataService._SelectedItems.Collection[i]) {
+                    removedIndex = i;
+                    break;
+                }
+            }
+            if (removedIndex != null) {
+                this._customsCollateralAnswerSharedDataService._SelectedItems.Collection.splice(removedIndex, 1);
+            }
+
+        }
+
+
+         this._customsCollateralAnswerSharedDataService.IsDisplayButtonSend = (this._customsCollateralAnswerSharedDataService._SelectedItems.Collection.length > 1);
+
+    }
+
 
 
 }

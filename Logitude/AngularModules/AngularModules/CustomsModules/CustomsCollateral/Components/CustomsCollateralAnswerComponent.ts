@@ -21,11 +21,18 @@ declare var window: any;
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import { CustomsCollateralPMService } from '../../../Customs/Services/StandardPMs/CustomsCollateralPMService';
 import { forEach } from '@angular/router/src/utils/collection';
-
+import { DeclarationExtendedListService } from '../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
+import { SendCollateralRequestParams } from '../../../Customs/DataContract/RequestParams/SendCollateralRequestParams';
+import { Observable } from 'rxjs';
+import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
+import { CustomsCollateralAnswerSharedDataService} from '../../../Customs/Services/DataChange/CustomsCollateralAnswerSharedDataService'
+import { subscribeOn } from 'rxjs/operator/subscribeOn';
 @Component({
     moduleId: module.id,
     templateUrl: './CustomsCollateralAnswerComponent.html',
-    providers: [CustomsCollateralPMService]
+    providers: [CustomsCollateralPMService, DeclarationExtendedListService, CustomsCollateralAnswerSharedDataService]
 })
 export class CustomsCollateralAnswerComponent extends BaseComponent implements OnInit {
 
@@ -41,9 +48,9 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
     private GuaranteeDefaultList: string[] = [];
     cardListService: CardListService = new CardListService();
     IsConcentrated: boolean;
-    collateralToSendlist: number[];
+    collateralToSendlist: string[];
 
-    constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService,private _customsCollateralPMService: CustomsCollateralPMService) {
+    constructor(private _customsCollateralAnswerSharedDataService:CustomsCollateralAnswerSharedDataService , public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService, private _customsCollateralPMService: CustomsCollateralPMService,private _declarationExtendedListService: DeclarationExtendedListService) {
         super();
     }
 
@@ -736,22 +743,57 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
 
 
     OnCustomSendOptionsButtonClick() {
-
-        var currentEntity: CustomsCollateralPM; 
+          var currentEntity: CustomsCollateralPM; 
         for (var i = 0; i < this.collateralToSendlist.length; i++) {
             this._customsCollateralPMService.get(this.collateralToSendlist[i].toString()).subscribe(
                 data => {
                     currentEntity = (data.Result as CustomsCollateralPM);
-                    this.EntityPM.RequestFileAmount = this.EntityPM.AllocatedAmount;
+                    //this.EntityPM.RequestFileAmount = this.EntityPM.AllocatedAmount;
                     currentEntity.AddCustomsCollateralsAnswer(this.EntityPM);
                     this._customsCollateralPMService.update(currentEntity).subscribe()
+  //{
+
+                        //return Observable.defer(() => {
+                        //    var authHeader = new Headers();
+                        //    authHeader.append('Token', SessionInfo.Token);
+                        //    authHeader.append('Content-Type', 'application/json');
+
+                        //    var serviceResponse: ServiceResponse;
+                        //    serviceResponse = new ServiceResponse();
+
+                        //    return this._http.post(
+                        //        this._apiUrl + '/PostSendPayReadyLow2755/', JSON.stringify(requestParams), { headers: authHeader })
+                        //        .map((res) => {
+                        //            var messString = res.json();
+
+
+                        //            var serviceResponse: ServiceResponse;
+                        //            serviceResponse = new ServiceResponse();
+                        //            serviceResponse.Result = messString;
+
+
+                        //            return serviceResponse;
+                        //        }).catch(ServiceHelper.HandleServiceError);
+                        //    ;
+
+                        //});
+                 //   }
+
 
                 }
 
 
             );
-
         }
+
+        let requestParams: SendCollateralRequestParams = new SendCollateralRequestParams();
+
+        requestParams.Collaterals = this.collateralToSendlist;
+        requestParams.Tenant = 1;
+
+ 
+        this._declarationExtendedListService.PostSendCollateral8212(requestParams).subscribe();
+           
 
     }
 

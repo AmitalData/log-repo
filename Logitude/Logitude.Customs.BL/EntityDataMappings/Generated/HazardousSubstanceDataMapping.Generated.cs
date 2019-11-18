@@ -23,8 +23,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
           { 
 		     None,  
 	         Code, 
-	         Name, 
-	         SearchFields,
+	         EnglishName, 
+	         SearchFields, 
+	         LocalName, 
+	         Inactive,
 	      }
 
 
@@ -32,8 +34,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
           { 
 		     None,  
 	         Code, 
-	         Name, 
-	         SearchFields,
+	         EnglishName, 
+	         SearchFields, 
+	         LocalName, 
+	         Inactive,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -42,14 +46,24 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	    public void PMToPOCO(HazardousSubstancePM entityPM, HazardousSubstance entityPOCO)
         {
 			 
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Name))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EnglishName))
             {
-				entityPOCO.Name = entityPM.Name;
+				entityPOCO.EnglishName = entityPM.EnglishName;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
             {
 				entityPOCO.SearchFields = entityPM.SearchFields;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LocalName))
+            {
+				entityPOCO.LocalName = entityPM.LocalName;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive))
+            {
+				entityPOCO.Inactive = entityPM.Inactive;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -63,14 +77,24 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.Code = entityPOCO.Code;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Name))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EnglishName))
             {
-					entityPM.Name = entityPOCO.Name;
+					entityPM.EnglishName = entityPOCO.EnglishName;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SearchFields))
             {
 					entityPM.SearchFields = entityPOCO.SearchFields;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LocalName))
+            {
+					entityPM.LocalName = entityPOCO.LocalName;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Inactive))
+            {
+					entityPM.Inactive = entityPOCO.Inactive;
             }
 
 		}
@@ -79,14 +103,24 @@ namespace Logitude.Customs.BL.EntityDataMappings
         {
 		     oldEntityPM.ChangedProperties.Clear();
 			 
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Name))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EnglishName))
             {
-                oldEntityPM.Name = entityPM.Name;
+                oldEntityPM.EnglishName = entityPM.EnglishName;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
             {
                 oldEntityPM.SearchFields = entityPM.SearchFields;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LocalName))
+            {
+                oldEntityPM.LocalName = entityPM.LocalName;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive))
+            {
+                oldEntityPM.Inactive = entityPM.Inactive;
             }
 			
 		}
@@ -101,6 +135,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
             {
                 entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.LocalName)) //T4 find type == nText 
+            {
+                entityPM.LocalName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.LocalName));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

@@ -17,9 +17,11 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string Code  { get; set; }
        [DataMember]
-       public string Name  { get; set; }
-       [DataMember]
        public string SearchFields  { get; set; }
+       [DataMember]
+       public string LocalName  { get; set; }
+       [DataMember]
+       public bool Inactive  { get; set; }
    }
 
 }

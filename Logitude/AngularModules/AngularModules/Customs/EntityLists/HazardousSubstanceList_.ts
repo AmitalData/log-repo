@@ -8,10 +8,9 @@
 
 export class HazardousSubstanceList {
    
-	Code: string;
-	SearchFields: string;
-	LocalName: string;
-	Inactive: boolean;
+    Code: string;
+    SearchFields: string;
+    LocalName: string;
+    Inactive: boolean;
 	
 }
- 

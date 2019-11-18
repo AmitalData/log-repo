@@ -263,6 +263,7 @@
     <Compile Include="EntityPMs\Generated\GuaranteeConditionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\GuaranteeCustomerActivityPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\GuaranteePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\HazardousSubstancePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ImporterDeclarationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ImporterDespositionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ImporterPeriodicDeclarStatusPM.Generated.cs" />

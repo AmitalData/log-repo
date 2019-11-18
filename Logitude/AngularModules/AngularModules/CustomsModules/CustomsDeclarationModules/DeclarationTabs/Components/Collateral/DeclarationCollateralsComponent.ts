@@ -21,10 +21,12 @@ import { CustomsCollateralPMService } from '../../../../../Customs/Services/Stan
 import { EntityListService } from '../../../../../Infrastructure/Services/EntityListService';
 import { ApiQueryFilters } from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { CustomsCollateralList } from '../../../../../Customs/EntityLists/CustomsCollateralList';
+import { CustomsCollateralAnswerSharedDataService } from '../../../../../Customs/Services/DataChange/CustomsCollateralAnswerSharedDataService'
 
 @Component({
   moduleId: module.id,
-  templateUrl: './DeclarationCollateralsComponent.html',
+    templateUrl: './DeclarationCollateralsComponent.html',
+    providers: [CustomsCollateralAnswerSharedDataService]
 })
 
 export class DeclarationCollateralsComponent extends BaseComponent implements OnInit, OnDestroy {
@@ -44,7 +46,7 @@ export class DeclarationCollateralsComponent extends BaseComponent implements On
     
     IsCollateralChecked: boolean;
     IsDisplayButtonSend: boolean;
-  constructor(private entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
+    constructor(private entityArgs: EntityArgs, private EntityResourceService: EntityResourceService, public _customsCollateralAnswerSharedDataService: CustomsCollateralAnswerSharedDataService) {
     super();
     this.collateralObslist = new ObservableCollection([]);
 
@@ -181,6 +183,19 @@ export class DeclarationCollateralsComponent extends BaseComponent implements On
 
     BuildColumns() {
         this.columns = [];
+        this.columns.push({
+
+            FieldName: 'IsChecked',
+            DataTypeCode: 'String',//'Number',
+            Display: '',
+            Styles: { width: '30px' },
+            IsCustomTemplate: true,
+            HtmlListComponentName: 'CustomsCollateralListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsCollateralListTemplate',
+            
+
+          });
+
         this.columns.push({
 
             FieldName: 'CollateralRequestNumber',
@@ -374,7 +389,7 @@ export class DeclarationCollateralsComponent extends BaseComponent implements On
       //   if (!AppTool.IsNullOrEmpty(item)) {
             var windowArgs: any = {};
 
-        windowArgs.collateralToSendlist = this.collateralToSendlist;
+        windowArgs.collateralToSendlist = this._customsCollateralAnswerSharedDataService._SelectedItems.Collection;
             var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.CollateralAnswer");
 
             var logWindow = new LogitudeWindow();

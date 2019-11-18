@@ -43,25 +43,25 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string name ;
+	  private string englishName ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string Name  
+       public string EnglishName  
 	   {
 	    
 	     get
 		{
-		   return name;
+		   return englishName;
 		 }
 		 set
 		 {
-		   if(name != value)
+		   if(englishName != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Name",OldValue=name,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EnglishName",OldValue=englishName,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   name=value;
+		   englishName=value;
 		   }
 			
 		 }
@@ -85,6 +85,52 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchFields",OldValue=searchFields,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   searchFields=value;
+		   }
+			
+		 }
+	   }
+	  private string localName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LocalName  
+	   {
+	    
+	     get
+		{
+		   return localName;
+		 }
+		 set
+		 {
+		   if(localName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LocalName",OldValue=localName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   localName=value;
+		   }
+			
+		 }
+	   }
+	  private bool inactive ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool Inactive  
+	   {
+	    
+	     get
+		{
+		   return inactive;
+		 }
+		 set
+		 {
+		   if(inactive != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Inactive",OldValue=inactive,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   inactive=value;
 		   }
 			
 		 }

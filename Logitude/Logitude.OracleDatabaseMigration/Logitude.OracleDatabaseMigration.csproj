@@ -396,6 +396,14 @@
     <Compile Include="Migrations\201911170637449_ChangeHazardousSubstances.Designer.cs">
       <DependentUpon>201911170637449_ChangeHazardousSubstances.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911180759188_ChangesHazardousSubstances.cs" />
+    <Compile Include="Migrations\201911180759188_ChangesHazardousSubstances.Designer.cs">
+      <DependentUpon>201911180759188_ChangesHazardousSubstances.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911181156591_ChangesHazardousSubstances1.cs" />
+    <Compile Include="Migrations\201911181156591_ChangesHazardousSubstances1.Designer.cs">
+      <DependentUpon>201911181156591_ChangesHazardousSubstances1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -679,6 +687,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911170637449_ChangeHazardousSubstances.resx">
       <DependentUpon>201911170637449_ChangeHazardousSubstances.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911180759188_ChangesHazardousSubstances.resx">
+      <DependentUpon>201911180759188_ChangesHazardousSubstances.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911181156591_ChangesHazardousSubstances1.resx">
+      <DependentUpon>201911181156591_ChangesHazardousSubstances1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>

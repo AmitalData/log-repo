@@ -164,6 +164,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\FreightPaymentMethodDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\GatepassReturnCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\GovernmentProcedureTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\HazardousSubstanceDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ImporterDeclarationTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ImporterTypeForClaimDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\LeadDocumentTypeDetails.Generated.cs" />
@@ -217,6 +218,7 @@
     <Compile Include="CloseTables\EnumGenerated\FreightPaymentMethodStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\GatepassReturnCodeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\GovernmentProcedureTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\HazardousSubstanceStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\ImporterDeclarationTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\ImporterTypeForClaimStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\LeadDocumentTypeStruct.Generated.cs" />
@@ -575,6 +577,7 @@
     <Compile Include="EntityDataMappings\Generated\GuaranteeConditionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\GuaranteeCustomerActivityDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\GuaranteeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\HazardousSubstanceDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ImporterDeclarationTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ImporterDespositionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ImporterPeriodicDeclarStatusDataMapping.Generated.cs" />
@@ -716,6 +719,7 @@
     <Compile Include="EntityDataMappings\GuaranteeConditionDataMapping.cs" />
     <Compile Include="EntityDataMappings\GuaranteeCustomerActivityDataMapping.cs" />
     <Compile Include="EntityDataMappings\GuaranteeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\HazardousSubstanceDataMapping.cs" />
     <Compile Include="EntityDataMappings\ImporterDeclarationTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ImporterDespositionDataMapping.cs" />
     <Compile Include="EntityDataMappings\ImporterPeriodicDeclarStatusDataMapping.cs" />
@@ -869,6 +873,7 @@
     <Compile Include="EntityQueryServices\Generated\DecDangersContactsQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeclarationPendingQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeficitDecisionQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\HazardousSubstanceQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\RequestTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\PendingByKeywordQueryService.cs" />
     <Compile Include="EntityQueryServices\ConsignmentQueryService.cs" />
@@ -1340,6 +1345,7 @@
     <Compile Include="EntityUpdateServices\Generated\FreightPaymentMethodUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\GatepassRequestUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\GatepassReturnCodeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\HazardousSubstanceUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ImporterDeclarationTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\MamanSpecialActionStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\MamanSpecialActionUpdateService.Generated.cs" />

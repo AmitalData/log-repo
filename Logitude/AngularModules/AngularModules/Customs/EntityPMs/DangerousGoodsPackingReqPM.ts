@@ -73,4 +73,4 @@ export class DangerousGoodsPackingReqPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

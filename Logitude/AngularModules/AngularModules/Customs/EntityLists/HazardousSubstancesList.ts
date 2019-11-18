@@ -9,8 +9,9 @@
 export class HazardousSubstanceList {
    
 	Code: string;
-	Name: string;
 	SearchFields: string;
+	LocalName: string;
+	Inactive: boolean;
 	
 }
  
