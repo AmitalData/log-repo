@@ -22,22 +22,15 @@ export class TariffTabsContentComponent implements OnDestroy {
     private AllTabs: TariffDetailsTab[] = [];
     public RightArrowDimmed: boolean = false;
     public LeftArrowDimmed: boolean = false;
-    private pageService: PagerService;   
-
-
-
-
+    private pageService: PagerService;       
     public EntityPM: TariffPM;
-    public Tabs: TariffDetailsTab[] = [];
-    //private CurrentSession = SessionLocator.SelectedSession;
+    public Tabs: TariffDetailsTab[] = [];   
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     private EditTabTariffType = "VR";
     constructor(public entityArgs: EntityArgs, private http: Http) {
         this.Listen();
         this.pageService = new PagerService();
     }
-
-
 
     setPage(page: number, IsNext: boolean) {
         if (this.SelectedTabItem != null) {           
@@ -49,30 +42,33 @@ export class TariffTabsContentComponent implements OnDestroy {
                     this.Tabs = this.AllTabs.slice(this.pager.startIndex, this.pager.endIndex + 1);
                     this.Tabs.forEach(item => { item.IsTabLoaded = false; });
                 }
+
                 NewTab = this.Tabs.filter(p => p.Index == this.SelectedTabItem.Index + 1)[0];
                 if (NewTab) {
                     this.SelectionChanged(NewTab);
                 }
             }
+
             else {        
                 if (this.SelectedTabItem.Index == this.pager.startIndex && this.pager.currentPage!=1) {
                     this.pager = this.pageService.getPager(this.AllTabs.length, page);
                     this.Tabs = this.AllTabs.slice(this.pager.startIndex, this.pager.endIndex + 1);
                     this.Tabs.forEach(item => { item.IsTabLoaded = false; });
                 }
+
                 NewTab = this.Tabs.filter(p => p.Index == this.SelectedTabItem.Index + -1)[0];
                 if (NewTab) {
                     this.SelectionChanged(NewTab,false);
                 }
             }
         }
+
         else {
             this.pager = this.pageService.getPager(this.AllTabs.length, page);
             this.Tabs = this.AllTabs.slice(this.pager.startIndex, this.pager.endIndex + 1);
-        }
-
-      
+        }      
     }
+
     private SetUIPropereties() {
         if (this.SelectedTabItem) {
             if (this.SelectedTabItem.Index == this.pager.endIndex) {
@@ -86,6 +82,7 @@ export class TariffTabsContentComponent implements OnDestroy {
             else {
                 this.RightArrowDimmed = false;
             }
+
             if (this.SelectedTabItem.Index == this.pager.startIndex && this.pager.currentPage == 1) {
                 this.LeftArrowDimmed = true;
             }
@@ -120,8 +117,8 @@ export class TariffTabsContentComponent implements OnDestroy {
 
         });
     }
-    ComputeDraftHeader(): any {
 
+    ComputeDraftHeader(): any {
         var datePipe: DatePipe = new DatePipe("en-US");
         var from: string = "";
         var to: string = "";
@@ -174,8 +171,12 @@ export class TariffTabsContentComponent implements OnDestroy {
             this.EditTabTariffType = "SVR";
         }
 
-        if (this.EntityPM.TypeCode == "OLC") {
+        else if (this.EntityPM.TypeCode == "OLC") {
             this.EditTabTariffType = "VR";
+        }
+
+        else if (this.EntityPM.TypeCode == "OFC") {
+            this.EditTabTariffType = "CVR";
         }
 
         this.BuildTabs();
@@ -389,6 +390,14 @@ class TariffDetailsTab {
                 this.ComponentPath = "./TariffModule/Components/EditTabs/Tariff/SurchargeVersionTabComponent";
                 break;
             }
+
+            case "CVR":
+                {
+                    this.IsDraft = version.IsDraft;
+                    this.VersionPM = version;
+                    this.ComponentPath = "./TariffModule/Components/EditTabs/Tariff/OceanFCLVersionTabComponent";
+                    break;
+                }
 
             case "GN": {
                 this.ComponentPath = "./TariffModule/Components/EditTabs/Tariff/TariffGeneralTabComponent";
