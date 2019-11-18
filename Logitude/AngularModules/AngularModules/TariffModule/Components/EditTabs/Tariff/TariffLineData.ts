@@ -1,7 +1,7 @@
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { TariffLinePM } from '../../../EntityPMs/TariffLinePM';
 import { AppTool, FontTool, FormatTool } from '../../../../Infrastructure/Tools';
-import { PortPM } from '../../../../Common/EntityPMs/PortPM';
+import { PortList } from '../../../../Common/EntityLists/PortList';
 import { VersionTabComponent } from './VersionTabComponent';
 import { SurchargeVersionTabComponent } from './SurchargeVersionTabComponent';
 import { OceanFCLVersionTabComponent } from './OceanFCLVersionTabComponent';
@@ -380,9 +380,9 @@ export class AirCostTariffLineData extends BaseComponent {
         }
     }
 
-    originPort: PortPM;
+    originPort: PortList;
     get OriginPort() { return this.originPort; }
-    set OriginPort(value: PortPM) {
+    set OriginPort(value: PortList) {
         if (this.originPort != value) {
             this.originPort = value;
         }
@@ -434,9 +434,9 @@ export class AirCostTariffLineData extends BaseComponent {
         }
     }
 
-    destinationPort: PortPM;
+    destinationPort: PortList;
     get DestinationPort() { return this.destinationPort; }
-    set DestinationPort(value: PortPM) {
+    set DestinationPort(value: PortList) {
         if (this.destinationPort != value) {
             this.destinationPort = value;
         }
@@ -1250,9 +1250,9 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         }
     }
 
-    originPort: PortPM;
+    originPort: PortList;
     get OriginPort() { return this.originPort; }
-    set OriginPort(value: PortPM) {
+    set OriginPort(value: PortList) {
         if (this.originPort != value) {
             this.originPort = value;
         }
@@ -1307,9 +1307,9 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         }
     }
 
-    destinationPort: PortPM;
+    destinationPort: PortList;
     get DestinationPort() { return this.destinationPort; }
-    set DestinationPort(value: PortPM) {
+    set DestinationPort(value: PortList) {
         if (this.destinationPort != value) {
             this.destinationPort = value;
         }
@@ -2180,9 +2180,9 @@ export class OceanFCLFreightTariffLineData extends BaseComponent {
         }
     }
 
-    originPort: PortPM;
+    originPort: PortList;
     get OriginPort() { return this.originPort; }
-    set OriginPort(value: PortPM) {
+    set OriginPort(value: PortList) {
         if (this.originPort != value) {
             this.originPort = value;
         }
@@ -2234,9 +2234,9 @@ export class OceanFCLFreightTariffLineData extends BaseComponent {
         }
     }
 
-    destinationPort: PortPM;
+    destinationPort: PortList;
     get DestinationPort() { return this.destinationPort; }
-    set DestinationPort(value: PortPM) {
+    set DestinationPort(value: PortList) {
         if (this.destinationPort != value) {
             this.destinationPort = value;
         }
