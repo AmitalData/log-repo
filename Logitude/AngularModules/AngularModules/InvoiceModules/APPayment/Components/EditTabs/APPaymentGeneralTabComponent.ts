@@ -45,13 +45,15 @@ export class APPaymentGeneralTabComponent extends BaseComponent implements OnIni
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;    
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.SetUIProperties();
                 }
             });
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.SetUIProperties();
                 }
             });
         }
