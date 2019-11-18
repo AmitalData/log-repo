@@ -24,8 +24,9 @@ namespace WebFreight.Web.Helpers.APIHelpers
             XmlSerializer serializer = new XmlSerializer(typeof(ConsolidationServiceArgs));
             ConsolidationServiceArgs args = serializer.Deserialize(stringReader) as ConsolidationServiceArgs;
 
+            
             ConsolidationService iConsolidationService = new ConsolidationService();
-            iConsolidationService.RunBatchService(args);
+            iConsolidationService.RunBatchService(args, BatchTaskExecution.Id);
         }
 
     }

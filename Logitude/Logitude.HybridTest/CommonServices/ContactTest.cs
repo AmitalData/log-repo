@@ -29,6 +29,7 @@ namespace Logitude.HybridTest.CommonServices
                     EnglishName = "Hybrid Contact",
                     LocalName = "Hybrid Contact",
                     Email = "HybridContact@logitudeworld.com",
+                    Password = "!H0",
                     ExternalId = HybridCodes.ContactCode,
                     Tenant = TestEnvironmentGlobalParameters.Tenant,
                 };
@@ -49,9 +50,16 @@ namespace Logitude.HybridTest.CommonServices
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
                 Response serviceResponse = new Response();
                 ContactServiceReference.ContactPM entityPM = serviceClient.GetContactPMByEmail("HybridContact@logitudeworld.com", TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
-                Assert.AreEqual(entityPM.EnglishName,"Hybrid Contact", "Get Contact PM By Email Failed! " + serviceResponse.ErrorMessage);
                 Assert.IsFalse(serviceResponse.HasError, "Get Contact PM By Email Failed! " + serviceResponse.ErrorMessage);
                 Assert.IsNull(serviceResponse.Result, "Get Contact PM By Email Failed! " + serviceResponse.ErrorMessage);
+                if (entityPM != null)
+                {
+                    Assert.AreEqual(entityPM.EnglishName, "Hybrid Contact", "Get Contact PM By Email Failed! " + serviceResponse.ErrorMessage);
+                }
+                else
+                {
+                    Assert.Inconclusive("There Isn't Contact With This Email!");
+                }
             }
         }
 
@@ -66,14 +74,23 @@ namespace Logitude.HybridTest.CommonServices
             {
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
                 Response serviceResponse = new Response();
-                ContactServiceReference.ContactApiFilters filters = new ContactServiceReference.ContactApiFilters();
-                filters.Take = 10;
-                filters.ByCode = true;
-                filters.SearchFields = HybridCodes.ContactCode;
+                ContactServiceReference.ContactApiFilters filters = new ContactServiceReference.ContactApiFilters
+                {
+                    Take = 10,
+                    ByCode = true,
+                    SearchFields = HybridCodes.ContactCode
+                };
                 ContactServiceReference.ContactList[] serviceResult = serviceClient.GetContactList(filters, TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
-                Assert.AreEqual(serviceResult[0].EnglishName, "Hybrid Contact", "Get Contact PM By Email Failed! " + serviceResponse.ErrorMessage);
                 Assert.IsFalse(serviceResponse.HasError, "Get Contact PM By Email Failed! " + serviceResponse.ErrorMessage);
                 Assert.IsNull(serviceResponse.Result, "Get Contact PM By Email Failed! " + serviceResponse.ErrorMessage);
+                if (serviceResult.Length != 0)
+                {
+                    Assert.AreEqual(serviceResult[0].EnglishName, "Hybrid Contact", "Get Contact PM By Email Failed! " + serviceResponse.ErrorMessage);
+                }
+                else
+                {
+                    Assert.Inconclusive("There Isn't Contact With This Code!");
+                }
             }
         }
 
@@ -88,10 +105,17 @@ namespace Logitude.HybridTest.CommonServices
             {
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
                 Response serviceResponse = new Response();
-                ContactServiceReference.ContactPM entityPM = serviceClient.GetContactByExternalId("HybridContact@logitudeworld.com", TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
-                Assert.AreEqual(entityPM.EnglishName, "Hybrid Contact", "Get Contact By External Id Failed! " + serviceResponse.ErrorMessage);
+                ContactServiceReference.ContactPM entityPM = serviceClient.GetContactByExternalId("?", TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
                 Assert.IsFalse(serviceResponse.HasError, "Get Contact By External Id Failed! " + serviceResponse.ErrorMessage);
                 Assert.IsNull(serviceResponse.Result, "Get Contact By External Id Failed! " + serviceResponse.ErrorMessage);
+                if (entityPM != null)
+                {
+                    Assert.AreEqual(entityPM.EnglishName, "Hybrid Contact", "Get Contact By External Id Failed! " + serviceResponse.ErrorMessage);
+                }
+                else
+                {
+                    Assert.Inconclusive("There Isn't Contact With This External ID!");
+                }
             }
         }
     }

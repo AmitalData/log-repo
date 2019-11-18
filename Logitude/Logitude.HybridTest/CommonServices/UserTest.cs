@@ -23,9 +23,9 @@ namespace Logitude.HybridTest.CommonServices
         }
 
         [TestMethod]
-        public void Test_User_GETUSER()
+        public void Test_User_GetUser()
         {
-            LoginService.GetLoginTokenByCredentials();
+            Test_User_UPSERT();
             UserServiceReference.UserWcfServiceClient serviceClient = new UserServiceReference.UserWcfServiceClient();
             string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
             serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
@@ -33,14 +33,23 @@ namespace Logitude.HybridTest.CommonServices
             {
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
                 Response serviceResponse = new Response();
-                UserServiceReference.UserApiFilters filters = new UserServiceReference.UserApiFilters();
-                filters.ByCode = true;
-                filters.SearchCode = HybridCodes.UserCode;
+                UserServiceReference.UserApiFilters filters = new UserServiceReference.UserApiFilters
+                {
+                    ByCode = true,
+                    SearchCode = HybridCodes.UserCode
+                };
                 UserServiceReference.UserPM serviceResult = serviceClient.GetUser(filters, TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
-                string userCode = serviceResult.Code;
-                Assert.AreEqual(userCode,HybridCodes.UserCode, "Hybrid User Doesn't Exist!");
                 Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
                 Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);
+                if (serviceResult != null)
+                {
+                    string userCode = serviceResult.Code;
+                    Assert.AreEqual(userCode, HybridCodes.UserCode, "Hybrid User Doesn't Exist!");
+                }
+                else
+                {
+                    Assert.Inconclusive("There Isn't USer With This Code!");
+                }
             }
         }
 

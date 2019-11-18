@@ -1213,29 +1213,27 @@ export class ARInvoiceMenuButtonsHandler {
                     this.entityArgs.EditComponent.NeedRefresh = true;
                     this.entityArgs.EditComponent.StopBusyIndicator();
                     this.entityArgs.EditComponent.ReloadEntityPM();
-
-                    var window = new MessageWindow();
-                    window.Show("Shipments updated successfully");
                 }
 
                 else if (list.StatusCode == "F") {
-
                     this.StopTimer();
-
                     this.entityArgs.EditComponent.StopBusyIndicator();
 
-                    var window = new MessageWindow();
-                    window.Show("There was an error updating shipments and saving the invoice. Please try again later");
+                    var errors: string[] = [];
+                    errors.push(list.ErrorLog);
+                    this.entityArgs.EditComponent.ValidationErrorsList = errors;
+                }
+
+                else {
+                    this.entityArgs.EditComponent.StopBusyIndicator();
+                    this.entityArgs.EditComponent.StartBusyIndicator("Updating Shipments... " + list.ProgressPercentage + "%");
                 }
             }
 
             else {
-
                 this.StopTimer();
-
                 this.entityArgs.EditComponent.StopBusyIndicator();
-                var window = new MessageWindow();
-                window.Show(myResponse.ErrorsArray[0]);
+                this.entityArgs.EditComponent.ValidationErrorsList = myResponse.ErrorsArray;
             }
         });
     }
