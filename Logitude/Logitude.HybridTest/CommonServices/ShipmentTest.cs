@@ -152,7 +152,7 @@ namespace Logitude.HybridTest.CommonServices
         }
 
         [TestMethod]
-        public void Test_User_GetShipmentList()
+        public void Test_Shipment_GetShipmentList()
         {
             Test_DirectShipment_UPSERT();
             ShipmentServiceReference.ShipmentWcfServiceClient serviceClient = new ShipmentServiceReference.ShipmentWcfServiceClient();
@@ -180,6 +180,34 @@ namespace Logitude.HybridTest.CommonServices
                     Assert.Inconclusive("Doesn't Exist Any Shipment!");
                 }
             }
+        }
+
+        [TestMethod]
+        public void Test_Shipment_CreateEvent()
+        {
+            LoginService.GetLoginTokenByCredentials();
+            Assert.Inconclusive("Not Implemented !");
+        }
+
+        [TestMethod]
+        public void Test_Shipment_BuildEventsList()
+        {
+            LoginService.GetLoginTokenByCredentials();
+            Assert.Inconclusive("Not Implemented !");
+        }
+
+        [TestMethod]
+        public void Test_Shipment_DeleteShipmentEvent()
+        {
+            LoginService.GetLoginTokenByCredentials();
+            Assert.Inconclusive("Not Implemented !");
+        }
+
+        [TestMethod]
+        public void Test_Shipment_DeleteShipmentTraceEvent()
+        {
+            LoginService.GetLoginTokenByCredentials();
+            Assert.Inconclusive("Not Implemented !");
         }
     }
 }
