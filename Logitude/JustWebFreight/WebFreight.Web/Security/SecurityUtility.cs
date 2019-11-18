@@ -997,7 +997,10 @@ namespace WebFreight.Web.Security
                     }
                     else
                     {
-                        context.Response.Redirect(redirectUrl,false);
+                        if (!context.Request.Url.ToString().Contains("https"))
+                        {
+                            context.Response.Redirect(redirectUrl, false);
+                        }
 
                     }
                 }

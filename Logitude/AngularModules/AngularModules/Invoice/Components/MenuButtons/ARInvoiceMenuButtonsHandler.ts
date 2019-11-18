@@ -1223,6 +1223,11 @@ export class ARInvoiceMenuButtonsHandler {
                     errors.push(list.ErrorLog);
                     this.entityArgs.EditComponent.ValidationErrorsList = errors;
                 }
+
+                else {
+                    this.entityArgs.EditComponent.StopBusyIndicator();
+                    this.entityArgs.EditComponent.StartBusyIndicator("Updating Shipments... " + list.ProgressPercentage + "%");
+                }
             }
 
             else {

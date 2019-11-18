@@ -1,9 +1,10 @@
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { TariffLinePM } from '../../../EntityPMs/TariffLinePM';
 import { AppTool, FontTool, FormatTool } from '../../../../Infrastructure/Tools';
-import { PortPM } from '../../../../Common/EntityPMs/PortPM';
+import { PortList } from '../../../../Common/EntityLists/PortList';
 import { VersionTabComponent } from './VersionTabComponent';
 import { SurchargeVersionTabComponent } from './SurchargeVersionTabComponent';
+import { OceanFCLVersionTabComponent } from './OceanFCLVersionTabComponent';
 import { CurrencyPM } from '../../../../Common/EntityPMs/CurrencyPM';
 
 export class AirCostTariffLineData extends BaseComponent {
@@ -379,9 +380,9 @@ export class AirCostTariffLineData extends BaseComponent {
         }
     }
 
-    originPort: PortPM;
+    originPort: PortList;
     get OriginPort() { return this.originPort; }
-    set OriginPort(value: PortPM) {
+    set OriginPort(value: PortList) {
         if (this.originPort != value) {
             this.originPort = value;
         }
@@ -433,9 +434,9 @@ export class AirCostTariffLineData extends BaseComponent {
         }
     }
 
-    destinationPort: PortPM;
+    destinationPort: PortList;
     get DestinationPort() { return this.destinationPort; }
-    set DestinationPort(value: PortPM) {
+    set DestinationPort(value: PortList) {
         if (this.destinationPort != value) {
             this.destinationPort = value;
         }
@@ -1249,9 +1250,9 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         }
     }
 
-    originPort: PortPM;
+    originPort: PortList;
     get OriginPort() { return this.originPort; }
-    set OriginPort(value: PortPM) {
+    set OriginPort(value: PortList) {
         if (this.originPort != value) {
             this.originPort = value;
         }
@@ -1306,9 +1307,9 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         }
     }
 
-    destinationPort: PortPM;
+    destinationPort: PortList;
     get DestinationPort() { return this.destinationPort; }
-    set DestinationPort(value: PortPM) {
+    set DestinationPort(value: PortList) {
         if (this.destinationPort != value) {
             this.destinationPort = value;
         }
@@ -1898,6 +1899,540 @@ export class AirSurchargeTariffLineData extends BaseComponent {
                     this.EntityPM.Index = this.initialIndex;
                 }
             }            
+        }
+    }
+}
+
+export class OceanFCLFreightTariffLineData extends BaseComponent {
+    public EntityPM: TariffLinePM;
+    public DataContext: OceanFCLFreightTariffLineData = this;
+    private ObjectTableName = "TariffLine";
+    public IsNewEntity: boolean = false;
+    public IsEditEnabled: boolean = false;
+    public ComparedEntity: TariffLinePM;
+    constructor(entity: TariffLinePM, public FatherComponent: OceanFCLVersionTabComponent, isNew: boolean = false) {
+        super();
+        this.EntityPM = entity;
+        this.IsNewEntity = isNew;
+        this.IsEditEnabled = FatherComponent.IsDraftVersion;
+        this.SetUIProperties();
+    }
+
+    public Container1ComparingPrice: number;
+    public Container1ComparingTextColor: string = null;
+    public Container2ComparingPrice: number;
+    public Container2ComparingTextColor: string = null;
+    public Container3ComparingPrice: number;
+    public Container3ComparingTextColor: string = null;
+    public Container4ComparingPrice: number;
+    public Container4ComparingTextColor: string = null;
+    public Container5ComparingPrice: number;
+    public Container5ComparingTextColor: string = null;
+    private DefaultColor = "blue";
+
+    SetCellsComparingText() {
+        if (this.ComparedEntity != null) {
+            this.CompareContainer1Price();
+            this.CompareContainer2Price();
+            this.CompareContainer3Price();
+            this.CompareContainer4Price();
+            this.CompareContainer5Price();
+        }
+    }
+    private CompareContainer1Price() {
+        if (this.ComparedEntity != null) {
+            this.Container1ComparingPrice = null;
+            this.Container1ComparingTextColor = this.DefaultColor;
+            if (this.ComparedEntity.Surcharge1Price != null) {
+                var surcharge1ComparingValue = this.Surcharge1Price - this.ComparedEntity.Surcharge1Price;
+                if (!AppTool.IsNullOrZero(surcharge1ComparingValue) && !AppTool.IsNullOrZero(this.ComparedEntity.Surcharge1Price)) {
+                    this.Container1ComparingPrice = (surcharge1ComparingValue / this.ComparedEntity.Surcharge1Price) * 100;
+                    this.Container1ComparingTextColor = this.ComputeWarningPercentageColor(this.Container1ComparingPrice);
+                }
+            }
+        }
+    }
+    private CompareContainer2Price() {
+        if (this.ComparedEntity != null) {
+            this.Container2ComparingPrice = null;
+            this.Container2ComparingTextColor = this.DefaultColor;
+            if (this.ComparedEntity.Surcharge2Price != null) {
+                var surcharge2ComparingValue = this.Surcharge2Price - this.ComparedEntity.Surcharge2Price;
+                if (!AppTool.IsNullOrZero(surcharge2ComparingValue) && !AppTool.IsNullOrZero(this.ComparedEntity.Surcharge2Price)) {
+                    this.Container2ComparingPrice = (surcharge2ComparingValue / this.ComparedEntity.Surcharge2Price) * 100;
+                    this.Container2ComparingTextColor = this.ComputeWarningPercentageColor(this.Container2ComparingPrice);
+                }
+            }
+        }
+    }
+    private CompareContainer3Price() {
+        if (this.ComparedEntity != null) {
+            this.Container3ComparingPrice = null;
+            this.Container3ComparingTextColor = this.DefaultColor;
+            if (this.ComparedEntity.Surcharge3Price != null) {
+                var surcharge3ComparingValue = this.Surcharge3Price - this.ComparedEntity.Surcharge3Price;
+                if (!AppTool.IsNullOrZero(surcharge3ComparingValue) && !AppTool.IsNullOrZero(this.ComparedEntity.Surcharge3Price)) {
+                    this.Container3ComparingPrice = (surcharge3ComparingValue / this.ComparedEntity.Surcharge3Price) * 100;
+                    this.Container3ComparingTextColor = this.ComputeWarningPercentageColor(this.Container3ComparingPrice);
+                }
+            }
+        }
+    }
+    private CompareContainer4Price() {
+        if (this.ComparedEntity != null) {
+            this.Container4ComparingPrice = null;
+            this.Container4ComparingTextColor = this.DefaultColor;
+            if (this.ComparedEntity.Surcharge4Price != null) {
+                var surcharge4ComparingValue = this.Surcharge4Price - this.ComparedEntity.Surcharge4Price;
+                if (!AppTool.IsNullOrZero(surcharge4ComparingValue) && !AppTool.IsNullOrZero(this.ComparedEntity.Surcharge4Price)) {
+                    this.Container4ComparingPrice = (surcharge4ComparingValue / this.ComparedEntity.Surcharge4Price) * 100;
+                    this.Container4ComparingTextColor = this.ComputeWarningPercentageColor(this.Container4ComparingPrice);
+                }
+            }
+        }
+    }
+    private CompareContainer5Price() {
+        if (this.ComparedEntity != null) {
+            this.Container5ComparingPrice = null;
+            this.Container5ComparingTextColor = this.DefaultColor;
+            if (this.ComparedEntity.Surcharge5Price != null) {
+                var surcharge5ComparingValue = this.Surcharge5Price - this.ComparedEntity.Surcharge5Price;
+                if (!AppTool.IsNullOrZero(surcharge5ComparingValue) && !AppTool.IsNullOrZero(this.ComparedEntity.Surcharge5Price)) {
+                    this.Container5ComparingPrice = (surcharge5ComparingValue / this.ComparedEntity.Surcharge5Price) * 100;
+                    this.Container5ComparingTextColor = this.ComputeWarningPercentageColor(this.Container5ComparingPrice);
+                }
+            }
+        }
+    }
+
+    ComputeWarningPercentageColor(price: number) {
+        var color = "blue";
+        if (this.FatherComponent.WarningPercentage == null) {
+            color = "blue";
+        }
+        else {
+
+            var price_abs = Math.abs(price);
+            if (price_abs > this.FatherComponent.WarningPercentage) {
+                color = "red";
+            }
+        }
+        return color;
+    }
+
+    get HasErrors() {
+        return this.EntityPM.HasErrors;
+    }
+    set HasErrors(value: boolean) {
+        if (this.EntityPM.HasErrors != value) {
+            this.EntityPM.HasErrors = value;
+        }
+    }
+
+    get ErrorText() {
+        return this.EntityPM.ErrorText;
+    }
+    set ErrorText(value: string) {
+        if (this.EntityPM.ErrorText != value) {
+            this.EntityPM.ErrorText = value;
+        }
+    }
+
+    private CheckIfLineHasError() {
+        if (this.ErrorText != 'Line is a duplicate') {
+            var error: boolean = false;
+            var errorText: string;
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.OriginPortText) && AppTool.IsNullOrEmpty(this.EntityPM.OriginPortId)) {
+                error = true;
+
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Port with code " + this.EntityPM.OriginPortText + " not found";
+                }
+
+                else {
+                    errorText = errorText + ", Port with code " + this.EntityPM.OriginPortText + " not found"
+                }
+            }
+            else if (AppTool.IsNullOrEmpty(this.EntityPM.OriginPortText) && AppTool.IsNullOrEmpty(this.EntityPM.OriginPortId)) {
+                error = true;
+
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Missing Origin Port";
+                }
+
+                else {
+                    errorText = errorText + ", Missing Origin Port"
+                }
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortText) && AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortId)) {
+                error = true;
+
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Port with code " + this.EntityPM.DestinationPortText + " not found";
+                }
+
+                else {
+                    errorText = errorText + ", Port with code " + this.EntityPM.DestinationPortText + " not found"
+                }
+            }
+            else if (AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortText) && AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortId)) {
+                error = true;
+
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Missing Destination Port";
+                }
+
+                else {
+                    errorText = errorText + ", Missing Destination Port"
+                }
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge1PriceText) && AppTool.IsNullOrZero(this.EntityPM.Surcharge1Price)) {
+                error = true;
+
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Container 1 Price format is invalid";
+                }
+
+                else {
+                    errorText = errorText + ", Container 1 Price format is invalid"
+                }
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge2PriceText) && AppTool.IsNullOrZero(this.EntityPM.Surcharge2Price)) {
+                error = true;
+
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Container 2 Price format is invalid";
+                }
+
+                else {
+                    errorText = errorText + ", Container 2 Price format is invalid"
+                }
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge3PriceText) && AppTool.IsNullOrZero(this.EntityPM.Surcharge3Price)) {
+                error = true;
+
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Container 3 Price format is invalid";
+                }
+
+                else {
+                    errorText = errorText + ", Container 3 Price format is invalid"
+                }
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge4PriceText) && AppTool.IsNullOrZero(this.EntityPM.Surcharge4Price)) {
+                error = true;
+
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Container 4 Price format is invalid";
+                }
+
+                else {
+                    errorText = errorText + ", Container 4 Price format is invalid"
+                }
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge5PriceText) && AppTool.IsNullOrZero(this.EntityPM.Surcharge5Price)) {
+                error = true;
+
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Container 5 Price format is invalid";
+                }
+
+                else {
+                    errorText = errorText + ", Container 5 Price format is invalid"
+                }
+            }
+
+            this.HasErrors = error;
+            this.ErrorText = errorText;
+        }
+    }
+
+    private SetUIProperties() {
+        this.UIProperties.SetRequired("OriginPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.OriginPortId));
+        this.UIProperties.SetRequired("DestinationPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.DestinationPortId));
+    }
+
+    // Origin Port
+    get OriginPortId() {
+        return this.EntityPM.OriginPortId;
+    }
+    set OriginPortId(value: string) {
+        if (this.EntityPM.OriginPortId != value) {
+            this.EntityPM.OriginPortId = value;
+            this.SetUIProperties();
+            this.CheckIfLineHasError();
+        }
+    }
+
+    get OriginPortCode() {
+        return this.EntityPM.OriginPortCode;
+    }
+    set OriginPortCode(value: string) {
+        if (this.EntityPM.OriginPortCode != value) {
+            this.EntityPM.OriginPortCode = value;
+        }
+    }
+
+    originPort: PortList;
+    get OriginPort() { return this.originPort; }
+    set OriginPort(value: PortList) {
+        if (this.originPort != value) {
+            this.originPort = value;
+        }
+        if (!AppTool.IsNullOrEmpty(value)) {
+            this.OriginPortCode = value.Code;
+        } else {
+            this.OriginPortCode = null;
+        }
+    }
+
+    get OriginPortValue() {
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.OriginPortCode)) {
+            return this.EntityPM.OriginPortCode;
+        }
+
+        else {
+            return this.EntityPM.OriginPortText;
+        }
+    }
+
+    get OriginPortColor() {
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.OriginPortId)) {
+            return FontTool.Black;
+        }
+
+        else {
+            return FontTool.Red;
+        }
+    }
+
+    // Destination Port
+    get DestinationPortId() {
+        return this.EntityPM.DestinationPortId;
+    }
+    set DestinationPortId(value: string) {
+        if (this.EntityPM.DestinationPortId != value) {
+            this.EntityPM.DestinationPortId = value;
+            this.SetUIProperties();
+            this.CheckIfLineHasError();
+        }
+    }
+
+    get DestinationPortCode() {
+        return this.EntityPM.DestinationPortCode;
+    }
+    set DestinationPortCode(value: string) {
+        if (this.EntityPM.DestinationPortCode != value) {
+            this.EntityPM.DestinationPortCode = value;
+        }
+    }
+
+    destinationPort: PortList;
+    get DestinationPort() { return this.destinationPort; }
+    set DestinationPort(value: PortList) {
+        if (this.destinationPort != value) {
+            this.destinationPort = value;
+        }
+        if (!AppTool.IsNullOrEmpty(value)) {
+            this.DestinationPortCode = value.Code;
+        } else {
+            this.DestinationPortCode = null;
+        }
+    }
+
+    get DestinationPortValue() {
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortCode)) {
+            return this.EntityPM.DestinationPortCode;
+        }
+
+        else {
+            return this.EntityPM.DestinationPortText;
+        }
+    }
+
+    get DestinationPortColor() {
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortId)) {
+            return FontTool.Black;
+        }
+
+        else {
+            return FontTool.Red;
+        }
+    }
+
+    get Notes() {
+        return this.EntityPM.Notes;
+    }
+    set Notes(value: string) {
+        if (this.EntityPM.Notes != value) {
+            this.EntityPM.Notes = value;
+        }
+    }
+
+    // Container 1
+    get Surcharge1Price() {
+        return this.EntityPM.Surcharge1Price;
+    }
+    set Surcharge1Price(value: number) {
+        if (this.EntityPM.Surcharge1Price != value) {
+            this.EntityPM.Surcharge1Price = value;
+            this.CheckIfLineHasError();
+            this.SetCellsComparingText();
+        }
+    }
+
+    get Container1PriceValue() {
+        if (!AppTool.IsNullOrZero(this.EntityPM.Surcharge1Price)) {
+            return FormatTool.FormatNumber(this.EntityPM.Surcharge1Price, "N3");
+        }
+
+        else {
+            return this.EntityPM.Surcharge1PriceText;
+        }
+    }
+
+    get Container1PriceColor() {
+        if (!AppTool.IsNullOrZero(this.EntityPM.Surcharge1Price)) {
+            return FontTool.Black;
+        }
+
+        else {
+            return FontTool.Red;
+        }
+    }
+
+    // Container 2
+    get Surcharge2Price() {
+        return this.EntityPM.Surcharge2Price;
+    }
+    set Surcharge2Price(value: number) {
+        if (this.EntityPM.Surcharge2Price != value) {
+            this.EntityPM.Surcharge2Price = value;
+            this.CheckIfLineHasError();
+            this.SetCellsComparingText();
+        }
+    }
+
+    get Container2PriceValue() {
+        if (!AppTool.IsNullOrZero(this.EntityPM.Surcharge2Price)) {
+            return FormatTool.FormatNumber(this.EntityPM.Surcharge2Price, "N3");
+        }
+
+        else {
+            return this.EntityPM.Surcharge2PriceText;
+        }
+    }
+
+    get Container2PriceColor() {
+        if (!AppTool.IsNullOrZero(this.EntityPM.Surcharge2Price)) {
+            return FontTool.Black;
+        }
+
+        else {
+            return FontTool.Red;
+        }
+    }
+
+    // Container 3
+    get Surcharge3Price() {
+        return this.EntityPM.Surcharge3Price;
+    }
+    set Surcharge3Price(value: number) {
+        if (this.EntityPM.Surcharge3Price != value) {
+            this.EntityPM.Surcharge3Price = value;
+            this.CheckIfLineHasError();
+            this.SetCellsComparingText();
+        }
+    }
+
+    get Container3PriceValue() {
+        if (!AppTool.IsNullOrZero(this.EntityPM.Surcharge3Price)) {
+            return FormatTool.FormatNumber(this.EntityPM.Surcharge3Price, "N3");
+        }
+
+        else {
+            return this.EntityPM.Surcharge3PriceText;
+        }
+    }
+
+    get Container3PriceColor() {
+        if (!AppTool.IsNullOrZero(this.EntityPM.Surcharge3Price)) {
+            return FontTool.Black;
+        }
+
+        else {
+            return FontTool.Red;
+        }
+    }
+
+    // Container 4
+    get Surcharge4Price() {
+        return this.EntityPM.Surcharge4Price;
+    }
+    set Surcharge4Price(value: number) {
+        if (this.EntityPM.Surcharge4Price != value) {
+            this.EntityPM.Surcharge4Price = value;
+            this.CheckIfLineHasError();
+            this.SetCellsComparingText();
+        }
+    }
+
+    get Container4PriceValue() {
+        if (!AppTool.IsNullOrZero(this.EntityPM.Surcharge4Price)) {
+            return FormatTool.FormatNumber(this.EntityPM.Surcharge4Price, "N3");
+        }
+
+        else {
+            return this.EntityPM.Surcharge4PriceText;
+        }
+    }
+
+    get Container4PriceColor() {
+        if (!AppTool.IsNullOrZero(this.EntityPM.Surcharge4Price)) {
+            return FontTool.Black;
+        }
+
+        else {
+            return FontTool.Red;
+        }
+    }
+
+    // Container 5
+    get Surcharge5Price() {
+        return this.EntityPM.Surcharge5Price;
+    }
+    set Surcharge5Price(value: number) {
+        if (this.EntityPM.Surcharge5Price != value) {
+            this.EntityPM.Surcharge5Price = value;
+            this.CheckIfLineHasError();
+            this.SetCellsComparingText();
+        }
+    }
+
+    get Container5PriceValue() {
+        if (!AppTool.IsNullOrZero(this.EntityPM.Surcharge5Price)) {
+            return FormatTool.FormatNumber(this.EntityPM.Surcharge5Price, "N3");
+        }
+
+        else {
+            return this.EntityPM.Surcharge5PriceText;
+        }
+    }
+
+    get Container5PriceColor() {
+        if (!AppTool.IsNullOrZero(this.EntityPM.Surcharge5Price)) {
+            return FontTool.Black;
+        }
+
+        else {
+            return FontTool.Red;
         }
     }
 }

@@ -813,7 +813,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             if (entityPOCO.StatusCode == "AR")
             {
-                throw new ApplicationException("this invoice is already auto credited");
+                throw new ApplicationException("This invoice is already auto credited");
+            }
+
+            else if (entityPOCO.StatusCode == "VD")
+            {
+                throw new ApplicationException("This invoice is already voided");
             }
 
             else

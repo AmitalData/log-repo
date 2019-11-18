@@ -4100,7 +4100,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.CustomerContactId = shipment.CustomerContactId;
                     shipmentPM.AgentContactId = shipment.AgentContactId;
                     shipmentPM.ShipmentTypeId = shipment.ShipmentTypeId;
-
+                    shipmentPM.MasterShipmentDataId = shipment.MasterShipmentDataId;
                     if (m != null)
                     {
                         shipmentPM.MainCarriageETD = m.MainCarriageETD;

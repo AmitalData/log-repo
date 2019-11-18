@@ -71,7 +71,7 @@ export class TariffDatesValidationComponent extends BaseComponent {
     OkButtonClicked() {
         this.ValidationErrorsList = [];
 
-        if (this.TariffType == "AFC" || this.TariffType =="OLC") {
+        if (this.TariffType == "AFC" || this.TariffType == "OLC" || this.TariffType == "OFC") {
             if (this.StartDate == null) {
                 this.ValidationErrorsList.push("Start date must be less than start date");
             }
@@ -111,7 +111,7 @@ export class TariffDatesValidationComponent extends BaseComponent {
     private Clone() {
         this.myCloner = new Cloner(this.DataContext);
 
-        if (this.TariffType == "AFC" || this.TariffType == "OLC") {
+        if (this.TariffType == "AFC" || this.TariffType == "OLC" || this.TariffType == "OFC") {
             this.myCloner.AddField('StartDate');
             this.myCloner.AddField('ExpirationDate');
             this.myCloner.AddEntity(this.EntityVersionPM);
