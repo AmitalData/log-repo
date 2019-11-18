@@ -39,15 +39,27 @@ namespace Logitude.Customs.BL.Tasks
             List<CourierMasterPM> courierMasterPMList = courierMasterQueryService.GetAllCourierMastersForClosing(t.Tenant);
             if(courierMasterPMList != null)
             {
+                LogMessagingUtil.Instance.AppendLine($"נמצאו " + courierMasterPMList.Count() + " טיסות פתוחות לסגירה " + "\n");
                 ICustomContext dbContext = CustomContext.GetContext(t.Tenant);
                 CourierMasterUpdateService CourierMasterUpdateService = new CourierMasterUpdateService(dbContext, new Dictionary<string, IContext>(), t.Tenant);
                 foreach (CourierMasterPM courierMasterPMItem in courierMasterPMList)
                 {
-                    LogMessagingUtil.Instance.AppendLine($"Close Courier Master({courierMasterPMItem.MAWB}) ");
-                    courierMasterPMItem.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-                    courierMasterPMItem.IsOpen = false;
-                    CourierMasterUpdateService.Update(courierMasterPMItem, true);
+                    try
+                    {
+                        courierMasterPMItem.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                        courierMasterPMItem.IsOpen = false;
+                        CourierMasterUpdateService.Update(courierMasterPMItem, true);
+                        LogMessagingUtil.Instance.AppendLine($"נסגרה טיסה " + courierMasterPMItem.MAWB + "\n");
+                    }
+                    catch
+                    {
+                        LogMessagingUtil.Instance.AppendLine($"לא נסגרה טיסה({courierMasterPMItem.MAWB})" + "\n");
+                    }
                 }
+            }
+            else
+            {
+                LogMessagingUtil.Instance.AppendLine($"לא נמצאו טיסות פתוחות לסגירה");
             }
         }
     }
