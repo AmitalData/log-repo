@@ -329,13 +329,15 @@ export class SimulatorBookingComponent extends BaseComponent {
                 else {
                     var myResult = myResponse.Result;
 
-                    if (myResult.Success) {
-                        var messageWindow = new MessageWindow();
-                        messageWindow.Show("Simulated Successfully");
+                    if (myResult.Errors != null && myResult.Errors.length > 0) {
+                        this.ValidationErrorsList = myResult.Errors;
+                       
                     }
 
                     else {
-                        this.ValidationErrorsList = myResult.Errors;
+                        var messageWindow = new MessageWindow();
+                        messageWindow.Show("Simulated Successfully");
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
                 }
             });
