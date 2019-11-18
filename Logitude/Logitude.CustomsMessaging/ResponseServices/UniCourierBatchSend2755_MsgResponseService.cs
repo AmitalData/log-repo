@@ -175,6 +175,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({itemPoco.DeclarationId})");
                         mess.AppendLine($" CreateSheetSBQMessage({itemPoco.DeclarationId})");
 
+                        string updateSql = $"Update DeclarationCourierStatuses set COURIERPAYMENTSTATUSCODE='I' where DECLARATIONID = '{itemPoco.DeclarationId}' ";
+                        CustomContext.CommandExecuteNonQuery(requestParams.Tenant, updateSql);
+
                         scopeNewCRS.Complete();
                     }
                     
@@ -190,14 +193,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
             }
 
-            realUpdatedList.ChunkBy(100)
-    .ForEach(list100 =>
-    {
-        string inList = String.Join(",", list100.Select(declarationId => $"'{declarationId}'").ToArray());
-        string updateSql = $"Update DeclarationCourierStatuses set COURIERPAYMENTSTATUSCODE='I' where DECLARATIONID in ({inList}) ";
+    //        realUpdatedList.ChunkBy(100)
+    //.ForEach(list100 =>
+    //{
+    //    string inList = String.Join(",", list100.Select(declarationId => $"'{declarationId}'").ToArray());
+    //    string updateSql = $"Update DeclarationCourierStatuses set COURIERPAYMENTSTATUSCODE='I' where DECLARATIONID in ({inList}) ";
 
-        CustomContext.CommandExecuteNonQuery(requestParams.Tenant, updateSql);
-    });
+    //    CustomContext.CommandExecuteNonQuery(requestParams.Tenant, updateSql);
+    //});
         }
 
         private static List<CourierPendingReason> GetAllCourierPendingReason(GenericRequestParams requestParams)
