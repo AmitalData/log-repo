@@ -32,8 +32,8 @@ namespace WebFreight.Web
         public static String OAUTH_URL = "https://oauth.intuit.com/oauth/v1";
 
 
-        public string oauth_callback_url = LogitudeSettings.LogitudeURL + "QuickbooksOnlineAuth2.aspx";
-        public string GrantUrl = LogitudeSettings.LogitudeURL + "QuickbooksOnlineAuth2.aspx?connect=true";
+        public string oauth_callback_url = LogitudeSettings.LogitudeURL + "/QuickbooksOnlineAuth2.aspx";
+        public string GrantUrl = LogitudeSettings.LogitudeURL + "/QuickbooksOnlineAuth2.aspx?connect=true";
         public OAuth2Client oauthClient;
 
         public List<string> queryKeys;
