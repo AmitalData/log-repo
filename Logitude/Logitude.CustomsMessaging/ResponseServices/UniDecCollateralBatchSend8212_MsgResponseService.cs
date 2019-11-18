@@ -45,14 +45,77 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CustomsCollateralsAnswer");
             //var objectTableIdCourierMaster = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
-            //var qs = new DeclarationCourierStatusQueryService(context);
+           var qs = new CustomsCollateralsAnswerQueryService(context);
+
             //List<DeclarationCourierStatusPM> listPM = new List<DeclarationCourierStatusPM>();
             var repo = new CustomsCollateralsAnswerRepository(context);
             List<CustomsCollateralsAnswer> listPoco = new List<CustomsCollateralsAnswer>();
-            if (customResponse.CollateralsList != null && customResponse.CollateralsList.Count > 0)
-            {
-                CreateCRS8212_Update2InProgress(customResponse, requestParams, mess, objectTableId, null, null, null);
 
+            foreach (var item in customResponse.CollateralsList)
+            {
+                var test = qs.GetSingle(item, 1, false, false);
+
+                try
+                {
+                    using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
+                    {
+                        var requestParams8212 = new CollateralRequestParams()
+                        {
+                            Tenant = requestParams.Tenant,
+                            LoggingEnabled = true,
+                            LoggingObjectTableId = objectTableId,
+                            LoggingEntityId = test.CustomsCollateralId,
+                            LoggingObjectTableId2 = requestParams.LoggingObjectTableId,
+                            //      LoggingEntityId2 = objectTableIdCourierMaster,
+                            InterfaceTypeCode = "8212",
+                            LoggingUserId = requestParams.LoggingUserId,
+                            RequestVIA = SendRequestVIA.WebServiceBatch,
+                            CustomCollateralId = test.CustomsCollateralId,
+                            CustomsCollateralsAnswers = new List<CustomsCollateralsAnswerParams>()
+                            {
+                                new CustomsCollateralsAnswerParams()
+                                {
+                                    CustomsCollateralId=test.CustomsCollateralId,
+                                     LineNumber = test.LineNumber,
+                                     Tenant= test.Tenant,
+                                     AnswerEntityTypeCode= test.AnswerEntityTypeCode,
+                                     AllocatedAmount =50,
+                                     Remarks = test.Remarks,
+                                     CustomsTapgFile= test.CustomsTapgFile,
+                                     CustomsNumeral = test.CustomsNumeral,
+                                     AnswerForCollateralStatusCode = test.AnswerForCollateralStatusCode,
+                                     Errors = test.Errors, 
+                                     AnswerEntityType = test.AnswerEntityTypeCode, 
+                                     AnswerForCollateralStatus = test.AnswerForCollateralStatusName
+
+
+                                }
+                            }
+
+
+                        };
+                        SBQMessageService.CreateSheetSBQMessage<CollateralRequestParams>(requestParams8212, false);
+                        LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({test.CustomsCollateralId})");
+                        mess.AppendLine($" CreateSheetSBQMessage({test.CustomsCollateralId})");
+
+                        scopeNewCRS.Complete();
+                    }
+
+                    this.MyRequestSheetParam = this.MyRequestSheetParam ?? new RequestSheetParam();
+
+                    //this.MyRequestSheetParam.RequestDescription = "Build Custom Zip File";
+                    ///LogitudeSettings.HandleBuildObjectTablesZipFilesData_Inject(false, true);
+
+                    this.MyRequestSheetParam.RequestDescription = requestParams.RequestName;
+                    this.MyResponseData.UserMessage = mess.ToString();
+                    this.MyResponseData.Succeeded = true;
+                }
+                catch (System.Exception ee1)
+                {
+
+                    LogMessagingUtil.Instance.AppendLine($"Exception!!!CreateSheetSBQMessage({test.CustomsCollateralId}) : {ee1.Message}");
+                    mess.AppendLine($"Exception!!!CreateSheetSBQMessage({test.CustomsCollateralId}) : {ee1.Message}");
+                }
             }
 
         }
