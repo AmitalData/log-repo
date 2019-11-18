@@ -44,10 +44,10 @@ namespace WebFreight.Web
             {
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
 
-                if (LogitudeSettings.DeploymentStage != "Dev")
-                {
-                    Security.SecurityUtility.RedirectToHttps(false);
-                }
+                //if (LogitudeSettings.DeploymentStage != "Dev")
+                //{
+                //    Security.SecurityUtility.RedirectToHttps(false);
+                //}
                 if (Request.QueryString.Count > 0)
                 {
                     queryKeys = new List<string>(Request.QueryString.AllKeys);
