@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "ea5df949-c1e1-4a19-88a3-880939810fbf",
-		"name": "PrepareFullAccountingVars",
+		"_postman_id": "f41d1d0c-7849-4b33-ba6c-f40c64c93635",
+		"name": "PrepareFullAccountingVars copy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -45,6 +45,8 @@
 							"      ",
 							"      ",
 							"    tests[\"BodyCointainsTokenKey : \" + id1exist] = responseBody.has(id1exist);",
+							"    postman.setNextRequest(\"GetFullAccountingSettings\");",
+							"",
 							"});"
 						],
 						"type": "text/javascript"
@@ -89,7 +91,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "317f8e11-a019-4332-8574-134fc42a82b0",
+						"id": "f529b3c2-48c3-45f5-9020-011c24d621b3",
 						"exec": [
 							"pm.test(\"GetFullAccountingSettings\", function () {",
 							"  pm.response.to.have.status(200);",
@@ -103,10 +105,6 @@
 							"       //throw new Error('NOt FUll Accounting Tenant');",
 							"         tests[\"Is Full Accounting Tenant :\" + false] = ( true );",
 							"         postman.setNextRequest(\"Get Chreonological Settings \");",
-							" ",
-							"         ",
-							"          ",
-							"",
 							"  }",
 							"  else{",
 							" // tests[\"Full Accounting Tenant : \" + true ] = ( true );",
@@ -125,19 +123,19 @@
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
+						"type": "text",
+						"value": "application/json"
 					},
 					{
 						"key": "tenant",
-						"value": "",
 						"type": "text",
+						"value": "",
 						"disabled": true
 					},
 					{
 						"key": "token",
-						"value": "{{Token}}",
-						"type": "text"
+						"type": "text",
+						"value": "{{Token}}"
 					}
 				],
 				"url": {
@@ -158,7 +156,128 @@
 					]
 				}
 			},
-			"response": []
+			"response": [
+				{
+					"name": "GetFullAccountingSettings",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "tenant",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "token",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/api/fullaccountingsettings/getsingle?id={{Tenant}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"fullaccountingsettings",
+								"getsingle"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{Tenant}}"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.12.2"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 06 Nov 2019 15:39:39 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "-1"
+						},
+						{
+							"key": "X-StackifyID",
+							"value": "V1|645cfd98-4ab5-4b61-9d64-bfa482bad26e|"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST, PUT, DELETE"
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Content-Type, Accept, token,ServerTime,TwoFactorkey"
+						},
+						{
+							"key": "Access-Control-Max-Age",
+							"value": "1728000"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=31536000 ; includeSubDomains"
+						},
+						{
+							"key": "Access-Control-Expose-Headers",
+							"value": "ServerExecutionTime, X-Custom"
+						},
+						{
+							"key": "ServerExecutionTime",
+							"value": "78"
+						},
+						{
+							"key": "X-AspNet-Version",
+							"value": "4.0.30319"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "ASP.NET"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"$id\": \"1\",\n    \"Tenant\": 1071,\n    \"DeductionFileNumber\": \"925144388\",\n    \"ConsolidationVAT\": \"925144388\",\n    \"DefaultVATTypeId\": \"1-3289\",\n    \"VATInputsGLAccountId\": \"1-314648\",\n    \"AutomaticReconcileMethodId\": \"1-49\",\n    \"ExchangeRateDiffGLAccountId\": \"1-216624\",\n    \"RevenueExpenseGLAccountId\": \"1-216625\",\n    \"Id\": \"1071\",\n    \"VATOutputGLAccountId\": \"1-314717\",\n    \"CustomerControlAccountId\": \"1-216626\",\n    \"CustomerControlAccountName\": \"Customer Control\",\n    \"CustomerControlAccountNumber\": \"125899\",\n    \"VendorControlAccountId\": \"1-216627\",\n    \"VendorControlAccountName\": \"Vendors Control\",\n    \"VendorControlAccountNumber\": \"8552\",\n    \"FileControlAccountId\": \"1-216628\",\n    \"FileControlAccountName\": \"Files Control\",\n    \"FileControlAccountNumber\": \"107161000000007\",\n    \"OceanExportJobControlAccountId\": \"1-216629\",\n    \"OceanExportJobControlAccountName\": \"OE Control\",\n    \"OceanExportJobControlAccountNumber\": \"107161000000008\",\n    \"AirExportJobControlAccountId\": \"1-216630\",\n    \"AirExportJobControlAccountName\": \"AE Control\",\n    \"AirExportJobControlAccountNumber\": \"122\",\n    \"OceanImportJobControlAccountId\": \"1-216631\",\n    \"OceanImportJobControlAccountName\": \"OI Sped\",\n    \"OceanImportJobControlAccountNumber\": \"107161000000010\",\n    \"AirImportJobControlAccountId\": \"1-216632\",\n    \"AirImportJobControlAccountName\": \"AI Sped\",\n    \"AirImportJobControlAccountNumber\": \"107161000000011\",\n    \"TenantPaymentTermId\": \"1-5437\",\n    \"AccountingActivationDate\": \"2019-11-05T08:36:45.433\",\n    \"AccountingActivated\": true,\n    \"ExternalReconciliationDefault\": \"3\",\n    \"TaxWithholdingGLAccountId\": \"1-216669\",\n    \"DefaultTaxWithholdPercentage\": 20,\n    \"CustomsGLAccountId\": \"1-216730\",\n    \"DefaultDifferencesGLAccountId\": \"1-216674\",\n    \"DefaultExternalDiffGLAccountId\": \"1-267516\",\n    \"SoftwareVersion\": \"2019\",\n    \"IsPaymentChequesActivated\": true,\n    \"GLAccounterCounterLength\": 8,\n    \"PaymentChequesLogoId\": \"1-936\",\n    \"ChangeSetOp\": 0,\n    \"EncodeBase64NVARCHARFieldsBy\": null\n}"
+				}
+			]
 		},
 		{
 			"name": "Get Chreonological Settings ",
@@ -195,7 +314,7 @@
 							"  else{",
 							" // tests[\"Full Accounting Tenant : \" + true ] = ( true );",
 							"  tests[\"Chronolical check activated :\" +  true] = ( true );",
-							"   postman.setNextRequest(null);",
+							"   postman.setNextRequest(\"GEtAccounntingPeriods\");",
 							" ",
 							"}",
 							"});",
@@ -248,7 +367,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "4bc45b58-019c-4017-b25a-a552290ef110",
+						"id": "6e39d185-098e-4173-8311-72657d1b50e8",
 						"exec": [
 							"pm.test(\"Get Accounting Periods\", function () {",
 							"    ",
@@ -259,7 +378,7 @@
 							"    pm.environment.set(\"CurrentMonth\",month);",
 							"    var idvalue7 = (pm.response.json().Result[pm.response.json().Result.length-2].OpenMonth);",
 							"    pm.environment.set(\"AcocuntingPeriodsOpenMonth\",idvalue7);",
-							"      var idvalue1 = (pm.response.json().Result[pm.response.json().Result.length-2].Id);",
+							"    var idvalue1 = (pm.response.json().Result[pm.response.json().Result.length-2].Id);",
 							"    var idvalue2 = (pm.response.json().Result[pm.response.json().Result.length-2].Tenant);",
 							"    var idvalue3 = (pm.response.json().Result[pm.response.json().Result.length-2].Year);",
 							"    var idvalue4 = (pm.response.json().Result[pm.response.json().Result.length-2].PeriodTypeCode);",
@@ -273,8 +392,7 @@
 							"    pm.environment.set(\"AcocuntingPeriodsPeriodTypeName\",idvalue5);",
 							"    pm.environment.set(\"AcocuntingPeriodsClosedMonth\",idvalue6);",
 							"",
-							"  ",
-							"    ",
+							"",
 							"      if (idvalue7 < month)",
 							"      {",
 							"           tests[\"Current Month Opened  : \" + false ] = ( true );",
@@ -484,6 +602,10 @@
 						"exec": [
 							"pm.test(\"GetTenantCurriencies\", function () {",
 							"  pm.response.to.have.status(200);",
+							"  ",
+							"  ",
+							"  ",
+							"  ",
 							" postman.setNextRequest(\"GetCountryAX\");",
 							"",
 							"});"
@@ -1229,7 +1351,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "5267272b-0cd9-4f05-ac44-053c6531f189",
+						"id": "fb3f1fdc-9c1d-4c3c-8775-b5c141007f7e",
 						"exec": [
 							"pm.test(\"Create Branch Main Office\", function () {\r",
 							" pm.response.to.have.status(200);\r",
@@ -1238,13 +1360,9 @@
 							"    pm.expect(idexist);\r",
 							"    if(idexist){\r",
 							"     pm.environment.set(\"BranchId\",idvalue);\r",
-							"     \r",
 							"     tests[\"BodyContanisBrnachId : \" + idexist] =(idexist);\r",
 							"     postman.setNextRequest(\"GetChargeTypesAirFreight\"); \r",
 							"    }\r",
-							"    \r",
-							"    \r",
-							"   \r",
 							"    \r",
 							"});  \r",
 							""
@@ -2363,7 +2481,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "90cec87d-391d-44af-a787-c761323f084f",
+						"id": "a803d3ff-7397-4aa9-94ac-374a1f66969f",
 						"exec": [
 							"pm.test(\"CreateCustomerGlAccountCustGl \", function () {",
 							"    pm.response.to.have.status(200);",
@@ -2378,10 +2496,7 @@
 							"",
 							"    pm.expect(id1exist);",
 							"   ",
-							"   // pm.environment.set(\"GLAccountId1\",idvalue1);",
-							" //  tests[\"BodyContanisGLAccountId : \" + id1exist] = responseBody.has(id1exist);",
-							" ",
-							"    ",
+							"",
 							"",
 							"if (id1exist)  {",
 							"   pm.environment.set(\"VendorGLAccountId\",idvalue1); ",
@@ -2416,7 +2531,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{  \r\n   \"$id\":\"1\",\r\n   \"Tenant\":{{Tenant}},\r\n   \"AccountTypeCode\":\"3\",\r\n   \"DisplayNumber\":\"458GLPM\",\r\n   \"LocalName\":\"458GLPM\",\r\n   \"EnglishName\":\"458GLPM\",\r\n   \"SearchFields\":\"458GLPM,458GLPM,458GLPM\",\r\n   \"IsMultiCurrency\":true,\r\n   \"RevenueExpenseType\":\"3\",\r\n   \"ChartOfAccountsId\":\"{{VendorChartOfAccountId}}\",\r\n   \"ChartOfAccountsTypeCode\":\"4\",\r\n   \"ReconcileMethodCode\":\"0\",\r\n   \"NewGLAccountCardId\":\"{{VendorId}}\"\r\n}"
+					"raw": "{  \r\n   \"$id\":\"1\",\r\n   \"Tenant\":{{Tenant}},\r\n   \"AccountTypeCode\":\"3\",\r\n   \"DisplayNumber\":\"458GLPML\",\r\n   \"LocalName\":\"458GLPML\",\r\n   \"EnglishName\":\"458GLPML\",\r\n   \"SearchFields\":\"458GLPML,458GLPML,458GLPML\",\r\n   \"IsMultiCurrency\":true,\r\n   \"RevenueExpenseType\":\"3\",\r\n   \"ChartOfAccountsId\":\"{{VendorChartOfAccountId}}\",\r\n   \"ChartOfAccountsTypeCode\":\"4\",\r\n   \"ReconcileMethodCode\":\"0\",\r\n   \"NewGLAccountCardId\":\"{{VendorId}}\"\r\n}"
 				},
 				"url": {
 					"raw": "{{URL}}/api/glaccounts",
@@ -2510,13 +2625,10 @@
 							"    pm.expect(idexist);",
 							"    if(idexist){",
 							"     pm.environment.set(\"VendorAddressId\",idvalue);",
-							"     ",
 							"     tests[\"BodyContanisAddressId : \" + idexist] =(idexist);",
+							"     postman.setNextRequest(\"GetBankChartOfAccount\");",
+							"",
 							"    }",
-							"    ",
-							"    ",
-							"   ",
-							"    ",
 							"});  ",
 							""
 						],
@@ -2539,7 +2651,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/cardviews/getsingle/?id={{VendorId}}\n",
+					"raw": "{{URL}}/api/cardviews/getsingle/?id={{VendorId}}",
 					"host": [
 						"{{URL}}"
 					],
@@ -2565,15 +2677,15 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "a56d05f3-8a9c-491a-91b5-ab82a0fe77d4",
+						"id": "4191ebb7-d81a-447b-9b89-e9e852a9afa2",
 						"exec": [
 							"pm.test(\"GetChartOfAccountBank BK771 Successfully Done\", function () {\r",
 							"   pm.response.to.have.status(200);\r",
 							"   if(pm.response.json().Result.length < 1 ){\r",
 							"       var idvaluet = \"test\";\r",
 							"        var idexist2 = idvaluet !== null;\r",
-							"     tests[\"ChartOfAccountExists : \" + false] = (true);\r",
-							"        postman.setNextRequest(\"PostBankChartOfAccount\");   \r",
+							"        tests[\"ChartOfAccountExists : \" + false] = (true);\r",
+							"        postman.setNextRequest(\"CreateBankChartOfAccount\");   \r",
 							"   }\r",
 							"   else {\r",
 							"    var idvalue =(pm.response.json().Result.filter(a => a.Code == 'BK771')[0].Id);\r",
@@ -2582,11 +2694,8 @@
 							"    \r",
 							" if (idexist)  {\r",
 							"     pm.environment.set(\"BankChartOfAccountId\",idvalue);\r",
-							"    \r",
-							"\r",
-							"     \r",
 							"     tests[\"ChartOfAccountExists : \" + true ] = (true);\r",
-							"     postman.setNextRequest(\"CreateBankGLA\");\r",
+							"     postman.setNextRequest(\"CreateBankGlAccount\");\r",
 							"    }\r",
 							"   }\r",
 							"    \r",
@@ -2608,7 +2717,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/chartofaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=BK771&PageSize=23 ",
+					"raw": "http://test.logitudeworld.com/test/api/chartofaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=BK771&PageSize=23",
 					"protocol": "http",
 					"host": [
 						"test",
@@ -2644,31 +2753,23 @@
 			"response": []
 		},
 		{
-			"name": "PostBankChartOfAccount",
+			"name": "CreateBankChartOfAccount",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "8eb6ed35-37d6-45d8-b7ba-45b608471c92",
+						"id": "c44706c0-d74d-45f6-878b-a3adbc457c6f",
 						"exec": [
 							"pm.test(\"CreateChartOfAccountCust1\", function () {\r",
 							" pm.response.to.have.status(200);\r",
 							"    var idvalue =(pm.response.json().Id);\r",
-							"    \r",
-							"    \r",
-							"    \r",
 							"    var idexist = idvalue !== null;\r",
 							"    pm.expect(idexist);\r",
 							"    if(idexist){\r",
-							"     pm.environment.set(\"BankChartOfAccountId\",idvalue);\r",
-							"     \r",
-							"     \r",
+							"     pm.environment.set(\"GetBankGlAccount\",idvalue);\r",
 							"     tests[\"BodyContanisChartOfAccountId : \" + true] =(true);\r",
-							"  \r",
+							"     postman.setNextRequest(\"CreateBankGlAccount\");\r",
 							"    }\r",
-							"    \r",
-							"   \r",
-							"    \r",
 							"});\r",
 							"     "
 						],
@@ -2693,28 +2794,237 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "   {\r\n   \t\"$id\": \"1\",\r\n    \"Tenant\": {{Tenant}},\r\n    \"Code\": \"BK771\",\r\n    \"LocalName\": \"PMBankChart\",\r\n    \"Englishname\": \"PMBankChart\",\r\n    \"TypeCode\": \"5\",\r\n    \"Inactive\": true,\r\n    \"ChangeSetOp\": 1\r\n \r\n}\r\n"
+					"raw": "   {\r\n   \t\"$id\": \"1\",\r\n    \"Tenant\": {{Tenant}},\r\n    \"Code\": \"BK771\",\r\n    \"LocalName\": \"PMBankChart\",\r\n    \"Englishname\": \"PMBankChart\",\r\n    \"TypeCode\": \"5\",\r\n    \"Inactive\": true,\r\n    \"ChangeSetOp\": 1\r\n}\r\n"
 				},
 				"url": {
-					"raw": "{{URL}}/api/cardviews/getsingle/?id={{VendorId}}\n",
+					"raw": "{{URL}}/api/chartofaccounts",
 					"host": [
 						"{{URL}}"
 					],
 					"path": [
 						"api",
-						"cardviews",
-						"getsingle",
-						""
+						"chartofaccounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateBankGlAccount",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "75bc44b6-854d-43e1-b0e2-62f8b247eef2",
+						"exec": [
+							"pm.test(\"CreateCustomerGlAccountCustGl \", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var idvalue1 = (pm.response.json().Id);",
+							"    var id1exist = idvalue1 !== null;",
+							"    pm.expect(id1exist);",
+							"if (id1exist)  {",
+							"   pm.environment.set(\"BankGLAccountId\",idvalue1); ",
+							"   tests[\"BodyContanisGlAccountId : \" + id1exist] =(id1exist);",
+							"   postman.setNextRequest(\"CreateBankCode\");",
+							" ",
+							"}});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{Token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n   \"$id\":\"1\",\r\n   \"Tenant\":{{Tenant}},\r\n   \"AccountTypeCode\":\"1\",\r\n   \"DisplayNumber\":\"1414BKPM\",\r\n   \"LocalName\":\"1414BKPM\",\r\n   \"EnglishName\":\"1414BKPM\",\r\n   \"SearchFields\":\"1414BKPM,1414BKPM,1414BKPM\",\r\n   \"RevenueExpenseType\":\"3\",\r\n   \"CurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"ChartOfAccountsId\":\"{{BankChartOfAccountId}}\",\r\n   \"ChartOfAccountsTypeCode\":\"5\",\r\n   \"ReconcileMethodCode\":\"0\",\r\n}"
+				},
+				"url": {
+					"raw": "{{URL}}/api/glaccounts",
+					"host": [
+						"{{URL}}"
 					],
-					"query": [
-						{
-							"key": "id",
-							"value": "{{VendorId}}\n"
-						}
+					"path": [
+						"api",
+						"glaccounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateBankCode",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "998d5990-60ca-4f9f-9f4b-f4e1dc495c1f",
+						"exec": [
+							"pm.test(\"CreateBankCode\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var idvalue1 = (pm.response.json().Id);",
+							"    var idvalue = (pm.response.json().Code);",
+							"    var id1exist = idvalue1 !== null;",
+							"    pm.expect(id1exist);",
+							"if (id1exist)  {",
+							"   pm.environment.set(\"BankCodeId\",idvalue1); ",
+							"   pm.environment.set(\"BankCode\",idvalue); ",
+							"   tests[\"BodyContanisBankCode : \" + id1exist] =(id1exist);",
+							"   postman.setNextRequest(\"CreateBranchCashBook\");",
+							" ",
+							"}});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authority",
+						"value": "test.logitudeworld.com"
+					},
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "origin",
+						"value": "https://test.logitudeworld.com"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-origin"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "referer",
+						"value": "https://test.logitudeworld.com/staging/Angular19061113/index.html"
+					},
+					{
+						"key": "accept-encoding",
+						"value": "gzip, deflate, br"
+					},
+					{
+						"key": "accept-language",
+						"value": "ar-JO,ar;q=0.9,en-US;q=0.8,en;q=0.7"
+					},
+					{
+						"key": "cookie",
+						"value": ""
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \"tenant\": {{Tenant}},\n    \"code\": \"BK14\",\n    \"englishName\": \"BKT\",\n    \"localName\": \"בקי\"\n}"
+				},
+				"url": {
+					"raw": "{{URL}}/api/bankcodes",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"bankcodes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateBranchCashBook",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5267272b-0cd9-4f05-ac44-053c6531f189",
+						"exec": [
+							"pm.test(\"Create Branch Main Office\", function () {\r",
+							" pm.response.to.have.status(200);\r",
+							"    var idvalue =(pm.response.json().Id);\r",
+							"    var idexist = idvalue !== null;\r",
+							"    pm.expect(idexist);\r",
+							"    if(idexist){\r",
+							"     pm.environment.set(\"BranchCashBookId\",idvalue);\r",
+							"     \r",
+							"     tests[\"BodyContanisBrnachId : \" + idexist] =(idexist);\r",
+							"     postman.setNextRequest(null); \r",
+							"    }\r",
+							" \r",
+							"\r",
+							"});  \r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{Token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"Tenant\":\"{{Tenant}}\",\r\n   \"EnglishName\":\"Cash Book\",\r\n   \"LocalName\":\"מבחן התרסקות\",\r\n   \"SearchFields\":\"test\"\r\n}"
+				},
+				"url": {
+					"raw": "{{URL}}/api/branches",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"branches"
 					]
 				}
 			},
 			"response": []
 		}
-	]
+	],
+	"protocolProfileBehavior": {}
 }

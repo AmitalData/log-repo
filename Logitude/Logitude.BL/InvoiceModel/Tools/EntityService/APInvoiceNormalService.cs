@@ -2170,7 +2170,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     journalLine.Reference2 = theEntityPm.MainEntityReference;
                     journalLine.Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber;
                     journalLine.Notes = theEntityPm.InternalNotes;
-                    journalLine.CreditAccountId = theEntityPm.VendorGLAccountId;
+                    journalLine.CreditAccountId = glAccount.Id;
                     //journalLine.CreditControlAccountId = glAccount == null ? "" : glAccount.ControlAccountId;
                     journalLine.ChangeSetOp = ChangeSetOperation.Insert;
                     journal.JournalLines.Add(journalLine);

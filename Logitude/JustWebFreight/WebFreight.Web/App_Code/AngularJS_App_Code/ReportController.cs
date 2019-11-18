@@ -91,15 +91,15 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                     }
                     else
                     {
-                        //if (reportFliter.ReportsRunUsingWR)
-                        //{
+                        if (reportFliter.ReportsRunUsingWR)
+                        {
                             return Request.CreateResponse(HttpStatusCode.OK, reportHelper.BuildReportDataViewWorkerRole(reportFliter));
-                        //}
-                        //else
-                        //{
-                        //    string urlImage = reportHelper.BuildStimulReport(reportFliter);
-                        //    return Request.CreateResponse(HttpStatusCode.OK, GetBuildStimulReportResult(reportFliter, urlImage));
-                        //}
+                        }
+                        else
+                        {
+                            string urlImage = reportHelper.BuildStimulReport(reportFliter);
+                            return Request.CreateResponse(HttpStatusCode.OK, GetBuildStimulReportResult(reportFliter, urlImage));
+                        }
                     }
                 }
                 else

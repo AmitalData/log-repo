@@ -1,0 +1,38 @@
+﻿<style>
+    .red {
+        color: red !important;
+    }
+</style>
+
+<!-- CreateDate -->
+<!-- DueDate -->
+<div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming"
+    *ngIf="fieldName == 'CreateDate' || fieldName == 'DueDate'">
+    {{ rowData[fieldName] | DateTimePipe:'SD' }}
+</div>
+
+
+<!-- TransactionAmount -->
+<div class="TextTrimming" *ngIf="fieldName == 'TransactionAmount'"
+    style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;"
+    [class.red]='rowData["ForeignAmountDebit"] > 0'>
+    {{ GetTransacionAmount() | NumbersPipe:'N2' }}
+</div>
+
+<!-- ReconciliationAmount -->
+<div class="TextTrimming" *ngIf="fieldName == 'ReconciliationAmount'"
+    style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;"
+    [class.red]='rowData["ReconciliationAmount"]<0'>
+    {{ rowData[fieldName] | NumbersPipe:'N2' }} {{rowData["CurrencySign"]}}
+</div>
+
+<!-- JournalNumber -->
+<div class="TextTrimming" *ngIf="fieldName == 'JournalNumber'" text-start>
+    <a href="javascript:;" (click)="OpenJournal(rowData.JournalId)">{{rowData.JournalNumber}}</a>
+</div>
+
+<!-- JournalNumber -->
+<div class="TextTrimming" *ngIf="fieldName == 'Reference1' || fieldName == 'Reference2' || fieldName == 'Reference3' || fieldName == 'Notes'"
+    text-start>
+    {{ rowData[fieldName] }}
+</div>

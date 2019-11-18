@@ -52,9 +52,16 @@ namespace Logitude.HybridTest.CommonServices
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
                 Response serviceResponse = new Response();
                 DocumentTypeServiceReference.DocumentTypePM entityPM = serviceClient.GetDocumentTypeByCode(HybridCodes.DocumentTypeCode, TestEnvironmentGlobalParameters.Tenant,ref serviceResponse);
-                Assert.AreEqual(entityPM.Code, HybridCodes.DocumentTypeCode, "Get Document Type By Code Failed! " + serviceResponse.ErrorMessage);
                 Assert.IsFalse(serviceResponse.HasError, "Get Document Type By Code Failed! " + serviceResponse.ErrorMessage);
                 Assert.IsNull(serviceResponse.Result, "Get Document Type By Code Failed! " + serviceResponse.ErrorMessage);
+                if (entityPM != null)
+                {
+                    Assert.AreEqual(entityPM.Code, HybridCodes.DocumentTypeCode, "Get Document Type By Code Failed! ");
+                }
+                else
+                {
+                    Assert.Inconclusive("There Isn't Document Type With This Code!");
+                }
             }
         }
 

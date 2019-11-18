@@ -14,8 +14,8 @@ FOR /L %%A IN (1,1,1) DO (
 
    
 --Report--
- rem cmd /c call  npm run e2e -- --params.Env="testEnvStaging" --params.Team="islam" --suite=login,Reports>D:\E2ETeamIslamReport\Report.log
- rem CALL :CheckError "Run Report"
+  cmd /c call  npm run e2e -- --params.Env="testEnvStaging" --params.Team="islam" --suite=login,Reports>D:\E2ETeamIslamReport\Report.log
+  CALL :CheckError "Run Report"
 
 --DocOut--
   cmd /c call  npm run e2e -- --params.Env="testEnvStaging" --params.ShipParams.ShipmentLevelCode="D" --params.ShipParams.Direction="Export" --params.ShipParams.TransportMode="A" --params.ShipParams.ShipmentType="" --params.ShipParams.ShipmentEditTabs="docs" --params.Team="islam" --suite=login,DocOut>D:\E2ETeamIslamReport\Report.log
