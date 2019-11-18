@@ -1109,8 +1109,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
                     this.StopBusyIndicator();
                     if (myResponse.HasError && myResponse.ErrorsArray && myResponse.ErrorsArray.length > 0) {
-                        var messageWindow = new MessageWindow();
-                        messageWindow.Show(myResponse.ErrorsArray[0]);
+                        this.ShowMessage(myResponse.ErrorsArray[0]);
                     }
                 }
 
@@ -1166,8 +1165,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
                             if (documentsExecutionLogList) {
                                 if (documentsExecutionLogList.StatusCode == "F") {
-                                    var messageWindow = new MessageWindow();
-                                    messageWindow.Show(documentsExecutionLogList.ExceptionMessage);
+                                    this.ShowMessage(documentsExecutionLogList.ExceptionMessage);
                                 }
                                 else if (documentsExecutionLogList.StatusCode == "D") {
                                     documentTypeCopyLists.forEach((copy) => {
@@ -1183,15 +1181,13 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                                 }
                             }
                             else {
-                                var messageWindow = new MessageWindow();
-                                messageWindow.Show("Documents execution Log not found");
+                                this.ShowMessage("Documents execution Log not found");
                             }
 
                         }
                         else {
-                            if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
-                                var messageWindow = new MessageWindow();
-                                messageWindow.Show(pmResponse.ErrorsArray[0]);
+                            if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {;
+                                this.ShowMessage(pmResponse.ErrorsArray[0]);
                             }
                         }
 
