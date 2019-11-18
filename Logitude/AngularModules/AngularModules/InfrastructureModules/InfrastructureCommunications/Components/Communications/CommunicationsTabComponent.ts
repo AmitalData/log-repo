@@ -91,8 +91,7 @@ export class CommunicationsTabComponent implements OnDestroy {
             filters.Filter2Value = this.ObjectTableId;
             filters.Filter2Operator = "Equals";
             if (this.IsForINTTRA == true) {
-                filters.addAdditionalFilter("To", "INTTRA", null, null, "Contains", false, false, false, "string");
-                filters.addAdditionalFilter("From", "INTTRA", null, null, "Contains", false, false, false, "string");
+                filters.addAdditionalFilter("FromTo", "true", null, null, "Contains", true, false, false, "string");
             }
 
             this.myService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {

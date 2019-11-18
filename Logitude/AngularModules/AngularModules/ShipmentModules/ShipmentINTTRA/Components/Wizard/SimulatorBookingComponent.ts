@@ -106,10 +106,10 @@ export class SimulatorBookingComponent extends BaseComponent {
     get GrossWeightUnitCode() { return this.EntityPM.GrossWeightUnitCode; }
     get ChargeableWeightUnitCode() { return this.EntityPM.ChargeableWeightUnitCode; }
 
-    get Volume() { return AppTool.IsNullOrZero(this.EntityPM.Volume) ? 0 : this.EntityPM.Volume; }
-    get GrossWeight() { return AppTool.IsNullOrZero(this.EntityPM.GrossWeight) ? 0 : this.EntityPM.GrossWeight; }
-    get ChargeableWeight() { return AppTool.IsNullOrZero(this.EntityPM.ChargeableWeight) ? 0 : this.EntityPM.ChargeableWeight; }
-    get NumberOfContainers() { return AppTool.IsNullOrZero(this.EntityPM.NumberOfContainers) ? 0 : this.EntityPM.NumberOfContainers; }
+    get Volume() { return AppTool.IsNullOrZero(this.EntityPM.BookingVolume) ? 0 : this.EntityPM.BookingVolume; }
+    get GrossWeight() { return AppTool.IsNullOrZero(this.EntityPM.OrderGrossWeight) ? 0 : this.EntityPM.OrderGrossWeight; }
+    get ChargeableWeight() { return AppTool.IsNullOrZero(this.EntityPM.OrderChargeableWeight) ? 0 : this.EntityPM.OrderChargeableWeight; }
+    get NumberOfContainers() { return AppTool.IsNullOrZero(this.EntityPM.BookingNumberOfPackages) ? 0 : this.EntityPM.BookingNumberOfPackages; }
 
     get INTTRABookingStatusName() { return this.EntityPM.INTTRABookingStatusName; }
     set INTTRABookingStatusName(value: string) {
