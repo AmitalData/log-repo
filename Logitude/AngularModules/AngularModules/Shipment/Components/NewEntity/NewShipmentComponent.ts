@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef, OnDestroy} from '@angular/core';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {AppTool, DateTool, FormatTool} from '../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -46,7 +46,7 @@ import {EntityListService} from '../../../Infrastructure/Services/EntityListServ
     templateUrl: './NewShipmentComponent.html',
 })
 
-export class NewShipmentComponent extends BaseComponent implements OnInit {
+export class NewShipmentComponent extends BaseComponent implements OnInit, OnDestroy {
     public TenantPM: TenantPM;
     public EntityPM: ShipmentPM;
     public DataContext = this;
@@ -60,6 +60,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit {
     public SessionIndex: number;
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
+    private PropertyChangedEvent: any = null;
     constructor() {
         super();
         this.SessionIndex = SessionLocator.Index;
@@ -67,7 +68,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit {
         this.TenantPM = SessionLocator.TenantPM;
         this.EntityPM = this.myShipmentPMService.GetNewEntityPM();
         this.OkButtonLabel = TextCodeTranslator.Translate("Shipment.B.Create");
-
+         
         if (this.TenantPM.AllowAgentInCustomersLOV) {
             this.CardDependencyProperty1 = "CS,AG";
             this.CardDependencyProperty1IsList = true;
@@ -88,10 +89,32 @@ export class NewShipmentComponent extends BaseComponent implements OnInit {
                 this.BuildAdditionalFields();
                 this.LoadAllowedAirline();
                 this.ScreenIsReady = true;
-
+                this.ListenToPropertyChanged();
             });
         });
 
+    }
+
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(this.PropertyChangedEvent);
+    }
+    
+    private ListenToPropertyChanged() {
+        if (this.PropertyChangedEvent) {
+            AppTool.KillEventEmitter(this.PropertyChangedEvent);
+            this.PropertyChangedEvent = null;
+        }
+
+        this.PropertyChangedEvent = this.EntityPM.PropertyChanged.subscribe(s => {
+            if (s) {
+                if (s.PropertyName == "ShipmentCustomerTypeCode") {
+                    this.CustomerId = null;
+                    this.SetCustomer(this.EntityPM.ShipmentCustomerTypeCode);
+                    this.SetCustomerRequired();
+                    this.ComputeCustomerDependency();
+                }
+            }
+        });
     }
 
     private myPortListService: PortListService;
@@ -340,7 +363,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit {
     public IsFCLEntity: boolean = false;
     public IsInlandDomestic: boolean = false;
     OnFiltersChanged() {
-       
+        
         if (!this.IsCreatedFromMasterHouses) {
             this.IsDirectionListEnabled = true;
             this.IsTransportModesListEnabled = AppTool.IsNullOrEmpty(this.DirectionId) ? false : true;
@@ -603,42 +626,6 @@ export class NewShipmentComponent extends BaseComponent implements OnInit {
         }
     }
     SetPartners() {
-        if (!this.IsBuildFromQuote && !this.IsCopyFromShipment) {
-            this.IsShipperMyCustomer = false;
-            this.IsConsigneeMyCustomer = false;
-            var myCRMCustomerId = null;
-
-            switch (this.DirectionId) {
-                case "I": {
-                    this.ShipmentCustomerTypeCode = "CON";
-                    this.IsConsigneeMyCustomer = true;
-
-                    if (!AppTool.IsNullOrEmpty(myCRMCustomerId)) {
-                        this.ConsigneeId = myCRMCustomerId;
-                        if (this.ShipperId == myCRMCustomerId) {
-                            this.ShipperId = null;
-                        }
-                    }
-
-                    break;
-                }
-
-                default: {
-                    this.ShipmentCustomerTypeCode = "SHI";
-                    this.IsShipperMyCustomer = true;
-
-                    if (!AppTool.IsNullOrEmpty(myCRMCustomerId)) {
-                        this.ShipperId = myCRMCustomerId;
-                        if (this.ConsigneeId == myCRMCustomerId) {
-                            this.ConsigneeId = null;
-                        }
-                    }
-
-                    break;
-                }
-            }
-        }
-
         if (this.IsCopyFromShipment) {
             this.CopyPartners();
         }
@@ -728,7 +715,6 @@ export class NewShipmentComponent extends BaseComponent implements OnInit {
         this.SetUIProperties_Filters();
         this.SetUIProperties_Shipper();
         this.SetUIProperties_Consignee();
-        this.SetUIProperties_Customer();
         this.SetUIProperties_Ports();
         this.SetUIProperties_MasterField();
         this.SetUIProperties_HouseField();
@@ -759,17 +745,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit {
                 isFieldRequired = true;
             }
         }
-
-        //if (AppTool.IsNullOrEmpty(this.ShipperId)) {
-        //    if (this.IsShipperMyCustomer) {
-        //        isFieldRequired = true;
-        //    }
-
-        //    else if (this.DirectionId == "E" || this.DirectionId == "D" || this.DirectionId == "R" || this.DirectionId == null) {
-        //        isFieldRequired = true;
-        //    }
-        //}
-
+        
         this.UIProperties.SetRequired("ShipperId", this.ObjectTableName, isFieldRequired);
     }
     SetUIProperties_Consignee() {
@@ -780,40 +756,10 @@ export class NewShipmentComponent extends BaseComponent implements OnInit {
                 isFieldRequired = true;
             }
         }
-
-        //if (AppTool.IsNullOrEmpty(this.ConsigneeId)) {
-        //    if (this.IsConsigneeMyCustomer) {
-        //        isFieldRequired = true;
-        //    }
-
-        //    else if (this.EntityPM.DirectionId == "I") {
-        //        isFieldRequired = true;
-        //    }
-
-        //    else if (this.IsInlandDomestic) {
-        //        isFieldRequired = true;
-        //    }
-        //}
-
+        
         this.UIProperties.SetRequired("ConsigneeId", this.ObjectTableName, isFieldRequired);
     }
-    SetUIProperties_Customer() {
-        //var isFieldEnabled: boolean = true;
-
-        //if (this.ShipmentCustomerTypeCode == "SHI") {
-        //    if (!AppTool.IsNullOrEmpty(this.ShipperId)) {
-        //        isFieldEnabled = false;
-        //    }
-        //}
-
-        //else if (this.ShipmentCustomerTypeCode == "CON") {
-        //    if (!AppTool.IsNullOrEmpty(this.ConsigneeId)) {
-        //        isFieldEnabled = false;
-        //    }
-        //}
-
-        //this.UIProperties.SetEnabled("CustomerId", this.ObjectTableName, isFieldEnabled);
-    }
+    
     SetUIProperties_Ports() {
         var isFromRequired: boolean = false;
         var isToRequired: boolean = false;
@@ -934,8 +880,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit {
                 this.CustomerId = newValue;
             }
 
-            this.SetUIProperties_Shipper();
-            this.SetUIProperties_Customer();
+            this.SetUIProperties_Shipper();            
 
             if (AppTool.IsNullOrEmpty(newValue)) {
                 this.ShipperPartnerTypeId = null;
@@ -1039,8 +984,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit {
                 this.CustomerId = newValue;
             }
 
-            this.SetUIProperties_Consignee();
-            this.SetUIProperties_Customer();
+            this.SetUIProperties_Consignee();            
 
             if (AppTool.IsNullOrEmpty(newValue)) {
                 this.ConsigneePartnerTypeId = null;
@@ -1278,7 +1222,6 @@ export class NewShipmentComponent extends BaseComponent implements OnInit {
             this.SetCustomer(newValue);
             this.SetCustomerRequired();
             this.ComputeCustomerDependency();
-            this.SetUIProperties_Customer();
         }
     }
 

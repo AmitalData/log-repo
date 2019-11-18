@@ -30,6 +30,11 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool ReadyForTransfer { get; set; }
         public string AccountingPaymentMethodId { get; set; }
 
+        public string VendorBankAddress { get; set; }
+        public string VendorBankName { get; set; }
+        public string VendorBankAccountNumber { get; set; }
+        public string VendorSwift { get; set; }
+        public string VendorIBANNumber { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string VendorId { get; set; }

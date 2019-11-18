@@ -60,5 +60,10 @@ export class APPaymentList {
 		AccountingPaymentMethodId: string;
 		BankAccountId: string;
 		FirstApproveDate: Date;
+		VendorBankAddress: string;
+		VendorBankName: string;
+		VendorBankAccountNumber: string;
+		VendorSwift: string;
+		VendorIBANNumber: string;
 	
 }

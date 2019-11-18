@@ -321,7 +321,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
         }
         private void InitAndValidatePaymentTerm_DueDate()
         {
-            bool calculateDueDate = false;
+            bool calculateDueDate = true;
 
             if (string.IsNullOrEmpty(this.aPInvoicePM.PaymentTermId))
             {
@@ -331,13 +331,13 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                     if (manuallySetPaymentTerm != null)
                     {
                         this.aPInvoicePM.PaymentTermId = manuallySetPaymentTerm.Id;
+                        calculateDueDate = false;
                     }
                 }
 
                 else
                 {
-                    this.aPInvoicePM.PaymentTermId = this.defaultPaymentTermId;
-                    calculateDueDate = true;
+                    this.aPInvoicePM.PaymentTermId = this.defaultPaymentTermId;                   
                 }
             }
             
@@ -640,7 +640,15 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             //ForiegnCurrencyAmount
             if (line.ForiegnCurrencyAmount == null || line.ForiegnCurrencyAmount == 0)
             {
-                line.ForiegnCurrencyAmount = line.LocalCurrencyAmount / line.ForiegnExchangeRate;
+                if (line.ForiegnCurrencyId == this.aPInvoicePM.InvoiceCurrencyId)
+                {
+                    line.ForiegnCurrencyAmount = line.InvoiceCurrencyAmount;
+                }
+
+                else
+                {
+                    line.ForiegnCurrencyAmount = line.LocalCurrencyAmount / line.ForiegnExchangeRate;
+                }
             }
 
             //ProfitCurrencyAmount
@@ -710,18 +718,6 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                     {
                         if (myComparativeDate != null)
                         {
-                            int dateYear = myComparativeDate.Value.Year;
-                            int dateMonth = myComparativeDate.Value.Month;
-                            int dateDay = myComparativeDate.Value.Day;
-
-                            if (paymentTerm.CurrentMonth)
-                            {
-                                dateMonth += 1;
-                                dateDay = 1;
-                            }
-
-                            var myDate = new DateTime(dateYear, dateMonth, dateDay, 0, 0, 0);
-                            myComparativeDate = myDate;
                             myComparativeDate = myComparativeDate.Value.AddDays(paymentTerm.Days);
                         }
                     }

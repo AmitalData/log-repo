@@ -13,23 +13,13 @@ export class APPaymentComponent {
         this.Helper = new FieldsHelper();
     }
     //public shipNumber: string;
-    Shipment() {
+    CreateAPInvoiceFromShipment() {
         var shipNumber;
         shipNumber = this.opp.DoOperations('D', 'Export', 'A', '');
         this.opp.SearchForShipment(shipNumber);
         this.Helper.WaitByIdAndClick('Shipment.TH.Overview');
         this.payablesComponent.PayablesTab(shipNumber,'',true);
-        //this.opp.EditShipment(shipNumber);
-        //this.opp.SaveShip();
-        //this.Helper.WaitByIdAndClick('Shipment.TH.Overview');
-        //this.Helper.WaitEditComponentBusyIndicator();
-        //this.Helper.WaitByIdAndClick('Shipment.TH.Payables');
-        //this.Helper.WaitEditComponentBusyIndicator();
-        //this.payablesComponent.AddPayableLines(shipNumber, 'D');
-        //this.payablesComponent.CreatAPInvoicewithVoid(shipNumber + '1L1', false);
-        //this.payablesComponent.EditAPInvoice(shipNumber + '1L1', false);
-        
- 
+
     }
     CreatePayment() {
         this.Helper.WaitByIdAndClick('NewAPPayment');

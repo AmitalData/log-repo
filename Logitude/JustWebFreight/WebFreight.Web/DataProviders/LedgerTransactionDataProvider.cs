@@ -72,6 +72,9 @@ namespace WebFreight.Web.DataProviders
         public bool IsExternalReconcile { get; set; }
         public bool InReconcileProgress { get; set; }
         public string ReconcileRemarks { get; set; }
+        public decimal CumulativeLocalAmount { get; set; }
+        public decimal CumulativeForeignAmount { get; set; }
+
 
         // foreign fields
         public string GLAccountRecoMethodCode { get; set; }

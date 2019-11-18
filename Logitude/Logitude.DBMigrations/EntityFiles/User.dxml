@@ -1,26 +1,26 @@
-<Table Name="Users">
+<Table Name="MyUsers" OldName="Users">
 
-  <Column Name="Id" Type="Text" Size="15">
+  <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false"/>
   </Column>
 
-  <Column Name="Tenant" Type="Integer">
+  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false"/>
   </Column>
 
-  <Column Name="FirstName" Type="nText" Size="50">
+  <Column Name="FName" OldNames="FirstName" Type="nvarchar" Size="50">
     <Constraints Nullable="false"/>
   </Column>
 
-  <Column Name="LastName" Type="nText" Size="50">
+  <Column Name="LastName" Type="nvarchar" Size="50">
     <Constraints Nullable="false"/>
   </Column>
 
-  <Column Name="Inactive" Type="Boolean">
+  <Column Name="Inactive" Type="bit">
     <Constraints Nullable="false"/>
   </Column>
 
-  <Column Name="BirthDate" Type="DateTime">
+  <Column Name="BirthDate" Type="datetime">
     <Constraints Nullable="false"/>
   </Column>
 

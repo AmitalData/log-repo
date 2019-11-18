@@ -27,6 +27,7 @@ import { PeriodTypeListService } from './Services/StandardLists/PeriodTypeListSe
 import { ReconcileCurrencyTypeListService } from './Services/StandardLists/ReconcileCurrencyTypeListService';
 import { ReconcileMethodListService } from './Services/StandardLists/ReconcileMethodListService';
 import { ReconciliationListService } from './Services/StandardLists/ReconciliationListService';
+import { ReconciliationLineListService } from './Services/StandardLists/ReconciliationLineListService';
 import { RevenueExpenseTypeListService } from './Services/StandardLists/RevenueExpenseTypeListService';
 import { TestEntityListService } from './Services/StandardLists/TestEntityListService';
 import { TaxReportListService } from './Services/StandardLists/TaxReportListService';
@@ -157,6 +158,7 @@ export class ModuleProviders {
             case "ReconcileCurrencyTypeListService": { myResult = new ReconcileCurrencyTypeListService(); break; }
             case "ReconcileMethodListService": { myResult = new ReconcileMethodListService(); break; }
             case "ReconciliationListService": { myResult = new ReconciliationListService(); break; }
+            case "ReconciliationLineListService": { myResult = new ReconciliationLineListService(); break; }
             case "RevenueExpenseTypeListService": { myResult = new RevenueExpenseTypeListService(); break; }
             case "TestEntityListService": { myResult = new TestEntityListService(); break; }
             case "TestEntityListService": { myResult = new TestEntityListService(); break; }

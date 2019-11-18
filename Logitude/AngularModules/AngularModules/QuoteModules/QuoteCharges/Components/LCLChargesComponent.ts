@@ -1725,6 +1725,8 @@ export class QuoteChargeItem extends BaseComponent {
                     }                    
                 }
             }
+
+            this.fatherComponent.CurrentSession.SessionEvent.emit("CostMeasurementIdChanged");
         }
     }
 

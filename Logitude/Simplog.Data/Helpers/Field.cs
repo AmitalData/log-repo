@@ -25,6 +25,11 @@ namespace Simplog.Data.Helpers
 
         [XmlAttribute]
         public string PropertyName { get; set; }
+
+
+        [XmlAttribute]
+        public string PartnerObjectFieldId { get; set; }
         
+
     }
 }

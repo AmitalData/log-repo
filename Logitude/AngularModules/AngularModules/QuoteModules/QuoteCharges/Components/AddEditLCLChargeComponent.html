@@ -673,7 +673,7 @@
                                                 <log-column [width]="'30'" [Alignment]="'left'">
                                                     <log-cell-template [IgnoreMods]="true" template="let item">
                                                         <IconButton [Name]="'Delete'" [IsSmall]="true"
-                                                                    style="display: block; float: left; margin-left:3px; margin-top:4px;" [disabled]="!IsEditingEnabled || !SelectedStepItem" (click)="DeleteStepClicked(item)"></IconButton>
+                                                                    style="display: block; float: left; margin-left:3px; margin-top:4px;" [disabled]="!IsEditingEnabled" (click)="DeleteStepClicked(item)"></IconButton>
                                                     </log-cell-template>
                                                 </log-column>
 

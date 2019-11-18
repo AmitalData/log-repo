@@ -7714,6 +7714,60 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, EventTypeRepository, tenantEventTypes);
 
 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "NTAD",
+                EnglishName =  "New Note",
+                LocalName =  "הערה חדשה נוספה",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = GLAccountObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "NTUP",
+                EnglishName =  "Note Edited",
+                LocalName =  "הערה עודכנה",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = GLAccountObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "NTDL",
+                EnglishName =  "Note Deleted",
+                LocalName =  "הערה נמחקה",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = GLAccountObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
 	    }
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
@@ -7726,7 +7780,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			   Feature GLAccountFeature_MB10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INACITVE", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Inactive", NameTextCodeDefaultText = "Inactive", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
              			   Feature GLAccountFeature_MB11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRINTCARDINDEX", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.PrintCardIndex", NameTextCodeDefaultText = "Print Card Index", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature GLAccountFeature_MB12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GLAccountReactivate", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Reactivate", NameTextCodeDefaultText = "Reactivate", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+             			   Feature GLAccountFeature_MB12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GLAccountReactivate", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Reactivate", NameTextCodeDefaultText = "Reactivate", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
               
 
 		   TextCodeRepository.SubmitChanges();

@@ -33,5 +33,8 @@ namespace Logitude.HybridTest
         public const string DocumentTypeCode = "HDT";
         public const string UserCode = "HU";
         public const string EventTypeCode = "HET";
+        public const string AddressCode = "HA";
+        public const string BankCode = "HB";
+        public const string IncotermCode = "HI";
     }
 }

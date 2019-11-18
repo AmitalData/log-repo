@@ -151,7 +151,12 @@ namespace WebFreight.Web.WebPages
                     if (Type == "SaveToMicrosoftExcel2007")
                     {
                         HttpContext.Current.Response.ContentType = "application/" + "vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                        documentName = FileName + ".xlsx";
+                        var fileName = FileName;
+                        if (fileName.Contains("!BIReportName="))
+                        {
+                            fileName = fileName.Split(new string[] { "!BIReportName=" }, StringSplitOptions.None)[1];
+                        }
+                        documentName = fileName + ".xlsx";
                     }
                     else
                     {
@@ -169,9 +174,6 @@ namespace WebFreight.Web.WebPages
                     //            ShowType = "inline";
                     //            break;
                     //        }
-
-
-
                     //}
 
                     if (browser != null && browser.Browser.Equals("ie", StringComparison.OrdinalIgnoreCase))

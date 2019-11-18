@@ -29,7 +29,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
     {
         protected override void OnCreating(Def.EntityPMs.ARPaymentChequePM entityPM, Server.Tools.EntityPM entityParentPM)
         {
-            entityPM.Id = IdCounter.GetNumber("ARPaymentCheque", entityPM.Tenant);
+         //   entityPM.Id = IdCounter.GetNumber("ARPaymentCheque", entityPM.Tenant);
            
         }
 
@@ -172,7 +172,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                       
                         moreDataPM.ChangeSetOp = ChangeSetOperation.Update;
                         updateService.Update(moreDataPM, true);
-                        SubmitChanges();
+                     //   SubmitChanges();
                     }
                 }
 

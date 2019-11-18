@@ -5,7 +5,6 @@ import { OperationsComp } from './NewEntity/Operations.po';
 import { SendMailPopup } from '../SendMailPopup/SendMailPopup';
 import { PrintDocOut } from '../PrintDocOut/PrintDocOut';
 import { FieldsHelper } from '../../Helpers/FieldsHelper';
-import { ShipmentSearch } from '../ShipmentSearch';
 
 
 
@@ -28,9 +27,9 @@ export class DocOutSenario {
   }
   public OpenDocOutTab() {
     var shipperRef;
-    shipperRef = this.NewDirectShipment.DoOperations();
+      shipperRef = this.NewDirectShipment.DoOperations(browser.params.ShipParams.ShipmentLevelCode, browser.params.ShipParams.Direction, browser.params.ShipParams.TransportMode, browser.params.ShipParams.ShipmentType);
     this.NewDirectShipment.SearchForShipment(shipperRef);
-    this.NewDirectShipment.EditShipment(shipperRef);
+      this.NewDirectShipment.EditShipment(shipperRef, browser.params.ShipParams.ShipmentLevelCode, browser.params.ShipParams.ShipmentType, browser.params.ShipParams.Direction);
 
 }
 

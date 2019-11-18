@@ -11,7 +11,7 @@ namespace Logitude.HybridTest.CommonServices
         public void Test_ShippingLine_UPSERT()
         {
             LoginService.GetLoginTokenByCredentials();
-            Server.Tools.Response serviceResponse = CallShippingLineUpsert();
+            Response serviceResponse = CallShippingLineUpsert();
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
          }

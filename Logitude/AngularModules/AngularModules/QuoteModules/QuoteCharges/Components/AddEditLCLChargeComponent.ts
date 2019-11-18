@@ -45,7 +45,14 @@ export class AddEditLCLChargeComponent {
                     this.AddStepItemMethod();
                 }
             }
-        })
+
+            if (res == "CostMeasurementIdChanged") {
+                this.StepsItemsSource.Collection.forEach(item => {
+                    item.SetWeightUnitCode();
+                });
+            }
+        });
+
     }
 
     SetDataContext(dataContext: QuoteChargeItem) {
@@ -146,9 +153,12 @@ export class AddEditLCLChargeComponent {
         logitudeWindow.Show('./QuoteModules/QuoteCharges/Components/AddEditPriceStepComponent');
     }
     DeleteStepClicked(item: QuoteStepItem) {
-        if (this.SelectedStepItem) {
-            this.EntityPM.RemoveQuotePriceStepsPM(item.EntityPM);
-            this.BuildStepItemsSource();
+        if (this.DataContext.EntityPM.QuoteChargePriceSteps.indexOf(item.EntityPM) != -1) {
+            this.DataContext.EntityPM.RemoveQuotePriceStepsPM(item.EntityPM);
+        }
+
+        if (this.StepsItemsSource.Collection.indexOf(item) != -1) {
+            this.StepsItemsSource.Remove(item);
         }
     }
     OnRowEnded($event) {
@@ -346,7 +356,7 @@ export class QuoteStepItem extends BaseComponent {
     }
 
     public WeightUnitCode: string;
-    private SetWeightUnitCode() {
+    public SetWeightUnitCode() {
         var code: string;
 
         switch (this.QuoteChargePM.CostMeasurementCode) {

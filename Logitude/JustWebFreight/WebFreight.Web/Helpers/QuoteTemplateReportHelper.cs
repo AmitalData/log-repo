@@ -2036,7 +2036,7 @@ namespace Logitude.BL.Helpers
                             AppendNewQuoteTableoRow(FieldName, HtmlTemplate, quotetemplateTextDesignPMDetailsLable, StyleQuoteDetailsLable, styleTd);
 
                             //FieldValue
-                            styleTd = GetStyleRowTable(quotetemplateTextDesignPMDetailsLable, quotetemplatetableDesignPM, DetailsTableColumn2LabelWidth);
+                            styleTd = GetStyleRowTable(quotetemplateTextDesignPMDetailsLable, quotetemplatetableDesignPM, DetailsTableColumn2ValueWidth);
                             AppendNewQuoteTableoRow(FieldValue, HtmlTemplate, quotetemplateTextDesignPMDetailsValue, StyleQuoteDetailsValue, styleTd);
 
 

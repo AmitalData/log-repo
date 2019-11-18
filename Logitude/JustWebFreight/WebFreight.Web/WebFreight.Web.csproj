@@ -1663,6 +1663,7 @@
     <Compile Include="Controllers\GlobalModel\Generated\PMControllers\BatchServicesDefinitionController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\PMControllers\BluesnapContractController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\PMControllers\WebhookKeysController.Generated.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Extended\BIReportController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\BusinessRoleExtendedViewsController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\CacheLogController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\CustomPickListExtendedController.cs" />
@@ -2389,6 +2390,7 @@
     <Compile Include="Helpers\TFSParseWebhook.cs" />
     <Compile Include="Helpers\TimeClock\TMClockAnalyze.cs" />
     <Compile Include="Helpers\TMMessageBuilderAnalyzer.cs" />
+    <Compile Include="Helpers\WorkerRole\BIReportExecutionService.cs" />
     <Compile Include="Helpers\WorkerRole\DocumentsExecutionService.cs" />
     <Compile Include="Helpers\WorkerRole\ReportExecutionService.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.APPaymentTransferStatus.cs" />
@@ -2943,10 +2945,6 @@
     <Content Include="Integration Test\CRM\Opportunity\Opportunities.postman_collection.json" />
     <Content Include="Integration Test\APInvoiceFromShipment\Create-EditAPInvoiceFromShipment.postman_collection.json" />
     <Content Include="Integration Test\Accounting\AP Invoice.postman_collection.json" />
-    <Content Include="JustConfig\Master.ConnectionStrings.config" />
-    <Content Include="JustConfig\2019R4.appSettings.config" />
-    <Content Include="JustConfig\2019R4.ConnectionStrings.config" />
-    <Content Include="JustConfig\Master.appSettings.config" />
     <None Include="Properties\PublishProfiles\main.pubxml" />
     <None Include="Properties\PublishProfiles\NewPublish.pubxml" />
     <None Include="Resources\A252_2015_020151011133801779020300040816.mrt" />
@@ -6379,6 +6377,7 @@
     <Folder Include="CustomModel\Tools\TraceEvents\" />
     <Folder Include="images\ToolBar\" />
     <Folder Include="Integration Test\FullAccounting\" />
+    <Folder Include="JustConfig\" />
     <Folder Include="Logitude\BL\InfrastructureModel\" />
     <Folder Include="MessageModel\" />
     <Folder Include="MobileApplication\Views\DeclarationVehicleModification\" />

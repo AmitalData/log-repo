@@ -813,7 +813,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             if (entityPOCO.StatusCode == "AR")
             {
-                throw new ApplicationException("this invoice is already auto credited");
+                throw new ApplicationException("This invoice is already auto credited");
+            }
+
+            else if (entityPOCO.StatusCode == "VD")
+            {
+                throw new ApplicationException("This invoice is already voided");
             }
 
             else
@@ -3824,9 +3829,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     List<string> allShipmentsIds = (from d in items group d by d.ShipmentId into g select g.Key).ToList();
 
                     foreach (string iShipmentId in allShipmentsIds)
-                    {
-                        
-
+                    {                       
                         UpdateShipmentProfitClass.UpdateShipmentARInvoices(iShipmentId, this.tenant, ConsolidationNumber);
                         UpdateShipmentProfitClass.UpdateProfit(iShipmentId, this.tenant);
                     }

@@ -3938,6 +3938,34 @@ User/Pass",
             TaxReportPM taxReport = taxReportQueryService.GetSingle("1-202", true, false);
             TaxReportService.CreateTaxReportLines(taxReport, 54);
         }
+
+        private void button48_Click(object sender, EventArgs e)
+        {
+            Thread thread = new Thread(() => UpdateRules());
+            thread.IsBackground = true;
+            thread.Start();            
+        }
+
+        private void UpdateRules()
+        {
+            SetControlPropertyValue(UpdateRulesLabel, "Text", "Updating...");
+            SetControlPropertyValue(UpdateRulesLabel, "ForeColor", Color.Black);
+
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
+            timer1.Enabled = true;
+            timer1.Start();
+
+            MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
+            updateClass.LoadObjectTableRulesANDFieldsValidations();
+
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
+
+            SetControlPropertyValue(UpdateRulesLabel, "ForeColor", Color.Green); // timer
+            SetControlPropertyValue(UpdateRulesLabel, "Text", "Done in " + ts.ToString(@"hh\:mm\:ss"));
+        }
     }
 
     public class MyFeature
