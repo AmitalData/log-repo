@@ -1368,22 +1368,23 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                     {
                         throw new BusinessErrorException("Error in parsing COMMERCE PRICE (" + invoiceItem.COMMERCE_PRICE + ") into decimal");
                     }
-                }
-                if (String.IsNullOrWhiteSpace(invoiceItem.COMMERCE_PRICE_CURRENCY)) invoiceItem.COMMERCE_PRICE_CURRENCY = "ILS";
-                if (!String.IsNullOrWhiteSpace(invoiceItem.COMMERCE_PRICE_CURRENCY))
-                {
-                    var wholesaleCurrency = new CurrencyTypeRepository(ResolvedTenant());
-                    var mywholesaleCurrency = wholesaleCurrency.GetSingle(invoiceItem.COMMERCE_PRICE_CURRENCY);
-                    if (mywholesaleCurrency == null)
-                    {
-                        string wholesaleCurrencyCode = "";
-                        wholesaleCurrencyCode = GetTranslationL2P("IIGC", "CTBCURRENCY", invoiceItem.COMMERCE_PRICE_CURRENCY);
 
-                        if (!string.IsNullOrWhiteSpace(wholesaleCurrencyCode)) SupplierInvoiceItemPM.WholeSaleItemPriceCurrencyCode = wholesaleCurrencyCode;
-                    }
-                    else
+                    if (String.IsNullOrWhiteSpace(invoiceItem.COMMERCE_PRICE_CURRENCY)) invoiceItem.COMMERCE_PRICE_CURRENCY = "ILS";
+                    if (!String.IsNullOrWhiteSpace(invoiceItem.COMMERCE_PRICE_CURRENCY))
                     {
-                        SupplierInvoiceItemPM.WholeSaleItemPriceCurrencyCode = mywholesaleCurrency.Code.ToString();
+                        var wholesaleCurrency = new CurrencyTypeRepository(ResolvedTenant());
+                        var mywholesaleCurrency = wholesaleCurrency.GetSingle(invoiceItem.COMMERCE_PRICE_CURRENCY);
+                        if (mywholesaleCurrency == null)
+                        {
+                            string wholesaleCurrencyCode = "";
+                            wholesaleCurrencyCode = GetTranslationL2P("IIGC", "CTBCURRENCY", invoiceItem.COMMERCE_PRICE_CURRENCY);
+
+                            if (!string.IsNullOrWhiteSpace(wholesaleCurrencyCode)) SupplierInvoiceItemPM.WholeSaleItemPriceCurrencyCode = wholesaleCurrencyCode;
+                        }
+                        else
+                        {
+                            SupplierInvoiceItemPM.WholeSaleItemPriceCurrencyCode = mywholesaleCurrency.Code.ToString();
+                        }
                     }
                 }
                 if (!string.IsNullOrWhiteSpace(invoiceItem.ADDITIONAL_QUANTITY) && invoiceItem.ADDITIONAL_QUANTITY != "0")
