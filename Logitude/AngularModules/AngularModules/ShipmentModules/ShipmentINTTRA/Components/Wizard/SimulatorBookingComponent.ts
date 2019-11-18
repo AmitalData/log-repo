@@ -335,8 +335,8 @@ export class SimulatorBookingComponent extends BaseComponent {
                     }
 
                     else {
-                        var messageWindow = new MessageWindow();
-                        messageWindow.Show("Simulated Successfully");
+                        //var messageWindow = new MessageWindow();
+                        //messageWindow.Show("Simulated Successfully");
                         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
                 }
