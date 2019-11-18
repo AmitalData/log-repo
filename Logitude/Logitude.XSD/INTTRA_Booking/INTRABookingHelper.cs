@@ -162,6 +162,7 @@ namespace Logitude.XSD.INTTRA_Booking
         private void UpdateShipmentStatus()
         {
             this.DataContext.Shipment.INTTRABookingStatusCode = "ST";
+            this.DataContext.Shipment.INTTRABookingTransStatusCode = "BRS";
             this.DataContext.shipmentRepository.Update(this.DataContext.Shipment);
         }
 

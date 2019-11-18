@@ -298,10 +298,12 @@ export class SimulatorBookingComponent extends BaseComponent {
                 this.EntityPM.MainCarriageToPortId = this.INTTRABookingResponse_PODPort;
                 this.CurrentSession.CurrentEditComponent.SaveChanges();
             }
+            if (confirmWindow.No) {
+                this.EntityPM.INTTRABookingStatusCode = "RU";
+                this.CurrentSession.CurrentEditComponent.SaveChanges();
+            }
         });
     }
-
-    
 
     CloseButtonClicked() {
         this.Close();

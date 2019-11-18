@@ -2330,13 +2330,21 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.LoadXml(shipmentPM.INTTRALastBookingResponse);
-            XmlNodeList xnList = xmlDoc.GetElementsByTagName("ConveyanceInformation");
+            XmlNodeList xnList = xmlDoc.SelectNodes("//ConveyanceInformation");
 
             foreach (XmlNode xn in xnList)
             {
-                if (xn["Identifier"] != null && xn["Identifier"].OuterXml.Contains("VesselName"))
+                if (xn["Identifier"] != null)
                 {
-                    shipmentPM.INTTRABookingResponse_Voyage = xn["Identifier"].InnerText;
+                    if(xn.FirstChild != null && xn.FirstChild.OuterXml.Contains("VoyageNumber"))
+                    {
+                        shipmentPM.INTTRABookingResponse_Voyage = xn.FirstChild.InnerText;
+                    }
+
+                    if (xn.LastChild != null && xn.LastChild.OuterXml.Contains("VoyageNumber"))
+                    {
+                        shipmentPM.INTTRABookingResponse_Voyage = xn.LastChild.InnerText;
+                    }
                 }
             }
         }

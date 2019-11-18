@@ -83,6 +83,13 @@ namespace Logitude.BL.ShipmentsModel
                 Code = "WC", 
                 SearchFields = "Waiting For Confirmation,WC", 
 			});
+			 
+            all.Add(new INTTRABookingStatusDetails()
+            {    
+                Name = "Rejected by User", 
+                Code = "RU", 
+                SearchFields = "Rejected by User,RU", 
+			});
 			
             return all;
        }
