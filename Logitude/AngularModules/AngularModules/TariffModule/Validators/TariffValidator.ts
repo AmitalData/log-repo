@@ -5,11 +5,14 @@ import { TariffPM } from '../EntityPMs/TariffPM';
 import { TariffVersionPM } from '../EntityPMs/TariffVersionPM';
 import { Validator } from '../../Infrastructure/Validators/Validator';
 import { TextCodeTranslator } from '../../Infrastructure/Utilities/TextCodeTranslator';
+import { PackageTypeListService } from '../../Common/Services/StandardLists/PackageTypeListService';
+import { PackageTypeList } from '../../Common/EntityLists/PackageTypeList';
 
 export class TariffValidator {
     private IdProps: string[] = [];
     private UOMProps: string[] = [];
     private chargesTypePMService: ChargesTypeListService;
+    private packageTypeListService: PackageTypeListService;
     private Errors: string[] = [];
     private entityPM: TariffPM;
 
@@ -26,12 +29,24 @@ export class TariffValidator {
                 this.ValidateSurcharge();
             }
 
+            else if (entityPM.TypeCode == "OFC") {
+                this.packageTypeListService = new PackageTypeListService();
+                this.FillContainersIDs();
+                this.ValidateContainers();
+            }
+
             this.ValidateTariffLines();
         }
 
         return this.Errors;
     }
-    
+
+    FillContainersIDs() {
+        for (var index = 1; index <= 5; index++) {
+            this.IdProps.push("ContainerType" + index + "Id");
+        }
+    }
+
     FillChargesIDsAndUOMS() {
         for (var index = 1; index <= 10; index++) {
             this.IdProps.push("Surcharge" + index + "Id");
@@ -126,6 +141,78 @@ export class TariffValidator {
         }
     }
 
+    ValidateContainers() {
+        var IdProps: string[] = [];        
+        var IdPropsName: string[] = [];       
+        var DuplicatedContainersIds: string[] = [];
+        var EmptyIndex = 1;
+        var emptyLines: boolean = false;
+        var FirstLineEmpty: boolean = false;
+        var tempErrors: Array<string> = [];
+
+        for (var index = 1; index <= 5; index++) {
+            IdProps.push("ContainerType" + index + "Id");            
+            IdPropsName.push("Container Type " + index);
+            
+            if (this.IdProps.filter(p => this.entityPM[p + ""] == this.entityPM[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this.entityPM[IdProps[index - 1]] != null)[0] != null) {
+                var packageType = this.IdProps.filter(p => this.entityPM[p + ""] == this.entityPM[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this.entityPM[IdProps[index - 1]] != null)[0];
+                if (!DuplicatedContainersIds.includes(this.entityPM[packageType + ""])) {
+                    DuplicatedContainersIds.push(this.entityPM[packageType + ""]);
+                    this.packageTypeListService.getSingleFromCache(this.entityPM[packageType + ""]).subscribe(res => {
+                        if (!res.HasError) {
+                            var packageTypeList: PackageTypeList = res.Result;
+                            if (packageTypeList) {
+                                this.Errors.push("Container type " + packageTypeList.EnglishName + " is duplicated");
+                            }
+                        }
+                    });
+                }
+            }
+
+            if (index == 1) {
+                if (AppTool.IsNullOrEmpty(this.entityPM[IdProps[index - 1]])) {
+                    tempErrors.push(IdPropsName[index - 1] + " is required");
+                    FirstLineEmpty = true;
+                }
+                
+            }
+
+            else {
+                if (AppTool.IsNullOrEmpty(this.entityPM[IdProps[index - 1]])) {
+                    if (EmptyIndex == 1) {
+                        EmptyIndex = index;
+                    }
+                }
+                
+                if (index == 2) {
+                    if (!AppTool.IsNullOrEmpty(this.entityPM[IdProps[index - 1]])) {
+                        if (FirstLineEmpty) {
+                            emptyLines = true;
+                            this.Errors.push("Empty Container Lines aren't allowed between line 1 and line 2");
+                            EmptyIndex = 1;
+                        }
+                    }
+                }
+
+                if (index >= 3) {
+                    if (!AppTool.IsNullOrEmpty(this.entityPM[IdProps[index - 1]])) {
+                        if (EmptyIndex != 1) {
+                            emptyLines = true;
+                            this.Errors.push("Empty Container Lines aren't allowed between line " + (EmptyIndex - 1) + " and line " + index);
+                            EmptyIndex = 1;
+                        }
+                    }
+                }
+            }
+        }
+
+        if (!emptyLines) {
+            tempErrors.forEach(error => {
+                this.Errors.push(error);
+            });
+        }
+    }
+
     private ValidateTariffLines() {
         var msg: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
@@ -149,8 +236,8 @@ export class TariffValidator {
                     }
                 }
 
-                else if (this.entityPM.TypeCode == "AFC") {
-                    if (!this.entityPM.TariffLinesAddedFromExcel) {
+                else if (this.entityPM.TypeCode == "AFC" || this.entityPM.TypeCode == "OLC" || this.entityPM.TypeCode == "OFC") {
+                    if (!this.entityPM.TariffLinesAddedFromExcel && !this.entityPM.IsUpdatingMissingPorts) {
                         if (AppTool.IsNullOrEmpty(item.DestinationPortId)) {
                             this.Errors.push(msg.replace("%FieldName", "To"));
                         }
