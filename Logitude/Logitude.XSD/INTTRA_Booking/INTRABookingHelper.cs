@@ -81,8 +81,11 @@ namespace Logitude.XSD.INTTRA_Booking
                     }
                 };
 
-                this.SendXMLFile(message);
-                this.SaveChanges();
+                if (dataBuilder.Context.Errors == null || (dataBuilder.Context.Errors != null && dataBuilder.Context.Errors.Count() == 0))
+                {
+                    this.SendXMLFile(message);
+                    this.SaveChanges();
+                }
             }
         }
 

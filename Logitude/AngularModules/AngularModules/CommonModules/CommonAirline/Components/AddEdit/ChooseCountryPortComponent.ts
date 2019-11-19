@@ -108,7 +108,6 @@ export class ChooseCountryPortComponent extends BaseComponent {
                     }
                 });
 
-                
                 this.CountryPortsMessageCount = counter + " ports added";
                 this.CurrentSession.StopBusyIndicator();
             }

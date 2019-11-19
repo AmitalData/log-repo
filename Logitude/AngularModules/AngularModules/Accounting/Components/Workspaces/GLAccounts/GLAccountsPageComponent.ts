@@ -228,8 +228,7 @@ export class GLAccountsPageComponent implements AfterViewInit {
                     {
                         displayTitle = "Open Masters";
                         displayTitle = TextCodeTranslator.Translate("GLAccount.Q.OpenMasters");
-                        //filters.addAdditionalFilter("AccountTypeCode", "5", null, null, "Equals", false, false, false, "string");
-                        //filters.addAdditionalFilter("BalanceInLocalCurrency", "0", null, null, "NotEqual", true, false, false, "decimal");
+                        filters.addAdditionalFilter("BalanceInLocalCurrencyNotNull", "4", null, null, "Equals", true, false, false, "string", false, false);
 
                         break;
                     }

@@ -302,11 +302,16 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         [ActionName("PutExportBIReportToExcel")]
         public HttpResponseMessage PutExportBIReportToExcel(BIReportXMLData bIReportXMLData)
         {
+            string email = null;
+
             try
             {
+
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                email = authToken.Email;
+
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 string ObjectTableName = "Shipment";
                 var data = new ExportToExcelHelper().ExportBIQueryToExcel(bIReportXMLData, tenant);
@@ -320,6 +325,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     FileSize = data.Length,
 
                 };
+
                 IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
                 storageservice.Write(data, fileInfo);
 
@@ -328,6 +334,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             catch (Exception ex)
             {
+                if (email == "maheera@logitudeworld.com" || email == "ahmada@logitudeworld.com")
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ex);
+                }
+
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
@@ -343,7 +354,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 BIReportsExecutionLogRepository reportExecutionLogRepository = new BIReportsExecutionLogRepository(tenant);
                 var logId = IdCounter.GetNumber("BIReportsExecutionLog", tenant);
-                bIReportXMLData.BIReportKey = Guid.NewGuid() + logId;
+                bIReportXMLData.BIReportKey = Guid.NewGuid() + logId + "!BIReportName="+ bIReportXMLData.BIReportPM.Name;
                 BIReportsExecutionLog bIReportExecutionLog = new BIReportsExecutionLog()
                 {
                     Id = logId,
