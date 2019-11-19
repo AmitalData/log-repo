@@ -390,11 +390,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
         {
             if (entityPM == null || string.IsNullOrWhiteSpace(entityPM.CustomFileNo)) return null;
 
-            var openReaderSingleResult = new OpenReaderSingleResult(entityPM.Tenant);
+            var openReaderSingleResult = new OpenReaderSingleResult(AmitalContext.GetContext(entityPM.Tenant));
             string UserId = openReaderSingleResult.GetSchemaUserId();
             string theResult = "";
             var res1 = openReaderSingleResult.ExecuteReaderSingleResult<int>(
-                $"select IMPORT_TYPE from {UserId}.CFIFILEM where CFIFILEM='{entityPM.CustomFileNo}'"
+                $"select IMPORT_TYPE from {UserId}.CFIFILEM where FILE_NO='{entityPM.CustomFileNo}'"
                 ,
                 (dataReader) =>
                 {
