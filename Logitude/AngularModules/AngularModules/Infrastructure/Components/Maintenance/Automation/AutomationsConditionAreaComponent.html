@@ -137,8 +137,7 @@
 
                                                                                         <!--Boolean-->
                                                                                         <td *ngIf="item.SelectedCustomField.DataTypeCode == 'Boolean' && !item.IsSystemVariables">
-                                                                                            <CheckBox *ngIf="!item.IsRefrachCustomField" [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event"></CheckBox>
-                                                                                            <CheckBox *ngIf="item.IsRefrachCustomField" [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event"></CheckBox>
+                                                                                            <ComboBox style="width:160px;" (SelectedItemChanged)="item.BooleanListValueChanged($event)" [ItemsSource]="item.BooleanList" [SelectedItem]="item.IsChecked" ></ComboBox>
                                                                                         </td>
 
                                                                                      
