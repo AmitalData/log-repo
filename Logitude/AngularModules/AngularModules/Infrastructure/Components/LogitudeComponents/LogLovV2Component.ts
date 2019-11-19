@@ -819,10 +819,12 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         }
     }
     DrawColumns() {
-        var lookupFields: any[];
+
+          var lookupFields: any[];
         this.headerColumns = [];
         this.dataColumns = [];
         if (this.DisplayFieldsFromList != null && this.DisplayFieldsFromList != undefined) {
+            var fields: string[] = this.DisplayFieldsFromList.split(',');
             var fields: string[] = this.DisplayFieldsFromList.split(',');
             lookupFields = window.ObjectFields.filter(d => d.ObjectTableId == this.LookUpTable.Id && fields.lastIndexOf(d.FieldName) > -1);
         }
@@ -1161,10 +1163,10 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     NavigateListItems(isDown: boolean) {
+ 
         if (isDown) {
             var isSelected = false;
             var active = document.getElementsByClassName("highlighted");
-
             if (!active[0]) {
                 if (this.ItemsSource && this.ItemsSource.length > 0) {
                     var input = document.getElementById(this.MyDataListId);
@@ -1383,6 +1385,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     this.ItemsSource.push(itm);
                 });
 
+
+ 
                 //var index = items.indexOf(item);
                 //var temp = items[0];
                 //items[0] = item;
@@ -2859,6 +2863,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             }
 
         }
+ 
         loadPromise.then((res: any) => {
             res.subscribe(resp => {
                 if (resp.Result) {
@@ -2882,6 +2887,8 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     } else {
                         this.ItemsSource = this.bufferData;//resp.Result;
                         this.ItemsSourceCount = this.ItemsSource.length;//resp.Result.length;
+                        this.headerColumns;
+
                     }
 
                 }
@@ -2899,8 +2906,9 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                         this.ApplyManipulateData(this.bufferData);
 
                     } else {
-                        this.ItemsSource = this.bufferData;//resp.Result;
+                         this.ItemsSource = this.bufferData;//resp.Result;
                         this.ItemsSourceCount = this.ItemsSource.length;//resp.Result.length;
+                        this.headerColumns;
                     }
 
                 }
@@ -2930,6 +2938,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ApplyManipulateData(bufferData: any[]) {
+ 
         var objectTableName = this.LookUpTableName;
         if (this.LookUpTableName.indexOf('Customs.') > -1) {
             objectTableName = objectTableName.split('.')[1];

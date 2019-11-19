@@ -70,6 +70,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             LoggingUserId = requestParams.LoggingUserId,
                             RequestVIA = SendRequestVIA.WebServiceBatch,
                             CustomCollateralId = collateral.CustomsCollateralId,
+                            LoggingEntityId2 ="Test",
                             CustomsCollateralsAnswers = new List<CustomsCollateralsAnswerParams>()
                             {
                                 new CustomsCollateralsAnswerParams()

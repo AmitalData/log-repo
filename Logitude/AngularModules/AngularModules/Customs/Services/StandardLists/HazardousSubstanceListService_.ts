@@ -61,8 +61,7 @@ export class HazardousSubstanceListService {
     }
 
     getAll() {
-        debugger;
-	   var callTime = new Date();
+ 	   var callTime = new Date();
 	   var authHeader = new Headers();
        authHeader.append('Token', SessionInfo.Token);
        return Observable.defer(() => {
@@ -98,8 +97,7 @@ export class HazardousSubstanceListService {
 
 	
     getByFilters(filters: ApiQueryFilters) {
-        debugger;
-	   var callTime = new Date();       
+ 	   var callTime = new Date();       
         var urlparameters = '/getbyfilters?';
         var mykeys = Object.keys(filters);
         var addtionalFiltersValues = null;
@@ -215,8 +213,7 @@ export class HazardousSubstanceListService {
     }
 
     getAllFromCache(filters: ApiQueryFilters= new ApiQueryFilters(true)) {
-        debugger;
-	     var callTime = new Date(); 	           
+ 	     var callTime = new Date(); 	           
  	 if (!SessionLocator.UseCachedData) {
             return this.getByFilters(filters);
        }

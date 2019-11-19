@@ -95,7 +95,7 @@
                  <td>
                      <table>
                          <tr style="height:25px">
-                             <td colspan="3" >
+                             <td colspan="3">
                                  <table>
                                      <tr *ngIf="!IsConcentrated">
 
@@ -161,7 +161,11 @@
                              </td>
                              <td width="10px"></td>
                          </tr>
-
+                         <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+                             <td colspan="4">
+                                 <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+                             </td>
+                         </tr>
                          <tr style="height:25px">
                              <td width="10px;">
                                  <div *ngIf="AnswerEntityRedIconVisibility" style="width:7px;height:7px; border-radius:50%; background:red">
@@ -219,6 +223,7 @@
 
                                  </div>
                              </td>
+
                              <td style="width:120px">
                                  <LogLabel [ObjectFieldName]="'CustomsTapgFile'" [ObjectTableName]="ObjectTableName"
                                            [DataContext]="DataContext"></LogLabel>

@@ -293,7 +293,6 @@ export class CourierWorksheetComponent extends BaseComponent
 
         this._CourierMasterService.PostSendALLCorrectManifest(currRequestParams)
             .subscribe(res => {
-                debugger;
 
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();

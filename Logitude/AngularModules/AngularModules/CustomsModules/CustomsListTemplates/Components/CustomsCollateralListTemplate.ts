@@ -29,6 +29,7 @@ export class CustomsCollateralListTemplate {
 
     public _CustomsCollateralRecord: CustomsCollateralList;
     public fieldName: any;
+    public isAnswer: boolean;
     //@Output() selectItem: EventEmitter<any> = new EventEmitter();
     TableUpdateButtonIsEnabled: boolean = false;
     UpdateButtonVisibility: boolean = false;
@@ -45,6 +46,8 @@ export class CustomsCollateralListTemplate {
         ///console.log(rowData);
         this._CustomsCollateralRecord = CustomsCollateralRecord;
 
+
+
         this.fieldName = fieldName;
 
     }
@@ -52,8 +55,7 @@ export class CustomsCollateralListTemplate {
 
     OnCheckedWithSystemEvent(eventM, id) {
         eventM.stopPropagation();
-        debugger;
-        if (!this._customsCollateralAnswerSharedDataService._SelectedItems.Collection.includes(id)) {
+         if (!this._customsCollateralAnswerSharedDataService._SelectedItems.Collection.includes(id)) {
             this._customsCollateralAnswerSharedDataService._SelectedItems.Insert(id);
         }
         else {

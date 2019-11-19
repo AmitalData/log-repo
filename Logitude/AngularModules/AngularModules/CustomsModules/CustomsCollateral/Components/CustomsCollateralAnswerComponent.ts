@@ -50,6 +50,7 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
     cardListService: CardListService = new CardListService();
     IsConcentrated: boolean;
     collateralToSendlist: string[];
+    public ValidationErrorsList: string[] = [];
 
     constructor(private _customsCollateralAnswerSharedDataService:CustomsCollateralAnswerSharedDataService , public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService, private _customsCollateralPMService: CustomsCollateralPMService,private _declarationExtendedListService: DeclarationExtendedListService) {
         super();
@@ -741,51 +742,45 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
 
         this.CurrentSession.CloseCurrentWindow();
     }
+    FIELD_IS_REQUIERD: string;
 
+    GetRequierdFieldErrorText(fieldName) {
+        this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
+        return this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate(fieldName));
+    }
     OnCustomSendOptionsButtonClick() {
-          var currentEntity: CustomsCollateralPM; 
+        var currentEntity: CustomsCollateralPM;
+        var errors: string[] = [];
+        this.ValidationErrorsList = [];
+
+        if (this.EntityPM.CustomsTapgFile == null) {
+            errors.push(this.GetRequierdFieldErrorText("Customs.CustomsCollateralsAnswer.F.CustomsTapgFile"));
+
+        }
+
+     
+        this.ValidationErrorsList = errors;
+        if (this.ValidationErrorsList.length > 0) {
+            return;
+        }
+        let count: number=0;
         for (var i = 0; i < this.collateralToSendlist.length; i++) {
             this._customsCollateralPMService.get(this.collateralToSendlist[i].toString()).subscribe(
                 data => {
                     currentEntity = (data.Result as CustomsCollateralPM);
-                    //this.EntityPM.RequestFileAmount = this.EntityPM.AllocatedAmount;
-                    currentEntity.AddCustomsCollateralsAnswer(this.EntityPM);
-                    this._customsCollateralPMService.update(currentEntity).subscribe()
-  //{
+                     currentEntity.AddCustomsCollateralsAnswer(this.EntityPM);
+                    this._customsCollateralPMService.update(currentEntity).subscribe(res => {
 
-                        //return Observable.defer(() => {
-                        //    var authHeader = new Headers();
-                        //    authHeader.append('Token', SessionInfo.Token);
-                        //    authHeader.append('Content-Type', 'application/json');
-
-                        //    var serviceResponse: ServiceResponse;
-                        //    serviceResponse = new ServiceResponse();
-
-                        //    return this._http.post(
-                        //        this._apiUrl + '/PostSendPayReadyLow2755/', JSON.stringify(requestParams), { headers: authHeader })
-                        //        .map((res) => {
-                        //            var messString = res.json();
-
-
-                        //            var serviceResponse: ServiceResponse;
-                        //            serviceResponse = new ServiceResponse();
-                        //            serviceResponse.Result = messString;
-
-
-                        //            return serviceResponse;
-                        //        }).catch(ServiceHelper.HandleServiceError);
-                        //    ;
-
-                        //});
-                 //   }
-
-
-                }
+                   
+                });
+        }
 
 
             );
         }
+
+
 
         let requestParams: SendCollateralRequestParams = new SendCollateralRequestParams();
 
@@ -798,8 +793,7 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
             SessionLocator.SelectedSession.StopBusyIndicator();
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Show(res.Result);
-        } );
-           
+        });
  
     }
 

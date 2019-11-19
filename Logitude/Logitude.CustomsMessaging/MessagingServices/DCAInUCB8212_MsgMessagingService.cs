@@ -34,10 +34,26 @@ namespace Logitude.CustomsMessaging.MessagingServices
             get { return "UCB8212"; }
         }
 
+        //protected override GenericRequestParams CreateDefaultRequestParamsFromCustomsResponse(DCAInUCB8212WithResponseContentHeader customsResponse)
+        //{
+        //    var tableName = "Customs.CustomsCollateralsAnswer";
+        //    //ResolveTenant() ==CustomsAgentToTenant(_CustomResponse.NoticeToClient.customsAgent);
+
+        //    var myGenericRequestParams = new GenericRequestParams()
+        //    {
+        //        LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName(tableName),
+        //        LoggingEntityId = customsResponse.ResponseContentHeader.ApplicationID.ToString(),
+        //         //RequestName = "Acceptance of IMport dec # " + customsResponse.ResponseContentHeader.ApplicationID.ToString(),
+
+        //    };
+        //    return myGenericRequestParams;
+
+        //}
+
         public string CreateCRS(int tenant, string LoggingUserId, List<string> CollateralsList = null)
         {
 
-            var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
+            var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CustomsCollateralsAnswer");
             var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(tenant);
             var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, null, null, null, null, true);
             if (RequestInProgressList != null && RequestInProgressList.Count > 0)
@@ -59,7 +75,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             {
                 LoggingUserId = LoggingUserId,
                 tenant = tenant,
-                CollateralsList = CollateralsList,
+                 CollateralsList = CollateralsList,
                  ResponseContentHeader = new DefaultResponseContentHeader()
                 {
                     TransmitionDateTime = transmitionDateTime

@@ -195,8 +195,7 @@ export class ConsigmentPackagesDangerComponent
     ValidateCustomsItemField() {
         var errors = [];
          this.declarationValidator.validatePackagesDanger(this.OriginalDecDangersContactPM, this.OriginalConsignmentPackDangerPM);
-        debugger;
-        if (!this.validationTemperature(this.OriginalConsignmentPackDangerPM.FlashpointTemperature))
+         if (!this.validationTemperature(this.OriginalConsignmentPackDangerPM.FlashpointTemperature))
             errors.push(TextCodeTranslator.Translate("Customs.ConsignmentPackDanger.O.FlashpointTemperature") + "-" + TextCodeTranslator.Translate("Customs.General.O.PackageDangerTempValid"));
         if (!this.validationTemperature(this.OriginalConsignmentPackDangerPM.StorageTemperature))
             errors.push(TextCodeTranslator.Translate("Customs.ConsignmentPackDanger.O.StorageTemperature") + "-" + TextCodeTranslator.Translate("Customs.General.O.PackageDangerTempValid"));
