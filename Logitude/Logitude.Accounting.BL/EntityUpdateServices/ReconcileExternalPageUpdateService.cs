@@ -149,7 +149,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             ObjectTablePM objectTable = GetObjectTable(pagePM.Tenant, pagePM.ObjectTableId);
 
             ExternalPageAdditionalDataQueryService additionalDataQueryService = new ExternalPageAdditionalDataQueryService(pagePM.Tenant);
-            ExternalPageAdditionalDataPM additionalDataPM = additionalDataQueryService.GetSingle(objectTable.Id, pagePM.Id, false, false);
+            ExternalPageAdditionalDataPM additionalDataPM = additionalDataQueryService.GetSingle(objectTable.Id, pagePM.EntityId, false, false);
             return additionalDataPM;
         }
 

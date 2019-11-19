@@ -23,6 +23,7 @@ import { ObservableCollection } from '../../../Infrastructure/Utilities/Observab
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { ExternalPageAdditionalDataPMService } from '../../Services/StandardPMs/ExternalPageAdditionalDataPMService';
 import { ExternalPageAdditionalDataPM } from '../../EntityPMs/ExternalPageAdditionalDataPM';
+import { reject } from 'q';
 
 @Component({
     selector: 'AddEditRecoExPageComponent',
@@ -97,10 +98,8 @@ export class AddEditRecoExPageComponent extends BaseComponent
             this.IsRestoreButtonVisibile = args.IsRestoreButtonVisibile;
             this.EditWindowToolTip = args.message;
             this.RestoreToolTipMessage = args.RestoreToolTipMessage;
+            this.additionalDataPM = args.AdditionalDataPM;
 
-            var objectTable = window.ObjectTables.filter(d => d.Name === this.PageObjectTableName)[0];
-
-            this.GetAdditionalData(objectTable.Id, this.EntityPM.Id);
 
             this.GetDefaultValues();
 
@@ -117,27 +116,27 @@ export class AddEditRecoExPageComponent extends BaseComponent
         }
     }
 
+
     additionalDataPM: ExternalPageAdditionalDataPM;
     GetAdditionalData(objectTableId: string, entityId: string)
     {
-        this._ExternalPageAdditionalDataPMService.get(objectTableId, entityId)
+        return new Promise(resolve =>
+        {
+            this._ExternalPageAdditionalDataPMService.get(objectTableId, entityId)
             .subscribe(response =>
             {
-                console.log("[ReconcileExternalPage]", response);
+                console.log("[GetAdditionalData]", response);
 
                 if (!response.HasError) {
-                    this.additionalDataPM = response.Result
-                    if(this.isNewEntity){
-                        this.GetPreviousPageByNumber(this.additionalDataPM.LastPageNumber);
-                    }else{
-
-                    }
+                    resolve(this.additionalDataPM);
                 }
                 else {
-                    this.ValidationErrorsList = response.ErrorsArray;
+                    console.error(response.ErrorsArray.toString());
+                    reject();
+
                 }
             });
-
+        });
     }
 
     private SetCancelApprovalEditablilty()
@@ -157,6 +156,9 @@ export class AddEditRecoExPageComponent extends BaseComponent
     {
         this.isNewEntity = true;
 
+        this.GetPreviousPageByNumber(this.additionalDataPM.LastPageNumber);
+
+
         this.ReconcileExternalPagePM = this.InitializeNewPage(args);
     }
 
@@ -172,7 +174,7 @@ export class AddEditRecoExPageComponent extends BaseComponent
         newEntity.GLAccountId = args.GLAccountId;
         newEntity.EntryTypeCode = "1"; // 1- Manual
 
-        if (args.EntityPM.LastPageEndDate) {
+        if (this.additionalDataPM.LastPageEndDate) {
             newEntity.FromDate = this.GetLastPageDatePlusOneDay(args);
         }
 
@@ -181,7 +183,7 @@ export class AddEditRecoExPageComponent extends BaseComponent
 
     private GetLastPageDatePlusOneDay(args: any)
     {
-        var lastDate: Date = new Date(args.EntityPM.LastPageEndDate);
+        var lastDate: Date = new Date(this.additionalDataPM.LastPageEndDate);
         var lastDatePlusOne = new Date(lastDate.setDate(lastDate.getDate() + 1));
         var date = DateTool.GetDate(lastDatePlusOne.getFullYear(), lastDatePlusOne.getMonth(), lastDatePlusOne.getDate(), 0, 0, 0);
         return date;
@@ -306,7 +308,7 @@ export class AddEditRecoExPageComponent extends BaseComponent
         if (this.ReconcileExternalPagePM.StatusCode == "2") {  // 2- Approved
 
             // * Check last approved page
-            var isLastApprovedPage = this.EntityPM.LastPageNumber == this.ReconcileExternalPagePM.PageNo + "";
+            var isLastApprovedPage = this.additionalDataPM.LastPageNumber == this.ReconcileExternalPagePM.PageNo + "";
             if (isLastApprovedPage) {
                 // continue...
             }
@@ -550,9 +552,9 @@ export class AddEditRecoExPageComponent extends BaseComponent
     OpenPrevPage()
     {
         console.log(this.PreviousPagePM);
-        this.OpenBankPageWindow(this.PreviousPagePM);
+        this.OpenExternalPageWindow(this.PreviousPagePM);
     }
-    OpenBankPageWindow(externalPage: any = null)
+    OpenExternalPageWindow(externalPage: any = null)
     {
 
         var windowTitle = externalPage ? (TextCodeTranslator.Translate("ReconcileExternalPage.F.PageNo") + " " + externalPage.PageNo) : TextCodeTranslator.Translate("Accounting.General.O.NewPage");
@@ -564,6 +566,7 @@ export class AddEditRecoExPageComponent extends BaseComponent
         windowArgs.BankAccountId = this.EntityPM.Id;
         windowArgs.GLAccountId = this.EntityPM.GLAccountId;
         windowArgs.BankAccount = this.EntityPM;
+        windowArgs.AdditionalDataPM = this.additionalDataPM;
 
         var logWindow = new LogitudeWindow();
         logWindow.Width = 1000;
@@ -709,6 +712,7 @@ export class AddEditRecoExPageComponent extends BaseComponent
 
     GetDefaultValues()
     {
+
         // Tenant currency
         var defaultCurrencyId: string = SessionLocator.TenantPM.CurrencyId;
         this.currencyListService.getSingle(defaultCurrencyId).subscribe((myResponse: ServiceResponse) =>
