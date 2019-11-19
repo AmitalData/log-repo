@@ -155,6 +155,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({itemPM.DeclarationId})");
                         mess.AppendLine($" CreateSheetSBQMessage({itemPM.DeclarationId})");
 
+                        string updateSql = $"Update DeclarationCourierStatuses set COURIERDECLARATIONSTATUSCODE='I' where DECLARATIONID ='{itemPM.DeclarationId}' ";
+                        CustomContext.CommandExecuteNonQuery(requestParams.Tenant, updateSql);
+
                         scopeNewCRS.Complete();
                     }
                     listDeclarationIdCreateCRS.Add(itemPM.DeclarationId);
@@ -167,20 +170,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     mess.AppendLine($"Exception!!!CreateSheetSBQMessage({itemPM.DeclarationId}) : {ee1.Message}");
                 }
 
-                UpdateCOURIERDECLARATIONSTATUSCODE_Inprogress(requestParams, listDeclarationIdCreateCRS);
+                //UpdateCOURIERDECLARATIONSTATUSCODE_Inprogress(requestParams, listDeclarationIdCreateCRS);
             }
         }
 
         private static void UpdateCOURIERDECLARATIONSTATUSCODE_Inprogress(GenericRequestParams requestParams,  List<string> listDeclarationIdCreateCRS)
         {
-            listDeclarationIdCreateCRS.ChunkBy(100)
-.ForEach(list100 =>
-{
-string inList = String.Join(",", list100.Select(declarationId => $"'{declarationId}'").ToArray());
-string updateSql = $"Update DeclarationCourierStatuses set COURIERDECLARATIONSTATUSCODE='I' where DECLARATIONID in ({inList}) ";
+//            listDeclarationIdCreateCRS.ChunkBy(100)
+//.ForEach(list100 =>
+//{
+//string inList = String.Join(",", list100.Select(declarationId => $"'{declarationId}'").ToArray());
+//string updateSql = $"Update DeclarationCourierStatuses set COURIERDECLARATIONSTATUSCODE='I' where DECLARATIONID in ({inList}) ";
 
-CustomContext.CommandExecuteNonQuery(requestParams.Tenant, updateSql);
-});
+//CustomContext.CommandExecuteNonQuery(requestParams.Tenant, updateSql);
+//});
         }
 
         private static List<DeclarationCourierStatus> GetByMasterIDCourierDeclarationStatusCode(DCAInUCB2750WithResponseContentHeader customResponse, GenericRequestParams requestParams, DeclarationCourierStatusRepository repo)
