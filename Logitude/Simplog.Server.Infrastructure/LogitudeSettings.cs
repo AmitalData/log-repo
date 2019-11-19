@@ -160,6 +160,15 @@ namespace Simplog.Server.Infrastructure
         
     }
 
+    public class LogitudeAppSettings
+    { 
+        public static DateTime StartDateTime { get; set; }
+        public static bool IsRecycled { get; set; }
+        public static DateTime EndDateTime { get; set; } 
 
-  
+
+    }
+
+
+
 }

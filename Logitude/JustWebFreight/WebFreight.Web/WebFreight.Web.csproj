@@ -646,6 +646,7 @@
     <Content Include="CustomWebServices\VehicleWebService.asmx" />
     <Content Include="DropBoxAuth.aspx" />
     <Content Include="DropBoxHook.aspx" />
+    <Content Include="HealthProb.aspx" />
     <Content Include="Helpers\MessageModel\MessageWebService.asmx" />
     <Content Include="HtmlHelpers\Images\Filter_Images\CustomsImport.N.png" />
     <Content Include="HtmlHelpers\Images\Filter_Images\CustomsImport.O.png" />
@@ -2319,6 +2320,13 @@
     <Compile Include="ExternalAPIs\V1\HouseController.cs" />
     <Compile Include="ExternalAPIs\V1\VendorPartnerController.cs" />
     <Compile Include="GlobalModel\GlobalDomainService.TenantManagmentPrivateLablesPM.cs" />
+    <Compile Include="HealthProb.aspx.cs">
+      <DependentUpon>HealthProb.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HealthProb.aspx.designer.cs">
+      <DependentUpon>HealthProb.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\APIHelpers\ApiExceptionFilter.cs" />
     <Compile Include="Helpers\APIHelpers\APIReceivablePayableHelper.cs" />
     <Compile Include="Helpers\APIHelpers\ConsolidationServiceBatch.cs" />

@@ -647,6 +647,8 @@ namespace WebFreight.Web.Helpers
             }
             
             workbook.SaveAs(memory);
+            workbook.Close();
+            excelEngine.Dispose();
             return memory.ToArray();
         }
 
