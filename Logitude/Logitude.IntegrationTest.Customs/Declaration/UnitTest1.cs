@@ -13,8 +13,7 @@ namespace Logitude.IntegrationTest.Customs.Declaration
         [TestMethod]
         public void TestMethod1()
         {
-            //string email = "yaronc@amital.co.il";
-            //string pass = "!Y123456";
+           //this will be taken to master
           
             Task.Run(async () =>
             {
