@@ -107,7 +107,7 @@ export class ChooseCountryPortComponent extends BaseComponent {
                         counter = counter + 1;
                     }
                 });
-                this.ParentClass.fatherComponent.ItemList = this.ParentClass.fatherComponent.ItemList.sort((a, b) => { return (a.CountryCode === b.CountryCode) ? 0 : (a.CountryCode < b.CountryCode) ? -1 : 1 });
+
                 this.CountryPortsMessageCount = counter + " ports added";
                 this.CurrentSession.StopBusyIndicator();
             }

@@ -58,8 +58,6 @@ namespace Logitude.Accounting.BL.CoreBL
 
         public static List<TaxReportLinePM> CreateTaxReportLines(TaxReportPM taxReport, int tenant)
         {
-            using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(60)))
-            {
 
                 JournalRepository journalRepository = new JournalRepository(tenant);
                 List<TaxReportData> TaxReportJournalData = journalRepository.GetARInvoiceJournals(taxReport.TaxReportMonth, tenant);
@@ -340,7 +338,13 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 // saving report
                 taxReport.ChangeSetOp = ChangeSetOperation.Update;
-               
+
+            using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(60)))
+            {
+
+                IAccountingContext MyContext = AccountingContext.GetContext(taxReport.Tenant);
+                TaxReportUpdateService updateService = new TaxReportUpdateService(MyContext, new Dictionary<string, IContext>(), taxReport.Tenant);
+                TaxReportLineUpdateService lineUpdateService = new TaxReportLineUpdateService(MyContext, new Dictionary<string, IContext>(), taxReport.Tenant);
                 updateService.Update(taxReport, true, TimeSpan.FromMinutes(60));
 
                // saving lines

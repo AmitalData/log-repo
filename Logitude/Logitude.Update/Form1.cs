@@ -3943,12 +3943,7 @@ User/Pass",
             batchTaskTester.Show();
         }
 
-        private void button47_Click(object sender, EventArgs e)
-        {
-            TaxReportQueryService taxReportQueryService = new TaxReportQueryService(54);
-            TaxReportPM taxReport = taxReportQueryService.GetSingle("1-202", true, false);
-            TaxReportService.CreateTaxReportLines(taxReport, 54);
-        }
+       
 
         private void button48_Click(object sender, EventArgs e)
         {
