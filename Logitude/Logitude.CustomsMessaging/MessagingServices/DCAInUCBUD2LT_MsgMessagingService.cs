@@ -4,6 +4,7 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.Messaging.Customs;
+using Logitude.Customs.Data;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Def.EntityQueryServicesExt;
 using Logitude.CustomsMessaging.Common.RequestParams;
@@ -13,18 +14,23 @@ using Logitude.CustomsMessaging.ResponseServices;
 using Logitude.CustomsMessaging.Testers.Messages;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Utils;
+using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using System.Xml.Serialization;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
+using Unifreight.Data.AmitalModel.Repsitories;
 using UnifreightIIG.Common.CommonIIGInterface;
 using UnifreightIIG.Common.MessageLib.PhysicalCheck;
 using UnifreightIIG.Common.SystemTableServiceReference;
@@ -288,19 +294,22 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 }
                 else
                 {
-                    //CGG_DEC_DOC_CLT
-                    var amitalContext = AmitalContext.GetContext(tenant);
-                    var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
-                    var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGG_DEC_DOC_CLT", "NON", "NON", false, true);
-                    def.DEFDATA = def.DEFDATA ?? "";
-                    if (!String.IsNullOrWhiteSpace(def.DEFDATA))
+                    if (GetCustomsFileImportType(declarationPM) == "4")
                     {
-                        var listStorageDefault = new List<string>();//&& declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILOVL"
-                        
-                        if (!String.IsNullOrWhiteSpace(declarationPM.CustomerCode) &&def.DEFDATA.Contains(declarationPM.CustomerCode)) // Maman
+                        //CGG_DEC_DOC_CLT
+                        var amitalContext = AmitalContext.GetContext(tenant);
+                        var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
+                        var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGG_DEC_DOC_CLT", "NON", "NON", false, true);
+                        def.DEFDATA = def.DEFDATA ?? "";
+                        if (!String.IsNullOrWhiteSpace(def.DEFDATA))
                         {
-                            Debug.WriteLine("def.DEFDATA.Contains(declarationPM.CustomerId)");
-                            shouldCreateDCAComm = true;
+                            var listStorageDefault = new List<string>();//&& declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILOVL"
+
+                            if (!String.IsNullOrWhiteSpace(declarationPM.CustomerCode) && def.DEFDATA.Contains(declarationPM.CustomerCode)) // Maman
+                            {
+                                Debug.WriteLine("def.DEFDATA.Contains(declarationPM.CustomerId)");
+                                shouldCreateDCAComm = true;
+                            }
                         }
                     }
 
@@ -376,6 +385,28 @@ namespace Logitude.CustomsMessaging.MessagingServices
             }
 
         }
+
+        private string GetCustomsFileImportType(DeclarationPM entityPM)
+        {
+            if (entityPM == null || string.IsNullOrWhiteSpace(entityPM.CustomFileNo)) return null;
+
+            var openReaderSingleResult = new OpenReaderSingleResult(entityPM.Tenant);
+            string UserId = openReaderSingleResult.GetSchemaUserId();
+            string theResult = "";
+            var res1 = openReaderSingleResult.ExecuteReaderSingleResult<int>(
+                $"select IMPORT_TYPE from {UserId}.CFIFILEM where CFIFILEM='{entityPM.CustomFileNo}'"
+                ,
+                (dataReader) =>
+                {
+                    theResult = dataReader.GetString(0);
+                    return 9999;
+
+                });
+            
+            return theResult;
+        }
+
+
 
         private bool TicketalreadyExistforthisDocument()
         {

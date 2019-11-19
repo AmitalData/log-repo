@@ -143,7 +143,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
 
         }
 
-        internal string GetSchemaUserId()
+        public string GetSchemaUserId()
         {
 
             var toSchema = DbContextBaseUtil.GetSchemaAMITAL_DB();
