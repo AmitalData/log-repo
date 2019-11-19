@@ -1819,9 +1819,19 @@ Exception:" + ee.Message
                 if (tryConcurrentKiller)
                 {
                     var requestParams = _CustomsRequestsSheetService.GetRequestParams<TRequestParams>();
-                    if (CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList().Contains(requestParams.InterfaceTypeCode))
+                    if (requestParams == null)
                     {
-                        CustomsRequestsSheetDomainModelUtil.ReleaseConcurrentVirtualKey(requestParams,false);
+                        throw new Exception("tryConcurrentKiller()--(requestParams==null)");
+                    }
+                    var intrefaceTypeListDisplayOnly = CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList();
+                    if (intrefaceTypeListDisplayOnly == null)
+                    {
+                        throw new Exception("tryConcurrentKiller()--(intrefaceTypeListDisplayOnly==null)");
+                    }
+                    if (intrefaceTypeListDisplayOnly/*CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList()*/.Contains(requestParams.InterfaceTypeCode))
+                    {
+
+                        CustomsRequestsSheetDomainModelUtil.ReleaseConcurrentVirtualKey(requestParams, false);
                     }
                 }
                 if (stepStatusEnum == CommStatusEnum.F)
