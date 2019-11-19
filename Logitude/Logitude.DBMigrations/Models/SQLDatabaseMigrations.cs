@@ -8,8 +8,10 @@ namespace Logitude.DBMigrations.Models
 {
     public class SQLDatabaseMigrations : DatabaseMigrations
     {
+        protected readonly string connectionString = ConfigurationManager.AppSettings["ConnectionString"];
+
         public SQLDatabaseMigrations(TableDefinition table)
-        { 
+        {
             DXMLTable = table;
         }
 
@@ -19,20 +21,18 @@ namespace Logitude.DBMigrations.Models
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                TableDefinition currentTable;
+                TableDefinition currentTable = null;
                 SqlCommand command = new SqlCommand(queryString, connection);
+                SqlDataReader reader = null;
                 command.Parameters.AddWithValue("@name", DXMLTable.Name);
                 command.Parameters.AddWithValue("@oldName", DXMLTable.OldName ?? DXMLTable.Name);
 
                 try
                 {
                     connection.Open();
-                    SqlDataReader reader = command.ExecuteReader();
-                    if (!reader.HasRows)
-                    {
-                        currentTable = null;
-                    }
-                    else
+                    reader = command.ExecuteReader();
+
+                    if (reader.HasRows)
                     {
                         reader.Read();
                         string tableName = reader["TABLE_NAME"].ToString();
@@ -44,8 +44,78 @@ namespace Logitude.DBMigrations.Models
                 }
                 catch (Exception)
                 {
+                    reader.Close();
                     connection.Close();
-                    currentTable = null;//throw an exception to console window
+                }
+
+                return currentTable;
+            }
+        }
+
+        protected override TableDefinition GetCurrentTableDefinitionFromDB(string tableName)
+        {
+            string queryString = @"SELECT COL.COLUMN_NAME AS ColumnName, COL.IS_NULLABLE AS Nullable, COL.DATA_TYPE AS DataType, COL.CHARACTER_MAXIMUM_LENGTH AS Size, CON.CONSTRAINT_NAME AS ConstraintName, TCON.CONSTRAINT_TYPE AS ConstraintType " +
+                                  "FROM INFORMATION_SCHEMA.COLUMNS COL LEFT OUTER JOIN INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE CON ON COL.COLUMN_NAME = CON.COLUMN_NAME LEFT OUTER JOIN INFORMATION_SCHEMA.TABLE_CONSTRAINTS TCON ON CON.CONSTRAINT_NAME = TCON.CONSTRAINT_NAME " +
+                                  "WHERE COL.TABLE_NAME = @tableName AND(CON.TABLE_NAME = @tableName OR CON.TABLE_NAME IS NULL)";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                TableDefinition currentTable = null;
+                List<ColumnDefinition> currentTableColumns = new List<ColumnDefinition>();
+                SqlCommand command = new SqlCommand(queryString, connection);
+                SqlDataReader reader = null;
+                command.Parameters.AddWithValue("@tableName", tableName);
+
+                try
+                {
+                    connection.Open();
+                    reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        if (!currentTableColumns.Where(c => c.Name == reader["ColumnName"].ToString()).Any())
+                        {
+                            ColumnDefinition column = new ColumnDefinition
+                            {
+                                Name = reader["ColumnName"].ToString(),
+                                Type = GetDxmlDataType(reader["DataType"].ToString()),
+                                Size = !String.IsNullOrEmpty(reader["Size"].ToString()) ? (reader["Size"].ToString() == "-1" ? -1 : Convert.ToInt32(reader["Size"].ToString())) : 0,
+                                Constraints = new ConstraintsDefinition
+                                {
+                                    Nullable = (reader["Nullable"].ToString() == "YES")
+                                }
+                            };
+
+                            if (!String.IsNullOrEmpty(reader["ConstraintType"].ToString()) && !String.IsNullOrEmpty(reader["ConstraintName"].ToString()))
+                            {
+                                column = SetConstraintForColumnDefinition(column, reader["ConstraintType"].ToString(), reader["ConstraintName"].ToString());
+                            }
+
+                            currentTableColumns.Add(column);
+                        }
+                        else
+                        {
+                            if (!String.IsNullOrEmpty(reader["ConstraintType"].ToString()) && !String.IsNullOrEmpty(reader["ConstraintName"].ToString()))
+                            {
+                                var column = currentTableColumns.Where(c => c.Name == reader["ColumnName"].ToString()).First();
+                                column = SetConstraintForColumnDefinition(column, reader["ConstraintType"].ToString(), reader["ConstraintName"].ToString());
+                            }
+                        }
+                    }
+
+                    reader.Close();
+                    connection.Close();
+
+                    currentTable = new TableDefinition
+                    {
+                        Name = tableName,
+                        Columns = currentTableColumns
+                    };
+                }
+                catch (Exception)
+                {
+                    reader.Close();
+                    connection.Close();
                 }
 
                 return currentTable;
@@ -64,16 +134,20 @@ namespace Logitude.DBMigrations.Models
             return createTableScript;
         }
 
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         protected override string GetAlterTableScript(TableDefinition currentTable)
         {
             TableMigrations tableMigrations = GetTableMigrations(currentTable, DXMLTable);
             string alterTableScript = "";
 
+            //function for rename table script
             if(tableMigrations.DxmlTableName != tableMigrations.CurrentTableName)
             {
                 alterTableScript += GetRenameTableScript(tableMigrations.CurrentTableName, tableMigrations.DxmlTableName) + "\n\n";
             }
 
+            //function to return column migrations script
             foreach (var columnMigration in tableMigrations.ColumnsMigrations)
             {
                 alterTableScript += GetColumnMigrationScript(tableMigrations.DxmlTableName, columnMigration, tableMigrations.ColumnsMigrations) + "\n\n";
@@ -151,75 +225,6 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        protected override TableDefinition GetCurrentTableDefinitionFromDB(string tableName)
-        {
-            string queryString = @"SELECT COL.COLUMN_NAME AS ColumnName, COL.IS_NULLABLE AS Nullable, COL.DATA_TYPE AS DataType, COL.CHARACTER_MAXIMUM_LENGTH AS Size, CON.CONSTRAINT_NAME AS ConstraintName, TCON.CONSTRAINT_TYPE AS ConstraintType " +
-                                  "FROM INFORMATION_SCHEMA.COLUMNS COL LEFT OUTER JOIN INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE CON ON COL.COLUMN_NAME = CON.COLUMN_NAME LEFT OUTER JOIN INFORMATION_SCHEMA.TABLE_CONSTRAINTS TCON ON CON.CONSTRAINT_NAME = TCON.CONSTRAINT_NAME " +
-                                  "WHERE COL.TABLE_NAME = @tableName AND(CON.TABLE_NAME = @tableName OR CON.TABLE_NAME IS NULL)";
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                List<ColumnDefinition> currentTableColumns = new List<ColumnDefinition>();
-
-                SqlCommand command = new SqlCommand(queryString, connection);
-                command.Parameters.AddWithValue("@tableName", tableName);
-
-                try
-                {
-                    connection.Open();
-                    SqlDataReader reader = command.ExecuteReader();
-
-                    while (reader.Read())
-                    {
-                        if (!currentTableColumns.Where(c => c.Name == reader["ColumnName"].ToString()).Any())
-                        {
-                            ColumnDefinition column = new ColumnDefinition
-                            {
-                                Name = reader["ColumnName"].ToString(),
-                                Type = GetDxmlDataType(reader["DataType"].ToString()),
-                                Size = !String.IsNullOrEmpty(reader["Size"].ToString()) ? (reader["Size"].ToString() == "-1" ? -1 : Convert.ToInt32(reader["Size"].ToString())) : 0,
-                                Constraints = new ConstraintsDefinition
-                                {
-                                    Nullable = (reader["Nullable"].ToString() == "YES")
-                                }
-                            };
-
-                            if (!String.IsNullOrEmpty(reader["ConstraintType"].ToString()) && !String.IsNullOrEmpty(reader["ConstraintName"].ToString()))
-                            {
-                                column = SetConstraintForColumnDefinition(column, reader["ConstraintType"].ToString(), reader["ConstraintName"].ToString());
-                            }
-
-                            currentTableColumns.Add(column);
-                        }
-                        else
-                        {
-                            if (!String.IsNullOrEmpty(reader["ConstraintType"].ToString()) && !String.IsNullOrEmpty(reader["ConstraintName"].ToString()))
-                            {
-                                var column = currentTableColumns.Where(c => c.Name == reader["ColumnName"].ToString()).First();
-                                column = SetConstraintForColumnDefinition(column, reader["ConstraintType"].ToString(), reader["ConstraintName"].ToString());
-                            }
-                        }
-                    }
-
-                    reader.Close();
-                    connection.Close();
-
-                    var currentTable = new TableDefinition
-                    {
-                        Name = tableName,
-                        Columns = currentTableColumns
-                    };
-
-                    return currentTable;
-                }
-                catch (Exception e)
-                {
-                    var error = e.ToString();
-                    return null;
-                }
-            }
-        }
-
         protected string GetRenameTableScript(string currentTableName, string dxmlTableName)
         {
             string renameTableScript = "-- Rename Table From " + currentTableName + " To " + dxmlTableName + "\n";
@@ -280,7 +285,7 @@ namespace Logitude.DBMigrations.Models
 
         protected string GetAddPrimaryKeyColumnMigrationScript(string tableName, ColumnMigration columnMigration)
         {
-            string primaryKeyConstraintName = columnMigration.CurrentColumn.Constraints.PrimaryKeyConstraintName ?? "PK_" + tableName + "_" + GenerateIdForConstraint();
+            string primaryKeyConstraintName = columnMigration.CurrentColumn.Constraints.PrimaryKeyConstraintName ?? "PK_" + tableName + "_" + GenerateRandomString();
             string addPrimaryKeyScript = "-- Add Primary Key To Column " + columnMigration.CurrentColumn.Name + "\n";
             addPrimaryKeyScript += "ALTER TABLE " + tableName + " ADD CONSTRAINT " + primaryKeyConstraintName + " PRIMARY KEY (" + columnMigration.CurrentColumn.Name + ")";
             return addPrimaryKeyScript;

@@ -698,6 +698,7 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         invoicedataprovider.PickupETD = myFirstPickup.ETD;
                         invoicedataprovider.PickupAddress = myServicHelper.GetPickUpAddress(myFirstPickup);
+                        invoicedataprovider.PickupShortAddress = myServicHelper.GetPickUpDeliveryShortAddress(myFirstPickup);
                     }
 
                     #endregion

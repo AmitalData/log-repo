@@ -424,7 +424,9 @@ namespace WebFreight.Web.DataProviders
 
         public string NotifyContactDetails { get; set; }      
         public string FullPickupAddress { get; set; }
-        public double? ChargeableWeight{ get; set; }
+        public double? ChargeableWeight { get; set; }
+        public string ChargeableWeightUnitCode { get; set; }
+
         public string IssuingCarrierAgentName { get; set; }
         public string ARInvoices { get; set; }
         public string SpecialServicesTypeName { get; set; }

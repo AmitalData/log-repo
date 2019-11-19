@@ -20,6 +20,8 @@ import { ChargesTypeList } from '../../../../Common/EntityLists/ChargesTypeList'
 import { MeasurementList } from '../../../../Common/EntityLists/MeasurementList';
 import { TariffVersionExtendedPMService } from '../../../Services/ExtendedPMs/TariffVersionExtendedPMService';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { PackageTypeList } from '../../../../Common/EntityLists/PackageTypeList';
+import { PackageTypeListService } from '../../../../Common/Services/StandardLists/PackageTypeListService';
 
 @Component({
     moduleId: module.id,
@@ -34,15 +36,17 @@ export class VersionHistoryTabComponent implements OnDestroy {
     private CurrentSession = SessionLocator.SelectedSession;
     public IsActionsEnabled: boolean = false;
     public IsDownloadExcelTemplateVisible: boolean = false;
-
+    public IsAllInChargesVisible: boolean = false;
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = entityArgs.EntityPM;
         this.VersionLinesSource = new ObservableCollection([]);
         this.TariffDomainService = new TariffDomainService();
 
-        if (this.EntityPM.TypeCode == "AFC" || this.EntityPM.TypeCode == "OLC") {
+        if (this.EntityPM.TypeCode == "AFC" || this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OFC") {
             this.SetStepsLabelsAndVisibility();
             this.IsDownloadExcelTemplateVisible = true;
+            this.IsAllInChargesVisible = true;
+            this.GetAllPackageTypes();
         }
 
         else if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC") {
@@ -73,6 +77,18 @@ export class VersionHistoryTabComponent implements OnDestroy {
                 });
             }
         });        
+    }
+
+    public AllPackageTypes: PackageTypeList[];
+    private GetAllPackageTypes() {
+        var iPackageTypeListService = new PackageTypeListService();
+
+        iPackageTypeListService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.AllPackageTypes = myResponse.Result;
+                this.SetContainersLabelsAndVisibility();
+            }
+        });
     }
 
     private SaveCompletedEvent: any = null;
@@ -305,6 +321,36 @@ export class VersionHistoryTabComponent implements OnDestroy {
         }
     }
 
+    public Container1PriceLabel: string;
+    public Container2PriceLabel: string;
+    public Container3PriceLabel: string;
+    public Container4PriceLabel: string;
+    public Container5PriceLabel: string;
+
+    public Container1PriceVisibility: boolean;
+    public Container2PriceVisibility: boolean;
+    public Container3PriceVisibility: boolean;
+    public Container4PriceVisibility: boolean;
+    public Container5PriceVisibility: boolean;
+
+    SetContainersLabelsAndVisibility() {
+        this.AddColumn(this.EntityPM.ContainerType1Id, 1);
+        this.AddColumn(this.EntityPM.ContainerType2Id, 2);
+        this.AddColumn(this.EntityPM.ContainerType3Id, 3);
+        this.AddColumn(this.EntityPM.ContainerType4Id, 4);
+        this.AddColumn(this.EntityPM.ContainerType5Id, 5);
+    }
+
+    AddColumn(iContainerTypeId: string, index: number) {
+        if (!AppTool.IsNullOrEmpty(iContainerTypeId)) {
+            var iPackageType: PackageTypeList = this.AllPackageTypes.filter(a => a.Id == iContainerTypeId)[0];
+            if (iPackageType) {
+                this['Container' + index + 'PriceLabel'] = iPackageType.Code;
+                this['Container' + index + 'PriceVisibility'] = true;
+            }
+        }
+    }
+
     private versions: TariffVersionPM[] = [];
     private LoadVersions() {
         var service: TariffVersionExtendedPMService = new TariffVersionExtendedPMService();
@@ -426,7 +472,7 @@ export class VersionHistoryTabComponent implements OnDestroy {
 
     private isCopyButtonClicked: boolean = false;
     private DoCopy() {
-        if (this.EntityPM.TypeCode == "AFC" || this.EntityPM.TypeCode == "OLC") {
+        if (this.EntityPM.TypeCode == "AFC" || this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OFC") {
             var windowTitle = "New Copy Version";
             var logWindow = new LogitudeWindow();
             logWindow.Width = 450;
@@ -462,10 +508,9 @@ export class VersionHistoryTabComponent implements OnDestroy {
         copiedVersion.CreateDate = DateTool.GetCurrentDateAsUtc();
         copiedVersion.CreatedByUserId = SessionInfo.LoggedUserId;
 
-        if (this.EntityPM.TypeCode == "AFC" || this.EntityPM.TypeCode == "OLC") {
+        if (this.EntityPM.TypeCode == "AFC" || this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OFC") {
             copiedVersion.ExpirationDate = this.VersionPM.ExpirationDate != null ? this.VersionPM.ExpirationDate : this.VersionPM.InitialEnddate;
         }
-
 
         copiedVersion.IsDraft = true;
         copiedVersion.StartDate = this.VersionPM.StartDate;
@@ -527,6 +572,16 @@ export class VersionHistoryTabComponent implements OnDestroy {
                 tariffLine.Surcharge8MinPrice = item.Surcharge8MinPrice;
                 tariffLine.Surcharge9MinPrice = item.Surcharge9MinPrice;
                 tariffLine.Surcharge10MinPrice = item.Surcharge10MinPrice;
+            }
+
+            else if (this.EntityPM.TypeCode == "OFC") {
+                tariffLine.StartDate = this.VersionPM.StartDate;
+                tariffLine.ExpirationDate = this.VersionPM.ExpirationDate;
+                tariffLine.Surcharge1Price = item.Surcharge1Price;
+                tariffLine.Surcharge2Price = item.Surcharge2Price;
+                tariffLine.Surcharge3Price = item.Surcharge3Price;
+                tariffLine.Surcharge4Price = item.Surcharge4Price;
+                tariffLine.Surcharge5Price = item.Surcharge5Price;               
             }
 
             copiedVersion.AddTariffLine(tariffLine);

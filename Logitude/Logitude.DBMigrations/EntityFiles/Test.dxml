@@ -32,7 +32,7 @@
     <Constraints Nullable="false"/>
   </Column>
 
-  <Column Name="Col9" Type="char" Size="6">
+  <Column Name="Col9" Type="char" Size="12">
     <Constraints Nullable="false"/>
   </Column>
 
@@ -40,7 +40,7 @@
     <Constraints Nullable="false"/>
   </Column>
 
-  <Column Name="Col11" Type="nvarchar" Size="100">
+  <Column Name="Col11" Type="varchar" Size="200">
     <Constraints Nullable="true"/>
   </Column>
 

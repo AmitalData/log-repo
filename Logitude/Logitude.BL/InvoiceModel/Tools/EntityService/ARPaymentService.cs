@@ -374,7 +374,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
 
             // PaymentCheque And CashBook
-            this.AddARPaymentChequeAndCashBook(theEntityPm, theEntityPm.SetApproved);
+           // this.AddARPaymentChequeAndCashBook(theEntityPm, theEntityPm.SetApproved); we do this only if it is new entity.
             this.VoidARPaymentInFullAccounting(theEntityPm, setVoided);
 
             this.InitializeTransferComponents();
@@ -1053,6 +1053,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                 if (theEntityPm.ARPaymentChequeReplicas.Count > 0)
                                 {
                                     int LineNumberCounter = 1;
+                                    if (!isNewEntity)
+                                    {
+                                        LineNumberCounter = theEntityPm.ARPaymentChequeReplicas.Max(d => d.LineNumber)+1;
+                                    }
                                     DateTime? valueDate=null;
                                     foreach (ARPaymentChequeReplicaPM item in theEntityPm.ARPaymentChequeReplicas)
                                     {
@@ -1062,7 +1066,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                         {
                                             throw new ApplicationException("value date should be the same for all payment cheques");
                                         }
-                                        bool exist = CheckIfPaymentChequeExist(item.ChequeNumber, LineNumberCounter++, theEntityPm);
+                                        bool exist = CheckIfPaymentChequeExist(item.ChequeNumber, item.LineNumber, theEntityPm);
                                         if (!exist)
                                         {
 
@@ -1135,8 +1139,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     }
                     else
                     {
-                        // Create Journal with lines for bank transfer or credit card  
-                        this.CreateARPaymentChequeJournals(theEntityPm, arPaymentcheque);
+                        if (isNewEntity)
+                        {
+                            // Create Journal with lines for bank transfer or credit card  
+                            this.CreateARPaymentChequeJournals(theEntityPm, arPaymentcheque);
+                        }
                     }
                 }
             }

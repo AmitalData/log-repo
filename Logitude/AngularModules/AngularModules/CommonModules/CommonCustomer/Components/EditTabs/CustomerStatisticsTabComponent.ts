@@ -942,12 +942,13 @@ export class CustomerStatisticsTabComponent extends BaseComponent {
 
     public EntityId: string = "";
     public EntityName: string = "";
-
+    private Numberpipe: NumbersPipe;
 
     private _entityResourceService: EntityResourceService = new EntityResourceService();
 
     constructor(public entityArgs: EntityArgs) {
         super();
+        this.Numberpipe = new NumbersPipe();
         this.EntityPM = entityArgs.EntityPM;
         this.NumbersPipe = new NumbersPipe();
         this.EntityId = this.EntityPM.Id;
