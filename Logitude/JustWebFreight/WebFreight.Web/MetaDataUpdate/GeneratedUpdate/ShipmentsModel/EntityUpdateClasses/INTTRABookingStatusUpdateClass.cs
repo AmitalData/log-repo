@@ -117,7 +117,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "INTTRA Booking Status",
-			      				    Code =  "2e81",
+			      				    Code =  "4165",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
@@ -131,6 +131,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -321,7 +322,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable INTTRABookingStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "INTTRABookingStatus" && d.Tenant == 0).FirstOrDefault();
+		   List<ObjectField> INTTRABookingStatusObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "INTTRABookingStatus").ToList();
+		       
+	      
+
+	         Screen INTTRABookingStatusINTTRABookingStatusHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "INTTRABookingStatus.HeaderScreen", Name = "INTTRABookingStatusHeaderScreen", ObjectTableId = INTTRABookingStatusObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    INTTRABookingStatusObjectTable.HeaderScreenId = INTTRABookingStatusINTTRABookingStatusHeaderScreenScreen0.Id;
+	   		  
 
 	    }
 
