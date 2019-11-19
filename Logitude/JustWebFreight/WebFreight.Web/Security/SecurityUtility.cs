@@ -955,7 +955,7 @@ namespace WebFreight.Web.Security
             throw new AutenticationException("Sorry! this user is not authorized!");
         }
 
-        public static void RedirectToHttps()
+        public static void RedirectToHttps(bool IsEndResponse=true)
         {
             bool redirect = false;
 
@@ -989,12 +989,29 @@ namespace WebFreight.Web.Security
             {
                 if (!context.Request.IsSecureConnection)
                 {
+
                     string redirectUrl = context.Request.Url.ToString().Replace("http:", "https:");
-                    context.Response.Redirect(redirectUrl);
+                    if (IsEndResponse)
+                    {
+                        context.Response.Redirect(redirectUrl);
+                    }
+                    else
+                    {
+                        if (!context.Request.Url.ToString().Contains("https"))
+                        {
+                            context.Response.Redirect(redirectUrl, false);
+                        }
+
+                    }
                 }
             }
 
         }
+
+
+
+
+
 
         public static string getLoggedDomain()
         {

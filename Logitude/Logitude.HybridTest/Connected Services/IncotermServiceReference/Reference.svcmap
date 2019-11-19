@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="073097de-ca9f-44a7-975c-e6fdb46a837c" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:9996/WcfApi/IncotermWcfService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="IncotermWcfService.xsd" MetadataType="Schema" ID="53685f66-dd7a-4d6f-bcb3-cbb83351f5ae" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/IncotermWcfService.svc?xsd=xsd0" />
+    <MetadataFile FileName="IncotermWcfService1.xsd" MetadataType="Schema" ID="f5aaa084-c25c-4031-8d1a-7e7024415b8c" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/IncotermWcfService.svc?xsd=xsd5" />
+    <MetadataFile FileName="IncotermWcfService.disco" MetadataType="Disco" ID="ea26d065-bb02-409b-b1e4-d2ed8fcac091" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/IncotermWcfService.svc?disco" />
+    <MetadataFile FileName="IncotermWcfService2.xsd" MetadataType="Schema" ID="7adbda20-08ac-4be1-8b64-ceb8920e71d1" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/IncotermWcfService.svc?xsd=xsd1" />
+    <MetadataFile FileName="IncotermWcfService3.xsd" MetadataType="Schema" ID="9995b61d-fc04-4e3e-a024-4ff353decd6d" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/IncotermWcfService.svc?xsd=xsd4" />
+    <MetadataFile FileName="IncotermWcfService4.xsd" MetadataType="Schema" ID="57625eb1-2baa-4f73-98c3-77e4a6f9ad3a" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/IncotermWcfService.svc?xsd=xsd3" />
+    <MetadataFile FileName="IncotermWcfService5.xsd" MetadataType="Schema" ID="fc965723-49ef-46ae-83eb-6aa41b34e3a6" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/IncotermWcfService.svc?xsd=xsd2" />
+    <MetadataFile FileName="IncotermWcfService.wsdl" MetadataType="Wsdl" ID="f3f372b8-37c9-45d7-ac41-a0cdb868b9e4" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/IncotermWcfService.svc?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

@@ -1,3 +1,4 @@
+import { ReconciliationExtendedPMService } from './../../../Accounting/Services/ExtendedPMs/ReconciliationExtendedPMService';
 import { Settings } from './../../Settings';
 declare var window: any;
 import { Component, Type, ComponentRef, ViewContainerRef, ViewChild, Output, EventEmitter, ViewChildren, QueryList, OnDestroy, ChangeDetectorRef } from '@angular/core';
@@ -163,45 +164,72 @@ export class EditComponent implements OnDestroy {
     }
 
     private LoadEntityPM() {
-        this.entityPMService.getSingle(this.ObjectTableName, this.EntityId).then((response: any) => {
-            response.subscribe((res) => {
-                var pmResponse: ServiceResponse = res;
 
-                if (!pmResponse.HasError) {
-                    this.EntityPM = pmResponse.Result;
+        if (this.ObjectTableName == "Reconciliation")
+        {
+            var service = new ReconciliationExtendedPMService();
+            service.GetSingleWithoutLines(this.EntityId).subscribe((response: ServiceResponse) =>
+            {
+                console.log("[GetSingleWithoutLines] ", response);
 
-                    if (this.EntityFields) {
-                        this.EntityFields.forEach(itemField => {
-                            this.EntityPM[itemField["FieldName"]] = itemField["FieldValue"];
-                        });
+                if (!response.HasError) {
+                    var reconciliation = response.Result;
+                    this.SetEntityPMAfterLoadIt(reconciliation);
 
-                        this.EntityPM.IsDirty = false;
-                    }
+                }
+                else {
+                    this.ValidationErrorsList = response.ErrorsArray;
+                    this.StopBusyIndicator();
+                }
+            });
 
-                    if (this.EntityPM) {
-                        this.entityArgs.EntityPM = this.EntityPM;
-                        this.entityArgs.ObjectTableName = this.ObjectTableName;
-                        this.entityArgs.EditComponent = this;
-                        this.SendActivityLog();
-                        this.BuildComponent();
+
+        }
+        else
+        {
+            this.entityPMService.getSingle(this.ObjectTableName, this.EntityId).then((response: any) => {
+                response.subscribe((res) => {
+                    var pmResponse: ServiceResponse = res;
+
+                    if (!pmResponse.HasError) {
+                        this.SetEntityPMAfterLoadIt(pmResponse.Result);
                     }
 
                     else {
                         this.StopBusyIndicator();
-                        this.ValidationErrorsList.push("Error displaying this " + TextCodeTranslator.Translate(this.ObjectTableName));
+                        this.ValidationErrorsList = pmResponse.ErrorsArray;
+                        //console.error(pmResponse.ErrorsArray);
                     }
-                }
-
-                else {
+                }, error => {
                     this.StopBusyIndicator();
-                    this.ValidationErrorsList = pmResponse.ErrorsArray;
-                    //console.error(pmResponse.ErrorsArray);
-                }
-            }, error => {
-                this.StopBusyIndicator();
+                });
             });
-        });
+        }
+
     }
+    private SetEntityPMAfterLoadIt(result)
+    {
+        this.EntityPM = result;
+        if (this.EntityFields) {
+            this.EntityFields.forEach(itemField =>
+            {
+                this.EntityPM[itemField["FieldName"]] = itemField["FieldValue"];
+            });
+            this.EntityPM.IsDirty = false;
+        }
+        if (this.EntityPM) {
+            this.entityArgs.EntityPM = this.EntityPM;
+            this.entityArgs.ObjectTableName = this.ObjectTableName;
+            this.entityArgs.EditComponent = this;
+            this.SendActivityLog();
+            this.BuildComponent();
+        }
+        else {
+            this.StopBusyIndicator();
+            this.ValidationErrorsList.push("Error displaying this " + TextCodeTranslator.Translate(this.ObjectTableName));
+        }
+    }
+
     private SendActivityLog() {
         if (this.ObjectTableName == "Customer") {
             if (this.EntityPM['IsCustomer']) {
@@ -1311,29 +1339,62 @@ export class EditComponent implements OnDestroy {
         if (this.EntityId) {
             this.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
 
-            this.entityPMService.getSingle(this.ObjectTableName, this.EntityId).then((res: any) => {
-                res.subscribe((myResponse: ServiceResponse) => {
+            if (this.ObjectTableName == "Reconciliation")
+            {
+                var service = new ReconciliationExtendedPMService();
+                service.GetSingleWithoutLines(this.EntityId).subscribe((response: ServiceResponse) =>
+                {
+                    console.log("[GetSingleWithoutLines] ", response);
 
-                    //this.StopBusyIndicator();
+                    if (!response.HasError) {
+                        var reconciliation = response.Result;
 
-                    if (myResponse.HasError) {
-                        this.StopBusyIndicator();
-                        this.ValidationErrorsList = myResponse.ErrorsArray;
-                        this.LoadCompleted.emit(false);
-                    }
-
-                    else {
-                        this.EntityPM = myResponse.Result;
+                        this.EntityPM = reconciliation;
                         this.entityArgs.EntityPM = this.EntityPM;
 
-                        this.EditComponentController.OnReloadEntityPM().then((isLock) => {
+                        this.EditComponentController.OnReloadEntityPM().then((isLock) =>
+                        {
                             this.StopBusyIndicator();
                             this.UpdateComponentMembers();
                             this.LoadCompleted.emit(true);
                         });
+
+                    }
+                    else {
+                        this.StopBusyIndicator();
+                        this.ValidationErrorsList = response.ErrorsArray;
+                        this.LoadCompleted.emit(false);
                     }
                 });
-            });
+
+
+            }
+            else
+            {
+                this.entityPMService.getSingle(this.ObjectTableName, this.EntityId).then((res: any) => {
+                    res.subscribe((myResponse: ServiceResponse) => {
+
+                        //this.StopBusyIndicator();
+
+                        if (myResponse.HasError) {
+                            this.StopBusyIndicator();
+                            this.ValidationErrorsList = myResponse.ErrorsArray;
+                            this.LoadCompleted.emit(false);
+                        }
+
+                        else {
+                            this.EntityPM = myResponse.Result;
+                            this.entityArgs.EntityPM = this.EntityPM;
+
+                            this.EditComponentController.OnReloadEntityPM().then((isLock) => {
+                                this.StopBusyIndicator();
+                                this.UpdateComponentMembers();
+                                this.LoadCompleted.emit(true);
+                            });
+                        }
+                    });
+                });
+            }
         }
     }
 

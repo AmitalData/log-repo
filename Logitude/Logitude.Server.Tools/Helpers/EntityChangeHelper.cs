@@ -329,7 +329,8 @@ namespace Logitude.Server.Tools.Helpers
                     if (externalEntityAutomationObjectFieldLists.Count() > 0)
                     {
                         object externalEntity = GetEntityByIdAndObjectField(externalEntityAutomationConditionField.Value , externalEnitityObjectField, tenant);
-                        externalEntityAutomationConditionFieldLists = externalEntityAutomationConditionFieldLists.Concat(GetExternalEntityAutomationConditionFieldsValueFromEntity(externalEnitityObjectField, externalEntityAutomationObjectFieldLists, externalEntity)).ToList();
+                        List<Field> externalEntityAutomationConditionFieldsValueLists = GetExternalEntityAutomationConditionFieldsValueFromEntity(externalEnitityObjectField, externalEntityAutomationObjectFieldLists, externalEntity);
+                        externalEntityAutomationConditionFieldLists = externalEntityAutomationConditionFieldLists.Concat(externalEntityAutomationConditionFieldsValueLists).ToList();
                     }
                 }
             }

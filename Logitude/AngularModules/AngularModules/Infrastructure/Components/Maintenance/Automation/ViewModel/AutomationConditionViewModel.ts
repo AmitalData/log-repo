@@ -22,6 +22,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
     SelectedCustomField: ObjectFieldPM;
     AddEditAutomationsViewModel: any;
     OperatorList: Operator[];
+    BooleanList:boolean[] = [true, false];
     SelectedOperator: Operator;
     isChangeOperator: boolean;
     IsSetValue: boolean;
@@ -250,11 +251,16 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
 
         return this.isChecked;
     }
-    set IsChecked(newValue: boolean) {
+    BooleanListValueChanged(newValue: boolean) {
         this.isChecked = newValue;
         this.CurrentEntityPM.Value = this.FieldValue = this.isChecked ? "true" : "false";
         this.AddEditAutomationsViewModel.IsChangeCondition = true;
     }
+    //set IsChecked(newValue: boolean) {
+    //    this.isChecked = newValue;
+    //    this.CurrentEntityPM.Value = this.FieldValue = this.isChecked ? "true" : "false";
+    //    this.AddEditAutomationsViewModel.IsChangeCondition = true;
+    //}
    
     ChosenOperatorList(dataTypeCode: string, isChangeOperator: boolean, objectFieldPM: ObjectFieldPM = null) {
         this.OperatorList = [];

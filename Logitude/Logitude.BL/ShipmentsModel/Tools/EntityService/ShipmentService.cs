@@ -2531,7 +2531,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     #region Houses
 
-                    if (entityPM.ShipmentLevelCode == "C" && shipmentChangeTracking.NotifyPropertyChangeValuesLists != null && shipmentChangeTracking.NotifyPropertyChangeValuesLists.Count > 0)
+                    if (entityPM.ShipmentLevelCode == "C")
                     {
                         isHaveAutomation = entityChangeHelper.CheckIfEntityHaveAutomation("Shipment", "OnUpdate", entityPM.Tenant);
                         if (isHaveAutomation)
@@ -2567,8 +2567,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             query.MapShipmentToShipmentPMForAutomation(shipmentChangeTracking.ChangeTrackingPM, this.entityPoco, null, this.entityMasterData);
             shipmentChangeTracking.ChangeTrackingPM.StatusId = entityPM.OldStatusValue;
             if (entityPM.ShipmentLevelCode == "H") shipmentChangeTracking.ChangeTrackingPM.StatusId = entityPM.StatusId;
-            List<NotifyPropertyChangeValues> notifyPropertyChangeValuesLists = ShipmentMapping.BuildChangedProperties(entityPM, shipmentChangeTracking.ChangeTrackingPM);
-            shipmentChangeTracking.EntityChangeFieldXml = EntityPMChangeTrackingHelper.GetChangesDetectedXml(notifyPropertyChangeValuesLists);
+            shipmentChangeTracking.NotifyPropertyChangeValuesLists= ShipmentMapping.BuildChangedProperties(entityPM, shipmentChangeTracking.ChangeTrackingPM);
+            shipmentChangeTracking.EntityChangeFieldXml = EntityPMChangeTrackingHelper.GetChangesDetectedXml(shipmentChangeTracking.NotifyPropertyChangeValuesLists);
 
             return shipmentChangeTracking;
         }

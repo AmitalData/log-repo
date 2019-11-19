@@ -651,6 +651,32 @@ tenant);
 
         }
 
+        public HttpResponseMessage GetSingleWithoutLines(string id)
+        {
+            try
+            {
+                string logKey = PerformanceLogger.LogCurrentTime();
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("Reconciliation", "READ", authToken.Tenant);
+
+                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
+                ReconciliationQueryService reconciliationQuery = new ReconciliationQueryService(MyContext);
+                reconciliationQuery.InitializeSettings();
+                ReconciliationPM reconciliationPM = reconciliationQuery.GetSingle(id, false, false);
+
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                return Request.CreateResponse(HttpStatusCode.OK, reconciliationPM);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
     }
 
 

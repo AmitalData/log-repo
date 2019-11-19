@@ -31,10 +31,17 @@ namespace Logitude.HybridTest.CommonServices
                 filters.Take = 10;
                 filters.SearchFields = HybridCodes.PackageTypeCode;
                 PackageTypeServiceReference.PackageTypeList[] serviceResult = serviceClient.GetPackageTypeList(filters, TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
-                string packageTypeCode = serviceResult[0].Code;
-                Assert.IsTrue(packageTypeCode == "HPT", "Hybrid Package Type Doesn't Exist!");
                 Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
                 Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);
+                if (serviceResult.Length != 0)
+                {
+                    string packageTypeCode = serviceResult[0].Code;
+                    Assert.IsTrue(packageTypeCode == "HPT", "Hybrid Package Type Doesn't Exist!");
+                }
+                else
+                {
+                    Assert.Inconclusive("There Isn't package Type With This Code!");
+                }
             }
         }
 

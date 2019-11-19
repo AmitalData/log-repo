@@ -60,9 +60,16 @@ namespace Logitude.HybridTest.CommonServices
                     SearchCode = HybridCodes.CustomerCode
                 };
                 CustomerServiceReference.CustomerPM entityPM = serviceClient.GetCustomerPM(filters, TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
-                Assert.AreEqual(entityPM.Code, HybridCodes.CustomerCode, "Get Customer PM Failed! " + serviceResponse.ErrorMessage);
                 Assert.IsFalse(serviceResponse.HasError, "Get Customer PM Failed! " + serviceResponse.ErrorMessage);
                 Assert.IsNull(serviceResponse.Result, "Get Customer PM Failed! " + serviceResponse.ErrorMessage);
+                if (entityPM != null)
+                {
+                    Assert.AreEqual(entityPM.Code, HybridCodes.CustomerCode, "Get Customer PM Failed! " + serviceResponse.ErrorMessage);
+                }
+                else
+                {
+                    Assert.Inconclusive("There Isn't Customer With This Code!");
+                }
             }
         }
 
@@ -82,10 +89,17 @@ namespace Logitude.HybridTest.CommonServices
                     ByCode = true,
                     SearchCode = HybridCodes.CustomerCode
                 };
-                CustomerServiceReference.AddressPM[] entityPM = serviceClient.GetCustomerAddresses(filters, TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
-                Assert.AreEqual(entityPM[0].CountryCode, HybridCodes.CountryCode, "Get Customer Addresses Failed! " + serviceResponse.ErrorMessage);
+                CustomerServiceReference.AddressPM[] entityList = serviceClient.GetCustomerAddresses(filters, TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
                 Assert.IsFalse(serviceResponse.HasError, "Get Customer Addresses Failed! " + serviceResponse.ErrorMessage);
                 Assert.IsNull(serviceResponse.Result, "Get Customer Addresses Failed! " + serviceResponse.ErrorMessage);
+                if (entityList.Length != 0)
+                {
+                    Assert.AreEqual(entityList[0].CountryCode, HybridCodes.CountryCode, "Get Customer Addresses Failed! " + serviceResponse.ErrorMessage);
+                }
+                else
+                {
+                    Assert.Inconclusive("There Isn't Any Address For This Coustmer!");
+                }
             }
         }
 
@@ -105,17 +119,23 @@ namespace Logitude.HybridTest.CommonServices
                     ByCode = true,
                     SearchCode = HybridCodes.CustomerCode
                 };
-                CustomerServiceReference.ContactPM[] entityPM = serviceClient.GetCustomerContacts(filters, TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
-                Assert.AreEqual(entityPM[0].EnglishName, "Hybrid Contact", "Get Customer Contacts Failed! " + serviceResponse.ErrorMessage);
+                CustomerServiceReference.ContactPM[] entityList = serviceClient.GetCustomerContacts(filters, TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
                 Assert.IsFalse(serviceResponse.HasError, "Get Customer Contacts Failed! " + serviceResponse.ErrorMessage);
                 Assert.IsNull(serviceResponse.Result, "Get Customer Contacts Failed! " + serviceResponse.ErrorMessage);
+                if (entityList.Length != 0)
+                {
+                    Assert.AreEqual(entityList[0].EnglishName, "Hybrid Contact", "Get Customer Contacts Failed! " + serviceResponse.ErrorMessage);
+                }
+                else
+                {
+                    Assert.Inconclusive("There Isn't Any Contact For This Coustmer!");
+                }
             }
         }
 
         [TestMethod]
         public void Test_Customer_GetCustomerList()
         {
-            Assert.IsFalse(true, "Get Customer Contacts Failed! ");
             Test_Customer_UPSERT();
             CustomerServiceReference.CustomerWcfServiceClient serviceClient = new CustomerServiceReference.CustomerWcfServiceClient();
             string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
@@ -129,10 +149,17 @@ namespace Logitude.HybridTest.CommonServices
                     ByCode = true,
                     SearchCode = HybridCodes.CustomerCode
                 };
-               // CustomerServiceReference.ContactPM[] entityPM = serviceClient.GetCustomerList(filters, TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
-               // Assert.AreEqual(entityPM[0].EnglishName, "Hybrid Contact", "Get Customer Contacts Failed! " + serviceResponse.ErrorMessage);
-                Assert.IsFalse(serviceResponse.HasError, "Get Customer Contacts Failed! " + serviceResponse.ErrorMessage);
-                Assert.IsNull(serviceResponse.Result, "Get Customer Contacts Failed! " + serviceResponse.ErrorMessage);
+                CustomerServiceReference.CustomerList[] entityList = serviceClient.GetCustomerList(HybridCodes.CustomerCode, "HybridUser@logitudeworld.com", true, TestEnvironmentGlobalParameters.Tenant, 0, 10, ref serviceResponse);
+                Assert.IsFalse(serviceResponse.HasError, "Get Customer List Failed! " + serviceResponse.ErrorMessage);
+                Assert.IsNull(serviceResponse.Result, "Get Customer List Failed! " + serviceResponse.ErrorMessage);
+                if (entityList.Length != 0)
+                {
+                     Assert.AreEqual(entityList[0].EnglishName, "Hybrid Customer", "Get Customer  Failed! " + serviceResponse.ErrorMessage);
+                }
+                else
+                {
+                    Assert.Inconclusive("There Isn't Any Customer!");
+                }
             }
         }
 
@@ -152,10 +179,17 @@ namespace Logitude.HybridTest.CommonServices
                     ByCode = true,
                     SearchCode = HybridCodes.CustomerCode
                 };
-                 CustomerServiceReference.CustomerList[] entityList = serviceClient.GetCustomerListByEmail("hybridcontact@logitudeworld.com", TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
-                 Assert.AreEqual(entityList[0].EnglishName, "Hybrid Customer", "Get Customer Contacts Failed! " + serviceResponse.ErrorMessage);
-                Assert.IsFalse(serviceResponse.HasError, "Get Customer Contacts Failed! " + serviceResponse.ErrorMessage);
+                CustomerServiceReference.CustomerList[] entityList = serviceClient.GetCustomerListByEmail("HybridContact@logitudeworld.com", TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
+                Assert.IsFalse(serviceResponse.HasError, "Get Customer List By Email Failed! " + serviceResponse.ErrorMessage);
                 Assert.IsNull(serviceResponse.Result, "Get Customer Contacts Failed! " + serviceResponse.ErrorMessage);
+                if (entityList.Length != 0)
+                {
+                    Assert.AreEqual(entityList[0].EnglishName, "Hybrid Customer", "Get Customer List By Email Failed! " + serviceResponse.ErrorMessage);
+                }
+                else
+                {
+                    Assert.Inconclusive("There Isn't Any Coustmer!");
+                }
             }
         }
 
@@ -175,11 +209,39 @@ namespace Logitude.HybridTest.CommonServices
                     ByCode = true,
                     SearchCode = HybridCodes.CustomerCode
                 };
-                CustomerServiceReference.CustomerList entityList = serviceClient.GetCustomerListById("hybridcontact@logitudeworld.com", TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
-                Assert.AreEqual(entityList.EnglishName, "Hybrid Customer", "Get Customer Contacts Failed! " + serviceResponse.ErrorMessage);
-                Assert.IsFalse(serviceResponse.HasError, "Get Customer Contacts Failed! " + serviceResponse.ErrorMessage);
-                Assert.IsNull(serviceResponse.Result, "Get Customer Contacts Failed! " + serviceResponse.ErrorMessage);
+                CustomerServiceReference.CustomerList entityList = serviceClient.GetCustomerListById(HybridCodes.ContactCode, TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
+                Assert.IsFalse(serviceResponse.HasError, "Get Customer List By Id Failed! " + serviceResponse.ErrorMessage);
+                Assert.IsNull(serviceResponse.Result, "Get Customer List By Id Failed! " + serviceResponse.ErrorMessage);
+                if (entityList != null)
+                {
+                    Assert.AreEqual(entityList.EnglishName, "Hybrid Customer", "Get Customer List By Id Failed! " + serviceResponse.ErrorMessage);
+                }
+                else
+                {
+                    Assert.Inconclusive("There Isn't Coustomer With This Id!");
+                }
             }
+        }
+
+        [TestMethod]
+        public void Test_Customer_GetReadyForActivationCustomer()
+        {
+            LoginService.GetLoginTokenByCredentials();
+            Assert.Inconclusive("Not Implemented !");
+        }
+
+        [TestMethod]
+        public void Test_Customer_RemoveFromCustomersQueue()
+        {
+            LoginService.GetLoginTokenByCredentials();
+            Assert.Inconclusive("Not Implemented !");
+        }
+
+        [TestMethod]
+        public void Test_Customer_GetActivationQuestionnaireAnswers()
+        {
+            LoginService.GetLoginTokenByCredentials();
+            Assert.Inconclusive("Not Implemented !");
         }
     }
 }

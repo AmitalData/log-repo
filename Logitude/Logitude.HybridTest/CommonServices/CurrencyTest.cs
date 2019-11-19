@@ -22,7 +22,7 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_Currency_GETLIST()
         {
-            LoginService.GetLoginTokenByCredentials();
+            Test_Currency_UPSERT();
             CurrencyServiceReference.CurrencyWcfServiceClient serviceClient = new CurrencyServiceReference.CurrencyWcfServiceClient();
             string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
             serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
@@ -30,14 +30,23 @@ namespace Logitude.HybridTest.CommonServices
             {
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
                 Response serviceResponse = new Response();
-                ApiSearchFilters filters = new ApiSearchFilters();
-                filters.Take = 10;
-                filters.SearchFields = HybridCodes.CurrencyCode;
+                ApiSearchFilters filters = new ApiSearchFilters
+                {
+                    Take = 10,
+                    SearchFields = HybridCodes.CurrencyCode
+                };
                 CurrencyServiceReference.CurrencyList[] serviceResult = serviceClient.GetList(filters, TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
-                string currencyCode = serviceResult[0].Code;
-                Assert.IsTrue(currencyCode == "HCR", "Hybrid Currency Doesn't Exist!");
                 Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
                 Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);
+                if (serviceResult.Length != 0)
+                {
+                    string currencyCode = serviceResult[0].Code;
+                    Assert.IsTrue(currencyCode == "HCR", "Hybrid Currency Doesn't Exist!");
+                }
+                else
+                {
+                    Assert.Inconclusive("There Isn't Currency With This Code!");
+                }
             }
         }
 

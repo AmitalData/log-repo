@@ -1013,6 +1013,15 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                    }).FirstOrDefault();
         }
 
+        public GLAccountPM GetGLAccountByCardId(string cardId, int tenant)
+        {
+            CardPM card = GetCardById(cardId, tenant);
+            if(card.GLAccountId != null)
+            {
+                return GetSinglePM(card.GLAccountId, tenant);
+            }
+            return null;
+        }
         public void ConnectCardToGLAccount(CardGLAccountConnectionArgs args)
         {
             CardPM cardPM = GetCardById(args.CardId, args.Tenant);

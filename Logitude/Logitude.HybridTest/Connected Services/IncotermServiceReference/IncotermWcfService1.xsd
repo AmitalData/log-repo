@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Logitude.BL.CommonDataModel.EntityLists" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Logitude.BL.CommonDataModel.EntityLists" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ArrayOfIncotermList">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="IncotermList" nillable="true" type="tns:IncotermList" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfIncotermList" nillable="true" type="tns:ArrayOfIncotermList" />
+  <xs:complexType name="IncotermList">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AddedManually" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Freight" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="InActive" type="xs:boolean" />
+      <xs:element minOccurs="0" name="LocalName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Notes" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OtherCharges" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SearchFields" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Tenant" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="IncotermList" nillable="true" type="tns:IncotermList" />
+</xs:schema>

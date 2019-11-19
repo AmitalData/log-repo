@@ -343,7 +343,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 BIReportsExecutionLogRepository reportExecutionLogRepository = new BIReportsExecutionLogRepository(tenant);
                 var logId = IdCounter.GetNumber("BIReportsExecutionLog", tenant);
-                bIReportXMLData.BIReportKey = Guid.NewGuid() + logId;
+                bIReportXMLData.BIReportKey = Guid.NewGuid() + logId + "!BIReportName="+ bIReportXMLData.BIReportPM.Name;
                 BIReportsExecutionLog bIReportExecutionLog = new BIReportsExecutionLog()
                 {
                     Id = logId,

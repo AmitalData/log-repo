@@ -30,7 +30,7 @@
                                 </LogLov>
                             </td>
 
-                            <td *ngIf="TariffType == 'AFC' || TariffType == 'OLC'">
+                            <td *ngIf="TariffType == 'AFC' || TariffType == 'OLC' || TariffType == 'OFC'">
                                 <div class="MediaFill">
                                     <table *ngIf="!DataContext.OriginPortId">
                                         <tr>
@@ -79,7 +79,7 @@
                                 </LogLov>
                             </td>
 
-                            <td *ngIf="TariffType == 'AFC' || TariffType == 'OLC'">
+                            <td *ngIf="TariffType == 'AFC' || TariffType == 'OLC' || TariffType == 'OFC'">
                                 <div class="MediaFill">
                                     <table *ngIf="!DataContext.DestinationPortId">
                                         <tr>
@@ -109,7 +109,7 @@
                                 </table>
                             </td>
                         </tr>
-                        
+
                         <!-- Currency -->
                         <tr class="FormFieldRow" *ngIf="TariffType == 'ASC' || TariffType == 'OSC'">
                             <td>
@@ -525,6 +525,88 @@
 
                                         <td>
                                             <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Surcharge10MinPrice'" [Text]="DataContext.Surcharge10MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <!--Ocean FCL Freight Cost -->
+                        <tr *ngIf="TariffType == 'OFC'" style="height:1px;">
+                            <td colspan="3">
+                                <table>
+                                    <!-- Container1Price -->
+                                    <tr *ngIf="DataContext.FatherComponent.Container1PriceVisibility" class="FormFieldRow">
+                                        <td style="width:100px;">
+                                            <LogLabel [ObjectFieldName]="'Surcharge1Price'" [Text]="DataContext.FatherComponent.Container1PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td style="width:220px;">
+                                            <LogTextBox [ObjectFieldName]="'Surcharge1Price'" [Text]="DataContext.Surcharge1Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Container2Price -->
+                                    <tr *ngIf="DataContext.FatherComponent.Container2PriceVisibility" class="FormFieldRow">
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'Surcharge2Price'" [Text]="DataContext.FatherComponent.Container2PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td>
+                                            <LogTextBox [ObjectFieldName]="'Surcharge2Price'" [Text]="DataContext.Surcharge2Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Container3Price -->
+                                    <tr *ngIf="DataContext.FatherComponent.Container3PriceVisibility" class="FormFieldRow">
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'Surcharge3Price'" [Text]="DataContext.FatherComponent.Container3PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td>
+                                            <LogTextBox [ObjectFieldName]="'Surcharge3Price'" [Text]="DataContext.Surcharge3Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Container4Price -->
+                                    <tr *ngIf="DataContext.FatherComponent.Container4PriceVisibility" class="FormFieldRow">
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'Surcharge4Price'" [Text]="DataContext.FatherComponent.Container4PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td>
+                                            <LogTextBox [ObjectFieldName]="'Surcharge4Price'" [Text]="DataContext.Surcharge4Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Container5Price -->
+                                    <tr *ngIf="DataContext.FatherComponent.Container5PriceVisibility" class="FormFieldRow">
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'Surcharge5Price'" [Text]="DataContext.FatherComponent.Container5PriceLabel" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td>
+                                            <LogTextBox [ObjectFieldName]="'Surcharge5Price'" [Text]="DataContext.Surcharge5Price" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                         </td>
 
                                         <td>

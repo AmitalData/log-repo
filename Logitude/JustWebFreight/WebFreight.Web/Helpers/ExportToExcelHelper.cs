@@ -572,8 +572,9 @@ namespace WebFreight.Web.Helpers
             ExcelEngine excelEngine = new ExcelEngine();
             IApplication application = excelEngine.Excel;
             IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
+            workbook.Version = ExcelVersion.Excel2007;
             IWorksheet sheet = workbook.Worksheets[0];
-            
+         
             int count = dataTable.Columns.Count;
             List<DataColumn> deletedColumns = new List<DataColumn>();
 
@@ -644,7 +645,7 @@ namespace WebFreight.Web.Helpers
                     }
                 }
             }
-            workbook.Version = ExcelVersion.Excel2007;
+            
             workbook.SaveAs(memory);
             return memory.ToArray();
         }
