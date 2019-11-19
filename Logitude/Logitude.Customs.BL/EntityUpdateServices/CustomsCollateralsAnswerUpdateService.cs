@@ -23,6 +23,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             entityParentPM.CustomsCollateralsAnswerLineNumber+=1;
             entityPM.LineNumber = entityParentPM.CustomsCollateralsAnswerLineNumber;
             entityPM.Tenant = entityParentPM.Tenant;
+            entityPM.AllocatedAmount = entityParentPM.CustomsCollateralsConditions.Sum(x => x.RequestedAmount);
         }
         
         protected override void OnUpdating(CustomsCollateralsAnswerPM entityPM, Data.EntityPOCOs.CustomsCollateralsAnswer entityPOCO)

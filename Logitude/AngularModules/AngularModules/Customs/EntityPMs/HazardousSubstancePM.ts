@@ -73,4 +73,4 @@ export class HazardousSubstancePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

@@ -53,7 +53,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             foreach (var item in customResponse.CollateralsList)
             {
-                var test = qs.GetSingle(item, 1, false, false);
+                var collateral = qs.GetSingle(item, 1, false, false);
 
                 try
                 {
@@ -64,29 +64,28 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             Tenant = requestParams.Tenant,
                             LoggingEnabled = true,
                             LoggingObjectTableId = objectTableId,
-                            LoggingEntityId = test.CustomsCollateralId,
+                            LoggingEntityId = collateral.CustomsCollateralId,
                             LoggingObjectTableId2 = requestParams.LoggingObjectTableId,
-                            //      LoggingEntityId2 = objectTableIdCourierMaster,
                             InterfaceTypeCode = "8212",
                             LoggingUserId = requestParams.LoggingUserId,
                             RequestVIA = SendRequestVIA.WebServiceBatch,
-                            CustomCollateralId = test.CustomsCollateralId,
+                            CustomCollateralId = collateral.CustomsCollateralId,
                             CustomsCollateralsAnswers = new List<CustomsCollateralsAnswerParams>()
                             {
                                 new CustomsCollateralsAnswerParams()
                                 {
-                                    CustomsCollateralId=test.CustomsCollateralId,
-                                     LineNumber = test.LineNumber,
-                                     Tenant= test.Tenant,
-                                     AnswerEntityTypeCode= test.AnswerEntityTypeCode,
-                                     AllocatedAmount =50,
-                                     Remarks = test.Remarks,
-                                     CustomsTapgFile= test.CustomsTapgFile,
-                                     CustomsNumeral = test.CustomsNumeral,
-                                     AnswerForCollateralStatusCode = test.AnswerForCollateralStatusCode,
-                                     Errors = test.Errors, 
-                                     AnswerEntityType = test.AnswerEntityTypeCode, 
-                                     AnswerForCollateralStatus = test.AnswerForCollateralStatusName
+                                    CustomsCollateralId=collateral.CustomsCollateralId,
+                                     LineNumber = collateral.LineNumber,
+                                     Tenant= collateral.Tenant,
+                                     AnswerEntityTypeCode= collateral.AnswerEntityTypeCode,
+                                     AllocatedAmount =collateral.AllocatedAmount,
+                                     Remarks = collateral.Remarks,
+                                     CustomsTapgFile= collateral.CustomsTapgFile,
+                                     CustomsNumeral = collateral.CustomsNumeral,
+                                     AnswerForCollateralStatusCode = collateral.AnswerForCollateralStatusCode,
+                                     Errors = collateral.Errors, 
+                                     AnswerEntityType = collateral.AnswerEntityTypeCode, 
+                                     AnswerForCollateralStatus = collateral.AnswerForCollateralStatusName
 
 
                                 }
@@ -95,28 +94,33 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                         };
                         SBQMessageService.CreateSheetSBQMessage<CollateralRequestParams>(requestParams8212, false);
-                        LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({test.CustomsCollateralId})");
-                        mess.AppendLine($" CreateSheetSBQMessage({test.CustomsCollateralId})");
+                        LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({collateral.CustomsCollateralId})");
+                        mess.AppendLine($" CreateSheetSBQMessage({collateral.CustomsCollateralId})");
 
                         scopeNewCRS.Complete();
                     }
 
-                    this.MyRequestSheetParam = this.MyRequestSheetParam ?? new RequestSheetParam();
-
-                    //this.MyRequestSheetParam.RequestDescription = "Build Custom Zip File";
-                    ///LogitudeSettings.HandleBuildObjectTablesZipFilesData_Inject(false, true);
-
-                    this.MyRequestSheetParam.RequestDescription = requestParams.RequestName;
-                    this.MyResponseData.UserMessage = mess.ToString();
-                    this.MyResponseData.Succeeded = true;
+          
                 }
                 catch (System.Exception ee1)
                 {
 
-                    LogMessagingUtil.Instance.AppendLine($"Exception!!!CreateSheetSBQMessage({test.CustomsCollateralId}) : {ee1.Message}");
-                    mess.AppendLine($"Exception!!!CreateSheetSBQMessage({test.CustomsCollateralId}) : {ee1.Message}");
+                    LogMessagingUtil.Instance.AppendLine($"Exception!!!CreateSheetSBQMessage({collateral.CustomsCollateralId}) : {ee1.Message}");
+                    mess.AppendLine($"Exception!!!CreateSheetSBQMessage({collateral.CustomsCollateralId}) : {ee1.Message}");
+                    return;
                 }
+
+           
             }
+
+            this.MyRequestSheetParam = this.MyRequestSheetParam ?? new RequestSheetParam();
+
+            //this.MyRequestSheetParam.RequestDescription = "Build Custom Zip File";
+            ///LogitudeSettings.HandleBuildObjectTablesZipFilesData_Inject(false, true);
+
+            this.MyRequestSheetParam.RequestDescription = requestParams.RequestName;
+            this.MyResponseData.UserMessage = mess.ToString();
+            this.MyResponseData.Succeeded = true;
 
         }
 

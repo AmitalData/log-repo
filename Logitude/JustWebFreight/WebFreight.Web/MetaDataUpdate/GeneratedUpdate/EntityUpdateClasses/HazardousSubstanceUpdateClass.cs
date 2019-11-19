@@ -107,7 +107,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "קוד או'ם",
 			      				    DefaultText =  "Hazardous Substance",
-			      				    Code =  "54a8",
+			      				    Code =  "cee3",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
@@ -478,7 +478,33 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
-	    {  	   
+	    {  
+	        FeatureRepository featureRepository = new FeatureRepository(0); 
+            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+	        QueryGroup HazardousSubstanceQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "cee3", Name = " Query Group" }, queryGroupRepository);
+	        queryGroupRepository.SubmitChanges();
+
+	        ObjectTable HazardousSubstanceObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.HazardousSubstance" && d.Tenant == 0).FirstOrDefault();
+	        List<ObjectField> HazardousSubstanceObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.HazardousSubstance").ToList();   
+
+			   TextCode HazardousSubstanceTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "HazardousSubstance.Q.HazardousSubstanceQ", DefaultText = "Hazardous Substance Query",LocalDefaultText = "Hazardous Substance Query", ObjectTableId = HazardousSubstanceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature HazardousSubstanceFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "HazardousSubstance.Q.HazardousSubstanceQ", ObjectTableId = HazardousSubstanceObjectTable.Id, Tenant = 0, NameTextCodeCode = "HazardousSubstance.Features.HazardousSubstanceQ", NameTextCodeDefaultText = "HazardousSubstanceQ", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+
+	        TextCodeRepository.SubmitChanges();
+	        FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query HazardousSubstanceQQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = HazardousSubstanceTextCode_0.Id, Code = "HazardousSubstanceQ",  QueryGroupCode = "cee3", IndexOrder = 0, Tenant = 0, ObjectTableId = HazardousSubstanceObjectTable.Id, QuerySection = "Customs.HazardousSubstance", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = HazardousSubstanceFeature_0.Id, DefaultSortName = "Code", DefaultSortDirection = "Ascending" }, queriesRepository, tenantQueries);
+	
+			 QueryColumn HazardousSubstanceQQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HazardousSubstanceQQuery.Id, IndexOrder = 0, ObjectFieldId = HazardousSubstanceObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == HazardousSubstanceObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn HazardousSubstanceQQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HazardousSubstanceQQuery.Id, IndexOrder = 1, ObjectFieldId = HazardousSubstanceObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == HazardousSubstanceObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn HazardousSubstanceQQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HazardousSubstanceQQuery.Id, IndexOrder = 2, ObjectFieldId = HazardousSubstanceObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == HazardousSubstanceObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn HazardousSubstanceQQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = HazardousSubstanceQQuery.Id, IndexOrder = 3, ObjectFieldId = HazardousSubstanceObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == HazardousSubstanceObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+	   
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

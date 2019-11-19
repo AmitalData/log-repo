@@ -29,6 +29,7 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { CustomsCollateralAnswerSharedDataService} from '../../../Customs/Services/DataChange/CustomsCollateralAnswerSharedDataService'
 import { subscribeOn } from 'rxjs/operator/subscribeOn';
+import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 @Component({
     moduleId: module.id,
     templateUrl: './CustomsCollateralAnswerComponent.html',
@@ -791,10 +792,15 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
         requestParams.Collaterals = this.collateralToSendlist;
         requestParams.Tenant = 1;
 
- 
-        this._declarationExtendedListService.PostSendCollateral8212(requestParams).subscribe();
-           
+        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
 
+        this._declarationExtendedListService.PostSendCollateral8212(requestParams).subscribe(res => {
+            SessionLocator.SelectedSession.StopBusyIndicator();
+            var myMessageWindow = new MessageWindow();
+            myMessageWindow.Show(res.Result);
+        } );
+           
+ 
     }
 
     //#endregion
