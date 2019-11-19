@@ -22,13 +22,17 @@
             <div class="TableHolder">
                 <table>
                     <tr style="height:25px">
-                        <td class="TabTitleRow" style="width:150px">
-                            {{'General.MH.CustomsCollateral'| TextCodeTranslationPipe}}
-                        </td>
-                        <td style="left:0px;" >
-                            <button class="Button" *ngIf="IsDisplayButtonSend" (click)="OpenEditCollateralAnswerWindow()">מענה מרוכז</button>
+                     
+                            
+                                    <td class="TabTitleRow" style="width:150px">
+                                        {{'General.MH.CustomsCollateral'| TextCodeTranslationPipe}}
+                                    </td>
 
-                        </td>
+                                    <td style="left:0px;float:left">
+                                        <button style="width:100px" class="Button" *ngIf="_customsCollateralAnswerSharedDataService.IsDisplayButtonSend" (click)="OpenEditCollateralAnswerWindow()">    {{'Customs.Declaration.O.MultiCollateralsAnswer'| TextCodeTranslationPipe}}</button>
+
+                                    </td>
+                      
                     </tr>
 
 
@@ -47,12 +51,7 @@
                                             <!--<div style="text-align:right">
                                 <span>{{item.CollateralRequestNumber}}</span>
                             </div>-->
-                                            <div class="TextTrimming" style="cursor:pointer">
-                                                <div style="width: 16px; height:16px; margin-top:10px">
-                                                    <input class="CenterCenter" style="box-shadow:none ;width: 16px; height:16px; text-align:center"
-                                                           type="checkbox" (click)="OnCheckedWithSystemEvent($event , item.Id)" />
-                                                </div>
-                                            </div>
+                                         
                                         </log-cell-template>
                                     </log-column>
 

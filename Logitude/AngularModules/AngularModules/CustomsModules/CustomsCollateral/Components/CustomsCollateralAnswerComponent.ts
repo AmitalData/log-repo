@@ -21,11 +21,19 @@ declare var window: any;
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import { CustomsCollateralPMService } from '../../../Customs/Services/StandardPMs/CustomsCollateralPMService';
 import { forEach } from '@angular/router/src/utils/collection';
-
+import { DeclarationExtendedListService } from '../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
+import { SendCollateralRequestParams } from '../../../Customs/DataContract/RequestParams/SendCollateralRequestParams';
+import { Observable } from 'rxjs';
+import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
+import { CustomsCollateralAnswerSharedDataService} from '../../../Customs/Services/DataChange/CustomsCollateralAnswerSharedDataService'
+import { subscribeOn } from 'rxjs/operator/subscribeOn';
+import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 @Component({
     moduleId: module.id,
     templateUrl: './CustomsCollateralAnswerComponent.html',
-    providers: [CustomsCollateralPMService]
+    providers: [CustomsCollateralPMService, DeclarationExtendedListService, CustomsCollateralAnswerSharedDataService]
 })
 export class CustomsCollateralAnswerComponent extends BaseComponent implements OnInit {
 
@@ -41,9 +49,10 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
     private GuaranteeDefaultList: string[] = [];
     cardListService: CardListService = new CardListService();
     IsConcentrated: boolean;
-    collateralToSendlist: number[];
+    collateralToSendlist: string[];
+    public ValidationErrorsList: string[] = [];
 
-    constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService,private _customsCollateralPMService: CustomsCollateralPMService) {
+    constructor(private _customsCollateralAnswerSharedDataService:CustomsCollateralAnswerSharedDataService , public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService, private _customsCollateralPMService: CustomsCollateralPMService,private _declarationExtendedListService: DeclarationExtendedListService) {
         super();
     }
 
@@ -733,26 +742,59 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
 
         this.CurrentSession.CloseCurrentWindow();
     }
+    FIELD_IS_REQUIERD: string;
 
+    GetRequierdFieldErrorText(fieldName) {
+        this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
+        return this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate(fieldName));
+    }
     OnCustomSendOptionsButtonClick() {
+        var currentEntity: CustomsCollateralPM;
+        var errors: string[] = [];
+        this.ValidationErrorsList = [];
 
-        var currentEntity: CustomsCollateralPM; 
+        if (this.EntityPM.CustomsTapgFile == null) {
+            errors.push(this.GetRequierdFieldErrorText("Customs.CustomsCollateralsAnswer.F.CustomsTapgFile"));
+
+        }
+
+     
+        this.ValidationErrorsList = errors;
+        if (this.ValidationErrorsList.length > 0) {
+            return;
+        }
+        let count: number=0;
         for (var i = 0; i < this.collateralToSendlist.length; i++) {
             this._customsCollateralPMService.get(this.collateralToSendlist[i].toString()).subscribe(
                 data => {
                     currentEntity = (data.Result as CustomsCollateralPM);
-                    this.EntityPM.RequestFileAmount = this.EntityPM.AllocatedAmount;
-                    currentEntity.AddCustomsCollateralsAnswer(this.EntityPM);
-                    this._customsCollateralPMService.update(currentEntity).subscribe()
+                     currentEntity.AddCustomsCollateralsAnswer(this.EntityPM);
+                    this._customsCollateralPMService.update(currentEntity).subscribe(res => {
 
-                }
+                   
+                });
+        }
 
 
             );
-
         }
 
+
+
+        let requestParams: SendCollateralRequestParams = new SendCollateralRequestParams();
+
+        requestParams.Collaterals = this.collateralToSendlist;
+        requestParams.Tenant = 1;
+
+        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+
+        this._declarationExtendedListService.PostSendCollateral8212(requestParams).subscribe(res => {
+            SessionLocator.SelectedSession.StopBusyIndicator();
+            var myMessageWindow = new MessageWindow();
+            myMessageWindow.Show(res.Result);
+        });
+ 
     }
 
     //#endregion

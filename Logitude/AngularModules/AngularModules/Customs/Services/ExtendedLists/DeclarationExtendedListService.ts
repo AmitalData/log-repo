@@ -7,6 +7,7 @@ import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryF
 import { DeclarationList } from '../../EntityLists/DeclarationList';
 
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
+import { SendCollateralRequestParams} from '../../DataContract/RequestParams/SendCollateralRequestParams';
 
 @Injectable()
 
@@ -172,6 +173,36 @@ export class DeclarationExtendedListService {
                 }).catch(ServiceHelper.HandleServiceError);
         });
     }
+
+
+    PostSendCollateral8212(requestParams: SendCollateralRequestParams) {
+
+        return Observable.defer(() => {
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            return this._http.post(
+                this._apiUrl + '/PostSendCollateral8212/', JSON.stringify(requestParams), { headers: authHeader })
+                .map((res) => {
+                    var messString = res.json();
+
+
+                    var serviceResponse: ServiceResponse;
+                    serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = messString;
+
+
+                    return serviceResponse;
+                }).catch(ServiceHelper.HandleServiceError);
+            ;
+
+        });
+    }
+
 
 
     PutCopyDeclaration(fromDeclarationId: string, toDeclarationId: string, tenant: number) {
