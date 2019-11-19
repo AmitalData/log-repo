@@ -84,11 +84,46 @@ namespace Logitude.HybridTest.CommonServices
                 filters.Skip = 0;
                 filters.SearchFields = HybridCodes.FromPortCode;
                 QuoteServiceReference.QuoteList[] serviceResult = serviceClient.GetQuoteList(filters, TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
-                string fromPortCode = serviceResult[0].FromPortId;
-                Assert.AreEqual(fromPortCode, HybridCodes.FromPortCode, "Hybrid Quote List Doesn't Exist!");
                 Assert.IsFalse(serviceResponse.HasError, "Get Quote List Failed! " + serviceResponse.ErrorMessage);
                 Assert.IsNull(serviceResponse.Result, "Get Quote List Failed! " + serviceResponse.ErrorMessage);
+                if (serviceResult.Length != 0)
+                {
+                    string fromPortCode = serviceResult[0].FromPortId;
+                    Assert.AreEqual(fromPortCode, HybridCodes.FromPortCode, "Hybrid Quote Doesn't Exist!");
+                }
+                else
+                {
+                    Assert.Inconclusive("There Isn't Quote With This From Port Code!");
+                }
             }
+        }
+
+        [TestMethod]
+        public void Test_Quote_UploadQuotationDocument()
+        {
+            LoginService.GetLoginTokenByCredentials();
+            Assert.Inconclusive("Not Implemented !");
+        }
+
+        [TestMethod]
+        public void Test_Quote_CreateEvent()
+        {
+            LoginService.GetLoginTokenByCredentials();
+            Assert.Inconclusive("Not Implemented !");
+        }
+
+        [TestMethod]
+        public void Test_Quote_BuildEventsList()
+        {
+            LoginService.GetLoginTokenByCredentials();
+            Assert.Inconclusive("Not Implemented !");
+        }
+
+        [TestMethod]
+        public void Test_Quote_DeleteQuoteEvent()
+        {
+            LoginService.GetLoginTokenByCredentials();
+            Assert.Inconclusive("Not Implemented !");
         }
     }
 }

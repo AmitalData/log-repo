@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "b0d06e07-fe57-4a94-afd0-1d5ec738574f",
+		"_postman_id": "3105db3b-00b1-4665-ad2a-8e1b205b46c5",
 		"name": "FullAccountingTesting copy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -28,7 +28,7 @@
 							"    var year = d.getFullYear();",
 							"    var uy = year.toString().substr(-2);",
 							"    month = (month + 1).toString();",
-							"     var time= d.getTime().toString().substr(0,12);",
+							"    var time= d.getTime().toString().substr(0,12);",
 							"    var tot=month + day + uy +time;",
 							"",
 							"   ",
@@ -749,7 +749,7 @@
 							"pm.test(\"CreateAPPayment \", function () {",
 							"    pm.response.to.have.status(200);",
 							"    var idvalue1 = (pm.response.json().Id);",
-							"      var idvalue = (pm.response.json().PaymentNo);",
+							"    var idvalue = (pm.response.json().PaymentNo);",
 							"    var id1exist = idvalue1 !== null;",
 							"    pm.expect(id1exist);",
 							"    pm.environment.set(\"APPaymentId\",idvalue1);",
@@ -815,7 +815,7 @@
 							"     pm.environment.set(\"APpaymentId\",idvalue);",
 							"",
 							"     tests[\"APpaymentExsits : \" + true ] = (true);",
-							"    postman.setNextRequest(null);  ",
+							"    postman.setNextRequest(\"PostCashbooks\");  ",
 							"    }",
 							"   ",
 							"    ",
@@ -899,7 +899,956 @@
 			"response": []
 		},
 		{
-			"name": "LogOut",
+			"name": "PostCashbooks",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1b57fd8a-d821-42ac-b0c0-6804ef74e67e",
+						"exec": [
+							"pm.test(\"PostCashbooks \", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var idvalue1 = (pm.response.json().Id);",
+							"    var idvalue2 = (pm.response.json().EnglishName);",
+							"    var idvalue = (pm.response.json().AccountNumber);",
+							"    var id1exist = idvalue1 !== null;",
+							"    pm.expect(id1exist);",
+							"    pm.environment.set(\"CashBookId\",idvalue1);",
+							"    pm.environment.set(\"CashBooksAccountNumber\",idvalue);",
+							"    pm.environment.set(\"CashBooksAccountEnglishName\",idvalue2);",
+							"    tests[\"IdExist : \" + id1exist] = (id1exist);",
+							"    postman.setNextRequest(\"GETCashBooks\"); ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authority",
+						"value": "test.logitudeworld.com"
+					},
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "origin",
+						"value": "https://test.logitudeworld.com"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-origin"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "referer",
+						"value": "https://test.logitudeworld.com/staging/Angular19061118/index.html"
+					},
+					{
+						"key": "accept-encoding",
+						"value": "gzip, deflate, br"
+					},
+					{
+						"key": "accept-language",
+						"value": "ar-JO,ar;q=0.9,en-US;q=0.8,en;q=0.7"
+					},
+					{
+						"key": "cookie",
+						"value": "email_cookie=sumaya@logitudeworld.com"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \n    \"tenant\": {{Tenant}},\n    \"createdByUserId\": \"{{LoggedUserId}}\",\n    \"AccountNumber\":\"CB{{tot}}\", \n    \"updatedByUserId\": \"{{LoggedUserId}}\",\n    \"cashBookTypeCode\": \"2\",\n    \"currencyId\": \"{{AccountingCurrencyId}}\",\n    \"accountId\": \"{{BankGLAccountId}}\",\n    \"localName\": \"מבחן התרסקות\",\n    \"englishName\": \"Chash Book Test\",\n    \"branchId\": \"{{BranchCashBookId}}\"\n      \n}"
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/staging/api/cashbooks",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"staging",
+						"api",
+						"cashbooks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GETCashBooks",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3c995a26-be83-409e-bd97-f74af35c87ee",
+						"exec": [
+							"pm.test(\"GETCashBooks\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   if(pm.response.json().Result.length < 1 ){",
+							"     tests[\"CashBooksExsits : \" + false] = (true);",
+							"   }",
+							"   else {",
+							"    var idvalue=pm.response.json().Result[0].Id;",
+							"    var idvalue2 = (pm.response.json().Result[0].EnglishName);",
+							"    var d = new Date();",
+							"    var year = d.getFullYear();",
+							"    var uy = year.toString().substr(-1);",
+							"    var time= d.getTime().toString().substr(0,12);",
+							"    var tot= uy +time;",
+							"",
+							"    pm.environment.set(\"tot\",tot);",
+							"    pm.environment.set(\"CashBookId\",idvalue);",
+							"    pm.environment.set(\"CashBooksAccountEnglishName\",idvalue2);",
+							"    tests[\"CashBooksExsits : \" + true ] = (true);",
+							"    postman.setNextRequest(\"PostPaymentCheques\");  ",
+							"",
+							"    }",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authority",
+						"value": "test.logitudeworld.com"
+					},
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-origin"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "referer",
+						"value": "https://test.logitudeworld.com/staging/Angular19061113/index.html"
+					},
+					{
+						"key": "accept-encoding",
+						"value": "gzip, deflate, br"
+					},
+					{
+						"key": "accept-language",
+						"value": "ar-JO,ar;q=0.9,en-US;q=0.8,en;q=0.7"
+					},
+					{
+						"key": "cookie",
+						"value": "email_cookie=sumaya@logitudeworld.com"
+					}
+				],
+				"url": {
+					"raw": "https://test.logitudeworld.com/staging/api/cashbookviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{CashBooksAccountNumber}}&GetCount=true&PageIndex=0&PageSize=22&SortBy=EnglishName&SortDirection=Ascending",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"staging",
+						"api",
+						"cashbookviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "{{CashBooksAccountNumber}}"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "22"
+						},
+						{
+							"key": "SortBy",
+							"value": "EnglishName"
+						},
+						{
+							"key": "SortDirection",
+							"value": "Ascending"
+						},
+						{
+							"key": "AdditionalFilters",
+							"value": "\\[\\{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22RP11719157310734087%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false\\}\\]",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostPaymentCheques",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7cb455b9-4a7c-41cd-a24a-949d0270769e",
+						"exec": [
+							"pm.test(\"PostPaymentCheques \", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var idvalue = (pm.response.json().ChequeNumber);",
+							"    var idvalue1 = (pm.response.json().Id);",
+							"    var id1exist = idvalue1 !== null;",
+							"    pm.expect(id1exist);",
+							"    pm.environment.set(\"PaymentChequeId\",idvalue1);",
+							"    pm.environment.set(\"PaymentChequeNumber\",idvalue);",
+							"    tests[\"IdExist : \" + id1exist] = (id1exist);",
+							"    postman.setNextRequest(\"GETPaymentCheques\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authority",
+						"value": "test.logitudeworld.com"
+					},
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "origin",
+						"value": "https://test.logitudeworld.com"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-origin"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "referer",
+						"value": "https://test.logitudeworld.com/staging/Angular19061118/index.html"
+					},
+					{
+						"key": "accept-encoding",
+						"value": "gzip, deflate, br"
+					},
+					{
+						"key": "accept-language",
+						"value": "ar-JO,ar;q=0.9,en-US;q=0.8,en;q=0.7"
+					},
+					{
+						"key": "cookie",
+						"value": "email_cookie=sumaya@logitudeworld.com"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"tenant\": \"{{Tenant}}\",\n    \"currencyId\": \"{{AccountingCurrencyId}}\",\n    \"ChequeNumber\":\"PC{{tot}}\",\n    \"valueDate\": \"2019-11-07T05:57:35.324Z\",\n    \"bankAccountId\": \"1-606\",\n    \"localAmount\": 200,\n    \"payToGLAccountId\": \"{{BankGLAccountId}}\",\n    \"payToName\": \"Bank Account Test\",\n    \"createdByUserId\": \"{{LoggedUserId}}\",\n    \"updatedByUserId\": \"{{LoggedUserId}}\",\n    \"SearchFields\":\"PC{{tot}}\",\n \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/staging/api/paymentcheques",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"staging",
+						"api",
+						"paymentcheques"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GETPaymentCheques",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c22349bc-6f85-44fa-a8cd-455a5313254e",
+						"exec": [
+							"pm.test(\"GETPaymentCheques\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   if(pm.response.json().Result.length < 1 ){",
+							"     tests[\"PaymentChequesExsits : \" + false] = (true);",
+							"   }",
+							"   else {",
+							"    var idvalue=pm.response.json().Result[0].Id;",
+							"    pm.environment.set(\"PaymentChequeId\",idvalue);",
+							"    tests[\"PaymentChequesExsits : \" + true ] = (true);",
+							"    postman.setNextRequest(\"PostBankAccount\");  ",
+							"    }",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authority",
+						"value": "test.logitudeworld.com"
+					},
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-origin"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "referer",
+						"value": "https://test.logitudeworld.com/staging/Angular19061113/index.html"
+					},
+					{
+						"key": "accept-encoding",
+						"value": "gzip, deflate, br"
+					},
+					{
+						"key": "accept-language",
+						"value": "ar-JO,ar;q=0.9,en-US;q=0.8,en;q=0.7"
+					},
+					{
+						"key": "cookie",
+						"value": "email_cookie=sumaya@logitudeworld.com"
+					}
+				],
+				"url": {
+					"raw": "https://test.logitudeworld.com/staging/api/paymentchequeviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{PaymentChequeNumber}}&GetCount=true&PageIndex=0&PageSize=22&SortBy=CreateDate&SortDirection=Desending",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"staging",
+						"api",
+						"paymentchequeviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "{{PaymentChequeNumber}}"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "22"
+						},
+						{
+							"key": "SortBy",
+							"value": "CreateDate"
+						},
+						{
+							"key": "SortDirection",
+							"value": "Desending"
+						},
+						{
+							"key": "AdditionalFilters",
+							"value": "\\[\\{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22PC1171915731210%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false\\}\\]",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostBankAccount",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "73604555-a246-4f9c-bf66-6793c2d14101",
+						"exec": [
+							"pm.test(\"PostBankAccount\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var idvalue = (pm.response.json().AccountNumber);",
+							"    var idvalue1 = (pm.response.json().Id);",
+							"    var idvalue2 = (pm.response.json().EnglishName);",
+							"    var id1exist = idvalue1 !== null;",
+							"    pm.expect(id1exist);",
+							"    pm.environment.set(\"BankAccountId\",idvalue1);",
+							"    pm.environment.set(\"BankAccountNumber\",idvalue);",
+							"    pm.environment.set(\"BankAccountEnglishName\",idvalue2);",
+							"    tests[\"IdExist : \" + id1exist] = (id1exist);",
+							"    postman.setNextRequest(\"GETBankAccount\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authority",
+						"value": "test.logitudeworld.com"
+					},
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "origin",
+						"value": "https://test.logitudeworld.com"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-origin"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "referer",
+						"value": "https://test.logitudeworld.com/staging/Angular19061113/index.html"
+					},
+					{
+						"key": "accept-encoding",
+						"value": "gzip, deflate, br"
+					},
+					{
+						"key": "accept-language",
+						"value": "ar-JO,ar;q=0.9,en-US;q=0.8,en;q=0.7"
+					},
+					{
+						"key": "cookie",
+						"value": "email_cookie=sumaya@logitudeworld.com"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"tenant\": {{Tenant}},\n    \"bankId\": \"{{BankCodeId}}\",\n    \"branchNumber\": 99,\n    \"accountNumber\": \"BKTest14\",\n    \"currencyId\": \"{{AccountingCurrencyId}}\",\n    \"gLAccountId\": \"{{BankGLAccountId}}\",\n    \"deferredGLAccountId\": \"{{BankGLAccountId}}\",\n    \"transferGLAcccountId\": \"{{BankGLAccountId}}\",\n    \"EnglishName\":\"Bank Account Test\",\n    \"LocalName\":\"מבחן חשבון בנק\",\n}"
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/staging/api/bankaccounts",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"staging",
+						"api",
+						"bankaccounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GETBankAccount",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5cf1e258-d713-4b9f-bb1e-6989e3e595a3",
+						"exec": [
+							"pm.test(\"GETBankAccount\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   if(pm.response.json().Result.length < 1 ){",
+							"     tests[\"BankAccountExsits : \" + false] = (true);",
+							"   }",
+							"   else {",
+							"    var idvalue=pm.response.json().Result[0].Id;",
+							"    var idvalue2 = (pm.response.json().Result[0].EnglishName);",
+							"    var idvalue1 = (pm.response.json().Result[0].AccountNumber);",
+							"    pm.environment.set(\"BankAccountId\",idvalue);",
+							"    pm.environment.set(\"BankAccountEnglishName\",idvalue2);",
+							"    pm.environment.set(\"BankAccountNumber\",idvalue1);",
+							"    tests[\"BankAccountExsits : \" + true ] = (true);",
+							"    postman.setNextRequest(\"PostDeposit\");  ",
+							"    }",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authority",
+						"value": "test.logitudeworld.com"
+					},
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-origin"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "referer",
+						"value": "https://test.logitudeworld.com/staging/Angular19061113/index.html"
+					},
+					{
+						"key": "accept-encoding",
+						"value": "gzip, deflate, br"
+					},
+					{
+						"key": "accept-language",
+						"value": "ar-JO,ar;q=0.9,en-US;q=0.8,en;q=0.7"
+					},
+					{
+						"key": "cookie",
+						"value": "email_cookie=sumaya@logitudeworld.com"
+					}
+				],
+				"url": {
+					"raw": "https://test.logitudeworld.com/staging/api/bankaccountviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{BankAccountNumber}}&GetCount=true&PageIndex=0&PageSize=22&SortBy=EnglishName&SortDirection=Desending",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"staging",
+						"api",
+						"bankaccountviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "{{BankAccountNumber}}"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "22"
+						},
+						{
+							"key": "SortBy",
+							"value": "EnglishName"
+						},
+						{
+							"key": "SortDirection",
+							"value": "Desending"
+						},
+						{
+							"key": "AdditionalFilters",
+							"value": "\\[\\{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22BKTest14%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false\\}\\]",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostDeposit",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1318d93b-e5b7-45c9-b958-5979d0cb78b5",
+						"exec": [
+							"pm.test(\"PostDeposit\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var idvalue = (pm.response.json().DepositNumber);",
+							"    var idvalue1 = (pm.response.json().Id);",
+							"    var id1exist = idvalue1 !== null;",
+							"    pm.expect(id1exist);",
+							"    pm.environment.set(\"DepositId\",idvalue1);",
+							"    pm.environment.set(\"DepositNumber\",idvalue);",
+							"    tests[\"IdExist : \" + id1exist] = (id1exist);",
+							"    postman.setNextRequest(\"GETDeposit\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authority",
+						"value": "test.logitudeworld.com"
+					},
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "origin",
+						"value": "https://test.logitudeworld.com"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-origin"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "referer",
+						"value": "https://test.logitudeworld.com/staging/Angular19061113/index.html"
+					},
+					{
+						"key": "accept-encoding",
+						"value": "gzip, deflate, br"
+					},
+					{
+						"key": "accept-language",
+						"value": "ar-JO,ar;q=0.9,en-US;q=0.8,en;q=0.7"
+					},
+					{
+						"key": "cookie",
+						"value": "email_cookie=sumaya@logitudeworld.com"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"accountingDate\": \"2019-11-02T11:34:48.000Z\",\n    \"tenant\": {{Tenant}},\n    \"depositDate\": \"2019-11-02T11:34:48.000Z\",\n    \"cashBookId\": \"{{CashBookId}}\",\n    \"depositCurrencyId\": \"{{AccountingCurrencyId}}\",\n    \"depositBankAccountId\": \"{{BankAccountId}}\",\n    \"isCashDeposit\": true,\n    \"cashBookName\": \"{{CashBooksAccountEnglishName}}\",\n    \"bankAccountNumber\": \"{{BankAccountNumber}}\",\n    \"foreignAmount\": \"335\",\n    \"localDepositAmount\": 335,\n    \"createdByUserId\": \"{{LoggedUserId}}\",\n    \"updatedByUserId\": \"{{LoggedUserId}}\",\n}"
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/staging/api/bankdeposits",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"staging",
+						"api",
+						"bankdeposits"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GETDeposit",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "79355fd2-26c3-4e24-a7cf-969179fc01c9",
+						"exec": [
+							"pm.test(\"GETDeposit\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   if(pm.response.json().Result.length < 1 ){",
+							"     tests[\"DepositExsits : \" + false] = (true);",
+							"   }",
+							"   else {",
+							"    var idvalue=pm.response.json().Result[0].Id;",
+							"    pm.environment.set(\"DepositId\",idvalue);",
+							"    tests[\"DepositExsits : \" + true ] = (true);",
+							"    postman.setNextRequest(\"LoggedOut\");  ",
+							"    }",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authority",
+						"value": "test.logitudeworld.com"
+					},
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-origin"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "referer",
+						"value": "https://test.logitudeworld.com/staging/Angular19061113/index.html"
+					},
+					{
+						"key": "accept-encoding",
+						"value": "gzip, deflate, br"
+					},
+					{
+						"key": "accept-language",
+						"value": "ar-JO,ar;q=0.9,en-US;q=0.8,en;q=0.7"
+					},
+					{
+						"key": "cookie",
+						"value": "email_cookie=sumaya@logitudeworld.com"
+					}
+				],
+				"url": {
+					"raw": "https://test.logitudeworld.com/staging/api/bankdepositviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{DepositNumber}}&GetCount=true&PageIndex=0&PageSize=22&SortBy=DepositNumber&SortDirection=Desending",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"staging",
+						"api",
+						"bankdepositviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "{{DepositNumber}}"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "22"
+						},
+						{
+							"key": "SortBy",
+							"value": "DepositNumber"
+						},
+						{
+							"key": "SortDirection",
+							"value": "Desending"
+						},
+						{
+							"key": "AdditionalFilters",
+							"value": "\\[\\{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%221179%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false\\}\\]",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LoggedOut",
 			"event": [
 				{
 					"listen": "test",

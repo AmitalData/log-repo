@@ -421,9 +421,16 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                     string[] Parts = HeaderDocumentIdentifier.Split('-');
 
                                     int CONTRL_Tenant = 0;
-
-                                    bool is_CONTRL_Tenant = Int32.TryParse(Parts[1], out CONTRL_Tenant);
-
+                                    bool is_CONTRL_Tenant = false;
+                                    if (Parts[0] == "B")
+                                    {
+                                        is_CONTRL_Tenant = Int32.TryParse(Parts[2], out CONTRL_Tenant);
+                                    }
+                                    else
+                                    {
+                                        is_CONTRL_Tenant = Int32.TryParse(Parts[1], out CONTRL_Tenant);
+                                    }
+                                    
                                     if (is_CONTRL_Tenant)
                                     {
                                         iMessageTenant = CONTRL_Tenant;
@@ -597,14 +604,14 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                 {
                                     if (iMessageBody.MessageProperties.Party != null)
                                     {
-                                        INTTRABooking2Confirm.PartiesType forwarder = iMessageBody.MessageProperties.Party.Where(d => d.Role == INTTRABooking2Confirm.PartyTypeValues.Forwarder).FirstOrDefault();
-                                        if (forwarder != null)
+                                        INTTRABooking2Confirm.PartiesType booker = iMessageBody.MessageProperties.Party.Where(d => d.Role == INTTRABooking2Confirm.PartyTypeValues.Booker).FirstOrDefault();
+                                        if (booker != null)
                                         {
-                                            if (forwarder.Identifier != null)
+                                            if (booker.Identifier != null)
                                             {
-                                                if (forwarder.Identifier.Value != null)
+                                                if (booker.Identifier.Value != null)
                                                 {
-                                                    Branch iBranch = this.myCommonContext.Branches.Where(d => d.INTTRAAlias == forwarder.Identifier.Value).FirstOrDefault();
+                                                    Branch iBranch = this.myCommonContext.Branches.Where(d => d.INTTRAAlias == booker.Identifier.Value).FirstOrDefault();
                                                     if (iBranch != null)
                                                     {
                                                         iMessageTenant = iBranch.Tenant;

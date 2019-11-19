@@ -32,8 +32,8 @@ namespace WebFreight.Web
         public static String OAUTH_URL = "https://oauth.intuit.com/oauth/v1";
 
 
-        public string oauth_callback_url = LogitudeSettings.LogitudeURL + "QuickbooksOnlineAuth2.aspx";
-        public string GrantUrl = LogitudeSettings.LogitudeURL + "QuickbooksOnlineAuth2.aspx?connect=true";
+        public string oauth_callback_url = LogitudeSettings.LogitudeURL + "/QuickbooksOnlineAuth2.aspx";
+        public string GrantUrl = LogitudeSettings.LogitudeURL + "/QuickbooksOnlineAuth2.aspx?connect=true";
         public OAuth2Client oauthClient;
 
         public List<string> queryKeys;
@@ -44,10 +44,10 @@ namespace WebFreight.Web
             {
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
 
-                if (LogitudeSettings.DeploymentStage != "Dev")
-                {
-                    Security.SecurityUtility.RedirectToHttps();
-                }
+                //if (LogitudeSettings.DeploymentStage != "Dev")
+                //{
+                //    Security.SecurityUtility.RedirectToHttps(false);
+                //}
                 if (Request.QueryString.Count > 0)
                 {
                     queryKeys = new List<string>(Request.QueryString.AllKeys);

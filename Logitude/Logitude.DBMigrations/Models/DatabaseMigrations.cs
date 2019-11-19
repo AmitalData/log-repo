@@ -28,7 +28,7 @@ namespace Logitude.DBMigrations.Models
                 return GetAlterTableScript(currentTable);
             }
         }
-         
+
         protected string GetColumnScript(ColumnDefinition column)
         {
             string columnScript = column.Name + " ";
@@ -42,21 +42,35 @@ namespace Logitude.DBMigrations.Models
         {
             switch (type)
             {
-                case "VARCHAR":
-                    return "Text";
-                case "NVARCHAR":
-                    return "nText";
-                case "INT":
-                    return "Integer";
-                case "BIT":
-                    return "Boolean";
-                case "DATETIME":
-                    return "DateTime";
+                case "int":
+                    return "int";
+                case "decimal":
+                    return "decimal";
+                case "timestamp":
+                    return "timestamp";
+                case "varbinary":
+                    return "varbinary";
+                case "varchar":
+                    return "varchar";
+                case "datetime":
+                    return "datetime";
+                case "time":
+                    return "time";
+                case "float":
+                    return "float";
+                case "char":
+                    return "char";
+                case "bigint":
+                    return "bigint";
+                case "nvarchar":
+                    return "nvarchar";
+                case "bit":
+                    return "bit";
                 default:
-                    return "Text";
+                    return null;
             }
         }
-
+        
         protected string GetConstraintsScript(ConstraintsDefinition constraints)
         {
             if (constraints != null)
@@ -94,8 +108,7 @@ namespace Logitude.DBMigrations.Models
             List<ColumnMigration> columnsMigrations = new List<ColumnMigration>();
             foreach (var dxmlTableColumn in dxmlTable.Columns)
             {
-                var result = IsColumnInCurrentTable(currentTable, dxmlTableColumn.Name, dxmlTableColumn.OldName);
-                if (!IsColumnInCurrentTable(currentTable, dxmlTableColumn.Name, dxmlTableColumn.OldName))
+                if (!IsColumnInCurrentTable(currentTable, dxmlTableColumn.Name, dxmlTableColumn.OldNames))
                 {
                     List<ColumnMigration> columnMigrations = GetColumnMigrations(null, dxmlTableColumn);
                     foreach(ColumnMigration columnMigration in columnMigrations)
@@ -105,7 +118,7 @@ namespace Logitude.DBMigrations.Models
                 }
                 else
                 {
-                    ColumnDefinition currentTableColumn = GetCurrentTableColumn(currentTable, dxmlTableColumn.Name, dxmlTableColumn.OldName);
+                    ColumnDefinition currentTableColumn = GetCurrentTableColumn(currentTable, dxmlTableColumn.Name, dxmlTableColumn.OldNames);
                     List<ColumnMigration> columnMigrations = GetColumnMigrations(currentTableColumn, dxmlTableColumn);
                     foreach (ColumnMigration columnMigration in columnMigrations)
                     {
@@ -116,7 +129,8 @@ namespace Logitude.DBMigrations.Models
             columnsMigrations = IncludeDropColumnsMigrations(currentTable, dxmlTable, columnsMigrations);
             TableMigrations tableMigrations = new TableMigrations
             {
-                TableName = dxmlTable.Name,
+                DxmlTableName = dxmlTable.Name,
+                CurrentTableName = currentTable.Name,
                 ColumnsMigrations = columnsMigrations
             };
             return tableMigrations;
@@ -124,9 +138,20 @@ namespace Logitude.DBMigrations.Models
         
         protected List<ColumnMigration> IncludeDropColumnsMigrations(TableDefinition currentTable, TableDefinition dxmlTable, List<ColumnMigration> columnsMigrations)
         {
-            List<string> dxmlTableColumnsNames = dxmlTable.Columns.Select(c => (c.Name)).ToList();
-            List<string> dxmlTableColumnsOldNames = dxmlTable.Columns.Where(c => c.OldName != null).Select(c => (c.OldName)).ToList();
-            dxmlTableColumnsNames = dxmlTableColumnsNames.Concat(dxmlTableColumnsOldNames).ToList();
+            List<string> dxmlTableColumnsNames = dxmlTable.Columns.Select(c => c.Name).ToList();
+            List<string> dxmlTableColumnsOldNames = dxmlTable.Columns.Where(c => c.OldNames != null).Select(c => c.OldNames).ToList();
+            foreach(var name in dxmlTableColumnsOldNames)
+            {
+                if (!name.Contains(","))
+                {
+                    dxmlTableColumnsNames.Add(name);
+                }
+                else
+                {
+                    dxmlTableColumnsNames = dxmlTableColumnsNames.Concat(name.Split(',').ToList()).ToList();
+                }
+            }
+            
             List<ColumnDefinition> droppedColumns = currentTable.Columns.Where(c => !dxmlTableColumnsNames.Contains(c.Name) && !c.Name.StartsWith("Drop_")).ToList();
             foreach (var droppedColumn in droppedColumns)
             {
@@ -140,9 +165,22 @@ namespace Logitude.DBMigrations.Models
             return columnsMigrations;
         }
 
-        protected bool IsColumnInCurrentTable(TableDefinition currentTable, string dxmlColumnName, string dxmlColumnOldName)
+        protected bool IsColumnInCurrentTable(TableDefinition currentTable, string dxmlColumnName, string dxmlColumnOldNames)
         {
-            bool IsColumnInCurrentTable = currentTable.Columns.Where(c => c.Name == dxmlColumnOldName).Any();
+            bool IsColumnInCurrentTable = false;
+            if(dxmlColumnOldNames != null)
+            {
+                if (!dxmlColumnOldNames.Contains(","))
+                {
+                    IsColumnInCurrentTable = currentTable.Columns.Where(c => c.Name == dxmlColumnOldNames).Any();
+                }
+                else
+                {
+                    List<string> oldNames = dxmlColumnOldNames.Split(',').ToList();
+                    IsColumnInCurrentTable = currentTable.Columns.Where(c => oldNames.Contains(c.Name)).Any();
+                }
+            }
+
             if (!IsColumnInCurrentTable)
             {
                 IsColumnInCurrentTable = currentTable.Columns.Where(c => c.Name == dxmlColumnName).Any();
@@ -150,15 +188,37 @@ namespace Logitude.DBMigrations.Models
             return IsColumnInCurrentTable;
         }
         
-        protected ColumnDefinition GetCurrentTableColumn(TableDefinition currentTable, string dxmlColumnName, string dxmlColumnOldName)
+        protected ColumnDefinition GetCurrentTableColumn(TableDefinition currentTable, string dxmlColumnName, string dxmlColumnOldNames)
         {
-            string columnName = dxmlColumnOldName;
-            bool IsColumnInCurrentTable = currentTable.Columns.Where(c => c.Name == dxmlColumnOldName).Any();
+            string columnName = dxmlColumnOldNames;
+            bool IsColumnInCurrentTable = false;
+            if(dxmlColumnOldNames != null)
+            {
+                if (!dxmlColumnOldNames.Contains(','))
+                {
+                    IsColumnInCurrentTable = currentTable.Columns.Where(c => c.Name == dxmlColumnOldNames).Any();
+                }
+                else
+                {
+                    List<string> oldNames = dxmlColumnOldNames.Split(',').ToList();
+                    IsColumnInCurrentTable = currentTable.Columns.Where(c => oldNames.Contains(c.Name)).Any();
+                }
+            }
+
             if (!IsColumnInCurrentTable)
             {
                 columnName = dxmlColumnName;
             }
-            return currentTable.Columns.Where(c => c.Name == columnName).First();
+
+            if (!columnName.Contains(','))
+            {
+                return currentTable.Columns.Where(c => c.Name == columnName).First();
+            }
+            else
+            {
+                List<string> names = columnName.Split(',').ToList();
+                return currentTable.Columns.Where(c => names.Contains(c.Name)).First();
+            }
         }
 
         protected ColumnMigration GetColumnMigration(int migrationType, ColumnDefinition currentTableColumn, ColumnDefinition dxmlTableColumn)
@@ -206,7 +266,8 @@ namespace Logitude.DBMigrations.Models
             return columnMigrations;
         }
 
-        protected bool IsNotInCurrentTable(ColumnDefinition currentTableColumn) {
+        protected bool IsNotInCurrentTable(ColumnDefinition currentTableColumn)
+        {
             return currentTableColumn == null;
         }
 
@@ -270,7 +331,7 @@ namespace Logitude.DBMigrations.Models
         protected List<ColumnMigration> GetAlterSizeColumnMigrations(ColumnDefinition currentTableColumn, ColumnDefinition dxmlTableColumn)
         {
             List<ColumnMigration> columnMigrations = new List<ColumnMigration>();
-            if (currentTableColumn.Size != dxmlTableColumn.Size)
+            if (currentTableColumn.Size != dxmlTableColumn.Size && dxmlTableColumn.Size != 0)
             {
                 if (currentTableColumn.Constraints.PrimaryKey)
                 {
@@ -351,11 +412,11 @@ namespace Logitude.DBMigrations.Models
             return columnMigrations;
         }
 
-        protected string GenerateIdForConstraint()
+        protected string GenerateRandomString()
         {
             return Regex.Replace(Convert.ToBase64String(Guid.NewGuid().ToByteArray()), "[/+=]", "").ToUpper();
         }
-
+        
         // abstract methods
         protected abstract TableDefinition GetCurrentTableDefinitionFromDB();
 

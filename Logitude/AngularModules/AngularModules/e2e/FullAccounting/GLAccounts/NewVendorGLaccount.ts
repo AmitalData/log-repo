@@ -3,15 +3,15 @@ import { FieldsHelper } from '../../Helpers/FieldsHelper';
 import { GeneralFunctions } from '../../Helpers/GeneralFunctions';
 
 export class NewVendor {
-  private Helper: FieldsHelper;
-  private Generator: GeneralFunctions;
+    private Helper: FieldsHelper;
+    private Generator: GeneralFunctions;
 
-  constructor() {
-    this.Helper = new FieldsHelper();
-    this.Generator = new GeneralFunctions();
-  }
+    constructor() {
+        this.Helper = new FieldsHelper();
+        this.Generator = new GeneralFunctions();
+    }
 
-  public CreateNewVendorGLAccount(Name: string) {
+    public CreateNewVendorGLAccount(Name: string) {
 
       this.Helper.WaitByIdAndClick('General.MH.Maintenance');
       this.Generator.GoToMainMenu('MaintenanceItemMTVD');
