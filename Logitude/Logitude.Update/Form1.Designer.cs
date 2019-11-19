@@ -1668,16 +1668,7 @@
             this.tabPage2.Size = new System.Drawing.Size(743, 558);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Other";
-            // 
-            // button47
-            // 
-            this.button47.Location = new System.Drawing.Point(522, 25);
-            this.button47.Name = "button47";
-            this.button47.Size = new System.Drawing.Size(184, 23);
-            this.button47.TabIndex = 97;
-            this.button47.Text = "tax report";
-            this.button47.UseVisualStyleBackColor = true;
-            this.button47.Click += new System.EventHandler(this.button47_Click);
+          
             // 
             // button44
             // 
