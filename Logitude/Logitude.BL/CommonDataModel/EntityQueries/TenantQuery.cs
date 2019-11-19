@@ -338,7 +338,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                     if (tenant.CurrencyId != null)
                     {
-                        Currency cur = CurrencyRepository.GetSingleCurrency(tenant.CurrencyId, tenant.Id, true);
+                        CurrencyRepository repository = new CurrencyRepository(tenant.Id);
+                        Currency cur = repository.GetSingleCurrencyById(tenant.CurrencyId, tenant.Id, true);
                         if (cur != null)
                         {
                             tenant.CurrencyCode = cur.Code;
@@ -505,11 +506,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     tenant.TemporalStartDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalStartDate;
                     tenant.TemporalEndDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalEndDate;
                     //tenant.StockTypeCode = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().StockTypeCode;
+                    scope.Complete();
                 }
 
                 if (tenant.CurrencyId != null)
                 {
-                    Currency cur = CurrencyRepository.GetSingleCurrency(tenant.CurrencyId, tenant.Id, true);
+                    CurrencyRepository repository = new CurrencyRepository(tenant.Id);
+                    Currency cur = repository.GetSingleCurrencyById(tenant.CurrencyId, tenant.Id, true);
                     tenant.CurrencyCode = cur.Code;
                 }
 

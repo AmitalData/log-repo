@@ -1130,6 +1130,84 @@ namespace WebFreight.Web.WebServices
 
             return myResult;
         }
+        public string GetPickUpDeliveryShortAddress(ShipmentPickUpDelivery myPickup)
+        {
+            string myResult = "";
+
+            switch (myPickup.PickUpDeliveryFromTypeCode)
+            {
+                case "PART":
+                    {
+                        if (!string.IsNullOrEmpty(myPickup.FromPartnerCardId))
+                        {
+                            Address myPartnerAddress = addressRepository.GetMainAddressByCardId(myPickup.FromPartnerCardId, tenant);
+                            if (myPartnerAddress != null)
+                            {
+                                myResult = myPartnerAddress.City;
+
+                                if (myPartnerAddress.ZipCode != null)
+                                {
+                                    myResult = myResult + " , " + myPartnerAddress.ZipCode;
+                                }
+
+                                if (myPartnerAddress.CountryId != null)
+                                {
+                                    Country iCountry = CountryRepository.GetSingleCountry(myPartnerAddress.CountryId, tenant, true);
+                                    if (iCountry != null)
+                                    {
+                                        myResult = myResult + " , " + iCountry.EnglishName;
+                                    }
+                                }
+                            }
+                        }
+
+                        break;
+                    }
+
+                case "PORT":
+                    {
+                        if (!string.IsNullOrEmpty(myPickup.FromPortId))
+                        {
+                            PortPM myPort = PortQuery.GetSinglePort(tenant, myPickup.FromPortId, true);
+                            if (myPort != null)
+                            {
+                                myResult = myPort.EnglishName;
+
+                                if (myPort.StateCode != null)
+                                {
+                                    myResult = myResult + " , " + myPort.StateCode;
+                                }
+                            }
+                        }
+
+                        break;
+                    }
+
+                case "CASL":
+                    {
+                        myResult = myPickup.FromAddressCity;
+
+                        if (myPickup.FromAddressZipCode != null)
+                        {
+                            myResult = myResult + " , " + myPickup.FromAddressZipCode;
+                        }
+
+                        if (myPickup.FromAddressCountryId != null)
+                        {
+                            Country iCountry = CountryRepository.GetSingleCountry(myPickup.FromAddressCountryId, tenant, true);
+                            if (iCountry != null)
+                            {
+                                myResult = myResult + " , " + iCountry.EnglishName;
+                            }
+                        }
+
+                        break;
+                    }
+            }
+
+            return myResult;
+        }
+
         public string GetDeliveryAddress(ShipmentPickUpDelivery myDelivery)
         {
             string myResult = "";

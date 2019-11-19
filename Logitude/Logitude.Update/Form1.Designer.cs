@@ -190,6 +190,7 @@
             this.AirlineLogoTenantTextBox = new System.Windows.Forms.TextBox();
             this.button46 = new System.Windows.Forms.Button();
             this.UpdateRulesLabel = new System.Windows.Forms.Label();
+            this.button47 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -396,6 +397,7 @@
             // 
             // toolStripTextBoxFilePath
             // 
+            this.toolStripTextBoxFilePath.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripTextBoxFilePath.Name = "toolStripTextBoxFilePath";
             this.toolStripTextBoxFilePath.Size = new System.Drawing.Size(100, 23);
             this.toolStripTextBoxFilePath.Text = "c:\\TextCode.xml";
@@ -524,6 +526,7 @@
             // 
             // tenantTxtBox
             // 
+            this.tenantTxtBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tenantTxtBox.Name = "tenantTxtBox";
             this.tenantTxtBox.Size = new System.Drawing.Size(100, 23);
             this.tenantTxtBox.Text = "1";
@@ -1840,6 +1843,16 @@
             this.UpdateRulesLabel.TabIndex = 97;
             this.UpdateRulesLabel.Text = "...";
             this.UpdateRulesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // button47
+            // 
+            this.button47.Location = new System.Drawing.Point(522, 25);
+            this.button47.Name = "button47";
+            this.button47.Size = new System.Drawing.Size(184, 23);
+            this.button47.TabIndex = 97;
+            this.button47.Text = "tax report";
+            this.button47.UseVisualStyleBackColor = true;
+            this.button47.Click += new System.EventHandler(this.button47_Click);
             // 
             // Form1
             // 
