@@ -59,7 +59,7 @@ export class ChooseCountryPortComponent extends BaseComponent {
     CloseButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
-    
+
     AddButtonClicked() {
         var errors: string[] = [];
         if (this.Country == null || this.CountryId == null) {
@@ -77,7 +77,7 @@ export class ChooseCountryPortComponent extends BaseComponent {
         }
     }
 
-    public CountryPortsMessageCount = ""; 
+    public CountryPortsMessageCount = "";
     private LoadPortListMethod() {
         var filters = new ApiQueryFilters();
         filters.addAdditionalFilter("TransportModeId", "A", null, null, "Equals", false, true, false, "Text");
@@ -107,7 +107,8 @@ export class ChooseCountryPortComponent extends BaseComponent {
                         counter = counter + 1;
                     }
                 });
-                this.ParentClass.fatherComponent.ItemList = this.ParentClass.fatherComponent.ItemList.sort((a, b) => { return (a.CountryCode === b.CountryCode) ? 0 : (a.CountryCode < b.CountryCode) ? -1 : 1 });
+
+
                 this.CountryPortsMessageCount = counter + " ports added";
                 this.CurrentSession.StopBusyIndicator();
             }
