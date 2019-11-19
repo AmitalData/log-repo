@@ -404,8 +404,8 @@
                         
                                             <td class="column1"> Password: <br />
                                     <div  style="height:33px;width:267px;border:1px solid lightgray;border-radius:4px;" class="InputShow">
-                                                   <input  style="width:215px;border:0px" class="auto-style1" id="Password" type="password" autocomplete="off" runat="server" oninput="onPasswordChanged()" required data-email-msg="password is required!" onkeypress="capLock(event)"/>
-                                                           <span> <a id="ShowHidePasswordLinkId" style="padding-left:2px;font-size:12px;vertical-align:central;font-family:Arial; cursor:pointer;text-decoration:none" onclick="ShowHidePasswordClick()">Show</a></span>
+                                                           <input  style="width:230px;border:0px;" class="auto-style1" id="Password" type="password" autocomplete="off" runat="server" oninput="onPasswordChanged()" required data-email-msg="password is required!" onkeypress="capLock(event)"/>
+                                                           <img  src="images/LoginScreen/password_eye_closed.png" id="ShowHidePasswordImageId" alt="Show Password" style="padding-left:2px;font-size:12px;vertical-align:central;font-family:Arial; cursor:pointer;text-decoration:none;float:right;margin-top:5px;margin-right:2px;" onclick="ShowHidePasswordClick()"/>
                                                     </div>
                                             </td>
 
@@ -1190,9 +1190,17 @@
 
 
         function ShowHidePasswordClick() {
-            var showHidePasswordLink = document.getElementById("ShowHidePasswordLinkId");
-            showHidePasswordLink.innerText = showHidePasswordLink.innerText == "Hide" ? "Show" : "Hide";
-
+            var showHidePasswordImage = document.getElementById("ShowHidePasswordImageId");
+            if (showHidePasswordImage.attributes.src != null) {
+                if (showHidePasswordImage.attributes.src.value == "images/LoginScreen/password_eye_closed.png") {
+                    $("#ShowHidePasswordImageId").attr("src", "images/LoginScreen/password_eye.png");
+                    $("#ShowHidePasswordImageId").attr("alt", "Hide Password");
+                }
+                else {
+                    $("#ShowHidePasswordImageId").attr("src", "images/LoginScreen/password_eye_closed.png");
+                    $("#ShowHidePasswordImageId").attr("alt", "Hide Password");
+                }
+            }
             var passwordInput = document.getElementById("Password");
               if (passwordInput.type === "password") passwordInput.type = "text";
             else passwordInput.type = "password";
