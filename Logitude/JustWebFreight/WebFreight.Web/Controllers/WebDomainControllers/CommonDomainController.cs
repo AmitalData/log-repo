@@ -12,7 +12,10 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.QuoteModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.BookingLib.Data.EntityLists;
+using Logitude.CRM.Data;
+using Logitude.CRM.Data.EntityListQueryServices;
 using Logitude.CRM.Data.EntityLists;
+using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.EntityListQueryServices;
 using Logitude.Customs.Data.EntityLists;
@@ -2489,6 +2492,39 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 AirlineAreaQuery entityQuery = new AirlineAreaQuery(tenant);
                 List<AirlineAreaList> myResult = entityQuery.GetAirlineAreasByAirlineId(airlineId, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        public HttpResponseMessage GetCardOccasions(string cardId)
+        {
+            try
+            {
+                List<OccasionList> myResult = new List<OccasionList>();
+
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                ICRMContext crmContext = CRMContext.GetContext(tenant);
+                ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+
+                List<string> allContactsIds = (from d in commonContext.CardContacts where d.CardId == cardId select d.ContactId).ToList();
+                if (allContactsIds.Count > 0)
+                {
+                    IQueryable<Occasion> iIQueryable = (from d in crmContext.OccasionInvitees.Include("Occasion")
+                                                        where allContactsIds.Contains(d.ContactId)
+                                                        select d.Occasion);
+
+                    OccasionListQueryService occasionQuery = new OccasionListQueryService(crmContext);
+
+                    myResult = occasionQuery.GetIqueryableList(iIQueryable).ToList();
+                }
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
