@@ -99,7 +99,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                     this.Response.YearTransferLedgerTransactionIds = startAccountBalanceService.YearTransferLedgerTransactionIds;
 
                     query = RemoveYearTransferLedgerTrans(query);
-                    BuildCallBack(query);
+                    BuildCallBack(query,
+                        startAccountBalanceService, endAccountBalanceService);
 
 
                 }
@@ -220,18 +221,43 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
 
 
-        private void BuildCallBack(IQueryable<Data.EntityPOCOs.LedgerTransaction> query)
+        private void BuildCallBack(IQueryable<Data.EntityPOCOs.LedgerTransaction> query, AccountBalanceM startAccountBalanceService,
+AccountBalanceM endAccountBalanceService)
         {
             //var BeginOfYearLocalAmountCardIndex = GetBeginOfYearLocalAmountCardIndex(_AccountingContext,_Param.From);
 
             Response.MyLedgerTransactionList = Translate2ListMode(query);
-
+            var qGperiod = (from r in query
+                            group r by 1 into g
+                            select new
+                            {
+                                AllCurrencyId = g.Select(r => r.CurrencyId).Distinct(),
+                                MaxCreateDate = g.Max(rec => rec.CreateDate),
+                                SumLocalAmount = g.Sum(rec => rec.LocalAmountDebit - rec.LocalAmountCredit),
+                                SumForeignAmount = g.Sum(rec => rec.ForeignAmountDebit - rec.ForeignAmountCredit),
+                                Count = g.Count()
+                            }
+            );
+            var myStatstic4period = qGperiod
+                    //.First()  = fail : Sequence contains no elements
+                    .FirstOrDefault();
             DateTime periodMaxCreateDate = DateTime.Now;
+            decimal periodSumLocalAmount = 0;
+            decimal periodSumForeignAmount = 0;
             int periodTotalRowCount = 0;
             Response.TotalRowCount = periodTotalRowCount;
 
 
             Response.AllIdAccounts = _allIdAccounts.ToList();
+            var AllCurrencyId = new List<string>();
+            if (myStatstic4period != null)
+            {
+                AllCurrencyId = myStatstic4period.AllCurrencyId.ToList();
+                periodMaxCreateDate = myStatstic4period.MaxCreateDate;
+                periodSumLocalAmount = myStatstic4period.SumLocalAmount;
+                periodSumForeignAmount = myStatstic4period.SumForeignAmount;
+                periodTotalRowCount = myStatstic4period.Count;
+            }
 
             Response.SearchFields = _SearchByFilter;
             Response.OmitAllCardIndex = !String.IsNullOrWhiteSpace(_SearchByFilter);
@@ -239,15 +265,163 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             {
                 return;
             }
+            Init1CurrAndSuppressCumuDueMultiCurrrency(AllCurrencyId);
+
+
+
+
+
+            InitForeignList(startAccountBalanceService, endAccountBalanceService);
+
+            Response.HaveAccountingQueued = (startAccountBalanceService.HaveAccountingQueued || endAccountBalanceService.HaveAccountingQueued);
+
+            CheckSumLocalEqualDiffEndStart(startAccountBalanceService, endAccountBalanceService, periodSumLocalAmount, periodSumForeignAmount);
+
+
+
+
+            var gLAccountTotalByMonthRepository = new GLAccountTotalByMonthRepository(_AccountingContext);
+            this.Response.OpenBalanceForYearInLocalCurrency = gLAccountTotalByMonthRepository.GetLocalOpenBalanceForYearDateTypeCode(_Param.DateTypeCode, _Param.GLAccountId, _Param.From.Year, _Param.Tenant);
+        }
+
+
+        private void CheckSumLocalEqualDiffEndStart(AccountBalanceM startAccountBalanceService, AccountBalanceM endAccountBalanceService, decimal periodSumLocalAmount, decimal periodSumForeignAmount)
+        {
+            var periodSumLocal = this.Response.EndBalanceLocal - this.Response.StartBalanceLocal;
+            if (periodSumLocal != periodSumLocalAmount)
+            {
+                throw new Exception("periodSum!=periodSumLocalAmount");
+            }
+
+            if (!this.Response.SuppressCumulativeDueMultiCurrencyInPeriod.GetValueOrDefault())
+            {
+
+                var currentCurrencyId = GetCurrCurrencyId();
+
+                var //this.Response.
+                    StartBalanceForeign = startAccountBalanceService.GetBalanceOfCurrency(currentCurrencyId);
+                var //this.Response.
+                    EndBalanceForeign = endAccountBalanceService.GetBalanceOfCurrency(currentCurrencyId);
+
+                var periodSumForeign = //this.Response.
+                    EndBalanceForeign - //this.Response.
+                    StartBalanceForeign.GetValueOrDefault();
+                if (periodSumForeign != periodSumForeignAmount)
+                {
+                    throw new Exception("periodSum(this.Response.EndBalanceForeign - this.Response.StartBalanceForeign.GetValueOrDefault())!=periodSumLocalAmount");
+                }
+
+            }
+        }
+
+
+        private void InitForeignList(AccountBalanceM startAccountBalanceService, AccountBalanceM endAccountBalanceService)
+        {
+
+            var featureForeignList = true;
+            if (featureForeignList)//this.Response.SuppressCumulativeDueMultiCurrencyInPeriod) = Multi Currency 
+            {
+                var qTotals =
+                    (from tot in startAccountBalanceService.Totals
+                     select new CallBackBalance
+                     {
+                         CurrencyId = tot.CurrencyId,
+                         BalanceForeign = tot.ForeignAmountDebit - tot.ForeignAmountCredit,
+                         BalanceLocal = tot.LocalAmountDebit - tot.LocalAmountCredit
+
+                     });
+                if (!String.IsNullOrWhiteSpace(_Param.CurrencyId))
+                {
+                    qTotals = qTotals.Where(r => r.CurrencyId == _Param.CurrencyId);
+                }
+                this.Response.StartBalanceForeignList = qTotals.ToList();
+
+
+                qTotals = (from tot in endAccountBalanceService.Totals
+                           select new CallBackBalance
+                           {
+                               CurrencyId = tot.CurrencyId,
+                               BalanceForeign = tot.ForeignAmountDebit - tot.ForeignAmountCredit,
+
+                               BalanceLocal = tot.LocalAmountDebit - tot.LocalAmountCredit
+                           });
+                if (!String.IsNullOrWhiteSpace(_Param.CurrencyId))
+                {
+                    qTotals = qTotals.Where(r => r.CurrencyId == _Param.CurrencyId);
+                }
+                this.Response.EndBalanceForeignList = qTotals.ToList();
+
+
+            }
+
+            if (!String.IsNullOrWhiteSpace(_Param.CurrencyId))
+            {
+
+                this.Response.StartBalanceLocal = startAccountBalanceService.GetBalanceOfLocalAmount(_Param.CurrencyId).GetValueOrDefault();
+                this.Response.EndBalanceLocal = endAccountBalanceService.GetBalanceOfLocalAmount(_Param.CurrencyId).GetValueOrDefault();
+
+
+                this.Response.StartBalanceForeignList = startAccountBalanceService.GetCallBackBalanceOfCurrency(_Param.CurrencyId);
+                this.Response.EndBalanceForeignList = endAccountBalanceService.GetCallBackBalanceOfCurrency(_Param.CurrencyId);
+
+            }
+            else
+            {
+                this.Response.StartBalanceForeignList = startAccountBalanceService.GetCallBackBalance();
+                this.Response.EndBalanceForeignList = endAccountBalanceService.GetCallBackBalance();
+
+
+                this.Response.StartBalanceLocal = startAccountBalanceService.GetBalanceOfLocalAmount().GetValueOrDefault();
+                this.Response.EndBalanceLocal = endAccountBalanceService.GetBalanceOfLocalAmount().GetValueOrDefault();
+            }
+
+
+
+            this.Response.StartBalanceForeignList = this.Response.StartBalanceForeignList ?? new List<CallBackBalance>();
+            this.Response.EndBalanceForeignList = this.Response.EndBalanceForeignList ?? new List<CallBackBalance>();
         }
 
 
 
- 
+        private void Init1CurrAndSuppressCumuDueMultiCurrrency(List<string> AllCurrencyId)
+        {
+            if (!String.IsNullOrWhiteSpace(_Param.CurrencyId))
+            {
+                AllCurrencyId.Remove(_Param.CurrencyId);
+                if (AllCurrencyId.Count > 0)
+                {
+                    this.Response.SuppressCumulativeDueMultiCurrencyInPeriod = true;
+                }
+
+            }
+            else
+            {
+                if (AllCurrencyId.Count <= 1)
+                {
+                    this.Response.SuppressCumulativeDueMultiCurrencyInPeriod = true;
+                    if (AllCurrencyId.Count == 1)
+                    {
+                        this.Response.SuppressCumulativeDueMultiCurrencyInPeriod = false;
+                        this.Response.Have1CurrencyIdInPeriod = AllCurrencyId.First();
+                    }
+                }
+                else
+                {
+                    this.Response.SuppressCumulativeDueMultiCurrencyInPeriod = true;
+                }
+            }
+            if (Response.TotalRowCount == 0)// No Row >> SuppressCumulativeDueMultiCurrencyInPeriod = true;
+            {
+                this.Response.SuppressCumulativeDueMultiCurrencyInPeriod = true;
+            }
+            this.Response.SuppressCumulativeDueMultiCurrencyInPeriod = this.Response.SuppressCumulativeDueMultiCurrencyInPeriod ?? false;
+        }
+
+
         private void ReCopyCallBack()
         {
             this.Response.SuppressCumulativeDueMultiCurrencyInPeriod = _Param.CallBack.SuppressCumulativeDueMultiCurrencyInPeriod;
-   //         this.Response.Have1CurrencyIdInPeriod = _Param.CallBack.Have1CurrencyIdInPeriod;
+            this.Response.Have1CurrencyIdInPeriod = _Param.CallBack.Have1CurrencyIdInPeriod;
 
             this.Response.AllIdAccounts = _Param.CallBack.AllIdAccounts;
             this.Response.TotalRowCount = _Param.CallBack.TotalRowCount;
@@ -256,7 +430,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             this.Response.OmitAllCardIndex = _Param.CallBack.OmitAllCardIndex;
             this.Response.StartBalanceForeignList = _Param.CallBack.StartBalanceForeignList;
             this.Response.EndBalanceForeignList = _Param.CallBack.EndBalanceForeignList;
-    //        this.Response.OpenBalanceForYearInLocalCurrency = _Param.CallBack.OpenBalanceForYearInLocalCurrency;
+            this.Response.OpenBalanceForYearInLocalCurrency = _Param.CallBack.OpenBalanceForYearInLocalCurrency;
         }
 
         public virtual List<LedgerTransactionList> Translate2ListMode(IQueryable<Data.EntityPOCOs.LedgerTransaction> QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId)

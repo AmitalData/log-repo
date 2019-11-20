@@ -918,6 +918,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
     public class LedgerTransactionCardIndexFilterCallBackCanBeNull
     {
         public bool? HaveAccountingQueued { get; set; }
+        public string Have1CurrencyIdInPeriod { get; set; }
     }
 
     public class LedgerTransactionCardIndexResponse : LedgerTransactionCardIndexFilterCallBack
@@ -944,6 +945,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         public decimal? EndBalanceLocal { get; set; }
         public bool? SuppressCumulativeDueMultiCurrencyInPeriod { get; set; }
         public List<string> YearTransferLedgerTransactionIds { get; set; }
+        public decimal? OpenBalanceForYearInLocalCurrency { get; set; }
 
     }
 
