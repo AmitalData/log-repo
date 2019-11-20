@@ -1642,14 +1642,7 @@
     <Compile Include="Migrations\201910230530223_addINTTRAUpdatesShipment.Designer.cs">
       <DependentUpon>201910230530223_addINTTRAUpdatesShipment.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201910211551152_UpdateField_JournalLine_IncreaseLength3.cs" />
-    <Compile Include="Migrations\201910211551152_UpdateField_JournalLine_IncreaseLength3.Designer.cs">
-      <DependentUpon>201910211551152_UpdateField_JournalLine_IncreaseLength3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201910231231109_CardFieldsMappingMigration.cs" />
-    <Compile Include="Migrations\201910231231109_CardFieldsMappingMigration.Designer.cs">
-      <DependentUpon>201910231231109_CardFieldsMappingMigration.cs</DependentUpon>
-    </Compile>
+
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2760,9 +2753,6 @@
     <EmbeddedResource Include="Migrations\201910231127147_AddingAccountingPartnerTable_Rabaia.resx">
       <DependentUpon>201910231127147_AddingAccountingPartnerTable_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910211551152_UpdateField_JournalLine_IncreaseLength3.resx">
-      <DependentUpon>201910211551152_UpdateField_JournalLine_IncreaseLength3.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910231231109_CardFieldsMappingMigration.resx">
       <DependentUpon>201910231231109_CardFieldsMappingMigration.cs</DependentUpon>
     </EmbeddedResource>
@@ -2826,9 +2816,7 @@
     <EmbeddedResource Include="Migrations\201910230530223_addINTTRAUpdatesShipment.resx">
       <DependentUpon>201910230530223_addINTTRAUpdatesShipment.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910231231109_CardFieldsMappingMigration.resx">
-      <DependentUpon>201910231231109_CardFieldsMappingMigration.cs</DependentUpon>
-    </EmbeddedResource>
+   
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">
