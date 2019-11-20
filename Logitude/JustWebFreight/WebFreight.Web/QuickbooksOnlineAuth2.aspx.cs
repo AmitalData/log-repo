@@ -165,7 +165,7 @@ namespace WebFreight.Web
                 {
                     Item.RefreshToken = RefreshToken;
                     Item.QBOrealMeID = realMeId;
-                    service.Update(Item);
+                    service.UpdateWithToken(Item,token);
                 }
                 DisposeSessions();
                 ClosePage();

@@ -10,6 +10,7 @@
     jQuery.IsAgentShared = false;
     jQuery.IsShipperShared = false;
     jQuery.IsConsigneeShared = false;
+    jQuery.LoadingCount = 1001;
 
     jQuery.SearchText_SHI = null;
     jQuery.SearchText_INV = null;
@@ -134,7 +135,7 @@
             this.PartnerId = $.CurrentCardId;
             this.PartnerType = $.CurrentCardType;
             this.SearchField = ($.trim($.SearchText_INV) == "" || $.trim($.SearchText_INV) == $.watermark_INV) ? null : $.trim($.SearchText_INV);
-            this.PageSize = 1000000;
+            this.PageSize = jQuery.LoadingCount;
             this.PageIndex = 0
 
             if ($.trim($.SelectedQuery_INV) == "Query_PRG_INV") {
@@ -161,7 +162,14 @@
             success: function (result) {
                 $.SendContactActivity($.CurrentEmail, "Invoice", "Invoices List", $.CurrentTenant, $.CurrentCardId);
 
-                $("#InvoicesQueryCount").html("(" + result.length + ")");
+
+                if (result.length >= $.LoadingCount) {
+                    $("#InvoicesQueryCount").html("(" + ($.LoadingCount - 1) + "+)");
+                }
+
+                else {
+                    $("#InvoicesQueryCount").html("(" + result.length + ")");
+                }
 
                 $("#InvoicesListBox").kendoListView(
 		        {
@@ -194,7 +202,7 @@
             this.TransportModeId = ($.trim($.SelectedTransportId_SHI) == "" || $.trim($.SelectedTransportId_SHI) == "All") ? null : $.SelectedTransportId_SHI;
             this.ShipmentLevelCode = ($.trim($.SelectedShipmentLevel) == "" || $.trim($.SelectedShipmentLevel) == "All") ? null : $.SelectedShipmentLevel;
             this.SearchField = ($.trim($.SearchText_SHI) == "" || $.trim($.SearchText_SHI) == $.watermark_SHI) ? null : $.trim($.SearchText_SHI);
-            this.PageSize = 1000000;
+            this.PageSize = jQuery.LoadingCount;
             this.PageIndex = 0
 
             if ($.trim($.SelectedQuery_SHI) == "Query_PRG_SHI") {
@@ -222,7 +230,13 @@
 
                 $.SendContactActivity($.CurrentEmail, "Shipment", "Shipments List", $.CurrentTenant, $.CurrentCardId);
 
-                $("#ShipmentsQueryCount").html("(" + result.length + ")");
+                if (result.length >= $.LoadingCount) {
+                    $("#ShipmentsQueryCount").html("(" + ($.LoadingCount - 1) + "+)");
+                }
+
+                else {
+                    $("#ShipmentsQueryCount").html("(" + result.length + ")");
+                }
 
                 $("#ShipmentsListBox").kendoListView(
 		        {
