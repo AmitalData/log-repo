@@ -40,6 +40,7 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
         super();
         this.SetReleasesQueriesVisibility();
         this.SetEntrysQueriesVisibility();
+        this.SetNewReleaseVisibility();
         this.warehouseReleasePMExtendedService = new WarehouseReleasePMExtendedService();
         this.warehouseEntryListExtendedService = new WarehouseEntryListExtendedService();
         this.warehouseReleaseListExtendedService = new WarehouseReleaseListExtendedService();
@@ -47,12 +48,12 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
         });
     }
 
-    WarehouseEntryCreatedQueryCount: number =0;
+    WarehouseEntryCreatedQueryCount: number = 0;
     WarehouseEntryEnteredQueryCount: number = 0;
     WarehouseEntryConnectedToShipmentsQueryCount: number = 0;
     WarehouseEntryNotConnectedToShipmentsQueryCount: number = 0;
     WarehouseEntryAllQueryCount: number = 0;
-
+    IsNewReleaseVisible: boolean = false;
 
     WarehouseReleaseCreatedQueryCount: number = 0;
     WarehouseReleaseReleasedQueryCount: number = 0;
@@ -69,7 +70,7 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
     BuildCustomQueriesList() {
         this.ReloadWarehouseEntryQueries.emit();
         this.ReloadWarehouseReleaseQueries.emit();
-        
+
     }
 
     LoadAllData() {
@@ -77,7 +78,7 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
         this.LoadRecentWarehouseEntries();
         this.LoadRecentWarehouseReleases();
         this.BuildCustomQueriesList();
-        
+
     }
 
     public RecentWarehouseReleasesLists: any[] = [];
@@ -101,7 +102,7 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
         });
     }
 
-    
+
 
     // Release Queries Features
     public WarehouseReleaseVisibility: boolean = false;
@@ -114,10 +115,15 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
         this.ReleasedQueriesVisibility = FeatureLocator.HasFeaturePermession("WarehouseRelease", "WarehouseRelease.Q.ReleasedQuery") ? true : false;
         this.CancledReleaseQueriesVisibility = FeatureLocator.HasFeaturePermession("WarehouseRelease", "WarehouseRelease.Q.CancelledReleasesQuery") ? true : false;
         this.CreatedReleaseQueriesVisibility = FeatureLocator.HasFeaturePermession("WarehouseRelease", "WarehouseRelease.Q.CreatedReleasesQuery") ? true : false;
-        this.WarehouseReleaseVisibility = this.AllReleaseQueriesVisibility || this.ReleasedQueriesVisibility || this.CancledReleaseQueriesVisibility || this.CreatedReleaseQueriesVisibility? true : false;
+        this.WarehouseReleaseVisibility = this.AllReleaseQueriesVisibility || this.ReleasedQueriesVisibility || this.CancledReleaseQueriesVisibility || this.CreatedReleaseQueriesVisibility ? true : false;
     }
 
+    SetNewReleaseVisibility() {
 
+        if (FeatureLocator.HasFeaturePermession("WarehouseRelease", "ShowNewFullWarehouseRelease")) {
+            this.IsNewReleaseVisible = true;
+        }
+    }
 
     CreatedEntryQueriesVisibility: boolean = false;
     EnteredEntryQueriesVisibility: boolean = false;
@@ -161,7 +167,7 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
             this.mySelectedDirectionFilter = value;
 
             this.LoadAllData();
-           
+
         }
     }
 
@@ -172,17 +178,17 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
             this.mySelectedTransportFilter = value;
 
             this.LoadAllData();
-     
+
         }
     }
 
     LoadDataSummary() {
 
-       // this.CurrentSession.StartBusyIndicatorLoading();
+        // this.CurrentSession.StartBusyIndicatorLoading();
         this.warehouseReleasePMExtendedService.GetCrossDockWorkspaceSummary(this.SelectedTransportFilter, this.SelectedDirectionFilter).subscribe(res => {
             var pmResponse: ServiceResponse = res;
 
-          //  this.CurrentSession.StopBusyIndicator();
+            //  this.CurrentSession.StopBusyIndicator();
 
             if (!pmResponse.HasError) {
                 var crossDockWorkspaceSummaryClass: any = pmResponse.Result;
@@ -199,7 +205,7 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
                     this.WarehouseReleaseAllQueryCount = crossDockWorkspaceSummaryClass.AllWarehouseReleasesCount;
                     this.WarehouseReleaseCanceledQueryCount = crossDockWorkspaceSummaryClass.CanceledReleasesCount;
                 }
-            } 
+            }
         });
     }
 
@@ -213,7 +219,7 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
     onWarehouseReleaseQueriesBackComplete(event) {
 
     }
-    
+
 
     NewEntryButtonclick() {
         var args: any = {};
@@ -224,6 +230,26 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
         logWindow.WindowArgs = args;
         logWindow.Title = "New Cross Dock Entry";
         logWindow.Show('./Warehouse/Components/NewEntity/NewFullWarehouseEntryComponent');
+
+        logWindow.WindowClosed.subscribe(s => {
+            if (s) {
+                this.LoadAllData();
+            }
+        });
+
+    }
+
+
+
+    NewReleaseButtonclick() {
+        var args: any = {};
+        args.ShipmentLevelCode = "D";
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 940;
+        logWindow.Height = 570;
+        logWindow.WindowArgs = args;
+        logWindow.Title = "New Cross Dock Release";
+        logWindow.Show('./Warehouse/Components/NewEntity/NewFullWarehouseReleaseComponent');
 
         logWindow.WindowClosed.subscribe(s => {
             if (s) {
@@ -248,104 +274,104 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
     }
 
     filterAgrs: ApiQueryFilters;
-    ViewWarehouseEntryQuery(queryName:string) {
+    ViewWarehouseEntryQuery(queryName: string) {
 
         this.filterAgrs = new ApiQueryFilters();
 
-                var queryCode: string = "";
-                var displayTitle: string = "";
-                switch (queryName) {
+        var queryCode: string = "";
+        var displayTitle: string = "";
+        switch (queryName) {
 
-                    case "All":
-                        {
-                            queryCode = "AllEntriesQuery";
-                            displayTitle = "All Entries";
-                         
-                            break;
-                        }
-                    case "Created":
-                        {
-                            queryCode = "CreatedEntriesQuery";
-                            displayTitle = "Created Entries";
+            case "All":
+                {
+                    queryCode = "AllEntriesQuery";
+                    displayTitle = "All Entries";
 
-                          
-                            break;
-                        }
+                    break;
+                }
+            case "Created":
+                {
+                    queryCode = "CreatedEntriesQuery";
+                    displayTitle = "Created Entries";
 
-                    case "Entered":
-                        {
-                            queryCode = "EnteredEntriesQuery";
-                            displayTitle = "Entered Entries";
-               
-                            break;
-                        }
 
-                    case "ConnectedToShipments":
-                        {
-                            queryCode = "ConnectedEntriesQuery";
-                            displayTitle = "Connected To Shipments Entries";
-
-                
-                            break;
-                        }
-
-                    case "NotConnectedToShipments":
-                        {
-                            queryCode = "NotConnectedEntriesQuery";
-                            displayTitle = "Not Connected To Shipments Entries";
-                   
-                            break;
-                        }
-
+                    break;
                 }
 
+            case "Entered":
+                {
+                    queryCode = "EnteredEntriesQuery";
+                    displayTitle = "Entered Entries";
 
-                this.SetDirectionTransportFilter();
-                var listArgs = new ListComponentArgs();
-                listArgs.Filters = this.filterAgrs;
-                listArgs.QueryCode = queryCode;
-                listArgs.ObjectTableName = "WarehouseEntry";
-                listArgs.DisplayTitle = displayTitle;
-                listArgs.BackButtonTitle = "Cross Docks";
-                this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
-                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
-                        .then(cmpRef => {
+                    break;
+                }
 
-                            var filtersBar: any = null;
-                            cmpRef.instance.FiltersBarLoaded.subscribe((myBar: any) => {
-                                filtersBar = myBar;
+            case "ConnectedToShipments":
+                {
+                    queryCode = "ConnectedEntriesQuery";
+                    displayTitle = "Connected To Shipments Entries";
 
-                                if (filtersBar) {
-                                    if (filtersBar.SelectedValue != this.SelectedTransportFilter) {
-                                        filtersBar.SetTransport(this.SelectedTransportFilter);
-                                    }
 
-                                    if (filtersBar.SelectedDirection != this.SelectedDirectionFilter) {
-                                        filtersBar.SetDirection(this.SelectedDirectionFilter);
-                                    }
-                                }
-                            });
+                    break;
+                }
 
-                            cmpRef.instance.BackCompleted.subscribe(($event: any) => {
-                                if (filtersBar) {
-                                    if (filtersBar.SelectedValue != this.SelectedTransportFilter) {
-                                        this.mySelectedTransportFilter = filtersBar.SelectedValue;
-                                    }
+            case "NotConnectedToShipments":
+                {
+                    queryCode = "NotConnectedEntriesQuery";
+                    displayTitle = "Not Connected To Shipments Entries";
 
-                                    if (filtersBar.SelectedDirection != this.SelectedDirectionFilter) {
-                                        this.mySelectedDirectionFilter = filtersBar.SelectedDirection;
-                                    }
-                                }
+                    break;
+                }
 
-                                this.LoadAllData();
-                            });
-                            listArgs.SelectedDirection = this.mySelectedDirectionFilter;
-                            listArgs.SelectedTransportMode = this.mySelectedTransportFilter;
-                            cmpRef.instance.ComponentRef = cmpRef;
-                            cmpRef.instance.Run(listArgs);
-                            this.CurrentSession.AddMenuReference(cmpRef);
-                        });
+        }
+
+
+        this.SetDirectionTransportFilter();
+        var listArgs = new ListComponentArgs();
+        listArgs.Filters = this.filterAgrs;
+        listArgs.QueryCode = queryCode;
+        listArgs.ObjectTableName = "WarehouseEntry";
+        listArgs.DisplayTitle = displayTitle;
+        listArgs.BackButtonTitle = "Cross Docks";
+        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                .then(cmpRef => {
+
+                    var filtersBar: any = null;
+                    cmpRef.instance.FiltersBarLoaded.subscribe((myBar: any) => {
+                        filtersBar = myBar;
+
+                        if (filtersBar) {
+                            if (filtersBar.SelectedValue != this.SelectedTransportFilter) {
+                                filtersBar.SetTransport(this.SelectedTransportFilter);
+                            }
+
+                            if (filtersBar.SelectedDirection != this.SelectedDirectionFilter) {
+                                filtersBar.SetDirection(this.SelectedDirectionFilter);
+                            }
+                        }
+                    });
+
+                    cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                        if (filtersBar) {
+                            if (filtersBar.SelectedValue != this.SelectedTransportFilter) {
+                                this.mySelectedTransportFilter = filtersBar.SelectedValue;
+                            }
+
+                            if (filtersBar.SelectedDirection != this.SelectedDirectionFilter) {
+                                this.mySelectedDirectionFilter = filtersBar.SelectedDirection;
+                            }
+                        }
+
+                        this.LoadAllData();
+                    });
+                    listArgs.SelectedDirection = this.mySelectedDirectionFilter;
+                    listArgs.SelectedTransportMode = this.mySelectedTransportFilter;
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run(listArgs);
+                    this.CurrentSession.AddMenuReference(cmpRef);
                 });
+        });
 
 
 
@@ -430,7 +456,7 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
         });
     }
 
-    EditWarehouseEntries(item:any) {
+    EditWarehouseEntries(item: any) {
 
         var myBackButtonLabel = "Cross Docks";
 
