@@ -55,6 +55,8 @@ namespace Logitude.Accounting.Data
 		 IDbSet<GLAccountType> GLAccountTypes { get; }
 		 IDbSet<GLAccountWithholdingTax> GLAccountWithholdingTax { get; }
 		 IDbSet<IntegrityCheckStatus> IntegrityCheckStatuses { get; }
+		 IDbSet<InterestBasesPeriod> InterestBasesPeriods { get; }
+		 IDbSet<InterestBasesType> InterestBasesTypes { get; }
 		 IDbSet<Journal> Journals { get; }
 		 IDbSet<JournalActionType> JournalActionTypes { get; }
 		 IDbSet<JournalAdditionalData> JournalAdditionalDatas { get; }

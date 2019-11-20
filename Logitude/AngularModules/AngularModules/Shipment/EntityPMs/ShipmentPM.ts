@@ -4273,6 +4273,59 @@ export class ShipmentPM {
     public set IsDeletingAllPayables(newValue: boolean) { if (this.isDeletingAllPayables != newValue) { this.isDeletingAllPayables = newValue; this.MarkAsDirty("IsDeletingAllPayables"); } }
 
 
+    private iNTTRABookingResponse_Voyage: string;
+    public get INTTRABookingResponse_Voyage() { return this.iNTTRABookingResponse_Voyage; }
+    public set INTTRABookingResponse_Voyage(newValue: string) { if (this.iNTTRABookingResponse_Voyage != newValue) { this.iNTTRABookingResponse_Voyage = newValue; this.MarkAsDirty("INTTRABookingResponse_Voyage"); } }
+
+    private iNTTRABookingResponse_POLDate: Date;
+    public get INTTRABookingResponse_POLDate() { return this.iNTTRABookingResponse_POLDate; }
+    public set INTTRABookingResponse_POLDate(newValue: Date) { if (this.iNTTRABookingResponse_POLDate != newValue) { this.iNTTRABookingResponse_POLDate = newValue; this.MarkAsDirty("INTTRABookingResponse_POLDate"); } }
+
+
+    private iNTTRABookingResponse_POFPort: string;
+    public get INTTRABookingResponse_POFPort() { return this.iNTTRABookingResponse_POFPort; }
+    public set INTTRABookingResponse_POFPort(newValue: string) { if (this.iNTTRABookingResponse_POFPort != newValue) { this.iNTTRABookingResponse_POFPort = newValue; this.MarkAsDirty("INTTRABookingResponse_POFPort"); } }
+
+    private iNTTRABookingResponse_POFCCode: string;
+    public get INTTRABookingResponse_POFCCode() { return this.iNTTRABookingResponse_POFCCode; }
+    public set INTTRABookingResponse_POFCCode(newValue: string) { if (this.iNTTRABookingResponse_POFCCode != newValue) { this.iNTTRABookingResponse_POFCCode = newValue; this.MarkAsDirty("INTTRABookingResponse_POFCCode"); } }
+
+    private iNTTRABookingResponse_POFCName: string;
+    public get INTTRABookingResponse_POFCName() { return this.iNTTRABookingResponse_POFCName; }
+    public set INTTRABookingResponse_POFCName(newValue: string) { if (this.iNTTRABookingResponse_POFCName != newValue) { this.iNTTRABookingResponse_POFCName = newValue; this.MarkAsDirty("INTTRABookingResponse_POFCName"); } }
+
+    private iNTTRABookingResponse_PODDate: Date;
+    public get INTTRABookingResponse_PODDate() { return this.iNTTRABookingResponse_PODDate; }
+    public set INTTRABookingResponse_PODDate(newValue: Date) { if (this.iNTTRABookingResponse_PODDate != newValue) { this.iNTTRABookingResponse_PODDate = newValue; this.MarkAsDirty("INTTRABookingResponse_PODDate"); } }
+
+    private iNTTRABookingResponse_PODPort: string;
+    public get INTTRABookingResponse_PODPort() { return this.iNTTRABookingResponse_PODPort; }
+    public set INTTRABookingResponse_PODPort(newValue: string) { if (this.iNTTRABookingResponse_PODPort != newValue) { this.iNTTRABookingResponse_PODPort = newValue; this.MarkAsDirty("INTTRABookingResponse_PODPort"); } }
+
+    private iNTTRABookingResponse_PODCCode: string;
+    public get INTTRABookingResponse_PODCCode() { return this.iNTTRABookingResponse_PODCCode; }
+    public set INTTRABookingResponse_PODCCode(newValue: string) { if (this.iNTTRABookingResponse_PODCCode != newValue) { this.iNTTRABookingResponse_PODCCode = newValue; this.MarkAsDirty("INTTRABookingResponse_PODCCode"); } }
+
+    private iNTTRABookingResponse_PODCName: string;
+    public get INTTRABookingResponse_PODCName() { return this.iNTTRABookingResponse_PODCName; }
+    public set INTTRABookingResponse_PODCName(newValue: string) { if (this.iNTTRABookingResponse_PODCName != newValue) { this.iNTTRABookingResponse_PODCName = newValue; this.MarkAsDirty("INTTRABookingResponse_PODCName"); } }
+
+
+    private iNTTRABookingResponse_POFPortCode: string;
+    public get INTTRABookingResponse_POFPortCode() { return this.iNTTRABookingResponse_POFPortCode; }
+    public set INTTRABookingResponse_POFPortCode(newValue: string) { if (this.iNTTRABookingResponse_POFPortCode != newValue) { this.iNTTRABookingResponse_POFPortCode = newValue; this.MarkAsDirty("INTTRABookingResponse_POFPortCode"); } }
+
+    private iNTTRABookingResponse_PODPortCode: string;
+    public get INTTRABookingResponse_PODPortCode() { return this.iNTTRABookingResponse_PODPortCode; }
+    public set INTTRABookingResponse_PODPortCode(newValue: string) { if (this.iNTTRABookingResponse_PODPortCode != newValue) { this.iNTTRABookingResponse_PODPortCode = newValue; this.MarkAsDirty("INTTRABookingResponse_PODPortCode"); } }
+
+    private iNTTRABookingResponse_ShippingLine: string;
+    public get INTTRABookingResponse_ShippingLine() { return this.iNTTRABookingResponse_ShippingLine; }
+    public set INTTRABookingResponse_ShippingLine(newValue: string) { if (this.iNTTRABookingResponse_ShippingLine != newValue) { this.iNTTRABookingResponse_ShippingLine = newValue; this.MarkAsDirty("INTTRABookingResponse_ShippingLine"); } }
+
+
+    
+
     public OldEntityPM: ShipmentPM;
 
     private aWBOCIPMs: AWBOCIPM[];

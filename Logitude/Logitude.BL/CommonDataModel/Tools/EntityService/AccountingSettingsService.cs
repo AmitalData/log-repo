@@ -96,6 +96,34 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             //tenant.AccountingActivated = entityPM.AccountingActivated;
             tenantRepository.Update(tenant);
             tenantRepository.SubmitChanges();
-        }   
+        }
+
+        public void UpdateWithToken(AccountingSettingPM entityPM,string token)
+        {
+
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            if (authToken != null && authToken.Tenant != entityPM.Id)
+            {
+                throw new ApplicationException("You are not authorized to do this operation");
+            }
+
+            this.isNewEntity = false;
+            this.entityPm = entityPM;
+            this.Poco = entityRepository.GetSingleAccountingSetting(entityPM.Id);
+
+            //AccountingSettingTracing.Trace(entityPM, Poco, isNewEntity);
+            AccountingSettingMapping.MapEntity(entityPM, Poco, isNewEntity);
+            entityRepository.Update(Poco);
+            entityRepository.SubmitChanges();
+
+            TenantRepository tenantRepository = new TenantRepository(entityPM.Id);
+            Tenant tenant = tenantRepository.GetSingleTenant(entityPM.Id);
+            tenant.VatNumber = entityPM.VatNumber;
+            tenant.PaymentTermId = entityPM.PaymentTermId;
+            //tenant.AccountingActivationDate = entityPM.AccountingActivationDate;
+            //tenant.AccountingActivated = entityPM.AccountingActivated;
+            tenantRepository.Update(tenant);
+            tenantRepository.SubmitChanges();
+        }
     }
 }

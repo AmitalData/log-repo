@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
@@ -42,7 +43,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
         private MemoryStream myMemoryStream;
         private INTTRA.Message iMessage;
         private INTTRA_Status.MessageType iMessage_Status;
-        private INTTRABooking2Confirm.Message iMessage_Booking; 
+        private INTTRABooking2Confirm.Message iMessage_Booking;
         XmlDocument xmlDocument;
 
         public INTTRAAnalyzer(AnalyzeQueue analyzeQueue, AnalyzeQueueRepository analyzeQueueRepository)
@@ -235,7 +236,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                                     {
                                                         this.myAnalyzeQueue.AWBNumber = HeaderDocumentIdentifier.Substring(0, 20);
                                                     }
-                                                }                                                
+                                                }
                                             }
 
                                             if (iMessageBody != null)
@@ -250,7 +251,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                     }
 
                                 case "Status":
-                                    {                                        
+                                    {
                                         XmlSerializer xmlSerializer = new XmlSerializer(typeof(INTTRA_Status.MessageType));
                                         INTTRA_Status.MessageType iMessage = (INTTRA_Status.MessageType)xmlSerializer.Deserialize(myMemoryStream);
                                         this.iMessage_Status = iMessage;
@@ -260,7 +261,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                             INTTRA_Status.HeaderType iHeader = iMessage.Header;
                                             INTTRA_Status.MessageBodyType iMessageBody = iMessage.MessageBody;
 
-                                            if(iHeader != null)
+                                            if (iHeader != null)
                                             {
                                                 INTTRA_Status.PartnerInformationType iRecipient = iHeader.Parties.Where(d => d.PartnerRole == INTTRA_Status.PartnerInformationTypePartnerRole.Recipient).FirstOrDefault();
                                                 this.Recipient = iRecipient.PartnerIdentifier.Value;
@@ -273,7 +274,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                                 if (iMessageProperties.ReferenceInformation != null)
                                                 {
                                                     INTTRA_Status.MessagePropertiesTypeReferenceInformation FreightForwarderReference = iMessageProperties.ReferenceInformation.Where(d => d.ReferenceType == INTTRA_Status.ReferenceInformationTypeReferenceType.FreightForwarderReference).FirstOrDefault();
-                                                    if(FreightForwarderReference != null)
+                                                    if (FreightForwarderReference != null)
                                                     {
                                                         this.ShipmentNumber = FreightForwarderReference.Value;
                                                     }
@@ -318,7 +319,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                         analyzeQueueRepository.SubmitChanges();
                         break;
                     }
-            }          
+            }
         }
         private void AnalyzeINTTRABooking()
         {
@@ -339,12 +340,12 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                     this.ConnectAnalyzeQueue();
                 }
             }
-         
+
             catch (Exception ex)
             {
                 this.OnCatchAnalyzingError(ex);
             }
-          
+
         }
         private void ConnectAnalyzeQueue()
         {
@@ -430,7 +431,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                     {
                                         is_CONTRL_Tenant = Int32.TryParse(Parts[1], out CONTRL_Tenant);
                                     }
-                                    
+
                                     if (is_CONTRL_Tenant)
                                     {
                                         iMessageTenant = CONTRL_Tenant;
@@ -780,8 +781,10 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                 }
             }
         }
+
         private void Analyze_Booking()
         {
+            this.shipmentPM.INTTRALastBookingResponse = "<?xml version='1.0' encoding='UTF - 8'?> " + LogitudeXmlSerializer.SerializeObjectToXmlElementString(xmlDocument);
             this.shipmentPM.IsUpdatedByINTTRAAnalyzer = true;
             string systemEmail = "system@tenant" + this.Tenant + ".com";
             SetINTTRABookingStatusCodeAndTransStatusCode();
@@ -789,6 +792,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
             ShipmentService service = new ShipmentService(myShipmentContext, shipmentPM, systemEmail);
             service.Update();
         }
+
         private void SetINTTRABookingStatusCodeAndTransStatusCode()
         {
             INTTRABooking2Confirm.HeaderType iMessageHeader = this.iMessage_Booking.Header;
@@ -802,10 +806,14 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
             var iNTTRABookingTransStatusCode = shipmentPM.INTTRABookingTransStatusCode;
             switch (status)
             {
+                case INTTRABooking2Confirm.HeaderTypeTransactionStatus.Replaced:
                 case INTTRABooking2Confirm.HeaderTypeTransactionStatus.Confirmed:
                     {
-                        iNTTRABookingStatusCode = "CD";
+                        iNTTRABookingStatusCode = "WC";
                         iNTTRABookingTransStatusCode = "BCD";
+                        this.FillShipmentConfirmedBy();
+                        this.FillShipmentBookingConfirmationNumber();
+                        //this.FillShipmentMainCarriageCarrierNumber();
                         break;
                     }
                 case INTTRABooking2Confirm.HeaderTypeTransactionStatus.Declined:
@@ -819,11 +827,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                         iNTTRABookingStatusCode = "PG";
                         break;
                     }
-                case INTTRABooking2Confirm.HeaderTypeTransactionStatus.Replaced:
-                    {
-                        iNTTRABookingStatusCode = "RD";
-                        break;
-                    }
+               
                 default:
                     {
                         throw new ApplicationException("Transaction Status is not sent");
@@ -831,6 +835,59 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
             }
             shipmentPM.INTTRABookingStatusCode = iNTTRABookingStatusCode;
             shipmentPM.INTTRABookingTransStatusCode = iNTTRABookingTransStatusCode;
+        }
+
+        private void FillShipmentConfirmedBy()
+        {
+            if (string.IsNullOrEmpty(shipmentPM.BookingConfirmedBy)) {
+                INTTRABooking2Confirm.MessageBodyType iMessageBody = iMessage_Booking.MessageBody;
+                INTTRABooking2Confirm.MessagePropertiesType iMessageProperties = iMessageBody.MessageProperties;
+                if (iMessageBody != null && iMessageBody.MessageProperties != null)
+                {
+                    shipmentPM.BookingConfirmedBy = iMessageBody.MessageProperties.ConfirmedWith != null ? iMessageBody.MessageProperties.ConfirmedWith.Name : null;
+
+                }
+            }
+        }
+
+        private void FillShipmentBookingConfirmationNumber()
+        {
+            if (string.IsNullOrEmpty(shipmentPM.BookingConfirmationNumber))
+            {
+                INTTRABooking2Confirm.MessageBodyType iMessageBody = iMessage_Booking.MessageBody;
+                INTTRABooking2Confirm.MessagePropertiesType iMessageProperties = iMessageBody.MessageProperties;
+                if (iMessageBody != null && iMessageBody.MessageProperties != null && iMessageBody.MessageProperties.TransportationDetails != null)
+                {
+                    var booking = iMessageBody.MessageProperties.ReferenceInformation.Where(d => d.Type == INTTRABooking2Confirm.ReferenceTypeValues.BookingNumber).FirstOrDefault();
+                    if (booking != null)
+                    {
+                        shipmentPM.BookingConfirmationNumber = booking.Value;
+                    }
+                }
+            }
+        }
+
+
+        private void FillShipmentMainCarriageCarrierNumber()
+        {
+            if (string.IsNullOrEmpty(shipmentPM.MainCarriageCarrierNumber))
+            {
+                INTTRABooking2Confirm.MessageBodyType iMessageBody = iMessage_Booking.MessageBody;
+                INTTRABooking2Confirm.MessagePropertiesType iMessageProperties = iMessageBody.MessageProperties;
+                if (iMessageBody != null && iMessageBody.MessageProperties != null && iMessageBody.MessageProperties.TransportationDetails != null)
+                {
+                    var transport = iMessageBody.MessageProperties.TransportationDetails.Where(d => d.TransportMode == INTTRABooking2Confirm.TransportModeTypeValues.MaritimeTransport).FirstOrDefault();
+
+                    if (transport != null && transport.ConveyanceInformation != null && transport.ConveyanceInformation.Identifier != null)
+                    {
+                        var voyage = transport.ConveyanceInformation.Identifier.Where(a => a.Type == INTTRABooking2Confirm.ConveyanceIdentifierTypeValues.VoyageNumber).FirstOrDefault();
+                        if (voyage != null)
+                        {
+                            shipmentPM.MainCarriageCarrierNumber = voyage.Value;
+                        }
+                    }
+                }
+            }
         }
 
         private string CreateCommunicationLogForTenant(string from, int fileSize)

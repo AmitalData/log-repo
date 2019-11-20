@@ -982,6 +982,8 @@ export class FlightSummary {
     public ActualDate: Date;
     public MainCarriageATA: Date;
     public ComputedStatusId: string;
+    public ActualDateCode: string;
+    public ExpectedDateCode: string;
 }
 export class ShipmentCarrierStatusList {
     public Id: string;

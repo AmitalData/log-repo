@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.DBMigrations.Models
 {
-    public class ColumnMigrationsDefinition
+    public class ColumnMigrationDefinition
     {
         public string Name { get; set; }
         public string Type { get; set; }
