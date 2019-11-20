@@ -44,10 +44,6 @@ namespace WebFreight.Web
             {
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
 
-                //if (LogitudeSettings.DeploymentStage != "Dev")
-                //{
-                //    Security.SecurityUtility.RedirectToHttps(false);
-                //}
                 if (Request.QueryString.Count > 0)
                 {
                     queryKeys = new List<string>(Request.QueryString.AllKeys);
@@ -65,6 +61,8 @@ namespace WebFreight.Web
                     if (queryKeys.Contains("code"))
                     {
                         ReadToken();
+                        DisposeSessions();
+
                     }
                 }
 
@@ -76,7 +74,7 @@ namespace WebFreight.Web
             }
         }
 
-        private void ReadToken()
+        private async void ReadToken()
         {
             if (HttpContext.Current.Session["ClientID"] != null)
             {
@@ -89,17 +87,29 @@ namespace WebFreight.Web
                     if (response.State != null)
                     {
 
-                        if (response.RealmId != null)
-                        {
-                            HttpContext.Current.Session["realMeId"] = response.RealmId;
-                        }
 
                         if (response.Code != null)
                         {
-                            HttpContext.Current.Session["AuthCode"] = response.Code;
-                            PageAsyncTask t = new PageAsyncTask(PerformCodeExchange);
-                            Page.RegisterAsyncTask(t);
-                            Page.ExecuteRegisteredAsyncTasks();
+
+                            try
+                            {
+                                string tenant = HttpContext.Current.Session["tenant"] + "";
+                                string token = HttpContext.Current.Request.Headers["Token"] + "";
+                                var tokenResp = await oauthClient.GetBearerTokenAsync(response.Code);
+
+                                if (Request.Url.Query == "")
+                                {
+                                    Response.Redirect(Request.RawUrl);
+                                }
+                                else
+                                {
+                                    this.SaveTokens(tokenResp.RefreshToken, response.RealmId, tenant, token);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                            }
+
                         }
 
 
@@ -129,73 +139,57 @@ namespace WebFreight.Web
 
         }
 
-        public async System.Threading.Tasks.Task PerformCodeExchange()
-        {
-            try
-            {
-                var tokenResp = await oauthClient.GetBearerTokenAsync((string)HttpContext.Current.Session["AuthCode"]);
-                HttpContext.Current.Session["RefreshToken"] = tokenResp.RefreshToken;
 
-                if (Request.Url.Query == "")
-                {
-                    Response.Redirect(Request.RawUrl);
-                }
-                else
-                {
-                    this.SaveTokens();
-                }
-            }
-            catch (Exception ex)
-            {
-            }
-        }
-
-
-
-
-
-        private void SaveTokens()
+        private void SaveTokens(string RefreshToken, string realMeId, string tenant,string token)
         {
 
             using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
 
-                AccountingSettingQuery query = new AccountingSettingQuery(int.Parse((HttpContext.Current.Session["tenant"] + "")));
-                AccountingSettingPM entityPM = query.GetSingleAccountingSettingPMById(int.Parse((HttpContext.Current.Session["tenant"] + "")));
+                AccountingSettingQuery query = new AccountingSettingQuery(int.Parse(tenant));
+                AccountingSettingPM entityPM = query.GetSingleAccountingSettingPMById(int.Parse(tenant));
                 var TempQBORealMeId = entityPM.QBOrealMeID;
-                entityPM.RefreshToken = HttpContext.Current.Session["RefreshToken"].ToString();
-                entityPM.QBOrealMeID = HttpContext.Current.Session["realMeId"].ToString();
+                entityPM.RefreshToken = RefreshToken;
+                entityPM.QBOrealMeID = realMeId;
                 entityPM.QBOOAuth = 2;
                 if (!String.IsNullOrEmpty(TempQBORealMeId) && entityPM.QBOrealMeID != TempQBORealMeId)
                 {
                     RunStoredProcedureClass.DeleteQBOTranslations(entityPM.Id);
                 }
                 List<AccountingSettingPM> LoggedEntities = query.GetAccountSettingPMs().Where(r => r.QBOrealMeID == entityPM.QBOrealMeID && r.Id != entityPM.Id).ToList();
-                ICommonDataContext MyContext = CommonDataContext.GetContext(int.Parse((HttpContext.Current.Session["tenant"] + "")));
-                AccountingSettingService service = new AccountingSettingService(MyContext, int.Parse((HttpContext.Current.Session["tenant"] + "")));
-                service.Update(entityPM);
+                ICommonDataContext MyContext = CommonDataContext.GetContext(int.Parse(tenant));
+                AccountingSettingService service = new AccountingSettingService(MyContext, int.Parse(tenant));
+                service.UpdateWithToken(entityPM,token);
 
                 foreach (AccountingSettingPM Item in LoggedEntities)
                 {
-                    Item.RefreshToken = HttpContext.Current.Session["RefreshToken"].ToString();
-                    Item.QBOrealMeID = HttpContext.Current.Session["realMeId"].ToString();
+                    Item.RefreshToken = RefreshToken;
+                    Item.QBOrealMeID = realMeId;
                     service.Update(Item);
                 }
                 DisposeSessions();
+                ClosePage();
                 scope.Complete();
             }
 
         }
 
-        private void DisposeSessions()
+        private void DisposeSessions() {
+               if (HttpContext.Current != null)
+            {
+                HttpContext.Current.Session["realMeId"] = null;
+                HttpContext.Current.Session["ClientID"] = null;
+                HttpContext.Current.Session["tenant"] = null;
+                HttpContext.Current.Session["ClientSecret"] = null;
+                HttpContext.Current.Session["AuthCode"] = null;
+                HttpContext.Current.Session["RefreshToken"] = null;
+            }
+}
+
+    private void ClosePage()
         {
-            HttpContext.Current.Session["realMeId"] = null;
-            HttpContext.Current.Session["ClientID"] = null;
-            HttpContext.Current.Session["tenant"] = null;
-            HttpContext.Current.Session["ClientSecret"] = null;
-            HttpContext.Current.Session["AuthCode"] = null;
-            HttpContext.Current.Session["RefreshToken"] = null;
             ClientScript.RegisterStartupScript(typeof(Page), "closePage", "<script type='text/JavaScript'>window.close();</script>");
+
         }
 
 
