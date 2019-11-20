@@ -56,7 +56,6 @@ exports.config = {
         defaultTimeoutInterval: 300000,
         print: function () { }
     },
-
     onPrepare() {
         require('ts-node').register({
             project: 'e2e/tsconfig.e2e.json'
@@ -113,7 +112,6 @@ exports.config = {
             browser.params.Link = "https://test.logitudeworld.com/test";
             browser.params.Login.Email = "raghad@protractor.com";
             browser.params.Login.Password = "!RS123Rs";
-
         }
         else if (browser.params.Env == "testStaging") {
             browser.params.Link = "https://staging.logitudeworld.com";
@@ -130,12 +128,11 @@ exports.config = {
             browser.params.Login.Email = "Raghad@protractor.com";
             browser.params.Login.Password = "!RS123Rs";
         }
-
         else if (browser.params.Env == "testEnvStaging") {
             browser.params.Link = "https://test.logitudeworld.com/staging";
             browser.params.Login.Email = "Raghad@protractor.com";
             browser.params.Login.Password = "!RS123Rs";
-
+        }
         else if (browser.params.Env == "testStaging") {
             browser.params.Link = "https://staging.logitudeworld.com";
             browser.params.Login.Email = "Raghad@protractor.com";

@@ -105,6 +105,8 @@
     <Compile Include="EntityPMs\Generated\GLAccountTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\GLAccountWithholdingTaxPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\IntegrityCheckStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\InterestBasesPeriodPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\InterestBasesTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\JournalActionTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\JournalAdditionalDataPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\JournalExternalReconcilePM.Generated.cs" />
