@@ -132,7 +132,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  true,
 			      				    IsLookUp =  true,
-			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "Customer,Customers,Simplog.FreightLib.NewCustomerCommand,Id,",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
@@ -9626,16 +9625,20 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   Feature CustomerProductsFeature_TH11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "POTENTIAL", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.Potential", NameTextCodeDefaultText = "Potential", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
-			   TextCode CustomerDocsOutTextCode_TH12 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.DocsOut", DefaultText = "Docs Out",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomerDocsOutFeature_TH12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSOUT", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.DocsOut", NameTextCodeDefaultText = "Docs Out", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CustomerOccasionsTextCode_TH12 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Occasions", DefaultText = "Occasions",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature CustomerOccasionsFeature_TH12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customer.Tab.Occasions", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerFeatures.CSOC", NameTextCodeDefaultText = "Occasions", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
-			   TextCode CustomerDocsInTextCode_TH13 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.DocsIn", DefaultText = "Docs In",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomerDocsInFeature_TH13 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CustomerDocsOutTextCode_TH13 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.DocsOut", DefaultText = "Docs Out",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature CustomerDocsOutFeature_TH13 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSOUT", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.DocsOut", NameTextCodeDefaultText = "Docs Out", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
-			   TextCode CustomerEventsTextCode_TH14 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CustomerEventsFeature_TH14 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode CustomerDocsInTextCode_TH14 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.DocsIn", DefaultText = "Docs In",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature CustomerDocsInFeature_TH14 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+ 
+                 
+			   TextCode CustomerEventsTextCode_TH15 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature CustomerEventsFeature_TH15 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -9665,11 +9668,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CLPO",HtmlComponentName = "",HtmlComponentUrl = "./CommonModules/CommonCustomer/Components/EditTabs/CustomerProductsTabComponent", FeatureId = CustomerProductsFeature_TH11.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.CustomerCRMTabs.ProductPotentialTabControl", ObjectTableId = CustomerObjectTable.Id, TabNameTextCodeId = CustomerProductsTextCode_TH11.Id, Tenant = 0, IndexOrder = 11 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CLDO",HtmlComponentName = "",HtmlComponentUrl = "./CommonModules/CommonCustomer/Components/EditTabs/CustomerDocsOutTabComponent", FeatureId = CustomerDocsOutFeature_TH12.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.CustomerCRMTabs.CustomerDocsOutTabControl", ObjectTableId = CustomerObjectTable.Id, TabNameTextCodeId = CustomerDocsOutTextCode_TH12.Id, Tenant = 0, IndexOrder = 12 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CSOC",HtmlComponentName = "",HtmlComponentUrl = "./CommonModules/CommonCustomer/Components/EditTabs/CustomerOccasionsTabComponent", FeatureId = CustomerOccasionsFeature_TH12.Id, ControlPath = "./CommonModules/CommonCustomer/Components/EditTabs/CustomerOccasionsTabComponent", ObjectTableId = CustomerObjectTable.Id, TabNameTextCodeId = CustomerOccasionsTextCode_TH12.Id, Tenant = 0, IndexOrder = 12 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CLDI",HtmlComponentName = "",HtmlComponentUrl = "./CommonModules/CommonCustomer/Components/EditTabs/CustomerDocsInTabComponent", FeatureId = CustomerDocsInFeature_TH13.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.CustomerCRMTabs.CustomerDocsInTabControl", ObjectTableId = CustomerObjectTable.Id, TabNameTextCodeId = CustomerDocsInTextCode_TH13.Id, Tenant = 0, IndexOrder = 13 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CLDO",HtmlComponentName = "",HtmlComponentUrl = "./CommonModules/CommonCustomer/Components/EditTabs/CustomerDocsOutTabComponent", FeatureId = CustomerDocsOutFeature_TH13.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.CustomerCRMTabs.CustomerDocsOutTabControl", ObjectTableId = CustomerObjectTable.Id, TabNameTextCodeId = CustomerDocsOutTextCode_TH13.Id, Tenant = 0, IndexOrder = 13 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CSEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomerEventsFeature_TH14.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CustomerObjectTable.Id, TabNameTextCodeId = CustomerEventsTextCode_TH14.Id, Tenant = 0, IndexOrder = 14 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CLDI",HtmlComponentName = "",HtmlComponentUrl = "./CommonModules/CommonCustomer/Components/EditTabs/CustomerDocsInTabComponent", FeatureId = CustomerDocsInFeature_TH14.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.CustomerCRMTabs.CustomerDocsInTabControl", ObjectTableId = CustomerObjectTable.Id, TabNameTextCodeId = CustomerDocsInTextCode_TH14.Id, Tenant = 0, IndexOrder = 14 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CSEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomerEventsFeature_TH15.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CustomerObjectTable.Id, TabNameTextCodeId = CustomerEventsTextCode_TH15.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
