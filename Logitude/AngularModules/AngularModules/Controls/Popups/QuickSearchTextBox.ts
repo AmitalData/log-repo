@@ -196,7 +196,19 @@ export class QuickSearchTextBox implements OnInit {
                         this.myPartnersDomainService = new PartnersDomainService();
                     }
 
-                    this.myPartnersDomainService.GetCustomersQuickSearch(this.searchText).subscribe((myResponse: ServiceResponse) => {
+                    var item = this.Filters.AdditionalFilters.filter(f => f.FieldName == "SearchFields")[0];
+                    if (item) {
+                        var indexOfItem = this.Filters.AdditionalFilters.indexOf(item);
+                        this.Filters.AdditionalFilters.splice(indexOfItem, 1);
+                    }
+
+                    if (!AppTool.IsNullOrEmpty(this.SearchText)) {
+                        this.Filters.Filter10Name = "SearchFields";
+                        this.Filters.Filter10Value = this.SearchText;
+                        this.Filters.Filter10Operator = "Contains";
+                    }
+
+                    this.myPartnersDomainService.GetCustomersQuickSearch(this.Filters).subscribe((myResponse: ServiceResponse) => {
                         this.OnDataLoaded(myResponse.Result);
                     });
 
