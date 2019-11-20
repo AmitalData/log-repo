@@ -46,8 +46,13 @@ export class NewAPInvoice {
         this.Helper.WaitByIdAndFill('APInvoiceLine_ChargesTypeId','Air Freight');
         this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'APInvoiceLine_ChargesTypeId', 'Air Freight');
         this.Helper.WaitBusyIndicator();
-        this.Helper.WaitByIdAndFill('APInvoiceLine_VatPercentage', '0')
-        this.Helper.WaitByIdAndFill('APInvoiceLine_InvoiceCurrencyAmount','1000');
+        this.Helper.WaitByIdAndFill('APInvoiceLine_VatPercentage', '0');
+        this.Helper.WaitBusyIndicator();
+
+        this.Helper.WaitByIdAndFill('APInvoiceLine_InvoiceCurrencyAmount', '1000');
+        this.Helper.WaitBusyIndicator();
+        this.Helper.ItemsVisibility('Ok-AddAPInvoiceLine');
+        this.Helper.ItemsPresent('Ok-AddAPInvoiceLine');
         this.Helper.WaitByIdAndClick('Ok-AddAPInvoiceLine');
         this.Helper.WaitWindowClosed();
         this.Helper.WaitBusyIndicator();
