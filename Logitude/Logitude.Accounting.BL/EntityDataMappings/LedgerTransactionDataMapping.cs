@@ -13,8 +13,7 @@ using Logitude.Accounting.Data;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
-
-
+using Logitude.Accounting.Data.Repositories;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -76,15 +75,14 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             CustomMappedPMProperties.Add(PMPropertyNames.OppositeAccountDisplayNumber);
             if (entityPOCO.OppositeAccountId != null)
             {
-                GLAccountQueryService glaQuery = new GLAccountQueryService(entityPOCO.Tenant);
-                GLAccountPM gla = glaQuery.GetSinglePM(entityPOCO.OppositeAccountId, entityPOCO.Tenant);
+                GLAccountRepository gLAccountRepository = new GLAccountRepository(entityPOCO.Tenant);
+                GLAccount gla = gLAccountRepository.GetSingle(entityPOCO.OppositeAccountId, entityPOCO.Tenant);
                 entityPM.OppositeAccountEnglishName = gla.EnglishName;
                 entityPM.OppositeAccountLocalName = gla.LocalName;
                 entityPM.OppositeAccountDisplayNumber = gla.DisplayNumber;
             }
 
             // GET reconciliation no. of reconciled LT
-            ReconciliationQueryService recoQuery = new ReconciliationQueryService(entityPM.Tenant);
             ReconciliationLineQueryService recoLineQuery = new ReconciliationLineQueryService(entityPM.Tenant);
             if (entityPM.IsReconciled)
             {
@@ -95,7 +93,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 // get reconciliaiton
                 if (recoLine != null)
                 {
-                    var reco = recoQuery.GetSingle(recoLine.ReconciliationId, false, false);
+                    ReconciliationRepository reconciliationRepository = new ReconciliationRepository(entityPM.Tenant);
+                    Reconciliation reco = reconciliationRepository.GetSingle(recoLine.ReconciliationId, entityPM.Tenant);
+
                     entityPM.RecoNumber = reco.Number;
                     entityPM.ReconciliationId = reco.Id;
                 }
@@ -105,24 +105,29 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
         private static void RetrieveJournalFields(LedgerTransactionPM entityPM, LedgerTransaction entityPOCO)
         {
-            var JournalId="";
-            int Tenant;
-            if (entityPOCO != null && 
-                !String.IsNullOrWhiteSpace(entityPOCO.JournalId)
-                )
+            var journalId="";
+            int tenant;
+            if (entityPOCO != null && !String.IsNullOrWhiteSpace(entityPOCO.JournalId))
             {
-                JournalId=entityPOCO.JournalId;
-                Tenant = entityPOCO.Tenant;
+                journalId = entityPOCO.JournalId;
+                tenant = entityPOCO.Tenant;
             }
             else
             {
-                JournalId = entityPM.JournalId;
-                Tenant = entityPM.Tenant;
+                journalId = entityPM.JournalId;
+                tenant = entityPM.Tenant;
             }
-            JournalQueryService journalQueryService = new JournalQueryService(Tenant);
-            JournalPM parent = journalQueryService.GetSingle(JournalId, false, false);
+
+            JournalRepository journalRepository = new JournalRepository(tenant);
+            Journal parent = journalRepository.GetSingle(journalId, tenant);
+            //JournalQueryService journalQueryService = new JournalQueryService(tenant);
+            //JournalPM parent = journalQueryService.GetSingle(journalId, false, false);
+
+            AccountingEntityRepository accountingEntityRepository = new AccountingEntityRepository(tenant);
+            var accountingEntity = accountingEntityRepository.GetSingle(parent.AccountingEntityCode);
+
             entityPM.Source = parent.AccountingEntityId;
-            entityPM.SourceType = parent.AccountingEntityName;
+            entityPM.SourceType = accountingEntity.EnglishName;
             entityPM.JournalNumber = parent.JournalNumber;
 
             

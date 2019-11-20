@@ -39,6 +39,7 @@ namespace WebFreight.Web.DataProviders
         public string Notes { get; set; }
         public double? AccountedAmount { get; set; }
         public double? OpenAmount { get; set; }
+
         public DateTime? FinalArrivalDate { get; set; }
     }    
 }

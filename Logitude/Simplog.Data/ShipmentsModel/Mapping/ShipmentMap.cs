@@ -287,6 +287,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.UpdatedByPartner).HasMaxLength(60).IsUnicode(false);
             this.Property(t => t.INTTRASIStatusCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.INTTRASIError).HasMaxLength(256).IsUnicode(false);
+            this.Property(t => t.INTTRABookingError).HasMaxLength(256).IsUnicode(false);
+            this.Property(t => t.INTTRALastBookingResponse).IsMaxLength().IsUnicode(true);
             this.Property(t => t.EmergencyContactId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.INTTRAContractNumber).HasMaxLength(35).IsUnicode(false);
             this.Property(t => t.INTTRAInstructions).HasMaxLength(500).IsUnicode(false);

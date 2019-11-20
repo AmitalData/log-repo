@@ -1642,7 +1642,12 @@
     <Compile Include="Migrations\201910230530223_addINTTRAUpdatesShipment.Designer.cs">
       <DependentUpon>201910230530223_addINTTRAUpdatesShipment.cs</DependentUpon>
     </Compile>
+    
 
+    <Compile Include="Migrations\201911150824004_AddINTTRABookingFieldsToShipment_Maheera.cs" />
+    <Compile Include="Migrations\201911150824004_AddINTTRABookingFieldsToShipment_Maheera.Designer.cs">
+      <DependentUpon>201911150824004_AddINTTRABookingFieldsToShipment_Maheera.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2816,7 +2821,10 @@
     <EmbeddedResource Include="Migrations\201910230530223_addINTTRAUpdatesShipment.resx">
       <DependentUpon>201910230530223_addINTTRAUpdatesShipment.cs</DependentUpon>
     </EmbeddedResource>
-   
+
+    <EmbeddedResource Include="Migrations\201911150824004_AddINTTRABookingFieldsToShipment_Maheera.resx">
+      <DependentUpon>201911150824004_AddINTTRABookingFieldsToShipment_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">
