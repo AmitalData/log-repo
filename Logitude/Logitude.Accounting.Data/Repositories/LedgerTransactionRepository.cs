@@ -415,13 +415,13 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
         }
 
 
-        public IQueryable<LedgerTransaction> GetQueryOrderByDateTypeAndIdByRec(int tenant, List<string> listOfAccId, DateTime @from, DateTime to,
+        public IQueryable<LedgerTransaction> GetQueryOrderByDateTypeAndIdByRec(int tenant, IQueryable<string> qOfAccId, DateTime @from, DateTime to,
        string currencyId,
        string searchByFilter, bool? isReconciled, string dateType)
         {
             var q = (from rec in context.LedgerTransactions
                      where rec.Tenant == tenant
-                     where listOfAccId.Contains(rec.AccountId) //less than 1000
+                     where qOfAccId.Contains(rec.AccountId) //less than 1000
                      select rec
                      );
             //if (context.ToString().StartsWith("Fake"))
