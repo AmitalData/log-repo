@@ -19,7 +19,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
 
     public partial class OccasionListQueryService
     {
-        private IQueryable<OccasionList> GetIqueryableList(IQueryable<Occasion> iQueryable)
+        public IQueryable<OccasionList> GetIqueryableList(IQueryable<Occasion> iQueryable)
         {
             IQueryable<OccasionList> query = (from a in iQueryable
                                               select new OccasionList()
@@ -72,7 +72,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                                   ParticipatedCustomers = a.ParticipatedCustomers,
                                                   InvitedContacts = a.InvitedContacts,
                                                   InvitedCustomers  =a.InvitedCustomers,
-
+                                                   
                                               });
             return query;
         }
