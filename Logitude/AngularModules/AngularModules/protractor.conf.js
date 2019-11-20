@@ -135,7 +135,7 @@ exports.config = {
             browser.params.Link = "https://test.logitudeworld.com/staging";
             browser.params.Login.Email = "Raghad@protractor.com";
             browser.params.Login.Password = "!RS123Rs";
-
+        }
         else if (browser.params.Env == "testStaging") {
             browser.params.Link = "https://staging.logitudeworld.com";
             browser.params.Login.Email = "Raghad@protractor.com";
@@ -165,6 +165,12 @@ exports.config = {
             browser.params.Link = "https://test.logitudeworld.com/staging";
             browser.params.Login.Email = "sumaya@automation.com";
             browser.params.Login.Password = "Sg0592463934!";
+        }
+
+        else if (browser.params.Env == "Pre_Racing") {
+            browser.params.Link = "https://pre.logitudeworld.com/";
+            browser.params.Login.Email = "lana3@test.com";
+            browser.params.Login.Password = "12La34Na56!";
         }
 
         //------------------------------------- Reporter --------------------------------
