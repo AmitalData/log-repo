@@ -436,6 +436,9 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
 
         if (this.EntityPM.AccountingSystemCode == "QBO" || this.EntityPM.AccountingSystemCode == "QBOG") {
             this.EntityPM.AccountingSystemCode = "NO";
+            this.EntityPM.QBOrealMeID = null;
+            this.EntityPM.QBOOAuth = 0;
+
             this.entityPMService.update(this.EntityPM).subscribe((myResponse1: ServiceResponse) => {
                 if (myResponse1.HasError) {
                     this.ValidationErrorsList = myResponse1.ErrorsArray;
