@@ -3383,6 +3383,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<ExternalReconciliation> ExternalReconciliations { get; set; }
         public IDbSet<ExternalReconciliationLine> ExternalReconciliationLines { get; set; }
         public IDbSet<BankPageEntryType> BankPageEntryTypes { get; set; }
+        public IDbSet<ExternalPageAdditionalData> ExternalPageAdditionalDatas { get; set; }
 
         public IDbSet<UIMessage> UIMessage { get; set; }
         public IDbSet<UIMessageAdditional> UIMessageAdditional { get; set; }
@@ -4348,6 +4349,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new WithholdingTaxDeductionTypeMap());
             modelBuilder.Configurations.Add(new AccountingCompanyTypeMap());
             modelBuilder.Configurations.Add(new BankPageEntryTypeMap());
+            modelBuilder.Configurations.Add(new ExternalPageAdditionalDataMap());
             modelBuilder.Configurations.Add(new AutomaticExternalRconcilMthodMap());
             modelBuilder.Configurations.Add(new RevaluationStatusMap());
             modelBuilder.Configurations.Add(new TaxReportStatusMap());
