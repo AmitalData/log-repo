@@ -257,10 +257,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             if (!entityPM.IsGeneralInvoice)
             {
-                //if (!entityPM.CreatedFromAPI)
-                //{
-                    this.UpdateAllPayablesAccountedAmountAndStatus();
-                //}
+                this.UpdateAllPayablesAccountedAmountAndStatus();
             }
 
             this.UpdateInvoiceAmountDue();
@@ -322,12 +319,30 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private void GeneratePayableLine_ChargeTypes(APInvoiceLinePM aPInvoiceLine, List<ShipmentPayable> shipmentPayable)
         {
             List<ShipmentPayable> myLines = shipmentPayable.Where(a => a.VendorId == entityPM.VendorId || a.VendorId == null).ToList();
-            if (myLines != null && myLines.Count() == 1)
+            if (myLines != null)
             {
-                ShipmentPayable shipmentPayableLine = shipmentPayable.FirstOrDefault();
-                // connect payable line to invoice line
-                aPInvoiceLine.EntityPayableId = shipmentPayableLine.Id;
-                this.ComputeOpenAmount(aPInvoiceLine, shipmentPayableLine);
+                if (myLines.Count() == 1)
+                {
+                    ShipmentPayable shipmentPayableLine;
+                    var matchedContainerLines = myLines.Where(a => a.Measurement != null && a.Measurement.Code == aPInvoiceLine.ContainerTypeCode && a.Quantity == aPInvoiceLine.Quantity && a.CurrencyId == aPInvoiceLine.ForiegnCurrencyId).ToList();
+                    if (matchedContainerLines != null && matchedContainerLines.Count() == 1)
+                    {
+                        shipmentPayableLine = matchedContainerLines.FirstOrDefault();
+                        aPInvoiceLine.EntityPayableId = shipmentPayableLine.Id;
+                        aPInvoiceLine.AmountTypeCode = "EXPT";
+                        this.ComputeOpenAmount(aPInvoiceLine, shipmentPayableLine);
+                    }
+                    else
+                    {
+                        shipmentPayableLine = shipmentPayable.FirstOrDefault();
+                        aPInvoiceLine.EntityPayableId = shipmentPayableLine.Id;
+                        this.ComputeOpenAmount(aPInvoiceLine, shipmentPayableLine);
+                    }
+                }
+                else
+                {
+                    this.UnexpectedPayablesInvoiceLines.Add(aPInvoiceLine);
+                }
             }
             else
             {
@@ -1276,8 +1291,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             AWBPrint = false,
                             IsEditedByUser = false,
                             IsFromQuote = false,
+                            Quantity = invoicelinePM.Quantity,
+                           
                         };
 
+                        if(invoicelinePM.ContainerTypeId != null)
+                        {
+                            PackageTypeRepository packageRepository = new PackageTypeRepository(tenant);
+                            var package = packageRepository.GetSinglePackageType(invoicelinePM.ContainerTypeId, tenant);
+                            if(package != null)
+                            {
+                                payable.MeasurementId = package.MeasurementId;
+                            }
+                        }
                         //ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(tenant);
                         //ChargesType chargesType = chargesTypeRepository.GetSingleChargesType(invoicelinePM.ChargesTypeId, tenant);
                         //if (chargesType != null)
@@ -1293,6 +1319,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
         }
+
+      
 
         private void UpdateAllPayablesAccountedAmountAndStatus()
         {
