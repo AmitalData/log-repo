@@ -105,17 +105,17 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                                                      select a).FirstOrDefault();
 
             IQueryable<TaskSchedulerHistoryPM> Latest15HistoriesQuery = (from a in ObjectContext.TaskSchedulerHistories
-                                                                         where a.TaskId == TaskId
-                                                                         select new TaskSchedulerHistoryPM()
-                                                                         {
-                                                                             StartDateTime = a.StartDateTime,
-                                                                             EndDateTime = a.EndDateTime,
-                                                                             Duration = DbFunctions.DiffSeconds(a.StartDateTime, a.EndDateTime),
-                                                                             //DurationTS = a.EndDateTime - a.StartDateTime,
-                                                                         }).Where(x => x.StartDateTime != null && x.EndDateTime != null && x.EndDateTime > x.StartDateTime).OrderByDescending(x => x.StartDateTime).Take(15);
+                                          where a.TaskId == TaskId
+                                          select new TaskSchedulerHistoryPM()
+                                          {
+                                              StartDateTime = a.StartDateTime,
+                                              EndDateTime = a.EndDateTime,
+                                              Duration = DbFunctions.DiffSeconds(a.StartDateTime, a.EndDateTime),
+                                              //DurationTS = a.EndDateTime - a.StartDateTime,
+                                          }).Where(x => x.StartDateTime != null && x.EndDateTime != null && x.EndDateTime > x.StartDateTime).OrderByDescending(x => x.StartDateTime).Take(15);
 
             //double? Latest15HistoriesAverageRunTime = Latest15HistoriesQuery.Average(a => a.Duration);//.ToList();.OrderByDescending(x => x.StartDateTime).Take(10)
-            double? Latest15HistoriesAverageRunTime = Latest15HistoriesQuery.Average(a => a.Duration);//.ToList();.OrderByDescending(x => x.StartDateTime).Take(10)
+            double? Latest15HistoriesAverageRunTime = Latest15HistoriesQuery.Average(a => a.Duration);// DurationTS.Value.TotalSeconds);//.ToList();.OrderByDescending(x => x.StartDateTime).Take(10)
 
             double? Duration = 0.0;
             if (Latest15HistoriesAverageRunTime != null)

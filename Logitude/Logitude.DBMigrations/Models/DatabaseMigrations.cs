@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -9,12 +7,7 @@ namespace Logitude.DBMigrations.Models
 {
     public abstract class DatabaseMigrations
     {
-        protected readonly string connectionString = ConfigurationManager.AppSettings["ConnectionString"];
-        public TableDefinition DXMLTable;
-        //public abstract DatabaseMigrations(TableDefinition table)
-        //{
-        //    DXMLTable = table;
-        //}
+        protected TableDefinition DXMLTable;
         
         public string GetScript()
         {
@@ -37,7 +30,7 @@ namespace Logitude.DBMigrations.Models
             columnScript += ",";
             return columnScript;
         }
-         
+
         protected string GetDxmlDataType(string type)
         {
             switch (type)
@@ -89,7 +82,7 @@ namespace Logitude.DBMigrations.Models
             }
             return null;
         }
-         
+
         protected ColumnDefinition SetConstraintForColumnDefinition(ColumnDefinition column, string constraintType, string constraintName)
         {
             switch (constraintType)
@@ -266,7 +259,8 @@ namespace Logitude.DBMigrations.Models
             return columnMigrations;
         }
 
-        protected bool IsNotInCurrentTable(ColumnDefinition currentTableColumn) {
+        protected bool IsNotInCurrentTable(ColumnDefinition currentTableColumn)
+        {
             return currentTableColumn == null;
         }
 
@@ -411,11 +405,11 @@ namespace Logitude.DBMigrations.Models
             return columnMigrations;
         }
 
-        protected string GenerateIdForConstraint()
+        protected string GenerateRandomString()
         {
             return Regex.Replace(Convert.ToBase64String(Guid.NewGuid().ToByteArray()), "[/+=]", "").ToUpper();
         }
-
+        
         // abstract methods
         protected abstract TableDefinition GetCurrentTableDefinitionFromDB();
 

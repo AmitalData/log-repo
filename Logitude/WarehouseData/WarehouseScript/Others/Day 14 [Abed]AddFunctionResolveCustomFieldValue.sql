@@ -44,23 +44,38 @@ end
 
 
 ELSE if(@DataTypeCode = ''Integer'' or @DataTypeCode = ''UnsInteger'') begin 
+
+if CHARINDEX('' '',@FieldValue) > 0 
+begin   set @FieldValue = REPLACE(@FieldValue, '' '', '''') 
+end 
+
 if CHARINDEX(''.'',@FieldValue) > 0
 begin
  --set @FieldValue =( SELECT value  FROM STRING_SPLIT(@FieldValue, ''.'')  WHERE RTRIM(value) LIKE ''+'');
  set @FieldValue = dbo.SplitString(@FieldValue,''.'', 1) 
 end
-SET @MyValueOut =  CAST(@FieldValue AS int); 
+SET @MyValueOut =  CAST(@FieldValue AS bigint); 
 
 end
 
 ELSE if(@DataTypeCode = ''Decimal'' or @DataTypeCode = ''UnsDecimal'') 
 begin 
+
+if CHARINDEX('' '',@FieldValue) > 0 
+begin   set @FieldValue = REPLACE(@FieldValue, '' '', '''') 
+end 
+
 if(len(@FieldValue)>=15)begin  set @FieldValue = STUFF(@FieldValue, len(@FieldValue)-2, 0, ''.'') end
 SET @MyValueOut = CAST(@FieldValue AS DECIMAL(38, 3));
 end
 
 ELSE if(@DataTypeCode = ''Double'' or @DataTypeCode = ''SigDouble'') 
 begin 
+
+if CHARINDEX('' '',@FieldValue) > 0 
+begin   set @FieldValue = REPLACE(@FieldValue, '' '', '''') 
+end 
+
 if(len(@FieldValue)>=15)begin  set @FieldValue = STUFF(@FieldValue, len(@FieldValue)-2, 0, ''.'') end
 SET @MyValueOut = CONVERT(NUMERIC(38,3), @FieldValue)
 end

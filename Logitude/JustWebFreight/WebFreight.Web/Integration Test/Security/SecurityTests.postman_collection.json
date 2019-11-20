@@ -51,7 +51,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"Email\":\"ahmadb@test.com\",\"Password\":\"ahmed13!A15\",\"IsUser\":true,\"CardId\":null,\"CardType\":null,\"GetToken\":true,\"ClientType\":\"Web\",\"Tenant\":\"{{Tenant}}\"}\n"
+					"raw": "{\"Email\":\"{{Email1}}\",\"Password\":\"{{Password}}\",\"IsUser\":true,\"CardId\":null,\"CardType\":null,\"GetToken\":true,\"ClientType\":\"Web\",\"Tenant\":\"{{Tenant}}\"}\n"
 				},
 				"url": {
 					"raw": "{{URL}}/api/authentication?tenant={{Tenant}}",
@@ -118,7 +118,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"Email\":\"ahmad2@test.com\",\"Password\":\"ahmed13!A15\",\"IsUser\":true,\"CardId\":null,\"CardType\":null,\"GetToken\":true,\"ClientType\":\"Web\",\"Tenant\":\"{{Tenant2}}\"}\n"
+					"raw": "{\"Email\":\"{{Email2}}\",\"Password\":\"{{Password}}\",\"IsUser\":true,\"CardId\":null,\"CardType\":null,\"GetToken\":true,\"ClientType\":\"Web\",\"Tenant\":\"{{Tenant2}}\"}\n"
 				},
 				"url": {
 					"raw": "{{URL}}/api/authentication?tenant={{Tenant2}}",
@@ -189,14 +189,6 @@
 					{
 						"key": "accept",
 						"value": "application/json, text/plain, */*"
-					},
-					{
-						"key": "referer",
-						"value": "https://system.logitudeworld.com/Angular19060311/index.html"
-					},
-					{
-						"key": "authority",
-						"value": "system.logitudeworld.com"
 					},
 					{
 						"key": "cookie",
@@ -329,7 +321,7 @@
 							"      //var idvalue1 = (pm.response.json().ErrorMessage);",
 							"      //var idvalue2 = \"Sorry! you have no permission to do this operation on Tenant!\";",
 							"      //pm.expect(idvalue1).to.include(idvalue2);",
-							"        pm.expect(pm.response.json().ErrorMessage).to.include(\"Sorry! you have no permission to do this operation\");",
+							"        pm.expect(pm.response.json().ErrorMessage).to.include(\"Sorry! this user is not authorized!\");",
 							"}",
 							"",
 							");",
@@ -422,14 +414,6 @@
 						"value": "application/json, text/plain, */*"
 					},
 					{
-						"key": "referer",
-						"value": "https://test.logitudeworld.com/test/Angular19190812/index.html"
-					},
-					{
-						"key": "authority",
-						"value": "test.logitudeworld.com"
-					},
-					{
 						"key": "cookie",
 						"value": "email_cookie=ahmadb@fnarsoft.com; ASP.NET_SessionId=yy3rifsojcwndu4d24qin3lm"
 					},
@@ -439,15 +423,11 @@
 					}
 				],
 				"url": {
-					"raw": "https://test.logitudeworld.com/test/api/tenants/getsingle?id={{Tenant}}",
-					"protocol": "https",
+					"raw": "{{URL}}/api/tenants/getsingle?id={{Tenant}}",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"tenants",
 						"getsingle"
@@ -505,14 +485,6 @@
 						"value": "application/json, text/plain, */*"
 					},
 					{
-						"key": "referer",
-						"value": "https://test.logitudeworld.com/test/Angular19190812/index.html"
-					},
-					{
-						"key": "authority",
-						"value": "test.logitudeworld.com"
-					},
-					{
 						"key": "cookie",
 						"value": "email_cookie=ahmadb@fnarsoft.com; ASP.NET_SessionId=yy3rifsojcwndu4d24qin3lm"
 					},
@@ -522,15 +494,11 @@
 					}
 				],
 				"url": {
-					"raw": "https://test.logitudeworld.com/test/api/tenants/getsingle?id={{Tenant}}",
-					"protocol": "https",
+					"raw": "{{URL}}/api/tenants/getsingle?id={{Tenant}}",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"tenants",
 						"getsingle"
@@ -575,14 +543,6 @@
 						"value": "application/json, text/plain, */*"
 					},
 					{
-						"key": "referer",
-						"value": "https://test.logitudeworld.com/test/Angular19190815/index.html"
-					},
-					{
-						"key": "authority",
-						"value": "test.logitudeworld.com"
-					},
-					{
 						"key": "cookie",
 						"value": "email_cookie=ahmad2@test.com; ASP.NET_SessionId=yy3rifsojcwndu4d24qin3lm"
 					},
@@ -596,15 +556,11 @@
 					"raw": "{\n  \"PropertyChanged\": {\n    \"_isScalar\": false,\n    \"observers\": [],\n    \"closed\": false,\n    \"isStopped\": false,\n    \"hasError\": false,\n    \"thrownError\": null,\n    \"__isAsync\": false\n  },\n  \"UIProperties\": {\n    \"UIPropertyList\": []\n  },\n  \"IsDirty\": false,\n  \"$id\": \"1\",\n  \"id\": \"{{AddressId}}\",\n  \"tenant\": \"{{Tenant}}\",\n  \"description\": \"Integration Test\",\n  \"city\": \"New York City\",\n  \"stateId\": \"1-89\",\n  \"zipCode\": \"+001\",\n  \"faxNumber\": \"asd\",\n  \"phoneNumber\": \"+001598137715\",\n  \"addressTypeId\": \"M\",\n  \"address1\": \"18 West 48th Street \",\n  \"address2\": \"#5B, New York3\",\n  \"name\": \"Te\",\n  \"countryId\": \"1-397\",\n  \"cardId\": \"1-1360\",\n  \"countryCode\": \"US\",\n  \"countryName\": \"United States of America\",\n  \"countryEnglishName\": \"United States of America\",\n  \"stateEnglishName\": \"New York\",\n  \"stateCode\": \"NY\",\n  \"searchFields\": \"Te,18 West 48th Street ,#5B, New York3,+001,New York City,United States of America\",\n  \"inActive\": false,\n  \"isLocalLanguage\": false,\n  \"isHybrid\": false,\n  \"vatNumber\": \"89898\",\n  \"cardCode\": \"10027\",\n  \"isCreatedWithPartner\": false,\n  \"cardEnglishName\": \"Simplog LTD.\",\n  \"hasStates\": true,\n  \"isStateRequired\": true,\n  \"OldEntityPM\": null\n}"
 				},
 				"url": {
-					"raw": "https://test.logitudeworld.com/test/api/addresses",
-					"protocol": "https",
+					"raw": "{{URL}}/api/addresses",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"addresses"
 					]
@@ -659,14 +615,6 @@
 						"value": "application/json, text/plain, */*"
 					},
 					{
-						"key": "referer",
-						"value": "https://test.logitudeworld.com/test/Angular19190815/index.html"
-					},
-					{
-						"key": "authority",
-						"value": "test.logitudeworld.com"
-					},
-					{
 						"key": "cookie",
 						"value": "email_cookie=ahmadb@fnarsoft.com; ASP.NET_SessionId=yy3rifsojcwndu4d24qin3lm"
 					},
@@ -676,15 +624,11 @@
 					}
 				],
 				"url": {
-					"raw": "https://test.logitudeworld.com/test/api/arinvoiceviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=&PageIndex=0&PageSize=22&SortDirection=Descending",
-					"protocol": "https",
+					"raw": "{{URL}}/api/arinvoiceviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=&PageIndex=0&PageSize=22&SortDirection=Descending",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"arinvoiceviews",
 						"getbyfilters"
@@ -781,14 +725,6 @@
 						"value": "application/json, text/plain, */*"
 					},
 					{
-						"key": "referer",
-						"value": "https://test.logitudeworld.com/test/Angular19190815/index.html"
-					},
-					{
-						"key": "authority",
-						"value": "test.logitudeworld.com"
-					},
-					{
 						"key": "cookie",
 						"value": "email_cookie=ahmadb@fnarsoft.com; ASP.NET_SessionId=yy3rifsojcwndu4d24qin3lm"
 					},
@@ -798,15 +734,11 @@
 					}
 				],
 				"url": {
-					"raw": "https://test.logitudeworld.com/test/api/arinvoices/getsingle?id={{ARInvoiceId}}",
-					"protocol": "https",
+					"raw": "{{URL}}/api/arinvoices/getsingle?id={{ARInvoiceId}}",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"arinvoices",
 						"getsingle"
@@ -864,14 +796,6 @@
 						"value": "application/json, text/plain, */*"
 					},
 					{
-						"key": "referer",
-						"value": "https://test.logitudeworld.com/test/Angular19190815/index.html"
-					},
-					{
-						"key": "authority",
-						"value": "test.logitudeworld.com"
-					},
-					{
 						"key": "cookie",
 						"value": "email_cookie=ahmadb@fnarsoft.com; ASP.NET_SessionId=yy3rifsojcwndu4d24qin3lm"
 					},
@@ -881,15 +805,11 @@
 					}
 				],
 				"url": {
-					"raw": "https://test.logitudeworld.com/test/api/arinvoices/getsingle?id={{ARInvoiceId}}",
-					"protocol": "https",
+					"raw": "{{URL}}/api/arinvoices/getsingle?id={{ARInvoiceId}}",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"arinvoices",
 						"getsingle"
@@ -951,14 +871,6 @@
 						"value": "application/json, text/plain, */*"
 					},
 					{
-						"key": "referer",
-						"value": "https://test.logitudeworld.com/test/Angular19190815/index.html"
-					},
-					{
-						"key": "authority",
-						"value": "test.logitudeworld.com"
-					},
-					{
 						"key": "cookie",
 						"value": "email_cookie=ahmadb@fnarsoft.com; ASP.NET_SessionId=yy3rifsojcwndu4d24qin3lm"
 					},
@@ -968,15 +880,11 @@
 					}
 				],
 				"url": {
-					"raw": "https://test.logitudeworld.com/test/api/arpaymentviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=&PageIndex=0&PageSize=22&SortDirection=Descending",
-					"protocol": "https",
+					"raw": "{{URL}}/api/arpaymentviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=&PageIndex=0&PageSize=22&SortDirection=Descending",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"arpaymentviews",
 						"getbyfilters"
@@ -1073,14 +981,6 @@
 						"value": "application/json, text/plain, */*"
 					},
 					{
-						"key": "referer",
-						"value": "https://test.logitudeworld.com/test/Angular19190815/index.html"
-					},
-					{
-						"key": "authority",
-						"value": "test.logitudeworld.com"
-					},
-					{
 						"key": "cookie",
 						"value": "email_cookie=ahmadb@fnarsoft.com; ASP.NET_SessionId=yy3rifsojcwndu4d24qin3lm"
 					},
@@ -1090,15 +990,11 @@
 					}
 				],
 				"url": {
-					"raw": "https://test.logitudeworld.com/test/api/arpayments/getsingle?id={{ARPaymentId}}",
-					"protocol": "https",
+					"raw": "{{URL}}/api/arpayments/getsingle?id={{ARPaymentId}}",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"arpayments",
 						"getsingle"
@@ -1156,14 +1052,6 @@
 						"value": "application/json, text/plain, */*"
 					},
 					{
-						"key": "referer",
-						"value": "https://test.logitudeworld.com/test/Angular19190815/index.html"
-					},
-					{
-						"key": "authority",
-						"value": "test.logitudeworld.com"
-					},
-					{
 						"key": "cookie",
 						"value": "email_cookie=ahmadb@fnarsoft.com; ASP.NET_SessionId=yy3rifsojcwndu4d24qin3lm"
 					},
@@ -1173,15 +1061,11 @@
 					}
 				],
 				"url": {
-					"raw": "https://test.logitudeworld.com/test/api/arpayments/getsingle?id={{ARPaymentId}}",
-					"protocol": "https",
+					"raw": "{{URL}}/api/arpayments/getsingle?id={{ARPaymentId}}",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"arpayments",
 						"getsingle"
@@ -1243,14 +1127,6 @@
 						"value": "application/json, text/plain, */*"
 					},
 					{
-						"key": "referer",
-						"value": "https://test.logitudeworld.com/test/Angular19190815/index.html"
-					},
-					{
-						"key": "authority",
-						"value": "test.logitudeworld.com"
-					},
-					{
 						"key": "cookie",
 						"value": "email_cookie=ahmadb@fnarsoft.com; ASP.NET_SessionId=yy3rifsojcwndu4d24qin3lm"
 					},
@@ -1260,15 +1136,11 @@
 					}
 				],
 				"url": {
-					"raw": "https://test.logitudeworld.com/test/api/apinvoiceviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=&PageIndex=0&PageSize=22",
-					"protocol": "https",
+					"raw": "{{URL}}/api/apinvoiceviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=&PageIndex=0&PageSize=22",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"apinvoiceviews",
 						"getbyfilters"
@@ -1361,14 +1233,6 @@
 						"value": "application/json, text/plain, */*"
 					},
 					{
-						"key": "referer",
-						"value": "https://test.logitudeworld.com/test/Angular19190815/index.html"
-					},
-					{
-						"key": "authority",
-						"value": "test.logitudeworld.com"
-					},
-					{
 						"key": "cookie",
 						"value": "email_cookie=ahmadb@fnarsoft.com; ASP.NET_SessionId=yy3rifsojcwndu4d24qin3lm"
 					},
@@ -1378,15 +1242,11 @@
 					}
 				],
 				"url": {
-					"raw": "https://test.logitudeworld.com/test/api/apinvoices/getsingle?id={{APInvoiceId}}",
-					"protocol": "https",
+					"raw": "{{URL}}/api/apinvoices/getsingle?id={{APInvoiceId}}",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"apinvoices",
 						"getsingle"
@@ -1444,14 +1304,6 @@
 						"value": "application/json, text/plain, */*"
 					},
 					{
-						"key": "referer",
-						"value": "https://test.logitudeworld.com/test/Angular19190815/index.html"
-					},
-					{
-						"key": "authority",
-						"value": "test.logitudeworld.com"
-					},
-					{
 						"key": "cookie",
 						"value": "email_cookie=ahmadb@fnarsoft.com; ASP.NET_SessionId=yy3rifsojcwndu4d24qin3lm"
 					},
@@ -1461,15 +1313,11 @@
 					}
 				],
 				"url": {
-					"raw": "https://test.logitudeworld.com/test/api/apinvoices/getsingle?id={{APInvoiceId}}",
-					"protocol": "https",
+					"raw": "{{URL}}/api/apinvoices/getsingle?id={{APInvoiceId}}",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"apinvoices",
 						"getsingle"
@@ -1531,14 +1379,6 @@
 						"value": "application/json, text/plain, */*"
 					},
 					{
-						"key": "referer",
-						"value": "https://test.logitudeworld.com/test/Angular19190815/index.html"
-					},
-					{
-						"key": "authority",
-						"value": "test.logitudeworld.com"
-					},
-					{
 						"key": "cookie",
 						"value": "email_cookie=ahmadb@fnarsoft.com; ASP.NET_SessionId=yy3rifsojcwndu4d24qin3lm"
 					},
@@ -1548,15 +1388,11 @@
 					}
 				],
 				"url": {
-					"raw": "https://test.logitudeworld.com/test/api/appaymentviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=&PageIndex=0&PageSize=22",
-					"protocol": "https",
+					"raw": "{{URL}}/api/appaymentviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=&PageIndex=0&PageSize=22",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"appaymentviews",
 						"getbyfilters"
@@ -1649,14 +1485,6 @@
 						"value": "application/json, text/plain, */*"
 					},
 					{
-						"key": "referer",
-						"value": "https://test.logitudeworld.com/test/Angular19190815/index.html"
-					},
-					{
-						"key": "authority",
-						"value": "test.logitudeworld.com"
-					},
-					{
 						"key": "cookie",
 						"value": "email_cookie=ahmadb@fnarsoft.com; ASP.NET_SessionId=yy3rifsojcwndu4d24qin3lm"
 					},
@@ -1666,15 +1494,11 @@
 					}
 				],
 				"url": {
-					"raw": "https://test.logitudeworld.com/test/api/appayments/getsingle?id={{APPaymentId}}",
-					"protocol": "https",
+					"raw": "{{URL}}/api/appayments/getsingle?id={{APPaymentId}}",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"appayments",
 						"getsingle"
@@ -1732,14 +1556,6 @@
 						"value": "application/json, text/plain, */*"
 					},
 					{
-						"key": "referer",
-						"value": "https://test.logitudeworld.com/test/Angular19190815/index.html"
-					},
-					{
-						"key": "authority",
-						"value": "test.logitudeworld.com"
-					},
-					{
 						"key": "cookie",
 						"value": "email_cookie=ahmadb@fnarsoft.com; ASP.NET_SessionId=yy3rifsojcwndu4d24qin3lm"
 					},
@@ -1749,15 +1565,11 @@
 					}
 				],
 				"url": {
-					"raw": "https://test.logitudeworld.com/test/api/appayments/getsingle?id={{APPaymentId}}",
-					"protocol": "https",
+					"raw": "{{URL}}/api/appayments/getsingle?id={{APPaymentId}}",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"appayments",
 						"getsingle"
@@ -1766,6 +1578,418 @@
 						{
 							"key": "id",
 							"value": "{{APPaymentId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetContactFromMyTenant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bdb027bd-5c3c-4987-977d-5ab34186cb41",
+						"exec": [
+							"pm.test(\"GetContactFromMyTenant\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   ",
+							"    var idvalue1 = (pm.response.json().Result[0].Email);",
+							"    var idvalue2 = pm.globals.get(\"Email\");",
+							"    var idexist = idvalue1 !== null;",
+							"    ",
+							"     if (idvalue1 == idvalue2)  {",
+							"        tests[\"GetContactFromMyTenant successfully : \" + idvalue1] = responseBody.has(idvalue1);",
+							"   ",
+							"    } ",
+							"    ",
+							"   ",
+							"});",
+							"     ",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept-encoding",
+						"value": "gzip, deflate, br"
+					},
+					{
+						"key": "accept-language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 OPR/62.0.3331.116"
+					},
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "cookie",
+						"value": "email_cookie=ahmad2@test.com; ASP.NET_SessionId=yy3rifsojcwndu4d24qin3lm"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/contactviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{Email}}&PageSize=22",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"contactviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "{{Email}}"
+						},
+						{
+							"key": "PageSize",
+							"value": "22"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetContactFromMyTenantNotMyTenant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bdb027bd-5c3c-4987-977d-5ab34186cb41",
+						"exec": [
+							"pm.test(\"GetContactFromMyTenantNotMyTenant\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   ",
+							"    var idvalue1 = (pm.response.json().Result[0].Email);",
+							"    var idvalue2 = pm.globals.get(\"Email\");",
+							"    var idexist = idvalue1 !== null;",
+							"    ",
+							"     if (idvalue1 == idvalue2)  {",
+							"        tests[\"GetContactFromMyTenantNotMyTenant successfully : \" + idvalue1] = responseBody.has(idvalue1);",
+							"   ",
+							"    } ",
+							"    ",
+							"   ",
+							"});",
+							"     ",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept-encoding",
+						"value": "gzip, deflate, br"
+					},
+					{
+						"key": "accept-language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36 OPR/62.0.3331.116"
+					},
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "cookie",
+						"value": "email_cookie=ahmad2@test.com; ASP.NET_SessionId=yy3rifsojcwndu4d24qin3lm"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/contactviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{Email}}&PageSize=22&Tenant={{Tenant2}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"contactviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "{{Email}}"
+						},
+						{
+							"key": "PageSize",
+							"value": "22"
+						},
+						{
+							"key": "Tenant",
+							"value": "{{Tenant2}}"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetContactLoggedUserFromMyTenant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "98c20003-9d37-4976-bb78-c88a43b2b37b",
+						"exec": [
+							"pm.test(\"GetContactLoggedUserFromMyTenant\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   ",
+							"    var idvalue1 = (pm.response.json().Id);",
+							"    var idvalue2 = pm.environment.get(\"CreatedByUserId\");",
+							"    var idvalue3 = (pm.response.json().Email);",
+							"    var idexist = idvalue1 !== null;",
+							"    ",
+							"     if (idvalue1 == idvalue2)  {",
+							"        tests[\"GetContactLoggedUserFromMyTenant successfully : \" + idvalue3] = responseBody.has(idvalue3);",
+							"   ",
+							"    } ",
+							"    ",
+							"   ",
+							"});",
+							"     ",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36 OPR/63.0.3368.71"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Cookie",
+						"value": "email_cookie=ahmadb@fnarsoft.com; ASP.NET_SessionId=bcnhxmem2y11pnejrrx2yktb"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/ngMetaData?tenant={{Tenant}}&useremail={{Email}}&getloggeduser=true",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"ngMetaData"
+					],
+					"query": [
+						{
+							"key": "tenant",
+							"value": "{{Tenant}}"
+						},
+						{
+							"key": "useremail",
+							"value": "{{Email}}"
+						},
+						{
+							"key": "getloggeduser",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetContactLoggedUserFromNotMyTenant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "98c20003-9d37-4976-bb78-c88a43b2b37b",
+						"exec": [
+							"pm.test(\"GetContactLoggedUserFromNotMyTenant Fail\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   ",
+							"    var idvalue1 = (pm.response.json());",
+							"    var idvalue2 = pm.environment.get(\"CreatedByUserId\");",
+							"    ",
+							"    var idexist = idvalue1 !== null;",
+							"    ",
+							"     if (idvalue1 !== idvalue2)  {",
+							"        tests[\"Exception: \" + idvalue1] = responseBody.has(idvalue1);",
+							"   ",
+							"    } ",
+							"    ",
+							"   ",
+							"});",
+							"     ",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36 OPR/63.0.3368.71"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Cookie",
+						"value": "email_cookie=ahmadb@fnarsoft.com; ASP.NET_SessionId=bcnhxmem2y11pnejrrx2yktb"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/ngMetaData?tenant={{Tenant}}&useremail={{Email2}}&getloggeduser=true",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"ngMetaData"
+					],
+					"query": [
+						{
+							"key": "tenant",
+							"value": "{{Tenant}}"
+						},
+						{
+							"key": "useremail",
+							"value": "{{Email2}}"
+						},
+						{
+							"key": "getloggeduser",
+							"value": "true"
 						}
 					]
 				}

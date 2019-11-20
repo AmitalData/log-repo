@@ -320,6 +320,7 @@
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\WeightUnitStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CodePropertiesMapping\IncotermCodePropertiesMapping.cs" />
     <Compile Include="CommonDataModel\CustomFilters\AgentSharedManifestCustomFilter.cs" />
+    <Compile Include="CommonDataModel\CustomFilters\CommunicationLogCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\CustomsShipperCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\AccountingPartnerCustomFilter.cs" />
     <Compile Include="CommonDataModel\EntityLists\AirlineAreasPortList.cs" />
@@ -389,6 +390,7 @@
     <Compile Include="InvoiceModel\APIDataContract\QueryService\ARPaymentChequeQueryService.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\QueryService\ARPaymentChequeStatusReplicaQueryService.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\QueryService\ARPaymentInvoiceQueryService.cs" />
+    <Compile Include="InvoiceModel\APIDataContract\XSD\APInvoiceXSD.cs" />
     <Compile Include="InvoiceModel\EntityPMs\ARPaymentChequeReplicaPM.cs" />
     <Compile Include="InvoiceModel\EntityPMs\ARPaymentChequeStatusReplicaPM.cs" />
     <Compile Include="InvoiceModel\EntityQueries\ARPaymentChequeReplicaQuery.cs" />

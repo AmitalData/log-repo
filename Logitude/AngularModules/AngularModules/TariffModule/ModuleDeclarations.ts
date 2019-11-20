@@ -19,6 +19,7 @@ import { TariffDatesValidationComponent } from './Components/EditTabs/Tariff/Tar
 import { UpdateSurchargesComponent } from './Components/EditTabs/Tariff/UpdateSurchargesComponent';
 import { ChoosePortComponent } from './Components/EditTabs/Tariff/ChoosePortComponent';
 import { AddEditAllInChargesComponent } from './Components/EditTabs/Tariff/AddEditAllInChargesComponent';
+import { OceanFCLVersionTabComponent } from './Components/EditTabs/Tariff/OceanFCLVersionTabComponent';
 
 export const Components =
     [
@@ -41,6 +42,7 @@ export const Components =
         TariffPriceStepsComponent,
         WizardDimensionsComponent,
         TariffHelperComponent,
+        OceanFCLVersionTabComponent,
     ];
 
 export const ControlsComponents =
@@ -72,6 +74,7 @@ export class ModuleDeclarations {
             case "TariffPriceStepsComponent": { myResult = TariffPriceStepsComponent; break; }
             case "WizardDimensionsComponent": { myResult = WizardDimensionsComponent; break; }
             case "TariffHelperComponent": { myResult = TariffHelperComponent; break; }
+            case "OceanFCLVersionTabComponent": { myResult = OceanFCLVersionTabComponent; break; }
         }
 
         return myResult;

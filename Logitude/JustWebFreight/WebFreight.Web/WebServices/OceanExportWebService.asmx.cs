@@ -193,6 +193,17 @@ namespace WebFreight.Web.WebServices
                 {
                     mainCarriageCarrier = (from a in commonContext.Cards where a.Id == shipment.MainCarriageCarrierId select a).FirstOrDefault();
                 }
+
+                if (!string.IsNullOrEmpty(shipment.CreatedByUserId))
+                {
+                    Contact createdByUser = contactRepository.GetSingleContact(shipment.CreatedByUserId, tenant);
+
+                    if (createdByUser != null)
+                    {
+                        myDataProvider.CreatedBy = createdByUser.EnglishName;
+                    }
+
+                }
                 #endregion
 
                 #region Shipper

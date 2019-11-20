@@ -2197,6 +2197,7 @@
     <Content Include="TariffModule\Components\EditTabs\Tariff\AddEditAllInChargesComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\AddEditTariffLineComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\ChoosePortComponent.html" />
+    <Content Include="TariffModule\Components\EditTabs\Tariff\OceanFCLVersionTabComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\SurchargeVersionTabComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\TariffDatesValidationComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\TariffDetailsTabComponent.html" />
@@ -6590,6 +6591,7 @@
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\AddEditAllInChargesComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\AddEditTariffLineComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\ChoosePortComponent.ts" />
+    <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\OceanFCLVersionTabComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\TariffLineData.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\SurchargeVersionTabComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\TariffDetailsTabComponent.ts" />
@@ -7401,8 +7403,6 @@
     <Folder Include="e2e\LogBox\Documents\" />
     <Folder Include="e2e\Testing Scenarios\Master\Smoke Testing Common\" />
     <Folder Include="e2e\Testing Scenarios\Production\Smoke Testing Common\" />
-    <Folder Include="e2e\Testing Scenarios\Production\Team Islam\" />
-    <Folder Include="e2e\Testing Scenarios\Production\Team Mohammad\" />
     <Folder Include="InfrastructureModules\InfrastructureAutomation\Components\" />
     <Folder Include="InfrastructureModules\InfrastructureStimulsoft\Components\" />
     <Folder Include="Logitude\Components\Customization\" />
