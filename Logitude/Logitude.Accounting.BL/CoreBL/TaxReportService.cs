@@ -64,10 +64,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(tenant);
 
-                IAccountingContext MyContext = AccountingContext.GetContext(taxReport.Tenant);
-                TaxReportUpdateService updateService = new TaxReportUpdateService(MyContext, new Dictionary<string, IContext>(), taxReport.Tenant);
-                TaxReportLineUpdateService lineUpdateService = new TaxReportLineUpdateService(MyContext, new Dictionary<string, IContext>(), taxReport.Tenant);
-
+               
                 APInvoiceQuery aPInvoiceQueryService = new APInvoiceQuery(tenant);
                 CardRepository cardRepository = new CardRepository(tenant);
                 TenantQuery tenantQuery = new TenantQuery(tenant);
