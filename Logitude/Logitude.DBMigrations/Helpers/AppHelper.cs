@@ -3,7 +3,6 @@ using System;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.IO;
-using System.Linq;
 
 namespace Logitude.DBMigrations.Helpers
 {
@@ -62,45 +61,64 @@ namespace Logitude.DBMigrations.Helpers
             Console.WriteLine("The Generated Scripts Saved Successfully To /GeneratedScript/Script.sql");
         }
         
-        public static void ExecuteScript(string generatedScript)
+        public static void ExecuteScript(string databaseType, string generatedScript)
         {
             Console.WriteLine("Executing The Generated Script To The Database ...");
-            try
+            switch (databaseType)
             {
-                string connectionString = ConfigurationManager.AppSettings["ConnectionString"];
-                SqlConnection connection = new SqlConnection(connectionString);
-                SqlCommand command = connection.CreateCommand();
-                command.CommandText = generatedScript;
-                connection.Open();
-                command.ExecuteNonQuery();
-                Console.WriteLine("The Generated Script Executed Successfully");
-            }
-            catch (Exception exception)
-            {
-                Console.Write("Error While Executing Script: ");
-                Console.WriteLine(exception.Message);
+                case "msql":
+                    try
+                    {
+                        string SQLConnectionString = ConfigurationManager.AppSettings["ConnectionString"];
+                        SqlConnection SqlConnection = new SqlConnection(SQLConnectionString);
+                        SqlCommand SqlCommand = SqlConnection.CreateCommand();
+                        SqlCommand.CommandText = generatedScript;
+                        SqlConnection.Open();
+                        SqlCommand.ExecuteNonQuery();
+                        Console.WriteLine("The Generated Script Executed Successfully");
+                    }
+                    catch (Exception exception)
+                    {
+                        Console.Write("Error While Executing Script: ");
+                        Console.WriteLine(exception.Message);
+                    }
+                    break;
+                case "oracle":
+                    Console.Write("Error While Executing Script");
+                    break;
+                default:
+                    Console.Write("Error While Executing Script");
+                    break;
             }
         }
 
-        public static bool IsConnectionStringValid()
+        public static bool IsConnectionStringValid(string databaseType)
         {
             Console.WriteLine("Checking If The Connection String Is Valid ...");
-            string connectionString = ConfigurationManager.AppSettings["ConnectionString"];
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            bool isConnectionStringValid;
+            switch (databaseType)
             {
-                bool isConnectionStringValid;
-                try
-                {
-                    connection.Open();
-                    isConnectionStringValid = true;
-                    connection.Close();
-                }
-                catch (Exception)
-                {
-                    isConnectionStringValid = false;
-                    connection.Close();
-                }
-                return isConnectionStringValid;
+                case "msql":
+                    string SQLConnectionString = ConfigurationManager.AppSettings["ConnectionString"];
+                    using (SqlConnection SqlConnection = new SqlConnection(SQLConnectionString))
+                    {
+                        try
+                        {
+                            SqlConnection.Open();
+                            isConnectionStringValid = true;
+                            SqlConnection.Close();
+                        }
+                        catch (Exception)
+                        {
+                            isConnectionStringValid = false;
+                            SqlConnection.Close();
+                        }
+                        return isConnectionStringValid;
+                    }
+                case "oracle":
+                    return false;
+                default:
+                    return false;
             }
         }
 

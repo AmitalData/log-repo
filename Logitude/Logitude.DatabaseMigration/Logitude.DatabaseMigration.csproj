@@ -1650,6 +1650,10 @@
     <Compile Include="Migrations\201910231231109_CardFieldsMappingMigration.Designer.cs">
       <DependentUpon>201910231231109_CardFieldsMappingMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911171621078_NewTable_ExternalPageAdditionalData.cs" />
+    <Compile Include="Migrations\201911171621078_NewTable_ExternalPageAdditionalData.Designer.cs">
+      <DependentUpon>201911171621078_NewTable_ExternalPageAdditionalData.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201911150824004_AddINTTRABookingFieldsToShipment_Maheera.cs" />
     <Compile Include="Migrations\201911150824004_AddINTTRABookingFieldsToShipment_Maheera.Designer.cs">
       <DependentUpon>201911150824004_AddINTTRABookingFieldsToShipment_Maheera.cs</DependentUpon>
@@ -2832,6 +2836,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910231231109_CardFieldsMappingMigration.resx">
       <DependentUpon>201910231231109_CardFieldsMappingMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911171621078_NewTable_ExternalPageAdditionalData.resx">
+      <DependentUpon>201911171621078_NewTable_ExternalPageAdditionalData.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911150824004_AddINTTRABookingFieldsToShipment_Maheera.resx">
       <DependentUpon>201911150824004_AddINTTRABookingFieldsToShipment_Maheera.cs</DependentUpon>
