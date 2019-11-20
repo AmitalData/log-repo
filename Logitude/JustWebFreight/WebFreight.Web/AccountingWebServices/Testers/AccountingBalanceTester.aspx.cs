@@ -924,23 +924,21 @@ namespace WebFreight.Web.AccountingWebServices.Testers
 
             myLedgerTransactionCardIndexFilter.CallBack = new LedgerTransactionCardIndexFilterCallBack()
             {
-                //EndCardIndexForeign = ledgerTransactionCardIndexService.Response.EndCardIndexForeign,
-                //  StartCardIndexForeignList = ledgerTransactionCardIndexService.Response.StartCardIndexForeignList,
-                //   EndCardIndexLocal = ledgerTransactionCardIndexService.Response.EndCardIndexLocal,
-                //   Have1CurrencyIdInPeriod = ledgerTransactionCardIndexService.Response.Have1CurrencyIdInPeriod,
+                StartBalanceForeignList = ledgerTransactionCardIndexService.Response.StartBalanceForeignList,
+                EndBalanceLocal = ledgerTransactionCardIndexService.Response.EndBalanceLocal,
+                Have1CurrencyIdInPeriod = ledgerTransactionCardIndexService.Response.Have1CurrencyIdInPeriod,
                 //   MaxCreateAt = ledgerTransactionCardIndexService.Response.MaxCreateAt,
 
-                //StartCardIndexForeign = ledgerTransactionCardIndexService.Response.StartCardIndexForeign,
-                //   EndCardIndexForeignList = ledgerTransactionCardIndexService.Response.EndCardIndexForeignList,
+                EndBalanceForeignList = ledgerTransactionCardIndexService.Response.EndBalanceForeignList,
                 AllIdAccounts = ledgerTransactionCardIndexService.Response.AllIdAccounts,
-                //    OpenCardIndexForYearInLocalCurrency = ledgerTransactionCardIndexService.Response.OpenCardIndexForYearInLocalCurrency,
                 HaveAccountingQueued = ledgerTransactionCardIndexService.Response.HaveAccountingQueued,
-                //    StartCardIndexLocal = ledgerTransactionCardIndexService.Response.StartCardIndexLocal,
+                StartBalanceLocal = ledgerTransactionCardIndexService.Response.StartBalanceLocal,
                 TotalRowCount = ledgerTransactionCardIndexService.Response.TotalRowCount,
                 SearchFields = ledgerTransactionCardIndexService.Response.SearchFields,
                 OmitAllCardIndex = ledgerTransactionCardIndexService.Response.OmitAllCardIndex,
-                //BeginOfYearLocalAmountCardIndex = ledgerTransactionCardIndexService.Response.BeginOfYearLocalAmountCardIndex,
-                //   SuppressCumulativeDueMultiCurrencyInPeriod = ledgerTransactionCardIndexService.Response.SuppressCumulativeDueMultiCurrencyInPeriod
+                SuppressCumulativeDueMultiCurrencyInPeriod = ledgerTransactionCardIndexService.Response.SuppressCumulativeDueMultiCurrencyInPeriod,
+                OpenBalanceForYearInLocalCurrency = ledgerTransactionCardIndexService.Response.OpenBalanceForYearInLocalCurrency,
+                YearTransferLedgerTransactionIds = ledgerTransactionCardIndexService.Response.YearTransferLedgerTransactionIds,
             };
             var SerializeObjectByteParam2 = LogitudeXmlSerializer.SerializeObject<LedgerTransactionCardIndexFilter>(myLedgerTransactionCardIndexFilter);
             _TextBoxParam.Text = System.Text.Encoding.UTF8.GetString(SerializeObjectByteParam2);
