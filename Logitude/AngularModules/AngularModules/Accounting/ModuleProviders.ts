@@ -126,6 +126,8 @@ import { OpenFormatReportMenuButtonsHandler } from './Components/MenuButtons/Ope
 import { AccountingIntegrityCheckPMService } from './Services/StandardPMs/AccountingIntegrityCheckPMService';
 import { ExternalPageAdditionalDataListService } from './Services/StandardLists/ExternalPageAdditionalDataListService';
 import { ExternalPageAdditionalDataPMService } from './Services/StandardPMs/ExternalPageAdditionalDataPMService';
+import { InterestBasesPeriodListService } from './Services/StandardLists/InterestBasesPeriodListService';
+import { InterestBasesTypeListService } from './Services/StandardLists/InterestBasesTypeListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -228,6 +230,9 @@ export class ModuleProviders {
             case "TaxDeductionReportStatusListService": { myResult = new TaxDeductionReportStatusListService(); break; }
             case "OpenFormatReportStatusListService": { myResult = new OpenFormatReportStatusListService(); break; }
             case "ExternalPageAdditionalDataListService": { myResult = new ExternalPageAdditionalDataListService(); break; }
+            case "InterestBasesPeriodListService": { myResult = new InterestBasesPeriodListService(); break; }
+            case "InterestBasesTypeListService": { myResult = new InterestBasesTypeListService(); break; }
+
             //#endregion
 
             //Extend Services
