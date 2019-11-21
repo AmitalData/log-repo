@@ -79,6 +79,8 @@ export class DirectShipment {
             this.Helper.WaitByIdAndFill('Shipment_MoveTypeId', 'TestMoveTypeIDOceanMTO');
             this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Shipment_MoveTypeId', 'TestMoveTypeIDOceanMTO');
 
+            this.Helper.WaitByIdAndFill('Shipment_MainCarriageVesselId', 'VPT');
+            this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Shipment_MainCarriageVesselId', 'VPT');
         }
         else {
             // this.Helper.WaitByIdAndFill('Shipment_MainCarriageCarrierId', 'Trucker1London');
