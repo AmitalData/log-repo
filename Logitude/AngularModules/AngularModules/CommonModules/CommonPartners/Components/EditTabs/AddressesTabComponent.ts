@@ -1,3 +1,4 @@
+import { ObjectsLocator } from './../../../../Infrastructure/Locators/ObjectsLocator';
 import {Component, OnDestroy} from '@angular/core';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
@@ -24,7 +25,7 @@ export class AddressesTabComponent implements OnDestroy {
     public ItemsSource: AddressItemClass[];
     public EntityPM: any = null;
     public EntityId: string = null;
-    public ObjectTableName: string;    
+    public ObjectTableName: string;
     public Customer: CustomerPM = null;
     public PartnerTypeId: string = null;
     public IsCustomerPartner: boolean = false;
@@ -32,6 +33,8 @@ export class AddressesTabComponent implements OnDestroy {
     public IsVisibile: boolean = false;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
+    public isRTL: boolean = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+
     constructor(public entityArgs: EntityArgs) {
         this._entityResourceService.getEntityResourceByTableName("Address", 0).subscribe(response=> {
             this.IsVisibile = true;
@@ -52,7 +55,7 @@ export class AddressesTabComponent implements OnDestroy {
 
             this.Listen();
             this.SetUIProperties();
-            this.LoadData();           
+            this.LoadData();
         });
     }
 
@@ -91,7 +94,7 @@ export class AddressesTabComponent implements OnDestroy {
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
 
-    
+
     public IsEditingEnabled: boolean = false;
     public IsBlockingUnifreightCustomer: boolean = false;
     private SetUIProperties() {
@@ -267,7 +270,7 @@ export class AddressItemClass extends BaseComponent {
         this.UIProperties.SetEnabled("Description", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Name", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Address1", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("Address2", this.ObjectTableName, this.IsEditingEnabled);        
+        this.UIProperties.SetEnabled("Address2", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("ZipCode", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("City", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("CountryId", this.ObjectTableName, this.IsEditingEnabled);
@@ -537,7 +540,7 @@ export class AddressItemClass extends BaseComponent {
                 this.CountryName = this.EntityPM.IsLocalLanguage ? this.Country.LocalName : this.Country.EnglishName;
             }
 
-            if (!newValue) {               
+            if (!newValue) {
                 if (!AppTool.IsNullOrEmpty(this.Description)) {
                     this.Description = this.Description.replace(/[^\x20-\x7F]/g, "");
                 }
@@ -582,7 +585,7 @@ export class AddressItemClass extends BaseComponent {
             this.IsStateRequired = list.IsStateRequired;
         }
 
-        this.SetUIProperties_State(); 
+        this.SetUIProperties_State();
     }
     private OnStateChanged(list: StateList) {
         if (list == null) {
@@ -592,7 +595,7 @@ export class AddressItemClass extends BaseComponent {
 
         else {
             this.StateCode = list.Code;
-            this.StateEnglishName = list.EnglishName;            
+            this.StateEnglishName = list.EnglishName;
         }
 
         this.SetUIProperties_StateRequired();
