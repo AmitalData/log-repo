@@ -237,7 +237,7 @@ export class NewRevaluationComponent extends BaseComponent {
             }
 
             else {
-              //  this.ValidationErrorsList = mm.ErrorsArray;
+                this.ValidationErrorsList = mm.ErrorsArray;
                 this.CurrentSession.StopBusyIndicator();
             }
         });
