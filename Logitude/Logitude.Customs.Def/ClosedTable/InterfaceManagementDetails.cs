@@ -2504,6 +2504,25 @@ namespace Logitude.Customs.Def.ClosedTable
 
             all.Add(new InterfaceManagementDetails()
             {
+                Code = "UCB8212",
+
+                ///DCAInUniCourierBatchSend_MsgMessagingService
+                InOut = InOutEnum.I.ToString(),
+                Description = "שידור מענה מרוכז ",// "Unifreight Courier *2750* Batch Send",
+                DcaPrefixName = "UnifreightCustoms_UCB8212_Out.",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = 5,
+                AllowRestore = true,
+
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "",
+                InterfaceType = "B",
+                //  NeedSignature = false
+
+            });
+            all.Add(new InterfaceManagementDetails()
+            {
                 Code = "UCB2715",
 
                 ///DCAInUniCourierBatchSend_MsgMessagingService

@@ -112,7 +112,7 @@
     </None>
     <None Include="EntityFiles\ConsignmentPackDanger.lxml" />
     <None Include="EntityFiles\DecDangersContacts.lxml" />
-    <None Include="EntityFiles\HazardousSubstances.lxml" />
+    <None Include="EntityFiles\HazardousSubstance.lxml" />
     <None Include="EntityFiles\RequestType.lxml">
       <SubType>Designer</SubType>
     </None>

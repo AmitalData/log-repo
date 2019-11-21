@@ -292,8 +292,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsPending900, 
 	         CourierPendingReasonList, 
 	         CargoDescription, 
-	         IsPaymentProtested,
-             FastIndividualProcessName,
+	         IsPaymentProtested, 
+	         FastIndividualProcessName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

@@ -415,8 +415,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     //string toCourierManifestStatusCode = "R";
                     string updateCourierManifestStatusCodeToR =
                         $"Update DECLARATIONCOURIERSTATUSES set CourierManifestStatusCode ='{setCourierManifestStatusCode}' where DECLARATIONID  in (select DECLARATIONID   from CourierDeclarations  where CourierMasterId ='{CourierMasterId}' and tenant ={EntityPM.Tenant} ) and CourierManifestStatusCode !='M' and CourierManifestStatusCode !='R' ";
-
-                    CustomContext.CommandExecuteNonQuery(EntityPM.Tenant, updateCourierManifestStatusCodeToR);
+                    int commandTimeout = 30;
+                    CustomContext.CommandExecuteNonQuery(EntityPM.Tenant, updateCourierManifestStatusCodeToR, commandTimeout);
 
                     //setDeclarationsList = OldNotInUse(entityPM, setCourierManifestStatusCode, setDeclarationsList);
                 }

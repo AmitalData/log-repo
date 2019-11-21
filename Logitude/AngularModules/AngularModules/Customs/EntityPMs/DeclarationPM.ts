@@ -990,7 +990,6 @@ export class DeclarationPM {
     public set FastIndividualProcessName(newValue: string) { if (this.fastIndividualProcessName != newValue) { this.fastIndividualProcessName = newValue; this.MarkAsDirty("FastIndividualProcessName"); } }
        
 	 
-
      
 	private decDangersContacts: DecDangersContactPM[];
     get  DecDangersContacts() {

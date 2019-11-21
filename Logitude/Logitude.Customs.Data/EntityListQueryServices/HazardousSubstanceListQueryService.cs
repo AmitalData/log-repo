@@ -24,21 +24,23 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 		IQueryable<HazardousSubstanceList> query = (from a in iQueryable
                                             select new HazardousSubstanceList()
 											{
-                     
-					                          Code = a.Code,
-					
-					                          Name = a.Name,
-					
-					                          SearchFields = a.SearchFields,
-					
-		                    	            });
+
+                                                Code = a.Code,
+
+                                                // EnglishName = a.EnglishName,
+                                                LocalName = a.LocalName,
+                                                Inactive = a.Inactive,
+                                                SearchFields = a.SearchFields,
+
+                                            });
             return query;
 		}
 
 		private IQueryable<HazardousSubstance> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<HazardousSubstance> iQueryable)
         {
-			throw new NotImplementedException();
-		}
+            return iQueryable;
+
+ 		}
 			}
 
 

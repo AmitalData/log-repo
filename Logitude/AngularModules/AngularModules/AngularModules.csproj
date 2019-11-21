@@ -886,6 +886,7 @@
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\CargoSplitRequestParams.ts" />
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\GatepassRequestMessageRequestParams.ts" />
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\SendALLStorageSiteRequestParams.ts" />
+    <TypeScriptCompile Include="Customs\DataContract\RequestParams\SendCollateralRequestParams.ts" />
     <TypeScriptCompile Include="Customs\DataContract\ResponseData\ContinuousResponseOnClaimFileResponseData.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ApprovedProfessionList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\ContinuousRequestTypeList.ts" />
@@ -927,7 +928,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\DeficitDecisionPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\GatepassRequestPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\GatepassReturnCodePM.ts" />
-    <TypeScriptCompile Include="Customs\EntityPMs\HazardousSubstancesPM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\HazardousSubstancePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\PendingByKeywordPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\PendingErrorPlacePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\RefundCustomerActivityTypePM.ts" />
@@ -936,6 +937,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\SeizureMethodTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\TransferCargoMethodTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\UpdateCodePM.ts" />
+    <TypeScriptCompile Include="Customs\Services\DataChange\CustomsCollateralAnswerSharedDataService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\CourierMasterExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\CourierPendingReasonExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\CustomsCollateralExtendedListService.ts" />

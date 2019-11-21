@@ -21,10 +21,14 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Key]
         [Column("Code")]
 	    public string Code { get; set; }
-        [Column("Name")]
-	    public string Name { get; set; }
+        [Column("EnglishName")]
+	    public string EnglishName { get; set; }
         [Column("SearchFields")]
 	    public string SearchFields { get; set; }
+        [Column("LocalName")]
+	    public string LocalName { get; set; }
+        [Column("Inactive")]
+	    public bool Inactive { get; set; }
     }
 }
 	 
