@@ -25,6 +25,8 @@ import { DeclarationCourierStatusList } from '../../../../Customs/EntityLists/De
 import { CustomsRequestsSheetPM } from '../../../../Customs/EntityPMs/CustomsRequestsSheetPM';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { DeclarationExtendedListService } from '../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
+import { CourierMasterPMService } from '../../../../Customs/Services/StandardPMs/CourierMasterPMService';
+//import { AmitalGatewayUtil } from '../../../Utilities/AmitalGatewayUtil';
 
 @Component({
     moduleId: module.id,
@@ -38,6 +40,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private _DeclarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
     _CourierMasterService: CourierMasterService = new CourierMasterService();
+    _CourierMasterPMService: CourierMasterPMService = new CourierMasterPMService();
     _EntityListService: EntityListService = new EntityListService();
 
     // Queries Features
@@ -53,6 +56,9 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
     public isRTL: boolean = false;
     public isScreenLoaded: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+
+    @Output() MenuHeaderchangeevent = new EventEmitter();
+
     constructor() {
         this.LoadAllScreenData();
         this.CurrentSession.StartBusyIndicatorLoading();
@@ -110,6 +116,8 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
     }
 
     LoadQueriesCounts() {
+
+        this.RefreshList();
         /*
         this._CourierMasterService.GetSummary().subscribe(myResult => {
             if (myResult != null) {
@@ -261,158 +269,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
         }
         //filters.addAdditionalFilter("CourierMasterId", this.entityPM.Id, null, null, "Equals", false, false, false, "string");
         filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
-        /*
-        switch (this._SelectedTabFilter.Code) {
-            //case "ACC":
-            case "ALL": {
-                break;
-            }
-            default: {
-                filters.addAdditionalFilter("Is" + this._SelectedTabFilter.Code + "Tab", true, null, null, "Equals", false, false, false, "Boolean");
-                break;
-            }
-        }
-        
-        switch (this._SelectedBOLValue) {
-            case "L": {
-                filters.addAdditionalFilter("HighLowValue", "L", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-            case "H": {
-                filters.addAdditionalFilter("HighLowValue", "H", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-        }
 
-        switch (this._SelectedStatusValue) {
-            case "O": {
-                filters.addAdditionalFilter("IsClosedForFollowUp", false, null, null, "Equals", false, false, false, "Boolean");
-                break;
-            }
-            case "C": {
-                filters.addAdditionalFilter("IsClosedForFollowUp", true, null, null, "Equals", false, false, false, "Boolean");
-                break;
-            }
-        }
-
-        switch (this._SelectedMNFValue) {
-            case "C": {
-                filters.addAdditionalFilter("CourierManifestStatusCode", "M", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-            case "W": {
-                filters.addAdditionalFilter("CourierManifestStatusCode", "X", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-        }
-
-        switch (this._SelectedDECValue) {
-            case "C": {
-                filters.addAdditionalFilter("CourierDeclarationStatusCode", "M", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-            case "W": {
-                filters.addAdditionalFilter("CourierDeclarationStatusCode", "X", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-        }
-
-        switch (this._SelectedDOCValue) {
-            case "C": {
-                filters.addAdditionalFilter("DocumentStatusCode", "M", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-            case "U": {
-                filters.addAdditionalFilter("DocumentStatusCode", "X", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-        }
-
-        switch (this._SelectedTotalInvoiceValue) {
-            case "75": {
-                filters.addAdditionalFilter("TotalInvoiceAmountInUSD", 75, null, null, "LessThanOrEqual", false, false, false, "number");
-                break;
-            }
-            case "500": {
-                filters.addAdditionalFilter("TotalInvoiceAmountInUSD", 76, 500, null, "Between", false, false, false, "number", false);
-                break;
-            }
-            case "1000": {
-                filters.addAdditionalFilter("TotalInvoiceAmountInUSD", 501, 1000, null, "Between", false, false, false, "number", false);
-                break;
-            }
-        }
-
-        switch (this._SelectedAvailableValue) {
-            case "AD": {
-                filters.addAdditionalFilter("AcceptanceStatusCode", "2", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-            case "AV": {
-                filters.addAdditionalFilter("AcceptanceStatusCode", "1", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-            case "NAV": {
-                filters.addAdditionalFilter("AcceptanceStatusCode", "null", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-        }
-
-        switch (this._SelectedACCValue) {
-            case "W": {
-                filters.addAdditionalFilter("StorageSiteStatusCode", "2", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-            case "WS": {
-                filters.addAdditionalFilter("SpecialActionStatus", "X", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-        }
-
-        if (this.SelectedPendingCodeFilter != null && this._SelectedTabFilter.Code == "HOLD") {
-            switch (this.SelectedPendingCodeFilter.Key) {
-                case "A": {
-                    break;
-                }
-                default: {
-                    filters.addAdditionalFilter("CourierPendingReasonList", this.SelectedPendingCodeFilter.Key, null, null, "Contains", false, false, false, "string");
-                    break;
-                }
-            }
-        }
-
-        if (!AppTool.IsNullOrEmpty(this.SearchFilter)) {
-            filters.addAdditionalFilter("CourierSearchFields", this.SearchFilter, null, null, "Contains", false, false, false, "string", false, true);
-        }
-        if (AppTool.IsNullOrEmpty(filters.SortBy)) {
-            filters.SortBy = "CourierHawb";
-        }
-        if (AppTool.IsNullOrEmpty(filters.SortDirection)) {
-            filters.SortDirection = "Descending";
-        }
-
-        switch (this._SelectedFastIndividualProcessValue) {
-            case "F": {
-                filters.addAdditionalFilter("FastIndividualProcessCode", "F", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-            case "I": {
-                filters.addAdditionalFilter("FastIndividualProcessCode", "I", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-        }
-
-        switch (this._SelectedCustomStatusValue) {
-            case "H": {
-                filters.addAdditionalFilter("CourierCustomStatusCode", "1", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-            case "S": {
-                filters.addAdditionalFilter("CourierCustomStatusCode", "2", null, null, "Equals", false, false, false, "string");
-                break;
-            }
-        }
-        */
     }
 
 
@@ -533,6 +390,13 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
         return myout;
     }
 
+    RefreshList() {
+
+        setTimeout(() => {
+            this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+        }, 10);
+    }
+
     BuildFiltersForCourierMasterQuery(filters: ApiQueryFilters = null) {
 
         if (filters == null) {
@@ -550,6 +414,36 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
     }
 
     ViewInitCompleted($event) {
+    }
+
+    ShowCourierWorkSheetForPending902(event) {
+
+        var selected = event.rowData;
+        var windowArgs: any = {};
+            this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationCourierStatus").subscribe(response => {
+                this._CourierMasterPMService.get(selected.Id).subscribe((myResponse: any) => {
+                        if (myResponse.HasError) {
+                            console.log("Error while getting EntityPM", myResponse);
+                        }
+                        else {
+                            windowArgs.CurrentEntity = myResponse.Result;
+                            windowArgs.TabMode = "Pending902";
+                            var logWindow = new LogitudeWindow();
+                            logWindow.Width = 1500;
+                            logWindow.Height = 1000;
+                            logWindow.WindowArgs = windowArgs;
+                            logWindow.ShowCloseButton = true;
+                            logWindow.IsFillScreen = true;
+                            //AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = true;
+                            logWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/CourierWorksheetComponent');
+                            logWindow.WindowClosed.subscribe(($event1: any) => {
+                                //AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = false;
+                                //this.isEditControlOpened = false;
+                                //this.OnBackFromEdit(selectedEntityId, $event);
+                            });
+                        }
+                });
+            });
     }
 
 }
