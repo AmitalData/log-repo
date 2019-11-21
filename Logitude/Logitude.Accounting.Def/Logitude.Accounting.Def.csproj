@@ -92,6 +92,7 @@
     <Compile Include="EntityPMs\Generated\Category5PM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ChartOfAccountPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ChartOfAccountsTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ExternalPageAdditionalDataPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExternalReconciliationLinePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExternalReconciliationPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\FullAccountingSettingPM.Generated.cs" />
@@ -104,6 +105,8 @@
     <Compile Include="EntityPMs\Generated\GLAccountTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\GLAccountWithholdingTaxPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\IntegrityCheckStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\InterestBasesPeriodPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\InterestBasesTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\JournalActionTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\JournalAdditionalDataPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\JournalExternalReconcilePM.Generated.cs" />

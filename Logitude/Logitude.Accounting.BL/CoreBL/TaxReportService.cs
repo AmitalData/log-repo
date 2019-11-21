@@ -64,7 +64,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(tenant);
 
-              
+               
                 APInvoiceQuery aPInvoiceQueryService = new APInvoiceQuery(tenant);
                 CardRepository cardRepository = new CardRepository(tenant);
                 TenantQuery tenantQuery = new TenantQuery(tenant);
@@ -224,9 +224,9 @@ namespace Logitude.Accounting.BL.CoreBL
                         if (card != null && card.PartnerTypeId == PartnerTypeValues.Vendor)
                             VatNumber = card.VatNumber;
                       
-                        IQueryable<LedgerTransaction> transactionsByJournal = ledgerTransactionRepository.GetByJournalAndReference1(a.JournalId, a.Reference, tenant);
-                        decimal transactionSum = transactionsByJournal.Sum(d => d.LocalAmountCredit);
-                        //var transactionSum = ledgerTransactons.Where(d => d.JournalId == a.JournalId && d.Reference == a.Reference).Sum(d => d.LocalAmountCredit);
+                        //IQueryable<LedgerTransaction> transactionsByJournal = ledgerTransactionRepository.GetByJournalAndReference1(a.JournalId, a.Reference, tenant);
+                        //decimal transactionSum = transactionsByJournal.Sum(d => d.LocalAmountCredit);
+                        var transactionSum = ledgerTransactons.Where(d => d.JournalId == a.JournalId && d.Reference == a.Reference).Sum(d => d.LocalAmountCredit);
                         InputInvoiceAmount = transactionSum - InputVatAmount;
                     }
                     
@@ -344,8 +344,9 @@ namespace Logitude.Accounting.BL.CoreBL
                 TaxReportLineUpdateService lineUpdateService = new TaxReportLineUpdateService(MyContext, new Dictionary<string, IContext>(), taxReport.Tenant);
                 updateService.Update(taxReport, true, TimeSpan.FromMinutes(60));
 
-                // saving lines
+               // saving lines
                 int count = 0;
+                //int submitChangesCounter
                 foreach (TaxReportLinePM linePM in reportLinesList)
                 {
                     linePM.Line = ++count;

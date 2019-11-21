@@ -499,6 +499,7 @@ namespace WebFreight.Web.DataProviders
         public DateTime? DeliveryETD { get; set; }
         public string PickupAddress { get; set; }
         public string DeliveryAddress { get; set; }
+        public string PickupShortAddress { get; set; }
 
         public string DepositBankEnglishName { get; set; }
         public string DepositBankLocalName { get; set; }
@@ -518,6 +519,12 @@ namespace WebFreight.Web.DataProviders
         public string CarrierCBSA { get; set; }
         public string CarrierCAAT { get; set; }
         public string AccountDisplayNumber { get; set; }
+        
+        public string ShipperNotExporter { get; set; }
+        public string ShipperNotExporterAddress { get; set; }
+        public string ConsigneeNotImporter { get; set; }
+        public string ConsigneeNotImporterAddress { get; set; }
+        
     }
 
     public class SAT

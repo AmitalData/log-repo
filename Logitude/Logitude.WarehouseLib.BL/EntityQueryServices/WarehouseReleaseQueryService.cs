@@ -54,20 +54,20 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
         {
 
             IQueryable<WarehouseReleaseList> myResult = (from a in context.WarehouseReleases
-                                                       where a.Tenant == tenant
-                                                       select new WarehouseReleaseList()
-                                                       {
-                                                           Id = a.Id,
-                                                           ReleaseNumber = a.ReleaseNumber,
-                                                           ActualReleaseDate = a.ActualReleaseDate,
-                                                           ReleaseBy = a.ReleaseBy,
-                                                           StatusName = a.WarehouseReleaseStatus != null ? a.WarehouseReleaseStatus.Name : "",
-                                                           ExpectedReleaseDate = a.ExpectedReleaseDate,
-                                                           CreateDate = a.CreateDate,
-                                                           StatusCode = a.StatusCode,
-                                                           DirectionId = a.DirectionId,
-                                                           TransportModeId = a.TransportModeId,
-                                                       });
+                                                         where a.Tenant == tenant
+                                                         select new WarehouseReleaseList()
+                                                         {
+                                                             Id = a.Id,
+                                                             ReleaseNumber = a.ReleaseNumber,
+                                                             ActualReleaseDate = a.ActualReleaseDate,
+                                                             ReleaseBy = a.ReleaseBy,
+                                                             StatusName = a.WarehouseReleaseStatus != null ? a.WarehouseReleaseStatus.Name : "",
+                                                             ExpectedReleaseDate = a.ExpectedReleaseDate,
+                                                             CreateDate = a.CreateDate,
+                                                             StatusCode = a.StatusCode,
+                                                             DirectionId = a.DirectionId,
+                                                             TransportModeId = a.TransportModeId,
+                                                         });
             return myResult;
         }
 
@@ -75,7 +75,7 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
         {
 
             List<string> myResult = (from a in context.WarehouseReleases
-                                               where a.ShipmentId == shipmentId && a.Tenant == tenant && a.StatusCode != "CARE"
+                                     where a.ShipmentId == shipmentId && a.Tenant == tenant && a.StatusCode != "CARE"
                                      select a.Id).ToList();
             return myResult;
         }
@@ -83,15 +83,15 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
         public bool CheckIfShipmentHasReleasePackage(string shipmentId, int tenant)
         {
 
-           bool myResult = (from a in context.WarehouseReleases where a.ShipmentId == shipmentId && a.Tenant == tenant && a.StatusCode!= "CARE" select a).Any();
+            bool myResult = (from a in context.WarehouseReleases where a.ShipmentId == shipmentId && a.Tenant == tenant && a.StatusCode != "CARE" select a).Any();
 
             return myResult;
         }
 
         public override void GetComposition(EntityKeyFields entityKeys, WarehouseReleasePM entityPM)
-      {
-          IWarehouseContext context = MainContext as IWarehouseContext;
-          WarehouseReleaseKeys warehouseReleaseKeys = entityKeys as WarehouseReleaseKeys;
+        {
+            IWarehouseContext context = MainContext as IWarehouseContext;
+            WarehouseReleaseKeys warehouseReleaseKeys = entityKeys as WarehouseReleaseKeys;
 
             WarehouseReleasePackageQueryService queryService = new WarehouseReleasePackageQueryService(context);
             entityPM.WarehouseReleasePackages = queryService.GetMulti(warehouseReleaseKeys, true);
@@ -128,14 +128,10 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
             EntityLastActivityRepository entityLastActivityRepository = new EntityLastActivityRepository(tenant);
             List<EntityLastActivity> lastActivities = entityLastActivityRepository.GetTopEntityLastActivities(tenant, userId, objectTableId).ToList();
 
-            List<string> ids = new List<string>();
-            foreach (EntityLastActivity activity in lastActivities)
-            {
-                ids.Add(activity.EntityId);
-            }
+            List<string> entityIds = lastActivities.Select(d => d.EntityId).ToList();
 
             WarehouseReleaseRepository repository = new WarehouseReleaseRepository(tenant);
-            List<WarehouseRelease> warehouseReleases = repository.GetWarehouseReleasesFromIdList(ids, tenant).ToList();
+            List<WarehouseRelease> warehouseReleases = repository.GetWarehouseReleasesFromIdList(entityIds, tenant).ToList();
 
             warehouseReleases = BranchPermitionsFilter.AddUserBranchRestrictionFilters<WarehouseRelease>(new QueryOperations(), warehouseReleases.AsQueryable<WarehouseRelease>(), tenant).ToList();
             warehouseReleases = ProductPermitionsFilter.AddUserProductRestrictionFilters<WarehouseRelease>(new QueryOperations(), warehouseReleases.AsQueryable<WarehouseRelease>(), tenant).ToList();
@@ -148,7 +144,7 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                 List<string> cardIds = new List<string>();
                 List<string> portIds = new List<string>();
                 List<string> addressIds = new List<string>();
-                List<string> shipmentIds = new List<string>();
+
                 foreach (WarehouseRelease warehouseRelease in warehouseReleases)
                 {
 
@@ -158,21 +154,12 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                     if (!string.IsNullOrEmpty(warehouseRelease.ToPortId) && !cardIds.Contains(warehouseRelease.ToPortId)) portIds.Add(warehouseRelease.ToPortId);
                 }
 
-
                 List<CardList> cardLists = new List<CardList>();
                 if (cardIds.Count > 0)
                 {
                     CardQuery cardQuery = new CardQuery(tenant);
                     cardLists = cardQuery.GetCardListsByListIds(cardIds, tenant);
                 }
-
-                //List<ShipmentList> shipmentLists = new List<ShipmentList>();
-                //if (shipmentIds.Count > 0)
-                //{
-                //    ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-                //    shipmentLists = shipmentQuery.GetShipmentsForCrossDock(shipmentIds, tenant);
-                //}
-
                 List<PortList> portLists = new List<PortList>();
                 if (portIds.Count > 0)
                 {
@@ -233,7 +220,7 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
 
             return warehouseReleaseLists;
         }
-       
+
         private string ComputeFieldRouting(List<PortList> portLists, WarehouseRelease warehouseRelease)
         {
             string routing = (GetPortCodeFromPortId(portLists, warehouseRelease.FromPortId) + " > ");
@@ -243,17 +230,17 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
             }
             else if (warehouseRelease.ToTypeCode == "PART" && !string.IsNullOrEmpty(warehouseRelease.ToAddressId))
             {
-                routing += warehouseRelease.ToAddress != null ? warehouseRelease.ToAddress.City + " ": "";
-                routing += warehouseRelease.ToAddress != null && warehouseRelease.ToAddress.Country != null ?warehouseRelease.ToAddress.Country.EnglishName : "";
+                routing += warehouseRelease.ToAddress != null ? warehouseRelease.ToAddress.City + " " : "";
+                routing += warehouseRelease.ToAddress != null && warehouseRelease.ToAddress.Country != null ? warehouseRelease.ToAddress.Country.EnglishName : "";
             }
             else if (warehouseRelease.ToTypeCode == "CASL")
             {
-                routing += (warehouseRelease.ToAddressCity) +" "+ (warehouseRelease.ToAddressCountry != null ? warehouseRelease.ToAddressCountry.EnglishName : "");
+                routing += (warehouseRelease.ToAddressCity) + " " + (warehouseRelease.ToAddressCountry != null ? warehouseRelease.ToAddressCountry.EnglishName : "");
             }
             return routing;
         }
 
-        private  string GetPortCodeFromPortId(List<PortList> portLists, string portId)
+        private string GetPortCodeFromPortId(List<PortList> portLists, string portId)
         {
             string portCode = string.Empty;
             if (!string.IsNullOrEmpty(portId))
@@ -294,7 +281,7 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
             }
 
 
-    
+
             return warehouseReleaseLists;
         }
 

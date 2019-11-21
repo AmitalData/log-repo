@@ -81,8 +81,11 @@ namespace Logitude.XSD.INTTRA_Booking
                     }
                 };
 
-                this.SendXMLFile(message);
-                this.SaveChanges();
+                if (dataBuilder.Context.Errors == null || (dataBuilder.Context.Errors != null && dataBuilder.Context.Errors.Count() == 0))
+                {
+                    this.SendXMLFile(message);
+                    this.SaveChanges();
+                }
             }
         }
 
@@ -159,6 +162,7 @@ namespace Logitude.XSD.INTTRA_Booking
         private void UpdateShipmentStatus()
         {
             this.DataContext.Shipment.INTTRABookingStatusCode = "ST";
+            this.DataContext.Shipment.INTTRABookingTransStatusCode = "BRS";
             this.DataContext.shipmentRepository.Update(this.DataContext.Shipment);
         }
 

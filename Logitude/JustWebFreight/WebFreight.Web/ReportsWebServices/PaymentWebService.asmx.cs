@@ -191,6 +191,8 @@ namespace WebFreight.Web.ReportsWebServices
 
                         if (address != null)
                         {
+
+                        
                             if (!loggedContact.DontShowLocalLabels)
                             {
                                 if (!string.IsNullOrEmpty(billToCard.LocalName))
@@ -199,6 +201,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 }
                             }
 
+                       
                             paymentDataProvider.BillToAddress = paymentDataProvider.BillToName + DataProviders.General.GetAddress(address);
                         }
 
@@ -208,7 +211,7 @@ namespace WebFreight.Web.ReportsWebServices
                         // accounting card
                         paymentDataProvider.AccountingCard = billToCard.ReceivablesAccountingCard;
                         paymentDataProvider.ReceivedFrom = paymentDataProvider.BillToName + DataProviders.General.GetAddress(address);
-
+                        paymentDataProvider.ReceivedFromInLocal = billToCard.LocalName+ Environment.NewLine + DataProviders.General.GetAddress(address);
                         if (billToCard.PartnerTypeId == "CS")
                         {
                             CustomerQuery customerQuery = new CustomerQuery(tenant);

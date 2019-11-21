@@ -41,6 +41,7 @@ export class APPaymentList {
 		ExternalAccountingEntityId: string;
 		CreatedByUserName: string;
 		VendorName: string;
+		VendorLocalName: string;
 		StatusName: string;
 		PaymentCurrencyCode: string;
 		PaymentMethodName: string;

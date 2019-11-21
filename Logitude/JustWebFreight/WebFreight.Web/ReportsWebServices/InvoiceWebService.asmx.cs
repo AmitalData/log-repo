@@ -670,6 +670,45 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                     #endregion
 
+                    #region ShipperNotExporter
+                    if (!string.IsNullOrEmpty(shipment.ShipperNotExporterId))
+                    {
+                        Card myCard = CardRepository.GetSingleCard(shipment.ShipperNotExporterId, tenant, true);
+                        if (myCard != null)
+                        {
+                            invoicedataprovider.ShipperNotExporter = myCard.EnglishName;
+
+                            if (!string.IsNullOrEmpty(shipment.ShipperNotExporterAddressId))
+                            {
+                                Address myAddress = addressRepository.GetSingleAddress(shipment.ShipperNotExporterAddressId, tenant);
+                                if (myAddress != null)
+                                {
+                                    invoicedataprovider.ShipperNotExporterAddress = DataProviders.General.GetAddress(myAddress);
+                                }
+                            }
+                        }
+                    }
+                    #endregion
+
+                    #region ConsigneeNotImporter
+                    if (!string.IsNullOrEmpty(shipment.ConsigneeNotImporterId))
+                    {
+                        Card myCard = CardRepository.GetSingleCard(shipment.ConsigneeNotImporterId, tenant, true);
+                        if (myCard != null)
+                        {
+                            invoicedataprovider.ConsigneeNotImporter = myCard.EnglishName;
+
+                            if (!string.IsNullOrEmpty(shipment.ConsigneeNotImporterAddressId))
+                            {
+                                Address myAddress = addressRepository.GetSingleAddress(shipment.ConsigneeNotImporterAddressId, tenant);
+                                if (myAddress != null)
+                                {
+                                    invoicedataprovider.ConsigneeNotImporterAddress = DataProviders.General.GetAddress(myAddress);
+                                }
+                            }
+                        }
+                    }
+                    #endregion
                     if (shipment.DirectionId == "E")
                     {
                         invoicedataprovider.MainCarriageExpectedDate = shipment.MainCarriageETD != null ? String.Format("{0:dd.MMM.yy}", shipment.MainCarriageETD) : "";
@@ -702,6 +741,7 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         invoicedataprovider.PickupETD = myFirstPickup.ETD;
                         invoicedataprovider.PickupAddress = myServicHelper.GetPickUpAddress(myFirstPickup);
+                        invoicedataprovider.PickupShortAddress = myServicHelper.GetPickUpDeliveryShortAddress(myFirstPickup);
                     }
 
                     #endregion

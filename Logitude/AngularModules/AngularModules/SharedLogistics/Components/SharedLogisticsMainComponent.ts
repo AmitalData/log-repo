@@ -154,7 +154,7 @@ export class SharedLogisticsMainComponent implements OnInit {
                     if (data != null) {
                         this.InvitedCustomersCount = data.InvitedCustomersCount;
                         this.NotInvitedCustomersCount = data.NotInvitedCustomersCount;
-                        this.ActivatedCustomersCount = data.ActivatedCustomersCount;
+                        this.ActivatedCustomersCount = data.ActivatedCustomersCount + data.ActivatedCustomersForMobileCount;
                         this.ActivatedCustomersForMobileCount = data.ActivatedCustomersForMobileCount;
 
                         this.InvitedAgentsCount = data.InvitedAgentsCount;
@@ -406,7 +406,6 @@ export class SharedLogisticsMainComponent implements OnInit {
                         this.filterAgrs.SortDirection = "Descending";
 
                         this.filterAgrs.addAdditionalFilter("SharedLogisticsInvitationStatusCode", 3, null, null, "Equals", false, true, false, "string");
-                        this.filterAgrs.addAdditionalFilter("IsActiveForMobile", false, null, null, "Equals", false, true, false, "boolen");
                         displayTitle = "Activated Customers";
 
                     }
