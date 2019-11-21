@@ -395,6 +395,10 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicedataprovider.AgentReference1 = shipment.AgentReference1;
                     invoicedataprovider.AgentReference2 = shipment.AgentReference2;
 
+                    invoicedataprovider.Transshipment1MasterNumber = shipment.Transshipment1AdditionalMAWBOBLBL;
+                    invoicedataprovider.Transshipment1FromPortName = shipment.Transshipment1FromPortName;
+                    invoicedataprovider.Transshipment1CarrierName = shipment.Transshipment1CarrierName;
+
                     if (!string.IsNullOrEmpty(shipment.OBLTypeCode))
                     {
                         OBLType type = shipmentsContext.OBLTypes.Where(d => d.Code == shipment.OBLTypeCode).FirstOrDefault();

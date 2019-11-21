@@ -419,6 +419,10 @@ namespace WebFreight.Web.DataProviders
         public string Notify1Address { get; set; }
         public string Notify1VATNumber { get; set; }
 
+        public string Transshipment1MasterNumber { get; set; }
+        public string Transshipment1FromPortName { get; set; }
+        public string Transshipment1CarrierName { get; set; }
+
         public class InvoicesReport
         {
             public string InvoiceType { get; set; }
