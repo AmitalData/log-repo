@@ -16159,7 +16159,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 EnglishName = "Constraint Declined by Customs",
                 Tenant = 0,
                 AddedManually = false,
-                LocalName = "אילוץ נדחה עי המכס",
+                LocalName = "ממתין לבדיקת יסמ ובקרת מסמכים",
                 ObjectTableId = declarationObject.Id,
                 ShortView = false,
                 EventTypeCategoryCode = "LOG",
@@ -16305,6 +16305,71 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 Tenant = 0,
                 AddedManually = false,
                 LocalName = "הצהרה נותבה לבקרת מסמכים",
+                ObjectTableId = declarationObject.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "LOG",
+
+            }, EventTypesRepository, tenantEventTypes);
+
+            AddEventTypes.AddEventType(new EventTypeDetails() 
+            {
+                Code = "VCS",
+                EnglishName = "Custom Documents Check",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "ממתין לבדיקת יסמ",
+                ObjectTableId = declarationObject.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "LOG",
+
+            }, EventTypesRepository, tenantEventTypes);
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "VCE",
+                EnglishName = "Custom Documents Check",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "ממתין ליחידת בטחון",
+                ObjectTableId = declarationObject.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "LOG",
+
+            }, EventTypesRepository, tenantEventTypes);
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "VCA",
+                EnglishName = "Custom Documents Check",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "ממתין ליחידת בטחון ובקרת מסמכים",
+                ObjectTableId = declarationObject.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "LOG",
+
+            }, EventTypesRepository, tenantEventTypes);
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "VCG",
+                EnglishName = "Custom Documents Check",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "ממתין ליחידת הבטחון וליסמ",
+                ObjectTableId = declarationObject.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "LOG",
+
+            }, EventTypesRepository, tenantEventTypes);
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "VCT",
+                EnglishName = "Custom Documents Check",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "ממתין ליחידת הבטחון,ליסמ ולבקרת מסמכים",
                 ObjectTableId = declarationObject.Id,
                 ShortView = false,
                 EventTypeCategoryCode = "LOG",
