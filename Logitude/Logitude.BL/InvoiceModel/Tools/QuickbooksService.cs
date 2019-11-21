@@ -28,7 +28,7 @@ namespace Logitude.BL.InvoiceModel.Tools
             var oauth2Client = new OAuth2Client(mySetting.QBOClientID,
                     mySetting.QBOClientSecret,
                     "https://developer.intuit.com/v2/OAuth2Playground/RedirectUrl",
-                    "sandbox"); // environment is “sandbox” or “production”
+                    "production"); // environment is “sandbox” or “production”
 
             var previousRefreshToken = entityPM.RefreshToken;
             var tokenResp = oauth2Client.RefreshTokenAsync(previousRefreshToken);

@@ -441,7 +441,7 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
                     this.RowTextDesignPM = this.QuoteTemplateTextDesignPMLists.filter(d => d.Id == this.TableDesignPM.LinesDesignId)[0];
                     if (this.RowTextDesignPM) {
                         this.RowTextDesignPM.Title = "Value";
-                        this.RowTextDesignPM.HideAlignment = true;
+                       // this.RowTextDesignPM.HideAlignment = true;
                     }
                 }
                 if (this.QuoteTemplateSectionTypeCode == "QD") {
