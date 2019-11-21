@@ -3869,10 +3869,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable WarehouseReleaseObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "WarehouseRelease" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature WarehouseReleaseFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = WarehouseReleaseObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseRelease.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature WarehouseReleaseFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = WarehouseReleaseObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseRelease.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature WarehouseReleaseFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = WarehouseReleaseObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseRelease.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature WarehouseReleaseFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = WarehouseReleaseObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseRelease.Features.PackageFeature", NameTextCodeDefaultText = "WarehouseRelease Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature WarehouseReleaseFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = true, ObjectTableId = WarehouseReleaseObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseRelease.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature WarehouseReleaseFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = true, ObjectTableId = WarehouseReleaseObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseRelease.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature WarehouseReleaseFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = true, ObjectTableId = WarehouseReleaseObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseRelease.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature WarehouseReleaseFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = true, ObjectTableId = WarehouseReleaseObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseRelease.Features.PackageFeature", NameTextCodeDefaultText = "WarehouseRelease Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature WarehouseReleaseFeature_ShowNewFullWarehouseRelease = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ShowNewFullWarehouseRelease", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = WarehouseReleaseObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseRelease.Features.ShowNewFullWarehouseRelease", NameTextCodeDefaultText = @"Show New Full Warehouse Release Button" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 

@@ -96,6 +96,8 @@ SELECT        dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumb
 						 dbo.Shipments.INTTRASIError,
 						 dbo.Shipments.INTTRASIStatusCode,
 						 dbo.Shipments.INTTRASIStatusDate,
+						 dbo.Shipments.INTTRABookingError,
+						 dbo.Shipments.INTTRALastBookingResponse,
 						 dbo.INTTRASIStatus.Name AS INTTRASIStatusName,
 
 						 dbo.Shipments.INTTRABookingStatusCode,

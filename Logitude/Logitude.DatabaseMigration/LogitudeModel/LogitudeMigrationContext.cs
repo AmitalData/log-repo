@@ -3383,6 +3383,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<ExternalReconciliation> ExternalReconciliations { get; set; }
         public IDbSet<ExternalReconciliationLine> ExternalReconciliationLines { get; set; }
         public IDbSet<BankPageEntryType> BankPageEntryTypes { get; set; }
+        public IDbSet<ExternalPageAdditionalData> ExternalPageAdditionalDatas { get; set; }
 
         public IDbSet<UIMessage> UIMessage { get; set; }
         public IDbSet<UIMessageAdditional> UIMessageAdditional { get; set; }
@@ -3406,7 +3407,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<IntegrityCheckStatus> IntegrityCheckStatuses { get; set; }
         public IDbSet<AccountingNote> AccountingNotes { get; set; }
         public IDbSet<GLAccountCounter> GLAccountCounters { get; set; }
-
+        public IDbSet<InterestBasesType> InterestBasesTypes { get; set; }
+        public IDbSet<InterestBasesPeriod> InterestBasesPeriods {get; set;}
 
         #endregion
 
@@ -4348,6 +4350,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new WithholdingTaxDeductionTypeMap());
             modelBuilder.Configurations.Add(new AccountingCompanyTypeMap());
             modelBuilder.Configurations.Add(new BankPageEntryTypeMap());
+            modelBuilder.Configurations.Add(new ExternalPageAdditionalDataMap());
             modelBuilder.Configurations.Add(new AutomaticExternalRconcilMthodMap());
             modelBuilder.Configurations.Add(new RevaluationStatusMap());
             modelBuilder.Configurations.Add(new TaxReportStatusMap());
@@ -4365,6 +4368,10 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         //    modelBuilder.Configurations.Add(new OpenFormatDateTypeMap());
             modelBuilder.Configurations.Add(new OpenFormatReportStatusMap());
             modelBuilder.Configurations.Add(new GLAccountCounterMap());
+            modelBuilder.Configurations.Add(new InterestBasesTypeMap());
+            modelBuilder.Configurations.Add(new InterestBasesPeriodMap());
+
+
             #endregion
 
             #region WareHouse

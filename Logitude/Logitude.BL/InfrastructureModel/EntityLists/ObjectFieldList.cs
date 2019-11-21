@@ -75,7 +75,6 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public bool DisplayInAutomationAsEnitity { get; set; }
         public string RecordType { get; set; }
         public string ObjectTable_LookUpTableName { get; set; }
-        
-
+        public string FieldCode { get;  set; }
     }
 }
