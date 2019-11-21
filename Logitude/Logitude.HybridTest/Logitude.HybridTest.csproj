@@ -320,6 +320,7 @@
     <Compile Include="LoginTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestEnvironmentGlobalParameters .cs" />
+    <Compile Include="WcfServiceInvoker.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -1419,21 +1420,6 @@
     <WCFMetadataStorage Include="Connected Services\VesselServiceReference\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\BranchServiceReference\BranchWcfService.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\BranchServiceReference\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\BranchServiceReference\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\BranchServiceReference\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Connected Services\AirlineServiceReference\AirlineWcfService.disco" />
   </ItemGroup>
   <ItemGroup>
@@ -2059,6 +2045,27 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\OpportunityServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
+      <Project>{a663e7ef-b858-4bb6-bc33-e473f51b8e56}</Project>
+      <Name>Logitude.BL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\BranchServiceReference\BranchWcfService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\BranchServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\BranchServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\BranchServiceReference\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

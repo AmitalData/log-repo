@@ -189,6 +189,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
         this.froalaEditorSetting = new FroalaEditorSetting();
         this.froalaEditorSetting.Id = Guid.newGuid();
         this.froalaEditorSetting.IsDisableEdit = true;
+        this.froalaEditorSetting.UseNormalPreview = true;
         this.froalaEditorSetting.HtmlString = "";
         this.froalaEditorSetting.Height = (this.CurrentSession.CurrentWindow.Height - 100);
         this.HeightPdf = (this.CurrentSession.CurrentWindow.Height - 100);

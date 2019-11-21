@@ -252,6 +252,11 @@ export class APPaymentPM {
     public set VendorName(newValue: string) { if (this.vendorName != newValue) { this.vendorName = newValue; this.MarkAsDirty("VendorName"); } }
        
 	 
+    private vendorLocalName: string;
+    public get VendorLocalName() { return this.vendorLocalName; }
+    public set VendorLocalName(newValue: string) { if (this.vendorLocalName != newValue) { this.vendorLocalName = newValue; this.MarkAsDirty("VendorLocalName"); } }
+       
+	 
     private statusName: string;
     public get StatusName() { return this.statusName; }
     public set StatusName(newValue: string) { if (this.statusName != newValue) { this.statusName = newValue; this.MarkAsDirty("StatusName"); } }
