@@ -11,15 +11,15 @@ namespace Logitude.HybridTest.CommonServices
         public void Test_DirectShipment_UPSERT()
         {
             LoginService.GetLoginTokenByCredentials();
-            Response branchServiceResponse = BranchTest.CallBranchUpsert();
-            Assert.IsFalse(branchServiceResponse.HasError, "Branch Upsert Failed! " + branchServiceResponse.ErrorMessage);
-            Assert.IsNotNull(branchServiceResponse.Result, "Branch Upsert Failed! " + branchServiceResponse.ErrorMessage);
-            Response departmentServiceResponse = DepartmentTest.CallDepartmentUpsert();
-            Assert.IsFalse(departmentServiceResponse.HasError, "Departmnet Upsert Failed! " + departmentServiceResponse.ErrorMessage);
-            Assert.IsNotNull(departmentServiceResponse.Result, "Department Upsert Failed! " + departmentServiceResponse.ErrorMessage);
-            Response agentServiceResponse = AgentTest.CallAgentUpsert();
-            Assert.IsFalse(agentServiceResponse.HasError, "Agent Upsert Failed! " + agentServiceResponse.ErrorMessage);
-            Assert.IsNotNull(agentServiceResponse.Result, "Agent Upsert Failed! " + agentServiceResponse.ErrorMessage);
+            //Response branchServiceResponse = BranchTest.CallBranchUpsert();
+            //Assert.IsFalse(branchServiceResponse.HasError, "Branch Upsert Failed! " + branchServiceResponse.ErrorMessage);
+            //Assert.IsNotNull(branchServiceResponse.Result, "Branch Upsert Failed! " + branchServiceResponse.ErrorMessage);
+            //Response departmentServiceResponse = DepartmentTest.CallDepartmentUpsert();
+            //Assert.IsFalse(departmentServiceResponse.HasError, "Departmnet Upsert Failed! " + departmentServiceResponse.ErrorMessage);
+            //Assert.IsNotNull(departmentServiceResponse.Result, "Department Upsert Failed! " + departmentServiceResponse.ErrorMessage);
+            //Response agentServiceResponse = AgentTest.CallAgentUpsert();
+            //Assert.IsFalse(agentServiceResponse.HasError, "Agent Upsert Failed! " + agentServiceResponse.ErrorMessage);
+            //Assert.IsNotNull(agentServiceResponse.Result, "Agent Upsert Failed! " + agentServiceResponse.ErrorMessage);
             Response fromPortServiceResponse = PortTest.CallFromPortUpsert();
             Assert.IsFalse(fromPortServiceResponse.HasError, "From Port Upsert Failed! " + fromPortServiceResponse.ErrorMessage);
             Assert.IsNotNull(fromPortServiceResponse.Result, "From Port Upsert Failed! " + fromPortServiceResponse.ErrorMessage);
@@ -35,15 +35,15 @@ namespace Logitude.HybridTest.CommonServices
         public void Test_HouseShipment_UPSERT()
         {
             LoginService.GetLoginTokenByCredentials();
-            Response branchServiceResponse = BranchTest.CallBranchUpsert();
-            Assert.IsFalse(branchServiceResponse.HasError, "Branch Upsert Failed! " + branchServiceResponse.ErrorMessage);
-            Assert.IsNotNull(branchServiceResponse.Result, "Branch Upsert Failed! " + branchServiceResponse.ErrorMessage);
-            Response departmentServiceResponse = DepartmentTest.CallDepartmentUpsert();
-            Assert.IsFalse(departmentServiceResponse.HasError, "Departmnet Upsert Failed! " + departmentServiceResponse.ErrorMessage);
-            Assert.IsNotNull(departmentServiceResponse.Result, "Department Upsert Failed! " + departmentServiceResponse.ErrorMessage);
-            Response agentServiceResponse = AgentTest.CallAgentUpsert();
-            Assert.IsFalse(agentServiceResponse.HasError, "Agent Upsert Failed! " + agentServiceResponse.ErrorMessage);
-            Assert.IsNotNull(agentServiceResponse.Result, "Agent Upsert Failed! " + agentServiceResponse.ErrorMessage);
+            //Response branchServiceResponse = BranchTest.CallBranchUpsert();
+            //Assert.IsFalse(branchServiceResponse.HasError, "Branch Upsert Failed! " + branchServiceResponse.ErrorMessage);
+            //Assert.IsNotNull(branchServiceResponse.Result, "Branch Upsert Failed! " + branchServiceResponse.ErrorMessage);
+            //Response departmentServiceResponse = DepartmentTest.CallDepartmentUpsert();
+            //Assert.IsFalse(departmentServiceResponse.HasError, "Departmnet Upsert Failed! " + departmentServiceResponse.ErrorMessage);
+            //Assert.IsNotNull(departmentServiceResponse.Result, "Department Upsert Failed! " + departmentServiceResponse.ErrorMessage);
+            //Response agentServiceResponse = AgentTest.CallAgentUpsert();
+            //Assert.IsFalse(agentServiceResponse.HasError, "Agent Upsert Failed! " + agentServiceResponse.ErrorMessage);
+            //Assert.IsNotNull(agentServiceResponse.Result, "Agent Upsert Failed! " + agentServiceResponse.ErrorMessage);
             Response portServiceResponse = PortTest.CallFromPortUpsert();
             Assert.IsFalse(portServiceResponse.HasError, "Port Upsert Failed! " + portServiceResponse.ErrorMessage);
             Assert.IsNotNull(portServiceResponse.Result, "Port Upsert Failed! " + portServiceResponse.ErrorMessage);
@@ -67,17 +67,17 @@ namespace Logitude.HybridTest.CommonServices
                     DirectionId = "E", //I:Import, E:Export, D:Drop, R:Drop, C:Customs Import
                     FreightPrepaidCollectId = "P", //P:Prepaid, C:Collect, B:Both
                     OtherPrepaidCollectId = "P", //P:Prepaid, C:Collect, B:Both
-                    BranchId = HybridCodes.BranchCode,
-                    DepartmentId = HybridCodes.DepartmentCode,
-                    ConsigneeId = HybridCodes.AgentCode,
+                    BranchId = HybridData.BranchCode,
+                    DepartmentId = HybridData.DepartmentCode,
+                    ConsigneeId = HybridData.AgentCode,
                     ShipmentLevelCode = "D", //D:Direct, H: House, C:Consol, A:Customs
-                    FromPortId = HybridCodes.FromPortCode,
-                    ToPortId = HybridCodes.ToPortCode,
-                    MainCarriageFromPortId = HybridCodes.FromPortCode,
-                    MainCarriageToPortId = HybridCodes.ToPortCode,
+                    FromPortId = HybridData.FromPortCode,
+                    ToPortId = HybridData.ToPortCode,
+                    MainCarriageFromPortId = HybridData.FromPortCode,
+                    MainCarriageToPortId = HybridData.ToPortCode,
                     CreateDateTime = DateTime.Now,
                     LastUpdateDate = DateTime.Now,
-                    AgentContactId = HybridCodes.AgentCode,
+                    AgentContactId = HybridData.AgentCode,
                     Tenant = TestEnvironmentGlobalParameters.Tenant,
                 };
                 Response serviceResponse = serviceClient.Upsert(entityPM, false);
@@ -101,17 +101,17 @@ namespace Logitude.HybridTest.CommonServices
                     DirectionId = "E", //I:Import, E:Export, D:Drop, R:Drop, C:Customs Import
                     FreightPrepaidCollectId = "P", //P:Prepaid, C:Collect, B:Both
                     OtherPrepaidCollectId = "P", //P:Prepaid, C:Collect, B:Both
-                    BranchId = HybridCodes.BranchCode,
-                    DepartmentId = HybridCodes.DepartmentCode,
-                    ConsigneeId = HybridCodes.AgentCode,
+                    BranchId = HybridData.BranchCode,
+                    DepartmentId = HybridData.DepartmentCode,
+                    ConsigneeId = HybridData.AgentCode,
                     ShipmentLevelCode = "H", //D:Direct, H: House, C:Consol, A:Customs
-                    FromPortId = HybridCodes.FromPortCode,
-                    ToPortId = HybridCodes.ToPortCode,
-                    MainCarriageFromPortId = HybridCodes.FromPortCode,
-                    MainCarriageToPortId = HybridCodes.ToPortCode,
+                    FromPortId = HybridData.FromPortCode,
+                    ToPortId = HybridData.ToPortCode,
+                    MainCarriageFromPortId = HybridData.FromPortCode,
+                    MainCarriageToPortId = HybridData.ToPortCode,
                     CreateDateTime = DateTime.Now,
                     LastUpdateDate = DateTime.Now,
-                    AgentContactId = HybridCodes.AgentCode,
+                    AgentContactId = HybridData.AgentCode,
                     Tenant = TestEnvironmentGlobalParameters.Tenant,
                 };
                 Response serviceResponse = serviceClient.Upsert(entityPM, false);
@@ -173,7 +173,7 @@ namespace Logitude.HybridTest.CommonServices
                 if (serviceResult.Length != 0)
                 {
                     string userCode = serviceResult[0].ShipmentNumber;
-                    Assert.AreEqual(userCode, HybridCodes.UserCode, "Shipment List Doesn't Exist!");
+                    Assert.AreEqual(userCode, HybridData.UserCode, "Shipment List Doesn't Exist!");
                 }
                 else
                 {

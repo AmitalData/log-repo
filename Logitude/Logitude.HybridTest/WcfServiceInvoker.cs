@@ -20,33 +20,22 @@ namespace Logitude.HybridTest
             try
             {
                 //Import all contracts and endpoints
-                WsdlImporter importer = ImportContractsAndEndPoints(serviceProperties, entityType);
-                var contracts = importer.ImportAllContracts();
-                ServiceEndpointCollection allEndpoints = importer.ImportAllEndpoints();
-
-                //Generate type information for each contract
-                ServiceContractGenerator generator = new ServiceContractGenerator();
-                var endpointsForContracts = new Dictionary<string, IEnumerable<ServiceEndpoint>>();
-
-                foreach (ContractDescription contract in contracts)
-                {
-                    generator.GenerateServiceContractType(contract);
-                    endpointsForContracts[contract.Name] = allEndpoints.Where(
-                        see => see.Contract.Name == contract.Name).ToList();
-                }
-                CompilerResults compilerResults = GetCompilerResults(generator);
-                ServiceEndpoint serviceEndPoint = endpointsForContracts[serviceProperties.IServiceName].First();
-                object serviceClient = GetServiceClient(compilerResults, serviceEndPoint, serviceProperties);
-
+                object serviceClient = ResolveServiceClient(serviceProperties, entityType);
                 var wcfService = serviceClient.GetType().GetMethod(serviceProperties.ServiceOperation);
-
                 var innerChannel = (IClientChannel)serviceClient.GetType().GetProperty("InnerChannel").GetValue(serviceClient, null);
                 using (new OperationContextScope(innerChannel))
                 {
                     System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
                     // Now call the service, get back response
                     var serviceresults = wcfService.Invoke(serviceClient, BindingFlags.InvokeMethod, null, serviceParameters, null);
-                    //response = (Response)retVal;
+                    if (serviceresults is Response)
+                    {
+                        response = (Response)serviceresults;
+                    }
+                    else
+                    {
+                        response = (Response)serviceParameters[serviceProperties.ServiceResponseIndex];
+                    }
                     return serviceresults;
                 }
             }
@@ -57,7 +46,30 @@ namespace Logitude.HybridTest
             }
         }
 
-        public static WsdlImporter ImportContractsAndEndPoints(InvokedProperties serviceProperties, Type entityType)
+        private static object ResolveServiceClient(InvokedProperties serviceProperties, Type entityType)
+        {
+            WsdlImporter importer = ImportContractsAndEndPoints(serviceProperties, entityType);
+            var contracts = importer.ImportAllContracts();
+            ServiceEndpointCollection allEndpoints = importer.ImportAllEndpoints();
+
+            //Generate type information for each contract
+            ServiceContractGenerator generator = new ServiceContractGenerator();
+            var endpointsForContracts = new Dictionary<string, IEnumerable<ServiceEndpoint>>();
+
+            foreach (ContractDescription contract in contracts)
+            {
+                generator.GenerateServiceContractType(contract);
+                endpointsForContracts[contract.Name] = allEndpoints.Where(
+                    see => see.Contract.Name == contract.Name).ToList();
+            }
+            CompilerResults compilerResults = GetCompilerResults(generator);
+            string IServiceName = "I" + serviceProperties.ServiceName + "WcfService";
+            ServiceEndpoint serviceEndPoint = endpointsForContracts[IServiceName].First();
+            object serviceClient = GetServiceClient(compilerResults, serviceEndPoint, serviceProperties);
+            return serviceClient;
+        }
+
+        private static WsdlImporter ImportContractsAndEndPoints(InvokedProperties serviceProperties, Type entityType)
         {
             Uri mexAddress = new Uri(TestEnvironmentGlobalParameters.ServerURL + "/WcfApi/" + serviceProperties.ServiceName + "WcfService.svc?wsdl");
             MetadataExchangeClientMode mexMode = MetadataExchangeClientMode.HttpGet;
@@ -84,7 +96,7 @@ namespace Logitude.HybridTest
             return importer;
         }
 
-        public static CompilerResults GetCompilerResults(ServiceContractGenerator generator)
+        private static CompilerResults GetCompilerResults(ServiceContractGenerator generator)
         {
             // Generate a code file for the contracts 
             CodeDomProvider codeDomProvider = CodeDomProvider.CreateProvider("C#");
@@ -104,11 +116,12 @@ namespace Logitude.HybridTest
             return compilerResults;
         }
 
-        public static object GetServiceClient(CompilerResults compilerResults, ServiceEndpoint serviceEndPoint, InvokedProperties parameters)
+        private static object GetServiceClient(CompilerResults compilerResults, ServiceEndpoint serviceEndPoint, InvokedProperties serviceProperties)
         {
+            string IServiceName = "I" + serviceProperties.ServiceName + "WcfService";
             Type clientProxyType = compilerResults.CompiledAssembly.GetTypes().FirstOrDefault(
                      t => t.IsClass &&
-                         t.GetInterface(parameters.IServiceName) != null &&
+                         t.GetInterface(IServiceName) != null &&
                          t.GetInterface(typeof(System.ServiceModel.ICommunicationObject).Name) != null);
             
             object serviceClient = compilerResults.CompiledAssembly.CreateInstance(
@@ -126,7 +139,7 @@ namespace Logitude.HybridTest
     public class InvokedProperties
     {
         public string ServiceName { get; set; }
-        public string IServiceName { get; set; }
         public string ServiceOperation { get; set; }
+        public int ServiceResponseIndex { get; set; }
     }
 }

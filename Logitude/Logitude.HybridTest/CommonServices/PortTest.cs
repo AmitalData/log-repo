@@ -11,9 +11,9 @@ namespace Logitude.HybridTest.CommonServices
         public void Test_PORT_UPSERT()
         {
             LoginService.GetLoginTokenByCredentials();
-            Response countryServiceResponse = CountryTest.CallCountryUpsert();
-            Assert.IsFalse(countryServiceResponse.HasError, "Country Upsert Failed! " + countryServiceResponse.ErrorMessage);
-            Assert.IsNotNull(countryServiceResponse.Result, "Country Upsert Failed! " + countryServiceResponse.ErrorMessage);
+            //Response countryServiceResponse = CountryTest.CallCountryUpsert();
+            //Assert.IsFalse(countryServiceResponse.HasError, "Country Upsert Failed! " + countryServiceResponse.ErrorMessage);
+            //Assert.IsNotNull(countryServiceResponse.Result, "Country Upsert Failed! " + countryServiceResponse.ErrorMessage);
             Response serviceResponse = CallFromPortUpsert();
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
@@ -36,7 +36,7 @@ namespace Logitude.HybridTest.CommonServices
                 ApiSearchFilters filters = new ApiSearchFilters
                 {
                     Take = 10,
-                    SearchFields = HybridCodes.FromPortCode
+                    SearchFields = HybridData.FromPortCode
                 };
                 PortServiceReference.PortList[] serviceResult = serviceClient.GetList(filters, TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
                 Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
@@ -44,7 +44,7 @@ namespace Logitude.HybridTest.CommonServices
                 if (serviceResult.Length != 0)
                 {
                     string fromPortCode = serviceResult[0].Code;
-                    Assert.IsTrue(fromPortCode == HybridCodes.FromPortCode, "From Port Doesn't Exist!");
+                    Assert.IsTrue(fromPortCode == HybridData.FromPortCode, "From Port Doesn't Exist!");
                 }
                 else
                 {
@@ -87,11 +87,11 @@ namespace Logitude.HybridTest.CommonServices
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
                 PortServiceReference.PortPM entityPM = new PortServiceReference.PortPM()
                 {
-                    Code = HybridCodes.FromPortCode,
+                    Code = HybridData.FromPortCode,
                     EnglishName = "Hybrid From Port",
                     LocalName = "Hybrid From Port",
-                    CountryCode = HybridCodes.CountryCode,
-                    CountryId = HybridCodes.CountryCode,
+                    CountryCode = HybridData.CountryCode,
+                    CountryId = HybridData.CountryCode,
                     AddedManually = true,
                     IsAir = true,
                     IsOcean = true,
@@ -113,11 +113,11 @@ namespace Logitude.HybridTest.CommonServices
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
                 PortServiceReference.PortPM entityPM = new PortServiceReference.PortPM()
                 {
-                    Code = HybridCodes.ToPortCode,
+                    Code = HybridData.ToPortCode,
                     EnglishName = "Hybrid To Port",
                     LocalName = "Hybrid To Port",
-                    CountryCode = HybridCodes.CountryCode,
-                    CountryId = HybridCodes.CountryCode,
+                    CountryCode = HybridData.CountryCode,
+                    CountryId = HybridData.CountryCode,
                     AddedManually = true,
                     IsAir = true,
                     IsOcean = true,

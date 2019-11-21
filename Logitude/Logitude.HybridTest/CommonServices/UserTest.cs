@@ -11,12 +11,12 @@ namespace Logitude.HybridTest.CommonServices
         public void Test_User_UPSERT()
         {
             LoginService.GetLoginTokenByCredentials();
-            Response branchServiceResponse = BranchTest.CallBranchUpsert();
-            Assert.IsFalse(branchServiceResponse.HasError, "Branch Upsert Failed! " + branchServiceResponse.ErrorMessage);
-            Assert.IsNotNull(branchServiceResponse.Result, "Branch Upsert Failed! " + branchServiceResponse.ErrorMessage);
-            Response departmentServiceResponse = DepartmentTest.CallDepartmentUpsert();
-            Assert.IsFalse(departmentServiceResponse.HasError, "Departmnet Upsert Failed! " + departmentServiceResponse.ErrorMessage);
-            Assert.IsNotNull(departmentServiceResponse.Result, "Department Upsert Failed! " + departmentServiceResponse.ErrorMessage);
+            //Response branchServiceResponse = BranchTest.CallBranchUpsert();
+            //Assert.IsFalse(branchServiceResponse.HasError, "Branch Upsert Failed! " + branchServiceResponse.ErrorMessage);
+            //Assert.IsNotNull(branchServiceResponse.Result, "Branch Upsert Failed! " + branchServiceResponse.ErrorMessage);
+            //Response departmentServiceResponse = DepartmentTest.CallDepartmentUpsert();
+            //Assert.IsFalse(departmentServiceResponse.HasError, "Departmnet Upsert Failed! " + departmentServiceResponse.ErrorMessage);
+            //Assert.IsNotNull(departmentServiceResponse.Result, "Department Upsert Failed! " + departmentServiceResponse.ErrorMessage);
             Response serviceResponse = CallUserUpsert();
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
@@ -36,7 +36,7 @@ namespace Logitude.HybridTest.CommonServices
                 UserServiceReference.UserApiFilters filters = new UserServiceReference.UserApiFilters
                 {
                     ByCode = true,
-                    SearchCode = HybridCodes.UserCode
+                    SearchCode = HybridData.UserCode
                 };
                 UserServiceReference.UserPM serviceResult = serviceClient.GetUser(filters, TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
                 Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
@@ -44,7 +44,7 @@ namespace Logitude.HybridTest.CommonServices
                 if (serviceResult != null)
                 {
                     string userCode = serviceResult.Code;
-                    Assert.AreEqual(userCode, HybridCodes.UserCode, "Hybrid User Doesn't Exist!");
+                    Assert.AreEqual(userCode, HybridData.UserCode, "Hybrid User Doesn't Exist!");
                 }
                 else
                 {
@@ -63,14 +63,14 @@ namespace Logitude.HybridTest.CommonServices
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
                 UserServiceReference.UserPM entityPM = new UserServiceReference.UserPM()
                 {
-                    Code = HybridCodes.UserCode,
+                    Code = HybridData.UserCode,
                     EnglishName = "Hybrid User",
                     LocalName = "Hybrid User",
                     Email = "Hybrid@fnarsoft.com",
                     Password = "!H0",
                     BusinessUnitId = TestEnvironmentGlobalParameters.Tenant.ToString(),
-                    BranchId = HybridCodes.BranchCode,
-                    DepartmentId = HybridCodes.DepartmentCode,
+                    BranchId = HybridData.BranchCode,
+                    DepartmentId = HybridData.DepartmentCode,
                     Tenant = TestEnvironmentGlobalParameters.Tenant,
                     DocumentFilingInbox = "HybridInbox"
                 };

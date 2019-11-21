@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.HybridTest
 {
-    public struct HybridCodes
+    public struct HybridData
     {
         //Codes
         public const string GlobalZoneCode = "HZ";
@@ -36,5 +36,26 @@ namespace Logitude.HybridTest
         public const string AddressCode = "HA";
         public const string BankCode = "HB";
         public const string IncotermCode = "HI";
+        public const string AirlineCode = "HA";
+
+        //Id
+        public static string CurrencyId { get; set; }
+        public static string CityId { get; set; }
+        public static string CountryId { get; set; }
+        public static string GlobalZoneId { get; set; }
+        public static string VendorId { get; set; }
+        public static string VesselId { get; set; }
+        public static string TruckerId { get; set; }
+        public static string StateId { get; set; }
+        public static string SpecialServicesTypeId { get; set; }
+        public static string ShippingLineId { get; set; }
+        public static string ShippingAgentId { get; set; }
+        public static string DepartmentId { get; set; }
+        public static string EventTypeId { get; set; }
+        public static string CustomAgentId { get; set; }
+        public static string BranchId { get; set; }
+        public static string AirlineId { get; set; }
+        public static string AccountingPartnerId { get; set; }
+        public static string AgentId { get; set; }
     }
 }

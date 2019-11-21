@@ -8,6 +8,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Description;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.HybridTest.WcfCallers;
 using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -20,55 +21,9 @@ namespace Logitude.HybridTest.CommonServices
         public void Test_Branch_UPSERT()
         {
             LoginService.GetLoginTokenByCredentials();
-            BranchPM entityPM =new BranchPM()
-            {
-                Code = HybridCodes.BranchCode,
-                EnglishName = "Hybrid Branch",
-                LocalName = "Hybrid Branch",
-                Tenant = TestEnvironmentGlobalParameters.Tenant,
-            };
-            InvokedProperties parameters = new InvokedProperties
-            {
-                ServiceName = "Branch",
-                IServiceName = "IBranchWcfService",
-                ServiceOperation = "Upsert",
-                  
-            };
-            Response serviceResponse = new Response();
-            object[] operationParameters = new object[] { entityPM, false };
-            WcfServiceInvoker.InvokeServiceMethod(parameters, operationParameters, typeof(BranchPM), ref serviceResponse);
-
-            Assert.AreEqual(serviceResponse.HasError, false, serviceResponse.ErrorMessage);
+            Response serviceResponse = BranchWcfCaller.CallBranchUpsert();
+            Assert.IsFalse(serviceResponse.HasError, serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
-            //Response serviceResponse = CallBranchUpsert();
-            //Assert.AreEqual(serviceResponse.HasError, false, serviceResponse.ErrorMessage);
-            //Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
         }
-
-        public static Response CallBranchUpsert()
-        {
-            BranchServiceReference.BranchWcfServiceClient serviceClient = new BranchServiceReference.BranchWcfServiceClient();
-            //string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
-            //serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
-            //using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
-            //{
-            //    System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
-            //    BranchServiceReference.BranchPM entityPM = new BranchServiceReference.BranchPM()
-            //    {
-            //        Code = HybridCodes.BranchCode,
-            //        EnglishName = "Hybrid Branch",
-            //        LocalName = "Hybrid Branch",
-            //        Tenant = TestEnvironmentGlobalParameters.Tenant,
-            //    };
-            //    Response serviceResponse = serviceClient.Upsert(entityPM, false);
-            //    return serviceResponse;
-            //}
-            return null;
-        }
-
-        
     }
-
-    
-
 }
