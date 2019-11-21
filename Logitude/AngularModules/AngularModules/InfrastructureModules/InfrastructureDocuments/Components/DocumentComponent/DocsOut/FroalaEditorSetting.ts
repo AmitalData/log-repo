@@ -10,7 +10,7 @@ export class FroalaEditorSetting {
       PageType: string;
       HtmlString: string;
       FroalaEditorIsReady: boolean;
-
+      UseNormalPreview: boolean;
 
 
 }
