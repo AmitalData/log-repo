@@ -434,5 +434,10 @@ namespace WebFreight.Web.DataProviders
         public string CarrierCBSA { get; set; }
         public string CarrierCAAT { get; set; }
         public string InlandDriver { get; set; }
+        public string ShipperAddress_WithName { get; set; }
+        public string ShipperNotExporterAddress_WithName { get; set; }
+        public string ConsigneeAddress_WithName { get; set; }
+        public string NotifyAddress_WithName { get; set; }
+        public string NotifyAddress2_WithName { get; set; }
     }
 }
