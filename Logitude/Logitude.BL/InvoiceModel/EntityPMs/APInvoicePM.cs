@@ -288,5 +288,10 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string JournalId { get; set; }
         public string ShipmentConcurrencyGUID { get; set; }
         public string ShipmentNewConcurrencyGUID { get; set; }
+
+        public string VendorCity { get; set; }
+        public string VendorCountry { get; set; }
+
+
     }
 }
