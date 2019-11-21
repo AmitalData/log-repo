@@ -27,6 +27,8 @@ using Logitude.BL.Helpers;
 using System.Text.RegularExpressions;
 using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
+using WebFreight.Web.WebServices;
+
 namespace WebFreight.Web.ReportsWebServices
 {
     /// <summary>
@@ -1197,6 +1199,84 @@ namespace WebFreight.Web.ReportsWebServices
                             House = assembly.House,
                             ShipperName = assembly.ShipperName
                         });
+                    }
+                }
+                #endregion
+
+                #region Payables List
+                ShipmentPayableRepository payableRepository = new ShipmentPayableRepository(tenant);
+                List<ShipmentPayable> payables = payableRepository.GetShipemntPayablesByShipmentId(shipmentpm.Id, tenant);
+                CurrencyRepository currencyRepository = new CurrencyRepository(tenant);
+                Currency localCurrency = CurrencyRepository.GetSingleCurrency(tenantpm.CurrencyId, tenant, true);
+                Currency profitCurrency = currencyRepository.GetSingleCurrency(shipmentpm.ProfitCurrencyId, tenant);
+                
+                prealertDataProvider.PayablesList = new List<PayableLine>();
+
+                foreach (ShipmentPayable payableItem in payables)
+                {
+                    PayableLine payableLine = new PayableLine()
+                    {
+                        Id = payableItem.Id,
+                        Name = payableItem.ChargesType == null ? null : payableItem.ChargesType.EnglishName,
+                        LocalName = payableItem.ChargesType == null ? null : payableItem.ChargesType.LocalName,
+                        CurrencyCode = payableItem.Currency == null ? null : payableItem.Currency.Code,
+                        LocalCurrencyCode = localCurrency.Code,
+                        ProfitCurrencyCode = profitCurrency.Code,
+                        OpenAmount = payableItem.OpenAmount,
+                        OpenAmountInLocal = payableItem.OpenAmountInLocalCurrency,
+                        OpenAmountInProfit = payableItem.OpenAmountInProfitCurrency,
+                        ExpectedAmount = payableItem.ExpectedAmount,
+                        ExpectedAmountInLocal = payableItem.ExpectedAmountLocal,
+                        ExpectedAmountInProfit = payableItem.ExpectedAmountInProfitCurrency,
+                        AccountedAmount = payableItem.AccountedAmount,
+                        AccountedAmountInLocal = payableItem.AccountedAmountInLocalCurrency,
+                        AccountedAmountInProfit = payableItem.AccountedAmountInProfitCurrency,
+                        UnitPrice = payableItem.UnitPrice,
+                        UOM = payableItem.Measurement == null ? null : payableItem.Measurement.Name,
+                        Quantity = payableItem.Quantity,
+                    };
+
+                    if (payableItem.Measurement != null)
+                    {
+                        if (payableItem.Measurement.Code == "")
+                        {
+                            payableLine.UOMPercentage = "%";
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(payableItem.VendorId))
+                    {
+                        Card vendor = (from a in commonContext.Cards
+                                       where a.Id == payableItem.VendorId
+                                       select a).FirstOrDefault();
+
+                        if (vendor != null)
+                        {
+                            payableLine.VendorName = vendor.EnglishName;
+                        }
+                    }
+
+                    prealertDataProvider.PayablesList.Add(payableLine);
+                }
+                #endregion
+                
+                #region Deliveries
+                List<ShipmentDeliveryPM> shipmentDeliveries = shipmentDeliveryQuery.GetShipmentDeliveryPMsByTenantAndShipment(shipmentpm.Id, tenant);
+                WebServiceHelper servicHelper = new WebServiceHelper(tenant);
+
+                if (shipmentDeliveries.Count > 0)
+                {
+                    prealertDataProvider.PickUpDeliveriesList = new List<PickUpDeliveryLine>();
+
+                    foreach (ShipmentDeliveryPM pickUpDeliveryLine in shipmentDeliveries)
+                    {
+                        PickUpDeliveryLine pickUpDeliveryItem = new PickUpDeliveryLine();
+                        pickUpDeliveryItem.ETD = pickUpDeliveryLine.ETD;
+                        pickUpDeliveryItem.ETA = pickUpDeliveryLine.ETA;
+                        pickUpDeliveryItem.ATD = pickUpDeliveryLine.ATD;
+                        pickUpDeliveryItem.ATA = pickUpDeliveryLine.ATA;
+                        //serviscHelper.GetDeliveryToAddress(pickUpDeliveryLine, pickUpDeliveryItem, addressRepository, tenant);
+                        //prealertDataProvider.PickUpDeliveriesList.Add(pickUpDeliveryItem);
                     }
                 }
                 #endregion

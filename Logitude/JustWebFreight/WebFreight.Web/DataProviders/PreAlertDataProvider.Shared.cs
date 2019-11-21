@@ -72,7 +72,8 @@ namespace WebFreight.Web.DataProviders
         public string CuttOffTime { get; set; }
 
         public List<Packages> PackagesList { get; set; }
-        
+        public List<PayableLine> PayablesList { get; set; }
+        public List<PickUpDeliveryLine> PickUpDeliveriesList { get; set; }
         public string Origin { get; set; }
         public string Destination { get; set; }
         public string IncotermCode { get; set; }
@@ -282,7 +283,7 @@ namespace WebFreight.Web.DataProviders
         public string NotifyName { get; set; }
         public string NotifyAddress { get; set; }
         public string ChargeableWeightUnitCode { get; set; }
-
+        public string Salesman { get; set; }
 
     }
 }
