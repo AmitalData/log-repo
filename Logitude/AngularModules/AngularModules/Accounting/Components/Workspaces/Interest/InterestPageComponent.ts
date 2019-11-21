@@ -65,6 +65,7 @@ export class InterestPageComponent implements AfterViewInit {
             listArgs.ObjectTableName = tableName;
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = TextCodeTranslator.Translate("Accounting.General.O.Interest");
+            listArgs.NewButtonLabel = TextCodeTranslator.Translate("InterestBasesType.Q.InterestBases");
             listArgs.IgnoreSelectedPerspective = true;
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
