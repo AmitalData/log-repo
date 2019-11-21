@@ -84,7 +84,7 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
         this.froalaEditorSetting = new FroalaEditorSetting();
         this.froalaEditorSetting.Id = Guid.newGuid();
         this.froalaEditorSetting.IsDisableEdit = true;
-
+        this.froalaEditorSetting.UseNormalPreview = true;
         if (this.QuoteTemplateSectionViewModel) {
             this.RefreshQuoteTemplateSectionBodyHtml();
             //if (this.QuoteTemplateSectionViewModel.IsLoaded) {

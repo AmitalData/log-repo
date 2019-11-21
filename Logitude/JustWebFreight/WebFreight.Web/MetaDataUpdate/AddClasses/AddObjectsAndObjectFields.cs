@@ -346,6 +346,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             }
             if (!tenantZeroObjectFields.Keys.Contains(objectFieldDetails.FieldName + objectFieldDetails.ObjectTableId))
             {
+
                 TextCode objectFieldTextCode = null;
                 if (!tenantZeroTextCodes.Keys.Contains(objectFieldDetails.ObjectTableName + ".F." + objectFieldDetails.FullFieldLable + objectFieldDetails.Tenant + objectFieldDetails.ObjectTableId))
                 {
@@ -481,7 +482,11 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 newObjectField.FullNameTextCodeId = objectFieldTextCode.Id;
                 newObjectField.FieldName = objectFieldDetails.FieldName;
                 newObjectField.Code = objectFieldDetails.Code;
-                if (string.IsNullOrEmpty(objectFieldDetails.Code))
+                if (string.IsNullOrEmpty(newObjectField.FieldCode))
+                {
+                    newObjectField.FieldCode = objectFieldDetails.ObjectTableName + "." + objectFieldDetails.FieldName; ;
+                }
+                    if (string.IsNullOrEmpty(objectFieldDetails.Code))
                 {
                     newObjectField.Code = objectFieldDetails.FieldName;
                 }
@@ -690,7 +695,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 updatedObjectField.RecordType = objectFieldDetails.RecordType;
 
 
-
+               
 
                 if (string.IsNullOrEmpty(objectFieldDetails.Code))
                 {
@@ -700,7 +705,12 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 {
                     updatedObjectField.FieldName = objectFieldDetails.FieldName;
                 }
-               
+
+                if (string.IsNullOrEmpty(updatedObjectField.FieldCode))
+                {
+                    updatedObjectField.FieldCode = objectFieldDetails.ObjectTableName + "." + objectFieldDetails.FieldName;
+                }
+
                 if (objectFieldDetails.ObjectTableName == "Address")
                     return;
 

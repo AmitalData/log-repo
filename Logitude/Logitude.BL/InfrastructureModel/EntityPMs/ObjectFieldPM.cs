@@ -108,7 +108,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
 
         public bool DisplayInAutomationAsEnitity { get; set; }
         public string RecordType { get; set; }
-
+        public string FieldCode { get; set; }
         private List<ObjectFieldValidationPM> objectFieldValidations;
         [Composition]
         [Include]

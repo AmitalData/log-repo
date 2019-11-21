@@ -24,6 +24,7 @@ export class FroalaEditorComponent implements OnInit, AfterViewInit {
     Id: string;
     PreviewDivId: string;
     IsDisableMode: boolean = false;
+    UseNormalPreview: boolean = false;
     @Output() FroalaReady: EventEmitter<boolean> = new EventEmitter<boolean>();
     constructor(elementRef: ElementRef, private cd: ChangeDetectorRef) {
         this.elementRef = elementRef;
@@ -39,6 +40,7 @@ export class FroalaEditorComponent implements OnInit, AfterViewInit {
 
         if (this.EditorfroalaSetting.IsDisableEdit) {
             this.IsDisableMode = true;
+            this.UseNormalPreview = this.EditorfroalaSetting.UseNormalPreview;
         }
     }
 
@@ -58,86 +60,92 @@ export class FroalaEditorComponent implements OnInit, AfterViewInit {
         //  this.HtmlString = this.CheckHtmlStyle(this.HtmlString);
 
 
+        if (!this.UseNormalPreview) {
 
-        //Froala Editor
-        var HtmlID = getHTMLID(this.Id);
+            //Froala Editor
+            var HtmlID = getHTMLID(this.Id);
 
-        RegisterCustomFroalaEditorButtom(this);
-
-
-        var froalakey: string = ObjectsLocator.GlobalSetting != null && ObjectsLocator.GlobalSetting.WorkEnvironment == "cloud" ? "8A-9pwkamE5f1kG4ok==" : "ubd1wxffppaxjuE-11A2C-9rs==";
-
-        
-        if (HtmlID.data('froala.editor')) HtmlID.froalaEditor('destroy');
-
-        HtmlID.froalaEditor({
-            allowedImageTypes: ["jpeg", "jpg", "png"],
-            toolbarButtons: this.EditorfroalaSetting.PageType == "Send" ? ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'insertTable', 'undo', 'redo', 'selectAll', 'rightToLeft', 'leftToRight', 'lineHeight'] : ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'insertTable', 'undo', 'redo', 'selectAll', 'insertLink', 'rightToLeft', 'leftToRight', 'PageBreak','lineHeight'],
-
-            toolbarButtonsMD: this.EditorfroalaSetting.PageType == "Send" ? ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', 'align', 'formatOL', 'insertTable', 'rightToLeft', 'leftToRight', 'lineHeight'] : ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', 'align', 'formatOL', 'insertTable', 'insertLink', 'rightToLeft', 'leftToRight', 'PageBreak','lineHeight'],
-            toolbarButtonsSM: this.EditorfroalaSetting.PageType == "Send" ? ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'insertTable', 'align', 'rightToLeft', 'leftToRight', 'lineHeight'] : ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'align', 'insertTable', 'rightToLeft', 'leftToRight', 'PageBreak','lineHeight'],
-            toolbarButtonsXS: this.EditorfroalaSetting.PageType == "Send" ? ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'insertTable', 'align', 'rightToLeft', 'leftToRight', 'lineHeight'] : ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'align', 'insertTable', 'rightToLeft', 'leftToRight', 'PageBreak','lineHeight'],
-            lineBreakerTags: ['table', 'hr', 'form'],
-            pluginsEnabled: null,
-            height: height,
-            heightMax: height,
-            iframe: true,
-            charCounterCount: false,
-            inlineMode: false,
-            zIndex: -1,
-            direction: '',
-            key: froalakey,
-            useClasses: false,
-
-            tableStyles: {
-                All: 'All',
-                Box: 'Box',
-                None: 'None',
-                Red: 'Border red',
-                Blue: 'Border blue',
-                DarkBlue: 'Border dark blue',
-                //Green: 'Border green',
-                //Yellow: 'Border yellow',
-                Brown: 'Border brown',
-                Maroon: 'Border maroon',
-
-                Black: 'Border Black',
-                Gray: 'Border gray',
-                LightGray: 'Border light gray',
-
-                White: 'Border white',
-
-            },
-            //scrollableContainer: '#' + this.Id,
-
-            tableMultipleStyles: true,
-
-            tableCellStyles: {
-                BorderLeft: 'Remove border left',
-                BorderRight: 'Remove border right',
-                BorderBottom: 'Remove border bottom',
-                BorderTop: 'Remove border top',
-            },
+            RegisterCustomFroalaEditorButtom(this);
 
 
-            lineHeights: {
-                Default: '',
-                '0.2': '0.2',
-                '0.5': '0.5',
-                Single: '1',
-                '1.15': '1.15',
-                '1.5': '1.5',
-                Double: '2'
-            },
+            var froalakey: string = ObjectsLocator.GlobalSetting != null && ObjectsLocator.GlobalSetting.WorkEnvironment == "cloud" ? "8A-9pwkamE5f1kG4ok==" : "ubd1wxffppaxjuE-11A2C-9rs==";
 
-        });
 
-        HtmlID.froalaEditor('html.set', this.HtmlString);
+            if (HtmlID.data('froala.editor')) HtmlID.froalaEditor('destroy');
 
-        if (this.IsDisableMode) {
+            HtmlID.froalaEditor({
+                allowedImageTypes: ["jpeg", "jpg", "png"],
+                toolbarButtons: this.EditorfroalaSetting.PageType == "Send" ? ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'insertTable', 'undo', 'redo', 'selectAll', 'rightToLeft', 'leftToRight', 'lineHeight'] : ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'insertTable', 'undo', 'redo', 'selectAll', 'insertLink', 'rightToLeft', 'leftToRight', 'PageBreak', 'lineHeight'],
 
-            HtmlID.froalaEditor('edit.off');
-            HtmlID.froalaEditor('toolbar.hide');
+                toolbarButtonsMD: this.EditorfroalaSetting.PageType == "Send" ? ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', 'align', 'formatOL', 'insertTable', 'rightToLeft', 'leftToRight', 'lineHeight'] : ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', 'paragraphFormat', 'align', 'formatOL', 'insertTable', 'insertLink', 'rightToLeft', 'leftToRight', 'PageBreak', 'lineHeight'],
+                toolbarButtonsSM: this.EditorfroalaSetting.PageType == "Send" ? ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'insertTable', 'align', 'rightToLeft', 'leftToRight', 'lineHeight'] : ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'align', 'insertTable', 'rightToLeft', 'leftToRight', 'PageBreak', 'lineHeight'],
+                toolbarButtonsXS: this.EditorfroalaSetting.PageType == "Send" ? ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'insertTable', 'align', 'rightToLeft', 'leftToRight', 'lineHeight'] : ['bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'align', 'insertTable', 'rightToLeft', 'leftToRight', 'PageBreak', 'lineHeight'],
+                lineBreakerTags: ['table', 'hr', 'form'],
+                pluginsEnabled: null,
+                height: height,
+                heightMax: height,
+                iframe: true,
+                charCounterCount: false,
+                inlineMode: false,
+                zIndex: -1,
+                direction: '',
+                key: froalakey,
+                useClasses: false,
+
+                tableStyles: {
+                    All: 'All',
+                    Box: 'Box',
+                    None: 'None',
+                    Red: 'Border red',
+                    Blue: 'Border blue',
+                    DarkBlue: 'Border dark blue',
+                    //Green: 'Border green',
+                    //Yellow: 'Border yellow',
+                    Brown: 'Border brown',
+                    Maroon: 'Border maroon',
+
+                    Black: 'Border Black',
+                    Gray: 'Border gray',
+                    LightGray: 'Border light gray',
+
+                    White: 'Border white',
+
+                },
+                //scrollableContainer: '#' + this.Id,
+
+                tableMultipleStyles: true,
+
+                tableCellStyles: {
+                    BorderLeft: 'Remove border left',
+                    BorderRight: 'Remove border right',
+                    BorderBottom: 'Remove border bottom',
+                    BorderTop: 'Remove border top',
+                },
+
+
+                lineHeights: {
+                    Default: '',
+                    '0.2': '0.2',
+                    '0.5': '0.5',
+                    Single: '1',
+                    '1.15': '1.15',
+                    '1.5': '1.5',
+                    Double: '2'
+                },
+
+            });
+
+            HtmlID.froalaEditor('html.set', this.HtmlString);
+
+            if (this.IsDisableMode) {
+
+                HtmlID.froalaEditor('edit.off');
+                HtmlID.froalaEditor('toolbar.hide');
+            }
+        }
+
+        else {
+            SetHtmlToFrame(this.PreviewDivId, this.HtmlString);
         }
 
         this.EditorfroalaSetting.FroalaEditorIsReady = true;
@@ -150,11 +158,19 @@ export class FroalaEditorComponent implements OnInit, AfterViewInit {
 
         var HtmlID = getHTMLID(this.Id);
         if (this.EditorfroalaSetting.FroalaEditorIsReady) {
-            if (HtmlID) {
-                html = HtmlID.froalaEditor('html.get');
+
+            if (!this.UseNormalPreview) {
+
+                if (HtmlID) {
+                    html = HtmlID.froalaEditor('html.get');
+                }
+                else html = this.HtmlString;
+                this.EditorfroalaSetting.HtmlString = html;
+            } else {
+                html = GetHtmlFromFrame(this.PreviewDivId);
+                this.EditorfroalaSetting.HtmlString = html;
             }
-            else html = this.HtmlString;
-            this.EditorfroalaSetting.HtmlString = html;
+
         }
 
         return html;
@@ -163,17 +179,20 @@ export class FroalaEditorComponent implements OnInit, AfterViewInit {
 
 
     SetHtml(html: string) {
-
         this.HtmlString = this.EditorfroalaSetting.HtmlString = html;
-        //  this.HtmlString = this.CheckHtmlStyle(this.HtmlString);
-
         if (this.EditorfroalaSetting.FroalaEditorIsReady) {
-            var HtmlID = getHTMLID(this.Id);
-            if (HtmlID) {
-                HtmlID.froalaEditor('html.set', html);
-            }
-        }
+            if (!this.UseNormalPreview) {
+                var HtmlID = getHTMLID(this.Id);
+                if (HtmlID) {
+                    HtmlID.froalaEditor('html.set', html);
+                }
 
+            } else {
+                var element = document.getElementById(this.PreviewDivId);
+                if (element) SetHtmlToFrame(this.PreviewDivId, html);
+            }
+
+        }
     }
 
 
@@ -199,12 +218,13 @@ export class FroalaEditorComponent implements OnInit, AfterViewInit {
 
     public DestroyfroalaEditor() {
 
+        if (!this.UseNormalPreview) {
+            if (this.EditorfroalaSetting.FroalaEditorIsReady) {
+                var HtmlID = getHTMLID(this.Id);
 
-        if (this.EditorfroalaSetting.FroalaEditorIsReady) {
-            var HtmlID = getHTMLID(this.Id);
-
-            if (HtmlID && HtmlID.data('froala.editor')) {
-                HtmlID.froalaEditor('destroy');
+                if (HtmlID && HtmlID.data('froala.editor')) {
+                    HtmlID.froalaEditor('destroy');
+                }
             }
         }
 
