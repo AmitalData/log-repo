@@ -1,6 +1,5 @@
-
 SETLOCAL enabledelayedexpansion
-SET err=0
+SET NumberErrors=0
 SET TotalErrors
 
 cd /
@@ -8,7 +7,7 @@ cd windows
 c:
 cd C:\Program Files (x86)\Jenkins\workspace\LogitudeTestDevOps\Logitude\AngularModules\AngularModules
 
-set NumberErrors=0
+
 
 FOR /L %%A IN (1,1,1) DO (
 
@@ -37,33 +36,42 @@ CALL :CheckError "ShipmentView"
  CALL :CheckError "NewUser"
  
 --NewShipper--
- cmd /c call npm run e2e -- --params.Env="prod_1" --params.Team="islam" --suite=login,NewShipper>D:\E2ETeamIslamReport\Report.log
- CALL :CheckError "NewShipper"
+rem cmd /c call npm run e2e -- --params.Env="prod_1" --params.Team="islam" --suite=login,NewShipper>D:\E2ETeamIslamReport\Report.log
+rem  CALL :CheckError "NewShipper"
  
 
 )
 
-
-
-
 cd /
 cd C:\Automation e2e\TeamIslam\Prod
-
 >test.txt echo Errors in : %TotalErrors%
 >>test.txt echo Total Errors :%NumberErrors% 
-
 
 IF %NumberErrors% NEQ 0 ( 
   exit 1
 )
-
-pause
-
+Pause
 
 SETLOCAL
-:CheckError 
-for /f %%a in ('type D:\E2ETeamIslamReport\Report.log ^| find /c /i "error"') DO (if %%a NEQ 0 set TotalErrors=%TotalErrors%    %~1%NL% & @SET /a "NumberErrors=%NumberErrors%+1" )
+:CheckError
+    set /a count=0
+    cd /
+    cd windows
+    c:
+    cd C:\Automation e2e\TeamIslam\prod\screenshots
 
-for /f %%a in ('type D:\E2ETeamIslamReport\Report.log ^| find /c /i "This will be an error in future versions"') DO (if %%a NEQ 0 set TotalErrors=%TotalErrors%    %~1%NL% & @SET /a "NumberErrors=%NumberErrors%-1" )
+    IF EXIST images (
+        cd /
+        cd windows
+        c:
+        cd C:\Automation e2e\TeamIslam\Prod\screenshots\images
+
+        for %%x in (*.png) do set /a count+=1
+        set /A NumberErrors=count
+    )
+    cd /
+    cd windows
+    c:
+    cd C:\Program Files (x86)\Jenkins\workspace\2019.R3.DevOps\Logitude\AngularModules\AngularModules
 
 goto:eof

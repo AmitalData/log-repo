@@ -413,6 +413,8 @@ export class ShipmentList {
 		FirstPickupETD: Date;
 		FirstPickupETA: Date;
 		INTTRALastStatusDate: Date;
+		INTTRABookingError: string;
+		INTTRALastBookingResponse: string;
 		Notify1Reference: string;
 		Notify2Reference: string;
 		ShipperNotExporterReference: string;

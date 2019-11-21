@@ -39,7 +39,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          && a.Id == fieldId
                                          && a.InActive == false
                                          select new ObjectFieldPM()
-                                         {
+                                         {  FieldCode = a.FieldCode,
                                              IsMaxLength = a.IsMaxLength,
                                              AutomaticField = a.AutomaticField,
                                              CanFilter = a.CanFilter,
@@ -139,6 +139,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                              RecordType =a.RecordType,
                                              DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
+                                            
                                          }).FirstOrDefault();
 
             ObjectFieldValidationQuery objectFieldValidationQuery = new ObjectFieldValidationQuery(tenant);
@@ -230,7 +231,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
                                                      EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                                      RecordType = a.RecordType,
-                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,                                                 };
+                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
+                                                     FieldCode = a.FieldCode,
+                                                 };
             return result;
         }
 
@@ -330,6 +333,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                                     RecordType = a.RecordType,
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
+                                                    FieldCode = a.FieldCode,
                                                 }).ToList();
 
             return Get_List_Of_ObjectFields_With_Modifications_And_Validations(objectFields, tenant);
@@ -442,6 +446,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                              RecordType = a.RecordType,
                                              DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
+                                             FieldCode = a.FieldCode,
                                          }).FirstOrDefault();
 
             ObjectFieldValidationQuery objectFieldValidationQuery = new ObjectFieldValidationQuery(tenant);
@@ -555,6 +560,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                                     RecordType = a.RecordType,
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
+                                                    FieldCode = a.FieldCode,
                                                 }).OrderBy(o => o.FieldName).ToList();
 
             return Get_List_Of_ObjectFields_With_Modifications_And_Validations(objectFields, tenant);
@@ -669,6 +675,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                              RecordType = a.RecordType,
                                              DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
+                                             FieldCode = a.FieldCode,
                                          }).FirstOrDefault();
             if (mod != null)
             {
@@ -788,6 +795,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                                     RecordType = a.RecordType,
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
+                                                    FieldCode = a.FieldCode,
                                                 }).ToList();
 
             return Get_List_Of_ObjectFields_With_Modifications_And_Validations(objectFields, tenant);
@@ -899,6 +907,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                                     RecordType = a.RecordType,
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
+                                                    FieldCode = a.FieldCode,
                                                 }).ToList();
             return objectfields;
         }
@@ -1008,6 +1017,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                         RecordType = a.RecordType,
                         DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
+                        FieldCode = a.FieldCode,
                     }).ToList();
         }
 
@@ -1117,6 +1127,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                                     RecordType = a.RecordType,
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
+                                                    FieldCode = a.FieldCode,
                                                 }).ToList();
             return objectfields;
         }
@@ -1223,6 +1234,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DisplayOnLookUpLocal = a.ObjectField.DisplayOnLookUpLocal,
                                                     RecordType = a.ObjectField.RecordType,
                                                     DisplayInAutomationAsEnitity = a.ObjectField.DisplayInAutomationAsEnitity,
+                                                    FieldCode = a.ObjectField.FieldCode,
                                                 }).ToList();
 
 
@@ -1334,6 +1346,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                               EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                               RecordType = a.RecordType,
                               DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
+                              FieldCode = a.FieldCode,
                           });
             return result;
         }
@@ -1443,6 +1456,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                                     RecordType = a.RecordType,
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
+                                                    FieldCode = a.FieldCode,
                                                 }).ToList();
 
             return Get_List_Of_ObjectFields_With_Modifications_And_Validations(objectFields, tenant);//.Take(800).ToList();
@@ -1667,6 +1681,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                                     RecordType = a.RecordType,
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
+                                                    FieldCode = a.FieldCode,
                                                 }).ToList();
 
             return Get_List_Of_ObjectFields_With_Modifications_And_Validations(objectFields, tenant);
@@ -1795,6 +1810,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                              EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                                              RecordType = a.RecordType,
                                                              DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
+                                                             FieldCode = a.FieldCode,
                                                          }).ToList();
 
                             currentTenantObjectFields = Get_List_Of_ObjectFields_With_Modifications_And_Validations(currentTenantObjectFields, tenant);
@@ -1904,6 +1920,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                          EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                                          RecordType = a.RecordType,
                                                          DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
+                                                         FieldCode = a.FieldCode,
                                                      }).ToList();
 
                         currentTenantObjectFields = Get_List_Of_ObjectFields_With_Modifications_And_Validations(currentTenantObjectFields, tenant);
@@ -2012,6 +2029,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                       EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                                       RecordType = a.RecordType,
                                                       DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
+                                                      FieldCode = a.FieldCode,
                                                   }).ToList();
 
                         zeroTenantObjectFields = Get_List_Of_ObjectFields_With_Modifications_And_Validations(zeroTenantObjectFields, 0);
@@ -2122,6 +2140,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                                   RecordType = a.RecordType,
                                                   DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
+                                                  FieldCode = a.FieldCode,
                                               }).ToList();
 
                     zeroTenantObjectFields = Get_List_Of_ObjectFields_With_Modifications_And_Validations(zeroTenantObjectFields, 0);
@@ -2215,6 +2234,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                              RecordType = a.RecordType,
                                              DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
+                                             FieldCode = a.FieldCode,
                                          }).FirstOrDefault();
 
             return objectField;
@@ -2251,7 +2271,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     RecordType = a.RecordType,
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                     Code = a.Code,
-                                            CustomPickListCode =a.CustomPickListCode,
+                                                    FieldCode = a.FieldCode,
+                                                    CustomPickListCode =a.CustomPickListCode,
                                                 }).ToList();
 
             return objectFields;
@@ -2364,6 +2385,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                                     RecordType = a.RecordType,
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
+                                                    FieldCode = a.FieldCode,
                                                 }).ToList();
             return objectfields;
         }

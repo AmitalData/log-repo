@@ -827,14 +827,14 @@ class DepartureArrival {
         }
     }
     private Build_LSW() {
-        var list_EXP: FlightSummary[] = this.ExpectedItems.filter(d => DateTool.TruncateTime(d.ExpectedDate).valueOf() >= DateTool.GetDateByDay(-7).valueOf() && DateTool.TruncateTime(d.ExpectedDate).valueOf() <= DateTool.GetDateByDay(-1).valueOf());
+        var list_EXP: FlightSummary[] = this.ExpectedItems.filter(d => d.ExpectedDateCode == "LSW");
         if (list_EXP.length > 0) {
             var ids = this.GetIdsList(list_EXP);
             this.ExpectedCount = ids.length;
             this.ExpectedShipmentsIds = AppTool.GetIdsArrayText(ids);
         }
 
-        var list_ACT: FlightSummary[] = this.ActualItems.filter(d => DateTool.TruncateTime(d.ActualDate).valueOf() >= DateTool.GetDateByDay(-7).valueOf() && DateTool.TruncateTime(d.ActualDate).valueOf() <= DateTool.GetDateByDay(-1).valueOf());
+        var list_ACT: FlightSummary[] = this.ActualItems.filter(d => d.ActualDateCode == "LSW");
         if (list_ACT.length > 0) {
             var ids = this.GetIdsList(list_ACT);
             this.ActualCount = ids.length;
@@ -842,14 +842,14 @@ class DepartureArrival {
         }
     }
     private Build_TOD() {
-        var list_EXP: FlightSummary[] = this.ExpectedItems.filter(d => DateTool.TruncateTime(d.ExpectedDate).valueOf() == DateTool.GetDateByDay(0).valueOf());
+        var list_EXP: FlightSummary[] = this.ExpectedItems.filter(d => d.ExpectedDateCode == "TOD");
         if (list_EXP.length > 0) {
             var ids = this.GetIdsList(list_EXP);
             this.ExpectedCount = ids.length;
             this.ExpectedShipmentsIds = AppTool.GetIdsArrayText(ids);
         }
 
-        var list_ACT: FlightSummary[] = this.ActualItems.filter(d => DateTool.TruncateTime(d.ActualDate).valueOf() == DateTool.GetDateByDay(0).valueOf());
+        var list_ACT: FlightSummary[] = this.ActualItems.filter(d => d.ActualDateCode == "TOD");
         if (list_ACT.length > 0) {
             var ids = this.GetIdsList(list_ACT);
             this.ActualCount = ids.length;
@@ -857,7 +857,7 @@ class DepartureArrival {
         }
     }
     private Build_TOM() {
-        var list: FlightSummary[] = this.ExpectedItems.filter(d => DateTool.TruncateTime(d.ExpectedDate).valueOf() == DateTool.GetDateByDay(1).valueOf());
+        var list: FlightSummary[] = this.ExpectedItems.filter(d => d.ExpectedDateCode == "TOM");
         if (list.length > 0) {
             var ids = this.GetIdsList(list);
             this.ExpectedCount = ids.length;
@@ -865,7 +865,7 @@ class DepartureArrival {
         }
     }
     private Build_NXW() {
-        var list: FlightSummary[] = this.ExpectedItems.filter(d => DateTool.TruncateTime(d.ExpectedDate).valueOf() >= DateTool.GetDateByDay(2).valueOf() && DateTool.TruncateTime(d.ExpectedDate).valueOf() <= DateTool.GetDateByDay(7).valueOf());
+        var list: FlightSummary[] = this.ExpectedItems.filter(d => d.ExpectedDateCode == "NXW");
         if (list.length > 0) {
             var ids = this.GetIdsList(list);
             this.ExpectedCount = ids.length;

@@ -2,17 +2,17 @@ import { browser, by, element, WebDriver, protractor } from 'protractor';
 import { FieldsHelper } from '../../Helpers/FieldsHelper';
 import { GeneralFunctions } from '../../Helpers/GeneralFunctions';
 
-export class NewCustomer{
-  private Helper: FieldsHelper;
-  private Generator: GeneralFunctions;
+export class NewCustomer {
+    private Helper: FieldsHelper;
+    private Generator: GeneralFunctions;
 
-  constructor() {
-    this.Helper = new FieldsHelper();
-    this.Generator = new GeneralFunctions();
-  }
+    constructor() {
+        this.Helper = new FieldsHelper();
+        this.Generator = new GeneralFunctions();
+    }
 
 
-  public CreateNewCustomerGLAccount(Name: string) {
+    public CreateNewCustomerGLAccount(Name: string) {
 
         this.Helper.WaitByIdAndClick('NewButton_Customer');
       this.Helper.ItemsVisibility('Address_Name');

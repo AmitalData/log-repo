@@ -102,6 +102,7 @@ import {ExternalReconciliationShortTitleComponent} from './Components/ShortTiTle
 import { TaxReportShortTitleComponent } from './Components/ShortTiTles/TaxReportShortTitleComponent';
 import { EditTaxReportLineComponent } from './Components/EditTabs/TaxReport/EditTaxReportLine/EditTaxReportLineComponent';
 import { NewIntegrityCheckComponent } from './Components/NewEntity/NewIntegrityCheckComponent';
+import { InterestPageComponent } from './Components/Workspaces/Interest/InterestPageComponent';
 
 
 export const Components =
@@ -115,6 +116,7 @@ export const Components =
         PayablePageComponent,
         BanksPageComponent,
         MiscPageComponent,
+        InterestPageComponent,
 
         //New Entites
         NewGLAccountComponent,
@@ -225,6 +227,7 @@ export class ModuleDeclarations {
             case "PayablePageComponent": { myResult = PayablePageComponent; break; }
             case "BanksPageComponent": { myResult = BanksPageComponent; break; }
             case "MiscPageComponent": { myResult = MiscPageComponent; break; }
+            case "InterestPageComponent": { myResult = InterestPageComponent; break; }
 
             //New Entites
             case "NewGLAccountComponent": { myResult = NewGLAccountComponent; break; }

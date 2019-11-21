@@ -198,6 +198,10 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string INTTRARegistrationNotes { get; set; }
 
         [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public bool INTTRAUpdatesShipment { get; set; }
+
+        [DataMember]
         public string PrimaryContactName { get; set; }
         [DataMember]
         public string PrimaryContactEmail { get; set; }

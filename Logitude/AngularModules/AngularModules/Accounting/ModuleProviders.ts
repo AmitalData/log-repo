@@ -124,6 +124,10 @@ import { TaxReportMenuButtonsHandler } from './Components/MenuButtons/TaxReportM
 import { TaxDeductionReportMenuButtonsHandler } from './Components/MenuButtons/TaxDeductionReportMenuButtonsHandler';
 import { OpenFormatReportMenuButtonsHandler } from './Components/MenuButtons/OpenFormatReportMenuButtonsHandler';
 import { AccountingIntegrityCheckPMService } from './Services/StandardPMs/AccountingIntegrityCheckPMService';
+import { ExternalPageAdditionalDataListService } from './Services/StandardLists/ExternalPageAdditionalDataListService';
+import { ExternalPageAdditionalDataPMService } from './Services/StandardPMs/ExternalPageAdditionalDataPMService';
+import { InterestBasesPeriodListService } from './Services/StandardLists/InterestBasesPeriodListService';
+import { InterestBasesTypeListService } from './Services/StandardLists/InterestBasesTypeListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -180,12 +184,9 @@ export class ModuleProviders {
             case "TaxDeductionReportListService": { myResult = new TaxDeductionReportListService(); break; }
             case "OpenFormatReportListService": { myResult = new OpenFormatReportListService(); break; }
 
-
-
             case "TaxDeductionReportPMService": { myResult = new TaxDeductionReportPMService(); break; }
-
             case "OpenFormatReportPMService": { myResult = new OpenFormatReportPMService(); break; }
-
+            case "ExternalPageAdditionalDataPMService": { myResult = new ExternalPageAdditionalDataPMService(); break; }
 
             case "AccountingPeriodPMService": { myResult = new AccountingPeriodPMService(); break; }
             case "AutomaticReconcileMethodPMService": { myResult = new AutomaticReconcileMethodPMService(); break; }
@@ -228,6 +229,10 @@ export class ModuleProviders {
             // case "OpenFormatDateTypeListService": { myResult = new OpenFormatDateTypeListService(); break; }
             case "TaxDeductionReportStatusListService": { myResult = new TaxDeductionReportStatusListService(); break; }
             case "OpenFormatReportStatusListService": { myResult = new OpenFormatReportStatusListService(); break; }
+            case "ExternalPageAdditionalDataListService": { myResult = new ExternalPageAdditionalDataListService(); break; }
+            case "InterestBasesPeriodListService": { myResult = new InterestBasesPeriodListService(); break; }
+            case "InterestBasesTypeListService": { myResult = new InterestBasesTypeListService(); break; }
+
             //#endregion
 
             //Extend Services

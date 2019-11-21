@@ -25,7 +25,7 @@ export class NewARPayment {
         this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndFill('ARPayment_BillToAddressId', 'Main Address');
         this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'ARPayment_BillToAddressId', 'Main Address');
-        this.Helper.WaitBusyIndicator();
+        //this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndFill('ARPayment_AmountInPaymentCurrency', '10000');
         this.Helper.WaitByIdAndFill('ARPayment_AccountingPaymentMethodId', 'Cash');
         this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'ARPayment_AccountingPaymentMethodId', 'Cash'),

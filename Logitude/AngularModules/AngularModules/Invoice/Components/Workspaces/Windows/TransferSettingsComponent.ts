@@ -73,6 +73,7 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
                 this.EntityPM.QBOAccessToken = myResponse.Result.QBOAccessToken;
                 this.EntityPM.QBOAccessTokenSecret = myResponse.Result.QBOAccessTokenSecret;
                 this.EntityPM.RefreshToken = myResponse.Result.RefreshToken;
+                this.EntityPM.QBOOAuth = myResponse.Result.QBOOAuth;
 
                 var temp = this.EntityPM.QBOrealMeID;
                 this.EntityPM.QBOrealMeID = myResponse.Result.QBOrealMeID;
@@ -104,6 +105,9 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
                     this.EntityPM.QBOAccessToken = null;
                     this.EntityPM.QBOAccessTokenSecret = null;
                     this.EntityPM.QBOrealMeID = null;
+                    this.EntityPM.RefreshToken = null;
+                    this.EntityPM.QBOOAuth = 0;
+
                 }
             }
 
@@ -431,11 +435,14 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
             this.EntityPM.QBOAccessToken = null;
             this.EntityPM.QBOAccessTokenSecret = null;
             this.EntityPM.RefreshToken = null;
+            this.EntityPM.QBOOAuth = 0;
+
 
         }
 
         if (this.EntityPM.AccountingSystemCode == "QBO" || this.EntityPM.AccountingSystemCode == "QBOG") {
             this.EntityPM.AccountingSystemCode = "NO";
+
             this.entityPMService.update(this.EntityPM).subscribe((myResponse1: ServiceResponse) => {
                 if (myResponse1.HasError) {
                     this.ValidationErrorsList = myResponse1.ErrorsArray;
@@ -521,6 +528,10 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
                 this.EntityPM.QBOrealMeID = null;
                 this.EntityPM.QBOAccessToken = null;
                 this.EntityPM.QBOAccessTokenSecret = null;
+                this.EntityPM.RefreshToken = null;
+                this.EntityPM.QBOOAuth = 0;
+
+
                 this.DissConnectQBO(false);
             }
         });
@@ -577,6 +588,14 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
                 if (this.EntityPM.QBOAccessTokenSecret) {
                     this.EntityPM.QBOAccessTokenSecret = null;
                 }
+
+                if (this.EntityPM.RefreshToken) {
+                    this.EntityPM.RefreshToken = null;
+                }
+
+                if (this.EntityPM.QBOOAuth) {
+                    this.EntityPM.QBOOAuth = 0;
+                }
             }
 
             if (this.IsQuickBooksWindowOpened && (this.AccountingSystemCode == "QBO" || this.AccountingSystemCode == "QBOG")) {
@@ -599,6 +618,14 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
 
                         if (this.EntityPM.QBOAccessTokenSecret != loadedEntity.QBOAccessTokenSecret) {
                             this.EntityPM.QBOAccessTokenSecret = loadedEntity.QBOAccessTokenSecret;
+                        }
+
+                        if (this.EntityPM.RefreshToken != loadedEntity.RefreshToken) {
+                            this.EntityPM.RefreshToken = loadedEntity.RefreshToken;
+                        }
+
+                        if (this.EntityPM.QBOOAuth != loadedEntity.QBOOAuth) {
+                            this.EntityPM.QBOOAuth = loadedEntity.QBOOAuth;
                         }
 
                         this.SaveChanges();

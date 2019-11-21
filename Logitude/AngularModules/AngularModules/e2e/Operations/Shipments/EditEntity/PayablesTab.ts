@@ -143,6 +143,7 @@ export class PayablesTabComponent {
             }
             this.Helper.WaitEditComponentBusyIndicator();
         } else {//from accounting actions
+            this.WaitBusyIndicatorToShowandHide();
             this.Helper.WaitByIdAndClick('EditBackbutton_1');
             this.WaitBusyIndicatorToShowandHide();
             this.Helper.WaitByIdAndClick('BackButton');

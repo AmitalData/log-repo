@@ -715,7 +715,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string INTTRABookingStatusName { get; set; }
         public string INTTRABookingTransStatusName { get; set; }
         public string INTTRABookingTransStatusCode { get; set; }
-
+        public string INTTRABookingError { get; set; }
+        public string INTTRALastBookingResponse { get; set; }
 
         public string LastFinalDestination { get; set; }
         public DateTime? FirstPickupETD { get; set; }
