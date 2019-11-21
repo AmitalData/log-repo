@@ -156,6 +156,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
                     {
                         Create1170(requestParams, mess, objectTableId, objectTableIdCourierMaster, itemPM);
+                        
+                        string updateSql = $"Update DeclarationCourierStatuses set COURIERMANIFESTSTATUSCODE='I' where DECLARATIONID ='{itemPM.DeclarationId}' ";
+                        CustomContext.CommandExecuteNonQuery(requestParams.Tenant, updateSql);
+
                         scopeNewCRS.Complete();
                     }
                     listDeclarationIdCreateCRS.Add(itemPM.DeclarationId);
@@ -169,14 +173,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     mess.AppendLine($"Exception!!!CreateSheetSBQMessage({itemPM.DeclarationId}) : {ee1.Message}");
                 }
             }
-            listDeclarationIdCreateCRS.ChunkBy(100)
-.ForEach(list100 =>
-{
-    string inList = String.Join(",", list100.Select(declarationId => $"'{declarationId}'").ToArray());
-    string updateSql = $"Update DeclarationCourierStatuses set COURIERMANIFESTSTATUSCODE='I' where DECLARATIONID in ({inList}) ";
+//            listDeclarationIdCreateCRS.ChunkBy(100)
+//.ForEach(list100 =>
+//{
+//    string inList = String.Join(",", list100.Select(declarationId => $"'{declarationId}'").ToArray());
+//    string updateSql = $"Update DeclarationCourierStatuses set COURIERMANIFESTSTATUSCODE='I' where DECLARATIONID in ({inList}) ";
 
-    CustomContext.CommandExecuteNonQuery(requestParams.Tenant, updateSql);
-});
+//    CustomContext.CommandExecuteNonQuery(requestParams.Tenant, updateSql);
+//});
         }
 
         private static void Create1170(GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, DeclarationCourierStatus itemPM)
