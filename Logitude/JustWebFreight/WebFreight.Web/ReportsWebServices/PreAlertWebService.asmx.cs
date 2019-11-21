@@ -27,6 +27,8 @@ using Logitude.BL.Helpers;
 using System.Text.RegularExpressions;
 using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
+using WebFreight.Web.WebServices;
+
 namespace WebFreight.Web.ReportsWebServices
 {
     /// <summary>

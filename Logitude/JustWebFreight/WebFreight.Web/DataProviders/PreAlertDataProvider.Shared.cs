@@ -285,6 +285,7 @@ namespace WebFreight.Web.DataProviders
         public string NotifyName { get; set; }
         public string NotifyAddress { get; set; }
         public string ChargeableWeightUnitCode { get; set; }
+        public string Salesman { get; set; }
 
     }
 }
