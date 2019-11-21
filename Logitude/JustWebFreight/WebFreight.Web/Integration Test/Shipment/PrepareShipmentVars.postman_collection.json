@@ -6250,7 +6250,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{LogitudeURL}}/api/vesselviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=VesselIdPT&PageSize=23",
+					"raw": "{{LogitudeURL}}/api/vesselviews/getbyfilters?Filter1Name=Code&Filter1Operator=Contains&Filter1Value=VPT&PageSize=23",
 					"host": [
 						"{{LogitudeURL}}"
 					],
@@ -6262,7 +6262,7 @@
 					"query": [
 						{
 							"key": "Filter1Name",
-							"value": "SearchFields"
+							"value": "Code"
 						},
 						{
 							"key": "Filter1Operator",
@@ -6270,7 +6270,7 @@
 						},
 						{
 							"key": "Filter1Value",
-							"value": "VesselIdPT"
+							"value": "VPT"
 						},
 						{
 							"key": "PageSize",
