@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "477150ed-eeb9-4a4a-9d84-e3be621ffa77",
+		"_postman_id": "4548901b-f9a1-4312-882f-de13a8eafb41",
 		"name": "PrepareShipmentVars",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -6326,7 +6326,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"$id\": \"1\",\n  \"Tenant\": {{Tenant}},\n  \"IsSecured\": false,\n  \"Code\": null,\n  \"EnglishName\": \"VesselIdPT \",\n  \"LocalName\": \"VesselIdPT\",\n  \"Notes\": null,\n  \"ComputedLocalName\": null,\n  \"AddedManually\": true,\n  \"InActive\": false,\n  \"SearchFields\": null,\n  \"IsHybrid\": false,\n  \"IMOCode\": \"IMOCode PT\",\n  \"CountryId\": null\n}"
+					"raw": "{\n  \"$id\": \"1\",\n  \"Tenant\": {{Tenant}},\n  \"IsSecured\": false,\n  \"Code\": \"VPT\",\n  \"EnglishName\": \"VesselIdPT \",\n  \"LocalName\": \"VesselIdPT\",\n  \"Notes\": null,\n  \"ComputedLocalName\": null,\n  \"AddedManually\": true,\n  \"InActive\": false,\n  \"SearchFields\": null,\n  \"IsHybrid\": false,\n  \"IMOCode\": \"IMOCode PT\",\n  \"CountryId\": null\n}"
 				},
 				"url": "{{LogitudeURL}}/api/vessels"
 			},
