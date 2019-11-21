@@ -78,6 +78,7 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public bool IsExternalEntity { get; set; }
         public bool IsGeneralInvoice { get; set; }
         public DateTime? FirstApproveDate { get; set; }
-
+        public string VendorCity { get; set; }
+        public string VendorCountry { get; set; }
     }
 }
