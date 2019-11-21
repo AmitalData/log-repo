@@ -872,7 +872,7 @@ namespace WebFreight.Web.WebServices
                                 myResult = myResult + Environment.NewLine + (consigneeNotImporterAddress.PhoneNumber != null ? "Tel: " + consigneeNotImporterAddress.PhoneNumber + " " : "") + (consigneeNotImporterAddress.FaxNumber != null ? "Fax: " + consigneeNotImporterAddress.FaxNumber + " " : "");
                             }
 
-                            myDataProvider.ConsigneeAddress_WithName = DataProviders.General.GetAddressWithName(consigneeNotImporterAddress);
+                           
                         }
                     }
 
@@ -902,7 +902,9 @@ namespace WebFreight.Web.WebServices
                             {
                                 myResult = myResult + Environment.NewLine + (myConsigneePartnerAddress.PhoneNumber != null ? "Tel: " + myConsigneePartnerAddress.PhoneNumber + " " : "") + (myConsigneePartnerAddress.FaxNumber != null ? "Fax: " + myConsigneePartnerAddress.FaxNumber + " " : "");
                             }
+                            myDataProvider.ConsigneeAddress_WithName = DataProviders.General.GetAddressWithName(myConsigneePartnerAddress);
                         }
+
                     }
 
                     myDataProvider.ConsigneeAddress = myResult;
