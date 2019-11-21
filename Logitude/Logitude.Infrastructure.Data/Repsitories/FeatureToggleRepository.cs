@@ -20,7 +20,7 @@ namespace Logitude.Infrastructure.Data.Repsitories
         public IQueryable<FeatureToggle> GetAllByToggleCodeList(List<string> toggleCodes, int tenant)
         {
             return from a in context.FeatureToggles
-                   where a.Tenant == tenant && toggleCodes.Contains(a.ToggleCode)
+                   where a.Tenant == tenant && !a.Inactive && toggleCodes.Contains(a.ToggleCode)
                    select a;
         }
 
