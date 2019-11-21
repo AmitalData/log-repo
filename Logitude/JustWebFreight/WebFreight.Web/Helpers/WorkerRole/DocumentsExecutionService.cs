@@ -43,7 +43,7 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
                 if (queueService != null && queueResponse!=null)
                 {
                     documentsExecutionLog = GetDocumentsExecutionLog();
-                    if (documentsExecutionLog != null && (documentsExecutionLog.StatusCode != "D" || documentsExecutionLog.StatusCode != "F"))
+                    if (documentsExecutionLog != null && (documentsExecutionLog.StatusCode == "W" || documentsExecutionLog.StatusCode == "P"))
                     {
                         UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { StartDate = startDate, StatusCode = "P" });
                         ExportStimulDocumentToPDF();
