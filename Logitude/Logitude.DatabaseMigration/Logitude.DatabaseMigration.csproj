@@ -1642,8 +1642,6 @@
     <Compile Include="Migrations\201910230530223_addINTTRAUpdatesShipment.Designer.cs">
       <DependentUpon>201910230530223_addINTTRAUpdatesShipment.cs</DependentUpon>
     </Compile>
-
-
     <Compile Include="Migrations\201911171621078_NewTable_ExternalPageAdditionalData.cs" />
     <Compile Include="Migrations\201911171621078_NewTable_ExternalPageAdditionalData.Designer.cs">
       <DependentUpon>201911171621078_NewTable_ExternalPageAdditionalData.cs</DependentUpon>
@@ -1651,6 +1649,10 @@
     <Compile Include="Migrations\201911150824004_AddINTTRABookingFieldsToShipment_Maheera.cs" />
     <Compile Include="Migrations\201911150824004_AddINTTRABookingFieldsToShipment_Maheera.Designer.cs">
       <DependentUpon>201911150824004_AddINTTRABookingFieldsToShipment_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911200900337_oibjectfield_fiedcode.cs" />
+    <Compile Include="Migrations\201911200900337_oibjectfield_fiedcode.Designer.cs">
+      <DependentUpon>201911200900337_oibjectfield_fiedcode.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
@@ -2822,16 +2824,17 @@
     <EmbeddedResource Include="Migrations\201910201427034_UpdateField_JournalLine_Length2.resx">
       <DependentUpon>201910201427034_UpdateField_JournalLine_Length2.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\201910230530223_addINTTRAUpdatesShipment.resx">
       <DependentUpon>201910230530223_addINTTRAUpdatesShipment.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\201911171621078_NewTable_ExternalPageAdditionalData.resx">
       <DependentUpon>201911171621078_NewTable_ExternalPageAdditionalData.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911150824004_AddINTTRABookingFieldsToShipment_Maheera.resx">
       <DependentUpon>201911150824004_AddINTTRABookingFieldsToShipment_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911200900337_oibjectfield_fiedcode.resx">
+      <DependentUpon>201911200900337_oibjectfield_fiedcode.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -88,6 +88,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 tenant = theEntityPm.Tenant;
                 string ObjectTableId = theEntityPm.ObjectTableId;
                 ObjectTable ObjectTable = objectTableRepository.GetObjects().Where(o => o.Id == ObjectTableId).FirstOrDefault();
+               
 
                 List<ObjectField> list = entityRepository.GetObjectFieldsByTenant(tenant).Where(o => o.ObjectTableId == ObjectTableId && o.IsCustom == true).ToList<ObjectField>();
 
@@ -152,6 +153,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
                     string fieldname = "Field" + (count + 1).ToString();
                     theEntityPm.FieldName = fieldname;
+                    theEntityPm.FieldCode = ObjectTable.Name +"." + tenant.ToString() +  "." + theEntityPm.FieldCode;
                     theEntityPm.PMPropertyPath = fieldname;
                     theEntityPm.ListPropertyPath = fieldname;
                     theEntityPm.DisplayInList = true;
