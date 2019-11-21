@@ -50,7 +50,7 @@ export class QuoteSettingsComponent extends BaseComponent {
                     else {
                         this.selectedSaleCurrencySetting = this.SaleCurrencySettings.filter(f => f.Code == "F")[0];
                     }
-
+                    
                     this.IsResourcesReady = true;
                 }
             });
@@ -148,6 +148,13 @@ export class QuoteSettingsComponent extends BaseComponent {
         }
     }
 
+    get AutomaticallyCloseDays() { return this.EntityPM.AutomaticallyCloseDays; }
+    set AutomaticallyCloseDays(value: number) {
+        if (this.EntityPM.AutomaticallyCloseDays != value) {
+            this.EntityPM.AutomaticallyCloseDays = value;
+        }
+    }
+
     private selectedSaleCurrencySetting: CodeNameClass;
     get SelectedSaleCurrencySetting() { return this.selectedSaleCurrencySetting; }
     set SelectedSaleCurrencySetting(value: CodeNameClass) {
@@ -176,6 +183,14 @@ export class QuoteSettingsComponent extends BaseComponent {
 
         if (isAnyOptionChecked == false) {
             errors.push("One Option at least  should be selected");
+        }
+
+        if (this.AutomaticallyCloseDays == 0) {
+            errors.push("Automatically Close Days field should not be Zero");
+        }
+
+        if (this.AutomaticallyCloseDays == null) {
+            errors.push("Automatically Close Days field is required");
         }
 
         this.ValidationErrorsList = errors;
