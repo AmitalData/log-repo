@@ -30,11 +30,13 @@ namespace Logitude.HybridTest.WcfCallers
                 {
                     ServiceName = "CustomAgent",
                     ServiceOperation = "Upsert",
+                    ServiceType = typeof(CustomAgentPM),
+                    ServiceFilterType = null,
                 };
 
                 Response serviceResponse = new Response();
                 object[] serviceParameters = new object[] { entityPM, false };
-                WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, typeof(CustomAgentPM), ref serviceResponse);
+                WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
                 if (serviceResponse.Result != null)
                     HybridData.CustomAgentId = serviceResponse.Result;
                 return serviceResponse;

@@ -30,11 +30,13 @@ namespace Logitude.HybridTest.WcfCallers
                 {
                     ServiceName = "Trucker",
                     ServiceOperation = "Upsert",
+                    ServiceType = typeof(TruckerPM),
+                    ServiceFilterType = null,
                 };
 
                 Response serviceResponse = new Response();
                 object[] serviceParameters = new object[] { entityPM, false };
-                WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, typeof(TruckerPM), ref serviceResponse);
+                WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
                 if (serviceResponse.Result != null)
                     HybridData.TruckerId = serviceResponse.Result;
                 return serviceResponse;

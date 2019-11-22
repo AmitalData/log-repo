@@ -24,11 +24,13 @@ namespace Logitude.HybridTest.WcfCallers
             {
                 ServiceName = "Branch",
                 ServiceOperation = "Upsert",
+                ServiceType = typeof(BranchPM),
+                ServiceFilterType = null,
             };
 
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { entityPM, false };
-            WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, typeof(BranchPM), ref serviceResponse);
+            WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             if(serviceResponse.Result != null)
                 HybridData.BranchId = serviceResponse.Result;
             return serviceResponse;

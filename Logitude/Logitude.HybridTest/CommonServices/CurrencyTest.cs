@@ -31,6 +31,8 @@ namespace Logitude.HybridTest.CommonServices
                 ServiceName = "Currency",
                 ServiceOperation = "GetList",
                 ServiceResponseIndex = 2,
+                ServiceType = typeof(CurrencyList),
+                ServiceFilterType = typeof(ApiSearchFilters),
             };
             ApiSearchFilters filters = new ApiSearchFilters
             {
@@ -40,7 +42,7 @@ namespace Logitude.HybridTest.CommonServices
 
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { filters, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
-            CurrencyList[] currencies = (CurrencyList[]) WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, typeof(CurrencyList), ref serviceResponse);
+            CurrencyList[] currencies = (CurrencyList[]) WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);
             Assert.IsTrue(CheckResult(currencies), "Get Hybrid Currency Item From Currencies Failed!");

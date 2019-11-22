@@ -24,11 +24,13 @@ namespace Logitude.HybridTest.WcfCallers
             {
                 ServiceName = "GlobalZone",
                 ServiceOperation = "Upsert",
+                ServiceType = typeof(GlobalZonePM),
+                ServiceFilterType = null,
             };
 
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { entityPM, false };
-            WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, typeof(GlobalZonePM), ref serviceResponse);
+            WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             if(serviceResponse.Result != null)
                 HybridData.GlobalZoneId = serviceResponse.Result;
             return serviceResponse;

@@ -17,11 +17,13 @@ namespace Logitude.HybridTest.CommonServices
                 ServiceName = "Role",
                 ServiceOperation = "GetRoles",
                 ServiceResponseIndex = 1,
+                ServiceType = typeof(RoleList),
+                ServiceFilterType = null,
             };
 
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { TestEnvironmentGlobalParameters.Tenant, serviceResponse };
-            RoleList[] roles = (RoleList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, typeof(RoleList), ref serviceResponse);
+            RoleList[] roles = (RoleList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);
             if(roles.Length == 0)

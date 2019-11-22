@@ -327,6 +327,8 @@
     <Compile Include="WcfCallers\AccountingPartnerWcfCaller.cs" />
     <Compile Include="WcfCallers\SpecialServicesTypeWcfCaller.cs" />
     <Compile Include="WcfCallers\StateWcfCaller.cs" />
+    <Compile Include="WcfCallers\PortWcfCaller.cs" />
+    <Compile Include="WcfCallers\UserWcfCaller.cs" />
     <Compile Include="WcfCallers\TruckerWcfCaller.cs" />
     <Compile Include="WcfCallers\CustomAgentWcfCaller.cs" />
     <Compile Include="WcfCallers\ShippingLineWcfCaller.cs" />

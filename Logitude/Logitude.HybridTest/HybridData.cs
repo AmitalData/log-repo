@@ -57,5 +57,8 @@ namespace Logitude.HybridTest
         public static string AirlineId { get; set; }
         public static string AccountingPartnerId { get; set; }
         public static string AgentId { get; set; }
+        public static string UserId { get; set; }
+        public static string FromPortId { get; set; }
+        public static string ToPortId { get; set; }
     }
 }

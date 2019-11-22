@@ -29,11 +29,13 @@ namespace Logitude.HybridTest.CommonServices
                 ServiceName = "City",
                 ServiceOperation = "GetCityListByCode",
                 ServiceResponseIndex = 3,
+                ServiceType = typeof(CountryCityList),
+                ServiceFilterType = null,
             };
 
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { HybridData.CityCode, HybridData.CountryCode, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
-            CountryCityList city = (CountryCityList)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, typeof(CountryCityList), ref serviceResponse);
+            CountryCityList city = (CountryCityList)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);
             Assert.IsTrue(CheckResult(city), "Get Hybrid City Failed!");

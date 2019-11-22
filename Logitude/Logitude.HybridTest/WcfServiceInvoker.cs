@@ -1,4 +1,5 @@
-﻿using Logitude.Server.Tools;
+﻿using Logitude.HybridTest.UserServiceReference;
+using Logitude.Server.Tools;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
@@ -15,12 +16,12 @@ namespace Logitude.HybridTest
 {
     class WcfServiceInvoker
     {
-        public static object InvokeServiceMethod(InvokedProperties serviceProperties,object[] serviceParameters, Type entityType, ref Response response)
+        public static object InvokeServiceMethod(InvokedProperties serviceProperties,object[] serviceParameters, ref Response response)
         {
             try
             {
                 //Import all contracts and endpoints
-                object serviceClient = ResolveServiceClient(serviceProperties, entityType);
+                object serviceClient = ResolveServiceClient(serviceProperties);
                 var wcfService = serviceClient.GetType().GetMethod(serviceProperties.ServiceOperation);
                 var innerChannel = (IClientChannel)serviceClient.GetType().GetProperty("InnerChannel").GetValue(serviceClient, null);
                 using (new OperationContextScope(innerChannel))
@@ -46,9 +47,9 @@ namespace Logitude.HybridTest
             }
         }
 
-        private static object ResolveServiceClient(InvokedProperties serviceProperties, Type entityType)
+        private static object ResolveServiceClient(InvokedProperties serviceProperties)
         {
-            WsdlImporter importer = ImportContractsAndEndPoints(serviceProperties, entityType);
+            WsdlImporter importer = ImportContractsAndEndPoints(serviceProperties);
             var contracts = importer.ImportAllContracts();
             ServiceEndpointCollection allEndpoints = importer.ImportAllEndpoints();
 
@@ -69,7 +70,7 @@ namespace Logitude.HybridTest
             return serviceClient;
         }
 
-        private static WsdlImporter ImportContractsAndEndPoints(InvokedProperties serviceProperties, Type entityType)
+        private static WsdlImporter ImportContractsAndEndPoints(InvokedProperties serviceProperties)
         {
             Uri mexAddress = new Uri(TestEnvironmentGlobalParameters.ServerURL + "/WcfApi/" + serviceProperties.ServiceName + "WcfService.svc?wsdl");
             MetadataExchangeClientMode mexMode = MetadataExchangeClientMode.HttpGet;
@@ -88,9 +89,10 @@ namespace Logitude.HybridTest
             };
             xsd.Options.ImportXmlType = true;
             xsd.Options.GenerateSerializable = true;
-            xsd.Options.ReferencedTypes.Add(entityType); 
+            xsd.Options.ReferencedTypes.Add(serviceProperties.ServiceType);
             xsd.Options.ReferencedTypes.Add(typeof(Response));
-            xsd.Options.ReferencedTypes.Add(typeof(ApiSearchFilters));
+            if(serviceProperties.ServiceFilterType != null)
+                xsd.Options.ReferencedTypes.Add(serviceProperties.ServiceFilterType);
 
             importer.State.Add(typeof(XsdDataContractImporter), xsd);
             return importer;
@@ -141,5 +143,7 @@ namespace Logitude.HybridTest
         public string ServiceName { get; set; }
         public string ServiceOperation { get; set; }
         public int ServiceResponseIndex { get; set; }
+        public Type ServiceType { get; set; }
+        public Type ServiceFilterType { get; set; }
     }
 }

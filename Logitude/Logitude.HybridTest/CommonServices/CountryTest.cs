@@ -29,6 +29,8 @@ namespace Logitude.HybridTest.CommonServices
                 ServiceName = "Country",
                 ServiceOperation = "GetList",
                 ServiceResponseIndex = 2,
+                ServiceType = typeof(CountryList),
+                ServiceFilterType = typeof(ApiSearchFilters),
             };
             ApiSearchFilters filters = new ApiSearchFilters
             {
@@ -38,7 +40,7 @@ namespace Logitude.HybridTest.CommonServices
 
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { filters, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
-            CountryList[] countries = (CountryList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, typeof(CountryList), ref serviceResponse);
+            CountryList[] countries = (CountryList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);
             Assert.IsTrue(CheckResult(countries), "Get Hybrid Country Item From Countries Failed!");

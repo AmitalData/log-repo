@@ -17,11 +17,13 @@ namespace Logitude.HybridTest.CommonServices
                 ServiceName = "ShipmenFollowerst",
                 ServiceOperation = "GetShipmentFollowersByShipmentNumber",
                 ServiceResponseIndex = 2,
+                ServiceType = typeof(ContactList),
+                ServiceFilterType = null,
             };
 
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { "Hybrid Shipment", TestEnvironmentGlobalParameters.Tenant, serviceResponse };
-            ContactList[] contacts = (ContactList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, typeof(ContactList), ref serviceResponse);
+            ContactList[] contacts = (ContactList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get Shipment Followers By Shipment Number Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get Shipment Followers By Shipment Number Failed! " + serviceResponse.ErrorMessage);
             if (contacts.Length == 0)
