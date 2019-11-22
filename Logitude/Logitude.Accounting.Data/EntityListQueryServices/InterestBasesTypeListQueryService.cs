@@ -55,8 +55,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
 		private IQueryable<InterestBasesType> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<InterestBasesType> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
-		}
+            return iQueryable;
+        }
 				private IQueryable<InterestBasesType> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<InterestBasesType> iQueryable, int tenant)
         {
 			return iQueryable;

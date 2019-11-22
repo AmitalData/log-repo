@@ -126,6 +126,10 @@ import { OpenFormatReportMenuButtonsHandler } from './Components/MenuButtons/Ope
 import { AccountingIntegrityCheckPMService } from './Services/StandardPMs/AccountingIntegrityCheckPMService';
 import { ExternalPageAdditionalDataListService } from './Services/StandardLists/ExternalPageAdditionalDataListService';
 import { ExternalPageAdditionalDataPMService } from './Services/StandardPMs/ExternalPageAdditionalDataPMService';
+import { InterestBasesPeriodListService } from './Services/StandardLists/InterestBasesPeriodListService';
+import { InterestBasesTypeListService } from './Services/StandardLists/InterestBasesTypeListService';
+import { InterestBasesPeriodPMService } from './Services/StandardPMs/InterestBasesPeriodPMService';
+import { InterestBasesTypePMService } from './Services/StandardPMs/InterestBasesTypePMService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -228,6 +232,11 @@ export class ModuleProviders {
             case "TaxDeductionReportStatusListService": { myResult = new TaxDeductionReportStatusListService(); break; }
             case "OpenFormatReportStatusListService": { myResult = new OpenFormatReportStatusListService(); break; }
             case "ExternalPageAdditionalDataListService": { myResult = new ExternalPageAdditionalDataListService(); break; }
+            case "InterestBasesPeriodListService": { myResult = new InterestBasesPeriodListService(); break; }
+            case "InterestBasesTypeListService": { myResult = new InterestBasesTypeListService(); break; }
+            case "InterestBasesPeriodPMService": { myResult = new InterestBasesPeriodPMService(); break; }
+            case "InterestBasesTypePMService": { myResult = new InterestBasesTypePMService(); break; }
+
             //#endregion
 
             //Extend Services
