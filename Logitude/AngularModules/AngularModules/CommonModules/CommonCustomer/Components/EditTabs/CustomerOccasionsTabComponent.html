@@ -5,6 +5,18 @@
             <td>{{'Customer.TH.Occasions' | TextCodeTranslationPipe}}</td>
         </tr>
 
+        <tr style="height: 1px;">
+            <td>
+                <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
+            </td>
+        </tr>
+
+        <tr style="height: 5px;">
+            <td>
+                <div></div>
+            </td>
+        </tr>
+
         <tr>
             <td>
                 <div class="MediaFill">
@@ -56,11 +68,11 @@
                                     <td class="GridViewCell">
                                         <div class="MediaFill TextTrimming" style="line-height: 23px;">
                                             {{item.Location}}
-                                        </div>                                        
+                                        </div>
                                     </td>
 
                                     <td class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px;">
-                                        <Hyperlink (click)="ShowOccasionClicked(item)">view</Hyperlink>                                        
+                                        <Hyperlink (click)="ShowOccasionClicked(item)">view</Hyperlink>
                                     </td>
                                 </tr>
 
