@@ -11,38 +11,30 @@ namespace Logitude.IntegrationTest.Core.Login
 {
     public class LoginService
     {
-        public static async Task<string> GetLoginTokenByUserEmailAndTenant(string email,string password)
+        public static async Task<string> GetLoginTokenByUserEmailAndTenant(string email, string password)
         {
             int tenant = IntegrationTestLoginParameters.Tenant;
             var token = IntegrationTestLoginParameters.Token;
             if (string.IsNullOrEmpty(IntegrationTestLoginParameters.Token))
             {
-                using (var client = new HttpClient())
+                LoginParameters loginParameters = new LoginParameters()
                 {
+                    Email = email,
+                    Password = password,
+                    ByToken = false,
+                    CardId = null,
+                    CardType = null,
+                    IsMobileLogin = false,
+                    IsUser = true,
+                    GetToken = true,
+                    IsAngularLogin = true,
+                    ClientType = "Web",
+                };
 
-                    LoginParameters loginParameters = new LoginParameters()
-                    {
-                        Email = email,
-                        Password = password,
-                        ByToken = false,
-                        CardId = null,
-                        CardType = null,
-                        IsMobileLogin = false,
-                        IsUser = true,
-                        GetToken = true,
-                        IsAngularLogin = true,
-                        ClientType = "Web",
-                    };
-
-                    string AuthURI = IntegrationTestLoginParameters.ServerURL + "api/" + "Authentication";
-                    var serializedObject = JsonConvert.SerializeObject(loginParameters);
-                    var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-                    var result = await client.PostAsync(AuthURI, content);
-                    var stringResult = result.Content.ReadAsStringAsync().Result;
-                    UserData userData = JsonConvert.DeserializeObject<UserData>(stringResult) ;
-                    IntegrationTestLoginParameters.Token = token =userData.Token;
-                }
-
+                HttpResponseMessage httpResponseMessage = await RestClientService.PostAsync(loginParameters, "Authentication");
+                var stringResult = httpResponseMessage.Content.ReadAsStringAsync().Result;
+                UserData userData = JsonConvert.DeserializeObject<UserData>(stringResult);
+                IntegrationTestLoginParameters.Token = token = userData.Token;
             }
             return token;
         }
