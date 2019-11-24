@@ -43,7 +43,10 @@ namespace WebFreight.Web
             try
             {
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
-
+                if (!oauth_callback_url.Contains("https"))
+                {
+                    oauth_callback_url = oauth_callback_url.Replace("http", "https");
+                }
                 if (Request.QueryString.Count > 0)
                 {
                     queryKeys = new List<string>(Request.QueryString.AllKeys);
