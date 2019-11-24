@@ -39,6 +39,7 @@
     <Content Include="Accounting\Components\EditTabs\GLAccount\GLAccountSearchWindowComponent.html" />
     <Content Include="Accounting\Components\EditTabs\GLAccount\GLAccountTaxWithholdingTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\GLAccount\NewConnectedGLAccountComponent.html" />
+    <Content Include="Accounting\Components\EditTabs\Interest\DetailsTab\InterestBasesTypeDetailsTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\OpenFormatReport\OpenFormatReportLogTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\PaymentCheque\PaymentChequeGeneralTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\ExternalReconciliation\ExternalRecoDetailsTabComponent.html" />
@@ -78,6 +79,7 @@
     <Content Include="Accounting\Components\Maintenance\NewTaxWithholdingAssessingOfficeComponent.html" />
     <Content Include="Accounting\Components\NewEntity\AddEditRecoExPageComponent.html" />
     <Content Include="Accounting\Components\NewEntity\LoadRecoExPageComponent.html" />
+    <Content Include="Accounting\Components\NewEntity\NewInterestBasesTypeComponent.html" />
     <Content Include="Accounting\Components\NewEntity\NewBankDepositComponent.html" />
     <Content Include="Accounting\Components\NewEntity\NewCashBookComponent.html" />
     <Content Include="Accounting\Components\NewEntity\NewBankCodeComponent.html" />
@@ -101,6 +103,7 @@
     <Content Include="Accounting\Components\Others\ReconcileComponent.html" />
     <Content Include="Accounting\Components\ShortTitles\BankAccountShortTitleComponent.html" />
     <Content Include="Accounting\Components\ShortTitles\BankDepositShortTitleComponent.html" />
+    <Content Include="Accounting\Components\ShortTitles\InterestBasesTypeShortTitleComponent.html" />
     <Content Include="Accounting\Components\ShortTitles\TaxReportShortTitleComponent.html" />
     <Content Include="Accounting\Components\ShortTitles\GLAccountShortTitleComponent.html" />
     <Content Include="Accounting\Components\ShortTitles\ExternalReconciliationShortTitleComponent.html" />
@@ -108,6 +111,7 @@
     <Content Include="Accounting\Components\ShortTitles\PaymentChequeShortTitleComponent.html" />
     <Content Include="Accounting\Components\Templates\FieldTemplateComponent.html" />
     <Content Include="Accounting\Components\Workspaces\GLAccounts\GLAccountsPageComponent.html" />
+    <Content Include="Accounting\Components\Workspaces\Interest\InterestPageComponent.html" />
     <Content Include="Booking\Components\BookingWizard\NoRemainingStockComponent.html" />
     <Content Include="CommonModules\CommonAgent\Components\NewEntity\NewAgentComponent.html" />
     <Content Include="CommonModules\CommonAirline\Components\AddEdit\AddEditAirlineAreaComponent.html" />
@@ -116,6 +120,7 @@
     <Content Include="CommonModules\CommonAirline\Components\EditTabs\AirlineDocsInTabComponent.html" />
     <Content Include="CommonModules\CommonAirline\Components\EditTabs\AirlineGeneralTabComponent.html" />
     <Content Include="CommonModules\CommonAirline\Components\EditTabs\AreasTabComponent.html" />
+    <Content Include="CommonModules\CommonCustomer\Components\EditTabs\CustomerOccasionsTabComponent.html" />
     <Content Include="CommonModules\CommonCustomer\Components\EditTabs\MoreButtons\CustomerCustomsAgentByProductSplitComponent.html" />
     <Content Include="CommonModules\CommonCustomer\Components\EditTabs\MoreButtons\CustomerForwarderByProductSplitComponent.html" />
     <Content Include="CommonModules\CommonCustomer\Components\EditTabs\MoreButtons\CustomerMediatorByProductSplitComponent.html" />
@@ -398,6 +403,7 @@
     <TypeScriptCompile Include="Accounting\Components\EditTabs\AccountingIntegrityCheck\IntegrityCheckTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\BankAccount\BankPageEventsComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\BankCode\BankCodeGeneralTabComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\EditTabs\Interest\DetailsTab\InterestBasesTypeDetailsTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\OpenFormatReport\OpenFormatReportLogTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\TaxDeductionReport\TaxDeductionReportGeneralTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\TaxDeductionReport\TaxDeductionReportLogTabComponent.ts" />
@@ -407,14 +413,18 @@
     <TypeScriptCompile Include="Accounting\Components\Maintenance\FullAccountingAddControlComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Maintenance\Generate1000Component.ts" />
     <TypeScriptCompile Include="Accounting\Components\Maintenance\Receiving1000Component.ts" />
+    <TypeScriptCompile Include="Accounting\Components\MenuButtons\InterestBasesTypeMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Accounting\Components\MenuButtons\OpenFormatReportMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Accounting\Components\MenuButtons\TaxDeductionReportMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Accounting\Components\NewEntity\LoadRecoExPageComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\NewEntity\NewInterestBasesTypeComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\NewEntity\NewIntegrityCheckComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\NewEntity\NewOpenFormatReportComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\AccountingNoteComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\ExtReconcileAdjustBankFeeComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\ShortTitles\InterestBasesTypeShortTitleComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Workspaces\GLAccounts\GLAccountsPageComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\Workspaces\Interest\InterestPageComponent.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\AccountingIntegrityCheckList.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\IntegrityCheckStatusList.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\JournalAdditionalDataList.ts" />
@@ -430,10 +440,14 @@
     <TypeScriptCompile Include="Accounting\Services\ExtendedPMs\TaxDeductionReportExtendedPMService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardLists\AccountingIntegrityCheckListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardLists\IntegrityCheckStatusListService.ts" />
+    <TypeScriptCompile Include="Accounting\Services\StandardLists\InterestBasesPeriodListService.ts" />
+    <TypeScriptCompile Include="Accounting\Services\StandardLists\InterestBasesTypeListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardLists\JournalAdditionalDataListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardLists\OpenFormatReportListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardLists\OpenFormatReportStatusListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\AccountingIntegrityCheckPMService.ts" />
+    <TypeScriptCompile Include="Accounting\Services\StandardPMs\InterestBasesPeriodPMService.ts" />
+    <TypeScriptCompile Include="Accounting\Services\StandardPMs\InterestBasesTypePMService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\JournalAdditionalDataPMService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\OpenFormatReportPMService.ts" />
     <TypeScriptCompile Include="Accounting\Validators\PaymentChequeValidator.ts" />
@@ -443,6 +457,7 @@
     <TypeScriptCompile Include="CommonModules\CommonAirline\Components\EditTabs\AirlineDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonAirline\Components\EditTabs\AirlineGeneralTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonAirline\Components\EditTabs\AreasTabComponent.ts" />
+    <TypeScriptCompile Include="CommonModules\CommonCustomer\Components\EditTabs\CustomerOccasionsTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonOthers\Components\Depositions\EditTab\CustomsShipperGeneralTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWQueryBuilderFiltersComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWFilterSettings.ts" />

@@ -155,12 +155,14 @@ export class InvoiceTool {
             invoicePartners.push(new InvoicePartnerType("SL", "SL", "Shipping line"));
             invoicePartners.push(new InvoicePartnerType("TR", "TR", "Trucker"));
             invoicePartners.push(new InvoicePartnerType("VD", "VD", "Vendor"));
+            invoicePartners.push(new InvoicePartnerType("AC", "AC", "Accounting Partner"));
+
         }
 
         return invoicePartners;
     }
     public static GetBillToPartnerTypes() {
-        return "CS,AG,AL,CG,SG,SL,TR,VD,WH";
+        return "CS,AG,AL,CG,SG,SL,TR,VD,WH,AC";
     }
     public static GetVendorPartnerTypes() {
         return "AG,AL,CG,SG,SL,TR,VD,WH";

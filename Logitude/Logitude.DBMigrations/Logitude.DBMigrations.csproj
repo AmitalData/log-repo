@@ -48,7 +48,7 @@
     <Compile Include="Helpers\AppHelper.cs" />
     <Compile Include="Models\ColumnDefinition.cs" />
     <Compile Include="Models\ColumnMigration.cs" />
-    <Compile Include="Models\ColumnMigrationsDefinition.cs" />
+    <Compile Include="Models\ColumnMigrationDefinition.cs" />
     <Compile Include="Models\ConstraintsDefinition.cs" />
     <Compile Include="Models\SQLDatabaseMigrations.cs" />
     <Compile Include="Models\DatabaseMigrations.cs" />
@@ -62,9 +62,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="EntityFiles\Test.dxml" />
-    <None Include="EntityFiles\City.dxml" />
-    <None Include="EntityFiles\Package.dxml" />
-    <None Include="EntityFiles\User.dxml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="GeneratedScript\Script.sql" />

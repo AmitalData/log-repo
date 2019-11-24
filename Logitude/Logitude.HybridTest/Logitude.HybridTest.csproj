@@ -315,11 +315,43 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="HybridCodes.cs" />
+    <Compile Include="HybridData.cs" />
     <Compile Include="LoginService.cs" />
     <Compile Include="LoginTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestEnvironmentGlobalParameters .cs" />
+    <Compile Include="WcfCallers\AgentWcfCaller.cs" />
+    <Compile Include="WcfCallers\EventTypeWcfCaller.cs" />
+    <Compile Include="WcfCallers\DepartmentWcfCaller.cs" />
+    <Compile Include="WcfCallers\ShipmentWcfCaller.cs" />
+    <Compile Include="WcfCallers\ShippingAgentWcfCaller.cs" />
+    <Compile Include="WcfCallers\AccountingPartnerWcfCaller.cs" />
+    <Compile Include="WcfCallers\SpecialServicesTypeWcfCaller.cs" />
+    <Compile Include="WcfCallers\StateWcfCaller.cs" />
+    <Compile Include="WcfCallers\PortWcfCaller.cs" />
+    <Compile Include="WcfCallers\AddressWcfCaller.cs" />
+    <Compile Include="WcfCallers\CustomerWcfCaller.cs" />
+    <Compile Include="WcfCallers\QuoteWcfCaller.cs" />
+    <Compile Include="WcfCallers\CardContactWcfCaller.cs" />
+    <Compile Include="WcfCallers\UserWcfCaller.cs" />
+    <Compile Include="WcfCallers\TruckerWcfCaller.cs" />
+    <Compile Include="WcfCallers\CustomAgentWcfCaller.cs" />
+    <Compile Include="WcfCallers\ShippingLineWcfCaller.cs" />
+    <Compile Include="WcfCallers\BranchWcfCaller.cs" />
+    <Compile Include="WcfCallers\AirlineWcfCaller.cs" />
+    <Compile Include="WcfCallers\IncotermWcfCaller.cs" />
+    <Compile Include="WcfCallers\PackageTypeWcfCaller.cs" />
+    <Compile Include="WcfCallers\DocumentTypeWcfCaller.cs" />
+    <Compile Include="WcfCallers\CustomBankCardWcfCaller.cs" />
+    <Compile Include="WcfCallers\ContactWcfCaller.cs" />
+    <Compile Include="WcfCallers\ActivityWcfCaller.cs" />
+    <Compile Include="WcfCallers\VesselWcfCaller.cs" />
+    <Compile Include="WcfCallers\VendorWcfCaller.cs" />
+    <Compile Include="WcfCallers\GlobalZoneWcfCaller.cs" />
+    <Compile Include="WcfCallers\CountryWcfCaller.cs" />
+    <Compile Include="WcfCallers\CityWcfCaller.cs" />
+    <Compile Include="WcfCallers\CurrencyWcfCaller.cs" />
+    <Compile Include="WcfServiceInvoker.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -1419,21 +1451,6 @@
     <WCFMetadataStorage Include="Connected Services\VesselServiceReference\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\BranchServiceReference\BranchWcfService.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\BranchServiceReference\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\BranchServiceReference\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\BranchServiceReference\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Connected Services\AirlineServiceReference\AirlineWcfService.disco" />
   </ItemGroup>
   <ItemGroup>
@@ -2059,6 +2076,27 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\OpportunityServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
+      <Project>{a663e7ef-b858-4bb6-bc33-e473f51b8e56}</Project>
+      <Name>Logitude.BL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\BranchServiceReference\BranchWcfService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\BranchServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\BranchServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\BranchServiceReference\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

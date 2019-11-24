@@ -212,25 +212,26 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return new HashSet<string>(allIdAccounts);
         }
 
-        public HashSet<string> GetAllIdAccountsTypeCat(int tenant, string GLAccountId, string cat1, string cat2, string cat3, string cat4, string cat5, string gLAccountType, string chartOfAccountsId, 
+        public IQueryable<string> GetAllIdAccountsTypeCat(int tenant, string GLAccountId, string cat1, string cat2, string cat3, string cat4, string cat5, string gLAccountType, string chartOfAccountsId, 
     bool IncludeChildAccounts)
         {
-            List<String> allIdAccounts = new List<string>() { GLAccountId };
+           // List<String> allIdAccounts = new List<string>() { GLAccountId };
+            IQueryable<string> allIdAccounts = repository.GetQId(new List<string>() { GLAccountId }, tenant);
             if (!String.IsNullOrWhiteSpace(cat1) || !String.IsNullOrWhiteSpace(cat2) || !String.IsNullOrWhiteSpace(cat3) || !String.IsNullOrWhiteSpace(cat4)
                 || !String.IsNullOrWhiteSpace(cat5) || !String.IsNullOrWhiteSpace(gLAccountType) || !String.IsNullOrWhiteSpace(chartOfAccountsId))
             {
-                allIdAccounts = repository.GetQAccIdByAcountIdTypeCategories(tenant, GLAccountId, cat1, cat2, cat3, cat4, cat5, gLAccountType, chartOfAccountsId)
-                    .ToList();
+                allIdAccounts = repository.GetQAccIdByAcountIdTypeCategories(tenant, GLAccountId, cat1, cat2, cat3, cat4, cat5, gLAccountType, chartOfAccountsId);
+                 //   .ToList();
             }
 
-            if (IncludeChildAccounts && allIdAccounts != null && allIdAccounts.Count > 0)
+            if (IncludeChildAccounts && allIdAccounts != null && allIdAccounts.ToList().Count > 0)
             {
-                List<String> ChildAccounts = repository.GetChildAccountsList(allIdAccounts, tenant)
-                .Select(ca => ca.Id).ToList();
-                allIdAccounts.AddRange(ChildAccounts);
+                IQueryable<String> ChildAccounts = repository.GetChildAccountsQ(allIdAccounts, tenant)
+                .Select(ca => ca.Id).AsQueryable<string>();//ToList();
+                allIdAccounts.Union(ChildAccounts);
             }
 
-            return new HashSet<string>(allIdAccounts);
+            return allIdAccounts;// new HashSet<string>(allIdAccounts);
         }
 
 
@@ -328,6 +329,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
               }
             );
             return dic;
+        }
+
+        internal void SetSuppressFetchOpenReconcilation(bool suppressFetchOpenReconcilation)
+        {
+            (this.mapping as GLAccountDataMapping).SuppressFetchOpenReconcilation = suppressFetchOpenReconcilation;
         }
 
         //public bool CheckIfClientAndCurrencyExist(string clientId, string currencyId, string internalNumber, int tenant)
@@ -512,13 +518,17 @@ namespace Logitude.Accounting.BL.EntityQueryServices
        }
 
 
-        public List<GLAccountPM> GetByInternalNumber(string internalNumber, int tenant)
+        public GLAccountPM GetByInternalNumber(string internalNumber, int tenant)
         {
-          
 
-
-            List<GLAccount> pocos = this.repository.GetByInternalNumber(internalNumber, tenant);
-            return pocos.Select(rec => this.GetEntityPM(rec)).ToList();
+            var Ids = this.repository.GetIdsByInternalNumber(internalNumber, tenant);
+            if (Ids.Count==0)
+            {
+                return null;
+            }
+            return this.GetSingle(Ids.FirstOrDefault(), false,true);
+            //List<GLAccount> pocos = this.repository.GetByInternalNumber(internalNumber, tenant);
+            //return pocos.Select(rec => this.GetEntityPM(rec)).ToList();
         }
 
         public List<GLAccountPM> GetByDisplayNumber(string displayNumber, int tenant)
@@ -632,6 +642,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         }
 
         public static TaxDeductionReportData taxDeduction;
+
+        
+
         public TaxDeductionReportData GetTaxDeductionReportData(int? reportYear, int tenant)
         {
             

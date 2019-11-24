@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.HybridTest.WcfCallers;
 using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -11,64 +15,42 @@ namespace Logitude.HybridTest.CommonServices
         public void Test_Currency_UPSERT()
         {
             LoginService.GetLoginTokenByCredentials();
-            Response countryServiceResponse = CountryTest.CallCountryUpsert();
-            Assert.IsFalse(countryServiceResponse.HasError, "Country Upsert Failed! " + countryServiceResponse.ErrorMessage);
-            Assert.IsNotNull(countryServiceResponse.Result, "Country Upsert Failed! " + countryServiceResponse.ErrorMessage);
-            Response serviceResponse = CallCurrencyUpsert();
-            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            Response serviceResponse = CurrencyWcfCaller.CallCurrencyUpsert();
+            Assert.IsFalse(serviceResponse.HasError, serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
-         }
+        }
 
         [TestMethod]
         public void Test_Currency_GETLIST()
         {
-            Test_Currency_UPSERT();
-            CurrencyServiceReference.CurrencyWcfServiceClient serviceClient = new CurrencyServiceReference.CurrencyWcfServiceClient();
-            string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
-            serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
-            using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
+            LoginService.GetLoginTokenByCredentials();
+            Response prepareResponse = CurrencyWcfCaller.PrepareCurrency();
+            Assert.IsFalse(prepareResponse.HasError, "Prepare Currency Failed! " + prepareResponse.ErrorMessage);
+            InvokedProperties serviceProperties = new InvokedProperties
             {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
-                Response serviceResponse = new Response();
-                ApiSearchFilters filters = new ApiSearchFilters
-                {
-                    Take = 10,
-                    SearchFields = HybridCodes.CurrencyCode
-                };
-                CurrencyServiceReference.CurrencyList[] serviceResult = serviceClient.GetList(filters, TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
-                Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
-                Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);
-                if (serviceResult.Length != 0)
-                {
-                    string currencyCode = serviceResult[0].Code;
-                    Assert.IsTrue(currencyCode == "HCR", "Hybrid Currency Doesn't Exist!");
-                }
-                else
-                {
-                    Assert.Inconclusive("There Isn't Currency With This Code!");
-                }
-            }
+                ServiceName = "Currency",
+                ServiceOperation = "GetList",
+                ServiceResponseIndex = 2,
+                ServiceType = typeof(CurrencyList),
+                ServiceFilterType = typeof(ApiSearchFilters),
+            };
+            ApiSearchFilters filters = new ApiSearchFilters
+            {
+                Take = 10,
+                SearchFields = HybridData.CurrencyCode
+            };
+
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { filters, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
+            CurrencyList[] currencies = (CurrencyList[]) WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+            Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsTrue(CheckResult(currencies), "Get Hybrid Currency Item From Currencies Failed!");
         }
 
-        public static Response CallCurrencyUpsert()
+        public bool CheckResult(CurrencyList[] currencies)
         {
-            CurrencyServiceReference.CurrencyWcfServiceClient serviceClient = new CurrencyServiceReference.CurrencyWcfServiceClient();
-            string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
-            serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
-            using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
-            {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
-                CurrencyServiceReference.CurrencyPM entityPM = new CurrencyServiceReference.CurrencyPM()
-                {
-                    Code = HybridCodes.CurrencyCode,
-                    EnglishName = "Hybrid Currency",
-                    LocalName = "Hybrid Currency",
-                    AddedManually = true,
-                    Tenant = TestEnvironmentGlobalParameters.Tenant,
-                };
-                Response serviceResponse = serviceClient.Upsert(entityPM, false);
-                return serviceResponse;
-            }
+            return currencies[0].EnglishName == "Hybrid Currency";
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.HybridTest.WcfCallers;
 using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -11,55 +13,32 @@ namespace Logitude.HybridTest.CommonServices
         public void Test_Incoterm_UPSERT()
         {
             LoginService.GetLoginTokenByCredentials();
-            Response serviceResponse = CallIncotermUpsert();
-            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            Response serviceResponse = IncotermWcfCaller.CallIncotermUpsert();
+            Assert.IsFalse(serviceResponse.HasError, serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
         }
 
         [TestMethod]
         public void Test_Incoterm_GetIncoterms()
         {
-            IncotermServiceReference.IncotermWcfServiceClient serviceClient = new IncotermServiceReference.IncotermWcfServiceClient();
-            string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
-            serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
-            using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
+            LoginService.GetLoginTokenByCredentials();
+            Response prepareResponse = IncotermWcfCaller.PrepareIncoterm();
+            Assert.IsFalse(prepareResponse.HasError, "Prepare User Failed! " + prepareResponse.ErrorMessage);
+            InvokedProperties serviceProperties = new InvokedProperties
             {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
-                Response serviceResponse = new Response();
-                IncotermServiceReference.IncotermList[] entityList = serviceClient.GetIncoterms(ref serviceResponse);
-                Assert.IsFalse(serviceResponse.HasError, "Get Incoterms Failed! " + serviceResponse.ErrorMessage);
-                Assert.IsNull(serviceResponse.Result, "Get Incoterms Failed! " + serviceResponse.ErrorMessage);
-                if (entityList.Length != 0)
-                {
-                    //
-                }
-                else
-                {
-                    Assert.Inconclusive("There Isn't Any Incoterm!");
-                }
-            }
-        }
+                ServiceName = "Incoterm",
+                ServiceOperation = "GetIncoterms",
+                ServiceResponseIndex = 0,
+                ServiceType = typeof(IncotermList),
+            };
 
-        public static Response CallIncotermUpsert()
-        {
-            IncotermServiceReference.IncotermWcfServiceClient serviceClient = new IncotermServiceReference.IncotermWcfServiceClient();
-            string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
-            serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
-            using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
-            {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
-                IncotermServiceReference.IncotermPM entityPM = new IncotermServiceReference.IncotermPM()
-                {
-                    Code = HybridCodes.IncotermCode,
-                    Name = "Hybrid Incoterm",
-                    LocalName = "Hybrid Incoterm",
-                    Freight = "C",
-                    OtherCharges = "C",
-                    Tenant = TestEnvironmentGlobalParameters.Tenant
-                };
-                Response serviceResponse = serviceClient.Upsert(entityPM, false);
-                return serviceResponse;
-            }
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { serviceResponse };
+            IncotermList[] incoterms = (IncotermList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+            Assert.IsFalse(serviceResponse.HasError, "Get Incoterms Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsNull(serviceResponse.Result, "Get Incoterms Failed! " + serviceResponse.Result);
+            if(incoterms.Length == 0)
+                Assert.Inconclusive("There Isn't Any Incoterm!");
         }
     }
 }

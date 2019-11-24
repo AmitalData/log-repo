@@ -1,4 +1,5 @@
 ﻿using System;
+using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -11,25 +12,22 @@ namespace Logitude.HybridTest.CommonServices
         public void Test_HybridPartner_GetMislakaPartners()
         {
             LoginService.GetLoginTokenByCredentials();
-            HybridPartnerServiceReference.HybridPartnerWcfServiceClient serviceClient = new HybridPartnerServiceReference.HybridPartnerWcfServiceClient();
-            string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
-            serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
-            using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
+            InvokedProperties serviceProperties = new InvokedProperties
             {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
-                Response serviceResponse = new Response();
-                HybridPartnerServiceReference.HybridPartnerList[] entityList = serviceClient.GetMislakaPartners(TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
-                Assert.IsFalse(serviceResponse.HasError, "Get Customer Additional Services Failed! " + serviceResponse.ErrorMessage);
-                Assert.IsNull(serviceResponse.Result, "Get Mislaka Partners Failed! " + serviceResponse.ErrorMessage);
-                if (entityList.Length != 0)
-                {
-                     Assert.AreEqual(entityList[0].LocalName, "Forwarder", "Forwarder Mislaka Partner Doesn't Exist! ");
-                }
-                else
-                {
-                    Assert.Inconclusive("There Isn't Mislaka Partners!");
-                }
-            }
+                ServiceName = "HybridPartner",
+                ServiceOperation = "GetMislakaPartners",
+                ServiceResponseIndex = 1,
+                ServiceType = typeof(HybridPartnerList),
+                ServiceFilterType = null,
+            };
+
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { TestEnvironmentGlobalParameters.Tenant, serviceResponse };
+            HybridPartnerList[] customerAdditionalServices = (HybridPartnerList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+            Assert.IsFalse(serviceResponse.HasError, "Get Customer Additional Services Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsNull(serviceResponse.Result, "Get Mislaka Partners Failed! " + serviceResponse.ErrorMessage);
+            if (customerAdditionalServices.Length == 0)
+                Assert.Inconclusive("There Isn't Mislaka Partners!");
         }
     }
 }

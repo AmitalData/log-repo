@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Accounting Setting",
-			      				    Code =  "9453",
+			      				    Code =  "c425",
 			      				    Name =  "AccountingSetting",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -2841,6 +2841,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "RefreshToken",
+					  						OldFieldName =  "RefreshToken",
 					  						ObjectTableName =  "AccountingSetting",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -2860,6 +2861,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "RefreshToken",
 					  						ListPropertyPath =  "RefreshToken",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

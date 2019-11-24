@@ -144,6 +144,10 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new IntegrityCheckStatusMap());
 	
+            modelBuilder.Configurations.Add(new InterestBasesPeriodMap());
+	
+            modelBuilder.Configurations.Add(new InterestBasesTypeMap());
+	
             modelBuilder.Configurations.Add(new JournalMap());
 	
             modelBuilder.Configurations.Add(new JournalActionTypeMap());
@@ -252,6 +256,8 @@ namespace Logitude.Accounting.Data
 			modelBuilder.Entity<GLAccountTotalByMonth>().Property(x => x.ForeignAmountDebit).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<GLAccountTotalByMonth>().Property(x => x.ForeignAmountCredit).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<InterestBasesPeriod>().Property(x => x.InterestRate).HasPrecision(2, 2);
 				
 			modelBuilder.Entity<JournalLine>().Property(x => x.LocalAmount).HasPrecision(16, 2);
 				
@@ -811,6 +817,18 @@ namespace Logitude.Accounting.Data
 	 }
 	
 	 public IDbSet<IntegrityCheckStatus> IntegrityCheckStatuses 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<InterestBasesPeriod> InterestBasesPeriods 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<InterestBasesType> InterestBasesTypes 
 	 {
 	      get; set;
 	 

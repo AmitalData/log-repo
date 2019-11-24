@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "f4f2",
+			      				    Code =  "a6b3",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -127,6 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "General,Generals,,Id,",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
@@ -141,7 +142,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();
+		   List<ObjectField> GeneralObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "General").ToList();
+		       
+	      
+
+	         Screen GeneralGeneralHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "General.HeaderScreen", Name = "GeneralHeaderScreen", ObjectTableId = GeneralObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    GeneralObjectTable.HeaderScreenId = GeneralGeneralHeaderScreenScreen0.Id;
+	   		  
 
 	    }
 
@@ -2115,6 +2126,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  		   TextCode GeneralTextCode_GeneralOWarning = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.Warning", DefaultText = "Warning",LocalDefaultText = @"אזהרה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralMHOccasions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.Occasions", DefaultText = "Occasions",LocalDefaultText = @"Occasions", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_AccountingGeneralOInterest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Interest", DefaultText = "Interest",LocalDefaultText = @"ריבית", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_AccountingGeneralOInterestBases = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.InterestBases", DefaultText = "Interest Bases",LocalDefaultText = @"בסיסי ריבית", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_AccountingGeneralONewInterestBases = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.NewInterestBases", DefaultText = "New Interest Bases",LocalDefaultText = @"חדש  בסיס ריבית", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
