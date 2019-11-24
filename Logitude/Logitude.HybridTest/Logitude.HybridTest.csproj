@@ -315,11 +315,31 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="HybridCodes.cs" />
+    <Compile Include="HybridData.cs" />
     <Compile Include="LoginService.cs" />
     <Compile Include="LoginTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestEnvironmentGlobalParameters .cs" />
+    <Compile Include="WcfCallers\AgentWcfCaller.cs" />
+    <Compile Include="WcfCallers\EventTypeWcfCaller.cs" />
+    <Compile Include="WcfCallers\DepartmentWcfCaller.cs" />
+    <Compile Include="WcfCallers\ShippingAgentWcfCaller.cs" />
+    <Compile Include="WcfCallers\AccountingPartnerWcfCaller.cs" />
+    <Compile Include="WcfCallers\SpecialServicesTypeWcfCaller.cs" />
+    <Compile Include="WcfCallers\StateWcfCaller.cs" />
+    <Compile Include="WcfCallers\PortWcfCaller.cs" />
+    <Compile Include="WcfCallers\UserWcfCaller.cs" />
+    <Compile Include="WcfCallers\TruckerWcfCaller.cs" />
+    <Compile Include="WcfCallers\CustomAgentWcfCaller.cs" />
+    <Compile Include="WcfCallers\ShippingLineWcfCaller.cs" />
+    <Compile Include="WcfCallers\BranchWcfCaller.cs" />
+    <Compile Include="WcfCallers\AirlineWcfCaller.cs" />
+    <Compile Include="WcfCallers\VesselWcfCaller.cs" />
+    <Compile Include="WcfCallers\VendorWcfCaller.cs" />
+    <Compile Include="WcfCallers\GlobalZoneWcfCaller.cs" />
+    <Compile Include="WcfCallers\CountryWcfCaller.cs" />
+    <Compile Include="WcfCallers\CityWcfCaller.cs" />
+    <Compile Include="WcfCallers\CurrencyWcfCaller.cs" />
     <Compile Include="WcfServiceInvoker.cs" />
   </ItemGroup>
   <ItemGroup>

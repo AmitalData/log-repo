@@ -37,7 +37,7 @@ namespace Logitude.HybridTest.CommonServices
                     LocalName = "Hybrid Contact",
                     Email = "HybridContact@logitudeworld.com",
                     Password = "!H0",
-                    ExternalId = HybridCodes.ContactCode,
+                    ExternalId = HybridData.ContactCode,
                     Tenant = TestEnvironmentGlobalParameters.Tenant,
                 };
                 Response serviceResponse = serviceClient.Upsert(entityPM, false);
@@ -85,7 +85,7 @@ namespace Logitude.HybridTest.CommonServices
                 {
                     Take = 10,
                     ByCode = true,
-                    SearchFields = HybridCodes.ContactCode
+                    SearchFields = HybridData.ContactCode
                 };
                 ContactServiceReference.ContactList[] serviceResult = serviceClient.GetContactList(filters, TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
                 Assert.IsFalse(serviceResponse.HasError, "Get Contact PM By Email Failed! " + serviceResponse.ErrorMessage);

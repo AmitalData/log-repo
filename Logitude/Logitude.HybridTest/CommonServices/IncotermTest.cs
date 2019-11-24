@@ -50,7 +50,7 @@ namespace Logitude.HybridTest.CommonServices
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
                 IncotermServiceReference.IncotermPM entityPM = new IncotermServiceReference.IncotermPM()
                 {
-                    Code = HybridCodes.IncotermCode,
+                    Code = HybridData.IncotermCode,
                     Name = "Hybrid Incoterm",
                     LocalName = "Hybrid Incoterm",
                     Freight = "C",

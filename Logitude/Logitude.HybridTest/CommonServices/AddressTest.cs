@@ -11,9 +11,9 @@ namespace Logitude.HybridTest.CommonServices
         public void Test_Address_UPSERT()
         {
             LoginService.GetLoginTokenByCredentials();
-            Response countryServiceResponse = CountryTest.CallCountryUpsert();
-            Assert.IsFalse(countryServiceResponse.HasError, "Country Upsert Failed! " + countryServiceResponse.ErrorMessage);
-            Assert.IsNotNull(countryServiceResponse.Result, "Country Upsert Failed! " + countryServiceResponse.ErrorMessage);
+            //Response countryServiceResponse = CountryTest.CallCountryUpsert();
+            //Assert.IsFalse(countryServiceResponse.HasError, "Country Upsert Failed! " + countryServiceResponse.ErrorMessage);
+            //Assert.IsNotNull(countryServiceResponse.Result, "Country Upsert Failed! " + countryServiceResponse.ErrorMessage);
             Response customerServiceResponse = CustomerTest.CallCustomerUpsert();
             Assert.IsFalse(customerServiceResponse.HasError, "Customer Upsert Failed! " + customerServiceResponse.ErrorMessage);
             Assert.IsNotNull(customerServiceResponse.Result, "customer Upsert Failed! " + customerServiceResponse.ErrorMessage);
@@ -38,7 +38,7 @@ namespace Logitude.HybridTest.CommonServices
                 Assert.IsNull(serviceResponse.Result, "Get Address By External Id Failed! " + serviceResponse.ErrorMessage);
                 if (serviceResult != null)
                 {
-                    Assert.AreEqual(serviceResult.ExternalId, HybridCodes.AddressCode, serviceResponse.ErrorMessage);
+                    Assert.AreEqual(serviceResult.ExternalId, HybridData.AddressCode, serviceResponse.ErrorMessage);
                 }
                 else
                 {
@@ -57,13 +57,13 @@ namespace Logitude.HybridTest.CommonServices
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
                 AddressServiceReference.AddressPM entityPM = new AddressServiceReference.AddressPM()
                 {
-                    ExternalId = HybridCodes.AddressCode,
+                    ExternalId = HybridData.AddressCode,
                     Name = "Hybrid Address",
                     City = "Hybrid City",
                     AddressTypeId = "M",
                     Description = "Main Address",
-                    CountryId = HybridCodes.CountryCode,
-                    CardId = HybridCodes.CustomerCode,
+                    CountryId = HybridData.CountryCode,
+                    CardId = HybridData.CustomerCode,
                     Tenant = TestEnvironmentGlobalParameters.Tenant,
 
                 };
