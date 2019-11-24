@@ -7,15 +7,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
     public partial class GLAccountCurrencyQueryService : EntityQueryService<GLAccountCurrency, GLAccountCurrencyKeys, GLAccountCurrencyPM, GLAccountPM, GLAccountKeys>
     {
+        public List<string> GetRelatedCurrenciesAccountCurrencyId(int tenant, string GLAccountId)
+        {
+            return this.repository.GetQRelatedCurrenciesAccountByCustomerGLAccountActive(tenant, GLAccountId).Select(r => r.CurrencyId).ToList();
+        }
         public List<GLAccountCurrencyPM> GetRelatedCurrenciesAccount(int tenant, string GLAccountId)
         {
-            var pocos= this.repository.GetRelatedCurrenciesAccountByCustomerGLAccountActive(tenant, GLAccountId);
-            return pocos.Select(r => this.GetEntityPM(r)).ToList();
+            string key = $"GetRelatedCurrenciesAccount({tenant}, {GLAccountId})";
+            return CacheManager.GetOrInsertNewObject<List<GLAccountCurrencyPM>>(key, () =>
+            {
+                var pocos = this.repository.GetRelatedCurrenciesAccountByCustomerGLAccountActive(tenant, GLAccountId);
+                return pocos.Select(r => this.GetEntityPM(r, false)).ToList();
+            });
+            
 
         }
 
