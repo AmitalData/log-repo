@@ -667,4 +667,25 @@ export class CourierMasterService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
+
+
+    GetIfAllowToCancelCourierMaster(CourierMasterId) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        var callTime = new Date();
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetIfAllowToCancelCourierMaster?' + 'CourierMasterId=' + CourierMasterId, {
+                headers: authHeader
+            }).map(response => {
+ 
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = response.json();
+
+                return serviceResponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+
+    }
 }

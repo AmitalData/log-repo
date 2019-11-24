@@ -9,11 +9,64 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Logitude.CustomsMessaging.Common.ResponseData;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
     public partial  class CourierMasterQueryService 
     {
+
+        public string CheckIfAllowToCancelCourierMaster(int tenant, string courierMasterId)
+        {
+            if (GetRequestInProgress(tenant, courierMasterId)) return    "INVALID_INPROGRESS";
+            if (CheckIfDecPayedFromCourierMaster(tenant, courierMasterId)) return "INVALID_PAYED";
+            return "";
+        }
+
+
+        public bool CheckIfDecPayedFromCourierMaster(int tenant, string courierMasterId)
+        {
+            //var courierDeclarationRepository = new CourierDeclarationRepository(this.context);
+            var declarationRepository = new DeclarationRepository(this.context);
+
+           // var qGetByCourierMasterId = courierDeclarationRepository.GetByCourierMasterId(tenant, courierMasterId);
+
+            return   declarationRepository.GetCourierConnectedDeclaratins(courierMasterId, tenant).Where(x => x.PaymentDate != null).Any();
+
+
+
+        }
+
+        public bool GetRequestInProgress(int tenant, string courierMasterId)
+        {
+            var qs = new CustomsRequestsSheetQueryService(this.context);
+            var qSheetStatusInProcess = qs.GetQSheetStatusInProcess(tenant);
+
+
+            string ObjectTableIdDeclaration = Simplog.Data.InfrastructureModel.Repositories.ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+            var qSheetStatusInProcessDecOnly = qSheetStatusInProcess.Where(rec => rec.ObjectTableId1 == ObjectTableIdDeclaration);
+
+
+            var courierDeclarationRepository = new CourierDeclarationRepository(this.context);
+            var qGetByCourierMasterId = courierDeclarationRepository.GetByCourierMasterId(tenant, courierMasterId);
+            var qDec = (from d in qGetByCourierMasterId
+                        join crs in qSheetStatusInProcessDecOnly on d.DeclarationId equals crs.EntityId1
+                        select d);
+
+
+            string ObjectTableIdCourierMaster = Simplog.Data.InfrastructureModel.Repositories.ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
+            var qSheetStatusInProcessCourierMasterOnly = qSheetStatusInProcess.Where(rec => rec.ObjectTableId1 == ObjectTableIdCourierMaster);
+
+
+            var qCMaster = (from crs in qSheetStatusInProcessCourierMasterOnly
+                            where crs.EntityId1 == courierMasterId
+                            select crs);
+
+            return qCMaster.Any() || qDec.Any();
+        }
+
+     
+
         public CourierMasterPM GetByDeclarationId(string declarationId, int tenant)
         {
             var courierDeclarationQueryService = new CourierDeclarationQueryService(tenant);

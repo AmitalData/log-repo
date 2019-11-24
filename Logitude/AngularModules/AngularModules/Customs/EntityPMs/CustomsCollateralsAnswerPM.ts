@@ -218,4 +218,4 @@ export class CustomsCollateralsAnswerPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

@@ -6,7 +6,7 @@
     </tr>
     <tr>
         <td>
-            <table style="table-layout: fixed;">
+            <table >
 
                 <tr style="height: 25px;">
 
@@ -24,6 +24,7 @@
                         <!--<LogTextBox [ObjectFieldName]="'UNCode'" [ObjectTableName]="ObjectTableName"
                 [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>-->
                     </td>
+                    <td style="width:7px"></td>
                     <td>
                         <LogLabel [ObjectFieldName]="'DangerousGoodsPackingReqCode'" [ObjectTableName]="ObjectTableName"
                                   [DataContext]="DataContext"></LogLabel>
@@ -46,6 +47,7 @@
                         <LogTextBox [ObjectFieldName]="'FlashpointTemperature'" [ObjectTableName]="ObjectTableName" [Text]="FlashpointTemperature"
                                     [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
                     </td>
+                    <td style="width:7px"></td>
                     <td>
                         <LogLabel [ObjectFieldName]="'StorageTemperature'" [ObjectTableName]="ObjectTableName"
                                   [DataContext]="DataContext"></LogLabel>
@@ -61,7 +63,7 @@
                         <!--אנשי קשר-->
                     </td>
                 </tr>
-                <tr  style="height: 25px;">
+                <tr style="height: 25px;">
                     <td>
                         <LogLabel [ObjectFieldName]="'CompanyName'" [ObjectTableName]="ObjectTableNameContact"
                                   [DataContext]="DataContext"></LogLabel>
@@ -70,15 +72,8 @@
                         <LogTextBox [ObjectFieldName]="'CompanyName'" [ObjectTableName]="ObjectTableNameContact"
                                     [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
                     </td>
-                    <td>
-                        <LogLabel [ObjectFieldName]="'CompanyCommNumber'" [ObjectTableName]="ObjectTableNameContact"
-                                  [DataContext]="DataContext"></LogLabel>
-                    </td>
-                    <td>
-                        <LogTextBox [ObjectFieldName]="'CompanyCommNumber'" [ObjectTableName]="ObjectTableNameContact"
-                                    [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
-                    </td>
 
+                    <td style="width:7px"></td>
                     <td>
                         <LogLabel [ObjectFieldName]="'CompanyCommTypeCode'" [ObjectTableName]="ObjectTableNameContact"
                                   [DataContext]="DataContext"></LogLabel>
@@ -93,8 +88,18 @@
 
                     </td>
 
+                    <td style="width:7px"></td>
+                    <td>
+                        <LogLabel [ObjectFieldName]="'CompanyCommNumber'" [ObjectTableName]="ObjectTableNameContact"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'CompanyCommNumber'" [ObjectTableName]="ObjectTableNameContact"
+                                    [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
                 </tr>
-                <tr  style="height: 25px;">
+                <tr style="height: 25px;">
                     <td>
                         <LogLabel [ObjectFieldName]="'ContactName'" [ObjectTableName]="ObjectTableNameContact"
                                   [DataContext]="DataContext"></LogLabel>
@@ -103,15 +108,7 @@
                         <LogTextBox [ObjectFieldName]="'ContactName'" [ObjectTableName]="ObjectTableNameContact"
                                     [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
                     </td>
-                    <td>
-                        <LogLabel [ObjectFieldName]="'ContactCommNumber'" [ObjectTableName]="ObjectTableNameContact"
-                                  [DataContext]="DataContext"></LogLabel>
-                    </td>
-                    <td>
-                        <LogTextBox [ObjectFieldName]="'ContactCommNumber'" [ObjectTableName]="ObjectTableNameContact"
-                                    [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
-                    </td>
-
+                    <td style="width:7px"></td>
                     <td>
                         <LogLabel [ObjectFieldName]="'ContactCommTypeCode'" [ObjectTableName]="ObjectTableNameContact"
                                   [DataContext]="DataContext"></LogLabel>
@@ -124,11 +121,21 @@
                                 [LookUpTableName]="'Customs.CommunicationType'">
                         </LogLov>
                     </td>
+                    <td style="width:7px"></td>
+                    <td>
+                        <LogLabel [ObjectFieldName]="'ContactCommNumber'" [ObjectTableName]="ObjectTableNameContact"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogTextBox [ObjectFieldName]="'ContactCommNumber'" [ObjectTableName]="ObjectTableNameContact"
+                                    [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                    </td>
+
                 </tr>
 
                 <!-- #region cancel and ok buttons -->
                 <tr style="height: 32px;">
-                    <td colspan="6" style="vertical-align: bottom ; left:5px;">
+                    <td colspan="9" style="vertical-align: bottom ; left:5px;">
                         <table style="height: 22px;">
                             <tr>
                                 <td>
