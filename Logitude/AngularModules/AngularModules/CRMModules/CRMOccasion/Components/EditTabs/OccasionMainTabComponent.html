@@ -199,7 +199,7 @@
                                                     <table>
                                                         <tr>
                                                             <td style="vertical-align:central;width: 50px;">
-                                                                <LogCheckBox [ObjectFieldName]="'IsCheckedAllContacts'" [NoObjectField]="true" [Checked]="IsCheckedAllContacts" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                <LogCheckBox [IsDisabled]="!IsOccasionEnabled" [ObjectFieldName]="'IsCheckedAllContacts'" [NoObjectField]="true" [Checked]="IsCheckedAllContacts" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
                                                             </td>
 
                                                             <td style="width:5px;">
@@ -211,7 +211,7 @@
                                                                     <label>Actions</label>
                                                                     <img src="./Images/ToggleIcon.png" />
 
-                                                                    <div class="ToggleButtonMenu" style="right: -70px;width:140px;">
+                                                                    <div [class.Disabled]="!IsOccasionEnabled" class="ToggleButtonMenu" style="right: -70px;width:140px;">
                                                                         <button (click)="ActionsButtonClicked('MAI')">Mark as invited</button>
                                                                         <button (click)="ActionsButtonClicked('MAP')">Mark as participated</button>
                                                                         <button (click)="ActionsButtonClicked('MAUI')">
@@ -219,7 +219,6 @@
                                                                         </button>
                                                                         <button (click)="ActionsButtonClicked('MAUP')">Mark as not participated</button>
                                                                         <button (click)="ActionsButtonClicked('D')">Delete</button>
-
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -232,7 +231,7 @@
                                                 </td>
 
                                                 <td style="float:right;vertical-align:central;">
-                                                    <button class="Button" (click)="AddContactsClicked()">Add Contacts</button>
+                                                    <button [disabled]="!IsOccasionEnabled" class="Button" (click)="AddContactsClicked()">Add Contacts</button>
                                                 </td>
 
                                                 <td style="width:3px;">
@@ -283,25 +282,25 @@
                                                                     </td>
 
                                                                     <td rowspan="2">
-                                                                        <div class="FillParent" style="vertical-align:central;">
+                                                                        <div class="MediaFill" style="vertical-align:central;">
                                                                             <table>
                                                                                 <tr>
                                                                                     <td>
                                                                                         <div></div>
                                                                                     </td>
                                                                                     <td style="width: 135px;">
-                                                                                        <div style="height:50%;">
-                                                                                            <span *ngIf="item.Invited" class="hyperlink" (click)="item.Invited = false" style="color:#1e4ac4;font-size:12px;text-decoration:none;"> Invited </span>
-                                                                                            <span *ngIf="!item.Invited" class="hyperlink" (click)="item.Invited = true" style="color:#1B90CB;font-size:12px;text-decoration:none;"> Mark As Invited </span>
+                                                                                        <div [class.Disabled]="!IsOccasionEnabled">
+                                                                                            <span *ngIf="item.Invited" [class.HyperlinkDisabled]="!IsOccasionEnabled" class="hyperlink" (click)="item.InvitedClicked(false)" style="color:#1e4ac4;font-size:12px;text-decoration:none;"> Invited </span>
+                                                                                            <span *ngIf="!item.Invited" [class.HyperlinkDisabled]="!IsOccasionEnabled" class="hyperlink" (click)="item.InvitedClicked(true)" style="color:#1B90CB;font-size:12px;text-decoration:none;"> Mark As Invited </span>
                                                                                         </div>
-                                                                                        <div style="height:50%;">
-                                                                                            <span *ngIf="item.Participated" class="hyperlink" (click)="item.Participated = false" style="color:#1e4ac4;font-size:12px;text-decoration:none;"> Participated </span>
-                                                                                            <span *ngIf="!item.Participated" class="hyperlink" (click)="item.Participated = true" style="color:#1B90CB;font-size:12px;text-decoration:none;"> Mark As Participated </span>
+                                                                                        <div [class.Disabled]="!IsOccasionEnabled">
+                                                                                            <span *ngIf="item.Participated"  [class.HyperlinkDisabled]="!IsOccasionEnabled" class="hyperlink" (click)="item.ParticipatedClicked(false)" style="color:#1e4ac4;font-size:12px;text-decoration:none;"> Participated </span>
+                                                                                            <span *ngIf="!item.Participated"  [class.HyperlinkDisabled]="!IsOccasionEnabled" class="hyperlink" (click)="item.ParticipatedClicked(true)" style="color:#1B90CB;font-size:12px;text-decoration:none;"> Mark As Participated </span>
                                                                                         </div>
                                                                                         <div></div>
                                                                                     </td>
 
-                                                                                    <td style="width:250px;vertical-align:central;">
+                                                                                    <td style="width:250px;">
                                                                                         <LogTextBox [Placeholder]="'Notes'" [ObjectFieldName]="'Notes'" [Text]="item.Notes" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true" [IsMultiline]="true"></LogTextBox>
                                                                                     </td>
 
@@ -310,7 +309,7 @@
                                                                                     </td>
 
                                                                                     <td style="width: 25px; vertical-align:top;">
-                                                                                        <IconButton [Name]="'delete'" (click)="DeleteOccasionInviteeClicked(item)"></IconButton>
+                                                                                        <IconButton [disabled]="!IsOccasionEnabled" [Name]="'delete'" (click)="DeleteOccasionInviteeClicked(item)"></IconButton>
                                                                                     </td>
 
                                                                                     <td style="width: 5px;">
