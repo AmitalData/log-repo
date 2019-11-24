@@ -466,7 +466,7 @@ export class ConsigmentTabContentComponent
             var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ConsignmentPackagesDanger");
 
             var logWindow = new LogitudeWindow();
-            logWindow.Width = 800;
+            logWindow.Width = 900;
             logWindow.Height = 300;
             logWindow.Title = windowTitle;
             logWindow.ShowCloseButton = false;
