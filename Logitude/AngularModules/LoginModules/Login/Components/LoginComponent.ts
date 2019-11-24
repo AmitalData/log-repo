@@ -31,6 +31,7 @@ export class LoginComponent {
     PasswordExpirationDateMessage: string;
     PasswordExpirationDateMessage2: string;
     PasswordImage: string = "./Images/LoginScreen/password_eye_closed.png";
+    PasswordTitle: string = "Show";
     PasswordWidth: number = 280;
     IsShowAreaCaptcha: boolean;
     CaptchaImageUrl: string;
@@ -280,6 +281,7 @@ export class LoginComponent {
         if (showHidePasswordImage) {
             this.PasswordImage = this.PasswordImage == "./Images/LoginScreen/password_eye.png" ? "./Images/LoginScreen/password_eye_closed.png" : "./Images/LoginScreen/password_eye.png";
             this.InputPasswordType = this.InputPasswordType == "password" ? "text" : "password";
+            this.PasswordTitle = this.PasswordTitle == "Show" ? "Hide" : "Show";
         }
 
 
