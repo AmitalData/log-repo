@@ -1,6 +1,7 @@
 ﻿using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Server.Tools;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void UpdateComposition(InterestBasesTypePM entityPM)
         {
-  
+            InterestBasesPeriodUpdateService mementoLineUpdateService = new InterestBasesPeriodUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+            mementoLineUpdateService.UpdateMulti(entityPM.MementoLines, entityPM.DeletedMementoLines, entityPM, false);
         }
     }
 }
