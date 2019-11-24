@@ -15,6 +15,8 @@ namespace WebFreight.Web.DataProviders
         [Key]
         public string Id { get; set; }
         public string Address { get; set; }
+        public string FromAddress { get; set; }
+        public string ToAddress { get; set; }
         public DateTime? ETD { get; set; }
         public DateTime? ETA { get; set; }
         public DateTime? ATD { get; set; }

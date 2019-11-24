@@ -41,7 +41,14 @@ namespace WebFreight.Web.ReportsWebServices
     // [System.Web.Script.Services.ScriptService]
     public class PreAlertWebService : System.Web.Services.WebService
     {
-        [WebMethod]
+        int tenant;
+        string shipmentid;
+        IShipmentsContext shipmentsContext;
+        PreAlertDataProvider prealertDataProvider;
+        TenantPM tenantpm;
+        ICommonDataContext commonContext;
+
+       [WebMethod]
         public byte[] GetPreAlertData(string shipmentid, int tenant,string documentTypeId)
         {
             PreAlertDataProvider prealertDataProvider = GetPreAlertDataProvider(shipmentid, tenant, documentTypeId);
@@ -84,16 +91,17 @@ namespace WebFreight.Web.ReportsWebServices
 
         public PreAlertDataProvider GetPreAlertDataProvider(string shipmentid, int tenant, string documentTypeId)
         {
-            PreAlertDataProvider prealertDataProvider = new PreAlertDataProvider();
-
-            IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
-            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+            this.tenant = tenant;
+            this.shipmentid = shipmentid;
+            prealertDataProvider = new PreAlertDataProvider();
+            shipmentsContext = ShipmentsContext.GetContext(tenant);
+            commonContext = CommonDataContext.GetContext(tenant);
             ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
             ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
             ShipmentPM shipmentpm = shipmentQuery.GetSinglePM(shipmentid, tenant);
 
             TenantQuery tenantQuery = new TenantQuery(tenant);
-            TenantPM tenantpm = tenantQuery.GetSinglePM(tenant);
+            tenantpm = tenantQuery.GetSinglePM(tenant);
 
             IWebFreightContext context = WebFreightContext.GetContext(tenant);
 
@@ -1204,81 +1212,11 @@ namespace WebFreight.Web.ReportsWebServices
                 #endregion
 
                 #region Payables List
-                ShipmentPayableRepository payableRepository = new ShipmentPayableRepository(tenant);
-                List<ShipmentPayable> payables = payableRepository.GetShipemntPayablesByShipmentId(shipmentpm.Id, tenant);
-                CurrencyRepository currencyRepository = new CurrencyRepository(tenant);
-                Currency localCurrency = CurrencyRepository.GetSingleCurrency(tenantpm.CurrencyId, tenant, true);
-                Currency profitCurrency = currencyRepository.GetSingleCurrency(shipmentpm.ProfitCurrencyId, tenant);
-                
-                prealertDataProvider.PayablesList = new List<PayableLine>();
-
-                foreach (ShipmentPayable payableItem in payables)
-                {
-                    PayableLine payableLine = new PayableLine()
-                    {
-                        Id = payableItem.Id,
-                        Name = payableItem.ChargesType == null ? null : payableItem.ChargesType.EnglishName,
-                        LocalName = payableItem.ChargesType == null ? null : payableItem.ChargesType.LocalName,
-                        CurrencyCode = payableItem.Currency == null ? null : payableItem.Currency.Code,
-                        LocalCurrencyCode = localCurrency.Code,
-                        ProfitCurrencyCode = profitCurrency.Code,
-                        OpenAmount = payableItem.OpenAmount,
-                        OpenAmountInLocal = payableItem.OpenAmountInLocalCurrency,
-                        OpenAmountInProfit = payableItem.OpenAmountInProfitCurrency,
-                        ExpectedAmount = payableItem.ExpectedAmount,
-                        ExpectedAmountInLocal = payableItem.ExpectedAmountLocal,
-                        ExpectedAmountInProfit = payableItem.ExpectedAmountInProfitCurrency,
-                        AccountedAmount = payableItem.AccountedAmount,
-                        AccountedAmountInLocal = payableItem.AccountedAmountInLocalCurrency,
-                        AccountedAmountInProfit = payableItem.AccountedAmountInProfitCurrency,
-                        UnitPrice = payableItem.UnitPrice,
-                        UOM = payableItem.Measurement == null ? null : payableItem.Measurement.Name,
-                        Quantity = payableItem.Quantity,
-                    };
-
-                    if (payableItem.Measurement != null)
-                    {
-                        if (payableItem.Measurement.Code == "")
-                        {
-                            payableLine.UOMPercentage = "%";
-                        }
-                    }
-
-                    if (!string.IsNullOrEmpty(payableItem.VendorId))
-                    {
-                        Card vendor = (from a in commonContext.Cards
-                                       where a.Id == payableItem.VendorId
-                                       select a).FirstOrDefault();
-
-                        if (vendor != null)
-                        {
-                            payableLine.VendorName = vendor.EnglishName;
-                        }
-                    }
-
-                    prealertDataProvider.PayablesList.Add(payableLine);
-                }
+                GetShipmentPayaples();
                 #endregion
-                
-                #region Deliveries
-                List<ShipmentDeliveryPM> shipmentDeliveries = shipmentDeliveryQuery.GetShipmentDeliveryPMsByTenantAndShipment(shipmentpm.Id, tenant);
-                WebServiceHelper servicHelper = new WebServiceHelper(tenant);
 
-                if (shipmentDeliveries.Count > 0)
-                {
-                    prealertDataProvider.PickUpDeliveriesList = new List<PickUpDeliveryLine>();
-
-                    foreach (ShipmentDeliveryPM pickUpDeliveryLine in shipmentDeliveries)
-                    {
-                        PickUpDeliveryLine pickUpDeliveryItem = new PickUpDeliveryLine();
-                        pickUpDeliveryItem.ETD = pickUpDeliveryLine.ETD;
-                        pickUpDeliveryItem.ETA = pickUpDeliveryLine.ETA;
-                        pickUpDeliveryItem.ATD = pickUpDeliveryLine.ATD;
-                        pickUpDeliveryItem.ATA = pickUpDeliveryLine.ATA;
-                        //serviscHelper.GetDeliveryToAddress(pickUpDeliveryLine, pickUpDeliveryItem, addressRepository, tenant);
-                        //prealertDataProvider.PickUpDeliveriesList.Add(pickUpDeliveryItem);
-                    }
-                }
+                #region PickUpsAndDeliveries
+                GetShipmentPickUpAndDeliveries();
                 #endregion
 
                 ////////////////////////////////////////////////////////////////////
@@ -1301,6 +1239,7 @@ namespace WebFreight.Web.ReportsWebServices
                 prealertDataProvider.FullMaster = shipmentpm.LongMaster;
                 prealertDataProvider.ShipmentNotes = shipmentpm.Notes;
                 prealertDataProvider.TotalQuantity = shipmentpm.NumberOfPackages;
+                prealertDataProvider.Salesman = shipmentpm.SalesmanUserName;
 
                 string routing = "";
 
@@ -1565,6 +1504,150 @@ namespace WebFreight.Web.ReportsWebServices
             #endregion
         }
 
+        private void GetShipmentPayaples()
+        {
+            List<ShipmentPayable> payables = GetShipmentPayaplesList();
+            prealertDataProvider.PayablesList = new List<PayableLine>();
+
+            foreach (ShipmentPayable payableItem in payables)
+            {
+                PayableLine payableLine = new PayableLine()
+                {
+                    Id = payableItem.ChargesType == null ? null : payableItem.ChargesType.Code,
+                    Name = payableItem.ChargesType == null ? null : payableItem.ChargesType.EnglishName,
+                    LocalName = payableItem.ChargesType == null ? null : payableItem.ChargesType.LocalName,
+                    CurrencyCode = payableItem.Currency == null ? null : payableItem.Currency.Code,
+                    LocalCurrencyCode = GetCurrencyCode(tenantpm.CurrencyId),
+                    ProfitCurrencyCode = GetCurrencyCode(tenantpm.ProfitCurrencyId),
+                    OpenAmount = payableItem.OpenAmount,
+                    OpenAmountInLocal = payableItem.OpenAmountInLocalCurrency,
+                    OpenAmountInProfit = payableItem.OpenAmountInProfitCurrency,
+                    ExpectedAmount = payableItem.ExpectedAmount,
+                    ExpectedAmountInLocal = payableItem.ExpectedAmountLocal,
+                    ExpectedAmountInProfit = payableItem.ExpectedAmountInProfitCurrency,
+                    AccountedAmount = payableItem.AccountedAmount,
+                    AccountedAmountInLocal = payableItem.AccountedAmountInLocalCurrency,
+                    AccountedAmountInProfit = payableItem.AccountedAmountInProfitCurrency,
+                    UnitPrice = payableItem.UnitPrice,
+                    UOM = payableItem.Measurement == null ? null : payableItem.Measurement.Name,
+                    Quantity = payableItem.Quantity,
+                    VendorName = GetPayableVendor(payableItem.VendorId),
+                };
+
+                if (payableItem.Measurement != null)
+                {
+                    if (payableItem.Measurement.Code == "")
+                    {
+                        payableLine.UOMPercentage = "%";
+                    }
+                }
+                
+                prealertDataProvider.PayablesList.Add(payableLine);
+            }
+            
+        }
+        private List<ShipmentPayable> GetShipmentPayaplesList()
+        {
+            ShipmentPayableRepository payableRepository = new ShipmentPayableRepository(tenant);
+            return payableRepository.GetShipemntPayablesByShipmentId(shipmentid, tenant);
+        }
+
+        private string GetCurrencyCode(string currencyId)
+        {
+            Currency currency = CurrencyRepository.GetSingleCurrency(currencyId, tenant, true);
+            return currency.Code;
+        }
+        private string GetPayableVendor(string vendorId)
+        {
+            if (!string.IsNullOrEmpty(vendorId))
+            {
+                Card vendorCard = CardRepository.GetSingleCard(vendorId, tenant, true);
+                if (vendorCard != null)
+                {
+                    return vendorCard.EnglishName;
+                }
+            }
+            return "";
+        }
+        private void GetShipmentPickUpAndDeliveries()
+        {
+            List<ShipmentPickUpDelivery> shipmentDeliveriesAndPickUps = GetShipmentPickUpAndDeliveriesList();
+            prealertDataProvider.PickUpsList = new List<PickUpDeliveryLine>();
+            prealertDataProvider.DeliveriesList = new List<PickUpDeliveryLine>();
+            foreach (ShipmentPickUpDelivery item in shipmentDeliveriesAndPickUps)
+            {
+                PickUpDeliveryLine pickUpDeliveryLine = BuildPickUpDeliveryLine(item);
+                InsertItemToPickUpsAndDeliveriesList(pickUpDeliveryLine, item.PickUpDeliveryTypeCode);
+            }
+        }
+        private List<ShipmentPickUpDelivery> GetShipmentPickUpAndDeliveriesList()
+        {
+            ShipmentPickUpDeliveryRepository shipmentPickUpDeliveryRepository = new ShipmentPickUpDeliveryRepository(shipmentsContext);
+            return shipmentPickUpDeliveryRepository.GetShipmentPickUpDeliveryForShipment(shipmentid, tenant);
+        }
+        private PickUpDeliveryLine BuildPickUpDeliveryLine(ShipmentPickUpDelivery pickUpDeliveryItem)
+        {
+            WebServiceHelper serviceHelper = new WebServiceHelper(tenant);
+            PickUpDeliveryLine item = new PickUpDeliveryLine();
+            item.ETD = pickUpDeliveryItem.ETD;
+            item.ETA = pickUpDeliveryItem.ETA;
+            item.ATD = pickUpDeliveryItem.ATD;
+            item.ATA = pickUpDeliveryItem.ATA;
+            item.FromAddress = serviceHelper.GetDeliveryPickUpAddress(BuildPickUpAndDeliveriesArguments(pickUpDeliveryItem, true));
+            item.ToAddress = serviceHelper.GetDeliveryPickUpAddress(BuildPickUpAndDeliveriesArguments(pickUpDeliveryItem, false));
+            item.CarrierName = GetPickUpsAndDeliveriesCarrierName(pickUpDeliveryItem.CarrierId);
+            return item;
+        }
+        private string GetPickUpsAndDeliveriesCarrierName(string carrierId)
+        {
+            Card carrierCard = CardRepository.GetSingleCard(carrierId, tenant, true);
+            string carrierName = "";
+            if (carrierCard != null)
+            {
+                carrierName = carrierCard.EnglishName != null ? carrierCard.EnglishName : "";
+            }
+            return carrierName;
+        }
+        private void InsertItemToPickUpsAndDeliveriesList(PickUpDeliveryLine pickUpDeliveryLine, string pickUpDeliveryTypeCode)
+        {
+            if (pickUpDeliveryTypeCode == "DELV")
+            {
+                prealertDataProvider.DeliveriesList.Add(pickUpDeliveryLine);
+            }
+            else if(pickUpDeliveryTypeCode == "PICK")
+            {
+                prealertDataProvider.PickUpsList.Add(pickUpDeliveryLine);
+            }
+        }
+        private PickUpAndDeliveriesArguments BuildPickUpAndDeliveriesArguments(ShipmentPickUpDelivery pickUpDeliveryItem, bool isFromAddress)
+        {
+            if (isFromAddress)
+            {
+                return new PickUpAndDeliveriesArguments()
+                {
+                    TypeCode = pickUpDeliveryItem.PickUpDeliveryFromTypeCode,
+                    PartnerCardId = pickUpDeliveryItem.FromPartnerCardId,
+                    AddressId = pickUpDeliveryItem.FromAddressId,
+                    PortId = pickUpDeliveryItem.FromPortId,
+                    AddressCountryId = pickUpDeliveryItem.FromAddressCountryId,
+                    AddressCity = pickUpDeliveryItem.FromAddressId,
+                    AddressZipCode = pickUpDeliveryItem.FromAddressZipCode
+                };
+            }
+            else
+            {
+                return new PickUpAndDeliveriesArguments()
+                {
+                    TypeCode = pickUpDeliveryItem.PickUpDeliveryToTypeCode,
+                    PartnerCardId = pickUpDeliveryItem.ToPartnerCardId,
+                    AddressId = pickUpDeliveryItem.ToAddressId,
+                    PortId = pickUpDeliveryItem.ToPortId,
+                    AddressCountryId = pickUpDeliveryItem.ToAddressCountryId,
+                    AddressCity = pickUpDeliveryItem.ToAddressId,
+                    AddressZipCode = pickUpDeliveryItem.ToAddressZipCode
+                };
+            }
+        }
         private void GetOtherCharges(string shipmentId, int tenant, ref double totalPrepaidString, ref double totalCollectString)
         {
             IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
