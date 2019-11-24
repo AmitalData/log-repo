@@ -975,8 +975,8 @@
 
                                                         <!-- close button -->
                                                         <!--<div (click)="item.CloseButtonClicked()" style="float: left;" class="CloseButtonWrapper" [title]="'General.B.Close' | TextCodeTranslationPipe">
-                                        <div class="CloseButton"></div>
-                                    </div>-->
+                    <div class="CloseButton"></div>
+                </div>-->
 
                                                     </div>
 
@@ -986,13 +986,14 @@
                                                 </div>
 
                                             </div>
-
-                                            <div *ngIf="item.ShowClassefierRemarkInfo" [id]="item.ClassefierRemarkToolTipWrapper" style="position: relative; float: right;height: 18px;width: 20px;">
-
-                                                <!-- Info Icon -->
-                                                <img (click)="item.ExcButtonClicked()" class="exc-remark-button" tabindex="-1" src="./Images/exclamation-16.png" />
-                                            </div>
-
+                                            <!--
+            <div *ngIf="item.ShowClassefierRemarkInfo" [id]="item.ClassefierRemarkToolTipWrapper" style="position: relative; float: right;height: 18px;width: 20px;">
+    -->
+                                            <!-- Info Icon -->
+                                            <!--
+        <img (click)="item.ExcButtonClicked()" class="exc-remark-button" tabindex="-1" src="./Images/exclamation-16.png" />
+    </div>
+    -->
                                         </div>
                                         <div class="TextTrimming" *ngIf="item.ShowValidatioIcon" style="position: relative; float: right;height: 20px;width: 20px;">
 
