@@ -20,8 +20,12 @@
     </QueryColumns>
     <QueryFilters />
   </Query>
-  <Screen Name="&quot;InterestBasesTypeHeaderScreen&quot;" ObjectTableName="&quot;InterestBasesType&quot;" IsReadOnly="true" IsHeaderScreen="true" NumberOfColumns="2" NumberOfRows="1">
-    <ScreenFields />
+  <Screen Name="&quot;InterestBasesTypeHeaderScreen&quot;" ObjectTableName="&quot;InterestBasesType&quot;" IsReadOnly="true" IsHeaderScreen="true" Code="&quot;InterestBasesType.HeaderScreen&quot;" NumberOfColumns="3" NumberOfRows="1">
+    <ScreenFields>
+      <ScreenField Column="0" Row="0" ObjectFieldName="&quot;Code&quot;" ScreenName="InterestBasesTypeHeaderScreen" />
+      <ScreenField Column="1" Row="0" ObjectFieldName="&quot;LocalName&quot;" ScreenName="InterestBasesTypeHeaderScreen" />
+      <ScreenField Column="2" Row="0" ObjectFieldName="&quot;InActive&quot;" ScreenName="InterestBasesTypeHeaderScreen" />
+    </ScreenFields>
   </Screen>
   <EventTypes>
     <EventType Code="&quot;CREV&quot;" ObjectTableName="&quot;InterestBasesType&quot;" EnglishName="&quot;Created&quot;" LocalName="&quot;Created&quot;" IsManualEntry="false" ShortView="true" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />

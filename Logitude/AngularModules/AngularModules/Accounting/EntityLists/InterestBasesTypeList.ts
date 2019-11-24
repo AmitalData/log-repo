@@ -22,4 +22,4 @@ export class InterestBasesTypeList {
 	InActive: boolean;
 	
 }
- S
+ 
