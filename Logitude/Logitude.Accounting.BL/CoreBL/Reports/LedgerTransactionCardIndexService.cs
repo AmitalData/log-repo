@@ -275,7 +275,7 @@ AccountBalanceM endAccountBalanceService)
 
             Response.HaveAccountingQueued = (startAccountBalanceService.HaveAccountingQueued || endAccountBalanceService.HaveAccountingQueued);
 
-            CheckSumLocalEqualDiffEndStart(startAccountBalanceService, endAccountBalanceService, periodSumLocalAmount, periodSumForeignAmount);
+      //     CheckSumLocalEqualDiffEndStart(startAccountBalanceService, endAccountBalanceService, periodSumLocalAmount, periodSumForeignAmount);
 
 
 
