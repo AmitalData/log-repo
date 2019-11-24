@@ -7,6 +7,9 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {QuoteTool} from '../../../../Quote/Tools';
+import { QuoteSettingPM } from '../../../../Quote/EntityPMs/QuoteSettingPM';
+import { QuoteDomainService } from '../../../../Quote/Services/QuoteDomainService';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
     selector: 'OrdersTabComponent',
@@ -17,14 +20,29 @@ import {QuoteTool} from '../../../../Quote/Tools';
 export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestroy {
     public EntityPM: QuotePM;
     public DataContext: OrdersTabComponent = this;
-    public ObjectTableName: string = "Quote";  
+    public ObjectTableName: string = "Quote";
+    public QuoteSetting: QuoteSettingPM = null;
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     public TransportModeId: string; 
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
+        this.GetQuoteSetting();
         this.Listen();
         this.ListenPropertyChanged();
+    }
+
+    private GetQuoteSetting() {
+        var quoteDomainService = new QuoteDomainService();
+        quoteDomainService.GetQuoteSettings().subscribe((myResponse: ServiceResponse) => {
+            if (myResponse.HasError == false) {
+                if (myResponse.Result) {
+                    if (myResponse.Result.Id) {
+                        this.QuoteSetting = myResponse.Result;
+                    }
+                }
+            }
+        });
     }
 
     ngOnInit() {
@@ -367,9 +385,9 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
 
             if (newValue) {
                 var todayDate = DateTool.GetCurrentDateAsUtc();
-
-                this.EntityPM.AutomaticallyCloseDays = 30;
-                this.EntityPM.AutomaticallyCloseDate = DateTool.AddDays(todayDate, 30);
+                var closeDays = this.QuoteSetting != null ? this.QuoteSetting.AutomaticallyCloseDays : 30;
+                this.EntityPM.AutomaticallyCloseDays = closeDays;
+                this.EntityPM.AutomaticallyCloseDate = DateTool.AddDays(todayDate, closeDays);
             }
 
             else {

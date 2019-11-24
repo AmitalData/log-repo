@@ -2516,6 +2516,12 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         logWindow.Height = 220;
                         break;
                     }
+                case "InterestBasesType":
+                    {
+                        logWindow.Width = 530;
+                        logWindow.Height = 400;
+                        break;
+                    }
             }
 
             var useLocal = !SessionLocator.LoggedUserPM.DontShowLocal;

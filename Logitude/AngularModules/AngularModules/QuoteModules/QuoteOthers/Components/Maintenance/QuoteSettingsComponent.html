@@ -283,8 +283,7 @@
                                     <SectionHead>
                                         <table>
                                             <tr>
-                                                <td style="width: 1px; color: #45494A; font-size: 14px;">Sale Currency</td>
-                                                <td style="padding-left: 5px;" class="Label">Quote Sale Currency Default</td>
+                                                <td style="width: 1px; color: #45494A; font-size: 14px;">General Settings</td>
                                             </tr>
                                         </table>
                                     </SectionHead>
@@ -297,6 +296,20 @@
 
                                                 <td style="width: 200px;">
                                                     <ComboBox [ItemsSource]="SaleCurrencySettings" [Binding]="'Name'" [SelectedItem]="SelectedSaleCurrencySetting" (SelectedItemChanged)="SelectedSaleCurrencySetting = $event"></ComboBox>
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'AutomaticallyCloseDays'" [NoObjectField]="true"  [Text]="'Automatically Close Days'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogTextBox [InputType]="'unsinteger'" [ObjectFieldName]="'AutomaticallyCloseDays'" [Text]="AutomaticallyCloseDays" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                                 </td>
 
                                                 <td>

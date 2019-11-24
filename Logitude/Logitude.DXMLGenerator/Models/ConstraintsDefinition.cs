@@ -10,13 +10,15 @@ namespace Logitude.DXMLGenerator.Models
     [XmlRoot("Constraints", Namespace = "", IsNullable = false)]
     public class ConstraintsDefinition
     {
-        [XmlAttribute()]
+        [XmlAttribute]
         public bool PrimaryKey { get; set; }
 
-        [XmlAttribute()]
-        public string PrimaryKeyConstraintName { get; set; }
+        [XmlIgnore]
+        public bool PrimaryKeySpecified { get { return PrimaryKey; } }
+
 
         [XmlAttribute()]
         public bool Nullable { get; set; }
+
     }
 }

@@ -57,7 +57,5 @@
   <Records />
   <DataContracts />
   <AdditionalTextCodes />
-  <AdditionalFeatures>
-    <Feature Code="&quot;QuickbooksConnectAuth1&quot;" FeatureTypeCode="&quot;ACT&quot;" FeatureTextCodeCode="&quot;AccountingSetting.Features.QuickbooksConnectAuth1&quot;" FeatureDefaultText="&quot;Quick books connect Auth1&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
-  </AdditionalFeatures>
+  
 </entity>

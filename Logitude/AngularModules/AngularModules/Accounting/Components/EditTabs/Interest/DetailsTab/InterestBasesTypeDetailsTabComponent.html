@@ -1,0 +1,101 @@
+<style type="text/css">
+    .SectionTitle {
+        height: 20px;
+        line-height: 20px;
+        font-size: 14px;
+        color: #1B90CB;
+        user-select: text;
+        -webkit-user-select: text;
+    }
+</style>
+<div class="TabHolder">
+    <table>
+        <tr class="TabTitleRow">
+            <td>{{'General.O.General' | TextCodeTranslationPipe}}</td>
+        </tr>
+        <tr style="height: 1px;vertical-align:top">
+            <td>
+                <table>
+                    <tr>
+                        <td style="width: 380px;">
+                            <table>
+                                <!-- VendorBankAddress -->
+                                <tr class="FormFieldRow">
+                                    <td style="width: 160px;">
+                                        <LogLabel [ObjectFieldName]="'VendorBankAddress'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogTextBox [Text]="VendorBankAddress" [ObjectFieldName]="'VendorBankAddress'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                                <!-- VendorBankName -->
+                                <tr class="FormFieldRow">
+                                    <td style="width: 160px;">
+                                        <LogLabel [ObjectFieldName]="'VendorBankName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogTextBox [Text]="VendorBankName" [ObjectFieldName]="'VendorBankName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                                <!-- VendorBankAccountNumber -->
+                                <tr class="FormFieldRow">
+                                    <td style="width: 160px;">
+                                        <LogLabel [ObjectFieldName]="'VendorBankAccountNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogTextBox [Text]="VendorBankAccountNumber" [ObjectFieldName]="'VendorBankAccountNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                                <!-- VendorSwift -->
+                                <tr class="FormFieldRow">
+                                    <td style="width: 160px;">
+                                        <LogLabel [ObjectFieldName]="'VendorSwift'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogTextBox [Text]="VendorSwift" [ObjectFieldName]="'VendorSwift'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                                <!-- VendorIBANNumber -->
+                                <tr class="FormFieldRow">
+                                    <td style="width: 160px;">
+                                        <LogLabel [ObjectFieldName]="'VendorIBANNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogTextBox [Text]="VendorIBANNumber" [ObjectFieldName]="'VendorIBANNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                               
+                                <tr>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div></div>
+            </td>
+        </tr>
+    </table>
+</div>
