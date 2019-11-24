@@ -19,6 +19,7 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 
 import {InterestBasesTypePM} from '../../EntityPMs/InterestBasesTypePM';
 
+import {InterestBasesPeriodPM} from '../../EntityPMs/InterestBasesPeriodPM';
 
 @Injectable()
 
@@ -209,12 +210,22 @@ export class InterestBasesTypePMService {
                  
             }
 			
+               this.MapInterestBasesPeriods(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
 		if (mapParent) {
                 entityPM.OldEntityPM = this.clone(entityPM);
-
+			   			   
+            entityPM.OldEntityPM.InterestBasesPeriods = [];
+            for (var item in entityPM.InterestBasesPeriods) {
+            var myInterestBasesPeriodPM = entityPM.InterestBasesPeriods[item];
+            var newInterestBasesPeriodPM: InterestBasesPeriodPM = this.clone(myInterestBasesPeriodPM);
+						
+							 
+            entityPM.OldEntityPM.InterestBasesPeriods.push(newInterestBasesPeriodPM);
+            }
+			   
 		}
         else {
 
@@ -224,6 +235,96 @@ export class InterestBasesTypePMService {
         return entityPM;
     }
 
+    MapInterestBasesPeriods(entityPM: InterestBasesTypePM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldInterestBasesPeriods: InterestBasesPeriodPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldInterestBasesPeriods = entityPM.OldEntityPM.InterestBasesPeriods;
+        }
+
+        entityPM.InterestBasesPeriods = new Array<InterestBasesPeriodPM>();
+        for (var item in jsonPM.InterestBasesPeriods) {
+            var jItem = jsonPM.InterestBasesPeriods[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newInterestBasesPeriodPM: InterestBasesPeriodPM;
+	  
+            if (mapParent) {
+                newInterestBasesPeriodPM = new InterestBasesPeriodPM(entityPM);
+            }
+            else
+            {
+                newInterestBasesPeriodPM = new InterestBasesPeriodPM(null);
+            }
+                
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newInterestBasesPeriodPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newInterestBasesPeriodPM.UniqueKey = Guid.newGuid();
+                newInterestBasesPeriodPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newInterestBasesPeriodPM.OldEntityPM = this.clone(newInterestBasesPeriodPM);
+
+				
+            }
+            else {
+                if (newInterestBasesPeriodPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newInterestBasesPeriodPM.ChangeSetOp = "Update";
+                }
+                else {
+                        newInterestBasesPeriodPM.ChangeSetOp = "Insert";
+                }
+ 
+                newInterestBasesPeriodPM.OldEntityPM = null;
+                newInterestBasesPeriodPM.EntityParentPM = null;
+            }
+			
+			 newInterestBasesPeriodPM.IsDirty = false;
+            entityPM.InterestBasesPeriods.push(newInterestBasesPeriodPM);
+        }
+        if (oldInterestBasesPeriods) {
+            
+            for (var itemKey in oldInterestBasesPeriods) {
+                if (entityPM.InterestBasesPeriods.filter(p=> p.UniqueKey === oldInterestBasesPeriods[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldInterestBasesPeriods[itemKey]) {
+                        //oldInterestBasesPeriods[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.InterestBasesPeriods.push(oldInterestBasesPeriods[itemKey]);
+						var oldItemJson = oldInterestBasesPeriods[itemKey];
+                        var deletedPM: InterestBasesPeriodPM = new InterestBasesPeriodPM(null);
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+                      
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.InterestBasesPeriods.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
 
 	  public clone(jsonPM: any) {
         var entityPM: any;
