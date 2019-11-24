@@ -543,6 +543,8 @@ namespace WebFreight.Web.WebServices
                             {
                                 myDataProvider.ShipperAddress_NoTel = myDataProvider.ShipperAddress_NoTel + Environment.NewLine + "Fax: " + shipperClientAddress.FaxNumber;
                             }
+                            
+                            myDataProvider.ShipperAddress_WithName = DataProviders.General.GetAddressWithName(shipperClientAddress);
                         }
                     }
 
@@ -869,6 +871,8 @@ namespace WebFreight.Web.WebServices
                             {
                                 myResult = myResult + Environment.NewLine + (consigneeNotImporterAddress.PhoneNumber != null ? "Tel: " + consigneeNotImporterAddress.PhoneNumber + " " : "") + (consigneeNotImporterAddress.FaxNumber != null ? "Fax: " + consigneeNotImporterAddress.FaxNumber + " " : "");
                             }
+
+                           
                         }
                     }
 
@@ -898,7 +902,9 @@ namespace WebFreight.Web.WebServices
                             {
                                 myResult = myResult + Environment.NewLine + (myConsigneePartnerAddress.PhoneNumber != null ? "Tel: " + myConsigneePartnerAddress.PhoneNumber + " " : "") + (myConsigneePartnerAddress.FaxNumber != null ? "Fax: " + myConsigneePartnerAddress.FaxNumber + " " : "");
                             }
+                            myDataProvider.ConsigneeAddress_WithName = DataProviders.General.GetAddressWithName(myConsigneePartnerAddress);
                         }
+
                     }
 
                     myDataProvider.ConsigneeAddress = myResult;
@@ -1168,6 +1174,8 @@ namespace WebFreight.Web.WebServices
                             {
                                 myDataProvider.NotifyAddress = myDataProvider.NotifyAddress + Environment.NewLine + (notify1Address.PhoneNumber != null ? "Tel: " + notify1Address.PhoneNumber + " " : "") + (notify1Address.FaxNumber != null ? "Fax: " + notify1Address.FaxNumber + " " : "");
                             }
+
+                            myDataProvider.NotifyAddress_WithName = DataProviders.General.GetAddressWithName(notify1Address);
                         }
                     }
 
@@ -1293,6 +1301,8 @@ namespace WebFreight.Web.WebServices
                             {
                                 myDataProvider.Notify2Address = myDataProvider.Notify2Address + Environment.NewLine + (notify2Address.PhoneNumber != null ? "Tel: " + notify2Address.PhoneNumber + " " : "") + (notify2Address.FaxNumber != null ? "Fax: " + notify2Address.FaxNumber + " " : "");
                             }
+
+                            myDataProvider.NotifyAddress2_WithName = DataProviders.General.GetAddressWithName(notify2Address);
                         }
                     }
 
@@ -2215,6 +2225,7 @@ namespace WebFreight.Web.WebServices
                         if (myAddress != null)
                         {
                             myDataProvider.PickUpAddress = myAddress.City != null ? myAddress.City : "";
+                            myDataProvider.ShipperNotExporterAddress_WithName = DataProviders.General.GetAddressWithName(myAddress);
                         }
                     }
 
