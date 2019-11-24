@@ -151,8 +151,12 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
 
             //(showLocals ? xxxxx.LocalName: xxxxx.EnglishName);
-            LedgerTransactionRepository LedgerTransactionreop = new LedgerTransactionRepository(entityPOCO.Tenant);
-           entityPM.ReconcilationCount = LedgerTransactionreop.getRecoCount(entityPM.Id);
+            if (!SuppressFetchOpenReconcilation)
+            {
+                LedgerTransactionRepository LedgerTransactionreop = new LedgerTransactionRepository(entityPOCO.Tenant);
+                entityPM.ReconcilationCount = LedgerTransactionreop.getRecoCount(entityPM.Id);
+
+            }
 
             if (entityPOCO.AccountTypeCode != null)
             {
@@ -506,8 +510,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
 
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
-
-
+        public bool SuppressFetchOpenReconcilation { get; internal set; }
 
         private static ContactPM GetLoggedContact(int tenant)
         {
@@ -523,8 +526,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             return loggedcontact;
         }
 
-
-
+        
     }
 
 

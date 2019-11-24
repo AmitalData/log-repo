@@ -69,7 +69,9 @@
                                         <div class="ScrollContent">
                                             <div class="QueriesSection" style="color: #58B8FF;">
                                                 <div>{{ 'InterestBasesType.Q.InterestBases' | TextCodeTranslationPipe }}</div>
-
+                                                <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
+                                                    <button class="Button" (click)="RunNewInterestBasesTypeWizard()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
+                                                </div>
                                                 <div>
                                                     <table>
                                                         <tr>
@@ -80,7 +82,7 @@
                                                                             <p class="QueryLink" (click)="ViewAccountingQuery('Interest Bases')"> {{ 'InterestBasesType.Q.InterestBases' | TextCodeTranslationPipe }}</p>
                                                                         </td>
                                                                     </tr>
-    
+
                                                                 </table>
                                                             </td>
                                                         </tr>
