@@ -59,6 +59,8 @@ namespace Logitude.Customs.BL.Models
             DeclarationClosure,
             CancelDeclarationClose,
             TSH_MSG7_AgentPaymentReplyResponseServiceBLD,
+            DF_NG_8251_Web02_DeclarationStatusResponseServicePreClearance,
+            DF_NG_8251_Web02_DeclarationStatusResponseServiceMessageToAgent,
         }
         public ProccessEnum CallProccessID { get; set; } //CargoExitFromCheckSite196
         //public PhysicalCheckPM DBOcc { get; set; } 

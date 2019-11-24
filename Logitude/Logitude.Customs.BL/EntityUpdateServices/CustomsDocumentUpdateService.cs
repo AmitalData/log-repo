@@ -177,6 +177,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     UpdateDeclarationCourierStatus(entityPM);
                 }
+                if(entityPM.DocumentTypeCode == "380" && string.IsNullOrEmpty(entityPM.DocumentStatusCode) && entityPM.ChangeSetOp == ChangeSetOperation.Update)
+                {
+                    UpdateDeclarationCourierStatus380(entityPM);
+                }
 
             }
             finally
@@ -726,6 +730,45 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
         }
+
+
+
+        private void UpdateDeclarationCourierStatus380(CustomsDocumentPM entityPM)
+        {
+
+            if (entityPM.DocumentTypeCode == "380")
+            {
+                ICustomContext context = MainContext as CustomContext;
+                DeclarationPM connectedDeclarationPM = GetConnectedDeclarationPM(entityPM);
+                if (connectedDeclarationPM != null && connectedDeclarationPM.IsCourierDeclaration)
+                {
+                    string status = "X";
+                    DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), connectedDeclarationPM.Tenant);
+                    DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+                    DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(connectedDeclarationPM.Id, true, false);
+                    if (currentDeclarationCourierStatusPM == null)
+                    {
+                        currentDeclarationCourierStatusPM = new DeclarationCourierStatusPM()
+                        {
+                            DeclarationId = connectedDeclarationPM.Id,
+                            Tenant = connectedDeclarationPM.Tenant,
+                            IsClosedForFollowUp = false,
+                            IsCourierMissingClassification = false,
+                        };
+                        currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Insert;
+                    }
+                    else
+                    {
+                        currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                    }
+                    currentDeclarationCourierStatusPM.DocumentStatusCode = status;
+                    declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+                }
+            }
+        }
+
+
+
 
         private DeclarationPM GetConnectedDeclarationPM(CustomsDocumentPM dirtyEntityPM)
         {
