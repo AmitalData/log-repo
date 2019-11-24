@@ -33,13 +33,15 @@ import { FullAccountingSettingsComponent } from './Components/Maintenance/FullAc
 import { FullAccountingAddControlComponent } from './Components/Maintenance/FullAccountingAddControlComponent';
 
 import {AccountingPeriodsComponent} from './Components/Maintenance/AccountingPeriodsComponent';
-import {EditAccountingPeriodComponent} from './Components/Maintenance/EditAccountingPeriodComponent';
+import { EditAccountingPeriodComponent } from './Components/Maintenance/EditAccountingPeriodComponent';
+import { InterestBasesTypeDetailsTabComponent } from './Components/EditTabs/Interest/DetailsTab/InterestBasesTypeDetailsTabComponent';
 import {AccountingPeriodEventComponent} from './Components/Maintenance/AccountingPeriodEventComponent';
 import {YearTransferComponent} from './Components/Maintenance/YearTransferComponent';
 import { NewTaxReportComponent } from './Components/NewEntity/NewTaxReportComponent';
 import { NewOpenFormatReportComponent } from './Components/NewEntity/NewOpenFormatReportComponent';
 import { AccountingLoadTestComponent } from './Components/Maintenance/AccountingLoadTestComponent';
 import { LoadRecoExPageComponent } from './Components/NewEntity/LoadRecoExPageComponent';
+import { NewInterestBasesTypeComponent } from './Components/NewEntity/NewInterestBasesTypeComponent';
 import { Generate1000Component } from './Components/Maintenance/Generate1000Component';
 import { Receiving1000Component } from './Components/Maintenance/Receiving1000Component';
 import { AccountingFunctionalTestComponent } from './Components/Maintenance/AccountingFunctionalTestComponent';
@@ -103,6 +105,7 @@ import { TaxReportShortTitleComponent } from './Components/ShortTiTles/TaxReport
 import { EditTaxReportLineComponent } from './Components/EditTabs/TaxReport/EditTaxReportLine/EditTaxReportLineComponent';
 import { NewIntegrityCheckComponent } from './Components/NewEntity/NewIntegrityCheckComponent';
 import { InterestPageComponent } from './Components/Workspaces/Interest/InterestPageComponent';
+import { InterestBasesTypeShortTitleComponent } from './Components/ShortTiTles/InterestBasesTypeShortTitleComponent';
 
 
 export const Components =
@@ -132,6 +135,7 @@ export const Components =
         NewPaymentChequeComponent,
         NewOpenFormatReportComponent,
         LoadRecoExPageComponent,
+        NewInterestBasesTypeComponent,
         //Maintenance
         NewCategory1Component,
         NewCategory2Component,
@@ -176,6 +180,7 @@ export const Components =
         OpenFormatReportLogTabComponent,
         TaxDeductionReportGeneralTabComponent,
         BankPageEventsComponent,
+        InterestBasesTypeDetailsTabComponent,
         //Templates
         GlAccountLedgerTransactionsListTemplate,
         ReconcileExternalPageListTemplate,
@@ -209,6 +214,7 @@ export const Components =
         IntegrityCheckTabComponent,
         AccountingNoteComponent,
         NewIntegrityCheckComponent,
+        InterestBasesTypeShortTitleComponent
     ];
 
 export class ModuleDeclarations {
@@ -245,6 +251,7 @@ export class ModuleDeclarations {
             case "NewTaxDeductionReportComponent": { myResult = NewTaxDeductionReportComponent; break; }
             case "NewOpenFormatReportComponent": { myResult = NewOpenFormatReportComponent; break; }
             case "LoadRecoExPageComponent": { myResult = LoadRecoExPageComponent; break; }
+            case "NewInterestBasesTypeComponent": { myResult = NewInterestBasesTypeComponent; break; }
 
             //Maintenance
             case "NewCategory1Component": { myResult = NewCategory1Component; break; }
@@ -290,6 +297,8 @@ export class ModuleDeclarations {
             case "OpenFormatReportLogTabComponent": { myResult = OpenFormatReportLogTabComponent; break; }
             case "TaxDeductionReportGeneralTabComponent": { myResult = TaxDeductionReportGeneralTabComponent; break; }
             case "BankPageEventsComponent": { myResult = BankPageEventsComponent; break; }
+            case "InterestBasesTypeDetailsTabComponent": { myResult = InterestBasesTypeDetailsTabComponent; break; }
+
             //Templates
             case "GlAccountLedgerTransactionsListTemplate": { myResult = GlAccountLedgerTransactionsListTemplate; break; }
             case "ReconcileExternalPageListTemplate": { myResult = ReconcileExternalPageListTemplate; break; }
@@ -324,6 +333,8 @@ export class ModuleDeclarations {
             case "IntegrityCheckTabComponent": { myResult = IntegrityCheckTabComponent; break; }
             case "AccountingNoteComponent": { myResult = AccountingNoteComponent; break; }
             case "NewIntegrityCheckComponent": { myResult = NewIntegrityCheckComponent; break; }
+            case "InterestBasesTypeShortTitleComponent": { myResult = InterestBasesTypeShortTitleComponent; break; }
+
         }
 
         return myResult;

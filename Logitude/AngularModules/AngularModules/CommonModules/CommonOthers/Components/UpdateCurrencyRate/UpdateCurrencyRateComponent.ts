@@ -91,7 +91,7 @@ export class UpdateCurrencyRateComponent extends BaseComponent {
     ValidateRateWarningMethod() {
         var warnings: string[] = [];
 
-        if (this.Rate != null && this.OldRate != null) {
+        if (this.Rate != 0 && this.Rate != null && this.OldRate != null) {
             var acceptRatio = 0.05;
 
             var rr = Math.abs(this.OldRate - this.Rate) / this.OldRate;
@@ -110,6 +110,11 @@ export class UpdateCurrencyRateComponent extends BaseComponent {
     OkButtonClicked() {
         var errors: string[] = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
+
+        if (AppTool.IsNullOrZero(this.Rate)) {
+            var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("RatesTable.F.Rate")));
+        }
 
         this.ValidationErrorsList = errors;
 

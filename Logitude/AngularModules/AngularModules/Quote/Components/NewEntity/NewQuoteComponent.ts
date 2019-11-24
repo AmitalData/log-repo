@@ -124,24 +124,23 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
         this.OpportunityId = args.OpportunityId;
         this.BuildFiltersLists();        
         this.SetUIProperties();
+        this.GetQuoteSetting();
+    }
 
-        if (this.IsCopyFromQuote) {
-
-            var myDomainService = new QuoteDomainService();
-
-            myDomainService.GetQuoteSettings().subscribe((myResponse: ServiceResponse) => {
-                if (myResponse.HasError == false) {
-                    if (myResponse.Result) {
-
-                        if (myResponse.Result.Id) {
-                            this.QuoteSetting = myResponse.Result;
-                        }
-
+    private GetQuoteSetting() {
+        var quoteDomainService = new QuoteDomainService();
+        quoteDomainService.GetQuoteSettings().subscribe((myResponse: ServiceResponse) => {
+            if (myResponse.HasError == false) {
+                if (myResponse.Result) {
+                    if (myResponse.Result.Id) {
+                        this.QuoteSetting = myResponse.Result;
+                    }
+                    if (this.IsCopyFromQuote) {
                         this.InitializeCopy(this.sourceEntityPM);
                     }
                 }
-            });
-        }
+            }
+        });
     }
 
     public ScreenOpacity: number = 0.7;
@@ -1100,9 +1099,9 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
 
             if (newValue) {
                 var todayDate = DateTool.GetCurrentDateAsUtc();
-
-                this.EntityPM.AutomaticallyCloseDays = 30;
-                this.EntityPM.AutomaticallyCloseDate = DateTool.AddDays(todayDate, 30);
+                var closeDays = this.QuoteSetting != null ? this.QuoteSetting.AutomaticallyCloseDays : 30;
+                this.EntityPM.AutomaticallyCloseDays = closeDays;
+                this.EntityPM.AutomaticallyCloseDate = DateTool.AddDays(todayDate, closeDays);
             }
 
             else {

@@ -92,10 +92,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
-			      				    HasShortTitle =  false,
+			      				    HasShortTitle =  true,
 			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  false,
-			      				    IsNewWizard =  false,
+			      				    IsNewWizard =  true,
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
@@ -111,19 +111,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  true,
 			      				    IsComposition =  false,
-			      				    EnableSecurity =  false,
+			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
-			      				    HasDynamicHeader =  false,
+			      				    HasDynamicHeader =  true,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
+			      				    NewWizardControlName =  "./Accounting/Components/NewEntity/NewInterestBasesTypeComponent",
 			      				    DefaultText =  "Interest Bases Type",
 			      				    Code =  "a37b",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
 			      				    ServerModuleName =  "",
+			      				    NewWizardComponentPath =  "./Accounting/Components/NewEntity/NewInterestBasesTypeComponent",
 			      				    NoTS =  false,
-			      				    HasMenuButtons =  false,
+			      				    HasMenuButtons =  true,
 			      				    AllowedForComputingPartners =  false,
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
@@ -206,7 +208,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						LookUpTableName =  "User",
 					  						MinLength =  0,
 					  						MaxLength =  15,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -785,7 +787,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {      
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable InterestBasesTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InterestBasesType" && d.Tenant == 0).FirstOrDefault();  
+                 
+			   TextCode InterestBasesTypeDetailsTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestBasesType.TH.Details", DefaultText = "Details",LocalDefaultText = "פרטים", ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature InterestBasesTypeDetailsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestBasesType.Tab.Details", ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestBasesTypeFeatures.IBTD", NameTextCodeDefaultText = "Details", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			 TextCodeRepository.SubmitChanges();
+			 FeaturesRepository.SubmitChanges();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			    
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "IBTD",HtmlComponentName = "",HtmlComponentUrl = "./Accounting/Components/EditTabs/Interest/DetailsTab/InterestBasesTypeDetailsTabComponent", FeatureId = InterestBasesTypeDetailsFeature_TH0.Id, ControlPath = "Simplog.InvoiceLib.Views.Tabs.InterestBasesTypesTabs.InterestBasesTypesDetailsTabControl", ObjectTableId = InterestBasesTypeObjectTable.Id, TabNameTextCodeId = InterestBasesTypeDetailsTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
@@ -842,6 +856,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
+		   FeatureRepository featureRepository = new FeatureRepository(0); 
+		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
+		   ObjectTable InterestBasesTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InterestBasesType" && d.Tenant == 0).FirstOrDefault(); 			   Feature InterestBasesTypeFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestBasesTypeInactive", ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestBasesType.Features.Inactive", NameTextCodeDefaultText = "Inactive", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+              
+
+		   TextCodeRepository.SubmitChanges();
+		   FeaturesRepository.SubmitChanges();
+		   MenuButtonGroup InterestBasesTypeMenuButtonGroup = AddMenuButtonGroupAndMenuButtons.AddMenuButtonGroup(new MenuButtonGroupDetails()
+				{
+					MenuButtonGroupType = "InterestBasesTypeEdit",
+					Name = "InterestBasesTypeEditButtonsGroup",
+					ObjectTableId = InterestBasesTypeObjectTable.Id,
+					Tenant = 0
+				}, menuButtonGroupRepository, tenantMenuButtonGroups);        
+   
+			   MenuButton InterestBasesTypeMenuButton0 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "More",
+						Index = 100, 
+						IsActive = false,
+						LabelTextCodeCode = "InterestBasesType.B.More",
+						LabelTextCodeDefaultText = "More",
+						Tenant = 0,
+						MenuButtonGroupId = InterestBasesTypeMenuButtonGroup.Id,
+						ObjectTableId = InterestBasesTypeObjectTable.Id,
+						MenuButtonType = "dropdownbutton",
+						FeatureId = null,
+						Style = null,
+						LocalDefaultText = "נוספים",
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+
+			   MenuButton InterestBasesTypeMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "InterestBasesTypeInactive",
+						Index = 0, 
+						IsActive = true,
+						LabelTextCodeCode = "InterestBasesType.B.Inactive",
+						LabelTextCodeDefaultText = "Inactive",
+						Tenant = 0,
+						MenuButtonGroupId = InterestBasesTypeMenuButtonGroup.Id,
+						ParentMenuButtonId = InterestBasesTypeMenuButton0.Id,
+						ObjectTableId = InterestBasesTypeObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  InterestBasesTypeFeature_MB00.Id,
+						Style = null,
+						LocalDefaultText = "חסימה",
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)

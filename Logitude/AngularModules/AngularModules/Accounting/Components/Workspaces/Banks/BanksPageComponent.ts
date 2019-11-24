@@ -269,12 +269,10 @@ export class BanksPageComponent {
     RunNewCashBookWizard() {
         var windowTitle = "New Cashbook";
         var windowTitle = TextCodeTranslator.Translate("Accounting.General.O.NewCashbook");
-
         var logWindow = new LogitudeWindow();
         logWindow.Width = 530;
         logWindow.Height = 400;
         logWindow.Title = windowTitle;
-        //logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
         logWindow.Show('./Accounting/Components/NewEntity/NewCashBookComponent');
     }

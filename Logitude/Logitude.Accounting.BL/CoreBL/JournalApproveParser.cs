@@ -139,7 +139,8 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 throw new Exception("accountId not found in tenant " + accountId);
             }
-            var res = GLAccountValidator.IsGLAccountValid(pm);
+            
+            ValidationResult res = GLAccountValidator./*IsGLAccountValid*/IsGLAccountValidCacheDueFromJournal(pm);
             if (res != null)
             {
                 throw new Exception("GLAccountValidator.IsGLAccountValid :" + res.ErrorMessage);

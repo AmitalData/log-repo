@@ -373,7 +373,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     entityPM = new QuoteSettingPM()
                     {
-                        Tenant = tenant
+                        Tenant = tenant,
+                        AutomaticallyCloseDays = 30,
                     };
                 }
 
@@ -396,6 +397,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         CopyNotify = myPOCO.CopyNotify,
                         IsSaleAsCostCurrency = myPOCO.IsSaleAsCostCurrency,
                         CopyExchangeRates = myPOCO.CopyExchangeRates,
+                        AutomaticallyCloseDays = myPOCO.AutomaticallyCloseDays,
                     };
                 }
 

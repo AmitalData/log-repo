@@ -46,9 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helper.cs" />
     <Compile Include="Models\ColumnDefinition.cs" />
     <Compile Include="Models\ConstraintsDefinition.cs" />
+    <Compile Include="Models\DXMLFilesGenerator.cs" />
+    <Compile Include="Models\RelationDefinition.cs" />
     <Compile Include="Models\TableDefinition.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
