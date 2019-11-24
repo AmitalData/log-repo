@@ -1,18 +1,17 @@
 import { Component, OnInit} from '@angular/core';
-import { APPaymentGeneralTabComponent } from '../../../../../InvoiceModules/APPayment/Components/EditTabs/APPaymentGeneralTabComponent';
-import { APPaymentPM } from '../../../../../Invoice/EntityPMs/APPaymentPM';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import { AppTool } from '../../../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
+import { InterestBasesTypePM } from '../../../../EntityPMs/InterestBasesTypePM';
 
 @Component({
     moduleId: module.id,
     templateUrl: './InterestBasesTypeDetailsTabComponent.html',
 })
 export class InterestBasesTypeDetailsTabComponent extends BaseComponent implements OnInit {
-    public EntityPM: APPaymentPM;
-    public ObjectTableName: string = "APPayment";
+    public EntityPM: InterestBasesTypePM;
+    public ObjectTableName: string = "InterestBasesType";
     public DataContext: InterestBasesTypeDetailsTabComponent = this;
     constructor(public entityArgs: EntityArgs) {
         super();
@@ -23,20 +22,20 @@ export class InterestBasesTypeDetailsTabComponent extends BaseComponent implemen
     ngOnInit() {
     }
     SetUIProperties() {
-        if (this.IsScreenEnabled) { 
-            this.UIProperties.SetEnabled("VendorBankAddress", "APPayment", true);
-            this.UIProperties.SetEnabled("VendorBankName", "APPayment", true);
-            this.UIProperties.SetEnabled("VendorBankAccountNumber", "APPayment", true);
-            this.UIProperties.SetEnabled("VendorSwift", "APPayment", true);
-            this.UIProperties.SetEnabled("VendorIBANNumber", "APPayment", true);
-        }
-        else{
-            this.UIProperties.SetEnabled("VendorBankAddress", "APPayment", false);
-            this.UIProperties.SetEnabled("VendorBankName", "APPayment", false);
-            this.UIProperties.SetEnabled("VendorBankAccountNumber", "APPayment", false);
-            this.UIProperties.SetEnabled("VendorSwift", "APPayment", false);
-            this.UIProperties.SetEnabled("VendorIBANNumber", "APPayment", false);
-        }
+        //if (this.IsScreenEnabled) { 
+        //    this.UIProperties.SetEnabled("VendorBankAddress", "APPayment", true);
+        //    this.UIProperties.SetEnabled("VendorBankName", "APPayment", true);
+        //    this.UIProperties.SetEnabled("VendorBankAccountNumber", "APPayment", true);
+        //    this.UIProperties.SetEnabled("VendorSwift", "APPayment", true);
+        //    this.UIProperties.SetEnabled("VendorIBANNumber", "APPayment", true);
+        //}
+        //else{
+        //    this.UIProperties.SetEnabled("VendorBankAddress", "APPayment", false);
+        //    this.UIProperties.SetEnabled("VendorBankName", "APPayment", false);
+        //    this.UIProperties.SetEnabled("VendorBankAccountNumber", "APPayment", false);
+        //    this.UIProperties.SetEnabled("VendorSwift", "APPayment", false);
+        //    this.UIProperties.SetEnabled("VendorIBANNumber", "APPayment", false);
+        //}
     }
 
     private SaveCompletedEvent: any = null;
@@ -61,76 +60,65 @@ export class InterestBasesTypeDetailsTabComponent extends BaseComponent implemen
         }
     }
 
-    get IsScreenEnabled() {
-        var result = true;
+
+    get Description() {
         if (this.EntityPM != null) {
-            if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR") {
-                result = true;
-            }
-            else {
-                result = false;
-            }
-        }
-        return result;
-    }
-    get VendorBankAddress() {
-        if (this.EntityPM != null) {
-            return this.EntityPM.VendorBankAddress;
+            return this.EntityPM.Description;
         }
         else
             return null;
     }
-    set VendorBankAddress(newValue: string) {
-        if (this.EntityPM.VendorBankAddress != newValue) {
-            this.EntityPM.VendorBankAddress = newValue;
+    set Description(newValue: string) {
+        if (this.EntityPM.Description != newValue) {
+            this.EntityPM.Description = newValue;
         }
     }
-    get VendorBankName() {
+    get EnglishName() {
         if (this.EntityPM != null) {
-            return this.EntityPM.VendorBankName;
+            return this.EntityPM.EnglishName;
         }
         else
             return null;
     }
-    set VendorBankName(newValue: string) {
-        if (this.EntityPM.VendorBankName != newValue) {
-            this.EntityPM.VendorBankName = newValue;
+    set EnglishName(newValue: string) {
+        if (this.EntityPM.EnglishName != newValue) {
+            this.EntityPM.EnglishName = newValue;
         }
     }
-    get VendorBankAccountNumber() {
+    get LocalName() {
         if (this.EntityPM != null) {
-            return this.EntityPM.VendorBankAccountNumber;
+            return this.EntityPM.LocalName;
         }
         else
             return null;
     }
-    set VendorBankAccountNumber(newValue: string) {
-        if (this.EntityPM.VendorBankAccountNumber != newValue) {
-            this.EntityPM.VendorBankAccountNumber = newValue;
+    set LocalName(newValue: string) {
+        if (this.EntityPM.LocalName != newValue) {
+            this.EntityPM.LocalName = newValue;
         }
     }
-    get VendorSwift() {
+    get Code() {
         if (this.EntityPM != null) {
-            return this.EntityPM.VendorSwift;
+            return this.EntityPM.Code;
         }
         else
             return null;
     }
-    set VendorSwift(newValue: string) {
-        if (this.EntityPM.VendorSwift != newValue) {
-            this.EntityPM.VendorSwift = newValue;
+    set Code(newValue: string) {
+        if (this.EntityPM.Code != newValue) {
+            this.EntityPM.Code = newValue;
         }
     }
-    get VendorIBANNumber() {
+    get InActive() {
         if (this.EntityPM != null) {
-            return this.EntityPM.VendorIBANNumber;
+            return this.EntityPM.InActive;
         }
         else
             return null;
     }
-    set VendorIBANNumber(newValue: string) {
-        if (this.EntityPM.VendorIBANNumber != newValue) {
-            this.EntityPM.VendorIBANNumber = newValue;
+    set InActive(newValue: boolean) {
+        if (this.EntityPM.InActive != newValue) {
+            this.EntityPM.InActive = newValue;
         }
     }
 
