@@ -1,4 +1,5 @@
 ﻿using System;
+using Logitude.HybridTest.OpportunityServiceReference;
 using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -12,77 +13,81 @@ namespace Logitude.HybridTest.CommonServices
         public void Test_Opportunity_GetOpportunityList()
         {
             LoginService.GetLoginTokenByCredentials();
-            OpportunityServiceReference.OpportunityWcfServiceClient serviceClient = new OpportunityServiceReference.OpportunityWcfServiceClient();
-            string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
-            serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
-            using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
+            InvokedProperties serviceProperties = new InvokedProperties
             {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
-                Response serviceResponse = new Response();
-                OpportunityServiceReference.OpportunityApiFilters filters = new OpportunityServiceReference.OpportunityApiFilters();
-                OpportunityServiceReference.OpportunityList[] entityList = serviceClient.GetOpportunityList("hybrid@fnarsoft.com", "",TestEnvironmentGlobalParameters.Tenant, 0, 10, filters, ref serviceResponse);
-                Assert.IsFalse(serviceResponse.HasError, "Get Opportunity List Failed! " + serviceResponse.ErrorMessage);
-                Assert.IsNull(serviceResponse.Result, "Get Opportunity List Failed! " + serviceResponse.ErrorMessage);
-                if (entityList.Length != 0)
-                {
-                    //
-                }
-                else
-                {
-                    Assert.Inconclusive("There Isn't Opportunity With This Searchfield!");
-                }
-            }
+                ServiceName = "Opportunity",
+                ServiceOperation = "GetOpportunityList",
+                ServiceResponseIndex = 6,
+                ServiceType = typeof(OpportunityList),
+                ServiceFilterType = typeof(OpportunityApiFilters),
+            };
+            OpportunityApiFilters filters = new OpportunityApiFilters();
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { "hybrid@fnarsoft.com", "", TestEnvironmentGlobalParameters.Tenant, 0, 10, filters, serviceResponse };
+            OpportunityList[] opportunities = (OpportunityList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+            Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.Result);
+            if (opportunities.Length == 0)
+                Assert.Inconclusive("There Isn't Opportunity With This Searchfield!");
+            else
+                HybridData.SomeOpportunityId = opportunities[0].Id;
         }
 
         [TestMethod]
         public void Test_Opportunity_GetCustomerListByOpportunityId()
         {
-            LoginService.GetLoginTokenByCredentials();
-            OpportunityServiceReference.OpportunityWcfServiceClient serviceClient = new OpportunityServiceReference.OpportunityWcfServiceClient();
-            string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
-            serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
-            using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
+            Test_Opportunity_GetOpportunityList();
+            if (HybridData.SomeOpportunityId != null)
             {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
+                LoginService.GetLoginTokenByCredentials();
+                InvokedProperties serviceProperties = new InvokedProperties
+                {
+                    ServiceName = "Opportunity",
+                    ServiceOperation = "GetCustomerListByOpportunityId",
+                    ServiceResponseIndex = 2,
+                    ServiceType = typeof(CustomerList),
+                    ServiceFilterType = null,
+                };
+                OpportunityApiFilters filters = new OpportunityApiFilters();
                 Response serviceResponse = new Response();
-                OpportunityServiceReference.CustomerList entityPM = serviceClient.GetCustomerListByOpportunityId("?", TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
+                object[] serviceParameters = new object[] { HybridData.SomeOpportunityId, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
+                CustomerList customer = (CustomerList)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
                 Assert.IsFalse(serviceResponse.HasError, "Get Customer List By Opportunity Id Failed! " + serviceResponse.ErrorMessage);
-                Assert.IsNull(serviceResponse.Result, "Get Customer List By Opportunity Id Failed! " + serviceResponse.ErrorMessage);
-                if (entityPM != null)
-                {
-                    //
-                }
-                else
-                {
-                    Assert.Inconclusive("There Isn't Opportunity With This Id!");
-                }
+                Assert.IsNull(serviceResponse.Result, "Get Customer List By Opportunity Id Failed! " + serviceResponse.Result);
+                if (customer == null)
+                    Assert.Inconclusive("There Isn't customer With This Opportunity Id!");
             }
+            else
+                Assert.IsTrue(false, "Get Opportunity List Failed!");
         }
 
         [TestMethod]
         public void Test_Opportunity_GetOpportunityListById()
         {
-            Assert.Inconclusive("!");
-            LoginService.GetLoginTokenByCredentials();
-            OpportunityServiceReference.OpportunityWcfServiceClient serviceClient = new OpportunityServiceReference.OpportunityWcfServiceClient();
-            string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
-            serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
-            using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
+            Assert.Inconclusive("Not Implemented !");
+            Test_Opportunity_GetOpportunityList();
+            if (HybridData.SomeOpportunityId != null)
             {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
-                Response serviceResponse = new Response();
-                //OpportunityServiceReference.OpportunityList entityPM = serviceClient.GetOpportunityListById("?", TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
-                Assert.IsFalse(serviceResponse.HasError, "Get Opportunity List By Id Failed! " + serviceResponse.ErrorMessage);
-                Assert.IsNull(serviceResponse.Result, "Get Opportunity List By Id Failed! " + serviceResponse.ErrorMessage);
-                //if (entityPM != null)
-                //{
-                //    //
-                //}
-                //else
+                LoginService.GetLoginTokenByCredentials();
+                InvokedProperties serviceProperties = new InvokedProperties
                 {
-                    Assert.Inconclusive("There Isn't Opportunity From Last Year!");
-                }
+                    ServiceName = "Opportunity",
+                    ServiceOperation = "GetOpportunityListById",
+                    ServiceResponseIndex = 2,
+                    ServiceType = typeof(OpportunityList),
+                    ServiceFilterType = null,
+                };
+                OpportunityApiFilters filters = new OpportunityApiFilters();
+                Response serviceResponse = new Response();
+                object[] serviceParameters = new object[] { HybridData.SomeOpportunityId, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
+                OpportunityList opportunity = (OpportunityList)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+                Assert.IsFalse(serviceResponse.HasError, "Get Opportunity List By Id Failed! " + serviceResponse.ErrorMessage);
+                Assert.IsNull(serviceResponse.Result, "Get Opportunity List By Id Failed! " + serviceResponse.Result);
+                if (opportunity == null)
+                    Assert.Inconclusive("There Isn't Opportunity With This Id!");
             }
+            else
+                Assert.IsTrue(false, "Get Opportunity List Failed!");
         }
     }
 }

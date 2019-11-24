@@ -1,4 +1,5 @@
 ﻿using System;
+using Logitude.HybridTest.WcfCallers;
 using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -10,8 +11,9 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_CustomBankCard_UPSERT()
         {
+            Assert.Inconclusive("Not Implemented !");
             LoginService.GetLoginTokenByCredentials();
-            Response serviceResponse = CallCustomBankCardUpsert();
+            Response serviceResponse = CustomBankCardWcfCaller.CallCustomBankCardUpsert();
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
         }
@@ -19,44 +21,24 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_CustomBankCard_DELETE()
         {
-            Test_CustomBankCard_UPSERT();
-            Response serviceResponse = CallCustomBankCardUpsert();
+            Assert.Inconclusive("Not Implemented !");
+            LoginService.GetLoginTokenByCredentials();
+            Response prepareResponse = CustomBankCardWcfCaller.PrepareCustomBankCard();
+            Assert.IsFalse(prepareResponse.HasError, "Prepare CustomBankCard Failed! " + prepareResponse.ErrorMessage);
+            InvokedProperties serviceProperties = new InvokedProperties
+            {
+                ServiceName = "CustomBankCard",
+                ServiceOperation = "Delete",
+                ServiceResponseIndex = 0,
+                ServiceType = null,
+                ServiceFilterType = null,
+            };
+
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { HybridData.BankCode, "?", TestEnvironmentGlobalParameters.Tenant };
+            WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Delete Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Delete Failed! " + serviceResponse.ErrorMessage);
-        }
-
-        public static Response CallCustomBankCardUpsert()
-        {
-            CustomBankCardServiceReference.CustomBankCardWcfServiceClient serviceClient = new CustomBankCardServiceReference.CustomBankCardWcfServiceClient();
-            string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
-            serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
-            using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
-            {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
-                CustomBankCardServiceReference.CustomBankPM entityPM = new CustomBankCardServiceReference.CustomBankPM()
-                {
-                    BankCode = HybridData.BankCode,
-                    EnglishName = "Hybrid Custom Bank",
-                    LocalName = "Hybrid Custom Bank",
-                    Tenant = TestEnvironmentGlobalParameters.Tenant,
-
-                };
-                Response serviceResponse = serviceClient.Upsert(entityPM, false);
-                return serviceResponse;
-            }
-        }
-
-        public static Response CallCustomBankCardDelete()
-        {
-            CustomBankCardServiceReference.CustomBankCardWcfServiceClient serviceClient = new CustomBankCardServiceReference.CustomBankCardWcfServiceClient();
-            string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
-            serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
-            using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
-            {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
-                Response serviceResponse = serviceClient.Delete(HybridData.BankCode, "?", TestEnvironmentGlobalParameters.Tenant);
-                return serviceResponse;
-            }
         }
     }
 }

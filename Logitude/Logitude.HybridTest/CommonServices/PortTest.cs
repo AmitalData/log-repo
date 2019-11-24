@@ -45,7 +45,7 @@ namespace Logitude.HybridTest.CommonServices
             object[] serviceParameters = new object[] { filters, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
             PortList[] ports = (PortList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.Result);
             Assert.IsTrue(CheckResult(ports), "Get Hybrid From Port From Ports Failed!");
         }
         public bool CheckResult(PortList[] ports)

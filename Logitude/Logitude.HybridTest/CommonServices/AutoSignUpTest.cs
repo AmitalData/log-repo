@@ -1,4 +1,5 @@
 ﻿using System;
+using Logitude.HybridTest.AutoSignUpServiceReference;
 using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -12,26 +13,25 @@ namespace Logitude.HybridTest.CommonServices
         {
             LoginService.GetLoginTokenByCredentials();
             Assert.Inconclusive("FILL ?!");
-            Response serviceResponse = CallAccountingPartnerUpsert();
-            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
-        }
 
-        public static Response CallAccountingPartnerUpsert()
-        {
-            AutoSignUpServiceReference.AutoSignUpWcfServiceClient serviceClient = new AutoSignUpServiceReference.AutoSignUpWcfServiceClient();
-            string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
-            serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
-            using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
+            LoginService.GetLoginTokenByCredentials();
+            InvokedProperties serviceProperties = new InvokedProperties
             {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
-                AutoSignUpServiceReference.AutoSignUpData entityPM = new AutoSignUpServiceReference.AutoSignUpData()
-                {
-                    //FILL
-                };
-                Response serviceResponse = serviceClient.Insert(entityPM, false);
-                return serviceResponse;
-            }
+                ServiceName = "AutoSignUp",
+                ServiceOperation = "Insert",
+                ServiceResponseIndex = 0,
+                ServiceType = typeof(AutoSignUpData),
+                ServiceFilterType = null,
+            };
+            AutoSignUpData entityPM = new AutoSignUpData()
+            {
+                //Fill
+            };
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { entityPM, false };
+            serviceResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+            Assert.IsFalse(serviceResponse.HasError, "Insert Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsNull(serviceResponse.Result, "Insert Failed! " + serviceResponse.Result);
         }
     }
 }

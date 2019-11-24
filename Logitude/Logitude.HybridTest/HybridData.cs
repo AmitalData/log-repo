@@ -26,7 +26,6 @@ namespace Logitude.HybridTest
         public const string DepartmentCode = "HDEP";
         public const string BranchCode = "HBRA"; 
         public const string PackageTypeCode = "HPT";
-        public const string ContactCode = "Hybrid Contact"; 
         public const string VesselCode = "HV"; 
         public const string StateCode = "HS";
         public const string SpecialServicesTypeCode = "HSST"; 
@@ -37,6 +36,11 @@ namespace Logitude.HybridTest
         public const string BankCode = "HB";
         public const string IncotermCode = "HI";
         public const string AirlineCode = "HA";
+        public const string QuoteCode = "Hybrid Quote";
+        public const string ContactCode = "Hybrid Contact";
+        public const string CardContactCode = "HCC";
+        public const string DirectShipmentCode = "Hybrid Direct Shipment";
+        public const string HouseShipmentCode = "Hybrid House Shipment";
 
         //Id
         public static string CurrencyId { get; set; }
@@ -60,5 +64,18 @@ namespace Logitude.HybridTest
         public static string UserId { get; set; }
         public static string FromPortId { get; set; }
         public static string ToPortId { get; set; }
+        public static string AddressId { get; set; }
+        public static string IncotermId { get; set; }
+        public static string PackageTypeId { get; set; }
+        public static string DocumentTypeId { get; set; }
+        public static string CustomBanksCardId { get; set; }
+        public static string CustomerId { get; set; }
+        public static string SomeOpportunityId { get; set; }
+        public static string QuoteId { get; set; }
+        public static string DirectShipmentId { get; set; }
+        public static string HouseShipmentId { get; set; }
+        public static string ContactId { get; set; }
+        public static string CardContactId { get; set; }
+        public static string ActivityId { get; set; }
     }
 }
