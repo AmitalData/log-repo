@@ -125,10 +125,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
 //            }
 
-
-
-            if (entityPM.IsCancelled==true)
-            {
                 string declarations="";
                  var declarationRepository = new DeclarationRepository(context);
 
@@ -140,14 +136,29 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     declarations = "'" + declarations  +"'"  ;
                  }
 
-              
+
+            if (entityPM.IsCancelled==true)
+            {
+   
                     entityPM.IsOpen = false;
                     this.toSendTask = true;
                 if (!string.IsNullOrWhiteSpace(declarations))
                 {
-                    CancelledDeclaration(declarations, entityPM.Tenant);
+                    CancelledDeclarations(declarations, entityPM.Tenant);
                }
  
+            }
+
+            else
+            {
+ 
+                entityPM.IsOpen = true;
+                this.toSendTask = true;
+                if (!string.IsNullOrWhiteSpace(declarations))
+                {
+                    OpenDeclarations(declarations, entityPM.Tenant);
+                }
+
             }
 
             entityPM.ConnectedDeclarations = null;
@@ -353,7 +364,47 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         }
 
 
-        private void CancelledDeclaration(string declarations, int Tenant)
+
+        private void OpenDeclarations(string declarations, int Tenant)
+        {
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            string strConnString = GetConnection(Tenant);
+            if (dbms == "oracle")
+            {
+                using (OracleConnection con = new OracleConnection(strConnString))
+                {
+                    string cmd = "Update DECLARATIONS set " +
+                        "ISCLOSE= 0  , ISCANCELLED =0 ";
+                    cmd = cmd + " where ID IN " + "(" + declarations + ")";
+
+                    OracleCommand sqlCommand = new OracleCommand(cmd, con);
+
+                    con.Open();
+                    sqlCommand.ExecuteNonQuery();
+                    con.Close();
+                }
+
+            }
+            else
+            {
+                using (SqlConnection cn = new SqlConnection(strConnString))
+                {
+                    string cmd = "Update DECLARATIONS set " +
+                        "ISCLOSE= 0  , ISCANCELLED =0 ";
+                    cmd = cmd + " where ID IN " + "(" + declarations + ")";
+
+                    SqlCommand sqlCommand = new SqlCommand(cmd, cn);
+
+                    cn.Open();
+                    sqlCommand.ExecuteNonQuery();
+                    cn.Close();
+                }
+            }
+        }
+
+
+
+        private void CancelledDeclarations(string declarations, int Tenant)
         {
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             string strConnString = GetConnection(Tenant);

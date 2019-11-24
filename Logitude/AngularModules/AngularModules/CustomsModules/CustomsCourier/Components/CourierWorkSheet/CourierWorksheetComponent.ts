@@ -1882,22 +1882,32 @@ export class CourierWorksheetComponent extends BaseComponent
             });
     }
 
+
+    OpenFlight() {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Show(TextCodeTranslator.Translate("Customs.CourierMaster.O.SureToOpenCancel"));
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.entityPM.IsCancelled = false;
+
+                SessionLocator.SelectedSession.StartBusyIndicatorSaving();
+                this._CourierMasterPMService
+                    .update(this.entityPM)
+                    .subscribe((response: ServiceResponse) => {
+                        SessionLocator.SelectedSession.StopBusyIndicator();
+                        if (response.HasError) {
+                            var mess
+                        } else {
+                            this.entityPM = response.Result;
+                        }
+                    });
+
+            }
+        });
+    }
+
+
     CancelFlight() {
-      //let  declarations: Array< DeclarationCourierStatusList>;
-      //  var myDeclarationCourierStatusListService = new DeclarationCourierStatusListService();
-      //  var myDeclarationCourierStatusListService = new DeclarationCourierStatusListService();
-      //  myDeclarationCourierStatusListService.getAll()
-      //      .subscribe(serviceResponse => {
-      //          declarations = serviceResponse.Result;
-      //          if (declarations.filter(x => x.CourierPaymentStatusCode != "").length > 0) {
-      //            this.  _ValidationErrors.push("error 1")
-      //          }
-      //          if (declarations.filter(x => x. != "").length > 0) {
-      //              this._ValidationErrors.push("error 1")
-      //          }
-
-      //      });
-
         this._ValidationErrors2=[]
         this._CourierMasterService.GetIfAllowToCancelCourierMaster(this.entityPM.Id).subscribe(
             data => {
@@ -1913,8 +1923,7 @@ export class CourierWorksheetComponent extends BaseComponent
                     case "":
                         {
                             var confirmWindow = new ConfirmWindow();
-                            debugger;
-                            confirmWindow.Show(TextCodeTranslator.Translate("Customs.CourierMaster.O.SureToCancel"));
+                             confirmWindow.Show(TextCodeTranslator.Translate("Customs.CourierMaster.O.SureToCancel"));
                             confirmWindow.WindowClosed.subscribe((event: any) => {
                                 if (confirmWindow.Yes) {
                                     this.entityPM.IsCancelled = true;
@@ -1931,12 +1940,6 @@ export class CourierWorksheetComponent extends BaseComponent
                                             }
                                         });
 
-                                     //this.entityArgs.EditComponent.SaveChanges();
-                                     // this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                                     //   if (isSaveSuccess) {
-                                     //       this.entityArgs.EditComponent.ReloadEntityPM();
-                                     //   }
-                                  //  });
                                 }
                             });
                             }
