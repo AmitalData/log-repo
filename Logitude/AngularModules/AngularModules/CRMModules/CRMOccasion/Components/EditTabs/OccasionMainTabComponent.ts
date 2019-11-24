@@ -4,7 +4,6 @@ import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs'
 import { OccasionPM } from '../../../../CRM/EntityPMs/OccasionPM';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { ListComponentArgs } from '../../../../Infrastructure/Args';
-import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { OccasionInviteePM } from '../../../../CRM/EntityPMs/OccasionInviteePM'; 
@@ -12,6 +11,10 @@ import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { AppTool } from '../../../../Infrastructure/Tools';
 import { CRMDomainService } from '../../../../CRM/Services/CRMDomainService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { ContactItemClass } from '../../../../CommonModules/CommonPartners/Components/EditTabs/ContactsTabComponent';
+import { ContactPMService } from '../../../../Common/Services/StandardPMs/ContactPMService';
+import { CachedDataManager } from '../../../../Infrastructure/Utilities/CachedDataManager';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService'
 
 
 @Component({
@@ -31,6 +34,7 @@ export class OccasionMainTabComponent extends BaseComponent {
     public OccasionLinesList: OccasionLineClass[] = [];
 
     constructor(public entityArgs: EntityArgs) {
+
         super();
         this.EntityPM = this.entityArgs.EntityPM;
         if (this.EntityPM) {
@@ -38,6 +42,9 @@ export class OccasionMainTabComponent extends BaseComponent {
         }
         this.LoadOccasionLinesData();
         this.Listen();
+
+        this._entityResourceService.getEntityResourceByTableName("Contact", 0).subscribe(response => {
+        });
     }
 
     private Listen() {
@@ -377,6 +384,15 @@ export class OccasionLineClass extends BaseComponent {
         }
     }
 
+    get ContactId() {
+        return this.EntityPM.ContactId;
+    }
+    set ContactId(value: string) {
+        if (this.EntityPM.ContactId != value) {
+            this.EntityPM.ContactId = value;
+        }
+    }
+
     get ContactName() {
         return this.EntityPM.ContactName;
     }
@@ -456,6 +472,32 @@ export class OccasionLineClass extends BaseComponent {
     set Invited(value: boolean) {
         if (this.EntityPM.Invited != value) {
             this.EntityPM.Invited = value;
+        }
+    }
+
+    public EditContactClicked(contactId: string) {
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 960;
+        logWindow.Height = 570;
+        logWindow.Title = "Update Contact";
+        var myService: ContactPMService = new ContactPMService();
+        myService.get(contactId).subscribe((myResult: ServiceResponse) => {
+            if (!myResult.HasError) {
+                var pm = myResult.Result;
+                var itemComponent = new ContactItemClass(pm, null, false);
+                logWindow.DataContext = itemComponent;
+                var args: any = {};
+                logWindow.WindowArgs = args;
+                logWindow.Show('./CommonModules/CommonPartners/Components/AddEdit/AddEditContactComponent');
+                logWindow.WindowClosed.subscribe(($event: any) => this.OnEditContactWindowClosed($event));
+            }
+        });
+    }
+    OnEditContactWindowClosed(arg: any) {
+        if (arg != 'cancel') {
+            // Refresh user table
+            CachedDataManager.RefreshTableData("User", true);
+            this.ContactId = arg;
         }
     }
 }
