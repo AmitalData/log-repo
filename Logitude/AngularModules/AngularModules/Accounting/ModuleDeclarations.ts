@@ -103,6 +103,7 @@ import { TaxReportShortTitleComponent } from './Components/ShortTiTles/TaxReport
 import { EditTaxReportLineComponent } from './Components/EditTabs/TaxReport/EditTaxReportLine/EditTaxReportLineComponent';
 import { NewIntegrityCheckComponent } from './Components/NewEntity/NewIntegrityCheckComponent';
 import { InterestPageComponent } from './Components/Workspaces/Interest/InterestPageComponent';
+import { InterestBasesTypeShortTitleComponent } from './Components/ShortTiTles/InterestBasesTypeShortTitleComponent';
 
 
 export const Components =
@@ -209,6 +210,7 @@ export const Components =
         IntegrityCheckTabComponent,
         AccountingNoteComponent,
         NewIntegrityCheckComponent,
+        InterestBasesTypeShortTitleComponent
     ];
 
 export class ModuleDeclarations {
@@ -324,6 +326,8 @@ export class ModuleDeclarations {
             case "IntegrityCheckTabComponent": { myResult = IntegrityCheckTabComponent; break; }
             case "AccountingNoteComponent": { myResult = AccountingNoteComponent; break; }
             case "NewIntegrityCheckComponent": { myResult = NewIntegrityCheckComponent; break; }
+            case "InterestBasesTypeShortTitleComponent": { myResult = InterestBasesTypeShortTitleComponent; break; }
+
         }
 
         return myResult;

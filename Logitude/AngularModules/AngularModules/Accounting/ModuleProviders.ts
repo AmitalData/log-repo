@@ -112,6 +112,7 @@ import { AutomaticExternalRconcilMthodListService } from './Services/StandardLis
 import { TaxReportExtendedPMService } from './Services/ExtendedPMs/TaxReportExtendedPMService';
 import { OpenFormatReportStatusListService } from './Services/StandardLists/OpenFormatReportStatusListService';
 
+import { InterestBasesTypeMenuButtonsHandler } from './Components/MenuButtons/InterestBasesTypeMenuButtonsHandler';
 import { JournalMenuButtonsHandler } from './Components/MenuButtons/JournalMenuButtonsHandler';
 import { GLAccountMenuButtonsHandler } from './Components/MenuButtons/GLAccountMenuButtonsHandler';
 import { CashBookMenuButtonsHandler } from './Components/MenuButtons/CashBookMenuButtonsHandler';
@@ -267,6 +268,7 @@ export class ModuleProviders {
             case "GLAccountMenuButtonsHandler": { myResult = new GLAccountMenuButtonsHandler; break; }
             case "CashBookMenuButtonsHandler": { myResult = new CashBookMenuButtonsHandler; break; }
             case "BankDepositMenuButtonsHandler": { myResult = new BankDepositMenuButtonsHandler; break; }
+            case "InterestBasesTypeMenuButtonsHandler": { myResult = new InterestBasesTypeMenuButtonsHandler; break; }
             case "PaymentChequeMenuButtonsHandler": {
                 myResult = new PaymentChequeMenuButtonsHandler; break
             }
