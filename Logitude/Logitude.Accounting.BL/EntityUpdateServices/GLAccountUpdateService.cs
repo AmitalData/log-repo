@@ -253,7 +253,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (String.IsNullOrWhiteSpace(entityPM.CustomerGLAccountId) && !String.IsNullOrWhiteSpace(entityPM.CustomerGLAccountInternalNumber))
             {
                 GLAccountQueryService query = new GLAccountQueryService(entityPM.Tenant);
-                GLAccountPM acc = query.GetByInternalNumber(entityPM.CustomerGLAccountInternalNumber, entityPM.Tenant).FirstOrDefault<GLAccountPM>();
+                GLAccountPM acc = query.GetByInternalNumber(entityPM.CustomerGLAccountInternalNumber, entityPM.Tenant)/*.FirstOrDefault<GLAccountPM>()*/;
                 if (acc != null)
                 {
                     entityPM.CustomerGLAccountId = acc.Id;
@@ -319,7 +319,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (entityPM.InternalNumber != null)
             {
                 GLAccountQueryService query = new GLAccountQueryService(entityPM.Tenant);
-                GLAccountPM acc = query.GetByInternalNumber(entityPM.InternalNumber, entityPM.Tenant).FirstOrDefault<GLAccountPM>();
+                GLAccountPM acc = query.GetByInternalNumber(entityPM.InternalNumber, entityPM.Tenant)/*.FirstOrDefault<GLAccountPM>()*/;
                 if (acc != null)
                 {
                     throw new Exception("Existing GLAccount found with Internal No. " + entityPM.InternalNumber + " (Display No. " + acc.DisplayNumber + ")");
@@ -333,7 +333,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (!String.IsNullOrWhiteSpace(entityPM.ParentAccountByCurrency))
             {
                 GLAccountQueryService query = new GLAccountQueryService(entityPM.Tenant);
-                GLAccountPM acc = query.GetByInternalNumber(entityPM.ParentAccountByCurrency, entityPM.Tenant).FirstOrDefault<GLAccountPM>();
+                GLAccountPM acc = query.GetByInternalNumber(entityPM.ParentAccountByCurrency, entityPM.Tenant)/*.FirstOrDefault<GLAccountPM>()*/;
                 if (acc != null)
                 {
                     gLAccountCurrency = new GLAccountCurrencyPM()
@@ -741,7 +741,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (String.IsNullOrWhiteSpace(entityPM.CustomerGLAccountId) && !String.IsNullOrWhiteSpace(entityPM.CustomerGLAccountInternalNumber))
             {
                 GLAccountQueryService query = new GLAccountQueryService(entityPM.Tenant);
-                GLAccountPM acc = query.GetByInternalNumber(entityPM.CustomerGLAccountInternalNumber, entityPM.Tenant).FirstOrDefault<GLAccountPM>();
+                GLAccountPM acc = query.GetByInternalNumber(entityPM.CustomerGLAccountInternalNumber, entityPM.Tenant)/*.FirstOrDefault<GLAccountPM>()*/;
                 if (acc != null)
                 {
                     entityPM.CustomerGLAccountId = acc.Id;

@@ -59,7 +59,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("InterestBasesType", "READ", authToken.Tenant);
+	                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
                 InterestBasesTypeListQueryService interestBasesTypeQuery = new InterestBasesTypeListQueryService(MyContext);
                 InterestBasesTypeList interestBasesTypeList = interestBasesTypeQuery.GetSingle(id);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -81,7 +82,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("InterestBasesType", "READ", authToken.Tenant);
+	                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
                 InterestBasesTypeListQueryService interestBasesTypeQuery = new InterestBasesTypeListQueryService(MyContext);
                 List<InterestBasesTypeList> result = interestBasesTypeQuery.GetList(authToken.Tenant);
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -103,7 +105,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                
+                SecurityUtility.CheckContactFeature("InterestBasesType", "READ", authToken.Tenant);
+	                
 				int tenant = authToken.Tenant;
 
                 QueryOperations queryOperations = new QueryOperations()

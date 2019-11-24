@@ -16,5 +16,8 @@ namespace Logitude.DXMLGenerator.Models
 
         [XmlElement("Column")]
         public List<ColumnDefinition> Columns { get; set; }
+
+        [XmlElement("Relation")]
+        public List<RelationDefinition> Relations { get; set; }
     }
 }

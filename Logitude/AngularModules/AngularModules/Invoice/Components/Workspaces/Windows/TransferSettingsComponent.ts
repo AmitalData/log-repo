@@ -142,7 +142,8 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
 
         else if (this.AccountingSystemCode == "QB" || this.AccountingSystemCode == "QBO" || this.AccountingSystemCode == "QBOG") {
             isAccountingSystem_QB_QBO = true;
-            if (FeatureLocator.HasFeaturePermession("AccountingSetting", "QuickbooksConnectAuth1")) {
+
+            if (FeatureLocator.HasFeaturePermession("AccountingTransferHeader", "QuickbooksConnectAuth1")) {
                 IsAccountingSystem_QB_QBO_old = true;
             }
         }
@@ -256,7 +257,7 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
     public isQBO: boolean = false;
     SetQuickBookProperties() {
 
-        if (this.EntityPM.RefreshToken != null || this.EntityPM.QBOAccessToken) {
+        if (this.EntityPM.RefreshToken != null || this.EntityPM.QBOAccessToken != null) {
             this.isLogedInQBO = true;
         }
 
@@ -489,7 +490,7 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
             AuthenticationLink = "QuickbooksOnlineAuth2.aspx?connect=true&tenant=";
         }
         else {
-            AuthenticationLink = "QuickbooksOnlineAuth.aspx?connect=true&tenant=";
+            AuthenticationLink = "QuickbooksOnline.aspx?connect=true&tenant=";
 
         }
 
