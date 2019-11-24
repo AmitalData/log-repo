@@ -23,6 +23,7 @@ export class AccountingWorkspaceComponent {
     public IsJournalTabVisibile: boolean = false;
     public IsGLAccountsTabVisibile: boolean = false;
     public IsMiscTabVisibile: boolean = false;
+    public IsInterestTabVisibile: boolean = false;
 
     constructor(private _entityResourceService: EntityResourceService) {
         this.RunComponent();
@@ -43,6 +44,7 @@ export class AccountingWorkspaceComponent {
         this._entityResourceService.getEntityResourceByTableName("ReconcileExternalPageLine").subscribe((response: any) => { });
         this._entityResourceService.getEntityResourceByTableName("BankAccount").subscribe((response: any) => { });
         this._entityResourceService.getEntityResourceByTableName("AccountingPeriod").subscribe((response: any) => { });
+        this._entityResourceService.getEntityResourceByTableName("InterestBasesType").subscribe((response: any) => { });
     }
 
     CheckFeatures() {
@@ -75,6 +77,10 @@ export class AccountingWorkspaceComponent {
         var MiscTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCMisc") && f.ObjectTableId == table.Id)[0];
         if (MiscTabFeature) {
             this.IsMiscTabVisibile = true;
+        }
+        var InterestTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCInterest") && f.ObjectTableId == table.Id)[0];
+        if (InterestTabFeature) {
+            this.IsInterestTabVisibile = true;
         }
     }
 
@@ -129,6 +135,10 @@ export class AccountingWorkspaceComponent {
             this.SelectedItem = "MISC";
 
         }
+        else if (this.IsInterestTabVisibile) {
+            this.SelectedItem = "Interest";
+
+        }
     }
 
     private Retries: number = 0;
@@ -161,6 +171,8 @@ export class AccountingWorkspaceComponent {
     private Page_Payable: any = null;
     private Page_Banks: any = null;
     private Page_Misc: any = null;
+    private Page_Interest: any = null;
+    
     SelectionChanged() {
         if (this.isLoaderReady) {
             if (this.SelectedItem != null) {
@@ -246,6 +258,18 @@ export class AccountingWorkspaceComponent {
                                         .then(cmpRef => {
                                             this.Page_GLAccounts = cmpRef.instance;
                                             this.Page_GLAccounts.InitComponent();
+                                        });
+                                });
+                            }
+                            break;
+                        }
+                        case "Interest": {
+                            if (this.Page_Interest == null) {
+                                this._entityResourceService.getEntityResourceByTableName("InterestBasesType", 0).subscribe((response: any) => {
+                                    SessionLocator.DynamicLoader.Load("./Accounting/Components/Workspaces/Interest/InterestPageComponent", myLocation.viewContainerRef)
+                                        .then(cmpRef => {
+                                            this.Page_Interest = cmpRef.instance;
+                                            this.Page_Interest.InitComponent();
                                         });
                                 });
                             }

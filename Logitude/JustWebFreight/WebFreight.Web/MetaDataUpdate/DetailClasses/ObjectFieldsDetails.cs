@@ -126,6 +126,6 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
 
         public bool DisplayInAutomationAsEnitity { get; set; }
         public string RecordType { get; set; }
-
+        public string FieldCode { get;  set; }
     }
 }

@@ -1,0 +1,235 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Accounting.Def.Validators;
+  
+namespace Logitude.Accounting.Def.EntityPMs
+{
+   [CustomValidation(typeof(AccountingClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class InterestBasesPeriodPM : EntityPM
+   {
+   	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime createDate ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime CreateDate  
+	   {
+	    
+	     get
+		{
+		   return createDate;
+		 }
+		 set
+		 {
+		   if(createDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreateDate",OldValue=createDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChanged(values);
+		   createDate=value;
+		   }
+			
+		 }
+	   }
+	  private string createdByUserId ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CreatedByUserId  
+	   {
+	    
+	     get
+		{
+		   return createdByUserId;
+		 }
+		 set
+		 {
+		   if(createdByUserId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUserId",OldValue=createdByUserId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   createdByUserId=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime updateDate ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime UpdateDate  
+	   {
+	    
+	     get
+		{
+		   return updateDate;
+		 }
+		 set
+		 {
+		   if(updateDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdateDate",OldValue=updateDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChanged(values);
+		   updateDate=value;
+		   }
+			
+		 }
+	   }
+	  private string updatedByUserId ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string UpdatedByUserId  
+	   {
+	    
+	     get
+		{
+		   return updatedByUserId;
+		 }
+		 set
+		 {
+		   if(updatedByUserId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserId",OldValue=updatedByUserId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   updatedByUserId=value;
+		   }
+			
+		 }
+	   }
+	  private string interestBaseTypeId ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string InterestBaseTypeId  
+	   {
+	    
+	     get
+		{
+		   return interestBaseTypeId;
+		 }
+		 set
+		 {
+		   if(interestBaseTypeId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InterestBaseTypeId",OldValue=interestBaseTypeId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   interestBaseTypeId=value;
+		   }
+			
+		 }
+	   }
+	  private int lineNumber ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int LineNumber  
+	   {
+	    
+	     get
+		{
+		   return lineNumber;
+		 }
+		 set
+		 {
+		   if(lineNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LineNumber",OldValue=lineNumber,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   lineNumber=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime interestBaseStartDate ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime InterestBaseStartDate  
+	   {
+	    
+	     get
+		{
+		   return interestBaseStartDate;
+		 }
+		 set
+		 {
+		   if(interestBaseStartDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InterestBaseStartDate",OldValue=interestBaseStartDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChanged(values);
+		   interestBaseStartDate=value;
+		   }
+			
+		 }
+	   }
+	  private decimal interestRate ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal InterestRate  
+	   {
+	    
+	     get
+		{
+		   return interestRate;
+		 }
+		 set
+		 {
+		   if(interestRate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InterestRate",OldValue=interestRate,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChanged(values);
+		   interestRate=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

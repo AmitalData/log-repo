@@ -356,5 +356,9 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
 
         public bool IsCreatingConsolidation { get; set; }
         public bool IsFromConsolidationBatch { get; set; }
+
+
+        public string BillToCity { get; set; }
+        public string BillToCountry { get; set; }
     }
 }

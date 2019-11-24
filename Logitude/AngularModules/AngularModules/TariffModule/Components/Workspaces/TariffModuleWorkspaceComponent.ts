@@ -27,7 +27,7 @@ declare var ResultAsArray: any;
 export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
     private CurrentSession = SessionLocator.SelectedSession;
     private DocumentExtendedService: DocumentsFilingExtendedPMService;
-
+    public IsTariffGenerateVisible: boolean = false;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     constructor(private _entityResourceService: EntityResourceService, private tariffDomainService: TariffDomainService) {
         this.RunComponent();
@@ -108,6 +108,9 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
     public OceanFCLSurchargesCostVisibility: boolean = false;
 
     SetQueriesVisibility() {
+        if (FeatureLocator.HasFeaturePermession("Tariff", "TARIFFGENERATE")) {
+            this.IsTariffGenerateVisible = true;
+        }
 
         if (FeatureLocator.HasFeaturePermession("Tariff", "Tariff.Q.AirFreightCostTariffs")) {
             this.AirFreightCostVisibility = true;

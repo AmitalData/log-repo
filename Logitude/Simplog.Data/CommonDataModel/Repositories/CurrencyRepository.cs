@@ -143,6 +143,51 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return entity;
         }
 
+        public Currency GetSingleCurrencyById(string id, int tenant, bool getFromCache)
+        {
+            string entityName = "Currency" + id + tenant;
+            Currency entity;
+            if (getFromCache)
+            {
+                if (HttpContext.Current != null)
+                {
+                    if (CacheManager.CacheWrapper.Get(entityName) == null)
+                    {
+                        ICommonDataContext context = CommonDataContext.GetContext(tenant);
+                        var currencies = (from a in context.Currencies
+                                          where a.Tenant == tenant
+                                          select a);
+
+                        foreach (var c in currencies)
+                        {
+                            string name = "Currency" + c.Id + tenant;
+                            if (CacheManager.CacheWrapper.Get(name) == null)
+                            {
+                                CacheManager.CacheWrapper.Insert(name, c, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                            }
+                        }
+                        entity = (Currency)CacheManager.CacheWrapper.Get(entityName);
+                    }
+                    else
+                    {
+                        entity = (Currency)CacheManager.CacheWrapper.Get(entityName);
+
+                    }
+                }
+                else
+                {
+                    ICommonDataContext context = CommonDataContext.GetContext(tenant);
+                    entity = (from record in context.Currencies where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
+                }
+            }
+            else
+            {
+                ICommonDataContext context = CommonDataContext.GetContext(tenant);
+                entity = (from record in context.Currencies where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
+            }
+            return entity;
+        }
+
         public void Add(Currency entity)
         {
             context.Currencies.Add(entity);

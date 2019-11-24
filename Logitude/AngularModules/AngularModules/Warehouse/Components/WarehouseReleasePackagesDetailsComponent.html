@@ -7,7 +7,7 @@
             <td>
                 <table>
                     <tr>
-                        
+
 
                         <td style="height:20px"><div style="height:20px"></div></td>
                         <td>
@@ -148,7 +148,7 @@
 
                                                             <td class="GridViewCell" style="width:100%; min-width: 100%; max-width: 100%; position: relative;">
                                                                 <div *ngIf="!IsLCLEntity" style="width:135px;max-width:135px">{{item.Description}}</div>
-                                                                <div  *ngIf="IsLCLEntity" style="width:240px;max-width:240px">{{item.Description}}</div>
+                                                                <div *ngIf="IsLCLEntity" style="width:240px;max-width:240px">{{item.Description}}</div>
                                                             </td>
 
                                                             <td *ngIf="!IsEditMode" class="GridViewCell" style="width: 50px; min-width: 50px; max-width: 50px;vertical-align:central">
@@ -189,9 +189,51 @@
             </td>
         </tr>
 
+        <tr [style.height]="IsEditMode ? '120px':'80px'" *ngIf="ShowPackageSummary" class="TabSummaryRounded" style="height: 120px;">
+            <td [style.height]="IsEditMode ? '120px':'80px'">
+                <div class="TabSummaryBody">
+                    <table>
+                        <tr style="height: 1px;">
+                            <td class="TabSummaryTitle">Summary</td>
+                        </tr>
 
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td style="width: 1px; padding-left: 20px;">
+                                            <div class="TabSummaryValue">{{TotalPieces | NumbersPipe:'N0'}}</div>
+                                            <div class="TabSummaryLabel">{{QuantityLabel}}</div>
+                                        </td>
 
-        <tr *ngIf="IsFromFullWarehouseEntryComponent && !IsEditMode" style="height: 32px;">
+                                        <td style="width: 1px; padding-left: 20px;">
+                                            <div class="TabSummaryValue">{{TotalGrossWeight | NumbersPipe:'N3'}}</div>
+                                            <div class="TabSummaryLabel">{{GrossWeightLabel}}</div>
+                                        </td>
+
+                                        <td style="width: 1px; padding-left: 20px;">
+                                            <div class="TabSummaryValue">{{TotalVolume | NumbersPipe:'N3'}}</div>
+                                            <div class="TabSummaryLabel">{{VolumeLabel}}</div>
+                                        </td>
+
+                                        <td style="width: 1px; padding-left: 20px;">
+                                            <div class="TabSummaryValue">{{TotalVolumetricWeight | NumbersPipe:'N3'}}</div>
+                                            <div class="TabSummaryLabel">{{VolumetricWeightLabel}}</div>
+                                        </td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+
+        <tr *ngIf="IsFromFullWarehouseReleaseComponent && !IsEditMode" style="height: 32px;">
             <td style="vertical-align: bottom">
                 <table style="height: 22px;">
                     <tr>

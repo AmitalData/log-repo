@@ -85,7 +85,7 @@
         <tr>
             <td>
                 <div class="ScrollViewer">
-          
+
                         <ul class="ScrollContent">
                             <li class="TemplateBoxItem" *ngFor="let item of ItemsSource">
                                 <table>
@@ -168,7 +168,9 @@
                                             </table>
 
                                             <!--<img style="position: absolute; right:0px; top:0px; width: 45px; height: 45px;" [attr.src]="item.CountryCode | CountryFlagPipe" />-->
-                                            <div style="position: absolute; right:0px; top:0px; width: 45px; height: 45px;">
+                                            <div style="position: absolute; right:0px; top:0px; width: 45px; height: 45px;"
+                                            [style.right]="isRTL?'initial':'0px'"
+                                            [style.left]="!isRTL?'initial':'0px'">
                                                 <Image [Width]="45" [Height]="45" [Src]="item.Src"></Image>
 
                                             </div>
@@ -180,7 +182,7 @@
                                 </table>
                             </li>
                         </ul>
-                
+
                 </div>
             </td>
         </tr>

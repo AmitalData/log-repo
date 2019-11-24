@@ -327,6 +327,7 @@ namespace WebFreight.Web.ReportsWebServices
                             if (truckerContact != null)
                             {
                                 deliveryNotedataprovider.Salesman = truckerContact.EnglishName != null ? truckerContact.EnglishName : "";
+                                deliveryNotedataprovider.SalesmanEmail = truckerContact.Email != null ? truckerContact.Email : "";
                             }
 
                             deliveryNotedataprovider.Telephone = address != null ? (address.PhoneNumber != null ? address.PhoneNumber : "") : "";
@@ -1156,6 +1157,7 @@ namespace WebFreight.Web.ReportsWebServices
                             if (truckerContact != null)
                             {
                                 deliveryNotedataprovider.Salesman = truckerContact.EnglishName != null ? truckerContact.EnglishName : "";
+                                deliveryNotedataprovider.SalesmanEmail = truckerContact.Email != null ? truckerContact.Email : "";
                             }
 
                             deliveryNotedataprovider.Telephone = address != null ? (address.PhoneNumber != null ? address.PhoneNumber : "") : "";

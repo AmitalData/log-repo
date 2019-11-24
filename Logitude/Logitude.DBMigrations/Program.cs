@@ -1,6 +1,5 @@
 ﻿using Logitude.DBMigrations.Helpers;
 using System;
-using System.Configuration;
 
 namespace Logitude.DBMigrations
 {
@@ -16,7 +15,7 @@ namespace Logitude.DBMigrations
                     string[] DXMLFiles = AppHelper.GetDXMLFilesFromRoot(root);
                     if (DXMLFiles != null)
                     {
-                        if (AppHelper.IsConnectionStringValid())
+                        if (AppHelper.IsConnectionStringValid("msql"))
                         {
                             string generatedScript = AppHelper.GenerateScriptFromDXMLFiles(DXMLFiles);
                             AppHelper.SaveScript(generatedScript);
@@ -28,14 +27,13 @@ namespace Logitude.DBMigrations
                                 }
                                 else
                                 {
-                                    AppHelper.ExecuteScript(generatedScript);
+                                    AppHelper.ExecuteScript("msql", generatedScript);
                                 }
                             }
                         }
                         else
                         {
-                            string connectionString = ConfigurationManager.AppSettings["ConnectionString"];
-                            Console.WriteLine("Cannot Connect To Database Using The Connection String: " + connectionString);
+                            Console.WriteLine("Cannot Connect To Database Using The Connection String");
                         }
                     }
                     else

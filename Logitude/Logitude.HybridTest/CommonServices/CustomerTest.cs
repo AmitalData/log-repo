@@ -11,9 +11,9 @@ namespace Logitude.HybridTest.CommonServices
         public void Test_Customer_UPSERT()
         {
             LoginService.GetLoginTokenByCredentials();
-            Response countryServiceResponse = CountryTest.CallCountryUpsert();
-            Assert.IsFalse(countryServiceResponse.HasError, "Country Upsert Failed! " + countryServiceResponse.ErrorMessage);
-            Assert.IsNotNull(countryServiceResponse.Result, "Country Upsert Failed! " + countryServiceResponse.ErrorMessage);
+            //Response countryServiceResponse = CountryTest.CallCountryUpsert();
+            //Assert.IsFalse(countryServiceResponse.HasError, "Country Upsert Failed! " + countryServiceResponse.ErrorMessage);
+            //Assert.IsNotNull(countryServiceResponse.Result, "Country Upsert Failed! " + countryServiceResponse.ErrorMessage);
             Response serviceResponse = CallCustomerUpsert();
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
@@ -29,11 +29,11 @@ namespace Logitude.HybridTest.CommonServices
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
                 CustomerServiceReference.CustomerPM entityPM = new CustomerServiceReference.CustomerPM()
                 {
-                    Code = HybridCodes.CustomerCode,
+                    Code = HybridData.CustomerCode,
                     EnglishName = "Hybrid Customer",
                     LocalName = "Hybrid Customer",
                     CityName = "Hybrid City",
-                    CountryCode = HybridCodes.CountryCode,
+                    CountryCode = HybridData.CountryCode,
                     PartnerTypeId = "CS",
                     IsCustomer = true,
                     Tenant = TestEnvironmentGlobalParameters.Tenant,
@@ -57,14 +57,14 @@ namespace Logitude.HybridTest.CommonServices
                 CustomerServiceReference.CustomerApiFilters filters = new CustomerServiceReference.CustomerApiFilters
                 {
                     ByCode = true,
-                    SearchCode = HybridCodes.CustomerCode
+                    SearchCode = HybridData.CustomerCode
                 };
                 CustomerServiceReference.CustomerPM entityPM = serviceClient.GetCustomerPM(filters, TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
                 Assert.IsFalse(serviceResponse.HasError, "Get Customer PM Failed! " + serviceResponse.ErrorMessage);
                 Assert.IsNull(serviceResponse.Result, "Get Customer PM Failed! " + serviceResponse.ErrorMessage);
                 if (entityPM != null)
                 {
-                    Assert.AreEqual(entityPM.Code, HybridCodes.CustomerCode, "Get Customer PM Failed! " + serviceResponse.ErrorMessage);
+                    Assert.AreEqual(entityPM.Code, HybridData.CustomerCode, "Get Customer PM Failed! " + serviceResponse.ErrorMessage);
                 }
                 else
                 {
@@ -87,14 +87,14 @@ namespace Logitude.HybridTest.CommonServices
                 CustomerServiceReference.CustomerApiFilters filters = new CustomerServiceReference.CustomerApiFilters
                 {
                     ByCode = true,
-                    SearchCode = HybridCodes.CustomerCode
+                    SearchCode = HybridData.CustomerCode
                 };
                 CustomerServiceReference.AddressPM[] entityList = serviceClient.GetCustomerAddresses(filters, TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
                 Assert.IsFalse(serviceResponse.HasError, "Get Customer Addresses Failed! " + serviceResponse.ErrorMessage);
                 Assert.IsNull(serviceResponse.Result, "Get Customer Addresses Failed! " + serviceResponse.ErrorMessage);
                 if (entityList.Length != 0)
                 {
-                    Assert.AreEqual(entityList[0].CountryCode, HybridCodes.CountryCode, "Get Customer Addresses Failed! " + serviceResponse.ErrorMessage);
+                    Assert.AreEqual(entityList[0].CountryCode, HybridData.CountryCode, "Get Customer Addresses Failed! " + serviceResponse.ErrorMessage);
                 }
                 else
                 {
@@ -117,7 +117,7 @@ namespace Logitude.HybridTest.CommonServices
                 CustomerServiceReference.CustomerApiFilters filters = new CustomerServiceReference.CustomerApiFilters
                 {
                     ByCode = true,
-                    SearchCode = HybridCodes.CustomerCode
+                    SearchCode = HybridData.CustomerCode
                 };
                 CustomerServiceReference.ContactPM[] entityList = serviceClient.GetCustomerContacts(filters, TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
                 Assert.IsFalse(serviceResponse.HasError, "Get Customer Contacts Failed! " + serviceResponse.ErrorMessage);
@@ -147,9 +147,9 @@ namespace Logitude.HybridTest.CommonServices
                 CustomerServiceReference.CustomerApiFilters filters = new CustomerServiceReference.CustomerApiFilters
                 {
                     ByCode = true,
-                    SearchCode = HybridCodes.CustomerCode
+                    SearchCode = HybridData.CustomerCode
                 };
-                CustomerServiceReference.CustomerList[] entityList = serviceClient.GetCustomerList(HybridCodes.CustomerCode, "HybridUser@logitudeworld.com", true, TestEnvironmentGlobalParameters.Tenant, 0, 10, ref serviceResponse);
+                CustomerServiceReference.CustomerList[] entityList = serviceClient.GetCustomerList(HybridData.CustomerCode, "HybridUser@logitudeworld.com", true, TestEnvironmentGlobalParameters.Tenant, 0, 10, ref serviceResponse);
                 Assert.IsFalse(serviceResponse.HasError, "Get Customer List Failed! " + serviceResponse.ErrorMessage);
                 Assert.IsNull(serviceResponse.Result, "Get Customer List Failed! " + serviceResponse.ErrorMessage);
                 if (entityList.Length != 0)
@@ -177,7 +177,7 @@ namespace Logitude.HybridTest.CommonServices
                 CustomerServiceReference.CustomerApiFilters filters = new CustomerServiceReference.CustomerApiFilters
                 {
                     ByCode = true,
-                    SearchCode = HybridCodes.CustomerCode
+                    SearchCode = HybridData.CustomerCode
                 };
                 CustomerServiceReference.CustomerList[] entityList = serviceClient.GetCustomerListByEmail("HybridContact@logitudeworld.com", TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
                 Assert.IsFalse(serviceResponse.HasError, "Get Customer List By Email Failed! " + serviceResponse.ErrorMessage);
@@ -207,9 +207,9 @@ namespace Logitude.HybridTest.CommonServices
                 CustomerServiceReference.CustomerApiFilters filters = new CustomerServiceReference.CustomerApiFilters
                 {
                     ByCode = true,
-                    SearchCode = HybridCodes.CustomerCode
+                    SearchCode = HybridData.CustomerCode
                 };
-                CustomerServiceReference.CustomerList entityList = serviceClient.GetCustomerListById(HybridCodes.ContactCode, TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
+                CustomerServiceReference.CustomerList entityList = serviceClient.GetCustomerListById(HybridData.ContactCode, TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
                 Assert.IsFalse(serviceResponse.HasError, "Get Customer List By Id Failed! " + serviceResponse.ErrorMessage);
                 Assert.IsNull(serviceResponse.Result, "Get Customer List By Id Failed! " + serviceResponse.ErrorMessage);
                 if (entityList != null)

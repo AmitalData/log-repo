@@ -29,7 +29,7 @@ namespace Logitude.HybridTest.CommonServices
                 Response serviceResponse = new Response();
                 PackageTypeServiceReference.PackageTypeApiFilters filters = new PackageTypeServiceReference.PackageTypeApiFilters();
                 filters.Take = 10;
-                filters.SearchFields = HybridCodes.PackageTypeCode;
+                filters.SearchFields = HybridData.PackageTypeCode;
                 PackageTypeServiceReference.PackageTypeList[] serviceResult = serviceClient.GetPackageTypeList(filters, TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
                 Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
                 Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);
@@ -55,7 +55,7 @@ namespace Logitude.HybridTest.CommonServices
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
                 PackageTypeServiceReference.PackageTypePM entityPM = new PackageTypeServiceReference.PackageTypePM()
                 {
-                    Code = HybridCodes.PackageTypeCode,
+                    Code = HybridData.PackageTypeCode,
                     EnglishName = "Hybrid PackageType",
                     LocalName = "Hybrid PackageType",
                     AddedManually = true,

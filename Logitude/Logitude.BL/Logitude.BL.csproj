@@ -320,6 +320,7 @@
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\WeightUnitStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CodePropertiesMapping\IncotermCodePropertiesMapping.cs" />
     <Compile Include="CommonDataModel\CustomFilters\AgentSharedManifestCustomFilter.cs" />
+    <Compile Include="CommonDataModel\CustomFilters\CommunicationLogCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\CustomsShipperCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\AccountingPartnerCustomFilter.cs" />
     <Compile Include="CommonDataModel\EntityLists\AirlineAreasPortList.cs" />

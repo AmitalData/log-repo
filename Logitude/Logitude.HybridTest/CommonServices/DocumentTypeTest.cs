@@ -26,7 +26,7 @@ namespace Logitude.HybridTest.CommonServices
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
                 DocumentTypeServiceReference.DocumentTypePM entityPM = new DocumentTypeServiceReference.DocumentTypePM()
                 {
-                    Code = HybridCodes.DocumentTypeCode,
+                    Code = HybridData.DocumentTypeCode,
                     Name = "Hybrid DocumentType",
                     ObjectTableName = "Shipment",
                     DocumentTypeCategoryCode = "O",
@@ -51,12 +51,12 @@ namespace Logitude.HybridTest.CommonServices
             {
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
                 Response serviceResponse = new Response();
-                DocumentTypeServiceReference.DocumentTypePM entityPM = serviceClient.GetDocumentTypeByCode(HybridCodes.DocumentTypeCode, TestEnvironmentGlobalParameters.Tenant,ref serviceResponse);
+                DocumentTypeServiceReference.DocumentTypePM entityPM = serviceClient.GetDocumentTypeByCode(HybridData.DocumentTypeCode, TestEnvironmentGlobalParameters.Tenant,ref serviceResponse);
                 Assert.IsFalse(serviceResponse.HasError, "Get Document Type By Code Failed! " + serviceResponse.ErrorMessage);
                 Assert.IsNull(serviceResponse.Result, "Get Document Type By Code Failed! " + serviceResponse.ErrorMessage);
                 if (entityPM != null)
                 {
-                    Assert.AreEqual(entityPM.Code, HybridCodes.DocumentTypeCode, "Get Document Type By Code Failed! ");
+                    Assert.AreEqual(entityPM.Code, HybridData.DocumentTypeCode, "Get Document Type By Code Failed! ");
                 }
                 else
                 {
@@ -83,7 +83,7 @@ namespace Logitude.HybridTest.CommonServices
                    serviceResult = serviceClient.GetDocumentTypes("Shipment", TestEnvironmentGlobalParameters.Tenant, 0+skip, 10, ref serviceResponse);
                     foreach (DocumentTypeServiceReference.DocumentTypeList documentType in serviceResult)
                     {
-                        if (documentType.Code == HybridCodes.DocumentTypeCode)
+                        if (documentType.Code == HybridData.DocumentTypeCode)
                         {
                             foundDocumentType = true;
                             break;

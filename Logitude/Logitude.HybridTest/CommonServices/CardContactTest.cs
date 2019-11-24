@@ -11,9 +11,9 @@ namespace Logitude.HybridTest.CommonServices
         public void Test_CardContact_UPSERT()
         {
             LoginService.GetLoginTokenByCredentials();
-            Response countryServiceResponse = CountryTest.CallCountryUpsert();
-            Assert.IsFalse(countryServiceResponse.HasError, "Country Upsert Failed! " + countryServiceResponse.ErrorMessage);
-            Assert.IsNotNull(countryServiceResponse.Result, "Country Upsert Failed! " + countryServiceResponse.ErrorMessage);
+            //Response countryServiceResponse = CountryTest.CallCountryUpsert();
+            //Assert.IsFalse(countryServiceResponse.HasError, "Country Upsert Failed! " + countryServiceResponse.ErrorMessage);
+            //Assert.IsNotNull(countryServiceResponse.Result, "Country Upsert Failed! " + countryServiceResponse.ErrorMessage);
             Response customerServiceResponse = CustomerTest.CallCustomerUpsert();
             Assert.IsFalse(customerServiceResponse.HasError, "Customer Upsert Failed! " + customerServiceResponse.ErrorMessage);
             Assert.IsNotNull(customerServiceResponse.Result, "customer Upsert Failed! " + customerServiceResponse.ErrorMessage);
@@ -33,8 +33,8 @@ namespace Logitude.HybridTest.CommonServices
                 CardContactServiceReference.CardContactPM entityPM = new CardContactServiceReference.CardContactPM()
                 {
                     IsAll = true,
-                    ContactId = HybridCodes.ContactCode,
-                    CardId = HybridCodes.CustomerCode,
+                    ContactId = HybridData.ContactCode,
+                    CardId = HybridData.CustomerCode,
                     Tenant = TestEnvironmentGlobalParameters.Tenant,
                 };
                 Response serviceResponse = serviceClient.Upsert(entityPM, false);

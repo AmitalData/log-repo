@@ -34,6 +34,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.PrimaryContactPhone).HasColumnName("PrimaryContactPhone");
             this.Property(t => t.CBSA).HasColumnName("CBSA");
             this.Property(t => t.CAAT).HasColumnName("CAAT");
+            this.Property(t => t.INTTRAUpdatesShipment).HasColumnName("INTTRAUpdatesShipment");
 
             this.HasRequired(t => t.Card).WithOptional(t => t.ShippingLine);
             this.HasOptional(t => t.ShippingAgent).WithMany(t => t.ShippingLines).HasForeignKey(d => d.ShippingAgentId);
