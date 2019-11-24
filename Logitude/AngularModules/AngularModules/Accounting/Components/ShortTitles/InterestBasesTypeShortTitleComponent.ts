@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {GLAccountPM} from '../../EntityPMs/GLAccountPM';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
+import { InterestBasesTypePM } from '../../EntityPMs/InterestBasesTypePM';
 
 @Component({
     moduleId: module.id,
@@ -9,7 +10,7 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 })
 
 export class InterestBasesTypeShortTitleComponent {
-    public EntityPM: GLAccountPM;
+    public EntityPM: InterestBasesTypePM;
     private CurrentSession = SessionLocator.SelectedSession;
 
     constructor(public entityArgs: EntityArgs) {

@@ -26,19 +26,13 @@ export class InterestBasesTypeMenuButtonsHandler {
                     switch (button.EventCode) {
                         case "InterestBasesTypeInactive":
                             {
-                                    if (this.EntityPM.InActive == false) {
-                                        button.IsDisabled = false;
+                                if (this.EntityPM.InActive) {
+                                    button.IsHidden = true;
                                     }
                                     else {
-                                        button.IsDisabled = true;
+                                    button.IsHidden = false;
                                     }
       
-                                break;
-                            }
-
-                        case "InterestBasesTypeInactives":
-                            {
-                                     button.IsHidden = false;
                                 break;
                             }
                     }

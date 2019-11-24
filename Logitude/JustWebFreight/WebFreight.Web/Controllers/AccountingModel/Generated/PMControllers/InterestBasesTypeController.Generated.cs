@@ -59,7 +59,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                
+                SecurityUtility.CheckContactFeature("InterestBasesType", "READ", authToken.Tenant);
+	                
                 IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
                 InterestBasesTypeQueryService interestBasesTypeQuery = new InterestBasesTypeQueryService(MyContext);
 				interestBasesTypeQuery.InitializeSettings();
@@ -91,7 +92,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                    
+                        SecurityUtility.CheckContactFeature("InterestBasesType", "NEW", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("InterestBasesType", entityPM.Tenant, authToken.Tenant);
+	                    
                         IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
                         InterestBasesTypeUpdateService service = new InterestBasesTypeUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
@@ -137,7 +140,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
+                        SecurityUtility.CheckContactFeature("InterestBasesType", "UPDATE", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("InterestBasesType", entityPM.Tenant, authToken.Tenant);
+	
                         IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
                         InterestBasesTypeUpdateService service = new InterestBasesTypeUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
 						service.InitializeEntityPM(entityPM);
