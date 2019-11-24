@@ -35,7 +35,7 @@ namespace Logitude.HybridTest.CommonServices
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
                 CustomBankCardServiceReference.CustomBankPM entityPM = new CustomBankCardServiceReference.CustomBankPM()
                 {
-                    BankCode = HybridCodes.BankCode,
+                    BankCode = HybridData.BankCode,
                     EnglishName = "Hybrid Custom Bank",
                     LocalName = "Hybrid Custom Bank",
                     Tenant = TestEnvironmentGlobalParameters.Tenant,
@@ -54,7 +54,7 @@ namespace Logitude.HybridTest.CommonServices
             using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
             {
                 System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
-                Response serviceResponse = serviceClient.Delete(HybridCodes.BankCode, "?", TestEnvironmentGlobalParameters.Tenant);
+                Response serviceResponse = serviceClient.Delete(HybridData.BankCode, "?", TestEnvironmentGlobalParameters.Tenant);
                 return serviceResponse;
             }
         }

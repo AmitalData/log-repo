@@ -1155,7 +1155,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                     var documentsExecutionLogList: DocumentsExecutionLogList = res.Result;
 
                     if (this.IsStartCheckDocumentBuildViaWorkerRoleTimer) {
-                        if (pmResponse.HasError || !documentsExecutionLogList || (documentsExecutionLogList && (documentsExecutionLogList.StatusCode == "D" || documentsExecutionLogList.StatusCode == "F"))) {
+                        if (pmResponse.HasError || !documentsExecutionLogList || (documentsExecutionLogList && (documentsExecutionLogList.StatusCode == "D" || documentsExecutionLogList.StatusCode == "F" || documentsExecutionLogList.StatusCode == "T"))) {
                             this.StartCheckDocumentBuildViaWorkerRoleTimerTimersub.unsubscribe();
                             this.IsStartCheckDocumentBuildViaWorkerRoleTimer = false;
                             this.StopBusyIndicator();
@@ -1164,7 +1164,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                         if (!pmResponse.HasError) {
 
                             if (documentsExecutionLogList) {
-                                if (documentsExecutionLogList.StatusCode == "F") {
+                                if (documentsExecutionLogList.StatusCode == "F" || documentsExecutionLogList.StatusCode == "T") {
                                     this.ShowMessage(documentsExecutionLogList.ExceptionMessage);
                                 }
                                 else if (documentsExecutionLogList.StatusCode == "D") {

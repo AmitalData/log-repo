@@ -25,5 +25,6 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public bool CopyNotify { get; set; }
         public bool CopyExchangeRates { get; set; }
         public bool IsSaleAsCostCurrency { get; set; }
+        public int AutomaticallyCloseDays { get; set; }
     }
 }

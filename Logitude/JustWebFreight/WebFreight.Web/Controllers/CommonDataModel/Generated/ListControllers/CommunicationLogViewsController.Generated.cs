@@ -41,6 +41,8 @@ using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Simplog.Data.CommonDataModel.Repositories;
+using Logitude.BL.CommonDataModel.CustomFilters;
+		  
 namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 { 
 
@@ -225,7 +227,10 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
                 listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
-				
+				                
+				CommunicationLogCustomFilter customfilters = new CommunicationLogCustomFilter(tenant);
+                entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
+	
                 entityPocos = genericFilter.GetFilteredQuery<CommunicationLog>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
                 IQueryable<CommunicationLogList> entityLists = communicationLogQuery.GetIQueryableEntityList(entityPocos);

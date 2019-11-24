@@ -1,4 +1,11 @@
 ﻿using System;
+using System.CodeDom.Compiler;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.Serialization;
+using System.ServiceModel.Description;
 using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -30,7 +37,7 @@ namespace Logitude.HybridTest.CommonServices
                     LocalName = "Hybrid Contact",
                     Email = "HybridContact@logitudeworld.com",
                     Password = "!H0",
-                    ExternalId = HybridCodes.ContactCode,
+                    ExternalId = HybridData.ContactCode,
                     Tenant = TestEnvironmentGlobalParameters.Tenant,
                 };
                 Response serviceResponse = serviceClient.Upsert(entityPM, false);
@@ -78,7 +85,7 @@ namespace Logitude.HybridTest.CommonServices
                 {
                     Take = 10,
                     ByCode = true,
-                    SearchFields = HybridCodes.ContactCode
+                    SearchFields = HybridData.ContactCode
                 };
                 ContactServiceReference.ContactList[] serviceResult = serviceClient.GetContactList(filters, TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
                 Assert.IsFalse(serviceResponse.HasError, "Get Contact PM By Email Failed! " + serviceResponse.ErrorMessage);
@@ -118,5 +125,14 @@ namespace Logitude.HybridTest.CommonServices
                 }
             }
         }
+        
     }
+
+
+    //public class InvokedParameters
+    //{
+    //    public string ServiceName { get; set; }
+    //    public string IServiceName { get; set; }
+    //    public string ServiceOperation { get; set; }
+    //}
 }

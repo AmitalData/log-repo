@@ -42,7 +42,7 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
                 if (queueService != null && queueResponse != null)
                 {
                     reportExecutionLog = GetReportExecutionLog();
-                    if (reportExecutionLog != null && (reportExecutionLog.StatusCode != "D" || reportExecutionLog.StatusCode != "F"))
+                    if (reportExecutionLog != null && (reportExecutionLog.StatusCode == "W" || reportExecutionLog.StatusCode == "P"))
                     {
                         UpdateReportExecutionLog(new ReportExecutionLogArgs() { StartDate = startDate, StatusCode = "P", ExecutedByServerName = System.Environment.MachineName });
                         BuildStimulReport();

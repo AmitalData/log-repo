@@ -106,6 +106,7 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
     Load(args: any) {
         this.froalaEditorSetting = new FroalaEditorSetting();
         this.froalaEditorSetting.Id = Guid.newGuid();
+        this.froalaEditorSetting.UseNormalPreview = true;
         this.froalaEditorSetting.IsDisableEdit = true;
         this.froalaEditorSetting.HtmlString = "";
         this.froalaEditorSetting.Height = (this.CurrentSession.CurrentWindow.Height - 100);

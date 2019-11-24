@@ -112,6 +112,7 @@ import { AutomaticExternalRconcilMthodListService } from './Services/StandardLis
 import { TaxReportExtendedPMService } from './Services/ExtendedPMs/TaxReportExtendedPMService';
 import { OpenFormatReportStatusListService } from './Services/StandardLists/OpenFormatReportStatusListService';
 
+import { InterestBasesTypeMenuButtonsHandler } from './Components/MenuButtons/InterestBasesTypeMenuButtonsHandler';
 import { JournalMenuButtonsHandler } from './Components/MenuButtons/JournalMenuButtonsHandler';
 import { GLAccountMenuButtonsHandler } from './Components/MenuButtons/GLAccountMenuButtonsHandler';
 import { CashBookMenuButtonsHandler } from './Components/MenuButtons/CashBookMenuButtonsHandler';
@@ -124,6 +125,12 @@ import { TaxReportMenuButtonsHandler } from './Components/MenuButtons/TaxReportM
 import { TaxDeductionReportMenuButtonsHandler } from './Components/MenuButtons/TaxDeductionReportMenuButtonsHandler';
 import { OpenFormatReportMenuButtonsHandler } from './Components/MenuButtons/OpenFormatReportMenuButtonsHandler';
 import { AccountingIntegrityCheckPMService } from './Services/StandardPMs/AccountingIntegrityCheckPMService';
+import { ExternalPageAdditionalDataListService } from './Services/StandardLists/ExternalPageAdditionalDataListService';
+import { ExternalPageAdditionalDataPMService } from './Services/StandardPMs/ExternalPageAdditionalDataPMService';
+import { InterestBasesPeriodListService } from './Services/StandardLists/InterestBasesPeriodListService';
+import { InterestBasesTypeListService } from './Services/StandardLists/InterestBasesTypeListService';
+import { InterestBasesPeriodPMService } from './Services/StandardPMs/InterestBasesPeriodPMService';
+import { InterestBasesTypePMService } from './Services/StandardPMs/InterestBasesTypePMService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -180,12 +187,9 @@ export class ModuleProviders {
             case "TaxDeductionReportListService": { myResult = new TaxDeductionReportListService(); break; }
             case "OpenFormatReportListService": { myResult = new OpenFormatReportListService(); break; }
 
-
-
             case "TaxDeductionReportPMService": { myResult = new TaxDeductionReportPMService(); break; }
-
             case "OpenFormatReportPMService": { myResult = new OpenFormatReportPMService(); break; }
-
+            case "ExternalPageAdditionalDataPMService": { myResult = new ExternalPageAdditionalDataPMService(); break; }
 
             case "AccountingPeriodPMService": { myResult = new AccountingPeriodPMService(); break; }
             case "AutomaticReconcileMethodPMService": { myResult = new AutomaticReconcileMethodPMService(); break; }
@@ -228,6 +232,12 @@ export class ModuleProviders {
             // case "OpenFormatDateTypeListService": { myResult = new OpenFormatDateTypeListService(); break; }
             case "TaxDeductionReportStatusListService": { myResult = new TaxDeductionReportStatusListService(); break; }
             case "OpenFormatReportStatusListService": { myResult = new OpenFormatReportStatusListService(); break; }
+            case "ExternalPageAdditionalDataListService": { myResult = new ExternalPageAdditionalDataListService(); break; }
+            case "InterestBasesPeriodListService": { myResult = new InterestBasesPeriodListService(); break; }
+            case "InterestBasesTypeListService": { myResult = new InterestBasesTypeListService(); break; }
+            case "InterestBasesPeriodPMService": { myResult = new InterestBasesPeriodPMService(); break; }
+            case "InterestBasesTypePMService": { myResult = new InterestBasesTypePMService(); break; }
+
             //#endregion
 
             //Extend Services
@@ -258,6 +268,7 @@ export class ModuleProviders {
             case "GLAccountMenuButtonsHandler": { myResult = new GLAccountMenuButtonsHandler; break; }
             case "CashBookMenuButtonsHandler": { myResult = new CashBookMenuButtonsHandler; break; }
             case "BankDepositMenuButtonsHandler": { myResult = new BankDepositMenuButtonsHandler; break; }
+            case "InterestBasesTypeMenuButtonsHandler": { myResult = new InterestBasesTypeMenuButtonsHandler; break; }
             case "PaymentChequeMenuButtonsHandler": {
                 myResult = new PaymentChequeMenuButtonsHandler; break
             }

@@ -14,4 +14,5 @@ export class QuoteSettingPM {
     public CopyNotify: boolean;
     public IsSaleAsCostCurrency: boolean;
     public CopyExchangeRates: boolean;
+    public AutomaticallyCloseDays: number;
 }

@@ -1009,12 +1009,15 @@
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\AutomaticExternalReconcileMethodViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\BankPageEntryTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\AccountingCompanyTypeViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\ExternalPageAdditionalDataViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\ExternalReconciliationLineViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\ExternalReconciliationViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\GLAccountCounterViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\GLAccountMoreDataViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\GLAccountWithholdingTaxViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\IntegrityCheckStatusViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\InterestBasesPeriodViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\InterestBasesTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\JournalMoreDataViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\OpenFormatReportStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\OpenFormatReportViewsController.Generated.cs" />
@@ -1039,10 +1042,13 @@
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\AccountingCompanyTypeController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\AccountingIntegrityCheckController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\AccountingNoteController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\PMControllers\ExternalPageAdditionalDataController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\ExternalReconciliationController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\GLAccountCounterController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\GLAccountMoreDataController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\GLAccountWithholdingTaxController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\PMControllers\InterestBasesPeriodController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\PMControllers\InterestBasesTypeController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\OpenFormatReportController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\PaymentChequeController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\ReconcileExternalPageController.Generated.cs" />
@@ -2662,6 +2668,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DeclarationCourierStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DeclarationMamanSpecialActionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DocumentTypeCustomsDataUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ExternalPageAdditionalDataUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ExternalReconciliationLineUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ExternalReconciliationUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\FeatureToggleUpdateClass.cs" />
@@ -2673,6 +2680,8 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountTotalDateTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountWithholdingTaxUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\IntegrityCheckStatusUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\InterestBasesPeriodUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\InterestBasesTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\JournalAdditionalDataUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\JournalExternalReconcileUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\JournalMoreDataUpdateClass.cs" />

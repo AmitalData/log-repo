@@ -101,6 +101,7 @@
     <Content Include="Accounting\Components\Others\ReconcileComponent.html" />
     <Content Include="Accounting\Components\ShortTitles\BankAccountShortTitleComponent.html" />
     <Content Include="Accounting\Components\ShortTitles\BankDepositShortTitleComponent.html" />
+    <Content Include="Accounting\Components\ShortTitles\InterestBasesTypeShortTitleComponent.html" />
     <Content Include="Accounting\Components\ShortTitles\TaxReportShortTitleComponent.html" />
     <Content Include="Accounting\Components\ShortTitles\GLAccountShortTitleComponent.html" />
     <Content Include="Accounting\Components\ShortTitles\ExternalReconciliationShortTitleComponent.html" />
@@ -108,6 +109,7 @@
     <Content Include="Accounting\Components\ShortTitles\PaymentChequeShortTitleComponent.html" />
     <Content Include="Accounting\Components\Templates\FieldTemplateComponent.html" />
     <Content Include="Accounting\Components\Workspaces\GLAccounts\GLAccountsPageComponent.html" />
+    <Content Include="Accounting\Components\Workspaces\Interest\InterestPageComponent.html" />
     <Content Include="Booking\Components\BookingWizard\NoRemainingStockComponent.html" />
     <Content Include="CommonModules\CommonAgent\Components\NewEntity\NewAgentComponent.html" />
     <Content Include="CommonModules\CommonAirline\Components\AddEdit\AddEditAirlineAreaComponent.html" />
@@ -408,6 +410,7 @@
     <TypeScriptCompile Include="Accounting\Components\Maintenance\FullAccountingAddControlComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Maintenance\Generate1000Component.ts" />
     <TypeScriptCompile Include="Accounting\Components\Maintenance\Receiving1000Component.ts" />
+    <TypeScriptCompile Include="Accounting\Components\MenuButtons\InterestBasesTypeMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Accounting\Components\MenuButtons\OpenFormatReportMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Accounting\Components\MenuButtons\TaxDeductionReportMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Accounting\Components\NewEntity\LoadRecoExPageComponent.ts" />
@@ -415,7 +418,9 @@
     <TypeScriptCompile Include="Accounting\Components\NewEntity\NewOpenFormatReportComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\AccountingNoteComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\ExtReconcileAdjustBankFeeComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\ShortTitles\InterestBasesTypeShortTitleComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Workspaces\GLAccounts\GLAccountsPageComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\Workspaces\Interest\InterestPageComponent.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\AccountingIntegrityCheckList.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\IntegrityCheckStatusList.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\JournalAdditionalDataList.ts" />
@@ -431,10 +436,14 @@
     <TypeScriptCompile Include="Accounting\Services\ExtendedPMs\TaxDeductionReportExtendedPMService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardLists\AccountingIntegrityCheckListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardLists\IntegrityCheckStatusListService.ts" />
+    <TypeScriptCompile Include="Accounting\Services\StandardLists\InterestBasesPeriodListService.ts" />
+    <TypeScriptCompile Include="Accounting\Services\StandardLists\InterestBasesTypeListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardLists\JournalAdditionalDataListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardLists\OpenFormatReportListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardLists\OpenFormatReportStatusListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\AccountingIntegrityCheckPMService.ts" />
+    <TypeScriptCompile Include="Accounting\Services\StandardPMs\InterestBasesPeriodPMService.ts" />
+    <TypeScriptCompile Include="Accounting\Services\StandardPMs\InterestBasesTypePMService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\JournalAdditionalDataPMService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\OpenFormatReportPMService.ts" />
     <TypeScriptCompile Include="Accounting\Validators\PaymentChequeValidator.ts" />

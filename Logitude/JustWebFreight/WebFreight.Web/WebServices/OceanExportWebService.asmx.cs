@@ -193,6 +193,17 @@ namespace WebFreight.Web.WebServices
                 {
                     mainCarriageCarrier = (from a in commonContext.Cards where a.Id == shipment.MainCarriageCarrierId select a).FirstOrDefault();
                 }
+
+                if (!string.IsNullOrEmpty(shipment.CreatedByUserId))
+                {
+                    Contact createdByUser = contactRepository.GetSingleContact(shipment.CreatedByUserId, tenant);
+
+                    if (createdByUser != null)
+                    {
+                        myDataProvider.CreatedBy = createdByUser.EnglishName;
+                    }
+
+                }
                 #endregion
 
                 #region Shipper
@@ -1102,7 +1113,7 @@ namespace WebFreight.Web.WebServices
                     }
                 }
                 #endregion
-
+                 
                 #region Move Type
                 if (!string.IsNullOrEmpty(shipment.MoveTypeId))
                 {
@@ -1960,6 +1971,8 @@ namespace WebFreight.Web.WebServices
                 myDataProvider.TotalVolume = shipment.Volume != null && shipment.Volume != 0 ? (shipment.Volume + " " + volumeUnitCode) : "";
                 myDataProvider.TotalWeight = shipment.GrossWeight != null && shipment.GrossWeight != 0 ? String.Format("{0:#,0.00}", shipment.GrossWeight.Value) + " " + (shipment.GrossWeightUnitCode != null ? shipment.GrossWeightUnitCode : "") : "";
 
+                //Confimation Note
+                myDataProvider.ConfirmationNotes = shipment.BookingConfirmationNotes != null ? shipment.BookingConfirmationNotes : "";
                 //PrepaidCollect
                 myDataProvider.PrepaidCollect = shipmentprepaidcollect != null ? shipmentprepaidcollect.Name : "";
 

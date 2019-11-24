@@ -2287,13 +2287,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
 
         }
-        public HttpResponseMessage GetCustomersQuickSearch(string SearchText)
+        public HttpResponseMessage GetCustomersQuickSearch([FromUri] ApiQueryFilters filters)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+
+                string SearchText = filters.Filter10Value;
 
                 PartnersDomainService domainService = new PartnersDomainService();
                 List<CustomerList> myResult = domainService.GetCustomersQuickSearch(tenant, SearchText);

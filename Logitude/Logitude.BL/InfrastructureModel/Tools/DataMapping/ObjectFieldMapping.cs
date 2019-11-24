@@ -15,6 +15,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             {
                 objectField.Code = objectFieldPM.FieldName;
             }
+            objectField.FieldCode = objectFieldPM.FieldCode;
             objectField.AutomaticField = objectFieldPM.AutomaticField;
             objectField.CanFilter = objectFieldPM.CanFilter;
             objectField.ConverterName = objectFieldPM.ConverterName;

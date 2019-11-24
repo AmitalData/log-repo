@@ -154,6 +154,10 @@
       <HintPath>..\packages\JWT.1.3.4\lib\3.5\JWT.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Logitude.Accounting.BL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\JustWebFreight\WebFreight.Web\bin\Logitude.Accounting.BL.dll</HintPath>
+    </Reference>
     <Reference Include="Logitude.BL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Logitude.BL\bin\Debug\Logitude.BL.dll</HintPath>
@@ -648,10 +652,6 @@
     <ProjectReference Include="..\JustWebFreight\WebFreight.Web\WebFreight.Web.csproj">
       <Project>{8408e4e5-b4b7-46bc-8300-1ae163b36e2d}</Project>
       <Name>WebFreight.Web</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Logitude.Accounting.BL\Logitude.Accounting.BL.csproj">
-      <Project>{00e5d96d-dd45-47e8-aaa3-fdbfd8add61a}</Project>
-      <Name>Logitude.Accounting.BL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">
       <Project>{a3799525-14a2-42fc-a2de-69ed3fd1c5d1}</Project>
