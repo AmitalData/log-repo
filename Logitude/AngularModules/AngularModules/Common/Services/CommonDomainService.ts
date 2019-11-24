@@ -1234,6 +1234,23 @@ export class CommonDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
+
+    GetCardOccasions(cardId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetCardOccasions?cardId=' + cardId, {
+                headers: authHeader
+            }).map(response => {
+                var myResult = response.json();
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myResult;
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
 }
 
 export class TranslationHeader {
