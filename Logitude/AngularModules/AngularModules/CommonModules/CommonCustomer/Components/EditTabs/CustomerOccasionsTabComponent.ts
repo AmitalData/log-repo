@@ -27,6 +27,10 @@ export class CustomerOccasionsTabComponent {
         });  
     }
 
+    RefreshButtonClicked() {
+        this.LoadOccasions();
+    }
+
     LoadOccasions() {
         var service: CommonDomainService = new CommonDomainService();
         service.GetCardOccasions(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
@@ -47,7 +51,7 @@ export class CustomerOccasionsTabComponent {
 
                     cmpRef.instance.BackCompleted.subscribe(bk => {
                         if (isEditComponentSaved) {
-                            this.entityArgs.EditComponent.ReloadEntityPM();
+                            this.LoadOccasions();
                         }
                     });
 

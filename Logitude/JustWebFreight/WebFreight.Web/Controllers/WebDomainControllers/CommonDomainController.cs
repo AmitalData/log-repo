@@ -2519,7 +2519,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     IQueryable<Occasion> iIQueryable = (from d in crmContext.OccasionInvitees.Include("Occasion")
                                                         where allContactsIds.Contains(d.ContactId)
-                                                        select d.Occasion);
+                                                        group d by d.Occasion into g
+                                                        select g.Key);
 
                     OccasionListQueryService occasionQuery = new OccasionListQueryService(crmContext);
 
