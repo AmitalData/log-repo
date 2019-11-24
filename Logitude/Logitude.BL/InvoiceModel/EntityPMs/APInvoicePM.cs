@@ -74,6 +74,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string MainEntityReference { get; set; }
         public string SearchFields { get; set; }
         public string VendorName { get; set; }
+        public string VendorLocalName { get; set; }
         public string VendorCode { get; set; }
         public string VendorType { get; set; }
         public string PaymentTermName { get; set; }
@@ -287,5 +288,10 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string JournalId { get; set; }
         public string ShipmentConcurrencyGUID { get; set; }
         public string ShipmentNewConcurrencyGUID { get; set; }
+
+        public string VendorCity { get; set; }
+        public string VendorCountry { get; set; }
+
+
     }
 }

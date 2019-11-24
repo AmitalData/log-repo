@@ -76,5 +76,6 @@ export class ObjectFieldList {
 		EnableFullscreenTextBox: boolean;
 		DisplayInAutomationAsEnitity: boolean;
 		RecordType: string;
+		ObjectTable_LookUpTableName: string;
 	
 }

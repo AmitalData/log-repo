@@ -636,14 +636,40 @@ export class PartnersDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-    GetCustomersQuickSearch(SearchText: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+    GetCustomersQuickSearch(filters: ApiQueryFilters) {
 
-        var url = this._apiUrl + '/GetCustomersQuickSearch?SearchText=' + SearchText;
+        var urlparameters = '/GetCustomersQuickSearch?';
+        var mykeys = Object.keys(filters);
+        var addtionalFiltersValues = null;
+        for (var i in mykeys) {
+            var propName = mykeys[i];
+            var propValue = filters[propName];
+
+            var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
+
+            if (urlparameters != "?") {
+                urlparameters = urlparameters.concat('&');
+            }
+            if (!ignoreFilter) {
+                propValue = encodeURIComponent(propValue);
+                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+            }
+
+            if (propName == "AdditionalFilters" && propValue.length > 0)
+                addtionalFiltersValues = JSON.stringify(propValue);
+
+
+        }
+        if (addtionalFiltersValues) {
+            urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
+        }
+
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        var callUrl = this._apiUrl.concat(urlparameters);//
 
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
+            return this._http.get(callUrl, { headers: authHeader }).map(response => {
 
                 var allLists = response.json();
                 var _mappedListsArray: Array<CustomerList> = [];

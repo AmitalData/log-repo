@@ -725,8 +725,9 @@ namespace WebFreight.Web.Helpers
 
 
 
-        public void BuildStimulReport(ReportFliter reportFliter)
+        public string BuildStimulReport(ReportFliter reportFliter)
         {
+            string result = string.Empty;
             if (reportFliter != null)
             {
                 byte[] filters = GetReportFilters(reportFliter.QueryFilterItemLists);
@@ -738,9 +739,10 @@ namespace WebFreight.Web.Helpers
                 if (template == null) throw new Exception("Report Template is missing");
                 else
                 {
-                    GetReportStimulsoftViewer(reportDataProvider, template, reportFliter);
+                    result = GetReportStimulsoftViewer(reportDataProvider, template, reportFliter);
                 }
             }
+            return result;
         }
 
 
@@ -1402,6 +1404,9 @@ namespace WebFreight.Web.Helpers
             }
 
             report.AutoLocalizeReportOnRun = true;
+            report.ReportCacheMode = StiReportCacheMode.On;
+            report.RenderedPages.CacheMode = true;
+            report.RenderedPages.CanUseCacheMode = true;
             //report.Culture = "he-IL"; // we can use report globalization to translate lables, google "Glabalization manager stimulsoft" for more
             report.Render(false);
 

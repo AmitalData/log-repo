@@ -441,7 +441,7 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
                     this.RowTextDesignPM = this.QuoteTemplateTextDesignPMLists.filter(d => d.Id == this.TableDesignPM.LinesDesignId)[0];
                     if (this.RowTextDesignPM) {
                         this.RowTextDesignPM.Title = "Value";
-                        this.RowTextDesignPM.HideAlignment = true;
+                       // this.RowTextDesignPM.HideAlignment = true;
                     }
                 }
                 if (this.QuoteTemplateSectionTypeCode == "QD") {
@@ -771,6 +771,11 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
         }
 
     }
+
+    TotalOfPercentages():number {
+        return this.TableColumn1LabelWidth +  this.TableColumn1ValueWidth + this.TableColumn2LabelWidth +  this.TableColumn2ValueWidth;
+    }
+
     SaveButtonClicked() {
 
         this.SaveObjectFieldTextList();
@@ -780,6 +785,12 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
         this.ValidationErrorsList = [];
         var textDesignPmLists = null;
         var textCodeDataLists: TextCodeData[] = null;
+        
+        if (this.TotalOfPercentages() > 100){
+            this.ValidationErrorsList.push("Total of percentages is greater than 100");
+        }
+    
+        if (this.ValidationErrorsList.length == 0) {
         if (this.QuoteTemplateTextDesignPMLists) {
             textDesignPmLists = this.QuoteTemplateTextDesignPMLists.filter(d => d.IsDirty == true);
             if (textDesignPmLists.length > 0) this.IsSaveQuoteTemplateTextDesignRuning = true;
@@ -859,7 +870,7 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
 
 
 
-
+}
 
 
     }

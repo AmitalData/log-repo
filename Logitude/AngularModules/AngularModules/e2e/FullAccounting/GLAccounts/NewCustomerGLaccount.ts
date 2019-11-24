@@ -2,38 +2,38 @@ import { browser, by, element, WebDriver, protractor } from 'protractor';
 import { FieldsHelper } from '../../Helpers/FieldsHelper';
 import { GeneralFunctions } from '../../Helpers/GeneralFunctions';
 
-export class NewCustomer{
-  private Helper: FieldsHelper;
-  private Generator: GeneralFunctions;
+export class NewCustomer {
+    private Helper: FieldsHelper;
+    private Generator: GeneralFunctions;
 
-  constructor() {
-    this.Helper = new FieldsHelper();
-    this.Generator = new GeneralFunctions();
-  }
+    constructor() {
+        this.Helper = new FieldsHelper();
+        this.Generator = new GeneralFunctions();
+    }
 
 
-  public CreateNewCustomerGLAccount(Name: string) {
+    public CreateNewCustomerGLAccount(Name: string) {
 
-        this.Helper.WaitByIdAndClick('NewCustomer');
-        this.Helper.ItemsVisibility('Customer_EnglishName');
-        this.Helper.ItemsPresent('Customer_EnglishName');
-        this.Helper.WaitByIdAndFill('Customer_EnglishName', Name);
-        this.Helper.WaitByIdAndFill('Customer_LocalName', Name);
-        this.Helper.WaitByIdAndFill('Customer_Address1_Potential', 'Ramallah');
-        this.Helper.WaitByIdAndFill('Customer_Address2_Potential', 'Nablus');
-        this.Helper.WaitByIdAndFill('Customer_ZipCode_Potential', '00970');
-        this.Helper.WaitByIdAndFill('Customer_CountryId_Potential', 'ps');
-        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Customer_CountryId_Potential', 'ps')
+        this.Helper.WaitByIdAndClick('NewButton_Customer');
+      this.Helper.ItemsVisibility('Address_Name');
+      this.Helper.ItemsPresent('Address_Name');
+      this.Helper.WaitByIdAndFill('Address_Name', Name);
+      this.Helper.WaitByIdAndFill('Address_LocalName', Name);
+      this.Helper.WaitByIdAndFill('Address_Address1', 'Ramallah');
+      this.Helper.WaitByIdAndFill('Address_Address2', 'Nablus');
+      this.Helper.WaitByIdAndFill('Address_ZipCode', '00970');
+      this.Helper.WaitByIdAndFill('Address_CountryId', 'ps');
+      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Address_CountryId', 'ps')
         // this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
         this.Helper.WaitBusyIndicator();
 
-        this.Helper.WaitByIdAndFill('Customer_City_Potential', 'Nablus');
+      this.Helper.WaitByIdAndFill('Address_City', 'Nablus');
         this.Helper.WaitBusyIndicator();
 
-        this.Helper.WaitByIdAndFill('Contact_EnglishName', 'My Contact');
-        this.Helper.WaitBusyIndicator();
+       // this.Helper.WaitByIdAndFill('Contact_EnglishName', 'My Contact');
+       // this.Helper.WaitBusyIndicator();
 
-        this.Helper.WaitByIdAndClick('Ok-AddPotCustomer');
+      this.Helper.WaitByIdAndClick('Ok-AddCustomer');
         this.Helper.WaitBusyIndicator();
         this.Helper.WaitWindowClosed();
 
@@ -44,11 +44,14 @@ export class NewCustomer{
     }
 
     public ActivateCustomerGLAccount(Name: string) {
-        this.Generator.QuickSearchTextBox('Card_Search', Name);
-        this.Helper.WaitByIdAndClick('Customer.B.Activate');
-        this.Helper.WaitByIdAndClick('Ok-activate');
-        this.Helper.WaitBusyIndicator();
-        this.Helper.WaitWindowClosed();
+       // this.Generator.QuickSearchTextBox('SearchFieldsId_0_0', Name);
+        this.Helper.WaitByIdAndFill('SearchFieldsId_0_0', Name);
+        this.Helper.ItemsPresent('ListDataLoaded');
+
+        this.Helper.WaitByIdAndClick('LogGrid_0_0row0');
+      //  this.Helper.WaitByIdAndClick('Ok-activate');
+       // this.Helper.WaitBusyIndicator();
+       // this.Helper.WaitWindowClosed();
         this.Helper.WaitByIdAndClick('Customer.TH.Accounting');
         this.Helper.WaitByIdAndClick('Activate');
         this.Helper.WaitByIdAndFill('GLAccount_ChartOfAccountsId', 'cust');

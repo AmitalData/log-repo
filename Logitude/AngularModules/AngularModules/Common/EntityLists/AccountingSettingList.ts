@@ -48,5 +48,7 @@ export class AccountingSettingList {
 		EnableNegativeOffsetARPayments: boolean;
 		EnableNegativeOffsetAPPayments: boolean;
 		EnableInvoiceStocksManagement: boolean;
+		RefreshToken: string;
+		QBOOAuth: number;
 	
 }

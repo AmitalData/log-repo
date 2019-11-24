@@ -51,9 +51,14 @@ namespace WebFreight.Web
         System.Timers.Timer aTimer = new System.Timers.Timer();
         protected void Application_Start(object sender, EventArgs e)
         {
-			
+            LogitudeAppSettings.StartDateTime = DateTime.Now;
+            //if ((DateTime.Now - LogitudeAppSettings.EndDateTime).TotalMinutes <= 5)
+            //{
+                LogitudeAppSettings.IsRecycled = true;
+            //} 
 
-			if (string.IsNullOrEmpty(LogitudeSettings.DeploymentStage))
+
+            if (string.IsNullOrEmpty(LogitudeSettings.DeploymentStage))
             {
                 string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
                 LogitudeSettings.DatabaseManagementSystem = dbms;
@@ -441,6 +446,7 @@ namespace WebFreight.Web
 
         protected void Application_End(object sender, EventArgs e)
         {
+            LogitudeAppSettings.EndDateTime = DateTime.Now;
             aTimer.Enabled = false;
             ContainerAccessor.CleanUp();
         }

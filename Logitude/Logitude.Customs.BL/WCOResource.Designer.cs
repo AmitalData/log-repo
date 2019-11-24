@@ -64,7 +64,7 @@ namespace Logitude.Customs.BL {
         ///   Looks up a localized string similar to מפתח,חטיבה,חטיבה (כן/לא),רמה,WCOID,Occurence,האם שונה ביחס למסר המקור,XML Tag Name,&quot;הצהרה
         ///M/C/O/N&quot;,שם שדה/חטיבה,תיאור/ הערות,תיאור WCO,פורמט,Data Type,שם שדה בדור קיים,שם טבלה DATA BASE,מספר טבלה DATA BASE
         ///1,declaration,כן,0,42A,1,לא,Declaration,M,הצהרת יבוא,הצהרת יבוא IM1,,,חטיבה,,,
-        ///2,declaration,לא,1,023,0..1,לא,|____ AcceptanceDateTime,N,תאריך בו נקלט המסר ההצהרה,התאריך בו נקלט מסר ההצהרה. סוכן המכס לא מזין תאריך זה.,Date on which a Goods declaration has been or will be accepted by Customs in accordanc [rest of string was truncated]&quot;;.
+        ///2,declaration,לא,1,023,0..1,לא,|____ AcceptanceDateTime,N,תאריך בו נקלט המסר ההצהרה,התאריך בו נקלט מסר ההצהרה. סוכן המכס לא מזין תאריך זה.,Date on which a Goods declaration has been or will be accepted by Customs in accordan [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string DB {
             get {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { BIReportPM } from '../../../../Infrastructure/EntityPMs/BIReportPM';
 import { BIReportPMService } from '../../../../Infrastructure/Services/StandardPMs/BIReportPMService';
@@ -6,6 +6,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
+import { BIReportExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/BIReportExtendedPMService';
 
 @Component({
     moduleId: module.id,
@@ -20,6 +21,10 @@ export class NewBIReport extends BaseComponent {
     public ObjectTableName: string = "BIReport";
     public IsNewQuery = true;
     private CurrentSession = SessionLocator.SelectedSession;
+    private OriginalName: string = "";
+    private IsCopy: boolean = false;
+    private ComponentRef;
+    @Output() BackCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
     constructor() {
         super();
         this.EntityPM = new BIReportPM();
@@ -34,9 +39,22 @@ export class NewBIReport extends BaseComponent {
         this.SetUIProperties();
     }
 
+
     SetWindowArgs(args: any) {
-        this.DWQueryId = args.DWQueryId;
-        this.EntityPM.BIReportFolderId = args.FolderId;
+        if (args.Name != null) {
+            this.EntityPM.DWQueryId = args.DWQueryId;
+            this.EntityPM.BIReportFolderId = args.BIReportFolderId;
+            this.EntityPM.Name = args.Name + "/Copy";
+            this.OriginalName = args.Name;
+            this.EntityPM.Description = args.Description;
+            this.IsCopy = true;
+            //this.ComponentRef = args.ComponentRef;
+            //this.BackCompleted = args.BackCompleted;
+        }
+        else {
+            this.DWQueryId = args.DWQueryId;
+            this.EntityPM.BIReportFolderId = args.FolderId;
+        }
         this.SetUIProperties();
     }
 
@@ -113,61 +131,80 @@ export class NewBIReport extends BaseComponent {
 
     OkButtonClicked() {
         this.ValidationErrorsList = [];
-
         if (AppTool.IsNullOrEmpty(this.EntityPM.Name)) {
             this.ValidationErrorsList.push("Name Field is Required");
+            
         }
 
         if (AppTool.IsNullOrEmpty(this.EntityPM.BIReportFolderId)) {
             this.ValidationErrorsList.push("Folder Field is Required");
+             
         }
+        if(this.ValidationErrorsList.length != 0) {
+            return;
+        }
+            
+        var service: BIReportExtendedPMService = new BIReportExtendedPMService();
+        service.DoesReportExist(this.EntityPM.Name, this.EntityPM.BIReportFolderId).subscribe(response => {
+            if (response.Result == true) {
+                this.ValidationErrorsList.push("Please use other name for your report so it is different from others");
+            }
+            else {
+                this.CurrentSession.CloseCurrentWindow();
 
-        if (this.ValidationErrorsList.length == 0) {
-            this.CurrentSession.CloseCurrentWindow();
+                var logWindow = new LogitudeWindow();
+                var windowArgs: any = {};
+                windowArgs.DWQueryId = this.DWQueryId;
+                windowArgs.IsCopy = this.IsCopy;
+                windowArgs.ComponentRef = this.ComponentRef;
+                windowArgs.BackCompleted = this.BackCompleted;
+                windowArgs.IsBIReportWorkspace = true;
+                logWindow.WindowArgs = windowArgs;
+                logWindow.Width = 1200;
+                logWindow.Height = 820;
+                logWindow.Title = "Query Builder";
+                logWindow.Show('./CommonModules/CommonOthers/Components/LoadSampleData/DWQueryBuilderComponent');
+                logWindow.ComponentLoaded.subscribe(s => {
+                    logWindow.WindowClosed.subscribe(d => {
+                        if (s != null) {
+                            if (d != "cancel") {
+                                this.EntityPM.DWQueryId = s.QID;
 
-            var logWindow = new LogitudeWindow();
-            var windowArgs: any = {};
-            windowArgs.DWQueryId = this.DWQueryId;
-            windowArgs.IsBIReportWorkspace = true;
-            logWindow.WindowArgs = windowArgs;
-            logWindow.Width = 1200;
-            logWindow.Height = 820;
-            logWindow.Title = "Query Builder";
-            logWindow.Show('./CommonModules/CommonOthers/Components/LoadSampleData/DWQueryBuilderComponent');
-            logWindow.ComponentLoaded.subscribe(s => {
-                logWindow.WindowClosed.subscribe(d => {
-                    if (s != null) {
-                        this.EntityPM.DWQueryId = s.QID;
+                                if (this.ValidationErrorsList.length == 0) {
+                                    this.CurrentSession.StartBusyIndicatorSaving();
+                                    this.myService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
+                                        this.CurrentSession.StopBusyIndicator();
 
-                        if (this.ValidationErrorsList.length == 0) {
-                            this.CurrentSession.StartBusyIndicatorSaving();
-                            this.myService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-                                this.CurrentSession.StopBusyIndicator();
+                                        if (myResponse.HasError) {
+                                            this.ValidationErrorsList = myResponse.ErrorsArray;
+                                        }
 
-                                if (myResponse.HasError) {
-                                    this.ValidationErrorsList = myResponse.ErrorsArray;
-                                }
+                                        else {
+                                            this.CurrentSession.CloseCurrentWindow();
 
-                                else {
-                                    this.CurrentSession.CloseCurrentWindow();
 
-                                    if (d != "cancel") {
-                                        SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureBIReport/Components/Workspaces/BIReportPreviewComponent", this.CurrentSession.SessionLocation.viewContainerRef)
-                                            .then(cmpRef => {
-                                                cmpRef.instance.ComponentRef = cmpRef;
-                                                cmpRef.instance.Run({
-                                                    DWQueryId: s.QID,
-                                                    ObjectTableName: 'BIReport',
-                                                    EntityId: this.EntityPM.Id,
+                                            SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureBIReport/Components/Workspaces/BIReportPreviewComponent", this.CurrentSession.SessionLocation.viewContainerRef)
+                                                .then(cmpRef => {
+                                                    cmpRef.instance.ComponentRef = cmpRef;
+                                                    cmpRef.instance.Run({
+                                                        DWQueryId: s.QID,
+                                                        ObjectTableName: 'BIReport',
+                                                        EntityId: this.EntityPM.Id,
+                                                        BackButtonLable: this.IsCopy ? "BI Report :" + this.OriginalName : "BI Reports",
+                                                    });
                                                 });
-                                            });
-                                    }
+
+                                        }
+                                    });
                                 }
-                            });
+                            }
                         }
-                    }
+                    });
                 });
-            });
-        }
+            }});
+         
+
+       
+   
     }
 }

@@ -2888,6 +2888,12 @@ namespace WebFreight.Web.ReportsWebServices
 
             if (!string.IsNullOrEmpty(agentId))
             {
+                Card agentCard = (from a in myCommonContext.Cards
+                                  where a.Id == agentId
+                                  select a).FirstOrDefault();
+
+                awbDp.AgentNameAddress = agentCard != null ? agentCard.EnglishName : "";
+
                 if (!string.IsNullOrEmpty(agentAddressId))
                 {
                     Address agentAddress = addressRepository.GetSingleAddress(agentAddressId, tenant);
@@ -2895,6 +2901,20 @@ namespace WebFreight.Web.ReportsWebServices
                     if (agentAddress != null)
                     {
                         awbDp.AgentATTN = agentAddress.ATTN;
+
+                        if (agentAddress.IsLocalLanguage)
+                        {
+                            if (agentCard != null && !string.IsNullOrEmpty(agentCard.LocalName))
+                            {
+                                awbDp.AgentNameAddress = agentCard.LocalName;
+                            }
+                        }
+
+                        awbDp.AgentNameAddress = awbDp.AgentNameAddress + Environment.NewLine + DataProviders.General.GetAddress(agentAddress);
+                        if (agentAddress.PhoneNumber != null || agentAddress.FaxNumber != null)
+                        {
+                            awbDp.AgentNameAddress = awbDp.AgentNameAddress + Environment.NewLine + (agentAddress.PhoneNumber != null ? "Tel: " + agentAddress.PhoneNumber + " " : "") + (agentAddress.FaxNumber != null ? "Fax: " + agentAddress.FaxNumber + " " : "");
+                        }
                     }
                 }
             }

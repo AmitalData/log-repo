@@ -10983,7 +10983,7 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
             QueryFilterItem filterItem_GLAccountId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "GLAccountId").FirstOrDefault();
             QueryFilterItem filterItem_AccountTypeCode = queryOperations.QueryFilterItems.Where(d => d.FieldName == "AccountTypeCode").FirstOrDefault();
-            QueryFilterItem filterItem_ChartOfAccountsId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ChartOfAccountsId").FirstOrDefault();
+            QueryFilterItem filterItem_ChartOfAccountsId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ChartOfAccountId").FirstOrDefault();
             QueryFilterItem filterItem_CurrencyId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CurrencyId").FirstOrDefault();
             QueryFilterItem filterItem_IsReconciled = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IsReconciled").FirstOrDefault();
             QueryFilterItem filterItem_IncludeChildAccounts = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeChildAccounts").FirstOrDefault();
@@ -11255,6 +11255,9 @@ namespace WebFreight.Web.ReportsWebServices
                     JournalNumber = transaction.JournalNumber,
                     GLAccountRecoMethodCode = glaccountPM.ReconcileMethodCode,
                     TenantCurrencySign = tenantPM.CurrencySign,
+
+                    CumulativeForeignAmount = transaction.CumulativeForeignAmount,
+                    CumulativeLocalAmount = transaction.CumulativeLocalAmount,
 
                 };
 
@@ -12158,7 +12161,25 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
             #endregion
-
+            string category1Name = GetCategory1Name(category1, tenant);
+            string category5Name = GetCategory5Name(category5, tenant);
+            totalData.CurrencyDetailed = currency;
+            ContactPM contact = GetLoggedContact(tenant);
+            bool showLocals = !contact.DontShowLocal;
+            if (showLocals)
+            {
+                totalData.DetailedCustomersAccounts = customer ? "הצג פירוט" : "ללא פירוט";
+                totalData.DetailedVendorsAccounts = vendor ? "הצג פירוט" : "ללא פירוט";
+            }
+            else
+            {
+                totalData.DetailedCustomersAccounts = customer ? "Show" : "Dont show";
+                totalData.DetailedVendorsAccounts = vendor ? "Show" : "Dont show";
+            }
+            totalData.Category = category1Name != null ? category1Name : category5Name;
+            totalData.UseZeroFilter = useZeroFilter;
+            totalData.FromDate = fromDate;
+            totalData.ToDate = toDate;
 
             var trailReportParam = new TrailReportParam()
             {
@@ -12859,6 +12880,29 @@ namespace WebFreight.Web.ReportsWebServices
 
 
             return totalData;
+        }
+
+        private string GetCategory1Name(string category1, int tenant)
+        {
+            Category1QueryService category1QueryService = new Category1QueryService(tenant);
+            Category1PM category = category1QueryService.GetSinglePM(category1, tenant);
+            ContactPM contact = GetLoggedContact(tenant);
+            bool showLocals = !contact.DontShowLocal;
+            if (category != null)
+                return showLocals ? category.LocalName : category.EnglishName;
+            else return null;
+
+        }
+        private string GetCategory5Name(string category5, int tenant)
+        {
+            Category5QueryService category5QueryService = new Category5QueryService(tenant);
+            Category5PM category = category5QueryService.GetSinglePM(category5, tenant);
+            ContactPM contact = GetLoggedContact(tenant);
+            bool showLocals = !contact.DontShowLocal;
+            if (category != null)
+                return showLocals ? category.LocalName : category.EnglishName;
+            else return null;
+
         }
         #endregion
 

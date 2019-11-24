@@ -247,6 +247,26 @@ export class ReconciliationExtendedPMService {
         });
     }
 
+    GetSingleWithoutLines(id: string) {
+
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            return this._http.get(this._apiUrl + '/GetSingleWithoutLines?id=' + id , { headers: authHeader })
+                .map((res) => {
+                    serviceResponse.Result = res.json();
+                    return serviceResponse;
+                })
+                    .catch(ServiceHelper.HandleServiceError);
+            });
+    }
+
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ReconciliationPM = null) {
 
 

@@ -10,17 +10,20 @@ export class PrintDocOut {
     }
 
     isPrintingCompleted(expectedId, closePopup) {
-       // this.helper.WaitBusyIndicator();
+        this.helper.WaitBusyIndicator();
        this.helper.WaitEditComponentBusyIndicator();
-        this.helper.ItemsPresent(expectedId);
+        
         if (closePopup) {
-            this.helper.WaitByCssStringAndClick('.Button', 'Close');
-           // this.helper.WaitBusyIndicator();
-           this.helper.WaitEditComponentBusyIndicator();
-            this.helper.WaitWindowClosed();
+            this.helper.ItemsPresent(expectedId);
+           this.helper.WaitByCssStringAndClick('.Button', 'Close'); // Edit Component
+           this.helper.WaitBusyIndicator(); // Logiude Window
+           this.helper.WaitEditComponentBusyIndicator(); // Edit Component
         } else {
-           
-            this.helper.WaitByIdAndClick('MessageWindow_Ok_0');
+            
+             this.helper.WaitEditComponentBusyIndicator(); // Edit Component
+            this.helper.WaitBusyIndicator(); // window component
+             this.helper.WaitByIdAndClick('MessageWindow_Ok_0'); // Message window
+           // console.log('Try to click OK ');
         }
     }
 }

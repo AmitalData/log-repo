@@ -68,6 +68,12 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.TransferStatusCode = entityPM.TransferStatusCode;
             entity.TaxDeductionLocalAmount = entityPM.TaxDeductionLocalAmount;
             entity.TaxDeductionPercentage = entityPM.TaxDeductionPercentage;
+            entity.VendorBankAddress = entityPM.VendorBankAddress;
+            entity.VendorBankName = entityPM.VendorBankName;
+            entity.VendorBankAccountNumber = entityPM.VendorBankAccountNumber;
+            entity.VendorIBANNumber = entityPM.VendorIBANNumber;
+            entity.VendorSwift = entityPM.VendorSwift;
+            
             if (entityPM.SetApproved)
             {
                 entityPM.ApprovedByUserId = loggedContact.Id;

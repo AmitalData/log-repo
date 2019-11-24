@@ -1,0 +1,51 @@
+﻿<Table Name="Test">
+
+  <Column Name="Col1" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false"/>
+  </Column>
+
+  <Column Name="Col2" Type="decimal">
+    <Constraints Nullable="false"/>
+  </Column>
+
+  <Column Name="Col3" Type="timestamp">
+    <Constraints Nullable="false"/>
+  </Column>
+
+  <Column Name="Col4" Type="varbinary" Size="-1">
+    <Constraints Nullable="false"/>
+  </Column>
+
+  <Column Name="Col5" Type="varchar" Size="10">
+    <Constraints Nullable="false"/>
+  </Column>
+
+  <Column Name="Col6" Type="datetime">
+    <Constraints Nullable="false"/>
+  </Column>
+
+  <Column Name="Col7" Type="time">
+    <Constraints Nullable="false"/>
+  </Column>
+
+  <Column Name="Col8" Type="float">
+    <Constraints Nullable="false"/>
+  </Column>
+
+  <Column Name="Col9" Type="char" Size="12">
+    <Constraints Nullable="false"/>
+  </Column>
+
+  <Column Name="Col10" Type="bigint">
+    <Constraints Nullable="false"/>
+  </Column>
+
+  <Column Name="Col11" Type="varchar" Size="200">
+    <Constraints Nullable="true"/>
+  </Column>
+
+  <Column Name="Col12" Type="bit">
+    <Constraints Nullable="false"/>
+  </Column>
+
+</Table>

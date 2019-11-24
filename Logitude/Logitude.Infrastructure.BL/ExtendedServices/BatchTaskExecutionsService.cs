@@ -58,6 +58,7 @@ namespace Logitude.Infrastructure.BL.ExtendedServices
             {
                 case "I":
                     {
+                        BatchTaskExecution.ProgressPercentage = 1;
                         BatchTaskExecution.StartDateTime = GetCurrentDateTime(BatchTaskExecution.Tenant);
                         break;
                     }

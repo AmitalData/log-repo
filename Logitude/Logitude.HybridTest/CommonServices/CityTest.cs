@@ -1,4 +1,7 @@
 ﻿using System;
+using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.HybridTest.WcfCallers;
+using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Logitude.HybridTest.CommonServices
@@ -10,37 +13,36 @@ namespace Logitude.HybridTest.CommonServices
         public void Test_City_UPSERT()
         {
             LoginService.GetLoginTokenByCredentials();
-            Server.Tools.Response countyServiceResponse = CountryTest.CallCountryUpsert();
-            Assert.IsFalse(countyServiceResponse.HasError, "Country Upsert Failed! " + countyServiceResponse.ErrorMessage);
-            Assert.IsNotNull(countyServiceResponse.Result, "Country Upsert Failed! " + countyServiceResponse.ErrorMessage);
-            Server.Tools.Response serviceResponse = CallCityUpsert();
-            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            Response serviceResponse = CityWcfCaller.CallCityUpsert();
+            Assert.IsFalse(serviceResponse.HasError, serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
-         }
+        }
 
-        public static Server.Tools.Response CallCityUpsert()
+        [TestMethod]
+        public void Test_City_GetCityListByCode()
         {
-
-            CityServiceReference.CityWcfServiceClient serviceClient = new CityServiceReference.CityWcfServiceClient();
-            string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
-            serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
-            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)serviceClient.InnerChannel))
+            LoginService.GetLoginTokenByCredentials();
+            Response prepareResponse = CityWcfCaller.PrepareCity();
+            Assert.IsFalse(prepareResponse.HasError, "Prepare City Failed! " + prepareResponse.ErrorMessage);
+            InvokedProperties serviceProperties = new InvokedProperties
             {
+                ServiceName = "City",
+                ServiceOperation = "GetCityListByCode",
+                ServiceResponseIndex = 3,
+                ServiceType = typeof(CountryCityList),
+                ServiceFilterType = null,
+            };
 
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
-                CityServiceReference.CountryCityPM entityPM = new CityServiceReference.CountryCityPM()
-                {
-                    Code = HybridCodes.CityCode,
-                    EnglishName = "Hybrid City",
-                    LocalName = "Hybrid City",
-                    CountryId = HybridCodes.CountryCode,
-                    AddedManually = true,
-                    Tenant = TestEnvironmentGlobalParameters.Tenant,
-                };
-
-                Logitude.Server.Tools.Response serviceResponse = serviceClient.Upsert(entityPM, false);
-                return serviceResponse;
-            }
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { HybridData.CityCode, HybridData.CountryCode, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
+            CountryCityList city = (CountryCityList)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+            Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsTrue(CheckResult(city), "Get Hybrid City Failed!");
+        }
+        public bool CheckResult(CountryCityList city)
+        {
+            return city.EnglishName == "Hybrid City";
         }
     }
 }

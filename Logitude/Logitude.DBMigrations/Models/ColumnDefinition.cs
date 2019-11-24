@@ -15,7 +15,7 @@ namespace Logitude.DBMigrations.Models
         public string Name { get; set; }
 
         [XmlAttribute()]
-        public string NewName { get; set; }
+        public string OldNames { get; set; }
 
         [XmlAttribute()]
         public string Type { get; set; }
@@ -24,6 +24,6 @@ namespace Logitude.DBMigrations.Models
         public int Size { get; set; }
 
         [XmlElement]
-        public ConstraintDefinition Constraints { get; set; }
+        public ConstraintsDefinition Constraints { get; set; }
     }
 }

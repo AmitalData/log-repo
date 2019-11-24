@@ -20,6 +20,7 @@ export class CommunicationsTabComponent implements OnDestroy {
     private ObjectTableId: string;
     private ObjectTableName: string = "CommunicationLog";
     public IsTitleHidden: boolean = false;
+    public IsForINTTRA: boolean = false;
     public ItemsSource: Array<CommunicationLogList>;
     private EntityPM: any;
     public IsResourcesReady: boolean = false;
@@ -89,6 +90,9 @@ export class CommunicationsTabComponent implements OnDestroy {
             filters.Filter2Name = "ObjectTableId";
             filters.Filter2Value = this.ObjectTableId;
             filters.Filter2Operator = "Equals";
+            if (this.EntityPM != null && this.EntityPM.IsForINTTRA == true) {
+                filters.addAdditionalFilter("FromTo", "true", null, null, "Contains", true, false, false, "string");
+            }
 
             this.myService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
                 if (myResponse == null) {

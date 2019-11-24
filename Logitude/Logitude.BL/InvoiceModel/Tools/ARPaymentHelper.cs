@@ -340,7 +340,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 
             try
             {
-                ServiceContext context = getServiceContext(tenant);
+                ServiceContext context = QuickbooksService.GetServiceContext(tenant);
                 QueryService<Intuit.Ipp.Data.Customer> customerQueryService = new QueryService<Intuit.Ipp.Data.Customer>(context);
                 List<Intuit.Ipp.Data.Customer> myResult = customerQueryService.ExecuteIdsQuery(sql).ToList();
                 return myResult;
@@ -363,7 +363,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 
             try
             {
-                ServiceContext context = getServiceContext(tenant);
+                ServiceContext context = QuickbooksService.GetServiceContext(tenant);
                 QueryService<Intuit.Ipp.Data.Vendor> VendorQueryService = new QueryService<Intuit.Ipp.Data.Vendor>(context);
                 List<Intuit.Ipp.Data.Vendor> myResult = VendorQueryService.ExecuteIdsQuery(sql).ToList();
                 return myResult;
@@ -379,7 +379,7 @@ namespace Logitude.BL.InvoiceModel.Tools
         {
             try
             {
-                ServiceContext context = getServiceContext(tenant);
+                ServiceContext context = QuickbooksService.GetServiceContext(tenant);
                 QueryService<Intuit.Ipp.Data.TaxCode> TaxCodeQueryService = new QueryService<Intuit.Ipp.Data.TaxCode>(context);
                 List<Intuit.Ipp.Data.TaxCode> myResult = TaxCodeQueryService.ExecuteIdsQuery(sql).ToList();
                 return myResult;
@@ -393,7 +393,7 @@ namespace Logitude.BL.InvoiceModel.Tools
         {
             try
             {
-                ServiceContext context = getServiceContext(tenant);
+                ServiceContext context = QuickbooksService.GetServiceContext(tenant);
                 QueryService<Intuit.Ipp.Data.Item> ItemQueryService = new QueryService<Intuit.Ipp.Data.Item>(context);
                 List<Intuit.Ipp.Data.Item> myResult = ItemQueryService.ExecuteIdsQuery(sql).ToList();
                 return myResult;                
@@ -414,7 +414,7 @@ namespace Logitude.BL.InvoiceModel.Tools
             try
             {
 
-                ServiceContext context = getServiceContext(tenant);
+                ServiceContext context = QuickbooksService.GetServiceContext(tenant);
 
                 QueryService<Intuit.Ipp.Data.Account> AccountQueryService = new QueryService<Intuit.Ipp.Data.Account>(context);
                 List<Intuit.Ipp.Data.Account> myResult = AccountQueryService.ExecuteIdsQuery(sql).ToList();
@@ -438,7 +438,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 
             try
             {
-                ServiceContext context = getServiceContext(tenant);
+                ServiceContext context = QuickbooksService.GetServiceContext(tenant);
                 QueryService<Intuit.Ipp.Data.CompanyCurrency> CompanyCurrencyQueryService = new QueryService<Intuit.Ipp.Data.CompanyCurrency>(context);
                 List<Intuit.Ipp.Data.CompanyCurrency> myResult = CompanyCurrencyQueryService.ExecuteIdsQuery(sql).ToList();
                 return myResult;
@@ -461,7 +461,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 
             try
             {
-                ServiceContext context = getServiceContext(tenant);
+                ServiceContext context = QuickbooksService.GetServiceContext(tenant);
                 QueryService<Intuit.Ipp.Data.Term> TermQueryService = new QueryService<Intuit.Ipp.Data.Term>(context);
                 List<Intuit.Ipp.Data.Term> myResult = TermQueryService.ExecuteIdsQuery(sql).ToList();
                 return myResult;
@@ -476,21 +476,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 
 
         }
-        private  ServiceContext getServiceContext(String tenant)
-        {
-            Setting mySetting = null;
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            {
-                SettingRepository mySettingRepository = new SettingRepository();
-                mySetting = mySettingRepository.GetSingleSetting("1");
-                scope.Complete();
-            }
-            AccountingSettingQuery query = new AccountingSettingQuery(int.Parse(tenant));
-            AccountingSettingPM entityPM = query.GetSingleAccountingSettingPMById(int.Parse(tenant));
-            OAuthRequestValidator oauthValidator = new OAuthRequestValidator(entityPM.QBOAccessToken, entityPM.QBOAccessTokenSecret, mySetting.QBOConsumerKey, mySetting.QBOConsumerSecretKey);
-            ServiceContext context = new ServiceContext(mySetting.QBOAppToken, entityPM.QBOrealMeID, IntuitServicesType.QBO, oauthValidator);            
-            return context;
-        }
+
         private void Run(ARPaymentPM ARPayment)
         {
             using (TransactionScope scope = TransactionFactory.GetTransaction())

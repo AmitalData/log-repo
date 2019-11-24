@@ -96,6 +96,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		Category5UpdateClass  Category5UpdateClass = new Category5UpdateClass();
 		ChartOfAccountUpdateClass  ChartOfAccountUpdateClass = new ChartOfAccountUpdateClass();
 		ChartOfAccountsTypeUpdateClass  ChartOfAccountsTypeUpdateClass = new ChartOfAccountsTypeUpdateClass();
+		ExternalPageAdditionalDataUpdateClass  ExternalPageAdditionalDataUpdateClass = new ExternalPageAdditionalDataUpdateClass();
 		ExternalReconciliationUpdateClass  ExternalReconciliationUpdateClass = new ExternalReconciliationUpdateClass();
 		ExternalReconciliationLineUpdateClass  ExternalReconciliationLineUpdateClass = new ExternalReconciliationLineUpdateClass();
 		FullAccountingSettingUpdateClass  FullAccountingSettingUpdateClass = new FullAccountingSettingUpdateClass();
@@ -108,6 +109,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		GLAccountTypeUpdateClass  GLAccountTypeUpdateClass = new GLAccountTypeUpdateClass();
 		GLAccountWithholdingTaxUpdateClass  GLAccountWithholdingTaxUpdateClass = new GLAccountWithholdingTaxUpdateClass();
 		IntegrityCheckStatusUpdateClass  IntegrityCheckStatusUpdateClass = new IntegrityCheckStatusUpdateClass();
+		InterestBasesPeriodUpdateClass  InterestBasesPeriodUpdateClass = new InterestBasesPeriodUpdateClass();
+		InterestBasesTypeUpdateClass  InterestBasesTypeUpdateClass = new InterestBasesTypeUpdateClass();
 		JournalUpdateClass  JournalUpdateClass = new JournalUpdateClass();
 		JournalActionTypeUpdateClass  JournalActionTypeUpdateClass = new JournalActionTypeUpdateClass();
 		JournalAdditionalDataUpdateClass  JournalAdditionalDataUpdateClass = new JournalAdditionalDataUpdateClass();
@@ -267,6 +270,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   ChartOfAccountsTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
+	   	   ExternalPageAdditionalDataUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+	
 	   	   ExternalReconciliationUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
 	   	   ExternalReconciliationLineUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
@@ -290,6 +295,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   GLAccountWithholdingTaxUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
 	   	   IntegrityCheckStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+	
+	   	   InterestBasesPeriodUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+	
+	   	   InterestBasesTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
 	   	   JournalUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
@@ -421,6 +430,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   ChartOfAccountsTypeUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
+	   	   ExternalPageAdditionalDataUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
+	
 	   	   ExternalReconciliationUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
 	   	   ExternalReconciliationLineUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
@@ -444,6 +455,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   GLAccountWithholdingTaxUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
 	   	   IntegrityCheckStatusUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
+	
+	   	   InterestBasesPeriodUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
+	
+	   	   InterestBasesTypeUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
 	   	   JournalUpdateClass.AddObjectFields(ObjectFields, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
@@ -574,6 +589,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   ChartOfAccountsTypeUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
 	
+	   	   ExternalPageAdditionalDataUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
+	
 	   	   ExternalReconciliationUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
 	
 	   	   ExternalReconciliationLineUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
@@ -597,6 +614,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   GLAccountWithholdingTaxUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
 	
 	   	   IntegrityCheckStatusUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
+	
+	   	   InterestBasesPeriodUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
+	
+	   	   InterestBasesTypeUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
 	
 	   	   JournalUpdateClass.AddTableQueries(Queries,QueryColumns, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters);
 	
@@ -727,6 +748,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   ChartOfAccountsTypeUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
+	   	   ExternalPageAdditionalDataUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
+	
 	   	   ExternalReconciliationUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
 	   	   ExternalReconciliationLineUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
@@ -750,6 +773,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   GLAccountWithholdingTaxUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
 	   	   IntegrityCheckStatusUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
+	
+	   	   InterestBasesPeriodUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
+	
+	   	   InterestBasesTypeUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
 	   	   JournalUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
@@ -880,6 +907,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   ChartOfAccountsTypeUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
+	   	   ExternalPageAdditionalDataUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
+	
 	   	   ExternalReconciliationUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
 	   	   ExternalReconciliationLineUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
@@ -903,6 +932,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   GLAccountWithholdingTaxUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
 	   	   IntegrityCheckStatusUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
+	
+	   	   InterestBasesPeriodUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
+	
+	   	   InterestBasesTypeUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
 	   	   JournalUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
@@ -1033,6 +1066,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   ChartOfAccountsTypeUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
 	
+	   	   ExternalPageAdditionalDataUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
+	
 	   	   ExternalReconciliationUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
 	
 	   	   ExternalReconciliationLineUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
@@ -1056,6 +1091,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   GLAccountWithholdingTaxUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
 	
 	   	   IntegrityCheckStatusUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
+	
+	   	   InterestBasesPeriodUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
+	
+	   	   InterestBasesTypeUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
 	
 	   	   JournalUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
 	
@@ -1186,6 +1225,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   ChartOfAccountsTypeUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
+	   	   ExternalPageAdditionalDataUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+	
 	   	   ExternalReconciliationUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
 	   	   ExternalReconciliationLineUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
@@ -1209,6 +1250,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   GLAccountWithholdingTaxUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
 	   	   IntegrityCheckStatusUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+	
+	   	   InterestBasesPeriodUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+	
+	   	   InterestBasesTypeUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
 	   	   JournalUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
@@ -1338,6 +1383,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   ChartOfAccountsTypeUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
+	   	   ExternalPageAdditionalDataUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+	
 	   	   ExternalReconciliationUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
 	   	   ExternalReconciliationLineUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
@@ -1361,6 +1408,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   GLAccountWithholdingTaxUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
 	   	   IntegrityCheckStatusUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+	
+	   	   InterestBasesPeriodUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+	
+	   	   InterestBasesTypeUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
 	   	   JournalUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
@@ -1490,6 +1541,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   ChartOfAccountsTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
+	   	   ExternalPageAdditionalDataUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
+	
 	   	   ExternalReconciliationUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
 	   	   ExternalReconciliationLineUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
@@ -1513,6 +1566,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   GLAccountWithholdingTaxUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
 	   	   IntegrityCheckStatusUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
+	
+	   	   InterestBasesPeriodUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
+	
+	   	   InterestBasesTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
 	   	   JournalUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
@@ -1633,6 +1690,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   
 	   
 	   
+	   
 	   	   GLAccountTotalDateTypeUpdateClass.FillGLAccountTotalDateType();
 	
 	   	   GLAccountTypeUpdateClass.FillGLAccountType();
@@ -1640,6 +1698,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   
 	   	   IntegrityCheckStatusUpdateClass.FillIntegrityCheckStatus();
 	
+	   
+	   
 	   
 	   
 	   

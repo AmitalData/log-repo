@@ -38,6 +38,7 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public DateTime? UpdateDate { get; set; }
         public string APInvoiceTypeCode { get; set; }
         public string VendorName { get; set; }
+        public string VendorLocalName { get; set; }
         public string VendorCode { get; set; }
         public string PaymentTermName { get; set; }
         public string InvoiceCurrencyCode { get; set; }
@@ -77,6 +78,7 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public bool IsExternalEntity { get; set; }
         public bool IsGeneralInvoice { get; set; }
         public DateTime? FirstApproveDate { get; set; }
-
+        public string VendorCity { get; set; }
+        public string VendorCountry { get; set; }
     }
 }

@@ -1,198 +1,384 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data.SqlClient;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Logitude.DBMigrations.Models
 {
     public abstract class DatabaseMigrations
     {
-        protected readonly string connectionString = ConfigurationManager.AppSettings["ConnectionString"];
-        public TableDefinition DXMLTable;
-        //public abstract DatabaseMigrations(TableDefinition table)
-        //{
-        //    DXMLTable = table;
-        //}
-        
+        protected TableDefinition DXMLTable;
+        protected TableDefinition CurrentTable;
+        protected TableMigrations TableMigrations;
+        protected List<ColumnMigration> ColumnMigrations = new List<ColumnMigration>();
+        protected bool AlterPrimaryKeyConstraint = false;
+
         public string GetScript()
         {
-            TableDefinition currentTable = GetCurrentTableDefinitionFromDB();
-            if (currentTable == null)
+            CurrentTable = GetCurrentTableDefinitionFromDB();
+            string script;
+            if (CurrentTable == null)
             {
-                return GetCreateTableScript();
+                script = GetCreateTableScript();
             }
             else
             {
-                return GetAlterTableScript(currentTable);
+                script = GetAlterTableScript();
             }
+            return script;
         }
-         
-        protected string GetColumnScript(ColumnDefinition column)
-        {
-            string columnScript = column.Name + " ";
-            columnScript += GetDataTypeScript(column.Type, column.Size);
-            columnScript += GetConstraintsScript(column.Constraints);
-            columnScript += ",";
-            return columnScript;
-        }
-         
+
         protected string GetDxmlDataType(string type)
         {
             switch (type)
             {
-                case "VARCHAR":
-                    return "Text";
-                case "NVARCHAR":
-                    return "nText";
-                case "INT":
-                    return "Integer";
-                case "BIT":
-                    return "Boolean";
-                case "DATETIME":
-                    return "DateTime";
+                case "int":
+                    return "int";
+                case "decimal":
+                    return "decimal";
+                case "timestamp":
+                    return "timestamp";
+                case "varbinary":
+                    return "varbinary";
+                case "varchar":
+                    return "varchar";
+                case "datetime":
+                    return "datetime";
+                case "time":
+                    return "time";
+                case "float":
+                    return "float";
+                case "char":
+                    return "char";
+                case "bigint":
+                    return "bigint";
+                case "nvarchar":
+                    return "nvarchar";
+                case "bit":
+                    return "bit";
                 default:
-                    return "Text";
+                    return null;
             }
         }
 
-        protected string GetConstraintsScript(ConstraintDefinition constraints)
-        {
-            if (constraints != null)
-            {
-                var constraintsScript = "";
-                if (constraints.PrimaryKey)
-                {
-                    constraintsScript += " PRIMARY KEY";
-                }
-                if (!constraints.Nullable)
-                {
-                    constraintsScript += " NOT NULL";
-                }
-
-                return constraintsScript;
-            }
-            return null;
-        }
-         
-        protected ColumnDefinition SetConstraintForColumnDefinition(ColumnDefinition column, string constraintType)
+        protected ColumnDefinition SetConstraintForColumnDefinition(ColumnDefinition column, string constraintType, string constraintName)
         {
             switch (constraintType)
             {
                 case "PRIMARY KEY":
                     column.Constraints.PrimaryKey = true;
+                    column.Constraints.PrimaryKeyConstraintName = constraintName;
                     return column;
                 default:
                     return column;
             }
         }
 
-        protected TableMigrations GetTableMigrations(TableDefinition currentTable, TableDefinition dxmlTable)
+        protected TableMigrations GetTableMigrations()
         {
-            List<ColumnMigrations> columnsMigrations = new List<ColumnMigrations>();
-            
-            foreach (var dxmlTableColumn in dxmlTable.Columns)
+            foreach (var dxmlTableColumn in DXMLTable.Columns)
             {
-                if(!IsColumnInTableDefinition(currentTable, dxmlTableColumn.Name))
+                ColumnDefinition currentTableColumn = null;
+                if (IsColumnInCurrentTable(dxmlTableColumn.Name, dxmlTableColumn.OldNames))
                 {
-                    ColumnMigrations columnMigrations = GetColumnMigrations(MigrationTypes.ADDCOLUMN, dxmlTableColumn);
-                    columnsMigrations.Add(columnMigrations);
+                    currentTableColumn = GetCurrentTableColumn(dxmlTableColumn.Name, dxmlTableColumn.OldNames);
                 }
-                else
-                {
-                    ColumnDefinition currentTableColumn = currentTable.Columns.Where(c => c.Name == dxmlTableColumn.Name).First();
-                    if(IsThereMigration(currentTableColumn, dxmlTableColumn))
-                    {
-                        ColumnMigrations columnMigrations = GetColumnMigrations(MigrationTypes.ALTERCOLUMN, dxmlTableColumn);
-                        columnsMigrations.Add(columnMigrations);
-                    }
-                }
+
+                BuildColumnMigrations(currentTableColumn, dxmlTableColumn);
             }
 
-            columnsMigrations = IncludeDropColumnsMigrations(currentTable, dxmlTable, columnsMigrations);
-
-            TableMigrations tableMigrations = new TableMigrations
-            {
-                TableName = dxmlTable.Name,
-                ColumnsMigrations = columnsMigrations
-            };
-            return tableMigrations;
-        }
-        
-        protected List<ColumnMigrations> IncludeDropColumnsMigrations(TableDefinition currentTable, TableDefinition dxmlTable, List<ColumnMigrations> columnsMigrations)
-        {
-            List<string> dxmlTableColumns = dxmlTable.Columns.Select(c => c.Name).ToList();
-            List<ColumnDefinition> droppedColumns = currentTable.Columns.Where(c => !dxmlTableColumns.Contains(c.Name)).ToList();
+            var droppedColumns = GetDroppedColumns();
 
             foreach (var droppedColumn in droppedColumns)
             {
-                ColumnDefinition currentTableColumn = currentTable.Columns.Where(c => c.Name == droppedColumn.Name).First();
-                ColumnMigrations columnMigrations = GetColumnMigrations(MigrationTypes.DROPCOLUMN, currentTableColumn);
-                columnsMigrations.Add(columnMigrations);
+                ColumnDefinition currentTableColumn = GetCurrentTableColumn(droppedColumn.Name, null);
+                BuildColumnMigrations(currentTableColumn, null);
             }
 
-            return columnsMigrations;
+            TableMigrations tableMigrations = new TableMigrations
+            {
+                DxmlTableName = DXMLTable.Name,
+                CurrentTableName = CurrentTable.Name,
+                ColumnsMigrations = ColumnMigrations
+            };
+
+            return tableMigrations;
         }
 
-        protected bool IsColumnInTableDefinition(TableDefinition tableDefinition, string columnName)
+        protected bool IsColumnInCurrentTable(string dxmlColumnName, string dxmlColumnOldNames)
         {
-            return tableDefinition.Columns.Where(c => c.Name == columnName).Any();
+            bool IsColumnInCurrentTable = false;
+            if (dxmlColumnOldNames != null)
+            {
+                if (!dxmlColumnOldNames.Contains(","))
+                {
+                    IsColumnInCurrentTable = CurrentTable.Columns.Where(c => c.Name == dxmlColumnOldNames).Any();
+                }
+                else
+                {
+                    List<string> oldNames = dxmlColumnOldNames.Split(',').ToList();
+                    IsColumnInCurrentTable = CurrentTable.Columns.Where(c => oldNames.Contains(c.Name)).Any();
+                }
+            }
+
+            if (!IsColumnInCurrentTable)
+            {
+                IsColumnInCurrentTable = CurrentTable.Columns.Where(c => c.Name == dxmlColumnName).Any();
+            }
+            return IsColumnInCurrentTable;
         }
 
-        protected ColumnMigrations GetColumnMigrations(int migrationType, ColumnDefinition columnDefinition)
+        protected ColumnDefinition GetCurrentTableColumn(string dxmlColumnName, string dxmlColumnOldNames)
         {
-            ColumnMigrations columnMigrations = new ColumnMigrations
+            string columnName = dxmlColumnOldNames;
+            bool IsColumnInCurrentTable = false;
+            if (dxmlColumnOldNames != null)
+            {
+                if (!dxmlColumnOldNames.Contains(','))
+                {
+                    IsColumnInCurrentTable = CurrentTable.Columns.Where(c => c.Name == dxmlColumnOldNames).Any();
+                }
+                else
+                {
+                    List<string> oldNames = dxmlColumnOldNames.Split(',').ToList();
+                    IsColumnInCurrentTable = CurrentTable.Columns.Where(c => oldNames.Contains(c.Name)).Any();
+                }
+            }
+
+            if (!IsColumnInCurrentTable)
+            {
+                columnName = dxmlColumnName;
+            }
+
+            if (!columnName.Contains(','))
+            {
+                return CurrentTable.Columns.Where(c => c.Name == columnName).First();
+            }
+            else
+            {
+                List<string> names = columnName.Split(',').ToList();
+                return CurrentTable.Columns.Where(c => names.Contains(c.Name)).First();
+            }
+        }
+
+        protected ColumnMigration GetColumnMigration(int migrationType, ColumnDefinition currentTableColumn, ColumnDefinition dxmlTableColumn)
+        {
+            ColumnMigrationDefinition currentColumn = currentTableColumn == null ? null : new ColumnMigrationDefinition
+            {
+                Name = currentTableColumn.Name,
+                Type = currentTableColumn.Type,
+                Size = currentTableColumn.Size,
+                Constraints = currentTableColumn.Constraints
+            };
+            ColumnMigrationDefinition newColumn = dxmlTableColumn == null ? null : new ColumnMigrationDefinition
+            {
+                Name = dxmlTableColumn.Name,
+                Type = dxmlTableColumn.Type,
+                Size = dxmlTableColumn.Size,
+                Constraints = dxmlTableColumn.Constraints
+            };
+            ColumnMigration columnMigration = new ColumnMigration
             {
                 MigrationType = migrationType,
-                ColumnName = columnDefinition.Name,
-                NewColumnName = columnDefinition.NewName,
-                NewColumnType = columnDefinition.Type,
-                NewColumnSize = columnDefinition.Size,
-                NewConstraints = columnDefinition.Constraints
+                CurrentColumn = currentColumn,
+                NewColumn = newColumn
             };
-            return columnMigrations;
+            return columnMigration;
         }
 
-        protected bool IsThereMigration(ColumnDefinition currentTableColumn, ColumnDefinition dxmlTableColumn)
+        protected bool IsNotInCurrentTable(ColumnDefinition currentTableColumn)
         {
-            if(dxmlTableColumn.Type != currentTableColumn.Type)
-            {
-                return true;
-            }
-            if(dxmlTableColumn.Size != currentTableColumn.Size)
-            {
-                return true;
-            }
-            if(dxmlTableColumn.Constraints.PrimaryKey != currentTableColumn.Constraints.PrimaryKey)
-            {
-                return true;
-            }
-            if(dxmlTableColumn.Constraints.Nullable != currentTableColumn.Constraints.Nullable)
-            {
-                return true;
-            }
-            return false;
+            return currentTableColumn == null;
         }
 
-        //private ColumnMigrations GetAddColumnMigrations()
-        //{
-        //    ColumnMigrations columnMigrations = GetColumnMigrations(MigrationTypes.ADDCOLUMN, dxmlTableColumn);
-        //    columnsMigrations.Add(columnMigrations);
-        //}
+        protected bool IsNotInDXMLTable(ColumnDefinition dxmlTableColumn)
+        {
+            return dxmlTableColumn == null;
+        }
 
-        // abstract Classes 
+        protected List<ColumnDefinition> GetDroppedColumns()
+        {
+            List<string> dxmlTableColumnsNames = DXMLTable.Columns.Select(c => c.Name).ToList();
+            List<string> dxmlTableColumnsOldNames = DXMLTable.Columns.Where(c => c.OldNames != null).Select(c => c.OldNames).ToList();
+            foreach (var name in dxmlTableColumnsOldNames)
+            {
+                if (!name.Contains(","))
+                {
+                    dxmlTableColumnsNames.Add(name);
+                }
+                else
+                {
+                    dxmlTableColumnsNames = dxmlTableColumnsNames.Concat(name.Split(',').ToList()).ToList();
+                }
+            }
+
+            List<ColumnDefinition> droppedColumns = CurrentTable.Columns.Where(c => !dxmlTableColumnsNames.Contains(c.Name) && !c.Name.StartsWith("Drop_")).ToList();
+            return droppedColumns;
+        }
+
+        protected void BuildColumnMigrations(ColumnDefinition currentTableColumn, ColumnDefinition dxmlTableColumn)
+        {
+            if (IsNotInCurrentTable(currentTableColumn))
+            {
+                BuildAddColumnMigration(currentTableColumn, dxmlTableColumn);
+            }
+            else if (IsNotInDXMLTable(dxmlTableColumn))
+            {
+                BuildDropColumnMigration(currentTableColumn, dxmlTableColumn);
+            }
+            else
+            {
+                BuildAlterMigration(currentTableColumn, dxmlTableColumn);
+            }
+        }
+
+        protected void BuildAddColumnMigration(ColumnDefinition currentTableColumn, ColumnDefinition dxmlTableColumn)
+        {
+            ColumnMigration addMigration = GetColumnMigration(MigrationTypes.ADD, currentTableColumn, dxmlTableColumn);
+            ColumnMigrations.Add(addMigration);
+        }
+
+        protected void BuildDropColumnMigration(ColumnDefinition currentTableColumn, ColumnDefinition dxmlTableColumn)
+        {
+            ColumnMigration dropMigration = GetColumnMigration(MigrationTypes.DROP, currentTableColumn, dxmlTableColumn);
+            ColumnMigrations.Add(dropMigration);
+        }
+
+        protected void BuildAlterMigration(ColumnDefinition currentTableColumn, ColumnDefinition dxmlTableColumn)
+        {
+            BuildAlterTypeMigration(currentTableColumn, dxmlTableColumn);
+
+            BuildAlterSizeMigration(currentTableColumn, dxmlTableColumn);
+
+            CheckAlterPrimaryKeyMigration(currentTableColumn, dxmlTableColumn);
+
+            BuildUnsetNullableMigration(currentTableColumn, dxmlTableColumn);
+
+            BuildSetNullableMigration(currentTableColumn, dxmlTableColumn);
+
+            BuildRenameMigration(currentTableColumn, dxmlTableColumn);
+        }
+
+        protected void BuildAlterTypeMigration(ColumnDefinition currentTableColumn, ColumnDefinition dxmlTableColumn)
+        {
+            if (currentTableColumn.Type != dxmlTableColumn.Type)
+            {
+                if (currentTableColumn.Constraints.PrimaryKey)
+                {
+                    ColumnMigration dropPrimaryKeyMigration = GetColumnMigration(MigrationTypes.DROPPRIMARYKEY, currentTableColumn, dxmlTableColumn);
+                    ColumnMigrations.Add(dropPrimaryKeyMigration);
+                }
+
+                ColumnMigration alterTypeMigration = GetColumnMigration(MigrationTypes.ALTERTYPE, currentTableColumn, dxmlTableColumn);
+                ColumnMigrations.Add(alterTypeMigration);
+
+                if (currentTableColumn.Constraints.PrimaryKey)
+                {
+                    ColumnMigration addPrimaryKeyMigration = GetColumnMigration(MigrationTypes.ADDPRIMARYKEY, currentTableColumn, dxmlTableColumn);
+                    ColumnMigrations.Add(addPrimaryKeyMigration);
+                }
+            }
+        }
+
+        protected void BuildAlterSizeMigration(ColumnDefinition currentTableColumn, ColumnDefinition dxmlTableColumn)
+        {
+            if (currentTableColumn.Size != dxmlTableColumn.Size && dxmlTableColumn.Size != 0)
+            {
+                if (currentTableColumn.Constraints.PrimaryKey)
+                {
+                    ColumnMigration dropPrimaryKeyMigration = GetColumnMigration(MigrationTypes.DROPPRIMARYKEY, currentTableColumn, dxmlTableColumn);
+                    ColumnMigrations.Add(dropPrimaryKeyMigration);
+                }
+
+                ColumnMigration alterTypeMigration = GetColumnMigration(MigrationTypes.ALTERSIZE, currentTableColumn, dxmlTableColumn);
+                ColumnMigrations.Add(alterTypeMigration);
+
+                if (currentTableColumn.Constraints.PrimaryKey)
+                {
+                    ColumnMigration addPrimaryKeyMigration = GetColumnMigration(MigrationTypes.ADDPRIMARYKEY, currentTableColumn, dxmlTableColumn);
+                    ColumnMigrations.Add(addPrimaryKeyMigration);
+                }
+            }
+        }
+
+        protected void CheckAlterPrimaryKeyMigration(ColumnDefinition currentTableColumn, ColumnDefinition dxmlTableColumn)
+        {
+            if (currentTableColumn.Constraints.PrimaryKey != dxmlTableColumn.Constraints.PrimaryKey)
+            {
+                AlterPrimaryKeyConstraint = true;
+            }
+        }
+
+        protected void BuildUnsetNullableMigration(ColumnDefinition currentTableColumn, ColumnDefinition dxmlTableColumn)
+        {
+            if (currentTableColumn.Constraints.Nullable && !dxmlTableColumn.Constraints.Nullable)
+            {
+                ColumnMigration unsetNullableMigration = GetColumnMigration(MigrationTypes.UNSETNULLABLE, currentTableColumn, dxmlTableColumn);
+                ColumnMigrations.Add(unsetNullableMigration);
+            }
+        }
+
+        protected void BuildSetNullableMigration(ColumnDefinition currentTableColumn, ColumnDefinition dxmlTableColumn)
+        {
+            if (!currentTableColumn.Constraints.Nullable && dxmlTableColumn.Constraints.Nullable)
+            {
+                ColumnMigration setNullableMigration = GetColumnMigration(MigrationTypes.SETNULLABLE, currentTableColumn, dxmlTableColumn);
+                ColumnMigrations.Add(setNullableMigration);
+            }
+        }
+
+        protected void BuildRenameMigration(ColumnDefinition currentTableColumn, ColumnDefinition dxmlTableColumn)
+        {
+            if (currentTableColumn.Name != dxmlTableColumn.Name)
+            {
+                ColumnMigration renameMigration = GetColumnMigration(MigrationTypes.RENAME, currentTableColumn, dxmlTableColumn);
+                ColumnMigrations.Add(renameMigration);
+            }
+        }
+
+        protected string GenerateRandomString()
+        {
+            return Regex.Replace(Convert.ToBase64String(Guid.NewGuid().ToByteArray()), "[/+=]", "").ToUpper();
+        }
+
+
+
+
+        // abstract methods
+        protected abstract string GetCreateTableScript();
+
+        protected abstract string GetCreateColumnScript(ColumnDefinition columnDefinition);
+
+        protected abstract string GetAlterTableScript();
+
+        protected abstract string GetAlterColumnScript(ColumnMigration columnMigration);
+
+        protected abstract string GetDataTypeScript(string type, int size);
+
+        protected abstract string GetRenameTableScript();
+
+        protected abstract string GetAddColumnScript(ColumnMigration columnMigration);
+
+        protected abstract string GetRenameColumnScript(ColumnMigration columnMigration);
+
+        protected abstract string GetDropColumnScript(ColumnMigration columnMigration);
+
+        protected abstract string GetAlterTypeScript(ColumnMigration columnMigration);
+
+        protected abstract string GetAlterSizeScript(ColumnMigration columnMigration);
+
+        protected abstract string GetAddPrimaryKeyScript(ColumnMigration columnMigration);
+
+        protected abstract string GetDropPrimaryKeyScript(ColumnMigration columnMigration);
+
+        protected abstract string GetSetNullableScript(ColumnMigration columnMigration);
+
+        protected abstract string GetUnsetNullableScript(ColumnMigration columnMigration);
 
         protected abstract TableDefinition GetCurrentTableDefinitionFromDB();
 
-        protected abstract string GetCreateTableScript();
-
-        protected abstract string GetAlterTableScript(TableDefinition currentTable);
-
-        protected abstract string GetColumnMigrationScript(string tableName, ColumnMigrations columnMigrations);
-
-        protected abstract string GetDataTypeScript(string type, int? size);
-
         protected abstract TableDefinition GetCurrentTableDefinitionFromDB(string tableName);
 
+        protected abstract string GetAlterPrimaryKeyScript();
     }
 }

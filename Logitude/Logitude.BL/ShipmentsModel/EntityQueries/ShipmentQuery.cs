@@ -36,6 +36,9 @@ using System.Reflection;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Server.Infrastructure;
 using System.IO;
+using System.Xml;
+using Logitude.Server.Tools;
+using System.Xml.Serialization;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -2273,7 +2276,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.ContainerLastStatusDate = shipment.ContainerLastStatusDate;
             shipmentPM.INTTRABookingStatusCode = shipment.INTTRABookingStatusCode;
             shipmentPM.INTTRABookingTransStatusCode = shipment.INTTRABookingTransStatusCode;
+            shipmentPM.INTTRABookingError = shipment.INTTRABookingError;
+            shipmentPM.INTTRALastBookingResponse = shipment.INTTRALastBookingResponse;
 
+            if (!string.IsNullOrEmpty(shipmentPM.INTTRALastBookingResponse)){
+                this.MapINTTRABookingXMLFields(shipmentPM);
+            }
 
             INTTRABookingStatusRepository iNTTRABookingStatusRepository = new INTTRABookingStatusRepository(repository.context);
             if(!string.IsNullOrEmpty(shipmentPM.INTTRABookingStatusCode))
@@ -2309,6 +2317,89 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
 
             return returnShipment;
+        }
+
+        private void MapINTTRABookingXMLFields(ShipmentPM shipmentPM)
+        {
+            this.ReadINTTRABookingXMLVoyage(shipmentPM);
+            this.ReadINTTRABookingXMLDates(shipmentPM);
+            this.ReadINTTRABookingXMLShippingLine(shipmentPM);
+        }
+
+        private void ReadINTTRABookingXMLVoyage(ShipmentPM shipmentPM)
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml(shipmentPM.INTTRALastBookingResponse);
+            XmlNodeList xnList = xmlDoc.SelectNodes("//ConveyanceInformation");
+
+            foreach (XmlNode xn in xnList)
+            {
+                if (xn["Identifier"] != null)
+                {
+                    if(xn.FirstChild != null && xn.FirstChild.OuterXml.Contains("VoyageNumber"))
+                    {
+                        shipmentPM.INTTRABookingResponse_Voyage = xn.FirstChild.InnerText;
+                    }
+
+                    if (xn.LastChild != null && xn.LastChild.OuterXml.Contains("VoyageNumber"))
+                    {
+                        shipmentPM.INTTRABookingResponse_Voyage = xn.LastChild.InnerText;
+                    }
+                }
+            }
+        }
+
+        private void ReadINTTRABookingXMLDates(ShipmentPM shipmentPM)
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml(shipmentPM.INTTRALastBookingResponse);
+            var path = "//Location";
+            XmlNodeList xnList = xmlDoc.SelectNodes(path);
+            ICommonDataContext commonContext = CommonDataContext.GetContext(shipmentPM.Tenant);
+            PortRepository portsRep = new PortRepository(commonContext);
+            foreach (XmlNode xn in xnList)
+            {
+                if (xn["Type"] != null && xn["Type"].InnerText== "PortOfLoad")
+                {
+                    Port port = portsRep.GetSinglePortIdByCombinedCode(xn["Identifier"].InnerText, shipmentPM.Tenant);
+                    if (port != null)
+                    {
+                        shipmentPM.INTTRABookingResponse_POFPort = port.Id;
+                        shipmentPM.INTTRABookingResponse_POFPortCode = port.Code;
+                        shipmentPM.INTTRABookingResponse_POFCCode = port.Country != null ? port.Country.Code : "";
+                        shipmentPM.INTTRABookingResponse_POFCName = port.Country != null ? port.Country.EnglishName : "";
+                    }
+                    shipmentPM.INTTRABookingResponse_POLDate = DateTime.Parse(xn["DateTime"].InnerText);
+                }
+
+                if (xn["Type"] != null && xn["Type"].InnerText == "PortOfDischarge")
+                {
+                    Port port = portsRep.GetSinglePortIdByCombinedCode(xn["Identifier"].InnerText, shipmentPM.Tenant);
+                    if (port != null)
+                    {
+                        shipmentPM.INTTRABookingResponse_PODPort = port.Id;
+                        shipmentPM.INTTRABookingResponse_PODPortCode = port.Code;
+                        shipmentPM.INTTRABookingResponse_PODCCode = port.Country != null ? port.Country.Code : "";
+                        shipmentPM.INTTRABookingResponse_PODCName = port.Country != null ? port.Country.EnglishName : "";
+                    }
+                    shipmentPM.INTTRABookingResponse_PODDate = DateTime.Parse(xn["DateTime"].InnerText);
+                }
+            }
+        }
+
+        private void ReadINTTRABookingXMLShippingLine(ShipmentPM shipmentPM)
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml(shipmentPM.INTTRALastBookingResponse);
+            var path = "//Party";
+            XmlNodeList xnList = xmlDoc.SelectNodes(path);
+            foreach (XmlNode xn in xnList)
+            {
+                if (xn["Role"] != null && xn["Role"].InnerText == "Carrier")
+                {
+                    shipmentPM.INTTRABookingResponse_ShippingLine = xn["Identifier"].InnerText;
+                }
+            }
         }
 
         public ShipmentPM MapShipmentToShipmentPMForMobile(ShipmentPM shipmentPM, Shipment shipment, IQueryable<ShipmentMasterData> shipmentMasterDataList, ShipmentMasterData masterData, bool withComposition)
@@ -4100,7 +4191,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.CustomerContactId = shipment.CustomerContactId;
                     shipmentPM.AgentContactId = shipment.AgentContactId;
                     shipmentPM.ShipmentTypeId = shipment.ShipmentTypeId;
-
+                    shipmentPM.MasterShipmentDataId = shipment.MasterShipmentDataId;
                     if (m != null)
                     {
                         shipmentPM.MainCarriageETD = m.MainCarriageETD;
@@ -10054,20 +10145,65 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                           && allCarriersIds.Contains(d.Id)
                                           select d).ToList();
 
-                foreach (FlightSummary item in myResult.Where(d => d.CarrierId != null))
+                foreach (FlightSummary item in myResult)
                 {
-                    Card myCarrier = allCarriers.Where(d => d.Id == item.CarrierId).FirstOrDefault();
-                    if (myCarrier != null)
-                    {
-                        item.CarrierCode = myCarrier.Code;
-                        item.CarrierName = myCarrier.EnglishName;
-                    }
+                    item.ActualDateCode = this.GetFlightSummaryDateCode(item.ActualDate, tenant);
+                    item.ExpectedDateCode = this.GetFlightSummaryDateCode(item.ExpectedDate, tenant);
 
-                    else
+                    if (item.CarrierId != null)
                     {
-                        item.CarrierCode = "No_Data";
-                        item.CarrierName = "No_Data";
+                        Card myCarrier = allCarriers.Where(d => d.Id == item.CarrierId).FirstOrDefault();
+                        if (myCarrier != null)
+                        {
+                            item.CarrierCode = myCarrier.Code;
+                            item.CarrierName = myCarrier.EnglishName;
+                        }
+
+                        else
+                        {
+                            item.CarrierCode = "No_Data";
+                            item.CarrierName = "No_Data";
+                        }
                     }
+                }
+            }
+
+            return myResult;
+        }
+
+        private string GetFlightSummaryDateCode(DateTime? date, int tenant)
+        {
+            string myResult = null;
+
+            if (date != null)
+            {
+                DateTime? todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+                DateTime? yesterdayDate = todayDate.Value.AddDays(-1);
+                DateTime? tomorrowDate = todayDate.Value.AddDays(1);
+                DateTime? afterTomorrowDate = todayDate.Value.AddDays(2);
+
+                DateTime? lastWeekDate = todayDate.Value.AddDays(-7);
+                DateTime? nextWeekDate = todayDate.Value.AddDays(7);
+
+                //queryableData.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.MainCarriageATD) >= date1 && System.Data.Entity.DbFunctions.TruncateTime(d.MainCarriageATD) <= date2);
+                if (date.Value.Date == todayDate)
+                {
+                    myResult = "TOD";
+                }
+                
+                else if(date.Value.Date == tomorrowDate)
+                {
+                    myResult = "TOM";
+                }
+
+                else if (date.Value.Date >= lastWeekDate && date.Value.Date <= yesterdayDate)
+                {
+                    myResult = "LSW";
+                }
+
+                else if (date.Value.Date >= afterTomorrowDate && date.Value.Date <= nextWeekDate)
+                {
+                    myResult = "NXW";
                 }
             }
 
@@ -11333,6 +11469,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                INTTRABookingStatusName = f.INTTRABookingStatusName,
                                INTTRABookingTransStatusName = f.INTTRABookingTransStatusName,
                                INTTRABookingTransStatusCode = f.INTTRABookingTransStatusCode,
+                               INTTRABookingError = f.INTTRABookingError,
+                               INTTRALastBookingResponse =f.INTTRALastBookingResponse,
                                LastFinalDestination = f.LastFinalDestination,
                                FirstPickupETA = f.FirstPickupETA,
                                FirstPickupETD = f.FirstPickupETD,
@@ -11679,6 +11817,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     INTTRABookingStatusName = f.INTTRABookingStatusName,
                     INTTRABookingTransStatusName = f.INTTRABookingTransStatusName,
                     INTTRABookingTransStatusCode = f.INTTRABookingTransStatusCode,
+                    INTTRABookingError = f.INTTRABookingError,
+                    INTTRALastBookingResponse = f.INTTRALastBookingResponse,
                     LastFinalDestination = f.LastFinalDestination,
                     FirstPickupETA = f.FirstPickupETA,
                     FirstPickupETD = f.FirstPickupETD,

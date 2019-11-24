@@ -21,6 +21,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.RegistryDateTypeCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.ReceivableVATCard).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.PayableVATCard).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.RefreshToken).HasMaxLength(2000);
 
             // Table & Column Mappings
             this.ToTable("AccountingSettings");
@@ -66,6 +67,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.EnableNegativeOffsetARPayments).HasColumnName("EnableNegativeOffsetARPayments");
             this.Property(t => t.EnableNegativeOffsetAPPayments).HasColumnName("EnableNegativeOffsetAPPayments");
             this.Property(t => t.EnableInvoiceStocksManagement).HasColumnName("EnableInvoiceStocksManagement");
+            this.Property(t => t.QBOOAuth).HasColumnName("QBOOAuth");
+            this.Property(t => t.RefreshToken).HasColumnName("RefreshToken");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

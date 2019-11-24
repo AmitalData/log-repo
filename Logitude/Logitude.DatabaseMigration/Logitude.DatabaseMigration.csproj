@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Logitude.DatabaseMigration</RootNamespace>
     <AssemblyName>Logitude.DatabaseMigration</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -17,6 +17,7 @@
     <SccProvider>SAK</SccProvider>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -1621,6 +1622,50 @@
     <Compile Include="Migrations\201911110938217_AddCodeToPaymentTerm_Samar.Designer.cs">
       <DependentUpon>201911110938217_AddCodeToPaymentTerm_Samar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911100708584_QBO_New_Fields.cs" />
+    <Compile Include="Migrations\201911100708584_QBO_New_Fields.Designer.cs">
+      <DependentUpon>201911100708584_QBO_New_Fields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911170836404_somecolumns.cs" />
+    <Compile Include="Migrations\201911170836404_somecolumns.Designer.cs">
+      <DependentUpon>201911170836404_somecolumns.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910201217593_UpdateField_JournalLine_Length.cs" />
+    <Compile Include="Migrations\201910201217593_UpdateField_JournalLine_Length.Designer.cs">
+      <DependentUpon>201910201217593_UpdateField_JournalLine_Length.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910201427034_UpdateField_JournalLine_Length2.cs" />
+    <Compile Include="Migrations\201910201427034_UpdateField_JournalLine_Length2.Designer.cs">
+      <DependentUpon>201910201427034_UpdateField_JournalLine_Length2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910230530223_addINTTRAUpdatesShipment.cs" />
+    <Compile Include="Migrations\201910230530223_addINTTRAUpdatesShipment.Designer.cs">
+      <DependentUpon>201910230530223_addINTTRAUpdatesShipment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911171621078_NewTable_ExternalPageAdditionalData.cs" />
+    <Compile Include="Migrations\201911171621078_NewTable_ExternalPageAdditionalData.Designer.cs">
+      <DependentUpon>201911171621078_NewTable_ExternalPageAdditionalData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911150824004_AddINTTRABookingFieldsToShipment_Maheera.cs" />
+    <Compile Include="Migrations\201911150824004_AddINTTRABookingFieldsToShipment_Maheera.Designer.cs">
+      <DependentUpon>201911150824004_AddINTTRABookingFieldsToShipment_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911201036255_InterestBasesTypeTable.cs" />
+    <Compile Include="Migrations\201911201036255_InterestBasesTypeTable.Designer.cs">
+      <DependentUpon>201911201036255_InterestBasesTypeTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911201323271_InterestBasesPeriodTable.cs" />
+    <Compile Include="Migrations\201911201323271_InterestBasesPeriodTable.Designer.cs">
+      <DependentUpon>201911201323271_InterestBasesPeriodTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911200900337_oibjectfield_fiedcode.cs" />
+    <Compile Include="Migrations\201911200900337_oibjectfield_fiedcode.Designer.cs">
+      <DependentUpon>201911200900337_oibjectfield_fiedcode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911240617280_Addgusment_Interest_Fields.cs" />
+    <Compile Include="Migrations\201911240617280_Addgusment_Interest_Fields.Designer.cs">
+      <DependentUpon>201911240617280_Addgusment_Interest_Fields.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2778,6 +2823,39 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911110938217_AddCodeToPaymentTerm_Samar.resx">
       <DependentUpon>201911110938217_AddCodeToPaymentTerm_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911100708584_QBO_New_Fields.resx">
+      <DependentUpon>201911100708584_QBO_New_Fields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911170836404_somecolumns.resx">
+      <DependentUpon>201911170836404_somecolumns.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910201217593_UpdateField_JournalLine_Length.resx">
+      <DependentUpon>201910201217593_UpdateField_JournalLine_Length.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910201427034_UpdateField_JournalLine_Length2.resx">
+      <DependentUpon>201910201427034_UpdateField_JournalLine_Length2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910230530223_addINTTRAUpdatesShipment.resx">
+      <DependentUpon>201910230530223_addINTTRAUpdatesShipment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911171621078_NewTable_ExternalPageAdditionalData.resx">
+      <DependentUpon>201911171621078_NewTable_ExternalPageAdditionalData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911150824004_AddINTTRABookingFieldsToShipment_Maheera.resx">
+      <DependentUpon>201911150824004_AddINTTRABookingFieldsToShipment_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911201036255_InterestBasesTypeTable.resx">
+      <DependentUpon>201911201036255_InterestBasesTypeTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911201323271_InterestBasesPeriodTable.resx">
+      <DependentUpon>201911201323271_InterestBasesPeriodTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911200900337_oibjectfield_fiedcode.resx">
+      <DependentUpon>201911200900337_oibjectfield_fiedcode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911240617280_Addgusment_Interest_Fields.resx">
+      <DependentUpon>201911240617280_Addgusment_Interest_Fields.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

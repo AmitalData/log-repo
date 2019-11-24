@@ -133,32 +133,49 @@
 
                             <tr class="FormFieldRow">
                                 <!-- GLAccountId -->
-                                <td style="width:330px" colspan="2">
+                                <td style="width:350px" colspan="4">
                                     <table>
 
                                         <tr>
-                                            <td style="width:120px">
+                                            <td style="width:150px">
                                                 <LogLabel [ObjectFieldName]="'GLAccountId'"
-                                                    [Text]="'GLTransactionReport.O.GLAccountNo' | TextCodeTranslationPipe"
-                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                          [Text]="'GLTransactionReport.O.GLAccountNo' | TextCodeTranslationPipe"
+                                                          [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
                                                 </LogLabel>
                                             </td>
 
                                             <td style="width:170px">
                                                 <LogLov [ObjectFieldName]="'GLAccountId'"
-                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                                    [LookUpTableName]="'GLAccount'"
-                                                    (SelectedItemChanged)="GLAccount = $event" [ForceShowAddLink]="true"
-                                                    [HideAddLink]="true" [HideColumns]="true">
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                                        [LookUpTableName]="'GLAccount'"
+                                                        (SelectedItemChanged)="GLAccount = $event" [ForceShowAddLink]="true"
+                                                        [HideAddLink]="true" [HideColumns]="true">
                                                 </LogLov>
                                             </td>
+
+                                            <td style="width:15px"></td>
+                                            <td style="width:150px">
+                                                <LogLabel [ObjectFieldName]="'ChartOfAccountId'"
+                                                          [Text]="'GLAccount.F.ChartOfAccountsId' | TextCodeTranslationPipe"
+                                                          [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                </LogLabel>
+                                            </td>
+
+                                            <td style="width:170px">
+                                                <LogLov [ObjectFieldName]="'ChartOfAccountId'"
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                                        [LookUpTableName]="'ChartOfAccount'"
+                                                        (SelectedItemChanged)="ChartOfAccount = $event" [ForceShowAddLink]="true"
+                                                        [HideAddLink]="true" [HideColumns]="true">
+                                                </LogLov>
+                                            </td>
+
+
                                             <td>
                                                 <div></div>
                                             </td>
                                             <td>
-                                            <td>
-
-                                            </td>
+                                            <td></td>
 
                                         </tr>
                                     </table>

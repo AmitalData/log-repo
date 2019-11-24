@@ -38,6 +38,13 @@ namespace Logitude.Accounting.Data.Repositories
                     select a).ToList();
         }
 
+        public List<GLAccount> GetChildAccountsQ(IQueryable<String> gLAccountIdQ, int tenant)
+        {
+            return (from a in context.GLAccounts
+                    where a.Tenant == tenant && gLAccountIdQ.Any(b => a.ParentAccountId == b)
+                    select a).ToList();
+        }
+
         public GLAccount GetGLAccountByIdTenant(string GLAccountId, int tenant)
         {
             return (from a in context.GLAccounts

@@ -1225,6 +1225,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             Feature AccountingBanksTabFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCBanks", Packagable = true, ObjectTableId = objectTable.Id, Tenant = tenant, NameTextCodeCode = "Accounting.Features.Banks", NameTextCodeDefaultText = "Banks Tab", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature AccountingGLAccountsTabFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCGLAccounts", Packagable = true, ObjectTableId = objectTable.Id, Tenant = tenant, NameTextCodeCode = "Accounting.Features.GLAccounts", NameTextCodeDefaultText = "GLAccounts Tab", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature AccountingMiscTabFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCMisc", Packagable = true, ObjectTableId = objectTable.Id, Tenant = tenant, NameTextCodeCode = "Accounting.Features.Misc", NameTextCodeDefaultText = "Misc Tab", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature AccountingInterestTabFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCInterest", Packagable = true, ObjectTableId = objectTable.Id, Tenant = tenant, NameTextCodeCode = "Accounting.Features.Interest", NameTextCodeDefaultText = "Interest Tab", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
 
             #endregion
@@ -2139,9 +2140,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 
 
             // GLAccount Transactions Report
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.GLAccountNo", DefaultText = "GL Account No.", LocalDefaultText = "מספר כרטיס", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.GLAccountNo", DefaultText = "GLAccount No", LocalDefaultText = "מספר כרטיס", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.GLAccountZrequierd", DefaultText = "GL Account field is requierd", LocalDefaultText = "חובה למלא את השדה מספר כרטיס", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.WithClosedTransactions", DefaultText = "With Closed Transactions", LocalDefaultText = "כלול תנועות סגורות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.RequiredFields", DefaultText = "One of the fields  “glaccount” or “Chart of account” must be filled", LocalDefaultText = "חובה לתחום כרטיס או קבוצת מאזן", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
 
 
 

@@ -1,4 +1,4 @@
-﻿
+
 <table>
     <tr style="height:30px">
         <td colspan="2">
@@ -299,7 +299,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                        <button id="{{'CancelAction' | IdGeneratorPipe}}" class="Button" (click)="CancelButtonClicked()">Cancel</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -307,7 +307,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!EnabledOkButton">Confirm</button>
+                        <button id="{{'ConfirmAction' | IdGeneratorPipe}}" class="RedButton" (click)="OkButtonClicked()" [disabled]="!EnabledOkButton">Confirm</button>
                     </td>
                 </tr>
             </table>

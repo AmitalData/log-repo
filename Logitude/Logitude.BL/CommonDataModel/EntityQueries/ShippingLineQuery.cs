@@ -76,6 +76,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     CBSA = a.CBSA,
                                     INTTRARegistrationNotes = a.INTTRARegistrationNotes,
                                     GLAccountId = a.Card.GLAccountId,
+                                    INTTRAUpdatesShipment = a.INTTRAUpdatesShipment,
                                     Card = new CardPM()
                                     {
                                         Id = a.Id,
@@ -165,6 +166,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     UsoCFDICode = a.Card.UsoCFDICode,
                                     IsINTTRARegistered = a.IsINTTRARegistered,
                                     INTTRARegistrationNotes = a.INTTRARegistrationNotes,
+                                    INTTRAUpdatesShipment = a.INTTRAUpdatesShipment,
                                     CAAT = a.CAAT,
                                     CBSA = a.CBSA,
                                     Card = new CardPM()
@@ -222,6 +224,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                            UsoCFDICode = a.Card.UsoCFDICode,
                                                            IsINTTRARegistered = a.IsINTTRARegistered,
                                                            INTTRARegistrationNotes = a.INTTRARegistrationNotes,
+                                                           INTTRAUpdatesShipment = a.INTTRAUpdatesShipment,
                                                            CAAT = a.CAAT,
                                                            CBSA = a.CBSA,
                                                        };
@@ -277,6 +280,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              UsoCFDICode = a.Card.UsoCFDICode,
                              IsINTTRARegistered = a.IsINTTRARegistered,
                              INTTRARegistrationNotes = a.INTTRARegistrationNotes,
+                             INTTRAUpdatesShipment = a.INTTRAUpdatesShipment,
                              CAAT = a.CAAT,
                              CBSA = a.CBSA,
 
@@ -348,6 +352,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                       UsoCFDICode = a.Card.UsoCFDICode,
                                                       IsINTTRARegistered = a.IsINTTRARegistered,
                                                       INTTRARegistrationNotes = a.INTTRARegistrationNotes,
+                                                      INTTRAUpdatesShipment = a.INTTRAUpdatesShipment,
                                                       PrimaryContactName = a.PrimaryContactName,
                                                       PrimaryContactEmail = a.PrimaryContactEmail,
                                                       PrimaryContactPhone = a.PrimaryContactPhone,

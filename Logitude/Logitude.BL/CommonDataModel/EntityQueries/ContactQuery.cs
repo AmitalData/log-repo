@@ -693,6 +693,247 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return entity;
         }
 
+        public ContactPM GetContactById(string id, int tenant)
+        {
+            id = id.ToLower();
+            string entityName = "ContactPM" + id + tenant;
+            entityName = entityName.ToLower();
+            ContactPM entity;
+            UserRepository usersRepository = new UserRepository(tenant);
+
+            if (HttpContext.Current != null)
+            {
+                if (CacheManager.CacheWrapper.Get(entityName) == null)
+                {
+                    bool isTenant0User = false;
+                    ContactPM contact = (from a in repository.context.Contacts
+                                         where a.Email == id && a.InActive == false //  && a.UserType == "R" by Islam: all tracing classes call this method with the system user
+                                         && a.Tenant == tenant
+                                         select new ContactPM()
+                                         {
+                                             Anniversary = a.Anniversary,
+                                             Birthday = a.Birthday,
+                                             BusinessPhone = a.BusinessPhone,
+                                             Email = a.Email,
+                                             SearchFields = a.SearchFields,
+                                             EnglishName = a.EnglishName,
+                                             FacebookId = a.FacebookId,
+                                             Fax = a.Fax,
+                                             Id = a.Id,
+                                             InActive = a.InActive,
+                                             LocalName = a.LocalName,
+                                             ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
+                                             Mobile = a.Mobile,
+                                             Notes = a.Notes,
+                                             Tenant = a.Tenant,
+                                             Signature = a.Signature,
+                                             SignatureHtml = a.SignatureHtml,
+                                             DontShowLocal = a.DontShowLocalLabels,
+                                             DisplayGettingStarted = a.DisplayGettingStarted,
+                                             BirthdayReminder = a.BirthdayReminder,
+                                             AnniversaryReminder = a.AnniversaryReminder,
+                                             ImageDetailId = a.ImageDetailId,
+                                             DoneDate = a.DoneDate,
+                                             BirthDayOfYear = a.BirthDayOfYear,
+                                             ContactDoneMethodCode = a.ContactDoneMethod != null ? a.ContactDoneMethod.Code : null,
+                                             Position = a.Position,
+                                             ExternalId = a.ExternalId,
+                                             IndexColor = a.IndexColor,
+                                             CompanyName = a.CompanyName,
+                                             CreateDate = a.CreateDate,
+                                         }).FirstOrDefault();
+
+                    if (contact == null)
+                    {
+                        contact = (from a in repository.context.Contacts
+                                   where a.Email == id
+                                   && a.Tenant == 0 && a.InActive == false
+                                   select new ContactPM()
+                                   {
+                                       Anniversary = a.Anniversary,
+                                       Birthday = a.Birthday,
+                                       BusinessPhone = a.BusinessPhone,
+                                       Email = a.Email,
+                                       SearchFields = a.SearchFields,
+                                       EnglishName = a.EnglishName,
+                                       FacebookId = a.FacebookId,
+                                       Fax = a.Fax,
+                                       Id = a.Id,
+                                       InActive = a.InActive,
+                                       LocalName = a.LocalName,
+                                       ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
+                                       Mobile = a.Mobile,
+                                       Notes = a.Notes,
+                                       Tenant = a.Tenant,
+                                       Signature = a.Signature,
+                                       SignatureHtml = a.SignatureHtml,
+                                       DontShowLocal = a.DontShowLocalLabels,
+                                       DisplayGettingStarted = a.DisplayGettingStarted,
+                                       BirthdayReminder = a.BirthdayReminder,
+                                       AnniversaryReminder = a.AnniversaryReminder,
+                                       ImageDetailId = a.ImageDetailId,
+                                       DoneDate = a.DoneDate,
+                                       BirthDayOfYear = a.BirthDayOfYear,
+                                       ContactDoneMethodCode = a.ContactDoneMethod != null ? a.ContactDoneMethod.Code : null,
+                                       Position = a.Position,
+                                       ExternalId = a.ExternalId,
+                                       IndexColor = a.IndexColor,
+                                       CompanyName = a.CompanyName,
+                                       CreateDate = a.CreateDate,
+                                   }).FirstOrDefault();
+
+                        isTenant0User = true;
+                    }
+
+                    if (contact != null)
+                    {
+                        using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                        {
+                            IGlobalContext globalContext = GlobalContext.GetContext();
+                            ContactPassword contactPassword = globalContext.ContactPasswords.Where(cn => cn.Email == contact.Email.ToLower()).FirstOrDefault();
+                            GlobalContact globalContact = null;
+
+                            if (isTenant0User)
+                            {
+                                globalContact = globalContext.GlobalContacts.Where(cn => cn.Email == contact.Email.ToLower() && cn.GlobalTenantId == 0).FirstOrDefault();
+                            }
+
+                            else
+                            {
+                                globalContact = globalContext.GlobalContacts.Where(cn => cn.Email == contact.Email.ToLower() && cn.GlobalTenantId == tenant).FirstOrDefault();
+                            }
+
+                            if (contactPassword != null)
+                            {
+                                contact.IsUser = globalContact.IsUser;
+                                contact.HasPassword = true;
+                                contact.IsLocked = contactPassword.IsLocked;
+                                contact.MustChangePassword = contactPassword.MustChangePassword;
+                                contact.NumberOfRetries = contactPassword.NumberOfRetries;
+                            }
+                        }
+                    }
+
+                    entity = contact;
+                    if (entity != null)
+                    {
+                        if (CacheManager.CacheWrapper.Get(entityName) == null)
+                        {
+                            CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                        }
+                    }
+                }
+
+                else
+                {
+                    entity = (ContactPM)CacheManager.CacheWrapper.Get(entityName);
+                }
+            }
+
+            else
+            {
+                bool isTenant0User = false;
+                ContactPM contact = (from a in repository.context.Contacts
+                                     where a.Email == id && a.UserType == "R"
+                                     && a.Tenant == tenant
+                                     select new ContactPM()
+                                     {
+                                         Anniversary = a.Anniversary,
+                                         Birthday = a.Birthday,
+                                         BusinessPhone = a.BusinessPhone,
+                                         Email = a.Email,
+                                         SearchFields = a.SearchFields,
+                                         EnglishName = a.EnglishName,
+                                         FacebookId = a.FacebookId,
+                                         Fax = a.Fax,
+                                         Id = a.Id,
+                                         InActive = a.InActive,
+                                         LocalName = a.LocalName,
+                                         ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
+                                         Mobile = a.Mobile,
+                                         Notes = a.Notes,
+                                         Tenant = a.Tenant,
+                                         Signature = a.Signature,
+                                         SignatureHtml = a.SignatureHtml,
+                                         DontShowLocal = a.DontShowLocalLabels,
+                                         DisplayGettingStarted = a.DisplayGettingStarted,
+                                         BirthdayReminder = a.BirthdayReminder,
+                                         AnniversaryReminder = a.AnniversaryReminder,
+                                         ImageDetailId = a.ImageDetailId,
+                                         DoneDate = a.DoneDate,
+                                         BirthDayOfYear = a.BirthDayOfYear,
+                                         ContactDoneMethodCode = a.ContactDoneMethod != null ? a.ContactDoneMethod.Code : null,
+                                         Position = a.Position,
+                                         ExternalId = a.ExternalId,
+                                         IndexColor = a.IndexColor,
+                                         CompanyName = a.CompanyName,
+                                         CreateDate = a.CreateDate,
+                                     }).FirstOrDefault();
+
+                if (contact == null)
+                {
+                    contact = (from a in repository.context.Contacts
+                               where a.Email == id
+                               && a.Tenant == 0
+                               select new ContactPM()
+                               {
+                                   Anniversary = a.Anniversary,
+                                   Birthday = a.Birthday,
+                                   BusinessPhone = a.BusinessPhone,
+                                   Email = a.Email,
+                                   SearchFields = a.SearchFields,
+                                   EnglishName = a.EnglishName,
+                                   FacebookId = a.FacebookId,
+                                   Fax = a.Fax,
+                                   Id = a.Id,
+                                   InActive = a.InActive,
+                                   LocalName = a.LocalName,
+                                   ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
+                                   Mobile = a.Mobile,
+                                   Notes = a.Notes,
+                                   Tenant = a.Tenant,
+                                   Signature = a.Signature,
+                                   SignatureHtml = a.SignatureHtml,
+                                   DontShowLocal = a.DontShowLocalLabels,
+                                   DisplayGettingStarted = a.DisplayGettingStarted,
+                                   BirthdayReminder = a.BirthdayReminder,
+                                   AnniversaryReminder = a.AnniversaryReminder,
+                                   ImageDetailId = a.ImageDetailId,
+                                   DoneDate = a.DoneDate,
+                                   BirthDayOfYear = a.BirthDayOfYear,
+                                   ContactDoneMethodCode = a.ContactDoneMethod != null ? a.ContactDoneMethod.Code : null,
+                                   Position = a.Position,
+                                   ExternalId = a.ExternalId,
+                                   IndexColor = a.IndexColor,
+                                   CompanyName = a.CompanyName,
+                                   CreateDate = a.CreateDate,
+                               }).FirstOrDefault();
+
+                    isTenant0User = true;
+                }
+
+                if (contact != null)
+                {
+                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                    {
+                        IGlobalContext globalContext = GlobalContext.GetContext();
+                        ContactPassword contactPassword = globalContext.ContactPasswords.Where(cn => cn.Email == contact.Email.ToLower()).FirstOrDefault();
+
+                        if (contactPassword != null)
+                        {
+                            contact.IsLocked = contactPassword.IsLocked;
+                            contact.MustChangePassword = contactPassword.MustChangePassword;
+                            contact.NumberOfRetries = contactPassword.NumberOfRetries;
+                        }
+                    }
+                }
+
+                entity = contact;
+            }
+
+            return entity;
+        }
+
         public ContactPM GetContactByNameAndTenant(string name, int tenant, bool getFromCache)
         {
             name = name.ToLower();

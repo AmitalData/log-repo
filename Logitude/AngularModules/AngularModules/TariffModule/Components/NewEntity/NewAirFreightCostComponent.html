@@ -82,7 +82,7 @@
                                 </tr>
 
                                 <!-- Price Steps  -->
-                                <tr *ngIf="EntityPM.TypeCode != 'ASC' && EntityPM.TypeCode != 'OSC' && EntityPM.TypeCode != 'OFC'" class="FormFieldRow">
+                                <tr *ngIf="EntityPM.TypeCode != 'ASC' && EntityPM.TypeCode != 'OSC' && EntityPM.TypeCode != 'OFC' && EntityPM.TypeCode != 'OFS'" class="FormFieldRow">
                                     <td>
                                         <LogLabel [NoObjectField]="true" [Text]="'Price Steps'" [DataContext]="DataContext"></LogLabel>
                                     </td>
@@ -209,7 +209,7 @@
                                                             [DataContext]="DataContext"
                                                             [SelectedValue]="Surcharge1UOM"
                                                             [LookUpTableName]="'Measurement'"
-                                                            [DependencyFilter2Value]="false"
+                                                            [QueryFilterItems]="MeasurmentQueryFilters"
                                                             [HideLastColumn]="true">
                                                     </LogLov>
                                                 </td>
@@ -243,7 +243,7 @@
                                                             [DataContext]="DataContext"
                                                             [SelectedValue]="Surcharge2UOM"
                                                             [LookUpTableName]="'Measurement'"
-                                                            [DependencyFilter2Value]="false"
+                                                            [QueryFilterItems]="MeasurmentQueryFilters"
                                                             [HideLastColumn]="true">
                                                     </LogLov>
                                                 </td>
@@ -278,7 +278,7 @@
                                                             [DataContext]="DataContext"
                                                             [SelectedValue]="Surcharge3UOM"
                                                             [LookUpTableName]="'Measurement'"
-                                                            [DependencyFilter2Value]="false"
+                                                            [QueryFilterItems]="MeasurmentQueryFilters"
                                                             [HideLastColumn]="true">
                                                     </LogLov>
                                                 </td>
@@ -312,7 +312,7 @@
                                                             [DataContext]="DataContext"
                                                             [SelectedValue]="Surcharge4UOM"
                                                             [LookUpTableName]="'Measurement'"
-                                                            [DependencyFilter2Value]="false"
+                                                            [QueryFilterItems]="MeasurmentQueryFilters"
                                                             [HideLastColumn]="true">
                                                     </LogLov>
                                                 </td>
@@ -345,7 +345,7 @@
                                                             [DataContext]="DataContext"
                                                             [SelectedValue]="Surcharge5UOM"
                                                             [LookUpTableName]="'Measurement'"
-                                                            [DependencyFilter2Value]="false"
+                                                            [QueryFilterItems]="MeasurmentQueryFilters"
                                                             [HideLastColumn]="true">
                                                     </LogLov>
                                                 </td>
@@ -379,7 +379,7 @@
                                                             [DataContext]="DataContext"
                                                             [SelectedValue]="Surcharge6UOM"
                                                             [LookUpTableName]="'Measurement'"
-                                                            [DependencyFilter2Value]="false"
+                                                            [QueryFilterItems]="MeasurmentQueryFilters"
                                                             [HideLastColumn]="true">
                                                     </LogLov>
                                                 </td>
@@ -413,7 +413,7 @@
                                                             [DataContext]="DataContext"
                                                             [SelectedValue]="Surcharge7UOM"
                                                             [LookUpTableName]="'Measurement'"
-                                                            [DependencyFilter2Value]="false"
+                                                            [QueryFilterItems]="MeasurmentQueryFilters"
                                                             [HideLastColumn]="true">
                                                     </LogLov>
                                                 </td>
@@ -446,7 +446,7 @@
                                                             [SelectedValue]="Surcharge8UOM"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'Measurement'"
-                                                            [DependencyFilter2Value]="false"
+                                                            [QueryFilterItems]="MeasurmentQueryFilters"
                                                             [HideLastColumn]="true">
                                                     </LogLov>
                                                 </td>
@@ -479,7 +479,7 @@
                                                             [DataContext]="DataContext"
                                                             [SelectedValue]="Surcharge9UOM"
                                                             [LookUpTableName]="'Measurement'"
-                                                            [DependencyFilter2Value]="false"
+                                                            [QueryFilterItems]="MeasurmentQueryFilters"
                                                             [HideLastColumn]="true">
                                                     </LogLov>
                                                 </td>
@@ -512,7 +512,7 @@
                                                             [DataContext]="DataContext"
                                                             [SelectedValue]="Surcharge10UOM"
                                                             [LookUpTableName]="'Measurement'"
-                                                            [DependencyFilter2Value]="false"
+                                                            [QueryFilterItems]="MeasurmentQueryFilters"
                                                             [HideLastColumn]="true">
                                                     </LogLov>
                                                 </td>

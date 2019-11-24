@@ -250,6 +250,16 @@ export class AccountingSettingPM {
     public set EnableInvoiceStocksManagement(newValue: boolean) { if (this.enableInvoiceStocksManagement != newValue) { this.enableInvoiceStocksManagement = newValue; this.MarkAsDirty("EnableInvoiceStocksManagement"); } }
        
 	 
+    private refreshToken: string;
+    public get RefreshToken() { return this.refreshToken; }
+    public set RefreshToken(newValue: string) { if (this.refreshToken != newValue) { this.refreshToken = newValue; this.MarkAsDirty("RefreshToken"); } }
+       
+	 
+    private qBOOAuth: number;
+    public get QBOOAuth() { return this.qBOOAuth; }
+    public set QBOOAuth(newValue: number) { if (this.qBOOAuth != newValue) { this.qBOOAuth = newValue; this.MarkAsDirty("QBOOAuth"); } }
+       
+	 
 
     public OldEntityPM: AccountingSettingPM;
 		

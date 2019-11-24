@@ -69,6 +69,8 @@
             this.tenantTxtBox = new System.Windows.Forms.ToolStripTextBox();
             this.rTLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lTRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.batchTaskExecutionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.executeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -157,6 +159,7 @@
             this.UpdateINFlble = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.button48 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.button45 = new System.Windows.Forms.Button();
             this.lblUTariffModule = new System.Windows.Forms.Label();
@@ -169,6 +172,7 @@
             this.lblUInvoice = new System.Windows.Forms.Label();
             this.lblUQuote = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.button47 = new System.Windows.Forms.Button();
             this.button44 = new System.Windows.Forms.Button();
             this.button43 = new System.Windows.Forms.Button();
             this.btnCompareData = new System.Windows.Forms.Button();
@@ -185,8 +189,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.AirlineLogoTenantTextBox = new System.Windows.Forms.TextBox();
             this.button46 = new System.Windows.Forms.Button();
-            this.batchTaskExecutionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.executeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.UpdateRulesLabel = new System.Windows.Forms.Label();
             this.button47 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -541,6 +544,21 @@
             this.lTRToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.lTRToolStripMenuItem.Text = "LTR";
             this.lTRToolStripMenuItem.Click += new System.EventHandler(this.ltrBtn_Click);
+            // 
+            // batchTaskExecutionToolStripMenuItem
+            // 
+            this.batchTaskExecutionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.executeToolStripMenuItem});
+            this.batchTaskExecutionToolStripMenuItem.Name = "batchTaskExecutionToolStripMenuItem";
+            this.batchTaskExecutionToolStripMenuItem.Size = new System.Drawing.Size(129, 20);
+            this.batchTaskExecutionToolStripMenuItem.Text = "Batch Task Execution";
+            // 
+            // executeToolStripMenuItem
+            // 
+            this.executeToolStripMenuItem.Name = "executeToolStripMenuItem";
+            this.executeToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.executeToolStripMenuItem.Text = "Execute";
+            this.executeToolStripMenuItem.Click += new System.EventHandler(this.executeToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
@@ -1405,6 +1423,8 @@
             // 
             this.tabPage1.AutoScroll = true;
             this.tabPage1.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage1.Controls.Add(this.UpdateRulesLabel);
+            this.tabPage1.Controls.Add(this.button48);
             this.tabPage1.Controls.Add(this.label3);
             this.tabPage1.Controls.Add(this.button45);
             this.tabPage1.Controls.Add(this.lblUTariffModule);
@@ -1463,6 +1483,16 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Update";
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
+            // 
+            // button48
+            // 
+            this.button48.Location = new System.Drawing.Point(543, 269);
+            this.button48.Name = "button48";
+            this.button48.Size = new System.Drawing.Size(184, 35);
+            this.button48.TabIndex = 96;
+            this.button48.Text = "Update Rules";
+            this.button48.UseVisualStyleBackColor = true;
+            this.button48.Click += new System.EventHandler(this.button48_Click);
             // 
             // label3
             // 
@@ -1638,6 +1668,7 @@
             this.tabPage2.Size = new System.Drawing.Size(743, 558);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Other";
+          
             // 
             // button44
             // 
@@ -1793,20 +1824,16 @@
             this.button46.UseVisualStyleBackColor = true;
             this.button46.Click += new System.EventHandler(this.button46_Click_1);
             // 
-            // batchTaskExecutionToolStripMenuItem
+            // UpdateRulesLabel
             // 
-            this.batchTaskExecutionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.executeToolStripMenuItem});
-            this.batchTaskExecutionToolStripMenuItem.Name = "batchTaskExecutionToolStripMenuItem";
-            this.batchTaskExecutionToolStripMenuItem.Size = new System.Drawing.Size(129, 20);
-            this.batchTaskExecutionToolStripMenuItem.Text = "Batch Task Execution";
-            // 
-            // executeToolStripMenuItem
-            // 
-            this.executeToolStripMenuItem.Name = "executeToolStripMenuItem";
-            this.executeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.executeToolStripMenuItem.Text = "Execute";
-            this.executeToolStripMenuItem.Click += new System.EventHandler(this.executeToolStripMenuItem_Click);
+            this.UpdateRulesLabel.AutoSize = true;
+            this.UpdateRulesLabel.Location = new System.Drawing.Point(434, 280);
+            this.UpdateRulesLabel.MinimumSize = new System.Drawing.Size(100, 0);
+            this.UpdateRulesLabel.Name = "UpdateRulesLabel";
+            this.UpdateRulesLabel.Size = new System.Drawing.Size(100, 13);
+            this.UpdateRulesLabel.TabIndex = 97;
+            this.UpdateRulesLabel.Text = "...";
+            this.UpdateRulesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // button47
             // 
@@ -2024,6 +2051,8 @@
         private System.Windows.Forms.ToolStripMenuItem batchTaskExecutionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem executeToolStripMenuItem;
         private System.Windows.Forms.Button button47;
+        private System.Windows.Forms.Button button48;
+        private System.Windows.Forms.Label UpdateRulesLabel;
     }
 }
 

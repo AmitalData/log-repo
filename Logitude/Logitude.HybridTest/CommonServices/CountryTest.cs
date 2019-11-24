@@ -1,4 +1,7 @@
 ﻿using System;
+using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.HybridTest.WcfCallers;
+using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Logitude.HybridTest.CommonServices
@@ -10,37 +13,41 @@ namespace Logitude.HybridTest.CommonServices
         public void Test_Country_UPSERT()
         {
             LoginService.GetLoginTokenByCredentials();
-            Server.Tools.Response globalZoneServiceResponse = GlobalZoneTest.CallGlobalZoneUpsert();
-            Assert.IsFalse(globalZoneServiceResponse.HasError, "Global Zone Upsert Failed! " + globalZoneServiceResponse.ErrorMessage);
-            Assert.IsNotNull(globalZoneServiceResponse.Result, "Global Zone Upsert Failed! " + globalZoneServiceResponse.ErrorMessage);
-            Server.Tools.Response serviceResponse = CallCountryUpsert();
-            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            Response serviceResponse = CountryWcfCaller.CallCountryUpsert();
+            Assert.IsFalse(serviceResponse.HasError, serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
          }
 
-        public static Server.Tools.Response CallCountryUpsert()
+        [TestMethod]
+        public void Test_Country_GETLIST()
         {
-
-            CountryServiceReference.CountryWcfServiceClient serviceClient = new CountryServiceReference.CountryWcfServiceClient();
-            string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
-            serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
-            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)serviceClient.InnerChannel))
+            LoginService.GetLoginTokenByCredentials();
+            Response prepareResponse = CountryWcfCaller.PrepareCountry();
+            Assert.IsFalse(prepareResponse.HasError, "Prepare Country Failed! " + prepareResponse.ErrorMessage);
+            InvokedProperties serviceProperties = new InvokedProperties
             {
+                ServiceName = "Country",
+                ServiceOperation = "GetList",
+                ServiceResponseIndex = 2,
+                ServiceType = typeof(CountryList),
+                ServiceFilterType = typeof(ApiSearchFilters),
+            };
+            ApiSearchFilters filters = new ApiSearchFilters
+            {
+                Take = 10,
+                SearchFields = HybridData.CountryCode
+            };
 
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
-                CountryServiceReference.CountryPM entityPM = new CountryServiceReference.CountryPM()
-                {
-                    Code = HybridCodes.CountryCode,
-                    EnglishName = "Hybrid Country",
-                    LocalName = "Hybrid Country",
-                    GlobalZoneId = HybridCodes.GlobalZoneCode,
-                    AddedManually = true,
-                    Tenant = TestEnvironmentGlobalParameters.Tenant,
-                };
-
-                Logitude.Server.Tools.Response serviceResponse = serviceClient.Upsert(entityPM, false);
-                return serviceResponse;
-            }
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { filters, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
+            CountryList[] countries = (CountryList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+            Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsTrue(CheckResult(countries), "Get Hybrid Country Item From Countries Failed!");
+        }
+        public bool CheckResult(CountryList[] countries)
+        {
+            return countries[0].EnglishName == "Hybrid Country";
         }
     }
 }

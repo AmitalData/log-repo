@@ -76,7 +76,9 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public int EmailSendingQuota { get; set; }
         public string ReleaseNotesURL { get; set; }
         public string CPUIntensiveWebServicesURL { get; set; }
-
+        public int QBOOAuthDefault { get; set; }
+        public string QBOClientID { get; set; }
+        public string QBOClientSecret { get; set; }
 
 
     }

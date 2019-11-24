@@ -54,7 +54,7 @@ export class ShipmentView {
     }
 
     DeleteNewView() {
-
+     
         this.helper.WaitByIdAndClick('QueryList_0_0');
         this.helper.WaitActionButtonAndClick('ActionButtonsParent', false);
         this.helper.waitByCss('.ConfirmWindow');

@@ -15,7 +15,7 @@ describe('Operations Module', () => {
     })
     it('Create Shipment .. ', function () {
         browser.ignoreSynchronization = true;
-        shipperRef1 = page.DoOperations();
+        shipperRef1 = page.DoOperations(browser.params.ShipParams.ShipmentLevelCode, browser.params.ShipParams.Direction, browser.params.ShipParams.TransportMode, browser.params.ShipParams.ShipmentType);
         console.log(shipperRef1);
     });
     it('Search For shipment ..', function () {
@@ -25,7 +25,7 @@ describe('Operations Module', () => {
     });
     it('Edit Shipment .. ', function () {
         browser.ignoreSynchronization = true;
-        page.EditShipment(shipperRef1);
+        page.EditShipment(shipperRef1, browser.params.ShipParams.ShipmentLevelCode, browser.params.ShipParams.ShipmentType, browser.params.ShipParams.Direction);
         page.SaveShip();
     });
     it('Shipment Actions .. ', function () {

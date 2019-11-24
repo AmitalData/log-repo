@@ -537,6 +537,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.INTTRALastStatusDate = entityPM.INTTRALastStatusDate;
             entityPoco.INTTRABookingTransStatusCode = entityPM.INTTRABookingTransStatusCode;
             entityPoco.INTTRABookingStatusCode = entityPM.INTTRABookingStatusCode;
+            entityPoco.INTTRALastBookingResponse = entityPM.INTTRALastBookingResponse;
+            entityPoco.INTTRABookingError = entityPM.INTTRABookingError;
         }
         private static void BuildRoutingField(ShipmentPM entityPM, Shipment entityPoco, ShipmentMasterData entityMasterData, IShipmentsContext objectContext)
         {
@@ -2759,14 +2761,19 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             shipmentPM.Field39 = houseShipment.Field39;
             shipmentPM.Field30 = houseShipment.Field30;
 
-            shipmentPM.MainCarriageCarrierId = masterShipment.MainCarriageCarrierId;
-            shipmentPM.MainCarriageETA = masterShipment.MainCarriageETA;
-            shipmentPM.MainCarriageETD = masterShipment.MainCarriageETD;
-            shipmentPM.MainCarriageATD = masterShipment.MainCarriageATD;
-            shipmentPM.MainCarriageATA = masterShipment.MainCarriageATA;
-            shipmentPM.FinalDistenationPortId = masterShipment.FinalDistenationPortId;
-            shipmentPM.StatusId = masterShipment.StatusId;
-            shipmentPM.CutoffDate = masterShipment.CutoffDate;
+            if (masterShipment != null)
+            {
+                shipmentPM.MainCarriageCarrierId = masterShipment.MainCarriageCarrierId;
+                shipmentPM.MainCarriageETA = masterShipment.MainCarriageETA;
+                shipmentPM.MainCarriageETD = masterShipment.MainCarriageETD;
+                shipmentPM.MainCarriageATD = masterShipment.MainCarriageATD;
+                shipmentPM.MainCarriageATA = masterShipment.MainCarriageATA;
+                shipmentPM.FinalDistenationPortId = masterShipment.FinalDistenationPortId;
+                shipmentPM.StatusId = masterShipment.StatusId;
+                shipmentPM.CutoffDate = masterShipment.CutoffDate;
+                shipmentPM.MasterShipmentDataId = masterShipment.Id;
+            }
+
 
             return shipmentPM;
 

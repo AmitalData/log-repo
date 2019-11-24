@@ -211,6 +211,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         {
                             data = this.ExportAirFreightCostLinesToExcel(tariff, tariffVersion.TariffLines, tenant, type);
                         }
+                        
+                        else if(tariff.TypeCode == "OFC")
+                        {
+                            data = this.ExportOceanFCLFreightCostLinesToExcel(tariff, tariffVersion.TariffLines, tenant, type);
+                        }
 
                         else if (tariff.TypeCode == "ASC" || tariff.TypeCode == "OSC")
                         {
@@ -832,6 +837,159 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             workbook.SaveAs(memory);
             return memory.ToArray();
         }
+        private byte[] ExportOceanFCLFreightCostLinesToExcel(TariffPM tariff, List<TariffLinePM> tariffLines, int tenant, string type)
+        {
+            System.IO.MemoryStream memory = new System.IO.MemoryStream();
+            tariffLines = tariffLines.OrderBy(P => P.Index).ToList();
+            ExcelEngine excelEngine = new ExcelEngine();
+            IApplication application = excelEngine.Excel;
+            IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
+            IWorksheet sheet1 = workbook.Worksheets[0];
+            
+            DataTable table = new DataTable();
+
+            #region header
+            table.Columns.Add("From");
+            table.Columns.Add("To");
+
+            int count = 0;
+            PackageTypeRepository packageTypeRepository = new PackageTypeRepository(tenant);
+            PackageType packageType = null;
+
+            if (!string.IsNullOrEmpty(tariff.ContainerType1Id))
+            {
+                count = 1;
+                packageType = packageTypeRepository.GetSinglePackageType(tariff.ContainerType1Id, tenant);
+
+                if (packageType != null)
+                {
+                    table.Columns.Add(packageType.Code);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(tariff.ContainerType2Id))
+            {
+                count++;
+                packageType = packageTypeRepository.GetSinglePackageType(tariff.ContainerType2Id, tenant);
+
+                if (packageType != null)
+                {
+                    table.Columns.Add(packageType.Code);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(tariff.ContainerType3Id))
+            {
+                count++;
+                packageType = packageTypeRepository.GetSinglePackageType(tariff.ContainerType3Id, tenant);
+
+                if (packageType != null)
+                {
+                    table.Columns.Add(packageType.Code);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(tariff.ContainerType4Id))
+            {
+                count++;
+                packageType = packageTypeRepository.GetSinglePackageType(tariff.ContainerType4Id, tenant);
+
+                if (packageType != null)
+                {
+                    table.Columns.Add(packageType.Code);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(tariff.ContainerType5Id))
+            {
+                count++;
+                packageType = packageTypeRepository.GetSinglePackageType(tariff.ContainerType5Id, tenant);
+
+                if (packageType != null)
+                {
+                    table.Columns.Add(packageType.Code);
+                }
+            }
+
+            table.Columns.Add("Notes");
+            #endregion
+
+            #region range
+            string range = "A1:C1";
+            if (count == 1)
+            {
+                range = "A1:D1";
+            }
+            else if (count == 2)
+            {
+                range = "A1:E1";
+            }
+            else if (count == 3)
+            {
+                range = "A1:F1";
+            }
+            else if (count == 4)
+            {
+                range = "A1:G1";
+            }
+            else if (count == 5)
+            {
+                range = "A1:H1";
+            }          
+            #endregion
+
+            if (type == "Data")
+            {
+                if (tariffLines != null && tariffLines.Count > 0)
+                {
+                    foreach (var item in tariffLines)
+                    {
+                        DataRow row = table.NewRow();
+                        row[0] = item.OriginPortCode ?? null;
+                        row[1] = item.DestinationPortCode ?? null;
+
+                        int rowIndex = 2;
+                        
+                        if (item.Surcharge1Price.HasValue)
+                        {
+                            row[rowIndex++] = item.Surcharge1Price ?? null;
+                        }
+                        
+                        if (item.Surcharge2Price.HasValue)
+                        {
+                            row[rowIndex++] = item.Surcharge2Price ?? null;
+                        }
+
+                        if (item.Surcharge3Price.HasValue)
+                        {
+                            row[rowIndex++] = item.Surcharge3Price ?? null;
+                        }
+                        
+                        if (item.Surcharge4Price.HasValue)
+                        {
+                            row[rowIndex++] = item.Surcharge4Price ?? null;
+                        }
+                        
+                        if (item.Surcharge5Price.HasValue)
+                        {
+                            row[rowIndex++] = item.Surcharge5Price ?? null;
+                        }
+                                                
+                        row[count + 2] = item.Notes ?? null;
+
+                        table.Rows.Add(row);
+                    }
+                }
+            }
+
+            sheet1.Range[range].CellStyle.Font.Color = ExcelKnownColors.White;
+            sheet1.Range[range].CellStyle.Color = System.Drawing.Color.Gray;
+            sheet1.Range[range].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
+
+            sheet1.ImportDataTable(table, true, 1, 1);
+            workbook.SaveAs(memory);
+            return memory.ToArray();
+        }
 
         public HttpResponseMessage GetApproveVersion(string tariffId, int version)
         {
@@ -917,6 +1075,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     this.TariffType = filter.TariffType;
                     tariffLinesResult = this.BuildOceanAirFreightCostExcelLines(sheet, authToken.Tenant, filter);
+                }
+
+                else if (filter.TariffType == "OFC")
+                {
+                    this.TariffType = filter.TariffType;
+                    tariffLinesResult = this.BuildOceanFCLFreightCostExcelLines(sheet, authToken.Tenant, filter);
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, tariffLinesResult);
@@ -1338,6 +1502,206 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             return myResult;
         }
+        public List<ExcelTariffLines> BuildOceanFCLFreightCostExcelLines(IWorksheet sheet, int tenant, TariffFilterParameter filter = null)
+        {
+            List<ExcelTariffLines> myResult = new List<ExcelTariffLines>();
+            int rowIndex = 0;
+
+            string notescolumn = sheet.Columns[sheet.Columns.Count() - 1].DisplayText;
+
+            foreach (IRange row in sheet.UsedRange.Rows.Skip(1))
+            {
+                String[] rowData = new String[sheet.Columns.Count() - 1];
+                ExcelTariffLines tariffLine = new ExcelTariffLines();
+                tariffLine.Index = rowIndex;
+
+                String notesRowData = row.Cells[sheet.Columns.Count() - 1].Value2.ToString();
+
+                for (int i = 0; i < sheet.Columns.Count() - 1; i++)
+                {
+                    if (row.Cells[i].HasFormula)
+                    {
+                        rowData[i] = row.Cells[i].FormulaNumberValue.ToString();
+                    }
+                    else
+                    {
+                        rowData[i] = row.Cells[i].Value2.ToString();
+                    }
+                }
+
+                Port fromPort = this.GetPortDetails(rowData[0], tenant);
+                if (fromPort != null)
+                {
+                    if ((fromPort.IsAir && this.TariffType == "AFC") || (fromPort.IsOcean && this.TariffType == "OLC") || (fromPort.IsOcean && this.TariffType == "OFC"))
+                    {
+                        tariffLine.FromPortId = fromPort.Id;
+                        tariffLine.FromPortCode = fromPort.Code;
+                        tariffLine.FromPortName = fromPort.EnglishName;
+                    }
+
+                    else
+                    {
+                        tariffLine.FromPortIsNotAir = true;
+                        tariffLine.FromPortText = rowData[0];
+                    }
+                }
+                else
+                {
+                    tariffLine.FromPortText = this.TrimTo_20(rowData[0]);
+                }
+
+                Port toPort = this.GetPortDetails(rowData[1], tenant);
+                if (toPort != null)
+                {
+                    if ((toPort.IsAir && this.TariffType == "AFC") || (toPort.IsOcean && this.TariffType == "OLC") || (toPort.IsOcean && this.TariffType == "OFC"))
+                    {
+                        tariffLine.ToPortId = toPort.Id;
+                        tariffLine.ToPortCode = toPort.Code;
+                        tariffLine.ToPortName = toPort.EnglishName;
+                    }
+
+                    else
+                    {
+                        tariffLine.ToPortIsNotAir = true;
+                        tariffLine.ToPortText = rowData[1];
+                    }
+                }
+                else
+                {
+                    tariffLine.ToPortText = this.TrimTo_20(rowData[1]);
+                }
+                
+                if (rowData.Length > 2)
+                {
+                    if (this.IsNumber(rowData[2]))
+                    {
+                        decimal myNumber = Convert.ToDecimal(rowData[2]);
+
+                        if (myNumber >= 0)
+                        {
+                            tariffLine.Surcharge1Price = myNumber;
+                        }
+                        else
+                        {
+                            tariffLine.IsSurcharge1PriceMinus = true;
+                            tariffLine.Surcharge1PriceText = String.Format("{0:0.000}", myNumber);
+                        }
+                    }
+                    else
+                    {
+                        tariffLine.Surcharge1PriceText = this.TrimTo_20(rowData[2]);
+                    }
+                }
+
+                if (rowData.Length > 3)
+                {
+                    if (this.IsNumber(rowData[3]))
+                    {
+                        decimal myNumber = Convert.ToDecimal(rowData[3]);
+
+                        if (myNumber >= 0)
+                        {
+                            tariffLine.Surcharge2Price = myNumber;
+                        }
+                        else
+                        {
+                            tariffLine.IsSurcharge2PriceMinus = true;
+                            tariffLine.Surcharge2PriceText = String.Format("{0:0.000}", myNumber);
+                        }
+                    }
+                    else
+                    {
+                        tariffLine.Surcharge2PriceText = this.TrimTo_20(rowData[3]);
+                    }
+                }
+
+                if (rowData.Length > 4)
+                {
+                    if (this.IsNumber(rowData[4]))
+                    {
+                        decimal myNumber = Convert.ToDecimal(rowData[4]);
+
+                        if (myNumber >= 0)
+                        {
+                            tariffLine.Surcharge3Price = myNumber;
+                        }
+                        else
+                        {
+                            tariffLine.IsSurcharge3PriceMinus = true;
+                            tariffLine.Surcharge3PriceText = String.Format("{0:0.000}", myNumber);
+                        }
+                    }
+                    else
+                    {
+                        tariffLine.Surcharge3PriceText = this.TrimTo_20(rowData[4]);
+                    }
+                }
+
+                if (rowData.Length > 5)
+                {
+                    if (this.IsNumber(rowData[5]))
+                    {
+                        decimal myNumber = Convert.ToDecimal(rowData[5]);
+
+                        if (myNumber >= 0)
+                        {
+                            tariffLine.Surcharge4Price = myNumber;
+                        }
+                        else
+                        {
+                            tariffLine.IsSurcharge4PriceMinus = true;
+                            tariffLine.Surcharge4PriceText = String.Format("{0:0.000}", myNumber);
+                        }
+                    }
+                    else
+                    {
+                        tariffLine.Surcharge4PriceText = this.TrimTo_20(rowData[5]);
+                    }
+                }
+
+                if (rowData.Length > 6)
+                {
+                    if (this.IsNumber(rowData[6]))
+                    {
+                        decimal myNumber = Convert.ToDecimal(rowData[6]);
+
+                        if (myNumber >= 0)
+                        {
+                            tariffLine.Surcharge5Price = myNumber;
+                        }
+                        else
+                        {
+                            tariffLine.IsSurcharge5PriceMinus = true;
+                            tariffLine.Surcharge5PriceText = String.Format("{0:0.000}", myNumber);
+                        }
+                    }
+                    else
+                    {
+                        tariffLine.Surcharge5PriceText = this.TrimTo_20(rowData[6]);
+                    }
+                }
+                
+                if (!string.IsNullOrEmpty(notescolumn))
+                {
+                    tariffLine.Notes = notesRowData;
+
+                    if (notesRowData.Length > 500)
+                    {
+                        tariffLine.Notes = notesRowData.Substring(0, 500);
+                    }
+                }
+
+                myResult.Add(tariffLine);
+                rowIndex++;
+            }
+
+            foreach (ExcelTariffLines item in myResult)
+            {
+                this.SetErrors_OceanFCLFreightCost(item);
+            }
+
+            return myResult;
+        }
         private void SetErrors_AirFreightCost(ExcelTariffLines item)
         {
             bool error = false;
@@ -1713,6 +2077,257 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             item.HasErrors = error;
             item.ErrorText = errorText;
         }
+        private void SetErrors_OceanFCLFreightCost(ExcelTariffLines item)
+        {
+            bool error = false;
+            string errorText = "";
+
+            if (!string.IsNullOrEmpty(item.FromPortText) && string.IsNullOrEmpty(item.FromPortId))
+            {
+                error = true;
+
+                if (item.FromPortIsNotAir)
+                {
+                    if (string.IsNullOrEmpty(errorText))
+                    {
+                        errorText = "Port Not Found";
+                    }
+
+                    else
+                    {
+                        errorText = errorText + ", Port Not Found";
+                    }
+                }
+                else
+                {
+                    if (string.IsNullOrEmpty(errorText))
+                    {
+                        errorText = "Port with code " + item.FromPortText + " not found";
+                    }
+
+                    else
+                    {
+                        errorText = errorText + ", Port with code " + item.FromPortText + " not found";
+                    }
+                }
+            }
+            else if (string.IsNullOrEmpty(item.FromPortText) && string.IsNullOrEmpty(item.FromPortId))
+            {
+                error = true;
+
+                if (string.IsNullOrEmpty(errorText))
+                {
+                    errorText = "Missing Origin Port";
+                }
+
+                else
+                {
+                    errorText = errorText + ", Missing Origin Port";
+                }
+            }
+
+            if (!string.IsNullOrEmpty(item.ToPortText) && string.IsNullOrEmpty(item.ToPortId))
+            {
+                error = true;
+
+                if (item.ToPortIsNotAir)
+                {
+                    if (string.IsNullOrEmpty(errorText))
+                    {
+                        errorText = "Port Not Found";
+                    }
+
+                    else
+                    {
+                        errorText = errorText + ", Port Not Found";
+                    }
+                }
+                else
+                {
+                    if (string.IsNullOrEmpty(errorText))
+                    {
+                        errorText = "Port with code " + item.ToPortText + " not found";
+                    }
+
+                    else
+                    {
+                        errorText = errorText + ", Port with code " + item.ToPortText + " not found";
+                    }
+                }
+            }
+            else if (string.IsNullOrEmpty(item.ToPortText) && string.IsNullOrEmpty(item.ToPortId))
+            {
+                error = true;
+
+                if (string.IsNullOrEmpty(errorText))
+                {
+                    errorText = "Missing Destination Port";
+                }
+
+                else
+                {
+                    errorText = errorText + ", Missing Destination Port";
+                }
+            }
+            
+            if (!string.IsNullOrEmpty(item.Surcharge1PriceText) && item.Surcharge1Price == null)
+            {
+                error = true;
+
+                if (item.IsSurcharge1PriceMinus)
+                {
+                    if (string.IsNullOrEmpty(errorText))
+                    {
+                        errorText = "Container 1 price can't be minus";
+                    }
+
+                    else
+                    {
+                        errorText = errorText + ", Container 1 price can't be minus";
+                    }
+                }
+
+                else
+                {
+                    if (string.IsNullOrEmpty(errorText))
+                    {
+                        errorText = "Container 1 price format is invalid";
+                    }
+
+                    else
+                    {
+                        errorText = errorText + ", Container 1 price format is invalid";
+                    }
+                }
+            }
+
+            if (!string.IsNullOrEmpty(item.Surcharge2PriceText) && item.Surcharge2Price == null)
+            {
+                error = true;
+
+                if (item.IsSurcharge2PriceMinus)
+                {
+                    if (string.IsNullOrEmpty(errorText))
+                    {
+                        errorText = "Container 2 price can't be minus";
+                    }
+
+                    else
+                    {
+                        errorText = errorText + ", Container 2 price can't be minus";
+                    }
+                }
+
+                else
+                {
+                    if (string.IsNullOrEmpty(errorText))
+                    {
+                        errorText = "Container 2 price format is invalid";
+                    }
+
+                    else
+                    {
+                        errorText = errorText + ", Container 2 price format is invalid";
+                    }
+                }
+            }
+
+            if (!string.IsNullOrEmpty(item.Surcharge3PriceText) && item.Surcharge3Price == null)
+            {
+                error = true;
+
+                if (item.IsSurcharge3PriceMinus)
+                {
+                    if (string.IsNullOrEmpty(errorText))
+                    {
+                        errorText = "Container 3 price can't be minus";
+                    }
+
+                    else
+                    {
+                        errorText = errorText + ", Container 3 price can't be minus";
+                    }
+                }
+
+                else
+                {
+                    if (string.IsNullOrEmpty(errorText))
+                    {
+                        errorText = "Container 3 price format is invalid";
+                    }
+
+                    else
+                    {
+                        errorText = errorText + ", Container 3 price format is invalid";
+                    }
+                }
+            }
+
+            if (!string.IsNullOrEmpty(item.Surcharge4PriceText) && item.Surcharge4Price == null)
+            {
+                error = true;
+
+                if (item.IsSurcharge4PriceMinus)
+                {
+                    if (string.IsNullOrEmpty(errorText))
+                    {
+                        errorText = "Container 4 price can't be minus";
+                    }
+
+                    else
+                    {
+                        errorText = errorText + ", Container 4 price can't be minus";
+                    }
+                }
+
+                else
+                {
+                    if (string.IsNullOrEmpty(errorText))
+                    {
+                        errorText = "Container 4 price format is invalid";
+                    }
+
+                    else
+                    {
+                        errorText = errorText + ", Container 4 price format is invalid";
+                    }
+                }
+            }
+
+            if (!string.IsNullOrEmpty(item.Surcharge5PriceText) && item.Surcharge5Price == null)
+            {
+                error = true;
+
+                if (item.IsSurcharge5PriceMinus)
+                {
+                    if (string.IsNullOrEmpty(errorText))
+                    {
+                        errorText = "Container 5 price can't be minus";
+                    }
+
+                    else
+                    {
+                        errorText = errorText + ", Container 5 price can't be minus";
+                    }
+                }
+
+                else
+                {
+                    if (string.IsNullOrEmpty(errorText))
+                    {
+                        errorText = "Container 5 price format is invalid";
+                    }
+
+                    else
+                    {
+                        errorText = errorText + ", Container 5 price format is invalid";
+                    }
+                }
+            }
+            
+            item.HasErrors = error;
+            item.ErrorText = errorText;
+        }
         private Port GetPortDetails(string code, int tenant)
         {
             Port myPort = null;
@@ -1728,7 +2343,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     myPort = this.portRepository.GetAirlinePortByCode(tenant, code, true);
                 }
-                else if (this.TariffType == "OLC")
+                else if (this.TariffType == "OLC" || this.TariffType == "OFC")
                 {
                     myPort = this.portRepository.GetOceanPortByCode(tenant, code, true);
                 }
@@ -1740,7 +2355,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         portZero = this.portRepository.GetAirlinePortByCode(0, code, true);
                     }
-                    else if (this.TariffType == "OLC")
+                    else if (this.TariffType == "OLC" || this.TariffType == "OFC")
                     {
                         portZero = this.portRepository.GetOceanPortByCode(0, code, true);
                     }

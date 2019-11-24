@@ -45,6 +45,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
         private string billToAccountingCard;
         private string currencyAccountingCard;
         private List<TransferStatusCodeItem> transferstatusCodes;
+        private string defaultPaymentTermId;
         public APInvoicePM APInvoiceCustomDataMappingAndValidating(APInvoice MyEntity, int tenant, string ComputingPartnerCode = "")
         {
             try
@@ -104,14 +105,16 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             aPInvoicePM.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
             aPInvoicePM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
+            this.defaultPaymentTermId = aPInvoicePM.PaymentTermId;
+
             if (string.IsNullOrEmpty(aPInvoicePM.BranchId))
             {
                 aPInvoicePM.BranchId = myUser.BranchId;
             }
 
-            if (string.IsNullOrEmpty(aPInvoicePM.PaymentTermId))
+            if (string.IsNullOrEmpty(this.defaultPaymentTermId))
             {
-                aPInvoicePM.PaymentTermId = myTenant.PaymentTermId;
+                this.defaultPaymentTermId = myTenant.PaymentTermId;
             }
 
             if (string.IsNullOrEmpty(aPInvoicePM.LocalCurrencyId))
@@ -149,9 +152,9 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                         this.aPInvoicePM.InvoiceCurrencyId = vendor.InvoiceCurrencyId;
                     }
 
-                    if (string.IsNullOrEmpty(this.aPInvoicePM.PaymentTermId))
+                    if (string.IsNullOrEmpty(this.defaultPaymentTermId))
                     {
-                        this.aPInvoicePM.PaymentTermId = vendor.PaymentTermId;
+                        defaultPaymentTermId = vendor.PaymentTermId;
                     }
                 }
             }
@@ -278,15 +281,23 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                     this.aPInvoicePM.ProfitCurrencyId = shipment.ProfitCurrencyId;                    
                     this.aPInvoicePM.OperationalDate = shipment.OperationalDate;
 
-                    DateTime? loadingDate = this.aPInvoicePM.InvoiceDate;
-                    if (loadingDate == null)
+                    if (this.aPInvoicePM.ProfitCurrencyId == this.aPInvoicePM.LocalCurrencyId)
                     {
-                        loadingDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        this.aPInvoicePM.ProfitCurrencyExchangeRate = 1;
                     }
-                    LastRate myRate = this.GetCurrencysExchangeRate(tenant, this.aPInvoicePM.LocalCurrencyId, this.aPInvoicePM.ProfitCurrencyId, loadingDate.Value);
-                    if (myRate != null)
+
+                    else
                     {
-                        this.aPInvoicePM.ProfitCurrencyExchangeRate = myRate.Rate;                        
+                        DateTime? loadingDate = this.aPInvoicePM.InvoiceDate;
+                        if (loadingDate == null)
+                        {
+                            loadingDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        }
+                        LastRate myRate = this.GetCurrencysExchangeRate(tenant, this.aPInvoicePM.LocalCurrencyId, this.aPInvoicePM.ProfitCurrencyId, loadingDate.Value);
+                        if (myRate != null)
+                        {
+                            this.aPInvoicePM.ProfitCurrencyExchangeRate = myRate.Rate;
+                        }
                     }
 
                     switch (shipment.DirectionId)
@@ -310,6 +321,8 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
         }
         private void InitAndValidatePaymentTerm_DueDate()
         {
+            bool calculateDueDate = true;
+
             if (string.IsNullOrEmpty(this.aPInvoicePM.PaymentTermId))
             {
                 if (this.aPInvoicePM.DueDate != null)
@@ -318,11 +331,17 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                     if (manuallySetPaymentTerm != null)
                     {
                         this.aPInvoicePM.PaymentTermId = manuallySetPaymentTerm.Id;
+                        calculateDueDate = false;
                     }
                 }
-            }
 
-            else
+                else
+                {
+                    this.aPInvoicePM.PaymentTermId = this.defaultPaymentTermId;                   
+                }
+            }
+            
+            if(calculateDueDate)
             {
                 DateTime? expectedDueDate = this.ComputeAPInvoiceDueDate(this.aPInvoicePM, paymentTermRepository);
 
@@ -372,14 +391,14 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                                     {
                                         if (line.Quantity == null || line.Quantity == 0)
                                         {
-                                            throw new ApplicationException("Line Quantity is Missing when Charges is BCNT");
+                                            throw new ApplicationException(chargesType.Code + " Line Quantity is Missing when Charges is BCNT");
                                         }
                                     }
                                     else
                                     {
                                         if (line.Quantity != null && line.Quantity != 0)
                                         {
-                                            throw new ApplicationException("Line Container Type is Missing when Charges is BCNT");
+                                            throw new ApplicationException(chargesType.Code + " Line Container Type is Missing when Charges is BCNT");
                                         }
                                     }
 
@@ -390,12 +409,12 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                                         {
                                             if(!packageType.IsContainer)
                                             {
-                                                throw new ApplicationException("Line Container Type should be is Container");
+                                                throw new ApplicationException(chargesType.Code + " Line Container Type should be is Container");
                                             }
 
                                             if(!packageType.IsOcean)
                                             {
-                                                throw new ApplicationException("Line Container Type should be is Ocean");
+                                                throw new ApplicationException(chargesType.Code + " Line Container Type should be Ocean");
                                             }
                                         }
                                     }
@@ -404,12 +423,12 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                                 {
                                     if (!string.IsNullOrEmpty(line.ContainerTypeId))
                                     {
-                                        throw new ApplicationException("Line Container Type is not Allowed when Charges is not BCNT");
+                                        throw new ApplicationException(chargesType.Code + " Line Container Type is not Allowed when Charges is not BCNT");
                                     }
 
                                     if (line.Quantity != null && line.Quantity != 0)
                                     {
-                                        throw new ApplicationException("Line Quantity is not Allowed when Charges is not BCNT");
+                                        throw new ApplicationException(chargesType.Code + " Line Quantity is not Allowed when Charges is not BCNT");
                                     }
                                 }
                             }
@@ -436,7 +455,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                                 line.VatTypeName = vatType.EnglishName;
                                 line.VatIsMultiPercentage = vatType.IsMultiPercentage;
 
-                                if (line.VatPercentage == null || line.VatPercentage == 0)
+                                if (line.VatPercentage == null)
                                 {
                                     if (!vatType.IsMultiPercentage)
                                     {
@@ -452,7 +471,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
                         else
                         {
-                            throw new ApplicationException("Line VAT Type is Missing");
+                            throw new ApplicationException(chargesType.Code + " Line VAT Type is Missing");
                         }
 
                         if (string.IsNullOrEmpty(line.ForiegnCurrencyId))
@@ -621,7 +640,15 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             //ForiegnCurrencyAmount
             if (line.ForiegnCurrencyAmount == null || line.ForiegnCurrencyAmount == 0)
             {
-                line.ForiegnCurrencyAmount = line.LocalCurrencyAmount / line.ForiegnExchangeRate;
+                if (line.ForiegnCurrencyId == this.aPInvoicePM.InvoiceCurrencyId)
+                {
+                    line.ForiegnCurrencyAmount = line.InvoiceCurrencyAmount;
+                }
+
+                else
+                {
+                    line.ForiegnCurrencyAmount = line.LocalCurrencyAmount / line.ForiegnExchangeRate;
+                }
             }
 
             //ProfitCurrencyAmount
@@ -691,18 +718,6 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                     {
                         if (myComparativeDate != null)
                         {
-                            int dateYear = myComparativeDate.Value.Year;
-                            int dateMonth = myComparativeDate.Value.Month + 1;
-                            int dateDay = myComparativeDate.Value.Day;
-
-                            if (paymentTerm.CurrentMonth)
-                            {
-                                dateMonth += 1;
-                                dateDay = 1;
-                            }
-
-                            var myDate = new DateTime(dateYear, dateMonth, dateDay, 0, 0, 0);
-                            myComparativeDate = myDate;
                             myComparativeDate = myComparativeDate.Value.AddDays(paymentTerm.Days);
                         }
                     }

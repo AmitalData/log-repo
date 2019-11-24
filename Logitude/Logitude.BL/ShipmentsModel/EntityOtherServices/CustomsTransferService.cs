@@ -33,6 +33,7 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
         private ICommonDataContext commoContext;
         private IShipmentsContext shipmentsContext;
         private ShipmentPayableRepository shipmentPayableRepository;
+        private ShipmentPackageRepository shipmentPackageRepository;
         private ShippingLineRepository shippingLineRepository;
         private AddressRepository addressRepository;
         public CustomsTransferService(List<ShipmentDataView> shipments, string filename, string type, int tenant)
@@ -45,6 +46,7 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
             commoContext = CommonDataContext.GetContext(tenant);
             shipmentsContext = ShipmentsContext.GetContext(tenant);
             shipmentPayableRepository = new ShipmentPayableRepository(shipmentsContext);
+            shipmentPackageRepository = new ShipmentPackageRepository(shipmentsContext);
             shippingLineRepository = new ShippingLineRepository(commoContext);
             addressRepository = new AddressRepository(commoContext);
 
@@ -69,25 +71,24 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
             {
                 case "AMOS":
                     {
-                        sheet1.Range["A1:AC1"].CellStyle.Font.Bold = true;
-                        sheet1.Range["A1:AC1"].CellStyle.Font.Size = 10;
-                        sheet1.Range["A1:AC1"].CellStyle.Font.FontName = "Calibri";
-                        sheet1.Range["A1:AC1"].CellStyle.Font.Color = ExcelKnownColors.Black;
-                        sheet1.Range["A1:AC1"].CellStyle.Color = System.Drawing.Color.FromArgb(255, 242, 220, 219);
-                        sheet1.Range["A1:AC1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
-
+                        sheet1.Range["A1:AX1"].CellStyle.Font.Bold = true;
+                        sheet1.Range["A1:AX1"].CellStyle.Font.Size = 10;
+                        sheet1.Range["A1:AX1"].CellStyle.Font.FontName = "Calibri";
+                        sheet1.Range["A1:AX1"].CellStyle.Font.Color = ExcelKnownColors.Black;
+                        sheet1.Range["A1:AX1"].CellStyle.Color = System.Drawing.Color.FromArgb(255, 242, 220, 219);
+                        sheet1.Range["A1:AX1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
                         break;
                     }
 
 
                 case "AMAS":
                     {
-                        sheet1.Range["A1:AA1"].CellStyle.Font.Bold = true;
-                        sheet1.Range["A1:AA1"].CellStyle.Font.Size = 10;
-                        sheet1.Range["A1:AA1"].CellStyle.Font.FontName = "Calibri";
-                        sheet1.Range["A1:AA1"].CellStyle.Font.Color = ExcelKnownColors.White;
-                        sheet1.Range["A1:AA1"].CellStyle.Color = System.Drawing.Color.Orange;
-                        sheet1.Range["A1:AA1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
+                        sheet1.Range["A1:AB1"].CellStyle.Font.Bold = true;
+                        sheet1.Range["A1:AB1"].CellStyle.Font.Size = 10;
+                        sheet1.Range["A1:AB1"].CellStyle.Font.FontName = "Calibri";
+                        sheet1.Range["A1:AB1"].CellStyle.Font.Color = ExcelKnownColors.White;
+                        sheet1.Range["A1:AB1"].CellStyle.Color = System.Drawing.Color.Orange;
+                        sheet1.Range["A1:AB1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
                         break;
                     }
             }
@@ -104,14 +105,15 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                         dataTable.Columns.Add("Unique_Number_of_Manifest");
                         dataTable.Columns.Add("Code_CAAT");
                         dataTable.Columns.Add("Kind_of_Movement");
+                        dataTable.Columns.Add("Customs_Section");
                         dataTable.Columns.Add("Electronic_Acknowledgment_of_Recepction");
                         dataTable.Columns.Add("Key_Carrier");
                         dataTable.Columns.Add("Name_of_Vessel");
                         dataTable.Columns.Add("Number_of_Trip");
                         dataTable.Columns.Add("Type_of_Operation");
                         dataTable.Columns.Add("Number_Of_BL");
-                        dataTable.Columns.Add("Port_of_Loading_Discharge");
-                        dataTable.Columns.Add("Country_of_Port_of_Loading_Discharge");
+                        dataTable.Columns.Add("Port_of_Loading_Unloading");
+                        dataTable.Columns.Add("Country_of_Port_of_Loading_Unloading");
                         dataTable.Columns.Add("Type_of_BL");
                         dataTable.Columns.Add("Number_of_BL_Reference");
                         dataTable.Columns.Add("Type_of_Port");
@@ -129,11 +131,32 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                         dataTable.Columns.Add("Name3");
                         dataTable.Columns.Add("Identification_Key_Fiscal3");
                         dataTable.Columns.Add("Place_of_residence3");
+                        dataTable.Columns.Add("Sequence1");
+                        dataTable.Columns.Add("Type_of_Goods");
+                        dataTable.Columns.Add("Type_of_packing");
+                        dataTable.Columns.Add("Marks_and_numbers");
+                        dataTable.Columns.Add("Total_Number_of_Pieces1");
+                        dataTable.Columns.Add("Gross_weight_Volume");
+                        dataTable.Columns.Add("Unit_of_measurement");
+                        dataTable.Columns.Add("General_Description");
+                        dataTable.Columns.Add("Sequence2");
+                        dataTable.Columns.Add("Additional_information_of_Goods");
+                        dataTable.Columns.Add("Class_Division_of_Goods");
+                        dataTable.Columns.Add("Number_of_United_Nations");
+                        dataTable.Columns.Add("Contact");
+                        dataTable.Columns.Add("Name");
+                        dataTable.Columns.Add("Sequence3");
+                        dataTable.Columns.Add("Container_Number");
+                        dataTable.Columns.Add("Container_Type");
+                        dataTable.Columns.Add("Service_Type_Code");
+                        dataTable.Columns.Add("Gross_Weight");
+                        dataTable.Columns.Add("Total_Number_of_Pieces2");
                         break;
                     }
 
                 case "AMAS":
                     {
+                        dataTable.Columns.Add("Type Oper");
                         dataTable.Columns.Add("Master B/L");
                         dataTable.Columns.Add("ORIGIN_AIRPORT_CODE");
                         dataTable.Columns.Add("ORIGIN_AIRPORT");
@@ -190,48 +213,164 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
         {
             if (shipments != null && shipments.Count > 0)
             {
-                Tenant myTenant;
+                Tenant myTenant = TenantRepository.GetSingleTenant(tenant, true);
                 ShippingLine carrier;
                 Address shipperAddress;
                 Address consigneeAddress;
 
+                List<string> shipmentsIds = shipments.Select(s => s.Id).ToList();
+                IQueryable<ShipmentPackage> shipmentPackages  = shipmentPackageRepository.GetPackagesFromShipmentsIds(shipmentsIds, tenant);
+
+                int index = 1;
                 foreach (ShipmentDataView item in shipments)
                 {
-                    myTenant = TenantRepository.GetSingleTenant(tenant, true);
                     carrier = shippingLineRepository.GetSingleShippingLine(item.MainCarriageCarrierId, tenant);
                     shipperAddress = addressRepository.GetSingleAddress(item.ShipperAddressId, tenant);
                     consigneeAddress = addressRepository.GetSingleAddress(item.ConsigneeAddressId, tenant);
+                    List<ShipmentPackage> myShipmentPackages = shipmentPackages.Where(d => d.ShipmentId == item.Id).ToList();
+                    List<ShipmentPackage> dangerousShipmentPackages = myShipmentPackages.Where(d => d.IsDangerous).ToList();
+
+                    string marksAndNumbers = "";
+                    string grossWeight = "";
+                    string generalDescription = "";
+                    string dangerousClassNumber = "";
+                    string dangerousUNNumber = "";
+                    string containerNumber = "";
+                    string containerType = "";
+                    string shipmentType = item.ShipmentTypeName;
+                    int totalInsidePackages = item.NumberOfInsidePackages;
+
+                    #region packages
+                    foreach (ShipmentPackage package in myShipmentPackages)
+                    {
+                        if (string.IsNullOrEmpty(marksAndNumbers))
+                        {
+                            marksAndNumbers = package.MarksAndNumbers;
+                        }
+
+                        else
+                        {
+                            marksAndNumbers += ", " + package.MarksAndNumbers;
+                        }
+
+                        if (string.IsNullOrEmpty(grossWeight))
+                        {
+                            grossWeight = package.Weight == null ? "" : package.Weight.ToString();
+                        }
+
+                        else
+                        {
+                            grossWeight += ", " + package.Weight;
+                        }
+
+                        if (string.IsNullOrEmpty(generalDescription))
+                        {
+                            generalDescription = package.Description;
+                        }
+
+                        else
+                        {
+                            generalDescription += ", " + package.Description;
+                        }
+                        
+                        if (string.IsNullOrEmpty(containerNumber))
+                        {
+                            containerNumber = package.ContainerNumber;
+                        }
+
+                        else
+                        {
+                            containerNumber += ", " + package.ContainerNumber;
+                        }
+
+                        if (string.IsNullOrEmpty(containerType))
+                        {
+                            containerType = package.PackageType == null ? "" : package.PackageType.Code;
+                        }
+
+                        else
+                        {
+                            containerType += ", " + (package.PackageType == null ? "" : package.PackageType.Code);
+                        }
+                    }
+                    #endregion
+
+                    #region dangerous packages
+                    foreach (ShipmentPackage package in dangerousShipmentPackages)
+                    {
+                        if (string.IsNullOrEmpty(dangerousClassNumber))
+                        {
+                            dangerousClassNumber = package.ClassNumber;
+                        }
+
+                        else
+                        {
+                            dangerousClassNumber += ", " + package.ClassNumber;
+                        }
+
+                        if (string.IsNullOrEmpty(dangerousUNNumber))
+                        {
+                            dangerousUNNumber = package.UnNumber;
+                        }
+
+                        else
+                        {
+                            dangerousUNNumber += ", " + package.UnNumber;
+                        }                        
+                    }
+                    #endregion
 
                     DataRow row = dataTable.NewRow();
-                    row[0] = "1";
+                    row[0] = index++;
                     //row[1] = ;
                     row[2] = myTenant == null ? "" : myTenant.CAAT;
                     row[3] = "8";
                     //row[4] = ;
-                    row[5] = carrier == null ? "" : carrier.SCACCode;
-                    row[6] = item.MainCarriageVesselName;
-                    row[7] = item.MainCarriageCarrierNumber;
-                    row[8] = item.DirectionId == "E" ? "2" : "1";
-                    row[9] = item.House;
-                    //row[10] = ;
+                    //row[5] = ;
+                    row[6] = carrier == null ? "" : carrier.SCACCode;
+                    row[7] = item.MainCarriageVesselName;
+                    row[8] = item.MainCarriageCarrierNumber;
+                    row[9] = item.DirectionId == "E" ? "2" : "1";
+                    row[10] = item.House;
                     //row[11] = ;
-                    row[12] = "H";
-                    row[13] = item.House;
-                    row[14] = "2";
-                    //row[15] = ;
+                    //row[12] = ;
+                    row[13] = "H";
+                    row[14] = item.House;
+                    row[15] = "2";
                     //row[16] = ;
-                    row[17] = "1";
-                    row[18] = item.ShipperName;
-                    //row[19] = ;
-                    row[20] = this.GetAddress(shipperAddress);
-                    row[21] = "2";
-                    row[22] = item.ConsigneeName;
-                    //row[23] = ;
-                    row[24] = this.GetAddress(consigneeAddress);
-                    row[25] = "3";
-                    row[26] = item.ConsigneeName;
-                    //row[27] = ;
-                    row[28] = this.GetAddress(consigneeAddress);
+                    //row[17] = ;
+                    row[18] = "1";
+                    row[19] = item.ShipperName;
+                    //row[20] = ;
+                    row[21] = this.GetAddress(shipperAddress);
+                    row[22] = "2";
+                    row[23] = item.ConsigneeName;
+                    //row[24] = ;
+                    row[25] = this.GetAddress(consigneeAddress);
+                    row[26] = "3";
+                    row[27] = item.ConsigneeName;
+                    //row[28] = ;
+                    row[29] = this.GetAddress(consigneeAddress);
+                    row[30] = "1";
+                    row[31] = "";
+                    row[32] = "";
+                    row[33] = marksAndNumbers;
+                    row[34] = totalInsidePackages;
+                    row[35] = grossWeight;
+                    row[36] = "";
+                    row[37] = generalDescription;
+                    row[38] = "";
+                    row[39] = "";
+                    row[40] = dangerousClassNumber;
+                    row[41] = dangerousUNNumber;
+                    row[42] = "";
+                    row[43] = "";
+                    row[44] = "1";
+                    row[45] = containerNumber;
+                    row[46] = containerType;
+                    row[47] = shipmentType;
+                    row[48] = grossWeight;
+                    row[49] = totalInsidePackages;
 
                     dataTable.Rows.Add(row);
                 }
@@ -254,13 +393,30 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                     consigneeAddress = addressRepository.GetSingleAddress(item.ConsigneeAddressId, tenant);
                     List<ShipmentPayable> shipmentPayables = shipmentPayableRepository.GetShipemntPayablesByShipmentId(item.Id, tenant);
 
+                    string typeOper = item.TransportModeId;
+                    switch(item.DirectionId)
+                    {
+                        case "I":
+                            {
+                                typeOper = "IA";
+                                break;
+                            }
+
+                        default:
+                            {
+                                typeOper = "EA";
+                                break;
+                            }
+                    }
+
                     DataRow row = dataTable.NewRow();
-                    row[0] = item.LongMaster;
-                    row[1] = item.MainCarriageFromPortCode;
-                    row[2] = item.MainCarriageFromPortName;
-                    row[3] = item.MainCarriageFinalDestinationPortCode;
-                    row[4] = item.MainCarriageFinalDestinationPortName;
-                    row[5] = item.House;
+                    row[0] = typeOper;
+                    row[1] = item.LongMaster;
+                    row[2] = item.MainCarriageFromPortCode;
+                    row[3] = item.MainCarriageFromPortName;
+                    row[4] = item.MainCarriageFinalDestinationPortCode;
+                    row[5] = item.MainCarriageFinalDestinationPortName;
+                    row[6] = item.House;
 
                     if (shipmentPayables.Count > 0)
                     {
@@ -270,49 +426,49 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                             Currency currency = CurrencyRepository.GetSingleCurrency(shipmentPayable.CurrencyId, tenant, true);
                             if (currency != null)
                             {
-                                row[6] = shipmentPayable.Currency.Code;
+                                row[7] = shipmentPayable.Currency.Code;
                             }
                         }
                     }
 
-                    row[7] = item.MainCarriageCarrierCode;
-                    row[8] = item.MainCarriageCarrierName;
-                    row[9] = item.NumberOfPackages;
-                    row[10] = MethodHelper.Round(item.GrossWeight, 3);
-                    row[11] = item.ShipperName;
-                    row[12] = this.ComputeAddressStreet(shipperAddress);
+                    row[8] = item.MainCarriageCarrierCode;
+                    row[9] = item.MainCarriageCarrierName;
+                    row[10] = item.NumberOfPackages;
+                    row[11] = MethodHelper.Round(item.GrossWeight, 3);
+                    row[12] = item.ShipperName;
+                    row[13] = this.ComputeAddressStreet(shipperAddress);
 
                     if (shipperAddress != null && !string.IsNullOrEmpty(shipperAddress.CountryId))
                     {
                         Country shipperCountry = CountryRepository.GetSingleCountry(shipperAddress.CountryId, tenant, true);
                         if (shipperCountry != null)
                         {
-                            row[13] = shipperCountry.Code;
-                            row[14] = shipperCountry.EnglishName;
+                            row[14] = shipperCountry.Code;
+                            row[15] = shipperCountry.EnglishName;
                         }
                     }
 
-                    //row[15] = shipment.ShipperCityCode;
-                    row[16] = shipperAddress == null ? "" : shipperAddress.City;
-                    row[17] = item.ConsigneeName;
-                    row[18] = this.ComputeAddressStreet(consigneeAddress);
+                    //row[16] = shipment.ShipperCityCode;
+                    row[17] = shipperAddress == null ? "" : shipperAddress.City;
+                    row[18] = item.ConsigneeName;
+                    row[19] = this.ComputeAddressStreet(consigneeAddress);
 
                     if (consigneeAddress != null && !string.IsNullOrEmpty(consigneeAddress.CountryId))
                     {
                         Country consigneeCountry = CountryRepository.GetSingleCountry(consigneeAddress.CountryId, tenant, true);
                         if (consigneeCountry != null)
                         {
-                            row[19] = consigneeCountry.Code;
-                            row[20] = consigneeCountry.EnglishName;
+                            row[20] = consigneeCountry.Code;
+                            row[21] = consigneeCountry.EnglishName;
                         }
                     }
 
-                    row[21] = item.MainCarriageFinalDestinationPortCode;
-                    row[22] = consigneeAddress == null ? "" : consigneeAddress.City;
-                    row[23] = item.DescriptionOfGoods;
-                    row[24] = item.IsDangerous ? "ED" : "";
-                    row[25] = item.DangerousUnNumber;
-                    row[26] = item.DescriptionOfGoods;
+                    row[22] = item.MainCarriageFinalDestinationPortCode;
+                    row[23] = consigneeAddress == null ? "" : consigneeAddress.City;
+                    row[24] = item.DescriptionOfGoods;
+                    row[25] = item.IsDangerous ? "ED" : "";
+                    row[26] = item.DangerousUnNumber;
+                    row[27] = item.DescriptionOfGoods;
 
                     dataTable.Rows.Add(row);
                 }

@@ -38,6 +38,9 @@ exports.config = {
         CRM: {
             CRMType: null,
             ActivityType: null,
+        },
+        Accounting: {
+            AccountingType: null,
         }
     },
     capabilities: {
@@ -53,7 +56,6 @@ exports.config = {
         defaultTimeoutInterval: 300000,
         print: function () { }
     },
-
     onPrepare() {
         require('ts-node').register({
             project: 'e2e/tsconfig.e2e.json'
@@ -70,7 +72,7 @@ exports.config = {
             savePath: 'C:/Program Files (x86)/Jenkins/workspace/TeamMohammadE2EScripts',
             consolidateAll: false
         });
-     
+
         if (browser.params.Env == "prod") {
             browser.params.Link = "https://system.logitudeworld.com";
             browser.params.Login.Email = "razantest@protractor.com";
@@ -110,7 +112,6 @@ exports.config = {
             browser.params.Link = "https://test.logitudeworld.com/test";
             browser.params.Login.Email = "raghad@protractor.com";
             browser.params.Login.Password = "!RS123Rs";
-
         }
         else if (browser.params.Env == "testStaging") {
             browser.params.Link = "https://staging.logitudeworld.com";
@@ -127,8 +128,18 @@ exports.config = {
             browser.params.Login.Email = "Raghad@protractor.com";
             browser.params.Login.Password = "!RS123Rs";
         }
+        else if (browser.params.Env == "testEnvStaging") {
+            browser.params.Link = "https://test.logitudeworld.com/staging";
+            browser.params.Login.Email = "Raghad@protractor.com";
+            browser.params.Login.Password = "!RS123Rs";
+        }
+        else if (browser.params.Env == "testStaging") {
+            browser.params.Link = "https://staging.logitudeworld.com";
+            browser.params.Login.Email = "Raghad@protractor.com";
+            browser.params.Login.Password = "!RS123Rs";
+        }
         else if (browser.params.Env == "test_1071") {
-            browser.params.Link = "https://test.logitudeworld.com/test";
+            browser.params.Link = "https://test.logitudeworld.com/staging";
             browser.params.Login.Email = "sgautomation@pro.com";
             browser.params.Login.Password = "Sg0592463934!";
         }
@@ -148,7 +159,7 @@ exports.config = {
             browser.params.Login.Password = "ahmed!A123";
         }
         else if (browser.params.Env == "test_1109") {
-            browser.params.Link = "https://test.logitudeworld.com/test";
+            browser.params.Link = "https://test.logitudeworld.com/staging";
             browser.params.Login.Email = "sumaya@automation.com";
             browser.params.Login.Password = "Sg0592463934!";
         }
@@ -180,31 +191,22 @@ exports.config = {
             jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
             jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'C:/e2eTracking/screenshots' }).getJasmine2Reporter());
         }
-
-
     },
 
     suites: {
-
-
         // ********************* Login **********************************
         login: 'e2e/Login/**/Login.e2e-spec.ts',
         NewQuote: 'e2e/CRM/Quotes/NewEntity/**/NewQuote-spec.ts',
         // CustomerGLA: 'e2e/FullAccounting/'
 
         CRM: 'e2e/CRM/**/CRMModule-spec.ts',
-        //  'e2e/LogBox/Login/**/Login.e2e-spec.ts',
-
         NewShipment: 'e2e/Operations/Shipments/NewEntity/**/Operations.e2e-spec.ts',
         NewEAWB: 'e2e/Operations/Shipments/NewEntity/**/OpEAWB-spec.ts',
         NewShipmentlogbox: 'e2e/LogBox/Shipments/**/ShipmentSearch.e2e-spec.ts',
         Contact: 'e2e/Contacts/**/Contacts-spec.ts',
-        EditTabs: 'e2e/Operations/Shipments/EditEntity/**/EditShipmentTabs.e2e-spec.ts',
-        ShipmentSearch: 'e2e/Operations/**/ShipmentSearch.e2e-spec.ts',
-
 
         // ********************* FullAccounting **********************************
-        PaymentCheque:'e2e/FullAccounting/PaymentCheque/**/NewPaymentCheque-spec.ts',
+        PaymentCheque: 'e2e/FullAccounting/PaymentCheque/**/NewPaymentCheque-spec.ts',
         ARPayment: 'e2e/FullAccounting/**/ARPayment-spec.ts',
         NewChartOfAccount: 'e2e/FullAccounting/ChartOfAccount/**/ChartOfAccount-spec.ts',
         FullAccProcess: 'e2e/FullAccounting/**/FullAccScenarios-spec.ts',
@@ -214,7 +216,7 @@ exports.config = {
         CustomerGLAccount: 'e2e/FullAccounting/**/CustomerGLAccount-spec.ts',
         APInvoice: 'e2e/FullAccounting/APInvoice/**/APInvoice-spec.ts',
         RevGLAccount: 'e2e/FullAccounting/**/GlAccount-spec.ts',
-     //   CashDeposit: 'e2e/FullAccounting/**/Deposit/NewDposit-spec.ts',
+        //   CashDeposit: 'e2e/FullAccounting/**/Deposit/NewDposit-spec.ts',
         //*************Report********************
         Reports: 'e2e/Report/**/Report-spec.ts',
 
@@ -228,9 +230,8 @@ exports.config = {
         NewShipper: 'e2e/Maintenance/**/Shipper-spec.ts',
 
         //*************DocOutTab***************
-        DocOut: 'e2e/**/DocsOut.e2e-spec.ts'
-
-
+        DocOut: 'e2e/**/DocsOut.e2e-spec.ts',
+        LogitudeAccounting: 'e2e/Accounting/**/AccountingModule-spec.ts'
     },
 };
 

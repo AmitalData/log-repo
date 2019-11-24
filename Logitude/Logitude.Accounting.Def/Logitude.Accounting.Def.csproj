@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Logitude.Accounting.Def</RootNamespace>
     <AssemblyName>Logitude.Accounting.Def</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -45,9 +45,8 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -93,6 +92,7 @@
     <Compile Include="EntityPMs\Generated\Category5PM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ChartOfAccountPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ChartOfAccountsTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ExternalPageAdditionalDataPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExternalReconciliationLinePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExternalReconciliationPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\FullAccountingSettingPM.Generated.cs" />
@@ -105,6 +105,8 @@
     <Compile Include="EntityPMs\Generated\GLAccountTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\GLAccountWithholdingTaxPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\IntegrityCheckStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\InterestBasesPeriodPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\InterestBasesTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\JournalActionTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\JournalAdditionalDataPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\JournalExternalReconcilePM.Generated.cs" />

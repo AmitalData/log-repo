@@ -338,7 +338,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                     if (tenant.CurrencyId != null)
                     {
-                        Currency cur = CurrencyRepository.GetSingleCurrency(tenant.CurrencyId, tenant.Id, true);
+                        CurrencyRepository repository = new CurrencyRepository(tenant.Id);
+                        Currency cur = repository.GetSingleCurrencyById(tenant.CurrencyId, tenant.Id, true);
                         if (cur != null)
                         {
                             tenant.CurrencyCode = cur.Code;
@@ -505,11 +506,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     tenant.TemporalStartDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalStartDate;
                     tenant.TemporalEndDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalEndDate;
                     //tenant.StockTypeCode = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().StockTypeCode;
+                    scope.Complete();
                 }
 
                 if (tenant.CurrencyId != null)
                 {
-                    Currency cur = CurrencyRepository.GetSingleCurrency(tenant.CurrencyId, tenant.Id, true);
+                    CurrencyRepository repository = new CurrencyRepository(tenant.Id);
+                    Currency cur = repository.GetSingleCurrencyById(tenant.CurrencyId, tenant.Id, true);
                     tenant.CurrencyCode = cur.Code;
                 }
 
@@ -1758,7 +1761,30 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         }
 
-
+        public string GetTenantVatNumber(int tenant)
+        {
+            string cacheKey = "TenantVatNumber" + tenant;
+            string vatNumber;
+            if (HttpContext.Current != null)
+            {
+                if (CacheManager.CacheWrapper.Get(cacheKey) == null)
+                {
+                    TenantRepository tenantRepository = new TenantRepository(tenant);
+                    vatNumber = tenantRepository.GetTenantVatNumberOnly(tenant);
+                    CacheManager.CacheWrapper.Insert(cacheKey, vatNumber, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                }
+                else
+                {
+                    vatNumber = (string)CacheManager.CacheWrapper.Get(cacheKey);
+                }
+            }
+            else
+            {
+                TenantRepository tenantRepository = new TenantRepository(tenant);
+                vatNumber = tenantRepository.GetTenantVatNumberOnly(tenant);
+            }
+            return vatNumber;
+        }
 
     }
 }

@@ -64,7 +64,14 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     }).ToList();
            
         }
-       
+
+        public bool ChequeIfPaymentChequeReplicaExist(string paymentId,string chequeNo, int LineNo, int tenant)
+        {
+
+          return repository.ChequeIfPaymentChequeReplicaExist(paymentId, chequeNo, LineNo, tenant);
+          
+
+        }
 
 
     }

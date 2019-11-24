@@ -118,6 +118,8 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new ChartOfAccountsTypeMap());
 	
+            modelBuilder.Configurations.Add(new ExternalPageAdditionalDataMap());
+	
             modelBuilder.Configurations.Add(new ExternalReconciliationMap());
 	
             modelBuilder.Configurations.Add(new ExternalReconciliationLineMap());
@@ -141,6 +143,10 @@ namespace Logitude.Accounting.Data
             modelBuilder.Configurations.Add(new GLAccountWithholdingTaxMap());
 	
             modelBuilder.Configurations.Add(new IntegrityCheckStatusMap());
+	
+            modelBuilder.Configurations.Add(new InterestBasesPeriodMap());
+	
+            modelBuilder.Configurations.Add(new InterestBasesTypeMap());
 	
             modelBuilder.Configurations.Add(new JournalMap());
 	
@@ -231,6 +237,8 @@ namespace Logitude.Accounting.Data
 				
 			modelBuilder.Entity<CashBook>().Property(x => x.TotalAmount).HasPrecision(16, 2);
 				
+			modelBuilder.Entity<ExternalPageAdditionalData>().Property(x => x.LastPageCloseBalance).HasPrecision(16, 2);
+				
 			modelBuilder.Entity<FullAccountingSetting>().Property(x => x.DefaultTaxWithholdPercentage).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<GLAccountMoreData>().Property(x => x.BalanceInLocalCurrency).HasPrecision(16, 2);
@@ -248,6 +256,8 @@ namespace Logitude.Accounting.Data
 			modelBuilder.Entity<GLAccountTotalByMonth>().Property(x => x.ForeignAmountDebit).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<GLAccountTotalByMonth>().Property(x => x.ForeignAmountCredit).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<InterestBasesPeriod>().Property(x => x.InterestRate).HasPrecision(2, 2);
 				
 			modelBuilder.Entity<JournalLine>().Property(x => x.LocalAmount).HasPrecision(16, 2);
 				
@@ -734,6 +744,12 @@ namespace Logitude.Accounting.Data
 	 
 	 }
 	
+	 public IDbSet<ExternalPageAdditionalData> ExternalPageAdditionalDatas 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<ExternalReconciliation> ExternalReconciliations 
 	 {
 	      get; set;
@@ -801,6 +817,18 @@ namespace Logitude.Accounting.Data
 	 }
 	
 	 public IDbSet<IntegrityCheckStatus> IntegrityCheckStatuses 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<InterestBasesPeriod> InterestBasesPeriods 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<InterestBasesType> InterestBasesTypes 
 	 {
 	      get; set;
 	 

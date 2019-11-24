@@ -374,7 +374,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
 
             // PaymentCheque And CashBook
-            this.AddARPaymentChequeAndCashBook(theEntityPm, theEntityPm.SetApproved);
+           // this.AddARPaymentChequeAndCashBook(theEntityPm, theEntityPm.SetApproved); we do this only if it is new entity.
             this.VoidARPaymentInFullAccounting(theEntityPm, setVoided);
 
             this.InitializeTransferComponents();
@@ -1053,23 +1053,67 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                 if (theEntityPm.ARPaymentChequeReplicas.Count > 0)
                                 {
                                     int LineNumberCounter = 1;
+                                    if (!isNewEntity)
+                                    {
+                                        LineNumberCounter = theEntityPm.ARPaymentChequeReplicas.Max(d => d.LineNumber)+1;
+                                    }
+                                    DateTime? valueDate=null;
                                     foreach (ARPaymentChequeReplicaPM item in theEntityPm.ARPaymentChequeReplicas)
                                     {
                                         arPaymentcheque = new ARPaymentChequePM();
+                                       if(LineNumberCounter == 1)    valueDate = item.ValueDate;
+                                        if(valueDate!= null && valueDate!= item.ValueDate)
+                                        {
+                                            throw new ApplicationException("value date should be the same for all payment cheques");
+                                        }
+                                        bool exist = CheckIfPaymentChequeExist(item.ChequeNumber, item.LineNumber, theEntityPm);
+                                        if (!exist)
+                                        {
 
+                                            arPaymentcheque.PaymentId = theEntityPm.Id;
+                                            arPaymentcheque.Tenant = tenant;
+                                            arPaymentcheque.LineNumber = LineNumberCounter++;
+                                            arPaymentcheque.ChequeNumber = item.ChequeNumber;
+                                            arPaymentcheque.ValueDate = item.ValueDate;
+                                            arPaymentcheque.BankBranch = item.BankBranch;
+                                            arPaymentcheque.BankAccount = item.BankAccount;
+                                            //arPaymentcheque.BankId = getBankCode(theEntityPm.Tenant);// "1-1";
+                                            arPaymentcheque.BankId = item.BankId;
+                                            arPaymentcheque.CurrencyId = theEntityPm.PaymentCurrencyId;
+                                            arPaymentcheque.LocalAmount = (decimal)item.LocalAmount;
+                                            arPaymentcheque.ForeignAmount = (decimal)item.ForeignAmount;
+                                            arPaymentcheque.ChangeSetOp = ChangeSetOperation.Insert;
+                                            arPaymentcheque.StatusCode = "1"; // In Cashbook  
+                                            arPaymentcheque.ExchangeRate = (decimal)theEntityPm.PaymentCurrencyExchangeRate;
+                                            arPaymentcheque.PaymentNumber = theEntityPm.PaymentNo;
 
+                                            IARPaymentChequeUpdateServiceExt paymentUpdate = ContainerAccessor.Container.Resolve(typeof(IARPaymentChequeUpdateServiceExt), "ARPaymentChequeUpdateServiceExt", new ParameterOverride("", 1)) as IARPaymentChequeUpdateServiceExt;
+
+                                            paymentUpdate.Update(arPaymentcheque);
+                                            CreateCashBook(arPaymentcheque);
+                                        }
+                                        // Create Journal with lines for cash or cheque
+                                        // this.CreateARPaymentChequeJournals(theEntityPm, arPaymentcheque);
+
+                                    }
+                                }
+                                else
+                                {
+                                    bool exist = CheckIfPaymentChequeExist(theEntityPm.ChequeOrPaymentRef, 1, theEntityPm);
+                                    if (!exist)
+                                    {
                                         arPaymentcheque.PaymentId = theEntityPm.Id;
                                         arPaymentcheque.Tenant = tenant;
-                                        arPaymentcheque.LineNumber = LineNumberCounter++;
-                                        arPaymentcheque.ChequeNumber = item.ChequeNumber;
-                                        arPaymentcheque.ValueDate = item.ValueDate;
-                                        arPaymentcheque.BankBranch = item.BankBranch;
-                                        arPaymentcheque.BankAccount = item.BankAccount;
+                                        arPaymentcheque.LineNumber = 1;
+                                        arPaymentcheque.ChequeNumber = theEntityPm.ChequeOrPaymentRef;
+                                        arPaymentcheque.ValueDate = theEntityPm.ValueDate.Value;
+                                        arPaymentcheque.BankBranch = theEntityPm.BankBranch;
+                                        arPaymentcheque.BankAccount = theEntityPm.Account;
                                         //arPaymentcheque.BankId = getBankCode(theEntityPm.Tenant);// "1-1";
-                                        arPaymentcheque.BankId = item.BankId;
+                                        arPaymentcheque.BankId = theEntityPm.Bank;
                                         arPaymentcheque.CurrencyId = theEntityPm.PaymentCurrencyId;
-                                        arPaymentcheque.LocalAmount = (decimal)item.LocalAmount;
-                                        arPaymentcheque.ForeignAmount = (decimal)item.ForeignAmount;
+                                        arPaymentcheque.LocalAmount = (decimal)theEntityPm.AmountInLocalCurrency.Value;
+                                        arPaymentcheque.ForeignAmount = (decimal)theEntityPm.AmountInPaymentCurrency.Value;
                                         arPaymentcheque.ChangeSetOp = ChangeSetOperation.Insert;
                                         arPaymentcheque.StatusCode = "1"; // In Cashbook  
                                         arPaymentcheque.ExchangeRate = (decimal)theEntityPm.PaymentCurrencyExchangeRate;
@@ -1078,34 +1122,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                         IARPaymentChequeUpdateServiceExt paymentUpdate = ContainerAccessor.Container.Resolve(typeof(IARPaymentChequeUpdateServiceExt), "ARPaymentChequeUpdateServiceExt", new ParameterOverride("", 1)) as IARPaymentChequeUpdateServiceExt;
                                         paymentUpdate.Update(arPaymentcheque);
                                         CreateCashBook(arPaymentcheque);
-                                        // Create Journal with lines for cash or cheque
-                                        // this.CreateARPaymentChequeJournals(theEntityPm, arPaymentcheque);
-
                                     }
-                                }
-                                else
-                                {
-                                    arPaymentcheque.PaymentId = theEntityPm.Id;
-                                    arPaymentcheque.Tenant = tenant;
-                                    arPaymentcheque.LineNumber = 1;
-                                    arPaymentcheque.ChequeNumber = theEntityPm.ChequeOrPaymentRef;
-                                    arPaymentcheque.ValueDate = theEntityPm.ValueDate.Value;
-                                    arPaymentcheque.BankBranch = theEntityPm.BankBranch;
-                                    arPaymentcheque.BankAccount = theEntityPm.Account;
-                                    //arPaymentcheque.BankId = getBankCode(theEntityPm.Tenant);// "1-1";
-                                    arPaymentcheque.BankId = theEntityPm.Bank;
-                                    arPaymentcheque.CurrencyId = theEntityPm.PaymentCurrencyId;
-                                    arPaymentcheque.LocalAmount = (decimal)theEntityPm.AmountInLocalCurrency.Value;
-                                    arPaymentcheque.ForeignAmount = (decimal)theEntityPm.AmountInPaymentCurrency.Value;
-                                    arPaymentcheque.ChangeSetOp = ChangeSetOperation.Insert;
-                                    arPaymentcheque.StatusCode = "1"; // In Cashbook  
-                                    arPaymentcheque.ExchangeRate = (decimal)theEntityPm.PaymentCurrencyExchangeRate;
-                                    arPaymentcheque.PaymentNumber = theEntityPm.PaymentNo;
-
-                                    IARPaymentChequeUpdateServiceExt paymentUpdate = ContainerAccessor.Container.Resolve(typeof(IARPaymentChequeUpdateServiceExt), "ARPaymentChequeUpdateServiceExt", new ParameterOverride("", 1)) as IARPaymentChequeUpdateServiceExt;
-                                    paymentUpdate.Update(arPaymentcheque);
-                                    CreateCashBook(arPaymentcheque);
-
                                     // Create Journal with lines for cash or cheque
                                     //   this.CreateARPaymentChequeJournals(theEntityPm, arPaymentcheque);
                                 }
@@ -1122,11 +1139,22 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     }
                     else
                     {
-                        // Create Journal with lines for bank transfer or credit card  
-                        this.CreateARPaymentChequeJournals(theEntityPm, arPaymentcheque);
+                        if (isNewEntity)
+                        {
+                            // Create Journal with lines for bank transfer or credit card  
+                            this.CreateARPaymentChequeJournals(theEntityPm, arPaymentcheque);
+                        }
                     }
                 }
             }
+        }
+
+        private bool CheckIfPaymentChequeExist(string chequeNumber, int lineNumber, ARPaymentPM payment)
+        {
+            ARPaymentChequeReplicaQuery aRPaymentChequeReplicaQuery = new ARPaymentChequeReplicaQuery(payment.Tenant);
+            return aRPaymentChequeReplicaQuery.ChequeIfPaymentChequeReplicaExist(payment.Id, chequeNumber, lineNumber, payment.Tenant);
+
+
         }
         private void MapPaymentChequeFieldsToPayment(ARPaymentChequeReplicaPM paymentCheque, ARPaymentPM payment)
         {

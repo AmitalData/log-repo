@@ -8,23 +8,45 @@ namespace Logitude.DBMigrations.Helpers
 {
     public static class AppHelper
     {
-        public static string GenerateScriptFromDXMLFiles()
+        public static string[] GetDXMLFilesFromRoot(string root)
         {
-            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-            string DXMLFilesPath = Path.Combine(projectDirectory, @"EntityFiles");
-            string[] DXMLFiles = Directory.GetFiles(DXMLFilesPath, "*.dxml");
+            try
+            {
+                string DXMLFilesPath = Path.Combine(root);
+                string[] DXMLFiles = Directory.GetFiles(DXMLFilesPath, "*.dxml", SearchOption.AllDirectories);
+                if(DXMLFiles.Length > 0)
+                {
+                    return DXMLFiles;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
 
+        public static string GenerateScriptFromDXMLFiles(string[] DXMLFiles)
+        {
             string generatedScript = "";
 
             foreach (var DXMLFile in DXMLFiles)
             {
-                var fileName = Path.GetFileName(DXMLFile).Split('.')[0];
-                Console.WriteLine("Generating Script For " + fileName + " Entity ...");
+                var fileName = Path.GetFileName(DXMLFile);
+                Console.WriteLine("Generating Script For " + fileName + " ...");
                 string xmlString = File.ReadAllText(DXMLFile);
-                TableDefinition DXMLTable = xmlString.ParseXML<TableDefinition>();
-                SQLDatabaseMigrations databaseMigrations = new SQLDatabaseMigrations(DXMLTable);
-                generatedScript += databaseMigrations.GetScript();
-                generatedScript += "\n----------------------------------------------\n";
+                TableDefinition DxmlTable = xmlString.ParseXML<TableDefinition>();
+                SQLDatabaseMigrations databaseMigrations = new SQLDatabaseMigrations(DxmlTable);
+                string DxmlTableScript = databaseMigrations.GetScript();
+                if (!String.IsNullOrEmpty(DxmlTableScript))
+                {
+                    generatedScript += "/* Generated Script For " + fileName + " */\n";
+                    generatedScript += DxmlTableScript;
+                    generatedScript += "\n";
+                }
             }
 
             return generatedScript;
@@ -32,30 +54,71 @@ namespace Logitude.DBMigrations.Helpers
 
         public static void SaveScript(string generatedScript)
         {
-            Console.WriteLine("Saving The Generated Script ...");
+            Console.WriteLine("Saving The Generated Scripts ...");
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
             string generatedScriptFilePath = Path.Combine(projectDirectory, @"GeneratedScript\Script.sql");
             File.WriteAllText(generatedScriptFilePath, generatedScript);
-            Console.WriteLine("The Generated Script Saved Successfully To GeneratedScript/Script.sql");
+            Console.WriteLine("The Generated Scripts Saved Successfully To /GeneratedScript/Script.sql");
         }
         
-        public static void ExecuteScript(string generatedScript)
+        public static void ExecuteScript(string databaseType, string generatedScript)
         {
             Console.WriteLine("Executing The Generated Script To The Database ...");
-            try
+            switch (databaseType)
             {
-                string connectionString = ConfigurationManager.AppSettings["ConnectionString"];
-                SqlConnection connection = new SqlConnection(connectionString);
-                SqlCommand command = connection.CreateCommand();
-                command.CommandText = generatedScript;
-                connection.Open();
-                command.ExecuteNonQuery();
-                Console.WriteLine("The Generated Script Executed Successfully");
+                case "msql":
+                    try
+                    {
+                        string SQLConnectionString = ConfigurationManager.AppSettings["ConnectionString"];
+                        SqlConnection SqlConnection = new SqlConnection(SQLConnectionString);
+                        SqlCommand SqlCommand = SqlConnection.CreateCommand();
+                        SqlCommand.CommandText = generatedScript;
+                        SqlConnection.Open();
+                        SqlCommand.ExecuteNonQuery();
+                        Console.WriteLine("The Generated Script Executed Successfully");
+                    }
+                    catch (Exception exception)
+                    {
+                        Console.Write("Error While Executing Script: ");
+                        Console.WriteLine(exception.Message);
+                    }
+                    break;
+                case "oracle":
+                    Console.Write("Error While Executing Script");
+                    break;
+                default:
+                    Console.Write("Error While Executing Script");
+                    break;
             }
-            catch (Exception e)
+        }
+
+        public static bool IsConnectionStringValid(string databaseType)
+        {
+            Console.WriteLine("Checking If The Connection String Is Valid ...");
+            bool isConnectionStringValid;
+            switch (databaseType)
             {
-                Console.WriteLine("Error While Executing The Generated Script:");
-                Console.WriteLine(e.ToString());
+                case "msql":
+                    string SQLConnectionString = ConfigurationManager.AppSettings["ConnectionString"];
+                    using (SqlConnection SqlConnection = new SqlConnection(SQLConnectionString))
+                    {
+                        try
+                        {
+                            SqlConnection.Open();
+                            isConnectionStringValid = true;
+                            SqlConnection.Close();
+                        }
+                        catch (Exception)
+                        {
+                            isConnectionStringValid = false;
+                            SqlConnection.Close();
+                        }
+                        return isConnectionStringValid;
+                    }
+                case "oracle":
+                    return false;
+                default:
+                    return false;
             }
         }
 
@@ -63,6 +126,21 @@ namespace Logitude.DBMigrations.Helpers
         {
             string[] arguments = Array.ConvertAll(args, a => a.ToLower());
             return (Array.IndexOf(arguments, arg) != -1);
+        }
+
+        public static string GetRoot(string[] args)
+        {
+            string[] arguments = Array.ConvertAll(args, a => a.ToLower());
+            int indexOfRootArgument = Array.IndexOf(arguments, "-root") + 1;
+            if(indexOfRootArgument < args.Length && indexOfRootArgument >= 0)
+            {
+                string root = args[indexOfRootArgument];
+                return root;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

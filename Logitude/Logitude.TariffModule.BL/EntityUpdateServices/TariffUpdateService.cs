@@ -44,6 +44,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 }
 
                 this.ValidateSurchargeUniqueSeller(entityPM);
+                this.ValidateFCLSurchargeUniqueSeller(entityPM);
             }
         }
 
@@ -100,6 +101,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             }
 
             this.ValidateSurchargeUniqueSeller(entityPM);
+            this.ValidateFCLSurchargeUniqueSeller(entityPM);
 
             if (entityPM.IsApprovingDraftVersion)
             {
@@ -577,6 +579,24 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                               && d.Id != entityPM.Id
                               && d.SellerId == entityPM.SellerId
                               && (d.TypeCode == "ASC" || d.TypeCode == "OSC")
+                              select d).Count();
+
+                if (iCount >= 1)
+                {
+                    throw new ApplicationException("Tariff surcharge seller should be unique");
+                }
+            }
+        }
+        private void ValidateFCLSurchargeUniqueSeller(TariffPM entityPM)
+        {
+            if (entityPM.TypeCode == "OFS")
+            {
+                ITariffModuleContext iContext = TariffModuleContext.GetContext(entityPM.Tenant);
+                int iCount = (from d in iContext.Tariffs
+                              where d.Tenant == entityPM.Tenant
+                              && d.Id != entityPM.Id
+                              && d.SellerId == entityPM.SellerId
+                              && d.TypeCode == "OFS"
                               select d).Count();
 
                 if (iCount >= 1)

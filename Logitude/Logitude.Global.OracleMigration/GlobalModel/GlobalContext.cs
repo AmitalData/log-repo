@@ -161,6 +161,7 @@ namespace Logitude.Global.OracleMigration.GlobalModel
         public IDbSet<InvalidEmailResetPassword> InvalidEmailResetPasswords { get; set; }
         public IDbSet<WebhookKeys> WebhookKeys { get; set; }
         public IDbSet<BluesnapContractType> BluesnapContractTypes { get; set; }
+
         public IDbSet<BluesnapTransaction> BluesnapTransactions { get; set; }
     }
 }

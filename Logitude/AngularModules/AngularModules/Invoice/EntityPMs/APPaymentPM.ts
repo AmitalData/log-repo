@@ -122,6 +122,31 @@ export class APPaymentPM {
     public set AccountingPaymentMethodId(newValue: string) { if (this.accountingPaymentMethodId != newValue) { this.accountingPaymentMethodId = newValue; this.MarkAsDirty("AccountingPaymentMethodId"); } }
        
 	 
+    private vendorBankAddress: string;
+    public get VendorBankAddress() { return this.vendorBankAddress; }
+    public set VendorBankAddress(newValue: string) { if (this.vendorBankAddress != newValue) { this.vendorBankAddress = newValue; this.MarkAsDirty("VendorBankAddress"); } }
+       
+	 
+    private vendorBankName: string;
+    public get VendorBankName() { return this.vendorBankName; }
+    public set VendorBankName(newValue: string) { if (this.vendorBankName != newValue) { this.vendorBankName = newValue; this.MarkAsDirty("VendorBankName"); } }
+       
+	 
+    private vendorBankAccountNumber: string;
+    public get VendorBankAccountNumber() { return this.vendorBankAccountNumber; }
+    public set VendorBankAccountNumber(newValue: string) { if (this.vendorBankAccountNumber != newValue) { this.vendorBankAccountNumber = newValue; this.MarkAsDirty("VendorBankAccountNumber"); } }
+       
+	 
+    private vendorSwift: string;
+    public get VendorSwift() { return this.vendorSwift; }
+    public set VendorSwift(newValue: string) { if (this.vendorSwift != newValue) { this.vendorSwift = newValue; this.MarkAsDirty("VendorSwift"); } }
+       
+	 
+    private vendorIBANNumber: string;
+    public get VendorIBANNumber() { return this.vendorIBANNumber; }
+    public set VendorIBANNumber(newValue: string) { if (this.vendorIBANNumber != newValue) { this.vendorIBANNumber = newValue; this.MarkAsDirty("VendorIBANNumber"); } }
+       
+	 
     private vendorId: string;
     public get VendorId() { return this.vendorId; }
     public set VendorId(newValue: string) { if (this.vendorId != newValue) { this.vendorId = newValue; this.MarkAsDirty("VendorId"); } }
@@ -225,6 +250,11 @@ export class APPaymentPM {
     private vendorName: string;
     public get VendorName() { return this.vendorName; }
     public set VendorName(newValue: string) { if (this.vendorName != newValue) { this.vendorName = newValue; this.MarkAsDirty("VendorName"); } }
+       
+	 
+    private vendorLocalName: string;
+    public get VendorLocalName() { return this.vendorLocalName; }
+    public set VendorLocalName(newValue: string) { if (this.vendorLocalName != newValue) { this.vendorLocalName = newValue; this.MarkAsDirty("VendorLocalName"); } }
        
 	 
     private statusName: string;

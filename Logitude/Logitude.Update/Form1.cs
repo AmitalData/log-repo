@@ -77,6 +77,9 @@ using System.Collections;
 using WebFreight.Web.WebServices;
 using Logitude.Server.Tools.StorageService;
 using System.Web;
+using Logitude.Server.Tools.Resolvers;
+using Logitude.BL.Resolvers;
+using WebFreight.Web.AccountingModel;
 
 namespace Logitude.Update
 {
@@ -404,45 +407,53 @@ User/Pass",
 
         private void button6_Click(object sender, EventArgs e)
         {
+            LoggedContactResolver.RegisterLoggedContactUtil();
+            DateTimeUtilResolver.RegisterDateTimeUtil();
+            TranslateTextsClassUtilResolver.RegisterTranslateTextsClassUtil();
+            IdCounterUtilResolver.RegisterIdCounterUtil();
+            AccountingRegistrations.Register();
 
-            //DateTime date = DateTime.Now.AddDays(-180);
-            //DateTime last180days = new DateTime(date.Year, date.Month, 1);
-            //DateTime referenceDate = new DateTime(2019, 3, 1);
-            //if (referenceDate <= last180days)
+            //CommunicationWorkerRole.BatchTaskExecutionWR btwr = new CommunicationWorkerRole.BatchTaskExecutionWR();
+            //btwr.ExecuteQueue(null);
+
+            ////DateTime date = DateTime.Now.AddDays(-180);
+            ////DateTime last180days = new DateTime(date.Year, date.Month, 1);
+            ////DateTime referenceDate = new DateTime(2019, 3, 1);
+            ////if (referenceDate <= last180days)
+            ////{
+
+            //string Reference = "BB4CL888";
+            //string referenceGroup = null;
+            //string reference = null;
+            //Regex isMatche = new Regex("([A-Za-z])");
+            //bool letters = isMatche.IsMatch(Reference);
+            //if (letters)
             //{
+            //    for (int i= 0; i < Reference.Length; i++)
+            //    {
+            //        string d = Reference.Substring(i , 1);
+            //        MatchCollection match = Regex.Matches(d, @"^[a-zA-Z]*$");
+            //        if (match.Count != 0)
+            //        {
+            //            referenceGroup =referenceGroup+d;// Reference.Substring(0, i);
 
-            string Reference = "BB4CL888";
-            string referenceGroup = null;
-            string reference = null;
-            Regex isMatche = new Regex("([A-Za-z])");
-            bool letters = isMatche.IsMatch(Reference);
-            if (letters)
-            {
-                for (int i= 0; i < Reference.Length; i++)
-                {
-                    string d = Reference.Substring(i , 1);
-                    MatchCollection match = Regex.Matches(d, @"^[a-zA-Z]*$");
-                    if (match.Count != 0)
-                    {
-                        referenceGroup =referenceGroup+d;// Reference.Substring(0, i);
-                      
-                    }
-                    else
-                    {
-                        reference = Reference.Substring(i, Reference.Length -i);
-                        break;
-                    }
-                    //var array = Regex.Matches("12s4rt", @"\D+|\d+")
-                    //.Cast<Match>()
-                    //.Select(m => m.Value)
-                    //.ToArray();
-                }
-            }
-            else
-            {
-                reference = Reference;
-                referenceGroup = "0000";
-            }
+            //        }
+            //        else
+            //        {
+            //            reference = Reference.Substring(i, Reference.Length -i);
+            //            break;
+            //        }
+            //        //var array = Regex.Matches("12s4rt", @"\D+|\d+")
+            //        //.Cast<Match>()
+            //        //.Select(m => m.Value)
+            //        //.ToArray();
+            //    }
+            //}
+            //else
+            //{
+            //    reference = Reference;
+            //    referenceGroup = "0000";
+            //}
 
         }
 
@@ -3930,6 +3941,36 @@ User/Pass",
         {
             BatchTaskTester batchTaskTester = new BatchTaskTester();
             batchTaskTester.Show();
+        }
+
+       
+
+        private void button48_Click(object sender, EventArgs e)
+        {
+            Thread thread = new Thread(() => UpdateRules());
+            thread.IsBackground = true;
+            thread.Start();            
+        }
+
+        private void UpdateRules()
+        {
+            SetControlPropertyValue(UpdateRulesLabel, "Text", "Updating...");
+            SetControlPropertyValue(UpdateRulesLabel, "ForeColor", Color.Black);
+
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
+            timer1.Enabled = true;
+            timer1.Start();
+
+            MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
+            updateClass.LoadObjectTableRulesANDFieldsValidations();
+
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
+
+            SetControlPropertyValue(UpdateRulesLabel, "ForeColor", Color.Green); // timer
+            SetControlPropertyValue(UpdateRulesLabel, "Text", "Done in " + ts.ToString(@"hh\:mm\:ss"));
         }
 
         private void button47_Click(object sender, EventArgs e)

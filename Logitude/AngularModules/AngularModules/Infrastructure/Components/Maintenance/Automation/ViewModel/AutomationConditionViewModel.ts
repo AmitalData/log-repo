@@ -22,6 +22,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
     SelectedCustomField: ObjectFieldPM;
     AddEditAutomationsViewModel: any;
     OperatorList: Operator[];
+    BooleanList:boolean[] = [true, false];
     SelectedOperator: Operator;
     isChangeOperator: boolean;
     IsSetValue: boolean;
@@ -44,7 +45,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
 
     AutomationEntityLists: AutomationEntityList[];
     SelectedAutomationEntity: AutomationEntityList;
-   PartnerObjectFieldId: string;
+   PartnerObjectFieldId: string = null;
    CurrentEntityType: string;
    ObjectFieldId: string = "";
    IsRefreshAutomationCondationField: boolean;
@@ -62,17 +63,22 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
 
         this.AllowedinAutomationConditionsFieldLists = addEditAutomationsViewModel.AllowedinAutomationConditionsFieldLists;
         this.ObjectFieldPM = this.AllowedinAutomationConditionsFieldLists.filter(d => d.Id == this.CurrentEntityPM.ObjectFieldId)[0];
+        this.PartnerObjectFieldId = this.CurrentEntityPM.PartnerObjectFieldId ? this.CurrentEntityPM.PartnerObjectFieldId:null;
+
         this.FieldValue = this.CurrentEntityPM.Value;
         this.DateTypeList = [];
+
+        this.FillAutomationEntityObjectField();
+
         this.DateTypeList.push(new Operator("@Today-", "-"));
         this.DateTypeList.push(new Operator("@Today+", "+"));
-        this.DateTypeList.push(new Operator("@Old Value-", "-"));
-        this.DateTypeList.push(new Operator("@Old Value+", "+"));
+        if (this.SelectedAutomationEntity != null && this.SelectedAutomationEntity.ObjectTableId == this.AddEditAutomationsViewModel.ObjectTableId) {
+            this.DateTypeList.push(new Operator("@Old Value-", "-"));
+            this.DateTypeList.push(new Operator("@Old Value+", "+"));
+        }
         this.DateTypeList.push(new Operator("Date", "Date"));
 
 
-        this.PartnerObjectFieldId = this.CurrentEntityPM.PartnerObjectFieldId;
-        this.FillAutomationEntityObjectField();
         this.SelectedDateType = this.DateTypeList[0];
         this.CurrentEntityType = this.AddEditAutomationsViewModel.CurrentEntityPM.Type;
         this.SystemVariableOperatorLists = [];
@@ -245,14 +251,21 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
 
         return this.isChecked;
     }
-    set IsChecked(newValue: boolean) {
+    BooleanListValueChanged(newValue: boolean) {
         this.isChecked = newValue;
         this.CurrentEntityPM.Value = this.FieldValue = this.isChecked ? "true" : "false";
         this.AddEditAutomationsViewModel.IsChangeCondition = true;
     }
+    //set IsChecked(newValue: boolean) {
+    //    this.isChecked = newValue;
+    //    this.CurrentEntityPM.Value = this.FieldValue = this.isChecked ? "true" : "false";
+    //    this.AddEditAutomationsViewModel.IsChangeCondition = true;
+    //}
    
     ChosenOperatorList(dataTypeCode: string, isChangeOperator: boolean, objectFieldPM: ObjectFieldPM = null) {
         this.OperatorList = [];
+
+
 
         if (dataTypeCode == "DateTime" || dataTypeCode == "Date" || dataTypeCode == "Integer" || dataTypeCode == "Decimal" || dataTypeCode == "Double") {
             this.OperatorList.push(new Operator("=", "="));
@@ -301,15 +314,19 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
 
 
         if (this.CurrentEntityType != "OnCreate") {
-            this.OperatorList.push(new Operator("Changed to", "CHANGEDTO"));
-            this.OperatorList.push(new Operator("Changed", "CHANGED"));
+            if (this.SelectedAutomationEntity!=null && this.SelectedAutomationEntity.ObjectTableId == this.AddEditAutomationsViewModel.ObjectTableId) {
+                this.OperatorList.push(new Operator("Changed to", "CHANGEDTO"));
+                this.OperatorList.push(new Operator("Changed", "CHANGED"));
+            }
         }
 
 
-        if (dataTypeCode == "DateTime" || dataTypeCode == "Date") {
+        if (dataTypeCode == "DateTime" || dataTypeCode == "Date" ) {
 
             if (!this.OperatorList.filter(d => d.Code == "CHANGED")[0]) {
-                this.OperatorList.push(new Operator("Changed", "CHANGED"));
+                if (this.SelectedAutomationEntity != null && this.SelectedAutomationEntity.ObjectTableId == this.AddEditAutomationsViewModel.ObjectTableId) {
+                    this.OperatorList.push(new Operator("Changed", "CHANGED"));
+                }
             }
             this.OperatorList.push(new Operator("Is Empty", "ISEMPTY"));
             this.OperatorList.push(new Operator("Is not Empty", "ISNOTEMPTY"));
@@ -425,9 +442,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
     AutomationEntityListValueChanged(value) {
         if (value) {
             this.ObjectFieldId = null;
-            this.PartnerObjectFieldId = value.ObjectFieldId;
-            this.CurrentEntityPM.PartnerObjectFieldId = value.ObjectFieldId;
-
+            this.PartnerObjectFieldId = this.CurrentEntityPM.PartnerObjectFieldId = value.ObjectFieldId ? value.ObjectFieldId:null;
             this.SelectedAutomationEntity = this.AutomationEntityLists.filter(d => d.ObjectFieldId == this.PartnerObjectFieldId)[0];
 
             if (!this.SelectedAutomationEntity) {

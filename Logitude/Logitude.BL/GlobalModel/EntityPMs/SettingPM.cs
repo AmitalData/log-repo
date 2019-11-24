@@ -44,5 +44,9 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         
         public int System2RedirectFraction { get; set; }
 
+        public int QBOOAuthDefault { get; set; }
+        public string QBOClientID { get; set; }
+        public string QBOClientSecret { get; set; }
+
     }
 }

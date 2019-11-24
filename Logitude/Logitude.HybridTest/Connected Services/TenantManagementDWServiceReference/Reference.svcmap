@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="b176793b-52d7-4772-bebf-32acd5090579" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:9996/WcfApi/TenantManagementDWWcfService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="TenantManagementDWWcfService.wsdl" MetadataType="Wsdl" ID="3bd8d21c-dc44-44c6-bbe5-dd16c55385de" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/TenantManagementDWWcfService.svc?wsdl" />
+    <MetadataFile FileName="TenantManagementDWWcfService.xsd" MetadataType="Schema" ID="0006c4c1-180c-45dd-b847-38754af2b491" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/TenantManagementDWWcfService.svc?xsd=xsd2" />
+    <MetadataFile FileName="TenantManagementDWWcfService1.xsd" MetadataType="Schema" ID="35877079-f439-4bc8-8ff5-a2969d6f9e82" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/TenantManagementDWWcfService.svc?xsd=xsd3" />
+    <MetadataFile FileName="TenantManagementDWWcfService2.xsd" MetadataType="Schema" ID="851f689e-4476-45e9-b364-85616c4c4a18" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/TenantManagementDWWcfService.svc?xsd=xsd0" />
+    <MetadataFile FileName="TenantManagementDWWcfService3.xsd" MetadataType="Schema" ID="bf27a5af-15ef-4b52-a865-3facdbf40241" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/TenantManagementDWWcfService.svc?xsd=xsd1" />
+    <MetadataFile FileName="TenantManagementDWWcfService4.xsd" MetadataType="Schema" ID="71c1422a-4599-42a4-93e3-b3519d27023d" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/TenantManagementDWWcfService.svc?xsd=xsd4" />
+    <MetadataFile FileName="TenantManagementDWWcfService.disco" MetadataType="Disco" ID="a41a1d2e-162c-4490-b28e-de56a5a0a933" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/TenantManagementDWWcfService.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

@@ -291,8 +291,8 @@
                                         </div>
                                     </log-header-template>
 
-                                    <log-cell-template id="{{ 'CostPrice' | IdGeneratorPipe}}"   template="let item" #logcelltemplate [IsEnabled]="item.IsEnabled_CostUnitPrice">
-                                        <div  *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;" class="TextTrimming" [attr.title]="item.CostUnitPrice | NumbersPipe:'N2'">
+                                    <log-cell-template id="{{ 'CostPrice' | IdGeneratorPipe}}" template="let item" #logcelltemplate [IsEnabled]="item.IsEnabled_CostUnitPrice">
+                                        <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;" class="TextTrimming" [attr.title]="item.CostUnitPrice | NumbersPipe:'N2'">
                                             <table>
                                                 <tr>
                                                     <td style="width:16px;" *ngIf="item.IsChargeBySteps">
@@ -316,7 +316,7 @@
                                         </div>
 
                                         <div *ngIf="logcelltemplate.IsEditMode">
-                                            <LogTextBox   [FocusOnMe]="'true'" [ObjectFieldName]="'CostUnitPrice'" [Text]="item.CostUnitPrice" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                            <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'CostUnitPrice'" [Text]="item.CostUnitPrice" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
                                         </div>
                                     </log-cell-template>
                                 </log-column>
@@ -342,7 +342,7 @@
                                                 <tr>
                                                     <td style="width:16px;" *ngIf="item.CostMinMaxIconIsVisibile">
                                                         <img style="float: left;" src="./Images/Icons/M-icon.png" width="16" height="16" [title]="item.CostMinMaxIconTitle" />
-                                                    </td>                                                   
+                                                    </td>
 
                                                     <td style="text-align:right;">
                                                         {{item.CostTotalAmount | NumbersPipe:'N2'}}
@@ -444,13 +444,13 @@
                                     </log-header-template>
 
                                     <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEnabled_SaleTotalAmount">
-                                        <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%;">                                           
+                                        <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%;">
                                             <table>
                                                 <tr>
                                                     <td style="width:16px;" *ngIf="item.SaleMinMaxIconIsVisibile">
                                                         <img style="float: left;" src="./Images/Icons/M-icon.png" width="16" height="16" [title]="item.SaleMinMaxIconTitle" />
                                                     </td>
-                                                   
+
                                                     <td style="text-align:right;" [ngStyle]="{color: item.SaleTotalAmountColor}">
                                                         {{item.SaleTotalAmount | NumbersPipe:'N2'}}
                                                     </td>
@@ -490,7 +490,7 @@
                                                     <td style="width:16px;" *ngIf="item.IsAllIN">
                                                         <img src="./Images/Icons/A-icon.png" width="16" height="16" title="All In" />
                                                     </td>
-                                                   
+
                                                     <td style="text-align:right;" [ngStyle]="{color: item.SaleTotalAmountLocalColor}">
                                                         {{item.SaleTotalAmountLocal | NumbersPipe:'N2'}}
                                                     </td>
@@ -587,27 +587,8 @@
                                                     <div></div>
                                                 </td>
 
-                                                <td style="width: 65px;">
-                                                    <button class="Button" (click)="AddStepClicked()" [disabled]="!DataContext.IsAddPricestepsEnabled">{{'Quote.B.Charges.AddStep' | TextCodeTranslationPipe}}</button>
-                                                </td>
-
-                                                <td style="width: 5px;">
-                                                    <div></div>
-                                                </td>
-
-                                                <td style="width: 80px;">
-                                                    <button class="Button" (click)="EditStepClicked()" [disabled]="!IsEditingEnabled || !SelectedStepItem">
-                                                        <img style="left:-10px;" src="./Images/Buttons/Edit.over.png" width="15" height="15" />
-                                                        {{'Quote.B.Charges.EditStep' | TextCodeTranslationPipe}}
-                                                    </button>
-                                                </td>
-
-                                                <td style="width: 5px;">
-                                                    <div></div>
-                                                </td>
-
-                                                <td style="width: 75px;">
-                                                    <button class="Button" (click)="DeleteStepClicked()" [disabled]="!IsEditingEnabled || !SelectedStepItem">{{'Quote.B.Charges.DeleteStep' | TextCodeTranslationPipe}}</button>
+                                                <td style="width: 20px; padding-right: 2px;float:right;vertical-align:central;">
+                                                    <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddStepClicked()" [disabled]="!DataContext.IsAddPricestepsEnabled"></IconButton>
                                                 </td>
                                             </tr>
                                         </table>
@@ -616,56 +597,87 @@
 
                                 <tr>
                                     <td>
-                                        <div class="SimpleGridView">
-                                            <div class="SimpleGridViewHeader">
-                                                <table>
-                                                    <tr>
-                                                        <td style="width: 150px; min-width:150px;">{{'QuotePriceSteps.F.Step' | TextCodeTranslationPipe}}</td>
-                                                        <td style="width: 100px; min-width:100px;">{{'QuotePriceSteps.F.CostStepPrices.Short' | TextCodeTranslationPipe}}</td>
-                                                        <td style="width: 70px; min-width:70px;">{{'QuotePriceSteps.F.MarkupValue.Short' | TextCodeTranslationPipe}}</td>
-                                                        <td style="width: 100px; min-width:100px;">{{'QuotePriceSteps.F.SaleStepPrices.Short' | TextCodeTranslationPipe}}</td>
-                                                        <td></td>
-                                                    </tr>
-                                                </table>
-                                            </div>
+                                        <div class="MediaFill" style="overflow-x: hidden;">
+                                            <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="StepsItemsSource" (RowEnded)="OnRowEnded($event)">
 
-                                            <div class="SimpleGridViewBody">
-                                                <table>
-                                                    <tr class="SimpleGridViewRow RowHover RowSelected" *ngFor="let item of StepsItemsSource" (click)="SelectingPriceItem(item)" [class.RowSelected]="item === SelectedStepItem">
-                                                        <td class="GridViewCell" style="width: 150px;">
-                                                            <table style="height: 22px;">
+                                                <!-- Step -->
+                                                <log-column [header]="'QuotePriceSteps.F.Step' | TextCodeTranslationPipe" [width]="'150'" [Alignment]="'left'">
+                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                            <table>
                                                                 <tr>
-                                                                    <td>
-                                                                        <div></div>
+                                                                    <td class="GridViewCell" style="width: 150px;">
+                                                                        <table style="height: 22px;">
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <div></div>
+                                                                                </td>
+                                                                                <td class="Label" *ngIf="item.Step">+</td>
+                                                                                <td class="Label">{{item.Step | NumbersPipe:'N2'}}</td>
+                                                                                <td style="width:5px;">
+                                                                                    <div></div>
+                                                                                </td>
+                                                                                <td class="Label">{{item.WeightUnitCode}}</td>
+                                                                            </tr>
+                                                                        </table>
                                                                     </td>
-                                                                    <td class="Label" *ngIf="item.Step">+</td>
-                                                                    <td class="Label">{{item.Step | NumbersPipe:'N2'}}</td>
-                                                                    <td style="width:5px;">
-                                                                        <div></div>
-                                                                    </td>
-                                                                    <td class="Label">{{item.WeightUnitCode}}</td>
                                                                 </tr>
                                                             </table>
-                                                        </td>
+                                                        </div>
+                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                            <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Step'" [ObjectTableName]="QuotePriceObjectTableName" [DataContext]="item" [Text]="item.Step" [HideColumns]="true"></LogTextBox>
+                                                        </div>
+                                                    </log-cell-template>
+                                                </log-column>
 
-                                                        <td class="GridViewCell" style="width: 100px; text-align: right;">{{item.CostUnitPrice | NumbersPipe:'N3'}}</td>
+                                                <!-- CostUnitPrice -->
+                                                <log-column [header]="'QuotePriceSteps.F.CostStepPrices.Short' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="'right'">
+                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                            <span>{{item.CostUnitPrice | NumbersPipe:'N3'}}</span>
+                                                        </div>
+                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                            <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'CostUnitPrice'" [ObjectTableName]="QuotePriceObjectTableName" [DataContext]="item" [Text]="item.CostUnitPrice" [HideColumns]="true"></LogTextBox>
 
-                                                        <td class="GridViewCell" style="width: 70px; text-align: right;">{{item.MarkupValue | NumbersPipe:'N3'}}</td>
+                                                        </div>
+                                                    </log-cell-template>
+                                                </log-column>
 
-                                                        <td class="GridViewCell" style="width: 100px; text-align: right;">{{item.SaleUnitPrice | NumbersPipe:'N3'}}</td>
+                                                <!-- MarkupValue -->
+                                                <log-column [header]="'QuotePriceSteps.F.MarkupValue.Short' | TextCodeTranslationPipe" [width]="'70'" [Alignment]="'right'">
+                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                            <span>{{item.MarkupValue | NumbersPipe:'N3'}}</span>
+                                                        </div>
+                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                            <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'MarkupValue'" [ObjectTableName]="QuotePriceObjectTableName" [DataContext]="item" [Text]="item.MarkupValue" [HideColumns]="true"></LogTextBox>
 
-                                                        <td>
-                                                            <div></div>
-                                                        </td>
-                                                    </tr>
+                                                        </div>
+                                                    </log-cell-template>
+                                                </log-column>
 
-                                                    <tr>
-                                                        <td colspan="5">
-                                                            <div></div>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </div>
+                                                <!-- SaleStepPrices -->
+                                                <log-column [header]="'QuotePriceSteps.F.SaleStepPrices.Short' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="'right'">
+                                                    <log-cell-template template="let item" #logcelltemplate>
+                                                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                            <span>{{item.SaleUnitPrice | NumbersPipe:'N3'}}</span>
+                                                        </div>
+                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                            <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'SaleUnitPrice'" [ObjectTableName]="QuotePriceObjectTableName" [DataContext]="item" [Text]="item.SaleUnitPrice" [HideColumns]="true"></LogTextBox>
+
+                                                        </div>
+                                                    </log-cell-template>
+                                                </log-column>
+
+                                                <!-- Buttons -->
+                                                <log-column [width]="'30'" [Alignment]="'left'">
+                                                    <log-cell-template [IgnoreMods]="true" template="let item">
+                                                        <IconButton [Name]="'Delete'" [IsSmall]="true"
+                                                                    style="display: block; float: left; margin-left:3px; margin-top:4px;" [disabled]="!IsEditingEnabled" (click)="DeleteStepClicked(item)"></IconButton>
+                                                    </log-cell-template>
+                                                </log-column>
+
+                                            </logitude-edit-grid>
                                         </div>
                                     </td>
                                 </tr>
@@ -816,7 +828,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{ 'CancelAddCharges' | IdGeneratorPipe}}"  class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        <button id="{{ 'CancelAddCharges' | IdGeneratorPipe}}" class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">

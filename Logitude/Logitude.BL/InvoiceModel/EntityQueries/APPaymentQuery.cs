@@ -87,6 +87,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        UpdateDate = a.UpdateDate,
                                        UpdatedByUserId = a.UpdatedByUserId,
                                        VendorName = a.VendorCard == null ? "" : (loggedContact.DontShowLocalLabels  ? a.VendorCard.EnglishName   : a.VendorCard.LocalName  ),
+                                       VendorLocalName = a.VendorCard == null ? "" : a.VendorCard.LocalName,
                                        ExternalAccountingEntityId=a.ExternalAccountingEntityId,
                                        TransferError = a.TransferError,
                                        TransferStatusCode = a.TransferStatusCode,
@@ -101,6 +102,11 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        FirstApproveDate = a.FirstApproveDate,
                                        AutomaticPaymentCheque = a.AutomaticPaymentCheque,
                                        BranchName = a.Branch == null ? null : a.Branch.EnglishName,
+                                       VendorBankAccountNumber = a.VendorBankAccountNumber,
+                                       VendorBankAddress = a.VendorBankAddress,
+                                       VendorBankName = a.VendorBankName,
+                                       VendorIBANNumber = a.VendorIBANNumber,
+                                       VendorSwift = a.VendorSwift
 
                                    }).FirstOrDefault();
 
@@ -222,6 +228,11 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        BankAccountId = a.BankAccountId,
                                        FirstApproveDate = a.FirstApproveDate,
                                        BranchName = a.Branch == null ? null : a.Branch.EnglishName,
+                                       VendorBankAccountNumber = a.VendorBankAccountNumber,
+                                       VendorBankAddress = a.VendorBankAddress,
+                                       VendorBankName = a.VendorBankName,
+                                       VendorIBANNumber = a.VendorIBANNumber,
+                                       VendorSwift = a.VendorSwift
                                    }).FirstOrDefault();
             if (payment != null)
             {
@@ -295,6 +306,11 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         BankAccountId = a.BankAccountId,
                         FirstApproveDate = a.FirstApproveDate,
                         BranchName = a.Branch == null ? null : a.Branch.EnglishName,
+                        VendorBankAccountNumber = a.VendorBankAccountNumber,
+                        VendorBankAddress = a.VendorBankAddress,
+                        VendorBankName = a.VendorBankName,
+                        VendorIBANNumber = a.VendorIBANNumber,
+                        VendorSwift = a.VendorSwift
                     });
 
             result = BranchPermitionsFilter.AddUserBranchRestrictionFilters<APPaymentPM>(new QueryOperations(), result, tenant);
@@ -355,6 +371,11 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        BankAccountId = a.BankAccountId,
                                        FirstApproveDate = a.FirstApproveDate,
                                        BranchName = a.Branch == null ? null : a.Branch.EnglishName,
+                                       VendorBankAccountNumber = a.VendorBankAccountNumber,
+                                       VendorBankAddress = a.VendorBankAddress,
+                                       VendorBankName = a.VendorBankName,
+                                       VendorIBANNumber = a.VendorIBANNumber,
+                                       VendorSwift = a.VendorSwift
 
                                    }).FirstOrDefault();
             payment.PaymentInvoices = apInvoicePaymentQuery.GetAPPaymentInvoicePMsForPayment(payment.Id, tenant).ToList();
@@ -407,6 +428,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                    PaymentMethodCode = a.AccountingPaymentMethod == null ? null : a.AccountingPaymentMethod.Code,
                                                    PaymentCurrencyCode = a.PaymentCurrency == null ? "" : a.PaymentCurrency.Code,
                                                    VendorName = a.VendorCard == null ? "" : a.VendorCard.EnglishName,
+                                                   VendorLocalName = a.VendorCard == null ? "" : a.VendorCard.LocalName,
                                                    CreatedByUserName = a.CreatedByUser == null ? "" : (a.CreatedByUser.Contact == null ? "" : a.CreatedByUser.Contact.EnglishName),
                                                    CreditCardTypeId = a.CreditCardTypeId,
                                                    AmountInProfitCurrency = a.AmountInProfitCurrency,
@@ -424,6 +446,11 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                    BankAccountId = a.BankAccountId,
                                                    FirstApproveDate = a.FirstApproveDate,
                                                    BranchName = a.Branch == null ? null : a.Branch.EnglishName,
+                                                   VendorBankAccountNumber = a.VendorBankAccountNumber,
+                                                   VendorBankAddress = a.VendorBankAddress,
+                                                   VendorBankName = a.VendorBankName,
+                                                   VendorIBANNumber = a.VendorIBANNumber,
+                                                   VendorSwift = a.VendorSwift
                                                };
             return result;
         }
@@ -474,6 +501,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             PaymentMethodName = a.PaymentMethod == null ? null : a.PaymentMethod.Name,
                             PaymentMethodCode = a.PaymentMethod == null ? null : a.PaymentMethod.Code,
                             VendorName = a.VendorCard == null ? "" : a.VendorCard.EnglishName,
+                            VendorLocalName = a.VendorCard == null ? "" : a.VendorCard.LocalName,
                             ExternalAccountingEntityId = a.ExternalAccountingEntityId,
                             TransferError=a.TransferError,
                             TransferStatusCode=a.TransferStatusCode,
@@ -486,6 +514,11 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             BankAccountId = a.BankAccountId,
                             FirstApproveDate = a.FirstApproveDate,
                             BranchName = a.Branch == null ? null : a.Branch.EnglishName,
+                            VendorBankAccountNumber = a.VendorBankAccountNumber,
+                            VendorBankAddress = a.VendorBankAddress,
+                            VendorBankName = a.VendorBankName,
+                            VendorIBANNumber = a.VendorIBANNumber,
+                            VendorSwift = a.VendorSwift
                         };
 
             return query;

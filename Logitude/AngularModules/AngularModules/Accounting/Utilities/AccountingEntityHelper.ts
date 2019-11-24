@@ -140,7 +140,7 @@ export class AccountingEntityHelper {
 
             // 10-Adjustment
             case "10": {
-                tableName = "Reconciliation";
+                tableName = "Journal";
 
                 break;
             }

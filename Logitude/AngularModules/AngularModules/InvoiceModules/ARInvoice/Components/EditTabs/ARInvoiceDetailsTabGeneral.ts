@@ -105,7 +105,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     }
 
     private myCardListService: CardListService;
-    private myCurrencyListService: CurrencyListService;
+    public myCurrencyListService: CurrencyListService;
     private myPaymentTermListService: PaymentTermListService;
     public myVatTypeListService: VatTypeListService;
     public myChargesTypeListService: ChargesTypeListService;
@@ -1286,8 +1286,8 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         var line: ARInvoiceLinePM = new ARInvoiceLinePM(null);
         line.Tenant = SessionLocator.TenantPM.Id;
         line.ARInvoiceId = this.EntityPM.Id;
-        line.ForiegnCurrencyId = this.InvoiceCurrencyId;
-        line.ForiegnCurrencyCode = this.InvoiceCurrencyCode;
+       // line.ForiegnCurrencyId = this.InvoiceCurrencyId;
+       // line.ForiegnCurrencyCode = this.InvoiceCurrencyCode;
         line.ForiegnExchangeRate = this.InvoiceCurrencyExchangeRate;
         line.LineActionCode = "1";
         var logWindow = new LogitudeWindow();
@@ -1447,6 +1447,15 @@ export class ARInvoiceLineItem extends BaseComponent {
         if (this.EntityPM.ForiegnCurrencyId != newValue) {
             this.EntityPM.ForiegnCurrencyId = newValue;
             this.SetCurrencyRateData();
+            this.fatherComponent.myCurrencyListService.getSingleFromCache(newValue).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    var list: CurrencyList = myResponse.Result;
+                    if (list != null) {
+                        this.ForiegnCurrencyCode = list.Code;
+                        
+                    }
+                }
+            });
         }
     }
 

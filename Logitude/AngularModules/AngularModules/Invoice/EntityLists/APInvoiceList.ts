@@ -39,6 +39,7 @@ export class APInvoiceList {
 		UpdateDate: Date;
 		APInvoiceTypeCode: string;
 		VendorName: string;
+		VendorLocalName: string;
 		VendorCode: string;
 		PaymentTermName: string;
 		InvoiceCurrencyCode: string;

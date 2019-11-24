@@ -63,11 +63,11 @@ export class FieldsHelper {
 
     WaitBusyIndicator() {
         var EC = protractor.ExpectedConditions;
-        browser.wait(EC.invisibilityOf(element(by.id("BusyIndicator_0"))), 100000).then(a => { });
+        browser.wait(EC.invisibilityOf(element(by.id("BusyIndicator_0"))), 100000000).then(a => { });
     }
     WaitBusyIndicatorToShow() {
         var EC = protractor.ExpectedConditions;
-        browser.wait(EC.visibilityOf(element(by.id("BusyIndicator_0"))), 100000).then(a => { });
+        browser.wait(EC.visibilityOf(element(by.id("BusyIndicator_0"))), 100000000).then(a => { });
     }
 
     WaitWindowClosed() {

@@ -108,6 +108,7 @@
     <Content Include="Accounting\Components\ShortTitles\PaymentChequeShortTitleComponent.html" />
     <Content Include="Accounting\Components\Templates\FieldTemplateComponent.html" />
     <Content Include="Accounting\Components\Workspaces\GLAccounts\GLAccountsPageComponent.html" />
+    <Content Include="Accounting\Components\Workspaces\Interest\InterestPageComponent.html" />
     <Content Include="Booking\Components\BookingWizard\NoRemainingStockComponent.html" />
     <Content Include="CommonModules\CommonAgent\Components\NewEntity\NewAgentComponent.html" />
     <Content Include="CommonModules\CommonAirline\Components\AddEdit\AddEditAirlineAreaComponent.html" />
@@ -278,6 +279,7 @@
     <Content Include="Customs\Components\ListTemplates\EndDateComponent.html" />
     <Content Include="Customs\Components\ListTemplates\SupplierInvoiceItemListTemplate.html" />
     <Content Include="e2e\dist\out-tsc\Shipment\EntityPMs\ShipmentPickUpDeliveryPackagePM.js" />
+    <Content Include="Images\Buttons\copy.report.png" />
     <Content Include="Images\Buttons\downarrow.png" />
     <Content Include="Images\Buttons\uparrow.png" />
     <Content Include="Images\Error.png" />
@@ -414,6 +416,7 @@
     <TypeScriptCompile Include="Accounting\Components\Others\AccountingNoteComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\ExtReconcileAdjustBankFeeComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Workspaces\GLAccounts\GLAccountsPageComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\Workspaces\Interest\InterestPageComponent.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\AccountingIntegrityCheckList.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\IntegrityCheckStatusList.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\JournalAdditionalDataList.ts" />
@@ -429,10 +432,14 @@
     <TypeScriptCompile Include="Accounting\Services\ExtendedPMs\TaxDeductionReportExtendedPMService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardLists\AccountingIntegrityCheckListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardLists\IntegrityCheckStatusListService.ts" />
+    <TypeScriptCompile Include="Accounting\Services\StandardLists\InterestBasesPeriodListService.ts" />
+    <TypeScriptCompile Include="Accounting\Services\StandardLists\InterestBasesTypeListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardLists\JournalAdditionalDataListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardLists\OpenFormatReportListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardLists\OpenFormatReportStatusListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\AccountingIntegrityCheckPMService.ts" />
+    <TypeScriptCompile Include="Accounting\Services\StandardPMs\InterestBasesPeriodPMService.ts" />
+    <TypeScriptCompile Include="Accounting\Services\StandardPMs\InterestBasesTypePMService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\JournalAdditionalDataPMService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\OpenFormatReportPMService.ts" />
     <TypeScriptCompile Include="Accounting\Validators\PaymentChequeValidator.ts" />
@@ -789,6 +796,11 @@
     <TypeScriptCompile Include="Accounting\Services\StandardLists\VatReportStatusListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\TaxReportPMService.ts" />
     <TypeScriptCompile Include="Controls\Pipes\DateToMonthPipe.ts" />
+    <TypeScriptCompile Include="e2e\Accounting\AccountingModule-spec.ts" />
+    <TypeScriptCompile Include="e2e\Accounting\AccountingModule.ts" />
+    <TypeScriptCompile Include="e2e\Accounting\New\APPayment.ts" />
+    <TypeScriptCompile Include="e2e\Accounting\New\APShipmentMultipleInvoice.ts" />
+    <TypeScriptCompile Include="e2e\Accounting\New\ARPayment.ts" />
     <TypeScriptCompile Include="e2e\Contacts\Contacts-spec.ts" />
     <TypeScriptCompile Include="e2e\Contacts\Contacts.ts" />
     <TypeScriptCompile Include="e2e\CRM\Activities\ActivitiesModule.ts" />
@@ -868,6 +880,9 @@
     <TypeScriptCompile Include="e2e\Maintenance\Users\UsersScenario.ts" />
     <TypeScriptCompile Include="e2e\Operations\PrintDocOut\PrintDocOut.ts" />
     <TypeScriptCompile Include="e2e\Operations\SendMailPopup\SendMailPopup.ts" />
+    <TypeScriptCompile Include="e2e\Operations\Shipments\DocOutSenario.ts" />
+    <TypeScriptCompile Include="e2e\Operations\Shipments\DocsOut.e2e-spec.ts" />
+    <TypeScriptCompile Include="e2e\Operations\Shipments\EditEntity\PrintOutDoc.ts" />
     <TypeScriptCompile Include="e2e\Operations\Shipments\EditEntity\ShipmentActions.ts" />
     <TypeScriptCompile Include="e2e\Operations\Shipments\NewEntity\OpEAWB-spec.ts" />
     <TypeScriptCompile Include="e2e\Operations\Shipments\NewEntity\OpEAWB.ts" />
@@ -976,7 +991,9 @@
     <TypeScriptCompile Include="Infrastructure\Helpers\DWQueryBuilderHelper.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\BusinessProcessDomainService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedLists\BusinessRoleExtendedListService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\BIReportExtendedPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\DWQueryBuilderService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\ObjectFieldPMExtendedService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\SchedulerExtendedPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\WebhookKeysExtendedPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BIReportFolderListService.ts" />
@@ -991,6 +1008,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\DWObjectFieldListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\DWObjectTableListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\FeatureToggleListService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardLists\ObjectFieldListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\SchedulerLogsListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\SchedulerProcedureListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\ToggleListService.ts" />
@@ -1006,6 +1024,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\SharedLogisticsSettingPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\WebhookKeysPMService.ts" />
     <TypeScriptCompile Include="InvoiceModules\APInvoice\ModuleAPInvoice.ts" />
+    <TypeScriptCompile Include="InvoiceModules\APPayment\Components\EditTabs\APPaymentGeneralTabComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\Components\EditTabs\EditPaymentChequeComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\ModuleAPPayment.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\ModuleDeclarations.ts" />
@@ -1026,6 +1045,7 @@
     <Content Include="Infrastructure\Components\QueryColumnsComponents\DWLogSearchAddFieldsComponent.html" />
     <Content Include="Infrastructure\Components\QueryColumnsComponents\DWLogSearchWindowFieldsComponent.html" />
     <Content Include="InvoiceModules\APPayment\Components\EditTabs\APEditMultiCurrency.html" />
+    <Content Include="InvoiceModules\APPayment\Components\EditTabs\APPaymentGeneralTabComponent.html" />
     <Content Include="InvoiceModules\APPayment\Components\EditTabs\EditPaymentChequeComponent.html" />
     <Content Include="InvoiceModules\ARInvoice\Components\EditTabs\AddEditARGeneralInvoiceLineComponent.html" />
     <Content Include="InvoiceModules\ARInvoice\Components\EditTabs\AddEditARInvoiceLineComponent.html" />
@@ -1063,6 +1083,7 @@
     <Content Include="Report\Components\FilterReportComponent\ShipmentDetailsFilterComponent.html" />
     <Content Include="Report\Components\FilterReportComponent\ShipmentsStocksFiltersComponent.html" />
     <Content Include="Report\Components\FiltersComponent\Accounting\DetailedShipmentChargesAnalysisComponent.html" />
+    <Content Include="Report\Components\FiltersComponent\Accounting\LedgerTransactionsFilterControl.html" />
     <Content Include="Report\Components\FiltersComponent\Accounting\VendorChargesAnalysisFilterComponent.html" />
     <Content Include="Report\Components\FiltersComponent\CRM\UsersByTenantReportFilterComponent.html" />
     <Content Include="Report\Components\FiltersComponent\Operational\LicenseManagementFilterComponent.html" />
@@ -2182,6 +2203,7 @@
     <Content Include="TariffModule\Components\EditTabs\Tariff\AddEditAllInChargesComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\AddEditTariffLineComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\ChoosePortComponent.html" />
+    <Content Include="TariffModule\Components\EditTabs\Tariff\OceanFCLVersionTabComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\SurchargeVersionTabComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\TariffDatesValidationComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\TariffDetailsTabComponent.html" />
@@ -3520,6 +3542,7 @@
     <TypeScriptCompile Include="Report\Components\FilterReportComponent\ShipmentDetailsFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FilterReportComponent\ShipmentsStocksFiltersComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Accounting\DetailedShipmentChargesAnalysisComponent.ts" />
+    <TypeScriptCompile Include="Report\Components\FiltersComponent\Accounting\LedgerTransactionsFilterControl.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Accounting\VendorChargesAnalysisFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\CRM\UsersByTenantReportFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Operational\LicenseManagementFilterComponent.ts" />
@@ -3794,10 +3817,7 @@
     <TypeScriptCompile Include="e2e\Helpers\GeneralFunctions.ts" />
     <TypeScriptCompile Include="e2e\Login\Login.e2e-spec.ts" />
     <TypeScriptCompile Include="e2e\Login\Login.po.ts" />
-    <TypeScriptCompile Include="e2e\Operations\ShipmentSearch.e2e-spec.ts" />
-    <TypeScriptCompile Include="e2e\Operations\ShipmentSearch.ts" />
     <TypeScriptCompile Include="e2e\Operations\Shipments\EditEntity\DocsOutTab.ts" />
-    <TypeScriptCompile Include="e2e\Operations\Shipments\EditEntity\EditShipmentTabs.e2e-spec.ts" />
     <TypeScriptCompile Include="e2e\Operations\Shipments\EditEntity\EditShipmentTabs.po.ts" />
     <TypeScriptCompile Include="e2e\Operations\Shipments\EditEntity\GeneralTab.ts" />
     <TypeScriptCompile Include="e2e\Operations\Shipments\EditEntity\OrdersTab.ts" />
@@ -6577,6 +6597,7 @@
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\AddEditAllInChargesComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\AddEditTariffLineComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\ChoosePortComponent.ts" />
+    <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\OceanFCLVersionTabComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\TariffLineData.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\SurchargeVersionTabComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\TariffDetailsTabComponent.ts" />
@@ -7388,8 +7409,6 @@
     <Folder Include="e2e\LogBox\Documents\" />
     <Folder Include="e2e\Testing Scenarios\Master\Smoke Testing Common\" />
     <Folder Include="e2e\Testing Scenarios\Production\Smoke Testing Common\" />
-    <Folder Include="e2e\Testing Scenarios\Production\Team Islam\" />
-    <Folder Include="e2e\Testing Scenarios\Production\Team Mohammad\" />
     <Folder Include="InfrastructureModules\InfrastructureAutomation\Components\" />
     <Folder Include="InfrastructureModules\InfrastructureStimulsoft\Components\" />
     <Folder Include="Logitude\Components\Customization\" />

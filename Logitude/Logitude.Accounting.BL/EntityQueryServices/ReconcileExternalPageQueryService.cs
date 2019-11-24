@@ -135,22 +135,17 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         }
 
-        public int GetLastPageNo(string entityId, string objectTableName, int tenant)
+        public int GetLastPageNumber(string entityId, string objectTableId, int tenant)
         {
-            ObjectTable objectTable = GetObjectTable(objectTableName, tenant);
-            //
-            var lastPage = (from a in context.ReconcileExternalPages
+            ReconcileExternalPage lastPage = (from a in context.ReconcileExternalPages
                             where
                                 a.EntityId == entityId
-                                && a.ObjectTableId == objectTable.Id 
+                                && a.ObjectTableId == objectTableId
                                 && a.Tenant == tenant
                             orderby a.PageNo descending
                             select a).FirstOrDefault();
-            if (lastPage != null)
-                return lastPage.PageNo;
-            else
-                return 0;
 
+            return lastPage != null ? lastPage.PageNo : 0;
         }
         public bool CheckLastApprovedPage(ReconcileExternalPagePM page, string objectTableName, int tenant)
         {

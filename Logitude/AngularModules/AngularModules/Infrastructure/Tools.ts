@@ -257,6 +257,28 @@ export class AppTool {
 
         return logitude_url;
     }
+
+
+
+    public static GetQuickbooksPageBasedOnAuth() {
+        SessionLocator.TenantManagementJS
+        var logitude_url = location.href.replace('index.html', '');
+
+        if (location.href.indexOf('localhost') > -1) {
+            logitude_url = 'http://localhost:9996/';
+        }
+
+        else {
+            var urlArr = location.href.split("/index.html");
+            var url = urlArr[0];
+            url = url.replace(url.substring(url.lastIndexOf('/'), url.length), "");
+            logitude_url = url + "/";
+        }
+
+        return logitude_url;
+    }
+
+
     public static GetComponentName(myComponentPath: string) {
         var myComponentName = null;
 
