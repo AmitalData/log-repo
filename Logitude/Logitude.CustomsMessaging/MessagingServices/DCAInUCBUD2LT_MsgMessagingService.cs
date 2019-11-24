@@ -13,8 +13,6 @@ using Logitude.CustomsMessaging.ResponseServices;
 using Logitude.CustomsMessaging.Testers.Messages;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Utils;
-using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -65,12 +63,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                 LoggingObjectTableId = objectTableId,
                 LoggingEntityId = customsResponse.DeclarationId,
-
+                
 
                 LoggingUserId = customsResponse.LoggingUserId,
                 RequestName = $" UD2LT   קישור מסמך לטיקט" + customsResponse.DocumentsFilingCode + " "
             };
-
+            
             return genericRequestParams;
         }
 
@@ -101,8 +99,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
             }
             LogMessagingUtil.Instance.AppendLine("Build !!!Requestsheet  with Interface Type  = UCBUD2LT  !!!");
 
-
-
+            
+            
 
 
             string uniComm = null;
@@ -238,7 +236,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             DateTime stopLogAt = new DateTime(2020, 01, 01);
             DeclarationPM declarationPM;
             Debug.WriteLine("CreateUD2LTService");
-            string jsonPM = "";
+            string jsonPM="";
             try
             {
 
@@ -266,7 +264,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 int tenant = _DocumentsFilingPM.Tenant;
                 if (!IsConnected2Declaration())
                 {
-                    LogitudeSettings.HandleLogMe("!IsConnected2Decalaration()" + jsonPM, false, "CreateUD2LTService", stopLogAt);
+                    LogitudeSettings.HandleLogMe("!IsConnected2Decalaration()"+ jsonPM, false, "CreateUD2LTService", stopLogAt);
                     Debug.WriteLine("!IsConnected2Decalaration()");
                     return;
                 }
@@ -285,60 +283,24 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 if (/*CourierENV() */ declarationPM.IsCourierDeclaration)
                 {
                     Debug.WriteLine("CourierENV");
-
+                    
                     shouldCreateDCAComm = true;
                 }
                 else
                 {
-
-                    if (String.IsNullOrWhiteSpace(declarationPM.CustomerCode))
+                    //CGG_DEC_DOC_CLT
+                    var amitalContext = AmitalContext.GetContext(tenant);
+                    var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
+                    var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGG_DEC_DOC_CLT", "NON", "NON", false, true);
+                    def.DEFDATA = def.DEFDATA ?? "";
+                    if (!String.IsNullOrWhiteSpace(def.DEFDATA))
                     {
-                        LogitudeSettings.HandleLogMe("!declarationPM.CustomerCode" + jsonPM, false, "CreateUD2LTService", stopLogAt);
-                        Debug.WriteLine("!declarationPM.CustomerCode");
-                        return;
-
-
-                    }
-                    else
-                    {
-
-                        var commonContext = CommonDataContext.GetContext(declarationPM.Tenant);
-                        var cardRepository = new CardRepository(commonContext);
-                        var card = cardRepository.GetSingleCard(declarationPM.CustomerCode, declarationPM.Tenant);
-                        if (card == null)
+                        var listStorageDefault = new List<string>();//&& declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILOVL"
+                        
+                        if (!String.IsNullOrWhiteSpace(declarationPM.CustomerCode) &&def.DEFDATA.Contains(declarationPM.CustomerCode)) // Maman
                         {
-                            LogitudeSettings.HandleLogMe("card = null" + declarationPM.CustomerCode  + " " + jsonPM, false, "CreateUD2LTService", stopLogAt);
-                            Debug.WriteLine("card = null");
-                            return;
-                        }
-                        if (String.IsNullOrWhiteSpace(card.Code))
-                        {
-                            LogitudeSettings.HandleLogMe("card.Code=null" + declarationPM.CustomerCode + " " + jsonPM, false, "CreateUD2LTService", stopLogAt);
-                            Debug.WriteLine("card.Code=null");
-                            return;
-                        }
-                        //CGG_DEC_DOC_CLT
-                        var amitalContext = AmitalContext.GetContext(tenant);
-                        var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
-                        var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGG_DEC_DOC_CLT", "NON", "NON", false, true);
-                        def.DEFDATA = def.DEFDATA ?? "";
-                        if (!String.IsNullOrWhiteSpace(def.DEFDATA))
-                        {
-                            var listStorageDefault = new List<string>();//&& declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILOVL"
-
-                            //if (!String.IsNullOrWhiteSpace(declarationPM.CustomerCode) && def.DEFDATA.Contains(declarationPM.CustomerCode)) // Maman
-                            if (def.DEFDATA.Contains(card.Code)) // Maman
-                            {
-                                Debug.WriteLine("def.DEFDATA.Contains(declarationPM.CustomerId)");
-                                shouldCreateDCAComm = true;
-                            }
-                            else
-                            {
-                                LogitudeSettings.HandleLogMe("!def.DEFDATA.Contains(card.Code)" + def.DEFDATA  +" " + card.Code + " " + jsonPM, false, "CreateUD2LTService", stopLogAt);
-                                Debug.WriteLine("card.Code=null");
-                                return;
-
-                            }
+                            Debug.WriteLine("def.DEFDATA.Contains(declarationPM.CustomerId)");
+                            shouldCreateDCAComm = true;
                         }
                     }
 
@@ -383,15 +345,23 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 }
 
 
-
+                
                 Debug.WriteLine("CreateCRS");
 
                 string loggingUserId = AuthenticationUtil.ResolveUserId(tenant);
 
 
+                string key = ProcessLockTableUtil.Instance.GetKey4UCBUD2LT(declarationPM.CustomFileNo, _DocumentsFilingPM.Tenant);
+                using (var disposableToken =
+                    //ProcessLockTableUtil.Instance.LockItAndGetReleaseToken(key, "5117ResponseService.Update")
+                    ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(_DocumentsFilingPM.Tenant, true, key, "UCBUD2LT.CRS",true)
+                    )
+                {
                     var myDCAInUCBUD2LT_MsgMessagingService = new DCAInUCBUD2LT_MsgMessagingService();
                     string crs = myDCAInUCBUD2LT_MsgMessagingService.CreateCRS(tenant, loggingUserId, _DocumentsFilingPM);
                     LogitudeSettings.HandleLogMe(crs + " " + jsonPM, false, "CreateUD2LTService.OK", stopLogAt);
+
+                }
 
             }
             catch (Exception E)

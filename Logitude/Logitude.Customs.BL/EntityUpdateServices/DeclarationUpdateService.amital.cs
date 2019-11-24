@@ -323,6 +323,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         }
                         break;
                     case EventContextTagModel.ProccessEnum.DF_NG_8251_Web02_DeclarationStatusResponseServiceCancel: // moran 8.9.16 - Task 20303  
+                    case EventContextTagModel.ProccessEnum.DF_NG_8251_Web02_DeclarationStatusResponseServicePreClearance:
+                    case EventContextTagModel.ProccessEnum.DF_NG_8251_Web02_DeclarationStatusResponseServiceMessageToAgent:
                         {
                             if (!string.IsNullOrWhiteSpace(eventContextTagModel.EventCode))
                             {

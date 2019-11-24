@@ -470,7 +470,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             bool toUpdateClassification = false;
             string defaultClassificationCode = null;
             string defaultClassificationCodeUnit = null;
-            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert && declarationPM.IsCourierDeclaration && entityPM.InvoiceAmountInUSD <= 75)
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert && declarationPM.IsCourierDeclaration && entityPM.InvoiceAmountInUSD < 1000)
             {
                 try
                 {
@@ -481,7 +481,19 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                                                       select a).Any();
                         if (isInvoiceItemInsertNullClassification)
                         {
-                            defaultClassificationCode = GetAmitalDefault("ISRAEL", "CGO_LOWVAL_ITEM", "NON", "NON", entityPM.Tenant);
+                            if(entityPM.InvoiceAmountInUSD < 75)
+                            {
+                                defaultClassificationCode = GetAmitalDefault("ISRAEL", "CGO_LOWVAL_ITEM", "NON", "NON", entityPM.Tenant);
+                            }
+                            else if(entityPM.InvoiceAmountInUSD >= 75 && entityPM.InvoiceAmountInUSD < 500)
+                                {
+                                defaultClassificationCode = GetAmitalDefault("ISRAEL", "CGO_VAL2_ITEM", "NON", "NON", entityPM.Tenant);
+                            }
+                            else if(entityPM.InvoiceAmountInUSD >= 500 && entityPM.InvoiceAmountInUSD < 1000)
+                            {
+                                defaultClassificationCode = GetAmitalDefault("ISRAEL", "CGO_VAL3_ITEM", "NON", "NON", entityPM.Tenant);
+                            }
+                            
                             if (!string.IsNullOrWhiteSpace(defaultClassificationCode))
                             {
                                 CustomsItemQueryService customsItemQueryService = new CustomsItemQueryService(entityPM.Tenant);

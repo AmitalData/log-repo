@@ -1397,10 +1397,45 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                     };
                     SupplierInvoiceItemPM.SupplierInvoiceItemProcesTypes.Add(supplierInvoiceItemProcesType);
                 }
+                if (!string.IsNullOrWhiteSpace(invoiceItem.PROCESSTYPE))
+                {
+                    SupplierInvoiceItemProcesTypePM supplierInvoiceItemProcesType = new SupplierInvoiceItemProcesTypePM()
+                    {
+                        DeclarationId = SupplierInvoiceItemPM.DeclarationId,
+                        InvoiceItemLineNumber = SupplierInvoiceItemPM.LineNumber,
+                        ProcessTypeCode = invoiceItem.PROCESSTYPE,
+                        InvoiceCounterKey = SupplierInvoiceItemPM.CounterKey,
+                        Tenant = SupplierInvoiceItemPM.Tenant,
+                        ChangeSetOp = ChangeSetOperation.Insert,
+                    };
+                    SupplierInvoiceItemPM.SupplierInvoiceItemProcesTypes.Add(supplierInvoiceItemProcesType);
+                }
+                if (!string.IsNullOrWhiteSpace(invoiceItem.TAXEXEMPTCODE))
+                {
+                    SupplierInvoiceItemPM.TaxExemptCode = invoiceItem.TAXEXEMPTCODE; //TranslateTaxExemptCode(invoiceItem.TAXEXEMPTCODE);
+                }
                 SupplierInvoiceItemPMList.Add(SupplierInvoiceItemPM);
             }
 
             return SupplierInvoiceItemPMList;
+        }
+
+        private string TranslateTaxExemptCode(string amitalTaxExemptCode)
+        {
+            if (String.IsNullOrWhiteSpace(amitalTaxExemptCode))
+            {
+                AppendLogLine("amitalTaxExemptCode is null");
+                return null;
+            }
+            var taxExemptCode = new ValidCustomsItemQueryService(ResolvedTenant());
+            var myTaxExemptCode = taxExemptCode.GetSingle(amitalTaxExemptCode, false, true);
+            if (myTaxExemptCode == null)
+            {
+                AppendLogLine("amitalTaxExemptCode = " + amitalTaxExemptCode + " could not translate to Logitude Id");
+                return null;
+            }
+            AppendLogLine("amitalTaxExemptCode = " + amitalTaxExemptCode + " Translated to " + myTaxExemptCode.Code);
+            return myTaxExemptCode.Code;
         }
 
         private List<SupplierInvoiceItemsConDeclarPM> GetSupplierInvoiceItemConDeclarsPM(AmitalMessaging.Customs.CustomFile.CommDecFile.INVOICEITEMS invoiceItem, SupplierInvoiceItemPM supplierInvoiceItemPM)

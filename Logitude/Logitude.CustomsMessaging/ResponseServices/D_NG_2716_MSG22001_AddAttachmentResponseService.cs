@@ -24,6 +24,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnifreightIIG.Common.GlobalScannedAttachmentToEntityServiceReference;
 using Logitude.Server.Tools.Utils;
+using Logitude.Customs.BL.BL;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -343,11 +344,32 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         status = "V";
                     }
                 }
-                if (!string.IsNullOrWhiteSpace(status))
+
+                DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), connectedDeclarationPM.Tenant);
+                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+                DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(connectedDeclarationPM.Id, true, false);
+
+                string CourierDeclarationstatus = null;
+                if (currentDeclarationCourierStatusPM != null)
                 {
-                    DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), connectedDeclarationPM.Tenant);
-                    DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
-                    DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(connectedDeclarationPM.Id, true, false);
+                    CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(connectedDeclarationPM, connectedDeclarationPM.Id, connectedDeclarationPM.Tenant);
+                    string prevVal = null;
+                    string currvVal = null;
+
+                    prevVal = currentDeclarationCourierStatusPM.CourierDeclarationStatusCode;
+                    calculateDeclarationCourierStatus.CalcCourierDeclarationStatusCode(currentDeclarationCourierStatusPM);
+                    currvVal = currentDeclarationCourierStatusPM.CourierDeclarationStatusCode;
+
+                    if (prevVal != currvVal)
+                    {
+                        CourierDeclarationstatus = currvVal;
+                    }
+                    LogMessagingUtil.Instance.AppendLine("currentDeclarationCourierStatusPM.CourierDeclarationStatusCode: " + currentDeclarationCourierStatusPM.CourierDeclarationStatusCode);
+                }
+
+                if (!string.IsNullOrWhiteSpace(status) || !string.IsNullOrWhiteSpace(CourierDeclarationstatus))
+                {
+
                     if (currentDeclarationCourierStatusPM == null)
                     {
                         currentDeclarationCourierStatusPM = new DeclarationCourierStatusPM()
@@ -365,6 +387,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                     LogMessagingUtil.Instance.AppendLine($"D_NG_2716_MSG22001_AddAttachmentResponseService UpdateDeclarationCourierStatus currentDeclarationCourierStatusPM.DocumentStatusCode = {status}");
                     currentDeclarationCourierStatusPM.DocumentStatusCode = status;
+                    currentDeclarationCourierStatusPM.CourierDeclarationStatusCode = CourierDeclarationstatus;
                     declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
                 }
             }

@@ -682,6 +682,20 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
         if (!this.IsDisplayOnly && this.DeclarationPM.SignerPersonalId) { //if payed -> its display only
             this.paymentPM.SignatoryIdentification = this.DeclarationPM.SignerPersonalId;
         }
+        //Only for Courier - Task 54622
+        if (AppTool.IsNullOrEmpty(this.paymentPM.SignatoryIdentification) && this.DeclarationPM.IsCourierDeclaration) {
+            //if (this.DeclarationPM.Consignments != null && this.DeclarationPM.Consignments.length > 0) {
+                //this.paymentPM.SignatoryIdentification = this.DeclarationPM.Consignments[0].SecondCargoID;
+                this.customsSettingListService.getAll().subscribe((response: ServiceResponse) => {
+                    var list = response.Result;
+                    console.log("[response/customsSettingListService.getAll]", list);
+                    if (!AppTool.IsNullOrEmpty(list)) {
+                        var customsSetting = list[0];
+                        this.paymentPM.SignatoryIdentification = customsSetting.CustomsAgentId;
+                        this.SignatoryIdentification = customsSetting.CustomsAgentId;
+                    }
+                });
+        }
     }
 
     AutoFillPaymentScreenByDefault() {

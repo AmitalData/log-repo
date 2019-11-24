@@ -322,7 +322,7 @@
                                                                     <tr>
                                                                         <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems == null || (_CourierWorksheetSharedDataService._SelectedItems != null
                                                                             && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0)"
-                                                                            style="width:500px">
+                                                                            style="width:170px">
 
                                                                             <split-button (DefaultSplitButtonClicked)="SendALLCorrectManifest('R')"
                                                                                           [ButtonText]=_ReadyMNFToBatchSendButtonText
@@ -342,7 +342,7 @@
                                                                             </split-button>
                                                                         </td>
                                                                         <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems != null && _CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0"
-                                                                            style="width:500px">
+                                                                            style="width:170px">
                                                                             <split-button (DefaultSplitButtonClicked)="SendALLCorrectManifest('M')"
                                                                                           [ButtonText]=SelectedMNFToBatchSendButtonText
                                                                                           [IsDisabled]="IsDisplayOnly"
@@ -365,7 +365,7 @@
 
                                                                         <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems == null || (_CourierWorksheetSharedDataService._SelectedItems != null
                                                                             && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0)"
-                                                                            style="width:500px">
+                                                                            style="width:170px">
                                                                             <split-button (DefaultSplitButtonClicked)="SendALLCorrectDec('R')"
                                                                                           [ButtonText]=_ReadyDECToBatchSendButtonText
                                                                                           [IsDisabled]="IsDisplayOnly"
@@ -384,7 +384,7 @@
                                                                             </split-button>
                                                                         </td>
                                                                         <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems != null && _CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0"
-                                                                            style="width:500px">
+                                                                            style="width:170px">
                                                                             <split-button (DefaultSplitButtonClicked)="SendALLCorrectDec('M')"
                                                                                           [ButtonText]=SelectedDECToBatchSendButtonText
                                                                                           [IsDisabled]="IsDisplayOnly"
@@ -403,7 +403,7 @@
                                                                             </split-button>
                                                                         </td>
                                                                         <td style="width:1px"></td>
-                                                                        <td style="width:200px">
+                                                                        <td style="width:220px">
                                                                             <!--<button class="Button" [disabled]="!(IsILOVLEnabled || IsMamanEnabled)" (click)="SendALLTerminal()">שדר מסר ש.מ.ב למסוף</button>-->
                                                                             <split-button (DefaultSplitButtonClicked)="SendALLTerminal('M')"
                                                                                           [IsDisabled]="(!(IsILOVLEnabled || IsMamanEnabled)) || IsDisplayOnly"
@@ -559,7 +559,24 @@
                                                                         <td *ngIf="_SelectedItems == null || (_SelectedItems != null && _SelectedItems.Collection.length == 0)" style="width:100px; text-align:right" dir="ltr"><button class="Button" (click)="SendReadyLOWPAYToBatch()" [disabled]="IsDisplayOnly"> {{ ' (' +this._PAYReadyNotFastindividual + ') ' + 'תשלום תהליך מהיר'}}</button></td>
                                                                         <td *ngIf="_SelectedItems != null && _SelectedItems.Collection.length > 0" style="width:100px; "><button class="Button" (click)="SendReadyLOWPAYToBatch()" [disabled]="IsDisplayOnly"> {{ 'תשלום תהליך מהיר מסומנים'}}</button></td>
                                                                         <td style="width:5px"></td>
+                                                                        <td style="width:100px"></td>
                                                                         <td></td>
+                                                                        <td style="width: 500px;">
+                                                                            <ul class="FiltersMenu" style="float:left; padding-left: 5px;">
+                                                                                <li (click)="PAYFilterClicked('I')" style="width:150px; height: 25px;" [class.SelectedFilter]="_SelectedPAYValue === 'I'">
+                                                                                    {{'Customs.CourierMaster.O.InProgress' | TextCodeTranslationPipe }}
+                                                                                    <span> {{' (' +this._PAY_I_Total + ')' }} </span>
+                                                                                </li>
+                                                                                <li (click)="PAYFilterClicked('R')" style="width:150px; height: 25px;" [class.SelectedFilter]="_SelectedPAYValue === 'R'">
+                                                                                    {{'Customs.CourierMaster.O.ReadyToSend' | TextCodeTranslationPipe }}
+                                                                                    <span> {{' (' +this._PAY_R_Total + ')' }} </span>
+                                                                                </li>
+                                                                                <li (click)="PAYFilterClicked('C')" style="width:150px; height: 25px;" [class.SelectedFilter]="_SelectedPAYValue === 'C'">
+                                                                                    {{'Customs.CourierMaster.O.Correct' | TextCodeTranslationPipe }}
+                                                                                    <span> {{' (' +this._PAY_C_Total + ')' }} </span>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </td>
                                                                     </tr>
                                                                 </table>
                                                                 <!--ACC-->
