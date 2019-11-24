@@ -762,6 +762,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
                     }
                     currentDeclarationCourierStatusPM.DocumentStatusCode = status;
+                    currentDeclarationCourierStatusPM.CourierDeclarationStatusCode = "M";
                     declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
                 }
             }
