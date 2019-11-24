@@ -512,13 +512,17 @@ namespace Logitude.Accounting.BL.EntityQueryServices
        }
 
 
-        public List<GLAccountPM> GetByInternalNumber(string internalNumber, int tenant)
+        public GLAccountPM GetByInternalNumber(string internalNumber, int tenant)
         {
-          
 
-
-            List<GLAccount> pocos = this.repository.GetByInternalNumber(internalNumber, tenant);
-            return pocos.Select(rec => this.GetEntityPM(rec)).ToList();
+            var Ids = this.repository.GetIdsByInternalNumber(internalNumber, tenant);
+            if (Ids.Count==0)
+            {
+                return null;
+            }
+            return this.GetSingle(Ids.FirstOrDefault(), false,true);
+            //List<GLAccount> pocos = this.repository.GetByInternalNumber(internalNumber, tenant);
+            //return pocos.Select(rec => this.GetEntityPM(rec)).ToList();
         }
 
         public List<GLAccountPM> GetByDisplayNumber(string displayNumber, int tenant)
