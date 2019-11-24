@@ -1,4 +1,3 @@
-import { CashBookExtendedPMService } from './../../../Services/ExtendedPMs/CashBookExtendedPMService';
 import { Output,OnInit } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import {Component}  from '@angular/core';
@@ -6,6 +5,8 @@ import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeCompo
 import {CashBookPM} from '../../../EntityPMs/CashBookPM';
 import {GLAccountList} from '../../../EntityLists/GLAccountList';
 import {CashBookLinePM} from '../../../EntityPMs/CashBookLinePM';
+import {LedgerTransactionList} from '../../../EntityLists/LedgerTransactionList';
+import {LedgerTransactionListService} from '../../../Services/StandardLists/LedgerTransactionListService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {ApiQueryFilters, FilterItem} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -16,7 +17,6 @@ import {GLAccountListService} from '../../../Services/StandardLists/GLAccountLis
 import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { CashbookChequesCounter } from '../../../DataContracts/CashbookChequesCounter';
 
 @Component({
     moduleId: module.id,
@@ -36,8 +36,6 @@ export class CashBookDetailsTabComponent extends BaseComponent implements OnInit
     public isRTL: boolean = false;
     private _entityListService: EntityListService = new EntityListService();
     _GLAccountListService: GLAccountListService = new GLAccountListService();
-    _CashBookExtendedPMService: CashBookExtendedPMService = new CashBookExtendedPMService();
-
     @Output() onQueryChangeEvent = new EventEmitter();
     @Output() MenuHeaderchangeevent = new EventEmitter();
 
@@ -49,7 +47,13 @@ export class CashBookDetailsTabComponent extends BaseComponent implements OnInit
         this.Listen();
         this.EntityPM = entityArgs.EntityPM;
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+        //this.ItemSource = this.EntityPM.CashBookLines;
+        this.LoadScreen();
 
+
+        //if (this.TotalSum > 0) {
+        //    this.UIProperties.SetEnabled("AccountId", this.ObjectTableName, false);
+        //}
 
         this.SetUIProperties();
     }
@@ -65,8 +69,6 @@ export class CashBookDetailsTabComponent extends BaseComponent implements OnInit
 
      ReloadData() {
          this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
-
-         this.LoadScreen();
      }
 
      BuildColumns() {
@@ -216,9 +218,9 @@ export class CashBookDetailsTabComponent extends BaseComponent implements OnInit
 
 
     LoadScreen() {
-        this.GetChequesCounter();
-
+        // this.RemoveDepositedLines();
         this.CalculateTotals();
+        this.ComputeFilterTotals();
 
         // toggle GLAccount editability
         if (this.EntityPM.AccountId)
@@ -242,10 +244,6 @@ export class CashBookDetailsTabComponent extends BaseComponent implements OnInit
 
 
     SetUIProperties() {
-        //if (this.TotalSum > 0) {
-        //    this.UIProperties.SetEnabled("AccountId", this.ObjectTableName, false);
-        //}
-
         this.UIProperties.SetEnabled("BranchId", this.ObjectTableName, false); // always dim, WI 41740
 
         if (this.EntityPM.Inactive) {
@@ -268,7 +266,7 @@ export class CashBookDetailsTabComponent extends BaseComponent implements OnInit
                 this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                        this.ReloadData();
+                        this.LoadScreen();
                         this.SetUIProperties();
                     }
                 });
@@ -279,7 +277,7 @@ export class CashBookDetailsTabComponent extends BaseComponent implements OnInit
                     if (isLoadSuccess) {
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         console.log("Entity Reloaded");
-                        this.ReloadData();
+                        this.LoadScreen();
                         this.SetUIProperties();
                     }
                 });
@@ -485,28 +483,43 @@ export class CashBookDetailsTabComponent extends BaseComponent implements OnInit
         // this.ChequesList.InsertCollection(filteredQuery, true);
 
         this.CalculateTotals();
+        this.ComputeFilterTotals();
 
     }
 
     //#endregion
+    CashCount: number = 0;
+    PostdatesCount: number = 0;
+    ComputeFilterTotals() {
 
+        // this.CashCount = 0;
+        // this.PostdatesCount = 0;
 
-    public ChequesCounter: CashbookChequesCounter = new CashbookChequesCounter();
-    GetChequesCounter(){
-        this.ChequesCounter = new CashbookChequesCounter();
-        this._CashBookExtendedPMService.GetCashbookChequesCounter(this.EntityPM.Id)
-            .subscribe((response: ServiceResponse) =>
-            {
-                console.log("[GetCashbookChequesCounter]", response);
+        // var todayDate = new Date();
+        // this.CashCount = this.FilteredLines.filter((el) => {
 
-                if (!response.HasError) {
-                    this.ChequesCounter = response.Result;
-                }
-                else {
-                    console.error(response.ErrorsArray);
-                }
-            });
+        //     if (el.DueDate != null) {
+        //         var date = new Date(el.DueDate.toString());
+        //         if (date <= todayDate) {
+        //             return true;
+        //         }
+        //         return false;
 
+        //     }
+        //     return false;
+        // }).length;
+        // this.PostdatesCount = this.FilteredLines.filter((el) => {
+
+        //     if (el.DueDate != null) {
+        //         var date = new Date(el.DueDate.toString());
+        //         if (date > todayDate) {
+        //             return true;
+        //         }
+        //         return false;
+
+        //     }
+        //     return false;
+        // }).length;
     }
 
 }

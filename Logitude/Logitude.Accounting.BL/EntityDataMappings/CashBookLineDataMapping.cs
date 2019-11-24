@@ -30,11 +30,15 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 entityPOCO.ARPChequeId = entityPM.ARPChequeId;
                 entityPOCO.Tenant = entityPM.Tenant;
             }
+
+            entityPOCO.SearchFields = entityPM.ChequeNumber + "," +  entityPM.Bank;
         }
 
         public void CustomPOCOToPM(CashBookLinePM entityPM, CashBookLine entityPOCO)
         {
             this.CustomMappedPMProperties.Add(PMPropertyNames.ChequeNumber);
+
+            entityPM.SearchFields = entityPOCO.SearchFields;
 
             // GET logged contact, RTL
             ContactPM contact = GetLoggedContact(entityPOCO.Tenant);
