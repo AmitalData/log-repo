@@ -29,7 +29,7 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public string SearchFields  { get; set; }
        [DataMember]
-       public int Code  { get; set; }
+       public string Code  { get; set; }
        [DataMember]
        public string LocalName  { get; set; }
        [DataMember]
