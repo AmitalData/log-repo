@@ -59,9 +59,9 @@ export class InterestBasesTypePM {
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
        
 	 
-    private code: number;
+    private code: string;
     public get Code() { return this.code; }
-    public set Code(newValue: number) { if (this.code != newValue) { this.code = newValue; this.MarkAsDirty("Code"); } }
+    public set Code(newValue: string) { if (this.code != newValue) { this.code = newValue; this.MarkAsDirty("Code"); } }
        
 	 
     private localName: string;

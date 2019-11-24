@@ -181,12 +181,12 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private int code ;
+	  private string code ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int Code  
+       public string Code  
 	   {
 	    
 	     get
@@ -197,7 +197,7 @@ namespace Logitude.Accounting.Def.EntityPMs
 		 {
 		   if(code != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Code",OldValue=code,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Code",OldValue=code,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   code=value;
 		   }
