@@ -4,15 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B4B8C0F5-3FA6-4674-83FC-633E1701CEBF}</ProjectGuid>
+    <ProjectGuid>{5172807F-7D70-4D28-85F7-D78AA5931345}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Logitude.DBMigrations</RootNamespace>
-    <AssemblyName>Logitude.DBMigrations</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <RootNamespace>LXMLFixer</RootNamespace>
+    <AssemblyName>LXMLFixer</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -45,26 +44,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers\AppHelper.cs" />
     <Compile Include="Models\ColumnDefinition.cs" />
-    <Compile Include="Models\ColumnMigration.cs" />
-    <Compile Include="Models\ColumnMigrationDefinition.cs" />
     <Compile Include="Models\ConstraintsDefinition.cs" />
-    <Compile Include="Models\SQLDatabaseMigrations.cs" />
-    <Compile Include="Models\DatabaseMigrations.cs" />
-    <Compile Include="Models\MigrationTypes.cs" />
+    <Compile Include="Models\LXMLFilesFixer.cs" />
+    <Compile Include="Models\RelationDefinition.cs" />
     <Compile Include="Models\TableDefinition.cs" />
-    <Compile Include="Models\TableMigrations.cs" />
+    <Compile Include="Models\XMLParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Helpers\XMLParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="EntityFiles\Test.dxml" />
+    <None Include="Reports\LXMLFilesMistakes.csv" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="GeneratedScript\Script.sql" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

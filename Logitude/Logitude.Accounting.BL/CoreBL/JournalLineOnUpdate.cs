@@ -303,15 +303,23 @@ namespace Logitude.Accounting.BL.CoreBL
         public virtual GLAccountPM GetSingleGLAccount(string accountId)
         {
             var glQS = new GLAccountQueryService(this._MainContext);
+            glQS.SetSuppressFetchOpenReconcilation(true);
+            
             var pm = glQS.GetSingle(accountId, false, true);
             return pm;
         }
         public virtual GLAccountPM GetByInternalNumberGLAccount(int tenant, string accountNumber)
         {
 
-            var glQS = new GLAccountQueryService(this._MainContext);
-            var pm = glQS.GetByInternalNumber(accountNumber, tenant)/*.SingleOrDefault()*/;
-            return pm;
+            string key = $"GetByInternalNumberGLAccount({tenant},{accountNumber})";
+            return CacheManager.GetOrInsertNewObject<GLAccountPM>(key, () =>
+            {
+                var glQS = new GLAccountQueryService(this._MainContext);
+                glQS.SetSuppressFetchOpenReconcilation(true);
+                var pm = glQS.GetByInternalNumber(accountNumber, tenant)/*.SingleOrDefault()*/;
+                return pm;
+            });
+            
         }
 
 
