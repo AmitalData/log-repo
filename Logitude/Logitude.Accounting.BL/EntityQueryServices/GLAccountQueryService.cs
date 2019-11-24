@@ -330,6 +330,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return dic;
         }
 
+        internal void SetSuppressFetchOpenReconcilation(bool suppressFetchOpenReconcilation)
+        {
+            (this.mapping as GLAccountDataMapping).SuppressFetchOpenReconcilation = suppressFetchOpenReconcilation;
+        }
+
         //public bool CheckIfClientAndCurrencyExist(string clientId, string currencyId, string internalNumber, int tenant)
         //{
         //    if (String.IsNullOrEmpty(clientId))
@@ -636,6 +641,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         }
 
         public static TaxDeductionReportData taxDeduction;
+
+        
+
         public TaxDeductionReportData GetTaxDeductionReportData(int? reportYear, int tenant)
         {
             
