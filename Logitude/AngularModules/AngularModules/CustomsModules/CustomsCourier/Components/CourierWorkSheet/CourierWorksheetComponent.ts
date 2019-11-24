@@ -75,6 +75,7 @@ export class CourierWorksheetComponent extends BaseComponent
 
     public ComponentRef: ComponentRef<CourierWorksheetComponent>;
     _ValidationErrors: string[] = [];
+    _ValidationErrors2: string[] = [];
     _TabFilterList: TabFilter[] = [];
     _SelectedTabFilter: TabFilter;
     set SelectedTabFilter(val: TabFilter) { this._SelectedTabFilter = val; }
@@ -338,7 +339,7 @@ export class CourierWorksheetComponent extends BaseComponent
                         currRequestParams.HAWB = this.entityPM.HAWB;
                         currRequestParams.InternalBankId = InternalBankId;
                         currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
-                        this._CourierMasterService.PostSendPayReadyLow2755(currRequestParams)
+                         this._CourierMasterService.PostSendPayReadyLow2755(currRequestParams)
                             .subscribe(res => {
                                 SessionLocator.SelectedSession.StopBusyIndicator();
                                 var myMessageWindow = new MessageWindow();
@@ -1020,7 +1021,7 @@ export class CourierWorksheetComponent extends BaseComponent
         this.BuildFiltersForQuery(filters);
 
         var myout = this._EntityListService.getExtendedByFilters("Customs.DeclarationCourierStatus", filters);
-
+        
         return myout;
     }
 
@@ -1879,6 +1880,71 @@ export class CourierWorksheetComponent extends BaseComponent
                     this.RefreshButtonClicked();
                 });
             });
+    }
+
+    CancelFlight() {
+      //let  declarations: Array< DeclarationCourierStatusList>;
+      //  var myDeclarationCourierStatusListService = new DeclarationCourierStatusListService();
+      //  var myDeclarationCourierStatusListService = new DeclarationCourierStatusListService();
+      //  myDeclarationCourierStatusListService.getAll()
+      //      .subscribe(serviceResponse => {
+      //          declarations = serviceResponse.Result;
+      //          if (declarations.filter(x => x.CourierPaymentStatusCode != "").length > 0) {
+      //            this.  _ValidationErrors.push("error 1")
+      //          }
+      //          if (declarations.filter(x => x. != "").length > 0) {
+      //              this._ValidationErrors.push("error 1")
+      //          }
+
+      //      });
+
+        this._ValidationErrors2=[]
+        this._CourierMasterService.GetIfAllowToCancelCourierMaster(this.entityPM.Id).subscribe(
+            data => {
+                if (data.Result != "")
+                    this._ValidationErrors2.push(TextCodeTranslator.Translate("Customs.CourierMaster.O.CantCancelFlight"));
+                switch (data.Result) {
+                    case "INVALID_INPROGRESS":
+                        this._ValidationErrors2.push(TextCodeTranslator.Translate("Customs.CourierMaster.O.NotValidDecInProccess"))
+                        break;
+                    case "INVALID_PAYED":
+                        this._ValidationErrors2.push(TextCodeTranslator.Translate("Customs.CourierMaster.O.NotValidDecWithPayment"))
+                        break;
+                    case "":
+                        {
+                            var confirmWindow = new ConfirmWindow();
+                            debugger;
+                            confirmWindow.Show(TextCodeTranslator.Translate("Customs.CourierMaster.O.SureToCancel"));
+                            confirmWindow.WindowClosed.subscribe((event: any) => {
+                                if (confirmWindow.Yes) {
+                                    this.entityPM.IsCancelled = true;
+
+                                    SessionLocator.SelectedSession.StartBusyIndicatorSaving();
+                                     this._CourierMasterPMService
+                                        .update(this.entityPM)
+                                        .subscribe((response: ServiceResponse) => {
+                                            SessionLocator.SelectedSession.StopBusyIndicator();
+                                            if (response.HasError) {
+                                                var mess
+                                            } else {
+                                                this.entityPM = response.Result;
+                                            }
+                                        });
+
+                                     //this.entityArgs.EditComponent.SaveChanges();
+                                     // this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                                     //   if (isSaveSuccess) {
+                                     //       this.entityArgs.EditComponent.ReloadEntityPM();
+                                     //   }
+                                  //  });
+                                }
+                            });
+                            }
+                        }
+ 
+            });
+
+
     }
 
 }

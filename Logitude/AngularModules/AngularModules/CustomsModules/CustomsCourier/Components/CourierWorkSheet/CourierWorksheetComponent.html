@@ -175,8 +175,11 @@
                                                         <button style="text-align:right" (click)="GatepassRequestMethod()" [disabled]="IsDisplayOnly">{{'גייטפס העברות' }}</button>
                                                         <button *ngIf="IsMamanEnabled" style="text-align:right" (click)="SendFTPMamanRequestMethod()" [disabled]="IsDisplayOnly">{{'Customs.Declaration.O.DeclarationMamanRequest' | TextCodeTranslationPipe }}</button>
                                                         <button style="text-align:right" (click)="ChangeStorageSiteMethod()" [disabled]="IsDisplayOnly">{{'שינוי אתר אחסון' }}</button>
-                                                        
+
                                                         <button style="text-align:right" (click)="IsReadyForInvoiceClick()" [disabled]="IsDisplayOnly">{{'מוכן להכנת חשבונית' }}<img *ngIf="entityPM.IsReadyForInvoice" class="certOkImg" style="position:relative;width:10px;margin-top:10px;opacity: 0.8;" src="./Images/Buttons/EditWithGreenTick.png" /></button>
+                                                        <button style="text-align:right" *ngIf="entityPM.IsCancelled==false" (click)="CancelFlight()">{{'Customs.CourierMaster.O.CancelFlight' | TextCodeTranslationPipe }}</button>
+                                                        <button style="text-align:right" *ngIf="entityPM.IsCancelled==true" (click)="OpenFlight()">{{'Customs.CourierMaster.O.OpenFlight' | TextCodeTranslationPipe }}</button>
+
                                                     </div>
 
                                                 </div>
@@ -271,6 +274,31 @@
                             </tr>
 
                             <!-- Validation Errors -->
+                            <tr class="ValidationSummary" *ngIf="_ValidationErrors2 != null && _ValidationErrors2.length > 0" style="height:1px; border-right:2px solid black ;border-right-color:red">
+                                <td style="vertical-align: top; padding-top: 3px; padding-bottom: 3px; padding-right: 10px; color: #dd1a1a;">
+                                    <div>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <div>
+                                                        <table>
+                                                          
+                                                            <tr>
+                                                                <td>
+                                                                    <span style="font-size: 13px; font-weight:bold">{{_ValidationErrors2}}</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr style="height:10px;"><td></td></tr>
+                                                        </table>
+                                                    </div>
+                                                </td>
+                                             
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+
                             <tr class="ValidationSummary" *ngIf="_ValidationErrors != null && _ValidationErrors.length > 0" style="height:1px; border-right:2px solid black ;border-right-color:red">
                                 <td style="vertical-align: top; padding-top: 3px; padding-bottom: 3px; padding-right: 10px; color: #dd1a1a;">
                                     <div>
