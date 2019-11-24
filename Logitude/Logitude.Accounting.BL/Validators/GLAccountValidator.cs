@@ -18,12 +18,22 @@ using Microsoft.Practices.Unity;
 using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
 using System.Diagnostics;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.Accounting.BL.Validators
 {
     public partial class GLAccountValidator
     {
 
+        public static ValidationResult IsGLAccountValidCacheDueFromJournal(GLAccountPM myGLAccountPM)
+        {
+            string key = $"IsGLAccountValidFromCache({myGLAccountPM.Id})";
+            return CacheManager.GetOrInsertNewObject<ValidationResult>(key, () =>
+            {
+                return GLAccountValidator.IsGLAccountValid(myGLAccountPM);
+            });
+
+        }
         public static ValidationResult IsGLAccountValid(GLAccountPM myGLAccountPM,bool FromFullAccountingProvider=false)
         {
             // GET logged contact, RTL
@@ -361,7 +371,7 @@ namespace Logitude.Accounting.BL.Validators
         {
             IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
             GLAccountQueryService query = new GLAccountQueryService(accountingContext);
-            GLAccountPM acc = query.GetByInternalNumber(internalNumber, tenant).FirstOrDefault<GLAccountPM>();
+            GLAccountPM acc = query.GetByInternalNumber(internalNumber, tenant)/*.FirstOrDefault<GLAccountPM>()*/;
             if (acc != null)
             {
                 return acc.Id;
