@@ -169,5 +169,8 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         //    }
         //}
         #endregion
+
+        public string BillToCity { get; set; }
+        public string BillToCountry { get; set; }
     }
 }

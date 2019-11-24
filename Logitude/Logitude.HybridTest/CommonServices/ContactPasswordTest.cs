@@ -11,9 +11,9 @@ namespace Logitude.HybridTest.CommonServices
         public void Test_ContactPassword_ChangeContactPassword()
         {
             LoginService.GetLoginTokenByCredentials();
-            Response contactServiceResponse = UserTest.CallUserUpsert();
-            Assert.IsFalse(contactServiceResponse.HasError, "Upsert User Failed! " + contactServiceResponse.ErrorMessage);
-            Assert.IsNotNull(contactServiceResponse.Result, "Upsert User Failed! " + contactServiceResponse.ErrorMessage);
+            //Response contactServiceResponse = UserTest.CallUserUpsert();
+            //Assert.IsFalse(contactServiceResponse.HasError, "Upsert User Failed! " + contactServiceResponse.ErrorMessage);
+            //Assert.IsNotNull(contactServiceResponse.Result, "Upsert User Failed! " + contactServiceResponse.ErrorMessage);
             Response serviceResponse = CallChangeContactPassword();
             Assert.IsFalse(serviceResponse.HasError, "Change Contact Password Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Change Contact Password Failed! " + serviceResponse.ErrorMessage);
