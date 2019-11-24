@@ -245,6 +245,10 @@ export class QuoteSettingsComponent extends BaseComponent {
             myResult = true;
         }
 
+        else if (this.AutomaticallyCloseDays != null) {
+            myResult = true;
+        }
+
         return myResult;
     }
 }
