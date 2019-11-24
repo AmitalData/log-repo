@@ -268,7 +268,8 @@ export class QuoteValidator {
 
             for (var i = 1; i <= 5; i++) {
                 if (!AppTool.IsNullOrEmpty(entityPM["PackageType" + i + "Quantity"]) && AppTool.IsNullOrEmpty(entityPM["PackageType" + i + "Id"])) {
-                    errors.push("Package Quantity line " + i + " is not allowed without package type");
+                    errors.push("Package type is required when Quantity is filled");
+                    break;
                 }
             }
 
