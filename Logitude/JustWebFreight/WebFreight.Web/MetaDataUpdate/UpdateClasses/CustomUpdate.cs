@@ -14784,6 +14784,13 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.InCorrect", DefaultText = "Incorrect", LocalDefaultText = "שגויים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.ReadyToSend", DefaultText = "Ready To Send", LocalDefaultText = "מוכנים לשליחה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.InProgress", DefaultText = "In Progress", LocalDefaultText = "בתהליך שליחה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.OpenFlight", DefaultText = "Open Flight", LocalDefaultText = "פתיחת ביטול טיסה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.CancelFlight", DefaultText = "Cancel Flight", LocalDefaultText = "ביטול טיסה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.NotValidDecInProccess", DefaultText = "There are declarations in progress.", LocalDefaultText = "יש הצהרות בתהליך", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.NotValidDecWithPayment", DefaultText = "There are paid declarations.", LocalDefaultText = "יש הצהרות ששולמו.", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.CantCancelFlight", DefaultText = "The flight cannot be canceled.", LocalDefaultText = "אין אפשרות לבטל את הטיסה - ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.SureToCancel", DefaultText = "Are you sure you want to cancel?", LocalDefaultText = "נא אשר ביטול טיסה.", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.SureToOpenCancel", DefaultText = "Please confirm opening flight cancellation.", LocalDefaultText = "נא אשר פתיחת ביטול טיסה.", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.CourierMasterQueries", DefaultText = "Courier Master Queries", LocalDefaultText = "שאילתות לשטרי מטען בלדר", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CourierMaster.O.FlightOpenDeclarations", DefaultText = "Flight Open Declarations", LocalDefaultText = "הצהרות פתוחות לפי טיסה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
@@ -16456,7 +16463,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 EnglishName = "Constraint Declined by Customs",
                 Tenant = 0,
                 AddedManually = false,
-                LocalName = "אילוץ נדחה עי המכס",
+                LocalName = "ממתין לבדיקת יסמ ובקרת מסמכים",
                 ObjectTableId = declarationObject.Id,
                 ShortView = false,
                 EventTypeCategoryCode = "LOG",
@@ -16602,6 +16609,71 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 Tenant = 0,
                 AddedManually = false,
                 LocalName = "הצהרה נותבה לבקרת מסמכים",
+                ObjectTableId = declarationObject.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "LOG",
+
+            }, EventTypesRepository, tenantEventTypes);
+
+            AddEventTypes.AddEventType(new EventTypeDetails() 
+            {
+                Code = "VCS",
+                EnglishName = "Custom Documents Check",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "ממתין לבדיקת יסמ",
+                ObjectTableId = declarationObject.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "LOG",
+
+            }, EventTypesRepository, tenantEventTypes);
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "VCE",
+                EnglishName = "Custom Documents Check",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "ממתין ליחידת בטחון",
+                ObjectTableId = declarationObject.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "LOG",
+
+            }, EventTypesRepository, tenantEventTypes);
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "VCA",
+                EnglishName = "Custom Documents Check",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "ממתין ליחידת בטחון ובקרת מסמכים",
+                ObjectTableId = declarationObject.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "LOG",
+
+            }, EventTypesRepository, tenantEventTypes);
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "VCG",
+                EnglishName = "Custom Documents Check",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "ממתין ליחידת הבטחון וליסמ",
+                ObjectTableId = declarationObject.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "LOG",
+
+            }, EventTypesRepository, tenantEventTypes);
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "VCT",
+                EnglishName = "Custom Documents Check",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "ממתין ליחידת הבטחון,ליסמ ולבקרת מסמכים",
                 ObjectTableId = declarationObject.Id,
                 ShortView = false,
                 EventTypeCategoryCode = "LOG",

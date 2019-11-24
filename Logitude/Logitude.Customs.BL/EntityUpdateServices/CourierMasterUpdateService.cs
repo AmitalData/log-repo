@@ -31,6 +31,7 @@ using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using System.Data.Common;
 using Simplog.Data.InfrastructureModel;
+using Logitude.Customs.BL.EntityDataMappings;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -57,12 +58,16 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 BuildGGGQ_FLIGHT_CREDIT_LETTER(entityPM);
             }
+
+
             Contact loggedContact = GetLoggedContact(entityPM.Tenant);
             ICustomContext context = MainContext as CustomContext;
             entityPM.UpdateDateTime = DateTime.Now;
             entityPM.UpdatedByUserId = loggedContact.Id;
             CourierDeclarationQueryService courierDeclarationQuery = new CourierDeclarationQueryService(entityPM.Tenant);
             CourierDeclarationUpdateService courierDeclarationUpdateService = new CourierDeclarationUpdateService(context, new Dictionary<string, IContext>(), entityPOCO.Tenant);
+            DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), entityPOCO.Tenant);
+
             if (entityPM.ConnectedDeclarations != null && entityPM.ConnectedDeclarations.Length > 0 )
             {
 
@@ -120,10 +125,47 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
 //            }
 
+                string declarations="";
+                 var declarationRepository = new DeclarationRepository(context);
+
+                var decs=   declarationRepository.GetCourierConnectedDeclaratins(entityPM.Id, entityPM.Tenant);
+
+                if (decs.Count()>0 )
+                {
+                     declarations=  string.Join("','", decs.Select(x=>x.Id));
+                    declarations = "'" + declarations  +"'"  ;
+                 }
+
+
+            if (entityPM.IsCancelled==true)
+            {
+   
+                    entityPM.IsOpen = false;
+                    this.toSendTask = true;
+                if (!string.IsNullOrWhiteSpace(declarations))
+                {
+                    CancelledDeclarations(declarations, entityPM.Tenant);
+               }
+ 
+            }
+
+            else
+            {
+ 
+                entityPM.IsOpen = true;
+                this.toSendTask = true;
+                if (!string.IsNullOrWhiteSpace(declarations))
+                {
+                    OpenDeclarations(declarations, entityPM.Tenant);
+                }
+
+            }
+
             entityPM.ConnectedDeclarations = null;
             entityPM.NotConnectedDeclarations = null;
 
-            if(entityPM.EstimatedArrivalDateOnly != null && entityPM.EstimatedArrivalDateOnly.HasValue)
+
+            if (entityPM.EstimatedArrivalDateOnly != null && entityPM.EstimatedArrivalDateOnly.HasValue)
             {
                 DateTime date = (DateTime)entityPM.EstimatedArrivalDateOnly;
                 if(entityPM.EstimatedArrivalTimeOnly != null && entityPM.EstimatedArrivalTimeOnly.HasValue)
@@ -320,6 +362,85 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             Contact contact = contactRep.GetSingleContactByEmail(email, tenant);
             return contact;
         }
+
+
+
+        private void OpenDeclarations(string declarations, int Tenant)
+        {
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            string strConnString = GetConnection(Tenant);
+            if (dbms == "oracle")
+            {
+                using (OracleConnection con = new OracleConnection(strConnString))
+                {
+                    string cmd = "Update DECLARATIONS set " +
+                        "ISCLOSE= 0  , ISCANCELLED =0 ";
+                    cmd = cmd + " where ID IN " + "(" + declarations + ")";
+
+                    OracleCommand sqlCommand = new OracleCommand(cmd, con);
+
+                    con.Open();
+                    sqlCommand.ExecuteNonQuery();
+                    con.Close();
+                }
+
+            }
+            else
+            {
+                using (SqlConnection cn = new SqlConnection(strConnString))
+                {
+                    string cmd = "Update DECLARATIONS set " +
+                        "ISCLOSE= 0  , ISCANCELLED =0 ";
+                    cmd = cmd + " where ID IN " + "(" + declarations + ")";
+
+                    SqlCommand sqlCommand = new SqlCommand(cmd, cn);
+
+                    cn.Open();
+                    sqlCommand.ExecuteNonQuery();
+                    cn.Close();
+                }
+            }
+        }
+
+
+
+        private void CancelledDeclarations(string declarations, int Tenant)
+        {
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            string strConnString = GetConnection(Tenant);
+            if (dbms == "oracle")
+            {
+                using (OracleConnection con = new OracleConnection(strConnString))
+                {
+                    string cmd = "Update DECLARATIONS set " +
+                        "ISCLOSE= 1  , ISCANCELLED =1 ";
+                    cmd = cmd + " where ID IN " + "(" + declarations + ")";
+
+                    OracleCommand sqlCommand = new OracleCommand(cmd, con);
+
+                    con.Open();
+                    sqlCommand.ExecuteNonQuery();
+                    con.Close();
+                }
+
+            }
+            else
+            {
+                using (SqlConnection cn = new SqlConnection(strConnString))
+                {
+                    string cmd = "Update DECLARATIONS set " +
+                        "ISCLOSE= 1  , ISCANCELLED =1 ";
+                    cmd = cmd + " where ID IN " + "(" + declarations + ")";
+
+                    SqlCommand sqlCommand = new SqlCommand(cmd, cn);
+
+                    cn.Open();
+                    sqlCommand.ExecuteNonQuery();
+                    cn.Close();
+                }
+            }
+        }
+
 
         private void SetDeclarationChanged(string declarations , string courierManifestStatusCode, int Tenant)
         {

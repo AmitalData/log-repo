@@ -216,6 +216,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     case "3":
                                         declarationPM.CourierCustomStatusCode = "1";
                                         courierStatusUpdated = true;
+
+                                        LogMessagingUtil.Instance.AppendLine("Pre Clearance");
+                                        var myEventContextTagModelPRS = new EventContextTagModel()
+                                        {
+                                            CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_8251_Web02_DeclarationStatusResponseServicePreClearance,
+                                        };                                       
+                                        myEventContextTagModelPRS.EventCode = "PRS";
+                                        declarationPM.CurrentContextTag = myEventContextTagModelPRS;
                                         break;
                                     case "25":
                                     case "30":
@@ -227,6 +235,43 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                         declarationPM.CourierCustomStatusCode = "2";
                                         courierStatusUpdated = true;
                                         declarationPM.CourierSuspentionCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;//Eitan H 4/3/2019 Task 49319
+
+                                        var myEventContextTagModel = new EventContextTagModel()
+                                        {
+                                            CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_8251_Web02_DeclarationStatusResponseServicePreClearance,
+                                        };
+                                        switch (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode)
+                                        {
+                                            case "25":
+                                                LogMessagingUtil.Instance.AppendLine("Event VCI");
+                                                myEventContextTagModel.EventCode = "VCI";
+                                                break;
+                                            case "30":
+                                                LogMessagingUtil.Instance.AppendLine("Event VCS");
+                                                myEventContextTagModel.EventCode = "VCS";
+                                                break;
+                                            case "31":
+                                                LogMessagingUtil.Instance.AppendLine("Event VCD");
+                                                myEventContextTagModel.EventCode = "VCD";
+                                                break;
+                                            case "32":
+                                                LogMessagingUtil.Instance.AppendLine("Event VCE");
+                                                myEventContextTagModel.EventCode = "VCE";
+                                                break;
+                                            case "33":
+                                                LogMessagingUtil.Instance.AppendLine("Event VCA");
+                                                myEventContextTagModel.EventCode = "VCA";
+                                                break;
+                                            case "34":
+                                                LogMessagingUtil.Instance.AppendLine("Event VCG");
+                                                myEventContextTagModel.EventCode = "VCG";
+                                                break;
+                                            case "35":
+                                                LogMessagingUtil.Instance.AppendLine("Event VCT");
+                                                myEventContextTagModel.EventCode = "VCT";
+                                                break;
+                                        }
+                                        declarationPM.CurrentContextTag = myEventContextTagModel;
                                         break;
                                     case "13":
                                         if (declarationPM.PaymentDate.HasValue)

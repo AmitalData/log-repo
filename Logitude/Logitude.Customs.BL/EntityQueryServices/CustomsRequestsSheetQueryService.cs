@@ -18,9 +18,33 @@ namespace Logitude.Customs.BL.EntityQueryServices
     public partial class CustomsRequestsSheetQueryService:EntityQueryService<CustomsRequestsSheet, CustomsRequestsSheetKeys, CustomsRequestsSheetPM, object, CustomsRequestsSheetKeys>
   
     {
-        
-        
-        
+
+
+        public IQueryable<CustomsRequestsSheet> GetQSheetStatusInProcess(int tenant)
+        {
+            var listSheetStatusInProcess = new List<string>();
+            foreach (var item in Enum.GetValues(typeof(SheetStatusInProcessEnum)))
+            {
+                listSheetStatusInProcess.Add(((int)item).ToString());
+            }
+
+
+            var q = this.repository.GetAll(tenant)
+                .Where(rec => rec.Tenant == tenant)
+                .Where(rec => listSheetStatusInProcess.Contains(rec.RequestStatusCode)
+                    //rec.RequestStatusCode == "1" /*EnglishName	LocalName Created	בקשה נרשמה */
+                    //||
+                    //rec.RequestStatusCode == "2" /*EnglishName	LocalName In Process	באמצע טיפול*/
+                    ////||
+                    ////rec.RequestStatusCode == "5" /* Waiting For Signing	ממתין לחתימה */ //Yuval Chalup 06.08.2015 TASK-15156 (Remarked)
+                    //||
+                    //rec.RequestStatusCode == "20" /* Sent	נשלח */ //Yuval Chalup 06.08.2015 TASK-15156
+                    //||
+                    //rec.RequestStatusCode == "21" /* Received	התקבלה תשובה */ //Yuval Chalup 06.08.2015 TASK-15156
+                    );
+            return q;
+        }
+
         public List<CustomsRequestsSheetList> GetCustomsRequestsSheetByCustomFileNumber(string customFileNumber, int tenant)
         {
             List<CustomsRequestsSheet> requests = repository.GetCustomsRequestsSheetByCustomFileNumber(customFileNumber, tenant);
