@@ -845,7 +845,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   FeatureRepository featureRepository = new FeatureRepository(0); 
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable InterestBasesTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InterestBasesType" && d.Tenant == 0).FirstOrDefault(); 			   Feature InterestBasesTypeFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestBasesTypeInactive", ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestBasesType.Features.Inactive", NameTextCodeDefaultText = "Inactive", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-              
+                   
+    
+			   Feature InterestBasesTypeFeature_MB1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestBasesTypeInactives", ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestBasesType.Features.Inactives", NameTextCodeDefaultText = "Inactives", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+
+ 
 
 		   TextCodeRepository.SubmitChanges();
 		   FeaturesRepository.SubmitChanges();
@@ -889,7 +893,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						Style = null,
 						LocalDefaultText = "חסימה",
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
-	   
+	          
+   
+			   MenuButton InterestBasesTypeMenuButton1 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "InterestBasesTypeInactives",
+						Index = 0, 
+						IsActive = true,
+						LabelTextCodeCode = "InterestBasesType.B.Inactives",
+						LabelTextCodeDefaultText = "Inactives",
+						Tenant = 0,
+						MenuButtonGroupId = InterestBasesTypeMenuButtonGroup.Id,
+						ObjectTableId = InterestBasesTypeObjectTable.Id,
+						MenuButtonType = "button",
+						FeatureId = InterestBasesTypeFeature_MB1.Id,
+						Style = null,
+						LocalDefaultText = "חסימה",
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)

@@ -36,6 +36,7 @@
     <MenuButton EventCode="&quot;More&quot;" DefaultText="&quot;More&quot;" MenuButtonType="&quot;dropdownbutton&quot;" IndexOrder="0" LocalDefaultText="&quot;נוספים&quot;" IsPackagable="false">
       <MenuItem EventCode="&quot;InterestBasesTypeInactive&quot;" DefaultText="&quot;Inactive&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="0" LocalDefaultText="&quot;חסימה&quot;" IsPackagable="false" />
     </MenuButton>
+    <MenuButton EventCode="&quot;InterestBasesTypeInactives&quot;" DefaultText="&quot;Inactives&quot;" MenuButtonType="&quot;button&quot;" IndexOrder="0" LocalDefaultText="&quot;חסימה&quot;" IsPackagable="true" />
   </MenuButtons>
   <DataContracts />
   <AdditionalTextCodes />
