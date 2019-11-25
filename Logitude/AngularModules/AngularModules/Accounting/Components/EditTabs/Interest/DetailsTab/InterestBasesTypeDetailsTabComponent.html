@@ -19,10 +19,10 @@
                     <tr>
                         <td style="width: 700px;">
                             <table>
-                                <!-- Code -->
                                 <tr>
                                     <td>
                                         <table>
+                                            <!-- Code -->
                                             <tr class="FormFieldRow">
                                                 <td style="width: 160px;">
                                                     <LogLabel [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -68,13 +68,12 @@
                                                     <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
                                                 <td>
-                                                    <LogTextBox [Text]="Description" [ObjectFieldName]="'Description'" [HideColumns]="true" [ObjectTableName]="ObjectTableName"  [IsMultiline]="true" [DataContext]="DataContext"></LogTextBox>
+                                                    <LogTextBox [Text]="Description" [ObjectFieldName]="'Description'" [HideColumns]="true" [ObjectTableName]="ObjectTableName" [IsMultiline]="true" [DataContext]="DataContext"></LogTextBox>
                                                 </td>
                                                 <td>
                                                     <div></div>
                                                 </td>
                                             </tr>
-                                            <tr><td></td></tr>
                                             <tr><td></td></tr>
                                         </table>
                                     </td>
@@ -92,6 +91,68 @@
                         </td>
                     </tr>
                 </table>
+            </td>
+        </tr>
+        <tr class="TabTitleRow">
+            <td>
+                <table>
+                    <tr>
+                        <td style="width: 100px;">
+                            {{'InterestBasesPeriod' | TextCodeTranslationPipe}}
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                        <td>
+                            <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" [disabled]="EntityPM.InActive" (click)="AddPeriodClicked()"></IconButton>
+                         </td>
+                    </tr>
+                </table>
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                <logitude-edit-grid GridWidth="100%" [HeaderHeight]="25" GridHeight="100%" [ItemSource]="InterestBasesPeriodsList">
+
+                    <!--InterestBaseStartDate-->
+                    <log-column [width]="'300'" [header]="'InterestBaseStartDate'">
+                        <log-cell-template template="let item" #logcelltemplate>
+                            <div style="float:left;"> {{item.InterestBaseStartDate | DateTimeToDatePipe}} </div>
+                        </log-cell-template>
+                    </log-column>
+
+                    <!--InterestRate-->
+                    <log-column [width]="'300'" [header]="'InterestRate'">
+                        <log-cell-template template="let item" #logcelltemplate>
+                            <div style="float:left;"> {{item.InterestRate}} </div>
+                        </log-cell-template>
+                    </log-column>
+
+                    <!--UpdatedByUserId-->
+                    <log-column [width]="'300'" [header]="'UpdatedByUserId'">
+                        <log-cell-template template="let item" #logcelltemplate>
+                            <div style="float:left;"> {{item.UpdatedByUserId}} </div>
+                        </log-cell-template>
+                    </log-column>
+
+                    <!--UpdateDate-->
+                    <log-column [width]="'300'" [header]="'UpdateDate'">
+                        <log-cell-template template="let item" #logcelltemplate>
+                            <div style="float:left;"> {{item.UpdateDate | DateTimeToDatePipe}} </div>
+                        </log-cell-template>
+                    </log-column>
+
+                    <!--NULL-->
+                    <log-column [width]="'300'" [header]="' '" class="CellTools">
+                        <log-cell-template template="let item" #logcelltemplate>
+                            <div style="margin-top:4px;">
+                                <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" [disabled]="EntityPM.InActive" (click)="EditPeriodClicked(item)"></IconButton>
+                            </div>
+                        </log-cell-template>
+                    </log-column>
+
+                </logitude-edit-grid>
             </td>
         </tr>
         <tr>

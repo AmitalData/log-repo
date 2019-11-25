@@ -4,6 +4,9 @@ import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityAr
 import { AppTool } from '../../../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
 import { InterestBasesTypePM } from '../../../../EntityPMs/InterestBasesTypePM';
+import { ObservableCollection } from '../../../../../Infrastructure/Utilities/ObservableCollection';
+import { InterestBasesPeriodPM } from '../../../../EntityPMs/InterestBasesPeriodPM';
+import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 
 @Component({
     moduleId: module.id,
@@ -13,40 +16,65 @@ export class InterestBasesTypeDetailsTabComponent extends BaseComponent implemen
     public EntityPM: InterestBasesTypePM;
     public ObjectTableName: string = "InterestBasesType";
     public DataContext: InterestBasesTypeDetailsTabComponent = this;
+    public InterestBasesPeriodsList: ObservableCollection;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
+        this.InterestBasesPeriodsList = new ObservableCollection([]);
+        this.BuildData();
         this.SetUIProperties();
         this.Listen();
     }
     ngOnInit() {
     }
     SetUIProperties() {
-        //if (this.IsScreenEnabled) { 
-        //    this.UIProperties.SetEnabled("VendorBankAddress", "APPayment", true);
-        //    this.UIProperties.SetEnabled("VendorBankName", "APPayment", true);
-        //    this.UIProperties.SetEnabled("VendorBankAccountNumber", "APPayment", true);
-        //    this.UIProperties.SetEnabled("VendorSwift", "APPayment", true);
-        //    this.UIProperties.SetEnabled("VendorIBANNumber", "APPayment", true);
-        //}
-        //else{
-        //    this.UIProperties.SetEnabled("VendorBankAddress", "APPayment", false);
-        //    this.UIProperties.SetEnabled("VendorBankName", "APPayment", false);
-        //    this.UIProperties.SetEnabled("VendorBankAccountNumber", "APPayment", false);
-        //    this.UIProperties.SetEnabled("VendorSwift", "APPayment", false);
-        //    this.UIProperties.SetEnabled("VendorIBANNumber", "APPayment", false);
-        //}
+        if (this.EntityPM.InActive) { 
+            this.UIProperties.SetEnabled("Code", "InterestBasesType", false);
+            this.UIProperties.SetEnabled("EnglishName", "InterestBasesType", false);
+            this.UIProperties.SetEnabled("LocalName", "InterestBasesType", false);
+            this.UIProperties.SetEnabled("Description", "InterestBasesType", false);
+        }
+        else{
+            this.UIProperties.SetEnabled("Code", "InterestBasesType", true);
+            this.UIProperties.SetEnabled("EnglishName", "InterestBasesType", true);
+            this.UIProperties.SetEnabled("LocalName", "InterestBasesType", true);
+            this.UIProperties.SetEnabled("Description", "InterestBasesType", true);
+        }
+    }
+
+    AddPeriodClicked() {
+        var itemPM = new InterestBasesPeriodPM(null);
+        itemPM.Tenant = SessionLocator.Tenant;
+        itemPM.InterestBaseTypeId = this.EntityPM.Id;
+        var itemComponent = new InterestBasesPeriodItem(itemPM, true, this);
+        this.LogWindowShow("Add Bases Period", itemComponent);
+    }
+
+    EditPeriodClicked(itemComponent: InterestBasesPeriodItem) {
+        itemComponent.IsNewEntity = false;
+        this.LogWindowShow("Edit Bases Period", itemComponent);
+    }
+
+    LogWindowShow(title: string, itemComponent) {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = title;
+        var myPath = "./Accounting/Components/Packages/EditTabs/Interest/DetailsTab/AddEditInterestBasesPeriod/AddEditInterestBasesPeriodComponent";
+        logWindow.Width = 400;
+        logWindow.Height = 150;
+        logWindow.DataContext = itemComponent;
+        logWindow.Show(myPath);
     }
 
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
-    private CurrentSession = SessionLocator.SelectedSession;
     private Listen() {
         if (this.entityArgs.EditComponent != null) {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.BuildData();
                     this.SetUIProperties();
                 }
             });
@@ -54,10 +82,20 @@ export class InterestBasesTypeDetailsTabComponent extends BaseComponent implemen
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.BuildData();
                     this.SetUIProperties();
                 }
             });
         }
+    }
+
+    public BuildData() {
+        this.InterestBasesPeriodsList.Clear();
+        var list = [];
+        this.EntityPM.InterestBasesPeriods.forEach(item => {
+            list.push(new InterestBasesPeriodItem(item, true, this));
+        });
+        this.InterestBasesPeriodsList.InsertCollection(list);
     }
 
 
@@ -126,4 +164,48 @@ export class InterestBasesTypeDetailsTabComponent extends BaseComponent implemen
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
+}
+
+export class InterestBasesPeriodItem extends BaseComponent {
+    public DataContext: InterestBasesPeriodItem = this;
+    public EntityPM: InterestBasesPeriodPM;
+    public InterestBasesTypePM: InterestBasesTypePM;
+    public ObjectTableName: string = "InterestBasesPeriod";
+    public IsNewEntity: boolean = false;
+
+    constructor(entityPM: InterestBasesPeriodPM, isNew: boolean, public fatherComponent: InterestBasesTypeDetailsTabComponent) {
+        super();
+        this.EntityPM = entityPM;
+        this.InterestBasesTypePM = fatherComponent.EntityPM;
+        this.IsNewEntity = isNew;
+    }
+
+    get InterestBaseStartDate() { return this.EntityPM.InterestBaseStartDate; }
+    set InterestBaseStartDate(newValue: Date) {
+        if (this.EntityPM.InterestBaseStartDate != newValue) {
+            this.EntityPM.InterestBaseStartDate = newValue;
+        }
+    }
+
+    get InterestRate() { return this.EntityPM.InterestRate; }
+    set InterestRate(newValue: number) {
+        if (this.EntityPM.InterestRate != newValue) {
+            this.EntityPM.InterestRate = newValue;
+        }
+    }
+
+    get UpdatedByUserId() { return this.EntityPM.UpdatedByUserId; }
+    set UpdatedByUserId(newValue: string) {
+        if (this.EntityPM.UpdatedByUserId != newValue) {
+            this.EntityPM.UpdatedByUserId = newValue;
+        }
+    }
+
+    get UpdateDate() { return this.EntityPM.UpdateDate; }
+    set UpdateDate(newValue: Date) {
+        if (this.EntityPM.UpdateDate != newValue) {
+            this.EntityPM.UpdateDate = newValue;
+        }
+    }
+
 }
