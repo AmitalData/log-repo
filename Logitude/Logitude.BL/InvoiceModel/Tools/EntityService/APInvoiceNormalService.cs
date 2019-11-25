@@ -296,16 +296,18 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 payables = payables.Where(a => a.ShipmentPayableLineStatusCode != "ACCT").ToList();
             }
 
-            foreach (APInvoiceLinePM line in invoiceLines)
+            foreach (APInvoiceLinePM aPInvoiceLine in invoiceLines)
             {
-                List<ShipmentPayable> myLines = payables.Where(d => d.ChargesTypeId == line.ChargesTypeId).ToList();
+                //List<ShipmentPayable> myLines = payables.Where(a => a.ChargesTypeId == aPInvoiceLine.ChargesTypeId && (a.Measurement != null && a.Measurement.Code == aPInvoiceLine.ContainerTypeCode && a.Quantity == aPInvoiceLine.Quantity)).ToList();
+                List<ShipmentPayable> myLines = payables.Where(a => a.ChargesTypeId == aPInvoiceLine.ChargesTypeId).ToList();
+
                 if (myLines == null || (myLines != null && myLines.Count() == 0))
                 {
-                    this.UnexpectedPayablesInvoiceLines.Add(line);
+                    this.UnexpectedPayablesInvoiceLines.Add(aPInvoiceLine);
                 }
                 else
                 {
-                    this.GeneratePayableLine_ChargeTypes(line, myLines);
+                    this.GeneratePayableLine_ChargeTypes(aPInvoiceLine, myLines);
                 }
             }
 
@@ -321,15 +323,17 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             List<ShipmentPayable> myLines = shipmentPayable.Where(a => a.VendorId == entityPM.VendorId || a.VendorId == null).ToList();
             if (myLines != null)
             {
-                if (myLines.Count() == 1)
+                var matchedContainerLines = myLines.Where(a => a.Measurement != null && a.Measurement.Code == aPInvoiceLine.ContainerTypeCode && a.Quantity == aPInvoiceLine.Quantity && a.CurrencyId == aPInvoiceLine.ForiegnCurrencyId).ToList();
+
+                if ((matchedContainerLines != null && matchedContainerLines.Count() == 1) || myLines.Count() == 1)
                 {
                     ShipmentPayable shipmentPayableLine;
-                    var matchedContainerLines = myLines.Where(a => a.Measurement != null && a.Measurement.Code == aPInvoiceLine.ContainerTypeCode && a.Quantity == aPInvoiceLine.Quantity && a.CurrencyId == aPInvoiceLine.ForiegnCurrencyId).ToList();
-                    if (matchedContainerLines != null && matchedContainerLines.Count() == 1)
+                    if (matchedContainerLines.Count() == 1)
                     {
                         shipmentPayableLine = matchedContainerLines.FirstOrDefault();
                         aPInvoiceLine.AmountTypeCode = "EXPT";
-                        shipmentPayableLine.UnitPrice = Round(aPInvoiceLine.InvoiceCurrencyAmount / aPInvoiceLine.Quantity, 2);
+                        if(shipmentPayableLine.UnitPrice == null)
+                            shipmentPayableLine.UnitPrice = Round(aPInvoiceLine.InvoiceCurrencyAmount / aPInvoiceLine.Quantity, 2);
                     }
                     else
                     {
@@ -1304,7 +1308,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             {
                                 payable.MeasurementId = package.MeasurementId;
                             }
-                            if (this.entityPM.CreatedFromAPI)
+                            if (this.entityPM.CreatedFromAPI && payable.UnitPrice == null)
                             {
                                 payable.UnitPrice = Round(invoicelinePM.InvoiceCurrencyAmount / invoicelinePM.Quantity, 2);
                             }
