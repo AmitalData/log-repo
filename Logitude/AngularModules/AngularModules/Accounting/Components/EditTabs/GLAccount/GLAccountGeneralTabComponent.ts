@@ -26,7 +26,7 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
     public IsCustomerAccount: boolean = false;
     public ChartOfAccountTypeFilterItems: ApiQueryFilters;
     public ParentsFilterItems: ApiQueryFilters;
-  IsVendor: boolean = false;
+    public IsVendor: boolean = false;
     private _GLAccountExtendedListService = new GLAccountExtendedListService();
 
 
@@ -373,6 +373,13 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
             }
 
         }
+    }
+
+    get AllowEditChequePayToName() { return this.EntityPM.AllowEditChequePayToName; }
+    set AllowEditChequePayToName(value: boolean) {
+        if (this.EntityPM.AllowEditChequePayToName != value) {
+            this.EntityPM.AllowEditChequePayToName = value;
+                    }
     }
     //#endregion
 

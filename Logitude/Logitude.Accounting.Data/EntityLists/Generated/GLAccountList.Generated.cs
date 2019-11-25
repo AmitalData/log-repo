@@ -198,6 +198,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string CreatedByLocalName  { get; set; }
        [DataMember]
        public string UpdatedByLocalName  { get; set; }
+       [DataMember]
+       public bool AllowEditChequePayToName  { get; set; }
    }
 
 }
