@@ -125,7 +125,6 @@ export class ActivityInputTemplate extends BaseComponent implements OnInit {
         this.GetDueDateObjectField();
         this.GetDescriptionFlowDirection();
         this.GetMeetingSummaryFlowDirection();
-        this.RefreshTextAlgimentVariables();
         this.RefreshDescriptionTextAlgimentVariables();
 
         if ((this.TypeCode == "EO" || this.TypeCode == "EI") && this.OnEditModeVisibility == true) {
@@ -893,34 +892,14 @@ export class ActivityInputTemplate extends BaseComponent implements OnInit {
         this.MeetingSummaryFlowDirection = myResult;
     }
 
-    public MeetingSummaryBackgroundAlignLeft = "transparent";
-    public MeetingSummaryBackgroundAlignRight = "transparent";
-    private GetMeetingSummaryBackgroundAlignLeft() {
-        if (!AppTool.IsNullOrEmpty(this.MeetingSummaryFlowDirection)) {
-            this.MeetingSummaryBackgroundAlignLeft = this.MeetingSummaryFlowDirection == "ltr" ? "#FDD59D" : "transparent";
-        }
-    }
-    private GetMeetingSummaryBackgroundAlignRight() {
-        if (!AppTool.IsNullOrEmpty(this.MeetingSummaryFlowDirection)) {
-            this.MeetingSummaryBackgroundAlignRight = this.MeetingSummaryFlowDirection == "rtl" ? "#FDD59D" : "transparent";
-        }
-    }
-
     public AlignMeetingSummaryLeftClicked() {
         this.entityPM.MeetingSummaryRightToLeft = false;
         this.GetMeetingSummaryFlowDirection();
-        this.RefreshTextAlgimentVariables();
     }
 
     public AlignMeetingSummaryRightClicked() {
         this.entityPM.MeetingSummaryRightToLeft = true;
         this.GetMeetingSummaryFlowDirection();
-        this.RefreshTextAlgimentVariables();
-    }
-
-    private RefreshTextAlgimentVariables() {
-        this.GetMeetingSummaryBackgroundAlignLeft();
-        this.GetMeetingSummaryBackgroundAlignRight();
     }
 
     get DescriptionRightToLeft() { return this.entityPM.DescriptionRightToLeft; }
