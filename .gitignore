@@ -406,3 +406,4 @@ __pycache__/
 /Logitude/Logitude.IntegrationTests/DownloadedFiles
 /Logitude/AngularModules/AngularModules/--protractor-html-reporter-2
 /Logitude/AngularModules/AngularModules/webpack.config-prod.js
+/Logitude/Logitude.HybridTest/Properties/DataSources
