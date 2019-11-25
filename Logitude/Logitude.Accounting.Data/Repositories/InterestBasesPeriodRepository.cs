@@ -19,6 +19,13 @@ namespace Logitude.Accounting.Data.Repositories
             InterestBasesTypeKeys myEntityKeys = entityKeys as InterestBasesTypeKeys;
             return (from a in context.InterestBasesPeriods where a.InterestBaseTypeId == myEntityKeys.Id select a).ToList();
         }
+
+        public InterestBasesPeriod GetSingleByInterestBaseStartDate(DateTime InterestBaseStartDate)
+        {
+            return (from a in context.InterestBasesPeriods
+                    where a.InterestBaseStartDate == InterestBaseStartDate
+                    select a).FirstOrDefault();
+        }
     }
 
 }

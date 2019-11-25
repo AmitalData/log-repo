@@ -93,6 +93,11 @@
                 </table>
             </td>
         </tr>
+        <tr style="height:20px;">
+            <td>
+                <div></div>
+            </td>
+        </tr>
         <tr class="TabTitleRow">
             <td>
                 <table>
@@ -104,8 +109,8 @@
                             <div></div>
                         </td>
                         <td>
-                            <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" [disabled]="EntityPM.InActive" (click)="AddPeriodClicked()"></IconButton>
-                         </td>
+                            <IconButton [style.float]="isRTL ? 'right' : 'left'"  [Name]="'Add'" [IsSmall]="true" [Left]="3" [disabled]="EntityPM.InActive" (click)="AddPeriodClicked()"></IconButton>
+                        </td>
                     </tr>
                 </table>
             </td>
@@ -116,28 +121,28 @@
                 <logitude-edit-grid GridWidth="100%" [HeaderHeight]="25" GridHeight="100%" [ItemSource]="InterestBasesPeriodsList">
 
                     <!--InterestBaseStartDate-->
-                    <log-column [width]="'300'" [header]="'InterestBaseStartDate'">
+                    <log-column [width]="'300'" [header]="InterestBaseStartDateHeader">
                         <log-cell-template template="let item" #logcelltemplate>
                             <div style="float:left;"> {{item.InterestBaseStartDate | DateTimeToDatePipe}} </div>
                         </log-cell-template>
                     </log-column>
 
                     <!--InterestRate-->
-                    <log-column [width]="'300'" [header]="'InterestRate'">
+                    <log-column [width]="'300'" [header]="InterestRateHeader">
                         <log-cell-template template="let item" #logcelltemplate>
                             <div style="float:left;"> {{item.InterestRate}} </div>
                         </log-cell-template>
                     </log-column>
 
                     <!--UpdatedByUserId-->
-                    <log-column [width]="'300'" [header]="'UpdatedByUserId'">
+                    <log-column [width]="'300'" [header]="UpdatedByUserIdHeader">
                         <log-cell-template template="let item" #logcelltemplate>
                             <div style="float:left;"> {{item.UpdatedByUserId}} </div>
                         </log-cell-template>
                     </log-column>
 
                     <!--UpdateDate-->
-                    <log-column [width]="'300'" [header]="'UpdateDate'">
+                    <log-column [width]="'300'" [header]="UpdateDateHeader">
                         <log-cell-template template="let item" #logcelltemplate>
                             <div style="float:left;"> {{item.UpdateDate | DateTimeToDatePipe}} </div>
                         </log-cell-template>
@@ -153,11 +158,6 @@
                     </log-column>
 
                 </logitude-edit-grid>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div></div>
             </td>
         </tr>
     </table>

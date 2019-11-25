@@ -10,6 +10,8 @@ using Logitude.Server.Tools;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs; 
 using Logitude.Accounting.Data;
+using Logitude.Server.Tools.Counters;
+using Logitude.Accounting.Data.Repositories;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -19,7 +21,18 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
         public void CustomPMToPOCO(InterestBasesPeriodPM entityPM, InterestBasesPeriod entityPOCO)
         {
-           
+            CustomMappedPOCOProperties.Add(POCOPropertyNames.LineNumber);
+            entityPOCO.LineNumber = entityPM.LineNumber;
+            CustomMappedPOCOProperties.Add(POCOPropertyNames.InterestBaseTypeId);
+            entityPOCO.InterestBaseTypeId = entityPM.InterestBaseTypeId;
+
+            InterestBasesPeriodRepository  PeriodRepository = new InterestBasesPeriodRepository(entityPM.Tenant);
+            InterestBasesPeriod Period = PeriodRepository.GetSingleByInterestBaseStartDate(entityPM.InterestBaseStartDate);
+            if (Period!=null)
+            {
+                 throw new Exception("Interest Base StartDate Already Exist");
+            }
+
         }
 
         public void CustomPOCOToPM(InterestBasesPeriodPM entityPM, InterestBasesPeriod entityPOCO)

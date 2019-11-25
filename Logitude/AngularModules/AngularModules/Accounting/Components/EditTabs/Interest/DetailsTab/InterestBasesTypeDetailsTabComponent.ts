@@ -7,19 +7,24 @@ import { InterestBasesTypePM } from '../../../../EntityPMs/InterestBasesTypePM';
 import { ObservableCollection } from '../../../../../Infrastructure/Utilities/ObservableCollection';
 import { InterestBasesPeriodPM } from '../../../../EntityPMs/InterestBasesPeriodPM';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
+import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { ObjectsLocator } from '../../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     moduleId: module.id,
     templateUrl: './InterestBasesTypeDetailsTabComponent.html',
 })
+
 export class InterestBasesTypeDetailsTabComponent extends BaseComponent implements OnInit {
     public EntityPM: InterestBasesTypePM;
     public ObjectTableName: string = "InterestBasesType";
     public DataContext: InterestBasesTypeDetailsTabComponent = this;
     public InterestBasesPeriodsList: ObservableCollection;
     private CurrentSession = SessionLocator.SelectedSession;
+    public isRTL: boolean = false;
     constructor(public entityArgs: EntityArgs) {
         super();
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.EntityPM = entityArgs.EntityPM;
         this.InterestBasesPeriodsList = new ObservableCollection([]);
         this.BuildData();
@@ -42,18 +47,24 @@ export class InterestBasesTypeDetailsTabComponent extends BaseComponent implemen
             this.UIProperties.SetEnabled("Description", "InterestBasesType", true);
         }
     }
+    //Grid Header
+    InterestBaseStartDateHeader = TextCodeTranslator.Translate("InterestBasesPeriod.CH.InterestBaseStartDateListLable");
+    UpdatedByUserIdHeader = TextCodeTranslator.Translate("InterestBasesPeriod.CH.UpdatedByUserIdListLable");
+    UpdateDateHeader = TextCodeTranslator.Translate("InterestBasesPeriod.CH.UpdateDateListLable");
+    InterestRateHeader = TextCodeTranslator.Translate("InterestBasesPeriod.CH.InterestRateListLable");
 
     AddPeriodClicked() {
         var itemPM = new InterestBasesPeriodPM(null);
         itemPM.Tenant = SessionLocator.Tenant;
         itemPM.InterestBaseTypeId = this.EntityPM.Id;
+        itemPM.LineNumber = this.EntityPM.InterestBasesPeriods.length + 1;
         var itemComponent = new InterestBasesPeriodItem(itemPM, true, this);
-        this.LogWindowShow("Add Bases Period", itemComponent);
+        this.LogWindowShow("Add Interest Bases Period", itemComponent);
     }
 
     EditPeriodClicked(itemComponent: InterestBasesPeriodItem) {
         itemComponent.IsNewEntity = false;
-        this.LogWindowShow("Edit Bases Period", itemComponent);
+        this.LogWindowShow("Edit Interest Bases Period", itemComponent);
     }
 
     LogWindowShow(title: string, itemComponent) {
@@ -61,7 +72,7 @@ export class InterestBasesTypeDetailsTabComponent extends BaseComponent implemen
         logWindow.Title = title;
         var myPath = "./Accounting/Components/Packages/EditTabs/Interest/DetailsTab/AddEditInterestBasesPeriod/AddEditInterestBasesPeriodComponent";
         logWindow.Width = 400;
-        logWindow.Height = 150;
+        logWindow.Height = 250;
         logWindow.DataContext = itemComponent;
         logWindow.Show(myPath);
     }
@@ -191,6 +202,13 @@ export class InterestBasesPeriodItem extends BaseComponent {
     set InterestRate(newValue: number) {
         if (this.EntityPM.InterestRate != newValue) {
             this.EntityPM.InterestRate = newValue;
+        }
+    }
+
+    get LineNumber() { return this.EntityPM.LineNumber; }
+    set LineNumber(newValue: number) {
+        if (this.EntityPM.LineNumber != newValue) {
+            this.EntityPM.LineNumber = newValue;
         }
     }
 
