@@ -323,17 +323,28 @@
     <Compile Include="WcfCallers\AgentWcfCaller.cs" />
     <Compile Include="WcfCallers\EventTypeWcfCaller.cs" />
     <Compile Include="WcfCallers\DepartmentWcfCaller.cs" />
+    <Compile Include="WcfCallers\ShipmentWcfCaller.cs" />
     <Compile Include="WcfCallers\ShippingAgentWcfCaller.cs" />
     <Compile Include="WcfCallers\AccountingPartnerWcfCaller.cs" />
     <Compile Include="WcfCallers\SpecialServicesTypeWcfCaller.cs" />
     <Compile Include="WcfCallers\StateWcfCaller.cs" />
     <Compile Include="WcfCallers\PortWcfCaller.cs" />
+    <Compile Include="WcfCallers\AddressWcfCaller.cs" />
+    <Compile Include="WcfCallers\CustomerWcfCaller.cs" />
+    <Compile Include="WcfCallers\QuoteWcfCaller.cs" />
+    <Compile Include="WcfCallers\CardContactWcfCaller.cs" />
     <Compile Include="WcfCallers\UserWcfCaller.cs" />
     <Compile Include="WcfCallers\TruckerWcfCaller.cs" />
     <Compile Include="WcfCallers\CustomAgentWcfCaller.cs" />
     <Compile Include="WcfCallers\ShippingLineWcfCaller.cs" />
     <Compile Include="WcfCallers\BranchWcfCaller.cs" />
     <Compile Include="WcfCallers\AirlineWcfCaller.cs" />
+    <Compile Include="WcfCallers\IncotermWcfCaller.cs" />
+    <Compile Include="WcfCallers\PackageTypeWcfCaller.cs" />
+    <Compile Include="WcfCallers\DocumentTypeWcfCaller.cs" />
+    <Compile Include="WcfCallers\CustomBankCardWcfCaller.cs" />
+    <Compile Include="WcfCallers\ContactWcfCaller.cs" />
+    <Compile Include="WcfCallers\ActivityWcfCaller.cs" />
     <Compile Include="WcfCallers\VesselWcfCaller.cs" />
     <Compile Include="WcfCallers\VendorWcfCaller.cs" />
     <Compile Include="WcfCallers\GlobalZoneWcfCaller.cs" />
@@ -1174,9 +1185,6 @@
     <None Include="Connected Services\ShipmentServiceReference\Logitude.HybridTest.ShipmentServiceReference.GetShipmentListResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\ShipmentServiceReference\Logitude.HybridTest.ShipmentServiceReference.ShipmentList.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <None Include="Connected Services\ShipmentServiceReference\ShipmentWcfService.wsdl" />
     <None Include="Connected Services\ShipmentServiceReference\ShipmentWcfService.xsd">
       <SubType>Designer</SubType>
@@ -1389,6 +1397,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\Logitude.BL.ShipmentsModel.EntityLists.ShipmentList.datasource" />
     <None Include="Properties\DataSources\Logitude.Server.Tools.Response.datasource" />
   </ItemGroup>
   <ItemGroup>
@@ -2073,6 +2082,10 @@
     <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
       <Project>{a663e7ef-b858-4bb6-bc33-e473f51b8e56}</Project>
       <Name>Logitude.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.CRM.BL\Logitude.CRM.BL.csproj">
+      <Project>{40502295-5a7f-4a20-91d2-768ca7cd35ec}</Project>
+      <Name>Logitude.CRM.BL</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

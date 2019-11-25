@@ -1,5 +1,6 @@
 import { browser, by, element, WebDriver, protractor, ExpectedConditions } from 'protractor';
 import { FieldsHelper } from '../../../Helpers/FieldsHelper';
+import { Console } from '@angular/core/src/console';
 
 export class ReceivablesTabComponent {
     private Helper: FieldsHelper;
@@ -15,7 +16,7 @@ export class ReceivablesTabComponent {
         this.Helper.WaitByIdAndClick('Shipment.TH.Receivables');
         this.Helper.WaitEditComponentBusyIndicator();
 
-        this.Helper.ItemsVisibility('ATDS-Receivable');
+        //this.Helper.ItemsVisibility('ATDS-Receivable');
         this.AddRecievableLines(ShipmentLevelCode, shipmentType);
 
         this.CreatARInvoicewithVoid(true, 'ARInvoice');
@@ -32,26 +33,47 @@ export class ReceivablesTabComponent {
         if (ShipmentLevelCode == 'D' || ShipmentLevelCode == 'H') {
 
             if (ShipmentType == '') {
-                this.amount1 = this.AddReceivables('Air Frei', '10', '10', 'USD');
-                this.amount2 = this.AddReceivables('Order', '10', '-20', 'USD');
+                this.amount1 = this.AddReceivables('Air Frei', '10', '10', 'USD','D');
+                this.amount2 = this.AddReceivables('Order', '10', '-20', 'USD','D');
             } else if (ShipmentType == 'FCL' || ShipmentType == 'LCL') {
-                this.amount1 = this.AddReceivables('ocean', '10', '10', 'USD');
-                this.amount2 = this.AddReceivables('Order', '10', '-20', 'USD');
+                this.amount1 = this.AddReceivables('ocean', '10', '10', 'USD', 'D');
+                this.amount2 = this.AddReceivables('Order', '10', '-20', 'USD', 'D');
             } else {
-                this.amount1 = this.AddReceivables('Inland', '10', '10', 'USD');
-                this.amount2 = this.AddReceivables('Order', '10', '-20', 'USD');
+                this.amount1 = this.AddReceivables('Inland', '10', '10', 'USD', 'D');
+                this.amount2 = this.AddReceivables('Order', '10', '-20', 'USD', 'D');
             }
         }
-        else if (ShipmentType == 'M') {
-            this.AddReceivables('A', '5', '10', 'USD');
+        else if (ShipmentLevelCode == 'M') {
+            console.log('Inside ShipmentLevelCode if statement');
+
+            if (ShipmentType == '') {
+                console.log('Inside ShipmentLevelCode if statement');
+                this.amount1 = this.AddReceivables('Air Frei', '10', '10', 'USD', 'M');
+                this.amount2 = this.AddReceivables('Order', '10', '-20', 'USD', 'M');
+                
+            } else if (ShipmentType == 'FCL' || ShipmentType == 'LCL') {
+                this.amount1 = this.AddReceivables('ocean', '10', '10', 'USD', 'M');
+                this.amount2 = this.AddReceivables('Order', '10', '-20', 'USD', 'M');
+                
+            } else {
+                this.amount1 = this.AddReceivables('Inland', '10', '10', 'USD', 'M');
+                this.amount2 = this.AddReceivables('Order', '10', '-20', 'USD', 'M');
+                
+            }
+          
         }
         this.Helper.WaitByIdAndClick('Shipment-Save');
         this.WaitBusyIndicatorToShowandHide();
     }
-    AddReceivables(ChargeType: string, quantity: any, unitPrice: any, currency: any) {
-
+    AddReceivables(ChargeType: string, quantity: any, unitPrice: any, currency: any, ShipmentLevelCode: string) {
+     
         this.Helper.WaitEditComponentBusyIndicator();
-        this.Helper.WaitByIdAndClick('Add_5');
+        if (ShipmentLevelCode == 'M') {
+            this.Helper.WaitByIdAndClick('Add_1');
+        }
+        else {
+            this.Helper.WaitByIdAndClick('Add_5');
+        }
 
         this.Helper.WaitByIdAndFill('ShipmentReceivable_ChargesTypeId', ChargeType);
         this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'ShipmentReceivable_ChargesTypeId', ChargeType);

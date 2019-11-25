@@ -9,6 +9,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
         public ObjectFieldMap()
         {
             this.HasKey(t => t.Id);
+           
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.FieldName).IsRequired().HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.ObjectTableId).IsRequired().HasMaxLength(15).IsUnicode(false);
@@ -56,6 +57,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.EnableFullscreenTextBox);
             this.Property(t => t.RecordType).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.FieldCode).IsRequired().HasMaxLength(200).IsUnicode(false);
+           
 
             // Table & Column Mappings
             this.ToTable("ObjectFields");

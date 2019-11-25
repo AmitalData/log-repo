@@ -15,7 +15,7 @@ namespace Logitude.HybridTest.CommonServices
         {
             LoginService.GetLoginTokenByCredentials();
             Response serviceResponse = UserWcfCaller.CallUserUpsert();
-            Assert.IsFalse(serviceResponse.HasError, serviceResponse.ErrorMessage);
+            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
         }
 
@@ -43,12 +43,8 @@ namespace Logitude.HybridTest.CommonServices
             object[] serviceParameters = new object[] { filters, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
             UserPM user = (UserPM)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsTrue(CheckResult(user), "Get Hybrid User Item From Users Failed!");
-        }
-        public bool CheckResult(UserPM user)
-        {
-            return user.EnglishName == "Hybrid User";
+            Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.Result);
+            Assert.AreEqual(user.EnglishName, "Hybrid User", "Get Hybrid User From Users Failed!");
         }
     }
 }

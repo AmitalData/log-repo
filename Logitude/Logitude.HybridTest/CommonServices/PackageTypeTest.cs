@@ -1,4 +1,6 @@
 ﻿using System;
+using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.HybridTest.WcfCallers;
 using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -11,61 +13,38 @@ namespace Logitude.HybridTest.CommonServices
         public void Test_PackageType_UPSERT()
         {
             LoginService.GetLoginTokenByCredentials();
-            Response serviceResponse = CallPackageTypeUpsert();
-            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            Response serviceResponse = PackageTypeWcfCaller.CallPackageTypeUpsert();
+            Assert.IsFalse(serviceResponse.HasError, serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
-         }
-
-        [TestMethod]
-        public void Test_PackageType_GETPACKAGETYPELIST()
-        {
-            LoginService.GetLoginTokenByCredentials();
-            PackageTypeServiceReference.PackageTypeWcfServiceClient serviceClient = new PackageTypeServiceReference.PackageTypeWcfServiceClient();
-            string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
-            serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
-            using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
-            {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
-                Response serviceResponse = new Response();
-                PackageTypeServiceReference.PackageTypeApiFilters filters = new PackageTypeServiceReference.PackageTypeApiFilters();
-                filters.Take = 10;
-                filters.SearchFields = HybridData.PackageTypeCode;
-                PackageTypeServiceReference.PackageTypeList[] serviceResult = serviceClient.GetPackageTypeList(filters, TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
-                Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
-                Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);
-                if (serviceResult.Length != 0)
-                {
-                    string packageTypeCode = serviceResult[0].Code;
-                    Assert.IsTrue(packageTypeCode == "HPT", "Hybrid Package Type Doesn't Exist!");
-                }
-                else
-                {
-                    Assert.Inconclusive("There Isn't package Type With This Code!");
-                }
-            }
         }
 
-        public static Response CallPackageTypeUpsert()
+        [TestMethod]
+        public void Test_PackageType_GetPackageTypeList()
         {
-            PackageTypeServiceReference.PackageTypeWcfServiceClient serviceClient = new PackageTypeServiceReference.PackageTypeWcfServiceClient();
-            string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
-            serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
-            using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
+
+            LoginService.GetLoginTokenByCredentials();
+            Response prepareResponse = PackageTypeWcfCaller.PreparePackageType();
+            Assert.IsFalse(prepareResponse.HasError, "Prepare User Failed! " + prepareResponse.ErrorMessage);
+            InvokedProperties serviceProperties = new InvokedProperties
             {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
-                PackageTypeServiceReference.PackageTypePM entityPM = new PackageTypeServiceReference.PackageTypePM()
-                {
-                    Code = HybridData.PackageTypeCode,
-                    EnglishName = "Hybrid PackageType",
-                    LocalName = "Hybrid PackageType",
-                    AddedManually = true,
-                    PrintAs = "Hybrid PackageType",
-                    IsAir = true,
-                    Tenant = TestEnvironmentGlobalParameters.Tenant,
-                };
-                Response serviceResponse = serviceClient.Upsert(entityPM, false);
-                return serviceResponse;
-            }
+                ServiceName = "PackageType",
+                ServiceOperation = "GetPackageTypeList",
+                ServiceResponseIndex = 2,
+                ServiceType = typeof(PackageTypeList),
+                ServiceFilterType = typeof(PackageTypeServiceReference.PackageTypeApiFilters),
+            };
+            PackageTypeServiceReference.PackageTypeApiFilters filters = new PackageTypeServiceReference.PackageTypeApiFilters
+            {
+                Take = 10,
+                SearchFields = HybridData.PackageTypeCode,
+            };
+
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { filters, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
+            PackageTypeList[] packageTypes = (PackageTypeList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+            Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.Result);
+            Assert.AreEqual(packageTypes[0].Code, "HPT", "Get Hybrid Package Type Item Failed!");
         }
     }
 }

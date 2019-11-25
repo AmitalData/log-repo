@@ -106,7 +106,7 @@ namespace WebFreight.Web.DataProviders
             return resultAddress;
         }
 
-        public static string GetAddressWithName(Address address)
+        public static string GetAddressWithName(Address address, bool isStateCode = false )
         {
             string resultAddress = "";
 
@@ -131,17 +131,24 @@ namespace WebFreight.Web.DataProviders
 
                 if (address.State != null)
                 {
-                    if (address.IsLocalLanguage)
+                    if (!isStateCode)
                     {
-                        resultAddress = resultAddress + " " + (address.State.LocalName != null ? address.State.LocalName : "");
-                    }
-
+                        if (address.IsLocalLanguage)
+                        {
+                            resultAddress = resultAddress + " " + (address.State.LocalName != null ? address.State.LocalName : "");
+                        }
+                        else
+                        {
+                            resultAddress = resultAddress + " " + (address.State.EnglishName != null ? address.State.EnglishName : "");
+                        }
+                    } 
                     else
                     {
-                        resultAddress = resultAddress + " " + (address.State.EnglishName != null ? address.State.EnglishName : "");
+                        resultAddress = resultAddress + " " + (address.State.Code != null ? address.State.Code : "");
                     }
+                   
                 }
-
+                
                 if (!string.IsNullOrEmpty(address.ZipCode))
                 {
                     resultAddress = resultAddress + " " + address.ZipCode;
