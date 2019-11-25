@@ -266,8 +266,19 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                     #endregion
                 }
+                
+                if (!string.IsNullOrEmpty(shipment.SalesmanUserId))
+                {
+                    #region
+                    Contact salesmanContact = ContactRepository.GetSingleContact(shipment.SalesmanUserId, tenant, true);
+                    if (salesmanContact != null)
+                    {
+                        deliveryNotedataprovider.SalesmanEmail = salesmanContact.Email;
+                    }
+                    #endregion
+                }
 
-                if(!string.IsNullOrEmpty(shipment.CustomerContactId))
+                if (!string.IsNullOrEmpty(shipment.CustomerContactId))
                 {
                     Contact contact = commonContext.Contacts.Where(d => d.Id == shipment.CustomerContactId && d.Tenant == tenant).FirstOrDefault();
                     if(contact != null)
@@ -327,7 +338,6 @@ namespace WebFreight.Web.ReportsWebServices
                             if (truckerContact != null)
                             {
                                 deliveryNotedataprovider.Salesman = truckerContact.EnglishName != null ? truckerContact.EnglishName : "";
-                                deliveryNotedataprovider.SalesmanEmail = truckerContact.Email != null ? truckerContact.Email : "";
                             }
 
                             deliveryNotedataprovider.Telephone = address != null ? (address.PhoneNumber != null ? address.PhoneNumber : "") : "";
@@ -1099,7 +1109,16 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                     #endregion
                 }
-
+                if (!string.IsNullOrEmpty(shipment.SalesmanUserId))
+                {
+                    #region
+                    Contact salesmanContact = ContactRepository.GetSingleContact(shipment.SalesmanUserId, tenant, true);
+                    if (salesmanContact != null)
+                    {
+                        deliveryNotedataprovider.SalesmanEmail = salesmanContact.Email;
+                    }
+                    #endregion
+                }
                 // tenant data
                 if (tenantSettings != null)
                 {
@@ -1157,7 +1176,6 @@ namespace WebFreight.Web.ReportsWebServices
                             if (truckerContact != null)
                             {
                                 deliveryNotedataprovider.Salesman = truckerContact.EnglishName != null ? truckerContact.EnglishName : "";
-                                deliveryNotedataprovider.SalesmanEmail = truckerContact.Email != null ? truckerContact.Email : "";
                             }
 
                             deliveryNotedataprovider.Telephone = address != null ? (address.PhoneNumber != null ? address.PhoneNumber : "") : "";

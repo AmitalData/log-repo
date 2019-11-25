@@ -1,4 +1,5 @@
 ﻿using System;
+using Logitude.HybridTest.OpportunityDWServiceReference;
 using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -12,92 +13,88 @@ namespace Logitude.HybridTest.CommonServices
         public void Test_OpportunityDW_GetOpportunitiesByDates()
         {
             LoginService.GetLoginTokenByCredentials();
-            OpportunityDWServiceReference.OpportunityDWWcfServiceClient serviceClient = new OpportunityDWServiceReference.OpportunityDWWcfServiceClient();
-            string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
-            serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
-            using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
+            InvokedProperties serviceProperties = new InvokedProperties
             {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
-                Response serviceResponse = new Response();
-                OpportunityDWServiceReference.OpportunityDW[] entityList = serviceClient.GetOpportunitiesByDates(TestEnvironmentGlobalParameters.Tenant, DateTime.Today.AddYears(-1), DateTime.Now, 0, 10, ref serviceResponse);
-                Assert.IsFalse(serviceResponse.HasError, "Get Opportunities By Dates Failed! " + serviceResponse.ErrorMessage);
-                Assert.IsNull(serviceResponse.Result, "Get Opportunities By Dates Failed! " + serviceResponse.ErrorMessage);
-                if (entityList.Length != 0)
-                {
-                    //
-                }
-                else
-                {
-                    Assert.Inconclusive("There Isn't Opportunity From Last Year!");
-                }
-            }
+                ServiceName = "OpportunityDW",
+                ServiceOperation = "GetOpportunitiesByDates",
+                ServiceResponseIndex = 5,
+                ServiceType = typeof(OpportunityDW),
+                ServiceFilterType = null,
+            };
+
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { TestEnvironmentGlobalParameters.Tenant, DateTime.Today.AddYears(-1), DateTime.Now, 0, 10, serviceResponse };
+            OpportunityDW[] opportunities = (OpportunityDW[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+            Assert.IsFalse(serviceResponse.HasError, "Get Opportunities By Dates Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsNull(serviceResponse.Result, "Get Opportunities By Dates Failed! " + serviceResponse.Result);
+            if(opportunities.Length == 0)
+                Assert.Inconclusive("There Isn't Opportunity From Last Year!");
         }
 
         [TestMethod]
         public void Test_OpportunityDW_GetOpportunitiesCountByDates()
         {
             LoginService.GetLoginTokenByCredentials();
-            OpportunityDWServiceReference.OpportunityDWWcfServiceClient serviceClient = new OpportunityDWServiceReference.OpportunityDWWcfServiceClient();
-            string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
-            serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
-            using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
+            InvokedProperties serviceProperties = new InvokedProperties
             {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
-                Response serviceResponse = new Response();
-                int opportunityCount = serviceClient.GetOpportunitiesCountByDates(TestEnvironmentGlobalParameters.Tenant, DateTime.Today.AddYears(-1), DateTime.Now, ref serviceResponse);
-                Assert.IsFalse(serviceResponse.HasError, "Get Opportunities Count By Dates Failed! " + serviceResponse.ErrorMessage);
-                Assert.IsNull(serviceResponse.Result, "Get Opportunities Count By Dates Failed! " + serviceResponse.ErrorMessage);
-                if (opportunityCount == 0)
-                {
-                    Assert.Inconclusive("There Isn't Opportunity From Last Year!");
-                }
-            }
+                ServiceName = "OpportunityDW",
+                ServiceOperation = "GetOpportunitiesCountByDates",
+                ServiceResponseIndex = 3,
+                ServiceType = typeof(OpportunityDW),
+                ServiceFilterType = null,
+            };
+
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { TestEnvironmentGlobalParameters.Tenant, DateTime.Today.AddYears(-1), DateTime.Now, serviceResponse };
+            int opportunitiescount = (int)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+            Assert.IsFalse(serviceResponse.HasError, "Get Opportunities Count By Dates Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsNull(serviceResponse.Result, "Get Opportunities Count By Dates Failed! " + serviceResponse.Result);
+            if (opportunitiescount == 0)
+                Assert.Inconclusive("There Isn't Opportunity From Last Year!");
         }
 
         [TestMethod]
         public void Test_OpportunityDW_GetOpportunitiesByUpdateDate()
         {
             LoginService.GetLoginTokenByCredentials();
-            OpportunityDWServiceReference.OpportunityDWWcfServiceClient serviceClient = new OpportunityDWServiceReference.OpportunityDWWcfServiceClient();
-            string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
-            serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
-            using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
+            InvokedProperties serviceProperties = new InvokedProperties
             {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
-                Response serviceResponse = new Response();
-                OpportunityDWServiceReference.OpportunityDW[] entityList = serviceClient.GetOpportunitiesByUpdateDate(TestEnvironmentGlobalParameters.Tenant, DateTime.Today.AddYears(-1), 0, 10, ref serviceResponse);
-                Assert.IsFalse(serviceResponse.HasError, "Get Opportunities By Update Date Failed! " + serviceResponse.ErrorMessage);
-                Assert.IsNull(serviceResponse.Result, "Get Opportunities By Update Date Failed! " + serviceResponse.ErrorMessage);
-                if (entityList.Length != 0)
-                {
-                    //
-                }
-                else
-                {
-                    Assert.Inconclusive("There Isn't Opportunity From Last Year!");
-                }
-            }
+                ServiceName = "OpportunityDW",
+                ServiceOperation = "GetOpportunitiesByUpdateDate",
+                ServiceResponseIndex = 4,
+                ServiceType = typeof(OpportunityDW),
+                ServiceFilterType = null,
+            };
+
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { TestEnvironmentGlobalParameters.Tenant, DateTime.Today.AddYears(-1), 0, 10, serviceResponse };
+            OpportunityDW[] opportunities = (OpportunityDW[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+            Assert.IsFalse(serviceResponse.HasError, "Get Opportunities By Update Date Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsNull(serviceResponse.Result, "Get Opportunities By Update Date Failed! " + serviceResponse.Result);
+            if (opportunities.Length == 0)
+                Assert.Inconclusive("There Isn't Opportunity From Last Year!");
         }
 
         [TestMethod]
         public void Test_OpportunityDW_GetOpportunitiesCountByUpdateDate()
         {
             LoginService.GetLoginTokenByCredentials();
-            OpportunityDWServiceReference.OpportunityDWWcfServiceClient serviceClient = new OpportunityDWServiceReference.OpportunityDWWcfServiceClient();
-            string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
-            serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
-            using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
+            InvokedProperties serviceProperties = new InvokedProperties
             {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
-                Response serviceResponse = new Response();
-                int opportunityCount = serviceClient.GetOpportunitiesCountByUpdateDate(TestEnvironmentGlobalParameters.Tenant, DateTime.Today.AddYears(-1), ref serviceResponse);
-                Assert.IsFalse(serviceResponse.HasError, "Get Opportunities Count By Update Date Failed! " + serviceResponse.ErrorMessage);
-                Assert.IsNull(serviceResponse.Result, "Get Opportunities Count By Update Date Failed! " + serviceResponse.ErrorMessage);
-                if (opportunityCount == 0)
-                {
-                    Assert.Inconclusive("There Isn't Opportunity From Last Year!");
-                }
-            }
+                ServiceName = "OpportunityDW",
+                ServiceOperation = "GetOpportunitiesCountByUpdateDate",
+                ServiceResponseIndex = 2,
+                ServiceType = typeof(OpportunityDW),
+                ServiceFilterType = null,
+            };
+
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { TestEnvironmentGlobalParameters.Tenant, DateTime.Today.AddYears(-1), serviceResponse };
+            int opportunitiescount = (int)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+            Assert.IsFalse(serviceResponse.HasError, "Get Opportunities Count By Update Date Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsNull(serviceResponse.Result, "Get Opportunities Count By Update Date Failed! " + serviceResponse.Result);
+            if (opportunitiescount == 0)
+                Assert.Inconclusive("There Isn't Opportunity From Last Year!");
         }
     }
 }

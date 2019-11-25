@@ -30,7 +30,9 @@ export class LoginComponent {
     public SampleLogoURL: string = "./Images/ApplicationLogo/Angular/AngularLogo.png";
     PasswordExpirationDateMessage: string;
     PasswordExpirationDateMessage2: string;
-
+    PasswordImage: string = "./Images/LoginScreen/password_eye_closed.png";
+    PasswordTitle: string = "Show";
+    PasswordWidth: number = 280;
     IsShowAreaCaptcha: boolean;
     CaptchaImageUrl: string;
     CaptchaTextValue: string;
@@ -275,10 +277,11 @@ export class LoginComponent {
     InputPasswordType: string = "password";
     ShowHidePasswordClick() {
 
-        var showHidePasswordLink = document.getElementById("ShowHidePasswordLinkId");
-        if (showHidePasswordLink) {
-            showHidePasswordLink.innerText = showHidePasswordLink.innerText == "Hide" ? "Show" : "Hide";
+        var showHidePasswordImage = document.getElementById("ShowHidePasswordImageId");
+        if (showHidePasswordImage) {
+            this.PasswordImage = this.PasswordImage == "./Images/LoginScreen/password_eye.png" ? "./Images/LoginScreen/password_eye_closed.png" : "./Images/LoginScreen/password_eye.png";
             this.InputPasswordType = this.InputPasswordType == "password" ? "text" : "password";
+            this.PasswordTitle = this.PasswordTitle == "Show" ? "Hide" : "Show";
         }
 
 

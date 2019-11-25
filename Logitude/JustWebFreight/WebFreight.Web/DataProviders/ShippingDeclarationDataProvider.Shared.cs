@@ -440,6 +440,6 @@ namespace WebFreight.Web.DataProviders
         public string ShipperNotExporterAddress_WithName { get; set; }
         public string ConsigneeAddress_WithName { get; set; }
         public string NotifyAddress_WithName { get; set; }
-        public string NotifyAddress2_WithName { get; set; }
+        public string Notify2Address_WithName { get; set; }
     }
 }

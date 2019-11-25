@@ -17,7 +17,7 @@ using Logitude.Accounting.Data;
 using Simplog.Server.Infrastructure;
 namespace Logitude.Accounting.BL.EntityQueryServices
 { 
-   public partial class InterestBasesPeriodQueryService: EntityQueryService<InterestBasesPeriod,InterestBasesPeriodKeys,InterestBasesPeriodPM,object,InterestBasesPeriodKeys>
+   public partial class InterestBasesPeriodQueryService: EntityQueryService<InterestBasesPeriod,InterestBasesPeriodKeys,InterestBasesPeriodPM,InterestBasesTypePM,InterestBasesTypeKeys>
    {
    
         InterestBasesPeriodRepository repository;

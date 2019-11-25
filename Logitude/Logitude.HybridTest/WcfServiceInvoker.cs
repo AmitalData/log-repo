@@ -64,7 +64,11 @@ namespace Logitude.HybridTest
                     see => see.Contract.Name == contract.Name).ToList();
             }
             CompilerResults compilerResults = GetCompilerResults(generator);
-            string IServiceName = "I" + serviceProperties.ServiceName + "WcfService";
+            string IServiceName = "I" + serviceProperties.ServiceName;
+            if (serviceProperties.ServiceName == "ContactPassword")
+                IServiceName += "Service";
+            else
+                IServiceName += "WcfService";
             ServiceEndpoint serviceEndPoint = endpointsForContracts[IServiceName].First();
             object serviceClient = GetServiceClient(compilerResults, serviceEndPoint, serviceProperties);
             return serviceClient;
@@ -72,14 +76,24 @@ namespace Logitude.HybridTest
 
         private static WsdlImporter ImportContractsAndEndPoints(InvokedProperties serviceProperties)
         {
-            Uri mexAddress = new Uri(TestEnvironmentGlobalParameters.ServerURL + "/WcfApi/" + serviceProperties.ServiceName + "WcfService.svc?wsdl");
+            string uri = TestEnvironmentGlobalParameters.ServerURL + "/WcfApi/" + serviceProperties.ServiceName;
+            if(serviceProperties.ServiceName == "ContactPassword")
+                uri += "Service.svc?wsdl";
+            else
+                uri += "WcfService.svc?wsdl";
+            Uri mexAddress = new Uri(uri);
             MetadataExchangeClientMode mexMode = MetadataExchangeClientMode.HttpGet;
-
-            // Get Metadata file from service
-            MetadataExchangeClient mexClient = new MetadataExchangeClient(mexAddress, mexMode)
+            WSHttpBinding binding = new WSHttpBinding(SecurityMode.None)
             {
+                MaxReceivedMessageSize = 50000000
+            };
+
+            MetadataExchangeClient mexClient = new MetadataExchangeClient(binding)
+            {
+                MaximumResolvedReferences = 50000000,
                 ResolveMetadataReferences = true
             };
+
             MetadataSet metaSet = mexClient.GetMetadata(mexAddress, mexMode);
 
             WsdlImporter importer = new WsdlImporter(metaSet);
@@ -89,8 +103,9 @@ namespace Logitude.HybridTest
             };
             xsd.Options.ImportXmlType = true;
             xsd.Options.GenerateSerializable = true;
-            xsd.Options.ReferencedTypes.Add(serviceProperties.ServiceType);
             xsd.Options.ReferencedTypes.Add(typeof(Response));
+            if (serviceProperties.ServiceType != null)
+                xsd.Options.ReferencedTypes.Add(serviceProperties.ServiceType);
             if(serviceProperties.ServiceFilterType != null)
                 xsd.Options.ReferencedTypes.Add(serviceProperties.ServiceFilterType);
 
@@ -120,7 +135,11 @@ namespace Logitude.HybridTest
 
         private static object GetServiceClient(CompilerResults compilerResults, ServiceEndpoint serviceEndPoint, InvokedProperties serviceProperties)
         {
-            string IServiceName = "I" + serviceProperties.ServiceName + "WcfService";
+            string IServiceName = "I" + serviceProperties.ServiceName;
+            if (serviceProperties.ServiceName == "ContactPassword")
+                IServiceName += "Service";
+            else
+                IServiceName += "WcfService";
             Type clientProxyType = compilerResults.CompiledAssembly.GetTypes().FirstOrDefault(
                      t => t.IsClass &&
                          t.GetInterface(IServiceName) != null &&
