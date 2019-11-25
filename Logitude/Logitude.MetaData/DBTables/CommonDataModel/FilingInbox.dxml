@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="FilingInboxes">
+  <Column Name="BodyDocumentId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="IsDeleted" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Sender" Type="nvarchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Subject" Type="nvarchar" Size="200">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UpdateDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="UpdatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="FilingInboxAttachments" ParentColumnName="FilingInboxId" ReferencedTableName="FilingInboxes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FilingInboxAttachments_dbo.FilingInboxes_FilingInboxId" />
+</Table>

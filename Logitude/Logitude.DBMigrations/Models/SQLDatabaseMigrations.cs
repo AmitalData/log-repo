@@ -54,9 +54,18 @@ namespace Logitude.DBMigrations.Models
 
         protected override TableDefinition GetCurrentTableDefinitionFromDB(string tableName)
         {
-            string queryString = @"SELECT COL.COLUMN_NAME AS ColumnName, COL.IS_NULLABLE AS Nullable, COL.DATA_TYPE AS DataType, COL.CHARACTER_MAXIMUM_LENGTH AS Size, CON.CONSTRAINT_NAME AS ConstraintName, TCON.CONSTRAINT_TYPE AS ConstraintType " +
-                                  "FROM INFORMATION_SCHEMA.COLUMNS COL LEFT OUTER JOIN INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE CON ON COL.COLUMN_NAME = CON.COLUMN_NAME LEFT OUTER JOIN INFORMATION_SCHEMA.TABLE_CONSTRAINTS TCON ON CON.CONSTRAINT_NAME = TCON.CONSTRAINT_NAME " +
-                                  "WHERE COL.TABLE_NAME = @tableName AND(CON.TABLE_NAME = @tableName OR CON.TABLE_NAME IS NULL)";
+            string queryString = @"SELECT Q1.*, Q2.ConstraintType, Q2.ConstraintName " +
+                                  "FROM ( " +
+                                  "SELECT COL.COLUMN_NAME AS ColumnName, IS_NULLABLE AS Nullable, DATA_TYPE AS DataType, CHARACTER_MAXIMUM_LENGTH AS Size " +
+                                  "FROM INFORMATION_SCHEMA.COLUMNS AS COL " +
+                                  "WHERE COL.TABLE_NAME = @tableName " +
+                                  ") AS Q1 " +
+                                  "LEFT JOIN ( " +
+                                  "SELECT CON.COLUMN_NAME AS ColumnName, TCON.CONSTRAINT_TYPE AS ConstraintType, TCON.CONSTRAINT_NAME AS ConstraintName " +
+                                  "FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS AS TCON " +
+                                  "INNER JOIN INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE AS CON ON TCON.CONSTRAINT_NAME = CON.CONSTRAINT_NAME " +
+                                  "WHERE TCON.TABLE_NAME = @tableName " +
+                                  ") AS Q2 ON Q2.ColumnName = Q1.ColumnName";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -125,7 +134,7 @@ namespace Logitude.DBMigrations.Models
         protected override string GetCreateTableScript()
         {
             string createTableScript = "-- Create New Table With Name " + DXMLTable.Name + "\n";
-            createTableScript += "CREATE TABLE " + DXMLTable.Name + "(" + "\n";
+            createTableScript += "CREATE TABLE [" + DXMLTable.Name + "](" + "\n";
             foreach (var column in DXMLTable.Columns)
             {
                 createTableScript += GetCreateColumnScript(column) + "\n";
@@ -133,16 +142,16 @@ namespace Logitude.DBMigrations.Models
 
             if (DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Any())
             {
-                string primaryKeyColumns = string.Join(",", DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Select(c => c.Name).ToArray());
+                string primaryKeyColumns = string.Join(",", DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Select(c => "[" + c.Name + "]").ToArray());
                 createTableScript += "PRIMARY KEY(" + primaryKeyColumns + ")" + "\n";
             }
-            createTableScript += ")" + "\n\n";
+            createTableScript += ");" + "\n\n";
             return createTableScript;
         }
 
         protected override string GetCreateColumnScript(ColumnDefinition columnDefinition)
         {
-            string columnScript = columnDefinition.Name + " ";
+            string columnScript = "[" + columnDefinition.Name + "]" + " ";
             columnScript += GetDataTypeScript(columnDefinition.Type, columnDefinition.Size);
             columnScript += columnDefinition.Constraints.Nullable ? " NULL" : " NOT NULL";
             columnScript += ",";
@@ -253,8 +262,8 @@ namespace Logitude.DBMigrations.Models
         protected override string GetAddColumnScript(ColumnMigration columnMigration)
         {
             string addScript = "-- Add New Column With Name " + columnMigration.NewColumn.Name + "\n";
-            addScript += "ALTER TABLE " + TableMigrations.DxmlTableName + " ";
-            addScript += "ADD " + columnMigration.NewColumn.Name + " ";
+            addScript += "ALTER TABLE " + "[" + TableMigrations.DxmlTableName + "]" + " ";
+            addScript += "ADD " + "[" + columnMigration.NewColumn.Name + "]" + " ";
             addScript += GetDataTypeScript(columnMigration.NewColumn.Type, columnMigration.NewColumn.Size);
             addScript += columnMigration.NewColumn.Constraints.Nullable ? " NULL" : " NOT NULL";
             addScript += "\n\n";
@@ -284,8 +293,8 @@ namespace Logitude.DBMigrations.Models
         protected override string GetAlterTypeScript(ColumnMigration columnMigration)
         {
             string alterTypeScript = "-- Change Type From " + columnMigration.CurrentColumn.Type + " To " + columnMigration.NewColumn.Type + " For Column " + columnMigration.CurrentColumn.Name + "\n";
-            alterTypeScript += "ALTER TABLE " + TableMigrations.DxmlTableName + " ";
-            alterTypeScript += "ALTER COLUMN " + columnMigration.CurrentColumn.Name + " ";
+            alterTypeScript += "ALTER TABLE " + "[" + TableMigrations.DxmlTableName + "]" + " ";
+            alterTypeScript += "ALTER COLUMN " + "[" + columnMigration.CurrentColumn.Name + "]" + " ";
             alterTypeScript += GetDataTypeScript(columnMigration.NewColumn.Type, columnMigration.CurrentColumn.Size == 0 ? 10 : columnMigration.CurrentColumn.Size);
             if (!columnMigration.CurrentColumn.Constraints.Nullable)
             {
@@ -298,8 +307,8 @@ namespace Logitude.DBMigrations.Models
         {
             bool IsAlterTypeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERTYPE).Any();
             string alterSizeScript = "-- Change Size From " + columnMigration.CurrentColumn.Size + " To " + columnMigration.NewColumn.Size + " For Column " + columnMigration.CurrentColumn.Name + "\n";
-            alterSizeScript += "ALTER TABLE " + TableMigrations.DxmlTableName + " ";
-            alterSizeScript += "ALTER COLUMN " + columnMigration.CurrentColumn.Name + " ";
+            alterSizeScript += "ALTER TABLE " + "[" + TableMigrations.DxmlTableName + "]" + " ";
+            alterSizeScript += "ALTER COLUMN " + "[" + columnMigration.CurrentColumn.Name + "]" + " ";
             alterSizeScript += GetDataTypeScript((IsAlterTypeInMigrationsList ? columnMigration.NewColumn.Type : columnMigration.CurrentColumn.Type), columnMigration.NewColumn.Size);
             if (!columnMigration.CurrentColumn.Constraints.Nullable)
             {
@@ -329,8 +338,8 @@ namespace Logitude.DBMigrations.Models
             bool IsAlterTypeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERTYPE).Any();
             bool IsAlterSizeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERSIZE).Any();
             string setNullableScript = "-- Set Nullable For Column " + columnMigration.CurrentColumn.Name + "\n";
-            setNullableScript += "ALTER TABLE " + TableMigrations.DxmlTableName + " ";
-            setNullableScript += "ALTER COLUMN " + columnMigration.CurrentColumn.Name + " ";
+            setNullableScript += "ALTER TABLE " + "[" + TableMigrations.DxmlTableName + "]" + " ";
+            setNullableScript += "ALTER COLUMN " + "[" + columnMigration.CurrentColumn.Name + "]" + " ";
             setNullableScript += GetDataTypeScript((IsAlterTypeInMigrationsList ? columnMigration.NewColumn.Type : columnMigration.CurrentColumn.Type), (IsAlterSizeInMigrationsList ? columnMigration.NewColumn.Size : columnMigration.CurrentColumn.Size));
             setNullableScript += " NULL";
             return setNullableScript + "\n\n";
@@ -341,8 +350,8 @@ namespace Logitude.DBMigrations.Models
             bool IsAlterTypeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERTYPE).Any();
             bool IsAlterSizeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERSIZE).Any();
             string unsetNullableScript = "-- Unset Nullable For Column " + columnMigration.CurrentColumn.Name + "\n";
-            unsetNullableScript += "ALTER TABLE " + TableMigrations.DxmlTableName + " ";
-            unsetNullableScript += "ALTER COLUMN " + columnMigration.CurrentColumn.Name + " ";
+            unsetNullableScript += "ALTER TABLE " + "[" + TableMigrations.DxmlTableName + "]" + " ";
+            unsetNullableScript += "ALTER COLUMN " + "[" + columnMigration.CurrentColumn.Name + "]" + " ";
             unsetNullableScript += GetDataTypeScript((IsAlterTypeInMigrationsList ? columnMigration.NewColumn.Type : columnMigration.CurrentColumn.Type), (IsAlterSizeInMigrationsList ? columnMigration.NewColumn.Size : columnMigration.CurrentColumn.Size));
             unsetNullableScript += " NOT NULL";
             return unsetNullableScript + "\n\n";

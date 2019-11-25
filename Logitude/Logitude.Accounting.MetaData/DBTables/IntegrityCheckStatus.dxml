@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="IntegrityCheckStatuses">
+  <Column Name="Code" Type="varchar" Size="1">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="100">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="AccountingIntegrityChecks" ParentColumnName="StatusCode" ReferencedTableName="IntegrityCheckStatuses" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.AccountingIntegrityChecks_dbo.IntegrityCheckStatuses_StatusCode" />
+</Table>

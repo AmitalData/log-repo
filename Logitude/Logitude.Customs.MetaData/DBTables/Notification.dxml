@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="Notifications">
+  <Column Name="AssigneToId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AssigneToNotificationTypeCode" Type="varchar" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="BadjCount" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ClosedByAssignee" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ClosedByCustomOfficeUserId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreatedByRequestID" Type="varchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CustomerId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DeclarationOfficeCode" Type="varchar" Size="17">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DepartmentId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Description" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DueDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EntityId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="IsClosedBCustomOffice" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsClosedByAssignee" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsHandledByCustomOffice" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsSeenByAssignee" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="NotificationDefinitionCode" Type="varchar" Size="5">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ObjectTableId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Reference1Number" Type="varchar" Size="256">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Reference2Number" Type="varchar" Size="256">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ResponseNotes" Type="nvarchar" Size="4000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="NotificationReplies" ParentColumnName="NotificationId" ReferencedTableName="Notifications" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.NotificationReplies_Customs.Notifications_NotificationId" />
+</Table>

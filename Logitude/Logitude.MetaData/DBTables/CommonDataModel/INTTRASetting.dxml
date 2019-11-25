@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="INTTRASettings">
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="InSettingsId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="INTTRAAlias" Type="varchar" Size="35">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="INTTRAId" Type="varchar" Size="35">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="INTTRASettingModeCode" Type="varchar" Size="4">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="OutSettingsId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+</Table>

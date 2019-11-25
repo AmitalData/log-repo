@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="CardContacts">
+  <Column Name="CardId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ContactId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="InternetAccess" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsAirExport" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsAirImport" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsAll" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsCustomsImport" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsInlandDomestic" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsInlandExport" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsInlandImport" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsOceanExport" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsOceanImport" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LastLoginDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="CardContactProducts" ParentColumnName="CardContactId" ReferencedTableName="CardContacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CardContactProducts_dbo.CardContacts_CardContactId" />
+  <Relation ParentTableName="CardContactAdditionalServices" ParentColumnName="CardContactId" ReferencedTableName="CardContacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CardContactAdditionalServices_dbo.CardContacts_CardContactId" />
+</Table>

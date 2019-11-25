@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="ClaimsRelatedEntities">
+  <Column Name="AbandonmentDestructionReferenc" Type="varchar" Size="22">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ClaimAmount" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ClaimEntityNumber" Type="varchar" Size="35">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ClaimEntityTypeCode" Type="varchar" Size="5">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ClaimExplanation" Type="nvarchar" Size="256">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ClaimId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="ClaimRequestNumber" Type="varchar" Size="9">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CommitteeDecisionNumber" Type="varchar" Size="22">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ContinuousMessagesTypeCode" Type="varchar" Size="9">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CourtCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CustomsBranchCode" Type="varchar" Size="17">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CustomsExceptions" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DecisionCode" Type="nvarchar" Size="128">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DecisionNote" Type="nvarchar" Size="256">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DeclarationVersion" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DepositingAmount" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EilatVatRefoundDecision" Type="nvarchar" Size="256">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EntityCounterKey" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="ExternalClaimNumber" Type="varchar" Size="35">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IsFinancialRefundDemand" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Numeral" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ProceedingNumber" Type="varchar" Size="22">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="RefundAmount" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SeconderyClaimEntityCode" Type="varchar" Size="5">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SeconderyClaimEntityID" Type="varchar" Size="35">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TapagNumber" Type="varchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="WarehouseTypeCode" Type="varchar" Size="17">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="ClaimsRelatedEntitiesAmounts" ParentColumnName="ClaimId" ReferencedTableName="ClaimsRelatedEntities" ReferencedColumnName="ClaimId" ForeignKeyConstraintName="FK_Customs.ClaimsRelatedEntitiesAmounts_Customs.ClaimsRelatedEntities_ClaimId_CounterKey" />
+  <Relation ParentTableName="ClaimsRelatedEntitiesReasons" ParentColumnName="ClaimId" ReferencedTableName="ClaimsRelatedEntities" ReferencedColumnName="ClaimId" ForeignKeyConstraintName="FK_Customs.ClaimsRelatedEntitiesReasons_Customs.ClaimsRelatedEntities_ClaimId_CounterKey" />
+  <Relation ParentTableName="ClaimsRelatedEntsExpDeclars" ParentColumnName="ClaimId" ReferencedTableName="ClaimsRelatedEntities" ReferencedColumnName="ClaimId" ForeignKeyConstraintName="FK_Customs.ClaimsRelatedEntsExpDeclars_Customs.ClaimsRelatedEntities_ClaimId_CounterKey" />
+  <Relation ParentTableName="ClaimsRelatedEntitiesAmounts" ParentColumnName="CounterKey" ReferencedTableName="ClaimsRelatedEntities" ReferencedColumnName="EntityCounterKey" ForeignKeyConstraintName="FK_Customs.ClaimsRelatedEntitiesAmounts_Customs.ClaimsRelatedEntities_ClaimId_CounterKey" />
+  <Relation ParentTableName="ClaimsRelatedEntitiesReasons" ParentColumnName="CounterKey" ReferencedTableName="ClaimsRelatedEntities" ReferencedColumnName="EntityCounterKey" ForeignKeyConstraintName="FK_Customs.ClaimsRelatedEntitiesReasons_Customs.ClaimsRelatedEntities_ClaimId_CounterKey" />
+  <Relation ParentTableName="ClaimsRelatedEntsExpDeclars" ParentColumnName="CounterKey" ReferencedTableName="ClaimsRelatedEntities" ReferencedColumnName="EntityCounterKey" ForeignKeyConstraintName="FK_Customs.ClaimsRelatedEntsExpDeclars_Customs.ClaimsRelatedEntities_ClaimId_CounterKey" />
+</Table>

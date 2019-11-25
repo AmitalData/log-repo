@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="GLAccounts">
+  <Column Name="AccountTypeCode" Type="varchar" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AssessingOfficeCode" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AutomaticReconcileId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Category1Id" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Category2Id" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Category3Id" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Category4Id" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Category5Id" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ChartOfAccountsId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ChartOfAccountsTypeCode" Type="varchar" Size="1">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ConsolidationVat" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ControlAccountId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CreatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CurrencyId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CustomerGLAccountId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DeductionFileNumber" Type="varchar" Size="30">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DeductionFileTypeId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DeductionTypeId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DisplayNumber" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EnglishName" Type="varchar" Size="75">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ExcludeFromDeductionReport" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Inactive" Type="bit">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="InternalNumber" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IsControlAccount" Type="bit">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IsEquipmentVendor" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsMultiCurrency" Type="bit">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IsVATExempt" Type="bit">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LocalName" Type="nvarchar" Size="105">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Occupation" Type="nvarchar" Size="60">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ParentAccountId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PreviousChartOfAccountsChangeDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PreviousChartOfAccountsId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PreviousEnglishName" Type="varchar" Size="75">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PreviousEnglishNameChangeDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PreviousLocalName" Type="nvarchar" Size="105">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PreviousLocalNameChangeDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PreviousNumber" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PreviousNumberChangeDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ReconcileMethodCode" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="RevaluationEnabled" Type="bit">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="RevenueExpenseType" Type="varchar" Size="1">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="4000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UpdateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UpdatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="PaymentCheques" ParentColumnName="BankAccountGLAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.PaymentCheques_dbo.GLAccounts_BankAccountGLAccountId" />
+  <Relation ParentTableName="PaymentCheques" ParentColumnName="PayToGLAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.PaymentCheques_dbo.GLAccounts_PayToGLAccountId" />
+  <Relation ParentTableName="ExternalReconciliations" ParentColumnName="GLAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ExternalReconciliations_dbo.GLAccounts_GLAccountId" />
+  <Relation ParentTableName="LedgerTransactions" ParentColumnName="AccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.LedgerTransactions_dbo.GLAccounts_AccountId" />
+  <Relation ParentTableName="LedgerTransactions" ParentColumnName="ControlAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.LedgerTransactions_dbo.GLAccounts_ControlAccountId" />
+  <Relation ParentTableName="LedgerTransactions" ParentColumnName="OppositeAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.LedgerTransactions_dbo.GLAccounts_OppositeAccountId" />
+  <Relation ParentTableName="JournalLines" ParentColumnName="CreditAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.JournalLines_dbo.GLAccounts_CreditAccountId" />
+  <Relation ParentTableName="JournalLines" ParentColumnName="CreditControlAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.JournalLines_dbo.GLAccounts_CreditControlAccountId" />
+  <Relation ParentTableName="JournalLines" ParentColumnName="DebitAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.JournalLines_dbo.GLAccounts_DebitAccountId" />
+  <Relation ParentTableName="JournalLines" ParentColumnName="DebitControlAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.JournalLines_dbo.GLAccounts_DebitControlAccountId" />
+  <Relation ParentTableName="ReconcileExternalPages" ParentColumnName="GLAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ReconcileExternalPages_dbo.GLAccounts_GLAccountId" />
+  <Relation ParentTableName="BankAccounts" ParentColumnName="DeferredGLAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BankAccounts_dbo.GLAccounts_DeferredGLAccountId" />
+  <Relation ParentTableName="BankAccounts" ParentColumnName="GLAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BankAccounts_dbo.GLAccounts_GLAccountId" />
+  <Relation ParentTableName="BankAccounts" ParentColumnName="TransferGLAcccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BankAccounts_dbo.GLAccounts_TransferGLAcccountId" />
+  <Relation ParentTableName="GLAccounts" ParentColumnName="ControlAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.GLAccounts_dbo.GLAccounts_ControlAccountId" />
+  <Relation ParentTableName="FullAccountingSettings" ParentColumnName="AirExportJobControlAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FullAccountingSettings_dbo.GLAccounts_AirExportJobControlAccountId" />
+  <Relation ParentTableName="FullAccountingSettings" ParentColumnName="AirImportJobControlAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FullAccountingSettings_dbo.GLAccounts_AirImportJobControlAccountId" />
+  <Relation ParentTableName="FullAccountingSettings" ParentColumnName="CustomerControlAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FullAccountingSettings_dbo.GLAccounts_CustomerControlAccountId" />
+  <Relation ParentTableName="FullAccountingSettings" ParentColumnName="CustomsGLAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FullAccountingSettings_dbo.GLAccounts_CustomsGLAccountId" />
+  <Relation ParentTableName="FullAccountingSettings" ParentColumnName="DefaultDifferencesGLAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FullAccountingSettings_dbo.GLAccounts_DefaultDifferencesGLAccountId" />
+  <Relation ParentTableName="FullAccountingSettings" ParentColumnName="DefaultExternalDiffGLAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FullAccountingSettings_dbo.GLAccounts_DefaultExternalDiffGLAccountId" />
+  <Relation ParentTableName="CashBooks" ParentColumnName="AccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CashBooks_dbo.GLAccounts_AccountId" />
+  <Relation ParentTableName="FullAccountingSettings" ParentColumnName="ExchangeRateDiffGLAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FullAccountingSettings_dbo.GLAccounts_ExchangeRateDiffGLAccountId" />
+  <Relation ParentTableName="FullAccountingSettings" ParentColumnName="FileControlAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FullAccountingSettings_dbo.GLAccounts_FileControlAccountId" />
+  <Relation ParentTableName="FullAccountingSettings" ParentColumnName="OceanExportJobControlAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FullAccountingSettings_dbo.GLAccounts_OceanExportJobControlAccountId" />
+  <Relation ParentTableName="FullAccountingSettings" ParentColumnName="OceanImportJobControlAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FullAccountingSettings_dbo.GLAccounts_OceanImportJobControlAccountId" />
+  <Relation ParentTableName="FullAccountingSettings" ParentColumnName="RevenueExpenseGLAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FullAccountingSettings_dbo.GLAccounts_RevenueExpenseGLAccountId" />
+  <Relation ParentTableName="FullAccountingSettings" ParentColumnName="TaxWithholdingGLAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FullAccountingSettings_dbo.GLAccounts_TaxWithholdingGLAccountId" />
+  <Relation ParentTableName="FullAccountingSettings" ParentColumnName="VATInputsGLAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FullAccountingSettings_dbo.GLAccounts_VATInputsGLAccountId" />
+  <Relation ParentTableName="FullAccountingSettings" ParentColumnName="VATOutputGLAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FullAccountingSettings_dbo.GLAccounts_VATOutputGLAccountId" />
+  <Relation ParentTableName="FullAccountingSettings" ParentColumnName="VendorControlAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FullAccountingSettings_dbo.GLAccounts_VendorControlAccountId" />
+  <Relation ParentTableName="Reconciliations" ParentColumnName="AccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Reconciliations_dbo.GLAccounts_AccountId" />
+  <Relation ParentTableName="GLAccountCurrencies" ParentColumnName="GLAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.GLAccountCurrencies_dbo.GLAccounts_GLAccountId" />
+  <Relation ParentTableName="GLAccountCurrencies" ParentColumnName="MainGLAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.GLAccountCurrencies_dbo.GLAccounts_MainGLAccountId" />
+  <Relation ParentTableName="GLAccountMoreDatas" ParentColumnName="AccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.GLAccountMoreDatas_dbo.GLAccounts_AccountId" />
+  <Relation ParentTableName="GLAccountTotalByMonths" ParentColumnName="AccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.GLAccountTotalByMonths_dbo.GLAccounts_AccountId" />
+  <Relation ParentTableName="GLAccountWithholdingTax" ParentColumnName="GLAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.GLAccountWithholdingTax_dbo.GLAccounts_GLAccountId" />
+  <Relation ParentTableName="Revaluations" ParentColumnName="GLAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Revaluations_dbo.GLAccounts_GLAccountId" />
+  <Relation ParentTableName="Revaluations" ParentColumnName="RevaluationsGLAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Revaluations_dbo.GLAccounts_RevaluationsGLAccountId" />
+</Table>

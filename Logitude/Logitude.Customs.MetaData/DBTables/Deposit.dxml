@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="Deposits">
+  <Column Name="BirthDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DepositAmount" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DepositEssenceTypeCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DepositValidityDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EngineNumber" Type="varchar" Size="25">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EntityNumber" Type="varchar" Size="25">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EntityTypeCode" Type="varchar" Size="9">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="LawyerNumber" Type="varchar" Size="9">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PaymentNumber" Type="varchar" Size="9">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="RequestValidityDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TapagID" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TradeMarkNumber" Type="varchar" Size="6">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="VehicleChassisNumber" Type="varchar" Size="20">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="DepositConditions" ParentColumnName="DepositId" ReferencedTableName="Deposits" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.DepositConditions_Customs.Deposits_DepositId" />
+</Table>

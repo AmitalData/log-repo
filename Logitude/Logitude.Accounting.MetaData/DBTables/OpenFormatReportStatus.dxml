@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="OpenFormatReportStatuses">
+  <Column Name="Code" Type="varchar" Size="1">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="EnglishName" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LocalName" Type="nvarchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="OpenFormatReports" ParentColumnName="StatusTypeCode" ReferencedTableName="OpenFormatReportStatuses" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.OpenFormatReports_dbo.OpenFormatReportStatuses_StatusTypeCode" />
+</Table>

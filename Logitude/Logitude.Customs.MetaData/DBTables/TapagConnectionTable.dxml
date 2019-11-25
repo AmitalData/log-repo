@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="TapagConnectionTables">
+  <Column Name="CustomsNumeral" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CustomsTapagFile" Type="varchar" Size="25">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DeclarationId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="RequestFileNumber" Type="varchar" Size="35">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TapagId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+</Table>

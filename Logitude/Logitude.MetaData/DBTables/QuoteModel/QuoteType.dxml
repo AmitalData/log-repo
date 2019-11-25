@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="QuoteTypes">
+  <Column Name="Code" Type="varchar" Size="1">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="40">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="Quotes" ParentColumnName="QuoteTypeCode" ReferencedTableName="QuoteTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.QuoteTypes_QuoteTypeCode" />
+  <Relation ParentTableName="QuoteTemplates" ParentColumnName="TemplateTypeCode" ReferencedTableName="QuoteTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.QuoteTemplates_dbo.QuoteTypes_TemplateTypeCode" />
+</Table>

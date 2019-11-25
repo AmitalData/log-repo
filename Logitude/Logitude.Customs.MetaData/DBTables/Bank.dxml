@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="Banks">
+  <Column Name="Code" Type="varchar" Size="2">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="EnglishName" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Inactive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LocalName" Type="nvarchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="PaymentOrderMethods" ParentColumnName="BankCode" ReferencedTableName="Banks" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.PaymentOrderMethods_Customs.Banks_BankCode" />
+  <Relation ParentTableName="Claims" ParentColumnName="BankTypeCode" ReferencedTableName="Banks" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Claims_Customs.Banks_BankTypeCode" />
+  <Relation ParentTableName="CustomsBranches" ParentColumnName="BankCode" ReferencedTableName="Banks" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomsBranches_Customs.Banks_BankCode" />
+  <Relation ParentTableName="DeclarationPaymentMethods" ParentColumnName="BankCode" ReferencedTableName="Banks" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.DeclarationPaymentMethods_Customs.Banks_BankCode" />
+  <Relation ParentTableName="CustomBanks" ParentColumnName="BankCode" ReferencedTableName="Banks" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomBanks_Customs.Banks_BankCode" />
+</Table>

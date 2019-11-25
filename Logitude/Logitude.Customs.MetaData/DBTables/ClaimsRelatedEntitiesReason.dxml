@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="ClaimsRelatedEntitiesReasons">
+  <Column Name="ClaimId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="CounterKey" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="LineNo" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="ReasonListTypeCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="ClaimsRelatedEntsReasonsExps" ParentColumnName="ClaimId" ReferencedTableName="ClaimsRelatedEntitiesReasons" ReferencedColumnName="ClaimId" ForeignKeyConstraintName="FK_Customs.ClaimsRelatedEntsReasonsExps_Customs.ClaimsRelatedEntitiesReasons_ClaimId_CounterKey_ReasonLineNo" />
+  <Relation ParentTableName="ClaimsRelatedEntsReasonsExps" ParentColumnName="CounterKey" ReferencedTableName="ClaimsRelatedEntitiesReasons" ReferencedColumnName="CounterKey" ForeignKeyConstraintName="FK_Customs.ClaimsRelatedEntsReasonsExps_Customs.ClaimsRelatedEntitiesReasons_ClaimId_CounterKey_ReasonLineNo" />
+  <Relation ParentTableName="ClaimsRelatedEntsReasonsExps" ParentColumnName="ReasonLineNo" ReferencedTableName="ClaimsRelatedEntitiesReasons" ReferencedColumnName="LineNo" ForeignKeyConstraintName="FK_Customs.ClaimsRelatedEntsReasonsExps_Customs.ClaimsRelatedEntitiesReasons_ClaimId_CounterKey_ReasonLineNo" />
+</Table>

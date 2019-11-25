@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="Feeds">
+  <Column Name="IsCancelled" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="PostDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="PostId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UpdateDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="UserId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+</Table>

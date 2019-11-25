@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="CustomsShippers">
+  <Column Name="CustomsShipperCode" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="varchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ValidDepositionNumber" Type="varchar" Size="20">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ValidityEndDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ValidityStartDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="CustomerDepositions" ParentColumnName="CustomsShipperId" ReferencedTableName="CustomsShippers" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomerDepositions_dbo.CustomsShippers_CustomsShipperId" />
+</Table>

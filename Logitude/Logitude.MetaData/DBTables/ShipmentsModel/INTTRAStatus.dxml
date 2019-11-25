@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="INTTRAStatuses">
+  <Column Name="Code" Type="varchar" Size="2">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="100">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="ShipmentPackages" ParentColumnName="LastStatusCode" ReferencedTableName="INTTRAStatuses" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ShipmentPackages_dbo.INTTRAStatuses_LastStatusCode" />
+  <Relation ParentTableName="ShipmentContainerStatuses" ParentColumnName="StatusCode" ReferencedTableName="INTTRAStatuses" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ShipmentContainerStatuses_dbo.INTTRAStatuses_StatusCode" />
+</Table>

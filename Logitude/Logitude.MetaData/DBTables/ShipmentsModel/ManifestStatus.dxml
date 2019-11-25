@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="ManifestStatus">
+  <Column Name="Code" Type="varchar" Size="4">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="40">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="ShipmentMasterDatas" ParentColumnName="ManifestStatusCode" ReferencedTableName="ManifestStatus" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ShipmentMasterDatas_dbo.ManifestStatus_ManifestStatusCode" />
+</Table>

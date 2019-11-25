@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="GLAccountMoreDatas">
+  <Column Name="AccountId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="BalanceInLocalCurrency" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LocalBalanceInDue" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="NextDueDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TotalOpenChequesInLocalCur" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TotFutureOpenChequesInLocalCur" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+</Table>

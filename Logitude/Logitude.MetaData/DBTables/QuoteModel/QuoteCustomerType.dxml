@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="QuoteCustomerTypes">
+  <Column Name="Code" Type="varchar" Size="4">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="40">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ShowInLOV" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="Quotes" ParentColumnName="QuoteCustomerTypeCode" ReferencedTableName="QuoteCustomerTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.QuoteCustomerTypes_QuoteCustomerTypeCode" />
+</Table>

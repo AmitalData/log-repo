@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="ChargesGroups">
+  <Column Name="Code" Type="varchar" Size="5">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="LocalName" Type="nvarchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="40">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ViewOrder" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="ChargesTypes" ParentColumnName="ChargesGroupId" ReferencedTableName="ChargesGroups" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ChargesTypes_dbo.ChargesGroups_ChargesGroupId" />
+</Table>

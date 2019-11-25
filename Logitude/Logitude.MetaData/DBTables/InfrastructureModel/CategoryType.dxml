@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="CategoryTypes">
+  <Column Name="Code" Type="varchar" Size="4">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="40">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="MenusTables" ParentColumnName="CategoryTypeCode" ReferencedTableName="CategoryTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.MenusTables_dbo.CategoryTypes_CategoryTypeCode" />
+</Table>

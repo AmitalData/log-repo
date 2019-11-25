@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="TermsofUses">
+  <Column Name="Date" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Version" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Relation ParentTableName="TermsofUseSignatures" ParentColumnName="TermsofUseVersion" ReferencedTableName="TermsofUses" ReferencedColumnName="Version" ForeignKeyConstraintName="FK_dbo.TermsofUseSignatures_dbo.TermsofUses_TermsofUseVersion" />
+</Table>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="AddressTypes">
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="Addresses" ParentColumnName="AddressTypeId" ReferencedTableName="AddressTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Addresses_dbo.AddressTypes_AddressTypeId" />
+</Table>

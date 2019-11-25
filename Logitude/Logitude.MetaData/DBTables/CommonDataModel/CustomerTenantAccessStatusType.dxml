@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="CustomerTenantAccessStatusTypes">
+  <Column Name="Code" Type="varchar" Size="2">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="EnglishName" Type="varchar" Size="25">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LocalName" Type="nvarchar" Size="25">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="52">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="CustomerTenantAccesses" ParentColumnName="Status" ReferencedTableName="CustomerTenantAccessStatusTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.CustomerTenantAccesses_dbo.CustomerTenantAccessStatusTypes_Status" />
+  <Relation ParentTableName="CustomerTenantAccessCards" ParentColumnName="StatusTypeCode" ReferencedTableName="CustomerTenantAccessStatusTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.CustomerTenantAccessCards_dbo.CustomerTenantAccessStatusTypes_StatusTypeCode" />
+  <Relation ParentTableName="CustomerTenantAccessRequests" ParentColumnName="RequestStatus" ReferencedTableName="CustomerTenantAccessStatusTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.CustomerTenantAccessRequests_dbo.CustomerTenantAccessStatusTypes_RequestStatus" />
+</Table>

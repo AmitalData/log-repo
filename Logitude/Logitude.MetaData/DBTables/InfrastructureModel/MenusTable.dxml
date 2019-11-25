@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="MenusTables">
+  <Column Name="CategoryTypeCode" Type="varchar" Size="4">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Code" Type="varchar" Size="4">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="FeatureId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="HtmlView" Type="varchar" Size="120">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Icon" Type="varchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="IndexOfOrder" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="MenuTypeCode" Type="varchar" Size="4">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ObjectTableId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TextCode" Type="varchar" Size="50">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UserControlName" Type="varchar" Size="120">
+    <Constraints Nullable="true" />
+  </Column>
+</Table>

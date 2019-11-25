@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="Tenants">
+  <Column Name="AccountingActivated" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="AccountingActivationDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AddressId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AgentId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AllowAgentInCustomersLOV" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="AllowEAWBMoreThanTenPackages" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ApplyVATForAllPartners" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="BankDetails" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CAAT" Type="varchar" Size="4">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CASSCode" Type="varchar" Size="4">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CBSA" Type="varchar" Size="5">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ChargeableWeightUnitCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CheckDigitControlAlgorithmCode" Type="varchar" Size="4">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Company" Type="varchar" Size="100">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CurrencyId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CustomerId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CustomerTenantShareExportFile" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DateTimeFormat" Type="varchar" Size="100">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DayLightEndDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DayLightOffset" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DayLightStartDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DefaultQuestionnaireId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DefaultSLAId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DimensionsUnitCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Direction" Type="varchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EcommerceSupportEmail" Type="varchar" Size="50">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Email" Type="varchar" Size="50">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ExportFreightPrepaidCollectId" Type="varchar" Size="1">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ExportOtherPrepaidCollectId" Type="varchar" Size="1">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ExportQuotationsToIntegratedSystem" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="FMCNumber" Type="varchar" Size="25">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Format" Type="varchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FreightCurrencyId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="GrossWeightUnitCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="HasPrimaryContact" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IATA" Type="varchar" Size="7">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="ImportFreightPrepaidCollectId" Type="varchar" Size="1">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ImportOtherPrepaidCollectId" Type="varchar" Size="1">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="InvoiceSection1" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="InvoiceSection2" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IsCorrespondenceRightToLeftEnabled" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsCustomerAddress1Required" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsCustomerFaxRequired" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsCustomerTelRequired" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsCustomerTenantShare" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsDataBackupBuilt" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsFullTextSearchEnabled" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsHybrid" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsInternalTicketByDefault" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsMobileActivated" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsNotesRightToLeftEnabled" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsNumeric" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsPickDelAdrsRequired" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsPotentialFaxRequired" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsPotentialTelRequired" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsQuoteSubjectEdited" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsSharedLogisticsActivated" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsTestTenant" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsWebAccessActivated" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Language" Type="varchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LayoutDirection" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LocalAddressId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LocalCustomsCode" Type="varchar" Size="50">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="MasterExportFreightPrepaidCollectId" Type="varchar" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="MasterExportOtherPrepaidCollectId" Type="varchar" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="MasterImportFreightPrepaidCollectId" Type="varchar" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="MasterImportOtherPrepaidCollectId" Type="varchar" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="NumberFormatCode" Type="nvarchar" Size="128">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="OtherChargesCurrencyId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PasswordPolicyCode" Type="varchar" Size="4">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="PaymentTermId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ProfitCurrencyId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ProrateMasterReceivables" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="QuoteSaleCurrencyId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="RegulatedAgentNumber" Type="varchar" Size="5">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="RegulatedAgentRegimeActivated" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SCACCode" Type="varchar" Size="4">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SharedLogisticsMessageLink" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Signature" Type="varchar" Size="60">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="StorageEncryptionKey" Type="varchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TemperatureUnitCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TenantEmailSendingQuota" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TenantVATManagement" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TimeZoneOffset" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="VatFormatCountryId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="VatFormatTypeCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="VatMandatoryCountryId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="VatMandatoryForPotentialCustomers" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="VatMandatoryTypeCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="VatNumber" Type="varchar" Size="20">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="VatSize" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="VatUniqueCountryId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="VatUniqueTypeCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="VolumeUnitCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Website" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="WeightMeasurementUnitCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="Participants" ParentColumnName="ForwarderTenant" ReferencedTableName="Tenants" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Participants_dbo.Tenants_ForwarderTenant" />
+  <Relation ParentTableName="AccountingSettings" ParentColumnName="Id" ReferencedTableName="Tenants" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.AccountingSettings_dbo.Tenants_Id" />
+  <Relation ParentTableName="LogBoxTenantSettings" ParentColumnName="Id" ReferencedTableName="Tenants" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.LogBoxTenantSettings_dbo.Tenants_Id" />
+  <Relation ParentTableName="ContactTenants" ParentColumnName="TenantId" ReferencedTableName="Tenants" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ContactTenants_dbo.Tenants_TenantId" />
+  <Relation ParentTableName="CommunicationLogs" ParentColumnName="Tenant" ReferencedTableName="Tenants" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CommunicationLogs_dbo.Tenants_Tenant" />
+</Table>

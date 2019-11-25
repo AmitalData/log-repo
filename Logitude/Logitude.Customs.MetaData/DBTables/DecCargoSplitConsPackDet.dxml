@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="DecCargoSplitConsPackDets">
+  <Column Name="DecCargoSplitConsItemLine" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="DecCargoSplitConsLineNo" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="DeclarationCargoSplitId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="GrossMassMeasure" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ManifestNumber" Type="varchar" Size="35">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="MarksNumbers" Type="varchar" Size="255">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PackageLine" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="PackageQuantity" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="PackageTypeCode" Type="varchar" Size="4">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+</Table>

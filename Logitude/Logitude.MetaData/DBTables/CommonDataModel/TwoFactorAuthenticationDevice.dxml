@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="TwoFactorAuthenticationDevices">
+  <Column Name="AuthenticationCode" Type="varchar" Size="10">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CodeExpirationDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DeviceDescription" Type="nvarchar" Size="200">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="InActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsVerified" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LastLoginDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LastLoginIP" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TwoFactorkey" Type="varchar" Size="40">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UpdateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+</Table>
