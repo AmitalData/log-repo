@@ -36,26 +36,45 @@ export class OccasionMainTabComponent extends BaseComponent {
         if (this.EntityPM) {
             this.EntityId = this.EntityPM.Id;
         }
+        this.SetUIProperties_EntityClosed();
         this.LoadOccasionLinesData();
         this.Listen();
+       
     }
 
     private Listen() {
         if (this.CurrentSession.CurrentEditComponent != null) {
-
             this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.SetUIProperties_EntityClosed();
                     this.LoadOccasionLinesData();
+                  
                 }
             });
 
             this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.SetUIProperties_EntityClosed();
+                }
+            });
+
+            this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                if (tabCode == "OCMN") {
+                    this.SetUIProperties_EntityClosed();
+                    this.LoadOccasionLinesData();
+                   
                 }
             });
         }
+    }
+
+    IsOccasionEnabled = true; 
+    private SetUIProperties_EntityClosed() {
+        var isEnabled = this.EntityPM.OccasionStatusId == "CD" ? false : true;
+        this.IsOccasionEnabled = isEnabled;
+        this.UIProperties.SetEnabled("IsCheckedAllContacts", null, isEnabled); 
     }
 
     LoadOccasionLinesData() {
@@ -93,25 +112,30 @@ export class OccasionMainTabComponent extends BaseComponent {
     }
 
     AddContactsClicked() {
-        var logWindow = new LogitudeWindow();
-        logWindow.IsFillScreen = true;
-        logWindow.Title = "Add Contact";
-        logWindow.WindowArgs = this.EntityPM;
-        logWindow.Show("./CRMModules/CRMOccasion/Components/AddEdit/AddEditOccasionContactComponent");
-        logWindow.WindowClosed.subscribe(($event: any) => {
-            this.LoadOccasionLinesData();
-        });
+        if (this.IsOccasionEnabled) {
+            var logWindow = new LogitudeWindow();
+            logWindow.IsFillScreen = true;
+            logWindow.Title = "Add Contact";
+            logWindow.WindowArgs = this.EntityPM;
+            logWindow.Show("./CRMModules/CRMOccasion/Components/AddEdit/AddEditOccasionContactComponent");
+            logWindow.WindowClosed.subscribe(($event: any) => {
+                this.LoadOccasionLinesData();
+            });
+
+        }
     }
 
     DeleteOccasionInviteeClicked(item: OccasionLineClass) {
-        var confirmWindow = new ConfirmWindow();
-        confirmWindow.Show("Delete this invitee?");
-        confirmWindow.WindowClosed.subscribe((event: any) => {
-            if (confirmWindow.Yes) {
-                this.EntityPM.RemoveOccasionInvitee(item.EntityPM);
-                this.LoadOccasionLinesData();
-            }
-        });
+        if (this.IsOccasionEnabled) {
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Show("Delete this invitee?");
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    this.EntityPM.RemoveOccasionInvitee(item.EntityPM);
+                    this.LoadOccasionLinesData();
+                }
+            });
+        }
     }
 
     public isCheckedAllContacts: boolean;
@@ -275,66 +299,74 @@ export class OccasionMainTabComponent extends BaseComponent {
     }
 
     ActionsButtonClicked(args) {
-        switch (args) {
-            case "MAI":
-                {
-                    this.MarkInvitees_Action(true);
-                    this.IsCheckedAllContacts = false;
-                    break;
-                }
-            case "MAP":
-                {
-                    this.MarkParticipated_Action(true);
-                    this.IsCheckedAllContacts = false;
-                    break;
-                }
-            case "MAUI":
-                {
-                    this.MarkInvitees_Action(false);
-                    this.IsCheckedAllContacts = false;
-                    break;
-                }
-            case "MAUP":
-                {
-                    this.MarkParticipated_Action(false);
-                    this.IsCheckedAllContacts = false;
-                    break;
-                }
-            case "D":
-                {
-                    this.DeleteCheckedOccasionInvitee();
-                    break;
-                }
+        if (this.IsOccasionEnabled) {
+            switch (args) {
+                case "MAI":
+                    {
+                        this.MarkInvitees_Action(true);
+                        this.IsCheckedAllContacts = false;
+                        break;
+                    }
+                case "MAP":
+                    {
+                        this.MarkParticipated_Action(true);
+                        this.IsCheckedAllContacts = false;
+                        break;
+                    }
+                case "MAUI":
+                    {
+                        this.MarkInvitees_Action(false);
+                        this.IsCheckedAllContacts = false;
+                        break;
+                    }
+                case "MAUP":
+                    {
+                        this.MarkParticipated_Action(false);
+                        this.IsCheckedAllContacts = false;
+                        break;
+                    }
+                case "D":
+                    {
+                        this.DeleteCheckedOccasionInvitee();
+                        break;
+                    }
+            }
         }
       
     }
 
     MarkInvitees_Action(isInvited) {
-        this.OccasionLinesList.filter(a => a.IsChecked).forEach(item => {
-            item.Invited = isInvited;
-        });
-        this.LoadOccasionLinesData();
+        if (this.IsOccasionEnabled) {
+            this.OccasionLinesList.filter(a => a.IsChecked).forEach(item => {
+                item.Invited = isInvited;
+            });
+            this.LoadOccasionLinesData();
+        }
     }
 
     MarkParticipated_Action(isParticipated) {
-        this.OccasionLinesList.filter(a => a.IsChecked).forEach(item => {
-            item.Participated = isParticipated;
-        });
-        this.LoadOccasionLinesData();
+        if (this.IsOccasionEnabled) {
+            this.OccasionLinesList.filter(a => a.IsChecked).forEach(item => {
+                item.Participated = isParticipated;
+            });
+            this.LoadOccasionLinesData();
+        }
     }
 
     DeleteCheckedOccasionInvitee() {
-        var confirmWindow = new ConfirmWindow();
-        confirmWindow.Show("Delete all checked invitees?");
-        confirmWindow.WindowClosed.subscribe((event: any) => {
-            if (confirmWindow.Yes) {
-                this.OccasionLinesList.filter(a => a.IsChecked).forEach(item => {
-                    this.EntityPM.RemoveOccasionInvitee(item.EntityPM);
-                });
-                this.LoadOccasionLinesData();
-                this.IsCheckedAllContacts = false;
-            }
-        });
+        if (this.IsOccasionEnabled) {
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Show("Delete all checked invitees?");
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    this.OccasionLinesList.filter(a => a.IsChecked).forEach(item => {
+                        this.EntityPM.RemoveOccasionInvitee(item.EntityPM);
+                    });
+                    this.LoadOccasionLinesData();
+                    this.IsCheckedAllContacts = false;
+                }
+            });
+        }
     }
 }
 
@@ -346,7 +378,13 @@ export class OccasionLineClass extends BaseComponent {
 
     constructor(entityPM: OccasionInviteePM, public father: OccasionMainTabComponent) {
         super();
-        this.EntityPM = entityPM; 
+        this.EntityPM = entityPM;
+        this.SetUIProperties();
+    }
+
+    SetUIProperties() {
+        this.UIProperties.SetEnabled("Notes", this.ObjectTableName, this.father.IsOccasionEnabled);
+        this.UIProperties.SetEnabled("IsChecked", null, this.father.IsOccasionEnabled);
     }
 
     private isChecked: boolean = false;
@@ -456,6 +494,18 @@ export class OccasionLineClass extends BaseComponent {
     set Invited(value: boolean) {
         if (this.EntityPM.Invited != value) {
             this.EntityPM.Invited = value;
+        }
+    }
+
+    InvitedClicked(isInvited: boolean) {
+        if (this.father.IsOccasionEnabled) {
+            this.Invited = isInvited;
+        }
+    }
+
+    ParticipatedClicked(isParticipated: boolean) {
+        if (this.father.IsOccasionEnabled) {
+            this.Participated = isParticipated;
         }
     }
 }
