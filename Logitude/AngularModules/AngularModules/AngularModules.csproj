@@ -844,8 +844,7 @@
     <TypeScriptCompile Include="e2e\FullAccounting\APPayment\APPayment-spec.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\APPayment\NewAPPayment.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\ARInvoice\ARInvoice-spec.ts" />
-    <TypeScriptCompile Include="e2e\FullAccounting\ARInvoice\Edit\EditARInvoice.ts" />
-    <TypeScriptCompile Include="e2e\FullAccounting\ARInvoice\New\NewARInvoice.ts" />
+    <TypeScriptCompile Include="e2e\FullAccounting\ARInvoice\NewARInvoice.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\ARPayment\ARPayment-spec.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\ARPayment\NewARPayment.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\BankAccount\EditBankAccount.ts" />

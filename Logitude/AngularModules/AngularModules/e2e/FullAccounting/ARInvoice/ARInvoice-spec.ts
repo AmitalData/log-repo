@@ -1,5 +1,5 @@
 import { browser, by, element } from "protractor"
-import { NewARInvoice} from "./New/NewARInvoice";
+import { NewARInvoice} from "./NewARInvoice";
 
 import { FieldsHelper } from '../../Helpers/FieldsHelper';
 import { GeneralFunctions } from '../../Helpers/GeneralFunctions';
