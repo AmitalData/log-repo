@@ -156,7 +156,8 @@ export class AddEditRecoExPageComponent extends BaseComponent
     {
         this.isNewEntity = true;
 
-        this.GetPreviousPageByNumber(this.additionalDataPM.LastPageNumber);
+        if(this.additionalDataPM)
+            this.GetPreviousPageByNumber(this.additionalDataPM.LastPageNumber);
 
 
         this.ReconcileExternalPagePM = this.InitializeNewPage(args);
@@ -174,7 +175,7 @@ export class AddEditRecoExPageComponent extends BaseComponent
         newEntity.GLAccountId = args.GLAccountId;
         newEntity.EntryTypeCode = "1"; // 1- Manual
 
-        if (this.additionalDataPM.LastPageEndDate) {
+        if (this.additionalDataPM && this.additionalDataPM.LastPageEndDate) {
             newEntity.FromDate = this.GetLastPageDatePlusOneDay(args);
         }
 

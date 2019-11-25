@@ -507,7 +507,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{ \r\n\"ChangeSetOp\": 2,\r\n\"ClosedMonth\":{{AcocuntingPeriodsClosedMonth}} ,\r\n\"EncodeBase64NVARCHARFieldsBy\": null,\r\n\"Id\": \"{{AcocuntingPeriodsId}}\",\r\n\"OpenMonth\":{{CurrentMonth}},\r\n\"PeriodTypeCode\": \"1\",\r\n\"PeriodTypeName\": \"Accounting\",\r\n\"Tenant\": {{AcocuntingPeriodsTenant}},\r\n\"Year\": {{AcocuntingPeriodsYear}}\r\n}\r\n",
+					"raw": "{ \r\n\r\n\"ClosedMonth\":{{AcocuntingPeriodsClosedMonth}} ,\r\n\"EncodeBase64NVARCHARFieldsBy\": null,\r\n\"Id\": \"{{AcocuntingPeriodsId}}\",\r\n\"OpenMonth\":{{CurrentMonth}},\r\n\"PeriodTypeCode\": \"1\",\r\n\"PeriodTypeName\": \"Accounting\",\r\n\"Tenant\": {{AcocuntingPeriodsTenant}},\r\n\"Year\": {{AcocuntingPeriodsYear}}\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -515,15 +515,11 @@
 					}
 				},
 				"url": {
-					"raw": "https://test.logitudeworld.com/TEST/api/accountingperiods",
-					"protocol": "https",
+					"raw": "{{URL}}/api/accountingperiods",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"TEST",
 						"api",
 						"accountingperiods"
 					]
@@ -2717,15 +2713,11 @@
 					}
 				],
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/chartofaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=BK771&PageSize=23",
-					"protocol": "http",
+					"raw": "{{URL}}/api/chartofaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=BK771&PageSize=23 ",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{URL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"chartofaccountviews",
 						"getbyfilters"

@@ -632,6 +632,7 @@
     <Content Include="Main Branch\2019\10 - 2019\Day 31 [Khalid] Add BluesnapPageAnalyzerWorkerRole.sql" />
     <Content Include="Main Branch\2019\10 - 2019\Day 28 [Abdullah] fill new fields of reconcileExternalPage.sql" />
     <Content Include="Main Branch\2019\10 - 2019\Day 23 [Abed] AddDocumentExceutionWRToBatchServiceDef.sql" />
+    <Content Include="Main Branch\2019\11 - 2019\Day 24 [Abdullah] Create new external additional entities for current bankaccounts.sql" />
     <Content Include="Main Branch\2019\11 - 2019\Day 03 [Maheera] Update OpenAmountInLocalCurrency In ARPayments.sql" />
     <Content Include="OracleScripts\18R01\1- from_pre  compare to_pe2.txt" />
     <Content Include="OracleScripts\18R01\2-compare aminet_main to aminetpre_main .txt" />

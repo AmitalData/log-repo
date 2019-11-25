@@ -1,7 +1,0 @@
-﻿<Table Name="MyCities" OldName="Cities">
-
-  <Column Name="Code" OldNames="MyCode" Type="varchar" Size="10">
-    <Constraints PrimaryKey="true" Nullable="false"/>
-  </Column>
-
-</Table>

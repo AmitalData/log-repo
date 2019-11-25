@@ -5,8 +5,9 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ListComponentArgs } from '../../../../Infrastructure/Args';
+import { InterestBasesTypePM } from '../../../EntityPMs/InterestBasesTypePM';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
-import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
+
 declare var window: any;
 @Component({
     moduleId: module.id,
@@ -18,8 +19,9 @@ export class InterestPageComponent implements AfterViewInit {
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     @Output() ReloadUserQueries = new EventEmitter();
     private CurrentSession = SessionLocator.SelectedSession;
+    public isRTL: boolean = false;
     constructor() {
-   
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
     }
 
     ngAfterViewInit() {
@@ -37,8 +39,17 @@ export class InterestPageComponent implements AfterViewInit {
         this.LoadAllScreenData();
 
     }
+    RunNewInterestBasesTypeWizard() {
+        var windowTitle = TextCodeTranslator.Translate("Accounting.General.O.NewInterestBases");
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 530;
+        logWindow.Height = 400;
+        logWindow.Title = windowTitle;
+        logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
+        logWindow.Show('./Accounting/Components/NewEntity/NewInterestBasesTypeComponent');
+    }
 
-    ViewAccountingQuery(myQueryCode: string) {
+        ViewAccountingQuery(myQueryCode: string) {
         if (myQueryCode != null) {
 
             var displayTitle = "";
@@ -65,7 +76,7 @@ export class InterestPageComponent implements AfterViewInit {
             listArgs.ObjectTableName = tableName;
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = TextCodeTranslator.Translate("Accounting.General.O.Interest");
-            listArgs.NewButtonLabel = TextCodeTranslator.Translate("InterestBasesType.Q.InterestBases");
+            listArgs.NewButtonLabel = TextCodeTranslator.Translate("Accounting.General.O.NewInterestBases");
             listArgs.IgnoreSelectedPerspective = true;
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)

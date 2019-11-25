@@ -77,5 +77,6 @@ export class ObjectFieldList {
 		DisplayInAutomationAsEnitity: boolean;
 		RecordType: string;
 		ObjectTable_LookUpTableName: string;
+		FieldCode: string;
 	
 }

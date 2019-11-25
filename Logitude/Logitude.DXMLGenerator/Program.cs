@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.DXMLGenerator
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {

@@ -62,9 +62,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="EntityFiles\Test.dxml" />
-    <None Include="EntityFiles\City.dxml" />
-    <None Include="EntityFiles\Package.dxml" />
-    <None Include="EntityFiles\User.dxml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="GeneratedScript\Script.sql" />

@@ -38,11 +38,7 @@ namespace Logitude.HybridTest.CommonServices
             CountryCityList city = (CountryCityList)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsTrue(CheckResult(city), "Get Hybrid City Failed!");
-        }
-        public bool CheckResult(CountryCityList city)
-        {
-            return city.EnglishName == "Hybrid City";
+            Assert.AreEqual(city.EnglishName, "Hybrid City", "Get Hybrid City Failed!");
         }
     }
 }
