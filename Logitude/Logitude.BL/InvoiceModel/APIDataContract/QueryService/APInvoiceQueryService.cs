@@ -885,6 +885,9 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             PaymentTermQuery paymentTermQuery = new PaymentTermQuery(tenant);
             PaymentTermPM paymentTerm = paymentTermQuery.GetSinglePMByExternalId("MS", tenant);
 
+            if (paymentTerm == null)
+                throw new ApplicationException("No 'Manually Set' payment term with ExternalId='MS', tenant=" + tenant);
+
             PaymentTerm manuallySetPaymentTerm = new PaymentTerm()
             {
                 Days = paymentTerm.Days,
