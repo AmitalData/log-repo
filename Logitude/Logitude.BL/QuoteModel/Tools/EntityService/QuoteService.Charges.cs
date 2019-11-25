@@ -17,7 +17,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
     public partial class QuoteService
     {
         List<PackageType> AllPackageTypes = new List<PackageType>();
-        private void GenerateDefaultCharges()
+        public void GenerateDefaultCharges()
         {
             if (isNewEntity || entityPM.ConvertToFCL || entityPM.ConvertToLCL)
             {
@@ -398,7 +398,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 }
             }
         }
-        private void ComputeChargesAmounts()
+        public void ComputeChargesAmounts()
         {
             if (isNewEntity)
             {
@@ -437,10 +437,20 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                         this.ComputeLineSaleTotalAmounts(item);
                     }
 
+                    QuoteChargePM itemFreight = entityPM.QuoteCharges.Where(d => d.ChargesGroupCode == "FRT").FirstOrDefault();
+                    if (itemFreight != null)
+                    {
+                        foreach (QuoteChargePM item in entityPM.QuoteCharges.Where(d => d.ChargesGroupCode != "FRT" && d.IsAllIN))
+                        {
+                            this.ComputeLineAllInAmount(item, itemFreight);
+                        }
+                    }
+
                     this.ComputeQuoteEstimateProfit();
                 }
             }
         }
+
 
 
         private void GetAllItemsExchangeRate()
@@ -880,6 +890,151 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
             item.CostAmountInSaleCurrency = MethodHelper.Round(myResult, 2);
         }
+
+        private void ComputeLineAllInAmount(QuoteChargePM item, QuoteChargePM itemFreight)
+        {
+            if (item.IsAllIN && itemFreight != null)
+            {
+                if (this.isLCLQuote)
+                {
+                    this.ComputeLineAllInAmount_LCL(item, itemFreight);
+                }
+
+                else
+                {
+                    this.ComputeLineAllInAmount_FCL(item, itemFreight);
+                }
+            }
+        }
+        private void ComputeLineAllInAmount_LCL(QuoteChargePM item, QuoteChargePM itemFreight)
+        {
+            if (item.SaleTotalAmountLocal != null || itemFreight.SaleTotalAmountLocal != null)
+            {
+                double? itemSaleTotalAmountLocal = item.SaleTotalAmountLocal == null ? 0 : item.SaleTotalAmountLocal;
+                double? itemFreightSaleTotalAmountLocal = itemFreight.SaleTotalAmountLocal == null ? 0 : itemFreight.SaleTotalAmountLocal;
+                itemFreight.SaleTotalAmountLocal = MethodHelper.Round(itemFreightSaleTotalAmountLocal + itemSaleTotalAmountLocal, 2);
+
+                double? itemTotalAmount = null;
+                if (itemFreight.SaleExchangeRate != null && itemFreight.SaleExchangeRate != 0)
+                {
+                    itemTotalAmount = itemFreight.SaleTotalAmountLocal / itemFreight.SaleExchangeRate;
+                }
+
+                if (itemFreight.SaleMinAmount != null)
+                {
+                    if (itemTotalAmount == null || itemTotalAmount < itemFreight.SaleMinAmount)
+                    {
+                        itemTotalAmount = itemFreight.SaleMinAmount;
+                    }
+                }
+
+                if (itemFreight.SaleMaxAmount != null)
+                {
+                    if (itemTotalAmount == null || itemTotalAmount > itemFreight.SaleMaxAmount)
+                    {
+                        itemTotalAmount = itemFreight.SaleMaxAmount;
+                    }
+                }
+
+                double? itemUnitPrice = itemFreight.SaleUnitPrice;
+                if (itemTotalAmount != null && itemFreight.SaleQuantity != null)
+                {
+                    itemUnitPrice = itemTotalAmount / itemFreight.SaleQuantity;
+                }
+
+                itemFreight.SaleTotalAmount = MethodHelper.Round(itemTotalAmount, 2);
+                itemFreight.SaleUnitPrice = MethodHelper.Round(itemUnitPrice, 3);
+            }
+        }
+        private void ComputeLineAllInAmount_FCL(QuoteChargePM item, QuoteChargePM itemFreight)
+        {
+            if (item.CostMeasurementCode == "BCNT")
+            {
+                double? itemTotalAmount = null;
+
+                if (entityPM.PackageType1Id != null)
+                {
+                    double? itemSaleUnitPrice = item.SaleContainerType1UnitPrice == null ? 0 : item.SaleContainerType1UnitPrice;
+                    double? itemFreightSaleUnitPrice = itemFreight.SaleContainerType1UnitPrice == null ? 0 : itemFreight.SaleContainerType1UnitPrice;
+                    itemFreight.SaleContainerType1UnitPrice = MethodHelper.Round(itemSaleUnitPrice + itemFreightSaleUnitPrice, 3);
+
+                    if (entityPM.PackageType1Quantity != null && itemFreight.SaleContainerType1UnitPrice != null)
+                    {
+                        double? itemAmount = entityPM.PackageType1Quantity * itemFreight.SaleContainerType1UnitPrice;
+                        itemTotalAmount = itemTotalAmount == null ? itemAmount : itemTotalAmount + itemAmount;
+                    }
+                }
+
+                if (entityPM.PackageType2Id != null)
+                {
+                    double? itemSaleUnitPrice = item.SaleContainerType2UnitPrice == null ? 0 : item.SaleContainerType2UnitPrice;
+                    double? itemFreightSaleUnitPrice = itemFreight.SaleContainerType2UnitPrice == null ? 0 : itemFreight.SaleContainerType2UnitPrice;
+                    itemFreight.SaleContainerType2UnitPrice = MethodHelper.Round(itemSaleUnitPrice + itemFreightSaleUnitPrice, 3);
+
+                    if (entityPM.PackageType2Quantity != null && itemFreight.SaleContainerType2UnitPrice != null)
+                    {
+                        double? itemAmount = entityPM.PackageType2Quantity * itemFreight.SaleContainerType2UnitPrice;
+                        itemTotalAmount = itemTotalAmount == null ? itemAmount : itemTotalAmount + itemAmount;
+                    }
+                }
+
+                if (entityPM.PackageType3Id != null)
+                {
+                    double? itemSaleUnitPrice = item.SaleContainerType3UnitPrice == null ? 0 : item.SaleContainerType3UnitPrice;
+                    double? itemFreightSaleUnitPrice = itemFreight.SaleContainerType3UnitPrice == null ? 0 : itemFreight.SaleContainerType3UnitPrice;
+                    itemFreight.SaleContainerType3UnitPrice = MethodHelper.Round(itemSaleUnitPrice + itemFreightSaleUnitPrice, 3);
+
+                    if (entityPM.PackageType3Quantity != null && itemFreight.SaleContainerType3UnitPrice != null)
+                    {
+                        double? itemAmount = entityPM.PackageType3Quantity * itemFreight.SaleContainerType3UnitPrice;
+                        itemTotalAmount = itemTotalAmount == null ? itemAmount : itemTotalAmount + itemAmount;
+                    }
+                }
+
+                if (entityPM.PackageType4Id != null)
+                {
+                    double? itemSaleUnitPrice = item.SaleContainerType4UnitPrice == null ? 0 : item.SaleContainerType4UnitPrice;
+                    double? itemFreightSaleUnitPrice = itemFreight.SaleContainerType4UnitPrice == null ? 0 : itemFreight.SaleContainerType4UnitPrice;
+                    itemFreight.SaleContainerType4UnitPrice = MethodHelper.Round(itemSaleUnitPrice + itemFreightSaleUnitPrice, 3);
+
+                    if (entityPM.PackageType4Quantity != null && itemFreight.SaleContainerType4UnitPrice != null)
+                    {
+                        double? itemAmount = entityPM.PackageType4Quantity * itemFreight.SaleContainerType4UnitPrice;
+                        itemTotalAmount = itemTotalAmount == null ? itemAmount : itemTotalAmount + itemAmount;
+                    }
+                }
+
+                if (entityPM.PackageType5Id != null)
+                {
+                    double? itemSaleUnitPrice = item.SaleContainerType5UnitPrice == null ? 0 : item.SaleContainerType5UnitPrice;
+                    double? itemFreightSaleUnitPrice = itemFreight.SaleContainerType5UnitPrice == null ? 0 : itemFreight.SaleContainerType5UnitPrice;
+                    itemFreight.SaleContainerType5UnitPrice = MethodHelper.Round(itemSaleUnitPrice + itemFreightSaleUnitPrice, 3);
+
+                    if (entityPM.PackageType5Quantity != null && itemFreight.SaleContainerType5UnitPrice != null)
+                    {
+                        double? itemAmount = entityPM.PackageType5Quantity * itemFreight.SaleContainerType5UnitPrice;
+                        itemTotalAmount = itemTotalAmount == null ? itemAmount : itemTotalAmount + itemAmount;
+                    }
+                }
+
+                if (itemTotalAmount != null)
+                {
+                    if (itemFreight.SaleMinAmount != null && itemTotalAmount < itemFreight.SaleMinAmount)
+                    {
+                        itemTotalAmount = itemFreight.SaleMinAmount;
+                    }
+
+                    if (itemFreight.SaleMaxAmount != null && itemTotalAmount < itemFreight.SaleMaxAmount)
+                    {
+                        itemTotalAmount = itemFreight.SaleMaxAmount;
+                    }
+                }
+
+                itemFreight.SaleTotalAmount = itemTotalAmount == null ? null : MethodHelper.Round(itemTotalAmount, 2);
+                itemFreight.SaleTotalAmountLocal = itemTotalAmount == null ? null : MethodHelper.Round(itemTotalAmount * itemFreight.SaleExchangeRate, 2);
+            }
+        }
+
         private void ComputeQuoteEstimateProfit()
         {
             double? myResult = null;

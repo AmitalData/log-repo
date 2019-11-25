@@ -153,7 +153,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
                     string fieldname = "Field" + (count + 1).ToString();
                     theEntityPm.FieldName = fieldname;
-                    theEntityPm.FieldCode = ObjectTable.Name +"." + tenant.ToString() +  "." + theEntityPm.FieldCode;
+                    theEntityPm.FieldCode = ObjectTable.Name +"." + tenant.ToString() +  "." + theEntityPm.FieldName;
                     theEntityPm.PMPropertyPath = fieldname;
                     theEntityPm.ListPropertyPath = fieldname;
                     theEntityPm.DisplayInList = true;
