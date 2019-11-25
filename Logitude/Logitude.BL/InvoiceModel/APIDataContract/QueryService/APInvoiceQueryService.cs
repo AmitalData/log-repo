@@ -391,14 +391,14 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                                     {
                                         if (line.Quantity == null || line.Quantity == 0)
                                         {
-                                            throw new ApplicationException("Line Quantity is Missing when Charges is BCNT");
+                                            throw new ApplicationException(chargesType.Code + " Line Quantity is Missing when Charges is BCNT");
                                         }
                                     }
                                     else
                                     {
                                         if (line.Quantity != null && line.Quantity != 0)
                                         {
-                                            throw new ApplicationException("Line Container Type is Missing when Charges is BCNT");
+                                            throw new ApplicationException(chargesType.Code + " Line Container Type is Missing when Charges is BCNT");
                                         }
                                     }
 
@@ -409,12 +409,12 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                                         {
                                             if(!packageType.IsContainer)
                                             {
-                                                throw new ApplicationException("Line Container Type should be is Container");
+                                                throw new ApplicationException(chargesType.Code + " Line Container Type should be is Container");
                                             }
 
                                             if(!packageType.IsOcean)
                                             {
-                                                throw new ApplicationException("Line Container Type should be Ocean");
+                                                throw new ApplicationException(chargesType.Code + " Line Container Type should be Ocean");
                                             }
                                         }
                                     }
@@ -423,12 +423,12 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                                 {
                                     if (!string.IsNullOrEmpty(line.ContainerTypeId))
                                     {
-                                        throw new ApplicationException("Line Container Type is not Allowed when Charges is not BCNT");
+                                        throw new ApplicationException(chargesType.Code + " Line Container Type is not Allowed when Charges is not BCNT");
                                     }
 
                                     if (line.Quantity != null && line.Quantity != 0)
                                     {
-                                        throw new ApplicationException("Line Quantity is not Allowed when Charges is not BCNT");
+                                        throw new ApplicationException(chargesType.Code + " Line Quantity is not Allowed when Charges is not BCNT");
                                     }
                                 }
                             }
@@ -471,7 +471,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
                         else
                         {
-                            throw new ApplicationException("Line VAT Type is Missing");
+                            throw new ApplicationException(chargesType.Code + " Line VAT Type is Missing");
                         }
 
                         if (string.IsNullOrEmpty(line.ForiegnCurrencyId))
@@ -860,6 +860,9 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
         {
             PaymentTermQuery paymentTermQuery = new PaymentTermQuery(tenant);
             PaymentTermPM paymentTerm = paymentTermQuery.GetSinglePMByExternalId("MS", tenant);
+
+            if (paymentTerm == null)
+                throw new ApplicationException("No 'Manually Set' payment term with ExternalId='MS', tenant=" + tenant);
 
             PaymentTerm manuallySetPaymentTerm = new PaymentTerm()
             {

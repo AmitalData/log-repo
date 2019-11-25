@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "7c99",
+			      				    Code =  "a6b3",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -2130,6 +2130,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  		   TextCode GeneralTextCode_AccountingGeneralOInterest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Interest", DefaultText = "Interest",LocalDefaultText = @"ריבית", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_AccountingGeneralOInterestBases = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.InterestBases", DefaultText = "Interest Bases",LocalDefaultText = @"בסיסי ריבית", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_AccountingGeneralONewInterestBases = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.NewInterestBases", DefaultText = "New Interest Bases",LocalDefaultText = @"חדש  בסיס ריבית", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

@@ -257,7 +257,7 @@ namespace Logitude.Accounting.Data
 				
 			modelBuilder.Entity<GLAccountTotalByMonth>().Property(x => x.ForeignAmountCredit).HasPrecision(16, 2);
 				
-			modelBuilder.Entity<InterestBasesPeriod>().Property(x => x.InterestRate).HasPrecision(4, 2);
+			modelBuilder.Entity<InterestBasesPeriod>().Property(x => x.InterestRate).HasPrecision(2, 2);
 				
 			modelBuilder.Entity<JournalLine>().Property(x => x.LocalAmount).HasPrecision(16, 2);
 				

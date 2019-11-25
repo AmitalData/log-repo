@@ -10,6 +10,7 @@ using Logitude.Server.Tools;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs; 
 using Logitude.Accounting.Data;
+using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -19,14 +20,27 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
         public void CustomPMToPOCO(InterestBasesTypePM entityPM, InterestBasesType entityPOCO)
         {
-            //throw new NotImplementedException();
+            CustomMappedPOCOProperties.Add(POCOPropertyNames.Id);
+            entityPOCO.Id = entityPM.Id;
+            CustomMappedPOCOProperties.Add(POCOPropertyNames.SearchFields);
+            BuildSearchFields(entityPM, entityPOCO);
         }
 
         public void CustomPOCOToPM(InterestBasesTypePM entityPM, InterestBasesType entityPOCO)
         {
-            //throw new NotImplementedException();
+
         }
-   }
+
+        private void BuildSearchFields(InterestBasesTypePM entityPM, InterestBasesType entityPOCO)
+        {
+            string mySearchFields = "";
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.LocalName);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.EnglishName);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Code);
+            entityPM.SearchFields = mySearchFields;
+            entityPOCO.SearchFields = mySearchFields;
+        }
+    }
 
 
 }

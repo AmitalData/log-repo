@@ -582,6 +582,7 @@
     <Compile Include="EntityUpdateServices\Generated\WithholdingTaxDeductionTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\GLAccountWithholdingTaxUpdateService.cs" />
     <Compile Include="EntityUpdateServices\IJournalUpdateServiceProvider.cs" />
+    <Compile Include="EntityUpdateServices\InterestBasesTypeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\JournalExternalReconcileUpdateService.cs" />
     <Compile Include="EntityUpdateServices\JournalReconcileUpdateService.cs" />
     <Compile Include="EntityUpdateServices\OpenFormatReportUpdateService.cs" />
