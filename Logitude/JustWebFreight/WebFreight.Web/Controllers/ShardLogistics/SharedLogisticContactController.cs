@@ -54,6 +54,8 @@ namespace WebFreight.Web.Controllers.ShardLogistics
 
             try
             {
+                Authentication();
+
                 SharedLogisticContactHelper sharedLogisticContactHelper = new SharedLogisticContactHelper();
                 sharedLogisticContactHelper.InternetAccessInvitation(sharedLogisticsContact, null);
                 return Request.CreateResponse(HttpStatusCode.OK, true);
