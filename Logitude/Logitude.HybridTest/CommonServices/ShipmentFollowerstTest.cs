@@ -25,7 +25,7 @@ namespace Logitude.HybridTest.CommonServices
             object[] serviceParameters = new object[] { "Hybrid Shipment", TestEnvironmentGlobalParameters.Tenant, serviceResponse };
             ContactList[] contacts = (ContactList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get Shipment Followers By Shipment Number Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get Shipment Followers By Shipment Number Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsNull(serviceResponse.Result, "Get Shipment Followers By Shipment Number Failed! " + serviceResponse.Result);
             if (contacts.Length == 0)
                 Assert.Inconclusive("There Isn't Any Shipment Followers!");
         }
