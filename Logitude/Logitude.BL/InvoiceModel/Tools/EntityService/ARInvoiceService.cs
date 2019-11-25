@@ -1513,7 +1513,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                             else if(myVatType != null)
                             {
-                                itemVAT.ExternalVATCard = myVatType.ExternalVATCard;
+                                itemVAT.ExternalVATCard = myVatType.ReceivablesExternalId;
                             }
                         }
 
@@ -2163,7 +2163,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     }
                                     else
                                     {
-                                        newItem.ExternalVatCard = lineVatType.ExternalVATCard;
+                                        newItem.ExternalVatCard = lineVatType.ReceivablesExternalId;
                                     }
                                 }
 
@@ -2205,7 +2205,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                         }
                                         else if (vatType != null)
                                         {
-                                            newItem.ExternalVatCard = vatType.ExternalVATCard;
+                                            newItem.ExternalVatCard = vatType.ReceivablesExternalId;
                                         }
                                     }
 
@@ -2544,7 +2544,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             {
                                 item.VatTypeName = vatType.EnglishName;
                                 item.ExternalTAXItemId = vatType.ExternalTAXItemId;
-                                vatExternalCard = vatType.ExternalVATCard;
+                                vatExternalCard = vatType.ReceivablesExternalId;
                             }
 
                             VatTypePercentage vatTypePercentage = vatTypePercentageRepository.GetVatTypePercentageByDate(item.VatTypeId, tenant, entityPM.InvoiceDate);

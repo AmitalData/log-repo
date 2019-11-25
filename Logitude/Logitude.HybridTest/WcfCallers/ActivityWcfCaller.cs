@@ -1,11 +1,11 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.HybridTest.ActivityServiceReference;
 using Logitude.Server.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Logitude.CRM.BL.EntityPMs;
 
 namespace Logitude.HybridTest.WcfCallers
 {
@@ -31,7 +31,7 @@ namespace Logitude.HybridTest.WcfCallers
             };
 
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { entityPM, "Hybrid@fnarsoft.com" };
+            object[] serviceParameters = new object[] { entityPM, "angular@fnarsoft.com" };
             WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             if(serviceResponse.Result != null)
                 HybridData.ActivityId = serviceResponse.Result;

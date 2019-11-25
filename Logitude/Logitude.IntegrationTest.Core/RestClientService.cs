@@ -12,39 +12,52 @@ namespace Logitude.IntegrationTest.Core
     public class RestClientService
     {
         private static string mainUrl = IntegrationTestLoginParameters.ServerURL + "api/";
-        public static async Task<HttpResponseMessage> GetAsync(string uriParams)
+        public static async Task<HttpResponseMessage> GetAsync(string urlControllerAndMethod)
         {
             using (var client = new HttpClient())
             {
-                string getDeclarationUrl = mainUrl + uriParams;
+                string getDeclarationUrl = GetUrl(urlControllerAndMethod);
                 client.DefaultRequestHeaders.Add("Token", IntegrationTestLoginParameters.Token);
                 var result = await client.GetAsync(getDeclarationUrl);
                 return result;
             }
         }
 
-        public static async Task<HttpResponseMessage> PostAsync(object content,string uriControllerAndMethod)
+        public static async Task<HttpResponseMessage> PostAsync(object content,string urlControllerAndMethod)
         {
             using (var client = new HttpClient())
             {
-                string AuthURI = mainUrl + uriControllerAndMethod;
-                var serializedObject = JsonConvert.SerializeObject(content);
-                var stringContent = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-                var result = await client.PostAsync(AuthURI, stringContent);
+                client.DefaultRequestHeaders.Add("Token", IntegrationTestLoginParameters.Token);
+                string postURI = GetUrl(urlControllerAndMethod);
+                var stringContent = PrepareStringContent(content);
+                var result = await client.PostAsync(postURI, stringContent);
                 return result;
             }
         }
 
-        public static async Task<HttpResponseMessage> PutAsync(object content, string uriControllerAndMethod)
+        public static async Task<HttpResponseMessage> PutAsync(object content, string urlControllerAndMethod)
         {
             using (var client = new HttpClient())
             {
-                string AuthURI = mainUrl + uriControllerAndMethod;
-                var serializedObject = JsonConvert.SerializeObject(content);
-                var stringContent = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-                var result = await client.PutAsync(AuthURI, stringContent);
+                client.DefaultRequestHeaders.Add("Token", IntegrationTestLoginParameters.Token);
+                string putURI = GetUrl(urlControllerAndMethod);
+                var stringContent = PrepareStringContent(content);
+                var result = await client.PutAsync(putURI, stringContent);
                 return result;
             }
+        }
+
+        private static StringContent PrepareStringContent(object content)
+        {
+            var serializedObject = JsonConvert.SerializeObject(content);
+            var stringContent = new StringContent(serializedObject, Encoding.UTF8, "application/json");
+            return stringContent;
+        }
+
+        private static string GetUrl(string urlControllerAndMethod)
+        {
+            string url = mainUrl + urlControllerAndMethod;
+            return url;
         }
     }
 }

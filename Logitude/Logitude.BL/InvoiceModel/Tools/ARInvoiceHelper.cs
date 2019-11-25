@@ -300,7 +300,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                             }
                           
                                 VatType myVatType = VatTypeRepository.GetSingleVatType(line.VatTypeId, tenant, false);
-                            ExternalVatTypesCode.Add(myVatType.ExternalVATCard);
+                            ExternalVatTypesCode.Add(myVatType.ReceivablesExternalId);
 
                             if (line.VatPercentage != 0 || AccountingSystemCode == "QBOG")
                             {
@@ -313,7 +313,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                                         myError = string.IsNullOrEmpty(myError) ? error : myError + ";" + error;                                    
                                 }
 
-                                if (FieldIsEmpty(myVatType.ExternalVATCard))
+                                if (FieldIsEmpty(myVatType.ReceivablesExternalId))
                                 {
                                     vatError = "VAT Type: " + myVatType.EnglishName + ". External ID is missing.";
                                     isReady = false;

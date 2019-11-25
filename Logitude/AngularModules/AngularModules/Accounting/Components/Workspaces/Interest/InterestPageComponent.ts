@@ -5,7 +5,6 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ListComponentArgs } from '../../../../Infrastructure/Args';
-import { InterestBasesTypePM } from '../../../EntityPMs/InterestBasesTypePM';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 
 declare var window: any;
@@ -53,7 +52,6 @@ export class InterestPageComponent implements AfterViewInit {
         if (myQueryCode != null) {
 
             var displayTitle = "";
-            var queryCode = myQueryCode;
 
             var filters = new ApiQueryFilters();
 

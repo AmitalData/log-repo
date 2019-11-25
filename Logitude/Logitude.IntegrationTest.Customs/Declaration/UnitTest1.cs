@@ -13,6 +13,19 @@ namespace Logitude.IntegrationTest.Customs.Declaration
     [TestClass]
     public class UnitTest1
     {
+        
+        [TestInitialize]
+        public void InitialTestMethod()
+        {
+            Task.Run(async () =>
+            {
+                string email = "angular@fnarsoft.com";
+                string pass = "1";
+                var token = await LoginService.GetLoginTokenByUserEmailAndTenant(email, pass);
+                Assert.IsNotNull(token);
+
+            }).GetAwaiter().GetResult();
+        }
         [TestMethod]
         public void TestMethod1()
         {
@@ -20,9 +33,6 @@ namespace Logitude.IntegrationTest.Customs.Declaration
           
             Task.Run(async () =>
             {
-                string email = "angular@fnarsoft.com";
-                string pass = "1";
-                var token =await LoginService.GetLoginTokenByUserEmailAndTenant(email, pass);
                 HttpResponseMessage response = await RestClientService.GetAsync("Declarations/getsingle?id=1-1");
                 var stringResult = response.Content.ReadAsStringAsync().Result;
                 DeclarationPM declarationPM = JsonConvert.DeserializeObject<DeclarationPM>(stringResult);
@@ -40,13 +50,10 @@ namespace Logitude.IntegrationTest.Customs.Declaration
 
             Task.Run(async () =>
             {
-                string email = "angular@fnarsoft.com";
-                string pass = "1";
-                var token = await LoginService.GetLoginTokenByUserEmailAndTenant(email, pass);
-                HttpResponseMessage response = await RestClientService.GetAsync("Declarations/getsingle?id=1-2");
+                HttpResponseMessage response = await RestClientService.GetAsync("Declarations/getsingle?id=1-1");
                 var stringResult = response.Content.ReadAsStringAsync().Result;
                 DeclarationPM declarationPM = JsonConvert.DeserializeObject<DeclarationPM>(stringResult);
-                Assert.AreNotEqual("1-1", declarationPM.Id);
+                Assert.AreEqual("1-1", declarationPM.Id);
 
 
             }).GetAwaiter().GetResult();
