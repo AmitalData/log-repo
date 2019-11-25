@@ -83,12 +83,17 @@ namespace Logitude.HybridTest
                 uri += "WcfService.svc?wsdl";
             Uri mexAddress = new Uri(uri);
             MetadataExchangeClientMode mexMode = MetadataExchangeClientMode.HttpGet;
-
-            // Get Metadata file from service
-            MetadataExchangeClient mexClient = new MetadataExchangeClient(mexAddress, mexMode)
+            WSHttpBinding binding = new WSHttpBinding(SecurityMode.None)
             {
+                MaxReceivedMessageSize = 50000000
+            };
+
+            MetadataExchangeClient mexClient = new MetadataExchangeClient(binding)
+            {
+                MaximumResolvedReferences = 50000000,
                 ResolveMetadataReferences = true
             };
+
             MetadataSet metaSet = mexClient.GetMetadata(mexAddress, mexMode);
 
             WsdlImporter importer = new WsdlImporter(metaSet);

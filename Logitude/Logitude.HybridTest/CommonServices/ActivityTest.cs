@@ -12,7 +12,15 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_Activity_UPSERT()
         {
-            LoginService.GetLoginTokenByCredentials();
+            //LoginService.GetLoginTokenByCredentials();
+            LoginServiceReference.LoginWcfServiceClient serviceClient = new LoginServiceReference.LoginWcfServiceClient();
+            string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
+            serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
+            using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
+            {
+                Response loginResponse = serviceClient.Login("angular@fnarsoft.com", "1");
+                TestEnvironmentGlobalParameters.Token = loginResponse.Result;
+            }
             Response serviceResponse = ActivityWcfCaller.CallActivityUpsert();
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);

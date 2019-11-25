@@ -16,7 +16,7 @@ namespace Logitude.HybridTest.WcfCallers
             {
                 IsAll = true,
                 ContactId = HybridData.ContactCode,
-                CardId = HybridData.CardContactCode,
+                CardId = HybridData.AgentCode,
                 Tenant = TestEnvironmentGlobalParameters.Tenant,
             };
 
