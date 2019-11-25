@@ -134,10 +134,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
         public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes, ObjectFieldRepository ObjectFieldsRepository, TextCodeRepository TextCodeRepository)
         {
-
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
-
                 FieldName = "SearchFields",
                 OldFieldName = "SearchFields",
                 ObjectTableName = "OccasionContact",
@@ -177,7 +175,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 InActive = false,
                 DisplayLongName = false,
                 FullFieldLable = "SearchFields",
-                DefaultText = "Search ...",
+                DefaultText = "Search names/ emails/ phone.#",
                 ListFieldLable = "SearchFieldsListLable",
                 ListLableDefaultText = "Search ...",
                 IsMaxLength = true,
@@ -190,13 +188,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 HasTemplate = false,
                 IsCustom = false,
                 EnableFullscreenTextBox = false,
-
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
-
                 FieldName = "Name",
                 OldFieldName = "Name",
                 ObjectTableName = "OccasionContact",
@@ -207,7 +202,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 CopyToDW = false,
                 DisplayOnLookUp = false,
                 DisplayOnLookUpLocal = false,
-                CanFilter = false,
+                CanFilter = true,
+                Operator = "StartsWith",
                 DisplayOnly = false,
                 SystemRequired = false,
                 SystemMaxLength = 60,
@@ -249,13 +245,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 HasTemplate = false,
                 IsCustom = false,
                 EnableFullscreenTextBox = false,
-
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
+            
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
-
                 FieldName = "Email",
                 OldFieldName = "Email",
                 ObjectTableName = "OccasionContact",
@@ -266,7 +259,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 CopyToDW = false,
                 DisplayOnLookUp = false,
                 DisplayOnLookUpLocal = false,
-                CanFilter = false,
+                CanFilter = true,
+                Operator = "StartsWith",
                 DisplayOnly = false,
                 SystemRequired = false,
                 SystemMaxLength = 70,
@@ -308,13 +302,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 HasTemplate = false,
                 IsCustom = false,
                 EnableFullscreenTextBox = false,
-
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
+            
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
-
                 FieldName = "BusinessPhone",
                 OldFieldName = "BusinessPhone",
                 ObjectTableName = "OccasionContact",
@@ -325,7 +316,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 CopyToDW = false,
                 DisplayOnLookUp = false,
                 DisplayOnLookUpLocal = false,
-                CanFilter = false,
+                CanFilter = true,
+                Operator = "StartsWith",
                 DisplayOnly = false,
                 SystemRequired = false,
                 SystemMaxLength = 25,
@@ -367,13 +359,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 HasTemplate = false,
                 IsCustom = false,
                 EnableFullscreenTextBox = false,
-
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
+            
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
-
                 FieldName = "Mobile",
                 OldFieldName = "Mobile",
                 ObjectTableName = "OccasionContact",
@@ -384,7 +373,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 CopyToDW = false,
                 DisplayOnLookUp = false,
                 DisplayOnLookUpLocal = false,
-                CanFilter = false,
+                CanFilter = true,
+                Operator = "StartsWith",
                 DisplayOnly = false,
                 SystemRequired = false,
                 SystemMaxLength = 25,
@@ -426,13 +416,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 HasTemplate = false,
                 IsCustom = false,
                 EnableFullscreenTextBox = false,
-
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
+            
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
-
                 FieldName = "Position",
                 OldFieldName = "Position",
                 ObjectTableName = "OccasionContact",
@@ -443,7 +430,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 CopyToDW = false,
                 DisplayOnLookUp = false,
                 DisplayOnLookUpLocal = false,
-                CanFilter = false,
+                CanFilter = true,
+                Operator = "Equals",
                 DisplayOnly = false,
                 SystemRequired = false,
                 SystemMaxLength = 40,
@@ -485,13 +473,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 HasTemplate = false,
                 IsCustom = false,
                 EnableFullscreenTextBox = false,
-
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
+            
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
-
                 FieldName = "Customers",
                 OldFieldName = "Customers",
                 ObjectTableName = "OccasionContact",
@@ -544,13 +529,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 HasTemplate = false,
                 IsCustom = false,
                 EnableFullscreenTextBox = false,
-
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
+            
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
-
                 FieldName = "Notes",
                 OldFieldName = "Notes",
                 ObjectTableName = "OccasionContact",
@@ -603,13 +585,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 HasTemplate = false,
                 IsCustom = false,
                 EnableFullscreenTextBox = false,
-
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
+            
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
-
                 FieldName = "Invited",
                 OldFieldName = "Invited",
                 ObjectTableName = "OccasionContact",
@@ -620,7 +599,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 CopyToDW = false,
                 DisplayOnLookUp = false,
                 DisplayOnLookUpLocal = false,
-                CanFilter = false,
+                CanFilter = true,
+                Operator = "Equals",
                 DisplayOnly = false,
                 SystemRequired = false,
                 SystemMaxLength = 0,
@@ -664,11 +644,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 EnableFullscreenTextBox = false,
 
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
+            
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
-
                 FieldName = "Participated",
                 OldFieldName = "Participated",
                 ObjectTableName = "OccasionContact",
@@ -679,7 +657,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 CopyToDW = false,
                 DisplayOnLookUp = false,
                 DisplayOnLookUpLocal = false,
-                CanFilter = false,
+                CanFilter = true,
+                Operator = "Equals",
                 DisplayOnly = false,
                 SystemRequired = false,
                 SystemMaxLength = 0,
@@ -721,9 +700,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 HasTemplate = false,
                 IsCustom = false,
                 EnableFullscreenTextBox = false,
-
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
         }
 
         public void AddTableQueries(Dictionary<string, Query> tenantQueries, Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository, TextCodeRepository TextCodeRepository, FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures, AdvancedQueryFilterRepository advancedQueryFiltersRepository, Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
@@ -747,8 +724,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
             Query OCCASIONCONTACTSQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = OccasionContactTextCode_0.Id, Code = "OCCASIONCONTACTS", QueryGroupCode = "e511", IndexOrder = 0, Tenant = 0, ObjectTableId = OccasionContactObjectTable.Id, QuerySection = "OccasionContact", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = OccasionContactFeature_0.Id, DefaultSortName = "Name", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
 
-            QueryColumn OCCASIONCONTACTSQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id, IndexOrder = 0, ObjectFieldId = OccasionContactObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == OccasionContactObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-            QueryColumn OCCASIONCONTACTSQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id, IndexOrder = 1, ObjectFieldId = OccasionContactObjectFields.Where(d => d.FieldName == "Email" && d.ObjectTableId == OccasionContactObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+            QueryColumn OCCASIONCONTACTSQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id, IndexOrder = 0, ObjectFieldId = OccasionContactObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == OccasionContactObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
+            QueryColumn OCCASIONCONTACTSQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id, IndexOrder = 1, ObjectFieldId = OccasionContactObjectFields.Where(d => d.FieldName == "Email" && d.ObjectTableId == OccasionContactObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
             QueryColumn OCCASIONCONTACTSQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id, IndexOrder = 2, ObjectFieldId = OccasionContactObjectFields.Where(d => d.FieldName == "BusinessPhone" && d.ObjectTableId == OccasionContactObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
             QueryColumn OCCASIONCONTACTSQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id, IndexOrder = 3, ObjectFieldId = OccasionContactObjectFields.Where(d => d.FieldName == "Mobile" && d.ObjectTableId == OccasionContactObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
             QueryColumn OCCASIONCONTACTSQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id, IndexOrder = 3, ObjectFieldId = OccasionContactObjectFields.Where(d => d.FieldName == "Position" && d.ObjectTableId == OccasionContactObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
@@ -793,10 +770,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
         {
 
         }
-
-
-
     }
-
 }
 	 

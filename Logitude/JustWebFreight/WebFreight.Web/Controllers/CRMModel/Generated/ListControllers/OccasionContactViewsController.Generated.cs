@@ -123,6 +123,38 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string occasionId = "";
                 string filterBy = "";
 
+                List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
+                for (int i = 1; i <= 10; i++)
+                {
+                    object filterNameProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Name")).GetValue(filters);
+                    object filterValue1 = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Value")).GetValue(filters);
+                    object filterOperatorProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Operator")).GetValue(filters);
+                    object filterValue2 = null;
+
+                    if (filterNameProp != null)
+                    {
+                        string filterName = filterNameProp.ToString();
+                        string filterOperator = filterOperatorProp != null ? filterOperatorProp.ToString() : "Equals";
+
+                        ObjectField field = myObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+                        if (field != null)
+                        {
+                            string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
+                            object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+
+                            string valuestring2 = filterValue2 != null ? filterValue2.ToString() : null;
+                            object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+
+                            queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
+                        }
+
+                        else
+                        {
+                            queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
+                        }
+                    }
+                }
+
                 if (!string.IsNullOrEmpty(filters.AdditionalFilters))
                 {
                     JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
@@ -139,25 +171,34 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         {
                             filterBy = filter.FieldValue.ToString();
                         }
+
+                        else
+                        {
+                            ObjectField field = myObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                            if (field != null)
+                            {
+                                string valuestring1 = filter.FieldValue != null ? filter.FieldValue.ToString() : null;
+                                object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+
+                                string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
+                                object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+                                
+                                queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
+                            }
+
+                            else
+                            {
+                                queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
+                            }
+                        }
                     }
                 }
-
-                GenericFilter genericFilter = new GenericFilter();
-                GenericSort sortClass = new GenericSort();
 
                 ICRMContext MyContext = CRMContext.GetContext(tenant);
                 OccasionInviteeRepository entityRepository = new OccasionInviteeRepository(MyContext);
                 IQueryable<OccasionInvitee> entityPocos = entityRepository.GetOccasionInviteesByOccasion(occasionId, tenant);
 
-                QueryOperations nonListQueryOperation = new QueryOperations();
-                nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
-
-                QueryOperations listQueryOperation = new QueryOperations();
-                listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
-
-                entityPocos = genericFilter.GetFilteredQuery<OccasionInvitee>(nonListQueryOperation, entityPocos);
-
-                switch(filterBy)
+                switch (filterBy)
                 {
                     case "ALL":
                         {
@@ -177,25 +218,44 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         }
                 }
 
+                GenericFilter genericFilter = new GenericFilter();
+                GenericSort sortClass = new GenericSort();
+
+                QueryOperations nonListQueryOperation = new QueryOperations();
+                nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+
+                QueryOperations listQueryOperation = new QueryOperations();
+                listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();                
+                
                 int skippedEntities = queryOperations.PageIndex;
 
                 IQueryable<OccasionContactList> entityLists = (from f in entityPocos.Include("Contact")
-                                                                 where f.Tenant == tenant                                                                 
-                                                                 select new OccasionContactList()
-                                                                 {
-                                                                     Id = f.ContactId,
-                                                                     Tenant = f.Tenant,
-                                                                     Name = f.Contact == null ? null : f.Contact.EnglishName,
-                                                                     Email = f.Contact == null ? null : f.Contact.Email,
-                                                                     BusinessPhone = f.Contact == null ? null : f.Contact.BusinessPhone,
-                                                                     Mobile = f.Contact == null ? null : f.Contact.Mobile,
-                                                                     Position = f.Contact == null ? null : f.Contact.Position,
-                                                                     Notes = f.Contact == null ? null : f.Contact.Notes,
-                                                                     Invited = f.Invited,
-                                                                     Participated = f.Participated,
-                                                                 });
-                
-                entityLists = genericFilter.GetFilteredQuery<OccasionContactList>(listQueryOperation, entityLists);
+                                                               where f.Tenant == tenant
+                                                               select new OccasionContactList()
+                                                               {
+                                                                   Id = f.ContactId,
+                                                                   Tenant = f.Tenant,
+                                                                   Name = f.Contact == null ? null : f.Contact.EnglishName,
+                                                                   Email = f.Contact == null ? null : f.Contact.Email,
+                                                                   BusinessPhone = f.Contact == null ? null : f.Contact.BusinessPhone,
+                                                                   Mobile = f.Contact == null ? null : f.Contact.Mobile,
+                                                                   Position = f.Contact == null ? null : f.Contact.Position,
+                                                                   Notes = f.Contact == null ? null : f.Contact.Notes,
+                                                                   Invited = f.Invited,
+                                                                   Participated = f.Participated,
+                                                               });
+
+                List<OccasionContactList> tempList = entityLists.ToList();
+                foreach (OccasionContactList item in tempList)
+                {
+                    item.SearchFields = this.BuildSearchFields(item);
+                    item.Customers = this.BuildCustomers(item);
+                }
+
+                entityLists = tempList.AsQueryable();
+
+                entityLists = genericFilter.GetFilteredQuery<OccasionContactList>(nonListQueryOperation, entityLists);
+                entityLists = genericFilter.GetFilteredQuery<OccasionContactList>(listQueryOperation, entityLists);                
 
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                 {
@@ -284,13 +344,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 }
 
                 List<OccasionContactList> listResult = entityLists.ToList();
-
-                foreach (OccasionContactList item in listResult)
-                {
-                    item.SearchFields = this.BuildSearchFields(item);
-                    item.Customers = this.BuildCustomers(item);
-                }
-
+                
                 response.Result = listResult;
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
