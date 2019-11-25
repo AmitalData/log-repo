@@ -39,8 +39,8 @@ namespace Logitude.HybridTest
         public const string QuoteCode = "Hybrid Quote";
         public const string ContactCode = "Hybrid Contact";
         public const string CardContactCode = "HCC";
-        public const string DirectShipmentCode = "Hybrid Direct Shipment";
-        public const string HouseShipmentCode = "Hybrid House Shipment";
+        public const string DirectShipmentCode = "Hybrid DShipment";
+        public const string HouseShipmentCode = "Hybrid HShipment";
 
         //Id
         public static string CurrencyId { get; set; }
