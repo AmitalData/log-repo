@@ -443,6 +443,7 @@ export class QuoteMenuButtonsHandler {
         this.Reload = false;
         this.IsConvertToLCLClicked = false;
         this.IsConvertToFCLClicked = false;
+        this.IsSetAsSentQuote = false;
     }
     Validate() {
         var validator = new QuoteValidator();
@@ -482,6 +483,11 @@ export class QuoteMenuButtonsHandler {
                     if (this.IsConvertToFCLClicked) {
                         this.DoConvertQuoteType("ToFCL");
                     }
+
+                    if (this.IsSetAsSentQuote) {
+                        this.StartSetAsSentToCustomer();
+                    }
+
                     
                     if (this.Reload) {
                         this.entityArgs.EditComponent.ReloadEntityPM();
@@ -679,31 +685,42 @@ export class QuoteMenuButtonsHandler {
         });
     }
 
+
+
+
+
+    IsSetAsSentQuote: boolean = false;
     private SetAsSentToCustomer() {
         this.Validate();
-
         if (this.isValid) {
-            var args = new QuoteEventNotesArgs();
-            args.EntityPM = this.EntityPM;
-            args.NotesHeader = TextCodeTranslator.Translate("Quote.F.Notes");
-
-            var logWindow = new LogitudeWindow();
-            logWindow.WindowArgs = args;
-            logWindow.Width = 450;
-            logWindow.Height = 300;
-            logWindow.Title = TextCodeTranslator.Translate("Quote.B.SetAsSent");
-            logWindow.Show('./Quote/Components/MenuButtons/QuoteEventNotesComponent');
-
-            logWindow.WindowClosed.subscribe(s => {
-                if (s) {
-                    this.OnNotesWindowClosed("sent");
-                }
-                else {
-                    this.isButtonClicked = false;
-                }
-            });
+            this.IsSetAsSentQuote = true;
+            this.entityArgs.EditComponent.SaveChanges();
         }
     }
+    StartSetAsSentToCustomer() {
+        this.StopFlags();
+        var args = new QuoteEventNotesArgs();
+        args.EntityPM = this.EntityPM;
+        args.NotesHeader = TextCodeTranslator.Translate("Quote.F.Notes");
+
+        var logWindow = new LogitudeWindow();
+        logWindow.WindowArgs = args;
+        logWindow.Width = 450;
+        logWindow.Height = 300;
+        logWindow.Title = TextCodeTranslator.Translate("Quote.B.SetAsSent");
+        logWindow.Show('./Quote/Components/MenuButtons/QuoteEventNotesComponent');
+
+        logWindow.WindowClosed.subscribe(s => {
+            if (s) {
+                this.OnNotesWindowClosed("sent");
+            }
+            else {
+                this.isButtonClicked = false;
+            }
+        });
+
+    }
+
 
     private CancelQuote() {
         this.Validate();
