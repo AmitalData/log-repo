@@ -328,19 +328,20 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     if (matchedContainerLines != null && matchedContainerLines.Count() == 1)
                     {
                         shipmentPayableLine = matchedContainerLines.FirstOrDefault();
-                        aPInvoiceLine.EntityPayableId = shipmentPayableLine.Id;
                         aPInvoiceLine.AmountTypeCode = "EXPT";
-                        this.ComputeOpenAmount(aPInvoiceLine, shipmentPayableLine);
+                        shipmentPayableLine.UnitPrice = Round(aPInvoiceLine.InvoiceCurrencyAmount / aPInvoiceLine.Quantity, 2);
                     }
                     else
                     {
                         shipmentPayableLine = shipmentPayable.FirstOrDefault();
-                        aPInvoiceLine.EntityPayableId = shipmentPayableLine.Id;
-                        this.ComputeOpenAmount(aPInvoiceLine, shipmentPayableLine);
                     }
+
+                    aPInvoiceLine.EntityPayableId = shipmentPayableLine.Id;
+                    this.ComputeOpenAmount(aPInvoiceLine, shipmentPayableLine);
                 }
                 else
                 {
+                    aPInvoiceLine.AmountTypeCode = "EXPT";
                     this.UnexpectedPayablesInvoiceLines.Add(aPInvoiceLine);
                 }
             }
@@ -1303,13 +1304,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             {
                                 payable.MeasurementId = package.MeasurementId;
                             }
+                            if (this.entityPM.CreatedFromAPI)
+                            {
+                                payable.UnitPrice = Round(invoicelinePM.InvoiceCurrencyAmount / invoicelinePM.Quantity, 2);
+                            }
                         }
-                        //ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(tenant);
-                        //ChargesType chargesType = chargesTypeRepository.GetSingleChargesType(invoicelinePM.ChargesTypeId, tenant);
-                        //if (chargesType != null)
-                        //{
-                        //    payable.MeasurementId = chargesType.MeasurementId;
-                        //}
 
                         invoicelinePM.EntityPayableId = payable.Id;
                         shipmentPayableRepository.Add(payable);
