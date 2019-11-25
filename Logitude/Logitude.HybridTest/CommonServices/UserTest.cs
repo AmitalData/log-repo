@@ -44,7 +44,7 @@ namespace Logitude.HybridTest.CommonServices
             UserPM user = (UserPM)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.Result);
-            Assert.AreEqual(user.EnglishName, "Hybrid User", "Get Hybrid User Item From Users Failed!");
+            Assert.AreEqual(user.EnglishName, "Hybrid User", "Get Hybrid User From Users Failed!");
         }
     }
 }
