@@ -40,7 +40,7 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         [Column("SearchFields")]
 	    public string SearchFields { get; set; }
         [Column("Code")]
-	    public int Code { get; set; }
+	    public string Code { get; set; }
         [Column("LocalName")]
 	    public string LocalName { get; set; }
         [Column("EnglishName")]

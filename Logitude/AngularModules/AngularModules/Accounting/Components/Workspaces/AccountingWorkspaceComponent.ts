@@ -80,7 +80,7 @@ export class AccountingWorkspaceComponent {
         }
         var InterestTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCInterest") && f.ObjectTableId == table.Id)[0];
         if (InterestTabFeature) {
-            this.IsMiscTabVisibile = true;
+            this.IsInterestTabVisibile = true;
         }
     }
 

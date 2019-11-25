@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .Box {
         width: 100%;
@@ -74,16 +74,36 @@
                                                         <td style="padding-left:5px">
                                                             <table>
                                                                 <tr>
-                                                                    <td style="width:150px">
-                                                                        <div *ngIf="IsAccountingSystem_QB_QBO">
-                                                                            <div *ngIf="!isLogedInQBO">
-                                                                                <button class="Button" (click)="ViewXMLClicked()">Connect</button>
-                                                                            </div>
+                                                                    <td style="width:400px">
+                                                                        <table>
+                                                                            <tr>
+                                                                                <td style="width:150px">
+                                                                                    <div *ngIf="IsAccountingSystem_QB_QBO">
+                                                                                        <div *ngIf="!isLogedInQBO">
+                                                                                            <button class="Button" (click)="ViewXMLClicked()">Connect</button>
+                                                                                        </div>
 
-                                                                            <div *ngIf="isLogedInQBO">
-                                                                                <button class="RedButton" (click)="DissConnectQBO()">Disconnect</button>
-                                                                            </div>
-                                                                        </div>
+                                                                                        <div *ngIf="isLogedInQBO">
+                                                                                            <button class="RedButton" (click)="DissConnectQBO()">Disconnect</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </td>
+                                                                                <td style="padding-left:10px">
+                                                                                    <div *ngIf="IsAccountingSystem_QB_QBO_old">
+                                                                                        <div *ngIf="!isLogedInQBO">
+                                                                                            <button class="Button" (click)="ViewXMLClicked(false)">Connect Auth1</button>
+                                                                                        </div>
+
+                                                                                        <div *ngIf="isLogedInQBO">
+                                                                                            <button class="RedButton" (click)="DissConnectQBO()">Disconnect Auth1</button>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                     
+
                                                                     </td>
 
                                                                     <td></td>

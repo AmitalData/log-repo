@@ -1,4 +1,6 @@
 ﻿using System;
+using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.HybridTest.WcfCallers;
 using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -11,122 +13,70 @@ namespace Logitude.HybridTest.CommonServices
         public void Test_PORT_UPSERT()
         {
             LoginService.GetLoginTokenByCredentials();
-            Response countryServiceResponse = CountryTest.CallCountryUpsert();
-            Assert.IsFalse(countryServiceResponse.HasError, "Country Upsert Failed! " + countryServiceResponse.ErrorMessage);
-            Assert.IsNotNull(countryServiceResponse.Result, "Country Upsert Failed! " + countryServiceResponse.ErrorMessage);
-            Response serviceResponse = CallFromPortUpsert();
-            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
-            Response serviceResponse2 = CallToPortUpsert();
-            Assert.IsFalse(serviceResponse2.HasError, "Upsert Failed! " + serviceResponse2.ErrorMessage);
-            Assert.IsNotNull(serviceResponse2.Result, "Upsert Failed! " + serviceResponse2.ErrorMessage);
+            Response serviceFromResponse = PortWcfCaller.CallFromPortUpsert();
+            Assert.IsFalse(serviceFromResponse.HasError, serviceFromResponse.ErrorMessage);
+            Assert.IsNotNull(serviceFromResponse.Result, "Upsert From Port Failed! " + serviceFromResponse.ErrorMessage);
+            Response serviceToResponse = PortWcfCaller.CallToPortUpsert();
+            Assert.IsFalse(serviceToResponse.HasError, serviceToResponse.ErrorMessage);
+            Assert.IsNotNull(serviceToResponse.Result, "Upsert To Port Failed! " + serviceToResponse.ErrorMessage);
         }
 
         [TestMethod]
         public void Test_PORT_GetList()
         {
             LoginService.GetLoginTokenByCredentials();
-            PortServiceReference.PortWcfServiceClient serviceClient = new PortServiceReference.PortWcfServiceClient();
-            string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
-            serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
-            using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
+            Response prepareResponse = PortWcfCaller.PrepareFromPort();
+            Assert.IsFalse(prepareResponse.HasError, "Prepare From Port Failed! " + prepareResponse.ErrorMessage);
+            InvokedProperties serviceProperties = new InvokedProperties
             {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
-                Response serviceResponse = new Response();
-                ApiSearchFilters filters = new ApiSearchFilters
-                {
-                    Take = 10,
-                    SearchFields = HybridCodes.FromPortCode
-                };
-                PortServiceReference.PortList[] serviceResult = serviceClient.GetList(filters, TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
-                Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
-                Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);
-                if (serviceResult.Length != 0)
-                {
-                    string fromPortCode = serviceResult[0].Code;
-                    Assert.IsTrue(fromPortCode == HybridCodes.FromPortCode, "From Port Doesn't Exist!");
-                }
-                else
-                {
-                    Assert.Inconclusive("There Isn't Port With This Code!");
-                }
-            }
-        }
+                ServiceName = "Port",
+                ServiceOperation = "GetList",
+                ServiceResponseIndex = 2,
+                ServiceType = typeof(PortList),
+                ServiceFilterType = typeof(ApiSearchFilters),
+            };
+            ApiSearchFilters filters = new ApiSearchFilters
+            {
+                Take = 10,
+                SearchFields = HybridData.FromPortCode
+            };
 
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { filters, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
+            PortList[] ports = (PortList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+            Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.Result);
+            Assert.IsTrue(CheckResult(ports), "Get Hybrid From Port From Ports Failed!");
+        }
+        public bool CheckResult(PortList[] ports)
+        {
+            return ports[0].EnglishName == "Hybrid From Port";
+        }
         [TestMethod]
         public void Test_PORT_GetPortId()
         {
             LoginService.GetLoginTokenByCredentials();
-            Test_PORT_UPSERT();
-            PortServiceReference.PortWcfServiceClient serviceClient = new PortServiceReference.PortWcfServiceClient();
-            string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
-            serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
-            using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
+            //Response prepareResponse = PortWcfCaller.PrepareToPort();
+            //Assert.IsFalse(prepareResponse.HasError, "Prepare To Port Failed! " + prepareResponse.ErrorMessage);
+            InvokedProperties serviceProperties = new InvokedProperties
             {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
-                Response serviceResponse = new Response();
-                PortServiceReference.PortApiFilters filters = new PortServiceReference.PortApiFilters
-                {
-                    PortCode = "TLV",
-                    CountryCode = "IL"
-                };
-                string serviceResult = serviceClient.GetPortId(filters, TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
-                Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
-                Assert.IsNotNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);
-                Assert.IsTrue(serviceResult != null, "From Port Doesn't Exist!");
-            }
-        }
+                ServiceName = "Port",
+                ServiceOperation = "GetPortId",
+                ServiceResponseIndex = 2,
+                ServiceType = typeof(PortList),
+                ServiceFilterType = typeof(PortServiceReference.PortApiFilters),
+            };
+            PortServiceReference.PortApiFilters filters = new PortServiceReference.PortApiFilters
+            {
+                PortCode = "TLV",
+                CountryCode = "IL",
+            };
 
-        public static Response CallFromPortUpsert()
-        {
-            PortServiceReference.PortWcfServiceClient serviceClient = new PortServiceReference.PortWcfServiceClient();
-            string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
-            serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
-            using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
-            {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
-                PortServiceReference.PortPM entityPM = new PortServiceReference.PortPM()
-                {
-                    Code = HybridCodes.FromPortCode,
-                    EnglishName = "Hybrid From Port",
-                    LocalName = "Hybrid From Port",
-                    CountryCode = HybridCodes.CountryCode,
-                    CountryId = HybridCodes.CountryCode,
-                    AddedManually = true,
-                    IsAir = true,
-                    IsOcean = true,
-                    IsInland = true,
-                    Tenant = TestEnvironmentGlobalParameters.Tenant,
-                };
-                Response serviceResponse = serviceClient.Upsert(entityPM, false);
-                return serviceResponse;
-            }
-        }
-
-        public static Response CallToPortUpsert()
-        {
-            PortServiceReference.PortWcfServiceClient serviceClient = new PortServiceReference.PortWcfServiceClient();
-            string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
-            serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
-            using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
-            {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
-                PortServiceReference.PortPM entityPM = new PortServiceReference.PortPM()
-                {
-                    Code = HybridCodes.ToPortCode,
-                    EnglishName = "Hybrid To Port",
-                    LocalName = "Hybrid To Port",
-                    CountryCode = HybridCodes.CountryCode,
-                    CountryId = HybridCodes.CountryCode,
-                    AddedManually = true,
-                    IsAir = true,
-                    IsOcean = true,
-                    IsInland = true,
-                    Tenant = TestEnvironmentGlobalParameters.Tenant,
-                };
-                Response serviceResponse = serviceClient.Upsert(entityPM, false);
-                return serviceResponse;
-            }
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { filters, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
+            string port = (string)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+            Assert.IsFalse(serviceResponse.HasError, "Get Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsNotNull(serviceResponse.Result, "Get Failed! " + serviceResponse.ErrorMessage);
         }
     }
 }

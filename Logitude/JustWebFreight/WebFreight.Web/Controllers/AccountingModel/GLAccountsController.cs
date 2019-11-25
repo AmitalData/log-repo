@@ -267,7 +267,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
                 GLAccountQueryService gLAccountQuery = new GLAccountQueryService(MyContext);
-                GLAccountPM gLAccountPM = gLAccountQuery.GetByInternalNumber(internalNumber, tenant).FirstOrDefault();
+                GLAccountPM gLAccountPM = gLAccountQuery.GetByInternalNumber(internalNumber, tenant)/*.FirstOrDefault()*/;
                 if (gLAccountPM == null) gLAccountPM = new GLAccountPM();
 
                 return Request.CreateResponse(HttpStatusCode.OK, gLAccountPM);

@@ -192,7 +192,7 @@ export class ShipmentHelper {
         console.log(LogitudeWizardType);
         var numbertest = this.generalFun.StockNumbers();
         if (LogitudeWizardType == 'M') {
-            this.Helper.WaitByIdAndFill('Master_Master', numbertest);
+            this.Helper.WaitByIdAndFill('Shipment_Master', numbertest);
             console.log('Stock Number is : ' + numbertest);
 
         } else {

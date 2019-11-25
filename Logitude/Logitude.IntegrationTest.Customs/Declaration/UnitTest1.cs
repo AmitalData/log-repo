@@ -1,9 +1,12 @@
 ﻿using System;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Logitude.Customs.Def.EntityPMs;
+using Logitude.IntegrationTest.Core;
 using Logitude.IntegrationTest.Core.Login;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
 
 namespace Logitude.IntegrationTest.Customs.Declaration
 {
@@ -20,21 +23,34 @@ namespace Logitude.IntegrationTest.Customs.Declaration
                 string email = "angular@fnarsoft.com";
                 string pass = "1";
                 var token =await LoginService.GetLoginTokenByUserEmailAndTenant(email, pass);
-                //Assert.IsNotNull(token);
-                // Actual test code here.
-              
-                using (var client = new HttpClient())
-                {
-                    string getDeclarationUrl = IntegrationTestLoginParameters.ServerURL + "api/" + "Declarations/getsingle?id=1-1";
-                    client.DefaultRequestHeaders.Add("Token", IntegrationTestLoginParameters.Token);
-                    var result = await client.GetAsync(getDeclarationUrl);
-                    var content = result.Content;
-                    Assert.IsNotNull(result);
-                }
-
+                HttpResponseMessage response = await RestClientService.GetAsync("Declarations/getsingle?id=1-1");
+                var stringResult = response.Content.ReadAsStringAsync().Result;
+                DeclarationPM declarationPM = JsonConvert.DeserializeObject<DeclarationPM>(stringResult);
+                Assert.AreEqual("1-1", declarationPM.Id);
+                
 
             }).GetAwaiter().GetResult();
             
+        }
+
+        [TestMethod]
+        public void TestMethod2()
+        {
+            //this will be taken to master
+
+            Task.Run(async () =>
+            {
+                string email = "angular@fnarsoft.com";
+                string pass = "1";
+                var token = await LoginService.GetLoginTokenByUserEmailAndTenant(email, pass);
+                HttpResponseMessage response = await RestClientService.GetAsync("Declarations/getsingle?id=1-2");
+                var stringResult = response.Content.ReadAsStringAsync().Result;
+                DeclarationPM declarationPM = JsonConvert.DeserializeObject<DeclarationPM>(stringResult);
+                Assert.AreNotEqual("1-1", declarationPM.Id);
+
+
+            }).GetAwaiter().GetResult();
+
         }
     }
 }

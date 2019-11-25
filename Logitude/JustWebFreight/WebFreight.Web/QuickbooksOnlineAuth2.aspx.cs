@@ -43,14 +43,17 @@ namespace WebFreight.Web
             try
             {
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
-
+                if (!oauth_callback_url.Contains("https"))
+                {
+                    oauth_callback_url = oauth_callback_url.Replace("http", "https");
+                }
                 if (Request.QueryString.Count > 0)
                 {
                     queryKeys = new List<string>(Request.QueryString.AllKeys);
                     if (queryKeys.Contains("connect"))
                     {
                         FireAuth();
-                        oauthClient = new OAuth2Client((string)HttpContext.Current.Session["ClientID"], (string)HttpContext.Current.Session["ClientSecret"], oauth_callback_url, "sandbox");
+                        oauthClient = new OAuth2Client((string)HttpContext.Current.Session["ClientID"], (string)HttpContext.Current.Session["ClientSecret"], oauth_callback_url, "production");
 
 
                         List<OidcScopes> scopes = new List<OidcScopes>();
@@ -78,7 +81,7 @@ namespace WebFreight.Web
         {
             if (HttpContext.Current.Session["ClientID"] != null)
             {
-                oauthClient = new OAuth2Client((string)HttpContext.Current.Session["ClientID"], (string)HttpContext.Current.Session["ClientSecret"], oauth_callback_url, "sandbox");
+                oauthClient = new OAuth2Client((string)HttpContext.Current.Session["ClientID"], (string)HttpContext.Current.Session["ClientSecret"], oauth_callback_url, "production");
                 AsyncMode = true;
 
                 if (Request.QueryString.Count > 0)

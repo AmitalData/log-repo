@@ -158,7 +158,7 @@
       <QueryFilter QueryCode="&quot;Ocean FCL Surcharges Cost&quot;" PredefinedValue="&quot;OFS&quot;" ObjectFieldName="&quot;TypeCode&quot;" IsPredefined="true" Operator="&quot;Equal&quot;" IndexOrder="0" />
     </QueryFilters>
   </Query>
-  <Screen Name="&quot;TariffHeaderScreen&quot;" ObjectTableName="&quot;Tariff&quot;" IsReadOnly="true" IsHeaderScreen="true" Code="&quot;Tariff.HeaderScreen&quot;" NumberOfColumns="4" NumberOfRows="2">
+  <Screen Name="&quot;TariffHeaderScreen&quot;" ObjectTableName="&quot;Tariff&quot;" NumberOfColumns="4" NumberOfRows="2" IsReadOnly="true" IsHeaderScreen="true" Code="&quot;Tariff.HeaderScreen&quot;">
     <ScreenFields>
       <ScreenField Column="0" Row="0" ObjectFieldName="&quot;Name&quot;" ScreenName="TariffHeaderScreen" />
       <ScreenField Column="0" Row="1" ObjectFieldName="&quot;StartDate&quot;" ScreenName="TariffHeaderScreen" />
@@ -169,7 +169,7 @@
       <ScreenField Column="3" Row="0" ObjectFieldName="&quot;TariffNumber&quot;" ScreenName="TariffHeaderScreen" />
     </ScreenFields>
   </Screen>
-  <Screen Name="&quot;TariffSurchagesHeaderScreen&quot;" ObjectTableName="&quot;Tariff&quot;" IsReadOnly="true" IsHeaderScreen="true" Code="&quot;Tariff.SurchagesHeaderScreen&quot;" NumberOfColumns="4" NumberOfRows="2">
+  <Screen Name="&quot;TariffSurchagesHeaderScreen&quot;" ObjectTableName="&quot;Tariff&quot;" NumberOfColumns="4" NumberOfRows="2" IsReadOnly="true" IsHeaderScreen="true" Code="&quot;Tariff.SurchagesHeaderScreen&quot;">
     <ScreenFields>
       <ScreenField Column="0" Row="0" ObjectFieldName="&quot;Name&quot;" ScreenName="TariffSurchagesHeaderScreen" />
       <ScreenField Column="0" Row="1" ObjectFieldName="&quot;CreateDate&quot;" ScreenName="TariffSurchagesHeaderScreen" />
@@ -209,5 +209,6 @@
     <Feature Code="&quot;TARRIFAPPROVEVERSION&quot;" FeatureTypeCode="&quot;ACT&quot;" FeatureTextCodeCode="&quot;Tariff.Features.TARRIFAPPROVEVERSION&quot;" FeatureDefaultText="&quot;Approve Version&quot;" IsPackagable="false" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
     <Feature Code="&quot;UPDATESURCHARGES&quot;" FeatureTypeCode="&quot;ACT&quot;" FeatureTextCodeCode="&quot;Tariff.Features.UPDATESURCHARGES&quot;" FeatureDefaultText="&quot;Update Surcharges&quot;" IsPackagable="false" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
     <Feature Code="&quot;UPDATEMISSINGPORTS&quot;" FeatureTypeCode="&quot;ACT&quot;" FeatureTextCodeCode="&quot;Tariff.Features.UPDATEMISSINGPORTS&quot;" FeatureDefaultText="&quot;Update Missing Ports&quot;" IsPackagable="false" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
+    <Feature Code="&quot;TARIFFGENERATE&quot;" FeatureTypeCode="&quot;AREA&quot;" FeatureTextCodeCode="&quot;Tariff.Features.TARIFFGENERATE&quot;" FeatureDefaultText="&quot;Tariff Generate&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>

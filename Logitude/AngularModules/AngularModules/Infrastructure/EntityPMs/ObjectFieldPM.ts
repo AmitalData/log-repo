@@ -487,6 +487,11 @@ export class ObjectFieldPM {
     public set RecordType(newValue: string) { if (this.recordType != newValue) { this.recordType = newValue; this.MarkAsDirty("RecordType"); } }
        
 	 
+    private fieldCode: string;
+    public get FieldCode() { return this.fieldCode; }
+    public set FieldCode(newValue: string) { if (this.fieldCode != newValue) { this.fieldCode = newValue; this.MarkAsDirty("FieldCode"); } }
+       
+	 
      
 	private objectFieldValidations: ObjectFieldValidationPM[];
     get  ObjectFieldValidations() {

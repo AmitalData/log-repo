@@ -6,6 +6,9 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.ServiceModel.Description;
+using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.HybridTest.WcfCallers;
 using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -18,121 +21,85 @@ namespace Logitude.HybridTest.CommonServices
         public void Test_Contact_UPSERT()
         {
             LoginService.GetLoginTokenByCredentials();
-            Response serviceResponse = CallContactUpsert();
+            Response serviceResponse = ContactWcfCaller.CallContactUpsert();
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
-         }
-
-        public static Response CallContactUpsert()
-        {
-            ContactServiceReference.ContactWcfServiceClient serviceClient = new ContactServiceReference.ContactWcfServiceClient();
-            string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
-            serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
-            using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
-            {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
-                ContactServiceReference.ContactPM entityPM = new ContactServiceReference.ContactPM()
-                {
-                    EnglishName = "Hybrid Contact",
-                    LocalName = "Hybrid Contact",
-                    Email = "HybridContact@logitudeworld.com",
-                    Password = "!H0",
-                    ExternalId = HybridCodes.ContactCode,
-                    Tenant = TestEnvironmentGlobalParameters.Tenant,
-                };
-                Response serviceResponse = serviceClient.Upsert(entityPM, false);
-                return serviceResponse;
-            }
         }
 
         [TestMethod]
         public void Test_Contact_GetContactPMByEmail()
         {
-            Test_Contact_UPSERT();
-            ContactServiceReference.ContactWcfServiceClient serviceClient = new ContactServiceReference.ContactWcfServiceClient();
-            string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
-            serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
-            using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
+            LoginService.GetLoginTokenByCredentials();
+            Response prepareResponse = ContactWcfCaller.PrepareContact();
+            Assert.IsFalse(prepareResponse.HasError, "Prepare Contact Failed! " + prepareResponse.ErrorMessage);
+            InvokedProperties serviceProperties = new InvokedProperties
             {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
-                Response serviceResponse = new Response();
-                ContactServiceReference.ContactPM entityPM = serviceClient.GetContactPMByEmail("HybridContact@logitudeworld.com", TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
-                Assert.IsFalse(serviceResponse.HasError, "Get Contact PM By Email Failed! " + serviceResponse.ErrorMessage);
-                Assert.IsNull(serviceResponse.Result, "Get Contact PM By Email Failed! " + serviceResponse.ErrorMessage);
-                if (entityPM != null)
-                {
-                    Assert.AreEqual(entityPM.EnglishName, "Hybrid Contact", "Get Contact PM By Email Failed! " + serviceResponse.ErrorMessage);
-                }
-                else
-                {
-                    Assert.Inconclusive("There Isn't Contact With This Email!");
-                }
-            }
+                ServiceName = "Contact",
+                ServiceOperation = "GetContactPMByEmail",
+                ServiceResponseIndex = 2,
+                ServiceType = typeof(ContactPM),
+                ServiceFilterType = null,
+            };
+
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { "HybridContact@logitudeworld.com", TestEnvironmentGlobalParameters.Tenant, serviceResponse };
+            ContactPM contact = (ContactPM)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+            Assert.IsFalse(serviceResponse.HasError, "Get Contact PM By Email Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsNull(serviceResponse.Result, "Get Contact PM By Email Failed! " + serviceResponse.Result);
+            Assert.AreEqual(contact.EnglishName, HybridData.ContactCode, "Get Hybrid Contact From Contacts Failed!");
         }
 
         [TestMethod]
         public void Test_Contact_GetContactList()
         {
-            Test_Contact_UPSERT();
-            ContactServiceReference.ContactWcfServiceClient serviceClient = new ContactServiceReference.ContactWcfServiceClient();
-            string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
-            serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
-            using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
+            LoginService.GetLoginTokenByCredentials();
+            Response prepareResponse = UserWcfCaller.PrepareUser();
+            Assert.IsFalse(prepareResponse.HasError, "Prepare User Failed! " + prepareResponse.ErrorMessage);
+            InvokedProperties serviceProperties = new InvokedProperties
             {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
-                Response serviceResponse = new Response();
-                ContactServiceReference.ContactApiFilters filters = new ContactServiceReference.ContactApiFilters
-                {
-                    Take = 10,
-                    ByCode = true,
-                    SearchFields = HybridCodes.ContactCode
-                };
-                ContactServiceReference.ContactList[] serviceResult = serviceClient.GetContactList(filters, TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
-                Assert.IsFalse(serviceResponse.HasError, "Get Contact PM By Email Failed! " + serviceResponse.ErrorMessage);
-                Assert.IsNull(serviceResponse.Result, "Get Contact PM By Email Failed! " + serviceResponse.ErrorMessage);
-                if (serviceResult.Length != 0)
-                {
-                    Assert.AreEqual(serviceResult[0].EnglishName, "Hybrid Contact", "Get Contact PM By Email Failed! " + serviceResponse.ErrorMessage);
-                }
-                else
-                {
-                    Assert.Inconclusive("There Isn't Contact With This Code!");
-                }
-            }
+                ServiceName = "Contact",
+                ServiceOperation = "GetContactList",
+                ServiceResponseIndex = 2,
+                ServiceType = typeof(ContactList),
+                ServiceFilterType = typeof(ContactServiceReference.ContactApiFilters),
+            };
+            ContactServiceReference.ContactApiFilters filters = new ContactServiceReference.ContactApiFilters
+            {
+                Take = 10,
+                ByCode = true,
+                SearchFields = HybridData.ContactCode
+            };
+
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { filters, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
+            ContactList[] contacts = (ContactList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+            Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.Result);
+            Assert.AreEqual(contacts[0].EnglishName, HybridData.ContactCode, "Get Hybrid Contact From Contacts Failed!");
         }
 
         [TestMethod]
         public void Test_Contact_GetContactByExternalId()
         {
-            Test_Contact_UPSERT();
-            ContactServiceReference.ContactWcfServiceClient serviceClient = new ContactServiceReference.ContactWcfServiceClient();
-            string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
-            serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
-            using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
+            LoginService.GetLoginTokenByCredentials();
+            Response prepareResponse = ContactWcfCaller.PrepareContact();
+            Assert.IsFalse(prepareResponse.HasError, "Prepare Contact Failed! " + prepareResponse.ErrorMessage);
+            InvokedProperties serviceProperties = new InvokedProperties
             {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
-                Response serviceResponse = new Response();
-                ContactServiceReference.ContactPM entityPM = serviceClient.GetContactByExternalId("?", TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
-                Assert.IsFalse(serviceResponse.HasError, "Get Contact By External Id Failed! " + serviceResponse.ErrorMessage);
-                Assert.IsNull(serviceResponse.Result, "Get Contact By External Id Failed! " + serviceResponse.ErrorMessage);
-                if (entityPM != null)
-                {
-                    Assert.AreEqual(entityPM.EnglishName, "Hybrid Contact", "Get Contact By External Id Failed! " + serviceResponse.ErrorMessage);
-                }
-                else
-                {
-                    Assert.Inconclusive("There Isn't Contact With This External ID!");
-                }
-            }
+                ServiceName = "Contact",
+                ServiceOperation = "GetContactByExternalId",
+                ServiceResponseIndex = 2,
+                ServiceType = typeof(ContactPM),
+                ServiceFilterType = null,
+            };
+
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { HybridData.ContactCode, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
+            ContactPM contact = (ContactPM)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+            Assert.IsFalse(serviceResponse.HasError, "Get Contact By External Id Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsNull(serviceResponse.Result, "Get Contact By External Id Failed! " + serviceResponse.Result);
+            Assert.AreEqual(contact.EnglishName, HybridData.ContactCode, "Get Hybrid Contact From Contacts Failed!");
         }
         
     }
-
-
-    //public class InvokedParameters
-    //{
-    //    public string ServiceName { get; set; }
-    //    public string IServiceName { get; set; }
-    //    public string ServiceOperation { get; set; }
-    //}
 }

@@ -15,7 +15,7 @@ export class InterestBasesTypeList {
 	UpdateDate: Date;
 	UpdatedByUserId: string;
 	SearchFields: string;
-	Code: number;
+	Code: string;
 	LocalName: string;
 	EnglishName: string;
 	Description: string;

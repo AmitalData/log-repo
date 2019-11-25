@@ -8,6 +8,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Server.Tools;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -125,9 +126,18 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
-        private FullAccountingSettingPM getFullAccountingSettings(int tenant)
+        public virtual FullAccountingSettingPM getFullAccountingSettings(int tenant)
         {
-            FullAccountingSettingPM accountingSettings;
+            bool fromCache = true;
+            FullAccountingSettingPM accountingSettings=null;
+            if (fromCache)
+            {
+                accountingSettings = FullAccountingSettingQueryService.Get(tenant);
+                return accountingSettings;
+            }
+
+
+            
             FullAccountingSettingQueryService query = new FullAccountingSettingQueryService(tenant);
             accountingSettings = query.GetSingleFullAccountingSetting(tenant);
             return accountingSettings;
@@ -149,8 +159,13 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             var queryService = ContainerAccessor.Container.ResolveSafe<ICurrencyQuery>() ??
                 new CurrencyQuery(tenant);
-            CurrencyPM currency = queryService.GetSingleCurrencyByCode(CurrencyCode, tenant);
-            return currency;
+            string key = $"GetSingleCurrencyByCode({tenant},{CurrencyCode})";
+            return CacheManager.GetOrInsertNewObject<CurrencyPM>(key, () =>
+            {
+                return queryService.GetSingleCurrencyByCode(CurrencyCode, tenant);
+            });
+            
+            
         }
 
 
@@ -288,14 +303,23 @@ namespace Logitude.Accounting.BL.CoreBL
         public virtual GLAccountPM GetSingleGLAccount(string accountId)
         {
             var glQS = new GLAccountQueryService(this._MainContext);
+            glQS.SetSuppressFetchOpenReconcilation(true);
+            
             var pm = glQS.GetSingle(accountId, false, true);
             return pm;
         }
         public virtual GLAccountPM GetByInternalNumberGLAccount(int tenant, string accountNumber)
         {
-            var glQS = new GLAccountQueryService(this._MainContext);
-            var pm = glQS.GetByInternalNumber(accountNumber, tenant).SingleOrDefault();
-            return pm;
+
+            string key = $"GetByInternalNumberGLAccount({tenant},{accountNumber})";
+            return CacheManager.GetOrInsertNewObject<GLAccountPM>(key, () =>
+            {
+                var glQS = new GLAccountQueryService(this._MainContext);
+                glQS.SetSuppressFetchOpenReconcilation(true);
+                var pm = glQS.GetByInternalNumber(accountNumber, tenant)/*.SingleOrDefault()*/;
+                return pm;
+            });
+            
         }
 
 

@@ -85,6 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "InterestBasesPeriod",
 			      				    IsNew =  true,
 			      				    DBTableName =  "InterestBasesPeriods",
+			      				    OldDBTableName =  "InterestBasesPeriods",
 			      				    ObjectTableSingular =  "InterestBasesPeriod",
 			      				    ObjectTablePlural =  "InterestBasesPeriods",
 			      				    DescriptionDefaultText =  "Table of interest period and rate per  base",
@@ -116,7 +117,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Accounting",
-			      				    Code =  "9dd4",
+			      				    Code =  "ebb2",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -139,6 +140,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreateDate",
+					  						OldFieldName =  "CreateDate",
 					  						ObjectTableName =  "InterestBasesPeriod",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -158,6 +160,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CreateDate",
 					  						ListPropertyPath =  "CreateDate",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -196,6 +199,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreatedByUserId",
+					  						OldFieldName =  "CreatedByUserId",
 					  						ObjectTableName =  "InterestBasesPeriod",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -216,6 +220,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CreatedByUserId",
 					  						ListPropertyPath =  "CreatedByUserId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -251,6 +256,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdateDate",
+					  						OldFieldName =  "UpdateDate",
 					  						ObjectTableName =  "InterestBasesPeriod",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -270,6 +276,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "UpdateDate",
 					  						ListPropertyPath =  "UpdateDate",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -288,6 +295,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UpdateDate",
 					  						DefaultText =  "Update Date",
+					  						FullLocalDefaultText =  "תאריך עדכון",
 					  						ListFieldLable =  "UpdateDateListLable",
 					  						ListLableDefaultText =  "Update Date",
 					  						ListLocalDefaultText =  "תאריך עדכון",
@@ -309,6 +317,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdatedByUserId",
+					  						OldFieldName =  "UpdatedByUserId",
 					  						ObjectTableName =  "InterestBasesPeriod",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -329,6 +338,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "UpdatedByUserId",
 					  						ListPropertyPath =  "UpdatedByUserId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -347,6 +357,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UpdatedByUserId",
 					  						DefaultText =  "Updated By",
+					  						FullLocalDefaultText =  "משתמש מעדכן הרישום",
 					  						ListFieldLable =  "UpdatedByUserIdListLable",
 					  						ListLableDefaultText =  "Updated By User",
 					  						ListLocalDefaultText =  "משתמש מעדכן הרישום",
@@ -368,6 +379,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "InterestBaseTypeId",
+					  						OldFieldName =  "InterestBaseTypeId",
 					  						ObjectTableName =  "InterestBasesPeriod",
 					  						FieldsDataType =  "LookUp",
 					  						MinLength =  0,
@@ -387,6 +399,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "InterestBaseTypeId",
 					  						ListPropertyPath =  "InterestBaseTypeId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -422,6 +435,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LineNumber",
+					  						OldFieldName =  "LineNumber",
 					  						ObjectTableName =  "InterestBasesPeriod",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -441,6 +455,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "LineNumber",
 					  						ListPropertyPath =  "LineNumber",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -459,6 +474,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LineNumber",
 					  						DefaultText =  "Line Number",
+					  						FullLocalDefaultText =  "שורה",
 					  						ListFieldLable =  "LineNumberListLable",
 					  						ListLableDefaultText =  "Line Number",
 					  						ListLocalDefaultText =  "שורה",
@@ -480,6 +496,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "InterestBaseStartDate",
+					  						OldFieldName =  "InterestBaseStartDate",
 					  						ObjectTableName =  "InterestBasesPeriod",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -499,6 +516,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "InterestBaseStartDate",
 					  						ListPropertyPath =  "InterestBaseStartDate",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -517,6 +535,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InterestBaseStartDate",
 					  						DefaultText =  "Interest Base Start Date",
+					  						FullLocalDefaultText =  "תאריך תחילת בסיס",
 					  						ListFieldLable =  "InterestBaseStartDateListLable",
 					  						ListLableDefaultText =  "Base start date",
 					  						ListLocalDefaultText =  "תאריך תחילת בסיס",
@@ -538,6 +557,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "InterestRate",
+					  						OldFieldName =  "InterestRate",
 					  						ObjectTableName =  "InterestBasesPeriod",
 					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
@@ -557,6 +577,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "InterestRate",
 					  						ListPropertyPath =  "InterestRate",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -571,12 +592,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						DisplayInDocumentReferences =  false,
-					  						NumberOfDigits =  4,
+					  						NumberOfDigits =  2,
 					  						DigitsAfterPoint =  2,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InterestRate",
 					  						DefaultText =  "Interest Rate",
+					  						FullLocalDefaultText =  "אחוז ריבית בסיס",
 					  						ListFieldLable =  "InterestRateListLable",
 					  						ListLableDefaultText =  "Interest rate",
 					  						ListLocalDefaultText =  "אחוז ריבית בסיס",
@@ -600,7 +622,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable InterestBasesPeriodObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InterestBasesPeriod" && d.Tenant == 0).FirstOrDefault();
+		   List<ObjectField> InterestBasesPeriodObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "InterestBasesPeriod").ToList();
+		       
+	      
+
+	         Screen InterestBasesPeriodInterestBasesPeriodHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "InterestBasesPeriod.HeaderScreen", Name = "InterestBasesPeriodHeaderScreen", ObjectTableId = InterestBasesPeriodObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    InterestBasesPeriodObjectTable.HeaderScreenId = InterestBasesPeriodInterestBasesPeriodHeaderScreenScreen0.Id;
+	   		  
 
 	    }
 

@@ -11,6 +11,7 @@ namespace Logitude.DBMigrations.Models
         protected TableDefinition CurrentTable;
         protected TableMigrations TableMigrations;
         protected List<ColumnMigration> ColumnMigrations = new List<ColumnMigration>();
+        protected bool AlterPrimaryKeyConstraint = false;
 
         public string GetScript()
         {
@@ -18,7 +19,7 @@ namespace Logitude.DBMigrations.Models
             string script;
             if (CurrentTable == null)
             {
-                script =  GetCreateTableScript();
+                script = GetCreateTableScript();
             }
             else
             {
@@ -58,25 +59,6 @@ namespace Logitude.DBMigrations.Models
                 default:
                     return null;
             }
-        }
-
-        protected string GetConstraintsScript(ConstraintsDefinition constraints)
-        {
-            if (constraints != null)
-            {
-                var constraintsScript = "";
-                if (constraints.PrimaryKey)
-                {
-                    constraintsScript += " PRIMARY KEY";
-                }
-                if (!constraints.Nullable)
-                {
-                    constraintsScript += " NOT NULL";
-                }
-
-                return constraintsScript;
-            }
-            return null;
         }
 
         protected ColumnDefinition SetConstraintForColumnDefinition(ColumnDefinition column, string constraintType, string constraintName)
@@ -126,7 +108,7 @@ namespace Logitude.DBMigrations.Models
         protected bool IsColumnInCurrentTable(string dxmlColumnName, string dxmlColumnOldNames)
         {
             bool IsColumnInCurrentTable = false;
-            if(dxmlColumnOldNames != null)
+            if (dxmlColumnOldNames != null)
             {
                 if (!dxmlColumnOldNames.Contains(","))
                 {
@@ -145,12 +127,12 @@ namespace Logitude.DBMigrations.Models
             }
             return IsColumnInCurrentTable;
         }
-        
+
         protected ColumnDefinition GetCurrentTableColumn(string dxmlColumnName, string dxmlColumnOldNames)
         {
             string columnName = dxmlColumnOldNames;
             bool IsColumnInCurrentTable = false;
-            if(dxmlColumnOldNames != null)
+            if (dxmlColumnOldNames != null)
             {
                 if (!dxmlColumnOldNames.Contains(','))
                 {
@@ -236,11 +218,11 @@ namespace Logitude.DBMigrations.Models
 
         protected void BuildColumnMigrations(ColumnDefinition currentTableColumn, ColumnDefinition dxmlTableColumn)
         {
-            if(IsNotInCurrentTable(currentTableColumn))
+            if (IsNotInCurrentTable(currentTableColumn))
             {
                 BuildAddColumnMigration(currentTableColumn, dxmlTableColumn);
             }
-            else if(IsNotInDXMLTable(dxmlTableColumn))
+            else if (IsNotInDXMLTable(dxmlTableColumn))
             {
                 BuildDropColumnMigration(currentTableColumn, dxmlTableColumn);
             }
@@ -264,17 +246,13 @@ namespace Logitude.DBMigrations.Models
 
         protected void BuildAlterMigration(ColumnDefinition currentTableColumn, ColumnDefinition dxmlTableColumn)
         {
-            bool IncludeUnsetNullableMigration = !(!currentTableColumn.Constraints.PrimaryKey && dxmlTableColumn.Constraints.PrimaryKey && currentTableColumn.Constraints.Nullable);
-
             BuildAlterTypeMigration(currentTableColumn, dxmlTableColumn);
 
             BuildAlterSizeMigration(currentTableColumn, dxmlTableColumn);
 
-            BuildDropPrimaryKeyMigration(currentTableColumn, dxmlTableColumn);
+            CheckAlterPrimaryKeyMigration(currentTableColumn, dxmlTableColumn);
 
-            BuildAddPrimaryKeyMigration(currentTableColumn, dxmlTableColumn);
-
-            BuildUnsetNullableMigration(currentTableColumn, dxmlTableColumn, IncludeUnsetNullableMigration);
+            BuildUnsetNullableMigration(currentTableColumn, dxmlTableColumn);
 
             BuildSetNullableMigration(currentTableColumn, dxmlTableColumn);
 
@@ -323,33 +301,17 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        protected void BuildDropPrimaryKeyMigration(ColumnDefinition currentTableColumn, ColumnDefinition dxmlTableColumn)
+        protected void CheckAlterPrimaryKeyMigration(ColumnDefinition currentTableColumn, ColumnDefinition dxmlTableColumn)
         {
-            if (currentTableColumn.Constraints.PrimaryKey && !dxmlTableColumn.Constraints.PrimaryKey)
+            if (currentTableColumn.Constraints.PrimaryKey != dxmlTableColumn.Constraints.PrimaryKey)
             {
-                ColumnMigration dropPrimaryKeyMigration = GetColumnMigration(MigrationTypes.DROPPRIMARYKEY, currentTableColumn, dxmlTableColumn);
-                ColumnMigrations.Add(dropPrimaryKeyMigration);
+                AlterPrimaryKeyConstraint = true;
             }
         }
 
-        protected void BuildAddPrimaryKeyMigration(ColumnDefinition currentTableColumn, ColumnDefinition dxmlTableColumn)
+        protected void BuildUnsetNullableMigration(ColumnDefinition currentTableColumn, ColumnDefinition dxmlTableColumn)
         {
-            if (!currentTableColumn.Constraints.PrimaryKey && dxmlTableColumn.Constraints.PrimaryKey)
-            {
-                if (currentTableColumn.Constraints.Nullable)
-                {
-                    ColumnMigration unsetNullableMigration = GetColumnMigration(MigrationTypes.UNSETNULLABLE, currentTableColumn, dxmlTableColumn);
-                    ColumnMigrations.Add(unsetNullableMigration);
-                }
-
-                ColumnMigration addPrimaryKeyMigration = GetColumnMigration(MigrationTypes.ADDPRIMARYKEY, currentTableColumn, dxmlTableColumn);
-                ColumnMigrations.Add(addPrimaryKeyMigration);
-            }
-        }
-
-        protected void BuildUnsetNullableMigration(ColumnDefinition currentTableColumn, ColumnDefinition dxmlTableColumn, bool IncludeUnsetNullableMigration)
-        {
-            if (currentTableColumn.Constraints.Nullable && !dxmlTableColumn.Constraints.Nullable && IncludeUnsetNullableMigration)
+            if (currentTableColumn.Constraints.Nullable && !dxmlTableColumn.Constraints.Nullable)
             {
                 ColumnMigration unsetNullableMigration = GetColumnMigration(MigrationTypes.UNSETNULLABLE, currentTableColumn, dxmlTableColumn);
                 ColumnMigrations.Add(unsetNullableMigration);
@@ -373,13 +335,13 @@ namespace Logitude.DBMigrations.Models
                 ColumnMigrations.Add(renameMigration);
             }
         }
-        
+
         protected string GenerateRandomString()
         {
             return Regex.Replace(Convert.ToBase64String(Guid.NewGuid().ToByteArray()), "[/+=]", "").ToUpper();
         }
-        
-        
+
+
 
 
         // abstract methods
@@ -400,7 +362,7 @@ namespace Logitude.DBMigrations.Models
         protected abstract string GetRenameColumnScript(ColumnMigration columnMigration);
 
         protected abstract string GetDropColumnScript(ColumnMigration columnMigration);
-        
+
         protected abstract string GetAlterTypeScript(ColumnMigration columnMigration);
 
         protected abstract string GetAlterSizeScript(ColumnMigration columnMigration);
@@ -416,5 +378,7 @@ namespace Logitude.DBMigrations.Models
         protected abstract TableDefinition GetCurrentTableDefinitionFromDB();
 
         protected abstract TableDefinition GetCurrentTableDefinitionFromDB(string tableName);
+
+        protected abstract string GetAlterPrimaryKeyScript();
     }
 }

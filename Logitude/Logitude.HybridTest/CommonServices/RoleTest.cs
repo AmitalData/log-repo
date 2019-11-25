@@ -1,4 +1,5 @@
 ﻿using System;
+using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -11,18 +12,22 @@ namespace Logitude.HybridTest.CommonServices
         public void Test_Role_GetRoles()
         {
             LoginService.GetLoginTokenByCredentials();
-            RoleServiceReference.RoleWcfServiceClient serviceClient = new RoleServiceReference.RoleWcfServiceClient();
-            string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
-            serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
-            using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
+            InvokedProperties serviceProperties = new InvokedProperties
             {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
-                Response serviceResponse = new Response();
-                RoleServiceReference.RoleList[] serviceResult = serviceClient.GetRoles(TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
-                Assert.AreNotEqual(serviceResult.Length, 0, "There Isn't Roles!");
-                Assert.IsFalse(serviceResponse.HasError, "Get Roles Failed! " + serviceResponse.ErrorMessage);
-                Assert.IsNull(serviceResponse.Result, "Get Roles Failed! " + serviceResponse.ErrorMessage);
-            }
+                ServiceName = "Role",
+                ServiceOperation = "GetRoles",
+                ServiceResponseIndex = 1,
+                ServiceType = typeof(RoleList),
+                ServiceFilterType = null,
+            };
+
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { TestEnvironmentGlobalParameters.Tenant, serviceResponse };
+            RoleList[] roles = (RoleList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+            Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.Result);
+            if(roles.Length == 0)
+                Assert.Inconclusive("There Isn't Roles!");
         }        
     }
 }
