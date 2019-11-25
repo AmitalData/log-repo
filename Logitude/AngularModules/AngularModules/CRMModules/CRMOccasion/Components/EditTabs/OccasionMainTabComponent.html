@@ -206,19 +206,19 @@
                                                                 <div></div>
                                                             </td>
 
-                                                            <td style="vertical-align:central;width: 70px;">
-                                                                <div tabindex="0" class="ToggleButton">
+                                                            <td [class.Disable] ="!IsOccasionEnabled" style="vertical-align:central;width: 70px;">
+                                                                <div [class.Disable]="!IsOccasionEnabled" tabindex="0" class="ToggleButton">
                                                                     <label>Actions</label>
                                                                     <img src="./Images/ToggleIcon.png" />
 
-                                                                    <div [class.Disabled]="!IsOccasionEnabled" class="ToggleButtonMenu" style="right: -70px;width:140px;">
-                                                                        <button (click)="ActionsButtonClicked('MAI')">Mark as invited</button>
-                                                                        <button (click)="ActionsButtonClicked('MAP')">Mark as participated</button>
-                                                                        <button (click)="ActionsButtonClicked('MAUI')">
+                                                                    <div class="ToggleButtonMenu" style="right: -70px;width:140px;">
+                                                                        <button [disabled]="!IsOccasionEnabled" (click)="ActionsButtonClicked('MAI')">Mark as invited</button>
+                                                                        <button [disabled]="!IsOccasionEnabled" (click)="ActionsButtonClicked('MAP')">Mark as participated</button>
+                                                                        <button [disabled]="!IsOccasionEnabled" (click)="ActionsButtonClicked('MAUI')">
                                                                             Mark as uninvited
                                                                         </button>
-                                                                        <button (click)="ActionsButtonClicked('MAUP')">Mark as not participated</button>
-                                                                        <button (click)="ActionsButtonClicked('D')">Delete</button>
+                                                                        <button [disabled]="!IsOccasionEnabled" (click)="ActionsButtonClicked('MAUP')">Mark as not participated</button>
+                                                                        <button [disabled]="!IsOccasionEnabled" (click)="ActionsButtonClicked('D')">Delete</button>
                                                                     </div>
                                                                 </div>
                                                             </td>
