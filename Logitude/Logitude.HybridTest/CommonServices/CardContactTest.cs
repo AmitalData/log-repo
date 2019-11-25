@@ -12,7 +12,7 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_CardContact_UPSERT()
         {
-            Assert.Inconclusive("Not Implemented !");
+            //Assert.Inconclusive("Not Implemented !");
 
             LoginService.GetLoginTokenByCredentials();
             Response serviceResponse = CardContactWcfCaller.CallCardContactUpsert();

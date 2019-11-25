@@ -13,9 +13,9 @@ namespace Logitude.HybridTest.WcfCallers
     {
         public static Response CallDirectShipmentUpsert()
         {
-            Response prepareResponse = InitialShipment();
-            if (!prepareResponse.HasError)
-            {
+            //Response prepareResponse = InitialShipment();
+            //if (!prepareResponse.HasError)
+           // {
                 ShipmentPM entityPM = new ShipmentPM()
                 {
                     ShipmentNumber = HybridData.DirectShipmentCode,
@@ -51,8 +51,8 @@ namespace Logitude.HybridTest.WcfCallers
                 if (serviceResponse.Result != null)
                     HybridData.DirectShipmentId = serviceResponse.Result;
                 return serviceResponse;
-            }
-            return prepareResponse;
+          //  }
+           // return prepareResponse;
         }
         public static Response PrepareDirectShipment()
         {
