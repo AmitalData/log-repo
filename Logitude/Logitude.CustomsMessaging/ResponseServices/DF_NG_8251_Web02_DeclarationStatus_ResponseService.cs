@@ -224,6 +224,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                         };                                       
                                         myEventContextTagModelPRS.EventCode = "PRS";
                                         declarationPM.CurrentContextTag = myEventContextTagModelPRS;
+                                        RaiseStatus(declarationPM, "", myEventContextTagModelPRS.EventCode);
                                         break;
                                     case "25":
                                     case "30":
@@ -272,6 +273,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                 break;
                                         }
                                         declarationPM.CurrentContextTag = myEventContextTagModel;
+                                        RaiseStatus(declarationPM, "", myEventContextTagModel.EventCode);
                                         break;
                                     case "13":
                                         if (declarationPM.PaymentDate.HasValue)
