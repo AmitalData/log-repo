@@ -40,7 +40,7 @@ namespace Logitude.HybridTest.CommonServices
                 ServiceOperation = "Cancel",
                 ServiceResponseIndex = 0,
                 ServiceType = null,
-                ServiceFilterType = null,
+                ServiceFilterType = null,//test puol request
             };
 
             Response serviceResponse = new Response();
