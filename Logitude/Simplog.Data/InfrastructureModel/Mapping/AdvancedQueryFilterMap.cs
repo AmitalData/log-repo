@@ -43,6 +43,12 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .HasMaxLength(15)
                 .IsUnicode(false);
 
+            this.Property(t => t.ObjectFieldCode)
+                 .IsRequired()
+                 .HasMaxLength(200)
+                 .IsUnicode(false);
+
+
             // Table & Column Mappings
             this.ToTable("AdvancedQueryFilters");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -55,7 +61,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.Operator).HasColumnName("Operator");
             this.Property(t => t.IndexOrder).HasColumnName("IndexOrder");
             this.Property(t => t.UserId).HasColumnName("UserId");
-
+            this.Property(t => t.ObjectFieldCode).HasColumnName("ObjectFieldCode");
             // Relationships
             this.HasOptional(t => t.User)
                 .WithMany()

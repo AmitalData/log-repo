@@ -89,5 +89,9 @@ export class AdvancedQueryFilterPM {
     private userId: string;
     public get UserId() { return this.userId; }
     public set UserId(newValue: string) { this.userId = newValue; }
-      
+
+
+    private objectFieldCode: string;
+    public get ObjectFieldCode() { return this.objectFieldCode; }
+    public set ObjectFieldCode(newValue: string) { this.objectFieldCode = newValue; }
 }
