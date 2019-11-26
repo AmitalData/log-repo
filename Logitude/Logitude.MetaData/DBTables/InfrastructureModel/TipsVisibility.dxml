@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="TipsVisibilities">
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="IsVisible" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TipCode" Type="varchar" Size="4">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+</Table>

@@ -12,7 +12,7 @@ namespace Logitude.LXMLFixer
         static void Main(string[] args)
         {
             LXMLFilesFixer fixer = new LXMLFilesFixer();
-            fixer.ExtractMistakes();
+            fixer.ExtractLXMLFilesMistakes();
         }
     }
 }

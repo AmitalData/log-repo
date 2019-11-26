@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="EntityStatus">
+  <Column Name="Code" Type="varchar" Size="4">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DisplayName" Type="varchar" Size="40">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="InActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="40">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ObjectTableId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="StatusWeight" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="EventTypes" ParentColumnName="EntityStatusId" ReferencedTableName="EntityStatus" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.EventTypes_dbo.EntityStatus_EntityStatusId" />
+  <Relation ParentTableName="ShipmentMasterDatas" ParentColumnName="StatusId" ReferencedTableName="EntityStatus" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentMasterDatas_dbo.EntityStatus_StatusId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="ComputedStatusId" ReferencedTableName="EntityStatus" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.EntityStatus_ComputedStatusId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="StatusId" ReferencedTableName="EntityStatus" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.EntityStatus_StatusId" />
+</Table>

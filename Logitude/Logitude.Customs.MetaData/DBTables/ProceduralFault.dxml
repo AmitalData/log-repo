@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="ProceduralFaults">
+  <Column Name="CancellationDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DeclarationId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="InputTypeCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="InspectionTypeCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IsAgentProceduralFaultCountabl" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsAgentResponsibility" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsCancelled" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsCustomerResponsibility" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsCustProceduralFaultCountabl" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LeadingDocumentVersion" Type="varchar" Size="5">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Notes" Type="nvarchar" Size="512">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ProceduralFaultCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ProceduralFaultInputProcesCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ProceduralFaultNumber" Type="varchar" Size="9">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ProceduralFaultStatusCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="RansomViolationSum" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="RansomViolationTypeCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Remarks" Type="nvarchar" Size="512">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UpdateDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="ProceduralFaultsConnEntities" ParentColumnName="ProceduralFaultId" ReferencedTableName="ProceduralFaults" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.ProceduralFaultsConnEntities_Customs.ProceduralFaults_ProceduralFaultId" />
+</Table>

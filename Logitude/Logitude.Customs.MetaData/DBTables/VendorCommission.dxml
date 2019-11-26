@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="VendorCommissions">
+  <Column Name="CommisionPercentage" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CustomerId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="VendorId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+</Table>

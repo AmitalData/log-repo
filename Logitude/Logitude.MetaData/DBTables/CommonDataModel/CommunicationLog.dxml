@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="CommunicationLogs">
+  <Column Name="AWBNumber" Type="varchar" Size="20">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="BCC" Type="varchar" Size="4000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CC" Type="varchar" Size="4000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ChildEntityId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ChildObjectTableId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CommunicationLogTypeCode" Type="varchar" Size="4">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CommunicationStatusTypeCode" Type="varchar" Size="4">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CorrelationID" Type="varchar" Size="64">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CreateDateUTC" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CreatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DocumentId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DocumentOutId" Type="varchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DocumentsFilingId" Type="varchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DoneDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DoneDateUTC" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EmailDeliveryError" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EntityId" Type="varchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EntityReference" Type="varchar" Size="50">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ExceptionMessage" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="From" Type="varchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="InOut" Type="varchar" Size="3">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsSecured" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LastStatusDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LastStatusDateUTC" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Logs" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LogSettings" Type="varchar" Size="350">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="MessageLockId" Type="varchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="NextTryDateTime" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="NextTryDateTimeUTC" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ObjectTableId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Priority" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="QueueName" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ReplyToList" Type="varchar" Size="500">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ResponseDocumentId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Retries" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Subject" Type="nvarchar" Size="500">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="To" Type="varchar" Size="4000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="ShipmentCustomsTransmissions" ParentColumnName="CommunicationLogId" ReferencedTableName="CommunicationLogs" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentCustomsTransmissions_dbo.CommunicationLogs_CommunicationLogId" />
+  <Relation ParentTableName="CommunicationAttachments" ParentColumnName="CommunicationLogId" ReferencedTableName="CommunicationLogs" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CommunicationAttachments_dbo.CommunicationLogs_CommunicationLogId" />
+  <Relation ParentTableName="CommunicationLogSteps" ParentColumnName="CommunicationLogId" ReferencedTableName="CommunicationLogs" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CommunicationLogSteps_dbo.CommunicationLogs_CommunicationLogId" />
+  <Relation ParentTableName="CustomsRequestsSheets" ParentColumnName="RequestComminicationId" ReferencedTableName="CommunicationLogs" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.CustomsRequestsSheets_dbo.CommunicationLogs_RequestComminicationId" />
+  <Relation ParentTableName="Activities" ParentColumnName="CommunicationLogId" ReferencedTableName="CommunicationLogs" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Activities_dbo.CommunicationLogs_CommunicationLogId" />
+  <Relation ParentTableName="OceanInsightsStatuses" ParentColumnName="CommunicationLogId" ReferencedTableName="CommunicationLogs" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OceanInsightsStatuses_dbo.CommunicationLogs_CommunicationLogId" />
+  <Relation ParentTableName="BookingAnswers" ParentColumnName="CommunicationLogId" ReferencedTableName="CommunicationLogs" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BookingAnswers_dbo.CommunicationLogs_CommunicationLogId" />
+  <Relation ParentTableName="InboundEmailLines" ParentColumnName="CommunicationLogId" ReferencedTableName="CommunicationLogs" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.InboundEmailLines_dbo.CommunicationLogs_CommunicationLogId" />
+</Table>

@@ -1,11 +1,8 @@
-﻿using Logitude.LXMLFixer.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace Logitude.LXMLFixer.Models
@@ -14,9 +11,11 @@ namespace Logitude.LXMLFixer.Models
     {
         private readonly string LXMLFilesRoot = ConfigurationManager.AppSettings["LXMLFilesRoot"];
         private readonly string DXMLFilesRoot = ConfigurationManager.AppSettings["DXMLFilesRoot"];
-        private string LXMLMistakesData = "";
 
-        public void ExtractMistakes()
+        private string LXMLMistakesData = "";
+        private string DXMLFilesThatNotFound = "";
+
+        public void ExtractLXMLFilesMistakes()
         {
             string[] lxmlFiles = GetLXMLFiles();
             foreach (var lxmlFile in lxmlFiles)
@@ -28,8 +27,8 @@ namespace Logitude.LXMLFixer.Models
                 string data = "";
                 string entityName = lxmlFileName.Split('.')[0];
 
-                TableDefinition dxmlTableDefinition = GetTableDefinitionForDXMLFile(entityName);
                 TableDefinition lxmlTableDefinition = GetTableDefinitionForLXMLFile(lxmlFile);
+                TableDefinition dxmlTableDefinition = GetTableDefinitionForDXMLFile(entityName);
 
                 if (dxmlTableDefinition != null && lxmlTableDefinition != null)
                 {
@@ -81,6 +80,7 @@ namespace Logitude.LXMLFixer.Models
                         Console.BackgroundColor = ConsoleColor.Red;
                         Console.WriteLine("Cannot Get DXML Table Definition For " + entityName + " Entity");
                         Console.ResetColor();
+                        DXMLFilesThatNotFound += entityName + ".dxml" + "\n";
                     }
                     if (lxmlTableDefinition == null)
                     {
@@ -92,14 +92,24 @@ namespace Logitude.LXMLFixer.Models
 
             }
 
-            WriteMistakesDataToCSVFile();
+            ExportMistakesData();
+            ExportDXMLFilesThatNotFound();
         }
 
-        private void WriteMistakesDataToCSVFile()
+        private void ExportMistakesData()
         {
             string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
             string csvFilePath = Path.Combine(projectDirectory, @"Reports\LXMLFilesMistakes.csv");
             File.WriteAllText(csvFilePath, LXMLMistakesData);
+            Console.WriteLine("\nLXML Files Mistakes Extracted To /Reports/LXMLFilesMistakes.csv\n");
+        }
+        
+        private void ExportDXMLFilesThatNotFound()
+        {
+            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            string csvFilePath = Path.Combine(projectDirectory, @"Reports\DXMLFilesThatNotFound.csv");
+            File.WriteAllText(csvFilePath, DXMLFilesThatNotFound);
+            Console.WriteLine("DXML Files That Not Found Extracted To /Reports/DXMLFilesThatNotFound.csv\n");
         }
 
         private string[] GetLXMLFiles()
@@ -159,19 +169,21 @@ namespace Logitude.LXMLFixer.Models
                 {
                     string fieldName = field.Attribute("FieldName") == null ? null : field.Attribute("FieldName").Value.Split('"')[1].Split('"')[0];
                     string type = field.Attribute("FieldsDataType") == null ? null : field.Attribute("FieldsDataType").Value.Split('"')[1].Split('"')[0];
-                    int size = field.Attribute("MaxLength") == null ? 0 : Convert.ToInt32(field.Attribute("MaxLength").Value);
-                    bool primaryKey = field.Attribute("IsPrimaryKey") == null ? false : field.Attribute("IsPrimaryKey").Value == "true";
-                    bool nullable = field.Attribute("IsNullable") == null ? false : field.Attribute("IsNullable").Value == "true";
+                    bool isMaxLength = field.Attribute("IsMaxLength") == null ? false : field.Attribute("IsMaxLength").Value == "true";
+                    int size = isMaxLength ? -1 : (field.Attribute("MaxLength") == null ? 0 : Convert.ToInt32(field.Attribute("MaxLength").Value));
+                    bool isPrimaryKey = field.Attribute("IsPrimaryKey") == null ? false : field.Attribute("IsPrimaryKey").Value == "true";
+                    bool isNullable = field.Attribute("IsNullable") == null ? false : field.Attribute("IsNullable").Value == "true";
+                    bool isFixedLength = field.Attribute("IsFixedLength") == null ? false : field.Attribute("IsFixedLength").Value == "true";
 
                     ColumnDefinition columnDefinition = new ColumnDefinition
                     {
                         Name = fieldName,
-                        Type = GetDataTypeForLXMLColumn(type),
+                        Type = GetDataTypeForColumnDefinition(type, isFixedLength),
                         Size = size,
                         Constraints = new ConstraintsDefinition
                         {
-                            PrimaryKey = primaryKey,
-                            Nullable = nullable
+                            PrimaryKey = isPrimaryKey,
+                            Nullable = isNullable
                         }
                     };
                     
@@ -192,10 +204,35 @@ namespace Logitude.LXMLFixer.Models
             }
         }
 
-        private string GetDataTypeForLXMLColumn(string type)
+        private string GetDataTypeForColumnDefinition(string type, bool isFixedLength)
         {
             switch (type)
             {
+                case "Boolean":
+                    return "bit";
+                case "Constant":
+                case "PickList":
+                case "List":
+                case "Emails":
+                case "Byte[]":
+                case "Text":
+                    return "varchar";
+                case "Date":
+                case "DateTime":
+                    return "datetime";
+                case "Decimal":
+                case "UnsDecimal":
+                    return "decimal";
+                case "Double":
+                case "SigDouble":
+                    return "float";
+                case "Integer":
+                case "UnsInteger":
+                    return "int";
+                case "nText":
+                    return "nvarchar";
+                case "LookUp":
+                    return isFixedLength ? "char" : "varchar";
                 default:
                     return null;
             }

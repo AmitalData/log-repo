@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="CardExternalAccountsByProducts">
+  <Column Name="CardId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CostCenter" Type="varchar" Size="25">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="GLAccount" Type="varchar" Size="25">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="ProductTypeCode" Type="varchar" Size="2">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UpdateDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="UpdatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+</Table>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="GLAccountTotalDateTypes">
+  <Column Name="Code" Type="varchar" Size="1">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="60">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="GLAccountTotalByMonths" ParentColumnName="DateTypeCode" ReferencedTableName="GLAccountTotalDateTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.GLAccountTotalByMonths_dbo.GLAccountTotalDateTypes_DateTypeCode" />
+</Table>

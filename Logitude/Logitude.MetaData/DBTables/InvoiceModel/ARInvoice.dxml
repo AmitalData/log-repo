@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="ARInvoices">
+  <Column Name="AccountingExternalCode" Type="nvarchar" Size="25">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AmountDue" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AmountDueInLocalCurrency" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AmountDueInProfitCurrency" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AmountInInvoiceCurrency" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AmountInLocalCurrency" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AmountInProfitCurrency" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ApprovedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ApprovedDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ARInvoiceStockId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ARInvoiceTypeCode" Type="varchar" Size="2">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="BankAccountLiteId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="BillToAddressId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="BillToId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="BranchId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CancelledByARInvoiceId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ConcurrencyGUID" Type="varchar" Size="40">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ConsolidationInvoiceId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CreditedByARInvoiceId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CustomerRef" Type="varchar" Size="105">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DateForVATInterest" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DebitAccount" Type="varchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Description" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DocumentFilingId" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DraftNumber" Type="varchar" Size="20">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DueDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ExchangeRateDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ExpectedPaymentDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ExternalAccountingEntityId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Field1" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Field10" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Field2" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Field3" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Field4" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Field5" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Field6" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Field7" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Field8" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Field9" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="HouseNumber" Type="nvarchar" Size="20">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Intercompany" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="InternalNotes" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="InvoiceCurrencyExchangeRate" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="InvoiceCurrencyId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="InvoiceDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="InvoiceNumber" Type="varchar" Size="20">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IsAutoCredit" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsCancelled" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsClosed" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsConsolidationInvoice" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsConstituentInvoice" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsCustomsChargesOnly" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsExternalEntity" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsFullAccounting" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsGeneralInvoice" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsInvoiceNumberFromStock" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsInvoiceNumberManuallySet" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsMultiCurrency" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsPrinted" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IssuedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsTransferStarted" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LocalCurrencyId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="MainEntityId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="MainEntityReference" Type="varchar" Size="20">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="MasterNumber" Type="nvarchar" Size="30">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="MetodoPagoCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="OperationalDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PaymentTermExternalId" Type="varchar" Size="25">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PaymentTermId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PrepaidCollectId" Type="varchar" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PrintByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PrintDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PrintNotes" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ProfitCurrencyExchangeRate" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ProfitCurrencyId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="RelatedInvoice" Type="varchar" Size="20">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SalesmanUserId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SATAdditionalFieldsXML" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SATApprovalDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SATInvoiceStatusCode" Type="varchar" Size="2">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SATPaymentMethodCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SATTransferStatusCode" Type="varchar" Size="2">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SATXML" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="4000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Sent" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SplitJournalByCurrency" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="StatusCode" Type="varchar" Size="2">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SubTotalInInvoiceCurrency" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SubTotalInLocalCurrency" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TotalAmountForTaxReport" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TotalVAT" Type="decimal">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TotaVatableAmountForTaxReport" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TransferError" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TransferStatusCode" Type="varchar" Size="2">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TransferTries" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TransmissionError" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="UpdateDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="UpdatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UsoCFDICode" Type="nvarchar" Size="128">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="VatNumber" Type="varchar" Size="30">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="ShipmentReceivables" ParentColumnName="ARInvoiceId" ReferencedTableName="ARInvoices" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentReceivables_dbo.ARInvoices_ARInvoiceId" />
+  <Relation ParentTableName="ARInvoiceEntities" ParentColumnName="ARInvoiceId" ReferencedTableName="ARInvoices" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoiceEntities_dbo.ARInvoices_ARInvoiceId" />
+  <Relation ParentTableName="ARInvoices" ParentColumnName="CancelledByARInvoiceId" ReferencedTableName="ARInvoices" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoices_dbo.ARInvoices_CancelledByARInvoiceId" />
+  <Relation ParentTableName="ARInvoices" ParentColumnName="CreditedByARInvoiceId" ReferencedTableName="ARInvoices" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoices_dbo.ARInvoices_CreditedByARInvoiceId" />
+  <Relation ParentTableName="ARInvoiceLines" ParentColumnName="ARInvoiceId" ReferencedTableName="ARInvoices" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoiceLines_dbo.ARInvoices_ARInvoiceId" />
+  <Relation ParentTableName="ARInvoicePayments" ParentColumnName="ARInvoiceId" ReferencedTableName="ARInvoices" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoicePayments_dbo.ARInvoices_ARInvoiceId" />
+  <Relation ParentTableName="ARInvoiceStockLines" ParentColumnName="ARInvoiceId" ReferencedTableName="ARInvoices" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoiceStockLines_dbo.ARInvoices_ARInvoiceId" />
+  <Relation ParentTableName="ARInvoiceTotalVATs" ParentColumnName="ARInvoiceId" ReferencedTableName="ARInvoices" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoiceTotalVATs_dbo.ARInvoices_ARInvoiceId" />
+</Table>

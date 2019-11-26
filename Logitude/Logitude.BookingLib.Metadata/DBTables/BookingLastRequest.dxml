@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="BookingLastRequests">
+  <Column Name="BookingId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CarrierId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Destination" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ETD" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FlightNumber" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Origin" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+</Table>

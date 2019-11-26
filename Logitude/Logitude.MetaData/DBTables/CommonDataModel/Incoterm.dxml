@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="Incoterms">
+  <Column Name="AddedManually" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Code" Type="varchar" Size="3">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Freight" Type="varchar" Size="1">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="InActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LocalName" Type="nvarchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="40">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Notes" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="OtherCharges" Type="varchar" Size="1">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="Quotes" ParentColumnName="IncotermId" ReferencedTableName="Incoterms" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.Incoterms_IncotermId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="IncotermId" ReferencedTableName="Incoterms" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Incoterms_IncotermId" />
+</Table>

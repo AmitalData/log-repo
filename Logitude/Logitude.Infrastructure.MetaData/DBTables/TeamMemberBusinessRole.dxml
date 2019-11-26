@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="TeamMemberBusinessRoles">
+  <Column Name="AddDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="AddedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="BusinessRoleId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="TeamMemberId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+</Table>

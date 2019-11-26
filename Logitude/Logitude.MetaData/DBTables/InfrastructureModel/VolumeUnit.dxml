@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="VolumeUnits">
+  <Column Name="Code" Type="varchar" Size="3">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="40">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="Shipments" ParentColumnName="VolumeUnitCode" ReferencedTableName="VolumeUnits" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.VolumeUnits_VolumeUnitCode" />
+  <Relation ParentTableName="Bookings" ParentColumnName="VolumeUnitCode" ReferencedTableName="VolumeUnits" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Bookings_dbo.VolumeUnits_VolumeUnitCode" />
+  <Relation ParentTableName="Tenants" ParentColumnName="VolumeUnitCode" ReferencedTableName="VolumeUnits" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Tenants_dbo.VolumeUnits_VolumeUnitCode" />
+  <Relation ParentTableName="FlightsSchedulesRequests" ParentColumnName="VolumeUnitCode" ReferencedTableName="VolumeUnits" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.FlightsSchedulesRequests_dbo.VolumeUnits_VolumeUnitCode" />
+</Table>

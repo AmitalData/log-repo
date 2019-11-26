@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="AutomaticReconcileMethods">
+  <Column Name="AutomaticReconcile1" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="AutomaticReconcile2" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AutomaticReconcile3" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Code" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Inactive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="GLAccounts" ParentColumnName="AutomaticReconcileId" ReferencedTableName="AutomaticReconcileMethods" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.GLAccounts_dbo.AutomaticReconcileMethods_AutomaticReconcileId" />
+  <Relation ParentTableName="FullAccountingSettings" ParentColumnName="AutomaticReconcileMethodId" ReferencedTableName="AutomaticReconcileMethods" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FullAccountingSettings_dbo.AutomaticReconcileMethods_AutomaticReconcileMethodId" />
+</Table>

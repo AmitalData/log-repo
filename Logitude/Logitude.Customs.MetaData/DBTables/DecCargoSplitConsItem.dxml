@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="DecCargoSplitConsItems">
+  <Column Name="CargoDescription" Type="nvarchar" Size="255">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DecCargoSplitConsLineNo" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="DeclarationCargoSplitId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="GrossMassMeasure" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ItemLine" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="ParentCargoConsinmentItem" Type="varchar" Size="3">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="RequestReasonCode" Type="varchar" Size="3">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="DecCargoSplitConsPackDets" ParentColumnName="DeclarationCargoSplitId" ReferencedTableName="DecCargoSplitConsItems" ReferencedColumnName="DeclarationCargoSplitId" ForeignKeyConstraintName="FK_Customs.DecCargoSplitConsPackDets_Customs.DecCargoSplitConsItems_DeclarationCargoSplitId_DecCargoSplitConsLineNo_DecCargoSpli" />
+  <Relation ParentTableName="DecCargoSplitConsPackDets" ParentColumnName="DecCargoSplitConsLineNo" ReferencedTableName="DecCargoSplitConsItems" ReferencedColumnName="DecCargoSplitConsLineNo" ForeignKeyConstraintName="FK_Customs.DecCargoSplitConsPackDets_Customs.DecCargoSplitConsItems_DeclarationCargoSplitId_DecCargoSplitConsLineNo_DecCargoSpli" />
+  <Relation ParentTableName="DecCargoSplitConsPackDets" ParentColumnName="DecCargoSplitConsItemLine" ReferencedTableName="DecCargoSplitConsItems" ReferencedColumnName="ItemLine" ForeignKeyConstraintName="FK_Customs.DecCargoSplitConsPackDets_Customs.DecCargoSplitConsItems_DeclarationCargoSplitId_DecCargoSplitConsLineNo_DecCargoSpli" />
+</Table>

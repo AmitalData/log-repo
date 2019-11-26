@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="HybridPartnersPermissions">
+  <Column Name="AllowedByHybridPartnerId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="HybridPartnerId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="InActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+</Table>

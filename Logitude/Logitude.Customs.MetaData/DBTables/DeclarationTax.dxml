@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="DeclarationTaxes">
+  <Column Name="DeclarationId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="DeferredTaxAmount" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TaxBaseAmount" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TaxTypeCode" Type="varchar" Size="3">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TotalAmount" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+</Table>

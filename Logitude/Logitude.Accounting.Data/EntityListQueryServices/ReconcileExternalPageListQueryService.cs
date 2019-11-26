@@ -73,12 +73,12 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 			return iQueryable;
 		}
 
-        public List<ReconcileExternalPageLineList> getExternalReoncilioationsByFilter(QueryOperations queryOperations, string bankAccountId, int tenant)
+        public List<ReconcileExternalPageLineList> getExternalReoncilioationsByFilter(QueryOperations queryOperations, string objectTableId, string entityId, int tenant)
         {
             var accountingContext = AccountingContext.GetContext(tenant);
             ReconcileExternalPageLineListQueryService lineQuery = new ReconcileExternalPageLineListQueryService(accountingContext);
 
-            IQueryable<ReconcileExternalPageLine> accountQuery = GetExternalReconciliationByBankAccount(bankAccountId, tenant);
+            IQueryable<ReconcileExternalPageLine> accountQuery = GetExternalReconciliations(objectTableId, entityId, tenant);
 
             // Get list query with query filters 
             IQueryable<ReconcileExternalPageLineList>  listQuery = BasicListFilter(accountQuery, queryOperations, tenant);
@@ -98,10 +98,10 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
         }
 
-        public GenericCallBack GetOpenReconciliationFilterCallBack(QueryOperations queryOperations, string bankAccountId, int tenant)
+        public GenericCallBack GetOpenReconciliationFilterCallBack(QueryOperations queryOperations, string objectTableId, string entityId, int tenant)
         {
 
-            IQueryable<ReconcileExternalPageLine> accountQuery = GetExternalReconciliationByBankAccount(bankAccountId, tenant);
+            IQueryable<ReconcileExternalPageLine> accountQuery = GetExternalReconciliations(objectTableId, entityId, tenant);
 
             IQueryable<ReconcileExternalPageLineList> query2 = BasicListFilter(accountQuery, queryOperations, tenant);
             var callback11 =
@@ -122,15 +122,13 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
             return myGenericCallBack;
         }
-        private IQueryable<ReconcileExternalPageLine> GetExternalReconciliationByBankAccount(string bankAccountId, int tenant)
+        private IQueryable<ReconcileExternalPageLine> GetExternalReconciliations(string objectTableId, string entityId, int tenant)
         {
-            ObjectTable bankAccountObjectTable = GetBankAccountObjectTable(tenant);
-
             IQueryable<ReconcileExternalPageLine> accountQuery = (from page in context.ReconcileExternalPages
                                                                   join line in context.ReconcileExternalPageLines on page.Id equals line.ReconcileExternalPageId
                                                                   where page.Tenant == tenant
-                                                                        && page.EntityId == bankAccountId
-                                                                        && page.ObjectTableId == bankAccountObjectTable.Id
+                                                                        && page.EntityId == entityId
+                                                                        && page.ObjectTableId == objectTableId
                                                                         && page.StatusCode == "2"  // 2- Approved
                                                                         && line.IsReconciled == false
                                                                   //&& line.InReconcileProgress == false
@@ -177,12 +175,12 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         //
         // External Reconcile
         //
-        public IQueryable<ReconcileExternalPageLineList> getPageLinesByFilter(QueryOperations queryOperations, string bankAccountId, int tenant)
+        public IQueryable<ReconcileExternalPageLineList> getPageLinesByFilter(QueryOperations queryOperations, string objectTableId, string entityId, int tenant)
         {
             var accountingContext = AccountingContext.GetContext(tenant);
             ReconcileExternalPageLineListQueryService lineQuery = new ReconcileExternalPageLineListQueryService(accountingContext);
 
-            IQueryable<ReconcileExternalPageLine> accountQuery = GetExternalReconciliationByBankAccount(bankAccountId, tenant);
+            IQueryable<ReconcileExternalPageLine> accountQuery = GetExternalReconciliations(objectTableId, entityId, tenant);
 
             // Get list query with query filters 
             IQueryable<ReconcileExternalPageLineList> listQuery = BasicListFilter(accountQuery, queryOperations, tenant);

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="Distributors">
+  <Column Name="Code" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="EnglishName" Type="varchar" Size="60">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LocalName" Type="nvarchar" Size="60">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="Users" ParentColumnName="DistributorCode" ReferencedTableName="Distributors" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Users_dbo.Distributors_DistributorCode" />
+</Table>

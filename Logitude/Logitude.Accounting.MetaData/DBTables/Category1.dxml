@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="Category1">
+  <Column Name="EnglishName" Type="varchar" Size="-1">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Inactive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LocalName" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="GLAccounts" ParentColumnName="Category1Id" ReferencedTableName="Category1" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.GLAccounts_dbo.Category1_Category1Id" />
+</Table>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="ChartOfAccounts">
+  <Column Name="Code" Type="varchar" Size="5">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="EnglishName" Type="varchar" Size="60">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Inactive" Type="bit">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LocalName" Type="nvarchar" Size="30">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ParentId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="200">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TypeCode" Type="varchar" Size="1">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="GLAccounts" ParentColumnName="ChartOfAccountsId" ReferencedTableName="ChartOfAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.GLAccounts_dbo.ChartOfAccounts_ChartOfAccountsId" />
+  <Relation ParentTableName="GLAccounts" ParentColumnName="PreviousChartOfAccountsId" ReferencedTableName="ChartOfAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.GLAccounts_dbo.ChartOfAccounts_PreviousChartOfAccountsId" />
+  <Relation ParentTableName="ChartOfAccounts" ParentColumnName="ParentId" ReferencedTableName="ChartOfAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ChartOfAccounts_dbo.ChartOfAccounts_ParentId" />
+  <Relation ParentTableName="Revaluations" ParentColumnName="ChartOfAccountsId" ReferencedTableName="ChartOfAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Revaluations_dbo.ChartOfAccounts_ChartOfAccountsId" />
+</Table>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="UsoCFDIs">
+  <Column Name="Code" Type="nvarchar" Size="128">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Name" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="Cards" ParentColumnName="UsoCFDICode" ReferencedTableName="UsoCFDIs" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Cards_dbo.UsoCFDIs_UsoCFDICode" />
+  <Relation ParentTableName="ARInvoices" ParentColumnName="UsoCFDICode" ReferencedTableName="UsoCFDIs" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ARInvoices_dbo.UsoCFDIs_UsoCFDICode" />
+</Table>

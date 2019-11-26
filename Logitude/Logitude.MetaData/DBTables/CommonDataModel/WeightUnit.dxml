@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="WeightUnits">
+  <Column Name="Code" Type="varchar" Size="3">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="40">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="Bookings" ParentColumnName="GrossWeightUnitCode" ReferencedTableName="WeightUnits" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Bookings_dbo.WeightUnits_GrossWeightUnitCode" />
+  <Relation ParentTableName="Tenants" ParentColumnName="WeightMeasurementUnitCode" ReferencedTableName="WeightUnits" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Tenants_dbo.WeightUnits_WeightMeasurementUnitCode" />
+  <Relation ParentTableName="Tenants" ParentColumnName="GrossWeightUnitCode" ReferencedTableName="WeightUnits" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Tenants_dbo.WeightUnits_GrossWeightUnitCode" />
+  <Relation ParentTableName="Shipments" ParentColumnName="ChargeableWeightUnitCode" ReferencedTableName="WeightUnits" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.WeightUnits_ChargeableWeightUnitCode" />
+  <Relation ParentTableName="FlightsSchedulesRequests" ParentColumnName="GrossWeightUnitCode" ReferencedTableName="WeightUnits" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.FlightsSchedulesRequests_dbo.WeightUnits_GrossWeightUnitCode" />
+  <Relation ParentTableName="Shipments" ParentColumnName="GrossWeightUnitCode" ReferencedTableName="WeightUnits" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.WeightUnits_GrossWeightUnitCode" />
+  <Relation ParentTableName="Bookings" ParentColumnName="ChargeableWeightUnitCode" ReferencedTableName="WeightUnits" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Bookings_dbo.WeightUnits_ChargeableWeightUnitCode" />
+</Table>

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="DocumentTypes">
+  <Column Name="AgentRoleId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Code" Type="varchar" Size="7">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CountryCode" Type="char" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CustomControl" Type="varchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CustomerRoleId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DocumentsDataProviderCode" Type="varchar" Size="10">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DocumentTypeCategoryCode" Type="varchar" Size="1">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DocumentTypeDefaultEditorTool" Type="varchar" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DocumentTypeDefaultHTMLTemplateId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DocumentTypeDefaultReportTemplateId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FileName" Type="nvarchar" Size="200">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="InActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsAgentSharedInDirect" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsAgentSharedInHouse" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsAgentSharedInMaster" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsAgentView" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsAir" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsAirDigitalSignRequired" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsCopiedAtSignup" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsCustomerView" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsDirect" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsDocIn" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsDocOut" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsDocumentOneTimePrintLimited" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsEnabledForCustomers" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsHouse" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsInland" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsInlandDigitalSignRequired" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsMaster" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsOcean" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsOceanDigitalSignRequired" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsReadOnly" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsSystemAdditionalPrintingFields" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LimitedPrintCopyId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Name" Type="nvarchar" Size="40">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Notes" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ObjectTableId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="OrderBy" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="PrintingFieldsScreenCode" Type="varchar" Size="60">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SharedDocumentTypeCopyId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Subject" Type="nvarchar" Size="500">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TemplateFormatCode" Type="varchar" Size="4">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="FollowUps" ParentColumnName="DocumentTypeId" ReferencedTableName="DocumentTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FollowUps_dbo.DocumentTypes_DocumentTypeId" />
+  <Relation ParentTableName="FormCustomFields1" ParentColumnName="DocumentTypeId" ReferencedTableName="DocumentTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FormCustomFields1_dbo.DocumentTypes_DocumentTypeId" />
+  <Relation ParentTableName="DocumentTypeCopies" ParentColumnName="DocumentTypeId" ReferencedTableName="DocumentTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DocumentTypeCopies_dbo.DocumentTypes_DocumentTypeId" />
+  <Relation ParentTableName="DocumentsFilings" ParentColumnName="DocumentTypeId" ReferencedTableName="DocumentTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DocumentsFilings_dbo.DocumentTypes_DocumentTypeId" />
+  <Relation ParentTableName="DocumentTypeCustomFields1" ParentColumnName="DocumentTypeId" ReferencedTableName="DocumentTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DocumentTypeCustomFields1_dbo.DocumentTypes_DocumentTypeId" />
+  <Relation ParentTableName="DocumentTypeMetaDatas" ParentColumnName="DocumentTypeId" ReferencedTableName="DocumentTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DocumentTypeMetaDatas_dbo.DocumentTypes_DocumentTypeId" />
+  <Relation ParentTableName="DocumentTypeTemplates" ParentColumnName="DocumentTypeId" ReferencedTableName="DocumentTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DocumentTypeTemplates_dbo.DocumentTypes_DocumentTypeId" />
+</Table>

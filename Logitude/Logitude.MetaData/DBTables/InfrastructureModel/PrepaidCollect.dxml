@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="PrepaidCollects">
+  <Column Name="DisplayInLOV" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="1">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="10">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="CustomerProducts" ParentColumnName="PrepaidCollectId" ReferencedTableName="PrepaidCollects" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomerProducts_dbo.PrepaidCollects_PrepaidCollectId" />
+  <Relation ParentTableName="Tenants" ParentColumnName="ExportFreightPrepaidCollectId" ReferencedTableName="PrepaidCollects" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tenants_dbo.PrepaidCollects_ExportFreightPrepaidCollectId" />
+  <Relation ParentTableName="Tenants" ParentColumnName="ExportOtherPrepaidCollectId" ReferencedTableName="PrepaidCollects" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tenants_dbo.PrepaidCollects_ExportOtherPrepaidCollectId" />
+  <Relation ParentTableName="ShipmentAWBPrintOnlies" ParentColumnName="PrepaidCollectId" ReferencedTableName="PrepaidCollects" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentAWBPrintOnlies_dbo.PrepaidCollects_PrepaidCollectId" />
+  <Relation ParentTableName="Tenants" ParentColumnName="ImportFreightPrepaidCollectId" ReferencedTableName="PrepaidCollects" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tenants_dbo.PrepaidCollects_ImportFreightPrepaidCollectId" />
+  <Relation ParentTableName="Tenants" ParentColumnName="ImportOtherPrepaidCollectId" ReferencedTableName="PrepaidCollects" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tenants_dbo.PrepaidCollects_ImportOtherPrepaidCollectId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="AdditionalChargesId" ReferencedTableName="PrepaidCollects" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.PrepaidCollects_AdditionalChargesId" />
+  <Relation ParentTableName="Tenants" ParentColumnName="MasterExportFreightPrepaidCollectId" ReferencedTableName="PrepaidCollects" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tenants_dbo.PrepaidCollects_MasterExportFreightPrepaidCollectId" />
+  <Relation ParentTableName="Tenants" ParentColumnName="MasterExportOtherPrepaidCollectId" ReferencedTableName="PrepaidCollects" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tenants_dbo.PrepaidCollects_MasterExportOtherPrepaidCollectId" />
+  <Relation ParentTableName="Tenants" ParentColumnName="MasterImportFreightPrepaidCollectId" ReferencedTableName="PrepaidCollects" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tenants_dbo.PrepaidCollects_MasterImportFreightPrepaidCollectId" />
+  <Relation ParentTableName="Tenants" ParentColumnName="MasterImportOtherPrepaidCollectId" ReferencedTableName="PrepaidCollects" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tenants_dbo.PrepaidCollects_MasterImportOtherPrepaidCollectId" />
+  <Relation ParentTableName="APInvoiceLines" ParentColumnName="PrepaidCollectId" ReferencedTableName="PrepaidCollects" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.APInvoiceLines_dbo.PrepaidCollects_PrepaidCollectId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="BasicFreightId" ReferencedTableName="PrepaidCollects" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.PrepaidCollects_BasicFreightId" />
+  <Relation ParentTableName="ShipmentPayables" ParentColumnName="PrepaidCollectId" ReferencedTableName="PrepaidCollects" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPayables_dbo.PrepaidCollects_PrepaidCollectId" />
+  <Relation ParentTableName="Incoterms" ParentColumnName="Freight" ReferencedTableName="PrepaidCollects" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Incoterms_dbo.PrepaidCollects_Freight" />
+  <Relation ParentTableName="ShipmentReceivables" ParentColumnName="PrepaidCollectId" ReferencedTableName="PrepaidCollects" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentReceivables_dbo.PrepaidCollects_PrepaidCollectId" />
+  <Relation ParentTableName="Incoterms" ParentColumnName="OtherCharges" ReferencedTableName="PrepaidCollects" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Incoterms_dbo.PrepaidCollects_OtherCharges" />
+  <Relation ParentTableName="Shipments" ParentColumnName="DestinationHaulageChargesId" ReferencedTableName="PrepaidCollects" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.PrepaidCollects_DestinationHaulageChargesId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="DestinationPortChargesId" ReferencedTableName="PrepaidCollects" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.PrepaidCollects_DestinationPortChargesId" />
+  <Relation ParentTableName="ARInvoices" ParentColumnName="PrepaidCollectId" ReferencedTableName="PrepaidCollects" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoices_dbo.PrepaidCollects_PrepaidCollectId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="FreightPrepaidCollectId" ReferencedTableName="PrepaidCollects" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.PrepaidCollects_FreightPrepaidCollectId" />
+  <Relation ParentTableName="ARInvoiceLines" ParentColumnName="PrepaidCollectId" ReferencedTableName="PrepaidCollects" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoiceLines_dbo.PrepaidCollects_PrepaidCollectId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="OtherPrepaidCollectId" ReferencedTableName="PrepaidCollects" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.PrepaidCollects_OtherPrepaidCollectId" />
+  <Relation ParentTableName="OpportunityProducts" ParentColumnName="PrepaidCollectId" ReferencedTableName="PrepaidCollects" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OpportunityProducts_dbo.PrepaidCollects_PrepaidCollectId" />
+</Table>

@@ -10,6 +10,8 @@ namespace Logitude.DBMigrations
             if (AppHelper.CheckAppArguments(args, "-root"))
             {
                 string root = AppHelper.GetRoot(args);
+                //root = @"C:\Users\AbedMalakh\source\repos\log-repo\Logitude";
+
                 if (!String.IsNullOrEmpty(root))
                 {
                     string[] DXMLFiles = AppHelper.GetDXMLFilesFromRoot(root);

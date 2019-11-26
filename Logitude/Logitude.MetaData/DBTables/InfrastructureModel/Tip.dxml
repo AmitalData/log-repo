@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="Tips">
+  <Column Name="Code" Type="varchar" Size="4">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="ObjectTableId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ShortTextCode" Type="varchar" Size="30">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="VisibilityDefaultValue" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="ObjectTables" ParentColumnName="MainTipCode" ReferencedTableName="Tips" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ObjectTables_dbo.Tips_MainTipCode" />
+  <Relation ParentTableName="TipsVisibilities" ParentColumnName="TipCode" ReferencedTableName="Tips" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.TipsVisibilities_dbo.Tips_TipCode" />
+</Table>

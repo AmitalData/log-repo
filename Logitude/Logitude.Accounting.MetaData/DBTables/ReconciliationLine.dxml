@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="ReconciliationLines">
+  <Column Name="CurrencyId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="GroupNumber" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsAdjustTransaction" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsPartial" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Line" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="ReconciledWithTransactionId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ReconciliationAmount" Type="decimal">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ReconciliationId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TransactionId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+</Table>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="QueueMessageMoreDetails">
+  <Column Name="CompleteDateTime" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreateDateTime" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Field1" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Field2" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Field3" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="bigint">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="MessageBody" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="NextRunDateTime" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ProcessingDateTime" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="QueueDefinitionCode" Type="varchar" Size="265">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="RetryNumber" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Status" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+</Table>

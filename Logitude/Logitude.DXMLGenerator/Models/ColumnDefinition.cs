@@ -21,7 +21,7 @@ namespace Logitude.DXMLGenerator.Models
         public int Size { get; set; }
 
         [XmlIgnore]
-        public bool SizeSpecified { get { return Size > 0; } }
+        public bool SizeSpecified { get { return Size != 0; } }
 
         [XmlElement]
         public ConstraintsDefinition Constraints { get; set; }

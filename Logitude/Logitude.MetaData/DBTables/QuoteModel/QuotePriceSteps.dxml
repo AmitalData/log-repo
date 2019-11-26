@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="QuotePriceSteps">
+  <Column Name="CostUnitPrice" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="MarkupValue" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="QuoteChargeId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="QuoteId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SaleUnitPrice" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Step" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+</Table>

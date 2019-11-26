@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="OccasionInvitees">
+  <Column Name="AddedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="AddedDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ContactId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Invited" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Notes" Type="nvarchar" Size="4000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="OccasionId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Participated" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UpdateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UpdatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+</Table>

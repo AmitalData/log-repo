@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="DocumentTypeCustomFields1">
+  <Column Name="DefaultValue" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DocumentTypeId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="FieldCode" Type="varchar" Size="30">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="FieldDataTypeCode" Type="varchar" Size="10">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="InActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IndexOrder" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsRequired" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="MultiLine" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="60">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+</Table>

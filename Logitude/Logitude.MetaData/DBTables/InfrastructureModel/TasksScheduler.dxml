@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="TasksScheduler">
+  <Column Name="AverageRunTime" Type="float">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CreateDateTime" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CreatedBy" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Description" Type="varchar" Size="200">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Friday" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="InActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsLastRunError" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LastRunEndTime" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LastRunEndTimeUTC" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LastRunResult" Type="varchar" Size="150">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LastRunStartTime" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LastRunStartTimeUTC" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Monday" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="MonthlyDay" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="NextRunTime" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="NextRunTimeUTC" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ProcedureCode" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="RepeatInMinutes" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Retries" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Satarday" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SchedulerDetailsXML" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="StartDateTime" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="StartDateTimeUTC" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Status" Type="varchar" Size="25">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Sunday" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Thursday" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TriggerType" Type="varchar" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tuesday" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Type" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="UpdateDateTime" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UpdatedBy" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Version" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Wednesday" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="TaskSchedulerHistory" ParentColumnName="TaskId" ReferencedTableName="TasksScheduler" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TaskSchedulerHistory_dbo.TasksScheduler_TaskId" />
+</Table>

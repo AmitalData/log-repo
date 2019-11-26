@@ -1,3 +1,4 @@
+declare var window: any;
 import { IdGeneratorPipe } from './../../../Controls/Pipes/IdGeneratorPipe';
 import { AccountingEntityHelper } from './../../Utilities/AccountingEntityHelper';
 import {Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef}  from '@angular/core';
@@ -36,7 +37,7 @@ import {ReconcileExternalPageLinePM} from '../../EntityPMs/ReconcileExternalPage
 import {ExternalReconciliationPMService} from '../../Services/StandardPMs/ExternalReconciliationPMService';
 import {ExternalReconciliationExtendedPMService} from '../../Services/ExtendedPMs/ExternalReconciliationExtendedPMService';
 import {LedgerTransactionExtendedListService} from '../../Services/ExtendedLists/LedgerTransactionExtendedListService';
-import {ExternalReconciliationExtendedListService} from '../../Services/ExtendedLists/ExternalReconciliationExtendedListService';
+import {ExternalReconciliationExtendedListService, ExternalAutoReconcileServiceArgs} from '../../Services/ExtendedLists/ExternalReconciliationExtendedListService';
 import { retry } from 'rxjs/operators';
 
 
@@ -760,11 +761,12 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         filters.GetAll = true;
         filters.GetCount = true;
 
+        var objectTable = window.ObjectTables.filter(d => d.Name === this.ObjectTableName)[0];
 
-        if(!this.showInProgessLines)
+        if (!this.showInProgessLines)
             filters.addAdditionalFilter("InReconcileProgress", false, null, null, "Equals", false, false, false, "boolean");
 
-        return this.entityListService.getExternalReoncilioationsByFilter("ReconcileExternalPage", this.BankAccountPM.Id, filters);
+        return this.entityListService.getExternalReoncilioationsByFilter("ReconcileExternalPage", objectTable.Id, this.EntityPM.Id, filters);
     }
 
     ExtPagePushLine(row, RowIndex) {
@@ -913,8 +915,11 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.PrepareTransactions")); //"Preparing Transactions..."
 
 
-            this._ExternalReconciliationExtendedListService.getExternalAutomaticReconcilationsByFilter(this.AmountCheckBoxChecked, this.ReferenceCheckBoxChecked, this.ReferenceDateCheckBoxChecked,
-                this.BankAccountPM.Id, this.BankAccountPM.GLAccountId, filters).subscribe(myResult => {
+
+            var serviceArgs = this.CreateExternalAutoReconcileServiceArgs(filters);
+
+            this._ExternalReconciliationExtendedListService.getExternalAutomaticReconcilationsByFilter(serviceArgs)
+                .subscribe(myResult => {
 
                     var mm: ServiceResponse = myResult;
                     var result = mm.Result;
@@ -969,6 +974,20 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
         }, 200);
 
+    }
+
+    private CreateExternalAutoReconcileServiceArgs(filters: ApiQueryFilters)
+    {
+        var objectTable = window.ObjectTables.filter(d => d.Name === this.ObjectTableName)[0];
+        var serviceArgs = new ExternalAutoReconcileServiceArgs();
+        serviceArgs.amountReconcile = this.AmountCheckBoxChecked;
+        serviceArgs.referenceReconcile = this.ReferenceCheckBoxChecked;
+        serviceArgs.refDateReconcile = this.ReferenceDateCheckBoxChecked;
+        serviceArgs.objectTableId = objectTable.Id;
+        serviceArgs.entityId = this.EntityPM.Id;
+        serviceArgs.glAccountId = this.GLAccountPM.Id;
+        serviceArgs.filters = filters;
+        return serviceArgs;
     }
 
     FilterButtonClicked() {

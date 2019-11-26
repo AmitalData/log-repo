@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="GovernmentProcedureTypes">
+  <Column Name="Code" Type="varchar" Size="7">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="EnglishName" Type="varchar" Size="60">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Inactive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IndexOrder" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IsImport" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LocalName" Type="nvarchar" Size="60">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="Declarations" ParentColumnName="ProcedureCurrentCode" ReferencedTableName="GovernmentProcedureTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Declarations_Customs.GovernmentProcedureTypes_ProcedureCurrentCode" />
+  <Relation ParentTableName="DecCargoSplitCons" ParentColumnName="ProcedureCurrentCode" ReferencedTableName="GovernmentProcedureTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.DecCargoSplitCons_Customs.GovernmentProcedureTypes_ProcedureCurrentCode" />
+</Table>
