@@ -215,24 +215,38 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
 
 
 
+    GetRecordType() {
+        var recordType:string = "";
+        if (this.SelectedAutomationEntity) {
+            recordType = this.SelectedAutomationEntity.Name;
+            if (this.AddEditAutomationsViewModel.IsMasterShipment) {
+                if (this.SelectedAutomationEntity.ObjectTableId == this.AddEditAutomationsViewModel.ObjectTableId) {
+                    recordType = "";
+                }
+            }
+        }
+        return recordType;
+    }
+
     InitLOVFilters(objectTableId:string) {
 
         this.AutomationCondationFieldListFilterItems = new ApiQueryFilters();
         this.AutomationCondationFieldListFilterItems.addAdditionalFilter("ObjectTableId", objectTableId, null, null, "Equals", false, false, false, "string");
         this.AutomationCondationFieldListFilterItems.addAdditionalFilter("AllowedinAutomationConditions", true, null, null, "Equals", true, false, false, "boolean");
+        this.AutomationCondationFieldListFilterItems.addAdditionalFilter("RecordType", this.GetRecordType(), null, null, "Equals", true, false, false, "string");
+
         this.AutomationCondationFieldListFilterItems.Tenant = 0;
 
     }
 
     InitCustomLOVFilters(objectFieldPM: ObjectFieldPM) {
         var objectTableId: string = this.AddEditAutomationsViewModel.ObjectTableId;
-        if (this.SelectedAutomationEntity) {
-            objectTableId = this.SelectedAutomationEntity.ObjectTableId;
-        }
 
         this.CustomAutomationCondationFieldListFilterItems = new ApiQueryFilters();
         this.CustomAutomationCondationFieldListFilterItems.addAdditionalFilter("ObjectTableId", objectTableId, null, null, "Equals", false, false, false, "string");
         this.CustomAutomationCondationFieldListFilterItems.addAdditionalFilter("AllowedinAutomationConditions", true, null, null, "Equals", true, false, false, "boolean");
+        this.AutomationCondationFieldListFilterItems.addAdditionalFilter("RecordType", this.GetRecordType(), null, null, "Equals", true, false, false, "string");
+
         if (this.SelectedCustomField) {
             if (this.SelectedCustomField.DataTypeCode == "LookUp") {
                 this.CustomAutomationCondationFieldListFilterItems.addAdditionalFilter("LookUpTableId", this.SelectedCustomField.LookUpTableId, null, null, "Equals", false, false, false, "string");
