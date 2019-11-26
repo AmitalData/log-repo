@@ -53,7 +53,6 @@ namespace AmitalCustomsWindowsService
             //var aa = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
             //GatewayService.TestXmlDF_MSG10000_ImportDeclaration(@"D:\Source\2012\UnifreightIIG\UnifreightIIG.ServerTester\UnifreightIIG.ServerTester\IIGProxys\ImportDeclaration\SaveDF_MSG2750_2754_ImportDeclarationRequest-309925709-7788.xml");
-
             
 
             Debug.WriteLine("AmitalCustomsWindowsService !!!...");

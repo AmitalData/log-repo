@@ -1959,13 +1959,16 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public List<DocumentsFilingPM> GetDocumentsFilingsForRelatedDocuments(string entityId, string childEntityId, string objectTableId, string directionCode, string referenceNumber, List<string> externalEntityReferences, int tenant)
         {
+
             ObjectTableRepository objectTableRep = new ObjectTableRepository(tenant);
 
             List<DocumentsFilingPM> externalDocumentPMs;
 
             if (string.IsNullOrEmpty(childEntityId))
             {
-                externalDocumentPMs = (from a in repository.context.DocumentsFilings
+                (repository.context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+                
+                    externalDocumentPMs = (from a in repository.context.DocumentsFilings
                                        //.Include("CreatedByUser.Contact")
                                        .Include("Document").Include("DocumentType")
                                        //.Include("Owner.Contact")

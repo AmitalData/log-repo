@@ -1,4 +1,5 @@
 ﻿using Logitude.AmitalMessaging.Utils;
+using Logitude.Customs.Data.Repsitories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,14 @@ namespace WebFreight.Web.CustomWebServices.Testers
 {
     public class Tester
     {
+        public static void GetSingleDeclarationPMByNumber()
+        {
+            var myDeclarationRepository = new DeclarationRepository(1);
+            var q = myDeclarationRepository.GetSingleDeclarationPMByNumber("xcc", 1);
+            var res=q.ToList();
+
+        }
+
         public static void TestNOWait()
         {
             using (var scope = TransactionFactory.GetNewTransaction())

@@ -1061,6 +1061,18 @@
 
         private CARS[] cARSField;
 
+        private string cOMMERCE_PRICEField;
+
+        private string cOMMERCE_PRICE_CURRENCYField;
+
+        private string aDDITIONAL_QUANTITYField;
+
+        private string aDDITIONAL_QUANTITY_TYPEField;
+
+        private string sTATISTICAL_QUANTITYField;
+
+        private string sTATISTICAL_QUANTITY_TYPEField;
+
         /// <remarks/>
         public string ITEMLINENO
         {
@@ -1282,6 +1294,84 @@
             set
             {
                 this.cARSField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string COMMERCE_PRICE
+        {
+            get
+            {
+                return this.cOMMERCE_PRICEField;
+            }
+            set
+            {
+                this.cOMMERCE_PRICEField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string COMMERCE_PRICE_CURRENCY
+        {
+            get
+            {
+                return this.cOMMERCE_PRICE_CURRENCYField;
+            }
+            set
+            {
+                this.cOMMERCE_PRICE_CURRENCYField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string ADDITIONAL_QUANTITY
+        {
+            get
+            {
+                return this.aDDITIONAL_QUANTITYField;
+            }
+            set
+            {
+                this.aDDITIONAL_QUANTITYField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string ADDITIONAL_QUANTITY_TYPE
+        {
+            get
+            {
+                return this.aDDITIONAL_QUANTITY_TYPEField;
+            }
+            set
+            {
+                this.aDDITIONAL_QUANTITY_TYPEField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string STATISTICAL_QUANTITY
+        {
+            get
+            {
+                return this.sTATISTICAL_QUANTITYField;
+            }
+            set
+            {
+                this.sTATISTICAL_QUANTITYField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string STATISTICAL_QUANTITY_TYPE
+        {
+            get
+            {
+                return this.sTATISTICAL_QUANTITY_TYPEField;
+            }
+            set
+            {
+                this.sTATISTICAL_QUANTITY_TYPEField = value;
             }
         }
     }

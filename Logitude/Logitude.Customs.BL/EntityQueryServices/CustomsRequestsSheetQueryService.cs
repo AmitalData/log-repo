@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity.Infrastructure;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -278,6 +279,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
         internal List<CustomsRequestsSheetPM> GetWaitingForSigningListIncludeSignStepName(int tenant)
         {
+
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
 
             var stepRepo = new CommunicationLogStepRepository(tenant);
 
