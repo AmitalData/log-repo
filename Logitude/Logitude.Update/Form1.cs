@@ -3972,13 +3972,7 @@ User/Pass",
             SetControlPropertyValue(UpdateRulesLabel, "ForeColor", Color.Green); // timer
             SetControlPropertyValue(UpdateRulesLabel, "Text", "Done in " + ts.ToString(@"hh\:mm\:ss"));
         }
-
-        private void button47_Click(object sender, EventArgs e)
-        {
-            TaxReportQueryService taxReportQueryService = new TaxReportQueryService(54);
-            TaxReportPM taxReport = taxReportQueryService.GetSingle("1-202", true, false);
-            TaxReportService.CreateTaxReportLines(taxReport, 54);
-        }
+         
     }
 
     public class MyFeature
