@@ -345,7 +345,7 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
                 this.UIProperties.SetEnabled("AnswerEntityTypeCode", this.ObjectTableName, true);
                 this.UIProperties.SetEnabled("AllocatedAmount", this.ObjectTableName, true);
                 this.UIProperties.SetEnabled("CustomsTapgFile", this.ObjectTableName, true);
-                if (this.IsGuaranteeDefaultList && this.AnswerEntityTypeCode == "2") this.IsGuaranteeDefaultShow = true;
+                if (this.IsGuaranteeDefaultList && (this.AnswerEntityTypeCode == "2" || this.IsConcentrated)) this.IsGuaranteeDefaultShow = true;
                 this.UIProperties.SetEnabled("Remarks", this.ObjectTableName, true);
                 this.UIProperties.SetEnabled("CustomsNumeral", this.ObjectTableName, true);
 
@@ -521,12 +521,12 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
 
              this.IsNewFile = false;
              this.UIProperties.SetEnabled("RequestFileTypeCode", this.ObjectTableName, false);
-             this.UIProperties.SetEnabled("RequestFileAmount", this.ObjectTableName, false);
+             this.UIProperties.SetEnabled("RequestFileAmo unt", this.ObjectTableName, false);
 
              this.UIProperties.SetEnabled("AnswerEntityTypeCode", this.ObjectTableName, true);
              this.UIProperties.SetEnabled("AllocatedAmount", this.ObjectTableName, true);
              this.UIProperties.SetEnabled("CustomsTapgFile", this.ObjectTableName, true);
-             if (this.IsGuaranteeDefaultList && this.AnswerEntityTypeCode == "2") this.IsGuaranteeDefaultShow = true;
+             if (this.IsGuaranteeDefaultList && (this.AnswerEntityTypeCode == "2" || this.IsConcentrated)) this.IsGuaranteeDefaultShow = true;
              this.UIProperties.SetEnabled("Remarks", this.ObjectTableName, true);
              this.UIProperties.SetEnabled("CustomsNumeral", this.ObjectTableName, true);
              this.EntityPM.NewFileRequest = false;
@@ -729,9 +729,10 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
     }
 
     SetWindowArgs(args: any) {
-
+      //  this.AnswerEntityTypeCode = "2";
+        this.IsGuaranteeDefaultList = true;
         this.IsConcentrated = true;
-        this.collateralToSendlist = args.collateralToSendlist;
+         this.collateralToSendlist = args.collateralToSendlist;
         this.EntityPM = new CustomsCollateralsAnswerPM(null);
  
     }
