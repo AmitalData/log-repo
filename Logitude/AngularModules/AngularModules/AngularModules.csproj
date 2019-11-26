@@ -212,6 +212,7 @@
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationSupplierInvoice\Components\SupplierInvoices\UpdateProcessCodeComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationSupplierInvoice\Components\SupplierInvoices\VendorExtendedSearchComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\CasualSupplierDetailsComponent.html" />
+    <Content Include="CustomsModules\CustomsGeneralRequests\Components\CopyDeclarationComponent.html" />
     <Content Include="CustomsModules\CustomsListTemplates\Components\CustomsCollateralListTemplate.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\General\ConsigmentTabContent\ConsigmentPackagesDanger\ConsigmentPackagesDangerComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\AddEditCustomsAirlineComponent.html" />
@@ -817,6 +818,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\Components\ExchangeRatesQueryComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\Components\GoldCreditLimitQueryComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\Components\ImporterDeclarationComponent.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\Components\CopyDeclarationComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\Components\MasterBOLQueryComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\Components\MorningMessageComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsGeneralRequests\Components\RecallClientsForCutoms.ts" />

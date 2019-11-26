@@ -710,8 +710,7 @@ export class CustomsDocumentsComponent
                 var myCustomsRequestsSheet = rsp.Result;
 
 
-
-                this.CurrentSession.StopBusyIndicator();
+                 this.CurrentSession.StopBusyIndicator();
                 if (myCustomsRequestsSheet) {
                     let customsRequestMenuService = new CustomsRequestMenuService();
                     customsRequestMenuService.ShowModalByIdAndIntreface(

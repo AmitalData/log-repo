@@ -251,13 +251,34 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
         }
 
-        public HttpResponseMessage PutCopyDeclaration(string fromDeclarationId, string toDeclarationId, int tenant)
+
+        public HttpResponseMessage PutCopyDeclaration_test(string fromDeclarationId,  int tenant)
         {
 
+            try
+            {
+                //string token = HttpContext.Current.Request.Headers["Token"];
+                //AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
 
+                //string loggedUserEmail = authToken.Email;
+                //int tenant = authToken.Tenant;
+                //SecurityUtility.AuthenticationOnTenant(tenant);
+                var customContext = CustomContext.GetContext(tenant);
 
+                DeclarationUpdateService service = new DeclarationUpdateService(customContext, new Dictionary<string, IContext>(), tenant);
+                service.CopyDeclaration_test(fromDeclarationId,  tenant);
 
+                return Request.CreateResponse(HttpStatusCode.OK, "ok");
+            }
 
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage PutCopyDeclaration(string fromDeclarationId, string toDeclarationId, int tenant)
+        {
 
             try
             {

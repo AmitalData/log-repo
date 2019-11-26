@@ -45,8 +45,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Customs.BL.Messaging.Maman;
 using Logitude.Customs.BL.Messaging.ILOVS;
 using System.Diagnostics;
-
-namespace Logitude.Customs.BL.EntityUpdateServices
+ namespace Logitude.Customs.BL.EntityUpdateServices
 {
     public partial class DeclarationUpdateService
     {
@@ -1367,6 +1366,69 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             return;
         }
         //Yuval Chalup 17.12.2015 TASK-18939 --->
+        //Yuval Chalup 17.12.2015 TASK-18939 --->
+
+        public bool CopyDeclaration_test(string fromDeclarationId , int tenant)
+        {
+            List<string> ids = new List<string>();
+            ICustomContext context = MainContext as CustomContext;
+
+            ids.Add(fromDeclarationId);
+
+            DeclarationQueryService declarationQueryService = new DeclarationQueryService(tenant);
+
+            List<DeclarationPM> declarationPMs = declarationQueryService.GetDeclarationsByIds(ids, tenant);
+
+            DeclarationPM fromDeclaration = declarationPMs.Where(d => d.Id == fromDeclarationId).FirstOrDefault();
+
+            DeclarationPM newDeclaration = new DeclarationPM();
+            newDeclaration = fromDeclaration;
+            newDeclaration.Id = "-99";
+            newDeclaration.ChangeSetOp = ChangeSetOperation.Insert;
+
+            foreach (var consignment in newDeclaration.Consignments)
+            {
+                consignment.ChangeSetOp = ChangeSetOperation.Insert;
+                consignment.DeclarationId = "-99";
+                foreach (var package in consignment.ConsignmentPackages)
+                {
+                    package.ChangeSetOp = ChangeSetOperation.Insert;
+                    package.DeclarationId = "-99";
+
+                    foreach (var consignmentPackDangers in package.ConsignmentPackDangers)
+                {
+                        consignmentPackDangers.ChangeSetOp = ChangeSetOperation.Insert;
+                        consignmentPackDangers.DeclarationId = "-99";
+                }
+
+    
+                }
+
+           
+            }
+
+                foreach (var invoice in newDeclaration.SupplierInvoices)
+            {
+                invoice.ChangeSetOp = ChangeSetOperation.Insert;
+                invoice.DeclarationId = "-99";
+                foreach (var item in invoice.SupplierInvoiceItems)
+                {
+                    item.ChangeSetOp = ChangeSetOperation.Insert;
+                    item.DeclarationId = "-99";
+                    foreach (var supplierInvioceItemCertificats in item.SupplierInvioceItemCertificats)
+                    {
+                        supplierInvioceItemCertificats.ChangeSetOp = ChangeSetOperation.Insert;
+                        supplierInvioceItemCertificats.DeclarationId = "-99";
+                    }
+                }
+            }
+            DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), tenant);
+
+            declarationUpdateService.Update(newDeclaration, true);
+
+
+            return true;
+        }
 
         public bool CopyDeclaration(string fromDeclarationId, string toDeclarationId, int tenant)
         {

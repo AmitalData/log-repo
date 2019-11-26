@@ -203,6 +203,24 @@ export class DeclarationExtendedListService {
         });
     }
 
+    PutCopyDeclaration_test(fromDeclarationId: string , tenant: number) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
+
+
+        return Observable.defer(() => {
+            return this._http.put(this._apiUrl + '/PutCopyDeclaration_test/?' + 'fromDeclarationId=' + fromDeclarationId + '&tenant=' + tenant,
+                { headers: authHeader }).map(response => {
+
+
+                    var serviceResponse: ServiceResponse = new ServiceResponse();
+                    serviceResponse.Result = response.json();
+
+                    return serviceResponse;
+                }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
 
 
     PutCopyDeclaration(fromDeclarationId: string, toDeclarationId: string, tenant: number) {
