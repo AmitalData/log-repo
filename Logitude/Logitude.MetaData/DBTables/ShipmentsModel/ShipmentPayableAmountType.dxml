@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="ShipmentPayableAmountTypes">
+  <Column Name="Code" Type="varchar" Size="4">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="40">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="ShipmentPayables" ParentColumnName="ShipmentPayableAmountTypeCode" ReferencedTableName="ShipmentPayableAmountTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ShipmentPayables_dbo.ShipmentPayableAmountTypes_ShipmentPayableAmountTypeCode" />
+</Table>

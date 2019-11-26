@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="ObjectTableRules">
+  <Column Name="ActiveForNew" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ActiveForUpdate" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="AdvancedCondition" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Condition" Type="varchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="InActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Internal" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="40">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ObjectTableId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="OutputMessage" Type="varchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="RuleCode" Type="varchar" Size="40">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="RuleNotificationTypeCode" Type="varchar" Size="4">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="RuleTypeCode" Type="varchar" Size="4">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SystemLevel" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TriggerFieldId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TriggerTypeCode" Type="varchar" Size="4">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="ObjectTableRuleFields" ParentColumnName="ObjectTableRuleId" ReferencedTableName="ObjectTableRules" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ObjectTableRuleFields_dbo.ObjectTableRules_ObjectTableRuleId" />
+  <Relation ParentTableName="RuleConditionFields" ParentColumnName="ObjectTableRuleId" ReferencedTableName="ObjectTableRules" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.RuleConditionFields_dbo.ObjectTableRules_ObjectTableRuleId" />
+</Table>

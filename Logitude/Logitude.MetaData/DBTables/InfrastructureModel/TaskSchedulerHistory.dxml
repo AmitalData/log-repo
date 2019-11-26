@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="TaskSchedulerHistory">
+  <Column Name="EndDateTime" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EndDateTimeUTC" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="IsError" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LogDocumentId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LogFirstLine" Type="varchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LogType" Type="varchar" Size="200">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="RunResult" Type="varchar" Size="200">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="StartDateTime" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="StartDateTimeUTC" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TaskId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+</Table>

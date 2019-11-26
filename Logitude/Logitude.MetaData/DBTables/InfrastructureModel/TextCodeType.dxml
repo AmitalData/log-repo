@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="TextCodeTypes">
+  <Column Name="Code" Type="varchar" Size="4">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="20">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="TextCodes" ParentColumnName="TextCodeTypeCode" ReferencedTableName="TextCodeTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.TextCodes_dbo.TextCodeTypes_TextCodeTypeCode" />
+</Table>

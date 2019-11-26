@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="CustomerProducts">
+  <Column Name="CommitmentChargeableWeight" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CommitmentNumberOfShipments" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CommitmentRevenue" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CommitmentTEU" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CustomerId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="LastShipmentDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Notes" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="NotesRightToLeft" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="PotentialChargeableWeight" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PotentialNumberOfShipments" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PotentialRevenue" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PotentialTEU" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PrepaidCollectId" Type="varchar" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ProductTypeCode" Type="varchar" Size="2">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+</Table>

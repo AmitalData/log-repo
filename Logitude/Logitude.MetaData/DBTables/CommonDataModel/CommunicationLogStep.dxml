@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="CommunicationLogSteps">
+  <Column Name="CommunicationLogId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="DocumentId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="EndDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsLogCompress" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Log" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="100">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Retries" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="StartDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Status" Type="varchar" Size="4">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="StepNumber" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+</Table>

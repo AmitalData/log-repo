@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="Directions">
+  <Column Name="Id" Type="char" Size="1">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="40">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="Bookings" ParentColumnName="DirectionCode" ReferencedTableName="Directions" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Bookings_dbo.Directions_DirectionCode" />
+  <Relation ParentTableName="WarehouseEntries" ParentColumnName="DirectionId" ReferencedTableName="Directions" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseEntries_dbo.Directions_DirectionId" />
+  <Relation ParentTableName="Quotes" ParentColumnName="DirectionId" ReferencedTableName="Directions" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.Directions_DirectionId" />
+  <Relation ParentTableName="WarehouseReleases" ParentColumnName="DirectionId" ReferencedTableName="Directions" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseReleases_dbo.Directions_DirectionId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="DirectionId" ReferencedTableName="Directions" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Directions_DirectionId" />
+</Table>

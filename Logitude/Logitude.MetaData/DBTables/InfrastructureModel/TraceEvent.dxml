@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="TraceEvents">
+  <Column Name="CustomerCareUserEmail" Type="varchar" Size="70">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Deleted" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="EntityId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="EventDateTime" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="EventTypeId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ExternalId" Type="varchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="40">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="IsAddedManually" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Location" Type="nvarchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LogDateTime" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Notes" Type="nvarchar" Size="4000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ObjectTableId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="PartnerName" Type="varchar" Size="70">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UserId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+</Table>

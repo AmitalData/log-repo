@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="Tapags">
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CustomerId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CustomsBranchCode" Type="varchar" Size="17">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FollowDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="ImporterId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IsClosed" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LeadingFileNumber" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ProfessionUnitTypeCode" Type="varchar" Size="5">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ReferantId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SpecializationTypeCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TapagNumber" Type="varchar" Size="12">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TapagTypeCode" Type="varchar" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ValidityDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="TapagConnectionTables" ParentColumnName="TapagId" ReferencedTableName="Tapags" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.TapagConnectionTables_Customs.Tapags_TapagId" />
+  <Relation ParentTableName="Deficits" ParentColumnName="TapagId" ReferencedTableName="Tapags" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.Deficits_Customs.Tapags_TapagId" />
+  <Relation ParentTableName="Deposits" ParentColumnName="TapagID" ReferencedTableName="Tapags" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.Deposits_Customs.Tapags_TapagID" />
+  <Relation ParentTableName="CustomsCollateralsAnswers" ParentColumnName="TapagId" ReferencedTableName="Tapags" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.CustomsCollateralsAnswers_Customs.Tapags_TapagId" />
+  <Relation ParentTableName="Guarantees" ParentColumnName="TapagID" ReferencedTableName="Tapags" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.Guarantees_Customs.Tapags_TapagID" />
+</Table>

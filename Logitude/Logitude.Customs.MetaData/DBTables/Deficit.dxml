@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="Deficits">
+  <Column Name="DebtNotificationNumber" Type="varchar" Size="9">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DebtNotificationReason" Type="nvarchar" Size="512">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="NotificationTypeCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PaymentOrderNumber" Type="varchar" Size="9">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ProductionDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="RealesGoodsDescription" Type="nvarchar" Size="512">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TapagId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ValidityDateTo" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="DeficitConnFileParagraphTypes" ParentColumnName="DeficitId" ReferencedTableName="Deficits" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.DeficitConnFileParagraphTypes_Customs.Deficits_DeficitId" />
+</Table>

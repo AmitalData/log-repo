@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="OpportunityProducts">
+  <Column Name="ChargeableWeight" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Notes" Type="nvarchar" Size="500">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="NotesRightToLeft" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="NumberOfShipments" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="OpportunityId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="OpportunityProductTypeCode" Type="varchar" Size="2">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="PrepaidCollectId" Type="varchar" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Revenue" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TEU" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+</Table>

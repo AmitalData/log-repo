@@ -274,6 +274,10 @@ export class VATSettingsComponent extends BaseComponent {
         var errors: string[] = [];
         Validator.TryValidateObject(this.tenantPM, this.DataContext.ObjectTableName, errors);
 
+        if (!AppTool.IsNullOrZero(this.VatSize) && this.VatSize > 20) {
+            errors.push("VAT Size should not exceed 20");
+        }
+
         if (this.VatFormatTypeCode == "FSC") {
             if (AppTool.IsNullOrEmpty(this.VatFormatCountryId)) {
                 errors.push("VAT Format Country is required");

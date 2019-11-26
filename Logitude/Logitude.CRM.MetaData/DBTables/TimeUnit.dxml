@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="TimeUnits">
+  <Column Name="Code" Type="varchar" Size="2">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="20">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="SLAEscalations" ParentColumnName="EscalationTimeUnit" ReferencedTableName="TimeUnits" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.SLAEscalations_dbo.TimeUnits_EscalationTimeUnit" />
+  <Relation ParentTableName="SLALines" ParentColumnName="ResolveWithinTimeUnit" ReferencedTableName="TimeUnits" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.SLALines_dbo.TimeUnits_ResolveWithinTimeUnit" />
+  <Relation ParentTableName="SLALines" ParentColumnName="FirstResponseTimeUnit" ReferencedTableName="TimeUnits" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.SLALines_dbo.TimeUnits_FirstResponseTimeUnit" />
+</Table>

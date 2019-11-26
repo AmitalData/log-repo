@@ -15,7 +15,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             advancedQueryFilter.PredefinedValue2 = advancedQueryFilterPM.PredefinedValue2;
             advancedQueryFilter.QueryId = advancedQueryFilterPM.QueryId;
             advancedQueryFilter.Tenant = advancedQueryFilterPM.Tenant;
-            advancedQueryFilter.UserId = advancedQueryFilterPM.UserId; 
+            advancedQueryFilter.UserId = advancedQueryFilterPM.UserId;
+            advancedQueryFilter.ObjectFieldCode = advancedQueryFilterPM.ObjectFieldCode;
         }
     }
 }

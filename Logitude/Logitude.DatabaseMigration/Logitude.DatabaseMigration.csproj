@@ -1674,6 +1674,10 @@
     <Compile Include="Migrations\201909301350305_VatType_New_Fields.Designer.cs">
       <DependentUpon>201909301350305_VatType_New_Fields.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911261045501_AbedAdddObjectFieldCodeToAdvancedQueryFilterTable.cs" />
+    <Compile Include="Migrations\201911261045501_AbedAdddObjectFieldCodeToAdvancedQueryFilterTable.Designer.cs">
+      <DependentUpon>201911261045501_AbedAdddObjectFieldCodeToAdvancedQueryFilterTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2870,6 +2874,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909301350305_VatType_New_Fields.resx">
       <DependentUpon>201909301350305_VatType_New_Fields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911261045501_AbedAdddObjectFieldCodeToAdvancedQueryFilterTable.resx">
+      <DependentUpon>201911261045501_AbedAdddObjectFieldCodeToAdvancedQueryFilterTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

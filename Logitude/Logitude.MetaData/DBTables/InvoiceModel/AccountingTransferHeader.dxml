@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="AccountingTransferHeaders">
+  <Column Name="AccountingTransferTypeCode" Type="nvarchar" Size="128">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FileName" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="nvarchar" Size="128">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Notes" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TransferDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TransferNumber" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="UserId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="AccountingTransferLines" ParentColumnName="AccountingTransferHeaderId" ReferencedTableName="AccountingTransferHeaders" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.AccountingTransferLines_dbo.AccountingTransferHeaders_AccountingTransferHeaderId" />
+</Table>

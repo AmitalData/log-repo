@@ -106,6 +106,7 @@ import { EditTaxReportLineComponent } from './Components/EditTabs/TaxReport/Edit
 import { NewIntegrityCheckComponent } from './Components/NewEntity/NewIntegrityCheckComponent';
 import { InterestPageComponent } from './Components/Workspaces/Interest/InterestPageComponent';
 import { InterestBasesTypeShortTitleComponent } from './Components/ShortTiTles/InterestBasesTypeShortTitleComponent';
+import { AddEditInterestBasesPeriodComponent } from './Components/EditTabs/Interest/DetailsTab/AddEditInterestBasesPeriod/AddEditInterestBasesPeriodComponent';
 
 
 export const Components =
@@ -181,6 +182,8 @@ export const Components =
         TaxDeductionReportGeneralTabComponent,
         BankPageEventsComponent,
         InterestBasesTypeDetailsTabComponent,
+        AddEditInterestBasesPeriodComponent,
+
         //Templates
         GlAccountLedgerTransactionsListTemplate,
         ReconcileExternalPageListTemplate,
@@ -298,7 +301,7 @@ export class ModuleDeclarations {
             case "TaxDeductionReportGeneralTabComponent": { myResult = TaxDeductionReportGeneralTabComponent; break; }
             case "BankPageEventsComponent": { myResult = BankPageEventsComponent; break; }
             case "InterestBasesTypeDetailsTabComponent": { myResult = InterestBasesTypeDetailsTabComponent; break; }
-
+            case "AddEditInterestBasesPeriodComponent": { myResult =AddEditInterestBasesPeriodComponent; break;}   
             //Templates
             case "GlAccountLedgerTransactionsListTemplate": { myResult = GlAccountLedgerTransactionsListTemplate; break; }
             case "ReconcileExternalPageListTemplate": { myResult = ReconcileExternalPageListTemplate; break; }

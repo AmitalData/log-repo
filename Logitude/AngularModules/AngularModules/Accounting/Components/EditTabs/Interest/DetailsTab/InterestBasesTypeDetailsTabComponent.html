@@ -11,75 +11,76 @@
 <div class="TabHolder">
     <table>
         <tr class="TabTitleRow">
-            <td>{{'General.O.General' | TextCodeTranslationPipe}}</td>
+            <td>{{'Accounting.General.O.Details' | TextCodeTranslationPipe}}</td>
         </tr>
         <tr style="height: 1px;vertical-align:top">
             <td>
                 <table>
                     <tr>
-                        <td style="width: 380px;">
+                        <td style="width: 700px;">
                             <table>
-                                <!-- VendorBankAddress -->
-                                <tr class="FormFieldRow">
-                                    <td style="width: 160px;">
-                                        <LogLabel [ObjectFieldName]="'VendorBankAddress'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                <tr>
+                                    <td>
+                                        <table>
+                                            <!-- Code -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 160px;">
+                                                    <LogLabel [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td>
+                                                    <LogTextBox [Text]="Code" [ObjectFieldName]="'Code'" [HideColumns]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                            <!-- EnglishName -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 160px;">
+                                                    <LogLabel [ObjectFieldName]="'EnglishName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td>
+                                                    <LogTextBox [Text]="EnglishName" [ObjectFieldName]="'EnglishName'" [HideColumns]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                            <!-- LocalName -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 160px;">
+                                                    <LogLabel [ObjectFieldName]="'LocalName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td>
+                                                    <LogTextBox [Text]="LocalName" [ObjectFieldName]="'LocalName'" [HideColumns]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
                                     </td>
                                     <td>
-                                        <LogTextBox [Text]="VendorBankAddress" [ObjectFieldName]="'VendorBankAddress'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        <table>
+                                            <!-- Description -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 160px;">
+                                                    <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td>
+                                                    <LogTextBox [Text]="Description" [ObjectFieldName]="'Description'" [HideColumns]="true" [ObjectTableName]="ObjectTableName" [IsMultiline]="true" [DataContext]="DataContext"></LogTextBox>
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                            <tr><td></td></tr>
+                                        </table>
                                     </td>
                                     <td>
                                         <div></div>
                                     </td>
                                 </tr>
-                                <!-- VendorBankName -->
-                                <tr class="FormFieldRow">
-                                    <td style="width: 160px;">
-                                        <LogLabel [ObjectFieldName]="'VendorBankName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                    </td>
-                                    <td>
-                                        <LogTextBox [Text]="VendorBankName" [ObjectFieldName]="'VendorBankName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                    </td>
-                                    <td>
-                                        <div></div>
-                                    </td>
-                                </tr>
-                                <!-- VendorBankAccountNumber -->
-                                <tr class="FormFieldRow">
-                                    <td style="width: 160px;">
-                                        <LogLabel [ObjectFieldName]="'VendorBankAccountNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                    </td>
-                                    <td>
-                                        <LogTextBox [Text]="VendorBankAccountNumber" [ObjectFieldName]="'VendorBankAccountNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                    </td>
-                                    <td>
-                                        <div></div>
-                                    </td>
-                                </tr>
-                                <!-- VendorSwift -->
-                                <tr class="FormFieldRow">
-                                    <td style="width: 160px;">
-                                        <LogLabel [ObjectFieldName]="'VendorSwift'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                    </td>
-                                    <td>
-                                        <LogTextBox [Text]="VendorSwift" [ObjectFieldName]="'VendorSwift'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                    </td>
-                                    <td>
-                                        <div></div>
-                                    </td>
-                                </tr>
-                                <!-- VendorIBANNumber -->
-                                <tr class="FormFieldRow">
-                                    <td style="width: 160px;">
-                                        <LogLabel [ObjectFieldName]="'VendorIBANNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                    </td>
-                                    <td>
-                                        <LogTextBox [Text]="VendorIBANNumber" [ObjectFieldName]="'VendorIBANNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                    </td>
-                                    <td>
-                                        <div></div>
-                                    </td>
-                                </tr>
-                               
                                 <tr>
                                     <td></td>
                                 </tr>
@@ -92,9 +93,71 @@
                 </table>
             </td>
         </tr>
-        <tr>
+        <tr style="height:20px;">
             <td>
                 <div></div>
+            </td>
+        </tr>
+        <tr class="TabTitleRow">
+            <td>
+                <table>
+                    <tr>
+                        <td style="width: 100px;">
+                            {{'InterestBasesPeriod' | TextCodeTranslationPipe}}
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                        <td>
+                            <IconButton [style.float]="isRTL ? 'right' : 'left'"  [Name]="'Add'" [IsSmall]="true" [Left]="3" [disabled]="EntityPM.InActive" (click)="AddPeriodClicked()"></IconButton>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                <logitude-edit-grid GridWidth="100%" [HeaderHeight]="25" GridHeight="100%" [ItemSource]="InterestBasesPeriodsList">
+
+                    <!--InterestBaseStartDate-->
+                    <log-column [width]="'300'" [header]="InterestBaseStartDateHeader">
+                        <log-cell-template template="let item" #logcelltemplate>
+                            <div style="float:left;"> {{item.InterestBaseStartDate | DateTimeToDatePipe}} </div>
+                        </log-cell-template>
+                    </log-column>
+
+                    <!--InterestRate-->
+                    <log-column [width]="'300'" [header]="InterestRateHeader">
+                        <log-cell-template template="let item" #logcelltemplate>
+                            <div style="float:left;"> {{item.InterestRate}} </div>
+                        </log-cell-template>
+                    </log-column>
+
+                    <!--UpdatedByUserId-->
+                    <log-column [width]="'300'" [header]="UpdatedByUserIdHeader">
+                        <log-cell-template template="let item" #logcelltemplate>
+                            <div style="float:left;"> {{item.UpdatedByUserId}} </div>
+                        </log-cell-template>
+                    </log-column>
+
+                    <!--UpdateDate-->
+                    <log-column [width]="'300'" [header]="UpdateDateHeader">
+                        <log-cell-template template="let item" #logcelltemplate>
+                            <div style="float:left;"> {{item.UpdateDate | DateTimeToDatePipe}} </div>
+                        </log-cell-template>
+                    </log-column>
+
+                    <!--NULL-->
+                    <log-column [width]="'300'" [header]="' '" class="CellTools">
+                        <log-cell-template template="let item" #logcelltemplate>
+                            <div style="margin-top:4px;">
+                                <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" [disabled]="EntityPM.InActive" (click)="EditPeriodClicked(item)"></IconButton>
+                            </div>
+                        </log-cell-template>
+                    </log-column>
+
+                </logitude-edit-grid>
             </td>
         </tr>
     </table>

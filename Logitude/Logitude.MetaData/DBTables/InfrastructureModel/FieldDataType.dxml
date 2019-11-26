@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="FieldDataTypes">
+  <Column Name="Code" Type="varchar" Size="10">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="20">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="ObjectFields" ParentColumnName="DataTypeCode" ReferencedTableName="FieldDataTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ObjectFields_dbo.FieldDataTypes_DataTypeCode" />
+  <Relation ParentTableName="DocumentTypeCustomFields1" ParentColumnName="FieldDataTypeCode" ReferencedTableName="FieldDataTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.DocumentTypeCustomFields1_dbo.FieldDataTypes_FieldDataTypeCode" />
+</Table>

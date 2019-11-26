@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="Activities">
+  <Column Name="ActivityStatusCode" Type="varchar" Size="1">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ActivityTimeTypeCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ActivityTypeCode" Type="varchar" Size="2">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ActivityWith" Type="varchar" Size="500">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AllDayEvent" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="BranchId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="BusinessProcessQueueId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="BusinessUnitId" Type="varchar" Size="50">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CallDetails" Type="nvarchar" Size="500">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CallPurpose" Type="nvarchar" Size="500">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CallResult" Type="nvarchar" Size="500">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CallTypeCode" Type="varchar" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CallWithId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Cc" Type="varchar" Size="4000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CommunicationLogId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CompleteDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ConcurrencyGUID" Type="varchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CreatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CustomerId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Description" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DescriptionRightToLeft" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DueDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DueDateDateField" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DueDateOffset" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Duration" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EndDateTime" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Field1" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Field10" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Field2" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Field3" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Field4" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Field5" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Field6" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Field7" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Field8" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Field9" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="From" Type="varchar" Size="500">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="IsLeftVoiceMail" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsOpen" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Location" Type="nvarchar" Size="255">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="MeetingSummary" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="MeetingSummaryRightToLeft" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="NeedSynchronization" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Notes" Type="nvarchar" Size="500">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="OpportunityId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="OutlookId" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="OwnerId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PhoneNumber" Type="varchar" Size="20">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PriorityCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="QuoteId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SenderContactId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SenderEmail" Type="varchar" Size="70">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SendReceiveDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ShipmentId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SortingBy" Type="varchar" Size="60">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SortingDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="StartDateTime" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Subject" Type="nvarchar" Size="255">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TeamId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TicketId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="To" Type="varchar" Size="4000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="UpdateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UpdatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="ActivityEmailRecipients" ParentColumnName="ActivityId" ReferencedTableName="Activities" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ActivityEmailRecipients_dbo.Activities_ActivityId" />
+  <Relation ParentTableName="ActivityInvitees" ParentColumnName="ActivityId" ReferencedTableName="Activities" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ActivityInvitees_dbo.Activities_ActivityId" />
+  <Relation ParentTableName="ActivityNotes" ParentColumnName="ActivityId" ReferencedTableName="Activities" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ActivityNotes_dbo.Activities_ActivityId" />
+  <Relation ParentTableName="ActivityOwnerHistories" ParentColumnName="ActivityId" ReferencedTableName="Activities" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ActivityOwnerHistories_dbo.Activities_ActivityId" />
+</Table>

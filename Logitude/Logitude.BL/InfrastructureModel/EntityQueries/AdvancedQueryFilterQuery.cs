@@ -53,6 +53,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                                     DataTypeCode = a.ObjectField.DataTypeCode,
                                                                     ObjectFieldOperator = a.ObjectField.Operator,
                                                                     UserId = a.UserId,
+                                                                    ObjectFieldCode = a.ObjectFieldCode,
                                                                 };
             return advancedFilters;
 
@@ -82,6 +83,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                                     DataTypeCode = a.ObjectField.DataTypeCode,
                                                                     ObjectFieldOperator = a.ObjectField.Operator,
                                                                     UserId = a.UserId,
+                                                                    ObjectFieldCode = a.ObjectFieldCode,
                                                                 };
             return advancedFilters;
 
@@ -118,6 +120,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                           DataTypeCode = a.ObjectField.DataTypeCode,
                                           ObjectFieldOperator = a.ObjectField.Operator,
                                           UserId = a.UserId,
+                                          ObjectFieldCode = a.ObjectFieldCode,
                                       };
                 }
 
@@ -145,6 +148,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                           DataTypeCode = a.ObjectField.DataTypeCode,
                                           ObjectFieldOperator = a.ObjectField.Operator,
                                           UserId = a.UserId,
+                                          ObjectFieldCode = a.ObjectFieldCode,
                                       };
                 }
             }
@@ -176,6 +180,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                                     DataTypeCode = a.ObjectField.DataTypeCode,
                                                                     ObjectFieldOperator = a.ObjectField.Operator,
                                                                     UserId = a.UserId,
+                                                                    ObjectFieldCode = a.ObjectFieldCode,
                                                                 };
             return advancedFilters;
 
@@ -205,6 +210,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                                     DataTypeCode = a.ObjectField.DataTypeCode,
                                                                     ObjectFieldOperator = a.ObjectField.Operator,
                                                                     UserId = a.UserId,
+                                                                    ObjectFieldCode = a.ObjectFieldCode,
                                                                 };
             return advancedFilters;
 
@@ -233,6 +239,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                                     DataTypeCode = a.ObjectField.DataTypeCode,
                                                                     ObjectFieldOperator = a.ObjectField.Operator,
                                                                     UserId = a.UserId,
+                                                                    ObjectFieldCode = a.ObjectFieldCode,
                                                                 };
             return advancedFilters;
 
@@ -262,6 +269,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                                     DataTypeCode = a.ObjectField.DataTypeCode,
                                                                     ObjectFieldOperator = a.ObjectField.Operator,
                                                                     UserId = a.UserId,
+                                                                    ObjectFieldCode = a.ObjectFieldCode,
                                                                 }).FirstOrDefault();
             return advancedFilters;
 

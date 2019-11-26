@@ -32,28 +32,18 @@ namespace Logitude.BL.InfrastructureModel.CustomFilters
                             queryableData = queryableData.Where(d => d.AllowedinAutomationConditions == true || d.IsCustom == true);
                         }
                     }
-                    if (item.FieldName == "AllowedinAutomationConditionsEntitiesFields")
+                    if (item.FieldName == "RecordType")
                     {
-                        queryableData = GetAllowedinAutomationConditionsEntitiesFields(queryableData, item);
+                        if (item.FieldValue != null)
+                        {
+                            queryableData = queryableData = queryableData.Where(d => string.IsNullOrEmpty(d.RecordType) || (!string.IsNullOrEmpty(d.RecordType) && d.RecordType.Contains(item.FieldValue.ToString())));
+                        }
                     }
-
                 }
             }
 
             return queryableData;
         }
 
-        private static IQueryable<ObjectField> GetAllowedinAutomationConditionsEntitiesFields(IQueryable<ObjectField> queryableData, QueryFilterItem item)
-        {
-            IQueryable<ObjectField> objectFieldLists = queryableData;
-            if (item.FieldValue != null)
-            {
-                string fieldValue = item.FieldValue.ToString();
-                var EntityTableIdLists = fieldValue.Split(',');
-                objectFieldLists = queryableData.Where(d => (d.AllowedinAutomationConditions == true || d.IsCustom == true) && EntityTableIdLists.Contains(d.ObjectTableId));
-            }
-
-            return objectFieldLists;
-        }
     }
 }

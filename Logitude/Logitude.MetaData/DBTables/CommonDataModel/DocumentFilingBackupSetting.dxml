@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="DocumentFilingBackupSettings">
+  <Column Name="ActivationDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DeactivationDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FTPDetailId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IsActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+</Table>
