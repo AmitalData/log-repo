@@ -39,9 +39,18 @@ BEGIN
 	declare @ActualFinalArrivalDate as datetime
 	declare @EstimatedFinalArrivalDate as datetime
 
+	declare @HasDelivery as bit
+	declare @HasOnCarriage as bit
+
+	set @HasDelivery = 0
+	set @HasOnCarriage= 0
+
 	-- @DeliveriesDate
 	if exists (select * from ShipmentPickUpDeliveries where ShipmentId = @ShipmentId and Tenant = @Tenant and PickUpDeliveryTypeCode = 'DELV')
 	BEGIN
+
+		set @HasDelivery = 1
+
 		declare @ETA as datetime
 		declare @ATA as datetime
 		declare @DeliveryDate as datetime
@@ -105,6 +114,8 @@ BEGIN
 	-- @OnCarriageDate	
 	if (@OnCarriageFromPortId is not null and @OnCarriageToPortId is not null)
 	BEGIN
+		set @HasOnCarriage = 1
+
 		if (@OnCarriageATA is not null)
 		begin
 			if (@ActualFinalArrivalDate is null)
@@ -125,36 +136,34 @@ BEGIN
 	END
 
 	-- House
-	if (@ShipmentLevelCode = 'H' AND @MasterShipmentDataId is not null)
-	BEGIN
-		declare @MasterFinalArrivalDate as datetime
-		declare @MasterEstimatedFinalArrivalDate as datetime
-		declare @MasterActualFinalArrivalDate as datetime
+		if (@ShipmentLevelCode = 'H' AND @MasterShipmentDataId is not null and @HasDelivery = 0)
+		BEGIN	
+			declare @IsTakingMasterDates as bit
+			set @IsTakingMasterDates = 0;
 
-		SELECT
-		@MasterFinalArrivalDate = FinalArrivalDate,
-		@MasterEstimatedFinalArrivalDate = EstimatedFinalArrivalDate,
-		@MasterActualFinalArrivalDate = ActualFinalArrivalDate
-		from Shipments where Id = @MasterShipmentDataId and Tenant = @Tenant
+			if(@HasOnCarriage = 0)
+			begin
+				set @IsTakingMasterDates = 1
+			end
 
-		if (@FinalArrivalDate is null)
-		set @FinalArrivalDate = @MasterFinalArrivalDate
-		else if (@MasterFinalArrivalDate is not null AND @MasterFinalArrivalDate > @FinalArrivalDate)
-		set @FinalArrivalDate = @MasterFinalArrivalDate
+			else
+			begin
+				if exists (select * from ShipmentPickUpDeliveries where ShipmentId = @MasterShipmentDataId and Tenant = @Tenant and PickUpDeliveryTypeCode = 'DELV')
+					set @IsTakingMasterDates = 1
+			end
 
-		if (@EstimatedFinalArrivalDate is null)
-		set @EstimatedFinalArrivalDate = @MasterEstimatedFinalArrivalDate
-		else if (@MasterEstimatedFinalArrivalDate is not null AND @MasterEstimatedFinalArrivalDate > @EstimatedFinalArrivalDate)
-		set @EstimatedFinalArrivalDate = @MasterEstimatedFinalArrivalDate
+			if (@IsTakingMasterDates = 1)
+			begin
+				SELECT
+				@FinalArrivalDate = FinalArrivalDate,
+				@EstimatedFinalArrivalDate = EstimatedFinalArrivalDate,
+				@ActualFinalArrivalDate = ActualFinalArrivalDate
+				from Shipments where Id = @MasterShipmentDataId and Tenant = @Tenant
+			end			
+		END
 
-		if (@ActualFinalArrivalDate is null)
-		set @ActualFinalArrivalDate = @MasterActualFinalArrivalDate
-		else if (@MasterActualFinalArrivalDate is not null AND @MasterActualFinalArrivalDate > @ActualFinalArrivalDate)
-		set @ActualFinalArrivalDate = @MasterActualFinalArrivalDate
-	END
-
-	else if (@ActualFinalArrivalDate is null OR @EstimatedFinalArrivalDate is null)
-	BEGIN
+		else if (@HasDelivery = 0 AND @HasOnCarriage = 0)
+		BEGIN
 
 	--Transshipment1
 	declare @Transshipment1FromPortId as varchar(15)
