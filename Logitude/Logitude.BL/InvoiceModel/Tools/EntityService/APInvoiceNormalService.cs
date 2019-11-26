@@ -39,6 +39,8 @@ using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.Accounting.Data.Repositories;
 using Simplog.Data.ShipmentsModel;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.InfrastructureModel.EntityLists;
+using Simplog.Data.InfrastructureModel;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -222,7 +224,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 if (entityPM.CreatedFromAPI)
                 {
                     this.GeneratePayablesFromInvoiceLines_FromAPI();
-                 
+
                 }
                 else
                 {
@@ -238,7 +240,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     this.BuildUnexpectedPayables(lines);
                     this.GetShipmentsData(entityPM.InvoiceLines);
                 }
-               
+
                 this.UpdateInvoiceEntities();
             }
 
@@ -275,8 +277,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 //if (!entityPM.CreatedFromAPI)
                 //{
-                    this.RunStoredProcedures();
-               // }
+                this.RunStoredProcedures();
+                // }
             }
         }
 
@@ -286,8 +288,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             List<APInvoiceLinePM> invoiceLines = entityPM.InvoiceLines.ToList();
             Shipment shipment = shipmentRepository.GetSingleShipment(entityPM.MainEntityId, tenant);
             List<ShipmentPayable> payables = shipmentPayableRepository.GetShipemntPayablesByShipmentId(shipment.Id, tenant).ToList();
-          
-            if(shipment.ShipmentLevelCode == "H")
+
+            if (shipment.ShipmentLevelCode == "H")
             {
                 payables = payables.Where(a => a.ShipmentPayableLineStatusCode != "ACCT" && a.ShipmentPayableLineStatusCode != "OAMT" && a.ShipmentPayableAmountTypeCode != "ACCU").ToList();
             }
@@ -320,28 +322,30 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void GeneratePayableLine_ChargeTypes(APInvoiceLinePM aPInvoiceLine, List<ShipmentPayable> shipmentPayable)
         {
-            List<ShipmentPayable> myLines = shipmentPayable.Where(a => a.VendorId == entityPM.VendorId || a.VendorId == null).ToList();
-            if (myLines != null)
+            List<ShipmentPayable> shipmentPayables_SameVendor = shipmentPayable.Where(a => a.VendorId == entityPM.VendorId || a.VendorId == null).ToList();
+            if (shipmentPayables_SameVendor != null)
             {
-                var matchedContainerLines = myLines.Where(a => a.Measurement != null && a.Measurement.Code == aPInvoiceLine.ContainerTypeCode && a.Quantity == aPInvoiceLine.Quantity && a.CurrencyId == aPInvoiceLine.ForiegnCurrencyId).ToList();
-
-                if ((matchedContainerLines != null && matchedContainerLines.Count() == 1) || myLines.Count() == 1)
+                var matchedContainerLines = shipmentPayables_SameVendor.Where(a => a.Measurement != null && a.Measurement.Code == aPInvoiceLine.ContainerTypeCode && a.Quantity == aPInvoiceLine.Quantity && a.CurrencyId == aPInvoiceLine.ForiegnCurrencyId).ToList();
+                if ((matchedContainerLines != null && matchedContainerLines.Count() == 1) || shipmentPayables_SameVendor.Count() == 1)
                 {
-                    ShipmentPayable shipmentPayableLine;
-                    if (matchedContainerLines.Count() == 1)
+                    ShipmentPayable shipmentPayableLine = this.GetMatchedShipmentPayableLine_ForAPI(matchedContainerLines, shipmentPayables_SameVendor, aPInvoiceLine);
+
+                    if ((aPInvoiceLine.ForiegnCurrencyId != null && aPInvoiceLine.ForiegnCurrencyId == shipmentPayableLine.CurrencyId) || aPInvoiceLine.ForiegnCurrencyId == null)
                     {
-                        shipmentPayableLine = matchedContainerLines.FirstOrDefault();
-                        aPInvoiceLine.AmountTypeCode = "EXPT";
-                        if(shipmentPayableLine.UnitPrice == null)
-                            shipmentPayableLine.UnitPrice = Round(aPInvoiceLine.InvoiceCurrencyAmount / aPInvoiceLine.Quantity, 2);
+                        if (entityPM.InvoiceCurrencyId != shipmentPayableLine.CurrencyId)
+                        {
+                            this.GetRates(tenant);
+                            double lineAmount = aPInvoiceLine.InvoiceCurrencyAmount != null ? aPInvoiceLine.InvoiceCurrencyAmount.Value : 0;
+                            aPInvoiceLine.InvoiceCurrencyAmount = Math.Round(CalculateLocalAmount(lineAmount, aPInvoiceLine.ForiegnCurrencyId,shipmentPayableLine.CurrencyId,tenant), 2);
+                        }
+                        aPInvoiceLine.EntityPayableId = shipmentPayableLine.Id;
+                        this.ComputeOpenAmount(aPInvoiceLine, shipmentPayableLine);
                     }
                     else
                     {
-                        shipmentPayableLine = shipmentPayable.FirstOrDefault();
+                        aPInvoiceLine.AmountTypeCode = "EXPT";
+                        this.UnexpectedPayablesInvoiceLines.Add(aPInvoiceLine);
                     }
-
-                    aPInvoiceLine.EntityPayableId = shipmentPayableLine.Id;
-                    this.ComputeOpenAmount(aPInvoiceLine, shipmentPayableLine);
                 }
                 else
                 {
@@ -353,6 +357,25 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 this.UnexpectedPayablesInvoiceLines.Add(aPInvoiceLine);
             }
+        }
+
+        private ShipmentPayable GetMatchedShipmentPayableLine_ForAPI(List<ShipmentPayable> matchedContainerLines, List<ShipmentPayable> shipmentPayables_SameVendor, APInvoiceLinePM aPInvoiceLine)
+        {
+            ShipmentPayable shipmentPayableLine;
+            if (matchedContainerLines.Count() == 1)
+            {
+                shipmentPayableLine = matchedContainerLines.FirstOrDefault();
+                aPInvoiceLine.AmountTypeCode = "EXPT";
+                if (shipmentPayableLine.UnitPrice == null)
+                {
+                    shipmentPayableLine.UnitPrice = Round(aPInvoiceLine.InvoiceCurrencyAmount / aPInvoiceLine.Quantity, 2);
+                }
+            }
+            else
+            {
+                shipmentPayableLine = shipmentPayables_SameVendor.FirstOrDefault();
+            }
+            return shipmentPayableLine;
         }
 
         private void ComputeOpenAmount(APInvoiceLinePM invoiceLine, ShipmentPayable shipmentPayableLine)
@@ -372,20 +395,62 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
         }
 
-        private LastRate GetCurrencysExchangeRate(int tenant, string localCurrencyId, string foriegnCurrencyId, DateTime rateDate)
+        private double CalculateLocalAmount(double amount, string convertedCurrencyId, string currencyId, int tenant)
         {
-            LastRate result = null;
+            var tenantCurrency = GetTenantCurrency(tenant);
+            double amountInTariffCurr, amountInConvertedCurr;
 
-            RatesTableQuery ratesTableQuery = new RatesTableQuery(tenant);
-            CurrencyRepository currencyRepository = new CurrencyRepository(tenant);
-
-            LastRate lastRate = ratesTableQuery.GetLastRecordByValueDate(tenant, foriegnCurrencyId, localCurrencyId, rateDate);
-            if (lastRate != null)
+            if (convertedCurrencyId == currencyId)
             {
-                result = lastRate;
+                amountInTariffCurr = amount;
             }
 
-            return result;
+            else
+            {
+                if (tenantCurrency == currencyId)
+                    amountInTariffCurr = amount;
+                else
+                {
+                    RatesTableList rateList = RatesList.Find(d => d.BaseCurrencyId == tenantCurrency && d.ForeignCurrencyId == currencyId);
+                    var rate = rateList == null ? 0 : rateList.Rate;
+                    amountInTariffCurr = amount * (double)rate;
+
+                }
+
+                if (tenantCurrency == convertedCurrencyId)
+                    amountInConvertedCurr = amountInTariffCurr;
+
+                else
+                {
+                    RatesTableList rateList = RatesList.Find(d => d.BaseCurrencyId == tenantCurrency && d.ForeignCurrencyId == convertedCurrencyId);
+                    var rate = rateList == null ? 0 : rateList.Rate;
+                    amountInTariffCurr = amountInTariffCurr / (double)rate;
+                }
+            }
+
+            return amountInTariffCurr;
+        }
+
+        private string GetTenantCurrency(int tenant)
+        {
+            TenantRepository tRepo = new TenantRepository(tenant);
+            Tenant t = tRepo.GetSingleByTenant(tenant);
+            var tenantCurrency = (t == null ? null : t.CurrencyId);
+            return tenantCurrency;
+        }
+
+        List<RatesTableList> RatesList;
+        private void GetRates(int tenant)
+        {
+            IWebFreightContext MyContext = WebFreightContext.GetContext(tenant);
+            RatesTableRepository ratesTableRepository = new RatesTableRepository(MyContext);
+            IQueryable<RatesTable> entityPocos = ratesTableRepository.GetRatesTables(tenant);
+
+            RatesTableQuery ratesTableQuery = new RatesTableQuery(ratesTableRepository);
+            IQueryable<RatesTableList> entityLists = ratesTableQuery.GetIQueryableEntityList(entityPocos);
+            entityLists = entityLists.OrderByDescending(r => r.ValueDate);
+
+            this.RatesList = entityLists.ToList();
         }
 
         private void VoidAPInvoiceInFullAccounting(APInvoicePM entityPM, bool setVoided)
