@@ -341,7 +341,6 @@ export class ProductViewModelData extends BaseComponent {
         this.BuildProductLocations();
         this.InitializeRightToLeft();
         this.GetNotesFlowDirection();
-        this.RefreshNotesTextAlgimentVariables();
     }
 
     private InitializeRightToLeft() {
@@ -970,33 +969,16 @@ export class ProductViewModelData extends BaseComponent {
         this.NotesFlowDirection = myResult;
     }
 
-    public NotesBackgroundAlignRight = "transparent";
-    private NotesBackgroundAlignLeft = "transparent";
-    private GetNotesBackgroundAlignRight() {
-        if (!AppTool.IsNullOrEmpty(this.NotesFlowDirection)) {
-            this.NotesBackgroundAlignRight = this.NotesFlowDirection == "rtl" ? "#FDD59D" : "transparent";
-        }
-    }
-    private GetNotesBackgroundAlignLeft() {
-        if (!AppTool.IsNullOrEmpty(this.NotesFlowDirection)) {
-            this.NotesBackgroundAlignLeft = this.NotesFlowDirection == "ltr" ? "#FDD59D" : "transparent";
-        }
-    }
-
     public AlignNotesLeftClicked() {
         this.entityPM.NotesRightToLeft = false;
         this.GetNotesFlowDirection();
-        this.RefreshNotesTextAlgimentVariables();
     }
+
     public AlignNotesRightClicked() {
         this.entityPM.NotesRightToLeft = true;
         this.GetNotesFlowDirection();
-        this.RefreshNotesTextAlgimentVariables();
     }
-    public RefreshNotesTextAlgimentVariables() {
-        this.GetNotesBackgroundAlignLeft();
-        this.GetNotesBackgroundAlignRight();
-    }
+
 
     public get LastShipmentDate() { return this.entityPM.LastShipmentDate; }
     public get IsDeleteButtonEnabled() { return this.LastShipmentDate == null; }

@@ -705,7 +705,9 @@
     <Content Include="images\FileIcons\microsoft-excel-icon.png" />
     <Content Include="images\icons\MiniGrayTick.png" />
     <Content Include="images\icons\MiniGreenTick.png" />
+    <Content Include="images\LoginScreen\password_eye.png" />
     <Content Include="images\Next.png" />
+    <Content Include="images\LoginScreen\password_eye_closed.png" />
     <Content Include="images\Previous.png" />
     <Content Include="images\Recent.png" />
     <Content Include="images\RecentW.png" />

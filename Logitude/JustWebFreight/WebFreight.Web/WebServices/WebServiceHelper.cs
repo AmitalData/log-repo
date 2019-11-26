@@ -1261,6 +1261,84 @@ namespace WebFreight.Web.WebServices
 
             return myResult;
         }
+
+        internal string GetDeliveryPickUpAddress(PickUpAndDeliveriesArguments arguments)
+        {
+            string address = "";
+            if (arguments != null)
+            {
+                switch (arguments.TypeCode)
+                {
+                    case "PART":
+                        {
+                            if (!string.IsNullOrEmpty(arguments.PartnerCardId))
+                            {
+                                Card partnerCard = CardRepository.GetSingleCard(arguments.PartnerCardId, tenant, true);
+                                if (partnerCard != null)
+                                {
+                                    address = partnerCard.EnglishName;
+                                }
+                            }
+
+                            if (!string.IsNullOrEmpty(arguments.AddressId))
+                            {
+                                Address partnerAddress = addressRepository.GetSingleAddress(arguments.AddressId, tenant);
+                                if (partnerAddress != null)
+                                {
+                                    address = address + Environment.NewLine + DataProviders.General.GetAddress(partnerAddress);
+
+                                    if (partnerAddress.PhoneNumber != null)
+                                    {
+                                        address = address + Environment.NewLine + "Tel: " + partnerAddress.PhoneNumber;
+                                    }
+                                }
+                            }
+
+                            break;
+                        }
+
+                    case "PORT":
+                        {
+                            if (!string.IsNullOrEmpty(arguments.PortId))
+                            {
+                                PortPM port = PortQuery.GetSinglePort(tenant, arguments.PortId, true);
+                                if (port != null)
+                                {
+                                    address = port.EnglishName + ", " + port.CountryName;
+
+                                    if (!string.IsNullOrEmpty(port.StateName))
+                                    {
+                                        address = address + ", State: " + port.StateName;
+                                    }
+                                }
+                            }
+
+                            break;
+                        }
+
+                    case "CASL":
+                        {
+                            if (!string.IsNullOrEmpty(arguments.AddressCountryId)) {
+                                Country country = CountryRepository.GetSingleCountry(arguments.AddressCountryId, tenant, true);
+                                if(!string.IsNullOrEmpty(country.EnglishName))
+                                {
+                                    address = country.EnglishName;
+                                }
+                            }
+                            
+                            address = address + ", " + arguments.AddressCity;
+
+                            if (!string.IsNullOrEmpty(arguments.AddressZipCode))
+                            {
+                                address = address + ", " + arguments.AddressZipCode;
+                            }
+
+                            break;
+                        }
+                }
+            }
+            return address;
+        }
     }
 
     public class PlaceOfReceiptData
@@ -1269,5 +1347,16 @@ namespace WebFreight.Web.WebServices
         public string CountryCode { get; set; }
         public string CountryName { get; set; }
         public string StateCode { get; set; }
+    }
+
+    public class PickUpAndDeliveriesArguments
+    {
+        public string TypeCode { get; set; }
+        public string PartnerCardId { get; set; }
+        public string AddressId { get; set; }
+        public string PortId { get; set; }
+        public string AddressCity { get; set; }
+        public string AddressZipCode { get; set; }
+        public string AddressCountryId { get; set; }
     }
 }
