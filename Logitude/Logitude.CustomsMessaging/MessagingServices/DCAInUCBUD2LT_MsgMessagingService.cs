@@ -95,13 +95,21 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
             var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(tenant);
-            var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, documentsFilingPM.EntityId, null, null, null, true);
-            if (RequestInProgressList != null && RequestInProgressList.Count > 0)
+            bool simultaneousCheckGeneralLock = true;
+            if (simultaneousCheckGeneralLock)
             {
 
-                ///throw new System.Exception("Requestsheet  with Interface Type  = UCBUD2LT  already in progress  !!!");
-                return "קיים מסר זהה בתהליך";
+            }
+            else
+            {
+                var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, documentsFilingPM.EntityId, null, null, null, true);
+                if (RequestInProgressList != null && RequestInProgressList.Count > 0)
+                {
 
+                    ///throw new System.Exception("Requestsheet  with Interface Type  = UCBUD2LT  already in progress  !!!");
+                    return "קיים מסר זהה בתהליך";
+
+                }
             }
             LogMessagingUtil.Instance.AppendLine("Build !!!Requestsheet  with Interface Type  = UCBUD2LT  !!!");
 
@@ -242,7 +250,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             DateTime stopLogAt = new DateTime(2020, 01, 01);
             DeclarationPM declarationPM;
             Debug.WriteLine("CreateUD2LTService");
-            string jsonPM="";
+            string logData="";
             try
             {
 
@@ -259,10 +267,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     Debug.WriteLine("_DocumentsFilingPM == null");
                     return;
                 }
-                jsonPM = Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(_DocumentsFilingPM);
+                logData = $"DocumentsFilingPM.Id={_DocumentsFilingPM.Id},Code={_DocumentsFilingPM.Code}"; //Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(_DocumentsFilingPM);
                 if (String.IsNullOrWhiteSpace(_DocumentsFilingPM.DocumentTypeCode))
                 {
-                    LogitudeSettings.HandleLogMe("_DocumentsFilingPM.DocumentTypeCode" + jsonPM, false, "CreateUD2LTService.DOC_ID", stopLogAt);
+                    LogitudeSettings.HandleLogMe("_DocumentsFilingPM.DocumentTypeCode" + logData, false, "CreateUD2LTService.DOC_ID", stopLogAt);
                     Debug.WriteLine("CreateUD2LTService.DOC_ID== null");
                     return;
                 }
@@ -270,7 +278,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 int tenant = _DocumentsFilingPM.Tenant;
                 if (!IsConnected2Declaration())
                 {
-                    LogitudeSettings.HandleLogMe("!IsConnected2Decalaration()"+ jsonPM, false, "CreateUD2LTService", stopLogAt);
+                    LogitudeSettings.HandleLogMe("!IsConnected2Decalaration()"+ logData, false, "CreateUD2LTService", stopLogAt);
                     Debug.WriteLine("!IsConnected2Decalaration()");
                     return;
                 }
@@ -278,11 +286,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 bool shouldCreateDCAComm = false;
                 var decQS = new DeclarationQueryService(tenant);
                 declarationPM = decQS.GetSingle(this._DocumentsFilingPM.EntityId, false, false);
-                jsonPM = Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(declarationPM);
+                logData += $"declarationPM.id={declarationPM.Id},CustomFileNo={declarationPM.CustomFileNo}"; //Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(declarationPM);
                 if (declarationPM.PaymentDate.HasValue)
                 {
                     shouldCreateDCAComm = false;
-                    LogitudeSettings.HandleLogMe("declarationPM.PaymentDate.HasValue" + jsonPM, false, "CreateUD2LTService", stopLogAt);
+                    LogitudeSettings.HandleLogMe("declarationPM.PaymentDate.HasValue" + logData, false, "CreateUD2LTService", stopLogAt);
                     Debug.WriteLine("Declaration has already been payed");
                     return;
                 }
@@ -316,14 +324,14 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 }
                 if (!shouldCreateDCAComm)
                 {
-                    LogitudeSettings.HandleLogMe("!shouldCreateDCAComm" + jsonPM, false, "CreateUD2LTService", stopLogAt);
+                    LogitudeSettings.HandleLogMe("!shouldCreateDCAComm" + logData, false, "CreateUD2LTService", stopLogAt);
                     Debug.WriteLine("!shouldCreateDCAComm");
                     return;
                 }
 
                 if (TicketalreadyExistforthisDocument())
                 {
-                    LogitudeSettings.HandleLogMe("TicketalreadyExistforthisDocument()" + jsonPM, false, "CreateUD2LTService", stopLogAt);
+                    LogitudeSettings.HandleLogMe("TicketalreadyExistforthisDocument()" + logData, false, "CreateUD2LTService", stopLogAt);
                     Debug.WriteLine("TicketalreadyExistforthisDocument");
                     return;
 
@@ -344,7 +352,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                             var myCustomsDocumentPointerPMListforDec = myCustomsDocumentPointerPMList.Where(o => o.ParentEntityCode == "Declaration" && o.ParentEntityId == declarationPM.Id);
                             if (myCustomsDocumentPointerPMListforDec != null && myCustomsDocumentPointerPMListforDec.Count() > 0)
                             {
-                                LogitudeSettings.HandleLogMe("Ticket already Exist for this Document" + jsonPM, false, "CreateUD2LTService", stopLogAt);
+                                LogitudeSettings.HandleLogMe("Ticket already Exist for this Document" + logData, false, "CreateUD2LTService", stopLogAt);
                                 Debug.WriteLine("Ticket already Exist for this Document");
                                 return;
 
@@ -360,7 +368,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 string loggingUserId = AuthenticationUtil.ResolveUserId(tenant);
 
 
-                string key = ProcessLockTableUtil.Instance.GetKey4UCBUD2LT(declarationPM.CustomFileNo, _DocumentsFilingPM.Tenant);
+                string key = ProcessLockTableUtil.Instance.GetKey4UCBUD2LT(_DocumentsFilingPM.Id, _DocumentsFilingPM.Tenant);
                 using (var disposableToken =
                     //ProcessLockTableUtil.Instance.LockItAndGetReleaseToken(key, "5117ResponseService.Update")
                     ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(_DocumentsFilingPM.Tenant, true, key, "UCBUD2LT.CRS",true)
@@ -368,7 +376,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 {
                     var myDCAInUCBUD2LT_MsgMessagingService = new DCAInUCBUD2LT_MsgMessagingService();
                     string crs = myDCAInUCBUD2LT_MsgMessagingService.CreateCRS(tenant, loggingUserId, _DocumentsFilingPM);
-                    LogitudeSettings.HandleLogMe(crs + " " + jsonPM, false, "CreateUD2LTService.OK", stopLogAt);
+                    LogitudeSettings.HandleLogMe(crs + " " + logData, false, "CreateUD2LTService.OK", stopLogAt);
 
                 }
 
@@ -376,7 +384,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             catch (Exception E)
             {
 
-                LogitudeSettings.HandleLogMe(E.ToString() + jsonPM, true, "CreateUD2LTService", stopLogAt);
+                LogitudeSettings.HandleLogMe(E.ToString() + logData, true, "CreateUD2LTService", stopLogAt);
                 throw;
             }
             finally
