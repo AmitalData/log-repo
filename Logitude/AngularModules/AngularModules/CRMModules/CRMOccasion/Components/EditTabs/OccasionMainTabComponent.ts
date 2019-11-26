@@ -15,6 +15,7 @@ import { ContactItemClass } from '../../../../CommonModules/CommonPartners/Compo
 import { ContactPMService } from '../../../../Common/Services/StandardPMs/ContactPMService';
 import { CachedDataManager } from '../../../../Infrastructure/Utilities/CachedDataManager';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService'
+import { ContactPM } from '../../../../Common/EntityPMs/ContactPM';
 
 
 @Component({
@@ -483,8 +484,8 @@ export class OccasionLineClass extends BaseComponent {
         var myService: ContactPMService = new ContactPMService();
         myService.get(contactId).subscribe((myResult: ServiceResponse) => {
             if (!myResult.HasError) {
-                var pm = myResult.Result;
-                var itemComponent = new ContactItemClass(pm, null, false);
+                var contactPM = myResult.Result;
+                var itemComponent = new ContactItemClass(contactPM, null, false);
                 logWindow.DataContext = itemComponent;
                 var args: any = {};
                 logWindow.WindowArgs = args;
@@ -498,6 +499,17 @@ export class OccasionLineClass extends BaseComponent {
             // Refresh user table
             CachedDataManager.RefreshTableData("User", true);
             this.ContactId = arg;
+            var myService: ContactPMService = new ContactPMService();
+            myService.get(this.ContactId).subscribe((myResult: ServiceResponse) => {
+                if (!myResult.HasError) {
+                    var contactPM: ContactPM = myResult.Result;
+                    this.ContactName = contactPM.EnglishName;
+                    this.ContactEmail = contactPM.Email;
+                    this.ContactPosition = contactPM.Position;
+                    this.ContactMobile = contactPM.Mobile;
+                    this.ContactTel = contactPM.BusinessPhone;
+                }
+            });
         }
     }
 }
