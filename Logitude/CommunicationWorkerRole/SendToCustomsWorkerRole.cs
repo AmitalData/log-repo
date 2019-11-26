@@ -30,7 +30,7 @@ namespace CommunicationWorkerRole
                     try
                     {
                         int tenant = 0;
-                        queueservice = QueueServiceManager.GetQueueService(queueName, 0);
+                        queueservice = new DbQueueService(queueName, 0);
                         var response = queueservice.Receive(new TimeSpan(0, 0, 0, 10));
                         LastActivity = DateTime.UtcNow;
 
@@ -129,6 +129,8 @@ namespace CommunicationWorkerRole
 
                                     catch (Exception ex)
                                     {
+                                        //queueservice.CompleteAsFailed();
+
                                         string error = ex.Message + (ex.InnerException != null ? Environment.NewLine + "InnerException: " + ex.InnerException.Message : "");
                                         this.UpdateShipment(log, error);
                                         this.UpdateCommunicationLog(log, error);

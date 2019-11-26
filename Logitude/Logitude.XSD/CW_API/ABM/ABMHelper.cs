@@ -30,6 +30,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using Logitude.Server.Tools.StorageService;
 using Logitude.Server.Tools;
+using Logitude.Server.Tools.QueueService;
 
 namespace Logitude.XSD.CW_API.ABM
 {
@@ -165,40 +166,44 @@ namespace Logitude.XSD.CW_API.ABM
             IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
             storageservice.Write(myByteArray, fileInfo);
 
-            try
-            {
-                using (TransactionScope scope = TransactionFactory.GetNewSerializableTransaction())
-                {
-                    BrokeredMessage message = new BrokeredMessage();
-                    message.ScheduledEnqueueTimeUtc = DateTime.UtcNow.Add(new TimeSpan(0, 0, 10));
+            string emailqueueName = WebFreightEntryPoint.GetQueueByEnviroment(queueName);
+            DbQueueService queueservice = new DbQueueService(emailqueueName, Tenant);
+            queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", myCommunicationLogId }, { "Tenant", Tenant.ToString() } });
 
-                    message.Properties["CommunicationLogId"] = myCommunicationLogId;
-                    message.Properties["Tenant"] = Tenant;
+            //try
+            //{
+            //    using (TransactionScope scope = TransactionFactory.GetNewSerializableTransaction())
+            //    {
+            //        BrokeredMessage message = new BrokeredMessage();
+            //        message.ScheduledEnqueueTimeUtc = DateTime.UtcNow.Add(new TimeSpan(0, 0, 10));
 
-                    string emailqueueName = WebFreightEntryPoint.GetQueueByEnviroment(queueName);
-                    QueueClient client = StorageAcountDetails.CreateServiceBusQueueClient(emailqueueName);
-                    client.Send(message);
+            //        message.Properties["CommunicationLogId"] = myCommunicationLogId;
+            //        message.Properties["Tenant"] = Tenant;
 
-                    scope.Complete();
-                }
-            }
+            //        string emailqueueName = WebFreightEntryPoint.GetQueueByEnviroment(queueName);
+            //        QueueClient client = StorageAcountDetails.CreateServiceBusQueueClient(emailqueueName);
+            //        client.Send(message);
 
-            catch (Exception ex)
-            {
-                string ip = "";
+            //        scope.Complete();
+            //    }
+            //}
 
-                if (HttpContext.Current != null && HttpContext.Current.Request != null)
-                {
-                    string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
-                    if (string.IsNullOrEmpty(currentIP))
-                    {
-                        currentIP = HttpContext.Current.Request.UserHostAddress;
-                    }
-                    ip = currentIP;
-                }
+            //catch (Exception ex)
+            //{
+            //    string ip = "";
 
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "customs controller", null, ip);
-            }
+            //    if (HttpContext.Current != null && HttpContext.Current.Request != null)
+            //    {
+            //        string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
+            //        if (string.IsNullOrEmpty(currentIP))
+            //        {
+            //            currentIP = HttpContext.Current.Request.UserHostAddress;
+            //        }
+            //        ip = currentIP;
+            //    }
+
+            //    ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "customs controller", null, ip);
+            //}
         }
 
         private string myObjectTableId;
