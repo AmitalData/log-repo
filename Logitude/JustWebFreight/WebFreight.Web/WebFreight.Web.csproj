@@ -1246,6 +1246,7 @@
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\TenantAdditionalDataController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\TenantLoginPolicyController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\TwoFactorAuthenticationDeviceController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\UserLastSettingsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\PortViewsController.cs" />
     <Compile Include="Controllers\CommonDataModel\Services\ExcelExportFeaturesController.cs" />
     <Compile Include="Controllers\CommonDataModel\Services\ExcelExportController.cs" />
