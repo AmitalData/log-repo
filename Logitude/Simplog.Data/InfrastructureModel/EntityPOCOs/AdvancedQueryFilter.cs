@@ -18,6 +18,8 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string Operator { get; set; }
         public int IndexOrder { get; set; }
         public string UserId { get; set; }
+        public string ObjectFieldCode { get; set; }
+        
 
         [ForeignKey("UserId")]
         public virtual User User { get; set; }

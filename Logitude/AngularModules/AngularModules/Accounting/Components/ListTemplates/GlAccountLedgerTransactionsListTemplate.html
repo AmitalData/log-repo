@@ -1,4 +1,4 @@
-﻿<style>
+<style>
     .red {
         color: red !important;
     }
@@ -25,7 +25,7 @@
 <div>
     <div *ngIf="fieldName == 'Indicator' && rowData['OpenAmount'] != 0" [attr.title]="GetIndicatorText()" class="circleWrapper CenterCenter">
         <div class="circleDraw"
-             [class.orangeCircle]="rowData['OpenAmount'] != CalculateOriginalAmount()"></div>
+             [class.orangeCircle]="(rowData['LocalAmountDebit'] >0 && rowData['OpenAmount'] != CalculateOriginalAmount()) || (rowData['LocalAmountCredit'] >0 && rowData['OpenAmount'] != -1*CalculateOriginalAmount())"></div>
     </div>
 
     <div [style.text-align]="isRTL ? 'right' : 'left'"  class="TextTrimming" *ngIf="fieldName == 'CreateDate'">{{ rowData[fieldName] | DateTimePipe:'SD' }}</div>
