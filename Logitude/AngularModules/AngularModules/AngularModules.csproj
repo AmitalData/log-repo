@@ -129,6 +129,7 @@
     <Content Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWQueryBuilderFiltersComponent.html" />
     <Content Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWFilterSettings.html" />
     <Content Include="CommonModules\CommonOthers\Components\ProductType\EditTabs\ProductTypeGeneralTabComponent.html" />
+    <Content Include="CommonModules\CommonPartners\Components\EditTabs\Contact\ContactOccasionsTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\CustomAgent\CustomAgentDocsInTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\Participant\ParticipantDocsInTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\ShippingAgent\ShippingAgentDocsInTabComponent.html" />
@@ -449,6 +450,7 @@
     <TypeScriptCompile Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWQueryBuilderFiltersComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWFilterSettings.ts" />
     <TypeScriptCompile Include="CommonModules\CommonOthers\Components\ProductType\EditTabs\ProductTypeGeneralTabComponent.ts" />
+    <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\Contact\ContactOccasionsTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\CustomAgent\CustomAgentDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\Participant\ParticipantDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\ShippingAgent\ShippingAgentDocsInTabComponent.ts" />

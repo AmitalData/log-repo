@@ -29,7 +29,7 @@ import { TruckerDocsInTabComponent } from './Components/EditTabs/Trucker/Trucker
 import { VendorDocsInTabComponent } from './Components/EditTabs/Vendor/VendorDocsInTabComponent';
 import { WarehouseDocsInTabComponent } from './Components/EditTabs/Warehouse/WarehouseDocsInTabComponent';
 import { NewAccountingPartnerComponent } from './Components/NewEntity/NewAccountingPartnerComponent';
-
+import { ContactOccasionsTabComponent} from './Components/EditTabs/Contact/ContactOccasionsTabComponent';
 
 export const Components =
     [
@@ -64,6 +64,7 @@ export const Components =
         VendorDocsInTabComponent,
         WarehouseDocsInTabComponent,
         NewAccountingPartnerComponent,
+        ContactOccasionsTabComponent,
     ];
 
 export class ModuleDeclarations {
@@ -103,6 +104,7 @@ export class ModuleDeclarations {
             case "VendorDocsInTabComponent": { myResult = VendorDocsInTabComponent; break; }
             case "WarehouseDocsInTabComponent": { myResult = WarehouseDocsInTabComponent; break; }
             case "NewAccountingPartnerComponent": { myResult = NewAccountingPartnerComponent; break; }
+            case "ContactOccasionsTabComponent": { myResult = ContactOccasionsTabComponent; break; }
 
         }
 
