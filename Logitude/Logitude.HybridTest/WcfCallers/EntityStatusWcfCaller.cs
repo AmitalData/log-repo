@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.Server.Tools;
 using System;
 using System.Collections.Generic;
@@ -8,23 +9,34 @@ using System.Threading.Tasks;
 
 namespace Logitude.HybridTest.WcfCallers
 {
-    class VesselWcfCaller
+    class EntityStatusWcfCaller
     {
-        public static Response CallVesselUpsert()
+        public static Response PrepareEntityStatus()
         {
-            VesselPM entityPM = new VesselPM()
+            if (HybridData.EntityStatusId == null)
             {
-                Code = HybridData.VesselCode,
-                EnglishName = "Hybrid Vessel",
-                LocalName = "Hybrid Vessel",
+                return CallEntityStatusUpsert();
+            }
+            return new Response();
+        }
+        public static Response CallEntityStatusUpsert()
+        {
+            EntityStatusPM entityPM = new EntityStatusPM()
+            {
+                Code = HybridData.EntityStatusCode,
+                Name = "Hybrid EntityStatus",
+                DisplayName = "Hybrid EntityStatus",
+                InActive = false,
+                ObjectTableName = "Shipment",
+                StatusWeight = 0,
                 Tenant = TestEnvironmentGlobalParameters.Tenant,
             };
 
             InvokedProperties serviceProperties = new InvokedProperties
             {
-                ServiceName = "Vessel",
+                ServiceName = "EntityStatus",
                 ServiceOperation = "Upsert",
-                ServiceType = typeof(VesselPM),
+                ServiceType = typeof(EntityStatusPM),
                 ServiceFilterType = null,
             };
 
@@ -32,16 +44,8 @@ namespace Logitude.HybridTest.WcfCallers
             object[] serviceParameters = new object[] { entityPM, false };
             WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             if(!serviceResponse.HasError && serviceResponse.Result != null)
-                HybridData.VesselId = serviceResponse.Result;
+                HybridData.EntityStatusId = serviceResponse.Result;
             return serviceResponse;
-        }
-        public static Response PrepareVessel()
-        {
-            if(HybridData.VesselId == null)
-            {
-                return CallVesselUpsert();
-            }
-            return new Response();
         }
     }
 }

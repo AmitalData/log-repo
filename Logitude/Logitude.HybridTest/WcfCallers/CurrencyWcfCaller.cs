@@ -32,7 +32,7 @@ namespace Logitude.HybridTest.WcfCallers
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { entityPM, false };
             WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            if(serviceResponse.Result != null)
+            if(!serviceResponse.HasError && serviceResponse.Result != null)
                 HybridData.CurrencyId = serviceResponse.Result;
             return serviceResponse;
         }

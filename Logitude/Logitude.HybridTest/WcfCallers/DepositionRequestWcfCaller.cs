@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.Server.Tools;
 using System;
 using System.Collections.Generic;
@@ -8,40 +9,28 @@ using System.Threading.Tasks;
 
 namespace Logitude.HybridTest.WcfCallers
 {
-    class VesselWcfCaller
+    class DepositionRequestWcfCaller
     {
-        public static Response CallVesselUpsert()
+        public static Response CallDepositionRequestUpsert()
         {
-            VesselPM entityPM = new VesselPM()
+            DepositionRequestPM entityPM = new DepositionRequestPM()
             {
-                Code = HybridData.VesselCode,
-                EnglishName = "Hybrid Vessel",
-                LocalName = "Hybrid Vessel",
+                VendorCode = HybridData.VendorCode,
                 Tenant = TestEnvironmentGlobalParameters.Tenant,
             };
 
             InvokedProperties serviceProperties = new InvokedProperties
             {
-                ServiceName = "Vessel",
+                ServiceName = "DepositionRequest",
                 ServiceOperation = "Upsert",
-                ServiceType = typeof(VesselPM),
+                ServiceType = typeof(DepositionRequestPM),
                 ServiceFilterType = null,
             };
 
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { entityPM, false };
             WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            if(!serviceResponse.HasError && serviceResponse.Result != null)
-                HybridData.VesselId = serviceResponse.Result;
             return serviceResponse;
-        }
-        public static Response PrepareVessel()
-        {
-            if(HybridData.VesselId == null)
-            {
-                return CallVesselUpsert();
-            }
-            return new Response();
         }
     }
 }

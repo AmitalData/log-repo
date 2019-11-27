@@ -7,7 +7,7 @@ namespace Logitude.DBMigrations
     {
         static void Main(string[] args)
         {
-            if (AppHelper.CheckAppArguments(args, "-root"))
+            if (AppHelper.IsArgumentProvided(args, "-root"))
             {
                 string root = AppHelper.GetRoot(args);
                 //root = @"C:\Users\AbedMalakh\source\repos\log-repo\Logitude";
@@ -21,7 +21,7 @@ namespace Logitude.DBMigrations
                         {
                             string generatedScript = AppHelper.GenerateScriptFromDXMLFiles(DXMLFiles);
                             AppHelper.SaveScript(generatedScript);
-                            if (AppHelper.CheckAppArguments(args, "-exe"))
+                            if (AppHelper.IsArgumentProvided(args, "-exe"))
                             {
                                 if (string.IsNullOrEmpty(generatedScript))
                                 {

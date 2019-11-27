@@ -29,5 +29,27 @@ namespace Logitude.CRM.BL.EntityQueryServices
             OccasionInviteeQueryService queryService = new OccasionInviteeQueryService(context);
             entityPM.OccasionInvitees = queryService.GetMulti(occasionKeys, true);
         }
+
+        public List<OccasionPM> GetContactOccasions(int tenant, ICRMContext context, string contactId)
+        {
+            List<string> occasionIds = (from item in context.OccasionInvitees
+                                        where item.ContactId == contactId
+                                        select item.OccasionId).ToList();
+
+            IQueryable<OccasionPM> iQueryable = from occasion in context.Occasions
+                                              where occasion.Tenant == tenant
+                                              && occasionIds.Contains(occasion.Id)
+                                              select new OccasionPM {
+                                                  Id = occasion.Id,
+                                                  Name = occasion.Name,
+                                                  TypeName = occasion.OccasionType.Name,
+                                                  IndustryName = occasion.Industry.Name,
+                                                  OccasionStatusName = occasion.OccasionStatus.Name,
+                                                  StartDateTime = occasion.StartDateTime,
+                                                  EndDateTime = occasion.EndDateTime,
+                                                  Location = occasion.Location
+                                              };
+            return iQueryable.ToList();
+        }
     }
 }

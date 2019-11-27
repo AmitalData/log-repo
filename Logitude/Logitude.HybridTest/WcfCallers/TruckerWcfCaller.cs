@@ -12,7 +12,7 @@ namespace Logitude.HybridTest.WcfCallers
     {
         public static Response CallTruckerUpsert()
         {
-            Response prepareResponse = CountryWcfCaller.PrepareCountry();
+            Response prepareResponse = PrepareTruckerVars();
             if (!prepareResponse.HasError)
             {
                 TruckerPM entityPM = new TruckerPM()
@@ -37,7 +37,7 @@ namespace Logitude.HybridTest.WcfCallers
                 Response serviceResponse = new Response();
                 object[] serviceParameters = new object[] { entityPM, false };
                 WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-                if (serviceResponse.Result != null)
+                if (!serviceResponse.HasError && serviceResponse.Result != null)
                     HybridData.TruckerId = serviceResponse.Result;
                 return serviceResponse;
             }
@@ -50,6 +50,11 @@ namespace Logitude.HybridTest.WcfCallers
                 return CallTruckerUpsert();
             }
             return new Response();
+        }
+        private static Response PrepareTruckerVars()
+        {
+            Response prepareResponse = CountryWcfCaller.PrepareCountry();
+            return prepareResponse;
         }
     }
 }
