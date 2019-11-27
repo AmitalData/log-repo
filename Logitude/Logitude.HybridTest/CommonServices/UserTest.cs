@@ -13,8 +13,20 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_User_UPSERT()
         {
-            LoginService.GetLoginTokenByCredentials();
-            Response serviceResponse = UserWcfCaller.CallUserUpsert();
+            UserPM userPM = new UserPM()
+            {
+                Code = HybridData.UserCode,
+                EnglishName = "Hybrid User",
+                LocalName = "Hybrid User",
+                Email = "Hybrid@fnarsoft.com",
+                Password = "!H0",
+                BusinessUnitId = TestEnvironmentGlobalParameters.Tenant.ToString(),
+                BranchId = HybridData.BranchCode,
+                DepartmentId = HybridData.DepartmentCode,
+                Tenant = TestEnvironmentGlobalParameters.Tenant,
+                DocumentFilingInbox = "HybridInbox"
+            };
+            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(userPM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
         }

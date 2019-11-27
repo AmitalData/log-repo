@@ -14,9 +14,16 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_Currency_UPSERT()
         {
-            LoginService.GetLoginTokenByCredentials();
-            Response serviceResponse = CurrencyWcfCaller.CallCurrencyUpsert();
-            Assert.IsFalse(serviceResponse.HasError, serviceResponse.ErrorMessage);
+            CurrencyPM currencyPM = new CurrencyPM()
+            {
+                Code = HybridData.CurrencyCode,
+                EnglishName = "Hybrid Currency",
+                LocalName = "Hybrid Currency",
+                AddedManually = true,
+                Tenant = TestEnvironmentGlobalParameters.Tenant,
+            };
+            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(currencyPM);
+            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
         }
 

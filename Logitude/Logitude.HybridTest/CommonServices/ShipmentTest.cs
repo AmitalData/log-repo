@@ -2,6 +2,7 @@
 using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.HybridTest.WcfCallers;
+using Logitude.HybridTest.WcfFactory;
 using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -10,25 +11,22 @@ namespace Logitude.HybridTest.CommonServices
     [TestClass]
     public class ShipmentTest
     {
-        [AssemblyInitialize]
-        public static void Test(TestContext context)
-        {
-
-        }
+        
         [TestMethod]
-        public void Test_DirectShipment_UPSERT()
+        public void Test_DirectAirExportShipment_UPSERT()
         {
-            LoginService.GetLoginTokenByCredentials();
-            Response serviceResponse = ShipmentWcfCaller.CallDirectShipmentUpsert();
+            ShipmentPM shipmentPM = ShipmentWcfFactory.GetShipmentPM();
+            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(shipmentPM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
         }
 
         [TestMethod]
-        public void Test_HouseShipment_UPSERT()
+        public void Test_HouseAirExportShipment_UPSERT()
         {
-            LoginService.GetLoginTokenByCredentials();
-            Response serviceResponse = ShipmentWcfCaller.CallHouseShipmentUpsert();
+            ShipmentPM shipmentPM = ShipmentWcfFactory.GetShipmentPM();
+            shipmentPM.ShipmentLevelCode = "H";
+            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(shipmentPM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
         }

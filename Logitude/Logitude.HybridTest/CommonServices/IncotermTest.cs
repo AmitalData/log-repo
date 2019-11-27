@@ -1,5 +1,6 @@
 ﻿using System;
 using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.HybridTest.WcfCallers;
 using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -12,9 +13,17 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_Incoterm_UPSERT()
         {
-            LoginService.GetLoginTokenByCredentials();
-            Response serviceResponse = IncotermWcfCaller.CallIncotermUpsert();
-            Assert.IsFalse(serviceResponse.HasError, serviceResponse.ErrorMessage);
+            IncotermPM incotermPM = new IncotermPM()
+            {
+                Code = HybridData.IncotermCode,
+                Name = "Hybrid Incoterm",
+                LocalName = "Hybrid Incoterm",
+                Freight = "C",
+                OtherCharges = "C",
+                Tenant = TestEnvironmentGlobalParameters.Tenant
+            };
+            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(incotermPM);
+            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
         }
 

@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.HybridTest.WcfCallers;
 using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -11,9 +11,17 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_State_UPSERT()
         {
-            LoginService.GetLoginTokenByCredentials();
-            Response serviceResponse = StateWcfCaller.CallStateUpsert();
-            Assert.IsFalse(serviceResponse.HasError, serviceResponse.ErrorMessage);
+            StatePM statePM = new StatePM()
+            {
+                Code = HybridData.StateCode,
+                EnglishName = "Hybrid State",
+                LocalName = "Hybrid State",
+                CountryId = HybridData.CountryCode,
+                AddedManually = true,
+                Tenant = TestEnvironmentGlobalParameters.Tenant,
+            };
+            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(statePM);
+            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
         }
     }

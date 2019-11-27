@@ -1,5 +1,6 @@
 ﻿using System;
 using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.HybridTest.WcfCallers;
 using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -12,9 +13,18 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_PackageType_UPSERT()
         {
-            LoginService.GetLoginTokenByCredentials();
-            Response serviceResponse = PackageTypeWcfCaller.CallPackageTypeUpsert();
-            Assert.IsFalse(serviceResponse.HasError, serviceResponse.ErrorMessage);
+            PackageTypePM packageTypePM = new PackageTypePM()
+            {
+                Code = HybridData.PackageTypeCode,
+                EnglishName = "Hybrid PackageType",
+                LocalName = "Hybrid PackageType",
+                AddedManually = true,
+                PrintAs = "Hybrid PackageType",
+                IsAir = true,
+                Tenant = TestEnvironmentGlobalParameters.Tenant,
+            };
+            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(packageTypePM);
+            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
         }
 

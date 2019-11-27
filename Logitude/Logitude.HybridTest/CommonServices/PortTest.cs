@@ -1,5 +1,6 @@
 ﻿using System;
 using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.HybridTest.WcfCallers;
 using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -10,15 +11,44 @@ namespace Logitude.HybridTest.CommonServices
     public class PortTest
     {
         [TestMethod]
-        public void Test_PORT_UPSERT()
+        public void Test_FromPort_UPSERT()
         {
-            LoginService.GetLoginTokenByCredentials();
-            Response serviceFromResponse = PortWcfCaller.CallFromPortUpsert();
-            Assert.IsFalse(serviceFromResponse.HasError, serviceFromResponse.ErrorMessage);
-            Assert.IsNotNull(serviceFromResponse.Result, "Upsert From Port Failed! " + serviceFromResponse.ErrorMessage);
-            Response serviceToResponse = PortWcfCaller.CallToPortUpsert();
-            Assert.IsFalse(serviceToResponse.HasError, serviceToResponse.ErrorMessage);
-            Assert.IsNotNull(serviceToResponse.Result, "Upsert To Port Failed! " + serviceToResponse.ErrorMessage);
+            PortPM portPM = new PortPM()
+            {
+                Code = HybridData.FromPortCode,
+                EnglishName = "Hybrid From Port",
+                LocalName = "Hybrid From Port",
+                CountryCode = HybridData.CountryCode,
+                CountryId = HybridData.CountryCode,
+                AddedManually = true,
+                IsAir = true,
+                IsOcean = true,
+                IsInland = true,
+                Tenant = TestEnvironmentGlobalParameters.Tenant,
+            };
+            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(portPM);
+            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
+        }
+        [TestMethod]
+        public void Test_ToPort_UPSERT()
+        {
+            PortPM portPM = new PortPM()
+            {
+                Code = HybridData.ToPortCode,
+                EnglishName = "Hybrid To Port",
+                LocalName = "Hybrid To Port",
+                CountryCode = HybridData.CountryCode,
+                CountryId = HybridData.CountryCode,
+                AddedManually = true,
+                IsAir = true,
+                IsOcean = true,
+                IsInland = true,
+                Tenant = TestEnvironmentGlobalParameters.Tenant,
+            };
+            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(portPM);
+            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
         }
 
         [TestMethod]

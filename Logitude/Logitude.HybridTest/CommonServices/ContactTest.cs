@@ -20,8 +20,16 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_Contact_UPSERT()
         {
-            LoginService.GetLoginTokenByCredentials();
-            Response serviceResponse = ContactWcfCaller.CallContactUpsert();
+            ContactPM contactPM = new ContactPM()
+            {
+                EnglishName = HybridData.ContactCode,
+                LocalName = "Hybrid Contact",
+                Email = "HybridContact@logitudeworld.com",
+                Password = "!H0",
+                ExternalId = HybridData.ContactCode,
+                Tenant = TestEnvironmentGlobalParameters.Tenant,
+            };
+            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(contactPM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
         }

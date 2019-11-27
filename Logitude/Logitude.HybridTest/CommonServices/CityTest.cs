@@ -1,5 +1,6 @@
 ﻿using System;
 using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.HybridTest.WcfCallers;
 using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -12,9 +13,17 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_City_UPSERT()
         {
-            LoginService.GetLoginTokenByCredentials();
-            Response serviceResponse = CityWcfCaller.CallCityUpsert();
-            Assert.IsFalse(serviceResponse.HasError, serviceResponse.ErrorMessage);
+            CountryCityPM cityPM = new CountryCityPM()
+            {
+                Code = HybridData.CityCode,
+                EnglishName = "Hybrid City",
+                LocalName = "Hybrid City",
+                CountryId = HybridData.CountryCode,
+                AddedManually = true,
+                Tenant = TestEnvironmentGlobalParameters.Tenant,
+            };
+            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(cityPM);
+            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
         }
 

@@ -326,8 +326,10 @@
     <Compile Include="WcfCallers\AgentWcfCaller.cs" />
     <Compile Include="WcfCallers\DocumentsMetaDataTypeWcfCaller.cs" />
     <Compile Include="WcfCallers\DepositionRequestWcfCaller.cs" />
+    <Compile Include="EntityWcfCaller.cs" />
     <Compile Include="WcfCallers\EventTypeWcfCaller.cs" />
     <Compile Include="WcfCallers\DepartmentWcfCaller.cs" />
+    <Compile Include="CommonServices\HybridTestInitializer.cs" />
     <Compile Include="WcfCallers\ShipmentWcfCaller.cs" />
     <Compile Include="WcfCallers\ShippingAgentWcfCaller.cs" />
     <Compile Include="WcfCallers\AccountingPartnerWcfCaller.cs" />
@@ -357,6 +359,8 @@
     <Compile Include="WcfCallers\CountryWcfCaller.cs" />
     <Compile Include="WcfCallers\CityWcfCaller.cs" />
     <Compile Include="WcfCallers\CurrencyWcfCaller.cs" />
+    <Compile Include="WcfFactory\QuoteWcfFactory.cs" />
+    <Compile Include="WcfFactory\ShipmentWcfFactory.cs" />
     <Compile Include="WcfServiceInvoker.cs" />
   </ItemGroup>
   <ItemGroup>

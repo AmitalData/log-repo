@@ -12,9 +12,17 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_Airline_UPSERT()
         {
-            LoginService.GetLoginTokenByCredentials();
-            Response serviceResponse = AirlineWcfCaller.CallAirlineUpsert();
-            Assert.IsFalse(serviceResponse.HasError, serviceResponse.ErrorMessage);
+            AirlinePM airlinePM = new AirlinePM()
+            {
+                Code = HybridData.AirlineCode,
+                EnglishName = "Hybrid Airline",
+                LocalName = "Hybrid Airline",
+                Prefix = TestEnvironmentGlobalParameters.Tenant.ToString(),
+                Tenant = TestEnvironmentGlobalParameters.Tenant,
+                CarrierTypeId = "AL",
+            };
+            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(airlinePM);
+            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
         }
     }

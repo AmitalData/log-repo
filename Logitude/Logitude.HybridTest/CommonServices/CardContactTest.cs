@@ -12,10 +12,14 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_CardContact_UPSERT()
         {
-            //Assert.Inconclusive("Not Implemented !");
-
-            LoginService.GetLoginTokenByCredentials();
-            Response serviceResponse = CardContactWcfCaller.CallCardContactUpsert();
+            CardContactPM cardContactPM = new CardContactPM()
+            {
+                IsAll = true,
+                ContactId = HybridData.ContactCode,
+                CardId = HybridData.AgentCode,
+                Tenant = TestEnvironmentGlobalParameters.Tenant,
+            };
+            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(cardContactPM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
         }
