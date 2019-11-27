@@ -405,13 +405,59 @@ export class CashBookDetailsTabComponent extends BaseComponent implements OnInit
 
     }
 
+    FilterLines() {
+        this.FilterCheques();
+        // var lines = this.ItemSource;
+
+        // // Filtering
+        // if (!AppTool.IsNullOrEmpty(this.searchText)) {
+        //     lines = lines.filter((el) => {
+        //         if (el.ChequeNumber != null)
+        //             if (el.ChequeNumber.toLowerCase().includes(this.searchText.toLowerCase())) return true;
+        //         if (el.AccountNumber != null)
+        //             if (el.AccountNumber.toLowerCase().includes(this.searchText.toLowerCase())) return true;
+        //         return false;
+        //     });
+        // }
+        // this.ItemSource = lines;
+
+        // this.ChequesList = new ObservableCollection([]);
+        // this.ChequesList.InsertCollection(lines, true);
+
+        // this.NoRows = lines.length == 0;
+    }
+
+    RemoveDepositedLines() {
+        // var lines = this.EntityPM.CashBookLines;
+
+        // // Filtering
+        // lines = lines.filter((el) => {
+        //     if (el.ARPChequeStatusCode == "5") return false; // 5- Returned to Customer
+        //     else if (el.IsDeposited == true) return false;
+        //     else return true;
+        // });
+
+        // this.FilteredLines = lines;
+        // this.ItemSource = this.FilteredLines;
+
+        // this.ChequesList = new ObservableCollection([]);
+        // this.ChequesList.InsertCollection(this.FilteredLines, true);
+
+        // this.NoRows = this.FilteredLines.length == 0;
+    }
+
     //#region Filter Methods
     public FilterSelectedValue: string = 'all';
     FilterItemClicked(itemValue: string) {
         if (this.FilterSelectedValue != itemValue) {
             this.FilterSelectedValue = itemValue;
-            this.ReloadData();
+            //this.FilterCheques();
+            this.FilterLines(); // set search then filter
         }
+    }
+    FilterCheques() {
+        this.ReloadData();
+
     }
 
     //#endregion

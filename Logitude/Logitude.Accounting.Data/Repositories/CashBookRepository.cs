@@ -9,6 +9,7 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
+using Simplog.Data.Helpers;
 
 namespace Logitude.Accounting.Data.Repositories
 {
@@ -83,14 +84,12 @@ namespace Logitude.Accounting.Data.Repositories
             DateTime todayDate = GetTodayDate(tenant);
 
             List<CashBookLine> query = (from cbLine in context.CashBookLines
-                                        join arpch in context.ARPaymentCheques on cbLine.ARPChequeId equals arpch.Id
-                                        where
-                                            cbLine.CashBookId == cashbookId
-                                            && arpch.ValueDate <= todayDate
-                                            && arpch.StatusCode != "5"
-                                            && cbLine.IsDeposited == false
-                                            && cbLine.Tenant == tenant
-                                        select cbLine).ToList();
+                         join arpch in context.ARPaymentCheques on cbLine.ARPChequeId equals arpch.Id
+                         where
+                             cbLine.CashBookId == cashbookId
+                             && arpch.ValueDate <= todayDate
+                             && cbLine.Tenant == tenant
+                         select cbLine).ToList();
 
             return query.Count();
         }
@@ -104,8 +103,6 @@ namespace Logitude.Accounting.Data.Repositories
                                         where
                                             cb.Id == cashbookId
                                             && arpch.ValueDate > todayDate
-                                            && arpch.StatusCode != "5"
-                                            && cbLine.IsDeposited == false
                                             && cb.Tenant == tenant
                                         select cbLine).ToList();
             return query.Count();
@@ -113,10 +110,8 @@ namespace Logitude.Accounting.Data.Repositories
         public int GetUndepositedChequesCount(string cashbookId, int tenant)
         {
             List<CashBookLine> query = (from cbLine in context.CashBookLines
-                                        join arpch in context.ARPaymentCheques on cbLine.ARPChequeId equals arpch.Id
                                         where
                                             cbLine.CashBookId == cashbookId
-                                            && arpch.StatusCode != "5"
                                             && cbLine.IsDeposited == false
                                             && cbLine.Tenant == tenant
                                         select cbLine).ToList();
@@ -158,8 +153,6 @@ namespace Logitude.Accounting.Data.Repositories
                     join arpch in context.ARPaymentCheques on cbLine.ARPChequeId equals arpch.Id
                     where
                         cb.Id == cashbookId
-                        && arpch.StatusCode != "5"
-                        && cbLine.IsDeposited == false
                         && cb.Tenant == tenant
                     select arpch).Sum(d => (decimal?)d.ForeignAmount);
         }
@@ -174,8 +167,6 @@ namespace Logitude.Accounting.Data.Repositories
                     where
                         cb.Id == cashbookId
                         && arpch.ValueDate > todayDate
-                        && arpch.StatusCode != "5"
-                        && cbLine.IsDeposited == false
                         && cb.Tenant == tenant
                     select arpch).Sum(d => (decimal?)d.ForeignAmount);
             
@@ -191,8 +182,6 @@ namespace Logitude.Accounting.Data.Repositories
                     where
                         cb.Id == cashbookId
                         && arpch.ValueDate <= todayDate
-                        && arpch.StatusCode != "5"
-                        && cbLine.IsDeposited == false
                         && cb.Tenant == tenant
                     select arpch).Sum(d => (decimal?)d.ForeignAmount);
         }
