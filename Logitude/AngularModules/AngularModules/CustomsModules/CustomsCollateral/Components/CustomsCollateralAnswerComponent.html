@@ -5,7 +5,7 @@
     }
 </style>
 
-<table style="background:#EEF2F3;border:  1px solid #3bb3e2;border-top:none">
+<table style="background:#EEF2F3;border:  1px solid #3bb3e2" [ngStyle]="{'border-top':!IsConcentrated ? 'none' : '1px solid #3bb3e2' }">
   <tr>
       <td style="width:10px"></td>
      <td>
