@@ -93,22 +93,6 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
         }
 
-        public HttpResponseMessage GetCashbookUndepositedChequesCount(string cashbookId)
-        {
-            try
-            {
-                AuthenticationToken authToken = AuthinticateTenant();
-
-                int count = GetUndepositedChequesCountForCashbook(cashbookId, authToken.Tenant);
-
-                return Request.CreateResponse(HttpStatusCode.OK, count);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-
-        }
 
 
         // --------------------------- PRIVATE MEMBERS 
@@ -119,12 +103,6 @@ namespace WebFreight.Web.Controllers.AccountingModel
             CashBookQueryService cashBookQuery = new CashBookQueryService(MyContext);
             CashbookChequesCounter chequeCounter = cashBookQuery.GetCashbookChequesCounter(id, tenant);
             return chequeCounter;
-        }
-        private int GetUndepositedChequesCountForCashbook(string cashbookId, int tenant)
-        {
-            IAccountingContext MyContext = AccountingContext.GetContext(tenant);
-            CashBookQueryService cashBookQuery = new CashBookQueryService(MyContext);
-            return cashBookQuery.GetUndepositedChequesCount(cashbookId, tenant);
         }
 
         private CashBookPM GetCashbookWithoutLines(string id, AuthenticationToken authToken)

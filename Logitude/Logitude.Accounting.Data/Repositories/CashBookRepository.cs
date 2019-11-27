@@ -107,16 +107,7 @@ namespace Logitude.Accounting.Data.Repositories
                                         select cbLine).ToList();
             return query.Count();
         }
-        public int GetUndepositedChequesCount(string cashbookId, int tenant)
-        {
-            List<CashBookLine> query = (from cbLine in context.CashBookLines
-                                        where
-                                            cbLine.CashBookId == cashbookId
-                                            && cbLine.IsDeposited == false
-                                            && cbLine.Tenant == tenant
-                                        select cbLine).ToList();
-            return query.Count();
-        }
+
 
 
         private static DateTime GetTodayDate(int tenant)
