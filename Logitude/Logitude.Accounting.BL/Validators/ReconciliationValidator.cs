@@ -50,17 +50,21 @@ namespace Logitude.Accounting.BL.Validators
             var user = GetLoggedContact(myReconciliationPM.Tenant);
             if (user != null) useLocal = !(GetLoggedContact(myReconciliationPM.Tenant).DontShowLocal);
             string txt_YouShouldSelectTwoTransactions = TranslateMyTextCode(/*"Journal.M.YouShouldSelectTwoTransactions"*/M_YouShouldSelectTwoTransactions, 0, useLocal);
-
-            // minimum rows
             List<string> errorsList = new List<string>();
-            if (myReconciliationPM.ReconciliationLines.Count == 0)
+
+            if (!myReconciliationPM.IsCancelled)
             {
-                AddError(errorsList, txt_YouShouldSelectTwoTransactions);
+                // minimum rows
+                if (myReconciliationPM.ReconciliationLines.Count == 0)
+                {
+                    AddError(errorsList, txt_YouShouldSelectTwoTransactions);
+                }
+                if (myReconciliationPM.ReconciliationLines.Count == 1)
+                {
+                    AddError(errorsList, txt_YouShouldSelectTwoTransactions);
+                }
             }
-            if (myReconciliationPM.ReconciliationLines.Count == 1)
-            {
-                AddError(errorsList, txt_YouShouldSelectTwoTransactions);
-            }
+            
 
             // no MultiCurrency Reconcile
             var listCurrency = myReconciliationPM.ReconciliationLines.Select(rec => rec.CurrencyId).Distinct().ToList();
