@@ -47,11 +47,15 @@ export class InterestBasesTypeDetailsTabComponent extends BaseComponent implemen
             this.UIProperties.SetEnabled("Description", "InterestBasesType", true);
         }
     }
-    //Grid Header
-    InterestBaseStartDateHeader = TextCodeTranslator.Translate("InterestBasesPeriod.CH.InterestBaseStartDateListLable");
-    UpdatedByUserIdHeader = TextCodeTranslator.Translate("InterestBasesPeriod.CH.UpdatedByUserIdListLable");
-    UpdateDateHeader = TextCodeTranslator.Translate("InterestBasesPeriod.CH.UpdateDateListLable");
-    InterestRateHeader = TextCodeTranslator.Translate("InterestBasesPeriod.CH.InterestRateListLable");
+    //Grid Header Label
+    public InterestBaseStartDateHeader = TextCodeTranslator.Translate("InterestBasesPeriod.CH.InterestBaseStartDateListLable");
+    public UpdatedByUserIdHeader = TextCodeTranslator.Translate("InterestBasesPeriod.CH.UpdatedByUserIdListLable");
+    public UpdateDateHeader = TextCodeTranslator.Translate("InterestBasesPeriod.CH.UpdateDateListLable");
+    public InterestRateHeader = TextCodeTranslator.Translate("InterestBasesPeriod.CH.InterestRateListLable");
+
+    //Add Edit Interest Bases Period Title
+    public EditInterestBasesPeriod = TextCodeTranslator.Translate("Accounting.General.O.Edit");
+    public AddInterestBasesPeriod = TextCodeTranslator.Translate("Accounting.General.B.Add");
 
     AddPeriodClicked() {
         var itemPM = new InterestBasesPeriodPM(null);
@@ -59,12 +63,12 @@ export class InterestBasesTypeDetailsTabComponent extends BaseComponent implemen
         itemPM.InterestBaseTypeId = this.EntityPM.Id;
         itemPM.LineNumber = this.EntityPM.InterestBasesPeriods.length + 1;
         var itemComponent = new InterestBasesPeriodItem(itemPM, true, this);
-        this.LogWindowShow("Add Interest Bases Period", itemComponent);
+        this.LogWindowShow(this.AddInterestBasesPeriod, itemComponent);
     }
 
     EditPeriodClicked(itemComponent: InterestBasesPeriodItem) {
         itemComponent.IsNewEntity = false;
-        this.LogWindowShow("Edit Interest Bases Period", itemComponent);
+        this.LogWindowShow(this.EditInterestBasesPeriod, itemComponent);
     }
 
     LogWindowShow(title: string, itemComponent) {
