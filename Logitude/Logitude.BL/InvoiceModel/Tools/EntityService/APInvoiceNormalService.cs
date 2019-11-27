@@ -300,7 +300,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             foreach (APInvoiceLinePM aPInvoiceLine in invoiceLines)
             {
-                //List<ShipmentPayable> myLines = payables.Where(a => a.ChargesTypeId == aPInvoiceLine.ChargesTypeId && (a.Measurement != null && a.Measurement.Code == aPInvoiceLine.ContainerTypeCode && a.Quantity == aPInvoiceLine.Quantity)).ToList();
                 List<ShipmentPayable> myLines = payables.Where(a => a.ChargesTypeId == aPInvoiceLine.ChargesTypeId).ToList();
 
                 if (myLines == null || (myLines != null && myLines.Count() == 0))
@@ -330,13 +329,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     ShipmentPayable shipmentPayableLine = this.GetMatchedShipmentPayableLine_ForAPI(matchedContainerLines, shipmentPayables_SameVendor, aPInvoiceLine);
 
-                    if ((aPInvoiceLine.ForiegnCurrencyId != null && aPInvoiceLine.ForiegnCurrencyId == shipmentPayableLine.CurrencyId) || aPInvoiceLine.ForiegnCurrencyId == null)
+                    if ((entityPM.InvoiceCurrencyId == aPInvoiceLine.ForiegnCurrencyId && aPInvoiceLine.ForiegnCurrencyId != shipmentPayableLine.CurrencyId) ||
+                        (entityPM.InvoiceCurrencyId != aPInvoiceLine.ForiegnCurrencyId && aPInvoiceLine.ForiegnCurrencyId == shipmentPayableLine.CurrencyId))
                     {
-                        if (entityPM.InvoiceCurrencyId != shipmentPayableLine.CurrencyId)
+                        if (aPInvoiceLine.ForiegnCurrencyId != shipmentPayableLine.CurrencyId || entityPM.InvoiceCurrencyId != shipmentPayableLine.CurrencyId)
                         {
                             this.GetRates(tenant);
                             double lineAmount = aPInvoiceLine.InvoiceCurrencyAmount != null ? aPInvoiceLine.InvoiceCurrencyAmount.Value : 0;
-                            aPInvoiceLine.InvoiceCurrencyAmount = Math.Round(CalculateLocalAmount(lineAmount, aPInvoiceLine.ForiegnCurrencyId,shipmentPayableLine.CurrencyId,tenant), 2);
+                            aPInvoiceLine.InvoiceCurrencyAmount = Math.Round(CalculateLocalAmount(lineAmount, aPInvoiceLine.ForiegnCurrencyId, shipmentPayableLine.CurrencyId, tenant), 2);
+                            aPInvoiceLine.ForiegnCurrencyId = shipmentPayableLine.CurrencyId;
                         }
                         aPInvoiceLine.EntityPayableId = shipmentPayableLine.Id;
                         this.ComputeOpenAmount(aPInvoiceLine, shipmentPayableLine);
@@ -387,7 +388,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             else
             {
                 var expect = shipmentPayableLine.ExpectedAmount == null ? 0 : shipmentPayableLine.ExpectedAmount;
-                var amount = invoiceLine.InvoiceCurrencyAmount == null ? 0 : invoiceLine.InvoiceCurrencyAmount;
+                var amount = invoiceLine.ForiegnCurrencyAmount == null ? 0 : invoiceLine.ForiegnCurrencyAmount;
                 var others = invoiceLine.OtherInvoicesAmounts == null ? 0 : invoiceLine.OtherInvoicesAmounts;
                 var corre = invoiceLine.CorrectionAmount == null ? 0 : invoiceLine.CorrectionAmount;
                 double? open = expect - others - amount - corre;
