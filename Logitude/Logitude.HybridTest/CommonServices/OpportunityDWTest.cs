@@ -1,5 +1,5 @@
 ﻿using System;
-using Logitude.HybridTest.OpportunityDWServiceReference;
+using Logitude.CRM.BL.EntityDws;
 using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -12,7 +12,6 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_OpportunityDW_GetOpportunitiesByDates()
         {
-            LoginService.GetLoginTokenByCredentials();
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "OpportunityDW",
@@ -21,7 +20,6 @@ namespace Logitude.HybridTest.CommonServices
                 ServiceType = typeof(OpportunityDW),
                 ServiceFilterType = null,
             };
-
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { TestEnvironmentGlobalParameters.Tenant, DateTime.Today.AddYears(-1), DateTime.Now, 0, 10, serviceResponse };
             OpportunityDW[] opportunities = (OpportunityDW[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
@@ -34,7 +32,6 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_OpportunityDW_GetOpportunitiesCountByDates()
         {
-            LoginService.GetLoginTokenByCredentials();
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "OpportunityDW",
@@ -43,7 +40,6 @@ namespace Logitude.HybridTest.CommonServices
                 ServiceType = typeof(OpportunityDW),
                 ServiceFilterType = null,
             };
-
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { TestEnvironmentGlobalParameters.Tenant, DateTime.Today.AddYears(-1), DateTime.Now, serviceResponse };
             int opportunitiescount = (int)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
@@ -56,7 +52,6 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_OpportunityDW_GetOpportunitiesByUpdateDate()
         {
-            LoginService.GetLoginTokenByCredentials();
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "OpportunityDW",
@@ -65,7 +60,6 @@ namespace Logitude.HybridTest.CommonServices
                 ServiceType = typeof(OpportunityDW),
                 ServiceFilterType = null,
             };
-
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { TestEnvironmentGlobalParameters.Tenant, DateTime.Today.AddYears(-1), 0, 10, serviceResponse };
             OpportunityDW[] opportunities = (OpportunityDW[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
@@ -78,7 +72,6 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_OpportunityDW_GetOpportunitiesCountByUpdateDate()
         {
-            LoginService.GetLoginTokenByCredentials();
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "OpportunityDW",
@@ -87,7 +80,6 @@ namespace Logitude.HybridTest.CommonServices
                 ServiceType = typeof(OpportunityDW),
                 ServiceFilterType = null,
             };
-
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { TestEnvironmentGlobalParameters.Tenant, DateTime.Today.AddYears(-1), serviceResponse };
             int opportunitiescount = (int)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);

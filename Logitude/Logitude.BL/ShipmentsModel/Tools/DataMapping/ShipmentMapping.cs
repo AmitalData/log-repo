@@ -550,7 +550,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 if (entityMasterData.MainCarriageFromAddressId != null)
                 {
                     Address fromAddress = addressRepository.GetSingleAddress(entityMasterData.MainCarriageFromAddressId, entityMasterData.Tenant);
-                    myRoutingField = fromAddress.City;
+                    myRoutingField = fromAddress.City;                    
                 }
 
                 if (entityMasterData.MainCarriageToAddressId != null)
@@ -2228,25 +2228,25 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
             if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I")
             {
-                if (!string.IsNullOrEmpty(entityPM.MainCarriageFromPartnerId))
+                AddressRepository addressRepository = new AddressRepository(entityPoco.Tenant);
+
+                if (entityMasterData.MainCarriageFromAddressId != null)
                 {
-                    Card myCard = CardRepository.GetSingleCard(entityPM.MainCarriageFromPartnerId, tenant, true);
-                    if (myCard != null)
+                    Address fromAddress = addressRepository.GetSingleAddress(entityMasterData.MainCarriageFromAddressId, entityMasterData.Tenant);
+                    if(fromAddress != null)
                     {
-                        MethodHelper.AddToSearchFields(ref mySearchFields, myCard.CityName);
+                        MethodHelper.AddToSearchFields(ref mySearchFields, fromAddress.City);
                     }
                 }
 
-                if (!string.IsNullOrEmpty(entityPM.MainCarriageToPartnerId))
+                if (entityMasterData.MainCarriageToAddressId != null)
                 {
-                    Card myCard = CardRepository.GetSingleCard(entityPM.MainCarriageToPartnerId, tenant, true);
-                    if (myCard != null)
+                    Address toAddress = addressRepository.GetSingleAddress(entityMasterData.MainCarriageToAddressId, entityMasterData.Tenant);
+                    if(toAddress != null)
                     {
-                        MethodHelper.AddToSearchFields(ref mySearchFields, myCard.CityName);
+                        MethodHelper.AddToSearchFields(ref mySearchFields, toAddress.City);
                     }
                 }
-
-
             }
 
             #region Quote

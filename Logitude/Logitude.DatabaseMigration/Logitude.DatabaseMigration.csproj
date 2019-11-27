@@ -1674,6 +1674,14 @@
     <Compile Include="Migrations\201909301350305_VatType_New_Fields.Designer.cs">
       <DependentUpon>201909301350305_VatType_New_Fields.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911210908155_AddAutomaticallyCloseDaysToQuoteSettingTable_Maheera.cs" />
+    <Compile Include="Migrations\201911210908155_AddAutomaticallyCloseDaysToQuoteSettingTable_Maheera.Designer.cs">
+      <DependentUpon>201911210908155_AddAutomaticallyCloseDaysToQuoteSettingTable_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911251002048_Addgussment.cs" />
+    <Compile Include="Migrations\201911251002048_Addgussment.Designer.cs">
+      <DependentUpon>201911251002048_Addgussment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201911251435282_Contrient.cs" />
     <Compile Include="Migrations\201911251435282_Contrient.Designer.cs">
       <DependentUpon>201911251435282_Contrient.cs</DependentUpon>
@@ -2792,9 +2800,6 @@
     <EmbeddedResource Include="Migrations\201910231127147_AddingAccountingPartnerTable_Rabaia.resx">
       <DependentUpon>201910231127147_AddingAccountingPartnerTable_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910211551152_UpdateField_JournalLine_IncreaseLength3.resx">
-      <DependentUpon>201910211551152_UpdateField_JournalLine_IncreaseLength3.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910231231109_CardFieldsMappingMigration.resx">
       <DependentUpon>201910231231109_CardFieldsMappingMigration.cs</DependentUpon>
     </EmbeddedResource>
@@ -2878,6 +2883,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909301350305_VatType_New_Fields.resx">
       <DependentUpon>201909301350305_VatType_New_Fields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911210908155_AddAutomaticallyCloseDaysToQuoteSettingTable_Maheera.resx">
+      <DependentUpon>201911210908155_AddAutomaticallyCloseDaysToQuoteSettingTable_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911251002048_Addgussment.resx">
+      <DependentUpon>201911251002048_Addgussment.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911251435282_Contrient.resx">
       <DependentUpon>201911251435282_Contrient.cs</DependentUpon>

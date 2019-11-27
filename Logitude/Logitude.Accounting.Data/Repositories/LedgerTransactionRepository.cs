@@ -1128,7 +1128,7 @@ on record.JournalId equals j.Id
                     join m in context.JournalAdditionalDatas on j.Id equals m.JournalId
                     where (m.TaxReportId == null || m.TaxReportTransmitStatusCode == "2" || m.TaxReportTransmitStatusCode==null) && a.AccountingDate <= taxdate
                    // && a.DocumentDate >= last180days
-                    && a.AccountId == setting.VATInputsGLAccountId && a.Tenant == tenant
+                    && a.AccountId == setting.VATInputsGLAccountId && a.Tenant == tenant && a.LocalAmountDebit != 0
                     select new TaxReportData()
                     {
                         Id = Guid.NewGuid().ToString(),

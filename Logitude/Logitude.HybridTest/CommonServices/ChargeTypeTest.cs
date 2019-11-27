@@ -11,7 +11,6 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_ChargeType_GetChargesTypes()
         {
-            LoginService.GetLoginTokenByCredentials();
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "ChargeType",
@@ -20,7 +19,6 @@ namespace Logitude.HybridTest.CommonServices
                 ServiceType = typeof(ChargesTypeList),
                 ServiceFilterType = null,
             };
-
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { TestEnvironmentGlobalParameters.Tenant, 0, 10, serviceResponse };
             ChargesTypeList[] chargesTypes = (ChargesTypeList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
