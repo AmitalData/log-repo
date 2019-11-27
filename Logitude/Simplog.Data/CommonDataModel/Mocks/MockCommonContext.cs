@@ -1136,7 +1136,12 @@ namespace Simplog.Data.CommonDataModel.Mocks
         {
             get { throw new NotImplementedException(); }
         }
-        
+
+        public IDbSet<UserLastSettings> UserLastSettings
+        {
+            get { throw new NotImplementedException(); }
+        }
+
         List<TermsofUse> termOfUses;
         MockObjectSet<TermsofUse> termOfUsesObjectSet;
         public IDbSet<TermsofUse> TermsofUses
