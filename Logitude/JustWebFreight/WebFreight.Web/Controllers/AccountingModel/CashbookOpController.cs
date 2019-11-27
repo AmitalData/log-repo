@@ -42,7 +42,6 @@ using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
 using Simplog.Data.Helpers;
 using Logitude.Accounting.BL.DataContract;
-using Logitude.Accounting.BL.CloseTables;
 
 namespace WebFreight.Web.Controllers.AccountingModel 
 {
@@ -63,7 +62,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckContactFeature("Cashbook", "READ", authToken.Tenant);
 
-                CashBookPM cashBookPM = GetCashbookWithoutLines(id, authToken.Tenant);
+                CashBookPM cashBookPM = GetCashbookWithoutLines(id, authToken);
 
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
@@ -111,49 +110,6 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="cashbookId"></param>
-        /// <param name="chequeFilterType">
-        /// should be one of these values: All, PostdatedCheque, CashCheque
-        /// </param>
-        /// <returns></returns>
-        public HttpResponseMessage GetCashbookTotalAmount(string cashbookId, string chequeFilterType)
-        {
-            try
-            {
-                AuthenticationToken authToken = AuthinticateTenant();
-
-                decimal totalAmount = 0;
-                CashBookPM cashbook = GetCashbookWithoutLines(cashbookId, authToken.Tenant);
-                if (cashbook.CashBookTypeCode == CashBookTypeValues.Cash)
-                {
-                    totalAmount = cashbook.TotalAmount ?? 0;
-                }
-                else
-                {
-                    totalAmount = GetChequesTotalAmount(cashbookId, chequeFilterType, authToken.Tenant);
-                }
-
-                return Request.CreateResponse(HttpStatusCode.OK, totalAmount);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-
-        }
-
-        private static decimal GetChequesTotalAmount(string cashbookId, string chequeFilterType, int tenant)
-        {
-            decimal totalAmount;
-            IAccountingContext MyContext = AccountingContext.GetContext(tenant);
-            CashBookQueryService cashBookQuery = new CashBookQueryService(MyContext);
-            totalAmount = cashBookQuery.GetCashbookChequesTotal(cashbookId, chequeFilterType, tenant);
-            return totalAmount;
-        }
-
 
         // --------------------------- PRIVATE MEMBERS 
 
@@ -171,9 +127,9 @@ namespace WebFreight.Web.Controllers.AccountingModel
             return cashBookQuery.GetUndepositedChequesCount(cashbookId, tenant);
         }
 
-        private CashBookPM GetCashbookWithoutLines(string id, int tenant)
+        private CashBookPM GetCashbookWithoutLines(string id, AuthenticationToken authToken)
         {
-            IAccountingContext MyContext = AccountingContext.GetContext(tenant);
+            IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
             CashBookQueryService query = new CashBookQueryService(MyContext);
             query.InitializeSettings();
             CashBookPM cashBookPM = query.GetSingle(id, false, false);
