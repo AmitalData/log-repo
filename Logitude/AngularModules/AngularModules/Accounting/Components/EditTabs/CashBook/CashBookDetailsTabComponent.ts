@@ -1,3 +1,4 @@
+import { CashBookExtendedPMService } from './../../../Services/ExtendedPMs/CashBookExtendedPMService';
 import { Output,OnInit } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import {Component}  from '@angular/core';
@@ -5,8 +6,6 @@ import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeCompo
 import {CashBookPM} from '../../../EntityPMs/CashBookPM';
 import {GLAccountList} from '../../../EntityLists/GLAccountList';
 import {CashBookLinePM} from '../../../EntityPMs/CashBookLinePM';
-import {LedgerTransactionList} from '../../../EntityLists/LedgerTransactionList';
-import {LedgerTransactionListService} from '../../../Services/StandardLists/LedgerTransactionListService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {ApiQueryFilters, FilterItem} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -17,6 +16,7 @@ import {GLAccountListService} from '../../../Services/StandardLists/GLAccountLis
 import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { CashbookChequesCounter } from '../../../DataContracts/CashbookChequesCounter';
 
 @Component({
     moduleId: module.id,
@@ -36,6 +36,8 @@ export class CashBookDetailsTabComponent extends BaseComponent implements OnInit
     public isRTL: boolean = false;
     private _entityListService: EntityListService = new EntityListService();
     _GLAccountListService: GLAccountListService = new GLAccountListService();
+    _CashBookExtendedPMService: CashBookExtendedPMService = new CashBookExtendedPMService();
+
     @Output() onQueryChangeEvent = new EventEmitter();
     @Output() MenuHeaderchangeevent = new EventEmitter();
 
@@ -47,13 +49,7 @@ export class CashBookDetailsTabComponent extends BaseComponent implements OnInit
         this.Listen();
         this.EntityPM = entityArgs.EntityPM;
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
-        //this.ItemSource = this.EntityPM.CashBookLines;
-        this.LoadScreen();
 
-
-        //if (this.TotalSum > 0) {
-        //    this.UIProperties.SetEnabled("AccountId", this.ObjectTableName, false);
-        //}
 
         this.SetUIProperties();
     }
@@ -69,6 +65,8 @@ export class CashBookDetailsTabComponent extends BaseComponent implements OnInit
 
      ReloadData() {
          this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
+
+         this.LoadScreen();
      }
 
      BuildColumns() {
@@ -218,32 +216,38 @@ export class CashBookDetailsTabComponent extends BaseComponent implements OnInit
 
 
     LoadScreen() {
-        // this.RemoveDepositedLines();
-        this.CalculateTotals();
-        this.ComputeFilterTotals();
+        this.GetChequesCounter();
+        this.CalculateTotalAmount();
+        this.ToggleGLAccountEditablity();
+    }
 
-        // toggle GLAccount editability
+
+    private ToggleGLAccountEditablity()
+    {
         if (this.EntityPM.AccountId)
-            this._GLAccountListService.getSingle(this.EntityPM.AccountId).subscribe((myResponse: ServiceResponse) => {
+            this._GLAccountListService.getSingle(this.EntityPM.AccountId).subscribe((myResponse: ServiceResponse) =>
+            {
                 if (myResponse != null) {
                     if (!myResponse.HasError) {
                         var glaccount: GLAccountList = myResponse.Result;
-                        var glaBalance = glaccount.BalanceInLocalCurrency
-
+                        var glaBalance = glaccount.BalanceInLocalCurrency;
                         if (this.TotalSum == 0 && (!glaBalance || glaBalance == 0)) {
                             this.UIProperties.SetEnabled("AccountId", this.ObjectTableName, true);
-                        } else {
+                        }
+                        else {
                             this.UIProperties.SetEnabled("AccountId", this.ObjectTableName, false);
                         }
                         this.SetUIProperties();
-
                     }
                 }
             });
     }
 
-
     SetUIProperties() {
+        //if (this.TotalSum > 0) {
+        //    this.UIProperties.SetEnabled("AccountId", this.ObjectTableName, false);
+        //}
+
         this.UIProperties.SetEnabled("BranchId", this.ObjectTableName, false); // always dim, WI 41740
 
         if (this.EntityPM.Inactive) {
@@ -266,7 +270,7 @@ export class CashBookDetailsTabComponent extends BaseComponent implements OnInit
                 this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                        this.LoadScreen();
+                        this.ReloadData();
                         this.SetUIProperties();
                     }
                 });
@@ -277,7 +281,7 @@ export class CashBookDetailsTabComponent extends BaseComponent implements OnInit
                     if (isLoadSuccess) {
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         console.log("Entity Reloaded");
-                        this.LoadScreen();
+                        this.ReloadData();
                         this.SetUIProperties();
                     }
                 });
@@ -375,62 +379,30 @@ export class CashBookDetailsTabComponent extends BaseComponent implements OnInit
         }
     }
 
-    CalculateTotals() {
-        // if (!AppTool.IsNullOrEmpty(this.ItemSource)) {
+    CalculateTotalAmount() {
 
-        //     this.TotalSum = 0;
-
-        //     if (this.CashBookTypeCode == "1") { //1-cash
-        //         this.TotalSum = this.EntityPM.TotalAmount;
-        //     } else {
-        //         for (let line of this.ItemSource) {
-        //             this.TotalSum += line.ForeignAmount;
-        //         }
-        //     }
+        var chequeFilterType = "All";
+        if (this.FilterSelectedValue == 'cash')
+            chequeFilterType = "CashCheque"
+        else if (this.FilterSelectedValue == 'postdated')
+            chequeFilterType = "PostdatedCheque"
 
 
-        // }
-    }
 
-    FilterLines() {
-        this.FilterCheques();
-        // var lines = this.ItemSource;
 
-        // // Filtering
-        // if (!AppTool.IsNullOrEmpty(this.searchText)) {
-        //     lines = lines.filter((el) => {
-        //         if (el.ChequeNumber != null)
-        //             if (el.ChequeNumber.toLowerCase().includes(this.searchText.toLowerCase())) return true;
-        //         if (el.AccountNumber != null)
-        //             if (el.AccountNumber.toLowerCase().includes(this.searchText.toLowerCase())) return true;
-        //         return false;
-        //     });
-        // }
-        // this.ItemSource = lines;
+        this._CashBookExtendedPMService.GetCashbookTotalAmount(this.EntityPM.Id, chequeFilterType)
+        .subscribe((response: ServiceResponse) =>
+        {
+            console.log("[GetCashbookTotalAmount]", response);
 
-        // this.ChequesList = new ObservableCollection([]);
-        // this.ChequesList.InsertCollection(lines, true);
+            if (!response.HasError) {
+                this.TotalSum = response.Result;
+            }
+            else {
+                console.error(response.ErrorsArray);
+            }
+        });
 
-        // this.NoRows = lines.length == 0;
-    }
-
-    RemoveDepositedLines() {
-        // var lines = this.EntityPM.CashBookLines;
-
-        // // Filtering
-        // lines = lines.filter((el) => {
-        //     if (el.ARPChequeStatusCode == "5") return false; // 5- Returned to Customer
-        //     else if (el.IsDeposited == true) return false;
-        //     else return true;
-        // });
-
-        // this.FilteredLines = lines;
-        // this.ItemSource = this.FilteredLines;
-
-        // this.ChequesList = new ObservableCollection([]);
-        // this.ChequesList.InsertCollection(this.FilteredLines, true);
-
-        // this.NoRows = this.FilteredLines.length == 0;
     }
 
     //#region Filter Methods
@@ -438,88 +410,29 @@ export class CashBookDetailsTabComponent extends BaseComponent implements OnInit
     FilterItemClicked(itemValue: string) {
         if (this.FilterSelectedValue != itemValue) {
             this.FilterSelectedValue = itemValue;
-            //this.FilterCheques();
-            this.FilterLines(); // set search then filter
+            this.ReloadData();
         }
-    }
-    FilterCheques() {
-        this.ReloadData();
-        // var originalCheques = this.FilteredLines;
-        // var filteredQuery = originalCheques;
-        // var today = new Date();
-        // this.NoRows = false;
-        // if (this.FilterSelectedValue == 'cash') {
-        //     filteredQuery = originalCheques.filter((el) => {
-
-        //         if (el.DueDate != null) {
-        //             var date = new Date(el.DueDate.toString());
-        //             if (date <= today) {
-        //                 return true;
-        //             }
-        //             return false;
-
-        //         }
-        //         return false;
-        //     }); // cash cheques
-
-        // } else if (this.FilterSelectedValue == 'postdated') {
-        //     filteredQuery = originalCheques.filter((el) => {
-
-        //         if (el.DueDate != null) {
-        //             var date = new Date(el.DueDate.toString());
-        //             if (date > today) {
-        //                 return true;
-        //             }
-        //             return false;
-
-        //         }
-        //         return false;
-        //     }); // postdated cheques
-        // }
-
-        // this.ItemSource = filteredQuery;
-
-        // this.ChequesList = new ObservableCollection([]);
-        // this.ChequesList.InsertCollection(filteredQuery, true);
-
-        this.CalculateTotals();
-        this.ComputeFilterTotals();
-
     }
 
     //#endregion
-    CashCount: number = 0;
-    PostdatesCount: number = 0;
-    ComputeFilterTotals() {
 
-        // this.CashCount = 0;
-        // this.PostdatesCount = 0;
 
-        // var todayDate = new Date();
-        // this.CashCount = this.FilteredLines.filter((el) => {
+    public ChequesCounter: CashbookChequesCounter = new CashbookChequesCounter();
+    GetChequesCounter(){
+        this.ChequesCounter = new CashbookChequesCounter();
+        this._CashBookExtendedPMService.GetCashbookChequesCounter(this.EntityPM.Id)
+            .subscribe((response: ServiceResponse) =>
+            {
+                console.log("[GetCashbookChequesCounter]", response);
 
-        //     if (el.DueDate != null) {
-        //         var date = new Date(el.DueDate.toString());
-        //         if (date <= todayDate) {
-        //             return true;
-        //         }
-        //         return false;
+                if (!response.HasError) {
+                    this.ChequesCounter = response.Result;
+                }
+                else {
+                    console.error(response.ErrorsArray);
+                }
+            });
 
-        //     }
-        //     return false;
-        // }).length;
-        // this.PostdatesCount = this.FilteredLines.filter((el) => {
-
-        //     if (el.DueDate != null) {
-        //         var date = new Date(el.DueDate.toString());
-        //         if (date > todayDate) {
-        //             return true;
-        //         }
-        //         return false;
-
-        //     }
-        //     return false;
-        // }).length;
     }
 
 }
