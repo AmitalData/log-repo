@@ -6149,7 +6149,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             BusinessUnitRepository unitRep = new BusinessUnitRepository(tenant);
             UserRepository userRep = new UserRepository(tenant);
-            CustomerBusinessUnitFilter myBusinessUnitFilter = new CustomerBusinessUnitFilter(tenant,true);
+            CustomerBusinessUnitFilter myBusinessUnitFilter = new CustomerBusinessUnitFilter(tenant);
             allServices = myBusinessUnitFilter.RunFilter(allServices);
 
             if (!string.IsNullOrEmpty(businessUnitId))
@@ -6335,7 +6335,7 @@ namespace WebFreight.Web.ReportsWebServices
             #endregion
 
             #region Base Data Filtered
-            CustomerBusinessUnitFilter myBusinessUnitFilter = new CustomerBusinessUnitFilter(tenant, true);
+            CustomerBusinessUnitFilter myBusinessUnitFilter = new CustomerBusinessUnitFilter(tenant);
 
             ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
 
