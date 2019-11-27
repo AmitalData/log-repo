@@ -234,6 +234,11 @@ namespace Logitude.Update
             Thread thread = new Thread(() =>
             {
                 UpdateModule(0, "customs", UpdateCustomslbl);
+                var repo = new CustomsSettingRepository(_SeedTenant);
+                if (repo.AnyCourierTenant())
+                {
+                    MessageBox.Show("נמצא סביבת בלדרות פעילה - וודא שאין מסרים לחתימה - שאל את איתן ענת !!!");
+                }
                 Func<string> GetConnetionStringFunc = () =>
                 {
                     string input = Microsoft.VisualBasic.Interaction.InputBox(
@@ -1857,6 +1862,8 @@ User/Pass",
         }
 
         bool buildCustomsZipFiles = false;
+        private int _SeedTenant=0;
+
         private void UpdateZipFiles()
         {
             //timer 
