@@ -254,46 +254,32 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             if (!_IsChanged) _IsChanged = true;
                         }
 
-                        if (_MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions != null
-                            && _MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions.Count > 0
-                            && _MyDeclarationPM.Consignments[0].ConsignmentInternalTransitions[0].SiteCode != null
-                            && customResponse.CargoItem != null)
+                        //If there are NO packages OR If there is one DUMMY package (without wight, quantity and pack type)
+                        if (_MyDeclarationPM.Consignments[0].ConsignmentPackages == null || _MyDeclarationPM.Consignments[0].ConsignmentPackages.Count() == 0 ||
+                            (_MyDeclarationPM.Consignments[0].ConsignmentPackages.Count() == 1 &&
+                            //(_MyDeclarationPM.Consignments[0].ConsignmentPackages.First().PackageTypeCode == null || _MyDeclarationPM.Consignments[0].ConsignmentPackages.First().PackageTypeCode == "") &&
+                            (_MyDeclarationPM.Consignments[0].ConsignmentPackages.First().PackageQuantity == null || _MyDeclarationPM.Consignments[0].ConsignmentPackages.First().PackageQuantity == 0) &&
+                            (_MyDeclarationPM.Consignments[0].ConsignmentPackages.First().GrossMassMeasure == null || _MyDeclarationPM.Consignments[0].ConsignmentPackages.First().GrossMassMeasure == 0)))
                         {
-                            LogMessagingUtil.Instance.AppendLine("Analyze Manifest response GetDeclarationConsignmentsPackagesPMForInternalTransitions (MN_NG_8241_CargoResponseService)");
-                            _MyDeclarationPM.Consignments[0].ConsignmentPackages = GetDeclarationConsignmentsPackagesPMForInternalTransitions(customResponse, _MyDeclarationPM.Consignments[0]);
+                            //If there is one DUMMY package (without wight, quantity and pack type) - Set first package as Update
+                            if (_MyDeclarationPM.Consignments[0].ConsignmentPackages.Count() == 1 &&
+                            //(_MyDeclarationPM.Consignments[0].ConsignmentPackages.First().PackageTypeCode == null || _MyDeclarationPM.Consignments[0].ConsignmentPackages.First().PackageTypeCode == "") &&
+                            (_MyDeclarationPM.Consignments[0].ConsignmentPackages.First().PackageQuantity == null || _MyDeclarationPM.Consignments[0].ConsignmentPackages.First().PackageQuantity == 0) &&
+                            (_MyDeclarationPM.Consignments[0].ConsignmentPackages.First().GrossMassMeasure == null || _MyDeclarationPM.Consignments[0].ConsignmentPackages.First().GrossMassMeasure == 0))
+                            {
+                                _MyDeclarationPM.Consignments[0].ConsignmentPackages[0].ChangeSetOp = ChangeSetOperation.Delete;
+                            }
+                            //_MyDeclarationPM.Consignments[0].ConsignmentPackages = GetDeclarationConsignmentsPackagesPM(customResponse, _MyDeclarationPM.Consignments[0]);
+                            foreach (var consignmentPackageDelete in _MyDeclarationPM.Consignments[0].ConsignmentPackages)
+                            {
+                                consignmentPackageDelete.ChangeSetOp = ChangeSetOperation.Delete;
+                            }
+                            foreach (var consignmentPackageInsert in GetDeclarationConsignmentsPackagesPM(customResponse, _MyDeclarationPM.Consignments[0]))
+                            {
+                                _MyDeclarationPM.Consignments[0].ConsignmentPackages.Add(consignmentPackageInsert);
+                            }
                             _MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
                             if (!_IsChanged) _IsChanged = true;
-                        }
-                        else
-                        {
-                            //If there are NO packages OR If there is one DUMMY package (without wight, quantity and pack type)
-                            if (_MyDeclarationPM.Consignments[0].ConsignmentPackages == null || _MyDeclarationPM.Consignments[0].ConsignmentPackages.Count() == 0 ||
-                                (_MyDeclarationPM.Consignments[0].ConsignmentPackages.Count() == 1 &&
-                                //(_MyDeclarationPM.Consignments[0].ConsignmentPackages.First().PackageTypeCode == null || _MyDeclarationPM.Consignments[0].ConsignmentPackages.First().PackageTypeCode == "") &&
-                                (_MyDeclarationPM.Consignments[0].ConsignmentPackages.First().PackageQuantity == null || _MyDeclarationPM.Consignments[0].ConsignmentPackages.First().PackageQuantity == 0) &&
-                                (_MyDeclarationPM.Consignments[0].ConsignmentPackages.First().GrossMassMeasure == null || _MyDeclarationPM.Consignments[0].ConsignmentPackages.First().GrossMassMeasure == 0)))
-                            {
-                                //If there is one DUMMY package (without wight, quantity and pack type) - Set first package as Update
-                                if (_MyDeclarationPM.Consignments[0].ConsignmentPackages.Count() == 1 &&
-                                //(_MyDeclarationPM.Consignments[0].ConsignmentPackages.First().PackageTypeCode == null || _MyDeclarationPM.Consignments[0].ConsignmentPackages.First().PackageTypeCode == "") &&
-                                (_MyDeclarationPM.Consignments[0].ConsignmentPackages.First().PackageQuantity == null || _MyDeclarationPM.Consignments[0].ConsignmentPackages.First().PackageQuantity == 0) &&
-                                (_MyDeclarationPM.Consignments[0].ConsignmentPackages.First().GrossMassMeasure == null || _MyDeclarationPM.Consignments[0].ConsignmentPackages.First().GrossMassMeasure == 0))
-                                {
-                                    _MyDeclarationPM.Consignments[0].ConsignmentPackages[0].ChangeSetOp = ChangeSetOperation.Delete;
-                                }
-                                //_MyDeclarationPM.Consignments[0].ConsignmentPackages = GetDeclarationConsignmentsPackagesPM(customResponse, _MyDeclarationPM.Consignments[0]);
-                                LogMessagingUtil.Instance.AppendLine("Analyze Manifest response GetDeclarationConsignmentsPackagesPM");
-                                foreach (var consignmentPackageDelete in _MyDeclarationPM.Consignments[0].ConsignmentPackages)
-                                {
-                                    consignmentPackageDelete.ChangeSetOp = ChangeSetOperation.Delete;
-                                }
-                                foreach (var consignmentPackageInsert in GetDeclarationConsignmentsPackagesPM(customResponse, _MyDeclarationPM.Consignments[0]))
-                                {
-                                    _MyDeclarationPM.Consignments[0].ConsignmentPackages.Add(consignmentPackageInsert);
-                                }
-                                _MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
-                                if (!_IsChanged) _IsChanged = true;
-                            }
                         }
                     }
                     if (_MyDeclarationPM.Consignments[0].ChangeSetOp == ChangeSetOperation.None)
