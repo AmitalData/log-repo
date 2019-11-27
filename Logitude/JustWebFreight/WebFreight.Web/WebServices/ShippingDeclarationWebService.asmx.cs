@@ -904,6 +904,7 @@ namespace WebFreight.Web.WebServices
                             }
                             myDataProvider.ConsigneeAddress_WithName = DataProviders.General.GetAddressWithName(myConsigneePartnerAddress, true);
                         }
+
                     }
 
                     myDataProvider.ConsigneeAddress = myResult;

@@ -1,4 +1,4 @@
-﻿import {MAWBStackPM} from './EntityPMs/MAWBStackPM';
+import {MAWBStackPM} from './EntityPMs/MAWBStackPM';
 import {CustomerPM} from './EntityPMs/CustomerPM';
 import {Injectable} from '@angular/core';
 
@@ -53,6 +53,7 @@ export class NewGLAccountArgs {
     public CardId: string;
     public RevenueExpenseType: string;
     public EntityName: string;
+    public PartnerType: string;
 }
 
 export class CustomerActivationArgs {
