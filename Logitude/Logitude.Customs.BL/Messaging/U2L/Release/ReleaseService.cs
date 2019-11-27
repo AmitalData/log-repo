@@ -1357,6 +1357,65 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                     if (!string.IsNullOrWhiteSpace(countryCode)) SupplierInvoiceItemPM.OriginCountryCode = countryCode;
                 }
                 SupplierInvoiceItemPM.PreferenceDocumentNumber = invoiceItem.PREFERENCEDOCUMENTNUMBER;
+
+                if (!string.IsNullOrWhiteSpace(invoiceItem.COMMERCE_PRICE) && invoiceItem.COMMERCE_PRICE != "0")
+                {
+                    if (decimal.TryParse(invoiceItem.COMMERCE_PRICE, out decimal1))
+                    {
+                        SupplierInvoiceItemPM.WholeSaleItemPrice = decimal1;
+                    }
+                    else
+                    {
+                        throw new BusinessErrorException("Error in parsing COMMERCE PRICE (" + invoiceItem.COMMERCE_PRICE + ") into decimal");
+                    }
+
+                    if (String.IsNullOrWhiteSpace(invoiceItem.COMMERCE_PRICE_CURRENCY)) invoiceItem.COMMERCE_PRICE_CURRENCY = "ILS";
+                    if (!String.IsNullOrWhiteSpace(invoiceItem.COMMERCE_PRICE_CURRENCY))
+                    {
+                        var wholesaleCurrency = new CurrencyTypeRepository(ResolvedTenant());
+                        var mywholesaleCurrency = wholesaleCurrency.GetSingle(invoiceItem.COMMERCE_PRICE_CURRENCY);
+                        if (mywholesaleCurrency == null)
+                        {
+                            string wholesaleCurrencyCode = "";
+                            wholesaleCurrencyCode = GetTranslationL2P("IIGC", "CTBCURRENCY", invoiceItem.COMMERCE_PRICE_CURRENCY);
+
+                            if (!string.IsNullOrWhiteSpace(wholesaleCurrencyCode)) SupplierInvoiceItemPM.WholeSaleItemPriceCurrencyCode = wholesaleCurrencyCode;
+                        }
+                        else
+                        {
+                            SupplierInvoiceItemPM.WholeSaleItemPriceCurrencyCode = mywholesaleCurrency.Code.ToString();
+                        }
+                    }
+                }
+                if (!string.IsNullOrWhiteSpace(invoiceItem.ADDITIONAL_QUANTITY) && invoiceItem.ADDITIONAL_QUANTITY != "0")
+                {
+                    if (decimal.TryParse(invoiceItem.ADDITIONAL_QUANTITY, out decimal1))
+                    {
+                        SupplierInvoiceItemPM.AdditionalQuantity = decimal1;
+                    }
+                    else
+                    {
+                        throw new BusinessErrorException("Error in parsing ADDITIONAL QUANTITY (" + invoiceItem.ADDITIONAL_QUANTITY + ") into decimal");
+                    }
+                }
+                SupplierInvoiceItemPM.AdditionalQuantityType = TranslateMeasurmentUnit(invoiceItem.ADDITIONAL_QUANTITY_TYPE);
+                if (!string.IsNullOrWhiteSpace(invoiceItem.STATISTICAL_QUANTITY) && invoiceItem.STATISTICAL_QUANTITY != "0")
+                {
+                    if (decimal.TryParse(invoiceItem.STATISTICAL_QUANTITY, out decimal1))
+                    {
+                        SupplierInvoiceItemPM.StatisticQuantity = decimal1;
+                    }
+                    else
+                    {
+                        throw new BusinessErrorException("Error in parsing STATISTICAL QUANTITY (" + invoiceItem.STATISTICAL_QUANTITY + ") into decimal");
+                    }
+                }
+                SupplierInvoiceItemPM.StatisticQuantityType = TranslateMeasurmentUnit(invoiceItem.STATISTICAL_QUANTITY_TYPE);
+                if(SupplierInvoiceItemPM.WholeSaleItemPrice.HasValue || SupplierInvoiceItemPM.AdditionalQuantity.HasValue || SupplierInvoiceItemPM.StatisticQuantity.HasValue)
+                {
+                    SupplierInvoiceItemPM.ItemAdditionalStatus = true;
+                }
+
                 if (invoiceItem.CERTIFICATES != null && invoiceItem.CERTIFICATES.Count() > 0)
                 {
                     SupplierInvoiceItemPM.SupplierInvioceItemCertificats = GetSupplierInvoiceItemCertificatePM(invoiceItem, SupplierInvoiceItemPM);
