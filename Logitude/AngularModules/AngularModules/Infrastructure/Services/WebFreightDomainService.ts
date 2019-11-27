@@ -226,8 +226,7 @@ export class WebFreightDomainService {
                 QueryData.BIReportPM = mappedEntity;
                 QueryData.DWQueryData = temp;
                 var temp2 = this.deepClone(QueryData);
-                /////////////////////////////////////////////////////
-                return this._http.put(this._apiUrl + "/PutExportBIReportToExcelByWR", JSON.stringify(temp2),
+                return this._http.put(this._apiUrl + "/PutExportBIReportToExcelByWR", JSON.stringify(QueryData),
                     { headers: authHeader }).map((res) => {
                         var entity = res.json();
                         var serviceResponse: ServiceResponse;
@@ -277,7 +276,6 @@ export class WebFreightDomainService {
         return entityPM;
     }
 
-
     public deepClone(obj, hash = new WeakMap()) {
         // Do not try to clone primitives or functions
         if (Object(obj) !== obj || obj instanceof Function) {
@@ -313,7 +311,7 @@ export class WebFreightDomainService {
             key => ({
                 [key]:
 
-                    key != "UIProperties" && key != "MyParentClass" ? this.deepClone(obj[key], hash) : true
+                    key != "UIProperties" && key != "MyParentClass" && key != "ShowSampleDateCommand" && key != "Items" && key != "TooltipId" && key != "TooltipContentId" && key != "CurrentSession" ? this.deepClone(obj[key], hash) : true
 
             })));
     }
