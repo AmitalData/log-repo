@@ -10,6 +10,11 @@ namespace Logitude.HybridTest.CommonServices
     [TestClass]
     public class ShipmentTest
     {
+        [AssemblyInitialize]
+        public static void Test(TestContext context)
+        {
+
+        }
         [TestMethod]
         public void Test_DirectShipment_UPSERT()
         {
@@ -106,6 +111,22 @@ namespace Logitude.HybridTest.CommonServices
         {
             LoginService.GetLoginTokenByCredentials();
             Assert.Inconclusive("Not Implemented !");
+            Response prepareResponse = ShipmentWcfCaller.PrepareDirectShipment();
+            Assert.IsFalse(prepareResponse.HasError, "Prepare Direct Shipment Failed! " + prepareResponse.ErrorMessage);
+            InvokedProperties serviceProperties = new InvokedProperties
+            {
+                ServiceName = "Shipment",
+                ServiceOperation = "CreateEvent",
+                ServiceResponseIndex = 0,
+                ServiceType = null,
+                ServiceFilterType = null,
+            };
+
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { TestEnvironmentGlobalParameters.Tenant, null, HybridData.DirectShipmentCode, HybridData.UserId, "CREV", DateTime.Now, DateTime.Now, "Hybrid Test Event" };
+            serviceResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+            Assert.IsFalse(serviceResponse.HasError, "Create Event Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsNull(serviceResponse.Result, "Create Event Failed! " + serviceResponse.Result);
         }
 
         [TestMethod]

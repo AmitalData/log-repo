@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Server.Tools;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,13 +32,15 @@ namespace Logitude.HybridTest.WcfCallers
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { entityPM, false };
             WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            if(serviceResponse.Result != null)
+            if(!serviceResponse.HasError && serviceResponse.Result != null)
                 HybridData.BranchId = serviceResponse.Result;
             return serviceResponse;
         }
         public static Response PrepareBranch()
         {
-            if(HybridData.BranchId == null)
+
+            Assert.Inconclusive("Test from branch");
+            if (HybridData.BranchId == null)
             {
                 return CallBranchUpsert();
             }
