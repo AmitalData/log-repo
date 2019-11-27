@@ -33,9 +33,6 @@ namespace Logitude.HybridTest.CommonServices
         {
             if (HybridData.IncotermId == null)
                 Test_Incoterm_UPSERT();
-            LoginService.GetLoginTokenByCredentials();
-            Response prepareResponse = IncotermWcfCaller.PrepareIncoterm();
-            Assert.IsFalse(prepareResponse.HasError, "Prepare User Failed! " + prepareResponse.ErrorMessage);
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "Incoterm",

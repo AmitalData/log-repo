@@ -80,8 +80,6 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_PORT_GetPortId()
         {
-            if (HybridData.FromPortId == null)
-                Test_FromPort_UPSERT();
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "Port",

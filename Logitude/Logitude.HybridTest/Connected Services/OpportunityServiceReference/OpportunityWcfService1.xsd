@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Logitude.BL.CommonDataModel.EntityLists" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Logitude.BL.CommonDataModel.EntityLists" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="CustomerList">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccountManagerUserEnglishName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ActivatedByUserId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ActivatedByUserName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ActivationDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ActivationRequestDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ActivationRequestedByUserId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ActivationRequestedByUserName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Activity" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ActivityWatch" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Address1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Address2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BeforeDeactiveStatusCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BillToId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BillToName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BlockNewInvoiceCreation" type="xs:boolean" />
+      <xs:element minOccurs="0" name="BlockNewShipmentCreation" type="xs:boolean" />
+      <xs:element minOccurs="0" name="CityName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ClassifierId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ClassifierName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CollectorId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CollectorName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CompetitorFields" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CountryCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CountryId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CountryName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreateDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="CreatedByUserId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreatedByUserName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreditLimitAmount" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="CreditLimitOpenBalance" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="CreditLimitWarningPercentage" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="CustomerSizeId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerSizeName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerStatusCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerStatusName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerStatusTemplateCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomsAgentId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomsAgentName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EnableConsolidationInvoices" type="xs:boolean" />
+      <xs:element minOccurs="0" name="EnglishName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ExternalAccountingBusinessArea" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ExternalId2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Field1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Field10" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Field2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Field3" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Field4" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Field5" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Field6" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Field7" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Field8" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Field9" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FirstInvoiceDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FirstShipmentDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ForwarderId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ForwarderName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FreelancerId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FreelancerName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="InActive" type="xs:boolean" />
+      <xs:element minOccurs="0" name="InactiveDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="IndustryId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IndustryName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="InvitationDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="InvoiceCurrencyCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="InvoiceCurrencyId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="InvoicesDue" type="xs:double" />
+      <xs:element minOccurs="0" name="IsActiveForMobile" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsBlockedBusinessUnit" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsBlockedQuickSearch" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsCreditLimitEnabled" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsCustomer" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsPrivateLabelCustomer" type="xs:boolean" />
+      <xs:element minOccurs="0" name="KCExpirationDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="KnownConsignor" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LastActivityByUserName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LastActivityDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="LastActivityTypeName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LastCallDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="LastInteractionDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="LastLoginDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="LastMeetingDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="LastOpportunityDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="LastOpportunityStatus" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LastOpportunitySubject" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LastQuoteDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="LastShipmentDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="LeadDescription" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LeadSourceId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LeadSourceName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LocalName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LogBoxActivated" type="xs:boolean" />
+      <xs:element minOccurs="0" name="MediatorId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MediatorName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MetodoPagoCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Notes" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PartnerTypeId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PayablesAccountingCard" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PaymentMethodCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PaymentTermEnglishName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PaymentTermId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Phone" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PrimaryContactEmail" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PrimaryContactId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PrimaryContactName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PrimaryContactPhone" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RankCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RankId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RankName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReadyForActivationDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ReceivablesAccountingCard" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RegionId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RegionName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SATForeignRFC" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SalesmanBusinessUnitId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SalesmanUserEnglishName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SalesmanUserId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SearchFields" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SetAsInactiveByName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SetAsInactiveByUserId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SharedLogisticsInvitationStatusCode" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="SharedLogisticsInvitationStatusName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StartWorkingDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="StartWorkingManuallySet" type="xs:boolean" />
+      <xs:element minOccurs="0" name="SupportNotes" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Tenant" type="xs:int" />
+      <xs:element minOccurs="0" name="UpdateDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="UpdatedByUserId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UpdatedByUserName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UsoCFDICode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="VatNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="VatTypeId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Website" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ZipCode" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CustomerList" nillable="true" type="tns:CustomerList" />
+</xs:schema>

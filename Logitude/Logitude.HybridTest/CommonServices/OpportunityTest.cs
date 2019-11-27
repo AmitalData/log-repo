@@ -1,4 +1,5 @@
 ﻿using System;
+using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.HybridTest.OpportunityServiceReference;
 using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

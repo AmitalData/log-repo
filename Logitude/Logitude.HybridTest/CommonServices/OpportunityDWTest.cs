@@ -1,5 +1,5 @@
 ﻿using System;
-using Logitude.HybridTest.OpportunityDWServiceReference;
+using Logitude.CRM.BL.EntityDws;
 using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
