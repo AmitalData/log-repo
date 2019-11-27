@@ -34,9 +34,6 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_User_GetUser()
         {
-            LoginService.GetLoginTokenByCredentials();
-            Response prepareResponse = UserWcfCaller.PrepareUser();
-            Assert.IsFalse(prepareResponse.HasError, "Prepare User Failed! " + prepareResponse.ErrorMessage);
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "User",

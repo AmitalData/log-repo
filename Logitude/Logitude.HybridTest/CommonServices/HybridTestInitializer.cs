@@ -11,19 +11,19 @@ namespace Logitude.HybridTest.WcfCallers
         [AssemblyInitialize]
         public static void PrepareSystemVars(TestContext context)
         {
-            ValidLogin();
-            //UpsertGlobalZone();
-            //UpsertCountry();
-            //UpsertVendor();
-            //UpsertCurrency();
-            //UpsertFromPort();
-            //UpsertToPort();
-            //UpsertDepartment();
-            //UpsertBranch();
-            //UpsertAgent();
-            //UpsertUser();
+            Login();
+            UpsertGlobalZone();
+            UpsertCountry();
+            UpsertVendor();
+            UpsertCurrency();
+            UpsertFromPort();
+            UpsertToPort();
+            UpsertDepartment();
+            UpsertBranch();
+            UpsertAgent();
+            UpsertUser();
         }
-        private static void ValidLogin()
+        private static void Login()
         {
             var apiCred = new APICredentialsParameters() { PrimaryKey = TestEnvironmentGlobalParameters.APICredential_PrimaryKey, SecondaryKey = TestEnvironmentGlobalParameters.APICredential_SecondaryKey, Tenant = TestEnvironmentGlobalParameters.Tenant };
             InvokedProperties serviceProperties = new InvokedProperties

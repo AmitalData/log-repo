@@ -26,15 +26,14 @@ namespace Logitude.HybridTest.CommonServices
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(packageTypePM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            HybridData.PackageTypeId = serviceResponse.Result;
         }
 
         [TestMethod]
         public void Test_PackageType_GetPackageTypeList()
         {
-
-            LoginService.GetLoginTokenByCredentials();
-            Response prepareResponse = PackageTypeWcfCaller.PreparePackageType();
-            Assert.IsFalse(prepareResponse.HasError, "Prepare User Failed! " + prepareResponse.ErrorMessage);
+            if(HybridData.PackageTypeId == null)
+                Test_PackageType_UPSERT();
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "PackageType",

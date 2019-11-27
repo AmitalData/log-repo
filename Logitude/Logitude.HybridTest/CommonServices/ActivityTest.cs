@@ -1,5 +1,5 @@
 ﻿using System;
-using Logitude.HybridTest.ActivityServiceReference;
+using Logitude.CRM.BL.EntityPMs;
 using Logitude.HybridTest.WcfCallers;
 using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -12,26 +12,12 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_Activity_UPSERT()
         {
-            //LoginService.GetLoginTokenByCredentials();
-            LoginServiceReference.LoginWcfServiceClient serviceClient = new LoginServiceReference.LoginWcfServiceClient();
-            string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
-            serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
-            using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
-            {
-                Response loginResponse = serviceClient.Login("angular@fnarsoft.com", "1");
-                TestEnvironmentGlobalParameters.Token = loginResponse.Result;
-            }
-            Response serviceResponse = ActivityWcfCaller.CallActivityUpsert();
-            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
+
         }
 
         [TestMethod]
         public void Test_Activity_GetActivities()
         {
-            LoginService.GetLoginTokenByCredentials();
-            Response prepareResponse = ActivityWcfCaller.PrepareActivity();
-            Assert.IsFalse(prepareResponse.HasError, "Prepare User Failed! " + prepareResponse.ErrorMessage);
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "Activity",
@@ -57,7 +43,6 @@ namespace Logitude.HybridTest.CommonServices
             Test_Activity_UPSERT();
             if (HybridData.ActivityId != null)
             {
-                LoginService.GetLoginTokenByCredentials();
                 InvokedProperties serviceProperties = new InvokedProperties
                 {
                     ServiceName = "Activity",
@@ -84,7 +69,6 @@ namespace Logitude.HybridTest.CommonServices
             Test_Activity_UPSERT();
             if (HybridData.ActivityId != null)
             {
-                LoginService.GetLoginTokenByCredentials();
                 InvokedProperties serviceProperties = new InvokedProperties
                 {
                     ServiceName = "Activity",

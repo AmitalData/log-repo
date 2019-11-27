@@ -26,10 +26,10 @@ namespace Logitude.HybridTest.WcfFactory
             Tenant = TestEnvironmentGlobalParameters.Tenant,
             BusinessUnitId = TestEnvironmentGlobalParameters.Tenant.ToString(),
             TransportModeId = "A", //A:Air, O:Occean, I:Inland
-            DirectionId = "I", //I:Import, E:Export, D:Drop, R:Drop, C:Customs Import
+            DirectionId = "E", //I:Import, E:Export, D:Drop, R:Drop, C:Customs Import
             QuoteTypeCode = "A", //A:Spot Rate, P:Routing Rate
             QuoteCustomerTypeCode = "CON", //CON:Consignee, AGT:Agent, SHI:Shipper, NOT:Notify, OTH:Other
         };
-        public static QuotePM GetquotePM() { return quotePM; }
+        public static QuotePM GetQuotePM() { return quotePM; }
     }
 }

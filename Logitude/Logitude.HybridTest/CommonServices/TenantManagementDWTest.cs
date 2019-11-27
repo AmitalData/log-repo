@@ -11,7 +11,6 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_TenantManagementDW_GetTenantManagements()
         {
-            LoginService.GetLoginTokenByCredentials();
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "TenantManagementDW",

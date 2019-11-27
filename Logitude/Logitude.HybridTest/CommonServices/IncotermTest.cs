@@ -25,11 +25,14 @@ namespace Logitude.HybridTest.CommonServices
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(incotermPM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            HybridData.IncotermId = serviceResponse.Result;
         }
 
         [TestMethod]
         public void Test_Incoterm_GetIncoterms()
         {
+            if (HybridData.IncotermId == null)
+                Test_Incoterm_UPSERT();
             LoginService.GetLoginTokenByCredentials();
             Response prepareResponse = IncotermWcfCaller.PrepareIncoterm();
             Assert.IsFalse(prepareResponse.HasError, "Prepare User Failed! " + prepareResponse.ErrorMessage);
@@ -40,7 +43,6 @@ namespace Logitude.HybridTest.CommonServices
                 ServiceResponseIndex = 0,
                 ServiceType = typeof(IncotermList),
             };
-
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { serviceResponse };
             IncotermList[] incoterms = (IncotermList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
