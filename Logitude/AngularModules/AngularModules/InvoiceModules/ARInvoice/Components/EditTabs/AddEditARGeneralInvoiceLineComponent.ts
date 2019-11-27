@@ -38,11 +38,11 @@ export class AddEditARGeneralInvoiceLineComponent {
         this.ChargeTypesQueryFilters.addAdditionalFilter("IsReceivable", true, null, null, "Equals", false, false, false, "Boolean");
     }
 
-    public AmountForiegnLabel: string = null;
+  //  public AmountForiegnLabel: string = null;
     public AmountLocalLabel: string = null;
     public AmountInvoiceLabel: string = null;
     SetLabels() {
-        this.AmountForiegnLabel = TextCodeTranslator.Translate("ARInvoiceLine.F.ForiegnCurrencyAmount").replace("%ForiegnCurrencyCode", this.DataContext.ForiegnCurrencyCode);
+     //   this.AmountForiegnLabel = TextCodeTranslator.Translate("ARInvoiceLine.F.ForiegnCurrencyAmount").replace("%ForiegnCurrencyCode", this.DataContext.ForiegnCurrencyCode);
         this.AmountLocalLabel = TextCodeTranslator.Translate("ARInvoiceLine.F.LocalCurrencyAmount").replace("%LocalCurrencyCode", SessionLocator.LocalCurrencyCode);
         this.AmountInvoiceLabel = TextCodeTranslator.Translate("ARInvoiceLine.F.InvoiceCurrencyAmount").replace("%InvoiceCurrencyCode", this.DataContext.InvoiceCurrencyCode);
     }
@@ -50,6 +50,15 @@ export class AddEditARGeneralInvoiceLineComponent {
     CancelButtonClicked() {
         this.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
+    }
+
+   
+    get ForiegnCurrencyId() { return this.EntityPM.ForiegnCurrencyId; }
+    set ForiegnCurrencyId(newValue: string) {
+        if (this.EntityPM.ForiegnCurrencyId != newValue) {
+            this.EntityPM.ForiegnCurrencyId = newValue;
+            this.SetLabels();
+        }
     }
 
     OkButtonClicked() {
