@@ -256,15 +256,15 @@
                                 <ul class="FiltersMenu">
                                     <li id="allcheques" (click)="FilterItemClicked('all')" style="width: 105px; height: 22px;"
                                         [class.SelectedFilter]="FilterSelectedValue === 'all'">
-                                        {{ 'CashBook.B.All' | TextCodeTranslationPipe }} ({{+PostdatesCount++CashCount}})
+                                        {{ 'CashBook.B.All' | TextCodeTranslationPipe }} ({{ChequesCounter.AllChequesCount}})
                                     </li>
                                     <li id="cashcheques" (click)="FilterItemClicked('cash')" style="width: 105px; height: 22px;"
                                         [class.SelectedFilter]="FilterSelectedValue === 'cash'">
-                                        {{ 'CashBook.B.CashCheques' | TextCodeTranslationPipe }} ({{CashCount}})
+                                        {{ 'CashBook.B.CashCheques' | TextCodeTranslationPipe }} ({{ChequesCounter.CashChequesCount}})
                                     </li>
                                     <li id="postdatedcheques" (click)="FilterItemClicked('postdated')" style="width: 135px; height: 22px;"
                                         [class.SelectedFilter]="FilterSelectedValue === 'postdated'">
-                                        {{ 'CashBook.B.PostdatedCheques' | TextCodeTranslationPipe }} ({{PostdatesCount}})
+                                        {{ 'CashBook.B.PostdatedCheques' | TextCodeTranslationPipe }} ({{ChequesCounter.PostdatedChequesCount}})
                                     </li>
                                 </ul>
 

@@ -59,25 +59,6 @@ export class CashBookExtendedPMService {
             });
     }
 
-    GetCashbookUndepositedChequesCount(cashbookId: string) {
-
-        return Observable.defer(() => {
-
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
-
-            return this._http.get(this._apiUrl + '/GetCashbookUndepositedChequesCount?cashbookId=' + cashbookId , { headers: authHeader })
-                .map((res) => {
-                    serviceResponse.Result = res.json();
-                    return serviceResponse;
-                })
-                    .catch(ServiceHelper.HandleServiceError);
-            });
-    }
 
 
     public clone(jsonPM: any) {

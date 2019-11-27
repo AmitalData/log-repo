@@ -79,11 +79,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return chequesCounters;
         }
-        public int GetUndepositedChequesCount(string cashbookId, int tenant)
-        {
-            CashBookRepository cashBookQuery = new CashBookRepository(tenant);
-            return cashBookQuery.GetUndepositedChequesCount(cashbookId, tenant);
-        }
 
         public List<CashBookPM> GetAll(int tenant)
         {
