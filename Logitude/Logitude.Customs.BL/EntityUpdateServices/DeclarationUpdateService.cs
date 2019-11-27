@@ -1383,23 +1383,19 @@ using System.Diagnostics;
 
             DeclarationPM newDeclaration = new DeclarationPM();
             newDeclaration = fromDeclaration;
-            newDeclaration.Id = "-99";
-            newDeclaration.ChangeSetOp = ChangeSetOperation.Insert;
+             newDeclaration.ChangeSetOp = ChangeSetOperation.Insert;
 
             foreach (var consignment in newDeclaration.Consignments)
             {
                 consignment.ChangeSetOp = ChangeSetOperation.Insert;
-                consignment.DeclarationId = "-99";
-                foreach (var package in consignment.ConsignmentPackages)
+                 foreach (var package in consignment.ConsignmentPackages)
                 {
                     package.ChangeSetOp = ChangeSetOperation.Insert;
-                    package.DeclarationId = "-99";
-
+ 
                     foreach (var consignmentPackDangers in package.ConsignmentPackDangers)
                 {
                         consignmentPackDangers.ChangeSetOp = ChangeSetOperation.Insert;
-                        consignmentPackDangers.DeclarationId = "-99";
-                }
+                 }
 
     
                 }
@@ -1407,22 +1403,89 @@ using System.Diagnostics;
            
             }
 
-                foreach (var invoice in newDeclaration.SupplierInvoices)
+
+            foreach (var dangerContact in newDeclaration.DecDangersContacts)
+            {
+                dangerContact.ChangeSetOp = ChangeSetOperation.Insert;
+            }
+
+              newDeclaration.SupplierInvoices = null;
+
+
+            DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), tenant);
+
+
+            declarationUpdateService.Update(newDeclaration, true);
+
+
+            declarationPMs = declarationQueryService.GetDeclarationsByIds(ids, tenant);
+
+             newDeclaration = declarationPMs.Where(d => d.Id == fromDeclarationId).FirstOrDefault();
+
+             foreach (var invoice in newDeclaration.SupplierInvoices)
             {
                 invoice.ChangeSetOp = ChangeSetOperation.Insert;
-                invoice.DeclarationId = "-99";
                 foreach (var item in invoice.SupplierInvoiceItems)
                 {
                     item.ChangeSetOp = ChangeSetOperation.Insert;
-                    item.DeclarationId = "-99";
                     foreach (var supplierInvioceItemCertificats in item.SupplierInvioceItemCertificats)
                     {
                         supplierInvioceItemCertificats.ChangeSetOp = ChangeSetOperation.Insert;
-                        supplierInvioceItemCertificats.DeclarationId = "-99";
+                    }
+
+
+                    foreach (var supplierInvoiceItemLevies in item.SupplierInvoiceItemLevies)
+                    {
+                        supplierInvoiceItemLevies.ChangeSetOp = ChangeSetOperation.Insert;
+                    }
+
+                    foreach (var supplierInvoiceItemModVehicles in item.SupplierInvoiceItemModVehicles)
+                    {
+                        supplierInvoiceItemModVehicles.ChangeSetOp = ChangeSetOperation.Insert;
+                    }
+
+                    foreach (var supplierInvoiceItemProcesTypes in item.SupplierInvoiceItemProcesTypes)
+                    {
+                        supplierInvoiceItemProcesTypes.ChangeSetOp = ChangeSetOperation.Insert;
+                    }
+
+                    foreach (var supplierInvoiceItemsConDeclars in item.SupplierInvoiceItemsConDeclars)
+                    {
+                        supplierInvoiceItemsConDeclars.ChangeSetOp = ChangeSetOperation.Insert;
+                    }
+
+                    foreach (var supplierInvoiceItemsDescripts in item.SupplierInvoiceItemsDescripts)
+                    {
+                        supplierInvoiceItemsDescripts.ChangeSetOp = ChangeSetOperation.Insert;
+                    }
+
+                    foreach (var supplierInvoiceItemsMods in item.SupplierInvoiceItemsMods)
+                    {
+                        supplierInvoiceItemsMods.ChangeSetOp = ChangeSetOperation.Insert;
+                    }
+
+                    foreach (var supplierInvoiceItemsProdIdents in item.SupplierInvoiceItemsProdIdents)
+                    {
+                        supplierInvoiceItemsProdIdents.ChangeSetOp = ChangeSetOperation.Insert;
+                    }
+
+                    foreach (var supplierInvoiceItemsSerialNums in item.SupplierInvoiceItemsSerialNums)
+                    {
+                        supplierInvoiceItemsSerialNums.ChangeSetOp = ChangeSetOperation.Insert;
+                    }
+
+                    foreach (var supplierInvoiceItemTaxes in item.SupplierInvoiceItemTaxes)
+                    {
+                        supplierInvoiceItemTaxes.ChangeSetOp = ChangeSetOperation.Insert;
+                    }
+
+
+                    foreach (var supplierInvoiceItemVehicles in item.SupplierInvoiceItemVehicles)
+                    {
+                        supplierInvoiceItemVehicles.ChangeSetOp = ChangeSetOperation.Insert;
                     }
                 }
             }
-            DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), tenant);
 
             declarationUpdateService.Update(newDeclaration, true);
 

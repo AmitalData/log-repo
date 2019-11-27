@@ -47,6 +47,8 @@ using Logitude.CustomsMessaging.Helpers;
 using Logitude.Server.Tools.Models;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.MessagingServices;
+using Logitude.CustomsMessaging.RequestServices;
+using System.Xml;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
@@ -252,30 +254,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         }
 
 
-        public HttpResponseMessage PutCopyDeclaration_test(string fromDeclarationId,  int tenant)
-        {
-
-            try
-            {
-                //string token = HttpContext.Current.Request.Headers["Token"];
-                //AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-
-                //string loggedUserEmail = authToken.Email;
-                //int tenant = authToken.Tenant;
-                //SecurityUtility.AuthenticationOnTenant(tenant);
-                var customContext = CustomContext.GetContext(tenant);
-
-                DeclarationUpdateService service = new DeclarationUpdateService(customContext, new Dictionary<string, IContext>(), tenant);
-                service.CopyDeclaration_test(fromDeclarationId,  tenant);
-
-                return Request.CreateResponse(HttpStatusCode.OK, "ok");
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
 
         public HttpResponseMessage PutCopyDeclaration(string fromDeclarationId, string toDeclarationId, int tenant)
         {

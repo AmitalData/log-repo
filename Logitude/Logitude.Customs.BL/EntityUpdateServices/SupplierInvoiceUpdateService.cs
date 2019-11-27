@@ -64,7 +64,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 entityPM.InvoiceCounterKey = maxCounterKey.Value + 1;
             }
 
-
+ 
             //var accumulationFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCUMULATION") && f.ObjectTableId == "Customs.SupplierInvoice Customs.Declaration")[0];
 
             //FeaturePM feature = TenantContext.Current.Features.Where(d => d.Code == "SENDTESTCASES").FirstOrDefault();

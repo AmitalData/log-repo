@@ -18,12 +18,14 @@ import { CustomSendOptionsArgs, SendRequestVIA } from '../../../Customs/DataCont
 import { CustomMessageProgressComponent } from '../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
 import { UIProperties } from '../../../Infrastructure/Components/LogitudeComponents/UIProperties';
+import { GenericRequestParams } from '../../../Customs/DataContract/RequestParams/GenericRequestParams';
+import { DeclarationWebService } from '../../../Customs/Services/WebServices/DeclarationWebService';
 
 @Component({
     selector: 'CopyDeclarationComponent',
     moduleId: module.id,
     templateUrl: './CopyDeclarationComponent.html',
-    providers: [DeclarationExtendedListService]
+    providers: [DeclarationExtendedListService, DeclarationWebService]
 })
 
 export class CopyDeclarationComponent extends BaseComponent
@@ -42,7 +44,7 @@ export class CopyDeclarationComponent extends BaseComponent
  
 
 
-    constructor(private _declarationExtendedListService: DeclarationExtendedListService) {
+    constructor(private _declarationExtendedListService: DeclarationExtendedListService, private _declarationWebService: DeclarationWebService) {
         super();
 
      }
@@ -100,8 +102,22 @@ export class CopyDeclarationComponent extends BaseComponent
     }
 
     CoptDeclaration() {
-        this._declarationExtendedListService
-            .PutCopyDeclaration_test(this.Id, 1)
+
+        var searchParams: GenericRequestParams = new GenericRequestParams();
+        searchParams.Tenant = SessionLocator.Tenant;
+        searchParams.AppicationId = this.Id;
+        searchParams.LoggingEnabled = true;
+        searchParams.LoggingEntityId = this.Id;
+        searchParams.LoggingEntityReference = this.DeclarationNumber;
+        searchParams.LoggingObjectTableId = this.ObjectTableName;
+        searchParams.LoggingUserId = SessionLocator.LoggedUserId;
+        searchParams.RequestName = "Declaration Request";
+        searchParams.ResponseName = "Declaration Response";
+        searchParams.RequestVIA = SendRequestVIA.DCABatch;
+        searchParams.ForcePersonalSign = false;
+
+        this._declarationWebService
+            .PutCopyDeclaration_test(searchParams)
             .subscribe((response: any) => {
 
                 if (response) {

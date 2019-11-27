@@ -38,6 +38,9 @@ using Simplog.Server.Infrastructure;
 using Logitude.Customs.BL.Models;
 using Logitude.Customs.BL.Messaging.Maman;
 using Logitude.Customs.BL.Messaging;
+using System.Xml.Serialization;
+using System.Xml;
+using System.IO;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
@@ -359,6 +362,49 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        public HttpResponseMessage PutCopyDeclaration_test(GenericRequestParams requestParams)
+        {
+
+            try
+            {
+                //string token = HttpContext.Current.Request.Headers["Token"];
+                //AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+
+                //string loggedUserEmail = authToken.Email;
+                //int tenant = authToken.Tenant;
+                //SecurityUtility.AuthenticationOnTenant(tenant);
+                //var customContext = CustomContext.GetContext(tenant);
+
+                //DeclarationUpdateService service = new DeclarationUpdateService(customContext, new Dictionary<string, IContext>(), tenant);
+                //service.CopyDeclaration_test(fromDeclarationId,  tenant);
+                DF_MSG10000_ImportDeclarationRequestService _dF_MSG10000_ImportDeclarationRequestService = new DF_MSG10000_ImportDeclarationRequestService();
+                var test = _dF_MSG10000_ImportDeclarationRequestService.GetRequest(requestParams);
+
+                XmlSerializer xsSubmit = new XmlSerializer(typeof(UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration));
+                var subReq = new UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration();
+                var xml = "";
+
+                using (var sww = new StringWriter())
+                {
+                    using (XmlWriter writer = XmlWriter.Create(sww))
+                    {
+                        xsSubmit.Serialize(writer, subReq);
+                        xml = sww.ToString(); // Your XML
+                    }
+                }
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, "ok");
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
 
         public HttpResponseMessage PostSendDeclaration(GenericRequestParams requestParamsData)
         {
