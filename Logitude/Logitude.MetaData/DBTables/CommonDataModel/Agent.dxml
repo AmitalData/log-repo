@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="Agents">
+  <Column Name="AgentSharedLogisticsKey" Type="varchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="BlockNewInvoiceCreation" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="BlockNewShipmentCreation" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CASSCode" Type="varchar" Size="4">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IATACode" Type="varchar" Size="7">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="IsCreditLimitEnabled" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="PrimaryContactEmail" Type="varchar" Size="70">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PrimaryContactName" Type="varchar" Size="60">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PrimaryContactPhone" Type="varchar" Size="25">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="RegulatedAgentCode" Type="varchar" Size="5">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="AgentSharedDocuments" ParentColumnName="AgentId" ReferencedTableName="Agents" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.AgentSharedDocuments_dbo.Agents_AgentId" />
+  <Relation ParentTableName="AgentSharedManifests" ParentColumnName="AgentId" ReferencedTableName="Agents" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.AgentSharedManifests_dbo.Agents_AgentId" />
+</Table>

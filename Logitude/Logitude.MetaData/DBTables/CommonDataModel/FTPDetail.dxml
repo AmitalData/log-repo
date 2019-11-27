@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="FTPDetails">
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Folder" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Host" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="InActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Password" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UpdateDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="UpdatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="UserName" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="UseSFTP" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="INTTRASettings" ParentColumnName="InSettingsId" ReferencedTableName="FTPDetails" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.INTTRASettings_dbo.FTPDetails_InSettingsId" />
+  <Relation ParentTableName="INTTRASettings" ParentColumnName="OutSettingsId" ReferencedTableName="FTPDetails" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.INTTRASettings_dbo.FTPDetails_OutSettingsId" />
+  <Relation ParentTableName="CustomsInterfaceSettings" ParentColumnName="ArtemusInSettingsId" ReferencedTableName="FTPDetails" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomsInterfaceSettings_dbo.FTPDetails_ArtemusInSettingsId" />
+  <Relation ParentTableName="CustomsInterfaceSettings" ParentColumnName="ArtemusOutSettingsId" ReferencedTableName="FTPDetails" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomsInterfaceSettings_dbo.FTPDetails_ArtemusOutSettingsId" />
+  <Relation ParentTableName="DocumentFilingBackupSettings" ParentColumnName="FTPDetailId" ReferencedTableName="FTPDetails" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DocumentFilingBackupSettings_dbo.FTPDetails_FTPDetailId" />
+</Table>

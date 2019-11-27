@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="Reports">
+  <Column Name="Code" Type="varchar" Size="4">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DefaultMessageTemplateId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DefaultTemplateId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Description" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FeatureId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FilterControlName" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FilterHtmlComponentUrl" Type="varchar" Size="256">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="InActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LocalName" Type="nvarchar" Size="60">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ReportDocumentId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ReportGroupId" Type="nvarchar" Size="128">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="ReportModifications" ParentColumnName="PackageId" ReferencedTableName="Reports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ReportModifications_dbo.Reports_PackageId" />
+  <Relation ParentTableName="ReportsTemplates" ParentColumnName="ReportId" ReferencedTableName="Reports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ReportsTemplates_dbo.Reports_ReportId" />
+  <Relation ParentTableName="ReportsTemplatesVersions" ParentColumnName="ReportId" ReferencedTableName="Reports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ReportsTemplatesVersions_dbo.Reports_ReportId" />
+</Table>

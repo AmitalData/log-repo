@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="JournalLines">
+  <Column Name="AccountingDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ActionCode" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreditAccountId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreditControlAccountId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CurrencyId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DebitAccountId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DebitControlAccountId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DocumentDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DueDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ExchangeRate" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ExternalOpenAmount" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ExternalReconcileNumber" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ForeignAmount" Type="decimal">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsExternalReconcile" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="JournalId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Line" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="LocalAmount" Type="decimal">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Notes" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Reference1" Type="nvarchar" Size="30">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Reference2" Type="nvarchar" Size="30">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Reference3" Type="nvarchar" Size="30">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="LedgerTransactions" ParentColumnName="JournalId" ReferencedTableName="JournalLines" ReferencedColumnName="JournalId" ForeignKeyConstraintName="FK_dbo.LedgerTransactions_dbo.JournalLines_JournalId_JournalLineNumber" />
+  <Relation ParentTableName="LedgerTransactions" ParentColumnName="JournalLineNumber" ReferencedTableName="JournalLines" ReferencedColumnName="Line" ForeignKeyConstraintName="FK_dbo.LedgerTransactions_dbo.JournalLines_JournalId_JournalLineNumber" />
+</Table>

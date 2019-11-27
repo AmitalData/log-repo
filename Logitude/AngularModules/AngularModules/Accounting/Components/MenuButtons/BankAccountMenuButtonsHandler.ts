@@ -139,6 +139,7 @@ export class BankAccountMenuButtonsHandler {
 
         var windowArgs: any = {};
         windowArgs.BankAccountPM = this.EntityPM;
+        windowArgs.EntityPM = this.EntityPM;
         windowArgs.openAmountCurrency = currency; // CurrencySign
         windowArgs.ObjectTableName = "BankAccount";
 
@@ -148,6 +149,7 @@ export class BankAccountMenuButtonsHandler {
 
         logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.ExternalReconcile");
 
+        logitudeWindow.IsFullScreen = true;
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./Accounting/Components/Others/ExternalReconcileComponent');
         logitudeWindow.WindowClosed.subscribe(($event: any) => {

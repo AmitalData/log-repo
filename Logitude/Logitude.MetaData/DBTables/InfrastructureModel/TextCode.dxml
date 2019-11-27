@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="TextCodes">
+  <Column Name="Code" Type="varchar" Size="100">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DefaultText" Type="nvarchar" Size="500">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DefaultTextPlural" Type="varchar" Size="500">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="30">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="InActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsSpellChecked" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LocalDefaultText" Type="nvarchar" Size="500">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ObjectTableId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SpellCheckDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SpellCheckedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TextCodeTypeCode" Type="varchar" Size="4">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="MenuButtons" ParentColumnName="LabelTextCodeId" ReferencedTableName="TextCodes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.MenuButtons_dbo.TextCodes_LabelTextCodeId" />
+  <Relation ParentTableName="ObjectTables" ParentColumnName="DescriptionTextCodeId" ReferencedTableName="TextCodes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ObjectTables_dbo.TextCodes_DescriptionTextCodeId" />
+  <Relation ParentTableName="ObjectTables" ParentColumnName="NewButtonTextCodeId" ReferencedTableName="TextCodes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ObjectTables_dbo.TextCodes_NewButtonTextCodeId" />
+  <Relation ParentTableName="Tips" ParentColumnName="ShortTextCode" ReferencedTableName="TextCodes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tips_dbo.TextCodes_ShortTextCode" />
+  <Relation ParentTableName="ObjectTableTabs" ParentColumnName="TabNameTextCodeId" ReferencedTableName="TextCodes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ObjectTableTabs_dbo.TextCodes_TabNameTextCodeId" />
+  <Relation ParentTableName="ObjectFields" ParentColumnName="FullNameTextCodeId" ReferencedTableName="TextCodes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ObjectFields_dbo.TextCodes_FullNameTextCodeId" />
+  <Relation ParentTableName="ObjectFields" ParentColumnName="HelpTextCodeId" ReferencedTableName="TextCodes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ObjectFields_dbo.TextCodes_HelpTextCodeId" />
+  <Relation ParentTableName="ObjectFields" ParentColumnName="ListTextCodeId" ReferencedTableName="TextCodes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ObjectFields_dbo.TextCodes_ListTextCodeId" />
+  <Relation ParentTableName="Translations" ParentColumnName="TextCodeId" ReferencedTableName="TextCodes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Translations_dbo.TextCodes_TextCodeId" />
+  <Relation ParentTableName="ObjectFields" ParentColumnName="ShortNameTextCodeId" ReferencedTableName="TextCodes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ObjectFields_dbo.TextCodes_ShortNameTextCodeId" />
+  <Relation ParentTableName="Queries" ParentColumnName="NameTextCodeId" ReferencedTableName="TextCodes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Queries_dbo.TextCodes_NameTextCodeId" />
+  <Relation ParentTableName="Features" ParentColumnName="NameTextCodeId" ReferencedTableName="TextCodes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Features_dbo.TextCodes_NameTextCodeId" />
+</Table>

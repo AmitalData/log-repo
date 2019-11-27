@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="TicketClassifications">
+  <Column Name="DefaultSeverityId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="EmployeeGroupId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EscalationNotify" Type="varchar" Size="4000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="50">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Inactive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ManagerUserId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Name" Type="nvarchar" Size="60">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ParentId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="Tickets" ParentColumnName="MainClassificationId" ReferencedTableName="TicketClassifications" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tickets_dbo.TicketClassifications_MainClassificationId" />
+  <Relation ParentTableName="Tickets" ParentColumnName="SecondaryClassificationId" ReferencedTableName="TicketClassifications" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tickets_dbo.TicketClassifications_SecondaryClassificationId" />
+</Table>

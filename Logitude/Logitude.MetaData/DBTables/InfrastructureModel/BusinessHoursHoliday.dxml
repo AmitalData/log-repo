@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="BusinessHoursHolidays">
+  <Column Name="BusinessHourId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Day" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="HolidayName" Type="nvarchar" Size="60">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Inactive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsRecurring" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Month" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UpdateDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="UpdatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Year" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+</Table>

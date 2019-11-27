@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="Documents">
+  <Column Name="CalculatedFileName" Type="nvarchar" Size="120">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Extension" Type="varchar" Size="10">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FileName" Type="nvarchar" Size="120">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FileSize" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Folder" Type="varchar" Size="40">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="HasFile" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="IsEncrypted" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SmallDocumentId" Type="varchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="SharedLogisticsUpdates" ParentColumnName="DocumentId" ReferencedTableName="Documents" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.SharedLogisticsUpdates_dbo.Documents_DocumentId" />
+  <Relation ParentTableName="CommunicationAttachments" ParentColumnName="DocumentId" ReferencedTableName="Documents" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CommunicationAttachments_dbo.Documents_DocumentId" />
+  <Relation ParentTableName="CommunicationLogSteps" ParentColumnName="DocumentId" ReferencedTableName="Documents" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CommunicationLogSteps_dbo.Documents_DocumentId" />
+  <Relation ParentTableName="Quotes" ParentColumnName="QuoteHTMLDocumentId" ReferencedTableName="Documents" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.Documents_QuoteHTMLDocumentId" />
+  <Relation ParentTableName="FilingInboxAttachments" ParentColumnName="DocumentId" ReferencedTableName="Documents" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FilingInboxAttachments_dbo.Documents_DocumentId" />
+  <Relation ParentTableName="FilingInboxes" ParentColumnName="BodyDocumentId" ReferencedTableName="Documents" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FilingInboxes_dbo.Documents_BodyDocumentId" />
+  <Relation ParentTableName="QuoteDocumentVersions" ParentColumnName="DocumentId" ReferencedTableName="Documents" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteDocumentVersions_dbo.Documents_DocumentId" />
+  <Relation ParentTableName="QuoteTemplates" ParentColumnName="FooterDocId" ReferencedTableName="Documents" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplates_dbo.Documents_FooterDocId" />
+  <Relation ParentTableName="QuoteTemplates" ParentColumnName="HeaderDocId" ReferencedTableName="Documents" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplates_dbo.Documents_HeaderDocId" />
+  <Relation ParentTableName="TaskSchedulerHistory" ParentColumnName="LogDocumentId" ReferencedTableName="Documents" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TaskSchedulerHistory_dbo.Documents_LogDocumentId" />
+  <Relation ParentTableName="QuoteTemplateSections" ParentColumnName="SectionDocId" ReferencedTableName="Documents" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateSections_dbo.Documents_SectionDocId" />
+  <Relation ParentTableName="QuoteTemplateSectionModifications" ParentColumnName="SectionDocId" ReferencedTableName="Documents" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateSectionModifications_dbo.Documents_SectionDocId" />
+  <Relation ParentTableName="CommunicationLogs" ParentColumnName="DocumentId" ReferencedTableName="Documents" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CommunicationLogs_dbo.Documents_DocumentId" />
+  <Relation ParentTableName="CommunicationLogs" ParentColumnName="ResponseDocumentId" ReferencedTableName="Documents" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CommunicationLogs_dbo.Documents_ResponseDocumentId" />
+  <Relation ParentTableName="DocumentOutCopies" ParentColumnName="DocumentId" ReferencedTableName="Documents" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DocumentOutCopies_dbo.Documents_DocumentId" />
+  <Relation ParentTableName="ReportModifications" ParentColumnName="ReportDocumentId" ReferencedTableName="Documents" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ReportModifications_dbo.Documents_ReportDocumentId" />
+  <Relation ParentTableName="Reports" ParentColumnName="ReportDocumentId" ReferencedTableName="Documents" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Reports_dbo.Documents_ReportDocumentId" />
+  <Relation ParentTableName="OceanInsightsStatuses" ParentColumnName="ContentDocumentId" ReferencedTableName="Documents" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OceanInsightsStatuses_dbo.Documents_ContentDocumentId" />
+  <Relation ParentTableName="DocumentsFilings" ParentColumnName="DocumentId" ReferencedTableName="Documents" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DocumentsFilings_dbo.Documents_DocumentId" />
+  <Relation ParentTableName="ReportsTemplatesVersions" ParentColumnName="ReportDocumentId" ReferencedTableName="Documents" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ReportsTemplatesVersions_dbo.Documents_ReportDocumentId" />
+  <Relation ParentTableName="ImageLibrarys" ParentColumnName="DocumentId" ReferencedTableName="Documents" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ImageLibrarys_dbo.Documents_DocumentId" />
+  <Relation ParentTableName="DocumentOuts" ParentColumnName="XamlDocumentId" ReferencedTableName="Documents" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DocumentOuts_dbo.Documents_XamlDocumentId" />
+</Table>

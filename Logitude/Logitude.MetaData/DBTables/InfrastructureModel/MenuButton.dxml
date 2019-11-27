@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="MenuButtons">
+  <Column Name="ControlPath" Type="varchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DropDownControl" Type="varchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EventCode" Type="varchar" Size="50">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FeatureId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="HtmlComponentPath" Type="varchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Index" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LabelTextCodeId" Type="varchar" Size="30">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="MenuButtonGroupId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="MenuButtonType" Type="varchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ParentMenuButtonId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Style" Type="varchar" Size="50">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Width" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="MenuButtons" ParentColumnName="ParentMenuButtonId" ReferencedTableName="MenuButtons" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.MenuButtons_dbo.MenuButtons_ParentMenuButtonId" />
+</Table>

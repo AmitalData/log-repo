@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="EntityLastActivityTypes">
+  <Column Name="Code" Type="varchar" Size="4">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="40">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="EntityLastActivities" ParentColumnName="ActivityTypeCode" ReferencedTableName="EntityLastActivityTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.EntityLastActivities_dbo.EntityLastActivityTypes_ActivityTypeCode" />
+</Table>

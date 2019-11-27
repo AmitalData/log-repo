@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="ChargeTypeAccountings">
+  <Column Name="ChargeTypeId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="nvarchar" Size="128">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="PayableDebitAccount" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PayableDebitGLAcountId" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ReceivableCreditAccount" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ReceivableCreditGLAccountId" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="VatTypeId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+</Table>

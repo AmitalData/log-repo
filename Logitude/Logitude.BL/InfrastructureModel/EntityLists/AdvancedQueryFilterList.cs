@@ -16,5 +16,6 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public int IndexOrder { get; set; }
         public string ObjectTableName { get; set; }
         public string UserId { get; set; }
+        public string ObjectFieldCode { get; set; }
     }
 }

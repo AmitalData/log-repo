@@ -32,6 +32,8 @@ namespace Logitude.DBMigrations.Helpers
         public static string GenerateScriptFromDXMLFiles(string[] DXMLFiles)
         {
             string generatedScript = "";
+            //
+            //
 
             foreach (var DXMLFile in DXMLFiles)
             {
@@ -122,7 +124,7 @@ namespace Logitude.DBMigrations.Helpers
             }
         }
 
-        public static bool CheckAppArguments(string[] args, string arg)
+        public static bool IsArgumentProvided(string[] args, string arg)
         {
             string[] arguments = Array.ConvertAll(args, a => a.ToLower());
             return (Array.IndexOf(arguments, arg) != -1);

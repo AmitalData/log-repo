@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="QuoteTemplateDetailsFields">
+  <Column Name="Column" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="FieldCode" Type="varchar" Size="40">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="QuoteTemplateId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Row" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+</Table>

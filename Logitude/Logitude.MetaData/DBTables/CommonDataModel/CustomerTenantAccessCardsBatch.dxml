@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="CustomerTenantAccessCardsBatches">
+  <Column Name="BatchNumber" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="CreateDateTime" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CustomerId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="CustomerTenantAccessId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="DoneDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FromDatetime" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Status" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ToDatetime" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TotalFailed" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TotalShipment" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Totalsucceeded" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+</Table>

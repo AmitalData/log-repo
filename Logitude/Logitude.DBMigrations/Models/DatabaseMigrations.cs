@@ -10,8 +10,10 @@ namespace Logitude.DBMigrations.Models
         protected TableDefinition DXMLTable;
         protected TableDefinition CurrentTable;
         protected TableMigrations TableMigrations;
-        protected List<ColumnMigration> ColumnMigrations = new List<ColumnMigration>();
+
+        private List<ColumnMigration> ColumnMigrations = new List<ColumnMigration>();
         protected bool AlterPrimaryKeyConstraint = false;
+        protected bool PrimaryKeyColumnAdded = false;
 
         public string GetScript()
         {
@@ -76,6 +78,40 @@ namespace Logitude.DBMigrations.Models
 
         protected TableMigrations GetTableMigrations()
         {
+            BuildAddAndAlterMigrations();
+
+            BuildDropMigrations();
+
+            TableMigrations tableMigrations = CreateNewTableMigrations();
+
+            return tableMigrations;
+        }
+
+        private TableMigrations CreateNewTableMigrations()
+        {
+            TableMigrations tableMigrations = new TableMigrations
+            {
+                DxmlTableName = DXMLTable.Name,
+                CurrentTableName = CurrentTable.Name,
+                ColumnsMigrations = ColumnMigrations
+            };
+
+            return tableMigrations;
+        }
+
+        private void BuildDropMigrations()
+        {
+            List<ColumnDefinition> droppedColumns = GetDroppedColumns();
+
+            foreach (var droppedColumn in droppedColumns)
+            {
+                ColumnDefinition currentTableColumn = GetCurrentTableColumn(droppedColumn.Name, null);
+                BuildColumnMigrations(currentTableColumn, null);
+            }
+        }
+
+        private void BuildAddAndAlterMigrations()
+        {
             foreach (var dxmlTableColumn in DXMLTable.Columns)
             {
                 ColumnDefinition currentTableColumn = null;
@@ -86,23 +122,6 @@ namespace Logitude.DBMigrations.Models
 
                 BuildColumnMigrations(currentTableColumn, dxmlTableColumn);
             }
-
-            var droppedColumns = GetDroppedColumns();
-
-            foreach (var droppedColumn in droppedColumns)
-            {
-                ColumnDefinition currentTableColumn = GetCurrentTableColumn(droppedColumn.Name, null);
-                BuildColumnMigrations(currentTableColumn, null);
-            }
-
-            TableMigrations tableMigrations = new TableMigrations
-            {
-                DxmlTableName = DXMLTable.Name,
-                CurrentTableName = CurrentTable.Name,
-                ColumnsMigrations = ColumnMigrations
-            };
-
-            return tableMigrations;
         }
 
         protected bool IsColumnInCurrentTable(string dxmlColumnName, string dxmlColumnOldNames)
@@ -236,6 +255,10 @@ namespace Logitude.DBMigrations.Models
         {
             ColumnMigration addMigration = GetColumnMigration(MigrationTypes.ADD, currentTableColumn, dxmlTableColumn);
             ColumnMigrations.Add(addMigration);
+            if (dxmlTableColumn.Constraints.PrimaryKey)
+            {
+                PrimaryKeyColumnAdded = true;
+            }
         }
 
         protected void BuildDropColumnMigration(ColumnDefinition currentTableColumn, ColumnDefinition dxmlTableColumn)
@@ -250,13 +273,13 @@ namespace Logitude.DBMigrations.Models
 
             BuildAlterSizeMigration(currentTableColumn, dxmlTableColumn);
 
-            CheckAlterPrimaryKeyMigration(currentTableColumn, dxmlTableColumn);
-
             BuildUnsetNullableMigration(currentTableColumn, dxmlTableColumn);
 
             BuildSetNullableMigration(currentTableColumn, dxmlTableColumn);
 
             BuildRenameMigration(currentTableColumn, dxmlTableColumn);
+
+            CheckAlterPrimaryKeyMigration(currentTableColumn, dxmlTableColumn);
         }
 
         protected void BuildAlterTypeMigration(ColumnDefinition currentTableColumn, ColumnDefinition dxmlTableColumn)
@@ -343,7 +366,6 @@ namespace Logitude.DBMigrations.Models
 
 
 
-
         // abstract methods
         protected abstract string GetCreateTableScript();
 
@@ -379,6 +401,14 @@ namespace Logitude.DBMigrations.Models
 
         protected abstract TableDefinition GetCurrentTableDefinitionFromDB(string tableName);
 
+        protected abstract string GetPrimaryKeyConstraintScript();
+
         protected abstract string GetAlterPrimaryKeyScript();
+
+        protected abstract string GetDropPrimaryKeyConstraintScript(string primaryKeyConstraintName);
+
+        protected abstract string GetAddPrimaryKeyConstraintScript(string primaryKeyConstraintName);
+
+        protected abstract bool CheckIfTableHasPrimaryKeys(TableDefinition table);
     }
 }

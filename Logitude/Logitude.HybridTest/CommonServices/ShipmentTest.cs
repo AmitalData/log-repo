@@ -10,6 +10,11 @@ namespace Logitude.HybridTest.CommonServices
     [TestClass]
     public class ShipmentTest
     {
+        [AssemblyInitialize]
+        public static void Test(TestContext context)
+        {
+
+        }
         [TestMethod]
         public void Test_DirectShipment_UPSERT()
         {
@@ -31,30 +36,28 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_Shipment_CANCEL()
         {
-            //Assert.Inconclusive("Not Implemented !");
             LoginService.GetLoginTokenByCredentials();
-            //Response prepareResponse = ShipmentWcfCaller.PrepareDirectShipment();
-            //Assert.IsFalse(prepareResponse.HasError, "Prepare Direct Shipment Failed! " + prepareResponse.ErrorMessage);
+            Response prepareResponse = ShipmentWcfCaller.PrepareDirectShipment();
+            Assert.IsFalse(prepareResponse.HasError, "Prepare Direct Shipment Failed! " + prepareResponse.ErrorMessage);
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "Shipment",
                 ServiceOperation = "Cancel",
                 ServiceResponseIndex = 0,
                 ServiceType = null,
-                ServiceFilterType = null,
+                ServiceFilterType = null,// pull request test
             };
 
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { HybridData.DirectShipmentCode, TestEnvironmentGlobalParameters.Tenant };
             serviceResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Canceled Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Canceled Failed! " + serviceResponse.Result);
+            Assert.IsNotNull(serviceResponse.Result, "Canceled Failed! " + serviceResponse.ErrorMessage);
         }
 
         [TestMethod]
         public void Test_Shipment_DELETE()
         {
-            Assert.Inconclusive("Not Implemented !");
             LoginService.GetLoginTokenByCredentials();
             Response prepareResponse = ShipmentWcfCaller.PrepareDirectShipment();
             Assert.IsFalse(prepareResponse.HasError, "Prepare Direct Shipment Failed! " + prepareResponse.ErrorMessage);
@@ -71,13 +74,12 @@ namespace Logitude.HybridTest.CommonServices
             object[] serviceParameters = new object[] { HybridData.DirectShipmentCode, TestEnvironmentGlobalParameters.Tenant };
             serviceResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Deleted Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Deleted Failed! " + serviceResponse.Result);
+            Assert.IsNotNull(serviceResponse.Result, "Deleted Failed! " + serviceResponse.ErrorMessage);
         }
 
         [TestMethod]
         public void Test_Shipment_GetShipmentList()
         {
-            Assert.Inconclusive("Not Implemented !");
             LoginService.GetLoginTokenByCredentials();
             Response prepareResponse = ShipmentWcfCaller.PrepareDirectShipment();
             Assert.IsFalse(prepareResponse.HasError, "Prepare Direct Shipment Failed! " + prepareResponse.ErrorMessage);
@@ -92,7 +94,8 @@ namespace Logitude.HybridTest.CommonServices
             ShipmentServiceReference.ShipmentApiFilters filters = new ShipmentServiceReference.ShipmentApiFilters
             {
                 Take = 10,
-                SearchFields = HybridData.DirectShipmentCode,
+                SearchFields = "Hybrid DShipment,OPOP,Created,HFP,Hybrid From Port,HC,Hybrid Country,HFP,Hybrid From Port,HC,Hybrid Country,HTP,Hybrid To Port,HC,Hybrid Country,HTP,Hybrid To Port,HC,Hybrid Country,Hybrid Agent",
+                //ShipmentLevel = "H",
             };
 
             Response serviceResponse = new Response();
@@ -108,6 +111,22 @@ namespace Logitude.HybridTest.CommonServices
         {
             LoginService.GetLoginTokenByCredentials();
             Assert.Inconclusive("Not Implemented !");
+            Response prepareResponse = ShipmentWcfCaller.PrepareDirectShipment();
+            Assert.IsFalse(prepareResponse.HasError, "Prepare Direct Shipment Failed! " + prepareResponse.ErrorMessage);
+            InvokedProperties serviceProperties = new InvokedProperties
+            {
+                ServiceName = "Shipment",
+                ServiceOperation = "CreateEvent",
+                ServiceResponseIndex = 0,
+                ServiceType = null,
+                ServiceFilterType = null,
+            };
+
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { TestEnvironmentGlobalParameters.Tenant, null, HybridData.DirectShipmentCode, HybridData.UserId, "CREV", DateTime.Now, DateTime.Now, "Hybrid Test Event" };
+            serviceResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+            Assert.IsFalse(serviceResponse.HasError, "Create Event Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsNull(serviceResponse.Result, "Create Event Failed! " + serviceResponse.Result);
         }
 
         [TestMethod]

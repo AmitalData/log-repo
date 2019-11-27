@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="ShipmentReceivables">
+  <Column Name="AmountInProfitCurrency" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ARInvoiceId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ARInvoiceLineId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AWBPrint" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ChargesTypeId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CurrencyId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DueTypeCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IATACodeId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="IsBackToBack" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsChargeBySteps" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsExchangeRateFixed" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsExpense" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsFixedPrice" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsFromQuote" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="MeasurementId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Notes" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PayableLocal" Type="decimal">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="PrepaidCollectId" Type="varchar" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ProfitCurrencyExchangeRate" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Quantity" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="QuoteChargeId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="QuoteSaleMaxAmount" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="QuoteSaleMinAmount" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Rate" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ShipmentId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ShipmentReceivableLineStatusCode" Type="char" Size="4">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ShipmentReceivableParentId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TotalAmount" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TotalAmountLocal" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="UnitPrice" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="UpdateByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UpdateDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="VatTypeId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="ShipmentReceivables" ParentColumnName="ShipmentReceivableParentId" ReferencedTableName="ShipmentReceivables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentReceivables_dbo.ShipmentReceivables_ShipmentReceivableParentId" />
+</Table>

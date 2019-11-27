@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="JournalTypes">
+  <Column Name="EnglishName" Type="varchar" Size="60">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Inactive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="JournalTypeID" Type="varchar" Size="3">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="LocalName" Type="nvarchar" Size="30">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="200">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="Journals" ParentColumnName="TypeCode" ReferencedTableName="JournalTypes" ReferencedColumnName="JournalTypeID" ForeignKeyConstraintName="FK_dbo.Journals_dbo.JournalTypes_TypeCode" />
+</Table>

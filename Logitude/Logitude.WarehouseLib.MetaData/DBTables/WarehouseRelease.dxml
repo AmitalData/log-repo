@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="WarehouseReleases">
+  <Column Name="ActualReleaseDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ChargeableWeightUnitCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ConnectedTo" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CreatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CustomerAddressId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CustomerId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CustomerRef1" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CustomerRef2" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DimensionsUnitCode" Type="varchar" Size="4">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DirectionId" Type="char" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ExpectedReleaseDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FromPortId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="GrossWeightUnitCode" Type="varchar" Size="3">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="HouseNumber" Type="varchar" Size="20">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="MasterNumber" Type="varchar" Size="30">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Notes" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Ratio" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ReleaseBy" Type="varchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ReleaseNumber" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ShipmentId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ShipmentLevelCode" Type="varchar" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ShipmentNumber" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ShipmentTypeId" Type="varchar" Size="4">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SpecialInstruction" Type="varchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="StatusCode" Type="varchar" Size="4">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ToAddressCity" Type="nvarchar" Size="25">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ToAddressCountryId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ToAddressId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ToAddressZipCode" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ToPartnerCardId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ToPortId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TotalGrossWeight" Type="decimal">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TotalPieces" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TotalQuantity" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TotalVolume" Type="decimal">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TotalVolumetricWeight" Type="decimal">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ToTypeCode" Type="varchar" Size="4">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TransportModeId" Type="char" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="UpdateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UpdatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="VolumeUnitCode" Type="varchar" Size="3">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="WarehouseId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="WarehouseReleasePackages" ParentColumnName="WarehouseReleaseId" ReferencedTableName="WarehouseReleases" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseReleasePackages_dbo.WarehouseReleases_WarehouseReleaseId" />
+</Table>

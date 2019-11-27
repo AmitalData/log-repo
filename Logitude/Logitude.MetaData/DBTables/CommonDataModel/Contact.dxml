@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="Contacts">
+  <Column Name="Anniversary" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AnniversaryReminder" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Birthday" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="BirthDayOfYear" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="BirthdayReminder" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="BusinessPhone" Type="varchar" Size="25">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CompanyName" Type="varchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ComputedKey" Type="varchar" Size="70">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ContactDoneMethodCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DisplayGettingStarted" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DoneDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DontShowLocalLabels" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Email" Type="varchar" Size="70">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EnglishName" Type="varchar" Size="60">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ExternalId" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FacebookId" Type="varchar" Size="20">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Fax" Type="varchar" Size="25">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="ImageDetailId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="InActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IndexColor" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LocalName" Type="nvarchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Mobile" Type="varchar" Size="25">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Notes" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Position" Type="varchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SharedLogisticsContactLastLogin_CardId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SharedLogisticsContactLastLogin_ContactId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SharedLogisticsContactLastLogin_PartnerTypeId" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SharedLogisticsContactLastLogin_Via" Type="varchar" Size="20">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Signature" Type="varbinary" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SignatureHtml" Type="varbinary" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UserType" Type="varchar" Size="1">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="Shipments" ParentColumnName="ShipperContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Contacts_ShipperContactId" />
+  <Relation ParentTableName="SharedFollowedShipments" ParentColumnName="ContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.SharedFollowedShipments_dbo.Contacts_ContactId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="ShipperNotExporterContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Contacts_ShipperNotExporterContactId" />
+  <Relation ParentTableName="Quotes" ParentColumnName="AgentContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.Contacts_AgentContactId" />
+  <Relation ParentTableName="Quotes" ParentColumnName="ConsigneeContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.Contacts_ConsigneeContactId" />
+  <Relation ParentTableName="Quotes" ParentColumnName="CustomerContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.Contacts_CustomerContactId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="AgentContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Contacts_AgentContactId" />
+  <Relation ParentTableName="Quotes" ParentColumnName="FreelancerContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.Contacts_FreelancerContactId" />
+  <Relation ParentTableName="Quotes" ParentColumnName="NotifyContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.Contacts_NotifyContactId" />
+  <Relation ParentTableName="CardContacts" ParentColumnName="ContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CardContacts_dbo.Contacts_ContactId" />
+  <Relation ParentTableName="LogBoxTenantSettings" ParentColumnName="LogBoxAdminUserId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.LogBoxTenantSettings_dbo.Contacts_LogBoxAdminUserId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="ColoaderContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Contacts_ColoaderContactId" />
+  <Relation ParentTableName="Cards" ParentColumnName="PrimaryContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Cards_dbo.Contacts_PrimaryContactId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="ConsigneeContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Contacts_ConsigneeContactId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="ConsigneeNotImporterContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Contacts_ConsigneeNotImporterContactId" />
+  <Relation ParentTableName="Quotes" ParentColumnName="ShipperContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.Contacts_ShipperContactId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="ConsolidatorContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Contacts_ConsolidatorContactId" />
+  <Relation ParentTableName="Users" ParentColumnName="Id" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Users_dbo.Contacts_Id" />
+  <Relation ParentTableName="Shipments" ParentColumnName="CustomAgentExportContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Contacts_CustomAgentExportContactId" />
+  <Relation ParentTableName="Branches" ParentColumnName="INTTRAContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Branches_dbo.Contacts_INTTRAContactId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="CustomAgentImportContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Contacts_CustomAgentImportContactId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="CustomClearancePointContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Contacts_CustomClearancePointContactId" />
+  <Relation ParentTableName="Activities" ParentColumnName="CallWithId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Activities_dbo.Contacts_CallWithId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="CustomerContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Contacts_CustomerContactId" />
+  <Relation ParentTableName="ContactLoginLogs" ParentColumnName="ContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ContactLoginLogs_dbo.Contacts_ContactId" />
+  <Relation ParentTableName="ContactsUnseenEntities" ParentColumnName="ContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ContactsUnseenEntities_dbo.Contacts_ContactId" />
+  <Relation ParentTableName="ContactLastLogins" ParentColumnName="Id" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ContactLastLogins_dbo.Contacts_Id" />
+  <Relation ParentTableName="Activities" ParentColumnName="SenderContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Activities_dbo.Contacts_SenderContactId" />
+  <Relation ParentTableName="SharedLogisticsContactLastLogins" ParentColumnName="ContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.SharedLogisticsContactLastLogins_dbo.Contacts_ContactId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="EmergencyContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Contacts_EmergencyContactId" />
+  <Relation ParentTableName="ContactTenants" ParentColumnName="ContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ContactTenants_dbo.Contacts_ContactId" />
+  <Relation ParentTableName="Tickets" ParentColumnName="ContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tickets_dbo.Contacts_ContactId" />
+  <Relation ParentTableName="Tickets" ParentColumnName="CreatedByContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tickets_dbo.Contacts_CreatedByContactId" />
+  <Relation ParentTableName="Tickets" ParentColumnName="CustomerContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tickets_dbo.Contacts_CustomerContactId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="FreelancerContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Contacts_FreelancerContactId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="FreightForwarderContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Contacts_FreightForwarderContactId" />
+  <Relation ParentTableName="Correspondences" ParentColumnName="CreatedByContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Correspondences_dbo.Contacts_CreatedByContactId" />
+  <Relation ParentTableName="OccasionInvitees" ParentColumnName="ContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OccasionInvitees_dbo.Contacts_ContactId" />
+  <Relation ParentTableName="TermsofUseSignatures" ParentColumnName="ContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TermsofUseSignatures_dbo.Contacts_ContactId" />
+  <Relation ParentTableName="ActivityEmailRecipients" ParentColumnName="ContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ActivityEmailRecipients_dbo.Contacts_ContactId" />
+  <Relation ParentTableName="ActivityEmailRecipients" ParentColumnName="SenderContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ActivityEmailRecipients_dbo.Contacts_SenderContactId" />
+  <Relation ParentTableName="ActivityInvitees" ParentColumnName="ContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ActivityInvitees_dbo.Contacts_ContactId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="Notify1ContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Contacts_Notify1ContactId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="Notify2ContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Contacts_Notify2ContactId" />
+  <Relation ParentTableName="InboundEmails" ParentColumnName="CreatedByContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.InboundEmails_dbo.Contacts_CreatedByContactId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="ReleasingAgentContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Contacts_ReleasingAgentContactId" />
+  <Relation ParentTableName="Opportunities" ParentColumnName="ContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Opportunities_dbo.Contacts_ContactId" />
+</Table>

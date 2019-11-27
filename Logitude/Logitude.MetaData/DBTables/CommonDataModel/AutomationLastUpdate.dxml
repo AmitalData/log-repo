@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="AutomationLastUpdates">
+  <Column Name="HasAutomation" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LastUpdateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ObjectTableId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+</Table>

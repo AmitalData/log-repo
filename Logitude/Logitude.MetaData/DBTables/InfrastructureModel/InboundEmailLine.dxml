@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="InboundEmailLines">
+  <Column Name="Bcc" Type="varchar" Size="500">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Body" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CCs" Type="varchar" Size="4000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CommunicationLogId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Direction" Type="varchar" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EntityLineId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="FullBody" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="HTMLFullBody" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="InboundEmailId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="InternalUsers" Type="varchar" Size="4000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Recepient" Type="nvarchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Sender" Type="nvarchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Subject" Type="nvarchar" Size="256">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+</Table>

@@ -12,35 +12,36 @@ import {LedgerTransactionList} from '../../EntityLists/LedgerTransactionList';
 
 export class ExternalReconciliationExtendedListService {
     private _http: Http
-    private _apiUrl: string; 
+    private _apiUrl: string;
 
     constructor() {
         this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ExternalReconciliation';
     }
 
-    getExternalAutomaticReconcilationsByFilter(amountReconcile: boolean, referenceReconcile: boolean, refDateReconcile: boolean,
-                                                bankAccountId: string, glAccountId: string, filters: ApiQueryFilters) {
+    getExternalAutomaticReconcilationsByFilter(args: ExternalAutoReconcileServiceArgs)
+    {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
         var url = this._apiUrl + "/GetExternalAutomaticReconcilationsByFilter";
 
         var urlparameters =
-            '?glAccountId=' + glAccountId
-            + '&bankAccountId=' + bankAccountId
-            + '&amountReconcile=' + amountReconcile
-            + '&referenceReconcile=' + referenceReconcile
-            + '&refDateReconcile=' + refDateReconcile; 
-
+            '?amountReconcile=' + args.amountReconcile
+            + '&referenceReconcile=' + args.referenceReconcile
+            + '&refDateReconcile=' + args.refDateReconcile
+            + '&objectTableId=' + args.objectTableId
+            + '&entityId=' + args.entityId
+            + '&glAccountId=' + args.glAccountId
+            + '&filters=' + args.filters;
 
 
         //#region Parse Filters into URI
-        var mykeys = Object.keys(filters);
+        var mykeys = Object.keys(args.filters);
         var addtionalFiltersValues = null;
         for (var i in mykeys) {
             var propName = mykeys[i];
-            var propValue = filters[propName];
+            var propValue = args.filters[propName];
 
             var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
 
@@ -172,4 +173,14 @@ export class AutoSelectedExternalReconciliationLines {
     transactionLines;
     pageLines;
     Count;
+}
+
+export class ExternalAutoReconcileServiceArgs{
+    amountReconcile: boolean;
+    referenceReconcile: boolean;
+    refDateReconcile: boolean;
+    objectTableId: string;
+    entityId: string;
+    glAccountId: string;
+    filters: ApiQueryFilters;
 }

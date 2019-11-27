@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="DocumentTypeCopies">
+  <Column Name="Code" Type="varchar" Size="7">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DocumentTypeId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="InActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IndexOrder" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsSelectedByDefault" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="40">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="DocumentOutCopies" ParentColumnName="DocumentTypeCopyId" ReferencedTableName="DocumentTypeCopies" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DocumentOutCopies_dbo.DocumentTypeCopies_DocumentTypeCopyId" />
+</Table>

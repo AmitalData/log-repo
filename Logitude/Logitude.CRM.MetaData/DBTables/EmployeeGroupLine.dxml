@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="EmployeeGroupLines">
+  <Column Name="EmployeeGroupId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="IsDefaultOwner" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UserId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+</Table>

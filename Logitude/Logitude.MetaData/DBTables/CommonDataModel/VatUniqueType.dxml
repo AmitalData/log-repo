@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="VatUniqueType">
+  <Column Name="Code" Type="varchar" Size="3">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="40">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ViewOrder" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="Tenants" ParentColumnName="VatUniqueTypeCode" ReferencedTableName="VatUniqueType" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Tenants_dbo.VatUniqueType_VatUniqueTypeCode" />
+</Table>

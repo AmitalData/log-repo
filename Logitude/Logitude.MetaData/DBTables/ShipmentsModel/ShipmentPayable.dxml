@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="ShipmentPayables">
+  <Column Name="AccountedAmount" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AccountedAmountInLocalCurrency" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AccountedAmountInProfitCurrency" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AWBPrint" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ChargesTypeId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CorrectionAmount" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CorrectionByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CorrectionDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CorrectionNote" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CurrencyId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DueTypeCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ExpectedAmount" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ExpectedAmountInProfitCurrency" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ExpectedAmountLocal" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IATACodeId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="IsBackToBack" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsChargeBySteps" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsEditedByUser" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsFromQuote" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="MaxAmount" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="MeasurementId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="MinAmount" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Notes" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="OpenAmount" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="OpenAmountInLocalCurrency" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="OpenAmountInProfitCurrency" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PrepaidCollectId" Type="varchar" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ProfitCurrencyExchangeRate" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Quantity" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="QuoteChargeId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="QuoteCostMaxAmount" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="QuoteCostMinAmount" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Rate" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ReceivableId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ShipmentId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ShipmentPayableAmountTypeCode" Type="varchar" Size="4">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ShipmentPayableLineStatusCode" Type="varchar" Size="4">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ShipmentPayableParentId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TariffId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TariffNumber" Type="varchar" Size="20">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TariffVersion" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UnitPrice" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="UpdateByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UpdateDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ValueDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="VatTypeId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="VendorId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="ShipmentPayables" ParentColumnName="ShipmentPayableParentId" ReferencedTableName="ShipmentPayables" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPayables_dbo.ShipmentPayables_ShipmentPayableParentId" />
+</Table>

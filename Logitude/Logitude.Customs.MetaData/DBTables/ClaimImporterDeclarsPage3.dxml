@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="ClaimImporterDeclarsPage3s">
+  <Column Name="ClaimId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="ImporterLoiDeclarationTypeCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LineNo" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="ClaimImporterDeclarsP3Lois" ParentColumnName="ClaimId" ReferencedTableName="ClaimImporterDeclarsPage3s" ReferencedColumnName="ClaimId" ForeignKeyConstraintName="FK_Customs.ClaimImporterDeclarsP3Lois_Customs.ClaimImporterDeclarsPage3s_ClaimId_CounterKey" />
+  <Relation ParentTableName="ClaimImporterDeclarsP3Lois" ParentColumnName="CounterKey" ReferencedTableName="ClaimImporterDeclarsPage3s" ReferencedColumnName="LineNo" ForeignKeyConstraintName="FK_Customs.ClaimImporterDeclarsP3Lois_Customs.ClaimImporterDeclarsPage3s_ClaimId_CounterKey" />
+</Table>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="AccountingSystems">
+  <Column Name="AllowAPInvoicesTransfer" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="AllowAPPaymentsTransfer" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="AllowARInvoicesTransfer" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="AllowARPaymentsTransfer" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="AllowManuallyDueDate" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="AllowMinusInvoiceLines" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="AllowPositiveAmountsInTheCreditNote" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CanTransferToDropbox" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Code" Type="varchar" Size="4">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="InActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsExternalCodesFromAPI" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsExternalCodesFromTable" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsExternalCodesSyncEnabled" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsJournalMode" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsSingleCurrencyAccount" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsSingleTaxPerInvoice" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsTaxItemManaged" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="40">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ShowDownloadScreen" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="AccountingSettings" ParentColumnName="AccountingSystemCode" ReferencedTableName="AccountingSystems" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.AccountingSettings_dbo.AccountingSystems_AccountingSystemCode" />
+</Table>

@@ -134,6 +134,7 @@
     <Content Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWQueryBuilderFiltersComponent.html" />
     <Content Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWFilterSettings.html" />
     <Content Include="CommonModules\CommonOthers\Components\ProductType\EditTabs\ProductTypeGeneralTabComponent.html" />
+    <Content Include="CommonModules\CommonPartners\Components\EditTabs\Contact\ContactOccasionsTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\CustomAgent\CustomAgentDocsInTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\Participant\ParticipantDocsInTabComponent.html" />
     <Content Include="CommonModules\CommonPartners\Components\EditTabs\ShippingAgent\ShippingAgentDocsInTabComponent.html" />
@@ -465,6 +466,7 @@
     <TypeScriptCompile Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWQueryBuilderFiltersComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWFilterSettings.ts" />
     <TypeScriptCompile Include="CommonModules\CommonOthers\Components\ProductType\EditTabs\ProductTypeGeneralTabComponent.ts" />
+    <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\Contact\ContactOccasionsTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\CustomAgent\CustomAgentDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\Participant\ParticipantDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\ShippingAgent\ShippingAgentDocsInTabComponent.ts" />
@@ -847,8 +849,7 @@
     <TypeScriptCompile Include="e2e\FullAccounting\APPayment\APPayment-spec.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\APPayment\NewAPPayment.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\ARInvoice\ARInvoice-spec.ts" />
-    <TypeScriptCompile Include="e2e\FullAccounting\ARInvoice\Edit\EditARInvoice.ts" />
-    <TypeScriptCompile Include="e2e\FullAccounting\ARInvoice\New\NewARInvoice.ts" />
+    <TypeScriptCompile Include="e2e\FullAccounting\ARInvoice\NewARInvoice.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\ARPayment\ARPayment-spec.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\ARPayment\NewARPayment.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\BankAccount\EditBankAccount.ts" />

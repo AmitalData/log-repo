@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="APILogs">
+  <Column Name="BatchNumber" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CorrelationId" Type="varchar" Size="64">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CreateDateUTC" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CustomerId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Direction" Type="varchar" Size="1">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="EntityId" Type="varchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ExpirationDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="LastExceptionMessage" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LastUpdateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LastUpdateDateUTC" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="NumberOfRetries" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ObjectTableId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PartnerName" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="QueueMessage" Type="varchar" Size="400">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="QueueMessageMoreDetailsId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="QueueType" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Refrence" Type="varchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Status" Type="varchar" Size="1">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Subject" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="APILogsData" ParentColumnName="Id" ReferencedTableName="APILogs" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.APILogsData_dbo.APILogs_Id" />
+</Table>

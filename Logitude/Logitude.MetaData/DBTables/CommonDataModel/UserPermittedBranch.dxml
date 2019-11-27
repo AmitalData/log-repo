@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="UserPermittedBranches">
+  <Column Name="BranchId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="nvarchar" Size="128">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UserId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+</Table>

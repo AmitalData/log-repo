@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="SupplierInvoiceItemsLevies">
+  <Column Name="DeclarationId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="InvoiceCounterKey" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="InvoiceItemLineNumber" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="LineNumber" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TradeLevyExamptCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TradeLevyNumber" Type="varchar" Size="10">
+    <Constraints Nullable="true" />
+  </Column>
+</Table>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="Journals">
+  <Column Name="AccountingDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="AccountingEntityCode" Type="varchar" Size="5">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="AccountingEntityId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AccountingEntityReference" Type="varchar" Size="30">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ApproveDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ApprovedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CreatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ExternalNo" Type="varchar" Size="30">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ExternalSystem" Type="nvarchar" Size="60">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="IsLedgerCreated" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsVoided" Type="bit">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="JournalNumber" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="OriginalJournalId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="QueueId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="StatusCode" Type="varchar" Size="3">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TypeCode" Type="varchar" Size="3">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UpdateDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="UpdatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="VoidDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="VoidedByJournalId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="VoidedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="JournalLines" ParentColumnName="JournalId" ReferencedTableName="Journals" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.JournalLines_dbo.Journals_JournalId" />
+  <Relation ParentTableName="Journals" ParentColumnName="OriginalJournalId" ReferencedTableName="Journals" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Journals_dbo.Journals_OriginalJournalId" />
+  <Relation ParentTableName="JournalAdditionalDatas" ParentColumnName="JournalId" ReferencedTableName="Journals" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.JournalAdditionalDatas_dbo.Journals_JournalId" />
+  <Relation ParentTableName="JournalExternalReconciles" ParentColumnName="JournalId" ReferencedTableName="Journals" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.JournalExternalReconciles_dbo.Journals_JournalId" />
+  <Relation ParentTableName="JournalMoreDatas" ParentColumnName="JournalId" ReferencedTableName="Journals" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.JournalMoreDatas_dbo.Journals_JournalId" />
+  <Relation ParentTableName="JournalReconciles" ParentColumnName="JournalId" ReferencedTableName="Journals" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.JournalReconciles_dbo.Journals_JournalId" />
+  <Relation ParentTableName="TaxReportLines" ParentColumnName="JournalId" ReferencedTableName="Journals" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TaxReportLines_dbo.Journals_JournalId" />
+</Table>

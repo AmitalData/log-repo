@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="CargoIdentifireTypes">
+  <Column Name="Code" Type="varchar" Size="4">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="EnglishName" Type="varchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Inactive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LocalName" Type="nvarchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="PhysicalChecks" ParentColumnName="CargoIdentifierTypeCode" ReferencedTableName="CargoIdentifireTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.PhysicalChecks_Customs.CargoIdentifireTypes_CargoIdentifierTypeCode" />
+  <Relation ParentTableName="Consignments" ParentColumnName="CargoTypeCode" ReferencedTableName="CargoIdentifireTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Consignments_Customs.CargoIdentifireTypes_CargoTypeCode" />
+  <Relation ParentTableName="DeclarationCargoSplits" ParentColumnName="CargoTypeCode" ReferencedTableName="CargoIdentifireTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.DeclarationCargoSplits_Customs.CargoIdentifireTypes_CargoTypeCode" />
+</Table>
