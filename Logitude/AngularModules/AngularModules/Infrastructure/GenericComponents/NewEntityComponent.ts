@@ -12,6 +12,8 @@ import { CachedDataManager } from '../Utilities/CachedDataManager';
 import {CommonDomainService} from '../../Common/Services/CommonDomainService';
 import {ServiceResponse} from '../DataContracts/ServiceResponse';
 import {ObjectsLocator} from '../Locators/ObjectsLocator';
+import { InterestBasesPeriodPM } from '../../Accounting/EntityPMs/InterestBasesPeriodPM';
+import { InterestBasesTypePMService } from '../../Accounting/Services/StandardPMs/InterestBasesTypePMService';
 
 @Component({
     moduleId: module.id,
@@ -96,10 +98,16 @@ export class NewEntityComponent {
     }
     private SaveEntityChanges() {
         //if (this.EntityPM.IsDirty) {
+
+        var InterestBasesPeriods: InterestBasesPeriodPM[] = [];
+        if (this.ObjectTableName == "InterestBasesType") {
+            InterestBasesPeriods = this.EntityPM.InterestBasesPeriods;
+            this.EntityPM.InterestBasesPeriods = null;
+        }
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
             this.entityPMService.insert(this.ObjectTableName, this.EntityPM).then((res: any) => {
                 res.subscribe(response => {
-
+                 
                     this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
                     var mm: EntityPMServiceResponse = response;
@@ -109,6 +117,22 @@ export class NewEntityComponent {
 
                         if (this.ObjectTable.CacheOnClient === true) {
                             CachedDataManager.RefreshTableData(this.ObjectTableName, true);
+                        }
+
+                        if (this.ObjectTableName == 'InterestBasesType') {
+                            InterestBasesPeriods.forEach(s => s.InterestBaseTypeId = this.EntityPM.Id);
+                            this.EntityPM.InterestBasesPeriods = InterestBasesPeriods;
+                            var myService: InterestBasesTypePMService = new InterestBasesTypePMService();
+                             myService.update(this.EntityPM).subscribe(myResult => {
+                                var iServiceResponse: ServiceResponse = myResult;
+                                if (!iServiceResponse.HasError) {
+                                    this.CurrentSession.CloseCurrentWindowEmit("ok");
+                                }
+                                else {
+                                    this.ValidationErrorsList = iServiceResponse.ErrorsArray;
+                                    this.CurrentSession.StopBusyIndicator();
+                                }
+                            });
                         }
 
                         if (this.ObjectTableName == 'VatType') {

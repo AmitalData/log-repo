@@ -27,7 +27,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             entityPOCO.InterestBaseTypeId = entityPM.InterestBaseTypeId;
 
             InterestBasesPeriodRepository  PeriodRepository = new InterestBasesPeriodRepository(entityPM.Tenant);
-            InterestBasesPeriod Period = PeriodRepository.GetSingleByInterestBaseStartDate(entityPM.InterestBaseStartDate);
+            InterestBasesPeriod Period = PeriodRepository.GetSingleByInterestBaseStartDateAndnterestBaseTypeId(entityPM.InterestBaseStartDate , entityPM.InterestBaseTypeId , entityPM.Tenant);
             if (Period!=null)
             {
                  throw new Exception("Interest Base StartDate Already Exist");
