@@ -1,4 +1,5 @@
 ﻿using System;
+using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.HybridTest.WcfCallers;
 using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -11,9 +12,19 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_ShippingLine_UPSERT()
         {
-            LoginService.GetLoginTokenByCredentials();
-            Response serviceResponse = ShippingLineWcfCaller.CallShippingLineUpsert();
-            Assert.IsFalse(serviceResponse.HasError, serviceResponse.ErrorMessage);
+            ShippingLinePM shippingLinePM = new ShippingLinePM()
+            {
+                Code = HybridData.ShippingLineCode,
+                SCACCode = HybridData.ShippingLineCode,
+                EnglishName = "Hybrid ShippingLine",
+                LocalName = "Hybrid ShippingLine",
+                CityName = "Hybrid City",
+                CountryCode = HybridData.CountryCode,
+                CarrierTypeId = "SL",
+                Tenant = TestEnvironmentGlobalParameters.Tenant,
+            };
+            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(shippingLinePM);
+            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
         }
     }
