@@ -652,6 +652,7 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
 
         logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.ExternalReconcile");
 
+        logitudeWindow.IsFullScreen = true;
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./Accounting/Components/Others/ExternalReconcileComponent');
         logitudeWindow.WindowClosed.subscribe(($event: any) =>

@@ -82,11 +82,11 @@ class LastStatusItem {
             this.VesselName = item.VesselName;
             this.VoyageNumber = item.VoyageNumber;
 
-            if (this.DepartureDate && item.TimeOfDepartureInfo) {
+            if (this.DepartureDate) {
                 this.DepartureDateInfo = item.TimeOfDepartureInfo == "E" ? "ETD" : "ATD";
             }
 
-            if (this.ArrivalDate && item.TimeOfArrivalInfo) {
+            if (this.ArrivalDate) {
                 this.ArrivalDateInfo = item.TimeOfArrivalInfo == "E" ? "ETA" : "ATA";
             }
 
