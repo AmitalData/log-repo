@@ -11,7 +11,6 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_ShipmentFollowerst_GetShipmentFollowersByShipmentNumber()
         {
-            LoginService.GetLoginTokenByCredentials();
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "ShipmenFollowerst",

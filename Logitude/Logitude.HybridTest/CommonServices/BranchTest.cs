@@ -20,9 +20,15 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_Branch_UPSERT()
         {
-            LoginService.GetLoginTokenByCredentials();
-            Response serviceResponse = BranchWcfCaller.CallBranchUpsert();
-            Assert.IsFalse(serviceResponse.HasError, serviceResponse.ErrorMessage);
+            BranchPM branchPM = new BranchPM()
+            {
+                Code = HybridData.BranchCode,
+                EnglishName = "Hybrid Branch",
+                LocalName = "Hybrid Branch",
+                Tenant = TestEnvironmentGlobalParameters.Tenant,
+            };
+            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(branchPM);
+            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
         }
     }

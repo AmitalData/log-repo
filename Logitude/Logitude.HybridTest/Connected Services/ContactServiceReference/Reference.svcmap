@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="6d8df7d4-b6c8-4879-9944-6b6bda8499f4" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="1f510bb0-b682-4e5f-a31a-a977081650d7" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -22,16 +22,16 @@
     <MetadataSource Address="http://localhost:9996/WcfApi/ContactWcfService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="ContactWcfService.xsd" MetadataType="Schema" ID="1f64046e-02ca-48b7-9a40-d98d69a450bf" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ContactWcfService.svc?xsd=xsd3" />
-    <MetadataFile FileName="ContactWcfService1.xsd" MetadataType="Schema" ID="a5e51f71-b948-4716-a7f3-ae6ecce85fed" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ContactWcfService.svc?xsd=xsd2" />
-    <MetadataFile FileName="ContactWcfService2.xsd" MetadataType="Schema" ID="03fa5348-11b7-42b5-ae81-7ae8cd1c2131" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ContactWcfService.svc?xsd=xsd1" />
-    <MetadataFile FileName="ContactWcfService3.xsd" MetadataType="Schema" ID="8a94646e-e6c3-4daa-baa6-858778a33caa" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ContactWcfService.svc?xsd=xsd7" />
-    <MetadataFile FileName="ContactWcfService.wsdl" MetadataType="Wsdl" ID="5ad9d11a-41e3-4d02-adf8-c37001744c9f" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ContactWcfService.svc?wsdl" />
-    <MetadataFile FileName="ContactWcfService4.xsd" MetadataType="Schema" ID="95b2b7cb-0900-40a9-8c6d-b228c5bfb90a" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ContactWcfService.svc?xsd=xsd5" />
-    <MetadataFile FileName="ContactWcfService5.xsd" MetadataType="Schema" ID="8616b0b0-c36f-45d4-aade-1a8d8a1abced" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ContactWcfService.svc?xsd=xsd0" />
-    <MetadataFile FileName="ContactWcfService6.xsd" MetadataType="Schema" ID="b8c75071-06a5-457b-b02b-ee8ea5222b02" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ContactWcfService.svc?xsd=xsd4" />
-    <MetadataFile FileName="ContactWcfService7.xsd" MetadataType="Schema" ID="7950275d-1100-41ff-a6d9-05de7137efd1" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ContactWcfService.svc?xsd=xsd6" />
-    <MetadataFile FileName="ContactWcfService.disco" MetadataType="Disco" ID="22dc4846-9fd2-4d4b-a623-942789060bb8" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ContactWcfService.svc?disco" />
+    <MetadataFile FileName="ContactWcfService.xsd" MetadataType="Schema" ID="0a9fcedd-de72-437f-a3c2-5caa9961bfb5" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ContactWcfService.svc?xsd=xsd3" />
+    <MetadataFile FileName="ContactWcfService1.xsd" MetadataType="Schema" ID="cad167b2-2b66-486f-bb5b-c250cab6527b" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ContactWcfService.svc?xsd=xsd2" />
+    <MetadataFile FileName="ContactWcfService2.xsd" MetadataType="Schema" ID="d1418612-5809-408b-9590-0d2d6d8f2213" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ContactWcfService.svc?xsd=xsd1" />
+    <MetadataFile FileName="ContactWcfService3.xsd" MetadataType="Schema" ID="b66442f3-70f4-42de-85a6-f53e92204011" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ContactWcfService.svc?xsd=xsd7" />
+    <MetadataFile FileName="ContactWcfService.wsdl" MetadataType="Wsdl" ID="db13f42d-7f88-4c0e-8512-93f2e74fa768" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ContactWcfService.svc?wsdl" />
+    <MetadataFile FileName="ContactWcfService4.xsd" MetadataType="Schema" ID="bf80b5d3-0634-41e8-b52b-a552e1a4e840" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ContactWcfService.svc?xsd=xsd5" />
+    <MetadataFile FileName="ContactWcfService5.xsd" MetadataType="Schema" ID="435d91c3-5cfe-4863-86fd-2a854c0b13da" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ContactWcfService.svc?xsd=xsd0" />
+    <MetadataFile FileName="ContactWcfService6.xsd" MetadataType="Schema" ID="d6057ac3-4bc8-4b50-a64e-84ec52407312" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ContactWcfService.svc?xsd=xsd4" />
+    <MetadataFile FileName="ContactWcfService7.xsd" MetadataType="Schema" ID="bf7f97d5-0d9d-43e9-82fa-8c962f98d911" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ContactWcfService.svc?xsd=xsd6" />
+    <MetadataFile FileName="ContactWcfService.disco" MetadataType="Disco" ID="abdef05e-ed7a-4630-8757-0d822bfe132d" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/ContactWcfService.svc?disco" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

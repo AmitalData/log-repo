@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.HybridTest.WcfCallers;
 using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -11,10 +11,16 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_Vessel_UPSERT()
         {
-            LoginService.GetLoginTokenByCredentials();
-            //Response serviceResponse = VesselWcfCaller.CallVesselUpsert();
-           // Assert.IsFalse(serviceResponse.HasError, serviceResponse.ErrorMessage);
-          //  Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            VesselPM vesselPM = new VesselPM()
+            {
+                Code = HybridData.VesselCode,
+                EnglishName = "Hybrid Vessel",
+                LocalName = "Hybrid Vessel",
+                Tenant = TestEnvironmentGlobalParameters.Tenant,
+            };
+            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(vesselPM);
+            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
         }
     }
 }

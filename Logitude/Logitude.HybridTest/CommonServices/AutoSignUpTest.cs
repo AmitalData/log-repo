@@ -11,10 +11,8 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_AutoSignUp_INSERT()
         {
-            LoginService.GetLoginTokenByCredentials();
             Assert.Inconclusive("FILL ?!");
-
-            LoginService.GetLoginTokenByCredentials();
+            
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "AutoSignUp",
