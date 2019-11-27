@@ -734,7 +734,7 @@
                     </log-column>
 
                     <!-- Notes -->
-                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'LedgerTransaction.F.Notes' | TextCodeTranslationPipe" [width]="'90'" [binding]="'Notes'">
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'LedgerTransaction.F.Notes' | TextCodeTranslationPipe" [width]="'250'" [binding]="'Notes'">
                         <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
                             <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
                                 <span>{{item.Notes}}</span>
