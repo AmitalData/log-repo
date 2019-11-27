@@ -71,6 +71,7 @@ export class AccountingTabComponent implements OnInit {
             case "Trucker":
             case "Warehouse":
             case "Vendor":
+            case "AccountingPartner":
                 {
                     this.isPartnerEntity = true;
                     break;
