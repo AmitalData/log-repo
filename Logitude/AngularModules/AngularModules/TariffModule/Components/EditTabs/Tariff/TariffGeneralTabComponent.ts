@@ -436,59 +436,20 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
 
             IdPropsName.push("Charge Type " + index);
             UOMPropsName.push("UOM " + index);
-
-            if (this.EntityPM.TypeCode == "OFS") {
-                if (this.IdProps.filter(p => this[p + ""] == this[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this[IdProps[index - 1]] != null)[0] != null) {
-                    if (this.UOMProps.filter(p => this[p + ""] == this[UOMProps[index - 1]] && (p + "" != UOMProps[index - 1] + "") && this[UOMProps[index - 1]] != null)[0] != null) {
-                        var chargresTypes = this.UOMProps.filter(p => this[p + ""] == this[UOMProps[index - 1]]);
-                        var isDuplicatiedUOMT: boolean = false;
-                        var tempCharges = [];
-                        chargresTypes.forEach(item => {
-                            var chargeItem = item.replace("UOM", "Id");
-                            if (tempCharges.includes(this[chargeItem + ""])) {
-                                isDuplicatiedUOMT = true;
-                                return;
-                            }
-                            else {
-                                tempCharges.push(this[chargeItem + ""]);
-                            }
-                        });
-                        if (isDuplicatiedUOMT) {
-                            var chargresType = this.IdProps.filter(p => this[p + ""] == this[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this[IdProps[index - 1]] != null)[0];
-                            var UOMsType = this.UOMProps.filter(p => this[p + ""] == this[UOMProps[index - 1]] && (p + "" != UOMProps[index - 1] + "") && this[UOMProps[index - 1]] != null)[0];
-                            var value = this[chargresType + ""] + " " + this[UOMsType + ""] + ", ";
-                            if (!DuplicatedChargesIds.includes(value)) {
-                                DuplicatedChargesIds.push(value);
-                                //Enable using the same charge type with different measurment
-                                this.chargesTypePMService.getSingleFromCache(this[chargresType + ""]).subscribe(res => {
-                                    if (!res.HasError) {
-                                        var chargesTypeList: ChargesTypeList = res.Result;
-                                        if (res) {
-                                            this.ValidationErrorsList.push("Charge type " + chargesTypeList.EnglishName + " is duplicated");
-                                        }
-                                    }
-                                });
+            if (this.IdProps.filter(p => this[p + ""] == this[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this[IdProps[index - 1]] != null)[0] != null) {
+                var chargresType = this.IdProps.filter(p => this[p + ""] == this[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this[IdProps[index - 1]] != null)[0];
+                if (!DuplicatedChargesIds.includes(this[chargresType + ""])) {
+                    DuplicatedChargesIds.push(this[chargresType + ""]);
+                    this.chargesTypePMService.getSingleFromCache(this[chargresType + ""]).subscribe(res => {
+                        if (!res.HasError) {
+                            var chargesTypeList: ChargesTypeList = res.Result;
+                            if (res) {
+                                this.ValidationErrorsList.push("Charge type " + chargesTypeList.EnglishName + " is duplicated");
                             }
                         }
-                    }
-                }
-            } else {
-                if (this.IdProps.filter(p => this[p + ""] == this[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this[IdProps[index - 1]] != null)[0] != null) {
-                    var chargresType = this.IdProps.filter(p => this[p + ""] == this[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this[IdProps[index - 1]] != null)[0];
-                    if (!DuplicatedChargesIds.includes(this[chargresType + ""])) {
-                        DuplicatedChargesIds.push(this[chargresType + ""]);
-                        this.chargesTypePMService.getSingleFromCache(this[chargresType + ""]).subscribe(res => {
-                            if (!res.HasError) {
-                                var chargesTypeList: ChargesTypeList = res.Result;
-                                if (res) {
-                                    this.ValidationErrorsList.push("Charge type " + chargesTypeList.EnglishName + " is duplicated");
-                                }
-                            }
-                        });
-                    }
+                    });
                 }
             }
-            
             if (index == 1) {
                 if (AppTool.IsNullOrEmpty(this[IdProps[index - 1]])) {
                     tempErrors.push(IdPropsName[index - 1] + " is required");
