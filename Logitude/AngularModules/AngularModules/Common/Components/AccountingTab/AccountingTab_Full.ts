@@ -35,7 +35,7 @@ export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnIn
 
     public get ShowConnectToCardButton() : boolean {
         if(this.CardList)
-            return this.CardList.PartnerTypeId == 'CS'||this.CardList.PartnerTypeId == 'VD';
+            return this.CardList.PartnerTypeId == 'CS' || this.CardList.PartnerTypeId == 'VD' || this.CardList.PartnerTypeId == 'AC';
 
         return false;
     }
@@ -153,6 +153,11 @@ export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnIn
             args.AccountType = "2";
             args.ChartOfAccountType = "3";
         }
+        else if (this.CardList.PartnerTypeId == "AC") {
+            args.AccountType = null;
+            args.ChartOfAccountType = null;
+           
+        }
         else {
             args.AccountType = "3";
             args.ChartOfAccountType = "4";
@@ -161,8 +166,11 @@ export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnIn
         args.CardId = this.CardList.Id;
         args.DisplayNo = this.CardList.Code;
         args.LocalName = this.CardList.LocalName;
+
         args.EnglishName = this.CardList.EnglishName;
+        args.PartnerType = "AC";
         logWindow.WindowArgs = args;
+
         logWindow.Show('./Accounting/Components/NewEntity/NewGLAccountComponent');
 
         logWindow.WindowClosed.subscribe(s => {

@@ -38,11 +38,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return new SystemDataPM()
             {
-                UserId = user.Id,
+                UserId = user != null ? user.Id:"",
                 Date = DateTime.Now.ToShortDateString(),
-                Signature = user.Contact.Signature,
-                SignatureHtml = user.Contact.SignatureHtml,
-                UserName = user.Contact.EnglishName,
+                Signature = user != null ? user.Contact.Signature: null,
+                SignatureHtml = user != null ? user.Contact.SignatureHtml: null,
+                UserName = user!=null ? user.Contact.EnglishName: "",
                 LocalCurrencyId = tenant.CurrencyId,
                 AddressId = tenant.AddressId,
                 Company = tenant.Company,
@@ -50,7 +50,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 IATA = tenant.IATA,
                 VatNumber = tenant.VatNumber,
                 Website = tenant.Website,
-                ContactId = user.Id,
+                ContactId = user != null ? user.Id:"",
                 Supportemail = supportEmail,
             };
         }
