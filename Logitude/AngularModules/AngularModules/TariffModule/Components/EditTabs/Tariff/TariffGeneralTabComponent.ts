@@ -8,6 +8,8 @@ import { ChargesTypeList } from '../../../../Common/EntityLists/ChargesTypeList'
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { TariffDomainService } from '../../../../TariffModule/Services/TariffDomainService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { MeasurementListService } from '../../../../Common/Services/StandardLists/MeasurementListService';
+import { MeasurementList } from '../../../../Common/EntityLists/MeasurementList';
 
 
 
@@ -24,8 +26,10 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
     private IdProps: string[] = [];
     private UOMProps: string[] = [];
     public ChargeTypesQueryFilters: ApiQueryFilters;
+    public MeasurmentQueryFilters: ApiQueryFilters;
     public ValidationErrorsList: string[] = [];
     private chargesTypePMService: ChargesTypeListService;
+    private measurementPMService: MeasurementListService;
     public SellerDependancy: string = "AL";
     public TariffCurrencyTextCode: string = "Tariff.F.CurrencyId";
     public IsContainersAreaVisible: boolean = false;
@@ -36,10 +40,11 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
         
         this.BuildQueryFilters();
 
-        if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC") {
+        if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
             this.FillChargesIDsAndUOMS();
             this.VisibileSurchargesArea = true;
             this.TariffCurrencyTextCode = "Tariff.O.DefaultCurrency";
+            this.measurementPMService = new MeasurementListService();
         }
 
         else if (this.EntityPM.TypeCode == "OFC") {
@@ -91,15 +96,19 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
 
     BuildQueryFilters() {
         var EntityType: string = "IsAir";
-        if (this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OFC") {
+        if (this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OFC" || this.EntityPM.TypeCode == "OFS") {
             EntityType = "IsOcean";
             this.SellerDependancy = "SL";
         }
 
         this.ChargeTypesQueryFilters = new ApiQueryFilters();
+        this.MeasurmentQueryFilters = new ApiQueryFilters();
         this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");
         this.ChargeTypesQueryFilters.addAdditionalFilter(EntityType, true, null, null, "Equals", false, false, false, "Boolean");
         this.ChargeTypesQueryFilters.addAdditionalFilter("ChargesGroupCode", "FRT", null, null, "NotEqual", false, false, false, "string");
+        if (this.EntityPM.TypeCode != "OFS") {
+            this.MeasurmentQueryFilters.addAdditionalFilter("IsContainer", false, null, null, "Equals", false, false, false, "Boolean");
+        }
     }
 
     FillChargesIDsAndUOMS() {
@@ -427,20 +436,59 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
 
             IdPropsName.push("Charge Type " + index);
             UOMPropsName.push("UOM " + index);
-            if (this.IdProps.filter(p => this[p + ""] == this[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this[IdProps[index - 1]] != null)[0] != null) {
-                var chargresType = this.IdProps.filter(p => this[p + ""] == this[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this[IdProps[index - 1]] != null)[0];
-                if (!DuplicatedChargesIds.includes(this[chargresType + ""])) {
-                    DuplicatedChargesIds.push(this[chargresType + ""]);
-                    this.chargesTypePMService.getSingleFromCache(this[chargresType + ""]).subscribe(res => {
-                        if (!res.HasError) {
-                            var chargesTypeList: ChargesTypeList = res.Result;
-                            if (res) {
-                                this.ValidationErrorsList.push("Charge type " + chargesTypeList.EnglishName + " is duplicated");
+
+            if (this.EntityPM.TypeCode == "OFS") {
+                if (this.IdProps.filter(p => this[p + ""] == this[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this[IdProps[index - 1]] != null)[0] != null) {
+                    if (this.UOMProps.filter(p => this[p + ""] == this[UOMProps[index - 1]] && (p + "" != UOMProps[index - 1] + "") && this[UOMProps[index - 1]] != null)[0] != null) {
+                        var chargresTypes = this.UOMProps.filter(p => this[p + ""] == this[UOMProps[index - 1]]);
+                        var isDuplicatiedUOMT: boolean = false;
+                        var tempCharges = [];
+                        chargresTypes.forEach(item => {
+                            var chargeItem = item.replace("UOM", "Id");
+                            if (tempCharges.includes(this[chargeItem + ""])) {
+                                isDuplicatiedUOMT = true;
+                                return;
+                            }
+                            else {
+                                tempCharges.push(this[chargeItem + ""]);
+                            }
+                        });
+                        if (isDuplicatiedUOMT) {
+                            var chargresType = this.IdProps.filter(p => this[p + ""] == this[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this[IdProps[index - 1]] != null)[0];
+                            var UOMsType = this.UOMProps.filter(p => this[p + ""] == this[UOMProps[index - 1]] && (p + "" != UOMProps[index - 1] + "") && this[UOMProps[index - 1]] != null)[0];
+                            var value = this[chargresType + ""] + " " + this[UOMsType + ""] + ", ";
+                            if (!DuplicatedChargesIds.includes(value)) {
+                                DuplicatedChargesIds.push(value);
+                                //Enable using the same charge type with different measurment
+                                this.chargesTypePMService.getSingleFromCache(this[chargresType + ""]).subscribe(res => {
+                                    if (!res.HasError) {
+                                        var chargesTypeList: ChargesTypeList = res.Result;
+                                        if (res) {
+                                            this.ValidationErrorsList.push("Charge type " + chargesTypeList.EnglishName + " is duplicated");
+                                        }
+                                    }
+                                });
                             }
                         }
-                    });
+                    }
+                }
+            } else {
+                if (this.IdProps.filter(p => this[p + ""] == this[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this[IdProps[index - 1]] != null)[0] != null) {
+                    var chargresType = this.IdProps.filter(p => this[p + ""] == this[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this[IdProps[index - 1]] != null)[0];
+                    if (!DuplicatedChargesIds.includes(this[chargresType + ""])) {
+                        DuplicatedChargesIds.push(this[chargresType + ""]);
+                        this.chargesTypePMService.getSingleFromCache(this[chargresType + ""]).subscribe(res => {
+                            if (!res.HasError) {
+                                var chargesTypeList: ChargesTypeList = res.Result;
+                                if (res) {
+                                    this.ValidationErrorsList.push("Charge type " + chargesTypeList.EnglishName + " is duplicated");
+                                }
+                            }
+                        });
+                    }
                 }
             }
+            
             if (index == 1) {
                 if (AppTool.IsNullOrEmpty(this[IdProps[index - 1]])) {
                     tempErrors.push(IdPropsName[index - 1] + " is required");
@@ -486,6 +534,19 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
                     }
                 }
             }
+            //Disable "By Container Type" UOM
+            if (this.EntityPM.TypeCode == "OFS" && this[UOMProps[index - 1]] != null) {
+                this.measurementPMService.getSingleFromCache(this[UOMProps[index - 1]]).subscribe(res => {
+                    if (!res.HasError) {
+                        var UOMEntity: MeasurementList = res.Result;
+                        if (res) {
+                            if (UOMEntity.Code == "BCNT") {
+                                this.ValidationErrorsList.push("By Container Type measurment dose not enabled");
+                            }
+                        }
+                    }
+                });
+            }
         }
 
         if (!emptyLines) {
@@ -496,7 +557,7 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
     }
 
     ngAfterViewInit() {
-        if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC") {
+        if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
             this.Validate(true);
         }
 
