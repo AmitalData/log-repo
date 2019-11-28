@@ -254,7 +254,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.CalculationOfTaxReportfields(entityPM, isApprovingInvoice);
             CheckLinesVatExcempt(entityPM, isApprovingInvoice);
 
-            ARInvoiceHelper helper = new ARInvoiceHelper();
+            ARInvoiceHelper helper = new ARInvoiceHelper(this.tenant, this.loggedContactId);
             helper.ARInvoiceQuickbooksValidating(entityPM, this.isApprovingInvoice, isNewEntity,this.objectContext,this.myCommonContext,isVoidingInvoice);
          
             ARInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity, loggedContactId);
@@ -457,7 +457,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.UpdateInvoiceLines();
                 this.UpdateTotalVats();
                 
-                ARInvoiceHelper helper = new ARInvoiceHelper();
+                ARInvoiceHelper helper = new ARInvoiceHelper(this.tenant, this.loggedContactId);
                 if (entityPM.SetReSendQBO)
                 {
                     helper.ARInvoiceQuickbooksValidating(entityPM, true, isNewEntity, this.objectContext, this.myCommonContext, isVoidingInvoice);

@@ -138,6 +138,7 @@ export class ShipmentPMService {
 
     getSingleBySecurityKeyTenantWithoutToken(SecurityKey: string,Tenant:number) {
 
+        var myCustomURL = "http://13.93.36.4/api/shipment";
         var authHeader = new Headers();
         //authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         //authHeader.append('CallTimKey', ServiceHelper.GetLoggedUserToken());
@@ -145,7 +146,7 @@ export class ShipmentPMService {
         //var key = PerformanceLogger.AddLogTime();
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetSingleBySecurityKeyWithoutToken?key=' + SecurityKey + '&tenant=' + Tenant, {
+            return this._http.get(myCustomURL + '/GetSingleBySecurityKeyWithoutToken?key=' + SecurityKey + '&tenant=' + Tenant, {
                 headers: authHeader
             }).map(response => {
 
