@@ -1,23 +1,27 @@
-import {ShipmentArchiveFilter} from '../../../../Controls/ShipmentArchiveFilter';
-import {TransportsFilter} from '../../../../Controls/TransportsFilter';
-import {Component, Output, EventEmitter, OnInit, AfterViewInit} from '@angular/core';
-import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import {SearchTextBox} from '../../../../Controls/SearchTextBox';
-import {IconButton} from '../../../../Controls/IconButton';
-import {LogGridComponent} from '../../../../Infrastructure/Components/LogitudeComponents/LogGridComponent/LogGridComponent'
-import {Http, Response} from '@angular/http';
-import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs';
-import {EntityListService} from '../../../../Infrastructure/Services/EntityListService';
-import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {LogBoxDocumentsComponent} from './LogBoxDocumentsComponent';
-import {ShipmentDomainService, ImporterQueriesDataCounts} from '../../../../Shipment/Services/ShipmentDomainService';
-import {AppTool} from '../../../../Infrastructure/Tools';
-import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
-import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
-import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
-import {UserExtendedPMService} from '../../../../Common/Services/ExtendedPMs/UserExtendedPMService'; 
-import {ShipmentPMService} from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
-import {ShipmentAdditionalCloudDataService} from '../../../../Shipment/Services/Others/ShipmentAdditionalCloudDataService';
+import { ShipmentArchiveFilter } from '../../../../Controls/ShipmentArchiveFilter';
+import { TransportsFilter } from '../../../../Controls/TransportsFilter';
+import { Component, Output, EventEmitter, OnInit, AfterViewInit } from '@angular/core';
+import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { SearchTextBox } from '../../../../Controls/SearchTextBox';
+import { IconButton } from '../../../../Controls/IconButton';
+import { LogGridComponent } from '../../../../Infrastructure/Components/LogitudeComponents/LogGridComponent/LogGridComponent'
+import { Http, Response } from '@angular/http';
+import { ServiceArgs } from '../../../../Infrastructure/DataContracts/ServiceArgs';
+import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { LogBoxDocumentsComponent } from './LogBoxDocumentsComponent';
+import { ShipmentDomainService, ImporterQueriesDataCounts } from '../../../../Shipment/Services/ShipmentDomainService';
+import { AppTool } from '../../../../Infrastructure/Tools';
+import { ShipmentPM } from '../../../../Shipment/EntityPMs/ShipmentPM';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { ServiceLocator } from '../../../../Infrastructure/Locators/ServiceLocator';
+import { UserExtendedPMService } from '../../../../Common/Services/ExtendedPMs/UserExtendedPMService';
+import { ShipmentPMService } from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
+import { ShipmentAdditionalCloudDataService } from '../../../../Shipment/Services/Others/ShipmentAdditionalCloudDataService';
+import { UserLastSettingsPM } from '../../../../Common/EntityPMs/UserLastSettingsPM';
+import { UserLastSettingsPMService } from '../../../../Common/Services/StandardPMs/UserLastSettingsPMService';
+import { UserLastSettingsExtendedPMService } from '../../../../Common/Services/ExtendedPMs/UserLastSettingsExtendedPMService';
+
 
 @Component({
     moduleId: module.id,
@@ -35,12 +39,18 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     public _ShipmentPMService: ShipmentPMService;
     private CurrentSession = SessionLocator.SelectedSession;
     public ToggleIsExportShipments: boolean = false;
+    public _UserLastSettingsPMService: UserLastSettingsPMService;
+    public _UserLastSettingsExtendedPMService: UserLastSettingsExtendedPMService;
+
+
     RefTemplateWidth: string = '220px';
     constructor(private _entityListService: EntityListService) {
         this.myShipmentDomainService = new ShipmentDomainService();
         this.myUserPMService = new UserExtendedPMService();
         this._ShipmentPMService = new ShipmentPMService();
         this._ShipmentAdditionalCloudDataService = new ShipmentAdditionalCloudDataService();
+        this._UserLastSettingsPMService = new UserLastSettingsPMService();
+        this._UserLastSettingsExtendedPMService = new UserLastSettingsExtendedPMService();
         var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LEX" && d.TenantNumber == SessionLocator.Tenant)[0];
         if (FeatureToggle) {
             this.ToggleIsExportShipments = true;
@@ -63,7 +73,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             }
         }
         else {
-            if (this.ToggleIsExportShipments) { 
+            if (this.ToggleIsExportShipments) {
                 this.RefTemplateWidth = '250px';
             }
             else {
@@ -155,7 +165,8 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 }
             }
         }
-        this.LoadImporterShipments();
+        this.setUserLastSettings();
+        
 
     }
     ngAfterViewInit() {
@@ -199,8 +210,9 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     set SelectedTransportFilter(newValue: string) {
         if (this.mySelectedTransportFilter != newValue) {
             this.mySelectedTransportFilter = newValue;
-         
+
             this.LoadImporterShipments();
+            this.SaveUserLastSettings("SelectedTransportFilter", this.mySelectedTransportFilter);
             ServiceLocator.SendTotangoUserActivity("LogBox", "Transportation type filter changed");
         }
     }
@@ -211,6 +223,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             this.mySelectedDirectionFilter = newValue;
 
             this.LoadImporterShipments();
+            this.SaveUserLastSettings("SelectedDirectionFilter", this.mySelectedDirectionFilter);
             ServiceLocator.SendTotangoUserActivity("LogBox", "Direction filter changed");
         }
     }
@@ -230,9 +243,64 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             //this.LoadQueriesCounts();
             //this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: this.SelectedTransportFilter == "All" ? true : false });
             this.LoadImporterShipments();
+            this.SaveUserLastSettings("SelectedArchiveFilter", this.mySelectedArchiveFilter);
             ServiceLocator.SendTotangoUserActivity("LogBox", "Open/Close filter changed");
+           
         }
     }
+
+    SaveUserLastSettings(FilterName: string, FilterValue: string) {
+       
+        this._UserLastSettingsExtendedPMService.getsingleByUserIdNameSpace(SessionLocator.LoggedUserId, "ShipmentModules.ShipmentLogBox.LogBoxMainComponent").subscribe(Result => {
+            if (!Result.HasError && Result.Result == null) {
+                var myFilterSettings = new UserLastSettingsPM();
+                myFilterSettings.FilterName = FilterName;
+                myFilterSettings.FilterValue = FilterValue;
+                myFilterSettings.ControlNameSpace = "ShipmentModules.ShipmentLogBox.LogBoxMainComponent";
+                myFilterSettings.Tenant = SessionLocator.Tenant;
+                myFilterSettings.UserId = SessionLocator.LoggedUserId;
+                this._UserLastSettingsPMService.insert(myFilterSettings).subscribe(myResult => {
+                });
+            }
+            else if (!Result.HasError && Result.Result != null) {
+                var myUpdatedFilterSettings = Result.Result;
+                myUpdatedFilterSettings.FilterName = FilterName;
+                myUpdatedFilterSettings.FilterValue = FilterValue;
+                myUpdatedFilterSettings.ControlNameSpace = "ShipmentModules.ShipmentLogBox.LogBoxMainComponent";
+                myUpdatedFilterSettings.Tenant = SessionLocator.Tenant;
+                myUpdatedFilterSettings.UserId = SessionLocator.LoggedUserId;
+                this._UserLastSettingsPMService.update(myUpdatedFilterSettings).subscribe(myResult => {
+                });
+            }
+        });
+        
+    }
+
+    setUserLastSettings() {
+
+        this._UserLastSettingsExtendedPMService.getallByUserIdNameSpace(SessionLocator.LoggedUserId, "ShipmentModules.ShipmentLogBox.LogBoxMainComponent").subscribe(Result => {
+            if (!Result.HasError && Result.Result != null) {
+                var myFiltersSettings = Result.Result;
+           
+                var myArchiveFilter = myFiltersSettings.filter(a => a.FilterName == 'SelectedArchiveFilter');
+                var myDirectionFilter = myFiltersSettings.filter(a => a.FilterName == 'SelectedDirectionFilter');
+                var myTransportFilter = myFiltersSettings.filter(a => a.FilterName == 'SelectedTransportFilter');
+
+                if (myArchiveFilter.length > 0) {
+                    this.mySelectedArchiveFilter = myArchiveFilter[0].FilterValue;
+                }
+                if (myDirectionFilter.length > 0) {
+                    this.mySelectedDirectionFilter = myDirectionFilter[0].FilterValue;
+                }
+                if (myTransportFilter.length > 0) {
+                    this.mySelectedTransportFilter = myTransportFilter[0].FilterValue;
+                } 
+            }
+            this.LoadImporterShipments();
+        });
+
+    }
+
     public AgentShipmentsCount: string;
     public MyShipmentsCount: string;
     public RequestedCount: string;
@@ -338,7 +406,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 this.HoverTemplateIndex = 5;
             }
         }
-        
+
         //this.columns.push({
         //    FieldName: 'RequestedDocumentsCount',
         //    DataTypeCode: 'String',
@@ -679,7 +747,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             clearTimeout(this.timerToken);
         }
         this.timerToken = setTimeout(() => this.LoadImporterShipments(), 500);
-        
+
     }
 
     AddNewEntity() {
@@ -764,7 +832,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         newWindow.Width = 1050;
         newWindow.Height = 700;
 
-        newWindow.Title = "Multi Archive Open Shipments"; 
+        newWindow.Title = "Multi Archive Open Shipments";
 
         var windowArgs: any = {};
         //windowArgs.SourceEntity = myResult.Result;//this.rowData;

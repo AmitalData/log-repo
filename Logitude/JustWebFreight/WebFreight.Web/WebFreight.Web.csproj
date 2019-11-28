@@ -1085,6 +1085,7 @@
     <Compile Include="Controllers\CommonDataModel\Extended\ReportsTemplateExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\ReportsTemplatesVersionExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\TenantAdditionalDataViewsExtendedController.cs" />
+    <Compile Include="Controllers\CommonDataModel\Extended\UserLastSettingsExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\WarehouseExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\AccountingPartnerViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\AgentSharedDocumentViewsController.Generated.cs" />
