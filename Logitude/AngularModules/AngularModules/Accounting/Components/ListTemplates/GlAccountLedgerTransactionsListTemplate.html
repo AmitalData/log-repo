@@ -29,7 +29,7 @@
     </div>
     
 
-    <div *ngIf="fieldName == 'GLAccountIndicator' && rowData['OpenAmount'] != 0" [attr.title]="GetIndicatorText()" class="circleWrapper CenterCenter">
+    <div *ngIf="fieldName == 'GLAccountIndicator' && rowData['OpenAmount'] != 0" [attr.title]="GetGLAccountIndicatorText()" class="circleWrapper CenterCenter">
         <div class="circleDraw"
              [class.orangeCircle]="(rowData['LocalAmountDebit'] != 0 && rowData['OpenAmount'] != CalculateOriginalAmount()) || (rowData['LocalAmountCredit'] != 0 && rowData['OpenAmount'] != -1*CalculateOriginalAmount())"></div>
     </div>
