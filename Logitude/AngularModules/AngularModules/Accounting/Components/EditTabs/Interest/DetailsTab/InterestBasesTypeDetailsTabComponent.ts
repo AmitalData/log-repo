@@ -238,6 +238,27 @@ export class InterestBasesPeriodItem extends BaseComponent {
         }
     }
 
+    get UpdatedByUserName() { return this.EntityPM.UpdatedByUserName; }
+    set UpdatedByUserName(newValue: string) {
+        if (this.EntityPM.UpdatedByUserName != newValue) {
+            this.EntityPM.UpdatedByUserName = newValue;
+        }
+    }
+
+    get CreatedByUserName() { return this.EntityPM.CreatedByUserName; }
+    set CreatedByUserName(newValue: string) {
+        if (this.EntityPM.CreatedByUserName != newValue) {
+            this.EntityPM.CreatedByUserName = newValue;
+        }
+    }
+
+    get CreatedByUserId() { return this.EntityPM.CreatedByUserId; }
+    set CreatedByUserId(newValue: string) {
+        if (this.EntityPM.CreatedByUserId != newValue) {
+            this.EntityPM.CreatedByUserId = newValue;
+        }
+    }
+
     get UpdateDate() { return this.EntityPM.UpdateDate; }
     set UpdateDate(newValue: Date) {
         if (this.EntityPM.UpdateDate != newValue) {
