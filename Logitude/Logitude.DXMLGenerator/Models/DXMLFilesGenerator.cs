@@ -41,6 +41,25 @@ namespace Logitude.DXMLGenerator.Models
                 ExportErrorsData();
             }
         }
+
+        public void GetPathsForDXMLFiles()
+        {
+            List<string> dbTablesNames = GetAllTablesNamesFromDB();
+            if (dbTablesNames != null)
+            {
+                foreach (string tableName in dbTablesNames)
+                {
+                    Console.WriteLine("Get DXML File Path For " + tableName + " Table ...");
+                    string path = GetPathForDXMLFile(tableName);
+                    if (String.IsNullOrEmpty(path))
+                    {
+                        ErrorsData += "Cannot Find Path For " + tableName + " Table" + "\n";
+                    }
+                }
+                Console.WriteLine("\nGetting Paths For DXML Files Finished\n");
+                ExportErrorsData();
+            }
+        }
         
         public void DeleteDXMLFiles()
         {
@@ -262,10 +281,10 @@ namespace Logitude.DXMLGenerator.Models
             {
                 try
                 {
-                    var emptyNamespace = new XmlSerializerNamespaces(new[] { XmlQualifiedName.Empty });
                     string path = GetPathForDXMLFile(tableDefinition.Name);
                     if (!String.IsNullOrEmpty(path))
                     {
+                        XmlSerializerNamespaces emptyNamespace = new XmlSerializerNamespaces(new[] { XmlQualifiedName.Empty });
                         XmlSerializer xmlSerializer = new XmlSerializer(typeof(TableDefinition));
                         TextWriter textWriter = new StreamWriter(path);
                         xmlSerializer.Serialize(textWriter, tableDefinition, emptyNamespace);
@@ -453,7 +472,7 @@ namespace Logitude.DXMLGenerator.Models
             if (!String.IsNullOrEmpty(ErrorsData))
             {
                 string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-                string filePath = Path.Combine(projectDirectory, @"Errors.txt");
+                string filePath = Path.Combine(projectDirectory, "Errors.txt");
                 File.WriteAllText(filePath, ErrorsData);
                 Console.WriteLine("\n" + "All Errors Are Exported To /Errors.txt\n");
             }
