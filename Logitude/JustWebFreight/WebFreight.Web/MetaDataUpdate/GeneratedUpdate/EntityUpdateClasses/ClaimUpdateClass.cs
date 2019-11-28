@@ -3910,7 +3910,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn OpenClaimFilesQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenClaimFilesQuery.Id, IndexOrder = 5, ObjectFieldId = ClaimObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == ClaimObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter OpenClaimFilesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ClaimObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == ClaimObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "0", QueryId = OpenClaimFilesQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter OpenClaimFilesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ClaimObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == ClaimObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ClaimObjectFields.Where(d => d.FieldName == "IsClosed" && d.ObjectTableId == ClaimObjectTable.Id).FirstOrDefault().FieldCode,PredefinedValue = "0", QueryId = OpenClaimFilesQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      

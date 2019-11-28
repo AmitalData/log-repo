@@ -1321,7 +1321,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 			 QueryColumn TodayAPILogsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAPILogsQuery.Id, IndexOrder = 8, ObjectFieldId = APILogsObjectFields.Where(d => d.FieldName == "Refrence" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter TodayAPILogsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = APILogsObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "Today",PredefinedValue2 = null, QueryId = TodayAPILogsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter TodayAPILogsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = APILogsObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = APILogsObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "Today",PredefinedValue2 = null, QueryId = TodayAPILogsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      

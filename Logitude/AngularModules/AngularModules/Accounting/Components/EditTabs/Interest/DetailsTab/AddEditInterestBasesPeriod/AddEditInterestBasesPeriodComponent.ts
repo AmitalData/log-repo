@@ -4,6 +4,7 @@ import { InterestBasesPeriodPM } from '../../../../../EntityPMs/InterestBasesPer
 import { BaseComponent } from '../../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../../../../Infrastructure/Utilities/SessionLocator';
 import { Validator } from '../../../../../../Infrastructure/Validators/Validator';
+import { TextCodeTranslator } from '../../../../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
     moduleId: module.id,
@@ -18,6 +19,7 @@ export class AddEditInterestBasesPeriodComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
+        this.UIProperties.SetEnabled("InterestRate", "InterestBasesPeriod", false);
     }
 
     SetDataContext(dataContext: InterestBasesPeriodItem) {
@@ -34,13 +36,15 @@ export class AddEditInterestBasesPeriodComponent extends BaseComponent {
         Validator.TryValidateObject(this.DataContext.EntityPM, this.DataContext.ObjectTableName, errors);
         this.ValidationErrorsList = errors;
         if (this.DataContext.EntityPM.InterestRate && !this.CheckInterestRateValid(this.DataContext.EntityPM.InterestRate))
-            this.ValidationErrorsList.push('Interest rate format must be 2.2');
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.Theratepercentageshouldbeformattedas00.00"));
+        if (this.DataContext.EntityPM.InterestBaseStartDate && !this.CheckInterestBaseStartDateExist(this.DataContext.EntityPM.InterestBaseStartDate))
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.AbaseperiodwiththesamestartdateisalreadyAdded"));
         if (this.ValidationErrorsList.length == 0) {
             if (this.DataContext.IsNewEntity)
                 if (this.DataContext.InterestBasesTypePM.InterestBasesPeriods.indexOf(this.EntityPM) == -1) {
-                    this.DataContext.InterestBasesTypePM.AddInterestBasesPeriod(this.EntityPM);
                     this.DataContext.fatherComponent.InterestBasesPeriodsList.Insert(this.DataContext);
-                this.DataContext.fatherComponent.BuildData();
+                    this.DataContext.InterestBasesTypePM.AddInterestBasesPeriod(this.EntityPM);
+                    this.DataContext.fatherComponent.BuildData();
                 }
                 this.CurrentSession.CloseCurrentWindow();
         }
@@ -52,5 +56,14 @@ export class AddEditInterestBasesPeriodComponent extends BaseComponent {
         }
         return true;
     }
+    CheckInterestBaseStartDateExist(InterestBaseStartDate: Date): boolean {
+        for (let i = 0; i < this.DataContext.fatherComponent.InterestBasesPeriodsList.Length; i++) {
+            if (this.DataContext.fatherComponent.InterestBasesPeriodsList.Collection[i].InterestBaseStartDate.getTime() === InterestBaseStartDate.getTime()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
 }

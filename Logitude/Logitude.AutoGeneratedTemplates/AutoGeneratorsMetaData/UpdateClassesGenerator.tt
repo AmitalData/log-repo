@@ -719,7 +719,7 @@ private void WriteAddQueryFilterMethod(XElement entity,XElement Column,int index
 	   }
 #>
 
-             AdvancedQueryFilter <#= Code.Trim(new char[]{' ','"'}).Replace(" ","") #>QueryFilter_<#= index #> = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = <#= TblName.Trim('"') #>ObjectFields.Where(d => d.FieldName == <#= ObjectFieldName #> && d.ObjectTableId == <#= TblName.Trim('"') #>ObjectTable.Id).FirstOrDefault().Id, PredefinedValue = <#= PredefinedValue #>, QueryId = <#= Code.Trim(new char[]{' ','"'}).Replace(" ","") #>Query.Id, Tenant = 0<#= !string.IsNullOrEmpty(Operator) ?",Operator = " + Operator : ""  #>}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter <#= Code.Trim(new char[]{' ','"'}).Replace(" ","") #>QueryFilter_<#= index #> = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = <#= TblName.Trim('"') #>ObjectFields.Where(d => d.FieldName == <#= ObjectFieldName #> && d.ObjectTableId == <#= TblName.Trim('"') #>ObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = <#= TblName.Trim('"') #>ObjectFields.Where(d => d.FieldName == <#= ObjectFieldName #> && d.ObjectTableId == <#= TblName.Trim('"') #>ObjectTable.Id).FirstOrDefault().FieldCode,PredefinedValue = <#= PredefinedValue #>, QueryId = <#= Code.Trim(new char[]{' ','"'}).Replace(" ","") #>Query.Id, Tenant = 0<#= !string.IsNullOrEmpty(Operator) ?",Operator = " + Operator : ""  #>}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 <#+
 }
@@ -965,7 +965,7 @@ namespace <#= UpdateClassnamespacestring #>
 			Queries = queriesRepository.GetQueriesByTenantSystemLevel(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
             QueryColumns = queryColumnsRepository.GetQueryColumnsByTenant(0).ToDictionary(d => d.QueryId + d.ObjectFieldId, a => a);
 			TenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
-			tenantAdvancedFilters = advancedQueryFiltersRepository.GetAdvancedQueryFiltersByTenant(0).ToDictionary(d => d.QueryId + d.ObjectFieldId, a => a);
+			tenantAdvancedFilters = advancedQueryFiltersRepository.GetAdvancedQueryFiltersByTenant(0).ToDictionary(d => d.QueryId + d.ObjectFieldCode, a => a);
 			tenantScreens = screensRepository.GetScreensByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
 			tenantScreenFields = screenFieldsRepository.GetScreenFieldsByTenant(0).ToDictionary(d => d.ScreenId + d.ObjectFieldId);
 			TenantObjectTableTabs = objectTableTabsRepository.GetObjectTableTabsByTenant(0).ToDictionary(d => d.Code, a => a);

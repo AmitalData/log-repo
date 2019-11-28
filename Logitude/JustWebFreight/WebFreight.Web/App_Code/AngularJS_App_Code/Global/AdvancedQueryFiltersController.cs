@@ -89,7 +89,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
 
         }
 
-        public HttpResponseMessage GetAdvancedQueryFiltersByTenantuserobjecttablequery(int tenant,string objecttableid,string queryid, string loggedcontactid)
+        public HttpResponseMessage GetAdvancedQueryFiltersByTenantuserobjecttablequery(int tenant,string objecttableCode,string queryid, string loggedcontactid)
         {
             try
             {
@@ -102,7 +102,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 AdvancedQueryFilterPM filter = null;
                 if (result != null)
                 {
-                    filter = result.Where(a => a.ObjectFieldId == objecttableid && a.QueryId == queryid).FirstOrDefault();
+                    filter = result.Where(a => a.ObjectFieldCode == objecttableCode && a.QueryId == queryid).FirstOrDefault();
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, filter);

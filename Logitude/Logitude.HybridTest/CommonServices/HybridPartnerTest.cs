@@ -11,7 +11,6 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_HybridPartner_GetMislakaPartners()
         {
-            LoginService.GetLoginTokenByCredentials();
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "HybridPartner",
@@ -20,7 +19,6 @@ namespace Logitude.HybridTest.CommonServices
                 ServiceType = typeof(HybridPartnerList),
                 ServiceFilterType = null,
             };
-
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { TestEnvironmentGlobalParameters.Tenant, serviceResponse };
             HybridPartnerList[] customerAdditionalServices = (HybridPartnerList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
