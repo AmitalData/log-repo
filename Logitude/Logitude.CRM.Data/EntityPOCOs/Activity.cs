@@ -210,8 +210,6 @@ namespace Logitude.CRM.Data.EntityPOCOs
         public virtual Team Team { get; set; }
         [Column("ShipmentId")]
 	    public string ShipmentId { get; set; }
-
-        public int? TestProperty { get; set; }
     }
 }
 	 

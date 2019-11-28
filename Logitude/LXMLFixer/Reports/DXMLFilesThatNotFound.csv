@@ -1,0 +1,17 @@
+ClaimsRelatedEntitiesRefund.dxml
+ClaimsRelatedEntitiesSeizure.dxml
+ClientDrivingLicense.dxml
+ClientDrivingLicenseType.dxml
+CourierPendingReason.dxml
+CourierStatus.dxml
+CustomsDocumentsDefinition.dxml
+CustomsPartnerFtp.dxml
+DeclarationCourierStatus.dxml
+DeclarationMamanSpecialAction.dxml
+MamanSpecialAction.dxml
+MamanSpecialActionStatus.dxml
+PendingErrorPlace.dxml
+RefundCustomerActivityType.dxml
+SeizureFactorType.dxml
+SeizureMethodType.dxml
+TPGFileType.dxml

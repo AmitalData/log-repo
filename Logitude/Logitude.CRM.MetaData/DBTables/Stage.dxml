@@ -27,8 +27,8 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="Opportunities" ParentColumnName="LastStageIdBeforeClosure" ReferencedTableName="Stages" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Opportunities_dbo.Stages_LastStageIdBeforeClosure" />
-  <Relation ParentTableName="Opportunities" ParentColumnName="StageId" ReferencedTableName="Stages" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Opportunities_dbo.Stages_StageId" />
   <Relation ParentTableName="OpportunityStages" ParentColumnName="FromStageId" ReferencedTableName="Stages" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OpportunityStages_dbo.Stages_FromStageId" />
   <Relation ParentTableName="OpportunityStages" ParentColumnName="ToStageId" ReferencedTableName="Stages" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OpportunityStages_dbo.Stages_ToStageId" />
+  <Relation ParentTableName="Opportunities" ParentColumnName="LastStageIdBeforeClosure" ReferencedTableName="Stages" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Opportunities_dbo.Stages_LastStageIdBeforeClosure" />
+  <Relation ParentTableName="Opportunities" ParentColumnName="StageId" ReferencedTableName="Stages" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Opportunities_dbo.Stages_StageId" />
 </Table>

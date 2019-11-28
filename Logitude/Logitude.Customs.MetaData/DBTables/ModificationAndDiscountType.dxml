@@ -15,6 +15,6 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="SupplierInvoiceModifications" ParentColumnName="TypeCode" ReferencedTableName="ModificationAndDiscountTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceModifications_Customs.ModificationAndDiscountTypes_TypeCode" />
   <Relation ParentTableName="SupplierInvoiceItemsMods" ParentColumnName="TypeCode" ReferencedTableName="ModificationAndDiscountTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemsMods_Customs.ModificationAndDiscountTypes_TypeCode" />
+  <Relation ParentTableName="SupplierInvoiceModifications" ParentColumnName="TypeCode" ReferencedTableName="ModificationAndDiscountTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceModifications_Customs.ModificationAndDiscountTypes_TypeCode" />
 </Table>

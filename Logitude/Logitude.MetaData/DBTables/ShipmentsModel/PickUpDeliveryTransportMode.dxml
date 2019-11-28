@@ -9,8 +9,8 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="ShipmentPickUpDeliveries" ParentColumnName="TransportModeCode" ReferencedTableName="PickUpDeliveryTransportModes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ShipmentPickUpDeliveries_dbo.PickUpDeliveryTransportModes_TransportModeCode" />
-  <Relation ParentTableName="Shipments" ParentColumnName="OnCarriageAdditionalTransportModeCode" ReferencedTableName="PickUpDeliveryTransportModes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.PickUpDeliveryTransportModes_OnCarriageAdditionalTransportModeCode" />
   <Relation ParentTableName="ShipmentPackages" ParentColumnName="DeliveryTransportModeCode" ReferencedTableName="PickUpDeliveryTransportModes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ShipmentPackages_dbo.PickUpDeliveryTransportModes_DeliveryTransportModeCode" />
   <Relation ParentTableName="ShipmentPackages" ParentColumnName="ECRTransportModeCode" ReferencedTableName="PickUpDeliveryTransportModes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ShipmentPackages_dbo.PickUpDeliveryTransportModes_ECRTransportModeCode" />
+  <Relation ParentTableName="ShipmentPickUpDeliveries" ParentColumnName="TransportModeCode" ReferencedTableName="PickUpDeliveryTransportModes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ShipmentPickUpDeliveries_dbo.PickUpDeliveryTransportModes_TransportModeCode" />
+  <Relation ParentTableName="Shipments" ParentColumnName="OnCarriageAdditionalTransportModeCode" ReferencedTableName="PickUpDeliveryTransportModes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.PickUpDeliveryTransportModes_OnCarriageAdditionalTransportModeCode" />
 </Table>

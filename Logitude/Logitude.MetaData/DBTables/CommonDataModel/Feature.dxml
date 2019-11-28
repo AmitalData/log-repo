@@ -33,12 +33,12 @@
   <Column Name="ToggleCode" Type="varchar" Size="3">
     <Constraints Nullable="true" />
   </Column>
+  <Relation ParentTableName="RoleFeatures" ParentColumnName="FeatureId" ReferencedTableName="Features" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.RoleFeatures_dbo.Features_FeatureId" />
+  <Relation ParentTableName="PackageFeatures" ParentColumnName="FeatureId" ReferencedTableName="Features" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.PackageFeatures_dbo.Features_FeatureId" />
   <Relation ParentTableName="MenuButtons" ParentColumnName="FeatureId" ReferencedTableName="Features" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.MenuButtons_dbo.Features_FeatureId" />
   <Relation ParentTableName="MenusTables" ParentColumnName="FeatureId" ReferencedTableName="Features" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.MenusTables_dbo.Features_FeatureId" />
   <Relation ParentTableName="ObjectTableHelperControls" ParentColumnName="FeatureId" ReferencedTableName="Features" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ObjectTableHelperControls_dbo.Features_FeatureId" />
   <Relation ParentTableName="ObjectTableTabs" ParentColumnName="FeatureId" ReferencedTableName="Features" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ObjectTableTabs_dbo.Features_FeatureId" />
   <Relation ParentTableName="Reports" ParentColumnName="FeatureId" ReferencedTableName="Features" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Reports_dbo.Features_FeatureId" />
   <Relation ParentTableName="Queries" ParentColumnName="FeatureId" ReferencedTableName="Features" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Queries_dbo.Features_FeatureId" />
-  <Relation ParentTableName="RoleFeatures" ParentColumnName="FeatureId" ReferencedTableName="Features" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.RoleFeatures_dbo.Features_FeatureId" />
-  <Relation ParentTableName="PackageFeatures" ParentColumnName="FeatureId" ReferencedTableName="Features" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.PackageFeatures_dbo.Features_FeatureId" />
 </Table>

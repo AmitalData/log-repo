@@ -105,9 +105,10 @@
   <Column Name="UserType" Type="varchar" Size="1">
     <Constraints Nullable="false" />
   </Column>
+  <Relation ParentTableName="Opportunities" ParentColumnName="ContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Opportunities_dbo.Contacts_ContactId" />
   <Relation ParentTableName="Shipments" ParentColumnName="ShipperContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Contacts_ShipperContactId" />
-  <Relation ParentTableName="SharedFollowedShipments" ParentColumnName="ContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.SharedFollowedShipments_dbo.Contacts_ContactId" />
   <Relation ParentTableName="Shipments" ParentColumnName="ShipperNotExporterContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Contacts_ShipperNotExporterContactId" />
+  <Relation ParentTableName="SharedFollowedShipments" ParentColumnName="ContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.SharedFollowedShipments_dbo.Contacts_ContactId" />
   <Relation ParentTableName="Quotes" ParentColumnName="AgentContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.Contacts_AgentContactId" />
   <Relation ParentTableName="Quotes" ParentColumnName="ConsigneeContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.Contacts_ConsigneeContactId" />
   <Relation ParentTableName="Quotes" ParentColumnName="CustomerContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.Contacts_CustomerContactId" />
@@ -142,14 +143,13 @@
   <Relation ParentTableName="Shipments" ParentColumnName="FreelancerContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Contacts_FreelancerContactId" />
   <Relation ParentTableName="Shipments" ParentColumnName="FreightForwarderContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Contacts_FreightForwarderContactId" />
   <Relation ParentTableName="Correspondences" ParentColumnName="CreatedByContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Correspondences_dbo.Contacts_CreatedByContactId" />
-  <Relation ParentTableName="OccasionInvitees" ParentColumnName="ContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OccasionInvitees_dbo.Contacts_ContactId" />
-  <Relation ParentTableName="TermsofUseSignatures" ParentColumnName="ContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TermsofUseSignatures_dbo.Contacts_ContactId" />
   <Relation ParentTableName="ActivityEmailRecipients" ParentColumnName="ContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ActivityEmailRecipients_dbo.Contacts_ContactId" />
   <Relation ParentTableName="ActivityEmailRecipients" ParentColumnName="SenderContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ActivityEmailRecipients_dbo.Contacts_SenderContactId" />
+  <Relation ParentTableName="OccasionInvitees" ParentColumnName="ContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OccasionInvitees_dbo.Contacts_ContactId" />
   <Relation ParentTableName="ActivityInvitees" ParentColumnName="ContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ActivityInvitees_dbo.Contacts_ContactId" />
+  <Relation ParentTableName="TermsofUseSignatures" ParentColumnName="ContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TermsofUseSignatures_dbo.Contacts_ContactId" />
   <Relation ParentTableName="Shipments" ParentColumnName="Notify1ContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Contacts_Notify1ContactId" />
   <Relation ParentTableName="Shipments" ParentColumnName="Notify2ContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Contacts_Notify2ContactId" />
   <Relation ParentTableName="InboundEmails" ParentColumnName="CreatedByContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.InboundEmails_dbo.Contacts_CreatedByContactId" />
   <Relation ParentTableName="Shipments" ParentColumnName="ReleasingAgentContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Contacts_ReleasingAgentContactId" />
-  <Relation ParentTableName="Opportunities" ParentColumnName="ContactId" ReferencedTableName="Contacts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Opportunities_dbo.Contacts_ContactId" />
 </Table>

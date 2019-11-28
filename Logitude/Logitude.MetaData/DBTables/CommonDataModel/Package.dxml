@@ -15,9 +15,9 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="FeatureChanges" ParentColumnName="PackageCode" ReferencedTableName="Packages" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.FeatureChanges_dbo.Packages_PackageCode" />
-  <Relation ParentTableName="UserLicenses" ParentColumnName="PackageCode" ReferencedTableName="Packages" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.UserLicenses_dbo.Packages_PackageCode" />
   <Relation ParentTableName="PackageConnectedPackages" ParentColumnName="ConnectedPackageCode" ReferencedTableName="Packages" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.PackageConnectedPackages_dbo.Packages_ConnectedPackageCode" />
   <Relation ParentTableName="PackageConnectedPackages" ParentColumnName="PackageCode" ReferencedTableName="Packages" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.PackageConnectedPackages_dbo.Packages_PackageCode" />
   <Relation ParentTableName="PackageFeatures" ParentColumnName="PackageCode" ReferencedTableName="Packages" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.PackageFeatures_dbo.Packages_PackageCode" />
+  <Relation ParentTableName="FeatureChanges" ParentColumnName="PackageCode" ReferencedTableName="Packages" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.FeatureChanges_dbo.Packages_PackageCode" />
+  <Relation ParentTableName="UserLicenses" ParentColumnName="PackageCode" ReferencedTableName="Packages" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.UserLicenses_dbo.Packages_PackageCode" />
 </Table>

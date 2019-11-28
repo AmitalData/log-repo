@@ -1,278 +1,133 @@
 DXML Table, LXML Table
-Activities,Activities
+Claims,Claims
 DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-DescriptionRightToLeft,DescriptionRightToLeft,Nullable,False,True
-Id,Id,Nullable,False,True
-MeetingSummaryRightToLeft,MeetingSummaryRightToLeft,Nullable,False,True
+ImporterClaimTypeCode,ImporterClaimTypeCode,Size,3,2
 
 
 DXML Table, LXML Table
-ActivityEmailRecipients,ActivityEmailRecipients
+ClaimImporterDeclarsPage3Bs,ClaimImporterDeclarsPage3Bs
 DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-Id,Id,Nullable,False,True
+LineNo,LineNo,Size,0,2
 
 
 DXML Table, LXML Table
-ActivityInvitees,ActivityInvitees
+ClaimsRelatedEntities,ClaimsRelatedEntities
 DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+ContinuousMessagesTypeCode,ContinuousMessagesTypeCode,Size,9,3
+CustomsBranchCode,CustomsBranchCode,Size,17,4
+DecisionCode,DecisionCode,Type,nvarchar,varchar
+DecisionCode,DecisionCode,Size,128,2
+DeclarationVersion,DeclarationVersion,Size,0,9
+WarehouseTypeCode,WarehouseTypeCode,Size,17,9
 
 
 DXML Table, LXML Table
-ActivityNotes,ActivityNotes
+Consignments,Consignments
 DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-Id,Id,Nullable,False,True
+ReceiverWarehouseCode,ReceiverWarehouseCode,Size,20,17
+StorageSiteCode,StorageSiteCode,Size,20,17
 
 
 DXML Table, LXML Table
-ActivityOwnerHistories,ActivityOwnerHistories
+ConsignmentInternalTransitions,ConsignmentInternalTransitions
 DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-NeedSynchronization,NeedSynchronization,Nullable,False,True
+SiteCode,SiteCode,Size,20,17
 
 
 DXML Table, LXML Table
-ActivityPriorities,ActivityPriorities
+ConsignmentPackages,ConsignmentPackages
 DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+PackageTypeCode,PackageTypeCode,Size,4,2
 
 
 DXML Table, LXML Table
-ActivityStatus,ActivityStatus
+CourierCustomStatus,CourierCustomStatuses,Incorrect Table Name In LXML File
 DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Code,Code,Type,nvarchar,varchar
+Code,Code,Size,128,3
+LocalName,LocalName,Size,-1,100
+Name,Name,Type,nvarchar,varchar
+Name,Name,Size,-1,100
+SearchFields,SearchFields,Size,-1,1000
 
 
 DXML Table, LXML Table
-ActivityTimeTypes,ActivityTimeTypes
+CourierMasters,CourierMasters
 DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+GatewayPortCode,GatewayPortCode,Size,17,35
 
 
 DXML Table, LXML Table
-ActivityTypes,ActivityTypes
+CustomsVendors,CustomsVendors
 DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+IsPalestinian,IsPalestinian,Size,0,1
 
 
 DXML Table, LXML Table
-CallTypes,CallTypes
+DecCargoSplitConsPackDets,DecCargoSplitConsPackDets
 DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+PackageLine,PackageLine,Size,0,4
+PackageTypeCode,PackageTypeCode,Size,4,2
 
 
 DXML Table, LXML Table
-Correspondences,Correspondences
+DecisionTypes,DecisionTypes
 DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-NotifyMe,NotifyMe,Nullable,False,True
-NotifyOwner,NotifyOwner,Nullable,False,True
-RightToLeft,RightToLeft,Nullable,False,True
+Code,Code,Type,nvarchar,varchar
+Code,Code,Size,128,2
+EnglishName,EnglishName,Type,nvarchar,varchar
+EnglishName,EnglishName,Size,-1,50
+LocalName,LocalName,Size,-1,50
+SearchFields,SearchFields,Size,-1,1000
 
 
 DXML Table, LXML Table
-CorrespondencesAttachments,CorrespondencesAttachments
+Declarations,Declarations
 DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AcceptanceStatusCode,AcceptanceStatusCode,Size,3,1
+CourierCustomStatusCode,CourierCustomStatusCode,Type,nvarchar,varchar
+CourierCustomStatusCode,CourierCustomStatusCode,Size,128,3
+MamanStatusCode,MamanStatusCode,Size,3,2
+StorageSiteCode,StorageSiteCode,Size,20,17
 
 
 DXML Table, LXML Table
-CRMFilterSettings,CRMFilterSettings
+DocumentTypeCustomsDatas,DocumentTypeCustomsData,Incorrect Table Name In LXML File
 DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-Id,Id,Nullable,False,True
+CustomsDoucumentTypeCode,CustomsDoucumentTypeCode,Nullable,True,False
+DocumentTypeId,DocumentTypeId,Type,nvarchar,varchar
+DocumentTypeId,DocumentTypeId,Size,128,15
 
 
 DXML Table, LXML Table
-EmployeeGroups,EmployeeGroups
+MeasurmentUnits,MeasurmentUnits
 DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+MalamId,MalamId,Size,0,15
 
 
 DXML Table, LXML Table
-EmployeeGroupLines,EmployeeGroupLines
+Notifications,Notifications
 DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-IsDefaultOwner,IsDefaultOwner,Nullable,False,True
+Description,Description,Size,-1,32000
+SearchFields,SearchFields,Size,-1,5000
 
 
 DXML Table, LXML Table
-EscalationActionTimeIndicators,EscalationActionTimeIndicators
+NotificationReplies,NotificationReplies
 DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-Code,Code,Nullable,False,True
+ResponseToCustoms,ResponseToCustoms,Size,-1,32000
 
 
 DXML Table, LXML Table
-EscalationPreDefinitions,EscalationPreDefinitions
+PhysicalChecks,PhysicalChecks
 DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-Code,Code,Nullable,False,True
+OperationCode,OperationCode,Size,4,2
+StatusMessageCode,StatusMessageCode,Size,4,2
 
 
 DXML Table, LXML Table
-Occasions,Occasions
+PropertiesDetailsHistorys,PropertiesDetailsHistorys
 DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-InvitedContacts,InvitedContacts,Nullable,False,True
-InvitedCustomers,InvitedCustomers,Nullable,False,True
-OccasionStatusId,OccasionStatusId,Size,3,15
-ParticipatedContacts,ParticipatedContacts,Nullable,False,True
-ParticipatedCustomers,ParticipatedCustomers,Nullable,False,True
-
-
-DXML Table, LXML Table
-OccasionInvitees,OccasionInvitees
-DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-Invited,Invited,Nullable,False,True
-Participated,Participated,Nullable,False,True
-
-
-DXML Table, LXML Table
-OccasionStatuses,OccasionStatuses
-DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-Code,Code,Nullable,False,True
-
-
-DXML Table, LXML Table
-OccasionTypes,OccasionTypes
-DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-AddedManually,AddedManually,Nullable,False,True
-
-
-DXML Table, LXML Table
-Opportunities,Opportunities
-DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-IsCancelled,IsCancelled,Nullable,False,True
-
-
-DXML Table, LXML Table
-OpportunityAdditionalServices,OpportunityAdditionalServices
-DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-NotesRightToLeft,NotesRightToLeft,Nullable,False,True
-
-
-DXML Table, LXML Table
-OpportunityClosingReasons,OpportunityClosingReasons
-DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-
-
-DXML Table, LXML Table
-OpportunityCompetitors,OpportunityCompetitors
-DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-
-
-DXML Table, LXML Table
-OpportunityCompetitorProducts,OpportunityCompetitorProducts
-DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-
-
-DXML Table, LXML Table
-OpportunityProducts,OpportunityProducts
-DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-NotesRightToLeft,NotesRightToLeft,Nullable,False,True
-
-
-DXML Table, LXML Table
-OpportunityProductLocations,OpportunityProductLocations
-DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-
-
-DXML Table, LXML Table
-OpportunityStages,OpportunityStages
-DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-
-
-DXML Table, LXML Table
-OpportunityTypes,OpportunityTypes
-DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-
-
-DXML Table, LXML Table
-Questionnaires,Questionnaires
-DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-
-
-DXML Table, LXML Table
-QuestionnaireAnswers,QuestionnaireAnswers
-DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-Id,Id,Nullable,False,True
-
-
-DXML Table, LXML Table
-QuestionnaireAnswerLines,QuestionnaireAnswerLines
-DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-
-
-DXML Table, LXML Table
-QuestionnaireQuestions,QuestionnaireQuestions
-DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-
-
-DXML Table, LXML Table
-Ratings,Ratings
-DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-
-
-DXML Table, LXML Table
-SLAEscalations,SLAEscalations
-DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-
-
-DXML Table, LXML Table
-SLAEscalationRecepients,SLAEscalationRecepients
-DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-
-
-DXML Table, LXML Table
-SLAHeaders,SLAHeaders
-DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-
-
-DXML Table, LXML Table
-SLALines,SLALines
-DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-FirstResponseEscalate,FirstResponseEscalate,Nullable,False,True
-ResolveWithinEscalate,ResolveWithinEscalate,Nullable,False,True
-
-
-DXML Table, LXML Table
-Stages,Stages
-DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-
-
-DXML Table, LXML Table
-Tickets,Tickets
-DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-Closewithoutnotifying,Closewithoutnotifying,Nullable,False,True
-InternalMode,InternalMode,Nullable,False,True
-OpenEscalation,OpenEscalation,Nullable,False,True
-
-
-DXML Table, LXML Table
-TicketClassifications,TicketClassifications
-DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-
-
-DXML Table, LXML Table
-TicketCreatedByTypes,TicketCreatedByTypes
-DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-Code,Code,Nullable,False,True
-
-
-DXML Table, LXML Table
-TicketEscalations,TicketEscalations
-DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-
-
-DXML Table, LXML Table
-TicketSeverities,TicketSeverities
-DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-
-
-DXML Table, LXML Table
-TicketSources,TicketSources
-DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-Code,Code,Nullable,False,True
-
-
-DXML Table, LXML Table
-TicketStages,TicketStages
-DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-
-
-DXML Table, LXML Table
-TicketTypes,TicketTypes
-DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-
-
-DXML Table, LXML Table
-TimeUnits,TimeUnits
-DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+MeasurementUnitID,MeasurementUnitID,Size,0,15
 
 

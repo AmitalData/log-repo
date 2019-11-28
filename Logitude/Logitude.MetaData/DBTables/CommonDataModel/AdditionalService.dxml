@@ -16,6 +16,6 @@
     <Constraints Nullable="false" />
   </Column>
   <Relation ParentTableName="CardContactAdditionalServices" ParentColumnName="AdditionalServiceId" ReferencedTableName="AdditionalServices" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CardContactAdditionalServices_dbo.AdditionalServices_AdditionalServiceId" />
-  <Relation ParentTableName="OpportunityAdditionalServices" ParentColumnName="AdditionalServiceId" ReferencedTableName="AdditionalServices" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OpportunityAdditionalServices_dbo.AdditionalServices_AdditionalServiceId" />
   <Relation ParentTableName="CustomerAdditionalServices" ParentColumnName="AdditionalServiceId" ReferencedTableName="AdditionalServices" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomerAdditionalServices_dbo.AdditionalServices_AdditionalServiceId" />
+  <Relation ParentTableName="OpportunityAdditionalServices" ParentColumnName="AdditionalServiceId" ReferencedTableName="AdditionalServices" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OpportunityAdditionalServices_dbo.AdditionalServices_AdditionalServiceId" />
 </Table>

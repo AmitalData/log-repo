@@ -36,7 +36,7 @@
   <Column Name="UpdatedByUserId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
+  <Relation ParentTableName="EmployeeGroupLines" ParentColumnName="EmployeeGroupId" ReferencedTableName="EmployeeGroups" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.EmployeeGroupLines_dbo.EmployeeGroups_EmployeeGroupId" />
   <Relation ParentTableName="Tickets" ParentColumnName="EmployeeGroupId" ReferencedTableName="EmployeeGroups" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tickets_dbo.EmployeeGroups_EmployeeGroupId" />
   <Relation ParentTableName="TicketClassifications" ParentColumnName="EmployeeGroupId" ReferencedTableName="EmployeeGroups" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TicketClassifications_dbo.EmployeeGroups_EmployeeGroupId" />
-  <Relation ParentTableName="EmployeeGroupLines" ParentColumnName="EmployeeGroupId" ReferencedTableName="EmployeeGroups" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.EmployeeGroupLines_dbo.EmployeeGroups_EmployeeGroupId" />
 </Table>

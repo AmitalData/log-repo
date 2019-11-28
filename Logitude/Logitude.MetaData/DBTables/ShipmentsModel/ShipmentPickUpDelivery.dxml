@@ -111,7 +111,7 @@
   <Column Name="TruckNumber" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
+  <Relation ParentTableName="ShipmentPackages" ParentColumnName="DeliveryId" ReferencedTableName="ShipmentPickUpDeliveries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPackages_dbo.ShipmentPickUpDeliveries_DeliveryId" />
   <Relation ParentTableName="ShipmentPackages" ParentColumnName="EmptyContainerReturnId" ReferencedTableName="ShipmentPickUpDeliveries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPackages_dbo.ShipmentPickUpDeliveries_EmptyContainerReturnId" />
   <Relation ParentTableName="ShipmentPickUpDeliveryPackages" ParentColumnName="ShipmentPickUpDeliveryId" ReferencedTableName="ShipmentPickUpDeliveries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPickUpDeliveryPackages_dbo.ShipmentPickUpDeliveries_ShipmentPickUpDeliveryId" />
-  <Relation ParentTableName="ShipmentPackages" ParentColumnName="DeliveryId" ReferencedTableName="ShipmentPickUpDeliveries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPackages_dbo.ShipmentPickUpDeliveries_DeliveryId" />
 </Table>

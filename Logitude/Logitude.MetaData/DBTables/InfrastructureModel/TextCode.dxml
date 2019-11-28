@@ -44,8 +44,8 @@
   <Relation ParentTableName="ObjectFields" ParentColumnName="FullNameTextCodeId" ReferencedTableName="TextCodes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ObjectFields_dbo.TextCodes_FullNameTextCodeId" />
   <Relation ParentTableName="ObjectFields" ParentColumnName="HelpTextCodeId" ReferencedTableName="TextCodes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ObjectFields_dbo.TextCodes_HelpTextCodeId" />
   <Relation ParentTableName="ObjectFields" ParentColumnName="ListTextCodeId" ReferencedTableName="TextCodes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ObjectFields_dbo.TextCodes_ListTextCodeId" />
-  <Relation ParentTableName="Translations" ParentColumnName="TextCodeId" ReferencedTableName="TextCodes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Translations_dbo.TextCodes_TextCodeId" />
   <Relation ParentTableName="ObjectFields" ParentColumnName="ShortNameTextCodeId" ReferencedTableName="TextCodes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ObjectFields_dbo.TextCodes_ShortNameTextCodeId" />
   <Relation ParentTableName="Queries" ParentColumnName="NameTextCodeId" ReferencedTableName="TextCodes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Queries_dbo.TextCodes_NameTextCodeId" />
+  <Relation ParentTableName="Translations" ParentColumnName="TextCodeId" ReferencedTableName="TextCodes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Translations_dbo.TextCodes_TextCodeId" />
   <Relation ParentTableName="Features" ParentColumnName="NameTextCodeId" ReferencedTableName="TextCodes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Features_dbo.TextCodes_NameTextCodeId" />
 </Table>

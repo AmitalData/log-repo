@@ -150,6 +150,6 @@
   <Column Name="VendorSwift" Type="varchar" Size="20">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="APInvoicePayments" ParentColumnName="APPaymentId" ReferencedTableName="APPayments" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.APInvoicePayments_dbo.APPayments_APPaymentId" />
   <Relation ParentTableName="PaymentCheques" ParentColumnName="APPaymentId" ReferencedTableName="APPayments" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.PaymentCheques_dbo.APPayments_APPaymentId" />
+  <Relation ParentTableName="APInvoicePayments" ParentColumnName="APPaymentId" ReferencedTableName="APPayments" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.APInvoicePayments_dbo.APPayments_APPaymentId" />
 </Table>

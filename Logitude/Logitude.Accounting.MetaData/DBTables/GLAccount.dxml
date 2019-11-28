@@ -141,11 +141,13 @@
   <Column Name="UpdatedByUserId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
+  <Relation ParentTableName="Revaluations" ParentColumnName="GLAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Revaluations_dbo.GLAccounts_GLAccountId" />
+  <Relation ParentTableName="Revaluations" ParentColumnName="RevaluationsGLAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Revaluations_dbo.GLAccounts_RevaluationsGLAccountId" />
   <Relation ParentTableName="PaymentCheques" ParentColumnName="BankAccountGLAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.PaymentCheques_dbo.GLAccounts_BankAccountGLAccountId" />
-  <Relation ParentTableName="PaymentCheques" ParentColumnName="PayToGLAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.PaymentCheques_dbo.GLAccounts_PayToGLAccountId" />
   <Relation ParentTableName="ExternalReconciliations" ParentColumnName="GLAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ExternalReconciliations_dbo.GLAccounts_GLAccountId" />
   <Relation ParentTableName="LedgerTransactions" ParentColumnName="AccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.LedgerTransactions_dbo.GLAccounts_AccountId" />
   <Relation ParentTableName="LedgerTransactions" ParentColumnName="ControlAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.LedgerTransactions_dbo.GLAccounts_ControlAccountId" />
+  <Relation ParentTableName="PaymentCheques" ParentColumnName="PayToGLAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.PaymentCheques_dbo.GLAccounts_PayToGLAccountId" />
   <Relation ParentTableName="LedgerTransactions" ParentColumnName="OppositeAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.LedgerTransactions_dbo.GLAccounts_OppositeAccountId" />
   <Relation ParentTableName="JournalLines" ParentColumnName="CreditAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.JournalLines_dbo.GLAccounts_CreditAccountId" />
   <Relation ParentTableName="JournalLines" ParentColumnName="CreditControlAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.JournalLines_dbo.GLAccounts_CreditControlAccountId" />
@@ -172,12 +174,10 @@
   <Relation ParentTableName="FullAccountingSettings" ParentColumnName="VATInputsGLAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FullAccountingSettings_dbo.GLAccounts_VATInputsGLAccountId" />
   <Relation ParentTableName="FullAccountingSettings" ParentColumnName="VATOutputGLAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FullAccountingSettings_dbo.GLAccounts_VATOutputGLAccountId" />
   <Relation ParentTableName="FullAccountingSettings" ParentColumnName="VendorControlAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FullAccountingSettings_dbo.GLAccounts_VendorControlAccountId" />
-  <Relation ParentTableName="Reconciliations" ParentColumnName="AccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Reconciliations_dbo.GLAccounts_AccountId" />
   <Relation ParentTableName="GLAccountCurrencies" ParentColumnName="GLAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.GLAccountCurrencies_dbo.GLAccounts_GLAccountId" />
   <Relation ParentTableName="GLAccountCurrencies" ParentColumnName="MainGLAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.GLAccountCurrencies_dbo.GLAccounts_MainGLAccountId" />
   <Relation ParentTableName="GLAccountMoreDatas" ParentColumnName="AccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.GLAccountMoreDatas_dbo.GLAccounts_AccountId" />
   <Relation ParentTableName="GLAccountTotalByMonths" ParentColumnName="AccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.GLAccountTotalByMonths_dbo.GLAccounts_AccountId" />
+  <Relation ParentTableName="Reconciliations" ParentColumnName="AccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Reconciliations_dbo.GLAccounts_AccountId" />
   <Relation ParentTableName="GLAccountWithholdingTax" ParentColumnName="GLAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.GLAccountWithholdingTax_dbo.GLAccounts_GLAccountId" />
-  <Relation ParentTableName="Revaluations" ParentColumnName="GLAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Revaluations_dbo.GLAccounts_GLAccountId" />
-  <Relation ParentTableName="Revaluations" ParentColumnName="RevaluationsGLAccountId" ReferencedTableName="GLAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Revaluations_dbo.GLAccounts_RevaluationsGLAccountId" />
 </Table>

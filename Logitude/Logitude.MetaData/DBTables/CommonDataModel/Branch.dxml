@@ -45,6 +45,7 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
+  <Relation ParentTableName="UserPermittedBranches" ParentColumnName="BranchId" ReferencedTableName="Branches" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.UserPermittedBranches_dbo.Branches_BranchId" />
   <Relation ParentTableName="Quotes" ParentColumnName="BranchId" ReferencedTableName="Branches" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.Branches_BranchId" />
   <Relation ParentTableName="APInvoices" ParentColumnName="BranchId" ReferencedTableName="Branches" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.APInvoices_dbo.Branches_BranchId" />
   <Relation ParentTableName="INTTRABranchRegisteredCarriers" ParentColumnName="BranchId" ReferencedTableName="Branches" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.INTTRABranchRegisteredCarriers_dbo.Branches_BranchId" />
@@ -56,5 +57,4 @@
   <Relation ParentTableName="CashBooks" ParentColumnName="BranchId" ReferencedTableName="Branches" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CashBooks_dbo.Branches_BranchId" />
   <Relation ParentTableName="DocumentsFilings" ParentColumnName="BranchId" ReferencedTableName="Branches" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DocumentsFilings_dbo.Branches_BranchId" />
   <Relation ParentTableName="ARPayments" ParentColumnName="BranchId" ReferencedTableName="Branches" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARPayments_dbo.Branches_BranchId" />
-  <Relation ParentTableName="UserPermittedBranches" ParentColumnName="BranchId" ReferencedTableName="Branches" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.UserPermittedBranches_dbo.Branches_BranchId" />
 </Table>

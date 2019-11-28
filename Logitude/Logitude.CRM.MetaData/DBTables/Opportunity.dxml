@@ -153,11 +153,11 @@
   <Column Name="ValueField" Type="decimal">
     <Constraints Nullable="true" />
   </Column>
+  <Relation ParentTableName="OpportunityStages" ParentColumnName="OpportunityId" ReferencedTableName="Opportunities" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OpportunityStages_dbo.Opportunities_OpportunityId" />
   <Relation ParentTableName="Activities" ParentColumnName="OpportunityId" ReferencedTableName="Opportunities" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Activities_dbo.Opportunities_OpportunityId" />
   <Relation ParentTableName="OpportunityAdditionalServices" ParentColumnName="OpportunityId" ReferencedTableName="Opportunities" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OpportunityAdditionalServices_dbo.Opportunities_OpportunityId" />
   <Relation ParentTableName="OpportunityCompetitorProducts" ParentColumnName="OpportunityId" ReferencedTableName="Opportunities" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OpportunityCompetitorProducts_dbo.Opportunities_OpportunityId" />
   <Relation ParentTableName="OpportunityCompetitors" ParentColumnName="OpportunityId" ReferencedTableName="Opportunities" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OpportunityCompetitors_dbo.Opportunities_OpportunityId" />
   <Relation ParentTableName="OpportunityProductLocations" ParentColumnName="OpportunityId" ReferencedTableName="Opportunities" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OpportunityProductLocations_dbo.Opportunities_OpportunityId" />
   <Relation ParentTableName="OpportunityProducts" ParentColumnName="OpportunityId" ReferencedTableName="Opportunities" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OpportunityProducts_dbo.Opportunities_OpportunityId" />
-  <Relation ParentTableName="OpportunityStages" ParentColumnName="OpportunityId" ReferencedTableName="Opportunities" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OpportunityStages_dbo.Opportunities_OpportunityId" />
 </Table>

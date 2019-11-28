@@ -15,6 +15,6 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="Declarations" ParentColumnName="CourierSuspentionCode" ReferencedTableName="DeclarationStatusTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Declarations_Customs.DeclarationStatusTypes_CourierSuspentionCode" />
   <Relation ParentTableName="Declarations" ParentColumnName="DeclarationStatusTypeCode" ReferencedTableName="DeclarationStatusTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Declarations_Customs.DeclarationStatusTypes_DeclarationStatusTypeCode" />
+  <Relation ParentTableName="Declarations" ParentColumnName="CourierSuspentionCode" ReferencedTableName="DeclarationStatusTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Declarations_Customs.DeclarationStatusTypes_CourierSuspentionCode" />
 </Table>

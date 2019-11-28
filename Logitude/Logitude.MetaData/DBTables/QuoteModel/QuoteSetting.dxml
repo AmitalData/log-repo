@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="QuoteSettings">
+  <Column Name="AutomaticallyCloseDays" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
   <Column Name="CopyAgent" Type="bit">
     <Constraints Nullable="false" />
   </Column>

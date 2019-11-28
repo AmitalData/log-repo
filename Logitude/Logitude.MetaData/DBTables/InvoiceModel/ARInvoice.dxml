@@ -312,6 +312,7 @@
   <Column Name="VatNumber" Type="varchar" Size="30">
     <Constraints Nullable="true" />
   </Column>
+  <Relation ParentTableName="ARInvoiceTotalVATs" ParentColumnName="ARInvoiceId" ReferencedTableName="ARInvoices" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoiceTotalVATs_dbo.ARInvoices_ARInvoiceId" />
   <Relation ParentTableName="ShipmentReceivables" ParentColumnName="ARInvoiceId" ReferencedTableName="ARInvoices" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentReceivables_dbo.ARInvoices_ARInvoiceId" />
   <Relation ParentTableName="ARInvoiceEntities" ParentColumnName="ARInvoiceId" ReferencedTableName="ARInvoices" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoiceEntities_dbo.ARInvoices_ARInvoiceId" />
   <Relation ParentTableName="ARInvoices" ParentColumnName="CancelledByARInvoiceId" ReferencedTableName="ARInvoices" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoices_dbo.ARInvoices_CancelledByARInvoiceId" />
@@ -319,5 +320,4 @@
   <Relation ParentTableName="ARInvoiceLines" ParentColumnName="ARInvoiceId" ReferencedTableName="ARInvoices" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoiceLines_dbo.ARInvoices_ARInvoiceId" />
   <Relation ParentTableName="ARInvoicePayments" ParentColumnName="ARInvoiceId" ReferencedTableName="ARInvoices" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoicePayments_dbo.ARInvoices_ARInvoiceId" />
   <Relation ParentTableName="ARInvoiceStockLines" ParentColumnName="ARInvoiceId" ReferencedTableName="ARInvoices" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoiceStockLines_dbo.ARInvoices_ARInvoiceId" />
-  <Relation ParentTableName="ARInvoiceTotalVATs" ParentColumnName="ARInvoiceId" ReferencedTableName="ARInvoices" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoiceTotalVATs_dbo.ARInvoices_ARInvoiceId" />
 </Table>
