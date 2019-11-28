@@ -182,14 +182,14 @@ export class AddEditLCLChargeComponent {
        
         this.StepsItemsSource.Collection.forEach(priceStep => {
             Validator.TryValidateObject(priceStep, this.QuotePriceObjectTableName, errors);
-            this.DataContext.EntityPM.QuoteChargePriceSteps.filter(d => d.Step == priceStep.Step).forEach((item) => {
+            this.DataContext.EntityPM.QuoteChargePriceSteps.filter(d => d.Step != null && d.Step == priceStep.Step).forEach((item) => {
                 if (item != priceStep.EntityPM) {
                     errors.push("Price Steps list already contains Step: " + AppTool.Round(priceStep.Step, 2));
                 }
             });
 
 
-            var duplicates = this.StepsItemsSource.Collection.filter(d => d.Step == priceStep.Step);
+            var duplicates = this.StepsItemsSource.Collection.filter(d => d.Step != null && d.Step == priceStep.Step);
             if (duplicates && duplicates.length > 1) {
                 errors.push("Price Steps list already contains Step: " + AppTool.Round(priceStep.Step, 2));
             }

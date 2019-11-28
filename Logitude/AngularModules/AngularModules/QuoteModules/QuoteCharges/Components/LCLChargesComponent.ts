@@ -279,6 +279,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         this.UIProperties.SetEnabled("IsFixedPrice", this.ObjectTableName, this.IsEditingEnabled);
     }
 
+
     public SelectedRow: QuoteChargeItem = null;
     OnRowSelected(itemComponent: QuoteChargeItem) {
         this.SelectedRow = itemComponent;
@@ -1067,6 +1068,11 @@ export class QuoteChargeItem extends BaseComponent {
         this.UIProperties.SetEnabled("Notes", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("IsChargeBySteps", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("CostIsFixedRate", this.ObjectTableName, this.IsEditingEnabled);
+
+        this.UIProperties.SetEnabled("Step","QuotePriceSteps", this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("CostUnitPrice", "QuotePriceSteps", this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("MarkupValue", "QuotePriceSteps", this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("SaleUnitPrice", "QuotePriceSteps", this.IsEditingEnabled);
     }
 
     public IsAllInCheckBoxVisible: boolean = false;
