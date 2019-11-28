@@ -11,7 +11,6 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_CustomerCompetitorDW_GetCustomerCompetitors()
         {
-            LoginService.GetLoginTokenByCredentials();
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "CustomerCompetitorDW",
@@ -20,7 +19,6 @@ namespace Logitude.HybridTest.CommonServices
                 ServiceType = typeof(CustomerCompetitorDW),
                 ServiceFilterType = null,
             };
-
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { TestEnvironmentGlobalParameters.Tenant, serviceResponse };
             CustomerCompetitorDW[] customerAdditionalServices = (CustomerCompetitorDW[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);

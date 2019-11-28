@@ -117,7 +117,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Customs Interface",
-			      				    Code =  "b143",
+			      				    Code =  "0571",
 			      				    Name =  "CustomsInterface",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
@@ -392,7 +392,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable CustomsInterfaceObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomsInterface" && d.Tenant == 0).FirstOrDefault();
+		   List<ObjectField> CustomsInterfaceObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CustomsInterface").ToList();
+		       
+	      
+
+	         Screen CustomsInterfaceCustomsInterfaceHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomsInterface.HeaderScreen", Name = "CustomsInterfaceHeaderScreen", ObjectTableId = CustomsInterfaceObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    CustomsInterfaceObjectTable.HeaderScreenId = CustomsInterfaceCustomsInterfaceHeaderScreenScreen0.Id;
+	   		  
 
 	    }
 

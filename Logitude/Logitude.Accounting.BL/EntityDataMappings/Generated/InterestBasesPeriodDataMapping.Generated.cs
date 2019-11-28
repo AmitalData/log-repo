@@ -45,7 +45,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         InterestBaseTypeId, 
 	         LineNumber, 
 	         InterestBaseStartDate, 
-	         InterestRate,
+	         InterestRate, 
+	         CreatedByUserName, 
+	         UpdatedByUserName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

@@ -12,6 +12,8 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.QuoteModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.BookingLib.Data.EntityLists;
+using Logitude.CRM.BL.EntityPMs;
+using Logitude.CRM.BL.EntityQueryServices;
 using Logitude.CRM.Data;
 using Logitude.CRM.Data.EntityListQueryServices;
 using Logitude.CRM.Data.EntityLists;
@@ -2535,7 +2537,28 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        public HttpResponseMessage GetContactOccasions(string contactId)
+        {
+            try
+            {
+                string logKey = PerformanceLogger.LogCurrentTime();
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("Occasion", "READ", authToken.Tenant);
+                int tenant = authToken.Tenant;
 
+                ICRMContext context = CRMContext.GetContext(tenant);
+                OccasionQueryService occasionQuery = new OccasionQueryService(context);
+                List<OccasionPM> result = occasionQuery.GetContactOccasions(tenant, context, contactId);
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }
 

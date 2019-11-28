@@ -1,4 +1,5 @@
 ﻿using System;
+using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.HybridTest.WcfCallers;
 using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -11,9 +12,15 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_SpecialServicesType_UPSERT()
         {
-            LoginService.GetLoginTokenByCredentials();
-            Response serviceResponse = SpecialServicesTypeWcfCaller.CallSpecialServicesTypeUpsert();
-            Assert.IsFalse(serviceResponse.HasError, serviceResponse.ErrorMessage);
+            SpecialServicesTypePM specialServicesTypePM = new SpecialServicesTypePM()
+            {
+                Code = HybridData.SpecialServicesTypeCode,
+                EnglishName = "Hybrid SpecialServicesType",
+                LocalName = "Hybrid SpecialServicesType",
+                Tenant = TestEnvironmentGlobalParameters.Tenant,
+            };
+            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(specialServicesTypePM);
+            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
         }
     }

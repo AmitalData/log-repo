@@ -14,8 +14,13 @@ namespace Logitude.Accounting.Data.Repositories
 {
    public partial class InterestBasesTypeRepository:IRepository<InterestBasesType>
    {
-        
-		public List<InterestBasesType> GetMulti(EntityKeyFields entityKeys)
+        public InterestBasesType GetSingleByCode(string Code, int tenant)
+        {
+            return (from a in context.InterestBasesTypes
+                    where a.Code == Code && a.Tenant == tenant
+                    select a).FirstOrDefault();
+        }
+        public List<InterestBasesType> GetMulti(EntityKeyFields entityKeys)
         {
             
 			throw new NotImplementedException();

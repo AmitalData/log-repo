@@ -108,8 +108,8 @@ declare @ConsolidatorReference as varchar(50)
 declare @ReleasingAgentId as varchar(15)
 declare @ReleasingAgentReference1 as varchar(50)
 declare @ReleasingAgentReference2 as varchar(50)
-declare @MainCarriageFromPartnerId as varchar(50)
-declare @MainCarriageToPartnerId as varchar(50)
+declare @MainCarriageFromAddressId as varchar(50)
+declare @MainCarriageToAddressId as varchar(50)
 
 END
 
@@ -238,8 +238,8 @@ BEGIN
 					@Transshipment1AdditionalMAWBOBLBL = Transshipment1AdditionalMAWBOBLBL,
 					@Transshipment2AdditionalMAWBOBLBL = Transshipment2AdditionalMAWBOBLBL,
 					@Transshipment3AdditionalMAWBOBLBL = Transshipment3AdditionalMAWBOBLBL,
-					@MainCarriageFromPartnerId=MainCarriageFromPartnerId,
-					@MainCarriageToPartnerId=MainCarriageToPartnerId
+					@MainCarriageFromAddressId = MainCarriageFromAddressId,
+					@MainCarriageToAddressId = MainCarriageToAddressId
 					from ShipmentMasterDatas
 					where Id = @MasterShipmentDataId AND Tenant = @Tenant					
 				END
@@ -1522,7 +1522,7 @@ BEGIN
 
 			if(@TransportModeId = 'I' and @DirectionId ='D' and @MasterShipmentDataId is not null)
 			begin
-			set @CityName = (select CityName from Cards where Id = @MainCarriageFromPartnerId AND Tenant = @Tenant)
+			set @CityName = (select City from Addresses where Id = @MainCarriageFromAddressId AND Tenant = @Tenant)
 			if(@CityName is not null or @CityName != '')
 			begin
 			if (@MySearchFields = '') set @MySearchFields = @CityName
@@ -1530,7 +1530,7 @@ BEGIN
 					end
 
 
-					set @CityName = (select CityName from Cards where Id = @MainCarriageToPartnerId AND Tenant = @Tenant)
+					set @CityName = (select City from Addresses where Id = @MainCarriageToAddressId AND Tenant = @Tenant)
 			if(@CityName is not null or @CityName != '')
 			begin
 			if (@MySearchFields = '') set @MySearchFields = @CityName

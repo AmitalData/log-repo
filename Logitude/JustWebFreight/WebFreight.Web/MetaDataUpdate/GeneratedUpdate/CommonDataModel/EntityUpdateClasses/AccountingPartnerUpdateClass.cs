@@ -2439,12 +2439,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
                  
 			   TextCode AccountingPartnerGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPartner.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature AccountingPartnerGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartner.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+ 
+                 
+			   TextCode AccountingPartnerAccountingTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPartner.TH.Accounting", DefaultText = "Accounting",LocalDefaultText = null, ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature AccountingPartnerAccountingFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingPartner.Tab.Accounting", ObjectTableId = AccountingPartnerObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPartnerFeatures.APAC", NameTextCodeDefaultText = "Accounting", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ACGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AccountingPartnerGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = AccountingPartnerObjectTable.Id, TabNameTextCodeId = AccountingPartnerGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "APAC",HtmlComponentName = "",HtmlComponentUrl = "./Common/Components/AccountingTab/AccountingTabComponent", FeatureId = AccountingPartnerAccountingFeature_TH1.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnersAccountingTab.AccountingTabControl", ObjectTableId = AccountingPartnerObjectTable.Id, TabNameTextCodeId = AccountingPartnerAccountingTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

@@ -20,10 +20,10 @@ namespace Logitude.Accounting.Data.Repositories
             return (from a in context.InterestBasesPeriods where a.InterestBaseTypeId == myEntityKeys.Id select a).ToList();
         }
 
-        public InterestBasesPeriod GetSingleByInterestBaseStartDate(DateTime InterestBaseStartDate)
+        public InterestBasesPeriod GetSingleByInterestBaseStartDateAndnterestBaseTypeId(DateTime InterestBaseStartDate , string InterestBaseTypeId ,int Tenant)
         {
             return (from a in context.InterestBasesPeriods
-                    where a.InterestBaseStartDate == InterestBaseStartDate
+                    where a.InterestBaseStartDate == InterestBaseStartDate && a.InterestBaseTypeId == InterestBaseTypeId && a.Tenant ==Tenant
                     select a).FirstOrDefault();
         }
     }

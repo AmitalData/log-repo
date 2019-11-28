@@ -90,7 +90,8 @@ export class SimulatorBookingComponent extends BaseComponent {
         this.IsSendingBookingEnabled = false;
         if ((this.EntityPM.INTTRABookingStatusCode == "NS" && this.EntityPM.INTTRABookingTransStatusCode == "NST") ||
             (this.EntityPM.INTTRABookingStatusCode == "ER" && this.EntityPM.INTTRABookingTransStatusCode == "BRS") ||
-            (this.EntityPM.INTTRABookingStatusCode == "DC" && this.EntityPM.INTTRABookingTransStatusCode == "BRR")) {
+            (this.EntityPM.INTTRABookingStatusCode == "DC" && this.EntityPM.INTTRABookingTransStatusCode == "BRR") || 
+            (this.EntityPM.INTTRABookingStatusCode == "RU" && this.EntityPM.INTTRABookingTransStatusCode == "BCD")) {
             this.IsSendingBookingEnabled = true;
         }
     }
