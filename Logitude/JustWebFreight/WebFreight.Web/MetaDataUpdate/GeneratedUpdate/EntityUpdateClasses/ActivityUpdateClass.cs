@@ -5698,7 +5698,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn MyOpenActivitiesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyOpenActivitiesQuery.Id, IndexOrder = 4, ObjectFieldId = ActivityObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ActivityObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter MyOpenActivitiesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ActivityObjectFields.Where(d => d.FieldName == "MyOpenActivities" && d.ObjectTableId == ActivityObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = MyOpenActivitiesQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter MyOpenActivitiesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ActivityObjectFields.Where(d => d.FieldName == "MyOpenActivities" && d.ObjectTableId == ActivityObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ActivityObjectFields.Where(d => d.FieldName == "MyOpenActivities" && d.ObjectTableId == ActivityObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = MyOpenActivitiesQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -5719,7 +5719,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn AllOpenActivitiesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenActivitiesQuery.Id, IndexOrder = 6, ObjectFieldId = ActivityObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ActivityObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter AllOpenActivitiesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ActivityObjectFields.Where(d => d.FieldName == "AllOpenActivities" && d.ObjectTableId == ActivityObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = AllOpenActivitiesQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter AllOpenActivitiesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ActivityObjectFields.Where(d => d.FieldName == "AllOpenActivities" && d.ObjectTableId == ActivityObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ActivityObjectFields.Where(d => d.FieldName == "AllOpenActivities" && d.ObjectTableId == ActivityObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = AllOpenActivitiesQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -5736,7 +5736,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn MyClosedActivitiesQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyClosedActivitiesQuery.Id, IndexOrder = 4, ObjectFieldId = ActivityObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ActivityObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter MyClosedActivitiesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ActivityObjectFields.Where(d => d.FieldName == "MyClosedActivities" && d.ObjectTableId == ActivityObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = MyClosedActivitiesQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter MyClosedActivitiesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ActivityObjectFields.Where(d => d.FieldName == "MyClosedActivities" && d.ObjectTableId == ActivityObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ActivityObjectFields.Where(d => d.FieldName == "MyClosedActivities" && d.ObjectTableId == ActivityObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = MyClosedActivitiesQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -5757,7 +5757,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn AllClosedActivitiesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllClosedActivitiesQuery.Id, IndexOrder = 6, ObjectFieldId = ActivityObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ActivityObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter AllClosedActivitiesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ActivityObjectFields.Where(d => d.FieldName == "AllClosedActivities" && d.ObjectTableId == ActivityObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = AllClosedActivitiesQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter AllClosedActivitiesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ActivityObjectFields.Where(d => d.FieldName == "AllClosedActivities" && d.ObjectTableId == ActivityObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ActivityObjectFields.Where(d => d.FieldName == "AllClosedActivities" && d.ObjectTableId == ActivityObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = AllClosedActivitiesQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -5794,7 +5794,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn MeetingsSummaryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MeetingsSummaryQuery.Id, IndexOrder = 5, ObjectFieldId = ActivityObjectFields.Where(d => d.FieldName == "MeetingSummary" && d.ObjectTableId == ActivityObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter MeetingsSummaryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ActivityObjectFields.Where(d => d.FieldName == "MeetingsSummary" && d.ObjectTableId == ActivityObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = MeetingsSummaryQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter MeetingsSummaryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ActivityObjectFields.Where(d => d.FieldName == "MeetingsSummary" && d.ObjectTableId == ActivityObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ActivityObjectFields.Where(d => d.FieldName == "MeetingsSummary" && d.ObjectTableId == ActivityObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = MeetingsSummaryQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -5815,7 +5815,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn CancelledActivitiesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CancelledActivitiesQuery.Id, IndexOrder = 6, ObjectFieldId = ActivityObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ActivityObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter CancelledActivitiesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ActivityObjectFields.Where(d => d.FieldName == "CancelledActivities" && d.ObjectTableId == ActivityObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = CancelledActivitiesQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter CancelledActivitiesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ActivityObjectFields.Where(d => d.FieldName == "CancelledActivities" && d.ObjectTableId == ActivityObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ActivityObjectFields.Where(d => d.FieldName == "CancelledActivities" && d.ObjectTableId == ActivityObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = CancelledActivitiesQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 	   
 	    }
