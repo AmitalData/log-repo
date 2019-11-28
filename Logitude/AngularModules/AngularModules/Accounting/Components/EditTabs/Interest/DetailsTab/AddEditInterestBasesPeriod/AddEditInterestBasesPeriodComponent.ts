@@ -36,6 +36,8 @@ export class AddEditInterestBasesPeriodComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
         if (this.DataContext.EntityPM.InterestRate && !this.CheckInterestRateValid(this.DataContext.EntityPM.InterestRate))
             this.ValidationErrorsList.push('Interest rate format must be 2.2');
+        if (this.DataContext.EntityPM.InterestBaseStartDate && !this.CheckInterestBaseStartDateExist(this.DataContext.EntityPM.InterestBaseStartDate))
+            this.ValidationErrorsList.push('Interest Base Start Date Already Added');
         if (this.ValidationErrorsList.length == 0) {
             if (this.DataContext.IsNewEntity)
                 if (this.DataContext.InterestBasesTypePM.InterestBasesPeriods.indexOf(this.EntityPM) == -1) {
@@ -53,5 +55,14 @@ export class AddEditInterestBasesPeriodComponent extends BaseComponent {
         }
         return true;
     }
+    CheckInterestBaseStartDateExist(InterestBaseStartDate: Date): boolean {
+        for (let i = 0; i < this.DataContext.fatherComponent.InterestBasesPeriodsList.Length; i++) {
+            if (this.DataContext.fatherComponent.InterestBasesPeriodsList.Collection[i].InterestBaseStartDate.getTime() === InterestBaseStartDate.getTime()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
 }

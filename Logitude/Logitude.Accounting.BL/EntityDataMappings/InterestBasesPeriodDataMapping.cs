@@ -17,6 +17,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.Resolvers;
+using Simplog.Server.Infrastructure;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -30,13 +31,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             entityPOCO.LineNumber = entityPM.LineNumber;
             CustomMappedPOCOProperties.Add(POCOPropertyNames.InterestBaseTypeId);
             entityPOCO.InterestBaseTypeId = entityPM.InterestBaseTypeId;
-
-            InterestBasesPeriodRepository  PeriodRepository = new InterestBasesPeriodRepository(entityPM.Tenant);
-            InterestBasesPeriod Period = PeriodRepository.GetSingleByInterestBaseStartDateAndnterestBaseTypeId(entityPM.InterestBaseStartDate , entityPM.InterestBaseTypeId , entityPM.Tenant);
-            if (Period!=null)
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
-                 throw new Exception("Interest Base StartDate Already Exist");
+                InterestBasesPeriodRepository PeriodRepository = new InterestBasesPeriodRepository(entityPM.Tenant);
+                InterestBasesPeriod Period = PeriodRepository.GetSingleByInterestBaseStartDateAndnterestBaseTypeId(entityPM.InterestBaseStartDate, entityPM.InterestBaseTypeId, entityPM.Tenant);
+                if (Period != null)
+                {
+                    throw new Exception("Interest Base Start Date Already Exist");
+                }
             }
+        
         }
 
         public void CustomPOCOToPM(InterestBasesPeriodPM entityPM, InterestBasesPeriod entityPOCO)

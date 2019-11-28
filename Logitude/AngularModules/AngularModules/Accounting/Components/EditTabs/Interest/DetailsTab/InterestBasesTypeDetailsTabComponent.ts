@@ -205,12 +205,24 @@ export class InterestBasesPeriodItem extends BaseComponent {
         }
         return true;
     }
+    CheckInterestBaseStartDateExist(InterestBaseStartDate: Date): boolean {
+        for (let i = 0; i < this.DataContext.fatherComponent.InterestBasesPeriodsList.Length; i++) {
+            if (this.DataContext.fatherComponent.InterestBasesPeriodsList.Collection[i].InterestBaseStartDate.getTime() === InterestBaseStartDate.getTime()) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     get InterestBaseStartDate() { return this.EntityPM.InterestBaseStartDate; }
     set InterestBaseStartDate(newValue: Date) {
         if (this.EntityPM.InterestBaseStartDate != newValue) {
             this.EntityPM.InterestBaseStartDate = newValue;
         }
+        if (newValue && !this.CheckInterestBaseStartDateExist(newValue))
+            this.UIProperties.SetValidity("InterestBaseStartDate", "InterestBasesPeriod", false, "Interest Base Start Date Already Added");
+        else
+            this.UIProperties.SetValidity("InterestBaseStartDate", "InterestBasesPeriod", true, "Interest Base Start Date Already Added");
     }
 
     get InterestRate() { return this.EntityPM.InterestRate; }

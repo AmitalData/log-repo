@@ -15,11 +15,15 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
     {
         protected override void OnCreating(InterestBasesTypePM entityPM, EntityPM entityParentPM)
         {
-            InterestBasesTypeRepository PeriodRepository = new InterestBasesTypeRepository(entityPM.Tenant);
-            InterestBasesType Period = PeriodRepository.GetSingleByCode(entityPM.Code, entityPM.Tenant);
-            if (Period != null)
+
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
-                throw new Exception("This Code Already Exist");
+                InterestBasesTypeRepository PeriodRepository = new InterestBasesTypeRepository(entityPM.Tenant);
+                InterestBasesType Period = PeriodRepository.GetSingleByCode(entityPM.Code, entityPM.Tenant);
+                if (Period != null)
+                {
+                    throw new Exception("This Code Already Exist");
+                }
             }
         }
 
