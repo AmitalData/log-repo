@@ -172,7 +172,7 @@
             this.lblUInvoice = new System.Windows.Forms.Label();
             this.lblUQuote = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.button47 = new System.Windows.Forms.Button();
+            //this.button47 = new System.Windows.Forms.Button();
             this.button44 = new System.Windows.Forms.Button();
             this.button43 = new System.Windows.Forms.Button();
             this.btnCompareData = new System.Windows.Forms.Button();
@@ -190,7 +190,7 @@
             this.AirlineLogoTenantTextBox = new System.Windows.Forms.TextBox();
             this.button46 = new System.Windows.Forms.Button();
             this.UpdateRulesLabel = new System.Windows.Forms.Label();
-            this.button47 = new System.Windows.Forms.Button();
+            //this.button47 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -1609,7 +1609,7 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Transparent;
-            this.tabPage2.Controls.Add(this.button47);
+            //this.tabPage2.Controls.Add(this.button47);
             this.tabPage2.Controls.Add(this.button44);
             this.tabPage2.Controls.Add(this.button43);
             this.tabPage2.Controls.Add(this.button42);
@@ -1834,16 +1834,17 @@
             this.UpdateRulesLabel.TabIndex = 97;
             this.UpdateRulesLabel.Text = "...";
             this.UpdateRulesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // button47
-            // 
-            this.button47.Location = new System.Drawing.Point(522, 25);
-            this.button47.Name = "button47";
-            this.button47.Size = new System.Drawing.Size(184, 23);
-            this.button47.TabIndex = 97;
-            this.button47.Text = "tax report";
-            this.button47.UseVisualStyleBackColor = true;
-            this.button47.Click += new System.EventHandler(this.button47_Click);
+            //// 
+            //// button47
+            //// 
+            //this.button47.Location = new System.Drawing.Point(522, 25);
+            //this.button47.Name = "button47";
+            //this.button47.Size = new System.Drawing.Size(184, 23);
+            //this.button47.TabIndex = 97;
+            //this.button47.Text = "tax report";
+            //this.
+            //.UseVisualStyleBackColor = true;
+            //this.button47.Click += new System.EventHandler(this.button47_Click);
             // 
             // Form1
             // 
@@ -2050,7 +2051,7 @@
         private System.Windows.Forms.Label UpdateLogosLabel;
         private System.Windows.Forms.ToolStripMenuItem batchTaskExecutionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem executeToolStripMenuItem;
-        private System.Windows.Forms.Button button47;
+        //private System.Windows.Forms.Button button47;
         private System.Windows.Forms.Button button48;
         private System.Windows.Forms.Label UpdateRulesLabel;
     }

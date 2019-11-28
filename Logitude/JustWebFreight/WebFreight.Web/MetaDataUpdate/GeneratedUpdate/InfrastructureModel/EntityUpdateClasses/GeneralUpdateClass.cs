@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "d6d5",
+			      				    Code =  "4770",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -2139,7 +2139,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingGeneralOTheratepercentageshouldbeformattedas0000 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Theratepercentageshouldbeformattedas00.00", DefaultText = "The rate percentage should be formatted as 00.00",LocalDefaultText = @"האחוז צריך להיות מוגדר בפורמט 00.00", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_AccountingGeneralOAbaseperiodwiththesamestartdateisalreadyAdded = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.A baseperiodwiththesamestartdateisalreadyAdded", DefaultText = "A base period with the same start date is already Added",LocalDefaultText = @"כבר קיימת תקופה עם תאריך התחלה זהה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_AccountingGeneralOAbaseperiodwiththesamestartdateisalreadyAdded = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.AbaseperiodwiththesamestartdateisalreadyAdded", DefaultText = "A base period with the same start date is already Added",LocalDefaultText = @"כבר קיימת תקופה עם תאריך התחלה זהה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
