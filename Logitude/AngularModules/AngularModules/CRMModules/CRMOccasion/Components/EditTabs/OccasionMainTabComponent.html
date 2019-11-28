@@ -270,7 +270,7 @@
                                                                     </td>
 
                                                                     <td style="width: 250px;" rowspan="2">
-                                                                        <div style="width:auto;height:50%;color:#1B90CB;" class="TextTrimming">{{item.ContactName}}</div>
+                                                                        <div (click)="item.EditContactClicked(item.ContactId)" style="width:auto;height:50%;color:#1B90CB;cursor:pointer;" class="TextTrimming">{{item.ContactName}}</div>
                                                                         <div style="color:#282E30;font-size:10px;text-align:left;" class="TextTrimming">Email: {{item.ContactEmail}}</div>
                                                                         <div style="color:#282E30;font-size:10px;text-align:left;" class="TextTrimming">Tel: {{item.ContactTel}}</div>
                                                                     </td>
