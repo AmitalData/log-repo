@@ -12,18 +12,26 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_Address_UPSERT()
         {
-            LoginService.GetLoginTokenByCredentials();
-            Response serviceResponse = AddressWcfCaller.CallAddressUpsert();
-            Assert.IsFalse(serviceResponse.HasError, serviceResponse.ErrorMessage);
+            AddressPM addressPM = new AddressPM()
+            {
+                ExternalId = HybridData.AddressCode,
+                Name = "Hybrid Address",
+                City = "Hybrid City",
+                AddressTypeId = "M",
+                Description = "Main Address",
+                CountryId = HybridData.CountryCode,
+                CardId = HybridData.CustomerCode,
+                Tenant = TestEnvironmentGlobalParameters.Tenant,
+            };
+            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(addressPM);
+            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            HybridData.AddressId = serviceResponse.Result;
         }
-
         [TestMethod]
         public void Test_Address_GetAddressByExternalId()
         {
-            LoginService.GetLoginTokenByCredentials();
-            Response prepareResponse = AddressWcfCaller.PrepareAddress();
-            Assert.IsFalse(prepareResponse.HasError, "Prepare Address Failed! " + prepareResponse.ErrorMessage);
+            Test_Address_UPSERT();
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "Address",

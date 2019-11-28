@@ -78,7 +78,7 @@
 
                                     <td>
                                         <LogLov [ObjectFieldName]="'ForiegnCurrencyId'"
-                                                [SelectedValue]="DataContext.ForiegnCurrencyId"
+                                                [SelectedValue]="ForiegnCurrencyId"
                                                 [ObjectTableName]="ObjectTableName"
                                                 [DataContext]="DataContext"
                                                 [LookUpTableName]="'Currency'">
@@ -140,7 +140,7 @@
                                 <!-- ForiegnCurrencyAmount -->
                                 <tr class="FormFieldRow">
                                     <td>
-                                        <LogLabel [ObjectFieldName]="'ForiegnCurrencyAmount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="AmountForiegnLabel"></LogLabel>
+                                        <LogLabel [ObjectFieldName]="'ForiegnCurrencyAmount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="DataContext.AmountForiegnLabel"></LogLabel>
                                     </td>
 
                                     <td>

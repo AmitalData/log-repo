@@ -1,4 +1,5 @@
 ﻿using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Server.Tools;
 using Simplog.Server.Infrastructure;
@@ -14,7 +15,16 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
     {
         protected override void OnCreating(InterestBasesTypePM entityPM, EntityPM entityParentPM)
         {
-          
+
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+            {
+                InterestBasesTypeRepository PeriodRepository = new InterestBasesTypeRepository(entityPM.Tenant);
+                InterestBasesType Period = PeriodRepository.GetSingleByCode(entityPM.Code, entityPM.Tenant);
+                if (Period != null)
+                {
+                    throw new Exception("This Code Already Exist");
+                }
+            }
         }
 
         protected override void OnUpdating(InterestBasesTypePM entityPM, InterestBasesType entityPOCO)

@@ -47,24 +47,32 @@ export class InterestBasesTypeDetailsTabComponent extends BaseComponent implemen
             this.UIProperties.SetEnabled("Description", "InterestBasesType", true);
         }
     }
-    //Grid Header
-    InterestBaseStartDateHeader = TextCodeTranslator.Translate("InterestBasesPeriod.CH.InterestBaseStartDateListLable");
-    UpdatedByUserIdHeader = TextCodeTranslator.Translate("InterestBasesPeriod.CH.UpdatedByUserIdListLable");
-    UpdateDateHeader = TextCodeTranslator.Translate("InterestBasesPeriod.CH.UpdateDateListLable");
-    InterestRateHeader = TextCodeTranslator.Translate("InterestBasesPeriod.CH.InterestRateListLable");
+    //Grid Header Label
+    public InterestBaseStartDateHeader = TextCodeTranslator.Translate("InterestBasesPeriod.CH.InterestBaseStartDateListLable");
+    public UpdatedByUserIdHeader = TextCodeTranslator.Translate("InterestBasesPeriod.CH.UpdatedByUserIdListLable");
+    public UpdateDateHeader = TextCodeTranslator.Translate("InterestBasesPeriod.CH.UpdateDateListLable");
+    public InterestRateHeader = TextCodeTranslator.Translate("InterestBasesPeriod.CH.InterestRateListLable");
+
+    //Add Edit Interest Bases Period Title
+    public EditInterestBasesPeriod = TextCodeTranslator.Translate("Accounting.General.O.Edit");
+    public AddInterestBasesPeriod = TextCodeTranslator.Translate("Accounting.General.B.Add");
 
     AddPeriodClicked() {
-        var itemPM = new InterestBasesPeriodPM(null);
-        itemPM.Tenant = SessionLocator.Tenant;
-        itemPM.InterestBaseTypeId = this.EntityPM.Id;
-        itemPM.LineNumber = this.EntityPM.InterestBasesPeriods.length + 1;
-        var itemComponent = new InterestBasesPeriodItem(itemPM, true, this);
-        this.LogWindowShow("Add Interest Bases Period", itemComponent);
+        if (!this.EntityPM.InActive) {
+            var itemPM = new InterestBasesPeriodPM(null);
+            itemPM.Tenant = SessionLocator.Tenant;
+            itemPM.InterestBaseTypeId = this.EntityPM.Id;
+            itemPM.LineNumber = this.EntityPM.InterestBasesPeriods.length + 1;
+            var itemComponent = new InterestBasesPeriodItem(itemPM, true, this);
+            this.LogWindowShow(this.AddInterestBasesPeriod, itemComponent);
+        }
     }
 
     EditPeriodClicked(itemComponent: InterestBasesPeriodItem) {
-        itemComponent.IsNewEntity = false;
-        this.LogWindowShow("Edit Interest Bases Period", itemComponent);
+        if (!this.EntityPM.InActive) {
+            itemComponent.IsNewEntity = false;
+            this.LogWindowShow(this.EditInterestBasesPeriod, itemComponent);
+        }
     }
 
     LogWindowShow(title: string, itemComponent) {
@@ -72,7 +80,7 @@ export class InterestBasesTypeDetailsTabComponent extends BaseComponent implemen
         logWindow.Title = title;
         var myPath = "./Accounting/Components/Packages/EditTabs/Interest/DetailsTab/AddEditInterestBasesPeriod/AddEditInterestBasesPeriodComponent";
         logWindow.Width = 400;
-        logWindow.Height = 250;
+        logWindow.Height = 200;
         logWindow.DataContext = itemComponent;
         logWindow.Show(myPath);
     }
@@ -184,11 +192,26 @@ export class InterestBasesPeriodItem extends BaseComponent {
     public ObjectTableName: string = "InterestBasesPeriod";
     public IsNewEntity: boolean = false;
 
-    constructor(entityPM: InterestBasesPeriodPM, isNew: boolean, public fatherComponent: InterestBasesTypeDetailsTabComponent) {
+    constructor(entityPM: InterestBasesPeriodPM, isNew: boolean, public fatherComponent) {
         super();
         this.EntityPM = entityPM;
         this.InterestBasesTypePM = fatherComponent.EntityPM;
         this.IsNewEntity = isNew;
+    }
+
+    CheckInterestRateValid(InterestRate: number): boolean {
+        if ((InterestRate.toFixed()).length > 2) {
+            return false;
+        }
+        return true;
+    }
+    CheckInterestBaseStartDateExist(InterestBaseStartDate: Date): boolean {
+        for (let i = 0; i < this.DataContext.fatherComponent.InterestBasesPeriodsList.Length; i++) {
+            if (this.DataContext.fatherComponent.InterestBasesPeriodsList.Collection[i].InterestBaseStartDate.getTime() === InterestBaseStartDate.getTime()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     get InterestBaseStartDate() { return this.EntityPM.InterestBaseStartDate; }
@@ -196,6 +219,10 @@ export class InterestBasesPeriodItem extends BaseComponent {
         if (this.EntityPM.InterestBaseStartDate != newValue) {
             this.EntityPM.InterestBaseStartDate = newValue;
         }
+        if (newValue && !this.CheckInterestBaseStartDateExist(newValue))
+            this.UIProperties.SetValidity("InterestBaseStartDate", "InterestBasesPeriod", false, "Interest Base Start Date Already Added");
+        else
+            this.UIProperties.SetValidity("InterestBaseStartDate", "InterestBasesPeriod", true, "Interest Base Start Date Already Added");
     }
 
     get InterestRate() { return this.EntityPM.InterestRate; }
@@ -203,6 +230,10 @@ export class InterestBasesPeriodItem extends BaseComponent {
         if (this.EntityPM.InterestRate != newValue) {
             this.EntityPM.InterestRate = newValue;
         }
+        if (newValue && !this.CheckInterestRateValid(newValue))
+            this.UIProperties.SetValidity("InterestRate", "InterestBasesPeriod", false,"Interest rate format must be 2.2");
+        else
+            this.UIProperties.SetValidity("InterestRate", "InterestBasesPeriod", true,"Interest rate format must be 2.2");
     }
 
     get LineNumber() { return this.EntityPM.LineNumber; }
@@ -216,6 +247,27 @@ export class InterestBasesPeriodItem extends BaseComponent {
     set UpdatedByUserId(newValue: string) {
         if (this.EntityPM.UpdatedByUserId != newValue) {
             this.EntityPM.UpdatedByUserId = newValue;
+        }
+    }
+
+    get UpdatedByUserName() { return this.EntityPM.UpdatedByUserName; }
+    set UpdatedByUserName(newValue: string) {
+        if (this.EntityPM.UpdatedByUserName != newValue) {
+            this.EntityPM.UpdatedByUserName = newValue;
+        }
+    }
+
+    get CreatedByUserName() { return this.EntityPM.CreatedByUserName; }
+    set CreatedByUserName(newValue: string) {
+        if (this.EntityPM.CreatedByUserName != newValue) {
+            this.EntityPM.CreatedByUserName = newValue;
+        }
+    }
+
+    get CreatedByUserId() { return this.EntityPM.CreatedByUserId; }
+    set CreatedByUserId(newValue: string) {
+        if (this.EntityPM.CreatedByUserId != newValue) {
+            this.EntityPM.CreatedByUserId = newValue;
         }
     }
 

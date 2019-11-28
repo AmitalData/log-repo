@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="058c4bdf-8861-49a3-9380-61ba7dc5a4ac" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="b686ecde-2084-4599-90e2-1b6d24b171fe" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -22,13 +22,13 @@
     <MetadataSource Address="http://localhost:9996/WcfApi/AutoSignUpWcfService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="AutoSignUpWcfService.xsd" MetadataType="Schema" ID="f403f183-37e4-40ba-9eed-c2e4b5d2dad2" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/AutoSignUpWcfService.svc?xsd=xsd3" />
-    <MetadataFile FileName="AutoSignUpWcfService1.xsd" MetadataType="Schema" ID="0e44b27b-f024-4e64-a1d6-ffd72bd586b0" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/AutoSignUpWcfService.svc?xsd=xsd2" />
-    <MetadataFile FileName="AutoSignUpWcfService2.xsd" MetadataType="Schema" ID="83e83d62-c3da-4a17-8a8e-820ca9b04ac5" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/AutoSignUpWcfService.svc?xsd=xsd1" />
-    <MetadataFile FileName="AutoSignUpWcfService3.xsd" MetadataType="Schema" ID="c3ad4e08-a71c-47b1-b427-3e28ee109b9a" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/AutoSignUpWcfService.svc?xsd=xsd0" />
-    <MetadataFile FileName="AutoSignUpWcfService4.xsd" MetadataType="Schema" ID="585511e8-dd12-4667-a5c3-b1cf5d133347" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/AutoSignUpWcfService.svc?xsd=xsd4" />
-    <MetadataFile FileName="AutoSignUpWcfService.wsdl" MetadataType="Wsdl" ID="7629f3a2-52c2-491a-b7bf-59a1f1034931" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/AutoSignUpWcfService.svc?wsdl" />
-    <MetadataFile FileName="AutoSignUpWcfService.disco" MetadataType="Disco" ID="889b22b6-3e07-4511-aa69-f45cf41f9f19" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/AutoSignUpWcfService.svc?disco" />
+    <MetadataFile FileName="AutoSignUpWcfService.xsd" MetadataType="Schema" ID="5809388b-82fa-4a64-8a04-ca071bad1c2c" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/AutoSignUpWcfService.svc?xsd=xsd3" />
+    <MetadataFile FileName="AutoSignUpWcfService1.xsd" MetadataType="Schema" ID="5ee68db1-eb7c-43a6-8350-0e05ee5e7fbd" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/AutoSignUpWcfService.svc?xsd=xsd2" />
+    <MetadataFile FileName="AutoSignUpWcfService2.xsd" MetadataType="Schema" ID="b088ef6c-0e93-4ce4-b1e3-904aef138e10" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/AutoSignUpWcfService.svc?xsd=xsd1" />
+    <MetadataFile FileName="AutoSignUpWcfService3.xsd" MetadataType="Schema" ID="dfe67917-b0e0-4c72-ba17-81920c1ab7f7" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/AutoSignUpWcfService.svc?xsd=xsd0" />
+    <MetadataFile FileName="AutoSignUpWcfService4.xsd" MetadataType="Schema" ID="3485104d-6c1d-4674-95da-78e03623dc2f" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/AutoSignUpWcfService.svc?xsd=xsd4" />
+    <MetadataFile FileName="AutoSignUpWcfService.wsdl" MetadataType="Wsdl" ID="8ac89974-fdd7-4cae-a8b8-7000a33b1683" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/AutoSignUpWcfService.svc?wsdl" />
+    <MetadataFile FileName="AutoSignUpWcfService.disco" MetadataType="Disco" ID="4566b9f5-161b-4718-a521-90d530e47102" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/AutoSignUpWcfService.svc?disco" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

@@ -2,7 +2,7 @@
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td colspan="4">
-            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+            <ValidationSummary  [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
         </td>
     </tr>
 
@@ -19,9 +19,9 @@
                                               [DataContext]="DataContext"></LogLabel>
                                 </td>
 
-                                <td>
+                                <td style="width: 130px;">
                                     <LogTextBox [ObjectFieldName]="'InterestRate'" [DataContext]="DataContext"
-                                                [ObjectTableName]="ObjectTableName"  [HideColumns]="true"></LogTextBox>
+                                                [ObjectTableName]="ObjectTableName" [Text]="InterestRate" [HideColumns]="true"></LogTextBox>
                                 </td>
                                 <td><div></div></td>
                             </tr>
@@ -31,7 +31,7 @@
                                     <LogLabel [ObjectFieldName]="'InterestBaseStartDate'" [ObjectTableName]="ObjectTableName"
                                               [DataContext]="DataContext"></LogLabel>
                                 </td>
-                                <td>
+                                <td style="width: 130px;">
                                     <LogDatePicker [ObjectFieldName]="'InterestBaseStartDate'" [ObjectTableName]="ObjectTableName"
                                                    [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
                                 </td>
@@ -45,7 +45,7 @@
             </table>
         </td>
 
-        <td><div></div></td>
+        <td colspan="3"><div></div></td>
 
 
     </tr>

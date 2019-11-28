@@ -111,9 +111,9 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 
         public static AdvancedQueryFilter AddAdvancedQueryFilter(AdvancedFilterDetails advancedQueryFilterDetails, AdvancedQueryFilterRepository advancedQueryFilterRepository, Dictionary<string, AdvancedQueryFilter> tenantAdvancedQueryFilter)
         {
-            if (tenantAdvancedQueryFilter.Keys.Contains(advancedQueryFilterDetails.QueryId + advancedQueryFilterDetails.ObjectFieldId))
+            if (tenantAdvancedQueryFilter.Keys.Contains(advancedQueryFilterDetails.QueryId + advancedQueryFilterDetails.ObjectFieldCode))
             {
-                AdvancedQueryFilter advancedQueryFilter = tenantAdvancedQueryFilter[advancedQueryFilterDetails.QueryId + advancedQueryFilterDetails.ObjectFieldId];
+                AdvancedQueryFilter advancedQueryFilter = tenantAdvancedQueryFilter[advancedQueryFilterDetails.QueryId + advancedQueryFilterDetails.ObjectFieldCode];
 
                 advancedQueryFilter.IndexOrder = advancedQueryFilterDetails.IndexOrder;
                 advancedQueryFilter.IsPredefined = advancedQueryFilterDetails.IsPredefined;
@@ -121,6 +121,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 advancedQueryFilter.PredefinedValue = advancedQueryFilterDetails.PredefinedValue;
                 advancedQueryFilter.PredefinedValue2 = advancedQueryFilterDetails.PredefinedValue2;
                 advancedQueryFilter.Tenant = advancedQueryFilterDetails.Tenant;
+                advancedQueryFilter.ObjectFieldCode = advancedQueryFilterDetails.ObjectFieldCode;
                 advancedQueryFilterRepository.Update(advancedQueryFilter);
                 return advancedQueryFilter;
             }
@@ -137,6 +138,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     PredefinedValue2 = advancedQueryFilterDetails.PredefinedValue2,
                     Id = IdCounter.GetNumber("AdvancedQueryFilter",advancedQueryFilterDetails.Tenant).ToString(),
                     QueryId = advancedQueryFilterDetails.QueryId,
+                    ObjectFieldCode = advancedQueryFilterDetails.ObjectFieldCode,
                 };
                 advancedQueryFilterRepository.Add(newAdvancedQueryFilter);
                 return newAdvancedQueryFilter;

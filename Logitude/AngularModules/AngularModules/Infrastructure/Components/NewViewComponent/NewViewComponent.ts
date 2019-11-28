@@ -980,7 +980,7 @@ export class NewViewComponent {
         //}
         //else {
         this.advancedQueryFiltersList.forEach((item, key) => {
-            this.objectField = window.ObjectFields.filter(o => o.Id === item.ObjectFieldId)[0];
+            this.objectField = window.ObjectFields.filter(o => o.FieldCode === item.ObjectFieldCode)[0];
             var xx = this.MapJsonToEntityPM(this.objectField);
             this.AddFilterField(xx);
         });
@@ -1011,9 +1011,9 @@ export class NewViewComponent {
         if (this.SelectedObjectFields == undefined) {
             this.SelectedObjectFields = [];
         } 
-        var filters = this.AdvancedQueryFilterPMs.filter(d => d.IsPredefined == true && d.ObjectFieldId == field.Id);
+        var filters = this.AdvancedQueryFilterPMs.filter(d => d.IsPredefined == true && d.ObjectFieldCode == field.FieldCode);
         if (filters != null && filters[0] != null) {
-            var value = this.AdvancedQueryFilterPMs.filter(d => d.IsPredefined == true && d.ObjectFieldId == field.Id)[0].PredefinedValue;
+            var value = this.AdvancedQueryFilterPMs.filter(d => d.IsPredefined == true && d.ObjectFieldCode == field.FieldCode)[0].PredefinedValue;
             this.FieldsValues.SetFieldValue(field.Id, value);
         }
         if (!this.IsNew) {
@@ -1297,7 +1297,7 @@ export class NewViewComponent {
                 advanceFilter.Operator = field.Operation.Code;
                 advanceFilter.PredefinedValue = field.TextValue;
                 advanceFilter.IsPredefined = true;
-
+                advanceFilter.ObjectFieldCode = field.ObjectField.FieldCode;
                 if (!AppTool.IsNullOrEmpty(this.EntityPM.SharedByUserId)) {
                     advanceFilter.UserId = this.EntityPM.SharedByUserId;
                 }
@@ -1509,8 +1509,8 @@ export class NewViewComponent {
         this.removedQueryFilters.forEach((item, key) => {
             if (item != null && item.AdvancedQueryFilterPM != null) {
                 this.GeneralEntitiesArgs.RemovedQueryFilters.push(item.AdvancedQueryFilterPM);
-                window.PreDefinedFilters = window.PreDefinedFilters.filter(a => a.ObjectFieldId != item.AdvancedQueryFilterPM.objectFieldId);
-                this.AdvancedQueryFilterPMs = this.AdvancedQueryFilterPMs.filter(a => a.ObjectFieldId != item.AdvancedQueryFilterPM.objectFieldId);
+                window.PreDefinedFilters = window.PreDefinedFilters.filter(a => a.ObjectFieldCode != item.AdvancedQueryFilterPM.ObjectFieldCode);
+                this.AdvancedQueryFilterPMs = this.AdvancedQueryFilterPMs.filter(a => a.ObjectFieldCode != item.AdvancedQueryFilterPM.ObjectFieldCode);
             }
         });
 
@@ -1564,6 +1564,8 @@ export class NewViewComponent {
                 advanceFilter.Operator = item.Operation.Code;
                 advanceFilter.PredefinedValue = item.TextValue;
                 advanceFilter.IsPredefined = true;
+                advanceFilter.ObjectFieldCode = item.ObjectField.FieldCode;
+                
 
                 if (!AppTool.IsNullOrEmpty(this.EntityPM.SharedByUserId)) {
                     advanceFilter.UserId = this.EntityPM.SharedByUserId;

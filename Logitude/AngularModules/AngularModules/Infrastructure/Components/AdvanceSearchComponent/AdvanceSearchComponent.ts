@@ -301,7 +301,7 @@ export class AdvanceSearchComponent implements OnInit {
         //}
         //else {
         this.advancedQueryFiltersList.forEach((item, key) => {
-            this.objectField = window.ObjectFields.filter(o => o.Id === item.ObjectFieldId)[0];
+            this.objectField = window.ObjectFields.filter(o => o.FieldCode === item.ObjectFieldCode)[0];
             var xx = this.MapJsonToEntityPM(this.objectField);
             this.AddFilterField(xx);
         });
@@ -338,9 +338,9 @@ export class AdvanceSearchComponent implements OnInit {
         if (this.SelectedObjectFields == undefined) {
             this.SelectedObjectFields = [];
         }
-        var filters = this.AdvancedQueryFilterPMs.filter(d => d.ObjectFieldId == field.Id);
+        var filters = this.AdvancedQueryFilterPMs.filter(d => d.ObjectFieldCode == field.FieldCode);
         if (filters != null && filters[0] != null && filters[0].IsPredefined == true) {
-            var value = this.AdvancedQueryFilterPMs.filter(d => d.IsPredefined == true && d.ObjectFieldId == field.Id)[0].PredefinedValue;
+            var value = this.AdvancedQueryFilterPMs.filter(d => d.IsPredefined == true && d.ObjectFieldCode == field.FieldCode)[0].PredefinedValue;
             this.FieldsValues.SetFieldValue(field.Id, value);
         }
         if (this.SelectedObjectFields.filter(a => a.FieldName == field.FieldName).length == 0) {
@@ -448,8 +448,8 @@ export class AdvanceSearchComponent implements OnInit {
 
         if (this.isWindowViewMode) { // || isLocalSave
             //this.SelectedObjectFields.forEach((field, key) => {
-            if (this.AdvancedQueryFilterPMs.filter(f => f.ObjectFieldId == field.ObjectField.Id && f.QueryId == this.QueryId)[0] != null) {
-                var advanceFilter = this.AdvancedQueryFilterPMs.filter(f => f.ObjectFieldId == field.ObjectField.Id && f.QueryId == this.QueryId)[0]
+            if (this.AdvancedQueryFilterPMs.filter(f => f.ObjectFieldCode == field.ObjectField.FieldCode && f.QueryId == this.QueryId)[0] != null) {
+                var advanceFilter = this.AdvancedQueryFilterPMs.filter(f => f.ObjectFieldCode == field.ObjectField.FieldCode && f.QueryId == this.QueryId)[0]
                 //if (this.FieldsValues.GetFieldValue(advanceFilter.ObjectFieldId) != null) {
 
                 //    if (field.DataTypeCode == "DateTime" || field.DataTypeCode == "Date") {
@@ -510,7 +510,7 @@ export class AdvanceSearchComponent implements OnInit {
             //});
         }
         //this.SelectedObjectFields.forEach((field, key) => {
-        if (this.AdvancedQueryFilterPMs.filter(f => f.ObjectFieldId == field.ObjectField.Id && f.QueryId == this.QueryId)[0] == null) {
+        if (this.AdvancedQueryFilterPMs.filter(f => f.ObjectFieldCode == field.ObjectField.FieldCode && f.QueryId == this.QueryId)[0] == null) {
             var value = this.FieldsValues.GetFieldValue(field.ObjectField.Id);
             var predefinedValue = null;
             var isPredifined = false;
@@ -527,7 +527,7 @@ export class AdvanceSearchComponent implements OnInit {
             var advanceFilter = new AdvancedQueryFilterPM();
 
             advanceFilter.Tenant = SessionInfo.LoggedUserTenant,
-                advanceFilter.ObjectFieldId = field.ObjectField.Id;
+            advanceFilter.ObjectFieldId = field.ObjectField.Id;
             advanceFilter.QueryId = this.QueryId;
             advanceFilter.DataTypeCode = field.ObjectField.DataTypeCode;
             advanceFilter.DisplayInList = field.ObjectField.DisplayInList;
@@ -541,10 +541,10 @@ export class AdvanceSearchComponent implements OnInit {
             advanceFilter.PredefinedValue = predefinedValue;
             advanceFilter.IsPredefined = isPredifined;
             advanceFilter.UserId = SessionInfo.LoggedUserId;
-
+            advanceFilter.ObjectFieldCode = field.ObjectField.FieldCode;
 
             if (field.ObjectField.DataTypeCode == "DateTime" || field.ObjectField.DataTypeCode == "Date") {
-                if (this.FieldsValues.GetFieldValue(advanceFilter.ObjectFieldId) != null) {
+                if (this.FieldsValues.GetFieldValue(advanceFilter.ObjectFieldCode) != null) {
                     //var date = this.FieldsValues.GetFieldValue(advanceFilter.ObjectFieldId).ToString();
 
                     //string[] datesArr = date.Split(',');
@@ -622,7 +622,7 @@ export class AdvanceSearchComponent implements OnInit {
     public DeteteFilter(field: FilterField) {
         //if (this.AdvancedQueryFilterPMs.filter(f => f.ObjectFieldId == field.ObjectField.Id && f.QueryId == this.QueryId)[0] != null) {
         //var advanceFilter = this.AdvancedQueryFilterPMs.filter(f => f.ObjectFieldId == field.ObjectField.Id && f.QueryId == this.QueryId)[0];
-        this.myAdvancedQueryFiltersPMService.getuseradvancedqueryfilterbytenantobjecttablequery(SessionInfo.LoggedUserTenant, field.ObjectField.Id, field.QueryId, SessionInfo.LoggedUserId).subscribe(filter => {
+        this.myAdvancedQueryFiltersPMService.getuseradvancedqueryfilterbytenantobjecttablequery(SessionInfo.LoggedUserTenant, field.ObjectField.FieldCode, field.QueryId, SessionInfo.LoggedUserId).subscribe(filter => {
             if (filter) {
                 var myService: AdvancedQueryFiltersPMService = new AdvancedQueryFiltersPMService();
                 myService.setServiceArgs(this.serviceArgs);

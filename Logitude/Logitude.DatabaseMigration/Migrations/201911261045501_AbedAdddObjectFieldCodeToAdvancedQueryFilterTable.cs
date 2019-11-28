@@ -20,3 +20,4 @@ namespace Logitude.DatabaseMigration.Migrations
         }
     }
 }
+  

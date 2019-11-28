@@ -40,7 +40,7 @@ export class NewViewFilterField extends BaseComponent {
         //}
         //SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId
         if (queryId != null && queryId != undefined && queryId != "") {
-            var preDefinedFilter = this.AdvancedQueryFilterPMs.filter(d => ((d.Tenant == SessionInfo.LoggedUserTenant && d.UserId == SessionInfo.LoggedUserId) || d.Tenant == 0) && d.IsPredefined == true).filter(d => d.ObjectFieldId == objectField.Id && d.QueryId == queryId)[0];
+            var preDefinedFilter = this.AdvancedQueryFilterPMs.filter(d => ((d.Tenant == SessionInfo.LoggedUserTenant && d.UserId == SessionInfo.LoggedUserId) || d.Tenant == 0) && d.IsPredefined == true).filter(d => d.ObjectFieldCode == objectField.FieldCode && d.QueryId == queryId)[0];
             if (preDefinedFilter != null) {
                 this.AdvancedQueryFilterPM = preDefinedFilter;
                 if (preDefinedFilter.PredefinedValue != null) {

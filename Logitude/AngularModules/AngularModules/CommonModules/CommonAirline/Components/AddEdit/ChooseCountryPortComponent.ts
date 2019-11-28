@@ -59,7 +59,7 @@ export class ChooseCountryPortComponent extends BaseComponent {
     CloseButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
-    
+
     AddButtonClicked() {
         var errors: string[] = [];
         if (this.Country == null || this.CountryId == null) {
@@ -77,7 +77,7 @@ export class ChooseCountryPortComponent extends BaseComponent {
         }
     }
 
-    public CountryPortsMessageCount = ""; 
+    public CountryPortsMessageCount = "";
     private LoadPortListMethod() {
         var filters = new ApiQueryFilters();
         filters.addAdditionalFilter("TransportModeId", "A", null, null, "Equals", false, true, false, "Text");

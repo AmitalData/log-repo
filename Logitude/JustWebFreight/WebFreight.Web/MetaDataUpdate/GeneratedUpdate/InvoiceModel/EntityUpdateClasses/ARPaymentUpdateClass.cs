@@ -5536,7 +5536,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 			 QueryColumn OpenPaymentsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenPaymentsQuery.Id, IndexOrder = 10, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "InternalNotes" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter OpenPaymentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "OpenPayments" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = OpenPaymentsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter OpenPaymentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "OpenPayments" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARPaymentObjectFields.Where(d => d.FieldName == "OpenPayments" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = OpenPaymentsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -5565,7 +5565,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 			 QueryColumn DraftPaymentsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftPaymentsQuery.Id, IndexOrder = 10, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "InternalNotes" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter DraftPaymentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "DraftPayments" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = DraftPaymentsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter DraftPaymentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "DraftPayments" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARPaymentObjectFields.Where(d => d.FieldName == "DraftPayments" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = DraftPaymentsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -5587,7 +5587,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 			 QueryColumn NotReadyPaymentsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotReadyPaymentsQuery.Id, IndexOrder = 6, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "TransferError" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 500 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter NotReadyPaymentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "NotReadyPayments" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = NotReadyPaymentsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter NotReadyPaymentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "NotReadyPayments" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARPaymentObjectFields.Where(d => d.FieldName == "NotReadyPayments" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = NotReadyPaymentsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -5609,10 +5609,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 			 QueryColumn MarkedasblockedfortransferQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MarkedasblockedfortransferQuery.Id, IndexOrder = 6, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "TransferError" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 500 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter MarkedasblockedfortransferQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "MarkedAsBlockedForTransfer" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = MarkedasblockedfortransferQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter MarkedasblockedfortransferQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "MarkedAsBlockedForTransfer" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARPaymentObjectFields.Where(d => d.FieldName == "MarkedAsBlockedForTransfer" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = MarkedasblockedfortransferQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 
-             AdvancedQueryFilter MarkedasblockedfortransferQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "SATTransferStatusCode" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "TE",PredefinedValue2 = null, QueryId = MarkedasblockedfortransferQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter MarkedasblockedfortransferQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "SATTransferStatusCode" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARPaymentObjectFields.Where(d => d.FieldName == "SATTransferStatusCode" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "TE",PredefinedValue2 = null, QueryId = MarkedasblockedfortransferQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -5645,7 +5645,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 			 QueryColumn PaymentsFailedtoOpeninSATQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentsFailedtoOpeninSATQuery.Id, IndexOrder = 12, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "InternalNotes" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter PaymentsFailedtoOpeninSATQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "SATTransferStatusCode" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "TE",PredefinedValue2 = null, QueryId = PaymentsFailedtoOpeninSATQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter PaymentsFailedtoOpeninSATQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "SATTransferStatusCode" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARPaymentObjectFields.Where(d => d.FieldName == "SATTransferStatusCode" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "TE",PredefinedValue2 = null, QueryId = PaymentsFailedtoOpeninSATQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -5666,7 +5666,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 			 QueryColumn SATFailedPaymentsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SATFailedPaymentsQuery.Id, IndexOrder = 6, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "TransferError" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 500 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter SATFailedPaymentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "SATTransferStatusCode" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "TE",PredefinedValue2 = null, QueryId = SATFailedPaymentsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter SATFailedPaymentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "SATTransferStatusCode" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = ARPaymentObjectFields.Where(d => d.FieldName == "SATTransferStatusCode" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "TE",PredefinedValue2 = null, QueryId = SATFailedPaymentsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 	   
 	    }
