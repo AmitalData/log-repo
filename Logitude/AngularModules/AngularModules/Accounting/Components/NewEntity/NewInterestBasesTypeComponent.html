@@ -9,80 +9,169 @@
     <tr>
         <td style="width: 400px">
             <table>
-                <tr class="FormFieldRow">
+                <tr class="FormFieldRow" style="height:80px;">
                     <td>
                         <table>
-                            <!-- Code -->
-                            <tr class="FormFieldRow">
-                                <td style="width: 110px;">
-                                    <LogLabel [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName"
-                                              [DataContext]="DataContext"></LogLabel>
+                            <tr>
+                                <td>
+                                    <table>
+                                        <!-- Code -->
+                                        <tr>
+                                            <td style="width: 110px;">
+                                                <LogLabel [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName"
+                                                          [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td style="width: 200px;">
+                                                <LogTextBox [ObjectFieldName]="'Code'" [InputType]="'text'" [DataContext]="DataContext"
+                                                            [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                            </td>
+                                            <td><div></div></td>
+                                        </tr>
+                                        <tr style="height:10px;"><td colspan=3><div></div></td></tr>
+                                        <!-- EnglishName -->
+                                        <tr>
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'EnglishName'" [ObjectTableName]="ObjectTableName"
+                                                          [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td>
+                                                <LogTextBox [ObjectFieldName]="'EnglishName'" [InputType]="'text'" [DataContext]="DataContext"
+                                                            [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                            </td>
+                                            <td><div></div></td>
+                                        </tr>
+
+                                        <tr><td colspan=2><div></div></td></tr>
+                                    </table>
                                 </td>
 
-                                <td style="width: 200px;">
-                                    <LogTextBox [ObjectFieldName]="'Code'" [InputType]="'text'" [DataContext]="DataContext"
-                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                <td>
+                                    <table>
+                                        <!-- LocalName -->
+                                        <tr>
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'LocalName'" [ObjectTableName]="ObjectTableName"
+                                                          [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td>
+                                                <LogTextBox [ObjectFieldName]="'LocalName'" [InputType]="'ntext'" [DataContext]="DataContext"
+                                                            [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                            </td>
+                                            <td><div></div></td>
+                                        </tr>
+                                        <tr style="height:10px;"><td colspan=3><div></div></td></tr>
+                                        <!-- Description -->
+                                        <tr>
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName"
+                                                          [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td>
+                                                <table>
+                                                    <tr style="height:20px;">
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <LogTextBox [ObjectFieldName]="'Description'" [InputType]="'ntext'" [DataContext]="DataContext"
+                                                                        [ObjectTableName]="ObjectTableName" [IsMultiline]="true" [HideColumns]="true"></LogTextBox>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td><div></div></td>
+                                        </tr>
+                                        <tr><td colspan=2><div></div></td></tr>
+                                    </table>
                                 </td>
-                                <td><div></div></td>
+
+
                             </tr>
 
-                            <!-- EnglishName -->
-                            <tr class="FormFieldRow">
-                                <td>
-                                    <LogLabel [ObjectFieldName]="'EnglishName'" [ObjectTableName]="ObjectTableName"
-                                              [DataContext]="DataContext"></LogLabel>
-                                </td>
-
-                                <td>
-                                    <LogTextBox [ObjectFieldName]="'EnglishName'" [InputType]="'text'" [DataContext]="DataContext"
-                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                </td>
-                                <td><div></div></td>
-                            </tr>
-
-                            <!-- LocalName -->
-                            <tr class="FormFieldRow">
-                                <td>
-                                    <LogLabel [ObjectFieldName]="'LocalName'" [ObjectTableName]="ObjectTableName"
-                                              [DataContext]="DataContext"></LogLabel>
-                                </td>
-
-                                <td>
-                                    <LogTextBox [ObjectFieldName]="'LocalName'" [InputType]="'ntext'" [DataContext]="DataContext"
-                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                </td>
-                                <td><div></div></td>
-                            </tr>
-
-                            <!-- Description -->
-                            <tr class="FormFieldRow">
-                                <td>
-                                    <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName"
-                                              [DataContext]="DataContext"></LogLabel>
-                                </td>
-
-                                <td>
-                                    <LogTextBox [ObjectFieldName]="'Description'" [InputType]="'ntext'" [DataContext]="DataContext"
-                                                [ObjectTableName]="ObjectTableName" [IsMultiline]="true" [HideColumns]="true"></LogTextBox>
-                                </td>
-                                <td><div></div></td>
-                            </tr>
-
-                            <tr><td><div></div></td></tr>
+                            <tr><td colspan=2><div></div></td></tr>
                         </table>
 
+                    </td>
+                    <td><div></div></td>
+                </tr>
+                <tr><td colspan=2><div></div></td></tr>
+            </table>
+        </td>
+
+        <td><div></div></td>
+    </tr>
+    <tr class="TabTitleRow">
+        <td>
+            <table>
+                <tr>
+                    <td>
+                        <IconButton [style.float]="isRTL ? 'right' : 'left'" [Name]="'Add'" [IsSmall]="true" [Left]="3"  (click)="AddPeriodClicked()"></IconButton>
                     </td>
                 </tr>
             </table>
         </td>
 
-        <td><div></div></td>
+    </tr>
+    <tr style="height:100%">
+        <td colspan=2>
+            <logitude-edit-grid GridWidth="100%" [HeaderHeight]="25" GridHeight="100%" [ItemSource]="InterestBasesPeriodsList">
 
-       
+                <!--InterestBaseStartDate-->
+                <log-column [width]="'10'" [header]="InterestBaseStartDateHeader">
+                    <log-cell-template template="let item" #logcelltemplate>
+                        <div style="float:left;"> {{item.InterestBaseStartDate | DateTimeToDatePipe}} </div>
+                    </log-cell-template>
+                </log-column>
+
+                <!--InterestRate-->
+                <log-column [width]="'10'" [header]="InterestRateHeader">
+                    <log-cell-template template="let item" #logcelltemplate>
+                        <div style="float:left;"> {{item.InterestRate}} </div>
+                    </log-cell-template>
+                </log-column>
+
+                <!--UpdatedByUserId-->
+                <log-column [width]="'10'" [header]="UpdatedByUserIdHeader">
+                    <log-cell-template template="let item" #logcelltemplate>
+                        <div style="float:left;"> {{item.UpdatedByUserId}} </div>
+                    </log-cell-template>
+                </log-column>
+
+                <!--UpdateDate-->
+                <log-column [width]="'10'" [header]="UpdateDateHeader">
+                    <log-cell-template template="let item" #logcelltemplate>
+                        <div style="float:left;"> {{item.UpdateDate | DateTimeToDatePipe}} </div>
+                    </log-cell-template>
+                </log-column>
+
+                <!--NULL-->
+                <log-column [width]="'10'" [header]="' '" class="CellTools">
+                    <log-cell-template template="let item" #logcelltemplate>
+                        <div style="margin-top:4px;">
+                            <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3"  (click)="EditPeriodClicked(item)"></IconButton>
+                        </div>
+                    </log-cell-template>
+                </log-column>
+
+            </logitude-edit-grid>
+        </td>
     </tr>
 
+    <tr><td colspan=2><div></div></td></tr>
+
     <tr style="height: 32px;">
-        <td colspan="4" style="vertical-align: bottom">
+        <td  colspan="2"  style="vertical-align: bottom">
             <table style="height: 22px;">
                 <tr>
                     <td>

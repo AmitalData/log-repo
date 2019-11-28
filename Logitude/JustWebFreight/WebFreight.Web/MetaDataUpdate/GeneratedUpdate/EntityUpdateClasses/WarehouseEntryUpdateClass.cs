@@ -4426,7 +4426,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn CreatedEntriesQueryQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedEntriesQueryQuery.Id, IndexOrder = 13, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "SpecialInstruction" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter CreatedEntriesQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "CreatedEntries" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = CreatedEntriesQueryQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter CreatedEntriesQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "CreatedEntries" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseEntryObjectFields.Where(d => d.FieldName == "CreatedEntries" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = CreatedEntriesQueryQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -4461,7 +4461,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn EnteredEntriesQueryQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EnteredEntriesQueryQuery.Id, IndexOrder = 13, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "SpecialInstruction" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter EnteredEntriesQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "EnterredEntries" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = EnteredEntriesQueryQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter EnteredEntriesQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "EnterredEntries" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseEntryObjectFields.Where(d => d.FieldName == "EnterredEntries" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = EnteredEntriesQueryQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -4530,7 +4530,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn ConnectedEntriesQueryQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConnectedEntriesQueryQuery.Id, IndexOrder = 13, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter ConnectedEntriesQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "ConnectedToShipment" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = ConnectedEntriesQueryQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter ConnectedEntriesQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "ConnectedToShipment" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseEntryObjectFields.Where(d => d.FieldName == "ConnectedToShipment" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = ConnectedEntriesQueryQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -4565,7 +4565,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn NotConnectedEntriesQueryQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotConnectedEntriesQueryQuery.Id, IndexOrder = 13, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter NotConnectedEntriesQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "ConnectedToShipment" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "false",PredefinedValue2 = null, QueryId = NotConnectedEntriesQueryQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter NotConnectedEntriesQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "ConnectedToShipment" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = WarehouseEntryObjectFields.Where(d => d.FieldName == "ConnectedToShipment" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "false",PredefinedValue2 = null, QueryId = NotConnectedEntriesQueryQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 	   
 	    }

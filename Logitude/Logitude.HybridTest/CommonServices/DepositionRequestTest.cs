@@ -12,10 +12,10 @@ namespace Logitude.HybridTest.CommonServices
         public void Test_DepositionRequest_UPSERT()
         {
             Assert.Inconclusive("Not implemented!");
-            LoginService.GetLoginTokenByCredentials();
-            Response serviceResponse = DepositionRequestWcfCaller.CallDepositionRequestUpsert();
-            Assert.IsFalse(serviceResponse.HasError, serviceResponse.ErrorMessage);
-            Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            //LoginService.GetLoginTokenByCredentials();
+            //Response serviceResponse = DepositionRequestWcfCaller.CallDepositionRequestUpsert();
+            //Assert.IsFalse(serviceResponse.HasError, serviceResponse.ErrorMessage);
+            //Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
         }
     }
 }

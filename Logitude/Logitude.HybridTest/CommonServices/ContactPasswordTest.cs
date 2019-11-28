@@ -10,7 +10,6 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_ContactPassword_ChangeContactPassword()
         {
-            LoginService.GetLoginTokenByCredentials();
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "ContactPassword",
@@ -19,7 +18,6 @@ namespace Logitude.HybridTest.CommonServices
                 ServiceType = null,
                 ServiceFilterType = null,
             };
-
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { "Hybrid@fnarsoft.com", "!H0", "!H1" };
             WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
