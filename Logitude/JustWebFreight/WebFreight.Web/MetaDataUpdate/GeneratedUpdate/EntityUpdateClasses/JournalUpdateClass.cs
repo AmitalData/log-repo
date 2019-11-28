@@ -2628,7 +2628,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn ExternalJournalsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExternalJournalsQuery.Id, IndexOrder = 7, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityReference" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter ExternalJournalsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "ExternalSystem" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "1",PredefinedValue2 = null, QueryId = ExternalJournalsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter ExternalJournalsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "ExternalSystem" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "ExternalSystem" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "1",PredefinedValue2 = null, QueryId = ExternalJournalsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -2671,7 +2671,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn ApprovedJournalsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApprovedJournalsQuery.Id, IndexOrder = 7, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter ApprovedJournalsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "StatusCode" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "2",PredefinedValue2 = null, QueryId = ApprovedJournalsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter ApprovedJournalsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "StatusCode" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "StatusCode" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "2",PredefinedValue2 = null, QueryId = ApprovedJournalsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -2694,7 +2694,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn DraftJournalsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftJournalsQuery.Id, IndexOrder = 7, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter DraftJournalsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "StatusCode" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "0",PredefinedValue2 = null, QueryId = DraftJournalsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter DraftJournalsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "StatusCode" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "StatusCode" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "0",PredefinedValue2 = null, QueryId = DraftJournalsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -2717,7 +2717,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn SavedJournalsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SavedJournalsQuery.Id, IndexOrder = 7, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "AccountingEntityReference" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter SavedJournalsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "StatusCode" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "1",PredefinedValue2 = null, QueryId = SavedJournalsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter SavedJournalsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = JournalObjectFields.Where(d => d.FieldName == "StatusCode" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = JournalObjectFields.Where(d => d.FieldName == "StatusCode" && d.ObjectTableId == JournalObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "1",PredefinedValue2 = null, QueryId = SavedJournalsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 	   
 	    }

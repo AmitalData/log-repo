@@ -645,7 +645,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			 QueryColumn AllMeasurementsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMeasurementsQuery.Id, IndexOrder = 3, ObjectFieldId = MeasurementObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == MeasurementObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter AllMeasurementsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = MeasurementObjectFields.Where(d => d.FieldName == "IsContainer" && d.ObjectTableId == MeasurementObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "false",PredefinedValue2 = null, QueryId = AllMeasurementsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter AllMeasurementsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = MeasurementObjectFields.Where(d => d.FieldName == "IsContainer" && d.ObjectTableId == MeasurementObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = MeasurementObjectFields.Where(d => d.FieldName == "IsContainer" && d.ObjectTableId == MeasurementObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "false",PredefinedValue2 = null, QueryId = AllMeasurementsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 	   
 	    }

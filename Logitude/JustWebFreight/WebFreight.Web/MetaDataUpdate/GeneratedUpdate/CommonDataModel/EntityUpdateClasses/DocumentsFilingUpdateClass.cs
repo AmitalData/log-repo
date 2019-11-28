@@ -1314,7 +1314,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			 QueryColumn AllDocumentsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDocumentsQuery.Id, IndexOrder = 7, ObjectFieldId = DocumentsFilingObjectFields.Where(d => d.FieldName == "IsRequested" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter AllDocumentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = DocumentsFilingObjectFields.Where(d => d.FieldName == "DirectionCode" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "I",PredefinedValue2 = null, QueryId = AllDocumentsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter AllDocumentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = DocumentsFilingObjectFields.Where(d => d.FieldName == "DirectionCode" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentsFilingObjectFields.Where(d => d.FieldName == "DirectionCode" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "I",PredefinedValue2 = null, QueryId = AllDocumentsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -1337,10 +1337,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			 QueryColumn RequestedDocumentsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestedDocumentsQuery.Id, IndexOrder = 7, ObjectFieldId = DocumentsFilingObjectFields.Where(d => d.FieldName == "IsRequested" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter RequestedDocumentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = DocumentsFilingObjectFields.Where(d => d.FieldName == "DirectionCode" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "I",PredefinedValue2 = null, QueryId = RequestedDocumentsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter RequestedDocumentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = DocumentsFilingObjectFields.Where(d => d.FieldName == "DirectionCode" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentsFilingObjectFields.Where(d => d.FieldName == "DirectionCode" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "I",PredefinedValue2 = null, QueryId = RequestedDocumentsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 
-             AdvancedQueryFilter RequestedDocumentsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = DocumentsFilingObjectFields.Where(d => d.FieldName == "IsRequested" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = RequestedDocumentsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter RequestedDocumentsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = DocumentsFilingObjectFields.Where(d => d.FieldName == "IsRequested" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = DocumentsFilingObjectFields.Where(d => d.FieldName == "IsRequested" && d.ObjectTableId == DocumentsFilingObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = RequestedDocumentsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 	   
 	    }

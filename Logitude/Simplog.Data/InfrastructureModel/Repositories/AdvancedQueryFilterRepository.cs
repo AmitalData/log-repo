@@ -50,7 +50,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         public void RemoveFilter(ObjectField objectField, int tenant, string queryId)
         {
             AdvancedQueryFilter advancedFilter = (from a in context.AdvancedQueryFilters
-                                                  where a.Tenant == tenant && a.ObjectField.Id == objectField.Id && a.QueryId == queryId
+                                                  where a.Tenant == tenant && a.ObjectField.FieldCode == objectField.FieldCode && a.QueryId == queryId
                                                   select a).FirstOrDefault();
 
             if (advancedFilter != null)

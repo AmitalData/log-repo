@@ -2243,6 +2243,7 @@ namespace WebFreight.Web.InfrastructureModel
                     Operator = q.Operator,
                     PredefinedValue = q.PredefinedValue,
                     PredefinedValue2 = q.PredefinedValue2,
+                    ObjectFieldCode = usedObjectField.Code,
 
                 };
                 theAdvancedQueryFilterRepository.Add(newQuery);
