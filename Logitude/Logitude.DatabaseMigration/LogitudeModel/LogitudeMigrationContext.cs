@@ -922,6 +922,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<CustomerDeposition> CustomerDepositions { get; set; }
         public IDbSet<UsersReleaseNotesDisplay> UsersReleaseNotesDisplays { get; set; }
         public IDbSet<CheckDigitControlAlgorithm> CheckDigitControlAlgorithms { get; set; }
+        public IDbSet<UserLastSettings> UserLastSettings { get; set; }
 
 
 
@@ -4769,6 +4770,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new TriggerTypeMap());
             modelBuilder.Configurations.Add(new TruckerMap());
             modelBuilder.Configurations.Add(new UserLastLoginMap());
+            modelBuilder.Configurations.Add(new UserLastSettingsMap());
+
             modelBuilder.Configurations.Add(new UserLoginLogMap());
             modelBuilder.Configurations.Add(new UserMap());
             modelBuilder.Configurations.Add(new ValidationTypeMap());

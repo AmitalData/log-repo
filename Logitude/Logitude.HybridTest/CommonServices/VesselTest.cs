@@ -13,9 +13,11 @@ namespace Logitude.HybridTest.CommonServices
         {
             VesselPM vesselPM = new VesselPM()
             {
-                Code = HybridData.VesselCode,
+                Code = HybridData.VesselCodeHV,
                 EnglishName = "Hybrid Vessel",
                 LocalName = "Hybrid Vessel",
+                IMOCode = "IMOCode HV",
+                AddedManually = true,
                 Tenant = TestEnvironmentGlobalParameters.Tenant,
             };
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(vesselPM);

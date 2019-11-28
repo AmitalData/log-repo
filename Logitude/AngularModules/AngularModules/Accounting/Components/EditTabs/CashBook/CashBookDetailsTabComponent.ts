@@ -1,10 +1,11 @@
+import { CashBookExtendedPMService } from './../../../Services/ExtendedPMs/CashBookExtendedPMService';
+import { Output,OnInit } from '@angular/core';
+import { EventEmitter } from '@angular/core';
 import {Component}  from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {CashBookPM} from '../../../EntityPMs/CashBookPM';
 import {GLAccountList} from '../../../EntityLists/GLAccountList';
 import {CashBookLinePM} from '../../../EntityPMs/CashBookLinePM';
-import {LedgerTransactionList} from '../../../EntityLists/LedgerTransactionList';
-import {LedgerTransactionListService} from '../../../Services/StandardLists/LedgerTransactionListService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {ApiQueryFilters, FilterItem} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -13,13 +14,16 @@ import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocato
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import {GLAccountListService} from '../../../Services/StandardLists/GLAccountListService';
 import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
+import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
+import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { CashbookChequesCounter } from '../../../DataContracts/CashbookChequesCounter';
 
 @Component({
     moduleId: module.id,
     templateUrl: './CashBookDetailsTabComponent.html',
 })
 
-export class CashBookDetailsTabComponent extends BaseComponent {
+export class CashBookDetailsTabComponent extends BaseComponent implements OnInit {
     public EntityPM: CashBookPM = null;
     public ObjectTableName = "CashBook";
     public DataContext = this;
@@ -30,7 +34,13 @@ export class CashBookDetailsTabComponent extends BaseComponent {
     ItemSource: CashBookLinePM[];
     FilteredLines: CashBookLinePM[]; // only non deposited chequeus
     public isRTL: boolean = false;
+    private _entityListService: EntityListService = new EntityListService();
     _GLAccountListService: GLAccountListService = new GLAccountListService();
+    _CashBookExtendedPMService: CashBookExtendedPMService = new CashBookExtendedPMService();
+
+    @Output() onQueryChangeEvent = new EventEmitter();
+    @Output() MenuHeaderchangeevent = new EventEmitter();
+
     ChequesList: ObservableCollection;
 
     private CurrentSession = SessionLocator.SelectedSession;
@@ -39,20 +49,176 @@ export class CashBookDetailsTabComponent extends BaseComponent {
         this.Listen();
         this.EntityPM = entityArgs.EntityPM;
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
-        //this.ItemSource = this.EntityPM.CashBookLines;
-        this.LoadScreen();
 
-
-        //if (this.TotalSum > 0) {
-        //    this.UIProperties.SetEnabled("AccountId", this.ObjectTableName, false);
-        //}
 
         this.SetUIProperties();
     }
+
+    ngOnInit() {
+        this.BuildColumns();
+        this.ReloadData();
+    }
+
+     //#region Data
+     searchFieldFilter: FilterItem;
+     public columns: any[] = null;
+
+     ReloadData() {
+         this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
+
+         this.LoadScreen();
+     }
+
+     BuildColumns() {
+         this.columns = [];
+
+         this.columns.push({
+             FieldName: 'ChequeNumber',
+             DataTypeCode: 'String',
+             Display: TextCodeTranslator.Translate("CashBookLine.F.ChequeNumber"),
+             Styles: { width: '90px' },
+             HtmlListComponentName: 'CashBookLineListTemplate',
+             HtmlListComponentUrl: './Accounting/Components/ListTemplates/CashBookLineListTemplate',
+             IsCustomTemplate: true
+         });
+
+         this.columns.push({
+            FieldName: 'ARPChequeStatusName',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("CashBookLine.F.ARPChequeStatusName"),
+            Styles: { width: '150px' },
+            HtmlListComponentName: 'CashBookLineListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/CashBookLineListTemplate',
+            IsCustomTemplate: true
+        });
+        this.columns.push({
+            FieldName: 'DueDate',
+            DataTypeCode: 'DateTime',
+            Display: TextCodeTranslator.Translate("CashBookLine.F.DueDate"),
+            Styles: { width: '100px' },
+            HtmlListComponentName: 'CashBookLineListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/CashBookLineListTemplate',
+            IsCustomTemplate: true
+        });
+         this.columns.push({
+             FieldName: 'LocalAmount',
+             DataTypeCode: 'Decimal',
+             Display: TextCodeTranslator.Translate("CashBookLine.F.LocalAmount"),
+             Styles: { width: '110px' },
+             HtmlListComponentName: 'CashBookLineListTemplate',
+             HtmlListComponentUrl: './Accounting/Components/ListTemplates/CashBookLineListTemplate',
+             IsCustomTemplate: true
+         });
+         this.columns.push({
+             FieldName: 'Currency',
+             DataTypeCode: 'String',
+             Display: TextCodeTranslator.Translate("CashBookLine.F.Currency"),
+             Styles: { width: '90px' },
+            //  HtmlListComponentName: 'CashBookLineListTemplate',
+            //  HtmlListComponentUrl: './Accounting/Components/ListTemplates/CashBookLineListTemplate',
+             IsCustomTemplate: true
+         });
+         this.columns.push({
+             FieldName: 'ForeignAmount',
+             DataTypeCode: 'Decimal',
+             Display: TextCodeTranslator.Translate("CashBookLine.F.ForeignAmount"),
+             Styles: { width: '110px' },
+             HtmlListComponentName: 'CashBookLineListTemplate',
+             HtmlListComponentUrl: './Accounting/Components/ListTemplates/CashBookLineListTemplate',
+             IsCustomTemplate: true
+         });
+         this.columns.push({
+             FieldName: 'AccountNumber',
+             DataTypeCode: 'String',
+             Display: TextCodeTranslator.Translate("CashBookLine.F.AccountNumber"),
+             Styles: { width: '110px' },
+             HtmlListComponentName: 'CashBookLineListTemplate',
+             HtmlListComponentUrl: './Accounting/Components/ListTemplates/CashBookLineListTemplate',
+             IsCustomTemplate: true
+         });
+         this.columns.push({
+             FieldName: 'Bank',
+             DataTypeCode: 'String',
+             Display: TextCodeTranslator.Translate("CashBookLine.F.Bank"),
+             Styles: { width: '75px' },
+             HtmlListComponentName: 'CashBookLineListTemplate',
+             HtmlListComponentUrl: './Accounting/Components/ListTemplates/CashBookLineListTemplate',
+             IsCustomTemplate: true
+         });
+         this.columns.push({
+            FieldName: 'Branch',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("CashBookLine.F.Branch"),
+            Styles: { width: '75px' },
+            HtmlListComponentName: 'CashBookLineListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/CashBookLineListTemplate',
+            IsCustomTemplate: true
+        });
+         this.columns.push({
+             FieldName: 'ARPaymentNumber',
+             DataTypeCode: 'String',
+             Display: TextCodeTranslator.Translate("CashBookLine.F.ARPaymentNumber"),
+             Styles: { width: '110px' },
+             HtmlListComponentName: 'CashBookLineListTemplate',
+             HtmlListComponentUrl: './Accounting/Components/ListTemplates/CashBookLineListTemplate',
+             IsCustomTemplate: true
+         });
+         //this.CustomColumnsReady.emit(this.columns);
+     }
+
+     DataSource = {
+         pageSize: 30,
+         rowCount: null,
+         sortingDir: "Ascending",
+         getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
+             var tempo = this.GetRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
+             return tempo;
+         },
+     };
+
+     GetRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
+
+         //#region Filters
+         var filters = new ApiQueryFilters;
+         // if (this.dateFilter) {
+         //     filters.AdditionalFilters.push(this.dateFilter);
+         // } else {
+         //     return;
+         // }
+         if (this.searchFieldFilter) {
+             filters.AdditionalFilters.push(this.searchFieldFilter);
+         }
+
+         filters.PageSize = 50;
+         filters.PageIndex = 0;
+         filters.GetCount = true;
+
+        //  filters.SortBy = "Line";
+        //  filters.SortDirection = "Ascending";
+         var today = new Date();
+
+        if (this.FilterSelectedValue == 'cash')
+            filters.addAdditionalFilter("DueDate", today, null, null, "LessThanOrEqual", false, false, false, "DateTime");
+        else if (this.FilterSelectedValue == 'postdated')
+            filters.addAdditionalFilter("DueDate", today, null, null, "Larger", false, false, false, "DateTime");
+
+         filters.addAdditionalFilter("ARPChequeStatusCode", "5", null, null, "NotEqual", false, false, false, "string");
+         filters.addAdditionalFilter("IsDeposited", false, null, null, "Equals", false, false, false, "Boolean");
+         filters.addAdditionalFilter("CashBookId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
+
+         //#endregion
+
+         return this._entityListService.getByFilters("CashBookLine", filters);
+
+     }
+
+     //#endregion
+
+
     LoadScreen() {
-        this.RemoveDepositedLines();
+        this.GetChequesCounter();
+
         this.CalculateTotals();
-        this.ComputeFilterTotals();
 
         // toggle GLAccount editability
         if (this.EntityPM.AccountId)
@@ -76,6 +242,10 @@ export class CashBookDetailsTabComponent extends BaseComponent {
 
 
     SetUIProperties() {
+        //if (this.TotalSum > 0) {
+        //    this.UIProperties.SetEnabled("AccountId", this.ObjectTableName, false);
+        //}
+
         this.UIProperties.SetEnabled("BranchId", this.ObjectTableName, false); // always dim, WI 41740
 
         if (this.EntityPM.Inactive) {
@@ -98,7 +268,7 @@ export class CashBookDetailsTabComponent extends BaseComponent {
                 this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                        this.LoadScreen();
+                        this.ReloadData();
                         this.SetUIProperties();
                     }
                 });
@@ -109,7 +279,7 @@ export class CashBookDetailsTabComponent extends BaseComponent {
                     if (isLoadSuccess) {
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         console.log("Entity Reloaded");
-                        this.LoadScreen();
+                        this.ReloadData();
                         this.SetUIProperties();
                     }
                 });
@@ -168,10 +338,28 @@ export class CashBookDetailsTabComponent extends BaseComponent {
 
     private timerToken: any;
     TextChanged(searchtext) {
-        this.timerToken = setTimeout(() => {
-            this.searchText = searchtext;
-            this.FilterLines();
-        }, 500);
+        if (!AppTool.IsNullOrEmpty(searchtext)) {
+
+            this.timerToken = setTimeout(() => {
+                this.searchFieldFilter = new FilterItem("SearchFields", searchtext, null, null, "Contains", false, false, false, "string", false);
+                this.RefreshButtonClicked();
+            }, 700);
+
+        } else {
+            this.searchFieldFilter = null;
+            this.RefreshButtonClicked();
+        }
+    }
+
+    TextChangedOld(searchtext) {
+        // this.timerToken = setTimeout(() => {
+        //     this.searchText = searchtext;
+        //     this.FilterLines();
+        // }, 500);
+    }
+
+    RefreshButtonClicked() {
+        this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
     }
 
     Abs(number: number) {
@@ -190,61 +378,61 @@ export class CashBookDetailsTabComponent extends BaseComponent {
     }
 
     CalculateTotals() {
-        if (!AppTool.IsNullOrEmpty(this.ItemSource)) {
+        // if (!AppTool.IsNullOrEmpty(this.ItemSource)) {
 
-            this.TotalSum = 0;
+        //     this.TotalSum = 0;
 
-            if (this.CashBookTypeCode == "1") { //1-cash
-                this.TotalSum = this.EntityPM.TotalAmount;
-            } else {
-                for (let line of this.ItemSource) {
-                    this.TotalSum += line.ForeignAmount;
-                }
-            }
+        //     if (this.CashBookTypeCode == "1") { //1-cash
+        //         this.TotalSum = this.EntityPM.TotalAmount;
+        //     } else {
+        //         for (let line of this.ItemSource) {
+        //             this.TotalSum += line.ForeignAmount;
+        //         }
+        //     }
 
 
-        }
+        // }
     }
 
     FilterLines() {
         this.FilterCheques();
-        var lines = this.ItemSource;
+        // var lines = this.ItemSource;
 
-        // Filtering
-        if (!AppTool.IsNullOrEmpty(this.searchText)) {
-            lines = lines.filter((el) => {
-                if (el.ChequeNumber != null)
-                    if (el.ChequeNumber.toLowerCase().includes(this.searchText.toLowerCase())) return true;
-                if (el.AccountNumber != null)
-                    if (el.AccountNumber.toLowerCase().includes(this.searchText.toLowerCase())) return true;
-                return false;
-            });
-        }
-        this.ItemSource = lines;
+        // // Filtering
+        // if (!AppTool.IsNullOrEmpty(this.searchText)) {
+        //     lines = lines.filter((el) => {
+        //         if (el.ChequeNumber != null)
+        //             if (el.ChequeNumber.toLowerCase().includes(this.searchText.toLowerCase())) return true;
+        //         if (el.AccountNumber != null)
+        //             if (el.AccountNumber.toLowerCase().includes(this.searchText.toLowerCase())) return true;
+        //         return false;
+        //     });
+        // }
+        // this.ItemSource = lines;
 
-        this.ChequesList = new ObservableCollection([]);
-        this.ChequesList.InsertCollection(lines, true);
+        // this.ChequesList = new ObservableCollection([]);
+        // this.ChequesList.InsertCollection(lines, true);
 
-        this.NoRows = lines.length == 0;
+        // this.NoRows = lines.length == 0;
     }
 
     RemoveDepositedLines() {
-        var lines = this.EntityPM.CashBookLines;
+        // var lines = this.EntityPM.CashBookLines;
 
-        // Filtering
-        lines = lines.filter((el) => {
-            if (el.ARPChequeStatusCode == "5") return false; // 5- Returned to Customer
-            else if (el.IsDeposited == true) return false;
-            else return true;
-        });
+        // // Filtering
+        // lines = lines.filter((el) => {
+        //     if (el.ARPChequeStatusCode == "5") return false; // 5- Returned to Customer
+        //     else if (el.IsDeposited == true) return false;
+        //     else return true;
+        // });
 
-        this.FilteredLines = lines;
-        this.ItemSource = this.FilteredLines;
+        // this.FilteredLines = lines;
+        // this.ItemSource = this.FilteredLines;
 
-        this.ChequesList = new ObservableCollection([]);
-        this.ChequesList.InsertCollection(this.FilteredLines, true);
+        // this.ChequesList = new ObservableCollection([]);
+        // this.ChequesList.InsertCollection(this.FilteredLines, true);
 
-        this.NoRows = this.FilteredLines.length == 0;
+        // this.NoRows = this.FilteredLines.length == 0;
     }
 
     //#region Filter Methods
@@ -257,83 +445,68 @@ export class CashBookDetailsTabComponent extends BaseComponent {
         }
     }
     FilterCheques() {
+        this.ReloadData();
+        // var originalCheques = this.FilteredLines;
+        // var filteredQuery = originalCheques;
+        // var today = new Date();
+        // this.NoRows = false;
+        // if (this.FilterSelectedValue == 'cash') {
+        //     filteredQuery = originalCheques.filter((el) => {
 
-        var originalCheques = this.FilteredLines;
-        var filteredQuery = originalCheques;
-        var today = new Date();
-        this.NoRows = false;
-        if (this.FilterSelectedValue == 'cash') {
-            filteredQuery = originalCheques.filter((el) => {
+        //         if (el.DueDate != null) {
+        //             var date = new Date(el.DueDate.toString());
+        //             if (date <= today) {
+        //                 return true;
+        //             }
+        //             return false;
 
-                if (el.DueDate != null) {
-                    var date = new Date(el.DueDate.toString());
-                    if (date <= today) {
-                        return true;
-                    }
-                    return false;
+        //         }
+        //         return false;
+        //     }); // cash cheques
 
-                }
-                return false;
-            }); // cash cheques
+        // } else if (this.FilterSelectedValue == 'postdated') {
+        //     filteredQuery = originalCheques.filter((el) => {
 
-        } else if (this.FilterSelectedValue == 'postdated') {
-            filteredQuery = originalCheques.filter((el) => {
+        //         if (el.DueDate != null) {
+        //             var date = new Date(el.DueDate.toString());
+        //             if (date > today) {
+        //                 return true;
+        //             }
+        //             return false;
 
-                if (el.DueDate != null) {
-                    var date = new Date(el.DueDate.toString());
-                    if (date > today) {
-                        return true;
-                    }
-                    return false;
+        //         }
+        //         return false;
+        //     }); // postdated cheques
+        // }
 
-                }
-                return false;
-            }); // postdated cheques
-        }
+        // this.ItemSource = filteredQuery;
 
-        this.ItemSource = filteredQuery;
-
-        this.ChequesList = new ObservableCollection([]);
-        this.ChequesList.InsertCollection(filteredQuery, true);
+        // this.ChequesList = new ObservableCollection([]);
+        // this.ChequesList.InsertCollection(filteredQuery, true);
 
         this.CalculateTotals();
-        this.ComputeFilterTotals();
 
     }
 
     //#endregion
-    CashCount: number = 0;
-    PostdatesCount: number = 0;
-    ComputeFilterTotals() {
 
-        this.CashCount = 0;
-        this.PostdatesCount = 0;
 
-        var todayDate = new Date();
-        this.CashCount = this.FilteredLines.filter((el) => {
+    public ChequesCounter: CashbookChequesCounter = new CashbookChequesCounter();
+    GetChequesCounter(){
+        this.ChequesCounter = new CashbookChequesCounter();
+        this._CashBookExtendedPMService.GetCashbookChequesCounter(this.EntityPM.Id)
+            .subscribe((response: ServiceResponse) =>
+            {
+                console.log("[GetCashbookChequesCounter]", response);
 
-            if (el.DueDate != null) {
-                var date = new Date(el.DueDate.toString());
-                if (date <= todayDate) {
-                    return true;
+                if (!response.HasError) {
+                    this.ChequesCounter = response.Result;
                 }
-                return false;
-
-            }
-            return false;
-        }).length;
-        this.PostdatesCount = this.FilteredLines.filter((el) => {
-
-            if (el.DueDate != null) {
-                var date = new Date(el.DueDate.toString());
-                if (date > todayDate) {
-                    return true;
+                else {
+                    console.error(response.ErrorsArray);
                 }
-                return false;
+            });
 
-            }
-            return false;
-        }).length;
     }
 
 }

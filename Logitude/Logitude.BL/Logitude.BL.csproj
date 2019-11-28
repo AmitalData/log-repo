@@ -339,6 +339,7 @@
     <Compile Include="CommonDataModel\EntityPMs\PaymentGatewayPartnerPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\TenantAdditionalDataPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\AccountingPartnerPM.cs" />
+    <Compile Include="CommonDataModel\EntityPMs\UserLastSettingsPM.cs" />
     <Compile Include="CommonDataModel\EntityQueries\AirlineAreasPortQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\AirlineAreaQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\CardContactAdditionalServiceQuery.cs" />
@@ -348,6 +349,7 @@
     <Compile Include="CommonDataModel\EntityQueries\PaymentGatewayPartnerQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\TenantAdditionalDataQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\AccountingPartnerQuery.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\UserLastSettingsQuery.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\AirlineAreasPortMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\AirlineAreaMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\CardContactAdditionalServiceMapping.cs" />
@@ -356,11 +358,13 @@
     <Compile Include="CommonDataModel\Tools\DataMapping\PaymentGatewayPartnerMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\TenantAdditionalDataMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\AccountingPartnerMapping.cs" />
+    <Compile Include="CommonDataModel\Tools\DataMapping\UserLastSettingsMapping.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\AirlineAreaService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\DocumentsExecutionLogService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\NumberOfUsersService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\TenantAdditionalDataService.cs" />
     <Compile Include="CommonDataModel\Tools\EntityService\AccountingPartnerService.cs" />
+    <Compile Include="CommonDataModel\Tools\EntityService\UserLastSettingsService.cs" />
     <Compile Include="CommonDataModel\Tools\TraceEvents\AccountingPartnerTracing.cs" />
     <Compile Include="CommonDataModel\Tools\TraceEvents\AirlineAreaTracing.cs" />
     <Compile Include="CommonDataModel\Tools\Validating\VATValidating.cs" />

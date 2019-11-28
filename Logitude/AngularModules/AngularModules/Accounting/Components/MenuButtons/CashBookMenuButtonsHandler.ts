@@ -1,3 +1,4 @@
+import { CashBookExtendedPMService } from './../../Services/ExtendedPMs/CashBookExtendedPMService';
 declare var window: any;
 import {CashBookPM} from '../../EntityPMs/CashBookPM';
 import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
@@ -23,6 +24,7 @@ export class CashBookMenuButtonsHandler {
     TotalSum: number = 0;
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    _CashBookExtendedPMService: CashBookExtendedPMService = new CashBookExtendedPMService();
 
     public SetEntityPM(entityArgs: EntityArgs) {
         this.TenantPM = SessionLocator.TenantPM;
@@ -122,43 +124,77 @@ export class CashBookMenuButtonsHandler {
     RunNewDepositWizard() {
 
         if (this.EntityPM.CashBookTypeCode == "2") { // 2-Cheque
-            var exist = this.EntityPM.CashBookLines.find(d => d.IsDeposited == false);
-            if (!exist) {
-                var msg = new MessageWindow();
-                msg.Width = 350;
-                msg.RTL = this.isRTL;
-                msg.Show(TextCodeTranslator.Translate("Accounting.O.NoChequesInCashbook"));//"There are no Cheques in the Cashbook");
 
-                return;
-            }
+            this.RunNewDepositForChequeCashbook();
+
         } else if (this.EntityPM.CashBookTypeCode == "1") { // 1-Cash
-            if (AppTool.IsNullOrZero(this.EntityPM.TotalAmount)){
-                var msg = new MessageWindow();
-                msg.Width = 350;
-                msg.RTL = this.isRTL;
-                msg.Show(TextCodeTranslator.Translate("Accounting.O.NoCashInCashbook"));//"There are no Cash in the Cashbook");
 
-                return;
-            }
+            this.RunNewDepositForCashCashbook();
+
         }
 
+    }
+
+
+    private RunNewDepositForCashCashbook()
+    {
+        if (AppTool.IsNullOrZero(this.EntityPM.TotalAmount)) {
+            var msg = new MessageWindow();
+            msg.Width = 350;
+            msg.RTL = this.isRTL;
+            msg.Show(TextCodeTranslator.Translate("Accounting.O.NoCashInCashbook")); //"There are no Cash in the Cashbook");
+        }
+        else {
+            this.OpenNewDepositWindow();
+        }
+    }
+
+    private RunNewDepositForChequeCashbook()
+    {
+        this._CashBookExtendedPMService.GetCashbookUndepositedChequesCount(this.EntityPM.Id)
+            .subscribe((response: ServiceResponse) =>
+            {
+                console.log("[GetCashbookChequesCounter]", response);
+                if (!response.HasError) {
+                    var undepositedChequeCount: number = response.Result;
+                    if (undepositedChequeCount == 0) {
+                        this.DisplayNoChequesErrorMsg();
+                    }
+                    else {
+                        this.OpenNewDepositWindow();
+                    }
+                }
+                else {
+                    console.error(response.ErrorsArray);
+                }
+            });
+    }
+
+    private OpenNewDepositWindow()
+    {
         var windowTitle = "New Deposit";
         var windowTitle = TextCodeTranslator.Translate("Accounting.General.O.NewDeposit");
-
         var windowArgs = new Args;
         windowArgs.CashBookId = this.EntityPM.Id;
-
         var logWindow = new LogitudeWindow();
         logWindow.Width = 520;
         logWindow.Height = 240;
         logWindow.Title = windowTitle;
         logWindow.WindowArgs = windowArgs;
-        logWindow.WindowClosed.subscribe(($event: any) => {
+        logWindow.WindowClosed.subscribe(($event: any) =>
+        {
             this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         });
         logWindow.Show('./Accounting/Components/NewEntity/NewBankDepositComponent');
     }
 
+    private DisplayNoChequesErrorMsg()
+    {
+        var msg = new MessageWindow();
+        msg.Width = 350;
+        msg.RTL = this.isRTL;
+        msg.Show(TextCodeTranslator.Translate("Accounting.O.NoChequesInCashbook"));
+    }
 
     private StartBusyIndicator(message: string) {
         this.CurrentSession.StartBusyIndicator(message);

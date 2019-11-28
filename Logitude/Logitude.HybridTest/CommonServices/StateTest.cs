@@ -11,13 +11,12 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_State_UPSERT()
         {
-            StatePM statePM = new StatePM()
+               StatePM statePM = new StatePM()
             {
-                Code = HybridData.StateCode,
-                EnglishName = "Hybrid State",
-                LocalName = "Hybrid State",
-                CountryId = HybridData.CountryCode,
-                AddedManually = true,
+                Code = HybridData.StateCodeAK,
+                EnglishName = "Alaska",
+                LocalName = "Alaska",
+                CountryId = HybridData.CountryCodeUS,
                 Tenant = TestEnvironmentGlobalParameters.Tenant,
             };
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(statePM);

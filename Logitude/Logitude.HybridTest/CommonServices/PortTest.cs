@@ -15,11 +15,11 @@ namespace Logitude.HybridTest.CommonServices
         {
             PortPM portPM = new PortPM()
             {
-                Code = HybridData.FromPortCode,
+                Code = HybridData.PortCode,
                 EnglishName = "Hybrid From Port",
                 LocalName = "Hybrid From Port",
-                CountryCode = HybridData.CountryCode,
-                CountryId = HybridData.CountryCode,
+                CountryCode = HybridData.CountryCodeUS,
+                CountryId = HybridData.CountryCodeUS,
                 AddedManually = true,
                 IsAir = true,
                 IsOcean = true,
@@ -29,33 +29,11 @@ namespace Logitude.HybridTest.CommonServices
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(portPM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
-            HybridData.FromPortId = serviceResponse.Result;
-        }
-        [TestMethod]
-        public void Test_ToPort_UPSERT()
-        {
-            PortPM portPM = new PortPM()
-            {
-                Code = HybridData.ToPortCode,
-                EnglishName = "Hybrid To Port",
-                LocalName = "Hybrid To Port",
-                CountryCode = HybridData.CountryCode,
-                CountryId = HybridData.CountryCode,
-                AddedManually = true,
-                IsAir = true,
-                IsOcean = true,
-                IsInland = true,
-                Tenant = TestEnvironmentGlobalParameters.Tenant,
-            };
-            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(portPM);
-            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            HybridData.PortId = serviceResponse.Result;
         }
         [TestMethod]
         public void Test_PORT_GetList()
         {
-            if (HybridData.FromPortId == null)
-                Test_FromPort_UPSERT();
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "Port",
@@ -67,7 +45,7 @@ namespace Logitude.HybridTest.CommonServices
             ApiSearchFilters filters = new ApiSearchFilters
             {
                 Take = 10,
-                SearchFields = HybridData.FromPortCode
+                SearchFields = HybridData.PortCodeLON
             };
 
             Response serviceResponse = new Response();
@@ -75,7 +53,7 @@ namespace Logitude.HybridTest.CommonServices
             PortList[] ports = (PortList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.Result);
-            Assert.AreEqual(ports[0].EnglishName, "Hybrid From Port", "Get Hybrid From Port From Ports Failed!");
+            Assert.AreEqual(ports[0].Id, HybridData.PortIdLON, "Get Hybrid From Port From Ports Failed!");
         }
         [TestMethod]
         public void Test_PORT_GetPortId()

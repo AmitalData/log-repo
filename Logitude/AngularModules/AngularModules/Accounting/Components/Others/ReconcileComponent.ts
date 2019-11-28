@@ -819,7 +819,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     GetIndicatorText(transaction)
     {
         var showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
-        if(transaction['OpenAmount'] != this.CalculateOriginalAmount(transaction))
+        if ((transaction['LocalAmountDebit'] > 0 && transaction['OpenAmount'] != this.CalculateOriginalAmount(transaction)) || (transaction['LocalAmountCredit'] > 0 && transaction['OpenAmount'] != -1 * this.CalculateOriginalAmount(transaction))) 
             return showLocal ? 'סכום פתוח חלקית' : 'Partial transaction';
         else
             return showLocal ? 'סכום פתוח ' : 'Open transaction';
