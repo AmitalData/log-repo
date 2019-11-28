@@ -27,7 +27,7 @@
         <div class="circleDraw"
              [class.orangeCircle]="(rowData['LocalAmountDebit'] >0 && rowData['OpenAmount'] != CalculateOriginalAmount()) || (rowData['LocalAmountCredit'] >0 && rowData['OpenAmount'] != -1*CalculateOriginalAmount())"></div>
     </div>
-    
+
 
     <div *ngIf="fieldName == 'GLAccountIndicator' && rowData['OpenAmount'] != 0" [attr.title]="GetIndicatorText()" class="circleWrapper CenterCenter">
         <div class="circleDraw"
@@ -73,7 +73,7 @@
         {{ rowData[fieldName] | NumbersPipe:'N2' }}
     </div>
 
-    <div class="TextTrimming" *ngIf="fieldName == 'Notes'" style="text-align: right;">{{ rowData[fieldName] }}</div>
+    <div class="TextTrimming" [attr.title]="rowData[fieldName]" *ngIf="fieldName == 'Notes'" text-start>{{ rowData[fieldName] }}</div>
 
 
     <!-- ForeignAmountCredit -->

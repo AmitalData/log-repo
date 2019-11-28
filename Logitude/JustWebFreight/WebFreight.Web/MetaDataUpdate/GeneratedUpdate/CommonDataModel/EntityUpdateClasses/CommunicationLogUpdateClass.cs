@@ -2310,7 +2310,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			 QueryColumn TodayCommunicationLogsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayCommunicationLogsQuery.Id, IndexOrder = 10, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "Retries" && d.ObjectTableId == CommunicationLogObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter TodayCommunicationLogsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == CommunicationLogObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "Today",PredefinedValue2 = null, QueryId = TodayCommunicationLogsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter TodayCommunicationLogsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == CommunicationLogObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CommunicationLogObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == CommunicationLogObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "Today",PredefinedValue2 = null, QueryId = TodayCommunicationLogsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
