@@ -18,6 +18,7 @@ export class AddEditInterestBasesPeriodComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
+        this.UIProperties.SetEnabled("InterestRate", "InterestBasesPeriod", false);
     }
 
     SetDataContext(dataContext: InterestBasesPeriodItem) {
@@ -38,9 +39,9 @@ export class AddEditInterestBasesPeriodComponent extends BaseComponent {
         if (this.ValidationErrorsList.length == 0) {
             if (this.DataContext.IsNewEntity)
                 if (this.DataContext.InterestBasesTypePM.InterestBasesPeriods.indexOf(this.EntityPM) == -1) {
-                    this.DataContext.InterestBasesTypePM.AddInterestBasesPeriod(this.EntityPM);
                     this.DataContext.fatherComponent.InterestBasesPeriodsList.Insert(this.DataContext);
-                this.DataContext.fatherComponent.BuildData();
+                    this.DataContext.InterestBasesTypePM.AddInterestBasesPeriod(this.EntityPM);
+                    this.DataContext.fatherComponent.BuildData();
                 }
                 this.CurrentSession.CloseCurrentWindow();
         }
