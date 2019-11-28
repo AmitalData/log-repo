@@ -45,7 +45,7 @@ namespace Logitude.HybridTest.CommonServices
             QuoteList[] quotes = (QuoteList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.Result);
-            Assert.AreEqual(quotes[0].FromPortId, HybridData.FromPortId, "Get Hybrid Quote Item From Quotes Failed!");
+            Assert.AreEqual(quotes[0].FromPortId, HybridData.PortCodeLON, "Get Hybrid Quote Item From Quotes Failed!");
         }
 
         [TestMethod]

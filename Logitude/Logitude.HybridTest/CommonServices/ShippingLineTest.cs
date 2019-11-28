@@ -14,12 +14,10 @@ namespace Logitude.HybridTest.CommonServices
         {
             ShippingLinePM shippingLinePM = new ShippingLinePM()
             {
-                Code = HybridData.ShippingLineCode,
-                SCACCode = HybridData.ShippingLineCode,
-                EnglishName = "Hybrid ShippingLine",
-                LocalName = "Hybrid ShippingLine",
-                CityName = "Hybrid City",
-                CountryCode = HybridData.CountryCode,
+                Code = HybridData.ShippingLineCodeHSL,
+                SCACCode = HybridData.ShippingLineCodeHSL,
+                EnglishName = "Hybrid ShippingLine changed",
+                LocalName = "Hybrid ShippingLine changed",
                 CarrierTypeId = "SL",
                 Tenant = TestEnvironmentGlobalParameters.Tenant,
             };
