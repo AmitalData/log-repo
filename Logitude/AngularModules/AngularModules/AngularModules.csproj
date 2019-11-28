@@ -503,10 +503,12 @@
     <TypeScriptCompile Include="Common\EntityPMs\CardContactProductPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CustomerDepositionPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CustomsShipperPM.ts" />
+    <TypeScriptCompile Include="Common\EntityPMs\UserLastSettingsPM.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedLists\CustomerDepositionListExtendedService.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedLists\UserExtendedListService.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedPMs\AutomationResultEmailRecipientExtendedService.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedPMs\CardExtendedPMService.ts" />
+    <TypeScriptCompile Include="Common\Services\ExtendedPMs\UserLastSettingsExtendedPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\AccountingPartnerListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\AirlineAreaListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardLists\CheckDigitControlAlgorithmListService.ts" />
@@ -518,6 +520,7 @@
     <TypeScriptCompile Include="Common\Services\StandardPMs\CustomerDepositionPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CustomsShipperPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\LogBoxTenantSettingPMService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardPMs\UserLastSettingsPMService.ts" />
     <TypeScriptCompile Include="Controls\InvitedFilter.ts" />
     <TypeScriptCompile Include="Controls\ParticipatedFilter.ts" />
     <TypeScriptCompile Include="Controls\Pipes\MinutesToTimePipe.ts" />
