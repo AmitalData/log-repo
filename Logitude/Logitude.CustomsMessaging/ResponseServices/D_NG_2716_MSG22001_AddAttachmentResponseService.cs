@@ -65,8 +65,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             bool lockit = !string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings.Get("Singleton.CRS:2715/UDLT"));
             string key = ProcessLockTableUtil.Instance.GetKey4DocumentsFilingId(requestParams.DocumentsFilingId, requestParams.Tenant);
+            bool SyncUpdateDeclarationCourier_DocumentStatusCode = true;//In ECOMMERCE(DSV) 2 docment per dec - force Sync UpdateDeclarationCourierStatus
+            if (SyncUpdateDeclarationCourier_DocumentStatusCode && !String.IsNullOrWhiteSpace(requestParams.DeclaretionId))
+            {
+                var declarationQueryService = new Logitude.Customs.BL.EntityQueryServices.DeclarationQueryService(requestParams.Tenant);
+                var connectedDeclarationPM = declarationQueryService.GetSingle(requestParams.DeclaretionId, false, false);
+                if (connectedDeclarationPM != null && connectedDeclarationPM.IsCourierDeclaration)
+                {
+                    key = ProcessLockTableUtil.Instance.GetKey4UpdateDeclarationCourier_DocumentStatusCode(connectedDeclarationPM.Id, requestParams.Tenant);
+                }
 
-            
+            }
+
             using (var processLockTableDisposable = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, lockit, key, "CRS:2715/UDLT"))
             {
                 RealUpdate(customResponse, requestParams);
