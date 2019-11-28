@@ -49,11 +49,11 @@ namespace Logitude.Customs.BL.Tasks
                         courierMasterPMItem.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                         courierMasterPMItem.IsOpen = false;
                         CourierMasterUpdateService.Update(courierMasterPMItem, true);
-                        LogMessagingUtil.Instance.AppendLine($"נסגרה טיסה " + courierMasterPMItem.MAWB + "\n");
+                        LogMessagingUtil.Instance.AppendLine($"נסגרה טיסה " + courierMasterPMItem.AirlinePrefix + "-" + courierMasterPMItem.MAWB + "\n");
                     }
                     catch
                     {
-                        LogMessagingUtil.Instance.AppendLine($"לא נסגרה טיסה({courierMasterPMItem.MAWB})" + "\n");
+                        LogMessagingUtil.Instance.AppendLine($"לא נסגרה טיסה " + courierMasterPMItem.AirlinePrefix + "-" + courierMasterPMItem.MAWB + "\n");
                     }
                 }
             }
