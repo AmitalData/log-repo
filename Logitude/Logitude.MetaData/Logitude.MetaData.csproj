@@ -233,6 +233,7 @@
     <None Include="EntityFiles\CommonDataModel\User.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\CommonDataModel\UserLastSettings.lxml" />
     <None Include="EntityFiles\CommonDataModel\UsoCFDI.lxml">
       <SubType>Designer</SubType>
     </None>

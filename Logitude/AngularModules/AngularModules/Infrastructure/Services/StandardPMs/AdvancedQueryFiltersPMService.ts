@@ -62,14 +62,14 @@ export class AdvancedQueryFiltersPMService {
         });
     }
 
-    getuseradvancedqueryfilterbytenantobjecttablequery(tenant: number,objecttableid:string,queryid:string, userid: string) {
+    getuseradvancedqueryfilterbytenantobjecttablequery(tenant: number, objecttableCode:string,queryid:string, userid: string) {
 
 
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/getadvancedqueryfiltersbytenantuserobjecttablequery?' + 'tenant=' + tenant + '&objecttableid=' + objecttableid + '&queryid=' + queryid + '&loggedcontactid=' + userid, {
+            return this._http.get(this._apiUrl + '/getadvancedqueryfiltersbytenantuserobjecttablequery?' + 'tenant=' + tenant + '&objecttableCode=' + objecttableCode + '&queryid=' + queryid + '&loggedcontactid=' + userid, {
                 headers: authHeader
             }).map(response => {
                 var pms = response.json();

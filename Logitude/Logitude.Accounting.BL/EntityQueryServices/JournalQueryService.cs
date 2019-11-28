@@ -135,7 +135,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         {
 
             var journalLineRepository = new JournalLineRepository(this.MainContext as IAccountingContext);
-            var have = (from j in repository.GetQueryablePending2ApproveOrdered(tenant)
+            var have = (from j in repository.
+                        //GetQueryablePending2ApproveOrdered(tenant)
+                        GetQueryablePending2Approve_LedgerNotCreated(tenant)
                         join jl in journalLineRepository.GetQueryContainsAccId(GLAccountIDList, tenant)
                         on j.Id equals jl.JournalId
                         select jl).Any();

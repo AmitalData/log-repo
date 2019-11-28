@@ -588,7 +588,7 @@
                                                 </td>
 
                                                 <td style="width: 20px; padding-right: 2px;float:right;vertical-align:central;">
-                                                    <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddStepClicked()" [disabled]="!DataContext.IsAddPricestepsEnabled"></IconButton>
+                                                    <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddStepClicked()" [disabled]="!IsEditingEnabled"></IconButton>
                                                 </td>
                                             </tr>
                                         </table>
@@ -598,7 +598,7 @@
                                 <tr>
                                     <td>
                                         <div class="MediaFill" style="overflow-x: hidden;">
-                                            <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="StepsItemsSource" (RowEnded)="OnRowEnded($event)">
+                                            <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="StepsItemsSource" (RowEnded)="OnRowEnded($event)" [Disabled]="!DataContext.IsEditingEnabled">
 
                                                 <!-- Step -->
                                                 <log-column [header]="'QuotePriceSteps.F.Step' | TextCodeTranslationPipe" [width]="'150'" [Alignment]="'left'">
@@ -609,15 +609,18 @@
                                                                     <td class="GridViewCell" style="width: 150px;">
                                                                         <table style="height: 22px;">
                                                                             <tr>
-                                                                                <td>
+                                                                                <td style="width:2px;min-width:2px;">
                                                                                     <div></div>
                                                                                 </td>
-                                                                                <td class="Label" *ngIf="item.Step">+</td>
+                                                                                <td style="width:10px;min-width:10px; float:left;" class="Label" *ngIf="item.Step">+</td>
                                                                                 <td class="Label">{{item.Step | NumbersPipe:'N2'}}</td>
-                                                                                <td style="width:5px;">
+                                                                                <td style="width:5px;min-width:5px;">
                                                                                     <div></div>
                                                                                 </td>
-                                                                                <td class="Label">{{item.WeightUnitCode}}</td>
+                                                                                <td style="width:40px;min-width:40px;float:right;" class="Label">{{item.WeightUnitCode}}</td>
+                                                                                <td style="width:2px;min-width:2px;">
+                                                                                    <div></div>
+                                                                                </td>
                                                                             </tr>
                                                                         </table>
                                                                     </td>

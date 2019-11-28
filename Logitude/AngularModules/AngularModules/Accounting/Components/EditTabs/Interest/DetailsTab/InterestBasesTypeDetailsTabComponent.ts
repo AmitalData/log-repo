@@ -205,12 +205,24 @@ export class InterestBasesPeriodItem extends BaseComponent {
         }
         return true;
     }
+    CheckInterestBaseStartDateExist(InterestBaseStartDate: Date): boolean {
+        for (let i = 0; i < this.DataContext.fatherComponent.InterestBasesPeriodsList.Length; i++) {
+            if (this.DataContext.fatherComponent.InterestBasesPeriodsList.Collection[i].InterestBaseStartDate.getTime() === InterestBaseStartDate.getTime()) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     get InterestBaseStartDate() { return this.EntityPM.InterestBaseStartDate; }
     set InterestBaseStartDate(newValue: Date) {
         if (this.EntityPM.InterestBaseStartDate != newValue) {
             this.EntityPM.InterestBaseStartDate = newValue;
         }
+        if (newValue && !this.CheckInterestBaseStartDateExist(newValue))
+            this.UIProperties.SetValidity("InterestBaseStartDate", "InterestBasesPeriod", false, TextCodeTranslator.Translate("Accounting.General.O.AbaseperiodwiththesamestartdateisalreadyAdded"));
+        else
+            this.UIProperties.SetValidity("InterestBaseStartDate", "InterestBasesPeriod", true, TextCodeTranslator.Translate("Accounting.General.O.AbaseperiodwiththesamestartdateisalreadyAdded"));
     }
 
     get InterestRate() { return this.EntityPM.InterestRate; }
@@ -219,9 +231,9 @@ export class InterestBasesPeriodItem extends BaseComponent {
             this.EntityPM.InterestRate = newValue;
         }
         if (newValue && !this.CheckInterestRateValid(newValue))
-            this.UIProperties.SetValidity("InterestRate", "InterestBasesPeriod", false,"Interest rate format must be 2.2");
+            this.UIProperties.SetValidity("InterestRate", "InterestBasesPeriod", false, TextCodeTranslator.Translate("Accounting.General.O.Theratepercentageshouldbeformattedas00.00"));
         else
-            this.UIProperties.SetValidity("InterestRate", "InterestBasesPeriod", true,"Interest rate format must be 2.2");
+            this.UIProperties.SetValidity("InterestRate", "InterestBasesPeriod", true, TextCodeTranslator.Translate("Accounting.General.O.Theratepercentageshouldbeformattedas00.00"));
     }
 
     get LineNumber() { return this.EntityPM.LineNumber; }

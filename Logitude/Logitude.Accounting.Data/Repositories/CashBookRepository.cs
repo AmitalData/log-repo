@@ -9,6 +9,7 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
+using Simplog.Data.Helpers;
 
 namespace Logitude.Accounting.Data.Repositories
 {
@@ -76,6 +77,44 @@ namespace Logitude.Accounting.Data.Repositories
             }
 
             return cashbook;
+        }
+
+        public int GetCashChequesTotalsForCashbook(string cashbookId, int tenant)
+        {
+            DateTime todayDate = GetTodayDate(tenant);
+
+            List<CashBookLine> query = (from cbLine in context.CashBookLines
+                         join arpch in context.ARPaymentCheques on cbLine.ARPChequeId equals arpch.Id
+                         where
+                             cbLine.CashBookId == cashbookId
+                             && arpch.ValueDate <= todayDate
+                             && cbLine.Tenant == tenant
+                         select cbLine).ToList();
+
+            return query.Count();
+        }
+        public int GetPostdatedChequesTotalsForCashbook(string cashbookId, int tenant)
+        {
+            DateTime todayDate = GetTodayDate(tenant);
+
+            List<CashBookLine> query = (from cb in context.CashBooks
+                                        join cbLine in context.CashBookLines on cb.Id equals cbLine.CashBookId
+                                        join arpch in context.ARPaymentCheques on cbLine.ARPChequeId equals arpch.Id
+                                        where
+                                            cb.Id == cashbookId
+                                            && arpch.ValueDate > todayDate
+                                            && cb.Tenant == tenant
+                                        select cbLine).ToList();
+            return query.Count();
+        }
+
+
+
+        private static DateTime GetTodayDate(int tenant)
+        {
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+            DateTime todayDateEndDate = new DateTime(todayDate.Year, todayDate.Month, todayDate.Day, 23, 59, 59);
+            return todayDateEndDate;
         }
     }
 

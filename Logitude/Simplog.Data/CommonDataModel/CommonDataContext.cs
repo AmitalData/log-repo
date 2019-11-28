@@ -450,7 +450,8 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new CardContactProductMap());
             modelBuilder.Configurations.Add(new DWHBuildStatusMap());
             modelBuilder.Configurations.Add(new DocumentsExecutionLogMap());
-            modelBuilder.Configurations.Add(new CardContactAdditionalServiceMap());
+            modelBuilder.Configurations.Add(new CardContactAdditionalServiceMap()); 
+            modelBuilder.Configurations.Add(new UserLastSettingsMap());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -519,6 +520,7 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<DWHSetting> DWHSettings { get; set; }
         public IDbSet<LogBoxTenantSetting> LogBoxTenantSettings { get; set; }
         public IDbSet<DWHBuildStatus> DWHBuildStatus { get; set; }
+        public IDbSet<UserLastSettings> UserLastSettings { get; set; }
 
 
         public IDbSet<Warehouse> Warehouses
