@@ -694,7 +694,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
                         var UOMEntity: MeasurementList = res.Result;
                         if (res) {
                             if (UOMEntity.Code == "BCNT") {
-                                this.ValidationErrorsList.push("By Container Type measurment dose not enabled");
+                                this.ValidationErrorsList.push("By Container Type measurment isn't enabled");
                             }
                         }
                     }
