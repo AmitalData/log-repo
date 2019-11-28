@@ -47,7 +47,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
     {
 	  
        
-        public HttpResponseMessage GetByUserIdNameSpace(string userId, string regionnamespace)
+        public HttpResponseMessage GetByUserIdFilterName(string userId, string FilterName)
         {
 		  try
             {
@@ -56,7 +56,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 UserLastSettingsQuery userLastSettingsQuery = new UserLastSettingsQuery(authToken.Tenant);
-                UserLastSettingsPM userLastSettingsPM = userLastSettingsQuery.GetSinglePM(userId, authToken.Tenant,regionnamespace);
+                UserLastSettingsPM userLastSettingsPM = userLastSettingsQuery.GetSinglePM(userId, authToken.Tenant,FilterName);
                 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 

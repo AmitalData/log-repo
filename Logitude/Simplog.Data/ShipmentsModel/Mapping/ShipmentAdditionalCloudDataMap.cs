@@ -41,6 +41,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.PaymentRequestXML).IsMaxLength().IsUnicode(true);
             this.Property(t => t.IsPaymentRequired).IsRequired();
             this.Property(t => t.DeclarationWCOXml).IsMaxLength();
+            this.Property(t => t.UserIdNumberXMLData).IsMaxLength();
+            this.Property(t => t.UserIdNumber).HasMaxLength(35);
 
             // Table & Column Mappings
             this.ToTable("ShipmentAdditionalCloudDatas");
@@ -60,6 +62,10 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.IsPaymentRequired).HasColumnName("IsPaymentRequired");
             this.Property(t => t.PaymentRequestXML).HasColumnName("PaymentRequestXML");
             this.Property(t => t.PaymentDateTime).HasColumnName("PaymentDateTime");
+            this.Property(t => t.IsUserIDNumberRequired).HasColumnName("IsUserIDNumberRequired");
+            this.Property(t => t.UserIdNumberUpdateDate).HasColumnName("UserIdNumberUpdateDate");
+            this.Property(t => t.UserIdNumberXMLData).HasColumnName("UserIdNumberXMLData");
+            this.Property(t => t.UserIdNumber).HasColumnName("UserIdNumber");
 
             this.HasRequired(t => t.Shipment);
 

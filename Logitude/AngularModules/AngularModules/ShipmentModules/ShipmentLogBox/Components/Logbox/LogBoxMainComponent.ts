@@ -251,7 +251,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
     SaveUserLastSettings(FilterName: string, FilterValue: string) {
        
-        this._UserLastSettingsExtendedPMService.getsingleByUserIdNameSpace(SessionLocator.LoggedUserId, "ShipmentModules.ShipmentLogBox.LogBoxMainComponent").subscribe(Result => {
+        this._UserLastSettingsExtendedPMService.getsingleByUserIdFilterName(SessionLocator.LoggedUserId, FilterName).subscribe(Result => {
             if (!Result.HasError && Result.Result == null) {
                 var myFilterSettings = new UserLastSettingsPM();
                 myFilterSettings.FilterName = FilterName;
@@ -287,13 +287,13 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 var myTransportFilter = myFiltersSettings.filter(a => a.FilterName == 'SelectedTransportFilter');
 
                 if (myArchiveFilter.length > 0) {
-                    this.mySelectedArchiveFilter = myArchiveFilter[0].FilterValue;
+                    this.SelectedArchiveFilter = myArchiveFilter[0].FilterValue;
                 }
                 if (myDirectionFilter.length > 0) {
-                    this.mySelectedDirectionFilter = myDirectionFilter[0].FilterValue;
+                    this.SelectedDirectionFilter = myDirectionFilter[0].FilterValue;
                 }
                 if (myTransportFilter.length > 0) {
-                    this.mySelectedTransportFilter = myTransportFilter[0].FilterValue;
+                    this.SelectedTransportFilter = myTransportFilter[0].FilterValue;
                 } 
             }
             this.LoadImporterShipments();

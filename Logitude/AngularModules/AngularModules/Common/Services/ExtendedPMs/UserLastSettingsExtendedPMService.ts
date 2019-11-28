@@ -24,14 +24,14 @@ export class UserLastSettingsExtendedPMService {
     }
 
   
-    getsingleByUserIdNameSpace(UserId: string, NameSpace: string) {
+    getsingleByUserIdFilterName(UserId: string, FilterName: string) {
 
 
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/getbyuseridnamespace?' + 'userid=' + UserId + '&regionnamespace=' + NameSpace, {
+            return this._http.get(this._apiUrl + '/getbyuseridfiltername?' + 'userid=' + UserId + '&filtername=' + FilterName, {
                 headers: authHeader
             }).map(response => {
                 var pm = response.json();
