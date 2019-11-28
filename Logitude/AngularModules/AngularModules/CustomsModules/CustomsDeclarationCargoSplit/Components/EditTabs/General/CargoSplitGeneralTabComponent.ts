@@ -457,7 +457,7 @@ public CargoIdentifiersList: ObservableCollection;
         var tab;
         this.Tabs = [];
         
-        if (this.EntityPM.DecCargoSplitCons.length > 0) {
+        if (this.EntityPM.DecCargoSplitCons != null && this.EntityPM.DecCargoSplitCons.length > 0) {
 
             var items: DecCargoSplitConPM[] = this.EntityPM.DecCargoSplitCons.sort((a, b) => { return (a.LineNumber === b.LineNumber) ? 0 : (a.LineNumber < b.LineNumber) ? -1 : 1 });
             this.TabIndex = 0;
