@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="PaymentTermDateTypes">
+  <Column Name="Code" Type="varchar" Size="5">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="60">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="PaymentTerms" ParentColumnName="FromDateTypeCode" ReferencedTableName="PaymentTermDateTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.PaymentTerms_dbo.PaymentTermDateTypes_FromDateTypeCode" />
+</Table>

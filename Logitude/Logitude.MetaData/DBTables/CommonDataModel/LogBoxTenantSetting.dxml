@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="LogBoxTenantSettings">
+  <Column Name="AutoArchiveOnInvoice" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CustomerTenantShareImportFile" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DocumentShareAsDefault" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Id" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="IsDocumentsArchive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LogBoxAdminUserId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="StockTypeCode" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+</Table>

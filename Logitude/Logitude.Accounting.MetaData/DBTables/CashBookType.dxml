@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="CashBookTypes">
+  <Column Name="Code" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="EnglishName" Type="varchar" Size="45">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Inactive" Type="bit">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LocalName" Type="nvarchar" Size="45">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="200">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="CashBooks" ParentColumnName="CashBookTypeCode" ReferencedTableName="CashBookTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.CashBooks_dbo.CashBookTypes_CashBookTypeCode" />
+</Table>

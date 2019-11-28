@@ -72,6 +72,16 @@ export class InterestBasesPeriodPM {
     public set InterestRate(newValue: number) { if (this.interestRate != newValue) { this.interestRate = newValue; this.MarkAsDirty("InterestRate"); } }
        
 	 
+    private createdByUserName: string;
+    public get CreatedByUserName() { return this.createdByUserName; }
+    public set CreatedByUserName(newValue: string) { if (this.createdByUserName != newValue) { this.createdByUserName = newValue; this.MarkAsDirty("CreatedByUserName"); } }
+       
+	 
+    private updatedByUserName: string;
+    public get UpdatedByUserName() { return this.updatedByUserName; }
+    public set UpdatedByUserName(newValue: string) { if (this.updatedByUserName != newValue) { this.updatedByUserName = newValue; this.MarkAsDirty("UpdatedByUserName"); } }
+       
+	 
 
     public OldEntityPM: InterestBasesPeriodPM;
 	

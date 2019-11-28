@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="BookingProducts">
+  <Column Name="AirlineId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Code" Type="varchar" Size="4">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="InActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="60">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="Bookings" ParentColumnName="BookingProductId" ReferencedTableName="BookingProducts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Bookings_dbo.BookingProducts_BookingProductId" />
+</Table>

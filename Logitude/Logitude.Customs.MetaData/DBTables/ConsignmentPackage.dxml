@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="ConsignmentPackages">
+  <Column Name="ConsignmentNumber" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="DeclarationId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="GrossMassMeasure" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="GrossMassMeasureTypeCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LineNumber" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="MarksNumbers" Type="varchar" Size="512">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PackageMeasureQualifierCode" Type="varchar" Size="4">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PackageQuantity" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PackageQuantityTypeCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PackageTypeCode" Type="varchar" Size="4">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SequenceNumeric" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+</Table>

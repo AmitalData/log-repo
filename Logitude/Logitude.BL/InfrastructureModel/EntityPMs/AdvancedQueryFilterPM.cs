@@ -23,5 +23,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public bool DisplayInList { get; set; }
         public string ObjectFieldOperator { get; set; }
         public string UserId { get; set; }
+
+        public string ObjectFieldCode { get; set; }
     }
 }

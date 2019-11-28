@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="ProductNameTypes">
+  <Column Name="Code" Type="varchar" Size="3">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="EnglishName" Type="varchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Inactive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LocalName" Type="nvarchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="SupplierInvoiceItemsDescripts" ParentColumnName="TypeCode" ReferencedTableName="ProductNameTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemsDescripts_Customs.ProductNameTypes_TypeCode" />
+</Table>

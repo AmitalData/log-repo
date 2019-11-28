@@ -2518,7 +2518,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     }
                 case "InterestBasesType":
                     {
-                        logWindow.Width = 530;
+                        logWindow.Width = 680;
                         logWindow.Height = 400;
                         break;
                     }

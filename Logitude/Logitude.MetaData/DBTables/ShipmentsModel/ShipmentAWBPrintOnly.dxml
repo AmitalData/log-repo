@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="ShipmentAWBPrintOnlies">
+  <Column Name="Amount" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CurrencyId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DueTypeCode" Type="varchar" Size="2">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ExchangeRate" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IATACodeId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="MeasurementId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PrepaidCollectId" Type="varchar" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Quantity" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ShipmentId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UnitPrice" Type="float">
+    <Constraints Nullable="true" />
+  </Column>
+</Table>

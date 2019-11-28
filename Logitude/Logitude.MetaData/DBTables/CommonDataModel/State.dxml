@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="States">
+  <Column Name="AddedManually" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Code" Type="varchar" Size="10">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CountryId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="EnglishName" Type="varchar" Size="40">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="InActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LocalName" Type="nvarchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Notes" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="QBOTransactionLocationCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="Ports" ParentColumnName="StateId" ReferencedTableName="States" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Ports_dbo.States_StateId" />
+  <Relation ParentTableName="Addresses" ParentColumnName="StateId" ReferencedTableName="States" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Addresses_dbo.States_StateId" />
+  <Relation ParentTableName="CountryCities" ParentColumnName="StateId" ReferencedTableName="States" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CountryCities_dbo.States_StateId" />
+</Table>

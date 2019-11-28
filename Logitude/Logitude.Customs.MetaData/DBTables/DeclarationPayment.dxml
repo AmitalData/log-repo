@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="DeclarationPayments">
+  <Column Name="ConcurrencyGUID" Type="varchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DeclarationId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="FuturePaymentDateTime" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IsProcessA" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="PaymentDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ProcessADescription" Type="nvarchar" Size="512">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SignatoryIdentification" Type="varchar" Size="17">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="DeclarationPaymentMethods" ParentColumnName="DeclarationId" ReferencedTableName="DeclarationPayments" ReferencedColumnName="DeclarationId" ForeignKeyConstraintName="FK_Customs.DeclarationPaymentMethods_Customs.DeclarationPayments_DeclarationId" />
+  <Relation ParentTableName="DeclarationPaymentProtests" ParentColumnName="DeclarationId" ReferencedTableName="DeclarationPayments" ReferencedColumnName="DeclarationId" ForeignKeyConstraintName="FK_Customs.DeclarationPaymentProtests_Customs.DeclarationPayments_DeclarationId" />
+</Table>

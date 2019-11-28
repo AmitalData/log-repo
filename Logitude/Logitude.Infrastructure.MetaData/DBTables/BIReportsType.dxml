@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="BIReportsTypes">
+  <Column Name="Code" Type="varchar" Size="3">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="60">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="BIReports" ParentColumnName="TypeCode" ReferencedTableName="BIReportsTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.BIReports_dbo.BIReportsTypes_TypeCode" />
+</Table>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="WarehouseReleaseStatuses">
+  <Column Name="Code" Type="varchar" Size="4">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="100">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="-1">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="WarehouseReleases" ParentColumnName="StatusCode" ReferencedTableName="WarehouseReleaseStatuses" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.WarehouseReleases_dbo.WarehouseReleaseStatuses_StatusCode" />
+</Table>

@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="Users">
+  <Column Name="AdditionalPackagesOnly" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="BranchId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="BusinessUnitId" Type="varchar" Size="50">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Code" Type="varchar" Size="20">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DepartmentId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DistributorCode" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DocumentFilingInbox" Type="varchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ExpirationDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FreelancerId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="IsBranchRestricted" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsDistributor" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsFreelancer" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsProductRestricted" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsSalesman" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsShowContactDetailsInTheMobileApp" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsTwoFactorAuthenticationEnabled" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LicencedUser" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Notes" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PersonalId" Type="varchar" Size="20">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ProductTypeCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SetAngularAsDefault" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ShowInboxToolTip" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ShowLocalNameInLOV" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ShowLogBoxToolTip" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Technology" Type="varchar" Size="5">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UserRoles" Type="varchar" Size="400">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="PaymentCheques" ParentColumnName="ApprovedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.PaymentCheques_dbo.Users_ApprovedByUserId" />
+  <Relation ParentTableName="EntityLastActivities" ParentColumnName="UserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.EntityLastActivities_dbo.Users_UserId" />
+  <Relation ParentTableName="CustomerSalesmanByProducts" ParentColumnName="SalesmanUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomerSalesmanByProducts_dbo.Users_SalesmanUserId" />
+  <Relation ParentTableName="PaymentCheques" ParentColumnName="CancelledByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.PaymentCheques_dbo.Users_CancelledByUserId" />
+  <Relation ParentTableName="CustomerSalesNote" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomerSalesNote_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="Opportunities" ParentColumnName="LeadUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Opportunities_dbo.Users_LeadUserId" />
+  <Relation ParentTableName="PaymentCheques" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.PaymentCheques_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="Customers" ParentColumnName="SalesmanUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Customers_dbo.Users_SalesmanUserId" />
+  <Relation ParentTableName="EntityLastUpdates" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.EntityLastUpdates_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="Customers" ParentColumnName="SetAsInactiveByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Customers_dbo.Users_SetAsInactiveByUserId" />
+  <Relation ParentTableName="CustomerSalesNote" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomerSalesNote_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="AgentSharedManifests" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.AgentSharedManifests_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="Automations" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Automations_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="Bookings" ParentColumnName="LastSentByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Bookings_dbo.Users_LastSentByUserId" />
+  <Relation ParentTableName="Automations" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Automations_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="AirlineAreas" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.AirlineAreas_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="Opportunities" ParentColumnName="OwnerId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Opportunities_dbo.Users_OwnerId" />
+  <Relation ParentTableName="AirlineAreas" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.AirlineAreas_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="SharedLogisticsUpdates" ParentColumnName="HandledByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.SharedLogisticsUpdates_dbo.Users_HandledByUserId" />
+  <Relation ParentTableName="PaymentCheques" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.PaymentCheques_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="ExternalReconciliations" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ExternalReconciliations_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="CustomerTenantAccesses" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomerTenantAccesses_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="AirlineAreasPorts" ParentColumnName="AddedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.AirlineAreasPorts_dbo.Users_AddedByUserId" />
+  <Relation ParentTableName="CustomerTenantAccessCards" ParentColumnName="CreateByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomerTenantAccessCards_dbo.Users_CreateByUserId" />
+  <Relation ParentTableName="Opportunities" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Opportunities_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="WarehouseEntries" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseEntries_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="SharedUserQueries" ParentColumnName="UserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.SharedUserQueries_dbo.Users_UserId" />
+  <Relation ParentTableName="AirlineMessagingRules" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.AirlineMessagingRules_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="Declarations" ParentColumnName="SignedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.Declarations_dbo.Users_SignedByUserId" />
+  <Relation ParentTableName="AirlineMessagingRules" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.AirlineMessagingRules_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="CustomsBooks" ParentColumnName="LastUpdateByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.CustomsBooks_dbo.Users_LastUpdateByUserId" />
+  <Relation ParentTableName="Declarations" ParentColumnName="ReferentUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.Declarations_dbo.Users_ReferentUserId" />
+  <Relation ParentTableName="Quotes" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="AccountManagerUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Users_AccountManagerUserId" />
+  <Relation ParentTableName="APInvoices" ParentColumnName="ApprovedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.APInvoices_dbo.Users_ApprovedByUserId" />
+  <Relation ParentTableName="WarehouseEntries" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseEntries_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="APInvoices" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.APInvoices_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="Journals" ParentColumnName="ApprovedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Journals_dbo.Users_ApprovedByUserId" />
+  <Relation ParentTableName="Bookings" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Bookings_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="WarehouseEntryPackages" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseEntryPackages_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="Journals" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Journals_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="INTTRABranchRegisteredCarriers" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.INTTRABranchRegisteredCarriers_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="WarehouseEntryPackages" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseEntryPackages_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="WarehouseEntryPackagesReleases" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseEntryPackagesReleases_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="Journals" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Journals_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="APInvoices" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.APInvoices_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="WarehouseEntryPackagesReleases" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseEntryPackagesReleases_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="Journals" ParentColumnName="VoidedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Journals_dbo.Users_VoidedByUserId" />
+  <Relation ParentTableName="Tapags" ParentColumnName="ReferantId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.Tapags_dbo.Users_ReferantId" />
+  <Relation ParentTableName="WarehouseReleasePackages" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseReleasePackages_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="ReconcileExternalPages" ParentColumnName="ApprovedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ReconcileExternalPages_dbo.Users_ApprovedByUserId" />
+  <Relation ParentTableName="ShipmentCustomsTransmissions" ParentColumnName="SentByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentCustomsTransmissions_dbo.Users_SentByUserId" />
+  <Relation ParentTableName="BusinessHours" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BusinessHours_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="TaxReports" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TaxReports_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="PostLikes" ParentColumnName="UserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.PostLikes_dbo.Users_UserId" />
+  <Relation ParentTableName="BusinessHours" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BusinessHours_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="TaxReports" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TaxReports_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="WarehouseReleasePackages" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseReleasePackages_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="AccountingNotes" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.AccountingNotes_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="ReconcileExternalPages" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ReconcileExternalPages_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="AccountingNotes" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.AccountingNotes_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="BusinessHoursHolidays" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BusinessHoursHolidays_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="WarehouseReleases" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseReleases_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="Cards" ParentColumnName="ClassifierId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Cards_dbo.Users_ClassifierId" />
+  <Relation ParentTableName="BusinessHoursHolidays" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BusinessHoursHolidays_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="Cards" ParentColumnName="CollectorId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Cards_dbo.Users_CollectorId" />
+  <Relation ParentTableName="Cards" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Cards_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="FeatureChanges" ParentColumnName="UserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FeatureChanges_dbo.Users_UserId" />
+  <Relation ParentTableName="Tariffs" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tariffs_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="FTPDetails" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FTPDetails_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="FTPDetails" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FTPDetails_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="ShipmentPayables" ParentColumnName="CorrectionByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPayables_dbo.Users_CorrectionByUserId" />
+  <Relation ParentTableName="FeatureToggles" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FeatureToggles_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="ShipmentPayables" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPayables_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="ComputingPartnerCodes" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ComputingPartnerCodes_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="LBPTeamMembers" ParentColumnName="AddedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.LBPTeamMembers_dbo.Users_AddedByUserId" />
+  <Relation ParentTableName="FeatureToggles" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FeatureToggles_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="CardExternalAccountsByProducts" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CardExternalAccountsByProducts_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="ComputingPartnerCodes" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ComputingPartnerCodes_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="LBPTeamMembers" ParentColumnName="MemberUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.LBPTeamMembers_dbo.Users_MemberUserId" />
+  <Relation ParentTableName="Feeds" ParentColumnName="UserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Feeds_dbo.Users_UserId" />
+  <Relation ParentTableName="ComputingPartners" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ComputingPartners_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="Cards" ParentColumnName="SalesmanUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Cards_dbo.Users_SalesmanUserId" />
+  <Relation ParentTableName="ComputingPartners" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ComputingPartners_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="QueryColumns" ParentColumnName="UserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QueryColumns_dbo.Users_UserId" />
+  <Relation ParentTableName="WarehouseReleases" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseReleases_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="Cards" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Cards_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="ComputingPartnerTables" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ComputingPartnerTables_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="QuestionnaireAnswers" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuestionnaireAnswers_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="Posts" ParentColumnName="CreatedById" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Posts_dbo.Users_CreatedById" />
+  <Relation ParentTableName="Groups" ParentColumnName="OwnerId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Groups_dbo.Users_OwnerId" />
+  <Relation ParentTableName="ComputingPartnerTables" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ComputingPartnerTables_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="Quotes" ParentColumnName="SalesmanUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.Users_SalesmanUserId" />
+  <Relation ParentTableName="ChargesExternalAccountsByProducts" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ChargesExternalAccountsByProducts_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="ShipmentPayables" ParentColumnName="UpdateByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPayables_dbo.Users_UpdateByUserId" />
+  <Relation ParentTableName="Questionnaires" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Questionnaires_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="CustomsRequestsSheets" ParentColumnName="RequestOwnerId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.CustomsRequestsSheets_dbo.Users_RequestOwnerId" />
+  <Relation ParentTableName="ComputingPartnerTranslations" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ComputingPartnerTranslations_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="Questionnaires" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Questionnaires_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="APPayments" ParentColumnName="ApprovedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.APPayments_dbo.Users_ApprovedByUserId" />
+  <Relation ParentTableName="QuestionnaireQuestions" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuestionnaireQuestions_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="ComputingPartnerTranslations" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ComputingPartnerTranslations_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="CustomsTransferHeaders" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomsTransferHeaders_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="APPayments" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.APPayments_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="QuestionnaireQuestions" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuestionnaireQuestions_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="AccountingTransferHeaders" ParentColumnName="UserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.AccountingTransferHeaders_dbo.Users_UserId" />
+  <Relation ParentTableName="FilingInboxes" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FilingInboxes_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="BankAccounts" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BankAccounts_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="MessagingStocks" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.MessagingStocks_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="ShipmentAssemblies" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentAssemblies_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="FlightsSchedulesRequests" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FlightsSchedulesRequests_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="CustomsSettings" ParentColumnName="DefaultNotificationAssignee" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.CustomsSettings_dbo.Users_DefaultNotificationAssignee" />
+  <Relation ParentTableName="MessagingStocks" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.MessagingStocks_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="MessagingStockUsageHistories" ParentColumnName="FirstActionByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.MessagingStockUsageHistories_dbo.Users_FirstActionByUserId" />
+  <Relation ParentTableName="APPayments" ParentColumnName="PrintedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.APPayments_dbo.Users_PrintedByUserId" />
+  <Relation ParentTableName="ShipmentReceivables" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentReceivables_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="Quotes" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="MessagingStockUsageHistories" ParentColumnName="LastActionByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.MessagingStockUsageHistories_dbo.Users_LastActionByUserId" />
+  <Relation ParentTableName="ShipmentAssemblies" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentAssemblies_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="Tariffs" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tariffs_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="BankAccounts" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BankAccounts_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="SharedManifestTranslations" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.SharedManifestTranslations_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="TariffSurchargesUpdates" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TariffSurchargesUpdates_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="SharedManifestTranslations" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.SharedManifestTranslations_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="APPayments" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.APPayments_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="NotificationReplies" ParentColumnName="RepliedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.NotificationReplies_dbo.Users_RepliedByUserId" />
+  <Relation ParentTableName="TariffVersionAllInCharges" ParentColumnName="AddedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TariffVersionAllInCharges_dbo.Users_AddedByUserId" />
+  <Relation ParentTableName="Notifications" ParentColumnName="AssigneToId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.Notifications_dbo.Users_AssigneToId" />
+  <Relation ParentTableName="TariffVersions" ParentColumnName="ApprovedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TariffVersions_dbo.Users_ApprovedByUserId" />
+  <Relation ParentTableName="Notifications" ParentColumnName="ClosedByCustomOfficeUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.Notifications_dbo.Users_ClosedByCustomOfficeUserId" />
+  <Relation ParentTableName="TariffVersions" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TariffVersions_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="Activities" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Activities_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="FollowEntities" ParentColumnName="FollowerUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FollowEntities_dbo.Users_FollowerUserId" />
+  <Relation ParentTableName="ShipmentReceivables" ParentColumnName="UpdateByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentReceivables_dbo.Users_UpdateByUserId" />
+  <Relation ParentTableName="QuoteStages" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteStages_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="Followers" ParentColumnName="FolloweeUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Followers_dbo.Users_FolloweeUserId" />
+  <Relation ParentTableName="ARInvoices" ParentColumnName="ApprovedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoices_dbo.Users_ApprovedByUserId" />
+  <Relation ParentTableName="Teams" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Teams_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="QuoteCharges" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteCharges_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="Followers" ParentColumnName="FollowerUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Followers_dbo.Users_FollowerUserId" />
+  <Relation ParentTableName="Teams" ParentColumnName="ManagerUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Teams_dbo.Users_ManagerUserId" />
+  <Relation ParentTableName="Activities" ParentColumnName="OwnerId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Activities_dbo.Users_OwnerId" />
+  <Relation ParentTableName="Teams" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Teams_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="GLAccounts" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.GLAccounts_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="SLAEscalationRecepients" ParentColumnName="UserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.SLAEscalationRecepients_dbo.Users_UserId" />
+  <Relation ParentTableName="QuoteDocumentVersions" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteDocumentVersions_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="Notifications" ParentColumnName="ClosedByAssignee" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.Notifications_dbo.Users_ClosedByAssignee" />
+  <Relation ParentTableName="Activities" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Activities_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="NotificationTenantDefinition" ParentColumnName="DefaultAssigneeId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.NotificationTenantDefinition_dbo.Users_DefaultAssigneeId" />
+  <Relation ParentTableName="QuoteTemplates" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplates_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="FollowUps" ParentColumnName="OwnerUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FollowUps_dbo.Users_OwnerUserId" />
+  <Relation ParentTableName="ARInvoices" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoices_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="SLAHeaders" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.SLAHeaders_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="QuoteDocumentVersions" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteDocumentVersions_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="SLAHeaders" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.SLAHeaders_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="BusinessProcessQueues" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BusinessProcessQueues_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="ConversationHeaderMessages" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ConversationHeaderMessages_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="GLAccounts" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.GLAccounts_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="ARInvoices" ParentColumnName="IssuedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoices_dbo.Users_IssuedByUserId" />
+  <Relation ParentTableName="ConversationHeaders" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ConversationHeaders_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="BusinessProcessQueues" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BusinessProcessQueues_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="BusinessRoles" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BusinessRoles_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="TaxDeductionReports" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TaxDeductionReports_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="BusinessRoles" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BusinessRoles_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="ObjectTableLastUpdates" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ObjectTableLastUpdates_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="QuoteTemplates" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplates_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="ConversationHeaderParticipants" ParentColumnName="ParticipantUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ConversationHeaderParticipants_dbo.Users_ParticipantUserId" />
+  <Relation ParentTableName="Tickets" ParentColumnName="OwnerId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tickets_dbo.Users_OwnerId" />
+  <Relation ParentTableName="TaxDeductionReports" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TaxDeductionReports_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="Sprints" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Sprints_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="ARInvoices" ParentColumnName="PrintByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoices_dbo.Users_PrintByUserId" />
+  <Relation ParentTableName="Sprints" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Sprints_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="DeclarationPayments" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.DeclarationPayments_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="ARInvoices" ParentColumnName="SalesmanUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoices_dbo.Users_SalesmanUserId" />
+  <Relation ParentTableName="BankDeposits" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BankDeposits_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="TextCodes" ParentColumnName="SpellCheckedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TextCodes_dbo.Users_SpellCheckedByUserId" />
+  <Relation ParentTableName="BankDeposits" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BankDeposits_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="TaxReportLines" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TaxReportLines_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="Counters" ParentColumnName="ChangedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Counters_dbo.Users_ChangedByUserId" />
+  <Relation ParentTableName="Tickets" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tickets_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="TeamMemberBusinessRoles" ParentColumnName="AddedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TeamMemberBusinessRoles_dbo.Users_AddedByUserId" />
+  <Relation ParentTableName="EmployeeGroups" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.EmployeeGroups_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="ARInvoices" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoices_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="EmployeeGroups" ParentColumnName="ManagerUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.EmployeeGroups_dbo.Users_ManagerUserId" />
+  <Relation ParentTableName="EmployeeGroups" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.EmployeeGroups_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="CashBooks" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CashBooks_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="OccasionInvitees" ParentColumnName="AddedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OccasionInvitees_dbo.Users_AddedByUserId" />
+  <Relation ParentTableName="CashBooks" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CashBooks_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="CourierMasters" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.CourierMasters_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="TicketClassifications" ParentColumnName="ManagerUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TicketClassifications_dbo.Users_ManagerUserId" />
+  <Relation ParentTableName="CommunicationLogs" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CommunicationLogs_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="OccasionInvitees" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OccasionInvitees_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="BatchTaskExecutions" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BatchTaskExecutions_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="LastSentByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Users_LastSentByUserId" />
+  <Relation ParentTableName="Occasions" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Occasions_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="BIReportFolders" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BIReportFolders_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="BIReportFolders" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BIReportFolders_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="LocalCustomsSentByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Users_LocalCustomsSentByUserId" />
+  <Relation ParentTableName="TipsVisibilities" ParentColumnName="UserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TipsVisibilities_dbo.Users_UserId" />
+  <Relation ParentTableName="TMEmployeeTimes" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TMEmployeeTimes_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="Reconciliations" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Reconciliations_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="TMEmployeeTimes" ParentColumnName="EmployeeUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TMEmployeeTimes_dbo.Users_EmployeeUserId" />
+  <Relation ParentTableName="CourierMasters" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.CourierMasters_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="Occasions" ParentColumnName="OwnerId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Occasions_dbo.Users_OwnerId" />
+  <Relation ParentTableName="BIReports" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BIReports_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="CRMFilterSettings" ParentColumnName="UserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CRMFilterSettings_dbo.Users_UserId" />
+  <Relation ParentTableName="ActivityNotes" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ActivityNotes_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="ReportExecutionLogs" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ReportExecutionLogs_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="Occasions" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Occasions_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="TMEmployeeTimes" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TMEmployeeTimes_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="ActivityNotes" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ActivityNotes_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="OccasionTypes" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OccasionTypes_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="BIReports" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BIReports_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="TMOfficeHours" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TMOfficeHours_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="DocumentsFilings" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DocumentsFilings_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="OccasionTypes" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OccasionTypes_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="DWQueries" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DWQueries_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="TMOfficeHours" ParentColumnName="UserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TMOfficeHours_dbo.Users_UserId" />
+  <Relation ParentTableName="DocumentOutCopies" ParentColumnName="LastPrintedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DocumentOutCopies_dbo.Users_LastPrintedByUserId" />
+  <Relation ParentTableName="ARPayments" ParentColumnName="ApprovedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARPayments_dbo.Users_ApprovedByUserId" />
+  <Relation ParentTableName="ActivityOwnerHistories" ParentColumnName="OwnerId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ActivityOwnerHistories_dbo.Users_OwnerId" />
+  <Relation ParentTableName="DocumentsFilings" ParentColumnName="DeletedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DocumentsFilings_dbo.Users_DeletedByUserId" />
+  <Relation ParentTableName="DWQueries" ParentColumnName="UpdateByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DWQueries_dbo.Users_UpdateByUserId" />
+  <Relation ParentTableName="GLAccountWithholdingTax" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.GLAccountWithholdingTax_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="TMOfficeHours" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TMOfficeHours_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="TMProjects" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TMProjects_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="BIReportsExecutionLogs" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BIReportsExecutionLogs_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="DocumentsExecutionLogs" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DocumentsExecutionLogs_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="AdvancedQueryFilters" ParentColumnName="UserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.AdvancedQueryFilters_dbo.Users_UserId" />
+  <Relation ParentTableName="OpenFormatReports" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OpenFormatReports_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="GroupMembers" ParentColumnName="UserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.GroupMembers_dbo.Users_UserId" />
+  <Relation ParentTableName="TMProjects" ParentColumnName="OwnerId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TMProjects_dbo.Users_OwnerId" />
+  <Relation ParentTableName="ReportsTemplates" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ReportsTemplates_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="ARPayments" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARPayments_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="CustomerAccountManagerByProducts" ParentColumnName="AccountManagerId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomerAccountManagerByProducts_dbo.Users_AccountManagerId" />
+  <Relation ParentTableName="ReportsTemplates" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ReportsTemplates_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="DocumentsFilings" ParentColumnName="OwnerId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DocumentsFilings_dbo.Users_OwnerId" />
+  <Relation ParentTableName="TMProjects" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TMProjects_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="ReportsTemplatesVersions" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ReportsTemplatesVersions_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="DocumentsFilings" ParentColumnName="ReceivedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DocumentsFilings_dbo.Users_ReceivedByUserId" />
+  <Relation ParentTableName="DocumentsFilings" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DocumentsFilings_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="OperationalClosedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Users_OperationalClosedByUserId" />
+  <Relation ParentTableName="TraceEvents" ParentColumnName="UserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TraceEvents_dbo.Users_UserId" />
+  <Relation ParentTableName="DocumentOuts" ParentColumnName="IssuedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DocumentOuts_dbo.Users_IssuedByUserId" />
+  <Relation ParentTableName="UserLastLogins" ParentColumnName="Id" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.UserLastLogins_dbo.Users_Id" />
+  <Relation ParentTableName="DocumentTypeTemplates" ParentColumnName="LastUpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DocumentTypeTemplates_dbo.Users_LastUpdatedByUserId" />
+  <Relation ParentTableName="ARPayments" ParentColumnName="PrintByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARPayments_dbo.Users_PrintByUserId" />
+  <Relation ParentTableName="ReportsTemplatesVersions" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ReportsTemplatesVersions_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="Translations" ParentColumnName="TranslatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Translations_dbo.Users_TranslatedByUserId" />
+  <Relation ParentTableName="Customers" ParentColumnName="AccountManagerUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Customers_dbo.Users_AccountManagerUserId" />
+  <Relation ParentTableName="Customers" ParentColumnName="ActivatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Customers_dbo.Users_ActivatedByUserId" />
+  <Relation ParentTableName="TwoFactorAuthenticationDevices" ParentColumnName="UserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TwoFactorAuthenticationDevices_dbo.Users_UserId" />
+  <Relation ParentTableName="Customers" ParentColumnName="ActivationRequestedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Customers_dbo.Users_ActivationRequestedByUserId" />
+  <Relation ParentTableName="ARPayments" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARPayments_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="UserLicenses" ParentColumnName="UserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.UserLicenses_dbo.Users_UserId" />
+  <Relation ParentTableName="UserLoginLogs" ParentColumnName="UserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.UserLoginLogs_dbo.Users_UserId" />
+  <Relation ParentTableName="DWQueryColumns" ParentColumnName="UserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DWQueryColumns_dbo.Users_UserId" />
+  <Relation ParentTableName="Queries" ParentColumnName="SharedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Queries_dbo.Users_SharedByUserId" />
+  <Relation ParentTableName="Revaluations" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Revaluations_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="Customers" ParentColumnName="ClassifierId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Customers_dbo.Users_ClassifierId" />
+  <Relation ParentTableName="ARInvoiceStockLines" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoiceStockLines_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="Queries" ParentColumnName="UserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Queries_dbo.Users_UserId" />
+  <Relation ParentTableName="Declarations" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.Declarations_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="Customers" ParentColumnName="CollectorId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Customers_dbo.Users_CollectorId" />
+  <Relation ParentTableName="UserPermittedBranches" ParentColumnName="UserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.UserPermittedBranches_dbo.Users_UserId" />
+  <Relation ParentTableName="ARInvoiceStockLines" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoiceStockLines_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="DWQueryFilters" ParentColumnName="UserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DWQueryFilters_dbo.Users_UserId" />
+  <Relation ParentTableName="ARInvoiceStocks" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoiceStocks_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="UserPermittedProducts" ParentColumnName="UserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.UserPermittedProducts_dbo.Users_UserId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="SalesmanUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Users_SalesmanUserId" />
+  <Relation ParentTableName="UsersReleaseNotesDisplays" ParentColumnName="UserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.UsersReleaseNotesDisplays_dbo.Users_UserId" />
+  <Relation ParentTableName="ARInvoiceStocks" ParentColumnName="UpdatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoiceStocks_dbo.Users_UpdatedByUserId" />
+  <Relation ParentTableName="Opportunities" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Opportunities_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="Bookings" ParentColumnName="CreatedByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Bookings_dbo.Users_CreatedByUserId" />
+  <Relation ParentTableName="Customers" ParentColumnName="FreelancerId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Customers_dbo.Users_FreelancerId" />
+  <Relation ParentTableName="EmployeeGroupLines" ParentColumnName="UserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.EmployeeGroupLines_dbo.Users_UserId" />
+  <Relation ParentTableName="EntityChanges" ParentColumnName="CreateByUserId" ReferencedTableName="Users" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.EntityChanges_dbo.Users_CreateByUserId" />
+</Table>

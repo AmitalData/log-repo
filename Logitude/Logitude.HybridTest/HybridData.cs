@@ -16,7 +16,7 @@ namespace Logitude.HybridTest
         public const string CustomAgentCode = "HCAgent";
         public const string CustomerCode = "HCustomer";
         public const string AccountingPartnerCode = "HAPartner";
-        public const string ShippingLineCode = "HSLN"; 
+        public const string ShippingLineCode = "HSLN";
         public const string VendorCode = "HVEN";
         public const string TruckerCode = "HTRU";
         public const string FromPortCode = "HFP";
@@ -24,11 +24,11 @@ namespace Logitude.HybridTest
         public const string CurrencyCode = "HCR";
         public const string ShippingAgentCode = "HSAG";
         public const string DepartmentCode = "HDEP";
-        public const string BranchCode = "HBRA"; 
+        public const string BranchCode = "HBRA";
         public const string PackageTypeCode = "HPT";
-        public const string VesselCode = "HV"; 
+        public const string VesselCode = "HV";
         public const string StateCode = "HS";
-        public const string SpecialServicesTypeCode = "HSST"; 
+        public const string SpecialServicesTypeCode = "HSST";
         public const string DocumentTypeCode = "HDT";
         public const string UserCode = "HU";
         public const string EventTypeCode = "HET";
@@ -41,6 +41,7 @@ namespace Logitude.HybridTest
         public const string CardContactCode = "HCC";
         public const string DirectShipmentCode = "Hybrid DShipment";
         public const string HouseShipmentCode = "Hybrid HShipment";
+        public const string EntityStatusCode = "HES";
 
         //Id
         public static string CurrencyId { get; set; }
@@ -77,5 +78,43 @@ namespace Logitude.HybridTest
         public static string ContactId { get; set; }
         public static string CardContactId { get; set; }
         public static string ActivityId { get; set; }
+        public static string EntityStatusId { get; set; }
+
+
+
+        //prepare
+
+        //Currency
+        public const string CurrencyCodeEUR = "EUR";
+        public static string CurrencyIdEUR { get; set; }
+        //Incoterm
+        public const string IncotermCodeCIF = "CIF";
+        public const string IncotermCodeLDE = "LDE";
+        public static string IncotermIdCIF { get; set; }
+        public static string IncotermIdLDE { get; set; }
+        //ChargeType
+        public const string ChargeTypeCodeAFT = "AFT";
+        public static string ChargeTypeIdAFT { get; set; }
+        public static string ChargeTypeIATACodeId { get; set; }
+        public static string ChargeTypeVatTypeId { get; set; }
+        //port
+        public const string PortCodeLHR = "LHR";
+        public const string PortCodeLAS = "LAS";
+        public const string PortCodeMIA = "MIA";
+        public const string PortCodeAirJFK = "JFK";
+        public const string PortCodeOceanSOU = "SOU";
+        public const string PortCodeInlandNYC = "NYC";
+        public const string PortCodeLON = "LON";
+        public const string PortCodeMAN = "MAN";
+        public static string PortIdLHR { get; set; }
+        public static string CountryIdForPortLHR { get; set; }
+        public static string PortIdLAS { get; set; }
+        public static string PortIdMIA { get; set; }
+        public static string PortIdAirJFK { get; set; }
+        public static string CountryIdForPortJFK { get; set; }
+        public static string PortIdOceanSOU { get; set; }
+        public static string PortIdInlandNYC { get; set; }
+        public static string PortIdLON { get; set; }
+        public static string PortIdMAN { get; set; }
     }
 }

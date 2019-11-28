@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="InterfaceTenantDefinitions">
+  <Column Name="Active" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Code" Type="varchar" Size="32">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DcaRenameFileEnable" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DcaRenameFilePrefix" Type="varchar" Size="256">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TenantPriority" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TenantSendOptionsCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+</Table>

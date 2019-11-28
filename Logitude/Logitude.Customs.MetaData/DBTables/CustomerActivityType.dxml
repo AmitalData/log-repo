@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="CustomerActivityTypes">
+  <Column Name="Code" Type="varchar" Size="2">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="EnglishName" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Inactive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LocalName" Type="nvarchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="PaymentOrderMethods" ParentColumnName="CustomerActivityTypeCode" ReferencedTableName="CustomerActivityTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.PaymentOrderMethods_Customs.CustomerActivityTypes_CustomerActivityTypeCode" />
+  <Relation ParentTableName="PaymentOrders" ParentColumnName="CustomerActivityTypeCode" ReferencedTableName="CustomerActivityTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.PaymentOrders_Customs.CustomerActivityTypes_CustomerActivityTypeCode" />
+  <Relation ParentTableName="Claims" ParentColumnName="BeneficiaryActivityTypeCode" ReferencedTableName="CustomerActivityTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Claims_Customs.CustomerActivityTypes_BeneficiaryActivityTypeCode" />
+  <Relation ParentTableName="Claims" ParentColumnName="ClaimSubmiterTypeCode" ReferencedTableName="CustomerActivityTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Claims_Customs.CustomerActivityTypes_ClaimSubmiterTypeCode" />
+  <Relation ParentTableName="DeclarationPaymentMethods" ParentColumnName="PayerActivityTypeCode" ReferencedTableName="CustomerActivityTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.DeclarationPaymentMethods_Customs.CustomerActivityTypes_PayerActivityTypeCode" />
+  <Relation ParentTableName="CustomBanks" ParentColumnName="PayerTypeCode" ReferencedTableName="CustomerActivityTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomBanks_Customs.CustomerActivityTypes_PayerTypeCode" />
+</Table>

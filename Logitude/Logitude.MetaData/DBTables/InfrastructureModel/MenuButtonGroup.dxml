@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="MenuButtonGroups">
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="MenuButtonGroupType" Type="varchar" Size="40">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="40">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ObjectTableId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="MenuButtons" ParentColumnName="MenuButtonGroupId" ReferencedTableName="MenuButtonGroups" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.MenuButtons_dbo.MenuButtonGroups_MenuButtonGroupId" />
+</Table>

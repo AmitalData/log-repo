@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="AccountingCompanyTypes">
+  <Column Name="Code" Type="varchar" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EnglishName" Type="varchar" Size="60">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Inactive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LocalName" Type="nvarchar" Size="60">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="GLAccounts" ParentColumnName="DeductionTypeId" ReferencedTableName="AccountingCompanyTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.GLAccounts_dbo.AccountingCompanyTypes_DeductionTypeId" />
+</Table>

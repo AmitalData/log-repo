@@ -9250,7 +9250,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			 QueryColumn ByLastShipmentQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ByLastShipmentQuery.Id, IndexOrder = 6, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "LastShipmentDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter ByLastShipmentQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "IsCustomer" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = ByLastShipmentQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter ByLastShipmentQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "IsCustomer" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "IsCustomer" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = ByLastShipmentQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -9304,7 +9304,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			 QueryColumn SharedLogisticsCustomersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticsCustomersQuery.Id, IndexOrder = 7, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "LastLoginDate" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter SharedLogisticsCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "SharedLogisticsCustomers" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = SharedLogisticsCustomersQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter SharedLogisticsCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "SharedLogisticsCustomers" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "SharedLogisticsCustomers" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = SharedLogisticsCustomersQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -9343,7 +9343,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			 QueryColumn CustomersQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomersQuery.Id, IndexOrder = 15, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter CustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "IsCustomer" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = CustomersQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter CustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "IsCustomer" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "IsCustomer" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = CustomersQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -9372,10 +9372,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			 QueryColumn Customer_Q_MyCustomersAccMngrQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_Q_MyCustomersAccMngrQuery.Id, IndexOrder = 10, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "SalesmanUserEnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter Customer_Q_MyCustomersAccMngrQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "MyCustomersAsAccountManager" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_Q_MyCustomersAccMngrQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter Customer_Q_MyCustomersAccMngrQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "MyCustomersAsAccountManager" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "MyCustomersAsAccountManager" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_Q_MyCustomersAccMngrQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 
-             AdvancedQueryFilter Customer_Q_MyCustomersAccMngrQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "IsCustomer" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_Q_MyCustomersAccMngrQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter Customer_Q_MyCustomersAccMngrQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "IsCustomer" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "IsCustomer" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_Q_MyCustomersAccMngrQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -9404,10 +9404,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			 QueryColumn Customer_MyCustomersQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_MyCustomersQuery.Id, IndexOrder = 10, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "SalesmanUserEnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter Customer_MyCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "MyCustomers" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_MyCustomersQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter Customer_MyCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "MyCustomers" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "MyCustomers" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_MyCustomersQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 
-             AdvancedQueryFilter Customer_MyCustomersQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "IsCustomer" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_MyCustomersQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter Customer_MyCustomersQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "IsCustomer" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "IsCustomer" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_MyCustomersQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -9432,10 +9432,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			 QueryColumn Customer_ReadyCustomersQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ReadyCustomersQuery.Id, IndexOrder = 8, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "SalesmanUserEnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter Customer_ReadyCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "ReadyCustomers" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_ReadyCustomersQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter Customer_ReadyCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "ReadyCustomers" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "ReadyCustomers" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_ReadyCustomersQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 
-             AdvancedQueryFilter Customer_ReadyCustomersQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "IsCustomer" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_ReadyCustomersQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter Customer_ReadyCustomersQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "IsCustomer" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "IsCustomer" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_ReadyCustomersQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -9458,7 +9458,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			 QueryColumn Customer_PotentialCustomersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_PotentialCustomersQuery.Id, IndexOrder = 7, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "SalesmanUserEnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter Customer_PotentialCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "PotentialCustomers" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_PotentialCustomersQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter Customer_PotentialCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "PotentialCustomers" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "PotentialCustomers" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_PotentialCustomersQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -9481,7 +9481,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			 QueryColumn Customer_ActiveCustomersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_ActiveCustomersQuery.Id, IndexOrder = 7, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "SalesmanUserEnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter Customer_ActiveCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "ActiveCustomers" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_ActiveCustomersQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter Customer_ActiveCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "ActiveCustomers" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "ActiveCustomers" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_ActiveCustomersQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -9504,7 +9504,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			 QueryColumn Customer_InactiveCustomersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = Customer_InactiveCustomersQuery.Id, IndexOrder = 7, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "SalesmanUserEnglishName" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter Customer_InactiveCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "InactiveCustomers" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_InactiveCustomersQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter Customer_InactiveCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomerObjectFields.Where(d => d.FieldName == "InactiveCustomers" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = CustomerObjectFields.Where(d => d.FieldName == "InactiveCustomers" && d.ObjectTableId == CustomerObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "true",PredefinedValue2 = null, QueryId = Customer_InactiveCustomersQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 	   
 	    }

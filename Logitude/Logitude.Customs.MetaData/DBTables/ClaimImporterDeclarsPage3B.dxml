@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="ClaimImporterDeclarsPage3Bs">
+  <Column Name="ClaimId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="DescriptionOfGoods" Type="nvarchar" Size="256">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="InventoryAmount" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LineNo" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="SaleAmountAfter" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SaleAmountBefore" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SaleAmountClaim" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SoldGoodsAmount" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+</Table>

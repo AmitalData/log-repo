@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="EntityLastActivities">
+  <Column Name="ActivityDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ActivityTypeCode" Type="varchar" Size="4">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="EntityId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="ObjectTableId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+</Table>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="GLAccountWithholdingTax">
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CreatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="FromDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="GLAccountId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Inactive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LineNumber" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Percentage" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ToDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+</Table>

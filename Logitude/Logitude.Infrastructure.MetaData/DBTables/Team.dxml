@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="Teams">
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CreatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="InActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LocalName" Type="nvarchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ManagerUserId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="40">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Notes" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Notify" Type="varchar" Size="4000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UpdateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UpdatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="LBPTeamMembers" ParentColumnName="MemberTeamId" ReferencedTableName="Teams" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.LBPTeamMembers_dbo.Teams_MemberTeamId" />
+  <Relation ParentTableName="LBPTeamMembers" ParentColumnName="TeamId" ReferencedTableName="Teams" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.LBPTeamMembers_dbo.Teams_TeamId" />
+  <Relation ParentTableName="Activities" ParentColumnName="TeamId" ReferencedTableName="Teams" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Activities_dbo.Teams_TeamId" />
+</Table>

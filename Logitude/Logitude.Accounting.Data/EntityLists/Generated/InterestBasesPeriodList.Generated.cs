@@ -34,6 +34,10 @@ namespace Logitude.Accounting.Data.EntityLists
        public DateTime InterestBaseStartDate  { get; set; }
        [DataMember]
        public decimal InterestRate  { get; set; }
+       [DataMember]
+       public string CreatedByUserName  { get; set; }
+       [DataMember]
+       public string UpdatedByUserName  { get; set; }
    }
 
 }

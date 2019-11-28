@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="SATPaymentMethods">
+  <Column Name="Code" Type="varchar" Size="2">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="LocalName" Type="varchar" Size="100">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="40">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="ARPayments" ParentColumnName="SATPaymentMethodCode" ReferencedTableName="SATPaymentMethods" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ARPayments_dbo.SATPaymentMethods_SATPaymentMethodCode" />
+</Table>

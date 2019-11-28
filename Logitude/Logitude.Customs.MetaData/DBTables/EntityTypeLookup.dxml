@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="EntityTypeLookups">
+  <Column Name="Code" Type="varchar" Size="9">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="EnglishName" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Inactive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LocalName" Type="nvarchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="PaymentOrders" ParentColumnName="CustomsEntityTypeCode" ReferencedTableName="EntityTypeLookups" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.PaymentOrders_Customs.EntityTypeLookups_CustomsEntityTypeCode" />
+  <Relation ParentTableName="Deposits" ParentColumnName="EntityTypeCode" ReferencedTableName="EntityTypeLookups" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Deposits_Customs.EntityTypeLookups_EntityTypeCode" />
+  <Relation ParentTableName="Guarantees" ParentColumnName="CustomEntityTypeCode" ReferencedTableName="EntityTypeLookups" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Guarantees_Customs.EntityTypeLookups_CustomEntityTypeCode" />
+  <Relation ParentTableName="CustomsCollaterals" ParentColumnName="CustomsEntityTypeCode" ReferencedTableName="EntityTypeLookups" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomsCollaterals_Customs.EntityTypeLookups_CustomsEntityTypeCode" />
+</Table>

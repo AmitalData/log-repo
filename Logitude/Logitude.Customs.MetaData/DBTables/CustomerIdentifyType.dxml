@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="CustomerIdentifyTypes">
+  <Column Name="Code" Type="varchar" Size="1">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="EnglishName" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Inactive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LocalName" Type="nvarchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="Declarations" ParentColumnName="EntitleImporterTypeCode" ReferencedTableName="CustomerIdentifyTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Declarations_Customs.CustomerIdentifyTypes_EntitleImporterTypeCode" />
+  <Relation ParentTableName="Declarations" ParentColumnName="ImporterTypeCode" ReferencedTableName="CustomerIdentifyTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Declarations_Customs.CustomerIdentifyTypes_ImporterTypeCode" />
+  <Relation ParentTableName="Declarations" ParentColumnName="TransferImporterTypeCode" ReferencedTableName="CustomerIdentifyTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Declarations_Customs.CustomerIdentifyTypes_TransferImporterTypeCode" />
+</Table>

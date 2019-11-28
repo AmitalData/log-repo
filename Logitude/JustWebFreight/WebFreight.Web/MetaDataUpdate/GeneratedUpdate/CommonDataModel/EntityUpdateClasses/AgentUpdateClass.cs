@@ -3331,7 +3331,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			 QueryColumn SharedLogisticsAgentsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SharedLogisticsAgentsQuery.Id, IndexOrder = 5, ObjectFieldId = AgentObjectFields.Where(d => d.FieldName == "LastLoginDate" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter SharedLogisticsAgentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = AgentObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "false",PredefinedValue2 = null, QueryId = SharedLogisticsAgentsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter SharedLogisticsAgentsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = AgentObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = AgentObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == AgentObjectTable.Id).FirstOrDefault().FieldCode, PredefinedValue = "false",PredefinedValue2 = null, QueryId = SharedLogisticsAgentsQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 	   
 	    }

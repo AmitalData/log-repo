@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="CustomsInterfaceSettings">
+  <Column Name="ActivateCustomsManagementInShipments" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="AMCAirStartDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AMCOceanStartDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ArtemusInSettingsId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ArtemusOutSettingsId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ExportFromUSAInterfaceCode" Type="varchar" Size="4">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ImportToUSAInterfaceCode" Type="varchar" Size="4">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LocalCompanyId" Type="varchar" Size="25">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LocalCustomsInterfaceCode" Type="varchar" Size="4">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LocalPassword" Type="varchar" Size="25">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LocalUserId" Type="varchar" Size="25">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+</Table>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="ARInvoiceLineActions">
+  <Column Name="Code" Type="varchar" Size="1">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Inactive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LocalName" Type="nvarchar" Size="50">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="20">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="ARInvoiceLines" ParentColumnName="LineActionCode" ReferencedTableName="ARInvoiceLineActions" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ARInvoiceLines_dbo.ARInvoiceLineActions_LineActionCode" />
+</Table>

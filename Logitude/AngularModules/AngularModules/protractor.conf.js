@@ -164,6 +164,12 @@ exports.config = {
             browser.params.Login.Password = "Sg0592463934!";
         }
 
+        else if (browser.params.Env == "Pre_Racing") {
+            browser.params.Link = "https://pre.logitudeworld.com/";
+            browser.params.Login.Email = "lana3@test.com";
+            browser.params.Login.Password = "12La34Na56!";
+        }
+
         //------------------------------------- Reporter --------------------------------
         if (browser.params.Team == "ayman") {
             jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));

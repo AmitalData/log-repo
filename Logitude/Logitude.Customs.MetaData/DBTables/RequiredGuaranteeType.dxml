@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="RequiredGuaranteeTypes">
+  <Column Name="GuaranteeAmount" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="GuaranteeId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="GuaranteeTypeCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+</Table>

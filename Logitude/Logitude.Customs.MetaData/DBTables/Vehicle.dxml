@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="Vehicles">
+  <Column Name="AirBagsNumber" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CommercialNickname" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ConcurrencyGUID" Type="varchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ConverterTypeCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DateOnRoadAbroad" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DeclarationId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EngineCapacity" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FuelTypeCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="GreenIndex" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="GreenIndexGroup" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="ImporterIdentityId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ImporterPassCountryCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ImporterPassportNumber" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ImporterPassportTypeCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IsABS" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsArmoredVehicle" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsCBS" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsLoweringVehicleForInvalid" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsraelEnterDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IsSlipperClutch" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsStabilityControl" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsSteeringDamper" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsTCS" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsThreeWheeledForReduction" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsTPS" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ManufactureCountryCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="MedalNumber" Type="varchar" Size="9">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ModelCode" Type="varchar" Size="5">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ModelDescription" Type="varchar" Size="18">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="NumberOfSeats" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="NumberOfWheels" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PassportName" Type="nvarchar" Size="55">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="RichbitFileNumber" Type="varchar" Size="10">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SelfVehicleWeight" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="StatusCode" Type="varchar" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TaxiMedalOwner" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TotalVehicleWeight" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TransmissionDateWithoutTax" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="VehicleCategory" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="VehicleChassisNumber" Type="varchar" Size="20">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="VehicleManufactureDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="VehicleManufacturerCode" Type="varchar" Size="5">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="VehicleMaxPowerKW" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="VehiclePoolTypeCode" Type="varchar" Size="2">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="VehiclePowerKW" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="VehiclePriceListTypeCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="VehicleSafetyAccessoryPoints" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="VehicleTecnologyTypeCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="VehicleTypeCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="VehicleWindowNumber" Type="varchar" Size="20">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="VehicleOwners" ParentColumnName="VehicleId" ReferencedTableName="Vehicles" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.VehicleOwners_Customs.Vehicles_VehicleId" />
+  <Relation ParentTableName="VehicleSafetyAccessories" ParentColumnName="VehicleId" ReferencedTableName="Vehicles" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.VehicleSafetyAccessories_Customs.Vehicles_VehicleId" />
+  <Relation ParentTableName="SupplierInvoiceItemVehicles" ParentColumnName="VehicleId" ReferencedTableName="Vehicles" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItemVehicles_Customs.Vehicles_VehicleId" />
+</Table>

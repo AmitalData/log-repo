@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="AutomaticReconciles">
+  <Column Name="Code" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="EnglishName" Type="varchar" Size="60">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Inactive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LocalName" Type="nvarchar" Size="60">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="200">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="AutomaticReconcileMethods" ParentColumnName="AutomaticReconcile1" ReferencedTableName="AutomaticReconciles" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.AutomaticReconcileMethods_dbo.AutomaticReconciles_AutomaticReconcile1" />
+  <Relation ParentTableName="AutomaticReconcileMethods" ParentColumnName="AutomaticReconcile2" ReferencedTableName="AutomaticReconciles" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.AutomaticReconcileMethods_dbo.AutomaticReconciles_AutomaticReconcile2" />
+  <Relation ParentTableName="AutomaticReconcileMethods" ParentColumnName="AutomaticReconcile3" ReferencedTableName="AutomaticReconciles" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.AutomaticReconcileMethods_dbo.AutomaticReconciles_AutomaticReconcile3" />
+</Table>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="FreightPaymentMethods">
+  <Column Name="Code" Type="varchar" Size="3">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="EnglishName" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Inactive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LocalName" Type="nvarchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="Declarations" ParentColumnName="WeightValue" ReferencedTableName="FreightPaymentMethods" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Declarations_Customs.FreightPaymentMethods_WeightValue" />
+  <Relation ParentTableName="CourierMasters" ParentColumnName="WeightValueCode" ReferencedTableName="FreightPaymentMethods" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CourierMasters_Customs.FreightPaymentMethods_WeightValueCode" />
+</Table>

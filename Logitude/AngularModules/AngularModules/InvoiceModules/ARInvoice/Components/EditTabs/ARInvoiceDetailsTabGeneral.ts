@@ -1286,8 +1286,8 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         var line: ARInvoiceLinePM = new ARInvoiceLinePM(null);
         line.Tenant = SessionLocator.TenantPM.Id;
         line.ARInvoiceId = this.EntityPM.Id;
-       // line.ForiegnCurrencyId = this.InvoiceCurrencyId;
-       // line.ForiegnCurrencyCode = this.InvoiceCurrencyCode;
+       line.ForiegnCurrencyId = "";
+        line.ForiegnCurrencyCode = "";
         line.ForiegnExchangeRate = this.InvoiceCurrencyExchangeRate;
         line.LineActionCode = "1";
         var logWindow = new LogitudeWindow();
@@ -1333,6 +1333,11 @@ export class ARInvoiceLineItem extends BaseComponent {
         this.ReadVatTypeData();
         this.ComputeRelativeRateDate();
         this.SetUIProperties();
+        if (this.EntityPM.ForiegnCurrencyCode != null) {
+            this.AmountForiegnLabel = TextCodeTranslator.Translate("ARInvoiceLine.F.ForiegnCurrencyAmount").replace("%ForiegnCurrencyCode", this.EntityPM.ForiegnCurrencyCode);
+        } else {
+            this.AmountForiegnLabel = TextCodeTranslator.Translate("ARInvoiceLine.F.ForiegnCurrencyAmount").replace("%ForiegnCurrencyCode", "");
+        }
     }
 
     public IsEditingEnabled: boolean = false;
@@ -1441,7 +1446,7 @@ export class ARInvoiceLineItem extends BaseComponent {
             this.EntityPM.EntityReference = newValue;
         }
     }
-
+    public AmountForiegnLabel: string;
     get ForiegnCurrencyId() { return this.EntityPM.ForiegnCurrencyId; }
     set ForiegnCurrencyId(newValue: string) {
         if (this.EntityPM.ForiegnCurrencyId != newValue) {
@@ -1452,7 +1457,8 @@ export class ARInvoiceLineItem extends BaseComponent {
                     var list: CurrencyList = myResponse.Result;
                     if (list != null) {
                         this.ForiegnCurrencyCode = list.Code;
-                        
+                       
+                        this.AmountForiegnLabel = TextCodeTranslator.Translate("ARInvoiceLine.F.ForiegnCurrencyAmount").replace("%ForiegnCurrencyCode", this.ForiegnCurrencyCode);
                     }
                 }
             });
@@ -1485,6 +1491,7 @@ export class ARInvoiceLineItem extends BaseComponent {
     set ForiegnCurrencyCode(newValue: string) {
         if (this.EntityPM.ForiegnCurrencyCode != newValue) {
             this.EntityPM.ForiegnCurrencyCode = newValue;
+          
         }
     }
 
@@ -1789,6 +1796,9 @@ export class ARInvoiceLineItem extends BaseComponent {
         }
     }
 
+    
+ 
+ 
     ReCalculateTotals() {
         if (this.Exists) {
             this.fatherComponent.ComputeTotals();
