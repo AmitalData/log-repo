@@ -36,6 +36,7 @@ export class CustomsCollateralList {
 	IsClosed: boolean;
 	CustomerId: string;
 	CustomerName: string;
+	IsAnswer: boolean;
 	
 }
  
