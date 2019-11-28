@@ -23,6 +23,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
 	    private IQueryable<CustomsCollateralList> GetIqueryableList(IQueryable<CustomsCollateral> iQueryable)
         {
+            CustomsCollateralsAnswerListQueryService customsCollateralsAnswerListQueryService = new CustomsCollateralsAnswerListQueryService(context);
+
+
             IQueryable<CustomsCollateralList> query = (from a in iQueryable.Include("CollateralRequestStatus").Include("EntityTypeLookup").Include("RequestedCollateralType")
                                                        select new CustomsCollateralList()
                                                          {
@@ -53,7 +56,21 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                              IsClosed = a.IsClosed,
                                                              CreateDateTime = a.CreateDateTime,
                                                              CustomerName = a.Customer != null ? a.Customer.Card.LocalName: null,
-                                                         });
+                                                             //IsAnswer= test.Where(x=>x.CustomsCollateralId== a.CollateralRequestNumber).Any()
+                                                       });
+
+            if (query.Count() > 0)
+            {
+                var query2 = query.ToList();
+
+                var customsCollateralsAnswerList = customsCollateralsAnswerListQueryService.GetList(query.First().Tenant);
+
+                foreach (var item in query2)
+                {
+                    item.IsAnswer = customsCollateralsAnswerList.Where(x => x.CustomsCollateralId == item.Id).Any();
+                }
+                query = query2.AsQueryable();
+            }
             return query;
 		}
 
