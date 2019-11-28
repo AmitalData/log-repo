@@ -18,6 +18,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.Resolvers;
 using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -27,6 +28,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
         public void CustomPMToPOCO(InterestBasesPeriodPM entityPM, InterestBasesPeriod entityPOCO)
         {
+            ContactPM contact = GetLoggedContact(entityPM.Tenant);
+            bool showLocals = !contact.DontShowLocal;
+
             CustomMappedPOCOProperties.Add(POCOPropertyNames.LineNumber);
             entityPOCO.LineNumber = entityPM.LineNumber;
             CustomMappedPOCOProperties.Add(POCOPropertyNames.InterestBaseTypeId);
@@ -37,7 +41,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 InterestBasesPeriod Period = PeriodRepository.GetSingleByInterestBaseStartDateAndnterestBaseTypeId(entityPM.InterestBaseStartDate, entityPM.InterestBaseTypeId, entityPM.Tenant);
                 if (Period != null)
                 {
-                    throw new Exception("Interest Base Start Date Already Exist");
+                    throw new Exception(TextCodesTranslator.TranslateText("Accounting.General.O.Abaseperiodwiththesamestartdateexists", entityPM.Tenant, showLocals));
                 }
             }
         

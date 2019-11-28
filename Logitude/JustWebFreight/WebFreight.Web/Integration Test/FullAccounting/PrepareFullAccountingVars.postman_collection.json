@@ -786,7 +786,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/vattypeviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&GetCount=true&PageIndex=0&PageSize=23&SortBy=&SortDirection=&AdditionalFilters=[{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22EPT%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false}]\n&Filter1Value=EXMPT",
+					"raw": "{{URL}}/api/vattypeviews/getbyfilters?GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&GetCount=true&PageIndex=0&PageSize=23&SortBy=&SortDirection=&AdditionalFilters=[{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22EPT%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false}]\n&Filter1Value=EXMPT&ForceCacheRefresh=True",
 					"host": [
 						"{{URL}}"
 					],
@@ -796,10 +796,6 @@
 						"getbyfilters"
 					],
 					"query": [
-						{
-							"key": "ForceCacheRefresh",
-							"value": "false"
-						},
 						{
 							"key": "GetAll",
 							"value": "false"
@@ -847,6 +843,10 @@
 						{
 							"key": "Filter1Value",
 							"value": "EXMPT"
+						},
+						{
+							"key": "ForceCacheRefresh",
+							"value": "True"
 						}
 					]
 				}
