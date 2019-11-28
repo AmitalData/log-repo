@@ -6831,20 +6831,18 @@ namespace WebFreight.Web.Helpers
             return result;
         }
 
-        private static  string GetLoggedUserId(int tenant)
+        private static string GetLoggedUserId(int tenant)
         {
-            string  userId = string.Empty;
+            string userId = string.Empty;
             string userEmail = AuthenticationUtil.GetLoggedUserEmail(tenant);
-            using (TransactionScope transactionScope = TransactionFactory.GetNewTransaction())
+
+            if (!string.IsNullOrEmpty(userEmail))
             {
-                if (!string.IsNullOrEmpty(userEmail))
-                {
-                    ContactRepository contactRepository = new ContactRepository();
-                    userId = contactRepository.GetConactIdByemail(userEmail, tenant);
-                    if (string.IsNullOrEmpty(userId)) userId = contactRepository.GetConactIdByemail(userEmail, 0);
-                }
-                transactionScope.Complete();
+                ContactRepository contactRepository = new ContactRepository(tenant);
+                userId = contactRepository.GetConactIdByemail(userEmail, tenant);
+                if (string.IsNullOrEmpty(userId)) userId = contactRepository.GetConactIdByemail(userEmail, 0);
             }
+
             return userId;
         }
 
