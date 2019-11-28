@@ -330,7 +330,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     ShipmentPayable shipmentPayableLine = this.GetMatchedShipmentPayableLine_ForAPI(matchedContainerLines, shipmentPayables_SameVendor, aPInvoiceLine);
 
                     if ((entityPM.InvoiceCurrencyId == aPInvoiceLine.ForiegnCurrencyId && aPInvoiceLine.ForiegnCurrencyId != shipmentPayableLine.CurrencyId) ||
-                        (entityPM.InvoiceCurrencyId != aPInvoiceLine.ForiegnCurrencyId && aPInvoiceLine.ForiegnCurrencyId == shipmentPayableLine.CurrencyId))
+                        (entityPM.InvoiceCurrencyId != aPInvoiceLine.ForiegnCurrencyId && aPInvoiceLine.ForiegnCurrencyId == shipmentPayableLine.CurrencyId) ||
+                        (entityPM.InvoiceCurrencyId == aPInvoiceLine.ForiegnCurrencyId && aPInvoiceLine.ForiegnCurrencyId == shipmentPayableLine.CurrencyId))
                     {
                         if (aPInvoiceLine.ForiegnCurrencyId != shipmentPayableLine.CurrencyId || entityPM.InvoiceCurrencyId != shipmentPayableLine.CurrencyId)
                         {
