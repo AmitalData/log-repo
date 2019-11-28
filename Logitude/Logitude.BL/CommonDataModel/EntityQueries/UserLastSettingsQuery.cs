@@ -47,11 +47,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       }).FirstOrDefault();
             return entity;
         }
-        public UserLastSettingsPM GetSinglePM(string userId, int tenant, string regionnamespace)
+        public UserLastSettingsPM GetSinglePM(string userId, int tenant, string FilterName)
         {
             UserLastSettingsPM entity = (from a in repository.context.UserLastSettings
                                          where a.Tenant == tenant
-                                         && a.UserId == userId && a.ControlNameSpace == regionnamespace
+                                         && a.UserId == userId && a.FilterName == FilterName
                                          select new UserLastSettingsPM()
                                          {
                                              UserId = a.UserId,
