@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="PerformanceLogs">
+  <Column Name="Email" Type="varchar" Size="50">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ExecutionTime" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="40">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="LogDateTimeGMT" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LogDateTimeLocal" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="MethodName" Type="varchar" Size="65">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="MethodParameters" Type="varchar" Size="500">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ModelName" Type="varchar" Size="40">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="MonitoringService" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ServerTime" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UserIP" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+</Table>

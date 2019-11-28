@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="PaymentMethods">
+  <Column Name="Code" Type="varchar" Size="2">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Name" Type="nvarchar" Size="40">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="TenantManagements" ParentColumnName="PaymentMethodCode" ReferencedTableName="PaymentMethods" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.TenantManagements_dbo.PaymentMethods_PaymentMethodCode" />
+</Table>

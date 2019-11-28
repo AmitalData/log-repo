@@ -172,9 +172,9 @@ namespace Logitude.LXMLFixer.Models
                     bool isMaxLength = field.Attribute("IsMaxLength") == null ? false : field.Attribute("IsMaxLength").Value == "true";
                     int size = isMaxLength ? -1 : (field.Attribute("MaxLength") == null ? 0 : Convert.ToInt32(field.Attribute("MaxLength").Value));
                     bool isPrimaryKey = field.Attribute("IsPrimaryKey") == null ? false : field.Attribute("IsPrimaryKey").Value == "true";
-                    bool isNullable = field.Attribute("IsNullable") == null ? false : field.Attribute("IsNullable").Value == "true";
+                    bool isNullable = field.Attribute("IsRequired") == null ? false : field.Attribute("IsRequired").Value == "false";
                     bool isFixedLength = field.Attribute("IsFixedLength") == null ? false : field.Attribute("IsFixedLength").Value == "true";
-
+                    
                     ColumnDefinition columnDefinition = new ColumnDefinition
                     {
                         Name = fieldName,

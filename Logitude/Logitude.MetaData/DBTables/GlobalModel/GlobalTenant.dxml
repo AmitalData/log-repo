@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="GlobalTenants">
+  <Column Name="CompanyName" Type="nvarchar" Size="100">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="GlobalDBId" Type="nvarchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Id" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="IsActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="PrivateLabelId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TTY" Type="varchar" Size="33">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Version" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="TenantManagements" ParentColumnName="Id" ReferencedTableName="GlobalTenants" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TenantManagements_dbo.GlobalTenants_Id" />
+  <Relation ParentTableName="GlobalContacts" ParentColumnName="GlobalTenantId" ReferencedTableName="GlobalTenants" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.GlobalContacts_dbo.GlobalTenants_GlobalTenantId" />
+</Table>

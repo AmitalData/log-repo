@@ -19,6 +19,7 @@ namespace Logitude.DXMLGenerator.Models
         private List<string> ExcludedTables;
         private List<string> ExcludedTablesNames;
         private int GeneratedDXMLFilesCounter = 0;
+        private int GeneratedPathsCounter = 0;
         private int DeleteCounter = 0;
         private string ErrorsData = "";
 
@@ -42,21 +43,26 @@ namespace Logitude.DXMLGenerator.Models
             }
         }
 
-        public void GetPathsForDXMLFiles()
+        public void GeneratePathsForDXMLFiles()
         {
             List<string> dbTablesNames = GetAllTablesNamesFromDB();
             if (dbTablesNames != null)
             {
+                Console.WriteLine("Generating DXML Files Paths For " + dbTablesNames.Count() + " Tables ...");
                 foreach (string tableName in dbTablesNames)
                 {
-                    Console.WriteLine("Get DXML File Path For " + tableName + " Table ...");
-                    string path = GetPathForDXMLFile(tableName);
-                    if (String.IsNullOrEmpty(path))
+                    string path = GetPathForDXMLFile(tableName, false);
+                    if (!String.IsNullOrEmpty(path))
+                    {
+                        Console.WriteLine(tableName + " DXML File Path: " + path);
+                        GeneratedPathsCounter++;
+                    }
+                    else
                     {
                         ErrorsData += "Cannot Find Path For " + tableName + " Table" + "\n";
                     }
                 }
-                Console.WriteLine("\nGetting Paths For DXML Files Finished\n");
+                Console.WriteLine("\n" + GeneratedPathsCounter + " Paths Generated Successfully\n");
                 ExportErrorsData();
             }
         }
@@ -281,7 +287,7 @@ namespace Logitude.DXMLGenerator.Models
             {
                 try
                 {
-                    string path = GetPathForDXMLFile(tableDefinition.Name);
+                    string path = GetPathForDXMLFile(tableDefinition.Name, true);
                     if (!String.IsNullOrEmpty(path))
                     {
                         XmlSerializerNamespaces emptyNamespace = new XmlSerializerNamespaces(new[] { XmlQualifiedName.Empty });
@@ -354,73 +360,51 @@ namespace Logitude.DXMLGenerator.Models
             }
         }
 
-        private string GetPathForDXMLFile(string tableName)
+        private string GetPathForDXMLFile(string tableName, bool createDirectory)
         {
-            string entityName;
-
-            if (ExcludedTables != null && ExcludedTablesNames != null && ExcludedTablesNames.Contains(tableName))
+            try
             {
-                string excludedTable = ExcludedTables.Where(t => t.Split('/')[0] == tableName).FirstOrDefault();
-                entityName = String.IsNullOrEmpty(excludedTable) ? null : excludedTable.Split('/')[1];
-            }
-            else
-            {
-                PluralizationService pluralizationService = PluralizationService.CreateService(CultureInfo.GetCultureInfo("en-us"));
-                entityName = pluralizationService.Singularize(tableName);
-            }
+                string entityName;
 
-            if (String.IsNullOrEmpty(entityName))
-            {
-                return null;
-            }
-
-            string rootPath = Path.Combine(Root);
-            string[] lxmlFiles = Directory.GetFiles(rootPath, entityName + ".lxml", SearchOption.AllDirectories);
-
-            if (lxmlFiles.Length > 0)
-            {
-                string lxmlFilePath = lxmlFiles[0];
-                string lxmlFileName = Path.GetFileName(lxmlFilePath);
-
-                if (lxmlFilePath.Contains(@"\EntityFiles\"))
+                if (ExcludedTables != null && ExcludedTablesNames != null && ExcludedTablesNames.Contains(tableName))
                 {
-                    string lxmlFileRootPath = lxmlFilePath.Split(new string[] { @"\EntityFiles\" }, StringSplitOptions.None)[0];
-                    string lxmlFileFolderName;
-                    if (!lxmlFilePath.Split(new string[] { @"\EntityFiles\" }, StringSplitOptions.None)[1].Contains(@"\"))
-                    {
-                        lxmlFileFolderName = null;
-                    }
-                    else
-                    {
-                        lxmlFileFolderName = lxmlFilePath.Split(new string[] { @"\EntityFiles\" }, StringSplitOptions.None)[1].Split(new string[] { @"\" + lxmlFileName }, StringSplitOptions.None)[0];
-                    }
-
-                    string dxmlFilePath = String.IsNullOrEmpty(lxmlFileFolderName) ? lxmlFileRootPath + @"\DBTables" : lxmlFileRootPath + @"\DBTables" + @"\" + lxmlFileFolderName;
-                    if (!Directory.Exists(dxmlFilePath))
-                    {
-                        Directory.CreateDirectory(dxmlFilePath);
-                    }
-
-                    return dxmlFilePath + @"\" + entityName + ".dxml";
+                    string excludedTable = ExcludedTables.Where(t => t.Split('/')[0] == tableName).FirstOrDefault();
+                    entityName = String.IsNullOrEmpty(excludedTable) ? null : excludedTable.Split('/')[1];
                 }
                 else
                 {
+                    PluralizationService pluralizationService = PluralizationService.CreateService(CultureInfo.GetCultureInfo("en-us"));
+                    entityName = pluralizationService.Singularize(tableName);
+                }
+
+                if (String.IsNullOrEmpty(entityName))
+                {
                     return null;
                 }
-            }
-            else
-            {
-                string[] pocoFiles = Directory.GetFiles(rootPath, entityName + ".cs", SearchOption.AllDirectories);
-                if (pocoFiles.Length > 0)
-                {
-                    string pocoFilePath = pocoFiles.ToList().Where(a => a.Contains(@"\EntityPOCOs\")).FirstOrDefault();
 
-                    if (!String.IsNullOrEmpty(pocoFilePath))
+                string rootPath = Path.Combine(Root);
+                string[] lxmlFiles = Directory.GetFiles(rootPath, entityName + ".lxml", SearchOption.AllDirectories);
+
+                if (lxmlFiles.Length > 0)
+                {
+                    string lxmlFilePath = lxmlFiles[0];
+                    string lxmlFileName = Path.GetFileName(lxmlFilePath);
+
+                    if (lxmlFilePath.Contains(@"\EntityFiles\"))
                     {
-                        string[] pocoFileFolders = pocoFilePath.Split(new string[] { @"\" }, StringSplitOptions.None);
-                        string pocoFileFolderName = pocoFileFolders[Array.IndexOf(pocoFileFolders, "EntityPOCOs") - 1].Contains(".Data") ? null : pocoFileFolders[Array.IndexOf(pocoFileFolders, "EntityPOCOs") - 1];
-                        string dxmlFilePath = pocoFilePath.Split(new string[] { @"\Logitude\" }, StringSplitOptions.None)[0] + @"\Logitude\Logitude.MetaData\DBTables" + (!String.IsNullOrEmpty(pocoFileFolderName) ? @"\" + pocoFileFolderName : null);
-                        if (!Directory.Exists(dxmlFilePath))
+                        string lxmlFileRootPath = lxmlFilePath.Split(new string[] { @"\EntityFiles\" }, StringSplitOptions.None)[0];
+                        string lxmlFileFolderName;
+                        if (!lxmlFilePath.Split(new string[] { @"\EntityFiles\" }, StringSplitOptions.None)[1].Contains(@"\"))
+                        {
+                            lxmlFileFolderName = null;
+                        }
+                        else
+                        {
+                            lxmlFileFolderName = lxmlFilePath.Split(new string[] { @"\EntityFiles\" }, StringSplitOptions.None)[1].Split(new string[] { @"\" + lxmlFileName }, StringSplitOptions.None)[0];
+                        }
+
+                        string dxmlFilePath = String.IsNullOrEmpty(lxmlFileFolderName) ? lxmlFileRootPath + @"\DBTables" : lxmlFileRootPath + @"\DBTables" + @"\" + lxmlFileFolderName;
+                        if (!Directory.Exists(dxmlFilePath) && createDirectory)
                         {
                             Directory.CreateDirectory(dxmlFilePath);
                         }
@@ -434,12 +418,44 @@ namespace Logitude.DXMLGenerator.Models
                 }
                 else
                 {
-                    return null;
-                }
-            }
+                    string[] pocoFiles = Directory.GetFiles(rootPath, entityName + ".cs", SearchOption.AllDirectories);
+                    if (pocoFiles.Length > 0)
+                    {
+                        string pocoFilePath = pocoFiles.ToList().Where(a => a.Contains(@"\EntityPOCOs\") || a.Contains(@"\POCOs\")).FirstOrDefault();
 
-            //string path = @"D:\LogitudeMainDXMLFiles\" + entityName + ".dxml";
-            //return path;
+                        if (!String.IsNullOrEmpty(pocoFilePath))
+                        {
+                            string pocoFolderName = pocoFilePath.Contains(@"\EntityPOCOs\") ? "EntityPOCOs" : "POCOs";
+                            string[] pocoFileFolders = pocoFilePath.Split(new string[] { @"\" }, StringSplitOptions.None);
+                            string pocoFileFolderName = pocoFileFolders[Array.IndexOf(pocoFileFolders, pocoFolderName) - 1].Contains(".Data") ? null : pocoFileFolders[Array.IndexOf(pocoFileFolders, pocoFolderName) - 1];
+                            pocoFileFolderName = pocoFileFolders[Array.IndexOf(pocoFileFolders, pocoFolderName) - 1].Contains(".SystemLogs") ? "SystemLogsModel" : pocoFileFolderName;
+
+                            string dxmlFilePath = pocoFilePath.Split(new string[] { @"\Logitude\" }, StringSplitOptions.None)[0] + @"\Logitude\Logitude.MetaData\DBTables" + (!String.IsNullOrEmpty(pocoFileFolderName) ? @"\" + pocoFileFolderName : null);
+                            if (!Directory.Exists(dxmlFilePath))
+                            {
+                                Directory.CreateDirectory(dxmlFilePath);
+                            }
+
+                            return dxmlFilePath + @"\" + entityName + ".dxml";
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+
+                //string path = @"D:\LogitudeMainDXMLFiles\" + entityName + ".dxml";
+                //return path;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         private void BuildExcludedTablesList()

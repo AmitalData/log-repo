@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="BatchServicesDefinitions">
+  <Column Name="ClassName" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Code" Type="nvarchar" Size="128">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Parameter1" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Parameter2" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="QueueDefinitionCode" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="BatchServicesDefinitionMods" ParentColumnName="Code" ReferencedTableName="BatchServicesDefinitions" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.BatchServicesDefinitionMods_dbo.BatchServicesDefinitions_Code" />
+</Table>

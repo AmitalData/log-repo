@@ -156,6 +156,8 @@ namespace Logitude.CRM.Data.EntityMapping
             this.Property(t => t.TeamId).HasColumnName("TeamId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.ShipmentId).HasColumnName("ShipmentId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.TestProperty).HasColumnName("TestProperty").IsRequired();
         }
     }
 }

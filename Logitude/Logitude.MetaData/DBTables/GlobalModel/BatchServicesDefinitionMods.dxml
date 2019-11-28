@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="BatchServicesDefinitionMods">
+  <Column Name="Code" Type="nvarchar" Size="128">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="InActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="NumberOfThreads" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+</Table>
