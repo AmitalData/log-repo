@@ -81,20 +81,26 @@ namespace Logitude.Server.Tools.Utils
         }
         public string GetKey4DocumentsFilingId(string DocumentsFilingId, int tenant)
         {
-            string key = "DocFil:" + DocumentsFilingId + ",tenant:" +
+            string key = "DocFilingId:" + DocumentsFilingId + ",t:" +
                        tenant.ToString();
+            return key;
+
+        }
+        public string GetKey4UpdateDeclarationCourier_DocumentStatusCode(string DecId, int tenant)
+        {
+            string key = "CourierDocStatus:DecId:" + DecId + ",T:" +tenant.ToString();
             return key;
 
         }
         public string GetKey4Declaration(string declarationNumber, int tenant)
         {
-            string key = "ResponseService,declarationNumber:" + declarationNumber + ",tenant:" +
+            string key = "ResponseService,declarationNumber:" + declarationNumber + ",t:" +
                        tenant.ToString();
             return key;
         }
-        public string GetKey4UCBUD2LT(string fileNo, int tenant)
+        public string GetKey4UCBUD2LT(string DocumentsFilingId, int tenant)
         {
-            string key = "UCBUD2LT:" + fileNo + ",tenant:" +
+            string key = "UCBUD2LT:DocFilingId:" + DocumentsFilingId + ",t:" +
                        tenant.ToString();
             return key;
         }

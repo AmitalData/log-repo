@@ -47,8 +47,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
         private IQueryable<CustomsCollateralsAnswer> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<CustomsCollateralsAnswer> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
-		}
+            return iQueryable;
+
+        }
 	}
 
 

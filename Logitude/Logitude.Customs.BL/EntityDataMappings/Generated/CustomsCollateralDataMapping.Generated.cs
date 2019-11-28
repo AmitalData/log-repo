@@ -79,7 +79,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CustomerId, 
 	         PaymentNumber, 
 	         PaymentOrderId, 
-	         CustomerName,
+	         CustomerName, 
+	         IsAnswer,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
