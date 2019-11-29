@@ -14,12 +14,12 @@ namespace Logitude.HybridTest.WcfCallers
         {
             AuthSuccessfull();
             PrepareShipment.PrepareShipmentVars();
-            ////Other necessary Vars:
-            //UpsertGlobalZone();
-            //UpsertDepartment();
-            //UpsertBranch();
-            //UpsertAgent();
-            //UpsertUser();
+
+            //Other necessary Vars:
+            UpsertGlobalZone();
+            UpsertDepartment();
+            UpsertBranch();
+            UpsertUser();
         }
         private static void AuthSuccessfull()
         {
@@ -43,7 +43,7 @@ namespace Logitude.HybridTest.WcfCallers
         {
             GlobalZonePM entityPM = new GlobalZonePM()
             {
-                Code = HybridData.GlobalZoneCode,
+                Code = HybridData.GlobalZoneCodeHZ,
                 EnglishName = "Hybrid GlobalZone",
                 LocalName = "Hybrid GlobalZone",
                 Tenant = TestEnvironmentGlobalParameters.Tenant,
@@ -54,7 +54,7 @@ namespace Logitude.HybridTest.WcfCallers
         {
             DepartmentPM entityPM = new DepartmentPM()
             {
-                Code = HybridData.DepartmentCode,
+                Code = HybridData.DepartmentCodeHDEP,
                 EnglishName = "Hybrid Department",
                 LocalName = "Hybrid Department",
                 Tenant = TestEnvironmentGlobalParameters.Tenant,
@@ -65,7 +65,7 @@ namespace Logitude.HybridTest.WcfCallers
         {
             BranchPM entityPM = new BranchPM()
             {
-                Code = HybridData.BranchCode,
+                Code = HybridData.BranchCodeHBRA,
                 EnglishName = "Hybrid Branch",
                 LocalName = "Hybrid Branch",
                 Tenant = TestEnvironmentGlobalParameters.Tenant,
@@ -76,7 +76,7 @@ namespace Logitude.HybridTest.WcfCallers
         {
             AgentPM entityPM = new AgentPM()
             {
-                Code = HybridData.AgentCode,
+                Code = HybridData.AgentCodeHAgent,
                 EnglishName = "Hybrid Agent",
                 LocalName = "Hybrid Agent",
                 CityName = "Hybrid City",
@@ -90,14 +90,14 @@ namespace Logitude.HybridTest.WcfCallers
         {
             UserPM entityPM = new UserPM()
             {
-                Code = HybridData.UserCode,
+                Code = HybridData.UserCodeHU,
                 EnglishName = "Hybrid User",
                 LocalName = "Hybrid User",
                 Email = "Hybrid@fnarsoft.com",
                 Password = "!H0",
                 BusinessUnitId = TestEnvironmentGlobalParameters.Tenant.ToString(),
-                BranchId = HybridData.BranchCode,
-                DepartmentId = HybridData.DepartmentCode,
+                BranchId = HybridData.BranchCodeHBRA,
+                DepartmentId = HybridData.DepartmentCodeHDEP,
                 Tenant = TestEnvironmentGlobalParameters.Tenant,
                 DocumentFilingInbox = "HybridInbox"
             };

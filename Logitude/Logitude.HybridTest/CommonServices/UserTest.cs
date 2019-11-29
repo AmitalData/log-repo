@@ -16,20 +16,21 @@ namespace Logitude.HybridTest.CommonServices
         {
             UserPM userPM = new UserPM()
             {
-                Code = HybridData.UserCode,
+                Code = HybridData.UserCodeHU,
                 EnglishName = "Hybrid User",
                 LocalName = "Hybrid User",
                 Email = "Hybrid@fnarsoft.com",
                 Password = "!H0",
                 BusinessUnitId = TestEnvironmentGlobalParameters.Tenant.ToString(),
-                BranchId = HybridData.BranchCode,
-                DepartmentId = HybridData.DepartmentCode,
+                BranchId = HybridData.BranchCodeHBRA,
+                DepartmentId = HybridData.DepartmentCodeHDEP,
                 Tenant = TestEnvironmentGlobalParameters.Tenant,
                 DocumentFilingInbox = "HybridInbox"
             };
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(userPM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            HybridData.UserIdHU = serviceResponse.Result;
         }
 
         [TestMethod]
@@ -46,7 +47,7 @@ namespace Logitude.HybridTest.CommonServices
             UserApiFilters filters = new UserApiFilters
             {
                 ByCode = true,
-                SearchCode = HybridData.UserCode
+                SearchCode = HybridData.UserCodeHU
             };
 
             Response serviceResponse = new Response();

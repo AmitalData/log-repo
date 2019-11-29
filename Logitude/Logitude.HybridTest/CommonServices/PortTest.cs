@@ -11,13 +11,13 @@ namespace Logitude.HybridTest.CommonServices
     public class PortTest
     {
         [TestMethod]
-        public void Test_FromPort_UPSERT()
+        public void Test_Port_UPSERT()
         {
             PortPM portPM = new PortPM()
             {
-                Code = HybridData.PortCode,
-                EnglishName = "Hybrid From Port",
-                LocalName = "Hybrid From Port",
+                Code = HybridData.PortCodeHP,
+                EnglishName = "Hybrid Port",
+                LocalName = "Hybrid Port",
                 CountryCode = HybridData.CountryCodeUS,
                 CountryId = HybridData.CountryCodeUS,
                 AddedManually = true,
@@ -29,7 +29,6 @@ namespace Logitude.HybridTest.CommonServices
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(portPM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
-            HybridData.PortId = serviceResponse.Result;
         }
         [TestMethod]
         public void Test_PORT_GetList()
@@ -56,7 +55,7 @@ namespace Logitude.HybridTest.CommonServices
             Assert.AreEqual(ports[0].Id, HybridData.PortIdLON, "Get Hybrid From Port From Ports Failed!");
         }
         [TestMethod]
-        public void Test_PORT_GetPortId()
+        public void Test_PORT_GetPortId() //This mehtod get the port from port 0
         {
             InvokedProperties serviceProperties = new InvokedProperties
             {

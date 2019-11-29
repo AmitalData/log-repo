@@ -15,15 +15,15 @@ namespace Logitude.HybridTest.CommonServices
         {
             PackageTypePM packageTypePM = new PackageTypePM()
             {
-                Code = HybridData.PackageTypeCode,
-                EnglishName = HybridData.PackageTypeCode,
+                Code = HybridData.PackageTypeCodeHPT,
+                EnglishName = "Hybrid Package Type",
                 IsOcean = true,
                 IsAir = false,
                 IsInland = true,
                 IsContainer = true,
                 //MeasurementId
                 AddedManually = true,
-                PrintAs = HybridData.PackageTypeCode,
+                PrintAs = HybridData.PackageTypeCodeHPT,
                 Tenant = TestEnvironmentGlobalParameters.Tenant,
             };
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(packageTypePM);

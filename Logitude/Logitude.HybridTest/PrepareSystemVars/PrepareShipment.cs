@@ -327,7 +327,7 @@ namespace Logitude.HybridTest.WcfCallers
         {
             AgentPM agentPM = new AgentPM()
             {
-                Code = HybridData.AgentCode,
+                Code = HybridData.AgentCodeHAgent,
                 EnglishName = "TestAgentExport1",
                 LocalName = "Hybrid Agent",
                 CityName = "Washnton",

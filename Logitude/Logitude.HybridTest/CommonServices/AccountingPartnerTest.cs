@@ -14,11 +14,11 @@ namespace Logitude.HybridTest.CommonServices
         {
             AccountingPartnerPM accountingPartnerPM = new AccountingPartnerPM()
             {
-                Code = HybridData.AccountingPartnerCode,
+                Code = HybridData.AccountingPartnerCodeHAPartner,
                 EnglishName = "Hybrid AccountingPartner",
                 LocalName = "Hybrid AccountingPartner",
                 CityName = "Hybrid City",
-                CountryCode = HybridData.CountryCode,
+                CountryCode = HybridData.CountryCodeUS,
                 PartnerTypeId = "AC",
                 Tenant = TestEnvironmentGlobalParameters.Tenant,
             };

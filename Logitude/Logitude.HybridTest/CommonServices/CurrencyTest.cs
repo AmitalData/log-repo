@@ -16,7 +16,7 @@ namespace Logitude.HybridTest.CommonServices
         {
             CurrencyPM currencyPM = new CurrencyPM()
             {
-                Code = HybridData.CurrencyCode,
+                Code = HybridData.CurrencyCodeHCR,
                 EnglishName = "Hybrid Currency",
                 LocalName = "Hybrid Currency",
                 AddedManually = true,
