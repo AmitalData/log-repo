@@ -1085,6 +1085,7 @@
     <Compile Include="Controllers\CommonDataModel\Extended\ReportsTemplateExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\ReportsTemplatesVersionExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\TenantAdditionalDataViewsExtendedController.cs" />
+    <Compile Include="Controllers\CommonDataModel\Extended\UserLastSettingsExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\WarehouseExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\AccountingPartnerViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\AgentSharedDocumentViewsController.Generated.cs" />
@@ -1240,6 +1241,7 @@
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\TenantAdditionalDataController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\TenantLoginPolicyController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\TwoFactorAuthenticationDeviceController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\UserLastSettingsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\PortViewsController.cs" />
     <Compile Include="Controllers\CommonDataModel\Services\ExcelExportFeaturesController.cs" />
     <Compile Include="Controllers\CommonDataModel\Services\ExcelExportController.cs" />
