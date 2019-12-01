@@ -81,8 +81,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public List<string> GetGLAccountsWithoutLedgerTransactions(List<string> glAccountIds, int tenant)
         {
             return (from l in context.LedgerTransactions
-                 
-                    where glAccountIds.Contains(l.AccountId) && l.Tenant == tenant
+
+                    where !glAccountIds.Contains(l.AccountId) && l.Tenant == tenant
                     select l.AccountId).ToList();
 
         }
