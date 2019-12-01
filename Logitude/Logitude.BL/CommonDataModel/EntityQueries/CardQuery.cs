@@ -208,7 +208,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       MetodoPagoCode = a.MetodoPagoCode,
                                       UsoCFDICode = a.UsoCFDICode,
                                       StateName = a.StateName,
-                                      
+                                      CustomerStatusCode = a.Customer != null ? (a.Customer.CustomerStatus != null ? a.Customer.CustomerStatus.Code : null) : null,
                                       IsInternationalPartner = a.IsInternationalPartner,
                                       IsAutonomy = a.IsAutonomy,
                                   }).FirstOrDefault();
