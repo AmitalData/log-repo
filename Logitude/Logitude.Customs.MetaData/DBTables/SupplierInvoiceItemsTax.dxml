@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="SupplierInvoiceItemsTaxes">
+  <Column Name="AlternateDefinedPerUnitMeasure" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AlternateDefinedPerUnitQuant" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AlternateMeasurementUnitCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AlternateRate" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DeclarationId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="DeferedTaxAmount" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DefinedPerUnitMeasure" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DefinedPerUnitQuantity" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="InvoiceCounterKey" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="LineNumber" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="MeasurementUnitCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TaxAmount" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TaxBaseAmount" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TaxRate" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TaxTypeCode" Type="varchar" Size="3">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TotalBtlCoverageNIS" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TradeAgreementTypeCode" Type="varchar" Size="8">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TradeLevyNumber" Type="varchar" Size="9">
+    <Constraints Nullable="true" />
+  </Column>
+</Table>

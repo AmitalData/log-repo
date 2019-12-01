@@ -296,7 +296,42 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-   }
+
+	   private List<InterestBasesPeriodPM> interestBasesPeriods;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("InterestBasesPeriodInterestBasesType", "Id","InterestBaseTypeId")]
+	   [DataMember]
+	   public virtual List<InterestBasesPeriodPM> InterestBasesPeriods  
+	   {
+	        get
+             {
+                 if (interestBasesPeriods == null)
+                 {
+                     interestBasesPeriods = new List<InterestBasesPeriodPM>();
+                 }
+                 return interestBasesPeriods;
+              }
+             set { interestBasesPeriods = value; }
+	    }
+		   
+	   private List<InterestBasesPeriodPM>  deletedInterestBasesPeriods;
+	   public virtual List<InterestBasesPeriodPM> DeletedInterestBasesPeriods  
+	   {
+	        get
+             {
+                 if ( deletedInterestBasesPeriods == null)
+                 {
+                      deletedInterestBasesPeriods = new List<InterestBasesPeriodPM>();
+                 }
+                 return  deletedInterestBasesPeriods;
+              }
+             set {  deletedInterestBasesPeriods = value; }
+	    }
+	     }
    
 }
 	 

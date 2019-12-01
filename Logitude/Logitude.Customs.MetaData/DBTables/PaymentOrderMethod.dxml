@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="PaymentOrderMethods">
+  <Column Name="AccountNumber" Type="varchar" Size="11">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Amount" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="BankCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="BranchCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CustomerActivityTypeCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CustomsBranchId" Type="varchar" Size="6">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="InternalBankId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Line" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="PaymentMethodStatusCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PaymentOrderId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TypeCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+</Table>

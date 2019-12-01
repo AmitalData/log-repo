@@ -1,5 +1,6 @@
 ﻿using System;
 using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.HybridTest.WcfCallers;
 using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -12,19 +13,27 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_PackageType_UPSERT()
         {
-            LoginService.GetLoginTokenByCredentials();
-            Response serviceResponse = PackageTypeWcfCaller.CallPackageTypeUpsert();
-            Assert.IsFalse(serviceResponse.HasError, serviceResponse.ErrorMessage);
+            PackageTypePM packageTypePM = new PackageTypePM()
+            {
+                Code = HybridData.PackageTypeCodeHPT,
+                EnglishName = "Hybrid Package Type",
+                IsOcean = true,
+                IsAir = false,
+                IsInland = true,
+                IsContainer = true,
+                //MeasurementId
+                AddedManually = true,
+                PrintAs = HybridData.PackageTypeCodeHPT,
+                Tenant = TestEnvironmentGlobalParameters.Tenant,
+            };
+            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(packageTypePM);
+            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
         }
 
         [TestMethod]
         public void Test_PackageType_GetPackageTypeList()
         {
-
-            LoginService.GetLoginTokenByCredentials();
-            Response prepareResponse = PackageTypeWcfCaller.PreparePackageType();
-            Assert.IsFalse(prepareResponse.HasError, "Prepare User Failed! " + prepareResponse.ErrorMessage);
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "PackageType",
@@ -36,7 +45,7 @@ namespace Logitude.HybridTest.CommonServices
             PackageTypeServiceReference.PackageTypeApiFilters filters = new PackageTypeServiceReference.PackageTypeApiFilters
             {
                 Take = 10,
-                SearchFields = HybridData.PackageTypeCode,
+                SearchFields = HybridData.PackageTypeCodePC1,
             };
 
             Response serviceResponse = new Response();
@@ -44,7 +53,7 @@ namespace Logitude.HybridTest.CommonServices
             PackageTypeList[] packageTypes = (PackageTypeList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.Result);
-            Assert.AreEqual(packageTypes[0].Code, "HPT", "Get Hybrid Package Type Item Failed!");
+            Assert.AreEqual(packageTypes[0].Id, HybridData.PackageTypeIdPC1, "Get Hybrid Package Type Item Failed!");
         }
     }
 }

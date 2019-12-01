@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="SupplierInvoiceItemVehicleMods">
+  <Column Name="AdjustmentTypeCode" Type="varchar" Size="4">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DeclarationId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="DeductAmount" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="InvoiceCounterKey" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="InvoiceItemLineNumber" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="LineNumber" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="VehicleLineNumber" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+</Table>

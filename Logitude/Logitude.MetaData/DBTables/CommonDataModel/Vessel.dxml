@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="Vessels">
+  <Column Name="AddedManually" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Code" Type="varchar" Size="5">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CountryId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EnglishName" Type="varchar" Size="40">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="IMOCode" Type="varchar" Size="10">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="InActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LocalName" Type="nvarchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Notes" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="ShipmentMasterDatas" ParentColumnName="MainCarriageVesselId" ReferencedTableName="Vessels" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentMasterDatas_dbo.Vessels_MainCarriageVesselId" />
+  <Relation ParentTableName="ShipmentMasterDatas" ParentColumnName="Transshipment1VesselId" ReferencedTableName="Vessels" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentMasterDatas_dbo.Vessels_Transshipment1VesselId" />
+  <Relation ParentTableName="ShipmentMasterDatas" ParentColumnName="Transshipment2VesselId" ReferencedTableName="Vessels" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentMasterDatas_dbo.Vessels_Transshipment2VesselId" />
+  <Relation ParentTableName="ShipmentMasterDatas" ParentColumnName="Transshipment3VesselId" ReferencedTableName="Vessels" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentMasterDatas_dbo.Vessels_Transshipment3VesselId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="OnCarriageVesselId" ReferencedTableName="Vessels" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Vessels_OnCarriageVesselId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="PreCarriageVesselId" ReferencedTableName="Vessels" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Vessels_PreCarriageVesselId" />
+</Table>

@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="Declarations">
+  <Column Name="AcceptanceStatusCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AgentId" Type="varchar" Size="9">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AutonomyRegionTypeCode" Type="varchar" Size="4">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CasualImporterAddress1" Type="nvarchar" Size="35">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CasualImporterAddress2" Type="nvarchar" Size="35">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CasualImporterCity" Type="nvarchar" Size="17">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CasualImporterContact" Type="nvarchar" Size="50">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CasualImporterEmail" Type="varchar" Size="50">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CasualImporterFax" Type="varchar" Size="30">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CasualImporterTel" Type="varchar" Size="30">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CasualImporterZipCode" Type="varchar" Size="10">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CasualSupplierAddress" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CasualSupplierName" Type="nvarchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CIFValue" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ConcurrencyGUID" Type="varchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CorrectionsXml" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CourierCustomStatusCode" Type="nvarchar" Size="128">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CourierHataraStatusCode" Type="varchar" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CourierHAWB" Type="varchar" Size="35">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CourierReleaseStatusCode" Type="varchar" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CourierSearchFields" Type="nvarchar" Size="500">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CourierSuspentionCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CourierSuspentionReasonCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreateDateTime" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CustomerId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CustomFileNo" Type="varchar" Size="12">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DealValue" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DealValueWithFactor" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DealValueWithoutFactor" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DeclarationDocumentId" Type="varchar" Size="35">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DeclarationDocumentTypeCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DeclarationNumber" Type="varchar" Size="35">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DeclarationOfficeCode" Type="varchar" Size="17">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DeclarationStatusTypeCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DepartmentId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DepositionStatusCode" Type="varchar" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EntitleImporterAddress" Type="nvarchar" Size="236">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EntitleImporterCode" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EntitleImporterCountryCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EntitleImporterId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EntitleImporterName" Type="nvarchar" Size="55">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EntitleImporterTypeCode" Type="varchar" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EntitlePassportNumber" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ErrosXml" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ExcludeConsignment" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ExternalDeclarationNumber" Type="varchar" Size="35">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FileState" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="HasConstraint" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="HatraDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="ImporterAddress" Type="nvarchar" Size="236">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ImporterCode" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ImporterEntitlementTypeCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ImporterId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ImporterName" Type="nvarchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ImporterPassCountryCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ImporterPassportNumber" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ImporterTypeCode" Type="varchar" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IsCancelled" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsChanged" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsClose" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsConnectedToUnifreight" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsConvertedDeclaration" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsCourierDeclaration" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsReleaseFile" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsSignedVersion" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsValueForCustomsOnly" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ItemsProcessTypesList" Type="varchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LoadingFactor" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="MainImporterEntitlemntTypeCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="MamanErrorXml" Type="varchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="MamanStatusCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ManifestCargoStatusCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ManifestErrorXml" Type="varchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PaymentDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PaymentOrderNumber" Type="varchar" Size="9">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PaymentStatusCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PlatformFee" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="PrimaryInvoiceCounterKey" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ProcedureCurrentCode" Type="varchar" Size="7">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ReferentUserId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SignedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SignerPersonalId" Type="varchar" Size="20">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="StorageSiteCode" Type="varchar" Size="20">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="StorageSiteName" Type="nvarchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="StorageStatusCode" Type="varchar" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TaxationDateTime" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TotalTax" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TransferImporterAddress" Type="nvarchar" Size="236">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TransferImporterCode" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TransferImporterCountryCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TransferImporterId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TransferImporterName" Type="nvarchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TransferImporterTypeCode" Type="varchar" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TransferPassportNumber" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TransImporterEntitleTypeCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TransportModeId" Type="varchar" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="UpdateDateTime" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="UserNotes" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="VersionId" Type="varchar" Size="9">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="WeightValue" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="Vehicles" ParentColumnName="DeclarationId" ReferencedTableName="Declarations" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.Vehicles_Customs.Declarations_DeclarationId" />
+  <Relation ParentTableName="PhysicalChecks" ParentColumnName="DeclarationId" ReferencedTableName="Declarations" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.PhysicalChecks_Customs.Declarations_DeclarationId" />
+  <Relation ParentTableName="TapagConnectionTables" ParentColumnName="DeclarationId" ReferencedTableName="Declarations" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.TapagConnectionTables_Customs.Declarations_DeclarationId" />
+  <Relation ParentTableName="ProceduralFaults" ParentColumnName="DeclarationId" ReferencedTableName="Declarations" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.ProceduralFaults_Customs.Declarations_DeclarationId" />
+  <Relation ParentTableName="Consignments" ParentColumnName="DeclarationId" ReferencedTableName="Declarations" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.Consignments_Customs.Declarations_DeclarationId" />
+  <Relation ParentTableName="DeclarationCargoSplits" ParentColumnName="DeclarationId" ReferencedTableName="Declarations" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.DeclarationCargoSplits_Customs.Declarations_DeclarationId" />
+  <Relation ParentTableName="DeclarationConsAcceptances" ParentColumnName="DeclarationId" ReferencedTableName="Declarations" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.DeclarationConsAcceptances_Customs.Declarations_DeclarationId" />
+  <Relation ParentTableName="DeclarationConstraints" ParentColumnName="DeclarationID" ReferencedTableName="Declarations" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.DeclarationConstraints_Customs.Declarations_DeclarationID" />
+  <Relation ParentTableName="DeclarationPayments" ParentColumnName="DeclarationId" ReferencedTableName="Declarations" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.DeclarationPayments_Customs.Declarations_DeclarationId" />
+  <Relation ParentTableName="DeclarationTaxes" ParentColumnName="DeclarationId" ReferencedTableName="Declarations" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.DeclarationTaxes_Customs.Declarations_DeclarationId" />
+  <Relation ParentTableName="DeficitConnFileParagraphTypes" ParentColumnName="DeclarationId" ReferencedTableName="Declarations" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.DeficitConnFileParagraphTypes_Customs.Declarations_DeclarationId" />
+  <Relation ParentTableName="CourierDeclarations" ParentColumnName="DeclarationId" ReferencedTableName="Declarations" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.CourierDeclarations_Customs.Declarations_DeclarationId" />
+  <Relation ParentTableName="SupplierInvoices" ParentColumnName="DeclarationId" ReferencedTableName="Declarations" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.SupplierInvoices_Customs.Declarations_DeclarationId" />
+  <Relation ParentTableName="CustomsCollaterals" ParentColumnName="DeclarationId" ReferencedTableName="Declarations" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.CustomsCollaterals_Customs.Declarations_DeclarationId" />
+</Table>

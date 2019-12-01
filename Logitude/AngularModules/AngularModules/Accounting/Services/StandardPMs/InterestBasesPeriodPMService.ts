@@ -180,7 +180,7 @@ export class InterestBasesPeriodPMService {
          
         if (!entityPM) {
             
-            entityPM = new InterestBasesPeriodPM();
+            entityPM = new InterestBasesPeriodPM(null);
         }
 
 		var customFields: Array<string> = [];
@@ -245,7 +245,7 @@ export class InterestBasesPeriodPMService {
 
 	  public GetNewEntityPM() {		 
 		    var entityPM: InterestBasesPeriodPM;
-			entityPM = new InterestBasesPeriodPM();
+			entityPM = new InterestBasesPeriodPM(null);
 			entityPM.Tenant = InfraSettings.TenantPM.Id;
 			return entityPM;
     }

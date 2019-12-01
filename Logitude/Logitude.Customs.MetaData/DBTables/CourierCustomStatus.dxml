@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="CourierCustomStatus">
+  <Column Name="Code" Type="nvarchar" Size="128">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="LocalName" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Name" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="Declarations" ParentColumnName="CourierCustomStatusCode" ReferencedTableName="CourierCustomStatus" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Declarations_dbo.CourierCustomStatus_CourierCustomStatusCode" />
+</Table>

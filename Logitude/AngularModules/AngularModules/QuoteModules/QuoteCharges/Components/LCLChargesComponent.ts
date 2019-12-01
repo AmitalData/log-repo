@@ -279,6 +279,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         this.UIProperties.SetEnabled("IsFixedPrice", this.ObjectTableName, this.IsEditingEnabled);
     }
 
+
     public SelectedRow: QuoteChargeItem = null;
     OnRowSelected(itemComponent: QuoteChargeItem) {
         this.SelectedRow = itemComponent;
@@ -988,7 +989,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                     item.VatTypeId = vatTypeId;
                     item.VatPercent = itemVatPercentage;
                     item.VatTypeCell = itemVatTypeCell;
-                    item.ExternalVATCard = vat.ExternalVATCard;
+                    item.ExternalVATCard = vat.ReceivablesExternalId;
                     item.ExternalTAXItemId = vat.ExternalTAXItemId;
                     item.QuoteCurrencyVatableAmount = myVatableAmount;
                     item.LocalCurrencyVatableAmount = myVatableAmountLocal;
@@ -1067,6 +1068,11 @@ export class QuoteChargeItem extends BaseComponent {
         this.UIProperties.SetEnabled("Notes", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("IsChargeBySteps", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("CostIsFixedRate", this.ObjectTableName, this.IsEditingEnabled);
+
+        this.UIProperties.SetEnabled("Step","QuotePriceSteps", this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("CostUnitPrice", "QuotePriceSteps", this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("MarkupValue", "QuotePriceSteps", this.IsEditingEnabled);
+        this.UIProperties.SetEnabled("SaleUnitPrice", "QuotePriceSteps", this.IsEditingEnabled);
     }
 
     public IsAllInCheckBoxVisible: boolean = false;
@@ -1556,7 +1562,7 @@ export class QuoteChargeItem extends BaseComponent {
                         if (list) {
                             this.VatTypeName = list.EnglishName;
                             this.VatIsMultiPercentage = list.IsMultiPercentage;
-                            this.EntityPM.ExternalVATCard = list.ExternalVATCard;
+                            this.EntityPM.ExternalVATCard = list.ReceivablesExternalId;
                             this.EntityPM.ExternalTAXItemId = list.ExternalTAXItemId;
 
                             if (list.IsMultiPercentage) {

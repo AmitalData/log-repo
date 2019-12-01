@@ -13,18 +13,26 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_DocumentType_UPSERT()
         {
-            LoginService.GetLoginTokenByCredentials();
-            Response serviceResponse = DocumentTypeWcfCaller.CallDocumentTypeUpsert();
-            Assert.IsFalse(serviceResponse.HasError, serviceResponse.ErrorMessage);
+            DocumentTypePM documentTypePM = new DocumentTypePM()
+            {
+                Code = HybridData.DocumentTypeCodeHDT,
+                Name = "Hybrid DocumentType",
+                ObjectTableName = "Shipment",
+                DocumentTypeCategoryCode = "O",
+                IsDocIn = true,
+                IsDocOut = true,
+                Tenant = TestEnvironmentGlobalParameters.Tenant,
+            };
+            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(documentTypePM);
+            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            HybridData.DocumentTypeIdHDT = serviceResponse.Result;
         }
-
         [TestMethod]
         public void Test_DocumentType_GetDocumentTypeByCode()
         {
-            LoginService.GetLoginTokenByCredentials();
-            Response prepareResponse = DocumentTypeWcfCaller.PrepareDocumentType();
-            Assert.IsFalse(prepareResponse.HasError, "Prepare User Failed! " + prepareResponse.ErrorMessage);
+            if(HybridData.DocumentTypeIdHDT == null)
+                Test_DocumentType_UPSERT();
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "DocumentType",
@@ -35,19 +43,17 @@ namespace Logitude.HybridTest.CommonServices
             };
 
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { HybridData.DocumentTypeCode, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
+            object[] serviceParameters = new object[] { HybridData.DocumentTypeCodeHDT, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
             DocumentTypePM documentType = (DocumentTypePM)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get Document Type By Code Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get Document Type By Code Failed! " + serviceResponse.Result);
-            Assert.AreEqual(documentType.Code, HybridData.DocumentTypeCode, "Get Document Type By Code Failed!");
+            Assert.AreEqual(documentType.Code, HybridData.DocumentTypeCodeHDT, "Get Document Type By Code Failed!");
         }
-
         [TestMethod]
         public void Test_DocumentType_GetDocumentTypes()
         {
-            LoginService.GetLoginTokenByCredentials();
-            Response prepareResponse = DocumentTypeWcfCaller.PrepareDocumentType();
-            Assert.IsFalse(prepareResponse.HasError, "Prepare User Failed! " + prepareResponse.ErrorMessage);
+            if (HybridData.DocumentTypeIdHDT == null)
+                Test_DocumentType_UPSERT();
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "DocumentType",
@@ -68,7 +74,7 @@ namespace Logitude.HybridTest.CommonServices
                 documentTypes = (DocumentTypeList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
                 foreach (DocumentTypeList documentType in documentTypes)
                 {
-                    if (documentType.Code == HybridData.DocumentTypeCode)
+                    if (documentType.Code == HybridData.DocumentTypeCodeHDT)
                     {
                         DocumentTypeExist = true;
                         break;

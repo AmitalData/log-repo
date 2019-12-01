@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="ClientAddresses">
+  <Column Name="AddressId" Type="varchar" Size="9">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="AddressPurposeCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AddressTypeCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AuthorizedSignerPermit1" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AuthorizedSignerPermit2" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AuthorizedSignerPermit3" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="BranchName" Type="nvarchar" Size="25">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ClientId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="ContactFirstName" Type="nvarchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ContactIdentifier" Type="varchar" Size="9">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ContactLastName" Type="nvarchar" Size="19">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ContactRoleTypeCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ContactStateCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CustomAddressCode" Type="varchar" Size="9">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EnglishCityName" Type="varchar" Size="35">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EnglishCountryCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EnglishMainAddressLine" Type="varchar" Size="70">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EnglishPostalCode" Type="varchar" Size="9">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EnglishSubCountryCode" Type="varchar" Size="6">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IsHebrewAddress" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsPalestinianCity" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LocalApartment" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LocalCityCode" Type="varchar" Size="4">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LocalEntrance" Type="nvarchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LocalHouseLetter" Type="nvarchar" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LocalHouseNumber" Type="varchar" Size="50">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LocalPOBox" Type="varchar" Size="9">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LocalPostalCode" Type="varchar" Size="7">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LocalSecondLine" Type="nvarchar" Size="25">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LocalStreetName" Type="nvarchar" Size="20">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="ClientsAddressCommTypes" ParentColumnName="ClientId" ReferencedTableName="ClientAddresses" ReferencedColumnName="ClientId" ForeignKeyConstraintName="FK_Customs.ClientsAddressCommTypes_Customs.ClientAddresses_ClientId_AddressId" />
+  <Relation ParentTableName="ClientsAddressCommTypes" ParentColumnName="AddressId" ReferencedTableName="ClientAddresses" ReferencedColumnName="AddressId" ForeignKeyConstraintName="FK_Customs.ClientsAddressCommTypes_Customs.ClientAddresses_ClientId_AddressId" />
+</Table>

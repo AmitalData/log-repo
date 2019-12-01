@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="FilingInboxAttachments">
+  <Column Name="DocumentId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="FileName" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FilingInboxId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="FilingInboxAttachmentLogs" ParentColumnName="FilingInboxAttachmentId" ReferencedTableName="FilingInboxAttachments" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FilingInboxAttachmentLogs_dbo.FilingInboxAttachments_FilingInboxAttachmentId" />
+</Table>

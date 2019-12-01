@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="Opportunities">
+  <Column Name="ActualClosingDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="AgentId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="BusinessUnitId" Type="varchar" Size="50">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ClosingDescription" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ClosingReasonId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ConcurrencyGUID" Type="varchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ContactId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CreatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CustomerId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="EstimatedClosingDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Field1" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Field10" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Field2" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Field3" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Field4" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Field5" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Field6" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Field7" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Field8" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Field9" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ForeignClientId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="IsCancelled" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsClosed" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LastActivitySubject" Type="nvarchar" Size="255">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LastCompletedActivityDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LastCompletedActivityTypeCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LastStageDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LastStageIdBeforeClosure" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LeadDescription" Type="nvarchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LeadPartnerId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LeadSourceId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LeadUserId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="NextActivityDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="NextActivitySubject" Type="nvarchar" Size="255">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="NextActivityTypeCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Notes" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="NumberOfShipments" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="OpportunityTypeId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="OwnerId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Probability" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="RatingCode" Type="varchar" Size="1">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="StageDueDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="StageId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Subject" Type="nvarchar" Size="250">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UpdateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UpdatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ValueField" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="Activities" ParentColumnName="OpportunityId" ReferencedTableName="Opportunities" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Activities_dbo.Opportunities_OpportunityId" />
+  <Relation ParentTableName="OpportunityAdditionalServices" ParentColumnName="OpportunityId" ReferencedTableName="Opportunities" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OpportunityAdditionalServices_dbo.Opportunities_OpportunityId" />
+  <Relation ParentTableName="OpportunityCompetitorProducts" ParentColumnName="OpportunityId" ReferencedTableName="Opportunities" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OpportunityCompetitorProducts_dbo.Opportunities_OpportunityId" />
+  <Relation ParentTableName="OpportunityCompetitors" ParentColumnName="OpportunityId" ReferencedTableName="Opportunities" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OpportunityCompetitors_dbo.Opportunities_OpportunityId" />
+  <Relation ParentTableName="OpportunityProductLocations" ParentColumnName="OpportunityId" ReferencedTableName="Opportunities" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OpportunityProductLocations_dbo.Opportunities_OpportunityId" />
+  <Relation ParentTableName="OpportunityProducts" ParentColumnName="OpportunityId" ReferencedTableName="Opportunities" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OpportunityProducts_dbo.Opportunities_OpportunityId" />
+  <Relation ParentTableName="OpportunityStages" ParentColumnName="OpportunityId" ReferencedTableName="Opportunities" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OpportunityStages_dbo.Opportunities_OpportunityId" />
+</Table>

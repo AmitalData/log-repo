@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="APPaymentStatus">
+  <Column Name="Code" Type="varchar" Size="2">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="40">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="APPayments" ParentColumnName="StatusCode" ReferencedTableName="APPaymentStatus" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.APPayments_dbo.APPaymentStatus_StatusCode" />
+</Table>

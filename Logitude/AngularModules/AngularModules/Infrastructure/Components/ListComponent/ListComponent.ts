@@ -2518,7 +2518,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     }
                 case "InterestBasesType":
                     {
-                        logWindow.Width = 530;
+                        logWindow.Width = 680;
                         logWindow.Height = 400;
                         break;
                     }
@@ -2545,6 +2545,8 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             if (this.ObjectTableName == "Currency") {
                 str = TextCodeTranslator.Translate("General.B.Add") + " Currency";
             }
+
+
 
             if (this.ObjectTableName == "Customs.CustomsVendor") {
                 str = TextCodeTranslator.Translate("Customs.Vendor.O.SearchVendors");
@@ -2696,6 +2698,9 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
             }
 
+            if (this.ObjectTableName == "InterestBasesType") {
+                FinalText = TextCodeTranslator.Translate("Accounting.General.O.NewInterestBases");
+            }
 
             var windowTitle = FinalText; //TextCodeTranslator.Translate("General.O.NewEntity").replace("%Entity", TextCodeTranslator.Translate(this.ObjectTableName));
             logWindow.WindowArgs = args;

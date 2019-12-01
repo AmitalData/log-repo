@@ -1,5 +1,6 @@
 ﻿using System;
 using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.HybridTest.WcfCallers;
 using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -12,18 +13,25 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_City_UPSERT()
         {
-            LoginService.GetLoginTokenByCredentials();
-            Response serviceResponse = CityWcfCaller.CallCityUpsert();
-            Assert.IsFalse(serviceResponse.HasError, serviceResponse.ErrorMessage);
+            CountryCityPM cityPM = new CountryCityPM()
+            {
+                Code = HybridData.CityCodeHCity,
+                EnglishName = "Hybrid City",
+                LocalName = "Hybrid City",
+                CountryId = HybridData.CountryCodeUS,
+                AddedManually = true,
+                Tenant = TestEnvironmentGlobalParameters.Tenant,
+            };
+            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(cityPM);
+            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            HybridData.CityIdHCity = serviceResponse.Result;
         }
-
         [TestMethod]
         public void Test_City_GetCityListByCode()
         {
-            LoginService.GetLoginTokenByCredentials();
-            Response prepareResponse = CityWcfCaller.PrepareCity();
-            Assert.IsFalse(prepareResponse.HasError, "Prepare City Failed! " + prepareResponse.ErrorMessage);
+            if(HybridData.CityIdHCity == null)
+                Test_City_UPSERT();
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "City",
@@ -32,9 +40,8 @@ namespace Logitude.HybridTest.CommonServices
                 ServiceType = typeof(CountryCityList),
                 ServiceFilterType = null,
             };
-
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { HybridData.CityCode, HybridData.CountryCode, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
+            object[] serviceParameters = new object[] { HybridData.CityCodeHCity, HybridData.CountryCodeUS, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
             CountryCityList city = (CountryCityList)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);

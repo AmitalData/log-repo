@@ -43,7 +43,7 @@ export class FilterField extends BaseComponent {
         this.IsCustomFilter = this.ObjectField.IsCustomFilter;
         
         if (queryId != null && queryId != undefined && queryId != "") {
-            var preDefinedFilter = this.AdvancedQueryFilterPMs.filter(d => d.IsPredefined == true && d.ObjectFieldId == objectField.Id)[0];
+            var preDefinedFilter = this.AdvancedQueryFilterPMs.filter(d => d.IsPredefined == true && d.ObjectFieldCode == objectField.FieldCode)[0];
             if (preDefinedFilter != null) {
                 this.AdvancedQueryFilterPM = preDefinedFilter;
                 if (preDefinedFilter.PredefinedValue != null) {
@@ -71,7 +71,7 @@ export class FilterField extends BaseComponent {
         }
 
         else {
-            var preDefinedFilter = this.AdvancedQueryFilterPMs.filter(d => ((d.Tenant == SessionInfo.LoggedUserTenant && d.UserId == SessionInfo.LoggedUserId) || d.Tenant == 0) && d.IsPredefined == true).filter(d => d.ObjectFieldId == objectField.Id)[0];
+            var preDefinedFilter = this.AdvancedQueryFilterPMs.filter(d => ((d.Tenant == SessionInfo.LoggedUserTenant && d.UserId == SessionInfo.LoggedUserId) || d.Tenant == 0) && d.IsPredefined == true).filter(d => d.ObjectFieldCode == objectField.FieldCode)[0];
             if (preDefinedFilter != null) {
                 this.AdvancedQueryFilterPM = preDefinedFilter;
                 if (preDefinedFilter.PredefinedValue != null) {
@@ -207,8 +207,8 @@ export class FilterField extends BaseComponent {
                     //if (this.exists == false) {
                     tempField.IsDeleted = true;
                     //if (!this.IsDeleted){
-                    if (this.AdvancedQueryFilterPMs.filter(a => a.ObjectFieldId == this.ObjectField.Id).length > 0) {
-                        this.AdvancedQueryFilterPMs = this.AdvancedQueryFilterPMs.filter(a => a.ObjectFieldId != this.ObjectField.Id);
+                    if (this.AdvancedQueryFilterPMs.filter(a => a.ObjectFieldCode == this.ObjectField.FieldCode).length > 0) {
+                        this.AdvancedQueryFilterPMs = this.AdvancedQueryFilterPMs.filter(a => a.ObjectFieldCode != this.ObjectField.FieldCode);
                     }
                     this.ParentClass.DeteteFilter(this);
                     //if (this.TextValue != null && this.TextValue != '') {
@@ -395,8 +395,8 @@ export class FilterField extends BaseComponent {
         //this.AdvancedQueryFilterPM = filter;
         var temp = this;
         temp.IsDeleted = true;
-        if (this.AdvancedQueryFilterPMs.filter(a => a.ObjectFieldId == this.ObjectField.Id).length > 0) {
-            this.AdvancedQueryFilterPMs = this.AdvancedQueryFilterPMs.filter(a => a.ObjectFieldId != this.ObjectField.Id);
+        if (this.AdvancedQueryFilterPMs.filter(a => a.ObjectFieldCode == this.ObjectField.FieldCode).length > 0) {
+            this.AdvancedQueryFilterPMs = this.AdvancedQueryFilterPMs.filter(a => a.ObjectFieldCode != this.ObjectField.FieldCode);
         }
         this.ParentClass.DeteteFilter(this);
         if (this.TextValue != null) {

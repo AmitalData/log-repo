@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="SupplierInvoiceItemsConDeclars">
+  <Column Name="DeclarationId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="DeclarationNumber" Type="varchar" Size="35">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DeclarationTypeCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="InvoiceCounterKey" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="InvoiceItemLineNumber" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="InvoiceNumber" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ItemSequence" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LineNumber" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Quantity" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="QuantityTypeCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+</Table>

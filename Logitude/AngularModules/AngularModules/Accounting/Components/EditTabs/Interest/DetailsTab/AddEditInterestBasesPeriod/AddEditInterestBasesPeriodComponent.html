@@ -1,0 +1,78 @@
+
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="4">
+            <ValidationSummary  [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td style="width: 400px">
+            <table>
+                <tr class="FormFieldRow">
+                    <td>
+                        <table>
+                            <!-- InterestRate -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 150px;">
+                                    <LogLabel [ObjectFieldName]="'InterestRate'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td style="width: 130px;">
+                                    <LogTextBox [ObjectFieldName]="'InterestRate'" [DataContext]="DataContext"
+                                                [ObjectTableName]="ObjectTableName" [Text]="DataContext.InterestRate" [HideColumns]="true"></LogTextBox>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+                            <!-- InterestBaseStartDate -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 150px;">
+                                    <LogLabel [ObjectFieldName]="'InterestBaseStartDate'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="width: 130px;">
+                                    <LogDatePicker [ObjectFieldName]="'InterestBaseStartDate'" [ObjectTableName]="ObjectTableName"
+                                                   [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+                            <tr><td><div></div></td></tr>
+                        </table>
+
+                    </td>
+                </tr>
+            </table>
+        </td>
+
+        <td colspan="3"><div></div></td>
+
+
+    </tr>
+
+    <tr style="height: 32px;">
+        <td colspan="4" style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>
+

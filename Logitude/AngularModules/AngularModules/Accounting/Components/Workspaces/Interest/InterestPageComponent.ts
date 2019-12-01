@@ -5,13 +5,18 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ListComponentArgs } from '../../../../Infrastructure/Args';
-import { InterestBasesTypePM } from '../../../EntityPMs/InterestBasesTypePM';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
+import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
+import { ServiceLocator } from '../../../../Infrastructure/Locators/ServiceLocator';
+import { EntityPMService } from '../../../../Infrastructure/Services/EntityPMService';
 
 declare var window: any;
 @Component({
     moduleId: module.id,
     templateUrl: './InterestPageComponent.html',
+    providers: [EntityPMService],
+
 })
 
 export class InterestPageComponent implements AfterViewInit {
@@ -20,7 +25,8 @@ export class InterestPageComponent implements AfterViewInit {
     @Output() ReloadUserQueries = new EventEmitter();
     private CurrentSession = SessionLocator.SelectedSession;
     public isRTL: boolean = false;
-    constructor() {
+    public ObjectTableName = "InterestBasesType";
+    constructor(private entityPMService: EntityPMService) {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
     }
 
@@ -39,21 +45,45 @@ export class InterestPageComponent implements AfterViewInit {
         this.LoadAllScreenData();
 
     }
-    RunNewInterestBasesTypeWizard() {
-        var windowTitle = TextCodeTranslator.Translate("Accounting.General.O.NewInterestBases");
-        var logWindow = new LogitudeWindow();
-        logWindow.Width = 530;
-        logWindow.Height = 400;
-        logWindow.Title = windowTitle;
-        logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
-        logWindow.Show('./Accounting/Components/NewEntity/NewInterestBasesTypeComponent');
-    }
+    //RunNewInterestBasesTypeWizard() {
+    //    var windowTitle = TextCodeTranslator.Translate("Accounting.General.O.NewInterestBases");
+    //    var logWindow = new LogitudeWindow();
+    //    logWindow.Width = 720;
+    //    logWindow.Height = 400;
+    //    logWindow.Title = windowTitle;
+    //    logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
+    //    logWindow.Show('./Accounting/Components/NewEntity/NewInterestBasesTypeComponent');
+    //}
 
+    RunNewInterestBasesTypeWizard() {
+        if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "NEW", true)) {
+            return;
+        }
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
+            this.RunNewGenaricEntity();
+            ServiceLocator.SendTotangoUserActivity(this.ObjectTableName, "New" + this.ObjectTableName);
+        });
+    }
+    private RunNewGenaricEntity() {
+        var componentPath = "./Infrastructure/GenericComponents/NewEntityComponent";
+        this.entityPMService.getNewEntity(this.ObjectTableName).then(response => {
+            var args = new EntityArgs();
+            args.EntityPM = response;
+            args.ObjectTableName = this.ObjectTableName;
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 960;
+            logWindow.Height = 570;
+            var windowTitle = TextCodeTranslator.Translate("Accounting.General.O.NewInterestBaseType");
+            logWindow.WindowArgs = args;
+            logWindow.Title = windowTitle;
+            logWindow.Show(componentPath);
+        });
+    }
+ 
         ViewAccountingQuery(myQueryCode: string) {
         if (myQueryCode != null) {
 
             var displayTitle = "";
-            var queryCode = myQueryCode;
 
             var filters = new ApiQueryFilters();
 

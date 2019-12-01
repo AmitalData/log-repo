@@ -20,18 +20,25 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_Contact_UPSERT()
         {
-            LoginService.GetLoginTokenByCredentials();
-            Response serviceResponse = ContactWcfCaller.CallContactUpsert();
+            ContactPM contactPM = new ContactPM()
+            {
+                EnglishName = HybridData.ContactCode,
+                LocalName = "Hybrid Contact",
+                Email = "HybridContact@logitudeworld.com",
+                Password = "!H0",
+                ExternalId = HybridData.ContactCode,
+                Tenant = TestEnvironmentGlobalParameters.Tenant,
+            };
+            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(contactPM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            HybridData.ContactId = serviceResponse.Result;
         }
-
         [TestMethod]
         public void Test_Contact_GetContactPMByEmail()
         {
-            LoginService.GetLoginTokenByCredentials();
-            Response prepareResponse = ContactWcfCaller.PrepareContact();
-            Assert.IsFalse(prepareResponse.HasError, "Prepare Contact Failed! " + prepareResponse.ErrorMessage);
+            if(HybridData.ContactId == null)
+                Test_Contact_UPSERT();
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "Contact",
@@ -40,7 +47,6 @@ namespace Logitude.HybridTest.CommonServices
                 ServiceType = typeof(ContactPM),
                 ServiceFilterType = null,
             };
-
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { "HybridContact@logitudeworld.com", TestEnvironmentGlobalParameters.Tenant, serviceResponse };
             ContactPM contact = (ContactPM)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
@@ -48,13 +54,11 @@ namespace Logitude.HybridTest.CommonServices
             Assert.IsNull(serviceResponse.Result, "Get Contact PM By Email Failed! " + serviceResponse.Result);
             Assert.AreEqual(contact.EnglishName, HybridData.ContactCode, "Get Hybrid Contact From Contacts Failed!");
         }
-
         [TestMethod]
         public void Test_Contact_GetContactList()
         {
-            LoginService.GetLoginTokenByCredentials();
-            Response prepareResponse = UserWcfCaller.PrepareUser();
-            Assert.IsFalse(prepareResponse.HasError, "Prepare User Failed! " + prepareResponse.ErrorMessage);
+            if (HybridData.ContactId == null)
+                Test_Contact_UPSERT();
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "Contact",
@@ -69,7 +73,6 @@ namespace Logitude.HybridTest.CommonServices
                 ByCode = true,
                 SearchFields = HybridData.ContactCode
             };
-
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { filters, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
             ContactList[] contacts = (ContactList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
@@ -77,13 +80,11 @@ namespace Logitude.HybridTest.CommonServices
             Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.Result);
             Assert.AreEqual(contacts[0].EnglishName, HybridData.ContactCode, "Get Hybrid Contact From Contacts Failed!");
         }
-
         [TestMethod]
         public void Test_Contact_GetContactByExternalId()
         {
-            LoginService.GetLoginTokenByCredentials();
-            Response prepareResponse = ContactWcfCaller.PrepareContact();
-            Assert.IsFalse(prepareResponse.HasError, "Prepare Contact Failed! " + prepareResponse.ErrorMessage);
+            if (HybridData.ContactId == null)
+                Test_Contact_UPSERT();
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "Contact",
@@ -92,7 +93,6 @@ namespace Logitude.HybridTest.CommonServices
                 ServiceType = typeof(ContactPM),
                 ServiceFilterType = null,
             };
-
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { HybridData.ContactCode, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
             ContactPM contact = (ContactPM)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
@@ -100,6 +100,5 @@ namespace Logitude.HybridTest.CommonServices
             Assert.IsNull(serviceResponse.Result, "Get Contact By External Id Failed! " + serviceResponse.Result);
             Assert.AreEqual(contact.EnglishName, HybridData.ContactCode, "Get Hybrid Contact From Contacts Failed!");
         }
-        
     }
 }

@@ -257,10 +257,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             if (!entityPM.IsGeneralInvoice)
             {
-                //if (!entityPM.CreatedFromAPI)
-                //{
-                    this.UpdateAllPayablesAccountedAmountAndStatus();
-                //}
+                this.UpdateAllPayablesAccountedAmountAndStatus();
             }
 
             this.UpdateInvoiceAmountDue();
@@ -299,16 +296,18 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 payables = payables.Where(a => a.ShipmentPayableLineStatusCode != "ACCT").ToList();
             }
 
-            foreach (APInvoiceLinePM line in invoiceLines)
+            foreach (APInvoiceLinePM aPInvoiceLine in invoiceLines)
             {
-                List<ShipmentPayable> myLines = payables.Where(d => d.ChargesTypeId == line.ChargesTypeId).ToList();
+                //List<ShipmentPayable> myLines = payables.Where(a => a.ChargesTypeId == aPInvoiceLine.ChargesTypeId && (a.Measurement != null && a.Measurement.Code == aPInvoiceLine.ContainerTypeCode && a.Quantity == aPInvoiceLine.Quantity)).ToList();
+                List<ShipmentPayable> myLines = payables.Where(a => a.ChargesTypeId == aPInvoiceLine.ChargesTypeId).ToList();
+
                 if (myLines == null || (myLines != null && myLines.Count() == 0))
                 {
-                    this.UnexpectedPayablesInvoiceLines.Add(line);
+                    this.UnexpectedPayablesInvoiceLines.Add(aPInvoiceLine);
                 }
                 else
                 {
-                    this.GeneratePayableLine_ChargeTypes(line, myLines);
+                    this.GeneratePayableLine_ChargeTypes(aPInvoiceLine, myLines);
                 }
             }
 
@@ -322,12 +321,33 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private void GeneratePayableLine_ChargeTypes(APInvoiceLinePM aPInvoiceLine, List<ShipmentPayable> shipmentPayable)
         {
             List<ShipmentPayable> myLines = shipmentPayable.Where(a => a.VendorId == entityPM.VendorId || a.VendorId == null).ToList();
-            if (myLines != null && myLines.Count() == 1)
+            if (myLines != null)
             {
-                ShipmentPayable shipmentPayableLine = shipmentPayable.FirstOrDefault();
-                // connect payable line to invoice line
-                aPInvoiceLine.EntityPayableId = shipmentPayableLine.Id;
-                this.ComputeOpenAmount(aPInvoiceLine, shipmentPayableLine);
+                var matchedContainerLines = myLines.Where(a => a.Measurement != null && a.Measurement.Code == aPInvoiceLine.ContainerTypeCode && a.Quantity == aPInvoiceLine.Quantity && a.CurrencyId == aPInvoiceLine.ForiegnCurrencyId).ToList();
+
+                if ((matchedContainerLines != null && matchedContainerLines.Count() == 1) || myLines.Count() == 1)
+                {
+                    ShipmentPayable shipmentPayableLine;
+                    if (matchedContainerLines.Count() == 1)
+                    {
+                        shipmentPayableLine = matchedContainerLines.FirstOrDefault();
+                        aPInvoiceLine.AmountTypeCode = "EXPT";
+                        if(shipmentPayableLine.UnitPrice == null)
+                            shipmentPayableLine.UnitPrice = Round(aPInvoiceLine.InvoiceCurrencyAmount / aPInvoiceLine.Quantity, 2);
+                    }
+                    else
+                    {
+                        shipmentPayableLine = shipmentPayable.FirstOrDefault();
+                    }
+
+                    aPInvoiceLine.EntityPayableId = shipmentPayableLine.Id;
+                    this.ComputeOpenAmount(aPInvoiceLine, shipmentPayableLine);
+                }
+                else
+                {
+                    aPInvoiceLine.AmountTypeCode = "EXPT";
+                    this.UnexpectedPayablesInvoiceLines.Add(aPInvoiceLine);
+                }
             }
             else
             {
@@ -881,7 +901,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                             else if (myVatType != null)
                             {
-                                itemVAT.ExternalVATCard = myVatType.ExternalVATCard;
+                                itemVAT.ExternalVATCard = myVatType.ReceivablesExternalId;
                             }
                         }
 
@@ -1276,14 +1296,23 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             AWBPrint = false,
                             IsEditedByUser = false,
                             IsFromQuote = false,
+                            Quantity = invoicelinePM.Quantity,
+                           
                         };
 
-                        //ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(tenant);
-                        //ChargesType chargesType = chargesTypeRepository.GetSingleChargesType(invoicelinePM.ChargesTypeId, tenant);
-                        //if (chargesType != null)
-                        //{
-                        //    payable.MeasurementId = chargesType.MeasurementId;
-                        //}
+                        if(invoicelinePM.ContainerTypeId != null)
+                        {
+                            PackageTypeRepository packageRepository = new PackageTypeRepository(tenant);
+                            var package = packageRepository.GetSinglePackageType(invoicelinePM.ContainerTypeId, tenant);
+                            if(package != null)
+                            {
+                                payable.MeasurementId = package.MeasurementId;
+                            }
+                            if (this.entityPM.CreatedFromAPI && payable.UnitPrice == null)
+                            {
+                                payable.UnitPrice = Round(invoicelinePM.InvoiceCurrencyAmount / invoicelinePM.Quantity, 2);
+                            }
+                        }
 
                         invoicelinePM.EntityPayableId = payable.Id;
                         shipmentPayableRepository.Add(payable);
@@ -1293,6 +1322,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
         }
+
+      
 
         private void UpdateAllPayablesAccountedAmountAndStatus()
         {
@@ -1505,7 +1536,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     }
                                     else
                                     {
-                                        newItem.ExternalVatCard = lineVatType.ExternalVATCard;
+                                        newItem.ExternalVatCard = lineVatType.ReceivablesExternalId;
                                     }
                                 }
 
@@ -1551,7 +1582,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                         }
                                         else if (vatType != null)
                                         {
-                                            newItem.ExternalVatCard = vatType.ExternalVATCard;
+                                            newItem.ExternalVatCard = vatType.ReceivablesExternalId;
                                         }
                                     }
 

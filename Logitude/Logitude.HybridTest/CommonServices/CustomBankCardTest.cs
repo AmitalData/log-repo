@@ -12,19 +12,14 @@ namespace Logitude.HybridTest.CommonServices
         public void Test_CustomBankCard_UPSERT()
         {
             Assert.Inconclusive("Not Implemented !");
-            LoginService.GetLoginTokenByCredentials();
-            Response serviceResponse = CustomBankCardWcfCaller.CallCustomBankCardUpsert();
-            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            //Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            //Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
         }
 
         [TestMethod]
         public void Test_CustomBankCard_DELETE()
         {
             Assert.Inconclusive("Not Implemented !");
-            LoginService.GetLoginTokenByCredentials();
-            Response prepareResponse = CustomBankCardWcfCaller.PrepareCustomBankCard();
-            Assert.IsFalse(prepareResponse.HasError, "Prepare CustomBankCard Failed! " + prepareResponse.ErrorMessage);
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "CustomBankCard",
@@ -35,7 +30,7 @@ namespace Logitude.HybridTest.CommonServices
             };
 
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { HybridData.BankCode, "?", TestEnvironmentGlobalParameters.Tenant };
+            object[] serviceParameters = new object[] { "?", "?", TestEnvironmentGlobalParameters.Tenant };
             WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Delete Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Delete Failed! " + serviceResponse.ErrorMessage);

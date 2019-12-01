@@ -1,5 +1,6 @@
 ﻿using System;
 using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.HybridTest.UserServiceReference;
 using Logitude.HybridTest.WcfCallers;
 using Logitude.Server.Tools;
@@ -13,18 +14,28 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_User_UPSERT()
         {
-            LoginService.GetLoginTokenByCredentials();
-            Response serviceResponse = UserWcfCaller.CallUserUpsert();
+            UserPM userPM = new UserPM()
+            {
+                Code = HybridData.UserCodeHU,
+                EnglishName = "Hybrid User",
+                LocalName = "Hybrid User",
+                Email = "Hybrid@fnarsoft.com",
+                Password = "!H0",
+                BusinessUnitId = TestEnvironmentGlobalParameters.Tenant.ToString(),
+                BranchId = HybridData.BranchCodeHBRA,
+                DepartmentId = HybridData.DepartmentCodeHDEP,
+                Tenant = TestEnvironmentGlobalParameters.Tenant,
+                DocumentFilingInbox = "HybridInbox"
+            };
+            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(userPM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            HybridData.UserIdHU = serviceResponse.Result;
         }
 
         [TestMethod]
         public void Test_User_GetUser()
         {
-            LoginService.GetLoginTokenByCredentials();
-            Response prepareResponse = UserWcfCaller.PrepareUser();
-            Assert.IsFalse(prepareResponse.HasError, "Prepare User Failed! " + prepareResponse.ErrorMessage);
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "User",
@@ -36,7 +47,7 @@ namespace Logitude.HybridTest.CommonServices
             UserApiFilters filters = new UserApiFilters
             {
                 ByCode = true,
-                SearchCode = HybridData.UserCode
+                SearchCode = HybridData.UserCodeHU
             };
 
             Response serviceResponse = new Response();

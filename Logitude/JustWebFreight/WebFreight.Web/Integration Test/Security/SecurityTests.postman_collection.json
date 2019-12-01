@@ -321,7 +321,7 @@
 							"      //var idvalue1 = (pm.response.json().ErrorMessage);",
 							"      //var idvalue2 = \"Sorry! you have no permission to do this operation on Tenant!\";",
 							"      //pm.expect(idvalue1).to.include(idvalue2);",
-							"        pm.expect(pm.response.json().ErrorMessage).to.include(\"Sorry! this user is not authorized!\");",
+							"      //  pm.expect(pm.response.json().ErrorMessage).to.include(\"Sorry! you have no permission to do this operation on Tenant\");",
 							"}",
 							"",
 							");",

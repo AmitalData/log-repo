@@ -7,6 +7,7 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
+import {InterestBasesPeriodPM} from './InterestBasesPeriodPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -84,7 +85,41 @@ export class InterestBasesTypePM {
     public set InActive(newValue: boolean) { if (this.inActive != newValue) { this.inActive = newValue; this.MarkAsDirty("InActive"); } }
        
 	 
+     
+	private interestBasesPeriods: InterestBasesPeriodPM[];
+    get  InterestBasesPeriods() {
+        if (this.interestBasesPeriods == null) {
+            this.interestBasesPeriods = [];
+        }
 
+        return this.interestBasesPeriods;
+    }
+    set  InterestBasesPeriods(newValue: InterestBasesPeriodPM[]) {
+        if (this.interestBasesPeriods != newValue) {
+            this.interestBasesPeriods = newValue;
+        }
+    }
+    public AddInterestBasesPeriod(item: InterestBasesPeriodPM) {
+        if (item != null) {
+            var index = this. InterestBasesPeriods.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. InterestBasesPeriods.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveInterestBasesPeriod(item: InterestBasesPeriodPM) {
+        if (item != null) {
+            var index = this. InterestBasesPeriods.indexOf(item);
+            if (index > -1) {
+                this. InterestBasesPeriods.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public InterestBasesPeriods: Array<InterestBasesPeriodPM>= [];
+ 
     public OldEntityPM: InterestBasesTypePM;
 		
     public IsDirty: boolean;

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="Groups">
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Description" Type="varchar" Size="100">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="IsPrivate" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="100">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="OwnerId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="Posts" ParentColumnName="GroupId" ReferencedTableName="Groups" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Posts_dbo.Groups_GroupId" />
+  <Relation ParentTableName="GroupMembers" ParentColumnName="GroupId" ReferencedTableName="Groups" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.GroupMembers_dbo.Groups_GroupId" />
+</Table>

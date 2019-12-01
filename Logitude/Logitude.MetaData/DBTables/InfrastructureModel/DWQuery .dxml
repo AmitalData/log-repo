@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="DWQueries">
+  <Column Name="CreatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CreatedDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="SQLString" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UpdateByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UpdatedDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="BIReports" ParentColumnName="DWQueryId" ReferencedTableName="DWQueries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BIReports_dbo.DWQueries_DWQueryId" />
+  <Relation ParentTableName="DWQueryColumns" ParentColumnName="DWQueryId" ReferencedTableName="DWQueries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DWQueryColumns_dbo.DWQueries_DWQueryId" />
+  <Relation ParentTableName="DWQueryFilters" ParentColumnName="DWQueryId" ReferencedTableName="DWQueries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DWQueryFilters_dbo.DWQueries_DWQueryId" />
+  <Relation ParentTableName="DWSubQueries" ParentColumnName="DWQueryId" ReferencedTableName="DWQueries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DWSubQueries_dbo.DWQueries_DWQueryId" />
+</Table>

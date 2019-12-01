@@ -15,5 +15,4 @@ namespace Logitude.DXMLGenerator
             generator.GenerateDXMLFiles();
         }
     }
-
 }

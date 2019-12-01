@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="SubCountries">
+  <Column Name="Code" Type="varchar" Size="6">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="CountryCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EnglishName" Type="varchar" Size="60">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Inactive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LocalName" Type="varchar" Size="60">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="CustomsVendors" ParentColumnName="SubCountryCode" ReferencedTableName="SubCountries" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomsVendors_Customs.SubCountries_SubCountryCode" />
+  <Relation ParentTableName="ClientAddresses" ParentColumnName="EnglishSubCountryCode" ReferencedTableName="SubCountries" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.ClientAddresses_Customs.SubCountries_EnglishSubCountryCode" />
+</Table>

@@ -57,12 +57,12 @@ GenerateAllUpdateClasses("../EntityFiles","../../JustWebFreight/WebFreight.Web/M
 //GenerateAllUpdateClasses("../EntityFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/EntityUpdateClasses");
 GenerateMetaDataUpdateClass("../EntityFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate","AccountingUpdateClass");
 GenerateAllCloseTableDetailsEnumsClasss("../EntityFiles","../../Logitude.Accounting.BL/CloseTables");
-GenerateAllDomainServices("../EntityFiles","../.../JustWebFreight/WebFreight.Web/AccountingModel","AccountingContext","Logitude.Accounting","AccountingDomainService");
+GenerateAllDomainServices("../EntityFiles","../../JustWebFreight/WebFreight.Web/AccountingModel","AccountingContext","Logitude.Accounting","AccountingDomainService");
 	 
 
 // ---------------------------- typedscript generated files
 
-	GenerateAllControllers("../EntityFiles","../.../JustWebFreight/WebFreight.Web/Controllers","AccountingContext","Logitude.Accounting","AccountingModel");
+	GenerateAllControllers("../EntityFiles","../../JustWebFreight/WebFreight.Web/Controllers","AccountingContext","Logitude.Accounting","AccountingModel");
  
 
 // Generate Commmon TS files---------------------------------------------------------------------------------------------------------------

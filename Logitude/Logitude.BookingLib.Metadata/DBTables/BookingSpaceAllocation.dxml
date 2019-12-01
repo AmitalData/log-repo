@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="BookingSpaceAllocations">
+  <Column Name="Code" Type="varchar" Size="2">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="IsSelectable" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="100">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="Bookings" ParentColumnName="MainCarriageSpaceAllocationCode" ReferencedTableName="BookingSpaceAllocations" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Bookings_dbo.BookingSpaceAllocations_MainCarriageSpaceAllocationCode" />
+  <Relation ParentTableName="Bookings" ParentColumnName="Transshipment1SpaceAllocationCode" ReferencedTableName="BookingSpaceAllocations" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Bookings_dbo.BookingSpaceAllocations_Transshipment1SpaceAllocationCode" />
+  <Relation ParentTableName="Bookings" ParentColumnName="Transshipment2SpaceAllocationCode" ReferencedTableName="BookingSpaceAllocations" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Bookings_dbo.BookingSpaceAllocations_Transshipment2SpaceAllocationCode" />
+  <Relation ParentTableName="BookingAnswers" ParentColumnName="BookingSpaceAllocationCode" ReferencedTableName="BookingSpaceAllocations" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.BookingAnswers_dbo.BookingSpaceAllocations_BookingSpaceAllocationCode" />
+  <Relation ParentTableName="Bookings" ParentColumnName="SpaceAllocationCode" ReferencedTableName="BookingSpaceAllocations" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Bookings_dbo.BookingSpaceAllocations_SpaceAllocationCode" />
+</Table>

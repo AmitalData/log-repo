@@ -61,10 +61,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="EntityFiles\Test.dxml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="GeneratedScript\Script.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="EntityFiles\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

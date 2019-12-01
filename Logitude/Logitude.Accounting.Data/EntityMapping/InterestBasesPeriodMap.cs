@@ -39,7 +39,7 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.InterestBaseStartDate).HasColumnName("InterestBaseStartDate").IsRequired();
 
-            this.Property(t => t.InterestRate).HasColumnName("InterestRate").IsRequired().HasPrecision(2, 2);
+            this.Property(t => t.InterestRate).HasColumnName("InterestRate").IsRequired().HasPrecision(4, 2);
         }
     }
 }

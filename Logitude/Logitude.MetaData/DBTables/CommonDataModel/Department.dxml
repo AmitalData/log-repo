@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="Departments">
+  <Column Name="Code" Type="varchar" Size="10">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="EnglishName" Type="varchar" Size="40">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="InActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LocalName" Type="nvarchar" Size="40">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Notes" Type="nvarchar" Size="250">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="Declarations" ParentColumnName="DepartmentId" ReferencedTableName="Departments" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.Declarations_dbo.Departments_DepartmentId" />
+  <Relation ParentTableName="Quotes" ParentColumnName="DepartmentId" ReferencedTableName="Departments" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.Departments_DepartmentId" />
+  <Relation ParentTableName="Users" ParentColumnName="DepartmentId" ReferencedTableName="Departments" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Users_dbo.Departments_DepartmentId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="DepartmentId" ReferencedTableName="Departments" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Departments_DepartmentId" />
+  <Relation ParentTableName="Notifications" ParentColumnName="DepartmentId" ReferencedTableName="Departments" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.Notifications_dbo.Departments_DepartmentId" />
+  <Relation ParentTableName="DocumentsFilings" ParentColumnName="DepartmentId" ReferencedTableName="Departments" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DocumentsFilings_dbo.Departments_DepartmentId" />
+</Table>

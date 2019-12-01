@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="BusinessUnits">
+  <Column Name="Id" Type="varchar" Size="50">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="InActive" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Name" Type="varchar" Size="40">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ParentId" Type="varchar" Size="50">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="1000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="Quotes" ParentColumnName="BusinessUnitId" ReferencedTableName="BusinessUnits" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.BusinessUnits_BusinessUnitId" />
+  <Relation ParentTableName="Users" ParentColumnName="BusinessUnitId" ReferencedTableName="BusinessUnits" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Users_dbo.BusinessUnits_BusinessUnitId" />
+  <Relation ParentTableName="Activities" ParentColumnName="BusinessUnitId" ReferencedTableName="BusinessUnits" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Activities_dbo.BusinessUnits_BusinessUnitId" />
+  <Relation ParentTableName="Tickets" ParentColumnName="BusinessUnitId" ReferencedTableName="BusinessUnits" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tickets_dbo.BusinessUnits_BusinessUnitId" />
+  <Relation ParentTableName="Opportunities" ParentColumnName="BusinessUnitId" ReferencedTableName="BusinessUnits" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Opportunities_dbo.BusinessUnits_BusinessUnitId" />
+</Table>

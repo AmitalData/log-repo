@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="CustomerTenantAccessCards">
+  <Column Name="CreateByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CustomerId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="CustomerTenantAccessId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="LastMappingDateTime" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LastShipmentDateInQueue" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="StatusTypeCode" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UpdateDateTime" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+</Table>

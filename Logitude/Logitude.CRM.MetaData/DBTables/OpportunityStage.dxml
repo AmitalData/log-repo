@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="OpportunityStages">
+  <Column Name="EndDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FromStageId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="OpportunityId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="StartDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ToStageId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+</Table>

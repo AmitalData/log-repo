@@ -1,0 +1,23 @@
+﻿using Logitude.Server.Tools;
+
+namespace Logitude.HybridTest.WcfCallers
+{
+    class EntityWcfCaller
+    {
+        public static Response CallEntityUpsert<T>(T entityPM)
+        {
+            string ServiceNamePM = entityPM.GetType().Name; //ServiceNamePM = entityPM
+            InvokedProperties serviceProperties = new InvokedProperties
+            {
+                ServiceName = ServiceNamePM.Substring(0, ServiceNamePM.Length - 2),//ServiceName = entity
+                ServiceOperation = "Upsert",
+                ServiceType = entityPM.GetType(),
+            };
+
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { entityPM, false };
+            WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+            return serviceResponse;
+        }
+    }
+}

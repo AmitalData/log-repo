@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="ConversationHeaderParticipants">
+  <Column Name="ConversationHeaderId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DeleteDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="IsDelete" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsLeft" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsRead" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LastReadDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="LeaveDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ParticipantUserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Replied" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+</Table>

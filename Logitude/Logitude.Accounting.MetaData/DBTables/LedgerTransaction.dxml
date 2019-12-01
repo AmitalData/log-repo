@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="LedgerTransactions">
+  <Column Name="AccountId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="AccountingDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="AmountToReconcile" Type="decimal">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ControlAccountId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CurrencyId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DocumentDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="DueDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ExchangeRate" Type="decimal">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ForeignAmountCredit" Type="decimal">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="ForeignAmountDebit" Type="decimal">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="InProgressExternalReconcile" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="InReconcileProgress" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsExternalReconcile" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsReconciled" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="JournalId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="JournalLineNumber" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LocalAmountCredit" Type="decimal">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LocalAmountDebit" Type="decimal">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Mark" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Notes" Type="nvarchar" Size="150">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="OpenAmount" Type="decimal">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="OpenAmountCurrencyId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="OppositeAccountId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ReconcileRemarks" Type="nvarchar" Size="400">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Reference1" Type="nvarchar" Size="30">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Reference2" Type="nvarchar" Size="30">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Reference3" Type="nvarchar" Size="30">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="4000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="ExternalReconciliationLines" ParentColumnName="LedgerTransactionId" ReferencedTableName="LedgerTransactions" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ExternalReconciliationLines_dbo.LedgerTransactions_LedgerTransactionId" />
+  <Relation ParentTableName="JournalExternalReconciles" ParentColumnName="LedgerTransactionId" ReferencedTableName="LedgerTransactions" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.JournalExternalReconciles_dbo.LedgerTransactions_LedgerTransactionId" />
+  <Relation ParentTableName="JournalReconciles" ParentColumnName="LedgerTransactionId" ReferencedTableName="LedgerTransactions" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.JournalReconciles_dbo.LedgerTransactions_LedgerTransactionId" />
+  <Relation ParentTableName="ReconciliationLines" ParentColumnName="TransactionId" ReferencedTableName="LedgerTransactions" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ReconciliationLines_dbo.LedgerTransactions_TransactionId" />
+</Table>

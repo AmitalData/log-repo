@@ -274,6 +274,7 @@
     <Compile Include="CoreBL\ARPaymentReconciliationService.cs" />
     <Compile Include="CoreBL\YearTransferService.cs" />
     <Compile Include="DataContract\ARPaymentChequeFutureData.cs" />
+    <Compile Include="DataContract\CashbookChequesCounter.cs" />
     <Compile Include="DataContract\OpenFormatReportData.cs" />
     <Compile Include="DataContract\OpenFormatReportDataProvider.cs" />
     <Compile Include="DataContract\TaxDeductionReportData.cs" />
@@ -506,6 +507,7 @@
     <Compile Include="EntityQueryServices\GLAccountWithholdingTaxQueryService.cs" />
     <Compile Include="EntityQueryServices\JournalLineLedgerTransactionAccDTO.cs" />
     <Compile Include="EntityQueryServices\JournalLineLedgerTransactionDTO.cs" />
+    <Compile Include="EntityQueryServices\InterestBasesTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\JournalMoreDataQueryService.cs" />
     <Compile Include="EntityQueryServices\JournalStatusTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\JournalTypeQueryService.cs" />
@@ -753,6 +755,10 @@
     <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
       <Project>{a663e7ef-b858-4bb6-bc33-e473f51b8e56}</Project>
       <Name>Logitude.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.CRM.Data\Logitude.CRM.Data.csproj">
+      <Project>{4733F914-0E16-4412-84DF-D98232DD43E9}</Project>
+      <Name>Logitude.CRM.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Logitude.CustomsMessaging.Common\Logitude.CustomsMessaging.Common.csproj">
       <Project>{F0039DBE-4A1A-4755-8F37-E4005EA74746}</Project>

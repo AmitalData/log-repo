@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="TaxReports">
+  <Column Name="AmountForPayRefund" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CreatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="EquipmentInputsTaxAmount" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ExemptTaxableOutput" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="InputLinesCount" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IsCancelled" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="LastUpdateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="NeedsRebulid" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="OtherInputsTaxAmount" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="OutputLinesCount" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="OutputTaxAmount" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="OutputTaxAmountWithDiffPercent" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ProcessEndDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ProcessProgress" Type="int">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="ProcessStartDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="StatusCode" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TaxableOutputAmount" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TaxableOutputsWithDiffPercent" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TaxReportMonth" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TaxReportNumber" Type="varchar" Size="6">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="TaxReportTypeCode" Type="varchar" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UpdatedByUserId" Type="varchar" Size="15">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="VatNumber" Type="varchar" Size="30">
+    <Constraints Nullable="true" />
+  </Column>
+  <Relation ParentTableName="JournalAdditionalDatas" ParentColumnName="TaxReportId" ReferencedTableName="TaxReports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.JournalAdditionalDatas_dbo.TaxReports_TaxReportId" />
+  <Relation ParentTableName="TaxReportLines" ParentColumnName="TaxReportId" ReferencedTableName="TaxReports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TaxReportLines_dbo.TaxReports_TaxReportId" />
+</Table>
