@@ -54,7 +54,7 @@ cd C:\Automation e2e\TeamIslam\Test
 
 IF %NumberErrors% NEQ 0 (
  cd C:\Automation e2e\TeamIslam\Test\screenshots
-  "C:\Program Files\WinRAR\rar.exe" -r a "C:\Automation e2e\TeamIslam\Test\screenshots.rar"
+  "C:\Program Files\WinRAR\rar.exe" -r a "C:\Automation e2e\TeamIslam\Test\screenshots\screenshots.rar"
   XCOPY  "C:\Automation e2e\TeamIslam\Test\screenshots\screenshots.rar" "C:\Program Files (x86)\Jenkins\workspace\TeamIslamE2EScripts"  /S /I /Q /Y /F
   exit 1
 )
