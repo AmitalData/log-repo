@@ -1773,8 +1773,5 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         }
 
 
-
-
-
     }
 }
