@@ -8,11 +8,7 @@ namespace Logitude.HybridTest
 {
     public struct HybridData
     {
-        public static string ActivityId { get; set; }
-
         #region ShipmentVars
-        //prepare Shipment Vars
-
         //Currency
         public const string CurrencyCodeEUR = "EUR";
         public static string CurrencyIdEUR { get; set; }
@@ -26,6 +22,16 @@ namespace Logitude.HybridTest
         public static string ChargeTypeIdAFT { get; set; }
         public static string ChargeTypeIATACodeId { get; set; }
         public static string ChargeTypeVatTypeId { get; set; }
+        //Vessel
+        public const string VesselCodeHV = "HV";
+        public static string VesselIdHV { get; set; }
+        //Vendor
+        public const string VendorCodeHVEN = "HVEN";
+        public static string VendorIdHVEN { get; set; }
+        //Agent
+        public const string AgentCodeHAgent = "HAgent";
+        #endregion
+
         #region PortsVars
         //port
         public const string PortCodeLHR = "LHR";
@@ -47,6 +53,8 @@ namespace Logitude.HybridTest
         public static string PortIdLON { get; set; }
         public static string PortIdMAN { get; set; }
         #endregion
+
+        #region CountriesVars
         //Country
         public const string CountryCodeGB = "GB";
         public const string CountryCodeUS = "US";
@@ -54,6 +62,9 @@ namespace Logitude.HybridTest
         public static string CountryIdGB { get; set; }
         public static string CountryIdUS { get; set; }
         public static string StateIdAK { get; set; }
+        #endregion
+
+        #region CustomersVars
         //Customer
         public const string CustomerCodeHCustomer = "HCShipper";
         public const string CustomerContactCodeHCustomer = "Shipper Contract";
@@ -67,29 +78,33 @@ namespace Logitude.HybridTest
         public static string CustomerIdTestShipperImport1 { get; set; }
         public static string CustomerIdTestConsigneeExport1 { get; set; }
         public static string CustomerIdTestConsigneeImport1 { get; set; }
+        #endregion
 
+        #region AirLinesVars
         //AirLine
         public const string AirlineCodeHA = "HA";
         public const string AirlineCodeHL = "HL";
         public static string AirlineIdHA { get; set; }
         public static string AirlineIdHL { get; set; }
+        #endregion
+
+        #region ShippingLinesVars
         //Shipping Line
         public const string ShippingLineCodeHSL = "HSLN";
         public static string ShippingLineIdHSL { get; set; }
         public const string ShippingLineCodeHSL2 = "HSL2";
         public static string ShippingLineIdHSL2 { get; set; }
+        #endregion
+
+        #region TruckersVars
         //Trucker
         public const string TruckerCodeHT = "HTRU";
         public const string TruckerCodeHT2 = "HTR2";
         public static string TruckerIdHT { get; set; }
         public static string TruckerIdHT2 { get; set; }
-        //LogTenant!
+        #endregion
 
-        //MoveType!
-
-        //Vessel
-        public const string VesselCodeHV = "HV";
-        public static string VesselIdHV { get; set; }
+        #region PackageTypesVars
         //PackageType
         public const string PackageTypeCodePC1 = "PC1";
         public const string PackageTypeCodePC2 = "PC2";
@@ -99,12 +114,6 @@ namespace Logitude.HybridTest
         public static string PackageTypeIdPC2 { get; set; }
         public static string PackageTypeIdPP1 { get; set; }
         public static string PackageTypeIdPP2 { get; set; }
-        //Vendor
-        public const string VendorCodeHVEN = "HVEN";
-        public static string VendorIdHVEN { get; set; }
-        //Agent
-        public const string AgentCodeHAgent = "HAgent";
-
         #endregion
 
         #region OtherVars
@@ -131,6 +140,7 @@ namespace Logitude.HybridTest
         public const string CustomAgentCodeHCAgent = "HCAgent";
         public const string QuoteCode = "Hybrid Quote";
         public const string DirectShipmentCode = "Hybrid DShipment";
+        public const string HouseShipmentCode = "Hybrid HShipment";
 
         public static string FirstOpportunityId { get; set; }
         public static string DocumentTypeIdHDT { get; set; }
@@ -141,6 +151,8 @@ namespace Logitude.HybridTest
         public static string DirectShipmentId { get; set; }
         public static string QuoteId { get; set; }
 
+        ///AC
+        public static string ActivityId { get; set; }
 
         #endregion
     }

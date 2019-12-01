@@ -419,6 +419,11 @@ export class CardPM {
     public set IsAutonomy(newValue: boolean) { if (this.isAutonomy != newValue) { this.isAutonomy = newValue; this.MarkAsDirty("IsAutonomy"); } }
        
 	 
+    private customerStatusCode: string;
+    public get CustomerStatusCode() { return this.customerStatusCode; }
+    public set CustomerStatusCode(newValue: string) { if (this.customerStatusCode != newValue) { this.customerStatusCode = newValue; this.MarkAsDirty("CustomerStatusCode"); } }
+       
+	 
     private calculatedLocalName: string;
     public get CalculatedLocalName() { return this.calculatedLocalName; }
     public set CalculatedLocalName(newValue: string) { if (this.calculatedLocalName != newValue) { this.calculatedLocalName = newValue; this.MarkAsDirty("CalculatedLocalName"); } }
