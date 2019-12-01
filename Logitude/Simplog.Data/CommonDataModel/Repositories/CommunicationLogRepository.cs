@@ -95,6 +95,20 @@ namespace Simplog.Data.CommonDataModel.Repositories
             }
         }
 
+        public bool CommunicationOutGoingLogInProgress(string entityId, string objectTableId, int tenant,string subject=null)
+        {
+            var q = (from a in context.CommunicationLogs
+                     where a.EntityId == entityId && a.ObjectTableId == objectTableId
+                     && a.Tenant == tenant && a.InOut == "O" && a.CommunicationStatusTypeCode == "W"
+                     select a);
+            if (!string.IsNullOrWhiteSpace(subject))
+            {
+                q = q.Where(r => r.Subject == subject);
+            }
+            return q.Any();
+        }
+
+
         public CommunicationLog GetSpecificCommunicationLogForEntity(string entityId, int tenant, DateTime date)
         {
             CommunicationLog log = (from a in context.CommunicationLogs.Include("Document").Include("CreatedByUser").Include("CommunicationLogType").Include("CommunicationStatusType").Include("CreatedByUser.Contact").Include("ObjectTable").Include("CurrentTenant")
