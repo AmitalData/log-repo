@@ -282,7 +282,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
         }
 
-        List<APInvoiceLinePM> UnexpectedPayablesInvoiceLines = new List<APInvoiceLinePM>();
+        List<APInvoiceLinePM> UnexpectedPayablesInvoiceLines_ForAPI = new List<APInvoiceLinePM>();
         private void GeneratePayablesFromInvoiceLines_FromAPI()
         {
             List<APInvoiceLinePM> invoiceLines = entityPM.InvoiceLines.ToList();
@@ -304,22 +304,22 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 if (myLines == null || (myLines != null && myLines.Count() == 0))
                 {
-                    this.UnexpectedPayablesInvoiceLines.Add(aPInvoiceLine);
+                    this.UnexpectedPayablesInvoiceLines_ForAPI.Add(aPInvoiceLine);
                 }
                 else
                 {
-                    this.GeneratePayableLine_ChargeTypes(aPInvoiceLine, myLines);
+                    this.GeneratePayableLineFromChargeTypes_ForAPI(aPInvoiceLine, myLines);
                 }
             }
 
-            if (this.UnexpectedPayablesInvoiceLines.Count() > 0)
+            if (this.UnexpectedPayablesInvoiceLines_ForAPI.Count() > 0)
             {
-                this.BuildUnexpectedPayables(this.UnexpectedPayablesInvoiceLines);
+                this.BuildUnexpectedPayables(this.UnexpectedPayablesInvoiceLines_ForAPI);
             }
             this.GetShipmentsData(invoiceLines);
         }
 
-        private void GeneratePayableLine_ChargeTypes(APInvoiceLinePM aPInvoiceLine, List<ShipmentPayable> shipmentPayable)
+        private void GeneratePayableLineFromChargeTypes_ForAPI(APInvoiceLinePM aPInvoiceLine, List<ShipmentPayable> shipmentPayable)
         {
             List<ShipmentPayable> shipmentPayables_SameVendor = shipmentPayable.Where(a => a.VendorId == entityPM.VendorId || a.VendorId == null).ToList();
             if (shipmentPayables_SameVendor != null)
@@ -346,18 +346,18 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     else
                     {
                         aPInvoiceLine.AmountTypeCode = "EXPT";
-                        this.UnexpectedPayablesInvoiceLines.Add(aPInvoiceLine);
+                        this.UnexpectedPayablesInvoiceLines_ForAPI.Add(aPInvoiceLine);
                     }
                 }
                 else
                 {
                     aPInvoiceLine.AmountTypeCode = "EXPT";
-                    this.UnexpectedPayablesInvoiceLines.Add(aPInvoiceLine);
+                    this.UnexpectedPayablesInvoiceLines_ForAPI.Add(aPInvoiceLine);
                 }
             }
             else
             {
-                this.UnexpectedPayablesInvoiceLines.Add(aPInvoiceLine);
+                this.UnexpectedPayablesInvoiceLines_ForAPI.Add(aPInvoiceLine);
             }
         }
 
