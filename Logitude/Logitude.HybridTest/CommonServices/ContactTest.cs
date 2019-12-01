@@ -32,11 +32,13 @@ namespace Logitude.HybridTest.CommonServices
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(contactPM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            HybridData.ContactId = serviceResponse.Result;
         }
         [TestMethod]
         public void Test_Contact_GetContactPMByEmail()
         {
-            Test_Contact_UPSERT();
+            if(HybridData.ContactId == null)
+                Test_Contact_UPSERT();
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "Contact",
@@ -55,7 +57,8 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_Contact_GetContactList()
         {
-            Test_Contact_UPSERT();
+            if (HybridData.ContactId == null)
+                Test_Contact_UPSERT();
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "Contact",
@@ -80,7 +83,8 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_Contact_GetContactByExternalId()
         {
-            Test_Contact_UPSERT();
+            if (HybridData.ContactId == null)
+                Test_Contact_UPSERT();
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "Contact",

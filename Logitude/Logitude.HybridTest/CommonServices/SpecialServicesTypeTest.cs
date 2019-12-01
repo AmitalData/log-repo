@@ -14,7 +14,7 @@ namespace Logitude.HybridTest.CommonServices
         {
             SpecialServicesTypePM specialServicesTypePM = new SpecialServicesTypePM()
             {
-                Code = HybridData.SpecialServicesTypeCode,
+                Code = HybridData.SpecialServicesTypeCodeHSST,
                 EnglishName = "Hybrid SpecialServicesType",
                 LocalName = "Hybrid SpecialServicesType",
                 Tenant = TestEnvironmentGlobalParameters.Tenant,

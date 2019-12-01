@@ -15,10 +15,10 @@ namespace Logitude.HybridTest.CommonServices
         {
             CountryPM countryPM = new CountryPM()
             {
-                Code = HybridData.CountryCode,
+                Code = HybridData.CountryCodeHC,
                 EnglishName = "Hybrid Country",
                 LocalName = "Hybrid Country",
-                GlobalZoneId = HybridData.GlobalZoneCode,
+                GlobalZoneId = HybridData.GlobalZoneCodeHZ,
                 AddedManually = true,
                 Tenant = TestEnvironmentGlobalParameters.Tenant,
             };
@@ -40,7 +40,7 @@ namespace Logitude.HybridTest.CommonServices
             ApiSearchFilters filters = new ApiSearchFilters
             {
                 Take = 10,
-                SearchFields = HybridData.CountryCode
+                SearchFields = HybridData.CountryCodeUS
             };
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { filters, TestEnvironmentGlobalParameters.Tenant, serviceResponse };

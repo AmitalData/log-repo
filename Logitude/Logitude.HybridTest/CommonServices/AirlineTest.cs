@@ -14,12 +14,12 @@ namespace Logitude.HybridTest.CommonServices
         {
             AirlinePM airlinePM = new AirlinePM()
             {
-                Code = HybridData.AirlineCode,
-                EnglishName = "Hybrid Airline",
-                LocalName = "Hybrid Airline",
-                Prefix = TestEnvironmentGlobalParameters.Tenant.ToString(),
-                Tenant = TestEnvironmentGlobalParameters.Tenant,
+                Code = HybridData.AirlineCodeHA,
+                EnglishName = "Hybrid Airlines",
+                LocalName = "Hybrid Airlines",
                 CarrierTypeId = "AL",
+                Prefix = "999",
+                Tenant = TestEnvironmentGlobalParameters.Tenant,
             };
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(airlinePM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
