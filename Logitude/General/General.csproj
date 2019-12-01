@@ -219,7 +219,7 @@
     <Content Include="2019.R4\10 - 2019\Day 02 [Samar] delete payment date text codes.sql" />
     <Content Include="2019.R4\10 - 2019\Day 02 [Samar] add tariff payables disconnect event to all tenants.sql" />
     <Content Include="2019.R4\10 - 2019\Day 02 [Samar] update tariff line currency from tariff level.sql" />
-    <Content Include="2019.R5\11 - 2019\Day 20 [Abed] insert new communication log status time out.sql" />
+    <Content Include="2019.R4\11 - 2019\Day 24 - [Abdullah] fill cashbooklines search fields.sql" />
     <Content Include="Accounting\2015 - 8\day 10 [alex] unique constraint in JournalActionTypes.sql" />
     <Content Include="2019.R2\06 - 2019\Day 24 [Rabaia] DalayWithReturnStatusToZeroSP.sql" />
     <Content Include="Customs\2018 - 04\[Abdullah] Day 10 Delete forign keys for table CustomCountry.sql" />
@@ -622,9 +622,6 @@
     <Content Include="Main Branch\2019\08 - 2019\Day 18 [Abed] SetViewOrderInChargesGroup.sql" />
     <Content Include="Main Branch\2019\08 - 2019\Day28 [Ayman] CalculateTenantManagementTotalPrice.sql" />
     <Content Include="Main Branch\2019\09 - 2019\Day 2 [Khalid] Delete Screen Field Currency in Surcharge Header Screen.sql" />
-    <Content Include="Main Branch\2019\09 - 2019\Day 22 [Nawras] Fill From-To Port in WarehouseRelease Table.sql" />
-    <Content Include="Main Branch\2019\09 - 2019\Day 26 [Abed] Fill ToTypeCode in WarehouseRelease Table.sql" />
-    <Content Include="Main Branch\2019\09 - 2019\Day 30 [Abed] SetDefultValuesToDWHBuildStatus Table.sql" />
     <Content Include="Main Branch\2019\09 - 2019\Day 8 [Rabaia] FillBatchServiceQueueNames.sql" />
     <Content Include="Main Branch\2019\10 - 2019\Day 01 [Rabaia] add DeclarationApprovalRequestQueue  batch service.sql" />
     <Content Include="Main Branch\2019\10 - 2019\Day 02 [Abed] fill  parameter Amount in Local Currency column true for all SharedLogisticsSetting.sql" />

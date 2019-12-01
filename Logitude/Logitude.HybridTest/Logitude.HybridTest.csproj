@@ -150,10 +150,11 @@
     </Compile>
     <Compile Include="HybridData.cs" />
     <Compile Include="LoginTest.cs" />
+    <Compile Include="PrepareSystemVars\PrepareShipment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestEnvironmentGlobalParameters .cs" />
     <Compile Include="EntityWcfCaller.cs" />
-    <Compile Include="CommonServices\HybridTestInitializer.cs" />
+    <Compile Include="PrepareSystemVars\PrepareSystem.cs" />
     <Compile Include="WcfFactory\QuoteWcfFactory.cs" />
     <Compile Include="WcfFactory\ShipmentWcfFactory.cs" />
     <Compile Include="WcfServiceInvoker.cs" />

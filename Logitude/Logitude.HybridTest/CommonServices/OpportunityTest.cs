@@ -30,13 +30,13 @@ namespace Logitude.HybridTest.CommonServices
             if (opportunities.Length == 0)
                 Assert.Inconclusive("There Isn't Opportunity With This Searchfield!");
             else
-                HybridData.SomeOpportunityId = opportunities[0].Id;
+                HybridData.FirstOpportunityId = opportunities[0].Id;
         }
 
         [TestMethod]
         public void Test_Opportunity_GetCustomerListByOpportunityId()
         {
-            if (HybridData.SomeOpportunityId == null)
+            if (HybridData.FirstOpportunityId == null)
                 Test_Opportunity_GetOpportunityList();
             InvokedProperties serviceProperties = new InvokedProperties
             {
@@ -48,7 +48,7 @@ namespace Logitude.HybridTest.CommonServices
             };
             OpportunityApiFilters filters = new OpportunityApiFilters();
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { HybridData.SomeOpportunityId, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
+            object[] serviceParameters = new object[] { HybridData.FirstOpportunityId, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
             CustomerList customer = (CustomerList)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get Customer List By Opportunity Id Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get Customer List By Opportunity Id Failed! " + serviceResponse.Result);
@@ -60,7 +60,7 @@ namespace Logitude.HybridTest.CommonServices
         public void Test_Opportunity_GetOpportunityListById()
         {
             Assert.Inconclusive("Missing Service Method!");
-            if (HybridData.SomeOpportunityId == null)
+            if (HybridData.FirstOpportunityId == null)
                 Test_Opportunity_GetOpportunityList();
             InvokedProperties serviceProperties = new InvokedProperties
             {
@@ -72,7 +72,7 @@ namespace Logitude.HybridTest.CommonServices
             };
             OpportunityApiFilters filters = new OpportunityApiFilters();
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { HybridData.SomeOpportunityId, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
+            object[] serviceParameters = new object[] { HybridData.FirstOpportunityId, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
             OpportunityList opportunity = (OpportunityList)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get Opportunity List By Id Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get Opportunity List By Id Failed! " + serviceResponse.Result);

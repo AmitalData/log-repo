@@ -115,7 +115,7 @@ namespace Logitude.HybridTest.CommonServices
             };
 
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { TestEnvironmentGlobalParameters.Tenant, null, HybridData.DirectShipmentCode, HybridData.UserId, "CREV", DateTime.Now, DateTime.Now, "Hybrid Test Event" };
+            object[] serviceParameters = new object[] { TestEnvironmentGlobalParameters.Tenant, null, HybridData.DirectShipmentCode, HybridData.UserIdHU, "CREV", DateTime.Now, DateTime.Now, "Hybrid Test Event" };
             serviceResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Create Event Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Create Event Failed! " + serviceResponse.Result);

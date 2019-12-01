@@ -14,7 +14,7 @@ namespace Logitude.HybridTest.CommonServices
         {
             EntityStatusPM entityStatusPM = new EntityStatusPM()
             {
-                Code = HybridData.EntityStatusCode,
+                Code = HybridData.EntityStatusCodeHES,
                 Name = "Hybrid EntityStatus",
                 DisplayName = "Hybrid EntityStatus",
                 InActive = false,

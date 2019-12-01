@@ -15,7 +15,7 @@ namespace Logitude.HybridTest.CommonServices
         {
             IncotermPM incotermPM = new IncotermPM()
             {
-                Code = HybridData.IncotermCode,
+                Code = HybridData.IncotermCodeHI,
                 Name = "Hybrid Incoterm",
                 LocalName = "Hybrid Incoterm",
                 Freight = "C",
@@ -25,14 +25,11 @@ namespace Logitude.HybridTest.CommonServices
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(incotermPM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
-            HybridData.IncotermId = serviceResponse.Result;
         }
 
         [TestMethod]
         public void Test_Incoterm_GetIncoterms()
         {
-            if (HybridData.IncotermId == null)
-                Test_Incoterm_UPSERT();
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "Incoterm",

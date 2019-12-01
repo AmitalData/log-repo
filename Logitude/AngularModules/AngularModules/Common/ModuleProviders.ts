@@ -240,6 +240,9 @@ import { CheckDigitControlAlgorithmListService } from './Services/StandardLists/
 import { PaymentGatewayPartnerListService } from './Services/StandardLists/PaymentGatewayPartnerListService';
 import { AccountingPartnerListService } from './Services/StandardLists/AccountingPartnerListService';
 import { AccountingPartnerPMService } from './Services/StandardPMs/AccountingPartnerPMService';
+import { UserLastSettingsPMService } from './Services/StandardPMs/UserLastSettingsPMService';
+import { UserLastSettingsExtendedPMService } from './Services/ExtendedPMs/UserLastSettingsExtendedPMService';
+
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -493,7 +496,9 @@ export class ModuleProviders {
             case "PaymentGatewayPartnerListService": { myResult = new PaymentGatewayPartnerListService(); break; }
             case "AccountingPartnerListService": { myResult = new AccountingPartnerListService(); break; }
             case "AccountingPartnerPMService": { myResult = new AccountingPartnerPMService(); break; }
- 
+            case "UserLastSettingsPMService": { myResult = new UserLastSettingsPMService(); break; }
+            case "UserLastSettingsExtendedPMService": { myResult = new UserLastSettingsExtendedPMService(); break; }
+  
                 
         }
 
