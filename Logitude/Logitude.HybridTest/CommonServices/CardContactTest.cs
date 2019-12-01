@@ -16,17 +16,19 @@ namespace Logitude.HybridTest.CommonServices
             {
                 IsAll = true,
                 ContactId = HybridData.ContactCode,
-                CardId = HybridData.AgentCode,
+                CardId = HybridData.AgentCodeHAgent,
                 Tenant = TestEnvironmentGlobalParameters.Tenant,
             };
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(cardContactPM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            HybridData.ContactId = serviceResponse.Result;
         }
         [TestMethod]
         public void Test_CardContact_DELETE()
         {
-            Test_CardContact_UPSERT();
+            if(HybridData.ContactId == null)
+                Test_CardContact_UPSERT();
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "CardContact",
@@ -36,7 +38,7 @@ namespace Logitude.HybridTest.CommonServices
                 ServiceFilterType = null,
             };
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { HybridData.ContactCode, HybridData.AgentCode, TestEnvironmentGlobalParameters.Tenant, false };
+            object[] serviceParameters = new object[] { HybridData.ContactCode, HybridData.AgentCodeHAgent, TestEnvironmentGlobalParameters.Tenant, false };
             serviceResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Delete Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Delete Failed! " + serviceResponse.Result);
@@ -44,7 +46,8 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_CardContact_GetCardContactPM()
         {
-            Test_CardContact_UPSERT();
+            if (HybridData.ContactId == null)
+                Test_CardContact_UPSERT();
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "CardContact",
@@ -54,7 +57,7 @@ namespace Logitude.HybridTest.CommonServices
                 ServiceFilterType = null,
             };
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { HybridData.ContactCode, HybridData.AgentCode, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
+            object[] serviceParameters = new object[] { HybridData.ContactCode, HybridData.AgentCodeHAgent, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
             CardContactPM cardContact = (CardContactPM)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get Card Contact PM Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get Card Contact PM Failed! " + serviceResponse.Result);

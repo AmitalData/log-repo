@@ -14,7 +14,7 @@ namespace Logitude.HybridTest.CommonServices
         {
             GlobalZonePM globalZonePM = new GlobalZonePM()
             {
-                Code = HybridData.GlobalZoneCode,
+                Code = HybridData.GlobalZoneCodeHZ,
                 EnglishName = "Hybrid GlobalZone",
                 LocalName = "Hybrid GlobalZone",
                 Tenant = TestEnvironmentGlobalParameters.Tenant,

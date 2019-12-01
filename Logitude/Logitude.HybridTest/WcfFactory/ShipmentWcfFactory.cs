@@ -12,16 +12,16 @@ namespace Logitude.HybridTest.WcfFactory
         readonly private static ShipmentPM shipmentPM = new ShipmentPM()
         {
             ShipmentNumber = HybridData.DirectShipmentCode,
-            BranchId = HybridData.BranchCode,
-            DepartmentId = HybridData.DepartmentCode,
-            ConsigneeId = HybridData.AgentCode,
-            FromPortId = HybridData.FromPortCode,
-            ToPortId = HybridData.ToPortCode,
-            MainCarriageFromPortId = HybridData.FromPortCode,
-            MainCarriageToPortId = HybridData.ToPortCode,
+            BranchId = HybridData.BranchCodeHBRA,
+            DepartmentId = HybridData.DepartmentCodeHDEP,
+            ConsigneeId = HybridData.AgentCodeHAgent,
+            FromPortId = HybridData.PortCodeLON,
+            ToPortId = HybridData.PortCodeMAN,
+            MainCarriageFromPortId = HybridData.PortCodeLON,
+            MainCarriageToPortId = HybridData.PortCodeMAN,
             CreateDateTime = DateTime.Now,
             LastUpdateDate = DateTime.Now,
-            AgentContactId = HybridData.AgentCode,
+            AgentContactId = HybridData.AgentCodeHAgent,
             Tenant = TestEnvironmentGlobalParameters.Tenant,
             TransportModeId = "A",//A:Air, O:Occean, I:Inland
             DirectionId = "E",//I:Import, E:Export, D:Drop, R:Drop, C:Customs Import

@@ -48,7 +48,10 @@ export class OperationsComponent implements OnInit {
                             this.IsMenuVisible = true;
                         }
 
-                        this.IsAMANACItemVisible = ObjectsLocator.CustomsInterfaceSettingPM.LocalCustomsInterfaceCode == "AMC" ? true : false;
+                        if (ObjectsLocator.CustomsInterfaceSettingPM.LocalCustomsInterfaceCode == "AMC" ) {
+                            this.IsAMANACItemVisible = true;
+                            this.IsMenuVisible = true;
+                        }
 
                         this.RunComponent();
                     });

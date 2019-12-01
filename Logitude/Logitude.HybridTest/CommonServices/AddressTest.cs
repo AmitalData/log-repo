@@ -14,24 +14,25 @@ namespace Logitude.HybridTest.CommonServices
         {
             AddressPM addressPM = new AddressPM()
             {
-                ExternalId = HybridData.AddressCode,
+                ExternalId = HybridData.AddressCodeHA,
                 Name = "Hybrid Address",
                 City = "Hybrid City",
                 AddressTypeId = "M",
                 Description = "Main Address",
-                CountryId = HybridData.CountryCode,
-                CardId = HybridData.CustomerCode,
+                CountryId = HybridData.CountryCodeUS,
+                CardId = HybridData.CustomerCodeHCustomer,
                 Tenant = TestEnvironmentGlobalParameters.Tenant,
             };
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(addressPM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
-            HybridData.AddressId = serviceResponse.Result;
+            HybridData.AddressIdHA = serviceResponse.Result;
         }
         [TestMethod]
         public void Test_Address_GetAddressByExternalId()
         {
-            Test_Address_UPSERT();
+            if(HybridData.AddressIdHA == null)
+                Test_Address_UPSERT();
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "Address",
@@ -42,7 +43,7 @@ namespace Logitude.HybridTest.CommonServices
             };
 
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { HybridData.AddressId, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
+            object[] serviceParameters = new object[] { HybridData.AddressIdHA, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
             AddressPM address = (AddressPM)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get Address By External Id Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get Address By External Id Failed! " + serviceResponse.ErrorMessage);
