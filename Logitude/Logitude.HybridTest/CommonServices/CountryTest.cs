@@ -47,7 +47,7 @@ namespace Logitude.HybridTest.CommonServices
             CountryList[] countries = (CountryList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);
-            Assert.AreEqual(countries[0].EnglishName, "Hybrid Country", "Get Hybrid Country Item From Countries Failed!");
+            Assert.AreEqual(countries[0].Id, HybridData.CountryIdUS, "Get Hybrid Country Item From Countries Failed!");
         }
     }
 }

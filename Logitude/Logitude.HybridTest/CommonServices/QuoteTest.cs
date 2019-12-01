@@ -20,10 +20,11 @@ namespace Logitude.HybridTest.CommonServices
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
             HybridData.QuoteId = serviceResponse.Result;
         }
+
         [TestMethod]
         public void Test_Quote_GetQuoteList()
         {
-            Assert.Inconclusive("Not Implemented !");
+            Assert.Inconclusive("Search Field Problem!");
             if (HybridData.QuoteId == null)
                 Test_Quote_UPSERT();
             InvokedProperties serviceProperties = new InvokedProperties
@@ -45,7 +46,7 @@ namespace Logitude.HybridTest.CommonServices
             QuoteList[] quotes = (QuoteList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.Result);
-            Assert.AreEqual(quotes[0].FromPortId, HybridData.PortCodeLON, "Get Hybrid Quote Item From Quotes Failed!");
+            Assert.AreEqual(quotes[0].FromPortId, HybridData.PortIdLON, "Get Hybrid Quote Item From Quotes Failed!");
         }
 
         [TestMethod]

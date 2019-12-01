@@ -27,8 +27,6 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_CardContact_DELETE()
         {
-            if(HybridData.ContactId == null)
-                Test_CardContact_UPSERT();
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "CardContact",
@@ -46,8 +44,6 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_CardContact_GetCardContactPM()
         {
-            if (HybridData.ContactId == null)
-                Test_CardContact_UPSERT();
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "CardContact",

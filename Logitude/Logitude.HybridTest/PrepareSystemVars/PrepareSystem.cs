@@ -20,6 +20,7 @@ namespace Logitude.HybridTest.WcfCallers
             UpsertDepartment();
             UpsertBranch();
             UpsertUser();
+            UpsertCardContact();
         }
         private static void AuthSuccessfull()
         {
@@ -38,43 +39,44 @@ namespace Logitude.HybridTest.WcfCallers
                 TestEnvironmentGlobalParameters.Token = loginResponse.Result;
             else
                 Assert.Fail("Login Failed");
+            Assert.IsNotNull(loginResponse.Result, "The Token returned is null " + loginResponse.ErrorMessage);
         }
         private static void UpsertGlobalZone()
         {
-            GlobalZonePM entityPM = new GlobalZonePM()
+            GlobalZonePM globalZonePM = new GlobalZonePM()
             {
                 Code = HybridData.GlobalZoneCodeHZ,
                 EnglishName = "Hybrid GlobalZone",
                 LocalName = "Hybrid GlobalZone",
                 Tenant = TestEnvironmentGlobalParameters.Tenant,
             };
-            AssertResponse(entityPM);
+            AssertResponse(globalZonePM);
         }
         private static void UpsertDepartment()
         {
-            DepartmentPM entityPM = new DepartmentPM()
+            DepartmentPM departmentPM = new DepartmentPM()
             {
                 Code = HybridData.DepartmentCodeHDEP,
                 EnglishName = "Hybrid Department",
                 LocalName = "Hybrid Department",
                 Tenant = TestEnvironmentGlobalParameters.Tenant,
             };
-            AssertResponse(entityPM);
+            AssertResponse(departmentPM);
         }
         private static void UpsertBranch()
         {
-            BranchPM entityPM = new BranchPM()
+            BranchPM branchPM = new BranchPM()
             {
                 Code = HybridData.BranchCodeHBRA,
                 EnglishName = "Hybrid Branch",
                 LocalName = "Hybrid Branch",
                 Tenant = TestEnvironmentGlobalParameters.Tenant,
             };
-            AssertResponse(entityPM);
+            AssertResponse(branchPM);
         }
         private static void UpsertAgent()
         {
-            AgentPM entityPM = new AgentPM()
+            AgentPM agentPM = new AgentPM()
             {
                 Code = HybridData.AgentCodeHAgent,
                 EnglishName = "Hybrid Agent",
@@ -84,11 +86,11 @@ namespace Logitude.HybridTest.WcfCallers
                 PartnerTypeId = "AG",
                 Tenant = TestEnvironmentGlobalParameters.Tenant,
             };
-            AssertResponse(entityPM);
+            AssertResponse(agentPM);
         }
         private static void UpsertUser()
         {
-            UserPM entityPM = new UserPM()
+            UserPM userPM = new UserPM()
             {
                 Code = HybridData.UserCodeHU,
                 EnglishName = "Hybrid User",
@@ -101,7 +103,18 @@ namespace Logitude.HybridTest.WcfCallers
                 Tenant = TestEnvironmentGlobalParameters.Tenant,
                 DocumentFilingInbox = "HybridInbox"
             };
-            AssertResponse(entityPM);
+            AssertResponse(userPM);
+        }
+        private static void UpsertCardContact()
+        {
+            CardContactPM cardContactPM = new CardContactPM()
+            {
+                IsAll = true,
+                ContactId = HybridData.ContactCode,
+                CardId = HybridData.AgentCodeHAgent,
+                Tenant = TestEnvironmentGlobalParameters.Tenant,
+            };
+            AssertResponse(cardContactPM);
         }
         private static void AssertResponse<T>(T entityPM)
         {
