@@ -44,7 +44,10 @@ cd C:\Automation e2e\TeamMohammad\Test
 
 
 
-IF %NumberErrors% NEQ 0 ( 
+IF %NumberErrors% NEQ 0 (
+ cd C:\Automation e2e\TeamMohammad\Test\screenshots
+  "C:\Program Files\WinRAR\rar.exe" -r a "C:\Automation e2e\TeamMohammad\Test\screenshots.rar"
+  XCOPY  "C:\Automation e2e\TeamMohammad\Test\screenshots\screenshots.rar" "C:\Program Files (x86)\Jenkins\workspace\TeamMohammadE2EScripts"  /S /I /Q /Y /F
   exit 1
 )
 Pause
