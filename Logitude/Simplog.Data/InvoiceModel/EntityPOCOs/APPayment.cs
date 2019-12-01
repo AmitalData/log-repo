@@ -94,5 +94,10 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
 
         public DateTime? FirstApproveDate { get; set; }
         public bool AutomaticPaymentCheque { get; set; }
+        public DateTime? AccountingCancelationDate { get; set; }
+        public bool DontIncludeInDeductionReport { get; set; }
+        public string CancelationNotes { get; set; }
+
+
     }
 }

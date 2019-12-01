@@ -84,6 +84,9 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.BankAccountId = entityPM.BankAccountId;
             entity.PaymentMethodId = entityPM.AccountingPaymentMethodId;
             entity.AutomaticPaymentCheque = entityPM.AutomaticPaymentCheque;
+            entity.AccountingCancelationDate = entityPM.AccountingCancelationDate;
+            entity.DontIncludeInDeductionReport = entityPM.DontIncludeInDeductionReport;
+            entity.CancelationNotes = entityPM.CancelationNotes;
             if (entityPM.StatusCode == "AD" && entityPM.OpenAmount == 0)
             {
                 entity.IsClosed = true;

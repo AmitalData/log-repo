@@ -1012,6 +1012,16 @@ export class ARInvoicePM {
     public set IsFromConsolidationBatch(newValue: boolean) { if (this.isFromConsolidationBatch != newValue) { this.isFromConsolidationBatch = newValue; this.MarkAsDirty("IsFromConsolidationBatch"); } }
        
 	 
+    private billToCity: string;
+    public get BillToCity() { return this.billToCity; }
+    public set BillToCity(newValue: string) { if (this.billToCity != newValue) { this.billToCity = newValue; this.MarkAsDirty("BillToCity"); } }
+       
+	 
+    private billToCountry: string;
+    public get BillToCountry() { return this.billToCountry; }
+    public set BillToCountry(newValue: string) { if (this.billToCountry != newValue) { this.billToCountry = newValue; this.MarkAsDirty("BillToCountry"); } }
+       
+	 
 
     public OldEntityPM: ARInvoicePM;
 		

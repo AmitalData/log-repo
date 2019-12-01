@@ -12,7 +12,8 @@ namespace Logitude.HybridTest.WcfCallers
         [AssemblyInitialize]
         public static void PrepareSystemVars(TestContext context)
         {
-            AuthSuccessfull();
+            GetAuthenticationToken1();
+            GetAuthenticationToken2();
             PrepareShipment.PrepareShipmentVars();
 
             //Other necessary Vars:
@@ -20,10 +21,11 @@ namespace Logitude.HybridTest.WcfCallers
             UpsertDepartment();
             UpsertBranch();
             UpsertUser();
+            UpsertCardContact();
         }
-        private static void AuthSuccessfull()
+        private static void GetAuthenticationToken1()
         {
-            var apiCred = new APICredentialsParameters() { PrimaryKey = TestEnvironmentGlobalParameters.APICredential_PrimaryKey, SecondaryKey = TestEnvironmentGlobalParameters.APICredential_SecondaryKey, Tenant = TestEnvironmentGlobalParameters.Tenant };
+            var apiCred = new APICredentialsParameters() { PrimaryKey = TestEnvironmentGlobalParameters.APICredential_PrimaryKey1, SecondaryKey = TestEnvironmentGlobalParameters.APICredential_SecondaryKey1, Tenant = TestEnvironmentGlobalParameters.Tenant1 };
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "Login",
@@ -35,46 +37,66 @@ namespace Logitude.HybridTest.WcfCallers
             object[] serviceParameters = new object[] { "", apiCred };
             Response loginResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             if (!loginResponse.HasError)
-                TestEnvironmentGlobalParameters.Token = loginResponse.Result;
+                TestEnvironmentGlobalParameters.Token1 = loginResponse.Result;
             else
                 Assert.Fail("Login Failed");
+            Assert.IsNotNull(loginResponse.Result, "The Token returned is null " + loginResponse.ErrorMessage);
+        }
+        private static void GetAuthenticationToken2()
+        {
+            var apiCred = new APICredentialsParameters() { PrimaryKey = TestEnvironmentGlobalParameters.APICredential_PrimaryKey2, SecondaryKey = TestEnvironmentGlobalParameters.APICredential_SecondaryKey2, Tenant = TestEnvironmentGlobalParameters.Tenant2 };
+            InvokedProperties serviceProperties = new InvokedProperties
+            {
+                ServiceName = "Login",
+                ServiceOperation = "LoginByCredential",
+                ServiceType = typeof(APICredentialsParameters),
+            };
+
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { "", apiCred };
+            Response loginResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+            if (!loginResponse.HasError)
+                TestEnvironmentGlobalParameters.Token2 = loginResponse.Result;
+            else
+                Assert.Fail("Login Failed");
+            Assert.IsNotNull(loginResponse.Result, "The Token returned is null " + loginResponse.ErrorMessage);
         }
         private static void UpsertGlobalZone()
         {
-            GlobalZonePM entityPM = new GlobalZonePM()
+            GlobalZonePM globalZonePM = new GlobalZonePM()
             {
                 Code = HybridData.GlobalZoneCodeHZ,
                 EnglishName = "Hybrid GlobalZone",
                 LocalName = "Hybrid GlobalZone",
-                Tenant = TestEnvironmentGlobalParameters.Tenant,
+                Tenant = TestEnvironmentGlobalParameters.Tenant1,
             };
-            AssertResponse(entityPM);
+            AssertResponse(globalZonePM);
         }
         private static void UpsertDepartment()
         {
-            DepartmentPM entityPM = new DepartmentPM()
+            DepartmentPM departmentPM = new DepartmentPM()
             {
                 Code = HybridData.DepartmentCodeHDEP,
                 EnglishName = "Hybrid Department",
                 LocalName = "Hybrid Department",
-                Tenant = TestEnvironmentGlobalParameters.Tenant,
+                Tenant = TestEnvironmentGlobalParameters.Tenant1,
             };
-            AssertResponse(entityPM);
+            AssertResponse(departmentPM);
         }
         private static void UpsertBranch()
         {
-            BranchPM entityPM = new BranchPM()
+            BranchPM branchPM = new BranchPM()
             {
                 Code = HybridData.BranchCodeHBRA,
                 EnglishName = "Hybrid Branch",
                 LocalName = "Hybrid Branch",
-                Tenant = TestEnvironmentGlobalParameters.Tenant,
+                Tenant = TestEnvironmentGlobalParameters.Tenant1,
             };
-            AssertResponse(entityPM);
+            AssertResponse(branchPM);
         }
         private static void UpsertAgent()
         {
-            AgentPM entityPM = new AgentPM()
+            AgentPM agentPM = new AgentPM()
             {
                 Code = HybridData.AgentCodeHAgent,
                 EnglishName = "Hybrid Agent",
@@ -82,26 +104,37 @@ namespace Logitude.HybridTest.WcfCallers
                 CityName = "Hybrid City",
                 CountryCode = HybridData.CountryCodeUS,
                 PartnerTypeId = "AG",
-                Tenant = TestEnvironmentGlobalParameters.Tenant,
+                Tenant = TestEnvironmentGlobalParameters.Tenant1,
             };
-            AssertResponse(entityPM);
+            AssertResponse(agentPM);
         }
         private static void UpsertUser()
         {
-            UserPM entityPM = new UserPM()
+            UserPM userPM = new UserPM()
             {
                 Code = HybridData.UserCodeHU,
                 EnglishName = "Hybrid User",
                 LocalName = "Hybrid User",
                 Email = "Hybrid@fnarsoft.com",
                 Password = "!H0",
-                BusinessUnitId = TestEnvironmentGlobalParameters.Tenant.ToString(),
+                BusinessUnitId = TestEnvironmentGlobalParameters.Tenant1.ToString(),
                 BranchId = HybridData.BranchCodeHBRA,
                 DepartmentId = HybridData.DepartmentCodeHDEP,
-                Tenant = TestEnvironmentGlobalParameters.Tenant,
+                Tenant = TestEnvironmentGlobalParameters.Tenant1,
                 DocumentFilingInbox = "HybridInbox"
             };
-            AssertResponse(entityPM);
+            AssertResponse(userPM);
+        }
+        private static void UpsertCardContact()
+        {
+            CardContactPM cardContactPM = new CardContactPM()
+            {
+                IsAll = true,
+                ContactId = HybridData.ContactCode,
+                CardId = HybridData.AgentCodeHAgent,
+                Tenant = TestEnvironmentGlobalParameters.Tenant1,
+            };
+            AssertResponse(cardContactPM);
         }
         private static void AssertResponse<T>(T entityPM)
         {

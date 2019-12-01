@@ -709,6 +709,16 @@ export class APInvoicePM {
     public set ShipmentNewConcurrencyGUID(newValue: string) { if (this.shipmentNewConcurrencyGUID != newValue) { this.shipmentNewConcurrencyGUID = newValue; this.MarkAsDirty("ShipmentNewConcurrencyGUID"); } }
        
 	 
+    private vendorCity: string;
+    public get VendorCity() { return this.vendorCity; }
+    public set VendorCity(newValue: string) { if (this.vendorCity != newValue) { this.vendorCity = newValue; this.MarkAsDirty("VendorCity"); } }
+       
+	 
+    private vendorCountry: string;
+    public get VendorCountry() { return this.vendorCountry; }
+    public set VendorCountry(newValue: string) { if (this.vendorCountry != newValue) { this.vendorCountry = newValue; this.MarkAsDirty("VendorCountry"); } }
+       
+	 
 
     public OldEntityPM: APInvoicePM;
 		
