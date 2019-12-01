@@ -14,7 +14,7 @@ namespace Logitude.IntegrationTest.Customs.Declaration
     public class UnitTest1
     {
         
-        [TestInitialize]
+        [AssemblyInitialize]
         public void InitialTestMethod()
         {
             Task.Run(async () =>
