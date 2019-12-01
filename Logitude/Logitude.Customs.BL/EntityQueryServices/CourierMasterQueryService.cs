@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Logitude.CustomsMessaging.Common.ResponseData;
+using Simplog.Data.CommonDataModel.Repositories;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -18,7 +19,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         public string CheckIfAllowToCancelCourierMaster(int tenant, string courierMasterId)
         {
-            if (GetRequestInProgress(tenant, courierMasterId)) return    "INVALID_INPROGRESS";
+             if (GetRequestInProgress(tenant, courierMasterId)) return    "INVALID_INPROGRESS";
             if (CheckIfDecPayedFromCourierMaster(tenant, courierMasterId)) return "INVALID_PAYED";
             return "";
         }
@@ -62,7 +63,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
                             where crs.EntityId1 == courierMasterId
                             select crs);
 
-            return qCMaster.Any() || qDec.Any();
+            var communicationLogRepository = new CommunicationLogRepository();
+
+            var b = communicationLogRepository.CommunicationOutGoingLogInProgress(courierMasterId, ObjectTableIdCourierMaster, tenant);
+            return qCMaster.Any() || qDec.Any() || b;
         }
 
      

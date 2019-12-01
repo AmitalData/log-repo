@@ -389,8 +389,9 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
     }
     
     private BuildAccountingCustomFilesList() {
-        this.GuaranteeDefaultList = [];
+         this.GuaranteeDefaultList = [];
         var customerCode = "";
+        debugger;
         if (!AppTool.IsNullOrEmpty(this.collateralPM.DeclarationId)) {
             let myDeclarationPMService: DeclarationPMService = new DeclarationPMService()
             myDeclarationPMService.get(this.collateralPM.DeclarationId).subscribe(rsptPMget => {
@@ -734,7 +735,11 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
         this.IsConcentrated = true;
          this.collateralToSendlist = args.collateralToSendlist;
         this.EntityPM = new CustomsCollateralsAnswerPM(null);
- 
+        this.collateralPM = new CustomsCollateralPM();
+        this.collateralPM.DeclarationId = args.DeclarationId;
+        debugger;
+          this.BuildAccountingCustomFilesList();
+
     }
 
 
