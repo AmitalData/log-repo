@@ -151,14 +151,14 @@
                                                 <div></div>
                                             </td>
                                             <td *ngIf="ToggleIsExportShipments" style="width: 117px; vertical-align: middle; position:relative;"> 
-                                                <DirectionsFilter [HideImportDomistic]="true" (SelectedValueChanged)="SelectedDirectionFilter = $event"></DirectionsFilter>
+                                                <DirectionsFilter [SelectedValue]="SelectedDirectionFilter" [HideImportDomistic]="true" (SelectedValueChanged)="SelectedDirectionFilter = $event"></DirectionsFilter>
                                             </td>
 
                                             <td style="width: 3px;">
                                                 <div></div>
                                             </td>
                                             <td style="width: 117px; vertical-align: middle; position:relative;">
-                                                <TransportsFilter (SelectedValueChanged)="SelectedTransportFilter = $event"></TransportsFilter>
+                                                <TransportsFilter [SelectedValue]="SelectedTransportFilter" (SelectedValueChanged)="SelectedTransportFilter = $event"></TransportsFilter>
                                             </td>
 
                                             <td style="width: 3px;">
@@ -166,7 +166,7 @@
                                             </td>
 
                                             <td style="width: 175px; vertical-align: middle; position:relative;">
-                                                <ShipmentArchiveFilter (SelectedTypeValueChanged)="SelectedArchiveFilter = $event"></ShipmentArchiveFilter>
+                                                <ShipmentArchiveFilter [SelectedValue]="SelectedArchiveFilter" (SelectedTypeValueChanged)="SelectedArchiveFilter = $event"></ShipmentArchiveFilter>
                                             </td>
 
                                             <td style="width: 3px;">

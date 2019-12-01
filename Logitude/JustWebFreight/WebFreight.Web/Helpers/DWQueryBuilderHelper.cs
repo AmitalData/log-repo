@@ -479,10 +479,10 @@ namespace WebFreight.Web.Helpers
                 OrderByString = DWQueryParam.ColumnsSort;
             }
             string PagingString = " ORDER BY " + OrderByString;
-
-            if(LogitudeSettings.LogitudeURL != "http://localhost:9996")
+            string offsetPagingString = "";
+            if (LogitudeSettings.LogitudeURL != "http://localhost:9996" && DWQueryParam.PageSize != 0)
             {
-                PagingString += (" OFFSET " + DWQueryParam.PageIndex + " ROWS FETCH NEXT " + DWQueryParam.PageSize + " ROWS ONLY"); 
+                offsetPagingString = (" OFFSET " + DWQueryParam.PageIndex + " ROWS FETCH NEXT " + DWQueryParam.PageSize + " ROWS ONLY"); 
             }
 
             string FinalQuery = "";
@@ -517,18 +517,19 @@ namespace WebFreight.Web.Helpers
                 FinalQuery = FinalQuery + " where " + Fact + TenantWhere + "@Tenant";
             }
 
-            sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() {ParameterName = "@Tenant", Value = Tenant.ToString() }); 
+            sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() {ParameterName = "@Tenant", Value = Tenant.ToString() });
 
-       
 
-            if (DWQueryParam.PageSize != 0)
-            {
-                FinalQuery = FinalQuery + PagingString;
-            }
-            else if (!string.IsNullOrEmpty(DWQueryParam.ColumnsSort))
-            {
-                FinalQuery = FinalQuery + " ORDER BY " + DWQueryParam.ColumnsSort;
-            }
+            FinalQuery = FinalQuery + PagingString + offsetPagingString;
+            //if (DWQueryParam.PageSize != 0)
+            //{
+            //    FinalQuery = FinalQuery + PagingString;
+            //}
+            //else 
+            //if (!string.IsNullOrEmpty(DWQueryParam.ColumnsSort))
+            //{
+            //    FinalQuery = FinalQuery + " ORDER BY " + DWQueryParam.ColumnsSort;
+            //}
 
             sqlCommandDefinition.SQLString = FinalQuery;
 
