@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="CustomDocumentTypes">
+<Table Name="CustomDocumentTypes" Schema="Customs" DBType="Main">
   <Column Name="AutoSetOriginalDocumentTrue" Type="bit">
     <Constraints Nullable="false" />
   </Column>

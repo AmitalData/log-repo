@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="APInvoiceLines">
+<Table Name="APInvoiceLines" Schema="dbo" DBType="Main">
   <Column Name="APInvoiceId" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="DecCargoSplitConsItems">
+<Table Name="DecCargoSplitConsItems" Schema="Customs" DBType="Main">
   <Column Name="CargoDescription" Type="nvarchar" Size="255">
     <Constraints Nullable="false" />
   </Column>

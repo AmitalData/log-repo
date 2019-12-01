@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="TaxReportLines">
+<Table Name="TaxReportLines" Schema="dbo" DBType="Main">
   <Column Name="IsEquipment" Type="bit">
     <Constraints Nullable="false" />
   </Column>

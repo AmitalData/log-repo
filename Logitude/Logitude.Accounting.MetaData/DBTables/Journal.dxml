@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="Journals">
+<Table Name="Journals" Schema="dbo" DBType="Main">
   <Column Name="AccountingDate" Type="datetime">
     <Constraints Nullable="false" />
   </Column>

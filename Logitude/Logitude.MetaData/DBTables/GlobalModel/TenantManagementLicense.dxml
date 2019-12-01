@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="TenantManagementLicenses">
+<Table Name="TenantManagementLicenses" Schema="dbo" DBType="Global">
   <Column Name="FreeUsers" Type="int">
     <Constraints Nullable="true" />
   </Column>

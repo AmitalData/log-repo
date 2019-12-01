@@ -8,48 +8,53 @@ namespace Logitude.DBMigrations.Models
 {
     public class SQLDatabaseMigrations : DatabaseMigrations
     {
-        protected readonly string ConnectionString = ConfigurationManager.AppSettings["ConnectionString"];
+        protected string ConnectionString;
         
-        public SQLDatabaseMigrations(TableDefinition table)
+        public SQLDatabaseMigrations(TableDefinition table, string connectionString)
         {
+            ConnectionString = connectionString;
             DXMLTable = table;
         }
 
         protected override TableDefinition GetCurrentTableDefinitionFromDB()
         {
-            string queryString = "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = @name OR TABLE_NAME = @oldName";
+            string queryString = @"SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = @name OR TABLE_NAME = @oldName";
 
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            TableDefinition currentTable = null;
+
+            SqlDataReader reader = null;
+            SqlConnection connection = new SqlConnection(ConnectionString);
+            SqlCommand command = new SqlCommand(queryString, connection);
+            command.Parameters.AddWithValue("@name", DXMLTable.Name);
+            command.Parameters.AddWithValue("@oldName", DXMLTable.OldName ?? DXMLTable.Name);
+
+            try
             {
-                TableDefinition currentTable = null;
-                SqlCommand command = new SqlCommand(queryString, connection);
-                SqlDataReader reader = null;
-                command.Parameters.AddWithValue("@name", DXMLTable.Name);
-                command.Parameters.AddWithValue("@oldName", DXMLTable.OldName ?? DXMLTable.Name);
+                connection.Open();
+                reader = command.ExecuteReader();
 
-                try
+                if (reader.HasRows)
                 {
-                    connection.Open();
-                    reader = command.ExecuteReader();
-
-                    if (reader.HasRows)
-                    {
-                        reader.Read();
-                        string tableName = reader["TABLE_NAME"].ToString();
-                        currentTable = GetCurrentTableDefinitionFromDB(tableName);
-                    }
-
-                    reader.Close();
-                    connection.Close();
-                }
-                catch (Exception)
-                {
-                    reader.Close();
-                    connection.Close();
+                    reader.Read();
+                    string tableName = reader["TABLE_NAME"].ToString();
+                    currentTable = GetCurrentTableDefinitionFromDB(tableName);
                 }
 
-                return currentTable;
+                reader.Close();
+                connection.Close();
             }
+            catch (Exception exception)
+            {
+                if (reader != null)
+                {
+                    reader.Close();
+                }
+                connection.Close();
+
+                ExitDatabaseMigrations(exception.Message);
+            }
+
+            return currentTable;
         }
 
         protected override TableDefinition GetCurrentTableDefinitionFromDB(string tableName)
@@ -67,74 +72,79 @@ namespace Logitude.DBMigrations.Models
                                   "WHERE TCON.TABLE_NAME = @tableName " +
                                   ") AS Q2 ON Q2.ColumnName = Q1.ColumnName";
 
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            TableDefinition currentTable = null;
+
+            SqlDataReader reader = null;
+            SqlConnection connection = new SqlConnection(ConnectionString);
+            SqlCommand command = new SqlCommand(queryString, connection);
+            command.Parameters.AddWithValue("@tableName", tableName);
+
+            try
             {
-                TableDefinition currentTable = null;
+                connection.Open();
+                reader = command.ExecuteReader();
+
                 List<ColumnDefinition> currentTableColumns = new List<ColumnDefinition>();
-                SqlCommand command = new SqlCommand(queryString, connection);
-                SqlDataReader reader = null;
-                command.Parameters.AddWithValue("@tableName", tableName);
 
-                try
+                while (reader.Read())
                 {
-                    connection.Open();
-                    reader = command.ExecuteReader();
-
-                    while (reader.Read())
+                    if (!currentTableColumns.Where(c => c.Name == reader["ColumnName"].ToString()).Any())
                     {
-                        if (!currentTableColumns.Where(c => c.Name == reader["ColumnName"].ToString()).Any())
+                        ColumnDefinition column = new ColumnDefinition
                         {
-                            ColumnDefinition column = new ColumnDefinition
+                            Name = reader["ColumnName"].ToString(),
+                            Type = GetDxmlDataType(reader["DataType"].ToString()),
+                            Size = !String.IsNullOrEmpty(reader["Size"].ToString()) ? (reader["Size"].ToString() == "-1" ? -1 : Convert.ToInt32(reader["Size"].ToString())) : 0,
+                            Constraints = new ConstraintsDefinition
                             {
-                                Name = reader["ColumnName"].ToString(),
-                                Type = GetDxmlDataType(reader["DataType"].ToString()),
-                                Size = !String.IsNullOrEmpty(reader["Size"].ToString()) ? (reader["Size"].ToString() == "-1" ? -1 : Convert.ToInt32(reader["Size"].ToString())) : 0,
-                                Constraints = new ConstraintsDefinition
-                                {
-                                    Nullable = (reader["Nullable"].ToString() == "YES")
-                                }
-                            };
-
-                            if (!String.IsNullOrEmpty(reader["ConstraintType"].ToString()) && !String.IsNullOrEmpty(reader["ConstraintName"].ToString()))
-                            {
-                                column = SetConstraintForColumnDefinition(column, reader["ConstraintType"].ToString(), reader["ConstraintName"].ToString());
+                                Nullable = (reader["Nullable"].ToString() == "YES")
                             }
+                        };
 
-                            currentTableColumns.Add(column);
+                        if (!String.IsNullOrEmpty(reader["ConstraintType"].ToString()) && !String.IsNullOrEmpty(reader["ConstraintName"].ToString()))
+                        {
+                            column = SetConstraintForColumnDefinition(column, reader["ConstraintType"].ToString(), reader["ConstraintName"].ToString());
                         }
-                        else
+
+                        currentTableColumns.Add(column);
+                    }
+                    else
+                    {
+                        if (!String.IsNullOrEmpty(reader["ConstraintType"].ToString()) && !String.IsNullOrEmpty(reader["ConstraintName"].ToString()))
                         {
-                            if (!String.IsNullOrEmpty(reader["ConstraintType"].ToString()) && !String.IsNullOrEmpty(reader["ConstraintName"].ToString()))
-                            {
-                                var column = currentTableColumns.Where(c => c.Name == reader["ColumnName"].ToString()).First();
-                                column = SetConstraintForColumnDefinition(column, reader["ConstraintType"].ToString(), reader["ConstraintName"].ToString());
-                            }
+                            var column = currentTableColumns.Where(c => c.Name == reader["ColumnName"].ToString()).First();
+                            column = SetConstraintForColumnDefinition(column, reader["ConstraintType"].ToString(), reader["ConstraintName"].ToString());
                         }
                     }
-
-                    reader.Close();
-                    connection.Close();
-
-                    currentTable = new TableDefinition
-                    {
-                        Name = tableName,
-                        Columns = currentTableColumns
-                    };
                 }
-                catch (Exception)
+
+                reader.Close();
+                connection.Close();
+
+                currentTable = new TableDefinition
+                {
+                    Name = tableName,
+                    Columns = currentTableColumns
+                };
+            }
+            catch (Exception exception)
+            {
+                if (reader != null)
                 {
                     reader.Close();
-                    connection.Close();
                 }
+                connection.Close();
 
-                return currentTable;
+                ExitDatabaseMigrations(exception.Message);
             }
+
+            return currentTable;
         }
 
         protected override string GetCreateTableScript()
         {
             string createTableScript = "-- Create New Table With Name " + DXMLTable.Name + "\n";
-            createTableScript += "CREATE TABLE [" + DXMLTable.Name + "](" + "\n";
+            createTableScript += "CREATE TABLE [" + DXMLTable.Schema + "].[" + DXMLTable.Name + "](" + "\n";
             foreach (var column in DXMLTable.Columns)
             {
                 createTableScript += GetCreateColumnScript(column) + "\n";

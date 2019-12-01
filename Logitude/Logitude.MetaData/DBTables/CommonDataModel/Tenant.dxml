@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="Tenants">
+<Table Name="Tenants" Schema="dbo" DBType="Main">
   <Column Name="AccountingActivated" Type="bit">
     <Constraints Nullable="false" />
   </Column>

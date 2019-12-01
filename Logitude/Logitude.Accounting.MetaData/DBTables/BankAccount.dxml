@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="BankAccounts">
+<Table Name="BankAccounts" Schema="dbo" DBType="Main">
   <Column Name="AccountNumber" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>

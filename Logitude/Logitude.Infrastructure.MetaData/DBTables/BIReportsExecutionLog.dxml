@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="BIReportsExecutionLogs">
+<Table Name="BIReportsExecutionLogs" Schema="dbo" DBType="Main">
   <Column Name="BIReportId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>

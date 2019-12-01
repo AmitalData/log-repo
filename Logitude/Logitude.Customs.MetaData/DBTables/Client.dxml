@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="Clients">
+<Table Name="Clients" Schema="Customs" DBType="Main">
   <Column Name="BirthDate" Type="datetime">
     <Constraints Nullable="true" />
   </Column>

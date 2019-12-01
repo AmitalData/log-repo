@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="GovernmentProcedureTypes">
+<Table Name="GovernmentProcedureTypes" Schema="Customs" DBType="Main">
   <Column Name="Code" Type="varchar" Size="7">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>

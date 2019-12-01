@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="TaxReports">
+<Table Name="TaxReports" Schema="dbo" DBType="Main">
   <Column Name="AmountForPayRefund" Type="decimal">
     <Constraints Nullable="true" />
   </Column>

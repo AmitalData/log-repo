@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="LogitudeLeads">
+<Table Name="LogitudeLeads" Schema="dbo" DBType="Global">
   <Column Name="CASSCode" Type="varchar" Size="4">
     <Constraints Nullable="true" />
   </Column>

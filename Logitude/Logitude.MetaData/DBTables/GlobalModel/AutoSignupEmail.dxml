@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="AutoSignupEmails">
+<Table Name="AutoSignupEmails" Schema="dbo" DBType="Global">
   <Column Name="CreateDate" Type="datetime">
     <Constraints Nullable="false" />
   </Column>

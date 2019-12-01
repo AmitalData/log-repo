@@ -72,4 +72,4 @@ BatchServicesDefinitionMods/BatchServicesDefinitionMods
 TenantManagementLicenses/TenantManagementLicense
 TenantManagmentPrivateLabels/TenantManagmentPrivateLabels
 WebhookKeys/WebhookKeys
-ARPaymentCheques/ARPaymentChequeReplica
+ARPaymentCheques/ARPaymentCheque

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="ARPayments">
+<Table Name="ARPayments" Schema="dbo" DBType="Main">
   <Column Name="Account" Type="nvarchar" Size="20">
     <Constraints Nullable="true" />
   </Column>

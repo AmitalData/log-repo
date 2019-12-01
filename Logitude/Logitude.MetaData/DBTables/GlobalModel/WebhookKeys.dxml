@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="WebhookKeys">
+<Table Name="WebhookKeys" Schema="dbo" DBType="Global">
   <Column Name="AccessKey" Type="varchar" Size="200">
     <Constraints Nullable="true" />
   </Column>

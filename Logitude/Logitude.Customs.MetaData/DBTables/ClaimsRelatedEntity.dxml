@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="ClaimsRelatedEntities">
+<Table Name="ClaimsRelatedEntities" Schema="Customs" DBType="Main">
   <Column Name="AbandonmentDestructionReferenc" Type="varchar" Size="22">
     <Constraints Nullable="true" />
   </Column>

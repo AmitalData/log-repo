@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="MobileNotificationLogs">
+<Table Name="MobileNotificationLogs" Schema="dbo" DBType="Global">
   <Column Name="AndroidStatus" Type="varchar" Size="1">
     <Constraints Nullable="false" />
   </Column>

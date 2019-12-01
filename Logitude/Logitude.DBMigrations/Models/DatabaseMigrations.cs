@@ -364,6 +364,12 @@ namespace Logitude.DBMigrations.Models
             return Regex.Replace(Convert.ToBase64String(Guid.NewGuid().ToByteArray()), "[/+=]", "").ToUpper();
         }
 
+        protected void ExitDatabaseMigrations(string message)
+        {
+            Console.WriteLine(message);
+            Environment.Exit(0);
+        }
+
 
 
         // abstract methods

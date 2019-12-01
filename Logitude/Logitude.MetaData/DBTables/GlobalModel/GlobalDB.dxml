@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="GlobalDBs">
+<Table Name="GlobalDBs" Schema="dbo" DBType="Global">
   <Column Name="DBConnection" Type="nvarchar" Size="512">
     <Constraints Nullable="false" />
   </Column>

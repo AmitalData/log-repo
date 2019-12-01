@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="ErrorLogs">
+<Table Name="ErrorLogs" Schema="dbo" DBType="SystemLogs">
   <Column Name="ClientDate" Type="datetime">
     <Constraints Nullable="false" />
   </Column>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="BluesnapContracts">
+<Table Name="BluesnapContracts" Schema="dbo" DBType="Global">
   <Column Name="BluesnapContractTypeCode" Type="varchar" Size="4">
     <Constraints Nullable="false" />
   </Column>

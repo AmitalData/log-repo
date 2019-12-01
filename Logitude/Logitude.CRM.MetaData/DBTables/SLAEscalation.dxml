@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="SLAEscalations">
+<Table Name="SLAEscalations" Schema="dbo" DBType="Main">
   <Column Name="EscalaitonTimeInMinutes" Type="int">
     <Constraints Nullable="true" />
   </Column>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="TransportModes">
+<Table Name="TransportModes" Schema="dbo" DBType="Main">
   <Column Name="Id" Type="char" Size="1">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>

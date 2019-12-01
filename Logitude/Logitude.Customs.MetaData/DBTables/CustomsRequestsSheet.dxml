@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="CustomsRequestsSheets">
+<Table Name="CustomsRequestsSheets" Schema="Customs" DBType="Main">
   <Column Name="AnalyzeDcaAggregateKey" Type="varchar" Size="128">
     <Constraints Nullable="true" />
   </Column>

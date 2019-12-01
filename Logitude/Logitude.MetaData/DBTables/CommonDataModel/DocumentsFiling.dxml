@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="DocumentsFilings">
+<Table Name="DocumentsFilings" Schema="dbo" DBType="Main">
   <Column Name="BackedupExternally" Type="bit">
     <Constraints Nullable="false" />
   </Column>

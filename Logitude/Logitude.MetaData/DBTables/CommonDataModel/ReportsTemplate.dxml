@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="ReportsTemplates">
+<Table Name="ReportsTemplates" Schema="dbo" DBType="Main">
   <Column Name="CC" Type="nvarchar" Size="4000">
     <Constraints Nullable="true" />
   </Column>

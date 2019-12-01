@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="CertificateExemptionTypes">
+<Table Name="CertificateExemptionTypes" Schema="Customs" DBType="Main">
   <Column Name="Code" Type="varchar" Size="3">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>

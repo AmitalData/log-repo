@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="PhysicalCheckStatusMessages">
+<Table Name="PhysicalCheckStatusMessages" Schema="Customs" DBType="Main">
   <Column Name="Code" Type="varchar" Size="4">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>

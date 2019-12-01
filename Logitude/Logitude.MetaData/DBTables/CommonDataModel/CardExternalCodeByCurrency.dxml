@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="CardExternalCodeByCurrencies">
+<Table Name="CardExternalCodeByCurrencies" Schema="dbo" DBType="Main">
   <Column Name="CardId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>

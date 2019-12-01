@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="ChargesTypes">
+<Table Name="ChargesTypes" Schema="dbo" DBType="Main">
   <Column Name="AccountingVATSplit" Type="bit">
     <Constraints Nullable="false" />
   </Column>

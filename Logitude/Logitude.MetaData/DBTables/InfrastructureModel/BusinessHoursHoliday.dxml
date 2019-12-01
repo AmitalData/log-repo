@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="BusinessHoursHolidays">
+<Table Name="BusinessHoursHolidays" Schema="dbo" DBType="Main">
   <Column Name="BusinessHourId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>

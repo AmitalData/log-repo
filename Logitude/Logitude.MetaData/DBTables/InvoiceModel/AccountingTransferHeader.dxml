@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="AccountingTransferHeaders">
+<Table Name="AccountingTransferHeaders" Schema="dbo" DBType="Main">
   <Column Name="AccountingTransferTypeCode" Type="nvarchar" Size="128">
     <Constraints Nullable="true" />
   </Column>

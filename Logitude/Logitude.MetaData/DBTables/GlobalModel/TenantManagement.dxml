@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="TenantManagements">
+<Table Name="TenantManagements" Schema="dbo" DBType="Global">
   <Column Name="ActivityLastDate" Type="datetime">
     <Constraints Nullable="true" />
   </Column>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="TenantLoginPolicies">
+<Table Name="TenantLoginPolicies" Schema="dbo" DBType="Main">
   <Column Name="AllowedIPs" Type="varchar" Size="200">
     <Constraints Nullable="true" />
   </Column>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="ApiCredintials">
+<Table Name="ApiCredintials" Schema="dbo" DBType="Global">
   <Column Name="AllowedIPs" Type="nvarchar" Size="1000">
     <Constraints Nullable="false" />
   </Column>

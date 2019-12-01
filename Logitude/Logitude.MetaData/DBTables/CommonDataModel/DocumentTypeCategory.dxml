@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="DocumentTypeCategories">
+<Table Name="DocumentTypeCategories" Schema="dbo" DBType="Main">
   <Column Name="Code" Type="varchar" Size="1">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>

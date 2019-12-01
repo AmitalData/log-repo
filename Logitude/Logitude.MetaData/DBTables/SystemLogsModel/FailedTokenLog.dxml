@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="FailedTokenLogs">
+<Table Name="FailedTokenLogs" Schema="dbo" DBType="SystemLogs">
   <Column Name="Browser" Type="varchar" Size="40">
     <Constraints Nullable="true" />
   </Column>

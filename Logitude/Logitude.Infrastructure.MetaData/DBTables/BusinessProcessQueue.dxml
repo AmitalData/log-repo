@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="BusinessProcessQueues">
+<Table Name="BusinessProcessQueues" Schema="dbo" DBType="Main">
   <Column Name="BusinessRoleId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>

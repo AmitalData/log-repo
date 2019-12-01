@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="AnalyzeQueues">
+<Table Name="AnalyzeQueues" Schema="dbo" DBType="Global">
   <Column Name="AckReason" Type="varchar" Size="256">
     <Constraints Nullable="true" />
   </Column>

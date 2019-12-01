@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="SupplierInvoiceModifications">
+<Table Name="SupplierInvoiceModifications" Schema="Customs" DBType="Main">
   <Column Name="Amount" Type="decimal">
     <Constraints Nullable="true" />
   </Column>

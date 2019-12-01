@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="ContactActivityLogs">
+<Table Name="ContactActivityLogs" Schema="dbo" DBType="SystemLogs">
   <Column Name="Activity" Type="varchar" Size="150">
     <Constraints Nullable="false" />
   </Column>

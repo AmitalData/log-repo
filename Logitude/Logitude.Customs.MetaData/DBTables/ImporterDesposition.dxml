@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="ImporterDespositions">
+<Table Name="ImporterDespositions" Schema="Customs" DBType="Main">
   <Column Name="DepositionNumber" Type="varchar" Size="20">
     <Constraints Nullable="true" />
   </Column>

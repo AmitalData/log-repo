@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="QuoteTemplateSections">
+<Table Name="QuoteTemplateSections" Schema="dbo" DBType="Main">
   <Column Name="Description" Type="nvarchar" Size="500">
     <Constraints Nullable="true" />
   </Column>

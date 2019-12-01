@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="HybridPartners">
+<Table Name="HybridPartners" Schema="dbo" DBType="Main">
   <Column Name="AllowSendingDocsToAgent" Type="bit">
     <Constraints Nullable="false" />
   </Column>

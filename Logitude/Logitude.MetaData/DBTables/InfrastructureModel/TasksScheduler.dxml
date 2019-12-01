@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="TasksScheduler">
+<Table Name="TasksScheduler" Schema="dbo" DBType="Main">
   <Column Name="AverageRunTime" Type="float">
     <Constraints Nullable="false" />
   </Column>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="Queries">
+<Table Name="Queries" Schema="dbo" DBType="Main">
   <Column Name="Agent" Type="bit">
     <Constraints Nullable="false" />
   </Column>

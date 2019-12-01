@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="DeclarationPaymentProtests">
+<Table Name="DeclarationPaymentProtests" Schema="Customs" DBType="Main">
   <Column Name="AmountInDispute" Type="decimal">
     <Constraints Nullable="true" />
   </Column>

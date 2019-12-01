@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="Features">
+<Table Name="Features" Schema="dbo" DBType="Main">
   <Column Name="Code" Type="varchar" Size="80">
     <Constraints Nullable="false" />
   </Column>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="ClaimImporterDeclarsP3Lois">
+<Table Name="ClaimImporterDeclarsP3Lois" Schema="Customs" DBType="Main">
   <Column Name="ClaimId" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>

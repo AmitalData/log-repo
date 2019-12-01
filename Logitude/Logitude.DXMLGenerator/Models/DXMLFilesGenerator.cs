@@ -13,9 +13,10 @@ namespace Logitude.DXMLGenerator.Models
 {
     public class DXMLFilesGenerator
     {
-        private readonly string Root = ConfigurationManager.AppSettings["LogitudeRoot"];
-        private readonly string ConnectionString = ConfigurationManager.AppSettings["ConnectionString"];
+        private readonly string Root = ConfigurationManager.AppSettings["Root"];
 
+        private string ConnectionString;
+        private string ErrorsFileName;
         private List<string> ExcludedTables;
         private List<string> ExcludedTablesNames;
         private int GeneratedDXMLFilesCounter = 0;
@@ -23,48 +24,52 @@ namespace Logitude.DXMLGenerator.Models
         private int DeleteCounter = 0;
         private string ErrorsData = "";
 
-        public DXMLFilesGenerator()
+        public DXMLFilesGenerator(string connectionString, string errorsFileName)
         {
+            ConnectionString = connectionString;
+            ErrorsFileName = errorsFileName;
             BuildExcludedTablesList();
         }
 
         public void GenerateDXMLFiles()
         {
-            List<string> dbTablesNames = GetAllTablesNamesFromDB();
-            if(dbTablesNames != null)
+            List<DBTable> dbTables = GetTablesFromDB();
+            if(dbTables != null)
             {
-                foreach (string tableName in dbTablesNames)
+                foreach (var table in dbTables)
                 {
-                    Console.WriteLine("Generating DXML File For " + tableName + " Table ...");
-                    SerializeAndSaveTable(tableName);
+                    Console.WriteLine("Generating DXML File For " + table.Name + " Table ...");
+                    SerializeAndSaveTable(table);
                 }
                 Console.WriteLine("\n" + GeneratedDXMLFilesCounter + " DXML Files Generated Successfully\n");
-                ExportErrorsData();
             }
+
+            ExportErrorsData();
         }
 
         public void GeneratePathsForDXMLFiles()
         {
-            List<string> dbTablesNames = GetAllTablesNamesFromDB();
-            if (dbTablesNames != null)
+            List<DBTable> dbTables = GetTablesFromDB();
+            if (dbTables != null)
             {
-                Console.WriteLine("Generating DXML Files Paths For " + dbTablesNames.Count() + " Tables ...");
-                foreach (string tableName in dbTablesNames)
+                Console.WriteLine("Generating DXML Files Paths For " + dbTables.Count() + " Tables ...");
+                foreach (var table in dbTables)
                 {
-                    string path = GetPathForDXMLFile(tableName, false);
+                    string path = GetPathForDXMLFile(table.Name, false);
                     if (!String.IsNullOrEmpty(path))
                     {
-                        Console.WriteLine(tableName + " DXML File Path: " + path);
+                        Console.WriteLine(table.Name + " DXML File Path: " + path);
                         GeneratedPathsCounter++;
                     }
                     else
                     {
-                        ErrorsData += "Cannot Find Path For " + tableName + " Table" + "\n";
+                        ErrorsData += "Cannot Find Path For " + table.Name + " Table" + "\n";
                     }
                 }
                 Console.WriteLine("\n" + GeneratedPathsCounter + " Paths Generated Successfully\n");
-                ExportErrorsData();
             }
+
+            ExportErrorsData();
         }
         
         public void DeleteDXMLFiles()
@@ -108,181 +113,212 @@ namespace Logitude.DXMLGenerator.Models
             Console.WriteLine("\n" + DeleteCounter + " DBTables Folders Deleted Successfully\n");
         }
 
-        private List<string> GetAllTablesNamesFromDB()
+        private List<DBTable> GetTablesFromDB()
         {
-            List<string> dbTablesNames = new List<string>();
+            string queryString = @"SELECT TABLE_CATALOG, TABLE_SCHEMA, TABLE_NAME FROM INFORMATION_SCHEMA.TABLES";
 
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            SqlDataReader reader = null;
+            SqlConnection connection = new SqlConnection(ConnectionString);
+            SqlCommand command = new SqlCommand(queryString, connection);
+
+            try
             {
-                string queryString = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES";
-                SqlCommand command = new SqlCommand(queryString, connection);
-                SqlDataReader reader = null;
+                connection.Open();
+                reader = command.ExecuteReader();
 
-                try
+                List<DBTable> dbTables = new List<DBTable>();
+
+                while (reader.Read())
                 {
-                    connection.Open();
-                    reader = command.ExecuteReader();
+                    string tableName = reader["TABLE_NAME"].ToString();
 
-                    while (reader.Read())
+                    if (tableName != "__MigrationHistory")
                     {
-                        string tableName = reader["TABLE_NAME"].ToString();
-                        if (tableName != "__MigrationHistory")
+                        string schema = reader["TABLE_SCHEMA"].ToString();
+                        string dbName = reader["TABLE_CATALOG"].ToString();
+
+                        DBTable dbTable = new DBTable
                         {
-                            dbTablesNames.Add(tableName);
-                        }
+                            Name = tableName,
+                            Schema = schema,
+                            DBName = dbName
+                        };
+
+                        dbTables.Add(dbTable);
                     }
-
-                    reader.Close();
-                    connection.Close();
-
-                    return dbTablesNames.OrderBy(n => n).ToList();
                 }
-                catch (Exception)
+
+                reader.Close();
+                connection.Close();
+
+                return dbTables.OrderBy(t => t.Name).ToList();
+            }
+            catch (Exception)
+            {
+                if (reader != null)
                 {
-                    Console.BackgroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Error While Get All Tables Names From The Database");
-                    Console.ResetColor();
-                    return null;
+                    reader.Close();
                 }
+                connection.Close();
+
+                Console.BackgroundColor = ConsoleColor.Red;
+                Console.WriteLine("Error While Get Tables From The Database");
+                Console.ResetColor();
+                ErrorsData += "Error While Get Tables From The Database" + "\n";
+                return null;
             }
         }
 
-        private TableDefinition GetTableDefinition(string tableName)
+        private TableDefinition GetTableDefinition(DBTable table)
         {
+            string queryString = @"SELECT Q1.*, Q2.ConstraintType, Q2.ConstraintName " +
+                                  "FROM ( " +
+                                  "SELECT COL.COLUMN_NAME AS ColumnName, IS_NULLABLE AS Nullable, DATA_TYPE AS DataType, CHARACTER_MAXIMUM_LENGTH AS Size " +
+                                  "FROM INFORMATION_SCHEMA.COLUMNS AS COL " +
+                                  "WHERE COL.TABLE_NAME = @tableName " +
+                                  ") AS Q1 " +
+                                  "LEFT JOIN ( " +
+                                  "SELECT CON.COLUMN_NAME AS ColumnName, TCON.CONSTRAINT_TYPE AS ConstraintType, TCON.CONSTRAINT_NAME AS ConstraintName " +
+                                  "FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS AS TCON " +
+                                  "INNER JOIN INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE AS CON ON TCON.CONSTRAINT_NAME = CON.CONSTRAINT_NAME " +
+                                  "WHERE TCON.TABLE_NAME = @tableName " +
+                                  ") AS Q2 ON Q2.ColumnName = Q1.ColumnName";
+
             TableDefinition tableDefinition = null;
-            List<ColumnDefinition> columnsDefinitions = new List<ColumnDefinition>();
 
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            SqlDataReader reader = null;
+            SqlConnection connection = new SqlConnection(ConnectionString);
+            SqlCommand command = new SqlCommand(queryString, connection);
+            command.Parameters.AddWithValue("@tableName", table.Name);
+
+            try
             {
-                string queryString = @"SELECT Q1.*, Q2.ConstraintType, Q2.ConstraintName " +
-                                      "FROM ( " +
-                                      "SELECT COL.COLUMN_NAME AS ColumnName, IS_NULLABLE AS Nullable, DATA_TYPE AS DataType, CHARACTER_MAXIMUM_LENGTH AS Size " +
-                                      "FROM INFORMATION_SCHEMA.COLUMNS AS COL " +
-                                      "WHERE COL.TABLE_NAME = @tableName " +
-                                      ") AS Q1 " +
-                                      "LEFT JOIN ( " +
-                                      "SELECT CON.COLUMN_NAME AS ColumnName, TCON.CONSTRAINT_TYPE AS ConstraintType, TCON.CONSTRAINT_NAME AS ConstraintName " +
-                                      "FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS AS TCON " +
-                                      "INNER JOIN INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE AS CON ON TCON.CONSTRAINT_NAME = CON.CONSTRAINT_NAME " +
-                                      "WHERE TCON.TABLE_NAME = @tableName " +
-                                      ") AS Q2 ON Q2.ColumnName = Q1.ColumnName";
+                connection.Open();
+                reader = command.ExecuteReader();
 
-                SqlCommand command = new SqlCommand(queryString, connection);
-                SqlDataReader reader = null;
-                command.Parameters.AddWithValue("@tableName", tableName);
+                List<ColumnDefinition> columnsDefinitions = new List<ColumnDefinition>();
 
-                try
+                while (reader.Read())
                 {
-                    connection.Open();
-                    reader = command.ExecuteReader();
-
-                    while (reader.Read())
+                    if (!columnsDefinitions.Where(c => c.Name == reader["ColumnName"].ToString()).Any())
                     {
-                        if (!columnsDefinitions.Where(c => c.Name == reader["ColumnName"].ToString()).Any())
+                        ColumnDefinition column = new ColumnDefinition
                         {
-                            ColumnDefinition column = new ColumnDefinition
+                            Name = reader["ColumnName"].ToString(),
+                            Type = GetDxmlDataType(reader["DataType"].ToString()),
+                            Size = !String.IsNullOrEmpty(reader["Size"].ToString()) ? Convert.ToInt32(reader["Size"].ToString()) : 0,
+                            Constraints = new ConstraintsDefinition
                             {
-                                Name = reader["ColumnName"].ToString(),
-                                Type = GetDxmlDataType(reader["DataType"].ToString()),
-                                Size = !String.IsNullOrEmpty(reader["Size"].ToString()) ? Convert.ToInt32(reader["Size"].ToString()) : 0,
-                                Constraints = new ConstraintsDefinition
-                                {
-                                    Nullable = (reader["Nullable"].ToString() == "YES")
-                                }
-                            };
-
-                            if (!String.IsNullOrEmpty(reader["ConstraintType"].ToString()) && !String.IsNullOrEmpty(reader["ConstraintName"].ToString()))
-                            {
-                                column = SetConstraintForColumnDefinition(column, reader["ConstraintType"].ToString());
+                                Nullable = (reader["Nullable"].ToString() == "YES")
                             }
+                        };
 
-                            columnsDefinitions.Add(column);
+                        if (!String.IsNullOrEmpty(reader["ConstraintType"].ToString()) && !String.IsNullOrEmpty(reader["ConstraintName"].ToString()))
+                        {
+                            column = SetConstraintForColumnDefinition(column, reader["ConstraintType"].ToString());
                         }
-                        else
+
+                        columnsDefinitions.Add(column);
+                    }
+                    else
+                    {
+                        if (!String.IsNullOrEmpty(reader["ConstraintType"].ToString()) && !String.IsNullOrEmpty(reader["ConstraintName"].ToString()))
                         {
-                            if (!String.IsNullOrEmpty(reader["ConstraintType"].ToString()) && !String.IsNullOrEmpty(reader["ConstraintName"].ToString()))
-                            {
-                                var column = columnsDefinitions.Where(c => c.Name == reader["ColumnName"].ToString()).First();
-                                column = SetConstraintForColumnDefinition(column, reader["ConstraintType"].ToString());
-                            }
+                            var column = columnsDefinitions.Where(c => c.Name == reader["ColumnName"].ToString()).First();
+                            column = SetConstraintForColumnDefinition(column, reader["ConstraintType"].ToString());
                         }
                     }
-
-                    reader.Close();
-                    connection.Close();
-
-                    tableDefinition = new TableDefinition
-                    {
-                        Name = tableName,
-                        Columns = columnsDefinitions.OrderBy(c => c.Name).ToList(),
-                        Relations = GetTableRelations(tableName)
-                    };
                 }
-                catch (Exception)
+
+                reader.Close();
+                connection.Close();
+
+                tableDefinition = new TableDefinition
                 {
-                    Console.BackgroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Error While Get Table Definition For " + tableName + " Table");
-                    Console.ResetColor();
-                }
-
-                return tableDefinition;
+                    Name = table.Name,
+                    Schema = table.Schema,
+                    DBType = GetDatabaseType(table.DBName),
+                    Columns = columnsDefinitions.OrderBy(c => c.Name).ToList(),
+                    Relations = GetTableRelations(table.Name)
+                };
             }
+            catch (Exception)
+            {
+                if(reader != null)
+                {
+                    reader.Close();
+                }
+                connection.Close();
+
+                Console.BackgroundColor = ConsoleColor.Red;
+                Console.WriteLine("Error While Get Table Definition For " + table.Name + " Table");
+                Console.ResetColor();
+                ErrorsData += "Error While Get Table Definition For " + table.Name + " Table" + "\n";
+            }
+
+            return tableDefinition;
         }
 
         private List<RelationDefinition> GetTableRelations(string tableName)
         {
-            List<RelationDefinition> relations = new List<RelationDefinition>();
+            string queryString = @"SELECT ParentTable.name AS ParentTableName, ParentColumn.name AS ParentColumnName, ReferencedTable.name AS ReferencedTableName, ReferencedColumn.name AS ReferencedColumnName, SysObject.name AS ForeignKeyConstraintName " +
+                                  "FROM SYS.FOREIGN_KEY_COLUMNS ForeignKeyColumns " +
+                                  "INNER JOIN SYS.TABLES ParentTable ON ParentTable.object_id = ForeignKeyColumns.parent_object_id " +
+                                  "INNER JOIN SYS.COLUMNS ParentColumn ON ParentColumn.column_id = ForeignKeyColumns.parent_column_id AND ParentColumn.object_id = ParentTable.object_id " +
+                                  "INNER JOIN SYS.TABLES ReferencedTable ON ReferencedTable.object_id = ForeignKeyColumns.referenced_object_id " +
+                                  "INNER JOIN SYS.COLUMNS ReferencedColumn ON ReferencedColumn.column_id = ForeignKeyColumns.referenced_column_id AND ReferencedColumn.object_id = ReferencedTable.object_id " +
+                                  "INNER JOIN SYS.OBJECTS SysObject ON SysObject.object_id = ForeignKeyColumns.constraint_object_id " +
+                                  "WHERE ForeignKeyColumns.referenced_object_id = (SELECT object_id FROM SYS.TABLES WHERE name = @tableName)";
 
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            SqlDataReader reader = null;
+            SqlConnection connection = new SqlConnection(ConnectionString);
+            SqlCommand command = new SqlCommand(queryString, connection);
+            command.Parameters.AddWithValue("@tableName", tableName);
+
+            try
             {
-                string queryString = "SELECT ParentTable.name AS ParentTableName, ParentColumn.name AS ParentColumnName, ReferencedTable.name AS ReferencedTableName, ReferencedColumn.name AS ReferencedColumnName, SysObject.name AS ForeignKeyConstraintName " +
-                                     "FROM SYS.FOREIGN_KEY_COLUMNS ForeignKeyColumns " +
-                                     "INNER JOIN SYS.TABLES ParentTable ON ParentTable.object_id = ForeignKeyColumns.parent_object_id " +
-                                     "INNER JOIN SYS.COLUMNS ParentColumn ON ParentColumn.column_id = ForeignKeyColumns.parent_column_id AND ParentColumn.object_id = ParentTable.object_id " +
-                                     "INNER JOIN SYS.TABLES ReferencedTable ON ReferencedTable.object_id = ForeignKeyColumns.referenced_object_id " +
-                                     "INNER JOIN SYS.COLUMNS ReferencedColumn ON ReferencedColumn.column_id = ForeignKeyColumns.referenced_column_id AND ReferencedColumn.object_id = ReferencedTable.object_id " +
-                                     "INNER JOIN SYS.OBJECTS SysObject ON SysObject.object_id = ForeignKeyColumns.constraint_object_id " +
-                                     "WHERE ForeignKeyColumns.referenced_object_id = (SELECT object_id FROM SYS.TABLES WHERE name = @tableName)";
+                connection.Open();
+                reader = command.ExecuteReader();
 
-                SqlCommand command = new SqlCommand(queryString, connection);
-                SqlDataReader reader = null;
-                command.Parameters.AddWithValue("@tableName", tableName);
+                List<RelationDefinition> relations = new List<RelationDefinition>();
 
-                try
+                while (reader.Read())
                 {
-                    connection.Open();
-                    reader = command.ExecuteReader();
-
-                    while (reader.Read())
+                    RelationDefinition relation = new RelationDefinition
                     {
-                        RelationDefinition relation = new RelationDefinition
-                        {
-                            ParentTableName = reader["ParentTableName"].ToString(),
-                            ParentColumnName = reader["ParentColumnName"].ToString(),
-                            ReferencedTableName = reader["ReferencedTableName"].ToString(),
-                            ReferencedColumnName = reader["ReferencedColumnName"].ToString(),
-                            ForeignKeyConstraintName = reader["ForeignKeyConstraintName"].ToString()
-                        };
-                        relations.Add(relation);
-                    }
+                        ParentTableName = reader["ParentTableName"].ToString(),
+                        ParentColumnName = reader["ParentColumnName"].ToString(),
+                        ReferencedTableName = reader["ReferencedTableName"].ToString(),
+                        ReferencedColumnName = reader["ReferencedColumnName"].ToString(),
+                        ForeignKeyConstraintName = reader["ForeignKeyConstraintName"].ToString()
+                    };
+                    relations.Add(relation);
+                }
 
-                    reader.Close();
-                    connection.Close();
-                }
-                catch (Exception)
-                {
-                    Console.BackgroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Error While Get Relations For " + tableName + " Table");
-                    Console.ResetColor();
-                }
+                reader.Close();
+                connection.Close();
 
                 return relations;
             }
+            catch (Exception)
+            {
+                if (reader != null)
+                {
+                    reader.Close();
+                }
+                connection.Close();
+
+                Console.BackgroundColor = ConsoleColor.Red;
+                Console.WriteLine("Error While Get Relations For " + tableName + " Table");
+                Console.ResetColor();
+                ErrorsData += "Error While Get Relations For " + tableName + " Table" + "\n";
+                return null;
+            }
         }
 
-        private void SerializeAndSaveTable(string tableName)
+        private void SerializeAndSaveTable(DBTable table)
         {
-            TableDefinition tableDefinition = GetTableDefinition(tableName);
+            TableDefinition tableDefinition = GetTableDefinition(table);
             if(tableDefinition != null)
             {
                 try
@@ -458,6 +494,26 @@ namespace Logitude.DXMLGenerator.Models
             }
         }
 
+        private string GetDatabaseType(string dbName)
+        {
+            if (dbName.ToLower().Contains("main"))
+            {
+                return "Main";
+            }
+            else if (dbName.ToLower().Contains("global"))
+            {
+                return "Global";
+            }
+            else if (dbName.ToLower().Contains("systemlogs"))
+            {
+                return "SystemLogs";
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         private void BuildExcludedTablesList()
         {
             try
@@ -488,9 +544,9 @@ namespace Logitude.DXMLGenerator.Models
             if (!String.IsNullOrEmpty(ErrorsData))
             {
                 string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-                string filePath = Path.Combine(projectDirectory, "Errors.txt");
+                string filePath = Path.Combine(projectDirectory, ErrorsFileName);
                 File.WriteAllText(filePath, ErrorsData);
-                Console.WriteLine("\n" + "All Errors Are Exported To /Errors.txt\n");
+                Console.WriteLine("\n" + "All Errors Are Exported To /" + ErrorsFileName + "\n");
             }
         }
     }

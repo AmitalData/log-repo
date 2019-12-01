@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="CustomBanks">
+<Table Name="CustomBanks" Schema="Customs" DBType="Main">
   <Column Name="AccountNumber" Type="varchar" Size="11">
     <Constraints Nullable="true" />
   </Column>

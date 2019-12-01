@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="CustomsCollateralsAnswers">
+<Table Name="CustomsCollateralsAnswers" Schema="Customs" DBType="Main">
   <Column Name="AllocatedAmount" Type="decimal">
     <Constraints Nullable="true" />
   </Column>

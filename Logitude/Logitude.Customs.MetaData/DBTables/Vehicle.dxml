@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="Vehicles">
+<Table Name="Vehicles" Schema="Customs" DBType="Main">
   <Column Name="AirBagsNumber" Type="int">
     <Constraints Nullable="true" />
   </Column>

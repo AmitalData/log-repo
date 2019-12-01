@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="ObjectTables">
+<Table Name="ObjectTables" Schema="dbo" DBType="Main">
   <Column Name="AllowCustomFields" Type="bit">
     <Constraints Nullable="false" />
   </Column>

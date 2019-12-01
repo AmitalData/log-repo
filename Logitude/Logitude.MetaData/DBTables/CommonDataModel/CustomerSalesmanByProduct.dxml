@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="CustomerSalesmanByProducts">
+<Table Name="CustomerSalesmanByProducts" Schema="dbo" DBType="Main">
   <Column Name="CustomerId" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>

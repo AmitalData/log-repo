@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="ConvertProgramInfoes">
+<Table Name="ConvertProgramInfoes" Schema="dbo" DBType="Global">
   <Column Name="GlobalDBId" Type="nvarchar" Size="15">
     <Constraints Nullable="false" />
   </Column>

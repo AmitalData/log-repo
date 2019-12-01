@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="Documents">
+<Table Name="Documents" Schema="dbo" DBType="Main">
   <Column Name="CalculatedFileName" Type="nvarchar" Size="120">
     <Constraints Nullable="true" />
   </Column>

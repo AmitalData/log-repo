@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="CustomsItemDetailsHistorys">
+<Table Name="CustomsItemDetailsHistorys" Schema="Customs" DBType="Main">
   <Column Name="CustomsItemID" Type="varchar" Size="9">
     <Constraints Nullable="true" />
   </Column>

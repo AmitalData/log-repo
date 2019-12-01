@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="Quotes">
+<Table Name="Quotes" Schema="dbo" DBType="Main">
   <Column Name="AcceptedDate" Type="datetime">
     <Constraints Nullable="true" />
   </Column>

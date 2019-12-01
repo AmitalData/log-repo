@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="Revaluations">
+<Table Name="Revaluations" Schema="dbo" DBType="Main">
   <Column Name="ChartOfAccountsId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>

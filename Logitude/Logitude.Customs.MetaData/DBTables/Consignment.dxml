@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="Consignments">
+<Table Name="Consignments" Schema="Customs" DBType="Main">
   <Column Name="CargoDescription" Type="nvarchar" Size="256">
     <Constraints Nullable="true" />
   </Column>

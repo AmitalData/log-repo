@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Table Name="OpportunityProductLocations">
+<Table Name="OpportunityProductLocations" Schema="dbo" DBType="Main">
   <Column Name="ChargeableWeight" Type="decimal">
     <Constraints Nullable="true" />
   </Column>
