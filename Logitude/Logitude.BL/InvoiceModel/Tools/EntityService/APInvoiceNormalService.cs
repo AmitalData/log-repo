@@ -345,14 +345,17 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     }
                     else
                     {
-                        aPInvoiceLine.AmountTypeCode = "EXPT";
-                        this.UnexpectedPayablesInvoiceLines_ForAPI.Add(aPInvoiceLine);
+                        //aPInvoiceLine.AmountTypeCode = "EXPT";
+                        //this.UnexpectedPayablesInvoiceLines_ForAPI.Add(aPInvoiceLine);
+
+                        throw new ApplicationException("The Invoice line Foriegn Currency should be the same as Invoice Currency");
                     }
                 }
                 else
                 {
-                    aPInvoiceLine.AmountTypeCode = "EXPT";
-                    this.UnexpectedPayablesInvoiceLines_ForAPI.Add(aPInvoiceLine);
+                    // aPInvoiceLine.AmountTypeCode = "EXPT";
+                    // this.UnexpectedPayablesInvoiceLines_ForAPI.Add(aPInvoiceLine);
+                    throw new ApplicationException("The Invoice line Foriegn Currency should be the same as Invoice Currency");
                 }
             }
             else
