@@ -1061,6 +1061,7 @@
     <Content Include="InvoiceModules\APPayment\Components\EditTabs\APEditMultiCurrency.html" />
     <Content Include="InvoiceModules\APPayment\Components\EditTabs\APPaymentGeneralTabComponent.html" />
     <Content Include="InvoiceModules\APPayment\Components\EditTabs\EditPaymentChequeComponent.html" />
+    <Content Include="InvoiceModules\APPayment\Components\Other\CancelAPPaymentComponent.html" />
     <Content Include="InvoiceModules\ARInvoice\Components\EditTabs\AddEditARGeneralInvoiceLineComponent.html" />
     <Content Include="InvoiceModules\ARInvoice\Components\EditTabs\AddEditARInvoiceLineComponent.html" />
     <Content Include="InvoiceModules\ARInvoice\Components\EditTabs\ARInvoiceDetailsTabConsolidation.html" />
@@ -1947,6 +1948,7 @@
     <TypeScriptCompile Include="Infrastructure\Helpers\SharedDocumentHelper.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\TenantManagmentPrivateLabelsPMService.ts" />
     <TypeScriptCompile Include="InvoiceModules\APInvoice\ModuleDeclarations.ts" />
+    <TypeScriptCompile Include="InvoiceModules\APPayment\Components\Other\CancelAPPaymentComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARInvoice\Components\EditTabs\AddEditARGeneralInvoiceLineComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARInvoice\Components\EditTabs\AddEditARInvoiceLineComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARInvoice\Components\EditTabs\ARInvoiceDetailsTabComponent.ts" />
