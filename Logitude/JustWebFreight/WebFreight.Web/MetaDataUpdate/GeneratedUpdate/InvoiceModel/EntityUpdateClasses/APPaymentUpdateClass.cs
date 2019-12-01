@@ -4354,6 +4354,177 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "AccountingCancelationDate",
+					  						OldFieldName =  "AccountingCancelationDate",
+					  						ObjectTableName =  "APPayment",
+					  						FieldsDataType =  "DateTime",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "AccountingCancelationDate",
+					  						ListPropertyPath =  "AccountingCancelationDate",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "AccountingCancelationDate",
+					  						DefaultText =  "Accounting Cancelation Date",
+					  						FullLocalDefaultText =  "תאריך ביטול חשבונאי",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "DontIncludeInDeductionReport",
+					  						OldFieldName =  "DontIncludeInDeductionReport",
+					  						ObjectTableName =  "APPayment",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "DontIncludeInDeductionReport",
+					  						ListPropertyPath =  "DontIncludeInDeductionReport",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "DontIncludeInDeductionReport",
+					  						DefaultText =  "Dont Include In Deduction Report",
+					  						FullLocalDefaultText =  "האם לדווח ביטול לניכוי במקור",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CancelationNotes",
+					  						OldFieldName =  "CancelationNotes",
+					  						ObjectTableName =  "APPayment",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  500,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  500,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CancelationNotes",
+					  						ListPropertyPath =  "CancelationNotes",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CancelationNotes",
+					  						DefaultText =  "Cancelation Notes",
+					  						FullLocalDefaultText =  "הערות ביטול",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
@@ -4597,8 +4768,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   Feature APPaymentTransferDetailsFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APPayment.Tab.TransferDetails", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPaymentFeatures.APPT", NameTextCodeDefaultText = "Transfer Details", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
-			   TextCode APPaymentEventsTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature APPaymentEventsFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APPayment.Tab.Events", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPaymentFeatures.APPE", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode APPaymentCancelationDetailsTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.TH.CancelationDetails", DefaultText = "Cancelation Details",LocalDefaultText = " פירוט ביטול", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature APPaymentCancelationDetailsFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APPayment.Tab.CancelationDetails", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPaymentFeatures.CNDT", NameTextCodeDefaultText = "Cancelation Details", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+ 
+                 
+			   TextCode APPaymentEventsTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature APPaymentEventsFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APPayment.Tab.Events", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPaymentFeatures.APPE", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -4606,15 +4781,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "APPD",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/APPayment/Components/EditTabs/APPaymentDetailsTabComponent", FeatureId = APPaymentDetailsFeature_TH0.Id, ControlPath = "Simplog.InvoiceLib.Views.Tabs.APPaymentsTabs.APPaymentsDetailsTabControl", ObjectTableId = APPaymentObjectTable.Id, TabNameTextCodeId = APPaymentDetailsTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "APPG",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/APPayment/Components/EditTabs/APPaymentGeneralTabComponent", FeatureId = APPaymentGeneralFeature_TH1.Id, ControlPath = "./InvoiceModules/APPayment/Components/EditTabs/APPaymentGeneralTabComponent", ObjectTableId = APPaymentObjectTable.Id, TabNameTextCodeId = APPaymentGeneralTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "APPG",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/APPayment/Components/EditTabs/APPaymentGeneralTabComponent", FeatureId = APPaymentGeneralFeature_TH1.Id, ControlPath = "./InvoiceModules/APPayment/Components/EditTabs/APPaymentGeneralTabComponent", ObjectTableId = APPaymentObjectTable.Id, TabNameTextCodeId = APPaymentGeneralTextCode_TH1.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "APDO",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/APPayment/Components/EditTabs/APPaymentDocsOutTabComponent", FeatureId = APPaymentDocsOutFeature_TH2.Id, ControlPath = "Simplog.InvoiceLib.Views.Tabs.APPaymentsTabs.APPaymentDocsOutTabControl", ObjectTableId = APPaymentObjectTable.Id, TabNameTextCodeId = APPaymentDocsOutTextCode_TH2.Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "APDO",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/APPayment/Components/EditTabs/APPaymentDocsOutTabComponent", FeatureId = APPaymentDocsOutFeature_TH2.Id, ControlPath = "Simplog.InvoiceLib.Views.Tabs.APPaymentsTabs.APPaymentDocsOutTabControl", ObjectTableId = APPaymentObjectTable.Id, TabNameTextCodeId = APPaymentDocsOutTextCode_TH2.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "APDI",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/APPayment/Components/EditTabs/APPaymentDocsInTabComponent", FeatureId = APPaymentDocsInFeature_TH3.Id, ControlPath = "Simplog.InvoiceLib.Views.Tabs.APPaymentsTabs.APPaymentsDocsInTabControl", ObjectTableId = APPaymentObjectTable.Id, TabNameTextCodeId = APPaymentDocsInTextCode_TH3.Id, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "APDI",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/APPayment/Components/EditTabs/APPaymentDocsInTabComponent", FeatureId = APPaymentDocsInFeature_TH3.Id, ControlPath = "Simplog.InvoiceLib.Views.Tabs.APPaymentsTabs.APPaymentsDocsInTabControl", ObjectTableId = APPaymentObjectTable.Id, TabNameTextCodeId = APPaymentDocsInTextCode_TH3.Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "APPT",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/APPayment/Components/EditTabs/APPaymentTransferTabComponent", FeatureId = APPaymentTransferDetailsFeature_TH4.Id, ControlPath = "Simplog.InvoiceLib.Views.Tabs.APPaymentsTabs.APPaymentTransferTabControl", ObjectTableId = APPaymentObjectTable.Id, TabNameTextCodeId = APPaymentTransferDetailsTextCode_TH4.Id, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "APPT",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/APPayment/Components/EditTabs/APPaymentTransferTabComponent", FeatureId = APPaymentTransferDetailsFeature_TH4.Id, ControlPath = "Simplog.InvoiceLib.Views.Tabs.APPaymentsTabs.APPaymentTransferTabControl", ObjectTableId = APPaymentObjectTable.Id, TabNameTextCodeId = APPaymentTransferDetailsTextCode_TH4.Id, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "APPE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = APPaymentEventsFeature_TH5.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = APPaymentObjectTable.Id, TabNameTextCodeId = APPaymentEventsTextCode_TH5.Id, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CNDT",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/APPayment/Components/EditTabs/APPaymentCancelationDetailsComponent", FeatureId = APPaymentCancelationDetailsFeature_TH5.Id, ControlPath = "CancelationDetailsControl", ObjectTableId = APPaymentObjectTable.Id, TabNameTextCodeId = APPaymentCancelationDetailsTextCode_TH5.Id, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "APPE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = APPaymentEventsFeature_TH6.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = APPaymentObjectTable.Id, TabNameTextCodeId = APPaymentEventsTextCode_TH6.Id, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

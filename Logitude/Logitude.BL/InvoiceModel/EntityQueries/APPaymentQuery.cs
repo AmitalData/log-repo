@@ -106,7 +106,11 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        VendorBankAddress = a.VendorBankAddress,
                                        VendorBankName = a.VendorBankName,
                                        VendorIBANNumber = a.VendorIBANNumber,
-                                       VendorSwift = a.VendorSwift
+                                       VendorSwift = a.VendorSwift,
+                                       AccountingCancelationDate = a.AccountingCancelationDate,
+                                       CancelationNotes=a.CancelationNotes,
+                                       DontIncludeInDeductionReport = a.DontIncludeInDeductionReport,
+
 
                                    }).FirstOrDefault();
 

@@ -2546,6 +2546,8 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                 str = TextCodeTranslator.Translate("General.B.Add") + " Currency";
             }
 
+
+
             if (this.ObjectTableName == "Customs.CustomsVendor") {
                 str = TextCodeTranslator.Translate("Customs.Vendor.O.SearchVendors");
             }
@@ -2696,6 +2698,9 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
             }
 
+            if (this.ObjectTableName == "InterestBasesType") {
+                FinalText = TextCodeTranslator.Translate("Accounting.General.O.NewInterestBases");
+            }
 
             var windowTitle = FinalText; //TextCodeTranslator.Translate("General.O.NewEntity").replace("%Entity", TextCodeTranslator.Translate(this.ObjectTableName));
             logWindow.WindowArgs = args;

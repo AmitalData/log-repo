@@ -248,6 +248,11 @@ export class APInvoiceLinePM {
     public set ContainerTypeId(newValue: string) { if (this.containerTypeId != newValue) { this.containerTypeId = newValue; this.MarkAsDirty("ContainerTypeId"); } }
        
 	 
+    private containerTypeCode: string;
+    public get ContainerTypeCode() { return this.containerTypeCode; }
+    public set ContainerTypeCode(newValue: string) { if (this.containerTypeCode != newValue) { this.containerTypeCode = newValue; this.MarkAsDirty("ContainerTypeCode"); } }
+       
+	 
     private quantity: number;
     public get Quantity() { return this.quantity; }
     public set Quantity(newValue: number) { if (this.quantity != newValue) { this.quantity = newValue; this.MarkAsDirty("Quantity"); } }

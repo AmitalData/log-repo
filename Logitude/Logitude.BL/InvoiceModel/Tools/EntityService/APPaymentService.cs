@@ -303,6 +303,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 AccountingEntityCode = "5",
                 AccountingEntityId = aPPaymentPM.Id,
                 AccountingEntityReference = aPPaymentPM.PaymentNo,
+                AccountingDate = aPPaymentPM.AccountingCancelationDate,
+                LineNotes = aPPaymentPM.CancelationNotes,
             });
 
         }
