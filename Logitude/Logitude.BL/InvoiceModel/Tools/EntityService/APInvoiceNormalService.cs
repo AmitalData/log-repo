@@ -337,7 +337,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         {
                             this.GetRates(tenant);
                             double lineAmount = aPInvoiceLine.InvoiceCurrencyAmount != null ? aPInvoiceLine.InvoiceCurrencyAmount.Value : 0;
-                            aPInvoiceLine.InvoiceCurrencyAmount = Math.Round(CalculateLocalAmount(lineAmount, aPInvoiceLine.ForiegnCurrencyId, shipmentPayableLine.CurrencyId, tenant), 2);
+                            aPInvoiceLine.ForiegnCurrencyAmount = Math.Round(CalculateLocalAmount(lineAmount, shipmentPayableLine.CurrencyId, aPInvoiceLine.ForiegnCurrencyId, tenant), 2);
                             aPInvoiceLine.ForiegnCurrencyId = shipmentPayableLine.CurrencyId;
                         }
                         aPInvoiceLine.EntityPayableId = shipmentPayableLine.Id;
