@@ -232,6 +232,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.HybridTest", "Logi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogitudeDataLoading", "LogitudeDataLoading\LogitudeDataLoading.csproj", "{1C73E85C-6D71-4A78-8E4C-17E69AF3C978}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogitudeBatchServicesManager", "LogitudeBatchServicesManager\LogitudeBatchServicesManager.csproj", "{F36D69D9-78F2-4F8A-8083-806EC05DF4DA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		All Projects|Any CPU = All Projects|Any CPU

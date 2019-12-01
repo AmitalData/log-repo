@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace LogitudeBatchServices
 {
-    public partial class LogitudeBatchServices : ServiceBase
+    public partial class LogitudeBatchServices : ServiceBase, IServiceStarter
     {
         public LogitudeBatchServices()
         {
@@ -38,6 +38,11 @@ namespace LogitudeBatchServices
 
         void worker_DoWork(object sender, DoWorkEventArgs e)
         {
+            StartMe(null);
+        }
+
+        public void StartMe(string arg)
+        {
             try
             {
                 EventLog.WriteEntry("worker_DoWork start");
@@ -52,9 +57,8 @@ namespace LogitudeBatchServices
             {
                 EventLog.WriteEntry("LogitudeBatchServices Error");
                 EventLog.WriteEntry(ex.Message);
-            } 
+            }
         }
-
         protected override void OnStop()
         {
             //Dispose();
@@ -71,6 +75,13 @@ namespace LogitudeBatchServices
         public void RegisterClasses()
         {
             ContainerAccessor.Container.RegisterType<ILoggedContactUtil, LoggedContactUtil>("LoggedContactUtil", new InjectionFactory(c => new LoggedContactUtil()));
+        }
+
+        public void Start()
+        {
+            var worker = new BackgroundWorker();
+            worker.DoWork += new DoWorkEventHandler(worker_DoWork);
+            worker.RunWorkerAsync();
         }
     }
 }

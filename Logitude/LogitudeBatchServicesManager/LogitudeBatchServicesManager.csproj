@@ -45,7 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BatchManagerService.cs" />
+    <Compile Include="BatchManagerService.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="BatchManagerService.Designer.cs">
       <DependentUpon>BatchManagerService.cs</DependentUpon>
     </Compile>
