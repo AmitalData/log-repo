@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "336104ef-9893-410d-ae60-c21445a76461",
+		"_postman_id": "b167d450-3e20-4d3a-be1a-87f7958c3ed4",
 		"name": "CreateUpdateShipment copy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -107,6 +107,11 @@
 							"    var idexist8 = idvalue8 !== null;",
 							"    pm.expect(idexist8);",
 							"    ",
+							"     var idvalue9 = (pm.response.json().ShipmentReceivables[0].Id);",
+							"    var idexist9 = idvalue9 !== null;",
+							"    pm.expect(idexist9);",
+							"    ",
+							"    ",
 							"    ",
 							"    ",
 							"    ",
@@ -119,6 +124,7 @@
 							"    pm.environment.set(\"ShipmentTypeId\",idvalue6);",
 							"    pm.environment.set(\"HouseNumber\",idvalue7);",
 							"    pm.environment.set(\"ShipmentPayableId\",idvalue8);",
+							"    pm.environment.set(\"ShipmentReceivableId\",idvalue9);",
 							"",
 							"  ",
 							"    ",
