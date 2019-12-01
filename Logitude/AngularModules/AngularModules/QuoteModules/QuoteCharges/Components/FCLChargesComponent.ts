@@ -718,10 +718,16 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             this.IsSameCostCurrency = false;
             this.IsSaleCurrencySameAsCost = false;
             this.OnFixedSameChanges();
+
+            this.ItemsSource.Collection.filter(d => d.IsAllIN == true).forEach(item => {
+                item.ApplyAllIn();
+            });
         }
 
         else {
-            if (this.EntityPM.QuoteCharges.filter(d => d.IsAllIN).length > 0) {
+            var itemFrieght = this.EntityPM.QuoteCharges.filter(f => f.ChargesGroupCode == "FRT")[0];
+
+            if (this.EntityPM.QuoteCharges.filter(d => d.IsAllIN == true && d.CostCurrencyId != itemFrieght.CostCurrencyId).length > 0) {
                 var messageWindow = new MessageWindow();
                 messageWindow.Show("You can't switch to multi-currency mode till you drop the all-in checks");
                 messageWindow.WindowClosed.subscribe((event: any) => {
@@ -736,6 +742,10 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
                 this.IsSameCostCurrency = true;
                 this.IsSaleCurrencySameAsCost = this.IsSameCostCurrency;
                 this.OnFixedSameChanges();
+
+                this.ItemsSource.Collection.filter(d => d.IsAllIN == true).forEach(item => {
+                    item.ApplyAllIn();
+                });
             }
         }
     }
@@ -3984,10 +3994,13 @@ export class FCLQuoteChargeItem extends BaseComponent {
         if (this.EntityPM.IsAllIN != newValue) {
             this.EntityPM.IsAllIN = newValue;
             this.SetUIProperties_AllIn();
-
-            this.UpdateCostSaleDataVisibility();
-            this.UpdateAllInFreight();
+            this.ApplyAllIn();
         }
+    }
+
+    ApplyAllIn() {
+        this.UpdateCostSaleDataVisibility();
+        this.UpdateAllInFreight();
     }
 
     private UpdateAllInFreight() {
