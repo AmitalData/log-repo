@@ -41,6 +41,7 @@ using Logitude.Customs.BL.Messaging;
 using System.Xml.Serialization;
 using System.Xml;
 using System.IO;
+using Logitude.CustomsMessaging.ResponseServices;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
@@ -381,15 +382,19 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 DF_MSG10000_ImportDeclarationRequestService _dF_MSG10000_ImportDeclarationRequestService = new DF_MSG10000_ImportDeclarationRequestService();
                 var test = _dF_MSG10000_ImportDeclarationRequestService.GetRequest(requestParams);
 
+                DF_NG_2754_MSG10004_ImportFixedDeclarationResponseService dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService = new DF_NG_2754_MSG10004_ImportFixedDeclarationResponseService();
+
+                dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(test.Declaration, requestParams.Tenant);
+
                 XmlSerializer xsSubmit = new XmlSerializer(typeof(UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration));
-                var subReq = new UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration();
+               // var subReq = new UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration();
                 var xml = "";
 
                 using (var sww = new StringWriter())
                 {
                     using (XmlWriter writer = XmlWriter.Create(sww))
                     {
-                        xsSubmit.Serialize(writer, subReq);
+                        xsSubmit.Serialize(writer, test.Declaration);
                         xml = sww.ToString(); // Your XML
                     }
                 }

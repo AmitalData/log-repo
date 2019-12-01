@@ -96,26 +96,37 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         }
 
+        private string GetValueIDType<T>(T codeType)  where T : IDType
+        {
+            if (codeType != null)
+                return   codeType.Value;
+            return null;
+        }
 
+        private string GetValueCodeType<T>(T codeType) where T : CodeType
+        {
+            if (codeType != null)
+                return codeType.Value;
+            return null;
+        }
+
+
+        private string GetValueTextType<T>(T codeType) where T : TextType
+        {
+            if (codeType != null)
+                return codeType.Value;
+            return null;
+        }
         public void MapResponseToDeclaration(UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration declaration, int tenant)
         {
             var context = CustomContext.GetContext(tenant);
-            var myQueryService = new DeclarationQueryService(context);
-            var myDeclarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), tenant);
-            var mySupplierInvoiceItemsTaxUpdateService = new SupplierInvoiceItemsTaxUpdateService(context, new Dictionary<string, IContext>(), tenant);
-            var mySupplierInvoiceItemVehicleModUpdateService = new SupplierInvoiceItemVehicleModUpdateService(context, new Dictionary<string, IContext>(), tenant); // moran 20.10.15 - Task 17209 
-            var mySupplierInvoiceItemModVehicleUpdateService = new SupplierInvoiceItemModVehicleUpdateService(context, new Dictionary<string, IContext>(), tenant); // moran 24.11.15 - Task 17424 
-            //var mySupplierInvoiceItemsTaxesModificationUpdateService = new SupplierInvoiceItemsTaxesModUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
-            var myDeclarationTaxUpdateService = new DeclarationTaxUpdateService(context, new Dictionary<string, IContext>(), tenant);
-            var myDeclarationConstraintUpdateService = new DeclarationConstraintUpdateService(context, new Dictionary<string, IContext>(), tenant);
-            var myDeclarationPaymentQueryService = new DeclarationPaymentQueryService(context);
-
+ 
 
             DeclarationPM declarationPM = new DeclarationPM()
             {
                 ChangeSetOp = ChangeSetOperation.Insert,
-                DeclarationNumber = declaration.ID.Value,
-                DeclarationOfficeCode = declaration.DeclarationOfficeID.Value,
+                DeclarationNumber = GetValueIDType(declaration.ID),
+                DeclarationOfficeCode = GetValueIDType(declaration.DeclarationOfficeID),
       
             
                 //AdditionalDocument ********************
@@ -140,13 +151,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (declaration.DMExtensions != null)
             {
-                declarationPM.CustomFileNo = declaration.DMExtensions.AgentFileReferenceID.Value;
-                declarationPM.ExternalDeclarationNumber = declaration.DMExtensions.ExternalDeclarationID.Value;
+                declarationPM.CustomFileNo = GetValueIDType(declaration.DMExtensions.AgentFileReferenceID);
+                declarationPM.ExternalDeclarationNumber = GetValueIDType(declaration.DMExtensions.ExternalDeclarationID);
                 declarationPM.TaxationDateTime = Convert.ToDateTime(declaration.DMExtensions.TaxationDateTime);
-                declarationPM.AutonomyRegionTypeCode = declaration.DMExtensions.AutonomyRegionType.Value;
-                declarationPM.DeclarationDocumentId = declaration.DMExtensions.PreviousDocument.ID.Value;
-                declarationPM.DeclarationDocumentTypeCode = declaration.DMExtensions.PreviousDocument.TypeCode.Value;
-                declarationPM.LoadingFactor = declaration.DMExtensions.ExpenseLoadingFactor.Value;
+                declarationPM.AutonomyRegionTypeCode = GetValueIDType(declaration.DMExtensions.AutonomyRegionType);
+                declarationPM.DeclarationDocumentId = GetValueIDType(declaration.DMExtensions.PreviousDocument.ID);
+                declarationPM.DeclarationDocumentTypeCode = GetValueCodeType( declaration.DMExtensions.PreviousDocument.TypeCode);
+                declarationPM.LoadingFactor =  declaration.DMExtensions.ExpenseLoadingFactor.Value ;
             }
 
 
@@ -164,15 +175,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             foreach (var importer in declaration.Importer)
             {
-            switch(importer.DMExtensions.RoleCode.Value)
+                if (importer.ID != null)
+               switch(GetValueCodeType(importer.DMExtensions.RoleCode))
                 {
                     case "4":
                         {
                             declarationPM.ImporterTypeCode = importer.ID.schemeID;
                             declarationPM.ImporterAddress = importer.DMExtensions.Address;
                             declarationPM.ImporterName = importer.DMExtensions.Name;
-                            declarationPM.MainImporterEntitlemntTypeCode = importer.DMExtensions.EntitlementTypeCode.Value;
-                         if (importer.ID.schemeID=="2" || importer.ID.schemeID == "3")   declarationPM.ImporterPassCountryCode = importer.DMExtensions.IssueLocation.Value;
+                            declarationPM.MainImporterEntitlemntTypeCode = GetValueCodeType(importer.DMExtensions.EntitlementTypeCode);
+                         if (importer.ID.schemeID=="2" || importer.ID.schemeID == "3")   declarationPM.ImporterPassCountryCode = GetValueTextType(importer.DMExtensions.IssueLocation);
 
                             switch (importer.ID.schemeID)
                             {
@@ -214,8 +226,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             declarationPM.TransferImporterTypeCode = importer.ID.schemeID;
                             declarationPM.TransferImporterAddress = importer.DMExtensions.Address;
                             declarationPM.TransferImporterName = importer.DMExtensions.Name;
-                            declarationPM.TransImporterEntitleTypeCode = importer.DMExtensions.EntitlementTypeCode.Value;
-                            if (importer.ID.schemeID == "2" || importer.ID.schemeID == "3") declarationPM.TransferImporterCountryCode = importer.DMExtensions.IssueLocation.Value;
+                            declarationPM.TransImporterEntitleTypeCode = GetValueCodeType(importer.DMExtensions.EntitlementTypeCode);
+                            if (importer.ID.schemeID == "2" || importer.ID.schemeID == "3") declarationPM.TransferImporterCountryCode = GetValueTextType(importer.DMExtensions.IssueLocation);
 
                             break;
 
@@ -243,8 +255,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             declarationPM.EntitleImporterTypeCode = importer.ID.schemeID;
                             declarationPM.EntitleImporterAddress = importer.DMExtensions.Address;
                             declarationPM.EntitleImporterName = importer.DMExtensions.Name;
-                            declarationPM.ImporterEntitlementTypeCode = importer.DMExtensions.EntitlementTypeCode.Value;
-                            if (importer.ID.schemeID == "2" || importer.ID.schemeID == "3") declarationPM.EntitleImporterCountryCode = importer.DMExtensions.IssueLocation.Value;
+                            declarationPM.ImporterEntitlementTypeCode = GetValueCodeType(importer.DMExtensions.EntitlementTypeCode);
+                            if (importer.ID.schemeID == "2" || importer.ID.schemeID == "3") declarationPM.EntitleImporterCountryCode = GetValueTextType(importer.DMExtensions.IssueLocation);
 
 
                             break;
@@ -260,28 +272,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
         }
 
 
-
-        private string GetImporter(DeclarationImporter Importer)
-        {
-            switch(Importer.ID.schemeID)
-            {
-                case "1":
-                    {
-                        
-                        break;
-                    }
-
-                case "3":
-                case"2":
-                    {
-                        break;
-                    }
-
-             
-
-            }
-            return "";
-        }
+    
+    
         private List<ConsignmentPM> GetConsignments(Declaration declaration)
         {
             if (declaration.GoodsShipment == null || declaration.GoodsShipment.Count() == 0) return null;
@@ -291,18 +283,19 @@ namespace Logitude.CustomsMessaging.ResponseServices
             foreach (var consignment in declaration.GoodsShipment[0].Consignment)
             {
                 ConsignmentPM consignmentPM = new ConsignmentPM();
+                consignmentPM.ChangeSetOp = ChangeSetOperation.Insert;
 
                 if (consignment.TransportContractDocument != null)
-                { consignmentPM.CargoTypeCode = consignment.TransportContractDocument.TypeCode.Value;
+                { consignmentPM.CargoTypeCode = GetValueCodeType(consignment.TransportContractDocument.TypeCode);
                     consignmentPM.ManifestDate = Convert.ToDateTime(consignment.TransportContractDocument.IssueDateTime);
-                    consignmentPM.ManifestNumber = consignment.TransportContractDocument.ID.Value;
+                    consignmentPM.ManifestNumber = GetValueIDType(consignment.TransportContractDocument.ID);
                    }
                 
 
                 if (consignment.TransportContractDocument.DMExtensions != null)
                 {
-                    consignmentPM.SecondCargoID = consignment.TransportContractDocument.DMExtensions.SecondCargoID.Value;
-                    consignmentPM.ThirdCargoID = consignment.TransportContractDocument.DMExtensions.ThirdCargoID.Value;
+                    consignmentPM.SecondCargoID = GetValueIDType(consignment.TransportContractDocument.DMExtensions.SecondCargoID);
+                    consignmentPM.ThirdCargoID = GetValueIDType(consignment.TransportContractDocument.DMExtensions.ThirdCargoID);
 
 
                 //if (consignmentPM.CargoTypeCode =="17")  ***************
@@ -313,41 +306,43 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 if (consignment.UnloadingLocation != null)
                 {
-                    consignmentPM.UnloadPortCode = consignment.UnloadingLocation.ID.Value;
+                    consignmentPM.UnloadPortCode = GetValueIDType(consignment.UnloadingLocation.ID);
                     consignmentPM.UnloadDate = Convert.ToDateTime( consignment.UnloadingLocation.ArrivalDateTime);
 
                 }
 
                 if(consignment.LoadingLocation!= null )
                 {
-                    consignmentPM.LoadingPortCode = consignment.LoadingLocation.ID.Value;
+                    consignmentPM.LoadingPortCode = GetValueIDType(consignment.LoadingLocation.ID);
                 }
 
 
                 if (consignment.DMExtensions!= null)
                 {
-                    consignmentPM.CargoDescription = consignment.DMExtensions.CargoDescription.Value;
-                    if (consignment.DMExtensions.LastReleaseFromWarehousInd.Value == true)
-                        consignmentPM.IsLastReleaseFromWarehous = "T";
-                    else
-                        consignmentPM.IsLastReleaseFromWarehous = "F";
-
-                    consignmentPM.OriginCountryCode = consignment.DMExtensions.ExportationCountryCode.Value;
+                    consignmentPM.CargoDescription = GetValueTextType(consignment.DMExtensions.CargoDescription);
+                    if (consignment.DMExtensions.LastReleaseFromWarehousInd != null)
+                    {
+                        if (consignment.DMExtensions.LastReleaseFromWarehousInd.Value == true)
+                            consignmentPM.IsLastReleaseFromWarehous = "T";
+                        else
+                            consignmentPM.IsLastReleaseFromWarehous = "F";
+                    }
+                    consignmentPM.OriginCountryCode = GetValueCodeType(consignment.DMExtensions.ExportationCountryCode);
 
                     if (consignment.DMExtensions.RegisteredFacility!=null && consignment.DMExtensions.RegisteredFacility.Count()>0)
                     {
                         foreach (var registeredFacility in consignment.DMExtensions.RegisteredFacility)
                         {
-                            switch(registeredFacility.FacilityType.Value)
+                            switch(GetValueCodeType(registeredFacility.FacilityType))
                             {
                                 case "004":
                                     {
-                                        consignmentPM.StorageSiteCode = registeredFacility.ID.Value;
+                                        consignmentPM.StorageSiteCode = GetValueIDType(registeredFacility.ID);
                                         break;
                                     }
                                 case "003":
                                     {
-                                        consignmentPM.ReceiverWarehouseCode = registeredFacility.ID.Value;
+                                        consignmentPM.ReceiverWarehouseCode = GetValueIDType(registeredFacility.ID);
                                         break;
                                     }
                                 case "005":
@@ -356,7 +351,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                         consignmentPM.ConsignmentInternalTransitions = new List<ConsignmentInternalTransitionPM>()
                                         {
                                             new ConsignmentInternalTransitionPM (){
-                                                SiteCode=registeredFacility.ID.Value
+                                               ChangeSetOp = ChangeSetOperation.Insert,
+                                                SiteCode=GetValueIDType(registeredFacility.ID)
                                         }
                                         };
                                         break;
@@ -384,7 +380,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             foreach (var packagesMeasure in packagesMeasures)
             {
                 ConsignmentPackagePM consignmentPackagePM = new ConsignmentPackagePM();
-                consignmentPackagePM.PackageMeasureQualifierCode = packagesMeasure.PackageMeasureQualifier.Value;
+                consignmentPackagePM.ChangeSetOp = ChangeSetOperation.Insert;
+                consignmentPackagePM.PackageMeasureQualifierCode = GetValueCodeType(packagesMeasure.PackageMeasureQualifier);
                 consignmentPackagePM.PackageQuantityTypeCode = packagesMeasure.TotalPackageQuantity.unitCode.ToString();
                 consignmentPackagePM.PackageQuantity =Convert.ToInt32(packagesMeasure.TotalPackageQuantity.Value) ;
                 consignmentPackagePM.GrossMassMeasureTypeCode = packagesMeasure.GrossMassMeasure.unitCode.ToString();
@@ -429,6 +426,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 SupplierInvoicePM supplierInvoicePM = new SupplierInvoicePM()
                 {
+                     ChangeSetOp = ChangeSetOperation.Insert,
                     SequenceNumeric = (int)item.SequenceNumeric,
                     InvoiceNumber = item.Invoice.ID.Value,
                     IssueDate = Convert.ToDateTime(item.Invoice.IssueDateTime),
@@ -477,6 +475,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             foreach (var governmentAgencyGoodsItem in item.GovernmentAgencyGoodsItem)
             {
                 SupplierInvoiceItemPM supplierInvoiceItemPM = new SupplierInvoiceItemPM();
+                supplierInvoiceItemPM.ChangeSetOp = ChangeSetOperation.Insert;
                 supplierInvoiceItemPM.SequenceNumeric =(int)governmentAgencyGoodsItem.SequenceNumeric;
                 supplierInvoiceItemPM.OriginCountryCode = governmentAgencyGoodsItem.Origin.CountryCode.Value;
 
@@ -508,6 +507,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     foreach (var governmentProcedure in governmentAgencyGoodsItem.Commodity.GovernmentProcedure)
                     {
                         SupplierInvoiceItemProcesTypePM supplierInvoiceItemProcesTypePM = new SupplierInvoiceItemProcesTypePM();
+                    supplierInvoiceItemProcesTypePM.ChangeSetOp = ChangeSetOperation.Insert;
                         supplierInvoiceItemProcesTypePM.ProcessTypeCode = governmentProcedure.CurrentCode.Value;
 
                         supplierInvoiceItemPM.SupplierInvoiceItemProcesTypes.Add(supplierInvoiceItemProcesTypePM);
@@ -564,7 +564,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     foreach (var previousDocument in governmentAgencyGoodsItem.PreviousDocument)
                     {
                         SupplierInvoiceItemsConDeclarPM supplierInvoiceItemsConDeclarPM = new SupplierInvoiceItemsConDeclarPM();
-
+                    supplierInvoiceItemsConDeclarPM.ChangeSetOp = ChangeSetOperation.Insert;
                         supplierInvoiceItemsConDeclarPM.DeclarationNumber = previousDocument.ID.Value;
                         supplierInvoiceItemsConDeclarPM.ItemSequence =(int) previousDocument.SequenceNumeric;
                         supplierInvoiceItemsConDeclarPM.DeclarationTypeCode = previousDocument.TypeCode.Value;
@@ -591,7 +591,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
                             foreach (var goodsItemAmount in governmentAgencyGoodsItem.DMExtensions.GoodsItemAmount)
                             {
-                                switch(goodsItemAmount.AmountType.Value)
+                                //    var success = Enum.TryParse<ISO3AlphaCurrencyCodeContentType>(CurrencyCode, out isoCurrency);
+ 
+
+                                switch (goodsItemAmount.AmountType.Value)
                                 {
                                     case "1":
                                         {
@@ -649,6 +652,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
             return supplierInvoiceItemPMs;
         }
 
+
+ 
+
         private List<SupplierInvoiceItemsModPM> GetSupplierInvoiceItemsMods(DeclarationGoodsShipmentGovernmentAgencyGoodsItem governmentAgencyGoodsItem)
         {
             List<SupplierInvoiceItemsModPM> supplierInvoiceItemsModPMs = new List<SupplierInvoiceItemsModPM>();
@@ -657,7 +663,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             foreach (var valuationAdjustment in governmentAgencyGoodsItem.ValuationAdjustment)
             {
                 SupplierInvoiceItemsModPM supplierInvoiceItemsMod = new SupplierInvoiceItemsModPM();
-
+                supplierInvoiceItemsMod.ChangeSetOp = ChangeSetOperation.Insert;
                 supplierInvoiceItemsMod.TypeCode = valuationAdjustment.AdditionCode.Value;
                 supplierInvoiceItemsMod.CurrencyTypeCode = valuationAdjustment.AmountAmount.currencyID.ToString();
                 supplierInvoiceItemsMod.Amount = valuationAdjustment.AmountAmount.Value;
@@ -674,7 +680,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             foreach (var vehicle in governmentAgencyGoodsItem.DMExtensions.Vehicle)
             {
                 SupplierInvoiceItemVehiclePM supplierInvoiceItemVehiclePM = new SupplierInvoiceItemVehiclePM();
-
+                supplierInvoiceItemVehiclePM.ChangeSetOp = ChangeSetOperation.Insert;
                 supplierInvoiceItemVehiclePM.RichbitFileNumber = vehicle.ID.Value;
                 supplierInvoiceItemVehiclePM.VehicleTypeCode = vehicle.IDTypeCode.Value;
 
@@ -696,9 +702,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
             foreach (var customsValuation in declarationGoodsShipment.CustomsValuation)
             {
                  string[] ChargesTypeCode = new string[] { "67,144,I02" };
-                if (!ChargesTypeCode.Contains(customsValuation.ChargesTypeCode.Value)) { 
-                SupplierInvoiceModificationPM supplierInvoiceModificationPM = new SupplierInvoiceModificationPM()
-                {
+                if (!ChargesTypeCode.Contains(customsValuation.ChargesTypeCode.Value)) {
+                    SupplierInvoiceModificationPM supplierInvoiceModificationPM = new SupplierInvoiceModificationPM()
+                    { ChangeSetOp = ChangeSetOperation.Insert,
                     TypeCode = customsValuation.ChargesTypeCode.Value,
                     //  CurrencyTypeCode = customsValuation.OtherChargeDeductionAmount.currencyID,
                     Amount = customsValuation.OtherChargeDeductionAmount.Value
