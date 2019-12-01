@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.HybridTest.LoginServiceReference;
+using Logitude.HybridTest.WcfFactory;
 using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -14,21 +15,12 @@ namespace Logitude.HybridTest.WcfCallers
             GetCurrencyIdEUR();
             GetIncotermIdCIF();
             GetChargeTypeIdAFT();
-            GetPortIdLHR();
-            GetPortIdLAS();
-            GetPortIdAirJFK();
-            GetPortIdOceanSOU();
-            GetPortIdInlandNYC();
-            GetPortIdLON();
-            GetPortIdMAN();
+            PreparePorts.PreparePortsVars();
             GetCountryIdGB();
             GetCountryIdUS();
             UpsertStateIdAK();
             UpsertAgentTest();
-            //UpsertShipperIdTestShipperExport1();
-            //UpsertShipperIdTestShipperImport1();
-            //UpsertConsigneeIdTestConsigneeExport1();
-            //UpsertConsigneeIdTestConsigneeImport1();
+            PrepareCustomers.PrepareCustomersVars();
             UpsertAirlineIdHA();
             UpsertAirlineIdHL();
             UpsertShippingLineIdHSL();
@@ -37,7 +29,7 @@ namespace Logitude.HybridTest.WcfCallers
             UpsertTruckerIdHT2();
             //GetLoggedTenantDB();
             //MoveType();
-            //UpsertVesselIdHV(); //404 !!
+            UpsertVesselIdHV();
             GetPackageTypeIdContainerPC1();
             GetPackageTypeIdContainerPC2();
             GetPackageTypeIdContainerPP1();
@@ -134,9 +126,7 @@ namespace Logitude.HybridTest.WcfCallers
                 OtherCharges = "C",
                 Tenant = TestEnvironmentGlobalParameters.Tenant
             };
-            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(incotermPM);
-            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            Response serviceResponse = AssertResponse(incotermPM);
             return serviceResponse.Result;
         }
         private static IncotermList IncotermExist(IncotermList[] incoterms, string code)
@@ -185,85 +175,6 @@ namespace Logitude.HybridTest.WcfCallers
             }
             return null;
         }
-        private static void GetPortIdLHR()
-        {
-            PortList LHRport = GetPortId(HybridData.PortCodeLHR);
-            HybridData.PortIdLHR = LHRport.Id;
-            HybridData.CountryIdForPortLHR = LHRport.CountryId;
-        }
-        private static void GetPortIdLAS()
-        {
-            PortList LASport = GetPortId(HybridData.PortCodeLAS+" ");
-            HybridData.PortIdLAS = LASport.Id;
-        }
-        private static void GetPortIdMIA()
-        {
-            PortList MIAport = GetPortId(HybridData.PortCodeMIA);
-            HybridData.PortIdMIA = MIAport.Id;
-        }
-        private static void GetPortIdAirJFK()
-        {
-            PortList JFKport = GetPortId(HybridData.PortCodeAirJFK);
-            HybridData.PortIdAirJFK = JFKport.Id;
-            HybridData.CountryIdForPortJFK = JFKport.CountryId;
-        }
-        private static void GetPortIdOceanSOU()
-        {
-            PortList SOUport = GetPortId(HybridData.PortCodeOceanSOU+ "tham");
-            HybridData.PortIdOceanSOU = SOUport.Id;
-        }
-        private static void GetPortIdInlandNYC()
-        {
-            PortList NYCport = GetPortId(HybridData.PortCodeInlandNYC);
-            HybridData.PortIdInlandNYC = NYCport.Id;
-        }
-        private static void GetPortIdLON()
-        {
-            PortList LONport = GetPortId(HybridData.PortCodeLON + "don");
-            HybridData.PortIdLON = LONport.Id;
-        }
-        private static void GetPortIdMAN()
-        {
-            PortList SOUport = GetPortId(HybridData.PortCodeMAN + "ch");
-            HybridData.PortIdMAN = SOUport.Id;
-        }
-        private static PortList GetPortId(string code)
-        {
-            InvokedProperties serviceProperties = new InvokedProperties
-            {
-                ServiceName = "Port",
-                ServiceOperation = "GetList",
-                ServiceResponseIndex = 2,
-                ServiceType = typeof(PortList),
-                ServiceFilterType = typeof(ApiSearchFilters),
-            };
-            ApiSearchFilters filters = new ApiSearchFilters
-            {
-                Take = 10,
-                SearchFields = code
-            };
-
-            Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { filters, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
-            PortList[] ports = (PortList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.Result);
-            if (ports.Length == 0)
-            {
-                serviceParameters = new object[] { filters, 0, serviceResponse };
-                ports = (PortList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-                Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
-                Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);
-                CopyPortFromTenant0ToTestTenant(ports[0]);
-            }
-            return ports[0];
-        }
-        private static void CopyPortFromTenant0ToTestTenant(PortList portPM)
-        {
-            portPM.Tenant = TestEnvironmentGlobalParameters.Tenant;
-            portPM.AddedManually = true;
-            AssertResponse(portPM);
-        }
         private static void GetCountryIdGB()
         {
             InvokedProperties serviceProperties = new InvokedProperties
@@ -306,7 +217,7 @@ namespace Logitude.HybridTest.WcfCallers
             CountryList[] countries = (CountryList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);
-            HybridData.CountryIdUS = countries[countries.Length-1].Id;
+            HybridData.CountryIdUS = countries[0].Id;
         }
         private static void UpsertStateIdAK()
         {
@@ -318,9 +229,7 @@ namespace Logitude.HybridTest.WcfCallers
                 CountryId = HybridData.CountryCodeUS,
                 Tenant = TestEnvironmentGlobalParameters.Tenant,
             };
-            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(statePM);
-            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            Response serviceResponse = AssertResponse(statePM);
             HybridData.StateIdAK = serviceResponse.Result;
         }
         private static void UpsertAgentTest()
@@ -351,9 +260,7 @@ namespace Logitude.HybridTest.WcfCallers
                 CardCode = "new",
 
             });
-            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(agentPM);
-            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            Response serviceResponse = AssertResponse(agentPM);
             HybridData.StateIdAK = serviceResponse.Result;
         }
         private static void UpsertAirlineIdHA()
@@ -367,10 +274,8 @@ namespace Logitude.HybridTest.WcfCallers
                 Prefix = "999",
                 Tenant = TestEnvironmentGlobalParameters.Tenant,
             };
-            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(airlinePM);
-            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
-            HybridData.AirlineIdHA= serviceResponse.Result;
+            Response serviceResponse = AssertResponse(airlinePM);
+            HybridData.AirlineIdHA = serviceResponse.Result;
         }
         private static void UpsertAirlineIdHL()
         {
@@ -383,9 +288,7 @@ namespace Logitude.HybridTest.WcfCallers
                 Prefix = "998",
                 Tenant = TestEnvironmentGlobalParameters.Tenant,
             };
-            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(airlinePM);
-            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            Response serviceResponse = AssertResponse(airlinePM);
             HybridData.AirlineIdHL = serviceResponse.Result;
         }
         private static void UpsertShippingLineIdHSL()
@@ -399,9 +302,7 @@ namespace Logitude.HybridTest.WcfCallers
                 CarrierTypeId = "SL",
                 Tenant = TestEnvironmentGlobalParameters.Tenant,
             };
-            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(shippingLinePM);
-            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            Response serviceResponse = AssertResponse(shippingLinePM);
             HybridData.ShippingLineIdHSL = serviceResponse.Result;
         }
         private static void UpsertShippingLineIdHSL2()
@@ -415,9 +316,7 @@ namespace Logitude.HybridTest.WcfCallers
                 CarrierTypeId = "SL",
                 Tenant = TestEnvironmentGlobalParameters.Tenant,
             };
-            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(shippingLinePM);
-            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            Response serviceResponse = AssertResponse(shippingLinePM);
             HybridData.ShippingLineIdHSL = serviceResponse.Result;
         }
         private static void UpsertTruckerIdHT()
@@ -444,9 +343,7 @@ namespace Logitude.HybridTest.WcfCallers
                 CountryCode = HybridData.CountryCodeGB,
                 StateCode = HybridData.StateCodeAK,
             });
-            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(truckerPM);
-            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            Response serviceResponse = AssertResponse(truckerPM);
             HybridData.TruckerIdHT = serviceResponse.Result;
         }
         private static void UpsertTruckerIdHT2()
@@ -473,9 +370,7 @@ namespace Logitude.HybridTest.WcfCallers
                 CountryCode = HybridData.CountryCodeGB,
                 StateCode = HybridData.StateCodeAK,
             });
-            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(truckerPM);
-            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            Response serviceResponse = AssertResponse(truckerPM);
             HybridData.TruckerIdHT2 = serviceResponse.Result;
         }
         private static void UpsertVesselIdHV()
@@ -489,9 +384,7 @@ namespace Logitude.HybridTest.WcfCallers
                 AddedManually = true,
                 Tenant = TestEnvironmentGlobalParameters.Tenant,
             };
-            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(vesselPM);
-            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            Response serviceResponse = AssertResponse(vesselPM);
             HybridData.VesselIdHV = serviceResponse.Result;
         }
         private static void GetPackageTypeIdContainerPC1()
@@ -587,9 +480,7 @@ namespace Logitude.HybridTest.WcfCallers
                 PrintAs = "PC'1",
                 Tenant = TestEnvironmentGlobalParameters.Tenant,
             };
-            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(packageTypePM);
-            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            Response serviceResponse = AssertResponse(packageTypePM);
             return serviceResponse.Result;
         }
         private static void UpsertVendorIdHVEN()
@@ -611,9 +502,7 @@ namespace Logitude.HybridTest.WcfCallers
                 CountryCode = HybridData.CountryCodeUS,
                 CardCode = "new",
             });
-            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(vendorPM);
-            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            Response serviceResponse = AssertResponse(vendorPM);
             HybridData.VendorIdHVEN = serviceResponse.Result;
         }
         private static void GetPackageTypeIdContainerPP2()
@@ -642,11 +531,12 @@ namespace Logitude.HybridTest.WcfCallers
             else
                 HybridData.PackageTypeIdPP2 = packageTypes[0].Id;
         }
-        private static void AssertResponse<T>(T entityPM)
+        private static Response AssertResponse<T>(T entityPM)
         {
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(entityPM);
-            Assert.IsFalse(serviceResponse.HasError, "Prepare System Vars Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNotNull(serviceResponse.Result, "Prepare System Vars Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsFalse(serviceResponse.HasError, "Prepare Shipment Vars Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsNotNull(serviceResponse.Result, "Prepare Shipment Vars Failed! " + serviceResponse.ErrorMessage);
+            return serviceResponse;
         }
     }
 }

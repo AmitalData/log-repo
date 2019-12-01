@@ -12,12 +12,15 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_Activity_UPSERT()
         {
+            Assert.Inconclusive("Not Implemented !");
 
         }
 
         [TestMethod]
         public void Test_Activity_GetActivities()
         {
+            Assert.Inconclusive("Not Implemented !");
+
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "Activity",

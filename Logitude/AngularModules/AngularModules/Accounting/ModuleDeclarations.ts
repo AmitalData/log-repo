@@ -9,7 +9,7 @@ import {ReceivablePageComponent} from './Components/Workspaces/Receivable/Receiv
 import {PayablePageComponent} from './Components/Workspaces/Payable/PayablePageComponent';
 import {BanksPageComponent} from './Components/Workspaces/Banks/BanksPageComponent';
 import { MiscPageComponent } from './Components/Workspaces/Misc/MiscPageComponent';
-
+import { InterestPageComponent } from './Components/Workspaces/Interest/InterestPageComponent';
 
 
 import {NewGLAccountComponent} from './Components/NewEntity/NewGLAccountComponent';
@@ -69,7 +69,10 @@ import {ReconcileExternalPageLineListTemplate} from './Components/ListTemplates/
 import {FieldTemplateComponent} from './Components/Templates/FieldTemplateComponent';
 import {ManageReconciliationListTemplate} from './Components/ListTemplates/ManageReconciliationListTemplate';
 import {TaxReportListTemplate} from './Components/ListTemplates/TaxReportListTemplate';
-import {ReconciliationLineListTemplate} from './Components/ListTemplates/ReconciliationLineListTemplate';
+import { ReconciliationLineListTemplate } from './Components/ListTemplates/ReconciliationLineListTemplate';
+
+import { InterestBasesTypeDetailsTabComponent } from './Components/EditTabs/Interest/DetailsTab/InterestBasesTypeDetailsTabComponent';
+
 
 import {ReconcileComponent} from './Components/Others/ReconcileComponent';
 import {ReconciledMessage} from './Components/Others/ReconciledMessage';
@@ -88,6 +91,7 @@ import {AccountingFlatFileDownloadComponent} from './Components/Others/Accountin
 import { GLAccountOverviewComponent } from './Components/EditTabs/GLAccount/GLAccountOverviewComponent';
 import { TaxDeductionReportLogTabComponent } from './Components/EditTabs/TaxDeductionReport/TaxDeductionReportLogTabComponent';
 import { NewTaxDeductionReportComponent } from './Components/NewEntity/NewTaxDeductionReportComponent';
+import { AddEditInterestBasesPeriodComponent } from './Components/EditTabs/Interest/DetailsTab/AddEditInterestBasesPeriod/AddEditInterestBasesPeriodComponent';
 
 // Short Titles
 import {GLAccountShortTitleComponent} from './Components/ShortTitles/GLAccountShortTitleComponent';
@@ -113,7 +117,7 @@ export const Components =
         PayablePageComponent,
         BanksPageComponent,
         MiscPageComponent,
-
+        InterestPageComponent,
         //New Entites
         NewGLAccountComponent,
         NewChartOfAccountComponent,
@@ -171,6 +175,8 @@ export const Components =
         OpenFormatReportLogTabComponent,
         TaxDeductionReportGeneralTabComponent,
         BankPageEventsComponent,
+        InterestBasesTypeDetailsTabComponent,
+
         //Templates
         GlAccountLedgerTransactionsListTemplate,
         ReconcileExternalPageListTemplate,
@@ -205,6 +211,7 @@ export const Components =
         IntegrityCheckTabComponent,
         AccountingNoteComponent,
         NewIntegrityCheckComponent,
+        AddEditInterestBasesPeriodComponent,
     ];
 
 export class ModuleDeclarations {
@@ -223,7 +230,7 @@ export class ModuleDeclarations {
             case "PayablePageComponent": { myResult = PayablePageComponent; break; }
             case "BanksPageComponent": { myResult = BanksPageComponent; break; }
             case "MiscPageComponent": { myResult = MiscPageComponent; break; }
-
+            case "InterestPageComponent":{ myResult = InterestPageComponent; break;}
             //New Entites
             case "NewGLAccountComponent": { myResult = NewGLAccountComponent; break; }
             case "NewChartOfAccountComponent": { myResult = NewChartOfAccountComponent; break; }
@@ -284,6 +291,7 @@ export class ModuleDeclarations {
             case "OpenFormatReportLogTabComponent": { myResult = OpenFormatReportLogTabComponent; break; }
             case "TaxDeductionReportGeneralTabComponent": { myResult = TaxDeductionReportGeneralTabComponent; break; }
             case "BankPageEventsComponent": { myResult = BankPageEventsComponent; break; }
+            case "InterestBasesTypeDetailsTabComponent": { myResult = InterestBasesTypeDetailsTabComponent; break;}
             //Templates
             case "GlAccountLedgerTransactionsListTemplate": { myResult = GlAccountLedgerTransactionsListTemplate; break; }
             case "ReconcileExternalPageListTemplate": { myResult = ReconcileExternalPageListTemplate; break; }
@@ -318,6 +326,8 @@ export class ModuleDeclarations {
             case "IntegrityCheckTabComponent": { myResult = IntegrityCheckTabComponent; break; }
             case "AccountingNoteComponent": { myResult = AccountingNoteComponent; break; }
             case "NewIntegrityCheckComponent": { myResult = NewIntegrityCheckComponent; break; }
+            case "AddEditInterestBasesPeriodComponent": { myResult = AddEditInterestBasesPeriodComponent; break; }
+
         }
 
         return myResult;

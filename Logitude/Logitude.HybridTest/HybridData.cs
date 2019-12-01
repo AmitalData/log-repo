@@ -8,21 +8,6 @@ namespace Logitude.HybridTest
 {
     public struct HybridData
     {
-        //Codes
-        //public const string VendorCode = "HVEN";
-        //public const string TruckerCode = "HTRU";
-        //public const string CurrencyCode = "HCR";
-        //public const string VesselCode = "HV";
-        //public const string StateCode = "HS";
-        //public const string CardContactCode = "HCC";
-        //public const string HouseShipmentCode = "Hybrid HShipment";
-        //public const string BankCode = "HB";
-        public const string QuoteCode = "Hybrid Quote";
-        public const string DirectShipmentCode = "Hybrid DShipment";
-
-        //Id
-        public static string DirectShipmentId { get; set; }
-        public static string QuoteId { get; set; }
         public static string ActivityId { get; set; }
 
         #region ShipmentVars
@@ -41,6 +26,7 @@ namespace Logitude.HybridTest
         public static string ChargeTypeIdAFT { get; set; }
         public static string ChargeTypeIATACodeId { get; set; }
         public static string ChargeTypeVatTypeId { get; set; }
+        #region PortsVars
         //port
         public const string PortCodeLHR = "LHR";
         public const string PortCodeLAS = "LAS";
@@ -60,6 +46,7 @@ namespace Logitude.HybridTest
         public static string PortIdInlandNYC { get; set; }
         public static string PortIdLON { get; set; }
         public static string PortIdMAN { get; set; }
+        #endregion
         //Country
         public const string CountryCodeGB = "GB";
         public const string CountryCodeUS = "US";
@@ -68,6 +55,18 @@ namespace Logitude.HybridTest
         public static string CountryIdUS { get; set; }
         public static string StateIdAK { get; set; }
         //Customer
+        public const string CustomerCodeHCustomer = "HCShipper";
+        public const string CustomerContactCodeHCustomer = "Shipper Contract";
+        public const string CustomerCodeTestShipperImport1 = "HShipper2";
+        public const string CustomerCodeTestConsigneeExport1 = "HConsignee";
+        public const string CustomerCodeTestConsigneeImport1 = "HConsignee2";
+
+        public static string CustomerIdHCustomer { get; set; }
+        public static string CustomerAddressIdHCustomer { get; set; }
+
+        public static string CustomerIdTestShipperImport1 { get; set; }
+        public static string CustomerIdTestConsigneeExport1 { get; set; }
+        public static string CustomerIdTestConsigneeImport1 { get; set; }
 
         //AirLine
         public const string AirlineCodeHA = "HA";
@@ -111,7 +110,7 @@ namespace Logitude.HybridTest
         #region OtherVars
 
         public const string ShippingAgentCodeHSAG = "HSAG";
-        public const string PortCodeHP = "HP";
+        public const string PortCodeHP = "HFP";
         public const string PackageTypeCodeHPT = "HPT";
         public const string IncotermCodeHI = "HI";
         public const string GlobalZoneCodeHZ = "HZ";
@@ -125,12 +124,13 @@ namespace Logitude.HybridTest
         public const string ShippingLineCodeHSLN = "HSLN";
         public const string SpecialServicesTypeCodeHSST = "HSST";
         public const string AddressCodeHA = "HA";
-        public const string CustomerCodeHCustomer = "HCustomer";
         public const string ContactCode = "Hybrid Contact";
         public const string CurrencyCodeHCR = "HCR";
         public const string CountryCodeHC = "HC";
         public const string CityCodeHCity = "HCity";
         public const string CustomAgentCodeHCAgent = "HCAgent";
+        public const string QuoteCode = "Hybrid Quote";
+        public const string DirectShipmentCode = "Hybrid DShipment";
 
         public static string FirstOpportunityId { get; set; }
         public static string DocumentTypeIdHDT { get; set; }
@@ -138,6 +138,8 @@ namespace Logitude.HybridTest
         public static string AddressIdHA { get; set; }
         public static string ContactId { get; set; }
         public static string CityIdHCity { get; set; }
+        public static string DirectShipmentId { get; set; }
+        public static string QuoteId { get; set; }
 
 
         #endregion

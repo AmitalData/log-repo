@@ -1,7 +1,7 @@
 ﻿using System;
+using Logitude.HybridTest.LoginServiceReference;
 using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 namespace Logitude.HybridTest
 {
     [TestClass]
@@ -10,96 +10,90 @@ namespace Logitude.HybridTest
         [TestMethod]
         public void Test_Login_With_Valid_APICredintials()
         {
+            var apiCred = new APICredentialsParameters() { PrimaryKey = TestEnvironmentGlobalParameters.APICredential_PrimaryKey, SecondaryKey = TestEnvironmentGlobalParameters.APICredential_SecondaryKey, Tenant = TestEnvironmentGlobalParameters.Tenant };
             InvokedProperties serviceProperties = new InvokedProperties
             {
-                ServiceName = "Shipment",
-                ServiceOperation = "CreateEvent",
-                ServiceResponseIndex = 0,
-                ServiceType = null,
-                ServiceFilterType = null,
+                ServiceName = "Login",
+                ServiceOperation = "LoginByCredential",
+                ServiceType = typeof(APICredentialsParameters),
             };
 
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { TestEnvironmentGlobalParameters.Tenant, null, HybridData.DirectShipmentCode, HybridData.UserIdHU, "CREV", DateTime.Now, DateTime.Now, "Hybrid Test Event" };
-            serviceResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Create Event Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Create Event Failed! " + serviceResponse.Result);
-
-            //string serverURL = System.Configuration.ConfigurationManager.AppSettings.Get("ServerURL");
-            ////P:9ae681d0-1d42-4293-9bea-aadef12e20dc
-            ////S:1dac32e1-84e4-496a-b4d2-687f16d04e3b
-            //var apiCred = new LoginServiceReference.APICredentialsParameters() { PrimaryKey = TestEnvironmentGlobalParameters.APICredential_PrimaryKey, SecondaryKey = TestEnvironmentGlobalParameters.APICredential_SecondaryKey, Tenant = TestEnvironmentGlobalParameters.Tenant };
-            //LoginServiceReference.LoginWcfServiceClient loginService = new LoginServiceReference.LoginWcfServiceClient();
-            //string serviceAddress = loginService.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
-            //loginService.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
-            //Logitude.Server.Tools.Response loginResponse = loginService.LoginByCredential("", apiCred);
-            //if (!loginResponse.HasError)
-            //{
-            //    string Token = loginResponse.Result;
-            //}
-            //Assert.AreEqual(loginResponse.HasError, false, loginResponse.ErrorMessage);
-            //Assert.IsNotNull(loginResponse.Result, "The Token returned is null " + loginResponse.ErrorMessage);
-            //return Token;
+            object[] serviceParameters = new object[] { "", apiCred };
+            Response loginResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+            if (!loginResponse.HasError)
+                TestEnvironmentGlobalParameters.Token = loginResponse.Result;
+            else
+                Assert.Fail("Login Failed");
+            Assert.IsNotNull(loginResponse.Result, "The Token returned is null " + loginResponse.ErrorMessage);
         }
 
         [TestMethod]
         public void Test_Login_With_Invalid_APICredintials()
         {
-            //string serverURL = System.Configuration.ConfigurationManager.AppSettings.Get("ServerURL");
-             
-            //var apiCred = new LoginServiceReference.APICredentialsParameters() { PrimaryKey = "1111", SecondaryKey = "2222", Tenant = TestEnvironmentGlobalParameters.Tenant };
-            //LoginServiceReference.LoginWcfServiceClient loginService = new LoginServiceReference.LoginWcfServiceClient();
-            //loginService.Endpoint.Address = new System.ServiceModel.EndpointAddress(serverURL + "/WcfApi/LoginWcfService.svc");
-            //Logitude.Server.Tools.Response loginResponse = loginService.LoginByCredential("", apiCred);
-            
-            //Assert.AreEqual(loginResponse.HasError, true, loginResponse.ErrorMessage);
-            //Assert.IsNull(loginResponse.Result, "The token was returned by the service " + loginResponse.Result);
-            //return Token;
+            var apiCred = new APICredentialsParameters() { PrimaryKey = "1111", SecondaryKey = "2222", Tenant = TestEnvironmentGlobalParameters.Tenant };
+            InvokedProperties serviceProperties = new InvokedProperties
+            {
+                ServiceName = "Login",
+                ServiceOperation = "LoginByCredential",
+                ServiceType = typeof(APICredentialsParameters),
+            };
+
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { "", apiCred };
+            Response loginResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+            Assert.IsTrue(loginResponse.HasError, loginResponse.ErrorMessage);
+            Assert.IsNull(loginResponse.Result, "The Token returned is null " + loginResponse.ErrorMessage);
         }
 
         [TestMethod]
         public void Test_Login_With_ValidPassword()
         {
-            //LoginServiceReference.LoginWcfServiceClient serviceClient = new LoginServiceReference.LoginWcfServiceClient();
-            //string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
-            //serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
-            //using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
-            //{
-            //    Response serviceResponse = serviceClient.Login("Hybrid@fnarsoft.com", "!H0");
-            //    Assert.IsFalse(serviceResponse.HasError, "Login Failed! " + serviceResponse.ErrorMessage);
-            //    Assert.IsNotNull(serviceResponse.Result, "Login Failed! " + serviceResponse.ErrorMessage);
-            //}
+            InvokedProperties serviceProperties = new InvokedProperties
+            {
+                ServiceName = "Login",
+                ServiceOperation = "Login",
+            };
+
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { "Hybrid@fnarsoft.com", "!H0" };
+            Response loginResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+            Assert.IsFalse(serviceResponse.HasError, "Login Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsNotNull(serviceResponse.Result, "Login Failed! " + serviceResponse.ErrorMessage);
         }
-
-
 
         [TestMethod]
         public void Test_Login_With_InvalidPassword()
         {
-            //LoginServiceReference.LoginWcfServiceClient serviceClient = new LoginServiceReference.LoginWcfServiceClient();
-            //string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
-            //serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
-            //using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
-            //{
-            //    Response serviceResponse = serviceClient.Login("Hybrid@fnarsoft.com", "WrongPass");
-            //    Assert.IsTrue(serviceResponse.HasError, "Login Succeeded With Invalid Email! " + serviceResponse.ErrorMessage);
-            //    Assert.IsNull(serviceResponse.Result, "Login Succeeded With Invalid Email! " + serviceResponse.ErrorMessage);
-            //}
+            InvokedProperties serviceProperties = new InvokedProperties
+            {
+                ServiceName = "Login",
+                ServiceOperation = "Login",
+            };
+
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { "Hybrid@fnarsoft.com", "WrongPass" };
+            Response loginResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+            Assert.IsTrue(serviceResponse.HasError, "Login Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsNull(serviceResponse.Result, "Login Failed! " + serviceResponse.ErrorMessage);
         }
 
         [TestMethod]
         public void Test_Login_GetUserTenants()
         {
-            //LoginServiceReference.LoginWcfServiceClient serviceClient = new LoginServiceReference.LoginWcfServiceClient();
-            //string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
-            //serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
-            //using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
+            //InvokedProperties serviceProperties = new InvokedProperties
             //{
-            //    Response serviceResponse = new Response();
-            //    LoginServiceReference.TenantInfo[] serviceResult = serviceClient.GetUserTenants("Hybrid@fnarsoft.com", ref serviceResponse);
-            //    Assert.IsTrue(serviceResponse.HasError, "User Must Be Not Authorized! " + serviceResponse.ErrorMessage);
-            //    Assert.IsNull(serviceResponse.Result, "User Must Be Not Authorized! " + serviceResponse.ErrorMessage);
-            //}
+            //    ServiceName = "Login",
+            //    ServiceOperation = "GetUserTenants",
+            //    ServiceResponseIndex = 1,
+            //    ServiceType = typeof(TenantInfo),
+            //};
+
+            //Response serviceResponse = new Response();
+            //object[] serviceParameters = new object[] { "Hybrid@fnarsoft.com", serviceResponse };
+            //TenantInfo[] userTenants = (TenantInfo[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+            //Assert.IsTrue(serviceResponse.HasError, "User Must Be Not Authorized! " + serviceResponse.ErrorMessage);
+            //Assert.IsNull(serviceResponse.Result, "User Must Be Not Authorized! " + serviceResponse.ErrorMessage);
         }
     }
 }
