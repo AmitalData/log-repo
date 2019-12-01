@@ -65,7 +65,7 @@ export class ARInvoiceShortTitleComponent {
     public EntityNumber: string = null;
     GetEntityNumber() {
 
-        if (this.EntityPM.StatusCode == "DR") {
+        if (this.EntityPM.StatusCode == "DR" || this.EntityPM.StatusCode == "LL") {
             if (this.EntityPM.DraftNumber) {
                 this.EntityNumber = this.EntityPM.DraftNumber + ", ";
             }
