@@ -81,8 +81,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
                 else
                 {
-
-                    listPoco = listPoco.Where(r => (r.CourierPaymentStatusCode == "R" || string.IsNullOrWhiteSpace(r.CourierPaymentStatusCode))).ToList();
+                    if (customResponse.CourierDeclarationStatusCode == "RV")
+                    {
+                        listPoco = listPoco.Where(r => (r.CourierPaymentStatusCode != "P")).ToList();
+                    }
+                    else
+                    {
+                        listPoco = listPoco.Where(r => (r.CourierPaymentStatusCode == "R" || string.IsNullOrWhiteSpace(r.CourierPaymentStatusCode))).ToList();
+                    }
+                        
                     if (listPoco.Count == 0)
                     {
                         mess.AppendLine($"יש להוסיף בדיקה לשדר מצהר תקינים ושדר הצהרה תקינים שרק הצהרות שלא שולמו ישלחו  {requestParams.AppicationId} ");

@@ -387,8 +387,8 @@ export class DeclarationCollateralsComponent extends BaseComponent implements On
 
     OpenEditCollateralAnswerWindow() {
       //   if (!AppTool.IsNullOrEmpty(item)) {
-            var windowArgs: any = {};
-
+        var windowArgs: any = {};
+        windowArgs.DeclarationId = this.EntityPM.Id;
         windowArgs.collateralToSendlist = this._customsCollateralAnswerSharedDataService._SelectedItems.Collection;
             var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.CollateralAnswer");
 
