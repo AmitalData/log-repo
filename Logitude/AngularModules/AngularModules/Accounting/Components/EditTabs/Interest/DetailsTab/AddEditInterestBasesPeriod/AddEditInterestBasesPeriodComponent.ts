@@ -61,9 +61,9 @@ export class AddEditInterestBasesPeriodComponent extends BaseComponent {
     }
     CheckInterestBaseStartDateExist(InterestBaseStartDate: Date, CreateDate:Date): boolean {
         for (let i = 0; i < this.DataContext.fatherComponent.InterestBasesPeriodsList.Length; i++) {
-            if (this.DataContext.fatherComponent.InterestBasesPeriodsList.Collection[i].InterestBaseStartDate.getTime() === InterestBaseStartDate.getTime()) {
+            if (new Date(this.DataContext.fatherComponent.InterestBasesPeriodsList.Collection[i].InterestBaseStartDate).getTime() === new Date(InterestBaseStartDate).getTime()) {
                 if (!this.DataContext.IsNewEntity) {
-                    if (this.DataContext.fatherComponent.InterestBasesPeriodsList.Collection[i].CreateDate.getTime() != CreateDate.getTime()) {
+                    if (new Date(this.DataContext.fatherComponent.InterestBasesPeriodsList.Collection[i].CreateDate).getTime() != new Date(CreateDate).getTime()) {
                         return false;
                     }
                 }
