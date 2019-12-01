@@ -1176,6 +1176,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             cashBookLine.ARPChequeId = aRPaymentCheque.Id;
             cashBookLine.ChangeSetOp = ChangeSetOperation.Insert;
             cashBookLine.IsDeposited = false;
+            cashBookLine.ChequeNumber = aRPaymentCheque.ChequeNumber;
+            cashBookLine.Bank = aRPaymentCheque.BankAccount;
 
             ICashBookLineUpdateServiceExt cashBookLineUpdate = ContainerAccessor.Container.Resolve(typeof(ICashBookLineUpdateServiceExt), "CashBookLineUpdateServiceExt", new ParameterOverride("", 1)) as ICashBookLineUpdateServiceExt;
             cashBookLineUpdate.Update(cashBookLine);

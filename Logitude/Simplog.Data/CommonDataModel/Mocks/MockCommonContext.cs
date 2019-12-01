@@ -1136,7 +1136,9 @@ namespace Simplog.Data.CommonDataModel.Mocks
         {
             get { throw new NotImplementedException(); }
         }
-        
+
+       
+
         List<TermsofUse> termOfUses;
         MockObjectSet<TermsofUse> termOfUsesObjectSet;
         public IDbSet<TermsofUse> TermsofUses
@@ -2715,6 +2717,19 @@ namespace Simplog.Data.CommonDataModel.Mocks
         }
 
         public IDbSet<SharedLogisticsContactLastLogin> SharedLogisticsContactLastLogins
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public IDbSet<UserLastSettings> UserLastSettings
         {
             get
             {

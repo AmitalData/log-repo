@@ -15,7 +15,7 @@ namespace Logitude.HybridTest.CommonServices
         {
             DocumentTypePM documentTypePM = new DocumentTypePM()
             {
-                Code = HybridData.DocumentTypeCode,
+                Code = HybridData.DocumentTypeCodeHDT,
                 Name = "Hybrid DocumentType",
                 ObjectTableName = "Shipment",
                 DocumentTypeCategoryCode = "O",
@@ -26,12 +26,12 @@ namespace Logitude.HybridTest.CommonServices
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(documentTypePM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
-            HybridData.DocumentTypeId = serviceResponse.Result;
+            HybridData.DocumentTypeIdHDT = serviceResponse.Result;
         }
         [TestMethod]
         public void Test_DocumentType_GetDocumentTypeByCode()
         {
-            if(HybridData.DocumentTypeId == null)
+            if(HybridData.DocumentTypeIdHDT == null)
                 Test_DocumentType_UPSERT();
             InvokedProperties serviceProperties = new InvokedProperties
             {
@@ -43,16 +43,16 @@ namespace Logitude.HybridTest.CommonServices
             };
 
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { HybridData.DocumentTypeCode, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
+            object[] serviceParameters = new object[] { HybridData.DocumentTypeCodeHDT, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
             DocumentTypePM documentType = (DocumentTypePM)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get Document Type By Code Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get Document Type By Code Failed! " + serviceResponse.Result);
-            Assert.AreEqual(documentType.Code, HybridData.DocumentTypeCode, "Get Document Type By Code Failed!");
+            Assert.AreEqual(documentType.Code, HybridData.DocumentTypeCodeHDT, "Get Document Type By Code Failed!");
         }
         [TestMethod]
         public void Test_DocumentType_GetDocumentTypes()
         {
-            if (HybridData.DocumentTypeId == null)
+            if (HybridData.DocumentTypeIdHDT == null)
                 Test_DocumentType_UPSERT();
             InvokedProperties serviceProperties = new InvokedProperties
             {
@@ -74,7 +74,7 @@ namespace Logitude.HybridTest.CommonServices
                 documentTypes = (DocumentTypeList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
                 foreach (DocumentTypeList documentType in documentTypes)
                 {
-                    if (documentType.Code == HybridData.DocumentTypeCode)
+                    if (documentType.Code == HybridData.DocumentTypeCodeHDT)
                     {
                         DocumentTypeExist = true;
                         break;

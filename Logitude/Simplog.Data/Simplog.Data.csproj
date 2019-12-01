@@ -456,6 +456,7 @@
     <Compile Include="CommonDataModel\Mapping\TenantManagmentLicenseMap.cs" />
     <Compile Include="CommonDataModel\Mapping\TwoFactorAuthenticationDeviceMap.cs" />
     <Compile Include="CommonDataModel\Mapping\LoginPolicyMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\UserLastSettingsMap.cs" />
     <Compile Include="CommonDataModel\Mapping\UserLicenseMap.cs" />
     <Compile Include="CommonDataModel\Mapping\UserPermittedProductMap.cs" />
     <Compile Include="CommonDataModel\Mapping\UsersReleaseNotesDisplayMap.cs" />
@@ -489,6 +490,7 @@
     <Compile Include="CommonDataModel\Repositories\ComputingPartnerTableRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ComputingPartnerTranslationRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ContactsUnseenEntitieRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\UserLastSettingsRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\DocumentsExecutionLogRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CreateSharedLogisticsContactLastLoginRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\DWHBuildStatusRepository.cs" />

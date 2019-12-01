@@ -149,7 +149,8 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
             });
             if (sortsList != null) {
                 sortsList = sortsList.sort((a, b) => { return (a.order === b.order) ? 0 : (a.order < b.order) ? -1 : 1 });
-                this.IsSorting = true;
+                //this.IsSorting = true;
+              
                 //this.agGrid.api.setSortModel(sortsList);
             }
             this.agGrid.api.refreshCells();
@@ -413,8 +414,10 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
 
     }
     onSortChanged(params) {
-        if (!this.IsSorting)
+        if (!this.IsSorting) {
             this.hasChanged = true;
+            this.IsFilterValueChanged = true;
+        }
         else {
             this.hasChanged = false;
             this.IsSorting = false;

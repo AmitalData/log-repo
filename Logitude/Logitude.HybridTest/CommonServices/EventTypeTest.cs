@@ -14,7 +14,7 @@ namespace Logitude.HybridTest.CommonServices
         {
             EventTypePM eventTypePM = new EventTypePM()
             {
-                Code = HybridData.EventTypeCode,
+                Code = HybridData.EventTypeCodeHET,
                 EnglishName = "Hybrid EventType",
                 LocalName = "Hybrid EventType",
                 ObjectTableName = "Shipment",

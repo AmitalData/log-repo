@@ -85,6 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "UserLastSettings",
 			      				    IsNew =  true,
 			      				    DBTableName =  "UserLastSettings",
+			      				    OldDBTableName =  "UserLastSettings",
 			      				    ObjectTableSingular =  "UserLastSetting",
 			      				    ObjectTablePlural =  "UserLastSettings",
 			      				    HasCustomFilter =  false,
@@ -115,7 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "User Last Settings",
-			      				    Code =  "714c",
+			      				    Code =  "4551",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -138,6 +139,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "UserId",
+					  						OldFieldName =  "UserId",
 					  						ObjectTableName =  "UserLastSettings",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
@@ -158,6 +160,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "UserId",
 					  						ListPropertyPath =  "UserId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -193,6 +196,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "ControlNameSpace",
+					  						OldFieldName =  "ControlNameSpace",
 					  						ObjectTableName =  "UserLastSettings",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -212,6 +216,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ControlNameSpace",
 					  						ListPropertyPath =  "ControlNameSpace",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -247,6 +252,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "FilterName",
+					  						OldFieldName =  "FilterName",
 					  						ObjectTableName =  "UserLastSettings",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -266,6 +272,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "FilterName",
 					  						ListPropertyPath =  "FilterName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -301,6 +308,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "FilterValue",
+					  						OldFieldName =  "FilterValue",
 					  						ObjectTableName =  "UserLastSettings",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -320,6 +328,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "FilterValue",
 					  						ListPropertyPath =  "FilterValue",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

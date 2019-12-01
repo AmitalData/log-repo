@@ -14,11 +14,11 @@ namespace Logitude.HybridTest.CommonServices
         {
             AgentPM agentPM = new AgentPM()
             {
-                Code = HybridData.AgentCode,
+                Code = HybridData.AgentCodeHAgent+"2",
                 EnglishName = "Hybrid Agent",
                 LocalName = "Hybrid Agent",
                 CityName = "Hybrid City",
-                CountryCode = HybridData.CountryCode,
+                CountryCode = HybridData.CountryCodeUS,
                 PartnerTypeId = "AG",
                 Tenant = TestEnvironmentGlobalParameters.Tenant,
             };

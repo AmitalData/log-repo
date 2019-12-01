@@ -22,7 +22,7 @@ namespace Logitude.HybridTest.CommonServices
         {
             BranchPM branchPM = new BranchPM()
             {
-                Code = HybridData.BranchCode,
+                Code = HybridData.BranchCodeHBRA,
                 EnglishName = "Hybrid Branch",
                 LocalName = "Hybrid Branch",
                 Tenant = TestEnvironmentGlobalParameters.Tenant,

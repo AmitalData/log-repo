@@ -13,14 +13,21 @@ namespace Logitude.HybridTest.CommonServices
         {
             VendorPM vendorPM = new VendorPM()
             {
-                Code = HybridData.VendorCode,
+                Code = HybridData.VendorCodeHVEN,
                 EnglishName = "Hybrid Vendor",
                 LocalName = "Hybrid Vendor",
-                CityName = "Hybrid City",
-                CountryCode = HybridData.CountryCode,
+                CountryCode = HybridData.CountryCodeUS,
                 PartnerTypeId = "VD",
                 Tenant = TestEnvironmentGlobalParameters.Tenant,
             };
+            vendorPM.Addresses.Add(new AddressPM
+            {
+                AddressTypeId = "M",
+                Description = "Main Address",
+                City = "New York",
+                CountryCode = HybridData.CountryCodeUS,
+                CardCode = "new",
+            });
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(vendorPM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);

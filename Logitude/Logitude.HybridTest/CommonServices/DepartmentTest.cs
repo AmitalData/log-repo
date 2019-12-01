@@ -14,7 +14,7 @@ namespace Logitude.HybridTest.CommonServices
         {
             DepartmentPM departmentPM = new DepartmentPM()
             {
-                Code = HybridData.DepartmentCode,
+                Code = HybridData.DepartmentCodeHDEP,
                 EnglishName = "Hybrid Department",
                 LocalName = "Hybrid Department",
                 Tenant = TestEnvironmentGlobalParameters.Tenant,

@@ -15,21 +15,23 @@ namespace Logitude.HybridTest.CommonServices
         {
             CountryCityPM cityPM = new CountryCityPM()
             {
-                Code = HybridData.CityCode,
+                Code = HybridData.CityCodeHCity,
                 EnglishName = "Hybrid City",
                 LocalName = "Hybrid City",
-                CountryId = HybridData.CountryCode,
+                CountryId = HybridData.CountryCodeUS,
                 AddedManually = true,
                 Tenant = TestEnvironmentGlobalParameters.Tenant,
             };
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(cityPM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            HybridData.CityIdHCity = serviceResponse.Result;
         }
         [TestMethod]
         public void Test_City_GetCityListByCode()
         {
-            Test_City_UPSERT();
+            if(HybridData.CityIdHCity == null)
+                Test_City_UPSERT();
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "City",
@@ -39,7 +41,7 @@ namespace Logitude.HybridTest.CommonServices
                 ServiceFilterType = null,
             };
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { HybridData.CityCode, HybridData.CountryCode, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
+            object[] serviceParameters = new object[] { HybridData.CityCodeHCity, HybridData.CountryCodeUS, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
             CountryCityList city = (CountryCityList)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);

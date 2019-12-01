@@ -9,6 +9,7 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
+using Simplog.Data.Helpers;
 
 namespace Logitude.Accounting.Data.Repositories
 {
@@ -76,6 +77,132 @@ namespace Logitude.Accounting.Data.Repositories
             }
 
             return cashbook;
+        }
+
+        public int GetCashChequesTotalsForCashbook(string cashbookId, int tenant)
+        {
+            DateTime todayDate = GetTodayDate(tenant);
+
+            List<CashBookLine> query = (from cbLine in context.CashBookLines
+                                        join arpch in context.ARPaymentCheques on cbLine.ARPChequeId equals arpch.Id
+                                        where
+                                            cbLine.CashBookId == cashbookId
+                                            && arpch.ValueDate <= todayDate
+                                            && arpch.StatusCode != "5"
+                                            && cbLine.IsDeposited == false
+                                            && cbLine.Tenant == tenant
+                                        select cbLine).ToList();
+
+            return query.Count();
+        }
+        public int GetPostdatedChequesTotalsForCashbook(string cashbookId, int tenant)
+        {
+            DateTime todayDate = GetTodayDate(tenant);
+
+            List<CashBookLine> query = (from cb in context.CashBooks
+                                        join cbLine in context.CashBookLines on cb.Id equals cbLine.CashBookId
+                                        join arpch in context.ARPaymentCheques on cbLine.ARPChequeId equals arpch.Id
+                                        where
+                                            cb.Id == cashbookId
+                                            && arpch.ValueDate > todayDate
+                                            && arpch.StatusCode != "5"
+                                            && cbLine.IsDeposited == false
+                                            && cb.Tenant == tenant
+                                        select cbLine).ToList();
+            return query.Count();
+        }
+        public int GetUndepositedChequesCount(string cashbookId, int tenant)
+        {
+            List<CashBookLine> query = (from cbLine in context.CashBookLines
+                                        join arpch in context.ARPaymentCheques on cbLine.ARPChequeId equals arpch.Id
+                                        where
+                                            cbLine.CashBookId == cashbookId
+                                            && arpch.StatusCode != "5"
+                                            && cbLine.IsDeposited == false
+                                            && cbLine.Tenant == tenant
+                                        select cbLine).ToList();
+            return query.Count();
+        }
+
+        public decimal GetChequesTotal(string cashbookId, string chequeFilterType, int tenant)
+        {
+            decimal? totalForiegnAmount;
+
+            switch (chequeFilterType)
+            {
+                case "CashCheque":
+                    {
+                        totalForiegnAmount = GetCashedChequesTotalAmount(cashbookId, tenant);
+                        break;
+                    }
+                case "PostdatedCheque":
+                    {
+                        totalForiegnAmount = GetPostdatedChequesTotalAmount(cashbookId, tenant);
+                        break;
+                    }
+                case "All":
+                default:
+                    {
+                        totalForiegnAmount = GetAllChequesTotalAmount(cashbookId, tenant);
+                        break;
+                    }
+            }
+
+           
+            return totalForiegnAmount ?? 0;
+        }
+
+        private decimal? GetAllChequesTotalAmount(string cashbookId, int tenant)
+        {
+            return (from cb in context.CashBooks
+                    join cbLine in context.CashBookLines on cb.Id equals cbLine.CashBookId
+                    join arpch in context.ARPaymentCheques on cbLine.ARPChequeId equals arpch.Id
+                    where
+                        cb.Id == cashbookId
+                        && arpch.StatusCode != "5"
+                        && cbLine.IsDeposited == false
+                        && cb.Tenant == tenant
+                    select arpch).Sum(d => (decimal?)d.ForeignAmount);
+        }
+
+        private decimal? GetPostdatedChequesTotalAmount(string cashbookId, int tenant)
+        {
+            DateTime todayDate = GetTodayDate(tenant);
+
+            decimal? total = (from cb in context.CashBooks
+                    join cbLine in context.CashBookLines on cb.Id equals cbLine.CashBookId
+                    join arpch in context.ARPaymentCheques on cbLine.ARPChequeId equals arpch.Id
+                    where
+                        cb.Id == cashbookId
+                        && arpch.ValueDate > todayDate
+                        && arpch.StatusCode != "5"
+                        && cbLine.IsDeposited == false
+                        && cb.Tenant == tenant
+                    select arpch).Sum(d => (decimal?)d.ForeignAmount);
+            
+            return total;
+        }
+
+        private decimal? GetCashedChequesTotalAmount(string cashbookId, int tenant)
+        {
+            DateTime todayDate = GetTodayDate(tenant);
+            return (from cb in context.CashBooks
+                    join cbLine in context.CashBookLines on cb.Id equals cbLine.CashBookId
+                    join arpch in context.ARPaymentCheques on cbLine.ARPChequeId equals arpch.Id
+                    where
+                        cb.Id == cashbookId
+                        && arpch.ValueDate <= todayDate
+                        && arpch.StatusCode != "5"
+                        && cbLine.IsDeposited == false
+                        && cb.Tenant == tenant
+                    select arpch).Sum(d => (decimal?)d.ForeignAmount);
+        }
+
+        private static DateTime GetTodayDate(int tenant)
+        {
+            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+            DateTime todayDateEndDate = new DateTime(todayDate.Year, todayDate.Month, todayDate.Day, 23, 59, 59);
+            return todayDateEndDate;
         }
     }
 

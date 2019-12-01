@@ -14,7 +14,7 @@ namespace Logitude.DatabaseMigration.Migrations
         public override void Down()
         {
             AlterColumn("dbo.InterestBasesPeriods", "InterestRate", c => c.Decimal(nullable: false, precision: 2, scale: 2));
-            DropColumn("dbo.QuoteSettings", "AutomaticallyCloseDays");
+            //DropColumn("dbo.QuoteSettings", "AutomaticallyCloseDays");
         }
     }
 }
