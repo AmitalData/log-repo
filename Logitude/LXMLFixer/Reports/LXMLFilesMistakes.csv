@@ -1,133 +1,3485 @@
-DXML Table, LXML Table
-Claims,Claims
+DXML Table, LXML Table,,,
+AccountingPartners,AccountingPartner,Incorrect Table Name In LXML File,,
 DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-ImporterClaimTypeCode,ImporterClaimTypeCode,Size,3,2
-
-
-DXML Table, LXML Table
-ClaimImporterDeclarsPage3Bs,ClaimImporterDeclarsPage3Bs
+Id,Id,Size,15,0
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+AccountingSettings,AccountingSettings,,,
 DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-LineNo,LineNo,Size,0,2
-
-
-DXML Table, LXML Table
-ClaimsRelatedEntities,ClaimsRelatedEntities
+AllowClosureWithoutPayables,AllowClosureWithoutPayables,Size,0,1
+AllowManualInvoiceNumber,AllowManualInvoiceNumber,Size,0,1
+AllowMinusInvoicelines,AllowMinusInvoicelines,Size,0,1
+AllowPositiveAmountsInTheCreditNote,AllowPositiveAmountsInTheCreditNote,Size,0,1
+AllowVoidAPI,AllowVoidAPI,Size,0,1
+AllowVoidAPP,AllowVoidAPP,Size,0,1
+AllowVoidARI,AllowVoidARI,Size,0,1
+AllowVoidARP,AllowVoidARP,Size,0,1
+APInvoiceTransferStartDate,APInvoiceTransferStartDate,Size,0,1
+ARInvoiceTransferStartDate,ARInvoiceTransferStartDate,Size,0,1
+ARPaymentTransferStartDate,ARPaymentTransferStartDate,Size,0,1
+EnableMultiCurrencyAPPayments,EnableMultiCurrencyAPPayments,Size,0,1
+EnableMultiCurrencyARPayments,EnableMultiCurrencyARPayments,Size,0,1
+EnableMultiPercentageVATTypes,EnableMultiPercentageVATTypes,Size,0,1
+EnableMultiRateAPInvoices,EnableMultiRateAPInvoices,Size,0,1
+EnableNegativeOffsetAPPayments,EnableNegativeOffsetAPPayments,Size,0,1
+EnableNegativeOffsetARPayments,EnableNegativeOffsetARPayments,Size,0,1
+IsAPInvoicesTransferEnabled,IsAPInvoicesTransferEnabled,Size,0,1
+IsAPPaymentsTransferEnabled,IsAPPaymentsTransferEnabled,Size,0,1
+IsARInvoiceChronologicalDates,IsARInvoiceChronologicalDates,Size,0,1
+IsARInvoicesTransferEnabled,IsARInvoicesTransferEnabled,Size,0,1
+IsARPaymentsTransferEnabled,IsARPaymentsTransferEnabled,Size,0,1
+IsSingleTaxPerInvoice,IsSingleTaxPerInvoice,Size,0,1
+IsVatNumberMandatoryInAP,IsVatNumberMandatoryInAP,Size,0,1
+IsVatNumberMandatoryInAR,IsVatNumberMandatoryInAR,Size,0,1
+NotifyPastDateOnInvoiceEdit,NotifyPastDateOnInvoiceEdit,Size,0,1
+QBOAccessToken,QBOAccessToken,Type,nvarchar,varchar
+QBOAccessToken,QBOAccessToken,Size,200,0
+QBOAccessTokenSecret,QBOAccessTokenSecret,Type,nvarchar,varchar
+QBOAccessTokenSecret,QBOAccessTokenSecret,Size,200,0
+QBOrealMeID,QBOrealMeID,Type,nvarchar,varchar
+QBOrealMeID,QBOrealMeID,Size,200,0
+TransferToDropboxActivated,TransferToDropboxActivated,Size,0,1
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+AccountingSystems,AccountingSystems,,,
 DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-ContinuousMessagesTypeCode,ContinuousMessagesTypeCode,Size,9,3
-CustomsBranchCode,CustomsBranchCode,Size,17,4
-DecisionCode,DecisionCode,Type,nvarchar,varchar
-DecisionCode,DecisionCode,Size,128,2
-DeclarationVersion,DeclarationVersion,Size,0,9
-WarehouseTypeCode,WarehouseTypeCode,Size,17,9
-
-
-DXML Table, LXML Table
-Consignments,Consignments
+AllowAPInvoicesTransfer,AllowAPInvoicesTransfer,Size,0,1
+AllowAPPaymentsTransfer,AllowAPPaymentsTransfer,Size,0,1
+AllowARInvoicesTransfer,AllowARInvoicesTransfer,Size,0,1
+AllowARPaymentsTransfer,AllowARPaymentsTransfer,Size,0,1
+AllowManuallyDueDate,AllowManuallyDueDate,Size,0,1
+AllowMinusInvoiceLines,AllowMinusInvoiceLines,Size,0,1
+AllowPositiveAmountsInTheCreditNote,AllowPositiveAmountsInTheCreditNote,Size,0,1
+CanTransferToDropbox,CanTransferToDropbox,Size,0,1
+Code,Code,Size,4,3
+InActive,InActive,Size,0,1
+IsExternalCodesFromAPI,IsExternalCodesFromAPI,Size,0,1
+IsExternalCodesFromTable,IsExternalCodesFromTable,Size,0,1
+IsExternalCodesSyncEnabled,IsExternalCodesSyncEnabled,Size,0,1
+IsJournalMode,IsJournalMode,Size,0,1
+IsSingleCurrencyAccount,IsSingleCurrencyAccount,Size,0,1
+IsSingleTaxPerInvoice,IsSingleTaxPerInvoice,Size,0,1
+IsTaxItemManaged,IsTaxItemManaged,Size,0,1
+SearchFields,SearchFields,Type,nvarchar,varchar
+ShowDownloadScreen,ShowDownloadScreen,Size,0,1
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+AdditionalServices,AdditionalServices,,,
 DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-ReceiverWarehouseCode,ReceiverWarehouseCode,Size,20,17
-StorageSiteCode,StorageSiteCode,Size,20,17
-
-
-DXML Table, LXML Table
-ConsignmentInternalTransitions,ConsignmentInternalTransitions
+Id,Id,Size,15,100
+InActive,InActive,Size,0,15
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+Addresses,Addresses,,,
 DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-SiteCode,SiteCode,Size,20,17
-
-
-DXML Table, LXML Table
-ConsignmentPackages,ConsignmentPackages
+AddressTypeId,AddressTypeId,Size,15,0
+AddressTypeId,AddressTypeId,Nullable,FALSE,TRUE
+City,City,Nullable,TRUE,FALSE
+CountryId,CountryId,Nullable,TRUE,FALSE
+ExternalId,ExternalId,Size,10,0
+Id,Id,Size,15,0
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+Agents,Agents,,,
 DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-PackageTypeCode,PackageTypeCode,Size,4,2
-
-
-DXML Table, LXML Table
-CourierCustomStatus,CourierCustomStatuses,Incorrect Table Name In LXML File
+AgentSharedLogisticsKey,AgentSharedLogisticsKey,Size,40,0
+BlockNewInvoiceCreation,BlockNewInvoiceCreation,Size,0,1
+BlockNewShipmentCreation,BlockNewShipmentCreation,Size,0,1
+Id,Id,Size,15,0
+IsCreditLimitEnabled,IsCreditLimitEnabled,Size,0,1
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+Airlines,Airlines,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AddedManually,AddedManually,Size,0,15
+ChampFFRFFA,ChampFFRFFA,Size,0,1
+ChampFHL,ChampFHL,Size,0,1
+ChampFSRFSA,ChampFSRFSA,Size,0,1
+ChampFSU,ChampFSU,Size,0,1
+ChampFVRFVA,ChampFVRFVA,Size,0,1
+ChampFWB,ChampFWB,Size,0,1
+ChampNeedsRegistration,ChampNeedsRegistration,Size,0,1
+ChampRegistrationRequested,ChampRegistrationRequested,Size,0,1
+CheckDigit,CheckDigit,Size,0,15
+GLSHKFFRFFA,GLSHKFFRFFA,Size,0,1
+GLSHKFHL,GLSHKFHL,Size,0,1
+GLSHKFSRFSA,GLSHKFSRFSA,Size,0,1
+GLSHKFSU,GLSHKFSU,Size,0,1
+GLSHKFVRFVA,GLSHKFVRFVA,Size,0,1
+GLSHKFWB,GLSHKFWB,Size,0,1
+GLSHKNeedsRegistration,GLSHKNeedsRegistration,Size,0,1
+GLSHKRegistrationRequested,GLSHKRegistrationRequested,Size,0,1
+HasAdaptations,HasAdaptations,Size,0,1
+Id,Id,Size,15,0
+IsAllowedInAirlinesRestriction,IsAllowedInAirlinesRestriction,Size,0,1
+IsChampRegistered,IsChampRegistered,Size,0,1
+IsDeclined,IsDeclined,Size,0,1
+IsDescriptionOfGoodsFromList,IsDescriptionOfGoodsFromList,Size,0,1
+IsGLSHKRegistered,IsGLSHKRegistered,Size,0,1
+IsManagingProduct,IsManagingProduct,Size,0,1
+IsProductMandatory,IsProductMandatory,Size,0,1
+LimitedLength,LimitedLength,Size,0,15
+NoAvailabilityInFVAMessages,NoAvailabilityInFVAMessages,Size,0,1
+OldTTY,OldTTY,Size,33,0
+Prefix,Prefix,Type,char,varchar
+RegistrationUpdatedBy,RegistrationUpdatedBy,Size,60,0
+ScheduleDays,ScheduleDays,Size,0,1
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+AirlineAreas,AirlineAreas,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+CreateDate,CreateDate,Nullable,TRUE,FALSE
+CreatedByUserId,CreatedByUserId,Size,15,0
+Description,Description,Size,-1,1000
+Id,Id,Type,nvarchar,varchar
+Id,Id,Size,128,0
+Name,Name,Type,varchar,nvarchar
+Name,Name,Nullable,FALSE,TRUE
+UpdateDate,UpdateDate,Nullable,TRUE,FALSE
+UpdatedByUserId,UpdatedByUserId,Size,15,0
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+AirlineAreasPorts,AirlineAreasPorts,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AddedByUserId,AddedByUserId,Size,15,0
+AddedDate,AddedDate,Nullable,TRUE,FALSE
+AirlineAreaId,AirlineAreaId,Type,nvarchar,varchar
+AirlineAreaId,AirlineAreaId,Size,128,15
+AirlineAreaId,AirlineAreaId,Nullable,FALSE,TRUE
+Id,Id,Type,nvarchar,varchar
+Id,Id,Size,128,0
+Name,Name,Type,varchar,nvarchar
+Name,Name,Nullable,FALSE,TRUE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+AirlineMessagingRules,AirlineMessagingRules,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+CreatedByUserId,CreatedByUserId,Size,15,0
+Id,Id,Size,15,0
+IsMandatoryForSending,IsMandatoryForSending,Size,0,2
+MaxSize,MaxSize,Size,0,2
+RuleFieldId,RuleFieldId,Nullable,FALSE,TRUE
+UpdatedByUserId,UpdatedByUserId,Size,15,0
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+AirlineStatistics,AirlineStatistics,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AirlinePrefix,AirlinePrefix,Size,4,0
+BookingId,BookingId,Size,15,0
+ChargeableWeight,ChargeableWeight,Size,0,3
+CreateDate,CreateDate,Size,0,70
+EntitiyCreateDate,EntitiyCreateDate,Size,0,100
+EntitiyUpdateDate,EntitiyUpdateDate,Size,0,15
+Flight1Date,Flight1Date,Size,0,30
+Flight2Date,Flight2Date,Size,0,30
+Flight3Date,Flight3Date,Size,0,30
+GrossWeight,GrossWeight,Size,0,10
+Id,Id,Size,15,0
+LastSentDate,LastSentDate,Size,0,3
+MessagingStatus,MessagingStatus,Size,60,0
+NumberOfPackages,NumberOfPackages,Size,0,3
+OnCarriageDate,OnCarriageDate,Size,0,30
+PreCarriageDate,PreCarriageDate,Size,0,30
+ProductName,ProductName,Size,60,0
+Sender,Sender,Size,60,0
+ShipmentId,ShipmentId,Size,15,0
+SourceTenant,SourceTenant,Size,0,100
+UpdateDate,UpdateDate,Size,0,100
+Volume,Volume,Size,0,15
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+Automations,Automations,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AutomationXML,AutomationXML,Type,nvarchar,varchar
+AutomationXML,AutomationXML,Size,-1,0
+CreatedByUserId,CreatedByUserId,Size,15,0
+DocumentTypeId,DocumentTypeId,Size,15,0
+From,From,Size,20,0
+FromEmail,FromEmail,Size,30,0
+Id,Id,Size,15,0
+ObjectTableId,ObjectTableId,Size,15,0
+ObjectTableId,ObjectTableId,Nullable,FALSE,TRUE
+ResultCode,ResultCode,Size,20,0
+ResultCode,ResultCode,Nullable,FALSE,TRUE
+TemplateId,TemplateId,Size,15,0
+Type,Type,Size,10,0
+Type,Type,Nullable,FALSE,TRUE
+UpdatedByUserId,UpdatedByUserId,Size,15,0
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+AutomationResultEmailRecipients,AutomationResultEmailRecipients,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AutomationsId,AutomationsId,Size,15,0
+AutomationsId,AutomationsId,Nullable,FALSE,TRUE
+Id,Id,Size,15,0
+RecipientType,RecipientType,Size,8,0
+RecipientValue,RecipientValue,Size,15,0
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+AWBDescriptionOfGoods,AWBDescriptionOfGoods,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Id,Id,Size,15,0
+ProductCode,ProductCode,Size,4,2
+Service,Service,Size,40,0
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+Branches,Branches,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AddressId,AddressId,Size,15,0
+Id,Id,Size,15,0
+InActive,InActive,Size,0,15
+Notes,Notes,Type,nvarchar,varchar
+Notes,Notes,Size,250,0
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+BusinessUnits,BusinessUnits,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Id,Id,Size,50,0
+InActive,InActive,Size,0,1
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+Cards,Cards,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AccountNumber,AccountNumber,Size,25,0
+BankAddress,BankAddress,Size,100,0
+BankName,BankName,Size,40,0
+CityName,CityName,Size,25,40
+CityName,CityName,Nullable,TRUE,FALSE
+CountryCode,CountryCode,Size,2,0
+CountryName,CountryName,Nullable,TRUE,FALSE
+CreatedByUserId,CreatedByUserId,Size,15,0
+EnableConsolidationInvoices,EnableConsolidationInvoices,Size,0,1
+IBANNumber,IBANNumber,Type,nvarchar,varchar
+IBANNumber,IBANNumber,Size,30,0
+Id,Id,Size,15,0
+ImageDetailId,ImageDetailId,Size,15,0
+InActive,InActive,Size,0,30
+InvoiceCurrencyId,InvoiceCurrencyId,Size,15,0
+IsCustomer,IsCustomer,Size,0,1
+Notes,Notes,Type,nvarchar,varchar
+PartnerTypeId,PartnerTypeId,Type,char,varchar
+SearchFields,SearchFields,Type,nvarchar,varchar
+SharedLogisticsInvitationStatusCode,SharedLogisticsInvitationStatusCode,Type,int,varchar
+SharedLogisticsInvitationStatusCode,SharedLogisticsInvitationStatusCode,Size,0,4
+SupportNotes,SupportNotes,Type,nvarchar,varchar
+Swift,Swift,Size,20,0
+UpdatedByUserId,UpdatedByUserId,Size,15,0
+UsoCFDICode,UsoCFDICode,Type,nvarchar,varchar
+UsoCFDICode,UsoCFDICode,Size,128,3
+VatTypeId,VatTypeId,Size,15,0
+Website,Website,Size,100,0
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+CardExternalAccountsByProducts,CardExternalAccountsByProducts,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+CardId,CardId,Nullable,FALSE,TRUE
+Id,Id,Size,15,0
+ProductTypeCode,ProductTypeCode,Nullable,FALSE,TRUE
+UpdateDate,UpdateDate,Size,0,1
+UpdatedByUserId,UpdatedByUserId,Nullable,FALSE,TRUE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ChargesTypes,ChargesTypes,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AccountingVATSplit,AccountingVATSplit,Size,0,1
+AddedManually,AddedManually,Size,0,15
+AWBPrintDescription,AWBPrintDescription,Size,0,15
+ChargesGroupId,ChargesGroupId,Nullable,TRUE,FALSE
+Id,Id,Size,15,0
+InActive,InActive,Size,0,15
+IsAir,IsAir,Size,0,15
+IsAutoDisplayInConsolidation,IsAutoDisplayInConsolidation,Size,0,15
+IsAutoDisplayInCustoms,IsAutoDisplayInCustoms,Size,0,15
+IsAutoDisplayInQuote,IsAutoDisplayInQuote,Size,0,15
+IsAutoDisplayInShipment,IsAutoDisplayInShipment,Size,0,15
+IsCustoms,IsCustoms,Size,0,15
+IsExpense,IsExpense,Size,0,1
+IsInland,IsInland,Size,0,15
+IsOcean,IsOcean,Size,0,15
+IsPayable,IsPayable,Size,0,15
+IsReceivable,IsReceivable,Size,0,15
+PayableAccountId,PayableAccountId,Size,15,0
+PayableDebitGLAcountId,PayableDebitGLAcountId,Size,15,0
+ReceivableAccountId,ReceivableAccountId,Size,15,0
+ReceivableCreditGLAccountId,ReceivableCreditGLAccountId,Size,15,0
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ChargeTypeAccountings,ChargeTypeAccountings,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Id,Id,Type,nvarchar,varchar
+Id,Id,Size,128,0
+PayableDebitAccount,PayableDebitAccount,Type,nvarchar,varchar
+PayableDebitAccount,PayableDebitAccount,Size,-1,15
+PayableDebitGLAcountId,PayableDebitGLAcountId,Type,nvarchar,varchar
+PayableDebitGLAcountId,PayableDebitGLAcountId,Size,-1,0
+ReceivableCreditAccount,ReceivableCreditAccount,Type,nvarchar,varchar
+ReceivableCreditAccount,ReceivableCreditAccount,Size,-1,15
+ReceivableCreditGLAccountId,ReceivableCreditGLAccountId,Type,nvarchar,varchar
+ReceivableCreditGLAccountId,ReceivableCreditGLAccountId,Size,-1,0
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+Commodities,Commodities,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Id,Id,Size,15,0
+InActive,InActive,Size,0,15
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+CommunicationLogs,CommunicationLogs,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+ChildEntityId,ChildEntityId,Size,15,0
+ChildObjectTableId,ChildObjectTableId,Size,15,0
+CorrelationID,CorrelationID,Size,64,0
+CreateDate,CreateDate,Size,0,40
+CreateDateUTC,CreateDateUTC,Size,0,40
+CreatedByUserId,CreatedByUserId,Nullable,TRUE,FALSE
+DocumentId,DocumentId,Size,15,0
+DocumentId,DocumentId,Nullable,FALSE,TRUE
+DocumentOutId,DocumentOutId,Size,40,15
+DocumentsFilingId,DocumentsFilingId,Size,40,0
+DoneDate,DoneDate,Size,0,40
+DoneDateUTC,DoneDateUTC,Size,0,40
+EntityId,EntityId,Size,40,0
+ExceptionMessage,ExceptionMessage,Type,nvarchar,varchar
+ExceptionMessage,ExceptionMessage,Size,-1,0
+LastStatusDateUTC,LastStatusDateUTC,Size,0,40
+Logs,Logs,Type,nvarchar,varchar
+Logs,Logs,Size,-1,0
+MessageLockId,MessageLockId,Size,40,0
+NextTryDateTime,NextTryDateTime,Size,0,40
+NextTryDateTimeUTC,NextTryDateTimeUTC,Size,0,40
+ObjectTableId,ObjectTableId,Nullable,TRUE,FALSE
+ReplyToList,ReplyToList,Size,500,0
+SearchFields,SearchFields,Type,nvarchar,varchar
+Subject,Subject,Type,nvarchar,varchar
+Tenant,Tenant,Size,0,1
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+CommunicationLogTypes,CommunicationLogTypes,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+CommunicationStatusTypes,CommunicationStatusTypes,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Code,Code,Size,4,2
+Name,Name,Size,40,20
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+Competitors,Competitors,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Id,Id,Size,15,0
+InActive,InActive,Size,0,15
+Name,Name,Nullable,TRUE,FALSE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ComputingPartnerCodes,ComputingPartnerCodes,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+ComputingPartnerId,ComputingPartnerId,Nullable,FALSE,TRUE
+CreateDate,CreateDate,Size,0,1
+CreatedByUserId,CreatedByUserId,Nullable,FALSE,TRUE
+Id,Id,Size,15,0
+ObjectTableId,ObjectTableId,Nullable,FALSE,TRUE
+PartnerCode,PartnerCode,Nullable,FALSE,TRUE
+PartnerName,PartnerName,Nullable,FALSE,TRUE
+UpdateDate,UpdateDate,Size,0,1
+UpdatedByUserId,UpdatedByUserId,Nullable,FALSE,TRUE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ComputingPartnerTables,ComputingPartnerTables,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+CreateDate,CreateDate,Size,0,1
+CreatedByUserId,CreatedByUserId,Nullable,FALSE,TRUE
+HasPartnerList,HasPartnerList,Size,0,1
+MustUsePartnerList,MustUsePartnerList,Size,0,1
+TenantLevelTranslationBlocked,TenantLevelTranslationBlocked,Size,0,1
+TransalationRequired,TransalationRequired,Size,0,1
+UpdateDate,UpdateDate,Size,0,1
+UpdatedByUserId,UpdatedByUserId,Nullable,FALSE,TRUE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ComputingPartnerTranslations,ComputingPartnerTranslations,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+ComputingPartnerId,ComputingPartnerId,Nullable,FALSE,TRUE
+CreateDate,CreateDate,Size,0,1
+CreatedByUserId,CreatedByUserId,Nullable,FALSE,TRUE
+Id,Id,Size,15,0
+ObjectTableId,ObjectTableId,Nullable,FALSE,TRUE
+OurCode,OurCode,Nullable,FALSE,TRUE
+PartnerCode,PartnerCode,Nullable,FALSE,TRUE
+SearchFields,SearchFields,Type,nvarchar,varchar
+SearchFields,SearchFields,Size,1000,0
+UpdateDate,UpdateDate,Size,0,1
+UpdatedByUserId,UpdatedByUserId,Nullable,FALSE,TRUE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+Contacts,Contacts,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Anniversary,Anniversary,Size,0,15
+AnniversaryReminder,AnniversaryReminder,Size,0,15
+Birthday,Birthday,Size,0,15
+BirthdayReminder,BirthdayReminder,Size,0,15
+CompanyName,CompanyName,Size,1000,0
+ComputedKey,ComputedKey,Size,70,0
+CreateDate,CreateDate,Size,0,15
+DoneDate,DoneDate,Size,0,15
+ExternalId,ExternalId,Type,nvarchar,varchar
+ExternalId,ExternalId,Size,-1,0
+FacebookId,FacebookId,Size,20,0
+Id,Id,Size,15,0
+ImageDetailId,ImageDetailId,Size,15,0
+InActive,InActive,Size,0,15
+Notes,Notes,Type,nvarchar,varchar
+SearchFields,SearchFields,Type,nvarchar,varchar
+SharedLogisticsContactLastLogin_CardId,Not Found,-,-,-
+SharedLogisticsContactLastLogin_ContactId,Not Found,-,-,-
+SharedLogisticsContactLastLogin_PartnerTypeId,Not Found,-,-,-
+SharedLogisticsContactLastLogin_Via,Not Found,-,-,-
+Signature,Signature,Type,varbinary,varchar
+Signature,Signature,Size,-1,0
+SignatureHtml,SignatureHtml,Type,varbinary,varchar
+SignatureHtml,SignatureHtml,Size,-1,0
+UserType,UserType,Size,1,0
+UserType,UserType,Nullable,FALSE,TRUE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ContactDoneMethods,ContactDoneMethods,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+Countries,Countries,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AddedManually,AddedManually,Size,0,15
+Code,Code,Type,char,varchar
+EC,EC,Size,0,15
+HasCitiesList,HasCitiesList,Size,0,1
+Id,Id,Size,15,0
+InActive,InActive,Size,0,15
+Notes,Notes,Type,nvarchar,varchar
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+CountryCities,CountryCities,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AddedManually,AddedManually,Size,0,15
+Id,Id,Size,15,0
+InActive,InActive,Size,0,15
+Notes,Notes,Type,nvarchar,varchar
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+CreditLimitSettings,CreditLimitSettings,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Id,Id,Size,15,0
+InvoiceCreationBlock,InvoiceCreationBlock,Size,0,1
+InvoiceCreationWarning,InvoiceCreationWarning,Size,0,1
+IsCreditLimitEnabled,IsCreditLimitEnabled,Size,0,1
+ShipmentCreationBlock,ShipmentCreationBlock,Size,0,1
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+Currencies,Currencies,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AddedManually,AddedManually,Size,0,15
+Id,Id,Size,15,0
+InActive,InActive,Size,0,15
+Notes,Notes,Type,nvarchar,varchar
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+CustomAgents,CustomAgents,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Id,Id,Size,15,0
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+Customers,Customers,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+ActivationDate,ActivationDate,Size,0,1
+ActivationRequestDate,ActivationRequestDate,Size,0,1
+ActivationRequestedByUserId,ActivationRequestedByUserId,Size,15,0
+ActivityWatch,ActivityWatch,Size,0,1
+BeforeDeactiveStatusCode,BeforeDeactiveStatusCode,Size,3,0
+BlockNewInvoiceCreation,BlockNewInvoiceCreation,Size,0,1
+BlockNewShipmentCreation,BlockNewShipmentCreation,Size,0,1
+CompetitorFields,CompetitorFields,Type,nvarchar,varchar
+CreditLimitAmount,CreditLimitAmount,Size,0,1
+CreditLimitOpenBalance,CreditLimitOpenBalance,Size,0,1
+CreditLimitWarningPercentage,CreditLimitWarningPercentage,Size,0,1
+CustomerSizeId,CustomerSizeId,Type,nvarchar,varchar
+CustomerSizeId,CustomerSizeId,Size,128,15
+Field1,Field1,Type,nvarchar,varchar
+Field1,Field1,Size,250,11
+Field10,Field10,Type,nvarchar,varchar
+Field10,Field10,Size,250,0
+Field2,Field2,Type,nvarchar,varchar
+Field2,Field2,Size,250,10
+Field3,Field3,Type,nvarchar,varchar
+Field3,Field3,Size,250,10
+Field4,Field4,Type,nvarchar,varchar
+Field4,Field4,Size,250,0
+Field5,Field5,Type,nvarchar,varchar
+Field5,Field5,Size,250,0
+Field6,Field6,Type,nvarchar,varchar
+Field6,Field6,Size,250,0
+Field7,Field7,Type,nvarchar,varchar
+Field7,Field7,Size,250,0
+Field8,Field8,Type,nvarchar,varchar
+Field8,Field8,Size,250,0
+Field9,Field9,Type,nvarchar,varchar
+Field9,Field9,Size,250,0
+FirstInvoiceDate,FirstInvoiceDate,Size,0,1
+FirstShipmentDate,FirstShipmentDate,Size,0,1
+FreelancerId,FreelancerId,Size,15,0
+Id,Id,Size,15,0
+InactiveDate,InactiveDate,Size,0,1
+IsCreditLimitEnabled,IsCreditLimitEnabled,Size,0,1
+IsCustomer,IsCustomer,Size,0,1
+KCExpirationDate,KCExpirationDate,Size,0,1
+LastCallDate,LastCallDate,Size,0,1
+LastInteractionDate,LastInteractionDate,Size,0,1
+LastMeetingDate,LastMeetingDate,Size,0,1
+LastOpportunityDate,LastOpportunityDate,Size,0,1
+LastOpportunityStatus,LastOpportunityStatus,Size,60,70
+LastQuoteDate,LastQuoteDate,Size,0,1
+LastShipmentDate,LastShipmentDate,Size,0,1
+ReadyForActivationDate,ReadyForActivationDate,Size,0,100
+SetAsInactiveByUserId,SetAsInactiveByUserId,Size,15,0
+StartWorkingDate,StartWorkingDate,Size,0,25
+StartWorkingManuallySet,StartWorkingManuallySet,Size,0,25
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+CustomerDepositions,CustomerDepositions,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+ValidityEndDate,ValidityEndDate,Nullable,TRUE,FALSE
+ValidityStartDate,ValidityStartDate,Nullable,TRUE,FALSE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+CustomerFieldsUpdateSettings,CustomerFieldsUpdateSettings,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Id,Id,Size,15,0
+UpdateDirection,UpdateDirection,Nullable,TRUE,FALSE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+CustomerProducts,CustomerProducts,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+PotentialTEU,PotentialTEU,Type,decimal,float
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+CustomerSalesNote,CustomerSalesNotes,Incorrect Table Name In LXML File,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+CreateDate,CreateDate,Size,0,1
+CreatedByUserId,CreatedByUserId,Nullable,FALSE,TRUE
+CustomerId,CustomerId,Nullable,FALSE,TRUE
+Id,Id,Size,15,0
+UpdateDate,UpdateDate,Size,0,1
+UpdatedByUserId,UpdatedByUserId,Nullable,FALSE,TRUE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+CustomerSizes,CustomerSizes,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Id,Id,Type,nvarchar,varchar
+Id,Id,Size,128,0
+InActive,InActive,Size,0,1
+Name,Name,Size,-1,60
+Name,Name,Nullable,TRUE,FALSE
+SearchFields,SearchFields,Size,-1,1000
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+CustomerStatus,CustomerStatus,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Code,Code,Size,3,2
+Name,Name,Size,60,20
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+CustomerTenantAccesses,CustomerTenantAccesses,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Id,Id,Size,15,0
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+CustomerTenantAccessCardsBatches,CustomerTenantAccessCardsBatches,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+FromDatetime,Not Found,-,-,-
+Status,Status,Nullable,FALSE,TRUE
+ToDatetime,Not Found,-,-,-
+TotalFailed,TotalFailed,Size,0,15
+TotalShipment,TotalShipment,Size,0,15
+Totalsucceeded,Totalsucceeded,Size,0,15
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+CustomerTenantAccessStatusTypes,CustomerTenantAccessStatusTypes,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+EnglishName,EnglishName,Nullable,TRUE,FALSE
+LocalName,LocalName,Type,nvarchar,varchar
+LocalName,LocalName,Nullable,TRUE,FALSE
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+CustomsInterfaces,CustomsInterfaces,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+CustomsInterfaceSettings,CustomsInterfaceSettings,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+ActivateCustomsManagementInShipments,ActivateCustomsManagementInShipments,Size,0,15
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+CustomsShippers,CustomsShippers,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+SearchFields,SearchFields,Type,varchar,nvarchar
+SearchFields,SearchFields,Size,1000,-1
+ValidityEndDate,ValidityEndDate,Nullable,TRUE,FALSE
+ValidityStartDate,ValidityStartDate,Nullable,TRUE,FALSE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+Departments,Departments,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Code,Code,Size,10,0
+Id,Id,Size,15,0
+InActive,InActive,Size,0,15
+Notes,Notes,Type,nvarchar,varchar
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+DimensionsUnits,DimensionsUnits,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+DocumentFilingBackupBatches,DocumentFilingBackupBatches,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+BatchNumber,BatchNumber,Nullable,FALSE,TRUE
+FromDatetime,Not Found,-,-,-
+Status,Status,Nullable,FALSE,TRUE
+ToDatetime,Not Found,-,-,-
+TotalDocuments,TotalDocuments,Size,0,15
+TotalFailed,TotalFailed,Size,0,15
+TotalSucceeded,TotalSucceeded,Size,0,15
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+DocumentFolders,DocumentFolders,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Code,Code,Size,5,10
+Code,Code,Nullable,TRUE,FALSE
+Id,Id,Size,15,0
+IsExternalFolder,IsExternalFolder,Size,0,15
+ParentFolderId,ParentFolderId,Nullable,TRUE,FALSE
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+DocumentsExecutionLogs,DocumentsExecutionLogs,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+ExceptionMessage,ExceptionMessage,Size,-1,8000
+Id,Id,Size,40,15
+Logs,Logs,Size,-1,8000
+StatusCode,StatusCode,Nullable,FALSE,TRUE
+Subject,Subject,Nullable,FALSE,TRUE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+DocumentsFilings,DocumentsFilings,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+BranchId,BranchId,Size,15,0
+ChildEntityId,ChildEntityId,Size,15,0
+ChildEntityReference,ChildEntityReference,Size,40,0
+ChildObjectTableId,ChildObjectTableId,Size,15,0
+ComputedForwarderDocumentId,ComputedForwarderDocumentId,Size,40,0
+CreateDate,CreateDate,Size,0,1
+CustomerDocumentId,CustomerDocumentId,Size,40,0
+DeletedByUserId,DeletedByUserId,Size,15,0
+DepartmentId,DepartmentId,Size,15,0
+Description,Description,Type,nvarchar,varchar
+Description,Description,Size,256,250
+DirectionCode,DirectionCode,Size,1,4
+DocumentId,DocumentId,Size,15,0
+EntityId,EntityId,Size,15,0
+EntityReference,EntityReference,Size,40,0
+ExternalEntityName,ExternalEntityName,Size,12,0
+ExternalEntityReference,ExternalEntityReference,Size,35,0
+FolderId,FolderId,Size,15,0
+ForwarderDocumentId,ForwarderDocumentId,Size,40,0
+Id,Id,Size,40,0
+Notes,Notes,Type,nvarchar,varchar
+Notes,Notes,Size,250,0
+OrigionalDocumentId,OrigionalDocumentId,Size,15,0
+ReceivedByUserId,ReceivedByUserId,Size,15,0
+SearchFields,SearchFields,Type,nvarchar,varchar
+SecurityId,SecurityId,Size,60,0
+SignersList,SignersList,Type,nvarchar,varchar
+SignersList,SignersList,Size,256,0
+SignRequestByUserEmail,SignRequestByUserEmail,Type,nvarchar,varchar
+SignRequestByUserEmail,SignRequestByUserEmail,Size,256,0
+StatusCode,StatusCode,Type,nvarchar,varchar
+StatusCode,StatusCode,Size,128,0
+UpdatedByUserId,UpdatedByUserId,Size,15,0
+UpdatedByUserId,UpdatedByUserId,Nullable,FALSE,TRUE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+DocumentTypeCategories,DocumentTypeCategories,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+DocumentTypeCopies,DocumentTypeCopies,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Code,Code,Size,7,0
+Code,Code,Nullable,FALSE,TRUE
+DocumentTypeId,DocumentTypeId,Size,15,0
+DocumentTypeId,DocumentTypeId,Nullable,FALSE,TRUE
+Id,Id,Size,15,0
+Name,Name,Size,40,0
+Name,Name,Nullable,FALSE,TRUE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+DocumentTypeCustomFields1,DocumentTypeCustomFields1,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+DefaultValue,DefaultValue,Type,nvarchar,varchar
+Id,Id,Size,15,0
+InActive,InActive,Size,0,15
+IsRequired,IsRequired,Size,0,15
+MultiLine,MultiLine,Size,0,15
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+DocumentTypeTemplates,DocumentTypeTemplates,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+CC,CC,Type,nvarchar,varchar
+CC,CC,Size,4000,0
+CountryCode,CountryCode,Type,char,varchar
+DocumentTypeId,DocumentTypeId,Nullable,FALSE,TRUE
+From,From,Type,nvarchar,varchar
+From,From,Size,500,0
+ReplyTo,ReplyTo,Type,nvarchar,varchar
+ReplyTo,ReplyTo,Size,500,0
+Subject,Subject,Type,nvarchar,varchar
+TemplateBody,TemplateBody,Type,varbinary,varchar
+TemplateBody,TemplateBody,Size,-1,1000
+TemplateBodyHtml,TemplateBodyHtml,Type,varbinary,varchar
+TemplateBodyHtml,TemplateBodyHtml,Size,-1,1000
+TemplateBodyjson,TemplateBodyjson,Type,varbinary,varchar
+TemplateBodyjson,TemplateBodyjson,Size,-1,0
+TemplateFooterHtml,TemplateFooterHtml,Type,varbinary,varchar
+TemplateFooterHtml,TemplateFooterHtml,Size,-1,0
+TemplateHeaderHtml,TemplateHeaderHtml,Type,varbinary,varchar
+TemplateHeaderHtml,TemplateHeaderHtml,Size,-1,0
+TemplateType,TemplateType,Size,1,1000
+TemplateType,TemplateType,Nullable,FALSE,TRUE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+FeatureAccessLevels,FeatureAccessLevels,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Name,Name,Nullable,FALSE,TRUE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+FilingInboxes,FilingInboxes,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+BodyDocumentId,BodyDocumentId,Nullable,FALSE,TRUE
+CreateDate,CreateDate,Size,0,1
+Id,Id,Size,15,0
+IsDeleted,IsDeleted,Size,0,1
+SearchFields,SearchFields,Type,nvarchar,varchar
+UpdateDate,UpdateDate,Size,0,1
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+FilingInboxAttachmentLogs,FilingInboxAttachmentLogs,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+DocumentsFilingId,DocumentsFilingId,Nullable,FALSE,TRUE
+FilingInboxAttachmentId,FilingInboxAttachmentId,Nullable,FALSE,TRUE
+Id,Id,Size,15,0
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+FTPDetails,FTPDetails,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+CreatedByUserId,CreatedByUserId,Size,15,0
+Id,Id,Size,15,0
+InActive,InActive,Size,0,100
+UpdatedByUserId,UpdatedByUserId,Size,15,0
+UseSFTP,UseSFTP,Size,0,100
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+GlobalZones,GlobalZones,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Id,Id,Size,15,0
+InActive,InActive,Size,0,15
+Notes,Notes,Type,nvarchar,varchar
+Notes,Notes,Size,250,0
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+HybridPartners,HybridPartners,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Id,Id,Size,15,0
+LocalName,LocalName,Type,nvarchar,varchar
+LogoId,LogoId,Size,15,0
+SearchFields,SearchFields,Type,nvarchar,varchar
+SearchFields,SearchFields,Size,1000,0
+SmallLogoId,SmallLogoId,Size,15,0
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+Incoterms,Incoterms,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AddedManually,AddedManually,Size,0,15
+Id,Id,Size,15,0
+InActive,InActive,Size,0,15
+Notes,Notes,Type,nvarchar,varchar
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+Industries,Industries,,,
 DXML Column,LXML Column,Attribute,DXML Value,LXML Value
 Code,Code,Type,nvarchar,varchar
-Code,Code,Size,128,3
-LocalName,LocalName,Size,-1,100
+Code,Code,Size,-1,3
+Code,Code,Nullable,TRUE,FALSE
+Id,Id,Size,15,0
+InActive,InActive,Size,0,15
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+LeadSources,LeadSources,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Id,Id,Size,15,0
+InActive,InActive,Size,0,15
+Name,Name,Type,varchar,nvarchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+LoginPolicies,LoginPolicies,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+LogitudeMessagesTransmissionLogs,LogitudeMessagesTransmissionLogs,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+ChargeableWeight,ChargeableWeight,Size,0,3
+DirectParticipant,DirectParticipant,Size,0,60
+GrossWeight,GrossWeight,Size,0,10
+HAWB,HAWB,Size,20,0
+Id,Id,Size,15,0
+IsUpdatedinAirlineTenant,IsUpdatedinAirlineTenant,Size,0,1
+ParticipantId,ParticipantId,Size,15,0
+Pieces,Pieces,Size,0,3
+SentDate,SentDate,Size,0,3
+SourceTenant,SourceTenant,Size,0,1
+Tenant,Tenant,Size,0,1
+UserName,UserName,Size,70,60
+Volume,Volume,Size,0,15
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+MAWBStacks,MAWBStacks,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AssignedToId,AssignedToId,Nullable,TRUE,FALSE
+Id,Id,Size,15,0
+Notes,Notes,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+Measurements,Measurements,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Id,Id,Size,15,0
+InActive,InActive,Size,0,1
+IsContainer,IsContainer,Size,0,1
+IsContainerMeasurement,IsContainerMeasurement,Size,0,1
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+MetodoPagos,MetodoPagos,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Code,Code,Size,3,10
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+NumberFormats,NumberFormats,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Code,Code,Type,nvarchar,varchar
+Code,Code,Size,128,1
 Name,Name,Type,nvarchar,varchar
-Name,Name,Size,-1,100
+Name,Name,Size,-1,40
+Name,Name,Nullable,TRUE,FALSE
+SearchFields,SearchFields,Type,nvarchar,varchar
 SearchFields,SearchFields,Size,-1,1000
-
-
-DXML Table, LXML Table
-CourierMasters,CourierMasters
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+Packages,Packages,,,
 DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-GatewayPortCode,GatewayPortCode,Size,17,35
-
-
-DXML Table, LXML Table
-CustomsVendors,CustomsVendors
+InActive,InActive,Size,0,1
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+PackageConnectedPackages,PackageConnectedPackages,,,
 DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-IsPalestinian,IsPalestinian,Size,0,1
-
-
-DXML Table, LXML Table
-DecCargoSplitConsPackDets,DecCargoSplitConsPackDets
+ConnectedPackageCode,ConnectedPackageCode,Nullable,FALSE,TRUE
+Id,Id,Size,15,0
+PackageCode,PackageCode,Nullable,FALSE,TRUE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+PackageTypes,PackageTypes,,,
 DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-PackageLine,PackageLine,Size,0,4
-PackageTypeCode,PackageTypeCode,Size,4,2
-
-
-DXML Table, LXML Table
-DecisionTypes,DecisionTypes
+AddedManually,AddedManually,Size,0,15
+ContainerSize,ContainerSize,Size,0,15
+Id,Id,Size,15,0
+InActive,InActive,Size,0,15
+IsAir,IsAir,Size,0,15
+IsContainer,IsContainer,Size,0,15
+IsInland,IsInland,Size,0,15
+IsOcean,IsOcean,Size,0,15
+IsRefrigerated,IsRefrigerated,Size,0,1
+MeasurementId,MeasurementId,Size,15,0
+Notes,Notes,Type,nvarchar,varchar
+SearchFields,SearchFields,Type,nvarchar,varchar
+TEU,TEU,Size,0,15
+Volume,Volume,Size,0,15
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+Participants,Participants,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+ForwarderTenant,ForwarderTenant,Size,0,100
+Id,Id,Size,15,0
+IsDirect,IsDirect,Size,0,100
+Registered,Registered,Size,0,100
+RegistrationRequested,RegistrationRequested,Size,0,100
+RegistrationUpdatedBy,RegistrationUpdatedBy,Size,60,0
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+PartnerTypes,PartnerTypes,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Id,Id,Type,char,varchar
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+PasswordPolicies,PasswordPolicies,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Code,Code,Size,4,2
+PasswordStrength,PasswordStrength,Type,nvarchar,varchar
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+PaymentGatewayPartners,PaymentGatewayPartners,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Code,Code,Type,nvarchar,varchar
+Code,Code,Size,128,15
+Name,Name,Type,nvarchar,varchar
+Name,Name,Size,-1,150
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+PaymentTerms,PaymentTerms,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AddedManually,AddedManually,Size,0,1
+CurrentMonth,CurrentMonth,Size,0,1
+Days,Days,Size,0,15
+DisplayInLOV,DisplayInLOV,Size,0,40
+ExternalId,ExternalId,Size,25,0
+Id,Id,Size,15,0
+InActive,InActive,Size,0,1
+IsManuallySet,IsManuallySet,Size,0,1
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+Ports,Ports,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AddedManually,AddedManually,Size,0,15
+Code,Code,Type,char,varchar
+Field1,Field1,Type,nvarchar,varchar
+Field1,Field1,Size,250,0
+Field10,Field10,Type,nvarchar,varchar
+Field10,Field10,Size,250,0
+Field2,Field2,Type,nvarchar,varchar
+Field2,Field2,Size,250,0
+Field3,Field3,Type,nvarchar,varchar
+Field3,Field3,Size,250,0
+Field4,Field4,Type,nvarchar,varchar
+Field4,Field4,Size,250,0
+Field5,Field5,Type,nvarchar,varchar
+Field5,Field5,Size,250,0
+Field6,Field6,Type,nvarchar,varchar
+Field6,Field6,Size,250,0
+Field7,Field7,Type,nvarchar,varchar
+Field7,Field7,Size,250,0
+Field8,Field8,Type,nvarchar,varchar
+Field8,Field8,Size,250,0
+Field9,Field9,Type,nvarchar,varchar
+Field9,Field9,Size,250,0
+Id,Id,Size,15,0
+InActive,InActive,Size,0,15
+IsAir,IsAir,Size,0,15
+IsInland,IsInland,Size,0,15
+IsOcean,IsOcean,Size,0,15
+Latitude,Latitude,Size,0,15
+Longtitude,Longtitude,Size,0,15
+Notes,Notes,Type,nvarchar,varchar
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ProductPeriods,ProductPeriods,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Name,Name,Size,60,20
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ProductTypes,ProductTypes,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Name,Name,Type,varchar,nvarchar
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+Ranks,Ranks,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Id,Id,Size,15,0
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+RateClasses,RateClasses,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+Regions,Regions,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Id,Id,Size,15,0
+Name,Name,Nullable,TRUE,FALSE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+Reports,Reports,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Code,Code,Nullable,TRUE,FALSE
+DefaultTemplateId,DefaultTemplateId,Size,15,0
+Description,Description,Type,nvarchar,varchar
+FeatureId,FeatureId,Size,15,0
+LocalName,LocalName,Type,nvarchar,varchar
+LocalName,LocalName,Size,60,0
+ReportDocumentId,ReportDocumentId,Size,15,0
+ReportGroupId,ReportGroupId,Type,nvarchar,varchar
+ReportGroupId,ReportGroupId,Size,128,0
+ReportGroupId,ReportGroupId,Nullable,FALSE,TRUE
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ReportsTemplates,ReportsTemplates,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+CC,CC,Type,nvarchar,varchar
+CC,CC,Size,4000,500
+CreateDate,CreateDate,Size,0,1
+CreatedByUserId,CreatedByUserId,Nullable,FALSE,TRUE
+CurrentVersion,CurrentVersion,Size,0,40
+From,From,Type,nvarchar,varchar
+InActive,InActive,Size,0,1
+IsSystem,IsSystem,Size,0,1
+ReplyTo,ReplyTo,Type,nvarchar,varchar
+ReportId,ReportId,Nullable,FALSE,TRUE
+Subject,Subject,Type,nvarchar,varchar
+UpdateDate,UpdateDate,Size,0,1
+UpdatedByUserId,UpdatedByUserId,Nullable,FALSE,TRUE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ReportsTemplatesVersions,ReportsTemplatesVersions,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+CreateDate,CreateDate,Size,0,1
+CreatedByUserId,CreatedByUserId,Nullable,FALSE,TRUE
+Id,Id,Size,15,0
+ReportId,ReportId,Nullable,FALSE,TRUE
+TemplateId,TemplateId,Nullable,FALSE,TRUE
+UpdateDate,UpdateDate,Size,0,1
+UpdatedByUserId,UpdatedByUserId,Nullable,FALSE,TRUE
+Version,Version,Size,0,40
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+Restrictions,Restrictions,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+ContactTenantId,ContactTenantId,Size,15,0
+ContactTenantId,ContactTenantId,Nullable,FALSE,TRUE
+Id,Id,Size,15,0
+Value,Value,Size,15,0
+Value,Value,Nullable,FALSE,TRUE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+Roles,Roles,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Code,Code,Nullable,FALSE,TRUE
+Id,Id,Size,15,0
+IsCustomRole,IsCustomRole,Size,0,1
+ParentRoleId,ParentRoleId,Type,nvarchar,varchar
+RoleTypeCode,RoleTypeCode,Nullable,FALSE,TRUE
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ShippingAgents,ShippingAgents,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+ForwarderAccountNumber,ForwarderAccountNumber,Size,15,25
+Id,Id,Size,15,0
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ShippingLines,ShippingLines,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AddedManually,AddedManually,Size,0,15
+Id,Id,Size,15,0
+IsINTTRARegistered,IsINTTRARegistered,Size,0,1
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+States,States,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AddedManually,AddedManually,Size,0,15
+Id,Id,Size,15,0
+InActive,InActive,Size,0,15
+Notes,Notes,Type,nvarchar,varchar
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+TarrifCharges,TarrifCharges,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Id,Id,Size,15,0
+MaxPrice,MaxPrice,Type,decimal,float
+MinPrice,MinPrice,Type,decimal,float
+TarrifHeaderId,TarrifHeaderId,Nullable,FALSE,TRUE
+UnitPrice,UnitPrice,Type,decimal,float
+UnitPrice,UnitPrice,Nullable,TRUE,FALSE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+TarrifHeaders,TarrifHeaders,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+FromDate,FromDate,Nullable,TRUE,FALSE
+Id,Id,Size,15,0
+Notes,Notes,Type,nvarchar,varchar
+TransitTimeNotes,TransitTimeNotes,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+TarrifSteps,TarrifSteps,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Id,Id,Size,15,0
+MaxPrice,MaxPrice,Type,decimal,float
+MinPrice,MinPrice,Type,decimal,float
+Step,Step,Type,decimal,float
+TarrifHeaderId,TarrifHeaderId,Nullable,FALSE,TRUE
+UnitPrice,UnitPrice,Type,decimal,float
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+TemplateFormats,TemplateFormats,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+Tenants,Tenants,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+CheckDigitControlAlgorithmCode,CheckDigitControlAlgorithmCode,Nullable,FALSE,TRUE
+Company,Company,Nullable,FALSE,TRUE
+CurrencyId,CurrencyId,Nullable,TRUE,FALSE
+DateTimeFormat,DateTimeFormat,Size,100,40
+DateTimeFormat,DateTimeFormat,Nullable,FALSE,TRUE
+DayLightEndDate,DayLightEndDate,Size,0,40
+DayLightStartDate,DayLightStartDate,Size,0,40
+DefaultSLAId,DefaultSLAId,Type,varchar,bit
+DefaultSLAId,DefaultSLAId,Size,15,0
+DefaultSLAId,DefaultSLAId,Nullable,TRUE,FALSE
+ExportFreightPrepaidCollectId,ExportFreightPrepaidCollectId,Size,1,15
+ExportOtherPrepaidCollectId,ExportOtherPrepaidCollectId,Size,1,15
+ImportFreightPrepaidCollectId,ImportFreightPrepaidCollectId,Size,1,15
+ImportOtherPrepaidCollectId,ImportOtherPrepaidCollectId,Size,1,15
+IsCustomerTenantShare,IsCustomerTenantShare,Size,0,1
+LayoutDirection,LayoutDirection,Type,nvarchar,varchar
+LayoutDirection,LayoutDirection,Size,-1,0
+MasterExportFreightPrepaidCollectId,MasterExportFreightPrepaidCollectId,Size,1,15
+MasterExportOtherPrepaidCollectId,MasterExportOtherPrepaidCollectId,Size,1,15
+MasterImportFreightPrepaidCollectId,MasterImportFreightPrepaidCollectId,Size,1,15
+MasterImportOtherPrepaidCollectId,MasterImportOtherPrepaidCollectId,Size,1,15
+NumberFormatCode,NumberFormatCode,Type,nvarchar,varchar
+NumberFormatCode,NumberFormatCode,Size,128,4
+ProfitCurrencyId,ProfitCurrencyId,Nullable,TRUE,FALSE
+SearchFields,SearchFields,Type,nvarchar,varchar
+StorageEncryptionKey,StorageEncryptionKey,Size,40,0
+VatMandatoryForPotentialCustomers,VatMandatoryForPotentialCustomers,Size,0,1
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+TenantAdditionalDatas,TenantAdditionalDatas,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+DropBoxAccessToken,DropBoxAccessToken,Type,nvarchar,varchar
+DropBoxAccessToken,DropBoxAccessToken,Size,-1,350
+DropBoxState,DropBoxState,Type,nvarchar,varchar
+DropBoxState,DropBoxState,Size,-1,100
+DropBoxUEmail,DropBoxUEmail,Type,nvarchar,varchar
+DropBoxUEmail,DropBoxUEmail,Size,-1,100
+DropBoxUID,DropBoxUID,Type,nvarchar,varchar
+DropBoxUID,DropBoxUID,Size,-1,100
+Id,Id,Size,0,15
+PaymentGatewayConnectionString,PaymentGatewayConnectionString,Type,nvarchar,varchar
+PaymentGatewayConnectionString,PaymentGatewayConnectionString,Size,-1,400
+PaymentGatewayPartnerCode,PaymentGatewayPartnerCode,Type,nvarchar,varchar
+PaymentGatewayPartnerCode,PaymentGatewayPartnerCode,Size,128,15
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+TenantLoginPolicies,TenantLoginPolicies,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+ExcludeInternalIPs,ExcludeInternalIPs,Size,0,1
+IsEnabledForSpecificUsers,IsEnabledForSpecificUsers,Size,0,1
+KeepUserLoggedIn,KeepUserLoggedIn,Size,0,1
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+TermsofUseSignatures,TermsofUseSignatures,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Id,Id,Size,15,0
+SignedDatetime,SignedDatetime,Size,0,40
+TermsofUseVersion,TermsofUseVersion,Size,0,40
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+Truckers,Truckers,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AddedManually,AddedManually,Size,0,15
+Id,Id,Size,15,0
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+TwoFactorAuthenticationDevices,TwoFactorAuthenticationDevices,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AuthenticationCode,AuthenticationCode,Nullable,FALSE,TRUE
+CreateDate,CreateDate,Size,0,1
+DeviceDescription,DeviceDescription,Nullable,FALSE,TRUE
+LastLoginDate,LastLoginDate,Size,0,1
+LastLoginDate,LastLoginDate,Nullable,TRUE,FALSE
+UpdateDate,UpdateDate,Size,0,1
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+Users,Users,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Code,Code,Size,20,0
+FreelancerId,FreelancerId,Size,15,0
+Id,Id,Size,15,0
+IsDistributor,IsDistributor,Size,0,1
+IsFreelancer,IsFreelancer,Size,0,1
+IsSalesman,IsSalesman,Size,0,1
+IsShowContactDetailsInTheMobileApp,IsShowContactDetailsInTheMobileApp,Size,0,1
+IsTwoFactorAuthenticationEnabled,IsTwoFactorAuthenticationEnabled,Size,0,1
+LicencedUser,LicencedUser,Size,0,1
+Notes,Notes,Type,nvarchar,varchar
+SearchFields,SearchFields,Type,nvarchar,varchar
+SetAngularAsDefault,SetAngularAsDefault,Size,0,1
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+UserLicenses,UserLicenses,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Id,Id,Size,15,0
+PackageCode,PackageCode,Nullable,FALSE,TRUE
+UserId,UserId,Size,15,4
+UserId,UserId,Nullable,FALSE,TRUE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+UsoCFDIs,UsoCFDIs,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Code,Code,Type,nvarchar,varchar
+Code,Code,Size,128,10
+Name,Name,Type,nvarchar,varchar
+Name,Name,Size,-1,40
+Name,Name,Nullable,TRUE,FALSE
+SearchFields,SearchFields,Type,nvarchar,varchar
+SearchFields,SearchFields,Size,-1,1000
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+VatFormatType,VatFormatTypes,Incorrect Table Name In LXML File,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Name,Name,Size,60,40
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+VatMandatoryType,VatMandatoryTypes,Incorrect Table Name In LXML File,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+VatTypes,VatTypes,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AddedManually,AddedManually,Size,0,15
+ExternalTAXItemId,ExternalTAXItemId,Size,25,0
+Id,Id,Size,15,0
+InActive,InActive,Size,0,15
+IsMultiPercentage,IsMultiPercentage,Size,0,1
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+VatTypePercentages,VatTypePercentages,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+FromDate,FromDate,Nullable,TRUE,FALSE
+Id,Id,Size,15,0
+Percentage,Percentage,Nullable,TRUE,FALSE
+VatTypeId,VatTypeId,Size,15,0
+VatTypeId,VatTypeId,Nullable,FALSE,TRUE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+VATTypesGroups,VATTypesGroups,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+GroupVATTypeId,GroupVATTypeId,Size,15,0
+SingleVATTypeId,SingleVATTypeId,Size,15,0
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+VatUniqueType,VatUniqueTypes,Incorrect Table Name In LXML File,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+Vendors,Vendors,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Id,Id,Size,15,0
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+Vessels,Vessels,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AddedManually,AddedManually,Size,0,15
+Id,Id,Size,15,0
+InActive,InActive,Size,0,15
+Notes,Notes,Type,nvarchar,varchar
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+Warehouses,Warehouses,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AddedManually,AddedManually,Size,0,15
+Id,Id,Size,15,0
+MyWarehouse,MyWarehouse,Size,0,15
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+WarehouseTypes,WarehouseTypes,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+WeightUnits,WeightUnits,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+CustomsInterfaces,CustomsInterfaces,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+AnalyzeQueues,AnalyzeQueues,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+CommunicationLogId,CommunicationLogId,Nullable,TRUE,FALSE
+EntityReference,EntityReference,Size,20,15
+ErrorMessage,ErrorMessage,Size,8000,500
+ErrorMessage,ErrorMessage,Nullable,TRUE,FALSE
+FileName,FileName,Type,nvarchar,varchar
+FileName,FileName,Size,120,0
+From,From,Nullable,FALSE,TRUE
+MessageBody,MessageBody,Type,varbinary,varchar
+MessageBody,MessageBody,Size,-1,0
+MessageBody,MessageBody,Nullable,FALSE,TRUE
+ObjectTableName,ObjectTableName,Size,25,0
+SearchFields,SearchFields,Type,nvarchar,varchar
+StackTrace,StackTrace,Size,8000,0
+Status,Status,Nullable,FALSE,TRUE
+Subject,Subject,Nullable,TRUE,FALSE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ApiCredintials,ApiCredintials,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AllowedIPs,AllowedIPs,Type,nvarchar,varchar
+HashedPrimaryAccessKey,HashedPrimaryAccessKey,Type,nvarchar,varchar
+HashedSeconderyAccessKey,HashedSeconderyAccessKey,Type,nvarchar,varchar
+Id,Id,Size,15,0
+maskedPrimaryAccessKey,maskedPrimaryAccessKey,Type,nvarchar,varchar
+maskedSeconderyAccessKey,maskedSeconderyAccessKey,Type,nvarchar,varchar
+UpdatedBy,UpdatedBy,Size,100,250
+UsedFor,UsedFor,Type,nvarchar,varchar
+UsedFor,UsedFor,Nullable,TRUE,FALSE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+AWBMessagesCCSTypes,AWBMessagesCCSTypes,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+BatchServicesDefinitions,BatchServicesDefinitions,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+ClassName,ClassName,Type,nvarchar,varchar
+ClassName,ClassName,Size,-1,200
+Code,Code,Type,nvarchar,varchar
+Code,Code,Size,128,100
+Parameter1,Parameter1,Type,nvarchar,varchar
+Parameter1,Parameter1,Size,-1,200
+Parameter2,Parameter2,Type,nvarchar,varchar
+Parameter2,Parameter2,Size,-1,100
+QueueDefinitionCode,Not Found,-,-,-
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+BluesnapContractTypes,BluesnapContractTypes,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Code,Code,Size,4,1
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+BluesnapTransactions,BluesnapTransactions,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+LogitudeAmital,LogitudeAmital,Type,nvarchar,varchar
+LogitudeAmital,LogitudeAmital,Nullable,FALSE,TRUE
+Tenant,Not Found,-,-,-
+TransactionDate,TransactionDate,Nullable,TRUE,FALSE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+PaymentChannels,PaymentChannels,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Code,Code,Size,2,4
+Name,Name,Type,nvarchar,varchar
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+PaymentCurrencies,PaymentCurrencies,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Name,Name,Type,nvarchar,varchar
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+PaymentMethods,PaymentMethods,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Code,Code,Size,2,4
+Name,Name,Type,nvarchar,varchar
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+RecurringPeriods,RecurringPeriods,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Code,Code,Type,nvarchar,varchar
+Code,Code,Size,2,4
+Name,Name,Type,nvarchar,varchar
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+TenantAddOns,TenantAddOns,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Id,Id,Size,15,0
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+TenantManagements,TenantManagements,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AWBMessagesCCSTypeCode,AWBMessagesCCSTypeCode,Nullable,TRUE,FALSE
+BluesnapAccount,BluesnapAccount,Type,nvarchar,varchar
+BluesnapContractId,BluesnapContractId,Size,15,10
+BluesnapContractQTY,Not Found,-,-,-
+BluesnapCRMContractId,BluesnapCRMContractId,Size,15,10
+BluesnapCRMContractQTY,Not Found,-,-,-
+BluesnapEAWBContractId,BluesnapEAWBContractId,Size,15,10
+BluesnapEAWBContractQTY,Not Found,-,-,-
+BluesnapEAWBSContractId,BluesnapEAWBSContractId,Size,15,10
+BluesnapEAWBSContractQTY,Not Found,-,-,-
+BluesnapInttraStockContractId,BluesnapInttraStockContractId,Size,15,10
+BluesnapInttraStockContractQTY,Not Found,-,-,-
+BluesnapOneTimeContractQTY,Not Found,-,-,-
+CountryName,CountryName,Type,nvarchar,varchar
+CountryName,CountryName,Size,-1,120
+EnableBranding,EnableBranding,Size,0,1
+HideSharedlogistics,HideSharedlogistics,Size,0,1
+InternalNotes,InternalNotes,Type,nvarchar,varchar
+IsCargonautEnabled,IsCargonautEnabled,Size,0,3
+IsDEXXConnectionEnabled,IsDEXXConnectionEnabled,Size,0,1
+IsEAWBOnlyDemo,IsEAWBOnlyDemo,Size,0,1
+IsMultiPackage,IsMultiPackage,Size,0,1
+IsRestrictedByAirline,IsRestrictedByAirline,Size,0,1
+MainContract,MainContract,Type,nvarchar,varchar
+ManagesRegisteredAgent,ManagesRegisteredAgent,Size,0,1
+Name,Name,Type,nvarchar,varchar
+Notes,Notes,Type,nvarchar,varchar
+OldTTY,OldTTY,Size,33,0
+PackageCodeSearchField,PackageCodeSearchField,Type,nvarchar,varchar
+RecurringPeriodCode,RecurringPeriodCode,Type,nvarchar,varchar
+SearchFields,SearchFields,Type,nvarchar,varchar
+StockTypeCode,StockTypeCode,Size,15,70
+SupportActivated,SupportActivated,Size,0,1
+TemporalPackageCode,TemporalPackageCode,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+TenantManagementLicenses,TenantManagementLicenses,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Id,Id,Size,15,0
+NumberOfUsers,NumberOfUsers,Size,0,1
+NumberOfUsers,NumberOfUsers,Nullable,TRUE,FALSE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+TenantManagmentPrivateLabels,TenantManagmentPrivateLabels,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+ContactUsEmail,ContactUsEmail,Type,nvarchar,varchar
+HybridPartnerId,HybridPartnerId,Type,nvarchar,varchar
+HybridPartnerId,HybridPartnerId,Size,15,0
+HybridPartnerId,HybridPartnerId,Nullable,FALSE,TRUE
+MainLogo,MainLogo,Type,varbinary,varchar
+MainLogo,MainLogo,Size,-1,0
+PrivateLabelName,PrivateLabelName,Type,nvarchar,varchar
+SmallLogo,SmallLogo,Type,varbinary,varchar
+SmallLogo,SmallLogo,Size,-1,0
+Tenant,Tenant,Nullable,FALSE,TRUE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+TenantTypes,TenantTypes,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+WebhookKeys,WebhookKeys,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AccessKey,AccessKey,Nullable,TRUE,FALSE
+Description,Description,Nullable,TRUE,FALSE
+Id,Id,Size,15,0
+InActive,InActive,Size,0,1000
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+APILogs,APILogs,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+BatchNumber,BatchNumber,Size,15,0
+CreateDate,CreateDate,Size,0,1
+CreateDateUTC,CreateDateUTC,Size,0,1
+CustomerId,CustomerId,Size,15,0
+Direction,Direction,Nullable,FALSE,TRUE
+ExpirationDate,ExpirationDate,Size,0,1
+LastUpdateDate,LastUpdateDate,Size,0,1
+LastUpdateDateUTC,LastUpdateDateUTC,Size,0,1
+QueueMessage,QueueMessage,Size,400,0
+QueueMessageMoreDetailsId,QueueMessageMoreDetailsId,Size,15,0
+QueueType,QueueType,Size,100,0
+Status,Status,Nullable,FALSE,TRUE
+Subject,Subject,Type,varchar,nvarchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+BusinessHours,BusinessHours,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Code,Code,Size,3,0
+CreateDate,CreateDate,Size,0,1
+CreatedByUserId,CreatedByUserId,Nullable,FALSE,TRUE
+Description,Description,Type,nvarchar,varchar
+FridayFromHour,FridayFromHour,Type,time,datetime
+FridayFromHour,FridayFromHour,Size,0,15
+FridayToHour,FridayToHour,Type,time,datetime
+FridayToHour,FridayToHour,Size,0,15
+Id,Id,Size,15,0
+MondayFromHour,MondayFromHour,Type,time,datetime
+MondayFromHour,MondayFromHour,Size,0,15
+MondayToHour,MondayToHour,Type,time,datetime
+MondayToHour,MondayToHour,Size,0,15
+Name,Name,Type,nvarchar,varchar
+SaturdayFromHour,SaturdayFromHour,Type,time,datetime
+SaturdayFromHour,SaturdayFromHour,Size,0,15
+SaturdayToHour,SaturdayToHour,Type,time,datetime
+SaturdayToHour,SaturdayToHour,Size,0,15
+SearchFields,SearchFields,Type,nvarchar,varchar
+SearchFields,SearchFields,Size,1000,0
+SundayFromHour,SundayFromHour,Type,time,datetime
+SundayFromHour,SundayFromHour,Size,0,15
+SundayToHour,SundayToHour,Type,time,datetime
+SundayToHour,SundayToHour,Size,0,15
+ThursdayFromHour,ThursdayFromHour,Type,time,datetime
+ThursdayFromHour,ThursdayFromHour,Size,0,15
+ThursdayToHour,ThursdayToHour,Type,time,datetime
+ThursdayToHour,ThursdayToHour,Size,0,15
+TuesdayFromHour,TuesdayFromHour,Type,time,datetime
+TuesdayFromHour,TuesdayFromHour,Size,0,15
+TuesdayToHour,TuesdayToHour,Type,time,datetime
+TuesdayToHour,TuesdayToHour,Size,0,15
+UpdateDate,UpdateDate,Size,0,1
+UpdatedByUserId,UpdatedByUserId,Nullable,FALSE,TRUE
+WednesdayFromHour,WednesdayFromHour,Type,time,datetime
+WednesdayFromHour,WednesdayFromHour,Size,0,15
+WednesdayToHour,WednesdayToHour,Type,time,datetime
+WednesdayToHour,WednesdayToHour,Size,0,15
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+BusinessHoursHolidays,BusinessHoursHolidays,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+BusinessHourId,BusinessHourId,Size,15,0
+BusinessHourId,BusinessHourId,Nullable,FALSE,TRUE
+CreateDate,CreateDate,Size,0,1
+CreatedByUserId,CreatedByUserId,Nullable,FALSE,TRUE
+HolidayName,HolidayName,Type,nvarchar,varchar
+Id,Id,Size,15,0
+UpdateDate,UpdateDate,Size,0,1
+UpdatedByUserId,UpdatedByUserId,Nullable,FALSE,TRUE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ChargesGroups,ChargesGroups,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+LocalName,LocalName,Nullable,TRUE,FALSE
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+CounterDefinitions,CounterDefinitions,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+CounterId,CounterId,Size,15,0
+CounterId,CounterId,Nullable,FALSE,TRUE
+Id,Id,Size,15,0
+Parameter1,Parameter1,Size,20,0
+Parameter2,Parameter2,Size,20,0
+StartNumber,StartNumber,Size,0,15
+Suffix,Not Found,-,-,-
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+Directions,Directions,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Id,Id,Type,char,varchar
+Id,Id,Size,1,0
+Name,Name,Size,40,10
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+DWCategories,DWCategories,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Code,Code,Size,50,3
+Index,Not Found,-,-,-
+Name,Name,Size,50,3
+Name,Name,Nullable,FALSE,TRUE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+DWObjectFields,DWObjectFields,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+IsCustom,Not Found,-,-,-
+IsPrimaryKey,IsPrimaryKey,Size,0,100
+IsRequired,IsRequired,Size,0,100
+LOVAdditionalColumns,Not Found,-,-,-
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+DWObjectTables,DWObjectTables,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+DefaultFilterBy,Not Found,-,-,-
+Id,Id,Nullable,FALSE,TRUE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+EntityStatus,EntityStatus,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Code,Code,Nullable,FALSE,TRUE
+DisplayName,DisplayName,Nullable,FALSE,TRUE
+Id,Id,Size,15,0
+ObjectTableId,ObjectTableId,Nullable,FALSE,TRUE
+SearchFields,SearchFields,Type,nvarchar,varchar
+StatusWeight,StatusWeight,Size,0,40
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+EventTypes,EventTypes,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AddedManually,AddedManually,Size,0,1
+AgentRoleId,AgentRoleId,Size,15,0
+CustomerRoleId,CustomerRoleId,Size,15,0
+EnglishName,EnglishName,Size,40,45
+EventTypeCategoryCode,EventTypeCategoryCode,Type,nvarchar,varchar
+EventTypeCategoryCode,EventTypeCategoryCode,Size,128,3
+Id,Id,Size,15,0
+InActive,InActive,Size,0,1
+IsAgentView,IsAgentView,Size,0,1
+IsCustomerView,IsCustomerView,Size,0,1
+IsFollowUp,IsFollowUp,Size,0,1
+IsManualEntry,IsManualEntry,Size,0,1
+IsSharedLogisticsEnabled,IsSharedLogisticsEnabled,Size,0,1
+LocalName,LocalName,Size,40,45
+ManualActivatedFollowUp,ManualActivatedFollowUp,Size,0,1
+SearchFields,SearchFields,Type,nvarchar,varchar
+Tenant,Tenant,Size,0,1
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+IATACodes,IATACodes,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Id,Id,Size,15,0
+IsIATA,IsIATA,Size,0,1
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+InboundEmails,InboundEmails,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AnalyzeQueueId,AnalyzeQueueId,Size,15,0
+CreateDate,CreateDate,Size,0,1
+EntityId,EntityId,Size,40,15
+Id,Id,Size,15,0
+Tenant,Tenant,Size,0,1
+UpdateDate,UpdateDate,Size,0,1
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+InboundEmailLines,InboundEmailLines,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Bcc,Bcc,Size,500,0
+Body,Body,Type,nvarchar,varchar
+CCs,CCs,Size,4000,500
+CommunicationLogId,CommunicationLogId,Nullable,TRUE,FALSE
+CreateDate,CreateDate,Size,0,1
+Direction,Direction,Nullable,TRUE,FALSE
+EntityLineId,EntityLineId,Size,15,0
+EntityLineId,EntityLineId,Nullable,FALSE,TRUE
+FullBody,FullBody,Type,nvarchar,varchar
+FullBody,FullBody,Size,-1,0
+HTMLFullBody,HTMLFullBody,Type,nvarchar,varchar
+HTMLFullBody,HTMLFullBody,Size,-1,0
+Id,Id,Size,15,0
+InboundEmailId,InboundEmailId,Size,15,0
+InboundEmailId,InboundEmailId,Nullable,FALSE,TRUE
+InternalUsers,InternalUsers,Size,4000,0
+Recepient,Recepient,Type,nvarchar,varchar
+Recepient,Recepient,Size,100,70
+Sender,Sender,Type,nvarchar,varchar
+Sender,Sender,Size,100,70
+Subject,Subject,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+MoveTypes,MoveTypes,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Id,Id,Size,15,0
+SearchFields,SearchFields,Type,nvarchar,varchar
+TransportModeId,TransportModeId,Type,char,varchar
+TransportModeId,TransportModeId,Size,1,15
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ObjectFields,ObjectFields,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AgentPermissionTypeCode,AgentPermissionTypeCode,Size,15,0
+AllowedinAutomationConditions,AllowedinAutomationConditions,Size,0,1
+CanAutomateSetValue,CanAutomateSetValue,Size,0,1
+Code,Code,Size,100,0
+Code,Code,Nullable,FALSE,TRUE
+ColumnHeaderTemplateName,ColumnHeaderTemplateName,Size,50,0
+ControlField1,ControlField1,Size,100,0
+ControlField2,ControlField2,Size,100,0
+ControlField3,ControlField3,Size,100,0
+ConverterName,ConverterName,Size,100,0
+CustomerPermissionTypeCode,CustomerPermissionTypeCode,Size,15,0
+CustomPickListCode,CustomPickListCode,Size,60,0
+DataTemplateName,DataTemplateName,Size,50,0
+DataTypeCode,DataTypeCode,Size,10,0
+DependencyFilter1Type,DependencyFilter1Type,Size,20,0
+DependencyFilter1Value,DependencyFilter1Value,Size,50,0
+DependencyFilter2Type,DependencyFilter2Type,Size,20,0
+DependencyFilter2Value,DependencyFilter2Value,Size,40,0
+DependencyFilter3Type,DependencyFilter3Type,Size,20,0
+DependencyFilter3Value,DependencyFilter3Value,Size,40,0
+DisplayInLookupColumnSize,DisplayInLookupColumnSize,Size,15,0
+EnableFullscreenTextBox,Not Found,-,-,-
+FieldCode,FieldCode,Nullable,FALSE,TRUE
+FieldName,FieldName,Type,varchar,nvarchar
+FieldName,FieldName,Size,100,500
+FieldName,FieldName,Nullable,FALSE,TRUE
+FullNameTextCodeId,FullNameTextCodeId,Size,30,0
+GeneratedComponentPath,GeneratedComponentPath,Size,250,0
+HelpTextCodeId,HelpTextCodeId,Size,30,0
+HtmlHeaderComponentName,HtmlHeaderComponentName,Size,100,0
+HtmlHeaderComponentUrl,HtmlHeaderComponentUrl,Size,256,0
+HtmlListComponentName,HtmlListComponentName,Size,100,0
+HtmlListComponentUrl,HtmlListComponentUrl,Size,256,0
+Id,Id,Size,15,0
+ListPropertyPath,ListPropertyPath,Size,100,0
+ListTextCodeId,ListTextCodeId,Size,30,0
+LookUpControlName,LookUpControlName,Size,50,0
+LookUpTableId,LookUpTableId,Size,15,0
+MultiTableId,MultiTableId,Size,15,0
+ObjectTableId,ObjectTableId,Nullable,FALSE,TRUE
+Operator,Operator,Size,40,0
+PMPropertyPath,PMPropertyPath,Size,100,0
+SearchFields,SearchFields,Type,nvarchar,varchar
+SearchFields,SearchFields,Size,1000,0
+ShortNameTextCodeId,ShortNameTextCodeId,Size,30,0
+TextCase,TextCase,Size,30,0
+ValidForQuerySection1,ValidForQuerySection1,Size,100,0
+ValidForQuerySection2,ValidForQuerySection2,Size,100,0
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ObjectTables,ObjectTables,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+ClientModuleName,ClientModuleName,Size,60,0
+CodeField,CodeField,Size,15,0
+DBTableName,DBTableName,Size,100,0
+DependencyFilter1,DependencyFilter1,Size,40,0
+DependencyFilter2,DependencyFilter2,Size,40,0
+DependencyFilter3,DependencyFilter3,Size,40,0
+DescriptionTextCodeId,DescriptionTextCodeId,Size,30,0
+DownloadToExcelFeatureCode,DownloadToExcelFeatureCode,Size,120,0
+EntityResource,EntityResource,Type,varbinary,varchar
+EntityResource,EntityResource,Size,-1,0
+HeaderScreenId,HeaderScreenId,Size,15,0
+Id,Id,Size,15,0
+KeyPropertyPath,KeyPropertyPath,Size,100,0
+LookUp1,LookUp1,Size,40,0
+LookUp2,LookUp2,Size,40,0
+LovDisplayMemberPath,LovDisplayMemberPath,Type,nvarchar,varchar
+LovDisplayMemberPath,LovDisplayMemberPath,Size,-1,30
+LovDisplayMemberPathLocal,LovDisplayMemberPathLocal,Type,nvarchar,varchar
+LovDisplayMemberPathLocal,LovDisplayMemberPathLocal,Size,-1,30
+MainTipCode,MainTipCode,Size,4,0
+NameField,NameField,Size,60,15
+NewButtonTextCodeId,NewButtonTextCodeId,Size,30,0
+NewWizardComponentPath,NewWizardComponentPath,Size,250,0
+NewWizardControlName,NewWizardControlName,Size,250,0
+ObjectTableTypeCode,ObjectTableTypeCode,Size,4,0
+ObjectTableTypeCode,ObjectTableTypeCode,Nullable,FALSE,TRUE
+ServerModuleName,ServerModuleName,Size,60,0
+SortingByObjectField,SortingByObjectField,Size,100,0
+SplitComponentPath,SplitComponentPath,Type,nvarchar,varchar
+SplitComponentPath,SplitComponentPath,Size,250,0
+UpdateKey,UpdateKey,Size,100,0
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+PrepaidCollects,PrepaidCollects,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+DisplayInLOV,DisplayInLOV,Size,0,40
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+RatesTables,RatesTables,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Id,Id,Size,15,0
+Rate,Rate,Size,0,15
+Rate,Rate,Nullable,TRUE,FALSE
+ValueDate,ValueDate,Size,0,15
+ValueDate,ValueDate,Nullable,TRUE,FALSE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+SchedulerProcedure,SchedulerProcedures,Incorrect Table Name In LXML File,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Code,Code,Type,varchar,nvarchar
+Description,Description,Type,varchar,nvarchar
+IsInternallyDefined,IsInternallyDefined,Nullable,TRUE,FALSE
+Name,Name,Type,varchar,nvarchar
+SearchFields,SearchFields,Type,varchar,nvarchar
+SearchFields,SearchFields,Size,1000,-1
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+TaskSchedulerHistory,TaskSchedulerHistory,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Id,Id,Size,15,0
+LogDocumentId,Not Found,-,-,-
+RunResult,RunResult,Size,200,0
+TaskId,TaskId,Size,15,0
+TaskId,TaskId,Nullable,FALSE,TRUE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+TasksScheduler,TasksScheduler,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+CreatedBy,CreatedBy,Nullable,FALSE,TRUE
+Friday,Friday,Size,0,100
+Id,Id,Size,15,0
+InActive,InActive,Size,0,100
+IsLastRunError,IsLastRunError,Size,0,100
+LastRunEndTimeUTC,Not Found,-,-,-
+Monday,Monday,Size,0,100
+NextRunTimeUTC,NextRunTimeUTC,Nullable,TRUE,FALSE
+RepeatInMinutes,RepeatInMinutes,Size,0,100
+RepeatInMinutes,RepeatInMinutes,Nullable,TRUE,FALSE
+Retries,Not Found,-,-,-
+Satarday,Satarday,Size,0,100
+SchedulerDetailsXML,SchedulerDetailsXML,Type,nvarchar,varchar
+StartDateTime,StartDateTime,Size,0,100
+Status,Status,Size,25,30
+Sunday,Sunday,Size,0,100
+Thursday,Thursday,Size,0,100
+Tuesday,Tuesday,Size,0,100
+UpdatedBy,UpdatedBy,Nullable,FALSE,TRUE
+Wednesday,Wednesday,Size,0,100
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+TransportModes,TransportModes,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Id,Id,Type,char,varchar
+Id,Id,Size,1,0
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+VolumeUnits,VolumeUnits,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+Accounts1,Accounts,Incorrect Table Name In LXML File,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AddedManually,AddedManually,Size,0,15
+Code,Code,Type,nvarchar,varchar
+ExternalAccountingCard,ExternalAccountingCard,Type,nvarchar,varchar
+Id,Id,Size,15,0
+InActive,InActive,Size,0,15
+Name,Name,Type,nvarchar,varchar
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+AccountingPaymentMethods,AccountingPaymentMethods,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AddedManually,AddedManually,Size,0,2
+Id,Id,Size,15,0
+Inactive,Inactive,Size,0,2
+IsAP,IsAP,Size,0,2
+IsAR,IsAR,Size,0,2
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+AccountingSystemsSyncStatuses,AccountingSystemsSyncStatuses,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+LastError,LastError,Type,nvarchar,varchar
+LastError,LastError,Size,-1,7000
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+AccountingTransferHeaders,AccountingTransferHeaders,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AccountingTransferTypeCode,AccountingTransferTypeCode,Type,nvarchar,varchar
+AccountingTransferTypeCode,AccountingTransferTypeCode,Size,128,4
+AccountingTransferTypeCode,AccountingTransferTypeCode,Nullable,TRUE,FALSE
+FileName,FileName,Type,nvarchar,varchar
+FileName,FileName,Size,-1,40
+Id,Id,Type,nvarchar,varchar
+Id,Id,Size,128,0
+Notes,Notes,Size,-1,250
+SearchFields,SearchFields,Type,nvarchar,varchar
+SearchFields,SearchFields,Size,-1,1000
+TransferDate,TransferDate,Size,0,15
+TransferDate,TransferDate,Nullable,TRUE,FALSE
+TransferNumber,TransferNumber,Type,nvarchar,varchar
+TransferNumber,TransferNumber,Size,-1,20
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+AccountingTransferLines,AccountingTransferLines,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AccountingTransferHeaderId,AccountingTransferHeaderId,Type,nvarchar,varchar
+AccountingTransferHeaderId,AccountingTransferHeaderId,Size,128,15
+EntityId,EntityId,Type,nvarchar,varchar
+EntityId,EntityId,Size,-1,15
+EntityReference,EntityReference,Type,nvarchar,varchar
+EntityReference,EntityReference,Size,-1,20
+Id,Id,Type,nvarchar,varchar
+Id,Id,Size,128,0
+SearchFields,SearchFields,Type,nvarchar,varchar
+SearchFields,SearchFields,Size,-1,1000
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+AccountingTransferTypes,AccountingTransferTypes,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Code,Code,Type,nvarchar,varchar
+Code,Code,Size,128,4
+Name,Name,Type,nvarchar,varchar
+Name,Name,Size,-1,40
+Name,Name,Nullable,TRUE,FALSE
+SearchFields,SearchFields,Type,nvarchar,varchar
+SearchFields,SearchFields,Size,-1,1000
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+AccountTypes,AccountTypes,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Name,Name,Size,40,30
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+APInvoices,APInvoices,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AccountingDate,AccountingDate,Size,0,1
+AmountDue,AmountDue,Size,0,15
+AmountDue,AmountDue,Nullable,TRUE,FALSE
+AmountDueInLocalCurrency,AmountDueInLocalCurrency,Size,0,15
+AmountDueInLocalCurrency,AmountDueInLocalCurrency,Nullable,TRUE,FALSE
+AmountDueInProfitCurrency,AmountDueInProfitCurrency,Size,0,15
+AmountDueInProfitCurrency,AmountDueInProfitCurrency,Nullable,TRUE,FALSE
+AmountInInvoiceCurrency,AmountInInvoiceCurrency,Nullable,TRUE,FALSE
+AmountInLocalCurrency,AmountInLocalCurrency,Nullable,TRUE,FALSE
+AmountInProfitCurrency,AmountInProfitCurrency,Nullable,TRUE,FALSE
+ApprovedDate,ApprovedDate,Size,0,1
+CreatedByUserId,CreatedByUserId,Nullable,FALSE,TRUE
+Description,Description,Type,nvarchar,varchar
+Description,Description,Size,250,0
+DueDate,DueDate,Nullable,TRUE,FALSE
+ExternalAccountingEntityId,ExternalAccountingEntityId,Size,15,0
+HouseNumber,HouseNumber,Type,nvarchar,varchar
+Id,Id,Size,15,0
+InternalNotes,InternalNotes,Type,nvarchar,varchar
+InternalNumber,InternalNumber,Nullable,FALSE,TRUE
+InvoiceCurrencyExchangeRate,InvoiceCurrencyExchangeRate,Nullable,TRUE,FALSE
+InvoiceDate,InvoiceDate,Nullable,TRUE,FALSE
+IsClosed,IsClosed,Size,0,15
+IsExternalEntity,IsExternalEntity,Size,0,1
+IsGeneralInvoice,IsGeneralInvoice,Size,0,1
+IsMultipleEntities,IsMultipleEntities,Size,0,1
+IsTransferStarted,IsTransferStarted,Size,0,1
+MasterNumber,MasterNumber,Type,nvarchar,varchar
+OperationalDate,OperationalDate,Size,0,1
+PaymentTermExternalId,PaymentTermExternalId,Size,25,0
+ProfitCurrencyExchangeRate,ProfitCurrencyExchangeRate,Nullable,TRUE,FALSE
+SearchFields,SearchFields,Type,nvarchar,varchar
+StatusCode,StatusCode,Nullable,FALSE,TRUE
+TransferError,TransferError,Type,nvarchar,varchar
+TransferStatusCode,TransferStatusCode,Nullable,FALSE,TRUE
+TransferTries,TransferTries,Size,0,1
+UpdatedByUserId,UpdatedByUserId,Nullable,FALSE,TRUE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+APInvoiceLines,APInvoiceLines,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AuthorizedSignatory,AuthorizedSignatory,Size,0,1
+Description,Description,Type,nvarchar,varchar
+EntityId,EntityId,Size,15,0
+EntityPayableId,EntityPayableId,Size,15,0
+InvoiceCurrencyAmount,InvoiceCurrencyAmount,Nullable,TRUE,FALSE
+VatAmount,VatAmount,Size,0,1
+VatPercentage,VatPercentage,Size,0,1
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+APInvoicePayments,APInvoicePayment,Incorrect Table Name In LXML File,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+ExchangeRate,ExchangeRate,Size,0,1
+ForeignAmount,ForeignAmount,Nullable,TRUE,FALSE
+Id,Id,Size,15,0
+LocalAmount,LocalAmount,Nullable,TRUE,FALSE
+PaymentAmount,PaymentAmount,Size,0,1
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+APInvoiceStatus,APInvoiceStatus,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Name,Name,Size,40,20
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+APInvoiceTotalVATs,APInvoiceTotalVATs,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+ExternalTAXItemId,ExternalTAXItemId,Size,25,0
+ExternalVATCard,ExternalVATCard,Size,25,0
+Id,Id,Size,15,0
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+APInvoiceTypes,APInvoiceTypes,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Name,Name,Size,40,20
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+APPayments,APPayments,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AccountingPaymentMethodId,AccountingPaymentMethodId,Size,15,20
+AccountingPaymentMethodId,AccountingPaymentMethodId,Nullable,TRUE,FALSE
+AmountInPaymentCurrency,AmountInPaymentCurrency,Nullable,TRUE,FALSE
+ApprovedByUserId,ApprovedByUserId,Nullable,FALSE,TRUE
+Bank,Bank,Size,40,10
+ChequeOrPaymentRef,ChequeOrPaymentRef,Size,20,30
+CreateDate,CreateDate,Nullable,TRUE,FALSE
+ExternalAccountingEntityId,ExternalAccountingEntityId,Size,15,0
+Id,Id,Size,15,0
+InternalNotes,InternalNotes,Type,nvarchar,varchar
+IsClosed,IsClosed,Size,0,15
+PaymentCurrencyExchangeRate,PaymentCurrencyExchangeRate,Nullable,TRUE,FALSE
+PaymentMethodId,PaymentMethodId,Size,15,0
+PaymentMethodId,PaymentMethodId,Nullable,FALSE,TRUE
+PaymentNo,PaymentNo,Nullable,FALSE,TRUE
+PrintedByUserId,PrintedByUserId,Size,15,0
+PrintNotes,PrintNotes,Type,nvarchar,varchar
+RegisterDate,RegisterDate,Nullable,TRUE,FALSE
+SearchFields,SearchFields,Size,-1,20000
+StatusCode,StatusCode,Nullable,FALSE,TRUE
+TaxDeductionPercentage,TaxDeductionPercentage,Size,0,1
+TransferError,TransferError,Type,nvarchar,varchar
+TransferError,TransferError,Size,-1,250
+TransferStatusCode,TransferStatusCode,Nullable,FALSE,TRUE
+UpdatedByUserId,UpdatedByUserId,Size,15,0
+UpdatedByUserId,UpdatedByUserId,Nullable,FALSE,TRUE
+ValueDate,ValueDate,Nullable,TRUE,FALSE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+APPaymentMethods,APPaymentMethods,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AccountingExternalId,AccountingExternalId,Size,15,0
+AddedManually,AddedManually,Size,0,2
+Id,Id,Size,15,0
+Inactive,Inactive,Size,0,2
+Name,Name,Size,40,20
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+APPaymentStatus,APPaymentStatus,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ARInvoices,ARInvoices,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AmountDue,AmountDue,Size,0,15
+AmountDue,AmountDue,Nullable,TRUE,FALSE
+AmountDueInLocalCurrency,AmountDueInLocalCurrency,Size,0,15
+AmountDueInLocalCurrency,AmountDueInLocalCurrency,Nullable,TRUE,FALSE
+AmountDueInProfitCurrency,AmountDueInProfitCurrency,Size,0,15
+AmountDueInProfitCurrency,AmountDueInProfitCurrency,Nullable,TRUE,FALSE
+AmountInInvoiceCurrency,AmountInInvoiceCurrency,Size,0,15
+AmountInInvoiceCurrency,AmountInInvoiceCurrency,Nullable,TRUE,FALSE
+AmountInLocalCurrency,AmountInLocalCurrency,Size,0,15
+AmountInLocalCurrency,AmountInLocalCurrency,Nullable,TRUE,FALSE
+ApprovedDate,ApprovedDate,Size,0,1
+ConcurrencyGUID,ConcurrencyGUID,Nullable,FALSE,TRUE
+CreateDate,CreateDate,Size,0,15
+CreateDate,CreateDate,Nullable,TRUE,FALSE
+CreatedByUserId,CreatedByUserId,Nullable,FALSE,TRUE
+CreditedByARInvoiceId,CreditedByARInvoiceId,Size,15,0
+DateForVATInterest,DateForVATInterest,Size,0,1
+Description,Description,Type,nvarchar,varchar
+Description,Description,Size,250,0
+DocumentFilingId,DocumentFilingId,Type,nvarchar,varchar
+DocumentFilingId,DocumentFilingId,Size,-1,15
+DueDate,DueDate,Size,0,15
+DueDate,DueDate,Nullable,TRUE,FALSE
+ExpectedPaymentDate,ExpectedPaymentDate,Size,0,15
+ExternalAccountingEntityId,ExternalAccountingEntityId,Size,15,0
+Field1,Field1,Type,nvarchar,varchar
+Field1,Field1,Size,250,0
+Field10,Field10,Type,nvarchar,varchar
+Field10,Field10,Size,250,0
+Field2,Field2,Type,nvarchar,varchar
+Field2,Field2,Size,250,0
+Field3,Field3,Type,nvarchar,varchar
+Field3,Field3,Size,250,0
+Field4,Field4,Type,nvarchar,varchar
+Field4,Field4,Size,250,0
+Field5,Field5,Type,nvarchar,varchar
+Field5,Field5,Size,250,0
+Field6,Field6,Type,nvarchar,varchar
+Field6,Field6,Size,250,0
+Field7,Field7,Type,nvarchar,varchar
+Field7,Field7,Size,250,0
+Field8,Field8,Type,nvarchar,varchar
+Field8,Field8,Size,250,0
+Field9,Field9,Type,nvarchar,varchar
+Field9,Field9,Size,250,0
+HouseNumber,HouseNumber,Type,nvarchar,varchar
+Id,Id,Size,15,0
+Intercompany,Intercompany,Size,0,1
+InternalNotes,InternalNotes,Type,nvarchar,varchar
+InvoiceCurrencyExchangeRate,InvoiceCurrencyExchangeRate,Size,0,1
+InvoiceCurrencyExchangeRate,InvoiceCurrencyExchangeRate,Nullable,TRUE,FALSE
+InvoiceDate,InvoiceDate,Size,0,15
+InvoiceDate,InvoiceDate,Nullable,TRUE,FALSE
+IsAutoCredit,IsAutoCredit,Size,0,2
+IsCancelled,IsCancelled,Size,0,2
+IsConsolidationInvoice,IsConsolidationInvoice,Size,0,1
+IsConstituentInvoice,IsConstituentInvoice,Size,0,1
+IsCustomsChargesOnly,IsCustomsChargesOnly,Size,0,1
+IsExternalEntity,IsExternalEntity,Size,0,1
+IsFullAccounting,IsFullAccounting,Size,0,20
+IsGeneralInvoice,IsGeneralInvoice,Size,0,1
+IsInvoiceNumberManuallySet,IsInvoiceNumberManuallySet,Size,0,2
+IsMultiCurrency,IsMultiCurrency,Size,0,1
+IsPrinted,IsPrinted,Size,0,2
+IsTransferStarted,IsTransferStarted,Size,0,1
+MainEntityId,MainEntityId,Size,15,0
+MasterNumber,MasterNumber,Type,nvarchar,varchar
+OperationalDate,OperationalDate,Size,0,1
+PaymentTermExternalId,PaymentTermExternalId,Size,25,0
+PrepaidCollectId,PrepaidCollectId,Size,1,0
+PrintDate,PrintDate,Size,0,15
+ProfitCurrencyId,ProfitCurrencyId,Size,15,0
+SATAdditionalFieldsXML,SATAdditionalFieldsXML,Type,nvarchar,varchar
+SATAdditionalFieldsXML,SATAdditionalFieldsXML,Size,-1,0
+SATInvoiceStatusCode,SATInvoiceStatusCode,Nullable,FALSE,TRUE
+SATTransferStatusCode,SATTransferStatusCode,Nullable,FALSE,TRUE
+SATXML,SATXML,Type,nvarchar,varchar
+SATXML,SATXML,Size,-1,0
+SearchFields,SearchFields,Type,nvarchar,varchar
+Sent,Sent,Size,0,2
+SplitJournalByCurrency,SplitJournalByCurrency,Size,0,1
+StatusCode,StatusCode,Nullable,FALSE,TRUE
+SubTotalInInvoiceCurrency,SubTotalInInvoiceCurrency,Size,0,15
+SubTotalInInvoiceCurrency,SubTotalInInvoiceCurrency,Nullable,TRUE,FALSE
+SubTotalInLocalCurrency,SubTotalInLocalCurrency,Size,0,15
+SubTotalInLocalCurrency,SubTotalInLocalCurrency,Nullable,TRUE,FALSE
+TransferError,TransferError,Type,nvarchar,varchar
+TransferStatusCode,TransferStatusCode,Nullable,FALSE,TRUE
+TransferTries,TransferTries,Size,0,1
+TransmissionError,TransmissionError,Type,nvarchar,varchar
+TransmissionError,TransmissionError,Size,-1,8000
+UpdateDate,UpdateDate,Size,0,1
+UpdatedByUserId,UpdatedByUserId,Nullable,FALSE,TRUE
+UsoCFDICode,UsoCFDICode,Type,nvarchar,varchar
+UsoCFDICode,UsoCFDICode,Size,128,3
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ARInvoiceLines,ARInvoiceLines,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+ARInvoiceId,ARInvoiceId,Size,15,0
+ARInvoiceId,ARInvoiceId,Nullable,FALSE,TRUE
+DateForInterest,DateForInterest,Size,0,1
+Description,Description,Type,nvarchar,varchar
+EntityId,EntityId,Size,15,0
+ExchangeRateDate,ExchangeRateDate,Size,0,15
+ForiegnCurrencyAmount,ForiegnCurrencyAmount,Size,0,15
+ForiegnCurrencyAmount,ForiegnCurrencyAmount,Nullable,TRUE,FALSE
+ForiegnExchangeRate,ForiegnExchangeRate,Size,0,15
+ForiegnExchangeRate,ForiegnExchangeRate,Nullable,TRUE,FALSE
+Id,Id,Size,15,0
+InvoiceCurrencyAmount,InvoiceCurrencyAmount,Size,0,15
+InvoiceCurrencyAmount,InvoiceCurrencyAmount,Nullable,TRUE,FALSE
+IsExpense,IsExpense,Size,0,1
+LocalCurrencyAmount,LocalCurrencyAmount,Size,0,15
+LocalCurrencyAmount,LocalCurrencyAmount,Nullable,TRUE,FALSE
+PrepaidCollectId,Not Found,-,-,-
+ProfitCurrencyAmount,ProfitCurrencyAmount,Size,0,15
+ProfitCurrencyAmount,ProfitCurrencyAmount,Nullable,TRUE,FALSE
+Quantity,Quantity,Size,0,15
+Quantity,Quantity,Nullable,TRUE,FALSE
+ReceivableId,ReceivableId,Size,15,0
+UnitPrice,UnitPrice,Size,0,15
+UnitPrice,UnitPrice,Nullable,TRUE,FALSE
+ValueDate,ValueDate,Size,0,1
+VatPercentage,VatPercentage,Size,0,1
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ARInvoicePayments,ARInvoicePayments,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+ExchangeRate,ExchangeRate,Size,0,1
+Id,Id,Size,15,0
+Id,Id,Primary Key,TRUE,FALSE
+Id,Id,Nullable,FALSE,TRUE
+PaymentAmount,PaymentAmount,Size,0,1
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ARInvoiceStatus,ARInvoiceStatus,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ARInvoiceStocksStatus,ARInvoiceStocksStatus,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Name,Name,Nullable,FALSE,TRUE
+SearchFields,SearchFields,Size,1000,-1
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ARInvoiceTotalVATs,ARInvoiceTotalVATs,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+ARInvoiceId,ARInvoiceId,Size,15,0
+ARInvoiceId,ARInvoiceId,Nullable,FALSE,TRUE
+ExternalTAXItemId,ExternalTAXItemId,Size,25,0
+ExternalVATCard,ExternalVATCard,Size,25,0
+Id,Id,Size,15,0
+VatTypeId,VatTypeId,Size,15,0
+VatTypeId,VatTypeId,Nullable,FALSE,TRUE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ARInvoiceTypes,ARInvoiceTypes,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ARPayments,ARPayments,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AccountingPaymentMethodId,AccountingPaymentMethodId,Size,15,20
+AmountInLocalCurrency,AmountInLocalCurrency,Nullable,TRUE,FALSE
+AmountInPaymentCurrency,AmountInPaymentCurrency,Nullable,TRUE,FALSE
+CashbookId,CashbookId,Size,15,0
+CreateDate,CreateDate,Nullable,TRUE,FALSE
+DebitAccountId,DebitAccountId,Size,15,0
+ExternalAccountingEntityId,ExternalAccountingEntityId,Size,15,0
+Id,Id,Size,15,0
+InternalNotes,InternalNotes,Type,nvarchar,varchar
+IsClosed,IsClosed,Size,0,15
+IsTransferStarted,IsTransferStarted,Size,0,1
+OpenAmount,OpenAmount,Nullable,TRUE,FALSE
+OpenAmountInLocalCurrency,OpenAmountInLocalCurrency,Nullable,TRUE,FALSE
+PaidBy,PaidBy,Type,nvarchar,varchar
+PaymentCurrencyExchangeRate,PaymentCurrencyExchangeRate,Nullable,TRUE,FALSE
+PaymentNo,PaymentNo,Nullable,FALSE,TRUE
+PrintNotes,PrintNotes,Type,nvarchar,varchar
+RegisterDate,RegisterDate,Nullable,TRUE,FALSE
+SATAdditionalFieldsXML,SATAdditionalFieldsXML,Type,nvarchar,varchar
+SATAdditionalFieldsXML,SATAdditionalFieldsXML,Size,-1,0
+SATTransferStatusCode,SATTransferStatusCode,Nullable,FALSE,TRUE
+SATXML,SATXML,Type,nvarchar,varchar
+SATXML,SATXML,Size,-1,0
+SearchFields,SearchFields,Size,-1,20000
+StatusCode,StatusCode,Size,2,15
+TransferError,TransferError,Type,nvarchar,varchar
+TransferError,TransferError,Size,-1,250
+TransferStatusCode,TransferStatusCode,Nullable,FALSE,TRUE
+TransferTries,TransferTries,Size,0,1
+TransmissionError,TransmissionError,Type,nvarchar,varchar
+TransmissionError,TransmissionError,Size,-1,8000
+UpdateDate,UpdateDate,Size,0,1
+UpdatedByUserId,UpdatedByUserId,Nullable,FALSE,TRUE
+ValueDate,ValueDate,Nullable,TRUE,FALSE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ARPaymentCheques,ARPaymentChequeReplicas,Incorrect Table Name In LXML File,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ARPaymentStatus,ARPaymentStatus,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+BankAccountLites,BankAccountLites,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+BranchAddress,BranchAddress,Type,nvarchar,varchar
+CreateDate,CreateDate,Size,0,15
+EnglishName,EnglishName,Type,varchar,nvarchar
+Id,Id,Size,15,0
+Inactive,Inactive,Size,0,1
+SearchFields,SearchFields,Type,nvarchar,varchar
+SearchFields,SearchFields,Size,-1,0
+UpdateDate,UpdateDate,Size,0,1
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+CreditCardTypes,CreditCardTypes,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+BankAccountId,BankAccountId,Type,varchar,nvarchar
+Id,Id,Size,15,0
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ExternalSystemsTablesCodes,ExternalSystemsTablesCodes,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Code,Code,Size,40,4
+Name,Name,Size,60,40
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+SATInterfaces,SATInterfaces,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Code,Code,Size,10,4
+Name,Name,Size,120,40
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+SATInterfaceSettings,SATInterfaceSettings,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+SATInterfaceCode,SATInterfaceCode,Size,10,4
+SATInterfaceCode,SATInterfaceCode,Nullable,FALSE,TRUE
+Token,Token,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+SATInvoiceStatus,SATInvoiceStatus,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Code,Code,Size,2,10
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+SATPaymentMethods,SATPaymentMethods,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Code,Code,Size,2,4
+LocalName,LocalName,Size,100,40
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+SATTransferStatus,SATTransferStatus,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Code,Code,Size,2,10
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+MarkUpTypes,MarkUpTypes,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+Quotes,Quotes,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AgentReference1,AgentReference1,Size,50,0
+AgentReference2,AgentReference2,Size,50,0
+AutomaticallyCloseDate,AutomaticallyCloseDate,Size,0,1
+AutomaticallyCloseDays,AutomaticallyCloseDays,Size,0,1
+BranchId,BranchId,Nullable,TRUE,FALSE
+BusinessUnitId,BusinessUnitId,Nullable,FALSE,TRUE
+ChargeableWeight,ChargeableWeight,Size,0,40
+ConcurrencyGUID,ConcurrencyGUID,Size,40,0
+ConcurrencyGUID,ConcurrencyGUID,Nullable,FALSE,TRUE
+ConsigneeName,ConsigneeName,Type,nvarchar,varchar
+CustomerName,CustomerName,Type,nvarchar,varchar
+CustomerName,CustomerName,Nullable,FALSE,TRUE
+DeliveryAddress,DeliveryAddress,Type,nvarchar,varchar
+DepartmentId,DepartmentId,Nullable,TRUE,FALSE
+DirectionId,DirectionId,Type,char,varchar
+ETA,ETA,Size,0,15
+ETD,ETD,Size,0,15
+ExchangeRate,ExchangeRate,Nullable,TRUE,FALSE
+ExpirationDate,ExpirationDate,Size,0,15
+ExpirationDays,ExpirationDays,Size,0,15
+Field1,Field1,Type,nvarchar,varchar
+Field1,Field1,Size,250,0
+Field10,Field10,Type,nvarchar,varchar
+Field10,Field10,Size,250,0
+Field2,Field2,Type,nvarchar,varchar
+Field2,Field2,Size,250,0
+Field3,Field3,Type,nvarchar,varchar
+Field3,Field3,Size,250,0
+Field4,Field4,Type,nvarchar,varchar
+Field4,Field4,Size,250,0
+Field5,Field5,Type,nvarchar,varchar
+Field5,Field5,Size,250,0
+Field6,Field6,Type,nvarchar,varchar
+Field6,Field6,Size,250,0
+Field7,Field7,Type,nvarchar,varchar
+Field7,Field7,Size,250,0
+Field8,Field8,Type,nvarchar,varchar
+Field8,Field8,Size,250,0
+Field9,Field9,Type,nvarchar,varchar
+Field9,Field9,Size,250,0
+FreelancerAddressId,FreelancerAddressId,Size,15,0
+FreelancerContactId,FreelancerContactId,Size,15,0
+FreelancerId,FreelancerId,Size,15,0
+FromAddressId,FromAddressId,Size,15,0
+GrossWeight,GrossWeight,Size,0,40
+GrossWeightInKG,GrossWeightInKG,Size,0,40
+GrossWeightPerTon,GrossWeightPerTon,Size,0,40
+Id,Id,Size,15,0
+IncludeDelivery,IncludeDelivery,Size,0,1
+IncludePickUp,IncludePickUp,Size,0,1
+IsAutomaticallyClosed,IsAutomaticallyClosed,Size,0,1
+IsCancelled,IsCancelled,Size,0,15
+IsChargesByVAT,IsChargesByVAT,Size,0,1
+IsClosed,IsClosed,Size,0,15
+IsDangerous,IsDangerous,Size,0,15
+IsSubjectEdited,IsSubjectEdited,Size,0,1
+LastActivityDate,LastActivityDate,Size,0,1
+LastModified,LastModified,Type,timestamp,varchar
+LastModified,LastModified,Nullable,FALSE,TRUE
+NextActivityDate,NextActivityDate,Size,0,1
+OpenDate,OpenDate,Size,0,15
+OpportunityId,OpportunityId,Size,15,0
+PackageType1Quantity,PackageType1Quantity,Size,0,15
+PackageType2Quantity,PackageType2Quantity,Size,0,15
+PackageType3Quantity,PackageType3Quantity,Size,0,15
+PackageType4Quantity,PackageType4Quantity,Size,0,15
+PackageType5Quantity,PackageType5Quantity,Size,0,15
+PickUpAddress,PickUpAddress,Type,nvarchar,varchar
+QuoteClosingReasonCode,QuoteClosingReasonCode,Type,nvarchar,varchar
+QuoteClosingReasonCode,QuoteClosingReasonCode,Size,128,2
+QuoteHTMLDocumentId,Not Found,-,-,-
+QuoteNumber,QuoteNumber,Nullable,FALSE,TRUE
+QuoteTemplateId,QuoteTemplateId,Size,15,0
+RatingCode,RatingCode,Nullable,FALSE,TRUE
+SearchFields,SearchFields,Type,nvarchar,varchar
+ShipperName,ShipperName,Type,nvarchar,varchar
+StageDueDate,StageDueDate,Size,0,1
+StageId,StageId,Nullable,FALSE,TRUE
+TEU,TEU,Size,0,15
+ToAddressId,ToAddressId,Size,15,0
+TotalPerContainer,TotalPerContainer,Size,0,1
+TransportModeId,TransportModeId,Type,char,varchar
+UpdateDate,UpdateDate,Size,0,1
+ValueOfGoods,ValueOfGoods,Size,0,15
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+QuoteCharges,QuoteCharges,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+ContainerType1MarkUpTypeCode,ContainerType1MarkUpTypeCode,Size,4,0
+ContainerType2MarkUpTypeCode,ContainerType2MarkUpTypeCode,Size,4,0
+ContainerType3MarkUpTypeCode,ContainerType3MarkUpTypeCode,Size,4,0
+ContainerType4MarkUpTypeCode,ContainerType4MarkUpTypeCode,Size,4,0
+ContainerType5MarkUpTypeCode,ContainerType5MarkUpTypeCode,Size,4,0
+CostContainerType1UnitPrice,CostContainerType1UnitPrice,Size,0,15
+CostContainerType2UnitPrice,CostContainerType2UnitPrice,Size,0,15
+CostContainerType3UnitPrice,CostContainerType3UnitPrice,Size,0,15
+CostContainerType4UnitPrice,CostContainerType4UnitPrice,Size,0,15
+CostContainerType5UnitPrice,CostContainerType5UnitPrice,Size,0,15
+CostExchangeRate,CostExchangeRate,Size,0,15
+CostExchangeRate,CostExchangeRate,Nullable,TRUE,FALSE
+CostIsFixedRate,CostIsFixedRate,Size,0,1
+CostMaxAmount,CostMaxAmount,Size,0,1
+CostMeasurementId,CostMeasurementId,Nullable,TRUE,FALSE
+CostMinAmount,CostMinAmount,Size,0,1
+CostQuantity,CostQuantity,Size,0,15
+CostTotalAmount,CostTotalAmount,Size,0,15
+CostTotalAmountLocal,CostTotalAmountLocal,Size,0,15
+CostUnitPrice,CostUnitPrice,Size,0,15
+Id,Id,Size,15,0
+IsAllIN,IsAllIN,Size,0,15
+IsChargeBySteps,IsChargeBySteps,Size,0,1
+MarkUpValue,MarkUpValue,Size,0,15
+QuoteId,QuoteId,Size,15,0
+QuoteId,QuoteId,Nullable,FALSE,TRUE
+SaleAmountInSaleCurrency,SaleAmountInSaleCurrency,Size,0,1
+SaleContainerType1UnitPrice,SaleContainerType1UnitPrice,Size,0,15
+SaleContainerType2UnitPrice,SaleContainerType2UnitPrice,Size,0,15
+SaleContainerType3UnitPrice,SaleContainerType3UnitPrice,Size,0,15
+SaleContainerType4UnitPrice,SaleContainerType4UnitPrice,Size,0,15
+SaleContainerType5UnitPrice,SaleContainerType5UnitPrice,Size,0,15
+SaleExchangeRate,SaleExchangeRate,Size,0,15
+SaleIsFixedRate,SaleIsFixedRate,Size,0,1
+SaleMaxAmount,SaleMaxAmount,Size,0,1
+SaleMinAmount,SaleMinAmount,Size,0,1
+SaleQuantity,SaleQuantity,Size,0,15
+SaleTotalAmount,SaleTotalAmount,Size,0,15
+SaleTotalAmountLocal,SaleTotalAmountLocal,Size,0,15
+SaleUnitPrice,SaleUnitPrice,Size,0,15
+SaleUnitPrice1InSaleCurrency,SaleUnitPrice1InSaleCurrency,Size,0,1
+SaleUnitPrice2InSaleCurrency,SaleUnitPrice2InSaleCurrency,Size,0,1
+SaleUnitPrice3InSaleCurrency,SaleUnitPrice3InSaleCurrency,Size,0,1
+SaleUnitPrice4InSaleCurrency,SaleUnitPrice4InSaleCurrency,Size,0,1
+SaleUnitPrice5InSaleCurrency,SaleUnitPrice5InSaleCurrency,Size,0,1
+SaleUnitPriceInSaleCurrency,SaleUnitPriceInSaleCurrency,Size,0,1
+UpdatedByUserId,UpdatedByUserId,Size,15,0
+UpdatedByUserId,UpdatedByUserId,Nullable,FALSE,TRUE
+VatPercentage,VatPercentage,Size,0,1
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+QuoteClosingReasons,QuoteClosingReasons,,,
 DXML Column,LXML Column,Attribute,DXML Value,LXML Value
 Code,Code,Type,nvarchar,varchar
 Code,Code,Size,128,2
-EnglishName,EnglishName,Type,nvarchar,varchar
-EnglishName,EnglishName,Size,-1,50
-LocalName,LocalName,Size,-1,50
+Name,Name,Type,nvarchar,varchar
+Name,Name,Size,-1,60
+Name,Name,Nullable,TRUE,FALSE
+SearchFields,SearchFields,Type,nvarchar,varchar
 SearchFields,SearchFields,Size,-1,1000
-
-
-DXML Table, LXML Table
-Declarations,Declarations
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+QuoteCustomerTypes,QuoteCustomerTypes,,,
 DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-AcceptanceStatusCode,AcceptanceStatusCode,Size,3,1
-CourierCustomStatusCode,CourierCustomStatusCode,Type,nvarchar,varchar
-CourierCustomStatusCode,CourierCustomStatusCode,Size,128,3
-MamanStatusCode,MamanStatusCode,Size,3,2
-StorageSiteCode,StorageSiteCode,Size,20,17
-
-
-DXML Table, LXML Table
-DocumentTypeCustomsDatas,DocumentTypeCustomsData,Incorrect Table Name In LXML File
+SearchFields,SearchFields,Type,nvarchar,varchar
+ShowInLOV,ShowInLOV,Size,0,40
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+QuotePackages,QuotePackages,,,
 DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-CustomsDoucumentTypeCode,CustomsDoucumentTypeCode,Nullable,True,False
-DocumentTypeId,DocumentTypeId,Type,nvarchar,varchar
-DocumentTypeId,DocumentTypeId,Size,128,15
-
-
-DXML Table, LXML Table
-MeasurmentUnits,MeasurmentUnits
+GrossWeight,GrossWeight,Size,0,15
+Height,Height,Size,0,15
+Id,Id,Size,15,0
+Length,Length,Size,0,15
+Quantity,Quantity,Size,0,15
+Quantity,Quantity,Nullable,TRUE,FALSE
+QuoteId,QuoteId,Size,15,0
+Volume,Volume,Size,0,15
+VolumetricWeight,VolumetricWeight,Size,0,15
+Width,Width,Size,0,15
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+QuotePriceSteps,QuotePriceSteps,,,
 DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-MalamId,MalamId,Size,0,15
-
-
-DXML Table, LXML Table
-Notifications,Notifications
+CostUnitPrice,CostUnitPrice,Size,0,15
+Id,Id,Size,15,0
+MarkupValue,MarkupValue,Size,0,15
+QuoteChargeId,QuoteChargeId,Size,15,0
+QuoteId,QuoteId,Size,15,0
+QuoteId,QuoteId,Nullable,FALSE,TRUE
+SaleUnitPrice,SaleUnitPrice,Size,0,15
+SaleUnitPrice,SaleUnitPrice,Nullable,TRUE,FALSE
+Step,Step,Size,0,1
+Step,Step,Nullable,TRUE,FALSE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+QuoteRatings,QuoteRatings,,,
 DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-Description,Description,Size,-1,32000
-SearchFields,SearchFields,Size,-1,5000
-
-
-DXML Table, LXML Table
-NotificationReplies,NotificationReplies
+IndexOrder,IndexOrder,Size,0,1
+Name,Name,Type,varchar,nvarchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+QuoteStages,QuoteStages,,,
 DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-ResponseToCustoms,ResponseToCustoms,Size,-1,32000
-
-
-DXML Table, LXML Table
-PhysicalChecks,PhysicalChecks
+Id,Id,Size,15,0
+MaxDays,MaxDays,Size,0,1
+Rank,Rank,Size,0,1
+UpdateDate,UpdateDate,Size,0,1
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+QuoteTemplates,QuoteTemplates,,,
 DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-OperationCode,OperationCode,Size,4,2
-StatusMessageCode,StatusMessageCode,Size,4,2
-
-
-DXML Table, LXML Table
-PropertiesDetailsHistorys,PropertiesDetailsHistorys
+Id,Id,Size,15,0
+InActive,InActive,Size,0,1
+IsDefault,IsDefault,Size,0,100
+Name,Name,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+QuoteTotalVATs,QuoteTotalVATs,,,
 DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-MeasurementUnitID,MeasurementUnitID,Size,0,15
-
-
+Id,Id,Size,15,0
+LocalCurrencyVatableAmount,LocalCurrencyVatableAmount,Size,0,1
+LocalCurrencyVATAmount,LocalCurrencyVATAmount,Size,0,1
+ProfitCurrencyVatableAmount,ProfitCurrencyVatableAmount,Size,0,1
+ProfitCurrencyVATAmount,ProfitCurrencyVATAmount,Size,0,1
+QuoteCurrencyVatableAmount,QuoteCurrencyVatableAmount,Size,0,1
+QuoteCurrencyVATAmount,QuoteCurrencyVATAmount,Size,0,1
+QuoteId,QuoteId,Size,15,0
+QuoteId,QuoteId,Nullable,FALSE,TRUE
+VatPercent,VatPercent,Size,0,1
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+QuoteTypes,QuoteTypes,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+AWBChargesCodes,AWBChargesCodes,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+AWBCustomsInformations,AWBCustomsInformations,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Code,Code,Type,nvarchar,varchar
+Code,Code,Size,128,2
+Name,Name,Type,nvarchar,varchar
+Name,Name,Size,-1,200
+Name,Name,Nullable,TRUE,FALSE
+SearchFields,SearchFields,Type,nvarchar,varchar
+SearchFields,SearchFields,Size,-1,1000
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+AWBInformations,AWBInformations,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Code,Code,Type,nvarchar,varchar
+Code,Code,Size,128,3
+Name,Name,Type,nvarchar,varchar
+Name,Name,Size,-1,200
+Name,Name,Nullable,TRUE,FALSE
+SearchFields,SearchFields,Type,nvarchar,varchar
+SearchFields,SearchFields,Size,-1,1000
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+AWBOCIs,AWBOCIs,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AWBCustomsInformationCode,AWBCustomsInformationCode,Type,nvarchar,varchar
+AWBCustomsInformationCode,AWBCustomsInformationCode,Size,128,2
+AWBInformationCode,AWBInformationCode,Type,nvarchar,varchar
+AWBInformationCode,AWBInformationCode,Size,128,3
+Id,Id,Type,nvarchar,varchar
+Id,Id,Size,128,0
+ShipmentId,ShipmentId,Size,15,0
+SupplementaryCustomsInfo,SupplementaryCustomsInfo,Type,nvarchar,varchar
+SupplementaryCustomsInfo,SupplementaryCustomsInfo,Size,-1,35
+SupplementaryCustomsInfo,SupplementaryCustomsInfo,Nullable,TRUE,FALSE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+AWBSpecialHandlingCodes,AWBSpecialHandlingCodes,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Id,Id,Size,15,0
+IsIATA,IsIATA,Size,0,1
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+CustomsTransferHeaders,CustomsTransferHeaders,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+FileName,FileName,Nullable,FALSE,TRUE
+SearchFields,SearchFields,Size,1000,-1
+TransferDate,TransferDate,Nullable,TRUE,FALSE
+TransferNumber,TransferNumber,Nullable,FALSE,TRUE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+CustomsTransferLines,CustomsTransferLines,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+CustomsTransferHeaderId,CustomsTransferHeaderId,Nullable,FALSE,TRUE
+ShipmentId,ShipmentId,Nullable,FALSE,TRUE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+CustomsTransferTypes,CustomsTransferTypes,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Name,Name,Nullable,FALSE,TRUE
+SearchFields,SearchFields,Size,1000,-1
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+CustomsTransmissionsStatus,CustomsTransmissionsStatus,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+FBLStocks,FBLStocks,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Notes,Notes,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+HarmonizeCodes,HarmonizeCodes,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+SearchFields,SearchFields,Size,4000,-1
+SearchFields,SearchFields,Nullable,FALSE,TRUE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+InsideShipmentPackages,InsideShipmentPackages,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+ChassisNumber,ChassisNumber,Type,varchar,nvarchar
+Color,Color,Type,varchar,nvarchar
+Height,Height,Size,0,15
+Id,Id,Size,15,0
+Length,Length,Size,0,15
+Make,Make,Type,varchar,nvarchar
+Model,Model,Type,varchar,nvarchar
+OriginalInsideShipmentPackageId,OriginalInsideShipmentPackageId,Size,15,0
+OriginalShipmentPackageId,OriginalShipmentPackageId,Size,15,0
+Quantity,Quantity,Nullable,TRUE,FALSE
+RegistrationNumber,RegistrationNumber,Type,varchar,nvarchar
+ShipmentPackageId,ShipmentPackageId,Nullable,FALSE,TRUE
+Volume,Volume,Size,0,15
+Weight,Weight,Size,0,15
+Width,Width,Size,0,15
+Year,Year,Type,varchar,nvarchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+INTTRABookingStatuses,INTTRABookingStatuses,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Name,Name,Size,40,100
+Name,Name,Nullable,FALSE,TRUE
+SearchFields,SearchFields,Size,1000,-1
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+INTTRABookingTransStatuses,INTTRABookingTransStatuses,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Name,Name,Size,40,100
+Name,Name,Nullable,FALSE,TRUE
+SearchFields,SearchFields,Size,1000,-1
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ManifestStatus,ManifestStatus,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+MessagingStocks,MessagingStocks,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Amount,Amount,Size,0,1
+Amount,Amount,Nullable,TRUE,FALSE
+CreateDate,CreateDate,Size,0,1
+CreatedByUserId,CreatedByUserId,Nullable,FALSE,TRUE
+EndDate,EndDate,Size,0,1
+EndDate,EndDate,Nullable,TRUE,FALSE
+Id,Id,Size,15,0
+IsCancelled,IsCancelled,Size,0,1
+Remaining,Remaining,Size,0,1
+SearchFields,SearchFields,Type,nvarchar,varchar
+SearchFields,SearchFields,Size,1000,0
+StartDate,StartDate,Size,0,1
+StartDate,StartDate,Nullable,TRUE,FALSE
+StockType,Not Found,-,-,-
+TenantNumber,TenantNumber,Size,0,1
+TotalPrice,TotalPrice,Size,0,1
+UpdateDate,UpdateDate,Size,0,1
+UpdatedByUserId,UpdatedByUserId,Nullable,FALSE,TRUE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+MessagingStockUsageHistories,MessagingStockUsageHistories,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+ActionType,ActionType,Nullable,FALSE,TRUE
+EntityId,EntityId,Size,15,0
+EntityId,EntityId,Nullable,FALSE,TRUE
+EntityNumber,EntityNumber,Size,15,0
+EntityNumber,EntityNumber,Nullable,FALSE,TRUE
+FirstActionByUserId,FirstActionByUserId,Nullable,FALSE,TRUE
+FirstActionDate,FirstActionDate,Size,0,1
+Id,Id,Size,15,0
+LastActionByUserId,LastActionByUserId,Nullable,FALSE,TRUE
+LastActionDate,LastActionDate,Size,0,1
+MessageType,MessageType,Nullable,FALSE,TRUE
+StockId,StockId,Nullable,FALSE,TRUE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+OtherParticipantIds,OtherParticipantIds,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+Shipments,Shipments,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AccountedPayablesInLocalCurrency,AccountedPayablesInLocalCurrency,Size,0,40
+AccountedPayablesInProfitCurrency,AccountedPayablesInProfitCurrency,Size,0,40
+AccountedReceivablesInLocalCurrency,AccountedReceivablesInLocalCurrency,Size,0,40
+AccountedReceivablesInProfitCurrency,AccountedReceivablesInProfitCurrency,Size,0,40
+AccountingCloseDate,AccountingCloseDate,Size,0,15
+AccountingInformationIdentifierCode1,AccountingInformationIdentifierCode1,Size,3,34
+AccountingInformationIdentifierCode2,AccountingInformationIdentifierCode2,Size,3,34
+AccountingInformationIdentifierCode3,AccountingInformationIdentifierCode3,Size,3,34
+AccountingInformationIdentifierCode4,AccountingInformationIdentifierCode4,Size,3,34
+AccountingInformationIdentifierCode5,AccountingInformationIdentifierCode5,Size,3,34
+AccountingInformationIdentifierCode6,AccountingInformationIdentifierCode6,Size,3,34
+ActualFinalArrivalDate,ActualFinalArrivalDate,Size,0,15
+AgentSharedManifestRef,AgentSharedManifestRef,Size,20,0
+AMSBL,AMSBL,Type,nvarchar,varchar
+AMSClosingDate,AMSClosingDate,Size,0,1
+ARInvoiceIssued,ARInvoiceIssued,Size,0,1
+AWBAccountingInformation,AWBAccountingInformation,Type,nvarchar,varchar
+AWBAccountingInformation,AWBAccountingInformation,Size,250,204
+AWBComments,AWBComments,Type,nvarchar,varchar
+AWBComments,AWBComments,Size,500,195
+AWBDeclaredValueForCarriage,AWBDeclaredValueForCarriage,Type,nvarchar,varchar
+AWBDeclaredValueForCustoms,AWBDeclaredValueForCustoms,Type,nvarchar,varchar
+AWBFreightAmountCollect,AWBFreightAmountCollect,Size,0,100
+AWBFreightAmountPrepaid,AWBFreightAmountPrepaid,Size,0,100
+AWBHandlingInformation,AWBHandlingInformation,Type,nvarchar,varchar
+AWBHandlingInformation,AWBHandlingInformation,Size,250,195
+AWBInsurrenceValue,AWBInsurrenceValue,Type,nvarchar,varchar
+AWBPrintingComments,AWBPrintingComments,Type,nvarchar,varchar
+AWBSpecialHandlingCodeId1,AWBSpecialHandlingCodeId1,Size,15,4
+AWBSpecialHandlingCodeId2,AWBSpecialHandlingCodeId2,Size,15,4
+AWBSpecialHandlingCodeId3,AWBSpecialHandlingCodeId3,Size,15,4
+AWBSpecialHandlingCodeId4,AWBSpecialHandlingCodeId4,Size,15,4
+AWBSpecialHandlingCodeId5,AWBSpecialHandlingCodeId5,Size,15,4
+AWBSpecialHandlingCodeId6,AWBSpecialHandlingCodeId6,Size,15,4
+AWBSpecialHandlingCodeId7,AWBSpecialHandlingCodeId7,Size,15,4
+AWBSpecialHandlingCodeId8,AWBSpecialHandlingCodeId8,Size,15,4
+AWBSpecialHandlingCodeId9,AWBSpecialHandlingCodeId9,Size,15,4
+BookingId,BookingId,Size,15,0
+BookingNumberOfPackages,BookingNumberOfPackages,Size,0,40
+BookingVolume,BookingVolume,Size,0,40
+CancelledDate,CancelledDate,Size,0,15
+CargonautFHLStatusDate,CargonautFHLStatusDate,Size,0,15
+CarrierLastStatusCode,CarrierLastStatusCode,Size,4,40
+CarrierLastStatusDate,CarrierLastStatusDate,Size,0,15
+ChargeableWeight,ChargeableWeight,Size,0,40
+ChargeableWeightEdited,ChargeableWeightEdited,Size,0,3
+ChargeableWeightInKG,ChargeableWeightInKG,Size,0,40
+ChargeableWeightUnitCode,ChargeableWeightUnitCode,Nullable,TRUE,FALSE
+ComputedShipmentNumber,Not Found,-,-,-
+ComputedStatusId,ComputedStatusId,Size,15,0
+ConcurrencyGUID,ConcurrencyGUID,Size,40,0
+ConcurrencyGUID,ConcurrencyGUID,Nullable,FALSE,TRUE
+CountryForStatisticsId,CountryForStatisticsId,Size,15,0
+CreateDateTime,CreateDateTime,Size,0,15
+CreatedByUserId,CreatedByUserId,Nullable,FALSE,TRUE
+CreditNoteIssued,CreditNoteIssued,Size,0,1
+CustomFileId,CustomFileId,Size,15,0
+CustomsClearanceDate,CustomsClearanceDate,Size,0,40
+DeclarationDate,DeclarationDate,Size,0,40
+DimensionsUnitCode,DimensionsUnitCode,Nullable,TRUE,FALSE
+DirectionId,DirectionId,Type,char,varchar
+DirectionId,DirectionId,Size,1,15
+ENSDate,ENSDate,Size,0,1
+EstimatedFinalArrivalDate,EstimatedFinalArrivalDate,Size,0,15
+FHLStatusDate,FHLStatusDate,Size,0,15
+Field1,Field1,Type,nvarchar,varchar
+Field1,Field1,Size,2000,0
+Field10,Field10,Type,nvarchar,varchar
+Field10,Field10,Size,2000,0
+Field11,Field11,Type,nvarchar,varchar
+Field11,Field11,Size,2000,0
+Field12,Field12,Type,nvarchar,varchar
+Field12,Field12,Size,2000,0
+Field13,Field13,Type,nvarchar,varchar
+Field13,Field13,Size,2000,0
+Field14,Field14,Type,nvarchar,varchar
+Field14,Field14,Size,2000,0
+Field15,Field15,Type,nvarchar,varchar
+Field15,Field15,Size,2000,0
+Field16,Field16,Type,nvarchar,varchar
+Field16,Field16,Size,2000,0
+Field17,Field17,Type,nvarchar,varchar
+Field17,Field17,Size,2000,0
+Field18,Field18,Type,nvarchar,varchar
+Field18,Field18,Size,2000,0
+Field19,Field19,Type,nvarchar,varchar
+Field19,Field19,Size,2000,0
+Field2,Field2,Type,nvarchar,varchar
+Field2,Field2,Size,2000,0
+Field20,Field20,Type,nvarchar,varchar
+Field20,Field20,Size,2000,0
+Field21,Field21,Type,nvarchar,varchar
+Field21,Field21,Size,2000,0
+Field22,Field22,Type,nvarchar,varchar
+Field22,Field22,Size,2000,0
+Field23,Field23,Type,nvarchar,varchar
+Field23,Field23,Size,2000,0
+Field24,Field24,Type,nvarchar,varchar
+Field24,Field24,Size,2000,0
+Field25,Field25,Type,nvarchar,varchar
+Field25,Field25,Size,2000,0
+Field26,Field26,Type,nvarchar,varchar
+Field26,Field26,Size,2000,0
+Field27,Field27,Type,nvarchar,varchar
+Field27,Field27,Size,2000,0
+Field28,Field28,Type,nvarchar,varchar
+Field28,Field28,Size,2000,0
+Field29,Field29,Type,nvarchar,varchar
+Field29,Field29,Size,2000,0
+Field3,Field3,Type,nvarchar,varchar
+Field3,Field3,Size,2000,0
+Field30,Field30,Type,nvarchar,varchar
+Field30,Field30,Size,2000,0
+Field31,Field31,Type,nvarchar,varchar
+Field31,Field31,Size,2000,0
+Field32,Field32,Type,nvarchar,varchar
+Field32,Field32,Size,2000,0
+Field33,Field33,Type,nvarchar,varchar
+Field33,Field33,Size,2000,0
+Field34,Field34,Type,nvarchar,varchar
+Field34,Field34,Size,2000,0
+Field35,Field35,Type,nvarchar,varchar
+Field35,Field35,Size,2000,0
+Field36,Field36,Type,nvarchar,varchar
+Field36,Field36,Size,2000,0
+Field37,Field37,Type,nvarchar,varchar
+Field37,Field37,Size,2000,0
+Field38,Field38,Type,nvarchar,varchar
+Field38,Field38,Size,2000,0
+Field39,Field39,Type,nvarchar,varchar
+Field39,Field39,Size,2000,0
+Field4,Field4,Type,nvarchar,varchar
+Field4,Field4,Size,2000,0
+Field40,Field40,Type,nvarchar,varchar
+Field40,Field40,Size,2000,0
+Field5,Field5,Type,nvarchar,varchar
+Field5,Field5,Size,2000,0
+Field6,Field6,Type,nvarchar,varchar
+Field6,Field6,Size,2000,0
+Field7,Field7,Type,nvarchar,varchar
+Field7,Field7,Size,2000,0
+Field8,Field8,Type,nvarchar,varchar
+Field8,Field8,Size,2000,0
+Field9,Field9,Type,nvarchar,varchar
+Field9,Field9,Size,2000,0
+FinalArrivalDate,FinalArrivalDate,Size,0,15
+FirstPickupETA,FirstPickupETA,Size,0,15
+FirstPickupETD,FirstPickupETD,Size,0,15
+ForeignPartnerCountryCode,ForeignPartnerCountryCode,Size,2,0
+FreelancerAddressId,FreelancerAddressId,Size,15,0
+FreelancerContactId,FreelancerContactId,Size,15,0
+FreelancerId,FreelancerId,Size,15,0
+FreightForwarderReference,FreightForwarderReference,Size,50,25
+FreightRelease,FreightRelease,Size,0,1
+GrossWeight,GrossWeight,Size,0,15
+GrossWeightEdited,GrossWeightEdited,Size,0,3
+GrossWeightInKG,GrossWeightInKG,Size,0,15
+GrossWeightPerTon,GrossWeightPerTon,Size,0,15
+GrossWeightUnitCode,GrossWeightUnitCode,Nullable,TRUE,FALSE
+HasException,HasException,Size,0,3
+HAWBDate,HAWBDate,Size,0,15
+Id,Id,Size,15,0
+INTTRALastStatusDate,INTTRALastStatusDate,Size,0,1
+INTTRASIError,INTTRASIError,Type,varchar,nvarchar
+INTTRASIStatusDate,INTTRASIStatusDate,Size,0,1
+IsAccountingClosed,IsAccountingClosed,Size,0,15
+IsDangerous,IsDangerous,Size,0,15
+ISFDate,ISFDate,Size,0,1
+IsManifestSentToAgent,IsManifestSentToAgent,Size,0,1
+IsMultipleCommodities,IsMultipleCommodities,Size,0,1
+IsNewARInvoiceBlocked,IsNewARInvoiceBlocked,Size,0,1
+IsOperationalClosed,IsOperationalClosed,Size,0,15
+ITDate,ITDate,Size,0,1
+LastFSRStatusRequestDate,LastFSRStatusRequestDate,Size,0,15
+LastSentByUserId,LastSentByUserId,Size,15,0
+LastSharedEventId,LastSharedEventId,Size,15,200
+LastUpdateDate,LastUpdateDate,Size,0,15
+LocalCustomsSentByUserId,LocalCustomsSentByUserId,Size,15,0
+LocalCustomsTransmissionsStatusDate,LocalCustomsTransmissionsStatusDate,Size,0,15
+ManifestLastSharingDate,ManifestLastSharingDate,Size,0,40
+MasterShipmentDataId,Not Found,-,-,-
+NextETA,NextETA,Size,0,15
+NextETD,NextETD,Size,0,15
+NextLegCode,NextLegCode,Size,4,0
+Notes,Notes,Type,nvarchar,varchar
+NumberOfInsidePackages,NumberOfInsidePackages,Size,0,1
+OnCarriageAdditionalTransportModeCode,OnCarriageAdditionalTransportModeCode,Size,4,15
+OnCarriageATA,OnCarriageATA,Size,0,15
+OnCarriageATD,OnCarriageATD,Size,0,15
+OnCarriageETA,OnCarriageETA,Size,0,15
+OnCarriageETD,OnCarriageETD,Size,0,15
+OnCarriageTransportModeId,OnCarriageTransportModeId,Type,char,varchar
+OnCarriageTransportModeId,OnCarriageTransportModeId,Size,1,15
+OpenPayablesInLocalCurrency,OpenPayablesInLocalCurrency,Size,0,40
+OpenPayablesInProfitCurrency,OpenPayablesInProfitCurrency,Size,0,40
+OpenReceivablesInLocalCurrency,OpenReceivablesInLocalCurrency,Size,0,40
+OpenReceivablesInProfitCurrency,OpenReceivablesInProfitCurrency,Size,0,40
+OperationalCloseDate,OperationalCloseDate,Size,0,15
+OperationalClosedByUserId,Not Found,-,-,-
+OperationalDate,OperationalDate,Size,0,1
+OrderChargeableWeight,OrderChargeableWeight,Size,0,40
+OrderGrossWeight,OrderGrossWeight,Size,0,40
+OrderIsDangerouseGoods,OrderIsDangerouseGoods,Size,0,40
+OrderVolumetricWeight,OrderVolumetricWeight,Size,0,40
+OriginShipmentId,OriginShipmentId,Size,15,0
+PackagesQuantity,PackagesQuantity,Size,0,1
+PreCarriageATA,PreCarriageATA,Size,0,15
+PreCarriageATD,PreCarriageATD,Size,0,15
+PreCarriageETA,PreCarriageETA,Size,0,15
+PreCarriageETD,PreCarriageETD,Size,0,15
+PreCarriageTransportModeId,PreCarriageTransportModeId,Type,char,varchar
+PreCarriageTransportModeId,PreCarriageTransportModeId,Size,1,15
+ProfitExchangeRate,ProfitExchangeRate,Size,0,15
+ProfitInLocalCurrency,ProfitInLocalCurrency,Size,0,40
+ProfitInProfitCurrency,ProfitInProfitCurrency,Size,0,40
+QuoteId,QuoteId,Size,15,0
+SearchFields,SearchFields,Type,nvarchar,varchar
+SecurityKey,SecurityKey,Type,nvarchar,varchar
+ShipmentLevelCode,ShipmentLevelCode,Nullable,TRUE,FALSE
+ShipmentNumber,ShipmentNumber,Nullable,FALSE,TRUE
+SplitOnCarriage,SplitOnCarriage,Size,0,1
+StatusDate,StatusDate,Size,0,15
+StatusId,StatusId,Nullable,FALSE,TRUE
+TerminalAvailable,TerminalAvailable,Size,0,1
+TEU,TEU,Size,0,15
+TransportModeId,TransportModeId,Type,char,varchar
+TransportModeId,TransportModeId,Size,1,15
+UpdatedByUserId,UpdatedByUserId,Nullable,FALSE,TRUE
+ValueOfGoods,ValueOfGoods,Size,0,15
+ViaColoader,ViaColoader,Size,0,1
+VolumeUnitCode,VolumeUnitCode,Nullable,TRUE,FALSE
+WarehouseLegActualEntryDate,WarehouseLegActualEntryDate,Size,0,1
+WarehouseLegActualReleaseDate,WarehouseLegActualReleaseDate,Size,0,1
+WarehouseLegCutOffDate,WarehouseLegCutOffDate,Size,0,1
+WarehouseLegExpectedEntryDate,WarehouseLegExpectedEntryDate,Size,0,1
+WarehouseLegExpectedReleaseDate,WarehouseLegExpectedReleaseDate,Size,0,1
+WarehouseLegLastFreeDate,WarehouseLegLastFreeDate,Size,0,1
+WarehouseLegRemarks,WarehouseLegRemarks,Type,nvarchar,varchar
+WarehouseLegVGMCutOffDate,WarehouseLegVGMCutOffDate,Size,0,1
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ShipmentAssemblies,ShipmentAssemblies,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+CreateDate,CreateDate,Size,0,15
+CreatedByUserId,CreatedByUserId,Nullable,FALSE,TRUE
+Id,Id,Size,15,0
+ShipmentId,ShipmentId,Nullable,FALSE,TRUE
+UpdateDate,UpdateDate,Size,0,15
+UpdatedByUserId,UpdatedByUserId,Nullable,FALSE,TRUE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ShipmentAWBPrintOnlies,ShipmentAWBPrintOnlies,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Id,Id,Size,15,0
+ShipmentId,ShipmentId,Nullable,FALSE,TRUE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ShipmentCommodities,ShipmentCommodities,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+ChargeableWeight,ChargeableWeight,Size,0,1
+ChargeAmount,ChargeAmount,Size,0,1
+ChargeRate,ChargeRate,Size,0,1
+GrossWeight,GrossWeight,Size,0,1
+Id,Id,Size,15,0
+NumberOfPackages,NumberOfPackages,Size,0,1
+ShipmentId,ShipmentId,Nullable,FALSE,TRUE
+Volume,Volume,Size,0,1
+VolumetricWeight,VolumetricWeight,Size,0,1
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ShipmentComputedFields,ShipmentComputedFields,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Commodity,Not Found,-,-,-
+ContainersNumbers,ContainersNumbers,Size,-1,1000
+DocumentsSearchFields,Not Found,-,-,-
+FinalDeliveryATA,FinalDeliveryATA,Nullable,TRUE,FALSE
+FinalDeliveryATD,FinalDeliveryATD,Nullable,TRUE,FALSE
+FinalDeliveryETA,FinalDeliveryETA,Nullable,TRUE,FALSE
+FinalDeliveryETD,FinalDeliveryETD,Nullable,TRUE,FALSE
+FirstPickupATA,FirstPickupATA,Nullable,TRUE,FALSE
+FirstPickupATD,FirstPickupATD,Nullable,TRUE,FALSE
+FirstPickupLocation,FirstPickupLocation,Size,-1,100
+ImporterDepositionRequestDetails,Not Found,-,-,-
+IsDepositionRequired,Not Found,-,-,-
+IsDigitalSignRequired,Not Found,-,-,-
+IsMissingDocuments,Not Found,-,-,-
+IsRequestedDocuments,Not Found,-,-,-
+LastDocumentDateTime,Not Found,-,-,-
+MissingDocumentsCount,Not Found,-,-,-
+MissingDocumentsNames,Not Found,-,-,-
+NumberOfHouses,Not Found,-,-,-
+RequestedDocumentsCount,Not Found,-,-,-
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ShipmentCustomerTypes,ShipmentCustomerTypes,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+SearchFields,SearchFields,Type,nvarchar,varchar
+ShowInLOV,ShowInLOV,Size,0,40
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ShipmentCustomsMessageTypes,ShipmentCustomsMessageTypes,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ShipmentCustomsTransmissions,ShipmentCustomsTransmissions,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+CommunicationLogId,CommunicationLogId,Size,15,0
+Error,Error,Type,nvarchar,varchar
+Error,Error,Size,-1,0
+Id,Id,Size,15,0
+SentByUserId,SentByUserId,Size,15,0
+ShipmentId,ShipmentId,Size,15,0
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ShipmentLevels,ShipmentLevels,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ShipmentPackages,ShipmentPackages,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+ChassisNumber,ChassisNumber,Type,varchar,nvarchar
+Color,Color,Type,varchar,nvarchar
+DeliveryATA,DeliveryATA,Size,0,1
+DeliveryATD,DeliveryATD,Size,0,1
+DeliveryETA,DeliveryETA,Size,0,1
+DeliveryETD,DeliveryETD,Size,0,1
+EmptyContainerReturnATA,EmptyContainerReturnATA,Size,0,1
+EmptyContainerReturnATD,EmptyContainerReturnATD,Size,0,1
+EmptyContainerReturnETA,EmptyContainerReturnETA,Size,0,1
+EmptyContainerReturnETD,EmptyContainerReturnETD,Size,0,1
+Height,Height,Size,0,15
+Id,Id,Size,15,0
+IsDeliveryFU,IsDeliveryFU,Size,0,1
+IsEmptyContainerReturnFU,IsEmptyContainerReturnFU,Size,0,1
+LastStatusDate,LastStatusDate,Size,0,1
+Length,Length,Size,0,15
+Make,Make,Type,varchar,nvarchar
+MethodUsed,MethodUsed,Type,nvarchar,varchar
+MethodUsed,MethodUsed,Size,-1,20
+Model,Model,Type,varchar,nvarchar
+NonActiveContainer,NonActiveContainer,Size,0,1
+Notes,Notes,Type,nvarchar,varchar
+NumberOfInsidePackages,NumberOfInsidePackages,Size,0,1
+OnCarriageATA,OnCarriageATA,Size,0,1
+OnCarriageATD,OnCarriageATD,Size,0,1
+OnCarriageETA,OnCarriageETA,Size,0,1
+OnCarriageETD,OnCarriageETD,Size,0,1
+OriginalShipmentPackageId,OriginalShipmentPackageId,Size,15,0
+Quantity,Quantity,Size,0,15
+Quantity,Quantity,Nullable,TRUE,FALSE
+RegistrationNumber,RegistrationNumber,Type,varchar,nvarchar
+RoutingIds,Not Found,-,-,-
+ShipmentId,ShipmentId,Size,15,0
+Tare,Tare,Size,0,15
+Ventilation,Ventilation,Size,0,10
+VGM,VGM,Size,0,2
+Volume,Volume,Size,0,15
+VolumetricWeight,VolumetricWeight,Size,0,15
+Weight,Weight,Size,0,15
+Width,Width,Size,0,15
+Year,Year,Type,varchar,nvarchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ShipmentPayables,ShipmentPayables,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AWBPrint,AWBPrint,Size,0,15
+CorrectionByUserId,CorrectionByUserId,Size,15,0
+CorrectionNote,CorrectionNote,Type,nvarchar,varchar
+CorrectionNote,CorrectionNote,Size,250,0
+CreatedByUserId,CreatedByUserId,Size,15,0
+CreatedByUserId,CreatedByUserId,Nullable,FALSE,TRUE
+ExpectedAmount,ExpectedAmount,Type,float,decimal
+ExpectedAmount,ExpectedAmount,Size,0,2
+ExpectedAmountInProfitCurrency,ExpectedAmountInProfitCurrency,Type,float,decimal
+ExpectedAmountInProfitCurrency,ExpectedAmountInProfitCurrency,Size,0,2
+ExpectedAmountLocal,ExpectedAmountLocal,Type,float,decimal
+ExpectedAmountLocal,ExpectedAmountLocal,Size,0,2
+Id,Id,Size,15,0
+MaxAmount,MaxAmount,Size,0,1
+MinAmount,MinAmount,Size,0,1
+Notes,Notes,Type,nvarchar,varchar
+Quantity,Quantity,Size,0,2
+QuoteChargeId,QuoteChargeId,Size,15,0
+QuoteCostMaxAmount,QuoteCostMaxAmount,Size,0,1
+QuoteCostMinAmount,QuoteCostMinAmount,Size,0,1
+Rate,Rate,Size,0,2
+ShipmentId,ShipmentId,Size,15,0
+ShipmentId,ShipmentId,Nullable,FALSE,TRUE
+ShipmentPayableAmountTypeCode,ShipmentPayableAmountTypeCode,Size,4,0
+ShipmentPayableParentId,ShipmentPayableParentId,Size,15,0
+UnitPrice,UnitPrice,Type,float,decimal
+UnitPrice,UnitPrice,Size,0,2
+UpdateByUserId,UpdateByUserId,Size,15,0
+UpdateByUserId,UpdateByUserId,Nullable,FALSE,TRUE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ShipmentPickUpDeliveries,ShipmentPickUpDeliveries,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+FromAddress,FromAddress,Type,nvarchar,varchar
+Id,Id,Size,15,0
+PickUpDeliveryNumber,PickUpDeliveryNumber,Nullable,FALSE,TRUE
+ShipmentId,ShipmentId,Nullable,FALSE,TRUE
+ToAddress,ToAddress,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ShipmentPickUpDeliveryPackages,ShipmentPickUpDeliveryPackages,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+ChassisNumber,ChassisNumber,Type,varchar,nvarchar
+Color,Color,Type,varchar,nvarchar
+Description,Description,Type,nvarchar,varchar
+Harmonize,Harmonize,Size,60,20
+Height,Height,Size,0,15
+Id,Id,Size,15,0
+Length,Length,Size,0,15
+Make,Make,Type,varchar,nvarchar
+Model,Model,Type,varchar,nvarchar
+OriginalShipmentPackageId,OriginalShipmentPackageId,Size,15,0
+Quantity,Quantity,Size,0,15
+Quantity,Quantity,Nullable,TRUE,FALSE
+RegistrationNumber,RegistrationNumber,Type,varchar,nvarchar
+ShipmentPickUpDeliveryId,ShipmentPickUpDeliveryId,Size,15,0
+ShipmentPickUpDeliveryId,ShipmentPickUpDeliveryId,Nullable,FALSE,TRUE
+Volume,Volume,Size,0,15
+Weight,Weight,Size,0,15
+Width,Width,Size,0,15
+Year,Year,Type,varchar,nvarchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ShipmentReceivables,ShipmentReceivables,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+AmountInProfitCurrency,AmountInProfitCurrency,Type,float,decimal
+AmountInProfitCurrency,AmountInProfitCurrency,Size,0,2
+ARInvoiceId,ARInvoiceId,Size,15,0
+ARInvoiceLineId,ARInvoiceLineId,Size,15,0
+CreatedByUserId,CreatedByUserId,Size,15,0
+CreatedByUserId,CreatedByUserId,Nullable,FALSE,TRUE
+Id,Id,Size,15,0
+IsExchangeRateFixed,IsExchangeRateFixed,Size,0,15
+IsExpense,IsExpense,Size,0,1
+Notes,Notes,Type,nvarchar,varchar
+Quantity,Quantity,Size,0,2
+QuoteChargeId,QuoteChargeId,Size,15,0
+QuoteSaleMaxAmount,QuoteSaleMaxAmount,Size,0,1
+QuoteSaleMinAmount,QuoteSaleMinAmount,Size,0,1
+Rate,Rate,Size,0,2
+ShipmentId,ShipmentId,Size,15,0
+ShipmentId,ShipmentId,Nullable,FALSE,TRUE
+ShipmentReceivableLineStatusCode,ShipmentReceivableLineStatusCode,Type,char,varchar
+ShipmentReceivableParentId,ShipmentReceivableParentId,Size,15,0
+TotalAmount,TotalAmount,Type,float,decimal
+TotalAmount,TotalAmount,Size,0,2
+TotalAmountLocal,TotalAmountLocal,Type,float,decimal
+TotalAmountLocal,TotalAmountLocal,Size,0,2
+UnitPrice,UnitPrice,Size,0,2
+UpdateByUserId,UpdateByUserId,Size,15,0
+UpdateByUserId,UpdateByUserId,Nullable,FALSE,TRUE
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ShipmentReceivableStatus,ShipmentReceivableStatus,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+SearchFields,SearchFields,Type,nvarchar,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ShipmentTypes,ShipmentTypes,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Id,Id,Size,4,0
+SearchFields,SearchFields,Type,nvarchar,varchar
+TransportModeId,TransportModeId,Type,char,varchar
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+SpecialServicesTypes,SpecialServicesTypes,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Id,Id,Size,15,0
+InActive,InActive,Size,0,1
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+BatchServicesLogs,BatchServicesLog,Incorrect Table Name In LXML File,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+BatchServiceCode,BatchServiceCode,Size,40,100
+BatchServiceCode,BatchServiceCode,Nullable,FALSE,TRUE
+CPU,CPU,Type,decimal,varchar
+CPU,CPU,Size,0,40
+DoneItemsInFiveMinutes,DoneItemsInFiveMinutes,Type,int,varchar
+DoneItemsInFiveMinutes,DoneItemsInFiveMinutes,Size,0,40
+DoneItemsInFiveMinutes,DoneItemsInFiveMinutes,Nullable,FALSE,TRUE
+DoneItemsInOneHour,DoneItemsInOneHour,Type,int,varchar
+DoneItemsInOneHour,DoneItemsInOneHour,Size,0,40
+DoneItemsInOneHour,DoneItemsInOneHour,Nullable,FALSE,TRUE
+DoneItemsInOneMinute,DoneItemsInOneMinute,Type,int,varchar
+DoneItemsInOneMinute,DoneItemsInOneMinute,Size,0,40
+DoneItemsInOneMinute,DoneItemsInOneMinute,Nullable,FALSE,TRUE
+NumberOfDoneItems,NumberOfDoneItems,Type,int,varchar
+NumberOfDoneItems,NumberOfDoneItems,Size,0,40
+,,,,
+,,,,
+DXML Table, LXML Table,,,
+ErrorLogs,ErrorLogs,,,
+DXML Column,LXML Column,Attribute,DXML Value,LXML Value
+Exception,Exception,Nullable,FALSE,TRUE
+Tier,Tier,Nullable,FALSE,TRUE
+UserName,UserName,Nullable,FALSE,TRUE
