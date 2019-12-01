@@ -129,7 +129,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 Simplog.Data.CommonDataModel.EntityPOCOs.AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 string sql = "Select DisplayName from Customer where Id='" + Id + "'";
-                ARInvoiceHelper service = new ARInvoiceHelper();
+                ARInvoiceHelper service = new ARInvoiceHelper(authToken.Tenant);
                 var myResult = service.GetQuickBooksOnlineCustomersByText(sql, authToken.Tenant+"");              
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
 
@@ -151,7 +151,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 Simplog.Data.CommonDataModel.EntityPOCOs.AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 string sql = "Select Name from TaxCode where Id='" + Id + "'";
-                ARInvoiceHelper service = new ARInvoiceHelper();
+                ARInvoiceHelper service = new ARInvoiceHelper(authToken.Tenant);
                 var myResult = service.GetQuickBooksOnlineVatTypesByText(sql, authToken.Tenant+"");
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
 
@@ -176,7 +176,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 Simplog.Data.CommonDataModel.EntityPOCOs.AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 string sql = "Select * from Item where Id ='" + Id + "'";
                 
-               ARInvoiceHelper service = new ARInvoiceHelper();
+               ARInvoiceHelper service = new ARInvoiceHelper(authToken.Tenant);
                 var myResult = service.GetQuickBooksOnlineReceivableChargesTypesByText(sql,authToken.Tenant+"");
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
 
@@ -201,7 +201,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 Simplog.Data.CommonDataModel.EntityPOCOs.AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 string sql = "Select * from Account where Id='" + Id + "'";
 
-                ARInvoiceHelper service = new ARInvoiceHelper();
+                ARInvoiceHelper service = new ARInvoiceHelper(authToken.Tenant);
                 var myResult = service.GetQuickBooksOnlinePayablesChargesTypesByText(sql, authToken.Tenant + "");
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
 
@@ -229,7 +229,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string sql ="Select * from CompanyCurrency where code ='" + Id + "'";
 
 
-               ARInvoiceHelper service = new ARInvoiceHelper();
+               ARInvoiceHelper service = new ARInvoiceHelper(authToken.Tenant);
                 var myResult = service.GetQuickBooksOnlineCurrenciesByText(sql,authToken.Tenant+"");
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
 
@@ -255,7 +255,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 Simplog.Data.CommonDataModel.EntityPOCOs.AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 string sql = "Select Name from Term where Id='" + Id + "'";
 
-                ARInvoiceHelper service = new ARInvoiceHelper();
+                ARInvoiceHelper service = new ARInvoiceHelper(authToken.Tenant);
                 var myResult = service.GetQuickBooksOnlinePaymentTermsByText(sql, authToken.Tenant+"");
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
 
@@ -281,7 +281,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 Simplog.Data.CommonDataModel.EntityPOCOs.AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 string sql = "Select DisplayName from Vendor where Id='" + Id + "'";
 
-                ARInvoiceHelper service = new ARInvoiceHelper();
+                ARInvoiceHelper service = new ARInvoiceHelper(authToken.Tenant);
                 var myResult = service.GetQuickBooksOnlineVendorByText(sql, authToken.Tenant + "");
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
 
@@ -307,7 +307,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 Simplog.Data.CommonDataModel.EntityPOCOs.AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 string sql = "Select Name from PaymentMethod where Id='" + Id + "'";
 
-                ARInvoiceHelper service = new ARInvoiceHelper();
+                ARInvoiceHelper service = new ARInvoiceHelper(authToken.Tenant);
                 var myResult = service.GetQuickBooksOnlinePaymentMethodByText(sql, authToken.Tenant + "");
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
 
