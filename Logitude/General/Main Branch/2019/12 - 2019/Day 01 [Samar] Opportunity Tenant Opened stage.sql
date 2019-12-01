@@ -11,7 +11,7 @@
 	FOR
 	SELECT Id, Tenant, CustomerId
 	FROM Opportunities	
-	where Tenant = 1 and CustomerId is not null
+	where Tenant = 341 and CustomerId is not null
 	OPEN OpportunitiesCursor FETCH NEXT FROM OpportunitiesCursor INTO @OpportunityId, @Tenant, @CustomerId
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
