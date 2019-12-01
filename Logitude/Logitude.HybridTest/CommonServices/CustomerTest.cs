@@ -2,6 +2,7 @@
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.HybridTest.WcfCallers;
+using Logitude.HybridTest.WcfFactory;
 using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -11,186 +12,169 @@ namespace Logitude.HybridTest.CommonServices
     public class CustomerTest
     {
         [TestMethod]
-        public void Test_Customer_UPSERT()
+        public void Test_CustomerExport_UPSERT()
         {
-            //LoginService.GetLoginTokenByCredentials();
-            //Response serviceResponse = CustomerWcfCaller.CallCustomerUpsert();
-            //Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
-            //Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            CustomerPM customerPM = CustomerWcfFactory.GetCustomerPM();
+            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(customerPM);
+            Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
         }
 
         [TestMethod]
         public void Test_Customer_GetCustomerPM()
         {
-            //Assert.Inconclusive("Not Implemented !");
-            //LoginService.GetLoginTokenByCredentials();
-            //Response prepareResponse = CustomerWcfCaller.PrepareCustomer();
-            //Assert.IsFalse(prepareResponse.HasError, "Prepare Customer Failed! " + prepareResponse.ErrorMessage);
-            //InvokedProperties serviceProperties = new InvokedProperties
-            //{
-            //    ServiceName = "Customer",
-            //    ServiceOperation = "GetCustomerPM",
-            //    ServiceResponseIndex = 2,
-            //    ServiceType = typeof(CustomerPM),
-            //    ServiceFilterType = typeof(CustomerServiceReference.CustomerApiFilters),
-            //};
-            //CustomerServiceReference.CustomerApiFilters filters = new CustomerServiceReference.CustomerApiFilters
-            //{
-            //    ByCode = true,
-            //    SearchCode = HybridData.CustomerCode
-            //};
+            InvokedProperties serviceProperties = new InvokedProperties
+            {
+                ServiceName = "Customer",
+                ServiceOperation = "GetCustomerPM",
+                ServiceResponseIndex = 2,
+                ServiceType = typeof(CustomerPM),
+                ServiceFilterType = typeof(CustomerServiceReference.CustomerApiFilters),
+            };
+            CustomerServiceReference.CustomerApiFilters filters = new CustomerServiceReference.CustomerApiFilters
+            {
+                ByCode = true,
+                SearchCode = HybridData.CustomerCodeHCustomer
+            };
 
-            //Response serviceResponse = new Response();
-            //object[] serviceParameters = new object[] { filters, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
-            //CustomerPM customer = (CustomerPM)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            //Assert.IsFalse(serviceResponse.HasError, "Get Customer PM Failed! " + serviceResponse.ErrorMessage);
-            //Assert.IsNull(serviceResponse.Result, "Get Customer PM Failed! " + serviceResponse.Result);
-            //Assert.AreEqual(customer.Code, HybridData.CustomerCode, "Get Customer PM Failed! " + serviceResponse.ErrorMessage);
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { filters, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
+            CustomerPM customer = (CustomerPM)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+            Assert.IsFalse(serviceResponse.HasError, "Get Customer PM Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsNull(serviceResponse.Result, "Get Customer PM Failed! " + serviceResponse.Result);
+            Assert.AreEqual(customer.Id, HybridData.CustomerIdHCustomer, "Get Customer PM Failed!");
         }
 
         [TestMethod]
         public void Test_Customer_GetCustomerAddresses()
         {
-            //Assert.Inconclusive("Not Implemented !");
-            //LoginService.GetLoginTokenByCredentials();
-            //Response prepareResponse = CustomerWcfCaller.PrepareCustomer();
-            //Assert.IsFalse(prepareResponse.HasError, "Prepare Customer Failed! " + prepareResponse.ErrorMessage);
-            //InvokedProperties serviceProperties = new InvokedProperties
-            //{
-            //    ServiceName = "Customer",
-            //    ServiceOperation = "GetCustomerPM",
-            //    ServiceResponseIndex = 2,
-            //    ServiceType = typeof(AddressPM),
-            //    ServiceFilterType = typeof(CustomerServiceReference.CustomerApiFilters),
-            //};
-            //CustomerServiceReference.CustomerApiFilters filters = new CustomerServiceReference.CustomerApiFilters
-            //{
-            //    ByCode = true,
-            //    SearchCode = HybridData.CustomerCode
-            //};
+            InvokedProperties serviceProperties = new InvokedProperties
+            {
+                ServiceName = "Customer",
+                ServiceOperation = "GetCustomerAddresses",
+                ServiceResponseIndex = 2,
+                ServiceType = typeof(AddressPM),
+                ServiceFilterType = typeof(CustomerServiceReference.CustomerApiFilters),
+            };
+            CustomerServiceReference.CustomerApiFilters filters = new CustomerServiceReference.CustomerApiFilters
+            {
+                ByCode = true,
+                SearchCode = HybridData.CustomerCodeHCustomer
+            };
 
-            //Response serviceResponse = new Response();
-            //object[] serviceParameters = new object[] { filters, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
-            //AddressPM[] addresses = (AddressPM[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            //Assert.IsFalse(serviceResponse.HasError, "Get Customer Addresses Failed! " + serviceResponse.ErrorMessage);
-            //Assert.IsNull(serviceResponse.Result, "Get Customer Addresses Failed! " + serviceResponse.Result);
-            //Assert.AreEqual(addresses[0].CountryCode, HybridData.CountryCode, "Get Customer Addresses Failed! " + serviceResponse.ErrorMessage);
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { filters, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
+            AddressPM[] addresses = (AddressPM[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+            Assert.IsFalse(serviceResponse.HasError, "Get Customer Addresses Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsNull(serviceResponse.Result, "Get Customer Addresses Failed! " + serviceResponse.Result);
+            if (addresses.Length == 0)
+                Assert.Inconclusive("There isn't any address for this customer");
+            else
+                Assert.AreEqual(addresses[0].CountryCode, HybridData.CountryCodeUS, "Get Customer Addresses Failed! " + serviceResponse.ErrorMessage);
         }
 
         [TestMethod]
         public void Test_Customer_GetCustomerContacts()
         {
-            //Assert.Inconclusive("Not Implemented !");
-            //LoginService.GetLoginTokenByCredentials();
-            //Response prepareResponse = CustomerWcfCaller.PrepareCustomer();
-            //Assert.IsFalse(prepareResponse.HasError, "Prepare Customer Failed! " + prepareResponse.ErrorMessage);
-            //InvokedProperties serviceProperties = new InvokedProperties
-            //{
-            //    ServiceName = "Customer",
-            //    ServiceOperation = "GetCustomerContacts",
-            //    ServiceResponseIndex = 2,
-            //    ServiceType = typeof(ContactPM),
-            //    ServiceFilterType = typeof(CustomerServiceReference.CustomerApiFilters),
-            //};
-            //CustomerServiceReference.CustomerApiFilters filters = new CustomerServiceReference.CustomerApiFilters
-            //{
-            //    ByCode = true,
-            //    SearchCode = HybridData.CustomerCode
-            //};
+            InvokedProperties serviceProperties = new InvokedProperties
+            {
+                ServiceName = "Customer",
+                ServiceOperation = "GetCustomerContacts",
+                ServiceResponseIndex = 2,
+                ServiceType = typeof(ContactPM),
+                ServiceFilterType = typeof(CustomerServiceReference.CustomerApiFilters),
+            };
+            CustomerServiceReference.CustomerApiFilters filters = new CustomerServiceReference.CustomerApiFilters
+            {
+                ByCode = true,
+                SearchCode = HybridData.CustomerCodeHCustomer
+            };
 
-            //Response serviceResponse = new Response();
-            //object[] serviceParameters = new object[] { filters, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
-            //ContactPM[] contacts = (ContactPM[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            //Assert.IsFalse(serviceResponse.HasError, "Get Customer Addresses Failed! " + serviceResponse.ErrorMessage);
-            //Assert.IsNull(serviceResponse.Result, "Get Customer Addresses Failed! " + serviceResponse.Result);
-            //Assert.AreEqual(contacts[0].EnglishName, "Hybrid Contact", "Get Customer Contacts Failed! " + serviceResponse.ErrorMessage);
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { filters, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
+            ContactPM[] contacts = (ContactPM[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+            Assert.IsFalse(serviceResponse.HasError, "Get Customer Contacts Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsNull(serviceResponse.Result, "Get Customer Contacts Failed! " + serviceResponse.Result);
+            if (contacts.Length == 0)
+                Assert.Inconclusive("There isn't any contact for this customer");
         }
 
         [TestMethod]
         public void Test_Customer_GetCustomerList()
         {
-            //Assert.Inconclusive("Not Implemented !");
-            //LoginService.GetLoginTokenByCredentials();
-            //Response prepareResponse = CustomerWcfCaller.PrepareCustomer();
-            //Assert.IsFalse(prepareResponse.HasError, "Prepare Customer Failed! " + prepareResponse.ErrorMessage);
-            //InvokedProperties serviceProperties = new InvokedProperties
-            //{
-            //    ServiceName = "Customer",
-            //    ServiceOperation = "GetCustomerList",
-            //    ServiceResponseIndex = 6,
-            //    ServiceType = typeof(CustomerList),
-            //    ServiceFilterType = typeof(CustomerServiceReference.CustomerApiFilters),
-            //};
-            //CustomerServiceReference.CustomerApiFilters filters = new CustomerServiceReference.CustomerApiFilters
-            //{
-            //    ByCode = true,
-            //    SearchCode = HybridData.CustomerCode
-            //};
+            InvokedProperties serviceProperties = new InvokedProperties
+            {
+                ServiceName = "Customer",
+                ServiceOperation = "GetCustomerList",
+                ServiceResponseIndex = 6,
+                ServiceType = typeof(CustomerList),
+                ServiceFilterType = typeof(CustomerServiceReference.CustomerApiFilters),
+            };
+            CustomerServiceReference.CustomerApiFilters filters = new CustomerServiceReference.CustomerApiFilters
+            {
+                ByCode = true,
+                SearchCode = HybridData.CustomerCodeHCustomer
+            };
 
-            //Response serviceResponse = new Response();
-            //object[] serviceParameters = new object[] { HybridData.CustomerCode, "HybridUser@logitudeworld.com", true, TestEnvironmentGlobalParameters.Tenant, 0, 10, serviceResponse };
-            //CustomerList[] customers = (CustomerList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            //Assert.IsFalse(serviceResponse.HasError, "Get Customer List Failed! " + serviceResponse.ErrorMessage);
-            //Assert.IsNull(serviceResponse.Result, "Get Customer List Failed! " + serviceResponse.Result);
-            //Assert.AreEqual(customers[0].EnglishName, "Hybrid Customer", "Get Custome Failed! " + serviceResponse.ErrorMessage);
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { HybridData.CustomerCodeHCustomer, "hybriduser@logitudeworld.com", true, TestEnvironmentGlobalParameters.Tenant, 0, 10, serviceResponse };
+            CustomerList[] customers = (CustomerList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+            Assert.IsFalse(serviceResponse.HasError, "Get Customer List Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsNull(serviceResponse.Result, "Get Customer List Failed! " + serviceResponse.Result);
+            if (customers.Length == 0)
+                Assert.Inconclusive("There isn't any customer with this search field!");
+            else
+                Assert.AreEqual(customers[0].Id, HybridData.CustomerIdHCustomer, "Get Custome Failed! " + serviceResponse.ErrorMessage);
         }
 
         [TestMethod]
         public void Test_Customer_GetCustomerListByEmail()
         {
-            //Assert.Inconclusive("Not Implemented !");
-            //LoginService.GetLoginTokenByCredentials();
-            //Response prepareResponse = CustomerWcfCaller.PrepareCustomer();
-            //Assert.IsFalse(prepareResponse.HasError, "Prepare Customer Failed! " + prepareResponse.ErrorMessage);
-            //InvokedProperties serviceProperties = new InvokedProperties
-            //{
-            //    ServiceName = "Customer",
-            //    ServiceOperation = "GetCustomerListByEmail",
-            //    ServiceResponseIndex = 2,
-            //    ServiceType = typeof(CustomerList),
-            //    ServiceFilterType = typeof(CustomerServiceReference.CustomerApiFilters),
-            //};
-            //CustomerServiceReference.CustomerApiFilters filters = new CustomerServiceReference.CustomerApiFilters
-            //{
-            //    ByCode = true,
-            //    SearchCode = HybridData.CustomerCode
-            //};
+            InvokedProperties serviceProperties = new InvokedProperties
+            {
+                ServiceName = "Customer",
+                ServiceOperation = "GetCustomerListByEmail",
+                ServiceResponseIndex = 2,
+                ServiceType = typeof(CustomerList),
+                ServiceFilterType = typeof(CustomerServiceReference.CustomerApiFilters),
+            };
+            CustomerServiceReference.CustomerApiFilters filters = new CustomerServiceReference.CustomerApiFilters
+            {
+                ByCode = true,
+                SearchCode = HybridData.CustomerCodeHCustomer
+            };
 
-            //Response serviceResponse = new Response();
-            //object[] serviceParameters = new object[] { "HybridContact@logitudeworld.com", TestEnvironmentGlobalParameters.Tenant, serviceResponse };
-            //CustomerList[] customers = (CustomerList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            //Assert.IsFalse(serviceResponse.HasError, "Get Customer List Failed! " + serviceResponse.ErrorMessage);
-            //Assert.IsNull(serviceResponse.Result, "Get Customer List Failed! " + serviceResponse.Result);
-            //Assert.AreEqual(customers[0].EnglishName, "Hybrid Customer", "Get Customer Failed! " + serviceResponse.ErrorMessage);
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { "HybridContact@logitudeworld.com", TestEnvironmentGlobalParameters.Tenant, serviceResponse };
+            CustomerList[] customers = (CustomerList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+            Assert.IsFalse(serviceResponse.HasError, "Get Customer List Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsNull(serviceResponse.Result, "Get Customer List Failed! " + serviceResponse.Result);
+            Assert.AreEqual(customers[0].EnglishName, "Hybrid Customer", "Get Customer Failed! " + serviceResponse.ErrorMessage);
         }
 
         [TestMethod]
         public void Test_Customer_GetCustomerListById()
         {
-        //    Assert.Inconclusive("Not Implemented !");
-        //    LoginService.GetLoginTokenByCredentials();
-        //Response prepareResponse = CustomerWcfCaller.PrepareCustomer();
-        //Assert.IsFalse(prepareResponse.HasError, "Prepare Customer Failed! " + prepareResponse.ErrorMessage);
-        //InvokedProperties serviceProperties = new InvokedProperties
-        //{
-        //    ServiceName = "Customer",
-        //    ServiceOperation = "GetCustomerListByEmail",
-        //    ServiceResponseIndex = 2,
-        //    ServiceType = typeof(CustomerList),
-        //    ServiceFilterType = typeof(CustomerServiceReference.CustomerApiFilters),
-        //};
-        //CustomerServiceReference.CustomerApiFilters filters = new CustomerServiceReference.CustomerApiFilters
-        //{
-        //    ByCode = true,
-        //    SearchCode = HybridData.CustomerCode
-        //};
+            InvokedProperties serviceProperties = new InvokedProperties
+            {
+                ServiceName = "Customer",
+                ServiceOperation = "GetCustomerListById",
+                ServiceResponseIndex = 2,
+                ServiceType = typeof(CustomerList),
+                ServiceFilterType = typeof(CustomerServiceReference.CustomerApiFilters),
+            };
+            CustomerServiceReference.CustomerApiFilters filters = new CustomerServiceReference.CustomerApiFilters
+            {
+                ByCode = true,
+                SearchCode = HybridData.CustomerCodeHCustomer
+            };
 
-        //Response serviceResponse = new Response();
-        //object[] serviceParameters = new object[] { HybridData.ContactCode, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
-        //CustomerList customer = (CustomerList)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-        //Assert.IsFalse(serviceResponse.HasError, "Get Customer List By Id Failed! " + serviceResponse.ErrorMessage);
-        //Assert.IsNull(serviceResponse.Result, "Get Customer List By Id Failed! " + serviceResponse.Result);
-        //Assert.AreEqual(customer.EnglishName, "Hybrid Customer", "Get Customer By Id Failed! " + serviceResponse.ErrorMessage);
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { HybridData.CustomerIdHCustomer, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
+            CustomerList customer = (CustomerList)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+            Assert.IsFalse(serviceResponse.HasError, "Get Customer List By Id Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsNull(serviceResponse.Result, "Get Customer List By Id Failed! " + serviceResponse.Result);
+            Assert.AreEqual(customer.Id, HybridData.CustomerIdHCustomer, "Get Customer By Id Failed! " + serviceResponse.ErrorMessage);
         }
 
         [TestMethod]

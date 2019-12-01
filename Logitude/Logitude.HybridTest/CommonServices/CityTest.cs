@@ -30,7 +30,7 @@ namespace Logitude.HybridTest.CommonServices
         [TestMethod]
         public void Test_City_GetCityListByCode()
         {
-            if(HybridData.CityIdHCity == null)
+            if (HybridData.CityIdHCity == null)
                 Test_City_UPSERT();
             InvokedProperties serviceProperties = new InvokedProperties
             {
@@ -45,7 +45,7 @@ namespace Logitude.HybridTest.CommonServices
             CountryCityList city = (CountryCityList)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);
-            Assert.AreEqual(city.EnglishName, "Hybrid City", "Get Hybrid City Failed!");
+            Assert.AreEqual(city.Id, HybridData.CityIdHCity, "Get Hybrid City Failed!");
         }
     }
 }

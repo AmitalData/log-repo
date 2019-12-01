@@ -67,6 +67,8 @@ namespace Logitude.HybridTest
             string IServiceName = "I" + serviceProperties.ServiceName;
             if (serviceProperties.ServiceName == "ContactPassword")
                 IServiceName += "Service";
+            else if (serviceProperties.ServiceName == "Vessel")
+                IServiceName += "WcfServcie";
             else
                 IServiceName += "WcfService";
             ServiceEndpoint serviceEndPoint = endpointsForContracts[IServiceName].First();
@@ -79,6 +81,8 @@ namespace Logitude.HybridTest
             string uri = TestEnvironmentGlobalParameters.ServerURL + "/WcfApi/" + serviceProperties.ServiceName;
             if(serviceProperties.ServiceName == "ContactPassword")
                 uri += "Service.svc?wsdl";
+            else if(serviceProperties.ServiceName == "Vessel")
+                uri += "WcfServcie.svc?wsdl";
             else
                 uri += "WcfService.svc?wsdl";
             Uri mexAddress = new Uri(uri);
@@ -138,6 +142,8 @@ namespace Logitude.HybridTest
             string IServiceName = "I" + serviceProperties.ServiceName;
             if (serviceProperties.ServiceName == "ContactPassword")
                 IServiceName += "Service";
+            if (serviceProperties.ServiceName == "Vessel")
+                IServiceName += "WcfServcie";
             else
                 IServiceName += "WcfService";
             Type clientProxyType = compilerResults.CompiledAssembly.GetTypes().FirstOrDefault(
