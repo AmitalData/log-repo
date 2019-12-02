@@ -88,7 +88,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        public HttpResponseMessage GetAvailableAirlineFreightTariffs(string FromPort, string ToPort, string BetweenDate, double Weight, string Weightcode, double? GrossWeight, string GrossWeightCode, double? Volume, string VolumeCode, string currencyId)
+        public HttpResponseMessage GetAvailableAirlineFreightTariffs(string FromPort, string ToPort, string BetweenDate, double Weight, string Weightcode, double? GrossWeight, string GrossWeightCode, double? Volume, string VolumeCode, string currencyId, string tariffType)
         {
             try
             {
@@ -109,7 +109,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 TariffQueryService tariffQueryService = new TariffQueryService(tenant);
 
-                List<TariffSearchSummary> myResult = tariffQueryService.GetTariffSearchSummary(FromPort, ToPort, BetweenDateOBJ, Weight, tenant, Weightcode, GrossWeight, GrossWeightCode, Volume, VolumeCode, currencyId);
+                List<TariffSearchSummary> myResult = tariffQueryService.GetTariffSearchSummary(FromPort, ToPort, BetweenDateOBJ, Weight, tenant, Weightcode, GrossWeight, GrossWeightCode, Volume, VolumeCode, currencyId, tariffType);
 
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);

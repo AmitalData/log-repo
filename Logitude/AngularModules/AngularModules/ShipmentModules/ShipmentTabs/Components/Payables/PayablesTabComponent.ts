@@ -222,7 +222,13 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                 betweenDate = this.EntityPM.MainCarriageETD;
             }
 
-    
+            var tariffType = "";
+            if (this.EntityPM.TransportModeId == "A") {
+                tariffType = "AFC";
+            }
+            else if (this.EntityPM.ShipmentTypeId == "LCL" || this.EntityPM.ShipmentTypeId == "LCLD") {
+                tariffType = "OLC";
+            }
 
             var WindowArgs: any =
             {
@@ -236,7 +242,8 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                 GrossWeightUnit: this.EntityPM.GrossWeightUnitCode,
                 VolumeUnit: this.EntityPM.VolumeUnitCode,
                 ShipmentPM: this.EntityPM,
-                FatherComponent: this
+                FatherComponent: this,
+                TariffType: tariffType
             };
             var logWindow = new LogitudeWindow();
             logWindow.IsFillScreenHeight = true;
