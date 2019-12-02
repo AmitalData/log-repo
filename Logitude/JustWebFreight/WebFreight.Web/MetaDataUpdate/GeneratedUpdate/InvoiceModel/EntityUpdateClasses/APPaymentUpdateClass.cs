@@ -4525,6 +4525,62 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "VoidedByJournalNumber",
+					  						OldFieldName =  "VoidedByJournal",
+					  						ObjectTableName =  "APPayment",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  100,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  100,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "VoidedByJournalNumber",
+					  						ListPropertyPath =  "VoidedByJournalNumber",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "VoidedByJournalNumber",
+					  						DefaultText =  "VoidedByJournal",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
@@ -5158,6 +5214,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
  		   TextCode APPaymentTextCode_APPaymentMAmountPaidLessOrEqual = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.AmountPaidLessOrEqual", DefaultText = "Amount Paid must be less than or equals to",LocalDefaultText = @"סכום לתשלום חייב להיות שווה או פחות מ-", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode APPaymentTextCode_APPaymentONoDeductionFileNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.O.NoDeductionFileNumber", DefaultText = "Vendor Deduction File Number not specified",LocalDefaultText = @"לא הוגדר מספר תיק ניכויים בכרטיס הספק", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode APPaymentTextCode_APPAymentOCancellationDateValidation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPAyment.O.CancellationDateValidation", DefaultText = "Cancellation date cannot be before APpayment date",LocalDefaultText = @"תאריך הביטול לא יכול להיות קודם לתאריך הוראת התשלום", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode APPaymentTextCode_APPaymentOVoidByJournal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.O.VoidByJournal", DefaultText = "Void by journal number",LocalDefaultText = @"בוטל ע”י פקודת יומן ", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode APPaymentTextCode_APPaymentOCancelationDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.O.CancelationDetails", DefaultText = "Cancelation Details",LocalDefaultText = @"פירוט ביטול", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

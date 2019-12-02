@@ -566,6 +566,7 @@ export class APPaymentMenuButtonsHandler {
         var logWindow = new LogitudeWindow();
         var windowArgs: any = {};
         windowArgs.PaymentDate = this.EntityPM.RegisterDate;
+        windowArgs.PaymentPM = this.EntityPM;
        // windowArgs = this.SetPaymentChequeWindowArgs(windowArgs);
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = 420;

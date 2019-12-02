@@ -251,7 +251,7 @@ export class ARPaymentPMService {
             entityPM.OldEntityPM.InvoicesLedgerTransactions = [];
             for (var item in entityPM.InvoicesLedgerTransactions) {
             var myLedgerTransactionPM = entityPM.InvoicesLedgerTransactions[item];
-          //  var newLedgerTransactionPM: LedgerTransactionPM = this.clone(myLedgerTransactionPM);
+           // var newLedgerTransactionPM: LedgerTransactionPM = this.clone(myLedgerTransactionPM);
 						
 							 
             //entityPM.OldEntityPM.InvoicesLedgerTransactions.push(newLedgerTransactionPM);
@@ -371,15 +371,15 @@ export class ARPaymentPMService {
 //file not found! for child composition ARPaymentInvoice
     MapInvoicesLedgerTransactions(entityPM: ARPaymentPM, jsonPM: any, mapParent: boolean = true) {
 
-       // entityPM.InvoicesLedgerTransactions = new Array<LedgerTransactionPM>();
+      //  entityPM.InvoicesLedgerTransactions = new Array<LedgerTransactionPM>();
         for (var item in jsonPM.InvoicesLedgerTransactions) {
 
             var jItem = jsonPM.InvoicesLedgerTransactions[item];
             if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
                 continue;
             }
-          //  var newLedgerTransactionPM: LedgerTransactionPM;
-           // newLedgerTransactionPM = new LedgerTransactionPM();
+            //var newLedgerTransactionPM: LedgerTransactionPM;
+            //newLedgerTransactionPM = new LedgerTransactionPM();
 				                
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
@@ -388,9 +388,9 @@ export class ARPaymentPMService {
                     continue;
                 }
                 var pmProperty = pmKeysArray[pmKey];
-              //  newLedgerTransactionPM[pmProperty] = jItem[pmProperty];
+             //   newLedgerTransactionPM[pmProperty] = jItem[pmProperty];
             }
-            //newLedgerTransactionPM.IsDirty = false;
+         //   newLedgerTransactionPM.IsDirty = false;
             //entityPM.InvoicesLedgerTransactions.push(newLedgerTransactionPM);
         }
     }
