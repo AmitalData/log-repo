@@ -217,7 +217,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             data = this.ExportOceanFCLFreightCostLinesToExcel(tariff, tariffVersion.TariffLines, tenant, type);
                         }
 
-                        else if (tariff.TypeCode == "ASC" || tariff.TypeCode == "OSC")
+                        else if (tariff.TypeCode == "ASC" || tariff.TypeCode == "OSC" || tariff.TypeCode == "OFS")
                         {
                             data = this.ExportAirSurchargesCostLinesToExcel(tariff, tariffVersion.TariffLines, tenant, type);
                         }
@@ -450,8 +450,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         count++;
                         table.Columns.Add("Min " + chargesType.Code);
                     }
-
-                    table.Columns.Add(chargesType.Code);
+                    string columnName = chargesType.Code;
+                    if (tariff.TypeCode == "OFS")
+                    {
+                        columnName = columnName + "(" + measurement.Code + ")";
+                    }
+                    table.Columns.Add(columnName);
                 }
             }
 
@@ -469,7 +473,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         table.Columns.Add("Min " + chargesType.Code);
                     }
 
-                    table.Columns.Add(chargesType.Code);
+                    string columnName = chargesType.Code;
+                    if (tariff.TypeCode == "OFS")
+                    {
+                        columnName = columnName + "(" + measurement.Code + ")";
+                    }
+                    table.Columns.Add(columnName);
                 }
             }
 
@@ -487,7 +496,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         table.Columns.Add("Min " + chargesType.Code);
                     }
 
-                    table.Columns.Add(chargesType.Code);
+                    string columnName = chargesType.Code;
+                    if (tariff.TypeCode == "OFS")
+                    {
+                        columnName = columnName + "(" + measurement.Code + ")";
+                    }
+                    table.Columns.Add(columnName);
                 }
             }
 
@@ -505,7 +519,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         table.Columns.Add("Min " + chargesType.Code);
                     }
 
-                    table.Columns.Add(chargesType.Code);
+                    string columnName = chargesType.Code;
+                    if (tariff.TypeCode == "OFS")
+                    {
+                        columnName = columnName + "(" + measurement.Code + ")";
+                    }
+                    table.Columns.Add(columnName);
                 }
             }
 
@@ -523,7 +542,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         table.Columns.Add("Min " + chargesType.Code);
                     }
 
-                    table.Columns.Add(chargesType.Code);
+                    string columnName = chargesType.Code;
+                    if (tariff.TypeCode == "OFS")
+                    {
+                        columnName = columnName + "(" + measurement.Code + ")";
+                    }
+                    table.Columns.Add(columnName);
                 }
             }
 
@@ -541,7 +565,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         table.Columns.Add("Min " + chargesType.Code);
                     }
 
-                    table.Columns.Add(chargesType.Code);
+                    string columnName = chargesType.Code;
+                    if (tariff.TypeCode == "OFS")
+                    {
+                        columnName = columnName + "(" + measurement.Code + ")";
+                    }
+                    table.Columns.Add(columnName);
                 }
             }
 
@@ -559,7 +588,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         table.Columns.Add("Min " + chargesType.Code);
                     }
 
-                    table.Columns.Add(chargesType.Code);
+                    string columnName = chargesType.Code;
+                    if (tariff.TypeCode == "OFS")
+                    {
+                        columnName = columnName + "(" + measurement.Code + ")";
+                    }
+                    table.Columns.Add(columnName);
                 }
             }
 
@@ -577,7 +611,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         table.Columns.Add("Min " + chargesType.Code);
                     }
 
-                    table.Columns.Add(chargesType.Code);
+                    string columnName = chargesType.Code;
+                    if (tariff.TypeCode == "OFS")
+                    {
+                        columnName = columnName + "(" + measurement.Code + ")";
+                    }
+                    table.Columns.Add(columnName);
                 }
             }
 
@@ -595,7 +634,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         table.Columns.Add("Min " + chargesType.Code);
                     }
 
-                    table.Columns.Add(chargesType.Code);
+                    string columnName = chargesType.Code;
+                    if (tariff.TypeCode == "OFS")
+                    {
+                        columnName = columnName + "(" + measurement.Code + ")";
+                    }
+                    table.Columns.Add(columnName);
                 }
             }
 
@@ -613,7 +657,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         table.Columns.Add("Min " + chargesType.Code);
                     }
 
-                    table.Columns.Add(chargesType.Code);
+                    string columnName = chargesType.Code;
+                    if (tariff.TypeCode == "OFS")
+                    {
+                        columnName = columnName + "(" + measurement.Code + ")";
+                    }
+                    table.Columns.Add(columnName);
                 }
             }
 

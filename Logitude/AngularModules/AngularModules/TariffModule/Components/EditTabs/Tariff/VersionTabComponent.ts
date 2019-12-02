@@ -63,7 +63,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     }
 
     SetOriginDependencyFilterValue() {
-        if (this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OSC") {
+        if (this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
             this.OriginDependencyFilterValue = "O";
             this.DestinationDependencyFilterValue = "O";
         }
