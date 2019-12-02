@@ -1773,5 +1773,59 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         }
 
 
+        public IQueryable<ContactList> GetDemoTenantContactList(IQueryable<Contact> iQueryable, string loggedUserId, int tenant)
+        {
+            List<ContactList> result = new List<ContactList>();
+
+            int index = 1;
+            foreach (Contact contact in iQueryable)
+            {
+                string email = contact.Email;
+                string name = contact.EnglishName;
+
+                if (contact.Id != loggedUserId)
+                {
+                    if (!string.IsNullOrEmpty(email))
+                    {
+                        string[] emailParts = contact.Email.Split('@');
+                        email = "contact" + index + "@democompany.com ";
+                    }
+                    name = "Contact" + index;
+                }
+
+                ContactList newItem = new ContactList()
+                {
+                    Email = email,
+                    EnglishName = name,
+                    Id = contact.Id,
+                    Anniversary = contact.Anniversary,
+                    Birthday = contact.Birthday,
+                    BusinessPhone = contact.BusinessPhone,
+                    SearchFields = contact.SearchFields,
+                    Fax = contact.Fax,
+                    InActive = contact.InActive,
+                    LocalName = contact.LocalName,
+                    Mobile = contact.Mobile,
+                    Notes = contact.Notes,
+                    Tenant = contact.Tenant,
+                    DontShowLocal = contact.DontShowLocalLabels,
+                    DisplayGettingStarted = contact.DisplayGettingStarted,
+                    BirthdayReminder = contact.BirthdayReminder,
+                    AnniversaryReminder = contact.AnniversaryReminder,
+                    ImageDetailId = contact.ImageDetailId,
+                    DoneDate = contact.DoneDate,
+                    BirthDayOfYear = contact.BirthDayOfYear,
+                    ContactDoneMethodCode = contact.ContactDoneMethod != null ? contact.ContactDoneMethod.Code : null,
+                    Position = contact.Position,
+                    IndexColor = contact.IndexColor,
+                    CompanyName = contact.CompanyName,
+                    CreateDate = contact.CreateDate,
+                };
+                result.Add(newItem);
+                index++;
+            }
+
+            return result.AsQueryable();
+        }
     }
 }

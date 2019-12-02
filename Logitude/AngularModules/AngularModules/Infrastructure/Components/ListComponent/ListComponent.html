@@ -123,10 +123,13 @@
 
 <div style="position: absolute; top:0px; bottom:0px; left:0px; right:0px;margin:auto; background:white;" *ngIf="IsDemoTenant">
     <table style="height:100%">
-        <tr style="height:22px;">
+        <tr style="height:22px;" *ngIf="BackButtonVisibility">
             <td>
                 <table>
                     <tr>
+                        <td style="width:100px;">
+                            <BackButton [Text]="BackBtnTitle" (click)="BackButtonClicked()"></BackButton>
+                        </td>
                         <td>
                             <div></div>
                         </td>
