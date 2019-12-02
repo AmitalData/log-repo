@@ -340,7 +340,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
 
             Dictionary<string, string> Currencies = myCommonContext.Currencies.Where(p => p.Tenant == tenant).ToDictionary(p => p.Id, p => p.Code);
             List<TariffVersionAllInCharge> TariffVersionAllInChargesList = this.repository.GetAllTariffAllInOnVersionsByTariffIds(items.Select(p => p.tariffid).ToArray(), TariffVersionList.Select(p => p.Version).ToArray(), tenant).ToList();
-            List<Tariff> SurchargeTariffList = this.repository.GetSurchargeTariffsByAirline(TariffList.Select(p => p.SellerId).ToArray(), tenant).Where(p => !p.InActive).ToList();
+            List<Tariff> SurchargeTariffList = this.repository.GetSurchargeTariffsByAirline(TariffList.Select(p => p.SellerId).ToArray(),typeCode, tenant).Where(p => !p.InActive).ToList();
             List<Measurement> UsedMeasurements = myCommonContext.Measurements.Where(p => p.Tenant == tenant).ToList();
             List<ChargesType> chargesTypes = myCommonContext.ChargesTypes.Where(p => p.Tenant == tenant).ToList();
 
