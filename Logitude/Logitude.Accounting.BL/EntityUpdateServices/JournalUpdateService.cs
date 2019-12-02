@@ -480,6 +480,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                 _JornalPmSource.ChangeSetOp = ChangeSetOperation.Update;
                 _JornalPmSource.StatusCodeEnum = JournalStatusTypePM.StatusCodeEnum.Voided;
+                _JornalPmSource.JournalLines.Select(d => d.Notes = stornoOverrideM.LineNotes);
+                _JornalPmSource.AccountingDate =(DateTime) stornoOverrideM.AccountingDate;
                 this.Update(_JornalPmSource, true);
                 scope.Complete();
                 return _JornalPmSource;
