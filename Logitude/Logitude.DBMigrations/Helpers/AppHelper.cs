@@ -33,18 +33,22 @@ namespace Logitude.DBMigrations.Helpers
         {
             GeneratedScript generatedScript = new GeneratedScript();
             
-            foreach (var dXMLFile in DXMLFiles)
+            foreach (var dxmlFile in DXMLFiles)
             {
-                string dxmlFileName = Path.GetFileName(dXMLFile);
+                string dxmlFileName = Path.GetFileName(dxmlFile);
                 Console.WriteLine("Generating Script For " + dxmlFileName + " ...");
-                string xmlString = File.ReadAllText(dXMLFile);
+
+                string xmlString = File.ReadAllText(dxmlFile);
                 TableDefinition dxmlTable = xmlString.ParseXML<TableDefinition>();
+
                 string connectonString = GetConnectionString(dxmlTable.DBType);
                 DatabaseMigrations databaseMigrations = new SQLDatabaseMigrations(dxmlTable, connectonString);
-                string DxmlTableScript = databaseMigrations.GetScript();
-                if (!String.IsNullOrEmpty(DxmlTableScript))
+
+                string script = databaseMigrations.GetScript();
+
+                if (!String.IsNullOrEmpty(script))
                 {
-                    generatedScript = AppendGeneratedScript(generatedScript, dxmlTable.DBType, DxmlTableScript, dxmlFileName);
+                    generatedScript = AppendGeneratedScript(generatedScript, dxmlTable.DBType, script, dxmlFileName);
                 }
             }
 
@@ -64,8 +68,6 @@ namespace Logitude.DBMigrations.Helpers
 
             string systemLogsScriptFilePath = Path.Combine(projectDirectory, @"GeneratedScript\SystemLogsScript.sql");
             File.WriteAllText(systemLogsScriptFilePath, generatedScript.SystemLogsScript);
-
-            Console.WriteLine("The Generated Scripts Saved Successfully To GeneratedScript Folder");
         }
         
         public static void ExecuteScript(GeneratedScript generatedScript)
@@ -122,7 +124,6 @@ namespace Logitude.DBMigrations.Helpers
             }
         }
 
-
         private static string GetConnectionString(string dbType)
         {
             string connectionString;
@@ -147,26 +148,26 @@ namespace Logitude.DBMigrations.Helpers
             return connectionString;
         }
 
-        private static GeneratedScript AppendGeneratedScript(GeneratedScript generatedScript, string dbType, string dxmlTableScript, string dxmlFileName)
+        private static GeneratedScript AppendGeneratedScript(GeneratedScript generatedScript, string dbType, string script, string dxmlFileName)
         {
             if (dbType == "Global")
             {
                 generatedScript.GlobalScript += "/* Generated Script For " + dxmlFileName + " */\n";
-                generatedScript.GlobalScript += dxmlTableScript;
+                generatedScript.GlobalScript += script;
                 generatedScript.GlobalScript += "\n";
                 return generatedScript;
             }
             else if (dbType == "Main")
             {
                 generatedScript.MainScript += "/* Generated Script For " + dxmlFileName + " */\n";
-                generatedScript.MainScript += dxmlTableScript;
+                generatedScript.MainScript += script;
                 generatedScript.MainScript += "\n";
                 return generatedScript;
             }
             else if (dbType == "SystemLogs")
             {
                 generatedScript.SystemLogsScript += "/* Generated Script For " + dxmlFileName + " */\n";
-                generatedScript.SystemLogsScript += dxmlTableScript;
+                generatedScript.SystemLogsScript += script;
                 generatedScript.SystemLogsScript += "\n";
                 return generatedScript;
             }

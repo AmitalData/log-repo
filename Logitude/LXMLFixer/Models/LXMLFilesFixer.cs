@@ -197,8 +197,8 @@ namespace Logitude.LXMLFixer.Models
                     bool isFixedLength = field.Attribute("IsFixedLength") == null ? false : field.Attribute("IsFixedLength").Value == "true";
 
                     string columnDefinitionDataType = GetDataTypeForColumnDefinition(dataType, isFixedLength);
-                    bool columnDefinitionNullableConstraint = GetIsNullableForConstraintsDefinition(isRequired, isNullable, isPrimaryKey, columnDefinitionDataType);
-
+                    bool columnDefinitionNullableConstraint = GetNullableForConstraintsDefinition(isRequired, isNullable, isPrimaryKey, columnDefinitionDataType);
+                    
                     ColumnDefinition columnDefinition = new ColumnDefinition
                     {
                         Name = name,
@@ -264,7 +264,7 @@ namespace Logitude.LXMLFixer.Models
             }
         }
 
-        private bool GetIsNullableForConstraintsDefinition(bool isRequired, bool isNullable, bool isPrimaryKey, string columnDefinitionDataType)
+        private bool GetNullableForConstraintsDefinition(bool isRequired, bool isNullable, bool isPrimaryKey, string columnDefinitionDataType)
         {
             if (isPrimaryKey)
             {

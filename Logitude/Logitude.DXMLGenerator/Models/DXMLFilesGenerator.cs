@@ -21,7 +21,6 @@ namespace Logitude.DXMLGenerator.Models
         private List<string> ExcludedTablesNames;
         private int GeneratedDXMLFilesCounter = 0;
         private int GeneratedPathsCounter = 0;
-        private int DeleteCounter = 0;
         private string ErrorsData = "";
 
         public DXMLFilesGenerator(string connectionString, string errorsFileName)
@@ -70,47 +69,6 @@ namespace Logitude.DXMLGenerator.Models
             }
 
             ExportErrorsData();
-        }
-        
-        public void DeleteDXMLFiles()
-        {
-            string rootPath = Path.Combine(Root);
-            string[] dxmlFiles = Directory.GetFiles(rootPath, "*.dxml", SearchOption.AllDirectories);
-            foreach (string dxmlFile in dxmlFiles)
-            {
-                string dxmlFileName = Path.GetFileName(dxmlFile);
-                try
-                {
-                    Console.WriteLine("Deleting " + dxmlFileName + " ...");
-                    File.Delete(dxmlFile);
-                    DeleteCounter++;
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("Error While Delete " + dxmlFileName);
-                }
-            }
-            Console.WriteLine("\n" + DeleteCounter + " DXML Files Deleted Successfully\n");
-        }
-
-        public void DeleteDBTablesFolders()
-        {
-            string rootPath = Path.Combine(Root);
-            string[] folders = Directory.GetDirectories(rootPath, "DBTables", SearchOption.AllDirectories);
-            foreach (string folder in folders)
-            {
-                try
-                {
-                    Console.WriteLine("Deleting " + folder + " ...");
-                    Directory.Delete(folder, true);
-                    DeleteCounter++;
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("Error While Delete " + folder);
-                }
-            }
-            Console.WriteLine("\n" + DeleteCounter + " DBTables Folders Deleted Successfully\n");
         }
 
         private List<DBTable> GetTablesFromDB()
@@ -484,9 +442,6 @@ namespace Logitude.DXMLGenerator.Models
                         return null;
                     }
                 }
-
-                //string path = @"D:\LogitudeMainDXMLFiles\" + entityName + ".dxml";
-                //return path;
             }
             catch (Exception)
             {
@@ -544,9 +499,9 @@ namespace Logitude.DXMLGenerator.Models
             if (!String.IsNullOrEmpty(ErrorsData))
             {
                 string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-                string filePath = Path.Combine(projectDirectory, ErrorsFileName);
+                string filePath = Path.Combine(projectDirectory, @"Errors\" + ErrorsFileName);
                 File.WriteAllText(filePath, ErrorsData);
-                Console.WriteLine("\n" + "All Errors Are Exported To /" + ErrorsFileName + "\n");
+                Console.WriteLine("\n" + "Errors Are Exported To /Errors/" + ErrorsFileName + "\n");
             }
         }
     }

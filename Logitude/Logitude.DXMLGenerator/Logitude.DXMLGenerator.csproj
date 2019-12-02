@@ -60,9 +60,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ExcludedTablesMap.txt" />
-    <Content Include="GlobalErrors.txt" />
-    <Content Include="MainErrors.txt" />
-    <Content Include="SystemLogsErrors.txt" />
+    <Content Include="Errors\GlobalErrors.txt" />
+    <Content Include="Errors\MainErrors.txt" />
+    <Content Include="Errors\SystemLogsErrors.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
