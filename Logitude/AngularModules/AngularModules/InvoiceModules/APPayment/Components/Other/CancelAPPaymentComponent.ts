@@ -70,7 +70,7 @@ export class CancelAPPaymentComponent extends BaseComponent {
                 this.UIProperties.SetRequired("AccountingCancelationDate", this.ObjectTableName, true);
 
             }
-            if (this.EntityPM.AccountingCancelationDate != null && cancelationDateParts > paymentDateParts) {
+            if (this.EntityPM.AccountingCancelationDate != null && cancelationDateParts < paymentDateParts) {
                 this.UIProperties.SetValidity("AccountingCancelationDate", this.ObjectTableName, false, "Cancellation date ");
             }
             if (value != null) {
