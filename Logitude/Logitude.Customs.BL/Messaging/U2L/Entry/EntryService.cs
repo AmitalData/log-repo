@@ -202,7 +202,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Entry
                             var mySupplierInvoiceItem = new LogitudeSupplierAccount();
 
                             mySupplierInvoiceItem.Document = item.PreferenceDocumentNumber;
-                            mySupplierInvoiceItem.ItemNo = item.ItemCode;
+                            if(item.ItemCode != null && item.ItemCode.Length < 11) mySupplierInvoiceItem.ItemNo = item.ItemCode;
                             mySupplierInvoiceItem.OriginCcountryId = item.OriginCountryCode;
                             mySupplierInvoiceItem.PratMehes = item.ClassificationCode;
                             mySupplierInvoiceItem.RateGroup = item.TradeAgreementCode;
