@@ -31,7 +31,7 @@ namespace Logitude.HybridTest.WcfCallers
                 IsAll = true,
                 ContactId = HybridData.ContactCode,
                 CardId = HybridData.CustomerCodeHCustomer,
-                Tenant = TestEnvironmentGlobalParameters.Tenant1,
+                Tenant = EnvironmentGlobalParams.MainTenant,
             };
             AssertResponse(cardContactPM);
         }

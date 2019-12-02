@@ -18,7 +18,7 @@ namespace Logitude.HybridTest.ServicesTest
                 LocalName = "Hybrid Vessel",
                 IMOCode = "IMOCode HV",
                 AddedManually = true,
-                Tenant = TestEnvironmentGlobalParameters.Tenant1,
+                Tenant = EnvironmentGlobalParams.MainTenant,
             };
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(vesselPM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);

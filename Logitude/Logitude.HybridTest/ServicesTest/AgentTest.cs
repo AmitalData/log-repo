@@ -20,7 +20,7 @@ namespace Logitude.HybridTest.ServicesTest
                 CityName = "Hybrid City",
                 CountryCode = HybridData.CountryCodeUS,
                 PartnerTypeId = "AG",
-                Tenant = TestEnvironmentGlobalParameters.Tenant1,
+                Tenant = EnvironmentGlobalParams.MainTenant,
             };
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(agentPM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);

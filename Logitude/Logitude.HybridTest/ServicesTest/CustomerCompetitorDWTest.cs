@@ -20,7 +20,7 @@ namespace Logitude.HybridTest.ServicesTest
                 ServiceFilterType = null,
             };
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { TestEnvironmentGlobalParameters.Tenant1, serviceResponse };
+            object[] serviceParameters = new object[] { EnvironmentGlobalParams.MainTenant, serviceResponse };
             CustomerCompetitorDW[] customerAdditionalServices = (CustomerCompetitorDW[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get Tenant Managements Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get Tenant Managements Failed! " + serviceResponse.ErrorMessage);

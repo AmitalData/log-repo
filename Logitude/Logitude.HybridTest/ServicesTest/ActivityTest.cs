@@ -31,7 +31,7 @@ namespace Logitude.HybridTest.ServicesTest
             };
 
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { "Hybrid@fnarsoft.com", TestEnvironmentGlobalParameters.Tenant1, serviceResponse };
+            object[] serviceParameters = new object[] { "Hybrid@fnarsoft.com", EnvironmentGlobalParams.MainTenant, serviceResponse };
             ActivityPM[] activities = (ActivityPM[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.Result);
@@ -55,7 +55,7 @@ namespace Logitude.HybridTest.ServicesTest
                     ServiceFilterType = null,
                 };
                 Response serviceResponse = new Response();
-                object[] serviceParameters = new object[] { HybridData.ActivityId, "Hybrid Update", TestEnvironmentGlobalParameters.Tenant1 };
+                object[] serviceParameters = new object[] { HybridData.ActivityId, "Hybrid Update", EnvironmentGlobalParams.MainTenant };
                 serviceResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
                 Assert.IsFalse(serviceResponse.HasError, "Update Outlook ID Failed! " + serviceResponse.ErrorMessage);
                 Assert.IsNull(serviceResponse.Result, "Update Outlook ID Failed! " + serviceResponse.Result);
@@ -81,7 +81,7 @@ namespace Logitude.HybridTest.ServicesTest
                     ServiceFilterType = null,
                 };
                 Response serviceResponse = new Response();
-                object[] serviceParameters = new object[] { HybridData.ActivityId, "Hybrid@fnarsoft.com", TestEnvironmentGlobalParameters.Tenant1 };
+                object[] serviceParameters = new object[] { HybridData.ActivityId, "Hybrid@fnarsoft.com", EnvironmentGlobalParams.MainTenant };
                 serviceResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
                 Assert.IsFalse(serviceResponse.HasError, "Set As Synchronized Failed! " + serviceResponse.ErrorMessage);
                 Assert.IsNull(serviceResponse.Result, "Set As Synchronized Failed! " + serviceResponse.Result);
@@ -96,12 +96,12 @@ namespace Logitude.HybridTest.ServicesTest
             Assert.Inconclusive("Not Implemented !");
         //    Test_Activity_UPSERT();
         //    ActivityServiceReference.ActivityWcfServiceClient serviceClient = new ActivityServiceReference.ActivityWcfServiceClient();
-        //    string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
+        //    string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", EnvironmentGlobalParams.ServerURL);
         //    serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
         //    using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
         //    {
-        //        System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
-        //        Response serviceResponse = serviceClient.Delete("?", TestEnvironmentGlobalParameters.Tenant);
+        //        System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", EnvironmentGlobalParams.Token);
+        //        Response serviceResponse = serviceClient.Delete("?", EnvironmentGlobalParams.Tenant);
         //        Assert.IsFalse(serviceResponse.HasError, "Delete Failed! " + serviceResponse.ErrorMessage);
         //        Assert.IsNull(serviceResponse.Result, "Delete Failed! " + serviceResponse.ErrorMessage);
         //    }
@@ -112,11 +112,11 @@ namespace Logitude.HybridTest.ServicesTest
         {
             //LoginService.GetLoginTokenByCredentials();
             //ActivityServiceReference.ActivityWcfServiceClient serviceClient = new ActivityServiceReference.ActivityWcfServiceClient();
-            //string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
+            //string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", EnvironmentGlobalParams.ServerURL);
             //serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
             //using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
             //{
-            //    System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
+            //    System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", EnvironmentGlobalParams.Token);
             //    Response serviceResponse = serviceClient.isOnline();
             //    Assert.IsFalse(serviceResponse.HasError, "is Online Failed! " + serviceResponse.ErrorMessage);
             //    Assert.IsNull(serviceResponse.Result, "is Online Failed! " + serviceResponse.ErrorMessage);
@@ -129,13 +129,13 @@ namespace Logitude.HybridTest.ServicesTest
             Assert.Inconclusive("Not Implemented !");
             //Test_Activity_UPSERT();
             //ActivityServiceReference.ActivityWcfServiceClient serviceClient = new ActivityServiceReference.ActivityWcfServiceClient();
-            //string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", TestEnvironmentGlobalParameters.ServerURL);
+            //string serviceAddress = serviceClient.Endpoint.Address.ToString().Replace("http://localhost:9996", EnvironmentGlobalParams.ServerURL);
             //serviceClient.Endpoint.Address = new System.ServiceModel.EndpointAddress(serviceAddress);
             //using (new System.ServiceModel.OperationContextScope(serviceClient.InnerChannel))
             //{
-            //    System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token);
+            //    System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", EnvironmentGlobalParams.Token);
             //    Response serviceResponse = new Response();
-            //    ActivityServiceReference.ActivityPM entityPM = serviceClient.GetActivityPM("?", TestEnvironmentGlobalParameters.Tenant, ref serviceResponse);
+            //    ActivityServiceReference.ActivityPM entityPM = serviceClient.GetActivityPM("?", EnvironmentGlobalParams.Tenant, ref serviceResponse);
             //    Assert.IsFalse(serviceResponse.HasError, "Get Activity PM Failed! " + serviceResponse.ErrorMessage);
             //    Assert.IsNull(serviceResponse.Result, "Get Activity PM Failed! " + serviceResponse.ErrorMessage);
             //    if (entityPM != null)

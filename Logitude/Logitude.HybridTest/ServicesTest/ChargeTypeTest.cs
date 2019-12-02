@@ -20,7 +20,7 @@ namespace Logitude.HybridTest.ServicesTest
                 ServiceFilterType = null,
             };
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { TestEnvironmentGlobalParameters.Tenant1, 0, 10, serviceResponse };
+            object[] serviceParameters = new object[] { EnvironmentGlobalParams.MainTenant, 0, 10, serviceResponse };
             ChargesTypeList[] chargesTypes = (ChargesTypeList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get Charge Types Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get Charge Types Failed! " + serviceResponse.ErrorMessage);
