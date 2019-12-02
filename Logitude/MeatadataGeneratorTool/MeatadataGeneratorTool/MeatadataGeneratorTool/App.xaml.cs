@@ -83,6 +83,7 @@ namespace MeatadataGeneratorTool
 
                     catch (Exception err)
                     {
+                        //MessageBox.Show(err.Message);
                         if (DirectOpenPath.Contains(".lxml"))
                         {
                             //MessageBox.Show(err.Message + Environment.NewLine + err.StackTrace);
