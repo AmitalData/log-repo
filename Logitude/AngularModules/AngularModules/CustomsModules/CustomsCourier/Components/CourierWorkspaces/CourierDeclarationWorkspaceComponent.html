@@ -135,7 +135,15 @@
                                                                             <p class="QueryLink" *ngIf="PendingVisibility" (click)="ViewCourierMasterQuery('Pending')"> {{'Customs.CourierMaster.O.Pending' | TextCodeTranslationPipe}}  </p>
                                                                         </td>
                                                                     </tr>
-                                                                    
+
+
+                                                                    <tr>
+                                                                        <td style="width:190px;">
+                                                                            <!-- ({{courierMasterSummary.Pending902 - for test mirit}})  -->
+                                                                            <p class="QueryLink" (click)="ShowCourierWorkSheetForPending902('Pending')"> {{'Pending 902 Test Mirit'}}  </p>
+                                                                        </td>
+                                                                    </tr>
+
                                                                     <tr>
                                                                         <td><div></div></td>
                                                                     </tr>

@@ -418,10 +418,10 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
 
     ShowCourierWorkSheetForPending902(event) {
 
-        var selected = event.rowData;
+        //var selected = event.rowData;
         var windowArgs: any = {};
             this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationCourierStatus").subscribe(response => {
-                this._CourierMasterPMService.get(selected.Id).subscribe((myResponse: any) => {
+                this._CourierMasterPMService.get("1-37").subscribe((myResponse: any) => {
                         if (myResponse.HasError) {
                             console.log("Error while getting EntityPM", myResponse);
                         }
