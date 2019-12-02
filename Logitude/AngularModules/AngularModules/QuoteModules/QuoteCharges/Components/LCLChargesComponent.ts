@@ -575,11 +575,8 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                     item.OnQuoteSaleCurrencyChanged();
                 });
 
-                this.ItemsSource.Collection.forEach((item: QuoteChargeItem) => {
-                    if (item.IsAllIN) {
-                        item.EntityPM.IsAllIN = false;
-                        item.IsAllIN = true;
-                    }
+                this.ItemsSource.Collection.filter(d => d.IsAllIN == true).forEach(item => {
+                    item.ApplyAllIn();
                 });
 
                 this.ComputeTotals();
@@ -604,11 +601,8 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                 item.OnQuoteSaleCurrencyChanged();
             });
 
-            this.ItemsSource.Collection.forEach((item: QuoteChargeItem) => {
-                if (item.IsAllIN) {
-                    item.EntityPM.IsAllIN = false;
-                    item.IsAllIN = true;
-                }
+            this.ItemsSource.Collection.filter(d => d.IsAllIN == true).forEach(item => {
+                item.ApplyAllIn();
             });
 
             this.ComputeTotals();
