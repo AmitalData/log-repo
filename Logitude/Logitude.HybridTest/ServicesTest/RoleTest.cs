@@ -21,7 +21,7 @@ namespace Logitude.HybridTest.ServicesTest
             };
 
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { TestEnvironmentGlobalParameters.Tenant1, serviceResponse };
+            object[] serviceParameters = new object[] { EnvironmentGlobalParams.MainTenant, serviceResponse };
             RoleList[] roles = (RoleList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.Result);

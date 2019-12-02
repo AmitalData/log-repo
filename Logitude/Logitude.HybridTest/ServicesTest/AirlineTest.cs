@@ -19,7 +19,7 @@ namespace Logitude.HybridTest.ServicesTest
                 LocalName = "Hybrid Airlines",
                 CarrierTypeId = "AL",
                 Prefix = "999",
-                Tenant = TestEnvironmentGlobalParameters.Tenant1,
+                Tenant = EnvironmentGlobalParams.MainTenant,
             };
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(airlinePM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);

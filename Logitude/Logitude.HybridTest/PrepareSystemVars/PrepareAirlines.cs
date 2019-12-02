@@ -24,7 +24,7 @@ namespace Logitude.HybridTest.WcfCallers
                 LocalName = "Hybrid Airlines",
                 CarrierTypeId = "AL",
                 Prefix = "999",
-                Tenant = TestEnvironmentGlobalParameters.Tenant1,
+                Tenant = EnvironmentGlobalParams.MainTenant,
             };
             Response serviceResponse = AssertResponse(airlinePM);
             HybridData.AirlineIdHA = serviceResponse.Result;
@@ -38,7 +38,7 @@ namespace Logitude.HybridTest.WcfCallers
                 LocalName = "Hybrid 2 Airlines",
                 CarrierTypeId = "AL",
                 Prefix = "998",
-                Tenant = TestEnvironmentGlobalParameters.Tenant1,
+                Tenant = EnvironmentGlobalParams.MainTenant,
             };
             Response serviceResponse = AssertResponse(airlinePM);
             HybridData.AirlineIdHL = serviceResponse.Result;
