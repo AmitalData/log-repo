@@ -40,7 +40,7 @@
 
                                                 <td style="width: 140px;">
                                                     <LogDatePicker [ObjectFieldName]="'AccountingCancelationDate'" [ObjectTableName]="ObjectTableName"
-                                                                   [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                                   [DataContext]="DataContext" [HideColumns]="true" [SelectedDateValue]="AccountingCancelationDate"></LogDatePicker>
                                                 </td>
                                                 <td style="width:70px;"><div></div></td>
                                             </tr>
@@ -55,7 +55,7 @@
 
                                                 <td style="width: 140px;" colspan="2">
                                                     <LogTextBox [ObjectFieldName]="'CancelationNotes'" [InputType]="'ntext'" [DataContext]="DataContext"
-                                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true" [Text]="CancelationNotes"></LogTextBox>
                                                 </td>
                                                 <td><div></div></td>
 

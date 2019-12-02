@@ -25,6 +25,7 @@ export class APPaymentCancelationDetailsComponent extends BaseComponent {
     IsVisibile: boolean;
     constructor(public entityArgs: EntityArgs) {
         super();
+        this.Listen();
         this._entityResourceService.getEntityResourceByTableName("APPayment", 0).subscribe(response => {
             this.IsVisibile = true;
             this.EntityPM = entityArgs.EntityPM;
@@ -33,7 +34,37 @@ export class APPaymentCancelationDetailsComponent extends BaseComponent {
 
 
     }
+    private SaveCompletedEvent: any = null;
+    private LoadCompletedEvent: any = null;
+    private Listen() {
+        if (this.entityArgs.EditComponent != null) {
 
+            this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                if (isSaveSuccess) {
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.RefreshProperties();
+                }
+
+               
+            });
+
+            this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                if (isLoadSuccess) {
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.RefreshProperties();
+                }
+            });
+        }
+    }
+
+    RefreshProperties() {
+        this.AccountingCancelationDate = this.EntityPM.AccountingCancelationDate;
+        this.CancelationNotes = this.EntityPM.CancelationNotes;
+     
+
+
+    }
     Cancelled: boolean;
     SetUIProperties() {
 
@@ -66,7 +97,12 @@ export class APPaymentCancelationDetailsComponent extends BaseComponent {
         }
     }
     get CancelationNotes() { return this.EntityPM.CancelationNotes; }
-   
+    set CancelationNotes(value: string) {
+        if (this.EntityPM.CancelationNotes != value) {
+            this.EntityPM.CancelationNotes = value;
+
+        }
+    }
     get DontIncludeInDeductionReport() { return this.EntityPM.DontIncludeInDeductionReport; }
     set DontIncludeInDeductionReport(value: boolean) {
         if (this.EntityPM.DontIncludeInDeductionReport != value) {

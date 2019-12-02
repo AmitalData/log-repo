@@ -572,7 +572,7 @@ export class APPaymentMenuButtonsHandler {
         logWindow.Width = 420;
         logWindow.Height = 250;
         logWindow.Title = windowTitle;
-        logWindow.ShowCloseButton = true;
+      //  logWindow.ShowCloseButton = true;
    
         logWindow.WindowClosed.subscribe(($event: any) => this.VoidingAPPayment($event));
         logWindow.Show('./InvoiceModules/APPayment/Components/Other/CancelAPPaymentComponent');
