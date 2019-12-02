@@ -28,6 +28,7 @@ export class AddEditInterestBasesPeriodComponent extends BaseComponent {
         this.EntityPM = dataContext.EntityPM;
         this.EntityPM.CloneMe();
         this.EntityPM.OldEntityPM = this.EntityPM;
+        this.OldInterestBaseStartDate = this.EntityPM.InterestBaseStartDate;
      }
 
     CancelButtonClicked() {
