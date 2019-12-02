@@ -91,6 +91,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                     AppendLogLine("GetSingleB4Upsert:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
                     if (this._MyDeclarationPM != null)
                     {
+                        CheckMasterToUpdate(MoreParams);
                         if (!declarationUpdateService.CheckIfUpdatingAllowed(this._MyDeclarationPM))
                         {
                             AppendLogLine("Updating Not Allowed For Declaration " + this._MyDeclarationPM.CustomFileNo + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
@@ -146,96 +147,6 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             AppendLogLine("GetSingle:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
 
             this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
-            string courier_id = null;
-            if (!String.IsNullOrWhiteSpace(MoreParams))
-            {
-                AppendLogLine("MoreParams: " + MoreParams);
-                var unifreightListsParams = UnifreightListsUtil.Deserialize(MoreParams);
-                AppendLogLine("MoreParams after Deserialize: " + unifreightListsParams);
-                courier_id = UnifreightListsUtil.GetValue(ref unifreightListsParams, "COURIER_ID");
-                AppendLogLine("courier id: " + courier_id);
-            }
-            
-                //Get CourierMaster
-                var myCourierMasterQueryService = new CourierMasterQueryService(_context);
-            if (!String.IsNullOrWhiteSpace(courier_id))
-            {
-                _CourierMasterPM = myCourierMasterQueryService.GetSingle(courier_id, true, false);
-            }
-            else
-            {
-                var airlineId = TranslateAirline(_LogitudeCommDecFile.CarrierPrefix);
-                if (String.IsNullOrWhiteSpace(airlineId))
-                {
-                    MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
-                    MyGenericResponseObj.Message = "Airline Prefix " + _LogitudeCommDecFile.CarrierPrefix + " Doesn't exist";
-                    AppendLogLine(MyGenericResponseObj.Message);
-                }
-                _CourierMasterPM = myCourierMasterQueryService.GetSingleByAirlineAWBs(airlineId, _LogitudeCommDecFile.HAWB, _LogitudeCommDecFile.MAWB, ResolvedTenant());
-            }
-            if (_CourierMasterPM != null)
-            {
-                var myCourierDeclarationQueryService = new CourierDeclarationQueryService(_context);
-                var myCourierDeclarationUpdateService = new CourierDeclarationUpdateService(_context, new Dictionary<string, IContext>(), ResolvedTenant());
-                _CourierDeclarationPM = myCourierDeclarationQueryService.GetSingle(_MyDeclarationPM.Id, _CourierMasterPM.Id, false, true);
-                if (_CourierDeclarationPM == null)
-                {
-                    if (!this._MyDeclarationPM.HatraDate.HasValue)
-                    {
-                        CourierDeclarationPM _CourierDeclarationPMPMDiferentMaster = myCourierDeclarationQueryService.GetCourierDeclarationByDeclarationId(_MyDeclarationPM.Id, ResolvedTenant());
-                        if (_CourierDeclarationPMPMDiferentMaster != null)
-                        {
-                            _CourierDeclarationPMPMDiferentMaster.ChangeSetOp = ChangeSetOperation.Delete;
-                            myCourierDeclarationUpdateService.Update(_CourierDeclarationPMPMDiferentMaster, true);
-                            string prevVal = null;
-                            string currvVal = null;
-                            DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
-                            DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
-                            if (currentDeclarationCourierStatusPM != null)
-                            {
-                                CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(_MyDeclarationPM, _MyDeclarationPM.Id, _MyDeclarationPM.Tenant);
-                                prevVal = currentDeclarationCourierStatusPM.CourierManifestStatusCode;
-                                if (prevVal == "V")
-                                {
-                                    currvVal = "R";
-                                }
-                                else
-                                {
-                                    calculateDeclarationCourierStatus.CalcCourierManifestStatusCode(currentDeclarationCourierStatusPM);
-                                    currvVal = currentDeclarationCourierStatusPM.CourierManifestStatusCode;
-                                }
-                                if (prevVal != currvVal)
-                                {
-                                    DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
-                                    currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                                    declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
-                                }
-                            }
-                            this.UpsertActionConst = String.Concat(UpsertActionConst, "+CourierMasterChange");
-                        }
-                    }
-                    _CourierDeclarationPM = new CourierDeclarationPM();
-                    _CourierDeclarationPM.ChangeSetOp = ChangeSetOperation.Insert;
-                    _CourierDeclarationPM.DeclarationId = _MyDeclarationPM.Id;
-                    _CourierDeclarationPM.CourierMasterId = _CourierMasterPM.Id;
-                }
-                else
-                {
-                    _CourierDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
-                }
-                if (_CourierDeclarationPM.SequenceNumeric == null)
-                {
-                    int? sequenceNumericMax = myCourierDeclarationQueryService.GetCourierMasterMaxSequenceNumeric(_CourierDeclarationPM.CourierMasterId, ResolvedTenant());
-                    if (sequenceNumericMax == null)
-                    {
-                        sequenceNumericMax = 0;
-                    }
-                    _CourierDeclarationPM.SequenceNumeric = sequenceNumericMax + 1;
-                }
-                _CourierDeclarationPM.Tenant = ResolvedTenant();
-                myCourierDeclarationUpdateService.Update(_CourierDeclarationPM, true);
-            }
-            
 
             if (!String.IsNullOrWhiteSpace(_LogitudeCommDecFile.TaxationDateTime))
             {
@@ -512,6 +423,101 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             MyCommunicationsParams.LoggingEntityId = MyGenericResponseObj.ApplicationId;
             MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
         }
+
+
+        private void CheckMasterToUpdate(string MoreParams)
+        {
+            string courier_id = null;
+            if (!String.IsNullOrWhiteSpace(MoreParams))
+            {
+                AppendLogLine("MoreParams: " + MoreParams);
+                var unifreightListsParams = UnifreightListsUtil.Deserialize(MoreParams);
+                AppendLogLine("MoreParams after Deserialize: " + unifreightListsParams);
+                courier_id = UnifreightListsUtil.GetValue(ref unifreightListsParams, "COURIER_ID");
+                AppendLogLine("courier id: " + courier_id);
+            }
+
+            //Get CourierMaster
+            var myCourierMasterQueryService = new CourierMasterQueryService(_context);
+            if (!String.IsNullOrWhiteSpace(courier_id))
+            {
+                _CourierMasterPM = myCourierMasterQueryService.GetSingle(courier_id, true, false);
+            }
+            else
+            {
+                var airlineId = TranslateAirline(_LogitudeCommDecFile.CarrierPrefix);
+                if (String.IsNullOrWhiteSpace(airlineId))
+                {
+                    MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
+                    MyGenericResponseObj.Message = "Airline Prefix " + _LogitudeCommDecFile.CarrierPrefix + " Doesn't exist";
+                    AppendLogLine(MyGenericResponseObj.Message);
+                }
+                _CourierMasterPM = myCourierMasterQueryService.GetSingleByAirlineAWBs(airlineId, _LogitudeCommDecFile.HAWB, _LogitudeCommDecFile.MAWB, ResolvedTenant());
+            }
+            if (_CourierMasterPM != null)
+            {
+                var myCourierDeclarationQueryService = new CourierDeclarationQueryService(_context);
+                var myCourierDeclarationUpdateService = new CourierDeclarationUpdateService(_context, new Dictionary<string, IContext>(), ResolvedTenant());
+                _CourierDeclarationPM = myCourierDeclarationQueryService.GetSingle(_MyDeclarationPM.Id, _CourierMasterPM.Id, false, true);
+                if (_CourierDeclarationPM == null)
+                {
+                    if (!this._MyDeclarationPM.HatraDate.HasValue)
+                    {
+                        CourierDeclarationPM _CourierDeclarationPMPMDiferentMaster = myCourierDeclarationQueryService.GetCourierDeclarationByDeclarationId(_MyDeclarationPM.Id, ResolvedTenant());
+                        if (_CourierDeclarationPMPMDiferentMaster != null)
+                        {
+                            _CourierDeclarationPMPMDiferentMaster.ChangeSetOp = ChangeSetOperation.Delete;
+                            myCourierDeclarationUpdateService.Update(_CourierDeclarationPMPMDiferentMaster, true);
+                            string prevVal = null;
+                            string currvVal = null;
+                            DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
+                            DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
+                            if (currentDeclarationCourierStatusPM != null)
+                            {
+                                CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(_MyDeclarationPM, _MyDeclarationPM.Id, _MyDeclarationPM.Tenant);
+                                prevVal = currentDeclarationCourierStatusPM.CourierManifestStatusCode;
+                                if (prevVal == "V")
+                                {
+                                    currvVal = "R";
+                                }
+                                else
+                                {
+                                    calculateDeclarationCourierStatus.CalcCourierManifestStatusCode(currentDeclarationCourierStatusPM);
+                                    currvVal = currentDeclarationCourierStatusPM.CourierManifestStatusCode;
+                                }
+                                if (prevVal != currvVal)
+                                {
+                                    DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                                    currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                                    declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+                                }
+                            }
+                            this.UpsertActionConst = String.Concat(UpsertActionConst, "+CourierMasterChange");
+                        }
+                    }
+                    _CourierDeclarationPM = new CourierDeclarationPM();
+                    _CourierDeclarationPM.ChangeSetOp = ChangeSetOperation.Insert;
+                    _CourierDeclarationPM.DeclarationId = _MyDeclarationPM.Id;
+                    _CourierDeclarationPM.CourierMasterId = _CourierMasterPM.Id;
+                }
+                else
+                {
+                    _CourierDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                }
+                if (_CourierDeclarationPM.SequenceNumeric == null)
+                {
+                    int? sequenceNumericMax = myCourierDeclarationQueryService.GetCourierMasterMaxSequenceNumeric(_CourierDeclarationPM.CourierMasterId, ResolvedTenant());
+                    if (sequenceNumericMax == null)
+                    {
+                        sequenceNumericMax = 0;
+                    }
+                    _CourierDeclarationPM.SequenceNumeric = sequenceNumericMax + 1;
+                }
+                _CourierDeclarationPM.Tenant = ResolvedTenant();
+                myCourierDeclarationUpdateService.Update(_CourierDeclarationPM, true);
+            }
+        }
+
 
         private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
         {
