@@ -20,7 +20,7 @@ namespace Logitude.HybridTest.ServicesTest
                 EnglishName = "Hybrid Currency",
                 LocalName = "Hybrid Currency",
                 AddedManually = true,
-                Tenant = TestEnvironmentGlobalParameters.Tenant1,
+                Tenant = EnvironmentGlobalParams.MainTenant,
             };
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(currencyPM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
@@ -44,7 +44,7 @@ namespace Logitude.HybridTest.ServicesTest
                 SearchFields = HybridData.CurrencyCodeEUR
             };
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { filters, TestEnvironmentGlobalParameters.Tenant1, serviceResponse };
+            object[] serviceParameters = new object[] { filters, EnvironmentGlobalParams.MainTenant, serviceResponse };
             CurrencyList[] currencies = (CurrencyList[]) WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);

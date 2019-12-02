@@ -25,7 +25,7 @@ namespace Logitude.HybridTest.WcfCallers
                 CarrierTypeId = "TR",
                 AddedManually = true,
                 TransportModeId = "I",
-                Tenant = TestEnvironmentGlobalParameters.Tenant1,
+                Tenant = EnvironmentGlobalParams.MainTenant,
             };
             truckerPM.Addresses.Add(new AddressPM
             {
@@ -52,7 +52,7 @@ namespace Logitude.HybridTest.WcfCallers
                 CarrierTypeId = "TR",
                 AddedManually = true,
                 TransportModeId = "I",
-                Tenant = TestEnvironmentGlobalParameters.Tenant1,
+                Tenant = EnvironmentGlobalParams.MainTenant,
             };
             truckerPM.Addresses.Add(new AddressPM
             {

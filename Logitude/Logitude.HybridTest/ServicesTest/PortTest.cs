@@ -24,7 +24,7 @@ namespace Logitude.HybridTest.ServicesTest
                 IsAir = true,
                 IsOcean = true,
                 IsInland = true,
-                Tenant = TestEnvironmentGlobalParameters.Tenant1,
+                Tenant = EnvironmentGlobalParams.MainTenant,
             };
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(portPM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
@@ -40,7 +40,7 @@ namespace Logitude.HybridTest.ServicesTest
                 ServiceOperation = "GetList",
                 ServiceResponseIndex = 2,
                 ServiceType = typeof(PortList),
-                ServiceFilterType = typeof(ApiSearchFilters),
+                ServiceFilterType = typeof(ApiSearchFilters)
             };
             ApiSearchFilters filters = new ApiSearchFilters
             {
@@ -49,13 +49,12 @@ namespace Logitude.HybridTest.ServicesTest
             };
 
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { filters, TestEnvironmentGlobalParameters.Tenant1, serviceResponse };
+            object[] serviceParameters = new object[] { filters, EnvironmentGlobalParams.MainTenant, serviceResponse };
             PortList[] ports = (PortList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.Result);
             Assert.AreEqual(ports[0].Id, HybridData.PortIdLON, "Get Hybrid From Port From Ports Failed!");
         }
-
         [TestMethod]
         public void Test_PORT_GetPortId() //This mehtod get the port from port 0
         {
@@ -74,7 +73,7 @@ namespace Logitude.HybridTest.ServicesTest
             };
 
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { filters, TestEnvironmentGlobalParameters.Tenant1, serviceResponse };
+            object[] serviceParameters = new object[] { filters, EnvironmentGlobalParams.MainTenant, serviceResponse };
             string port = (string)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Get Failed! " + serviceResponse.ErrorMessage);

@@ -22,7 +22,7 @@ namespace Logitude.HybridTest.WcfFactory
             CreateDateTime = DateTime.Now,
             LastUpdateDate = DateTime.Now,
             AgentContactId = HybridData.AgentCodeHAgent,
-            Tenant = TestEnvironmentGlobalParameters.Tenant1,
+            Tenant = EnvironmentGlobalParams.MainTenant,
             TransportModeId = "A",//A:Air, O:Occean, I:Inland
             DirectionId = "E",//I:Import, E:Export, D:Drop, R:Drop, C:Customs Import
             FreightPrepaidCollectId = "P",//P:Prepaid, C:Collect, B:Both

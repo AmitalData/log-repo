@@ -562,16 +562,17 @@ export class APPaymentMenuButtonsHandler {
         this.CurrentSession.StartBusyIndicatorLoading();
 
 
-        var windowTitle = "Cancel Payment";
+        var windowTitle = TextCodeTranslator.Translate("APPayment.O.CancelAPPayment");
         var logWindow = new LogitudeWindow();
         var windowArgs: any = {};
         windowArgs.PaymentDate = this.EntityPM.RegisterDate;
+        windowArgs.PaymentPM = this.EntityPM;
        // windowArgs = this.SetPaymentChequeWindowArgs(windowArgs);
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = 420;
         logWindow.Height = 250;
         logWindow.Title = windowTitle;
-        logWindow.ShowCloseButton = true;
+      //  logWindow.ShowCloseButton = true;
    
         logWindow.WindowClosed.subscribe(($event: any) => this.VoidingAPPayment($event));
         logWindow.Show('./InvoiceModules/APPayment/Components/Other/CancelAPPaymentComponent');

@@ -26,6 +26,7 @@ export class InterestBasesTypeDetailsTabComponent extends BaseComponent implemen
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.EntityPM = entityArgs.EntityPM;
+        this.EntityPM.OldEntityPM = this.EntityPM;
         this.InterestBasesPeriodsList = new ObservableCollection([]);
         this.BuildData();
         this.SetUIProperties();
@@ -226,28 +227,23 @@ export class InterestBasesPeriodItem extends BaseComponent {
     set InterestBaseStartDate(newValue: Date) {
         if (newValue && !this.CheckInterestBaseStartDateExist(newValue, this.CreateDate))
             this.UIProperties.SetValidity("InterestBaseStartDate", "InterestBasesPeriod", false, TextCodeTranslator.Translate("Accounting.General.O.AbaseperiodwiththesamestartdateisalreadyAdded"));
-        else {
+        else
             this.UIProperties.SetValidity("InterestBaseStartDate", "InterestBasesPeriod", true, TextCodeTranslator.Translate("Accounting.General.O.AbaseperiodwiththesamestartdateisalreadyAdded"));
-            if (this.EntityPM.InterestBaseStartDate != newValue) {
-                this.EntityPM.InterestBaseStartDate = newValue;
-            }
+
+        if (this.EntityPM.InterestBaseStartDate != newValue) {
+            this.EntityPM.InterestBaseStartDate = newValue;
         }
-
-
-
     }
 
     get InterestRate() { return this.EntityPM.InterestRate; }
     set InterestRate(newValue: number) {
-        if (newValue && !this.CheckInterestRateValid(newValue))
+         if (newValue && !this.CheckInterestRateValid(newValue))
             this.UIProperties.SetValidity("InterestRate", "InterestBasesPeriod", false, TextCodeTranslator.Translate("Accounting.General.O.Theratepercentageshouldbeformattedas00.00"));
-        else {
+        else
             this.UIProperties.SetValidity("InterestRate", "InterestBasesPeriod", true, TextCodeTranslator.Translate("Accounting.General.O.Theratepercentageshouldbeformattedas00.00"));
-            if (this.EntityPM.InterestRate != newValue) {
-                this.EntityPM.InterestRate = newValue;
-            }
+        if (this.EntityPM.InterestRate != newValue) {
+            this.EntityPM.InterestRate = newValue;
         }
-
     }
 
     get LineNumber() { return this.EntityPM.LineNumber; }
@@ -298,5 +294,9 @@ export class InterestBasesPeriodItem extends BaseComponent {
             this.EntityPM.CreateDate = newValue;
         }
     }
+
+    get CloneMe() { return this.EntityPM.CloneMe; }
+    get RejectChanges() { return this.EntityPM.RejectChanges; }
+
 
 }

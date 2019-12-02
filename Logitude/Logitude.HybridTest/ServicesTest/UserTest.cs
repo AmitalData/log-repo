@@ -21,10 +21,10 @@ namespace Logitude.HybridTest.ServicesTest
                 LocalName = "Hybrid User",
                 Email = "Hybrid@fnarsoft.com",
                 Password = "!H0",
-                BusinessUnitId = TestEnvironmentGlobalParameters.Tenant1.ToString(),
+                BusinessUnitId = EnvironmentGlobalParams.MainTenant.ToString(),
                 BranchId = HybridData.BranchCodeHBRA,
                 DepartmentId = HybridData.DepartmentCodeHDEP,
-                Tenant = TestEnvironmentGlobalParameters.Tenant1,
+                Tenant = EnvironmentGlobalParams.MainTenant,
                 DocumentFilingInbox = "HybridInbox"
             };
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(userPM);
@@ -51,7 +51,7 @@ namespace Logitude.HybridTest.ServicesTest
             };
 
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { filters, TestEnvironmentGlobalParameters.Tenant1, serviceResponse };
+            object[] serviceParameters = new object[] { filters, EnvironmentGlobalParams.MainTenant, serviceResponse };
             UserPM user = (UserPM)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.Result);

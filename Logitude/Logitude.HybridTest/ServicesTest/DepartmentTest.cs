@@ -17,7 +17,7 @@ namespace Logitude.HybridTest.ServicesTest
                 Code = HybridData.DepartmentCodeHDEP,
                 EnglishName = "Hybrid Department",
                 LocalName = "Hybrid Department",
-                Tenant = TestEnvironmentGlobalParameters.Tenant1,
+                Tenant = EnvironmentGlobalParams.MainTenant,
             };
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(departmentPM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
