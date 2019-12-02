@@ -5221,6 +5221,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
  		   TextCode APPaymentTextCode_APPaymentOCancelationDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.O.CancelationDetails", DefaultText = "Cancelation Details",LocalDefaultText = @"פירוט ביטול", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 		   TextCode APPaymentTextCode_APPaymentOCancelAPPayment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.O.CancelAPPayment", DefaultText = "Cancel APPayment",LocalDefaultText = @"ביטול תשלום", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
    
 	    
 }

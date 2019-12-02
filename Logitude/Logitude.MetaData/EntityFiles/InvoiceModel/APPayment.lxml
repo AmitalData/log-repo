@@ -258,6 +258,7 @@
     <TextCode Code="&quot;APPAyment.O.CancellationDateValidation&quot;" DefaultText="&quot;Cancellation date cannot be before APpayment date&quot;" LocalDefaultText="&quot;תאריך הביטול לא יכול להיות קודם לתאריך הוראת התשלום&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;APPayment.O.VoidByJournal&quot;" DefaultText="&quot;Void by journal number&quot;" LocalDefaultText="&quot;בוטל ע”י פקודת יומן &quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;APPayment.O.CancelationDetails&quot;" DefaultText="&quot;Cancelation Details&quot;" LocalDefaultText="&quot;פירוט ביטול&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;APPayment.O.CancelAPPayment&quot;" DefaultText="&quot;Cancel APPayment&quot;" LocalDefaultText="&quot;ביטול תשלום&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature Code="&quot;APPaymentEditExchangeRate&quot;" FeatureTypeCode="&quot;ACT&quot;" FeatureTextCodeCode="&quot;APPayment.Features.EditExchangeRate&quot;" FeatureDefaultText="&quot;Edit Exchange Rate&quot;" IsPackagable="false" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />

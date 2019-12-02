@@ -562,7 +562,7 @@ export class APPaymentMenuButtonsHandler {
         this.CurrentSession.StartBusyIndicatorLoading();
 
 
-        var windowTitle = "Cancel Payment";
+        var windowTitle = TextCodeTranslator.Translate("APPayment.O.CancelAPPayment");
         var logWindow = new LogitudeWindow();
         var windowArgs: any = {};
         windowArgs.PaymentDate = this.EntityPM.RegisterDate;
