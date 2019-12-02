@@ -326,6 +326,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public string BankBranch { get; set; }
         public string BankAccount { get; set; }
         public int Tenant { get; set; }
+        public string VATExternalId { get; set; }
 
         [XmlElement(ElementName = "Vendor")]
         public APPaymnetCardElement Card { get; set; }

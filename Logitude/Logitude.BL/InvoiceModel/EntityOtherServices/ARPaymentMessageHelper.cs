@@ -201,8 +201,8 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 {
                     string lineType = invoiceTypes.Where(d => d.Code == myline.ARInvoiceTypeCode).FirstOrDefault().Name;
 
-
                     double linePaidAmount = 0;
+
                     ARInvoicePayment myARInvoicePayment = allInvoicesPayments.Where(d => d.ARPaymentId == item.Id && d.ARInvoiceId == myline.Id).FirstOrDefault();
                     if(myARInvoicePayment != null) {
                         if(myARInvoicePayment.ForeignAmount != null)
@@ -217,6 +217,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                         InvoiceNumber = myline.InvoiceNumber,
                         PaidAmount = linePaidAmount,
                     };
+
 
                     paymentElement.Invoices.Add(invoiceElement);
                 }
@@ -371,6 +372,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public string InvoiceType { get; set; }
         public string InvoiceNumber { get; set; }
         public double PaidAmount { get; set; }
+        public string VATExternalId { get; set; }
     }
     #endregion
 }

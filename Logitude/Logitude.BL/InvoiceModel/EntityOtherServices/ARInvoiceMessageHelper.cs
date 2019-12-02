@@ -178,6 +178,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 invoiceElement.Tenant = tenant;
                 invoiceElement.Intercompany = item.Intercompany ? "True" : "False";
 
+              
                 if (item.IsConsolidationInvoice)
                 {
                     invoiceElement.ShipmentNumber = "Consolidation invoice";
@@ -252,6 +253,12 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 int count = 1;
                 foreach (ARInvoiceLine myline in lines)
                 {
+                    VatType LineVat=VatTypeRepository.GetSingleVatType(myline.VatTypeId, item.Tenant, true);
+                    if (LineVat != null) {
+                        invoiceElement.VATExternalId = LineVat.ReceivablesExternalId;
+                       }
+
+
                     #region
                     ARInvoiceLineElement lineElement = new ARInvoiceLineElement()
                     {
