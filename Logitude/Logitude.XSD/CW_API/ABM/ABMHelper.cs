@@ -166,8 +166,8 @@ namespace Logitude.XSD.CW_API.ABM
             IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
             storageservice.Write(myByteArray, fileInfo);
 
-            string emailqueueName = WebFreightEntryPoint.GetQueueByEnviroment(queueName);
-            DbQueueService queueservice = new DbQueueService(emailqueueName, Tenant);
+            //string emailqueueName = WebFreightEntryPoint.GetQueueByEnviroment(queueName);
+            DbQueueService queueservice = new DbQueueService(queueName, Tenant);
             queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", myCommunicationLogId }, { "Tenant", Tenant.ToString() } });
 
             //try
