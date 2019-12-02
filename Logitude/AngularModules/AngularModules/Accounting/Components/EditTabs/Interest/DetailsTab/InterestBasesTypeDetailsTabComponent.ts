@@ -26,6 +26,7 @@ export class InterestBasesTypeDetailsTabComponent extends BaseComponent implemen
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.EntityPM = entityArgs.EntityPM;
+        this.EntityPM.OldEntityPM = this.EntityPM;
         this.InterestBasesPeriodsList = new ObservableCollection([]);
         this.BuildData();
         this.SetUIProperties();
@@ -232,7 +233,6 @@ export class InterestBasesPeriodItem extends BaseComponent {
         if (this.EntityPM.InterestBaseStartDate != newValue) {
             this.EntityPM.InterestBaseStartDate = newValue;
         }
-
     }
 
     get InterestRate() { return this.EntityPM.InterestRate; }
@@ -294,5 +294,9 @@ export class InterestBasesPeriodItem extends BaseComponent {
             this.EntityPM.CreateDate = newValue;
         }
     }
+
+    get CloneMe() { return this.EntityPM.CloneMe; }
+    get RejectChanges() { return this.EntityPM.RejectChanges; }
+
 
 }

@@ -342,7 +342,7 @@ namespace Logitude.Server.Tools.Helpers
             object automationEntity = null;
             if (!string.IsNullOrEmpty(entityId) && objectField.ObjectTable_LookUpTable != null)
             {
-                if (objectField.ObjectTable_LookUpTable.Name == "Master" && ExternalEntity != null) automationEntity = ExternalEntity;
+                if (objectField.ObjectTable_LookUpTable.Name == "Shipment" && ExternalEntity != null) automationEntity = ExternalEntity;
                 else automationEntity = InjectionUtil.Instance.GetEntityByObjectTableNameAndEntityId(objectField.ObjectTable_LookUpTable.Name, entityId, tenant);
             }
 

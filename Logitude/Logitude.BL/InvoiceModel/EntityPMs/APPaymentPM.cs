@@ -144,7 +144,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public DateTime? AccountingCancelationDate { get; set; }
         public bool DontIncludeInDeductionReport { get; set; }
         public string CancelationNotes { get; set; }
-
+        public string VoidedByJournalNumber { get; set; }
 
 
     }
