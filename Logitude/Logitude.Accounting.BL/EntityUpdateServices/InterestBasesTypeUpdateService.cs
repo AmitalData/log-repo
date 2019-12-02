@@ -19,17 +19,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         protected override void OnCreating(InterestBasesTypePM entityPM, EntityPM entityParentPM)
         {
 
-            ContactPM contact = GetLoggedContact(entityPM.Tenant);
-            bool showLocals = !contact.DontShowLocal;
-            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
-            {
-                InterestBasesTypeRepository PeriodRepository = new InterestBasesTypeRepository(entityPM.Tenant);
-                InterestBasesType Period = PeriodRepository.GetSingleByCode(entityPM.Code, entityPM.Tenant);
-                if (Period != null)
-                {
-                    throw new Exception(TextCodesTranslator.TranslateText("Accounting.General.O.Abasetypewiththesamecodeexists", entityPM.Tenant, showLocals));
-                }
-            }
+   
         }
 
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
@@ -45,6 +35,17 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void OnUpdating(InterestBasesTypePM entityPM, InterestBasesType entityPOCO)
         {
+            ContactPM contact = GetLoggedContact(entityPM.Tenant);
+            bool showLocals = !contact.DontShowLocal;
+            if (entityPM.Code != entityPOCO.Code)
+            {
+                InterestBasesTypeRepository PeriodRepository = new InterestBasesTypeRepository(entityPM.Tenant);
+                InterestBasesType Period = PeriodRepository.GetSingleByCode(entityPM.Code, entityPM.Tenant);
+                if (Period != null)
+                {
+                    throw new Exception(TextCodesTranslator.TranslateText("Accounting.General.O.Abasetypewiththesamecodeexists", entityPM.Tenant, showLocals));
+                }
+            }
         }
 
         protected override void UpdateComposition(InterestBasesTypePM entityPM)
