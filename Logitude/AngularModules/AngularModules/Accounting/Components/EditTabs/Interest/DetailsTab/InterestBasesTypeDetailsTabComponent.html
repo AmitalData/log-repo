@@ -215,37 +215,37 @@
                 <logitude-edit-grid GridWidth="100%" [HeaderHeight]="25" GridHeight="100%" [ItemSource]="InterestBasesPeriodsList">
 
                     <!--InterestBaseStartDate-->
-                    <log-column [width]="'120'" [header]="InterestBaseStartDateHeader">
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'120'" [header]="InterestBaseStartDateHeader">
                         <log-cell-template template="let item" #logcelltemplate>
-                            <div style="float:left;"> {{item.InterestBaseStartDate | DateTimeToDatePipe}} </div>
+                            <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.InterestBaseStartDate | DateTimeToDatePipe}} </div>
                         </log-cell-template>
                     </log-column>
 
                     <!--InterestRate-->
-                    <log-column [width]="'120'" [header]="InterestRateHeader">
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'120'" [header]="InterestRateHeader">
                         <log-cell-template template="let item" #logcelltemplate>
-                            <div style="float:left;"> {{item.InterestRate}} </div>
+                            <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.InterestRate}} </div>
                         </log-cell-template>
                     </log-column>
 
                     <!--UpdatedByUserId-->
-                    <log-column [width]="'120'" [header]="UpdatedByUserIdHeader">
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'120'" [header]="UpdatedByUserIdHeader">
                         <log-cell-template template="let item" #logcelltemplate>
-                            <div style="float:left;"> {{item.UpdatedByUserName}} </div>
+                            <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.UpdatedByUserName}} </div>
                         </log-cell-template>
                     </log-column>
 
                     <!--UpdateDate-->
-                    <log-column [width]="'120'" [header]="UpdateDateHeader">
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'120'" [header]="UpdateDateHeader">
                         <log-cell-template template="let item" #logcelltemplate>
-                            <div style="float:left;"> {{item.UpdateDate | DateTimeToDatePipe}} </div>
+                            <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.UpdateDate | DateTimeToDatePipe}} </div>
                         </log-cell-template>
                     </log-column>
 
                     <!--NULL-->
-                    <log-column [width]="'50'" [header]="' '" class="CellTools">
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'50'" [header]="' '" class="CellTools">
                         <log-cell-template template="let item" #logcelltemplate>
-                            <div style="margin-top:4px;">
+                            <div [style.text-align]="isRTL ? 'right' : 'left'" style="margin-top:4px;">
                                 <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" [disabled]="EntityPM.InActive" (click)="EditPeriodClicked(item)"></IconButton>
                             </div>
                         </log-cell-template>
