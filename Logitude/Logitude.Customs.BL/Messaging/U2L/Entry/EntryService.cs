@@ -191,7 +191,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.Entry
                         var packageTypeCode = declarationPM.Consignments[0].ConsignmentPackages.Where(r => r.PackageMeasureQualifierCode == "1").FirstOrDefault().PackageTypeCode;
                         if (!string.IsNullOrWhiteSpace(packageTypeCode))
                         {
-                            mySupplierInvoice.PackageTypeCode = GetTranslationP2L("IIGC", "CTBPACKTYPE", packageTypeCode);
+                            //mySupplierInvoice.PackageTypeCode = GetTranslationP2L("IIGC", "CTBPACKTYPE", packageTypeCode);
+                            mySupplierInvoice.PackageTypeCode = packageTypeCode;
                         }
                     }
                     if (supplierInvoice.SupplierInvoiceItems != null && supplierInvoice.SupplierInvoiceItems.Count() > 0)
