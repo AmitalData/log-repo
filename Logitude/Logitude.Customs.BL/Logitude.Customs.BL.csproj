@@ -1793,8 +1793,10 @@
     <Compile Include="PatchDistribution\PatchDistributionManager.cs" />
     <Compile Include="PatchDistribution\PatchDistributionBase.cs" />
     <Compile Include="PatchDistribution\Patches\P19R03_0000_PatchDist.cs" />
-    <Compile Include="PatchDistribution\Patches\P19R03_0001_QueueMessagesShrink.cs" />
-    <Compile Include="PatchDistribution\Patches\P19R03_0002_DeleteQMessWhenDone.cs" />
+    <Compile Include="PatchDistribution\Patches\P19R03_0001_SInvoiceitemsEntry.cs" />
+    <Compile Include="PatchDistribution\Patches\P19R03_0004_SInvoiceitemsEntryTk2.cs" />
+    <Compile Include="PatchDistribution\Patches\P19R03_0002_QueueMessagesShrink.cs" />
+    <Compile Include="PatchDistribution\Patches\P19R03_0003_DeleteQMessWhenDone.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EntityUpdateServices\ClientUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ConsignmentUpdateService.cs" />

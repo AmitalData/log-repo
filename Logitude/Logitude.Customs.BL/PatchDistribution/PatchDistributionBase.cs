@@ -14,11 +14,13 @@ namespace Logitude.Customs.BL.PatchDistribution
         public string PatchName { get; }
 
         public string PatchDetails { get; }
+        public DateTime CreatedAt { get; }
         public string What2DOWhileCrash { get; set; }
 
-        public PatchDistributionBase(string patchDetails)
+        public PatchDistributionBase(string patchDetails, DateTime dateTime)
         {
             PatchDetails = patchDetails;
+            CreatedAt = dateTime;
             Type type = this.GetType().UnderlyingSystemType;
             String className = type.Name;
             var partsOfClassName = className.Split("_"[0]).ToList();

@@ -9,7 +9,7 @@ namespace Logitude.Customs.BL.PatchDistribution.Patches
     public class P19R03_0000_PatchDist: PatchDistributionBase
     {
 
-        public P19R03_0000_PatchDist() : base(/*this.GetType().AssemblyQualifiedName,*/ "טבלאות תשתית הפצה ")
+        public P19R03_0000_PatchDist() : base("טבלאות תשתית הפצה ",new DateTime(2019,12,2))
         {
             
             //this.PatchName = "טבלאות תשתית הפצה ";

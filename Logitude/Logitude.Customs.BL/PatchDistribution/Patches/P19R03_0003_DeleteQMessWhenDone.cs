@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Logitude.Customs.BL.PatchDistribution.Patches
 {
-    public class P19R03_0002_DeleteQMessWhenDone : PatchDistributionBase
+    public class P19R03_0003_DeleteQMessWhenDone : PatchDistributionBase
     {
-        public P19R03_0002_DeleteQMessWhenDone()
-            :base("שינוי SP queue_setstatus  מחיקת תור שהסתיים")
+        public P19R03_0003_DeleteQMessWhenDone()
+            :base("שינוי SP queue_setstatus  מחיקת תור שהסתיים", new DateTime(2019, 12, 2))
         {
 
         }
