@@ -73,6 +73,7 @@ using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Simplog.Data.InvoiceModel;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
+using Logitude.Customs.BL.PatchDistribution;
 
 namespace Logitude.Update
 {
@@ -1920,6 +1921,8 @@ User/Pass",
 
         private void productionToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            var myPatchDistributionManager = new PatchDistributionManager();
+            myPatchDistributionManager.CreateList();
 
         }
 
