@@ -15,7 +15,10 @@ namespace WebFreight.Web.Helpers.Quickbooks
 
        public QuickbooksHelper(string Tenant) {
             this.Tenant = Tenant;
-            service = new ARInvoiceHelper();
+
+            int tenantInt = 0;
+            Int32.TryParse(Tenant, out tenantInt);
+            service = new ARInvoiceHelper(tenantInt);
         }
 
         public List<Intuit.Ipp.Data.Customer> GetQuickBooksOnlineCustomersByText(String sql)

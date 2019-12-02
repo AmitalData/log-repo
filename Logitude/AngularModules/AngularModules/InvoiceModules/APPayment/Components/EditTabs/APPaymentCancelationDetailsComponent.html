@@ -1,10 +1,102 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
+<style>
+    .subTitle {
+        color: #1b90cb;
+        font-size: 16px;
+    }
+</style>
+<table *ngIf="IsVisibile">
 
-</body>
-</html>
+
+    <tr>
+        <td>
+            <div class="TableHolder">
+                <table>
+                    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+                        <td colspan="4">
+                            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+                        </td>
+                    </tr>
+                    <tr class="TabTitleRow">
+                        <td>{{ 'APPayment.O.CancelationDetails' | TextCodeTranslationPipe}} </td>
+                    </tr>
+
+                    <tr style="height: 15px;"><td><div style="width: 15px;"></div></td></tr>
+
+
+                    <tr>
+                        <td>
+                            <table>
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <table>
+
+
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 220px;">
+                                                    <LogLabel [ObjectFieldName]="'AccountingCancelationDate'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td style="width:10px"><div></div></td>
+
+                                                <td style="width: 140px;">
+                                                    <LogDatePicker [ObjectFieldName]="'AccountingCancelationDate'" [ObjectTableName]="ObjectTableName"
+                                                                   [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                </td>
+                                                <td style="width:70px;"><div></div></td>
+                                            </tr>
+
+
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 180px;">
+                                                    <LogLabel [ObjectFieldName]="'CancelationNotes'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td style="width:10px"><div></div></td>
+
+                                                <td style="width: 140px;" colspan="2">
+                                                    <LogTextBox [ObjectFieldName]="'CancelationNotes'" [InputType]="'ntext'" [DataContext]="DataContext"
+                                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                </td>
+                                                <td><div></div></td>
+
+                                            </tr>
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 180px;">
+                                                    <LogLabel [ObjectFieldName]="'DontIncludeInDeductionReport'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td style="width:10px"><div></div></td>
+
+                                                <td style="width: 140px;">
+                                                    <CheckBox [IsChecked]="DontIncludeInDeductionReport" [IsEnabled]="Cancelled"  (Checked)="DontIncludeInDeductionReport = $event"></CheckBox>
+                                                </td>
+                                                <td><div></div></td>
+
+                                            </tr>
+
+                                            <tr><td><div></div></td></tr>
+                                        </table>
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td><div></div></td>
+
+                       
+
+                    </tr>
+
+
+
+
+
+                </table>
+            </div>
+        </td>
+    </tr>
+
+
+
+</table>

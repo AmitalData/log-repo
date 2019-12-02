@@ -16,27 +16,17 @@ namespace Logitude.HybridTest.WcfCallers
             GetIncotermIdCIF();
             GetChargeTypeIdAFT();
             PreparePorts.PreparePortsVars();
-            GetCountryIdGB();
-            GetCountryIdUS();
+            PrepareCountries.PrepareCountriesVars();
             UpsertStateIdAK();
             UpsertAgentTest();
+            UpsertContactTest();
             PrepareCustomers.PrepareCustomersVars();
-            UpsertAirlineIdHA();
-            UpsertAirlineIdHL();
-            UpsertShippingLineIdHSL();
-            UpsertShippingLineIdHSL2();
-            UpsertTruckerIdHT();
-            UpsertTruckerIdHT2();
-            //GetLoggedTenantDB();
-            //MoveType();
+            PrepareAirlines.PrepareAirlinesVars();
+            PrepareShippingLines.PrepareShippingLinesVars();
+            PrepareTruckers.PrepareTruckersVars();
             UpsertVesselIdHV();
-            GetPackageTypeIdContainerPC1();
-            GetPackageTypeIdContainerPC2();
-            GetPackageTypeIdContainerPP1();
+            PreparePackageTypes.PreparePackageTypesVars();
             UpsertVendorIdHVEN();
-            GetPackageTypeIdContainerPP2();
-            //GetChargeTypeIdAirFreight
-            //GetQuoteStage
         }
         private static void GetCurrencyIdEUR()
         {
@@ -54,7 +44,7 @@ namespace Logitude.HybridTest.WcfCallers
                 SearchFields = HybridData.CurrencyCodeEUR,
             };
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { filters, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
+            object[] serviceParameters = new object[] { filters, TestEnvironmentGlobalParameters.Tenant1, serviceResponse };
             CurrencyList[] currencies = (CurrencyList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);
@@ -70,7 +60,7 @@ namespace Logitude.HybridTest.WcfCallers
         }
         private static void CopyCurrencyFromTenant0ToTestTenant(CurrencyList currencyPM)
         {
-            currencyPM.Tenant = TestEnvironmentGlobalParameters.Tenant;
+            currencyPM.Tenant = TestEnvironmentGlobalParameters.Tenant1;
             currencyPM.AddedManually = true;
             AssertResponse(currencyPM);
         }
@@ -124,7 +114,7 @@ namespace Logitude.HybridTest.WcfCallers
                 Name = "LDE Incoterm",
                 Freight = "P",
                 OtherCharges = "C",
-                Tenant = TestEnvironmentGlobalParameters.Tenant
+                Tenant = TestEnvironmentGlobalParameters.Tenant1
             };
             Response serviceResponse = AssertResponse(incotermPM);
             return serviceResponse.Result;
@@ -149,7 +139,7 @@ namespace Logitude.HybridTest.WcfCallers
                 ServiceFilterType = null,
             };
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { TestEnvironmentGlobalParameters.Tenant, 0, 10, serviceResponse };
+            object[] serviceParameters = new object[] { TestEnvironmentGlobalParameters.Tenant1, 0, 10, serviceResponse };
             ChargesTypeList[] chargesTypes = (ChargesTypeList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get Charge Types Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get Charge Types Failed! " + serviceResponse.ErrorMessage);
@@ -175,50 +165,6 @@ namespace Logitude.HybridTest.WcfCallers
             }
             return null;
         }
-        private static void GetCountryIdGB()
-        {
-            InvokedProperties serviceProperties = new InvokedProperties
-            {
-                ServiceName = "Country",
-                ServiceOperation = "GetList",
-                ServiceResponseIndex = 2,
-                ServiceType = typeof(CountryList),
-                ServiceFilterType = typeof(ApiSearchFilters),
-            };
-            ApiSearchFilters filters = new ApiSearchFilters
-            {
-                Take = 10,
-                SearchFields = HybridData.CountryCodeGB
-            };
-            Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { filters, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
-            CountryList[] countries = (CountryList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);
-            HybridData.CountryIdGB = countries[0].Id;
-        }
-        private static void GetCountryIdUS()
-        {
-            InvokedProperties serviceProperties = new InvokedProperties
-            {
-                ServiceName = "Country",
-                ServiceOperation = "GetList",
-                ServiceResponseIndex = 2,
-                ServiceType = typeof(CountryList),
-                ServiceFilterType = typeof(ApiSearchFilters),
-            };
-            ApiSearchFilters filters = new ApiSearchFilters
-            {
-                Take = 10,
-                SearchFields = HybridData.CountryCodeUS
-            };
-            Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { filters, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
-            CountryList[] countries = (CountryList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);
-            HybridData.CountryIdUS = countries[0].Id;
-        }
         private static void UpsertStateIdAK()
         {
             StatePM statePM = new StatePM()
@@ -227,7 +173,7 @@ namespace Logitude.HybridTest.WcfCallers
                 EnglishName = "Alaska",
                 LocalName = "Alaska",
                 CountryId = HybridData.CountryCodeUS,
-                Tenant = TestEnvironmentGlobalParameters.Tenant,
+                Tenant = TestEnvironmentGlobalParameters.Tenant1,
             };
             Response serviceResponse = AssertResponse(statePM);
             HybridData.StateIdAK = serviceResponse.Result;
@@ -242,10 +188,10 @@ namespace Logitude.HybridTest.WcfCallers
                 CityName = "Washnton",
                 CountryCode = HybridData.CountryCodeUS,
                 PartnerTypeId = "AG",
-                Tenant = TestEnvironmentGlobalParameters.Tenant,
+                Tenant = TestEnvironmentGlobalParameters.Tenant1,
             };
             agentPM.Addresses.Add(new AddressPM {
-                Tenant = TestEnvironmentGlobalParameters.Tenant,
+                Tenant = TestEnvironmentGlobalParameters.Tenant1,
                 Description = "Main Address",
                 City = "Washnton",
                 StateCode = HybridData.StateCodeAK,
@@ -263,115 +209,19 @@ namespace Logitude.HybridTest.WcfCallers
             Response serviceResponse = AssertResponse(agentPM);
             HybridData.StateIdAK = serviceResponse.Result;
         }
-        private static void UpsertAirlineIdHA()
+        private static void UpsertContactTest()
         {
-            AirlinePM airlinePM = new AirlinePM()
+            ContactPM contactPM = new ContactPM()
             {
-                Code = HybridData.AirlineCodeHA,
-                EnglishName = "Hybrid Airlines",
-                LocalName = "Hybrid Airlines",
-                CarrierTypeId = "AL",
-                Prefix = "999",
-                Tenant = TestEnvironmentGlobalParameters.Tenant,
+                EnglishName = HybridData.ContactCode,
+                LocalName = "Hybrid Contact",
+                Email = "HybridContact@logitudeworld.com",
+                Password = "!H0",
+                ExternalId = HybridData.ContactCode,
+                Tenant = TestEnvironmentGlobalParameters.Tenant1,
             };
-            Response serviceResponse = AssertResponse(airlinePM);
-            HybridData.AirlineIdHA = serviceResponse.Result;
-        }
-        private static void UpsertAirlineIdHL()
-        {
-            AirlinePM airlinePM = new AirlinePM()
-            {
-                Code = HybridData.AirlineCodeHL,
-                EnglishName = "Hybrid 2 Airlines",
-                LocalName = "Hybrid 2 Airlines",
-                CarrierTypeId = "AL",
-                Prefix = "998",
-                Tenant = TestEnvironmentGlobalParameters.Tenant,
-            };
-            Response serviceResponse = AssertResponse(airlinePM);
-            HybridData.AirlineIdHL = serviceResponse.Result;
-        }
-        private static void UpsertShippingLineIdHSL()
-        {
-            ShippingLinePM shippingLinePM = new ShippingLinePM()
-            {
-                Code = HybridData.ShippingLineCodeHSL,
-                SCACCode = HybridData.ShippingLineCodeHSL,
-                EnglishName = "Hybrid ShippingLine",
-                LocalName = "Hybrid ShippingLine",
-                CarrierTypeId = "SL",
-                Tenant = TestEnvironmentGlobalParameters.Tenant,
-            };
-            Response serviceResponse = AssertResponse(shippingLinePM);
-            HybridData.ShippingLineIdHSL = serviceResponse.Result;
-        }
-        private static void UpsertShippingLineIdHSL2()
-        {
-            ShippingLinePM shippingLinePM = new ShippingLinePM()
-            {
-                Code = HybridData.ShippingLineCodeHSL2,
-                SCACCode = HybridData.ShippingLineCodeHSL2,
-                EnglishName = "Hybrid 2 ShippingLine",
-                LocalName = "Hybrid 2 ShippingLine",
-                CarrierTypeId = "SL",
-                Tenant = TestEnvironmentGlobalParameters.Tenant,
-            };
-            Response serviceResponse = AssertResponse(shippingLinePM);
-            HybridData.ShippingLineIdHSL = serviceResponse.Result;
-        }
-        private static void UpsertTruckerIdHT()
-        {
-            TruckerPM truckerPM = new TruckerPM()
-            {
-                Code = HybridData.TruckerCodeHT,
-                EnglishName = "Hybrid Trucker",
-                LocalName = "Hybrid Trucker",
-                CarrierTypeId = "TR",
-                AddedManually = true,
-                TransportModeId = "I",
-                Tenant = TestEnvironmentGlobalParameters.Tenant,
-            };
-            truckerPM.Addresses.Add(new AddressPM
-            {
-                AddressTypeId = "M",
-                Description = "Main Address",
-                Name = "Hybrid City",
-                Address1 = "Address 1",
-                Address2 = "Address 2",
-                City = "Hybrid City",
-                VatNumber = "Vat 1152",
-                CountryCode = HybridData.CountryCodeGB,
-                StateCode = HybridData.StateCodeAK,
-            });
-            Response serviceResponse = AssertResponse(truckerPM);
-            HybridData.TruckerIdHT = serviceResponse.Result;
-        }
-        private static void UpsertTruckerIdHT2()
-        {
-            TruckerPM truckerPM = new TruckerPM()
-            {
-                Code = HybridData.TruckerCodeHT,
-                EnglishName = "Hybrid 2 Trucker",
-                LocalName = "Hybrid 2 Trucker",
-                CarrierTypeId = "TR",
-                AddedManually = true,
-                TransportModeId = "I",
-                Tenant = TestEnvironmentGlobalParameters.Tenant,
-            };
-            truckerPM.Addresses.Add(new AddressPM
-            {
-                AddressTypeId = "M",
-                Description = "Main Address",
-                Name = "Hybrid 2 City",
-                Address1 = "Address 1",
-                Address2 = "Address 2",
-                City = "Hybrid 2 City",
-                VatNumber = "Vat 1152",
-                CountryCode = HybridData.CountryCodeGB,
-                StateCode = HybridData.StateCodeAK,
-            });
-            Response serviceResponse = AssertResponse(truckerPM);
-            HybridData.TruckerIdHT2 = serviceResponse.Result;
+            Response serviceResponse = AssertResponse(contactPM);
+            HybridData.StateIdAK = serviceResponse.Result;
         }
         private static void UpsertVesselIdHV()
         {
@@ -382,106 +232,10 @@ namespace Logitude.HybridTest.WcfCallers
                 LocalName = "Hybrid Vessel",
                 IMOCode = "IMOCode HV",
                 AddedManually = true,
-                Tenant = TestEnvironmentGlobalParameters.Tenant,
+                Tenant = TestEnvironmentGlobalParameters.Tenant1,
             };
             Response serviceResponse = AssertResponse(vesselPM);
             HybridData.VesselIdHV = serviceResponse.Result;
-        }
-        private static void GetPackageTypeIdContainerPC1()
-        {
-            InvokedProperties serviceProperties = new InvokedProperties
-            {
-                ServiceName = "PackageType",
-                ServiceOperation = "GetPackageTypeList",
-                ServiceResponseIndex = 2,
-                ServiceType = typeof(PackageTypeList),
-                ServiceFilterType = typeof(PackageTypeServiceReference.PackageTypeApiFilters),
-            };
-            PackageTypeServiceReference.PackageTypeApiFilters filters = new PackageTypeServiceReference.PackageTypeApiFilters
-            {
-                Take = 10,
-                SearchFields = HybridData.PackageTypeCodePC1,
-            };
-
-            Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { filters, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
-            PackageTypeList[] packageTypes = (PackageTypeList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.Result);
-            if (packageTypes.Length == 0)
-                HybridData.PackageTypeIdPC1 = CreatePackageTypeIdContainer(HybridData.PackageTypeCodePC1);
-            else
-                HybridData.PackageTypeIdPC1 = packageTypes[0].Id;
-        }
-        private static void GetPackageTypeIdContainerPC2()
-        {
-            InvokedProperties serviceProperties = new InvokedProperties
-            {
-                ServiceName = "PackageType",
-                ServiceOperation = "GetPackageTypeList",
-                ServiceResponseIndex = 2,
-                ServiceType = typeof(PackageTypeList),
-                ServiceFilterType = typeof(PackageTypeServiceReference.PackageTypeApiFilters),
-            };
-            PackageTypeServiceReference.PackageTypeApiFilters filters = new PackageTypeServiceReference.PackageTypeApiFilters
-            {
-                Take = 10,
-                SearchFields = HybridData.PackageTypeCodePC2,
-            };
-
-            Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { filters, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
-            PackageTypeList[] packageTypes = (PackageTypeList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.Result);
-            if (packageTypes.Length == 0)
-                HybridData.PackageTypeIdPC2 = CreatePackageTypeIdContainer(HybridData.PackageTypeCodePC2);
-            else
-                HybridData.PackageTypeIdPC2 = packageTypes[0].Id;
-        }
-        private static void GetPackageTypeIdContainerPP1()
-        {
-            InvokedProperties serviceProperties = new InvokedProperties
-            {
-                ServiceName = "PackageType",
-                ServiceOperation = "GetPackageTypeList",
-                ServiceResponseIndex = 2,
-                ServiceType = typeof(PackageTypeList),
-                ServiceFilterType = typeof(PackageTypeServiceReference.PackageTypeApiFilters),
-            };
-            PackageTypeServiceReference.PackageTypeApiFilters filters = new PackageTypeServiceReference.PackageTypeApiFilters
-            {
-                Take = 10,
-                SearchFields = HybridData.PackageTypeCodePP1,
-            };
-
-            Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { filters, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
-            PackageTypeList[] packageTypes = (PackageTypeList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.Result);
-            if (packageTypes.Length == 0)
-                HybridData.PackageTypeIdPP1 = CreatePackageTypeIdContainer(HybridData.PackageTypeCodePP1);
-            else
-                HybridData.PackageTypeIdPP1 = packageTypes[0].Id;
-        }
-        private static string CreatePackageTypeIdContainer(string code)
-        {
-            PackageTypePM packageTypePM = new PackageTypePM()
-            {
-                Code = code,
-                EnglishName = "ContainerId"+code,
-                IsOcean = true,
-                IsAir = false,
-                IsInland = true,
-                IsContainer = true,
-                //MeasurementId
-                AddedManually = true,
-                PrintAs = "PC'1",
-                Tenant = TestEnvironmentGlobalParameters.Tenant,
-            };
-            Response serviceResponse = AssertResponse(packageTypePM);
-            return serviceResponse.Result;
         }
         private static void UpsertVendorIdHVEN()
         {
@@ -492,11 +246,12 @@ namespace Logitude.HybridTest.WcfCallers
                 LocalName = "Hybrid Vendor",
                 CountryCode = HybridData.CountryCodeUS,
                 PartnerTypeId = "VD",
-                Tenant = TestEnvironmentGlobalParameters.Tenant,
+                Tenant = TestEnvironmentGlobalParameters.Tenant1,
             };
             vendorPM.Addresses.Add(new AddressPM
             {
                 AddressTypeId = "M",
+                Name = "vendor address",
                 Description = "Main Address",
                 City = "New York",
                 CountryCode = HybridData.CountryCodeUS,
@@ -504,32 +259,6 @@ namespace Logitude.HybridTest.WcfCallers
             });
             Response serviceResponse = AssertResponse(vendorPM);
             HybridData.VendorIdHVEN = serviceResponse.Result;
-        }
-        private static void GetPackageTypeIdContainerPP2()
-        {
-            InvokedProperties serviceProperties = new InvokedProperties
-            {
-                ServiceName = "PackageType",
-                ServiceOperation = "GetPackageTypeList",
-                ServiceResponseIndex = 2,
-                ServiceType = typeof(PackageTypeList),
-                ServiceFilterType = typeof(PackageTypeServiceReference.PackageTypeApiFilters),
-            };
-            PackageTypeServiceReference.PackageTypeApiFilters filters = new PackageTypeServiceReference.PackageTypeApiFilters
-            {
-                Take = 10,
-                SearchFields = HybridData.PackageTypeCodePP2,
-            };
-
-            Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { filters, TestEnvironmentGlobalParameters.Tenant, serviceResponse };
-            PackageTypeList[] packageTypes = (PackageTypeList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.Result);
-            if (packageTypes.Length == 0)
-                HybridData.PackageTypeIdPP2 = CreatePackageTypeIdContainer(HybridData.PackageTypeCodePP2);
-            else
-                HybridData.PackageTypeIdPP2 = packageTypes[0].Id;
         }
         private static Response AssertResponse<T>(T entityPM)
         {

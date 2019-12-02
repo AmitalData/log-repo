@@ -26,6 +26,7 @@ export class InterestBasesTypeDetailsTabComponent extends BaseComponent implemen
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.EntityPM = entityArgs.EntityPM;
+        this.EntityPM.OldEntityPM = this.EntityPM;
         this.InterestBasesPeriodsList = new ObservableCollection([]);
         this.BuildData();
         this.SetUIProperties();
@@ -207,9 +208,10 @@ export class InterestBasesPeriodItem extends BaseComponent {
     }
     CheckInterestBaseStartDateExist(InterestBaseStartDate: Date, CreateDate:Date): boolean {
         for (let i = 0; i < this.DataContext.fatherComponent.InterestBasesPeriodsList.Length; i++) {
-            if (this.DataContext.fatherComponent.InterestBasesPeriodsList.Collection[i].InterestBaseStartDate.getTime() === InterestBaseStartDate.getTime()) {
+            if (new Date(this.DataContext.fatherComponent.InterestBasesPeriodsList.Collection[i].InterestBaseStartDate).getTime() === new Date(InterestBaseStartDate).getTime()) {
+                var idont; 
                 if (!this.IsNewEntity) {
-                    if (this.DataContext.fatherComponent.InterestBasesPeriodsList.Collection[i].CreateDate.getTime() != CreateDate.getTime()) {
+                    if (new Date(this.DataContext.fatherComponent.InterestBasesPeriodsList.Collection[i].CreateDate).getTime() != new Date(CreateDate).getTime()) {
                         return false;
                     }
                 }
@@ -231,7 +233,6 @@ export class InterestBasesPeriodItem extends BaseComponent {
         if (this.EntityPM.InterestBaseStartDate != newValue) {
             this.EntityPM.InterestBaseStartDate = newValue;
         }
-
     }
 
     get InterestRate() { return this.EntityPM.InterestRate; }
@@ -293,5 +294,9 @@ export class InterestBasesPeriodItem extends BaseComponent {
             this.EntityPM.CreateDate = newValue;
         }
     }
+
+    get CloneMe() { return this.EntityPM.CloneMe; }
+    get RejectChanges() { return this.EntityPM.RejectChanges; }
+
 
 }

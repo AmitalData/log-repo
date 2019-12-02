@@ -46,7 +46,26 @@ namespace Logitude.BL.InvoiceModel.Tools
 {
     public class ARInvoiceHelper
     {
-        private  int tenant { set; get; }
+        private int tenant;
+        private string loggedContactId;
+        public ARInvoiceHelper()
+        {
+
+        }
+        public ARInvoiceHelper(int tenant)
+        {
+            ContactRepository contactRepository = new ContactRepository(tenant);
+            Simplog.Data.CommonDataModel.EntityPOCOs.Contact loggedContact = contactRepository.GetSingleContactByEmail(SecurityUtility.GetAuthenticatedUser(), tenant);
+            this.tenant = tenant;
+            loggedContactId = loggedContact.Id;
+        }
+
+        public ARInvoiceHelper(int tenant, string loggedUserId)
+        {
+            this.tenant = tenant;
+            this.loggedContactId = loggedUserId;
+        }
+
         private  string tenantName { set; get; }
         private  ICommonDataContext commonContext;
         private IGlobalContext globalContext;
@@ -64,7 +83,6 @@ namespace Logitude.BL.InvoiceModel.Tools
         private string OldTransferStatusCode;
         private string ExternalTableIdCustomerRef;
         public  string PaymentTermExternalCode = null;
-        private  string LoggedContactId { get; set; }
         private  List<string> ExternalChargesTypesCode;
         private  List<string> ExternalVatTypesCode;
         private  Boolean IsNewEntity;
@@ -118,9 +136,9 @@ namespace Logitude.BL.InvoiceModel.Tools
                             GetObjectTableData();
                             documentRepository = new DocumentRepository(commonContext);
                             communicationLogRepository = new CommunicationLogRepository(commonContext);
-                            ContactRepository contactRepository = new ContactRepository(commonContext);
-                            Simplog.Data.CommonDataModel.EntityPOCOs.Contact loggedContact = contactRepository.GetSingleContactByEmail(SecurityUtility.GetAuthenticatedUser(), tenant);
-                            LoggedContactId = loggedContact.Id;
+                            //ContactRepository contactRepository = new ContactRepository(commonContext);
+                            //Simplog.Data.CommonDataModel.EntityPOCOs.Contact loggedContact = contactRepository.GetSingleContactByEmail(SecurityUtility.GetAuthenticatedUser(), tenant);
+                            //LoggedContactId = loggedContact.Id;
 
                             entityPM.TransferStatusCode = "IP";
                             entityPM.TransferError = null;
@@ -157,9 +175,9 @@ namespace Logitude.BL.InvoiceModel.Tools
                         objectContext = InvoiceContext;
                         invoiceLineRepository = new ARInvoiceLineRepository(objectContext);
                         invoiceTotalVatRepository = new ARInvoiceTotalVATRepository(objectContext);
-                        ContactRepository contactRepository = new ContactRepository(commonContext);
-                        Simplog.Data.CommonDataModel.EntityPOCOs.Contact loggedContact = contactRepository.GetSingleContactByEmail(SecurityUtility.GetAuthenticatedUser(), tenant);
-                        LoggedContactId = loggedContact.Id;
+                        //ContactRepository contactRepository = new ContactRepository(commonContext);
+                        //Simplog.Data.CommonDataModel.EntityPOCOs.Contact loggedContact = contactRepository.GetSingleContactByEmail(SecurityUtility.GetAuthenticatedUser(), tenant);
+                        //LoggedContactId = loggedContact.Id;
                         lines = new List<ARInvoiceLinePM>();
 
                         if (loggedTenant.CurrencyId == entityPM.InvoiceCurrencyId)
@@ -852,6 +870,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                 }
 
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Quickbooks online web service", null, ip);
+                throw ex;
             }
 
 
@@ -928,6 +947,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                 }
 
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Quickbooks online web service", null, ip);
+                throw ex;
             }
 
 
@@ -1003,6 +1023,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                 }
 
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Quickbooks online web service", null, ip);
+                throw ex;
             }
 
 
@@ -1047,7 +1068,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                 CommunicationLogTypeCode = "T",
                 CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                 CommunicationStatusTypeCode = "W",
-                CreatedByUserId = LoggedContactId,
+                CreatedByUserId = loggedContactId,
                 DocumentId = document.Id,
                 EntityReference = ARInvoice.InvoiceNumber,
                 SearchFields = ARInvoice.InvoiceNumber + "," + xmlTarget + "," + "O" + "," + xmlSubject,
