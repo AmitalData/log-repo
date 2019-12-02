@@ -26,5 +26,11 @@ namespace Logitude.Accounting.BL.EntityQueryServiceExt
             JournalQueryService query = new JournalQueryService(tenant);
             return query.GetByAccountingEntityIdAndAccountingEntityCode(accountingEntityId, accountingEntityCode, tenant);
         }
+        
+        public JournalPM GetApprovedJournalByAccountingEntityId(string accountingEntityId, string accountingEntityCode, int tenant)
+        {
+            JournalQueryService query = new JournalQueryService(tenant);
+            return query.GetApprovedJournalByAccountingEntityId(accountingEntityId, accountingEntityCode, tenant);
+        }
     }
 }

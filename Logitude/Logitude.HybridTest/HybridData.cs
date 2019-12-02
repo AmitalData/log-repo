@@ -30,6 +30,8 @@ namespace Logitude.HybridTest
         public static string VendorIdHVEN { get; set; }
         //Agent
         public const string AgentCodeHAgent = "HAgent";
+
+        public static string customClearedExternalId { get; set; }
         #endregion
 
         #region PortsVars
@@ -149,6 +151,8 @@ namespace Logitude.HybridTest
         public static string ContactId { get; set; }
         public static string CityIdHCity { get; set; }
         public static string DirectShipmentId { get; set; }
+        public static string HouseShipmentId { get; set; }
+
         public static string QuoteId { get; set; }
 
         ///AC

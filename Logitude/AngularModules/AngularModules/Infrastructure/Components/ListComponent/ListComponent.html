@@ -2,126 +2,153 @@
 <style>
 
 
-        .CustomLink:hover {
+    .CustomLink:hover {
         cursor: pointer;
         color: #1B90CB;
         text-decoration: underline;
-
-
     }
 
-        .CustomLink {
-          color:#0026ff;
-           text-decoration: none;
+    .CustomLink {
+        color: #0026ff;
+        text-decoration: none;
+    }
+
+
+    .simple-element {
+        position: relative;
+        display: block;
+        background-color: transparent;
+        height: 100%;
+    }
+
+    .Counter {
+        display: inline-block;
+        height: 30px;
+        font-size: 20px;
+        color: #548AEA;
+        vertical-align: top;
+    }
+    /* Dropdown Button */
+    .dropbtn {
+        box-sizing: border-box;
+        height: 22px;
+        line-height: 22px;
+        border: 1px solid #6a8299;
+        border-radius: 3px;
+        box-sizing: border-box;
+        color: #45494a;
+        cursor: pointer;
+        display: block;
+        font-size: 11px;
+        height: 22px;
+        outline: medium none;
+        position: relative;
+        text-align: center;
+        text-shadow: 1px 1px white;
+        width: 100%;
+    }
+
+        /* Dropdown button on hover & focus */
+        .dropbtn:hover, .dropbtn:focus {
+            background-color: #3e8e41;
         }
 
+    /* The container <div> - needed to position the dropdown content */
+    .dropdown {
+        position: relative;
+        display: inline-block;
+        margin: 7px;
+    }
 
-        .simple-element {
-            position: relative;
+    /* Dropdown Content (Hidden by Default) */
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        width: 206px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 2147483647;
+        height: 246px;
+    }
+
+        /* Links inside the dropdown */
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
             display: block;
-            background-color: transparent;
-            height: 100%;
         }
 
-        .Counter {
-            display: inline-block;
-            height: 30px;
-            font-size: 20px;
-            color: #548AEA;
-            vertical-align: top;
-        }
-        /* Dropdown Button */
-        .dropbtn {
-            box-sizing: border-box;
-            height: 22px;
-            line-height: 22px;
-            border: 1px solid #6a8299;
-            border-radius: 3px;
-            box-sizing: border-box;
-            color: #45494a;
-            cursor: pointer;
-            display: block;
-            font-size: 11px;
-            height: 22px;
-            outline: medium none;
-            position: relative;
-            text-align: center;
-            text-shadow: 1px 1px white;
-            width: 100%;
-        }
-
-            /* Dropdown button on hover & focus */
-            .dropbtn:hover, .dropbtn:focus {
-                background-color: #3e8e41;
+            /* Change color of dropdown links on hover */
+            .dropdown-content a:hover {
+                background-color: #f1f1f1;
             }
 
-        /* The container <div> - needed to position the dropdown content */
-        .dropdown {
-            position: relative;
-            display: inline-block;
-            margin: 7px;
-        }
+    .dropcontent {
+    }
 
-        /* Dropdown Content (Hidden by Default) */
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            width: 206px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 2147483647;
-            height: 246px;
-        }
+    /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+    .showDDButton {
+        display: block;
+        right: 0;
+    }
 
-            /* Links inside the dropdown */
-            .dropdown-content a {
-                color: black;
-                padding: 12px 16px;
-                text-decoration: none;
-                display: block;
-            }
-
-                /* Change color of dropdown links on hover */
-                .dropdown-content a:hover {
-                    background-color: #f1f1f1;
-                }
-
-        .dropcontent {
-        }
-
-        /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
-        .showDDButton {
-            display: block;
-            right: 0;
-        }
-
-        .noselect {
-            -webkit-touch-callout: none; /* iOS Safari */
-            -webkit-user-select: none; /* Chrome/Safari/Opera */
-            -khtml-user-select: none; /* Konqueror */
-            -moz-user-select: none; /* Firefox */
-            -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
+    .noselect {
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Chrome/Safari/Opera */
+        -khtml-user-select: none; /* Konqueror */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+        user-select: none; /* Non-prefixed version, currently
                                       not supported by any browser */
-        }
+    }
 
-        .ToolBarBackground {   
-            background: -moz-linear-gradient(50% 0% -90deg,rgba(235, 235, 235, 1) 0%,rgba(233, 233, 233, 1) 48.14%,rgba(226, 226, 226, 1) 67.05%,rgba(214, 214, 214, 1) 80.81%,rgba(197, 197, 197, 1) 92.01%,rgba(179, 179, 179, 1) 100%);
-            background: -webkit-linear-gradient(-90deg, rgba(235, 235, 235, 1) 0%, rgba(233, 233, 233, 1) 48.14%, rgba(226, 226, 226, 1) 67.05%, rgba(214, 214, 214, 1) 80.81%, rgba(197, 197, 197, 1) 92.01%, rgba(179, 179, 179, 1) 100%);
-            background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(235, 235, 235, 1) ),color-stop(0.4814,rgba(233, 233, 233, 1) ),color-stop(0.6705,rgba(226, 226, 226, 1) ),color-stop(0.8081,rgba(214, 214, 214, 1) ),color-stop(0.9201,rgba(197, 197, 197, 1) ),color-stop(1,rgba(179, 179, 179, 1) ));
-            background: -o-linear-gradient(-90deg, rgba(235, 235, 235, 1) 0%, rgba(233, 233, 233, 1) 48.14%, rgba(226, 226, 226, 1) 67.05%, rgba(214, 214, 214, 1) 80.81%, rgba(197, 197, 197, 1) 92.01%, rgba(179, 179, 179, 1) 100%);
-            background: linear-gradient(180deg, rgba(235, 235, 235, 1) 0%, rgba(233, 233, 233, 1) 48.14%, rgba(226, 226, 226, 1) 67.05%, rgba(214, 214, 214, 1) 80.81%, rgba(197, 197, 197, 1) 92.01%, rgba(179, 179, 179, 1) 100%);
-}
-        .Show{
-            display:contents;
-        }
+    .ToolBarBackground {
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(235, 235, 235, 1) 0%,rgba(233, 233, 233, 1) 48.14%,rgba(226, 226, 226, 1) 67.05%,rgba(214, 214, 214, 1) 80.81%,rgba(197, 197, 197, 1) 92.01%,rgba(179, 179, 179, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(235, 235, 235, 1) 0%, rgba(233, 233, 233, 1) 48.14%, rgba(226, 226, 226, 1) 67.05%, rgba(214, 214, 214, 1) 80.81%, rgba(197, 197, 197, 1) 92.01%, rgba(179, 179, 179, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(235, 235, 235, 1) ),color-stop(0.4814,rgba(233, 233, 233, 1) ),color-stop(0.6705,rgba(226, 226, 226, 1) ),color-stop(0.8081,rgba(214, 214, 214, 1) ),color-stop(0.9201,rgba(197, 197, 197, 1) ),color-stop(1,rgba(179, 179, 179, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(235, 235, 235, 1) 0%, rgba(233, 233, 233, 1) 48.14%, rgba(226, 226, 226, 1) 67.05%, rgba(214, 214, 214, 1) 80.81%, rgba(197, 197, 197, 1) 92.01%, rgba(179, 179, 179, 1) 100%);
+        background: linear-gradient(180deg, rgba(235, 235, 235, 1) 0%, rgba(233, 233, 233, 1) 48.14%, rgba(226, 226, 226, 1) 67.05%, rgba(214, 214, 214, 1) 80.81%, rgba(197, 197, 197, 1) 92.01%, rgba(179, 179, 179, 1) 100%);
+    }
+
+    .Show {
+        display: contents;
+    }
+
     .Hide {
         display: none;
     }
 </style>
 
-<div style="position: absolute; top:-1px; bottom:0; left:0; right:0; margin:auto; padding: 0px; background: white; border-radius:0 5px 5px 0;">
+<div style="position: absolute; top:0px; bottom:0px; left:0px; right:0px;margin:auto; background:white;" *ngIf="IsDemoTenant">
+    <table style="height:100%">
+        <tr style="height:22px;" *ngIf="BackButtonVisibility">
+            <td>
+                <table>
+                    <tr>
+                        <td style="width:100px;">
+                            <BackButton [Text]="BackBtnTitle" (click)="BackButtonClicked()"></BackButton>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td style="font-size:32px; text-align:center; padding:100px;">
+                Contacts area is restricted in the demo environment
+            </td>
+        </tr>
+
+        <tr><td><div></div></td></tr>
+    </table>
+</div>
+
+<div style="position: absolute; top:-1px; bottom:0; left:0; right:0; margin:auto; padding: 0px; background: white; border-radius:0 5px 5px 0;" *ngIf="!IsDemoTenant">
     <table class="noselect">
         <tr style="height: 1px;" *ngIf="!IsBackButtonAndTitleVisibile">
             <td>
@@ -132,7 +159,7 @@
         <tr style="height: 21px;" *ngIf="IsBackButtonAndTitleVisibile">
             <td style="height: 21px;">
                 <table>
-                    <tr >
+                    <tr>
 
                         <td *ngIf="BackButtonVisibility" style="width: 1px;">
                             <BackButton [Text]="BackBtnTitle" (click)="BackButtonClicked()"></BackButton>
@@ -180,63 +207,64 @@
         <tr [ngStyle]="{height: IsBackButtonAndTitleVisibile ? '21px' : '27px'}" [class.ToolBarBackground]="!IsBackButtonAndTitleVisibile">
             <td style="height: 21px; vertical-align:middle;">
                 <table>
-                  <tr>
-                    <td style="width: 21px;">
-                      <IconButton [Name]="'Refresh'" (click)="RefreshBtnClick()"></IconButton>
-                    </td>
+                    <tr>
+                        <td style="width: 21px;">
+                            <IconButton [Name]="'Refresh'" (click)="RefreshBtnClick()"></IconButton>
+                        </td>
 
-                    <td style="width: 5px;" *ngIf="IsNewEntityButtonVisible">
-                      <div></div>
-                    </td>
+                        <td style="width: 5px;" *ngIf="IsNewEntityButtonVisible">
+                            <div></div>
+                        </td>
 
-                    <!-- <td style="width: 96px;"> -->
-                    <td style="width: 1px;" *ngIf="IsNewEntityButtonVisible">
-                      <button [attr.id]="NewButtonId  | IdGeneratorPipe " [disabled]="IsNewEntityButtonDisabled" style="min-width: 95px; padding-left: 5px; padding-right: 5px;" class="Button" (click)="AddNewEntity()">{{NewEntityButtonLabel}}</button>
-                    </td>
+                        <!-- <td style="width: 96px;"> -->
+                        <td style="width: 1px;" *ngIf="IsNewEntityButtonVisible">
+                            <button [attr.id]="NewButtonId  | IdGeneratorPipe " [disabled]="IsNewEntityButtonDisabled" style="min-width: 95px; padding-left: 5px; padding-right: 5px;" class="Button" (click)="AddNewEntity()">{{NewEntityButtonLabel}}</button>
+                        </td>
 
-                    <td style="width: 5px;">
-                      <div></div>
-                    </td>
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
 
-                    <td style="width: 1px;" *ngIf="IsAddButtonVisible" title="{{AddButtonTitle}}">
-                      <button style="min-width: 95px; padding-left: 5px; padding-right: 5px;" class="Button" (click)="ImportEntitiesCommand()"> Add </button>
-                    </td>
+                        <td style="width: 1px;" *ngIf="IsAddButtonVisible" title="{{AddButtonTitle}}">
+                            <button style="min-width: 95px; padding-left: 5px; padding-right: 5px;" class="Button" (click)="ImportEntitiesCommand()"> Add </button>
+                        </td>
 
-                    <td style="width: 5px;">
-                      <div></div>
-                    </td>
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
 
-                    <td style="width: 22px; vertical-align: middle;" *ngIf="HasExcelExportButton">
-                      <button class="Button" (click)="btnExcelCLicked()"><img class="CenterCenter" title="Export To Excel" src="./Images/Buttons/excelicon.png" /></button>
-                    </td>
+                        <td style="width: 22px; vertical-align: middle;" *ngIf="HasExcelExportButton">
+                            <button class="Button" (click)="btnExcelCLicked()"><img class="CenterCenter" title="Export To Excel" src="./Images/Buttons/excelicon.png" /></button>
+                        </td>
 
-                    <td style="width: 10px;" *ngIf="HasExcelExportButton">
-                      <div></div>
-                    </td>
+                        <td style="width: 10px;" *ngIf="HasExcelExportButton">
+                            <div></div>
+                        </td>
 
-                    <td *ngIf="IsShowAddFromLibraryLink" style="width: 175px; vertical-align: middle;">
-                      <p (click)="LinkAddDocumentFromLibraryClcik()" class="CustomLink" style="font-size:12px;width:173px;vertical-align:central">Add Document From Library</p>
-                    </td>
+                        <td *ngIf="IsShowAddFromLibraryLink" style="width: 175px; vertical-align: middle;">
+                            <p (click)="LinkAddDocumentFromLibraryClcik()" class="CustomLink" style="font-size:12px;width:173px;vertical-align:central">Add Document From Library</p>
+                        </td>
 
-                    <td *ngIf="IsShowAddQuoteTemplateFromLibraryLink" style="width: 175px; vertical-align: middle;">
-                      <p (click)="LinkAddQuoteTemplateFromLibraryClcik()" class="CustomLink" style="font-size:12px;width:173px;vertical-align:central">{{'QuoteTemplate.B.Addtemplatefromlibrary' | TextCodeTranslationPipe}}
-                        </p>
-                    </td>
+                        <td *ngIf="IsShowAddQuoteTemplateFromLibraryLink" style="width: 175px; vertical-align: middle;">
+                            <p (click)="LinkAddQuoteTemplateFromLibraryClcik()" class="CustomLink" style="font-size:12px;width:173px;vertical-align:central">
+                                {{'QuoteTemplate.B.Addtemplatefromlibrary' | TextCodeTranslationPipe}}
+                            </p>
+                        </td>
 
-                    <td *ngIf="!IsShowTipArea && IsShowTipIcon" style="width: 30px; vertical-align: central;">
-                      <img style="height:30px;width:30px;margin-top:1px" (click)="TipVisibilityChanged('true')" src="./Images/Lamp2.png" />
-                    </td>
+                        <td *ngIf="!IsShowTipArea && IsShowTipIcon" style="width: 30px; vertical-align: central;">
+                            <img style="height:30px;width:30px;margin-top:1px" (click)="TipVisibilityChanged('true')" src="./Images/Lamp2.png" />
+                        </td>
 
-                    <td style="width: 35px;">
-                      <div></div>
-                    </td>
+                        <td style="width: 35px;">
+                            <div></div>
+                        </td>
 
-                    <td style="width: 35px; vertical-align: middle; font-size: 11px; color:  #45494A;">
-                      <span *ngIf="ShowViews"> {{View}} :</span>
-                    </td>
+                        <td style="width: 35px; vertical-align: middle; font-size: 11px; color:  #45494A;">
+                            <span *ngIf="ShowViews"> {{View}} :</span>
+                        </td>
 
-                    <td style="vertical-align: middle;">
-                      <QueryList *ngIf="ShowViews" [ItemsSource]="Queries" [UserItemSource]="UserQueries" [Binding]="'NameTextCodeCode'" [onSelectedQueryChangeEvent]="onSelectedQueryChangeEvent" [SelectedItem]="SelectedQuery" [ObjectTableName]="ObjectTableName" (itemSelectedEvent)="QueryValueChanged($event)" [QueryListSourceChanged]="QueryListSourceChanged" (QueriesChangedEvent)="QueriesChangedEvent($event)" [LoadResourceCompleted]="LoadResourceCompleted" [pubSubAdvanceQueryFiltersService]="AdvanceQFiltersService" (NewViewClosedEvent)="NewViewClosedEvent($event)"></QueryList>
+                        <td style="vertical-align: middle;">
+                            <QueryList *ngIf="ShowViews" [ItemsSource]="Queries" [UserItemSource]="UserQueries" [Binding]="'NameTextCodeCode'" [onSelectedQueryChangeEvent]="onSelectedQueryChangeEvent" [SelectedItem]="SelectedQuery" [ObjectTableName]="ObjectTableName" (itemSelectedEvent)="QueryValueChanged($event)" [QueryListSourceChanged]="QueryListSourceChanged" (QueriesChangedEvent)="QueriesChangedEvent($event)" [LoadResourceCompleted]="LoadResourceCompleted" [pubSubAdvanceQueryFiltersService]="AdvanceQFiltersService" (NewViewClosedEvent)="NewViewClosedEvent($event)"></QueryList>
 
                             <!--<select style="width: 150px;" [(ngModel)]="SelectedQueryId" (change)="QueryValueChanged($event.target.value)">
                                 <option *ngFor="let q of Queries" [value]="q.Id">{{q.NameTextCodeCode | TextCodeTranslationPipe}}</option>
@@ -259,61 +287,61 @@
                                     </div>
                                 </div>
                             </div>-->
-                    </td>
+                        </td>
 
-                    <td>
-                      <div></div>
-                    </td>
-
-
-                    <td style="width: 1px;" *ngIf="IsNavigateButtonVisible">
-                      <button *ngIf="IsNavigateButtonVisible" style="min-width: 95px; padding-left: 5px; padding-right: 5px;" class="Button" (click)="Navigate()">Navigate</button>
-                    </td>
-
-                    <td style="width: 5px;">
-                      <div></div>
-                    </td>
-
-                    <td style="width: 250px; vertical-align: middle;">
-                      <SearchTextBox [IsDisabled]="SeachBoxIsDisabled" [SearchText]="searchFields" [ObjectTableName]="ObjectTableName" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)"></SearchTextBox>
-                    </td>
+                        <td>
+                            <div></div>
+                        </td>
 
 
-                    <td style="width: 10px;">
-                      <div></div>
-                    </td>
+                        <td style="width: 1px;" *ngIf="IsNavigateButtonVisible">
+                            <button *ngIf="IsNavigateButtonVisible" style="min-width: 95px; padding-left: 5px; padding-right: 5px;" class="Button" (click)="Navigate()">Navigate</button>
+                        </td>
 
-                    <td style="width: 17px; vertical-align: middle; position:relative;">
-                      <img *ngIf="HasFilters == false" src="./Images/FilterGrayTrans.png" style="cursor: pointer;" title="No filters have been set" (click)="onOpenFilterAreaClick()" class="CenterCenter" />
-                      <img *ngIf="HasFilters == true" src="./Images/Filter.png" style="cursor: pointer;" title="Some filters have been set" (click)="onCloseFilterAreaClick()" class="CenterCenter" />
-                    </td>
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
 
-                    <td style="width: 3px;">
-                      <div></div>
-                    </td>
+                        <td style="width: 250px; vertical-align: middle;">
+                            <SearchTextBox [IsDisabled]="SeachBoxIsDisabled" [SearchText]="searchFields" [ObjectTableName]="ObjectTableName" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)"></SearchTextBox>
+                        </td>
 
-                    <td style="width: 12px; vertical-align: middle; position:relative;">
-                      <img *ngIf="IsAdvancedSearchOpened == false" src="./Images/FiltersOpen.png" style="cursor: pointer;" (click)="onOpenFilterAreaClick()" class="CenterCenter" />
-                      <img *ngIf="IsAdvancedSearchOpened == true" src="./Images/FiltersClose.png" style="cursor: pointer;" (click)="onCloseFilterAreaClick()" class="CenterCenter" />
-                    </td>
 
-                    <td style="width: 10px;">
-                      <div></div>
-                    </td>
+                        <td style="width: 10px;">
+                            <div></div>
+                        </td>
 
-                    <td style="width: 1px; vertical-align: middle;">
-                      <div style="height: 100%; background: #DADADA;"></div>
-                    </td>
+                        <td style="width: 17px; vertical-align: middle; position:relative;">
+                            <img *ngIf="HasFilters == false" src="./Images/FilterGrayTrans.png" style="cursor: pointer;" title="No filters have been set" (click)="onOpenFilterAreaClick()" class="CenterCenter" />
+                            <img *ngIf="HasFilters == true" src="./Images/Filter.png" style="cursor: pointer;" title="Some filters have been set" (click)="onCloseFilterAreaClick()" class="CenterCenter" />
+                        </td>
 
-                    <td style="width: 10px;">
-                      <div></div>
-                    </td>
+                        <td style="width: 3px;">
+                            <div></div>
+                        </td>
 
-                    <td style="width: 15px; vertical-align: middle; position:relative;">
-                      <img *ngIf="IsAdvancedSearchOpened == true" src="./Images/Columns.png" (click)="onColumnsClick()" title="Add/Remove columns" style="cursor: pointer;pointer-events:none;opacity:0.5" class="CenterCenter" />
-                      <img *ngIf="IsAdvancedSearchOpened == false" src="./Images/Columns.png" (click)="onColumnsClick()" title="Add/Remove columns" style="cursor: pointer;" class="CenterCenter" />
-                    </td>
-                  </tr>
+                        <td style="width: 12px; vertical-align: middle; position:relative;">
+                            <img *ngIf="IsAdvancedSearchOpened == false" src="./Images/FiltersOpen.png" style="cursor: pointer;" (click)="onOpenFilterAreaClick()" class="CenterCenter" />
+                            <img *ngIf="IsAdvancedSearchOpened == true" src="./Images/FiltersClose.png" style="cursor: pointer;" (click)="onCloseFilterAreaClick()" class="CenterCenter" />
+                        </td>
+
+                        <td style="width: 10px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 1px; vertical-align: middle;">
+                            <div style="height: 100%; background: #DADADA;"></div>
+                        </td>
+
+                        <td style="width: 10px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 15px; vertical-align: middle; position:relative;">
+                            <img *ngIf="IsAdvancedSearchOpened == true" src="./Images/Columns.png" (click)="onColumnsClick()" title="Add/Remove columns" style="cursor: pointer;pointer-events:none;opacity:0.5" class="CenterCenter" />
+                            <img *ngIf="IsAdvancedSearchOpened == false" src="./Images/Columns.png" (click)="onColumnsClick()" title="Add/Remove columns" style="cursor: pointer;" class="CenterCenter" />
+                        </td>
+                    </tr>
                 </table>
             </td>
         </tr>
@@ -338,11 +366,11 @@
                 <div class="CellContent">
                     <!--<div class="GeneratedGridContainer">-->
                     <!--*ngIf="!DestroyMe" only in customs-->
-                    <logitude-grid [dataSource]="dataSource" [QueryChangeEvent]="onQueryChangeEvent" [pubSubAdvanceQueryFiltersServiceRecived]="pubSubAdvanceQueryFiltersServiceRecived" [Filterchangeevent]="Filterchangeevent" 
+                    <logitude-grid [dataSource]="dataSource" [QueryChangeEvent]="onQueryChangeEvent" [pubSubAdvanceQueryFiltersServiceRecived]="pubSubAdvanceQueryFiltersServiceRecived" [Filterchangeevent]="Filterchangeevent"
                                    [rows]="items" [SearchFieldchangeevent]="SearchFieldchangeevent" [MenuHeaderchangeevent]="MenuHeaderchangeevent"
                                    [columns]="columns" (ColumnResisedevent)="ColumnResisedevent($event)" (MenuHeaderchanged)="onMenuHeaderchanged($event)"
                                    [ObjectTable]="ObjectTable" [ColumnsReady]="ColumnsReady" [HasPermition]="HasPermition"
-                                   [rowCount]="rowCount" [searchFields]="searchFields" [queryId]="SelectedQueryId" (rowSelectedEvent)="onRowSelected($event)" 
+                                   [rowCount]="rowCount" [searchFields]="searchFields" [queryId]="SelectedQueryId" (rowSelectedEvent)="onRowSelected($event)"
                                    (AfterViewInitCompleted)="ViewInitCompleted($event)" [ReattachToDetection]="ReattachToDetection" [MyScrollTop]="MyScrollTop" [MySelectedRowIndex]="MySelectedRowIndex" [SortServerProp]="SortServerProp" (SortInvoked)="OnSortInvoked($event)">
                     </logitude-grid>
                     <!--</div>-->
