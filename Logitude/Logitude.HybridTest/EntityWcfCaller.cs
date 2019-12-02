@@ -6,15 +6,15 @@ namespace Logitude.HybridTest.WcfCallers
     {
         public static Response CallEntityUpsert<T>(T entityPM)
         {
-            string ServiceNamePM = entityPM.GetType().Name; //ServiceNamePM = entityPM
-            ServiceNamePM = ServiceNamePM.Substring(0, ServiceNamePM.Length - 2);//ServiceName = entity
-            if (ServiceNamePM == "CountryCity")
+            string entityPMName = entityPM.GetType().Name; //ServiceNamePM = entityPM
+            string serviceName = entityPMName.Substring(0, entityPMName.Length - 2);//ServiceName = entity
+            if (serviceName == "CountryCity")
             {
-                ServiceNamePM = ServiceNamePM.Substring(7);
+                serviceName = serviceName.Substring(7);
             }
             InvokedProperties serviceProperties = new InvokedProperties
             {
-                ServiceName = ServiceNamePM,
+                ServiceName = serviceName,
                 ServiceOperation = "Upsert",
                 ServiceType = entityPM.GetType(),
             };

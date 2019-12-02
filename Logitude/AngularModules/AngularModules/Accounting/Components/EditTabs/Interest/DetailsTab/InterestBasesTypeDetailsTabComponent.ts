@@ -207,9 +207,10 @@ export class InterestBasesPeriodItem extends BaseComponent {
     }
     CheckInterestBaseStartDateExist(InterestBaseStartDate: Date, CreateDate:Date): boolean {
         for (let i = 0; i < this.DataContext.fatherComponent.InterestBasesPeriodsList.Length; i++) {
-            if (this.DataContext.fatherComponent.InterestBasesPeriodsList.Collection[i].InterestBaseStartDate.getTime() === InterestBaseStartDate.getTime()) {
+            if (new Date(this.DataContext.fatherComponent.InterestBasesPeriodsList.Collection[i].InterestBaseStartDate).getTime() === new Date(InterestBaseStartDate).getTime()) {
+                var idont; 
                 if (!this.IsNewEntity) {
-                    if (this.DataContext.fatherComponent.InterestBasesPeriodsList.Collection[i].CreateDate.getTime() != CreateDate.getTime()) {
+                    if (new Date(this.DataContext.fatherComponent.InterestBasesPeriodsList.Collection[i].CreateDate).getTime() != new Date(CreateDate).getTime()) {
                         return false;
                     }
                 }
@@ -225,24 +226,28 @@ export class InterestBasesPeriodItem extends BaseComponent {
     set InterestBaseStartDate(newValue: Date) {
         if (newValue && !this.CheckInterestBaseStartDateExist(newValue, this.CreateDate))
             this.UIProperties.SetValidity("InterestBaseStartDate", "InterestBasesPeriod", false, TextCodeTranslator.Translate("Accounting.General.O.AbaseperiodwiththesamestartdateisalreadyAdded"));
-        else
+        else {
             this.UIProperties.SetValidity("InterestBaseStartDate", "InterestBasesPeriod", true, TextCodeTranslator.Translate("Accounting.General.O.AbaseperiodwiththesamestartdateisalreadyAdded"));
-
-        if (this.EntityPM.InterestBaseStartDate != newValue) {
-            this.EntityPM.InterestBaseStartDate = newValue;
+            if (this.EntityPM.InterestBaseStartDate != newValue) {
+                this.EntityPM.InterestBaseStartDate = newValue;
+            }
         }
+
+
 
     }
 
     get InterestRate() { return this.EntityPM.InterestRate; }
     set InterestRate(newValue: number) {
-         if (newValue && !this.CheckInterestRateValid(newValue))
+        if (newValue && !this.CheckInterestRateValid(newValue))
             this.UIProperties.SetValidity("InterestRate", "InterestBasesPeriod", false, TextCodeTranslator.Translate("Accounting.General.O.Theratepercentageshouldbeformattedas00.00"));
-        else
+        else {
             this.UIProperties.SetValidity("InterestRate", "InterestBasesPeriod", true, TextCodeTranslator.Translate("Accounting.General.O.Theratepercentageshouldbeformattedas00.00"));
-        if (this.EntityPM.InterestRate != newValue) {
-            this.EntityPM.InterestRate = newValue;
+            if (this.EntityPM.InterestRate != newValue) {
+                this.EntityPM.InterestRate = newValue;
+            }
         }
+
     }
 
     get LineNumber() { return this.EntityPM.LineNumber; }
