@@ -8,6 +8,6 @@ namespace Logitude.IntegrationTest.FullAccounting
 {
     public class PreparationVariables
     {
-        public string ChartOfAccountCode { get { return "rev1"; } }
+        public string ChartOfAccountCode { get { return "1PMCF"; } }
     }
 }

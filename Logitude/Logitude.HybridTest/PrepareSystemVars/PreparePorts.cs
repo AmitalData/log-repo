@@ -79,7 +79,7 @@ namespace Logitude.HybridTest.WcfCallers
             };
 
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { filters, TestEnvironmentGlobalParameters.Tenant1, serviceResponse };
+            object[] serviceParameters = new object[] { filters, EnvironmentGlobalParams.MainTenant, serviceResponse };
             PortList[] ports = (PortList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.Result);
@@ -95,7 +95,7 @@ namespace Logitude.HybridTest.WcfCallers
         }
         private static void CopyPortFromTenant0ToTestTenant(PortList portPM)
         {
-            portPM.Tenant = TestEnvironmentGlobalParameters.Tenant1;
+            portPM.Tenant = EnvironmentGlobalParams.MainTenant;
             portPM.AddedManually = true;
             AssertResponse(portPM);
         }

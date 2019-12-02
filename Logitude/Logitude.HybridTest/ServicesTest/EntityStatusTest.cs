@@ -20,7 +20,7 @@ namespace Logitude.HybridTest.ServicesTest
                 InActive = false,
                 ObjectTableName = "Shipment",
                 StatusWeight = 0,
-                Tenant = TestEnvironmentGlobalParameters.Tenant1,
+                Tenant = EnvironmentGlobalParams.MainTenant,
             };
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(entityStatusPM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);

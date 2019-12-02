@@ -443,6 +443,11 @@ export class APPaymentPM {
     public set CancelationNotes(newValue: string) { if (this.cancelationNotes != newValue) { this.cancelationNotes = newValue; this.MarkAsDirty("CancelationNotes"); } }
        
 	 
+    private voidedByJournalNumber: string;
+    public get VoidedByJournalNumber() { return this.voidedByJournalNumber; }
+    public set VoidedByJournalNumber(newValue: string) { if (this.voidedByJournalNumber != newValue) { this.voidedByJournalNumber = newValue; this.MarkAsDirty("VoidedByJournalNumber"); } }
+       
+	 
 
     public OldEntityPM: APPaymentPM;
 		

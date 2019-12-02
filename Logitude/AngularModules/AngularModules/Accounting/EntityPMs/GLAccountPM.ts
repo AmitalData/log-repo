@@ -559,6 +559,11 @@ export class GLAccountPM {
     public set PartnerTypeId(newValue: string) { if (this.partnerTypeId != newValue) { this.partnerTypeId = newValue; this.MarkAsDirty("PartnerTypeId"); } }
        
 	 
+    private allowEditChequePayToName: boolean;
+    public get AllowEditChequePayToName() { return this.allowEditChequePayToName; }
+    public set AllowEditChequePayToName(newValue: boolean) { if (this.allowEditChequePayToName != newValue) { this.allowEditChequePayToName = newValue; this.MarkAsDirty("AllowEditChequePayToName"); } }
+       
+	 
 
     public OldEntityPM: GLAccountPM;
 		
