@@ -17,7 +17,7 @@ namespace Logitude.HybridTest.ServicesTest
                 Code = HybridData.SpecialServicesTypeCodeHSST,
                 EnglishName = "Hybrid SpecialServicesType",
                 LocalName = "Hybrid SpecialServicesType",
-                Tenant = TestEnvironmentGlobalParameters.Tenant1,
+                Tenant = EnvironmentGlobalParams.MainTenant,
             };
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(specialServicesTypePM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);

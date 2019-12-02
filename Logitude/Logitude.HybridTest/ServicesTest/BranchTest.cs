@@ -25,7 +25,7 @@ namespace Logitude.HybridTest.ServicesTest
                 Code = HybridData.BranchCodeHBRA,
                 EnglishName = "Hybrid Branch",
                 LocalName = "Hybrid Branch",
-                Tenant = TestEnvironmentGlobalParameters.Tenant1,
+                Tenant = EnvironmentGlobalParams.MainTenant,
             };
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(branchPM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);

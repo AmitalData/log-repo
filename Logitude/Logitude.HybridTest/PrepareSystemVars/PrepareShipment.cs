@@ -44,7 +44,7 @@ namespace Logitude.HybridTest.WcfCallers
                 SearchFields = HybridData.CurrencyCodeEUR,
             };
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { filters, TestEnvironmentGlobalParameters.Tenant1, serviceResponse };
+            object[] serviceParameters = new object[] { filters, EnvironmentGlobalParams.MainTenant, serviceResponse };
             CurrencyList[] currencies = (CurrencyList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);
@@ -60,7 +60,7 @@ namespace Logitude.HybridTest.WcfCallers
         }
         private static void CopyCurrencyFromTenant0ToTestTenant(CurrencyList currencyPM)
         {
-            currencyPM.Tenant = TestEnvironmentGlobalParameters.Tenant1;
+            currencyPM.Tenant = EnvironmentGlobalParams.MainTenant;
             currencyPM.AddedManually = true;
             AssertResponse(currencyPM);
         }
@@ -114,7 +114,7 @@ namespace Logitude.HybridTest.WcfCallers
                 Name = "LDE Incoterm",
                 Freight = "P",
                 OtherCharges = "C",
-                Tenant = TestEnvironmentGlobalParameters.Tenant1
+                Tenant = EnvironmentGlobalParams.MainTenant
             };
             Response serviceResponse = AssertResponse(incotermPM);
             return serviceResponse.Result;
@@ -139,7 +139,7 @@ namespace Logitude.HybridTest.WcfCallers
                 ServiceFilterType = null,
             };
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { TestEnvironmentGlobalParameters.Tenant1, 0, 10, serviceResponse };
+            object[] serviceParameters = new object[] { EnvironmentGlobalParams.MainTenant, 0, 10, serviceResponse };
             ChargesTypeList[] chargesTypes = (ChargesTypeList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get Charge Types Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get Charge Types Failed! " + serviceResponse.ErrorMessage);
@@ -173,7 +173,7 @@ namespace Logitude.HybridTest.WcfCallers
                 EnglishName = "Alaska",
                 LocalName = "Alaska",
                 CountryId = HybridData.CountryCodeUS,
-                Tenant = TestEnvironmentGlobalParameters.Tenant1,
+                Tenant = EnvironmentGlobalParams.MainTenant,
             };
             Response serviceResponse = AssertResponse(statePM);
             HybridData.StateIdAK = serviceResponse.Result;
@@ -188,10 +188,10 @@ namespace Logitude.HybridTest.WcfCallers
                 CityName = "Washnton",
                 CountryCode = HybridData.CountryCodeUS,
                 PartnerTypeId = "AG",
-                Tenant = TestEnvironmentGlobalParameters.Tenant1,
+                Tenant = EnvironmentGlobalParams.MainTenant,
             };
             agentPM.Addresses.Add(new AddressPM {
-                Tenant = TestEnvironmentGlobalParameters.Tenant1,
+                Tenant = EnvironmentGlobalParams.MainTenant,
                 Description = "Main Address",
                 City = "Washnton",
                 StateCode = HybridData.StateCodeAK,
@@ -218,7 +218,7 @@ namespace Logitude.HybridTest.WcfCallers
                 Email = "HybridContact@logitudeworld.com",
                 Password = "!H0",
                 ExternalId = HybridData.ContactCode,
-                Tenant = TestEnvironmentGlobalParameters.Tenant1,
+                Tenant = EnvironmentGlobalParams.MainTenant,
             };
             Response serviceResponse = AssertResponse(contactPM);
             HybridData.StateIdAK = serviceResponse.Result;
@@ -232,7 +232,7 @@ namespace Logitude.HybridTest.WcfCallers
                 LocalName = "Hybrid Vessel",
                 IMOCode = "IMOCode HV",
                 AddedManually = true,
-                Tenant = TestEnvironmentGlobalParameters.Tenant1,
+                Tenant = EnvironmentGlobalParams.MainTenant,
             };
             Response serviceResponse = AssertResponse(vesselPM);
             HybridData.VesselIdHV = serviceResponse.Result;
@@ -246,7 +246,7 @@ namespace Logitude.HybridTest.WcfCallers
                 LocalName = "Hybrid Vendor",
                 CountryCode = HybridData.CountryCodeUS,
                 PartnerTypeId = "VD",
-                Tenant = TestEnvironmentGlobalParameters.Tenant1,
+                Tenant = EnvironmentGlobalParams.MainTenant,
             };
             vendorPM.Addresses.Add(new AddressPM
             {

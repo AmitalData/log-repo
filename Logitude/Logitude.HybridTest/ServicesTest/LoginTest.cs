@@ -10,7 +10,7 @@ namespace Logitude.HybridTest.ServicesTest
         [TestMethod]
         public void Test_Login_With_Valid_APICredintials()
         {
-            var apiCred = new APICredentialsParameters() { PrimaryKey = TestEnvironmentGlobalParameters.APICredential_PrimaryKey1, SecondaryKey = TestEnvironmentGlobalParameters.APICredential_SecondaryKey1, Tenant = TestEnvironmentGlobalParameters.Tenant1 };
+            var apiCred = new APICredentialsParameters() { PrimaryKey = EnvironmentGlobalParams.MainTenant_APICredential_PrimaryKey, SecondaryKey = EnvironmentGlobalParams.MainTenant_APICredential_SecondaryKey, Tenant = EnvironmentGlobalParams.MainTenant };
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "Login",
@@ -22,7 +22,7 @@ namespace Logitude.HybridTest.ServicesTest
             object[] serviceParameters = new object[] { "", apiCred };
             Response loginResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             if (!loginResponse.HasError)
-                TestEnvironmentGlobalParameters.Token1 = loginResponse.Result;
+                EnvironmentGlobalParams.MainToken = loginResponse.Result;
             else
                 Assert.Fail("Login Failed");
             Assert.IsNotNull(loginResponse.Result, "The Token returned is null " + loginResponse.ErrorMessage);
@@ -31,7 +31,7 @@ namespace Logitude.HybridTest.ServicesTest
         [TestMethod]
         public void Test_Login_With_Invalid_APICredintials()
         {
-            var apiCred = new APICredentialsParameters() { PrimaryKey = "1111", SecondaryKey = "2222", Tenant = TestEnvironmentGlobalParameters.Tenant1 };
+            var apiCred = new APICredentialsParameters() { PrimaryKey = "1111", SecondaryKey = "2222", Tenant = EnvironmentGlobalParams.MainTenant };
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "Login",

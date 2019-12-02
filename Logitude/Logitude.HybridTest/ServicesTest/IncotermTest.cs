@@ -20,7 +20,7 @@ namespace Logitude.HybridTest.ServicesTest
                 LocalName = "Hybrid Incoterm",
                 Freight = "C",
                 OtherCharges = "C",
-                Tenant = TestEnvironmentGlobalParameters.Tenant1
+                Tenant = EnvironmentGlobalParams.MainTenant
             };
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(incotermPM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);

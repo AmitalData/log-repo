@@ -18,7 +18,7 @@ namespace Logitude.HybridTest.ServicesTest
                 LocalName = "Hybrid Vendor",
                 CountryCode = HybridData.CountryCodeUS,
                 PartnerTypeId = "VD",
-                Tenant = TestEnvironmentGlobalParameters.Tenant1,
+                Tenant = EnvironmentGlobalParams.MainTenant,
             };
             vendorPM.Addresses.Add(new AddressPM
             {

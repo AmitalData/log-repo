@@ -29,7 +29,7 @@ namespace Logitude.HybridTest.ServicesTest
                 MeasurementShortName = HybridData.PackageTypeCodeHPT + " Hybrid Package Type",
                 AddedManually = true,
                 PrintAs = HybridData.PackageTypeCodeHPT,
-                Tenant = TestEnvironmentGlobalParameters.Tenant1,
+                Tenant = EnvironmentGlobalParams.MainTenant,
             };
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(packageTypePM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
@@ -54,7 +54,7 @@ namespace Logitude.HybridTest.ServicesTest
             };
 
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { filters, TestEnvironmentGlobalParameters.Tenant1, serviceResponse };
+            object[] serviceParameters = new object[] { filters, EnvironmentGlobalParams.MainTenant, serviceResponse };
             PackageTypeList[] packageTypes = (PackageTypeList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.Result);
