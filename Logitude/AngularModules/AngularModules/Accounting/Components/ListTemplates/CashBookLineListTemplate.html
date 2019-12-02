@@ -1,0 +1,36 @@
+<style>
+    .red {
+        color: red !important;
+    }
+</style>
+
+<!-- DueDate -->
+<div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming"
+    *ngIf="fieldName == 'DueDate'">
+    {{ rowData[fieldName] | DateTimePipe:'SD' }}
+</div>
+
+<!-- LocalAmount -->
+<div class="TextTrimming" *ngIf="fieldName == 'LocalAmount'"
+    style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;"
+    [class.red]='rowData["LocalAmount"]<0'>
+    {{ rowData[fieldName] | NumbersPipe:'N2' }}
+</div>
+
+<!-- ForeignAmount -->
+<div class="TextTrimming" *ngIf="fieldName == 'ForeignAmount'"
+    style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;"
+    [class.red]='rowData["ForeignAmount"]<0'>
+    {{ rowData[fieldName] | NumbersPipe:'N2' }}
+</div>
+
+<!-- ARPaymentNumber -->
+<div class="TextTrimming" *ngIf="fieldName == 'ARPaymentNumber'" text-start>
+    <a href="javascript:;" (click)="OpenARPayment(rowData.ARPaymentId)">{{rowData.ARPaymentNumber}}</a>
+</div>
+
+<!-- textTrimming Fields -->
+<div class="TextTrimming" *ngIf="fieldName == 'ChequeNumber' || fieldName == 'ARPChequeStatusName' || fieldName == 'AccountNumber' || fieldName == 'Bank' || fieldName == 'Branch'"
+    text-start>
+    {{ rowData[fieldName] }}
+</div>

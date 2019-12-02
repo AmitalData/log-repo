@@ -28,6 +28,7 @@ import { ReconcileCurrencyTypeListService } from './Services/StandardLists/Recon
 import { ReconcileMethodListService } from './Services/StandardLists/ReconcileMethodListService';
 import { ReconciliationListService } from './Services/StandardLists/ReconciliationListService';
 import { ReconciliationLineListService } from './Services/StandardLists/ReconciliationLineListService';
+import { CashBookLineListService } from './Services/StandardLists/CashBookLineListService';
 import { RevenueExpenseTypeListService } from './Services/StandardLists/RevenueExpenseTypeListService';
 import { TestEntityListService } from './Services/StandardLists/TestEntityListService';
 import { TaxReportListService } from './Services/StandardLists/TaxReportListService';
@@ -97,6 +98,7 @@ import { BankDepositExtendedListService } from './Services/ExtendedLists/BankDep
 
 
 import { ReconciliationExtendedPMService } from './Services/ExtendedPMs/ReconciliationExtendedPMService';
+import { CashBookExtendedPMService } from './Services/ExtendedPMs/CashBookExtendedPMService';
 import { JournalOpService } from './Services/Others/JournalOpService';
 import { BankAccountExtendedListService } from './Services/ExtendedLists/BankAccountExtendedListService';
 import { ReconcileExternalPageListService } from './Services/StandardLists/ReconcileExternalPageListService';
@@ -159,6 +161,7 @@ export class ModuleProviders {
             case "ReconcileMethodListService": { myResult = new ReconcileMethodListService(); break; }
             case "ReconciliationListService": { myResult = new ReconciliationListService(); break; }
             case "ReconciliationLineListService": { myResult = new ReconciliationLineListService(); break; }
+            case "CashBookLineListService": { myResult = new CashBookLineListService(); break; }
             case "RevenueExpenseTypeListService": { myResult = new RevenueExpenseTypeListService(); break; }
             case "TestEntityListService": { myResult = new TestEntityListService(); break; }
             case "TestEntityListService": { myResult = new TestEntityListService(); break; }
@@ -239,6 +242,7 @@ export class ModuleProviders {
             case "BankDepositExtendedListService": { myResult = new BankDepositExtendedListService(); break; }
             case "BankAccountExtendedListService": { myResult = new BankAccountExtendedListService(); break; }
             case "ReconciliationExtendedPMService": { myResult = new ReconciliationExtendedPMService(); break; }
+            case "CashBookExtendedPMService": { myResult = new CashBookExtendedPMService(); break; }
             case "JournalOpService": { myResult = new JournalOpService(); break; }
             case "ReconcileExternalPageListService": { myResult = new ReconcileExternalPageListService(); break; }
             case "TaxWithholdingAssessOfficeListService": { myResult = new TaxWithholdingAssessOfficeListService(); break; }
