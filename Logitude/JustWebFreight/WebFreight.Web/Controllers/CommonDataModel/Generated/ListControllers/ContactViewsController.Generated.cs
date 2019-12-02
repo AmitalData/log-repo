@@ -73,9 +73,23 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
 					ContactQuery contactQuery = new ContactQuery(contactRepository);
 					IQueryable<Contact> iQueryable = singleEntityList.AsQueryable();
-					IQueryable<ContactList> iQueryableEntityList = contactQuery.GetIQueryableEntityList(iQueryable);
-				    entityList = iQueryableEntityList.FirstOrDefault();
+					//IQueryable<ContactList> iQueryableEntityList = contactQuery.GetIQueryableEntityList(iQueryable);
 
+                    IQueryable<ContactList> iQueryableEntityList = null;
+                    UserRepository userRepository = new UserRepository(MyContext);
+                    UserQuery userQuery = new UserQuery(userRepository);
+
+                    string loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser();
+                    UserPM loggedUser = userQuery.GetSingleUserPMByEmail(loggedUserEmail, authToken.Tenant, true);
+                    if (loggedUser != null && !loggedUser.IsCustomerCare && authToken.Tenant == 65)
+                    {
+                        iQueryableEntityList = contactQuery.GetDemoTenantContactList(iQueryable, loggedUser.Id, authToken.Tenant);
+                    }
+                    else
+                    {
+                        iQueryableEntityList = contactQuery.GetIQueryableEntityList(iQueryable);
+                    }
+                    entityList = iQueryableEntityList.FirstOrDefault();
 			    }
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
