@@ -38,6 +38,7 @@ namespace WebFreight.Web.WebServices
     {
         private int tenant;
         private WebServiceHelper myServicHelper;
+        private IShipmentsContext shipmentsContext;
 
         [WebMethod]
         public byte[] GetFBLData(string shipmentId, int tenant, string documentTypeCopyId)
@@ -62,7 +63,7 @@ namespace WebFreight.Web.WebServices
         {
             FBLDataProvider myDataProvider = new FBLDataProvider();
 
-            IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
+            shipmentsContext = ShipmentsContext.GetContext(tenant);
             IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
 
@@ -1445,6 +1446,7 @@ namespace WebFreight.Web.WebServices
                                 break;
                             }
                     }
+                    myDataProvider.DeliveryInstructions = myLastDelivery.Notes != null ? myLastDelivery.Notes : "";
                 }
                 #endregion
 
@@ -1989,6 +1991,11 @@ namespace WebFreight.Web.WebServices
 
                 CustomFieldResolver customFieldResolver = new CustomFieldResolver();
                 customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipment, myDataProvider);
+                ShipmentPickUpDelivery lastPickUp = GetLastPickUp(shipment.Id);
+                if (lastPickUp != null)
+                {
+                    myDataProvider.PickUpInstructions = lastPickUp.Notes != null ? lastPickUp.Notes : "";
+                }
             }
 
             //------------------------------------------------
@@ -2063,7 +2070,12 @@ namespace WebFreight.Web.WebServices
 
             return myDataProvider;
         }
-
+        private ShipmentPickUpDelivery GetLastPickUp(string shipmentId)
+        {
+            return (from pickUp in shipmentsContext.ShipmentPickUpDeliveries
+                    where pickUp.ShipmentId == shipmentId && pickUp.PickUpDeliveryTypeCode == "PICK"
+                    select pickUp).OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
+        }
         private void GetInsidePackagesData(IShipmentsContext context, ShipmentPackage package, ShipmentPM shipment, PackageLine line)
         {
             List<InsideShipmentPackage> insidePackages = context.InsideShipmentPackages.Include("PackageType").Where(d => d.ShipmentPackageId == package.Id && d.Tenant == package.Tenant).ToList();

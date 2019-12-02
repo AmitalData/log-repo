@@ -23,8 +23,8 @@ namespace Logitude.HybridTest.WcfFactory
             OpenDate = DateTime.Now,
             UpdateDate = DateTime.Now,
             SaleCurrencyId = HybridData.CurrencyCodeHCR,
-            Tenant = TestEnvironmentGlobalParameters.Tenant,
-            BusinessUnitId = TestEnvironmentGlobalParameters.Tenant.ToString(),
+            Tenant = TestEnvironmentGlobalParameters.Tenant1,
+            BusinessUnitId = TestEnvironmentGlobalParameters.Tenant1.ToString(),
             TransportModeId = "A", //A:Air, O:Occean, I:Inland
             DirectionId = "E", //I:Import, E:Export, D:Drop, R:Drop, C:Customs Import
             QuoteTypeCode = "A", //A:Spot Rate, P:Routing Rate

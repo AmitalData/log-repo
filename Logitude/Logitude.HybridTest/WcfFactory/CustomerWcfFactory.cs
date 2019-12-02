@@ -18,7 +18,7 @@ namespace Logitude.HybridTest.WcfFactory
             Notes = "TestShipperExport1",
             VatNumber = "TestShipper1Unique",
             PartnerTypeId = "CS",
-            Tenant = TestEnvironmentGlobalParameters.Tenant,
+            Tenant = TestEnvironmentGlobalParameters.Tenant1,
         };
 
         public static CustomerPM GetCustomerPM() {
@@ -34,8 +34,7 @@ namespace Logitude.HybridTest.WcfFactory
                 Address2 = "A400",
                 Name = "TestShipperExport1Address",
                 CountryCode = HybridData.CountryCodeUS,
-                Tenant = TestEnvironmentGlobalParameters.Tenant,
-
+                Tenant = TestEnvironmentGlobalParameters.Tenant1,
             });
             return customerPM;
         }

@@ -1,4 +1,5 @@
-﻿import {Injectable} from '@angular/core';
+﻿import { CustomFieldClass } from './../../../Infrastructure/DataContracts/CustomFieldClass';
+import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -255,12 +256,19 @@ export class ReconciliationExtendedPMService {
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
 
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
-
             return this._http.get(this._apiUrl + '/GetSingleWithoutLines?id=' + id , { headers: authHeader })
                 .map((res) => {
-                    serviceResponse.Result = res.json();
+
+                    var pm = res.json();
+
+                    var entity: ReconciliationPM;
+                    if (pm) {
+                        entity = this.MapJsonToEntityPM(pm);
+                    }
+
+                    var serviceResponse: ServiceResponse = new ServiceResponse();
+                    serviceResponse.Result = entity;
+
                     return serviceResponse;
                 })
                     .catch(ServiceHelper.HandleServiceError);
@@ -275,104 +283,146 @@ export class ReconciliationExtendedPMService {
             entityPM = new ReconciliationPM();
         }
 
-        var jsonPMKeys = Object.keys(jsonPM);
+		var customFields: Array<string> = [];
+        for (var i = 1; i < 11; i++) {
+            customFields.push("Field" + i);
+        }
+            var jsonPMKeys = Object.keys(jsonPM);
 
-        for (var key in jsonPMKeys) {
-            if (jsonPMKeys[key] === "UIProperties") {
+            for (var key in jsonPMKeys) {
+			 if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
 
                 continue;
             }
-            var property = jsonPMKeys[key];
-            entityPM[property] = jsonPM[property];
+                var property = jsonPMKeys[key];
+
+			  if(customFields.indexOf(property) > -1)
+                {
+                if (jsonPM[property]) {
+                    var customFieldClass: CustomFieldClass = new CustomFieldClass(jsonPM[property].Value, jsonPM[property].FieldName, jsonPM[property].TableName);
+                    entityPM[property] = customFieldClass;
+                }
+            }
+            else {
+                entityPM[property] = jsonPM[property];
+            }
+
+            }
+
+               this.MapReconciliationLines(entityPM, jsonPM, mapParent); // Call composition tables map methods
+
+
+
+		if (mapParent) {
+                entityPM.OldEntityPM = this.clone(entityPM);
+
+            entityPM.OldEntityPM.ReconciliationLines = [];
+            for (var item in entityPM.ReconciliationLines) {
+            var myReconciliationLinePM = entityPM.ReconciliationLines[item];
+            var newReconciliationLinePM: ReconciliationLinePM = this.clone(myReconciliationLinePM);
+
+
+            entityPM.OldEntityPM.ReconciliationLines.push(newReconciliationLinePM);
+            }
+
+		}
+        else {
+
+            entityPM.OldEntityPM = null;
         }
+		entityPM.IsDirty = false;
+        return entityPM;
+    }
+
+    MapReconciliationLines(entityPM: ReconciliationPM, jsonPM: any, mapParent: boolean = true) {
 
         var oldReconciliationLines: ReconciliationLinePM[] = [];
         if (entityPM.OldEntityPM && !mapParent) {
             oldReconciliationLines = entityPM.OldEntityPM.ReconciliationLines;
         }
 
-
         entityPM.ReconciliationLines = new Array<ReconciliationLinePM>();
         for (var item in jsonPM.ReconciliationLines) {
-
             var jItem = jsonPM.ReconciliationLines[item];
             if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
                 continue;
             }
             var newReconciliationLinePM: ReconciliationLinePM;
+
             if (mapParent) {
                 newReconciliationLinePM = new ReconciliationLinePM(entityPM);
             }
-            else {
+            else
+            {
                 newReconciliationLinePM = new ReconciliationLinePM(null);
             }
 
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
-
-                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties") {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
                 var pmProperty = pmKeysArray[pmKey];
                 newReconciliationLinePM[pmProperty] = jItem[pmProperty];
             }
-            newReconciliationLinePM.IsDirty = false;
+
+
             if (mapParent) {
-                newReconciliationLinePM.OldEntityPM = this.clone(newReconciliationLinePM);
                 newReconciliationLinePM.UniqueKey = Guid.newGuid();
                 newReconciliationLinePM.ChangeSetOp = "None";
                 jItem.ChangeSetOp = "None";
+                newReconciliationLinePM.OldEntityPM = this.clone(newReconciliationLinePM);
+
 
             }
             else {
-
                 if (newReconciliationLinePM.UniqueKey) {
 
                     if (jItem.IsDirty)
                         newReconciliationLinePM.ChangeSetOp = "Update";
                 }
                 else {
-                    newReconciliationLinePM.ChangeSetOp = "Insert";
+                        newReconciliationLinePM.ChangeSetOp = "Insert";
                 }
 
                 newReconciliationLinePM.OldEntityPM = null;
                 newReconciliationLinePM.EntityParentPM = null;
             }
 
-
+			 newReconciliationLinePM.IsDirty = false;
             entityPM.ReconciliationLines.push(newReconciliationLinePM);
         }
-
         if (oldReconciliationLines) {
 
             for (var itemKey in oldReconciliationLines) {
-                if (entityPM.ReconciliationLines.filter(p => p.UniqueKey === oldReconciliationLines[itemKey].UniqueKey).length === 0) {
+                if (entityPM.ReconciliationLines.filter(p=> p.UniqueKey === oldReconciliationLines[itemKey].UniqueKey).length === 0) {
 
                     if (oldReconciliationLines[itemKey]) {
-                        oldReconciliationLines[itemKey].ChangeSetOp = "Delete";
-                        entityPM.ReconciliationLines.push(oldReconciliationLines[itemKey]);
+                        //oldReconciliationLines[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.ReconciliationLines.push(oldReconciliationLines[itemKey]);
+						var oldItemJson = oldReconciliationLines[itemKey];
+                        var deletedPM: ReconciliationLinePM = new ReconciliationLinePM(null);
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+
+                        deletedPM.OldEntityPM = null;
+                        entityPM.ReconciliationLines.push(deletedPM);
                     }
                 }
             }
         }
-
-
-        entityPM.IsDirty = false;
-
-        if (mapParent) {
-            entityPM.OldEntityPM = this.clone(entityPM);
-            entityPM.OldEntityPM.ReconciliationLines = [];
-            for (var m in entityPM.ReconciliationLines) {
-                entityPM.OldEntityPM.ReconciliationLines.push(this.clone(entityPM.ReconciliationLines[m]));
-            }
-
-        }
-        else {
-
-            entityPM.OldEntityPM = null;
-        }
-
-        return entityPM;
     }
 
     MapJsonToLedgerTransactionPM(jsonPM: any, mapParent: boolean = true, entityPM: LedgerTransactionPM = null) {

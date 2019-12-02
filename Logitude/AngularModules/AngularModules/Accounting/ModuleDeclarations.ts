@@ -9,7 +9,7 @@ import {ReceivablePageComponent} from './Components/Workspaces/Receivable/Receiv
 import {PayablePageComponent} from './Components/Workspaces/Payable/PayablePageComponent';
 import {BanksPageComponent} from './Components/Workspaces/Banks/BanksPageComponent';
 import { MiscPageComponent } from './Components/Workspaces/Misc/MiscPageComponent';
-
+import { InterestPageComponent } from './Components/Workspaces/Interest/InterestPageComponent';
 
 
 import {NewGLAccountComponent} from './Components/NewEntity/NewGLAccountComponent';
@@ -44,6 +44,8 @@ import { LoadRecoExPageComponent } from './Components/NewEntity/LoadRecoExPageCo
 import { Generate1000Component } from './Components/Maintenance/Generate1000Component';
 import { Receiving1000Component } from './Components/Maintenance/Receiving1000Component';
 import { AccountingFunctionalTestComponent } from './Components/Maintenance/AccountingFunctionalTestComponent';
+import { ManageExternalReconciliationTabComponent } from './Components/Others/ReconcileExternalPage/ManageExternalReconciliationTabComponent';
+import { ExternalPagesTabComponent } from './Components/Others/ReconcileExternalPage/ExternalPagesTabComponent';
 
 import {GLAccountGeneralTabComponent} from './Components/EditTabs/GLAccount/GLAccountGeneralTabComponent';
 import {GLAccountTransactionsTabComponent} from './Components/EditTabs/GLAccount/GLAccountTransactionsTabComponent';
@@ -91,6 +93,8 @@ import {AccountingFlatFileDownloadComponent} from './Components/Others/Accountin
 import { GLAccountOverviewComponent } from './Components/EditTabs/GLAccount/GLAccountOverviewComponent';
 import { TaxDeductionReportLogTabComponent } from './Components/EditTabs/TaxDeductionReport/TaxDeductionReportLogTabComponent';
 import { NewTaxDeductionReportComponent } from './Components/NewEntity/NewTaxDeductionReportComponent';
+import { AddEditInterestBasesPeriodComponent } from './Components/EditTabs/Interest/DetailsTab/AddEditInterestBasesPeriod/AddEditInterestBasesPeriodComponent';
+import { ExtReconcileAdjustBankFeeComponent } from './Components/Others/ExtReconcileAdjustBankFeeComponent';
 
 // Short Titles
 import {GLAccountShortTitleComponent} from './Components/ShortTitles/GLAccountShortTitleComponent';
@@ -103,6 +107,7 @@ import { TaxReportShortTitleComponent } from './Components/ShortTiTles/TaxReport
 import { EditTaxReportLineComponent } from './Components/EditTabs/TaxReport/EditTaxReportLine/EditTaxReportLineComponent';
 import { NewIntegrityCheckComponent } from './Components/NewEntity/NewIntegrityCheckComponent';
 import { CashBookLineListTemplate } from './Components/ListTemplates/CashBookLineListTemplate';
+import { InterestBasesTypeShortTitleComponent } from './Components/ShortTiTles/InterestBasesTypeShortTitleComponent';
 
 
 export const Components =
@@ -116,7 +121,7 @@ export const Components =
         PayablePageComponent,
         BanksPageComponent,
         MiscPageComponent,
-
+        InterestPageComponent,
         //New Entites
         NewGLAccountComponent,
         NewChartOfAccountComponent,
@@ -175,7 +180,8 @@ export const Components =
         TaxDeductionReportGeneralTabComponent,
         BankPageEventsComponent,
         InterestBasesTypeDetailsTabComponent,
-
+        ManageExternalReconciliationTabComponent,
+        ExternalPagesTabComponent,
         //Templates
         GlAccountLedgerTransactionsListTemplate,
         ReconcileExternalPageListTemplate,
@@ -210,6 +216,9 @@ export const Components =
         IntegrityCheckTabComponent,
         AccountingNoteComponent,
         NewIntegrityCheckComponent,
+        AddEditInterestBasesPeriodComponent,
+        InterestBasesTypeShortTitleComponent,
+        ExtReconcileAdjustBankFeeComponent
     ];
 
 export class ModuleDeclarations {
@@ -228,7 +237,7 @@ export class ModuleDeclarations {
             case "PayablePageComponent": { myResult = PayablePageComponent; break; }
             case "BanksPageComponent": { myResult = BanksPageComponent; break; }
             case "MiscPageComponent": { myResult = MiscPageComponent; break; }
-
+            case "InterestPageComponent":{ myResult = InterestPageComponent; break;}
             //New Entites
             case "NewGLAccountComponent": { myResult = NewGLAccountComponent; break; }
             case "NewChartOfAccountComponent": { myResult = NewChartOfAccountComponent; break; }
@@ -290,7 +299,9 @@ export class ModuleDeclarations {
             case "TaxDeductionReportGeneralTabComponent": { myResult = TaxDeductionReportGeneralTabComponent; break; }
             case "BankPageEventsComponent": { myResult = BankPageEventsComponent; break; }
             case "InterestBasesTypeDetailsTabComponent": { myResult = InterestBasesTypeDetailsTabComponent; break;}
-            //Templates
+            case "ExternalPagesTabComponent": { myResult = ExternalPagesTabComponent; break; }
+
+             //Templates
             case "GlAccountLedgerTransactionsListTemplate": { myResult = GlAccountLedgerTransactionsListTemplate; break; }
             case "ReconcileExternalPageListTemplate": { myResult = ReconcileExternalPageListTemplate; break; }
             case "ReconcileExternalPageLineListTemplate": { myResult = ReconcileExternalPageLineListTemplate; break; }
@@ -324,6 +335,10 @@ export class ModuleDeclarations {
             case "IntegrityCheckTabComponent": { myResult = IntegrityCheckTabComponent; break; }
             case "AccountingNoteComponent": { myResult = AccountingNoteComponent; break; }
             case "NewIntegrityCheckComponent": { myResult = NewIntegrityCheckComponent; break; }
+            case "AddEditInterestBasesPeriodComponent": { myResult = AddEditInterestBasesPeriodComponent; break; }
+            case "InterestBasesTypeShortTitleComponent": { myResult = InterestBasesTypeShortTitleComponent; break; }
+            case "ExtReconcileAdjustBankFeeComponent": { myResult = ExtReconcileAdjustBankFeeComponent; break; }
+            case "ManageExternalReconciliationTabComponent": { myResult = ManageExternalReconciliationTabComponent; break;}
         }
 
         return myResult;

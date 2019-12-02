@@ -19,7 +19,7 @@ export class EditGLAccount {
         this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndClick('GLAccount.TH.General');
         this.Helper.WaitByIdAndFill('GLAccount_LocalName', 'Updated Local Name')
-        this.Helper.WaitBusyIndicator();
+       // this.Helper.WaitBusyIndicator();
         this.Helper.ItemsVisibility('GLAccount-Save');
       this.Helper.ItemsPresent('GLAccount-Save');
         this.Helper.WaitByIdAndClick('GLAccount-Save');

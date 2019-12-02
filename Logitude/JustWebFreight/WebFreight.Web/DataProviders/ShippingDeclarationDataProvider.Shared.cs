@@ -441,5 +441,7 @@ namespace WebFreight.Web.DataProviders
         public string ConsigneeAddress_WithName { get; set; }
         public string NotifyAddress_WithName { get; set; }
         public string Notify2Address_WithName { get; set; }
+        public string PickUpInstructions { get; set; }
+        public string DeliveryInstructions { get; set; }
     }
 }

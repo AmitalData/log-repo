@@ -898,7 +898,7 @@ namespace MeatadataGeneratorTool.ScreensModule
             get { return new RelayCommand(() => this.AddColumnBtnMethod()); }
         }
 
-        public string Code { get; internal set; }
+        public string Code { get;  set; }
 
         private void AddColumnBtnMethod()
         {

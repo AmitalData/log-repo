@@ -8,6 +8,9 @@ import {GLAccountExtendedListService} from '../../../Services/ExtendedLists/GLAc
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { GLAccountExtendedPMService } from '../../../Services/ExtendedPMs/GLAccountExtendedPMService';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { CardList } from '../../../../Common/EntityLists/CardList';
 
 @Component({
     moduleId: module.id,
@@ -28,7 +31,7 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
     public ParentsFilterItems: ApiQueryFilters;
   IsVendor: boolean = false;
     private _GLAccountExtendedListService = new GLAccountExtendedListService();
-
+    private gLAccountExtendedPMService = new GLAccountExtendedPMService();
 
     public isRTL: boolean = false;
 
@@ -45,7 +48,21 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
 
         //#region initialize query filters for ChartOfAccountType
         this.ChartOfAccountTypeFilterItems = new ApiQueryFilters();
-        this.ChartOfAccountTypeFilterItems.addAdditionalFilter("Code", "3,4", null, null, "Exclude", false, false, false, "string", false, true);
+        this.GetConnectedCards(this.EntityPM.Id).then((connectedCards: CardList[]) => {
+            var firstConnectedCard = connectedCards[0];
+           
+                if (firstConnectedCard && firstConnectedCard.PartnerTypeId == "AC") {
+                this.ChartOfAccountTypeFilterItems.addAdditionalFilter("CodeFilter", "5,6", null, null, "Exclude", false, false, false, "string", false, true);
+            }
+            else {
+                this.ChartOfAccountTypeFilterItems.addAdditionalFilter("Code", "3,4", null, null, "Exclude", false, false, false, "string", false, true);
+            }
+        });
+    
+        
+      
+        
+          
         //this.ChartOfAccountTypeFilterItems.addAdditionalFilter("Code", "4", null, null, "NotEqual", false, false, false, "string", false, true);
         //#endregion
 
@@ -103,6 +120,23 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
         this.SetUIProperties();
 
         this.Listen();
+    }
+
+  GetConnectedCards(accountId: string)
+    {
+
+        return new Promise(resolve =>
+        {
+            this.CurrentSession.StartBusyIndicatorLoading();
+            this.gLAccountExtendedPMService.GetConnectedCardsForGLAccount(accountId)
+                .subscribe((myResponse: ServiceResponse) =>
+                {
+                    this.CurrentSession.StopBusyIndicator();
+                    var connectedCards = myResponse.Result;
+                    if (connectedCards)
+                        resolve(connectedCards);
+                });
+        });
     }
 
     private SaveCompletedEvent: any = null;
