@@ -852,5 +852,12 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             
             return myResult;
         }
+
+        public bool CheckIsUserCustomerCareById(string id)
+        {
+            bool isCustomerCare = false;
+            isCustomerCare = entityRepository.IsContactIdExist(id,0);
+            return isCustomerCare;
+        }
     }
 }

@@ -46,6 +46,12 @@ namespace Logitude.Infrastructure.Data.EntityLists
        public string CreatedByUserName  { get; set; }
        [DataMember]
        public string UpdatedByUserName  { get; set; }
+       [DataMember]
+       public DateTime LastRunDate  { get; set; }
+       [DataMember]
+       public string LastRunByUserId  { get; set; }
+       [DataMember]
+       public string LastRunByUserName  { get; set; }
    }
 
 }

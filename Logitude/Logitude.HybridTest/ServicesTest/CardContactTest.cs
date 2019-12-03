@@ -17,7 +17,7 @@ namespace Logitude.HybridTest.ServicesTest
                 IsAll = true,
                 ContactId = HybridData.ContactCode,
                 CardId = HybridData.AgentCodeHAgent,
-                Tenant = TestEnvironmentGlobalParameters.Tenant1,
+                Tenant = EnvironmentGlobalParams.MainTenant,
             };
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(cardContactPM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
@@ -37,7 +37,7 @@ namespace Logitude.HybridTest.ServicesTest
                 ServiceFilterType = null,
             };
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { HybridData.ContactCode, HybridData.AgentCodeHAgent, TestEnvironmentGlobalParameters.Tenant1, false };
+            object[] serviceParameters = new object[] { HybridData.ContactCode, HybridData.AgentCodeHAgent, EnvironmentGlobalParams.MainTenant, false };
             serviceResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Delete Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Delete Failed! " + serviceResponse.Result);
@@ -46,6 +46,7 @@ namespace Logitude.HybridTest.ServicesTest
         [TestMethod]
         public void Test_CardContact_GetCardContactPM()
         {
+            Assert.Inconclusive("Check code!");
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "CardContact",
@@ -55,7 +56,7 @@ namespace Logitude.HybridTest.ServicesTest
                 ServiceFilterType = null,
             };
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { HybridData.ContactCode, HybridData.AgentCodeHAgent, TestEnvironmentGlobalParameters.Tenant1, serviceResponse };
+            object[] serviceParameters = new object[] { HybridData.ContactCode, HybridData.AgentCodeHAgent, EnvironmentGlobalParams.MainTenant, serviceResponse };
             CardContactPM cardContact = (CardContactPM)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get Card Contact PM Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get Card Contact PM Failed! " + serviceResponse.Result);

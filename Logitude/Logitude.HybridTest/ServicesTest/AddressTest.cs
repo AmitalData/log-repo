@@ -21,7 +21,7 @@ namespace Logitude.HybridTest.ServicesTest
                 Description = "Main Address",
                 CountryId = HybridData.CountryCodeHC,
                 CardId = HybridData.CustomerCodeHCustomer,
-                Tenant = TestEnvironmentGlobalParameters.Tenant1,
+                Tenant = EnvironmentGlobalParams.MainTenant,
             };
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(addressPM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
@@ -44,7 +44,7 @@ namespace Logitude.HybridTest.ServicesTest
             };
 
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { HybridData.AddressIdHA, TestEnvironmentGlobalParameters.Tenant1, serviceResponse };
+            object[] serviceParameters = new object[] { HybridData.AddressIdHA, EnvironmentGlobalParams.MainTenant, serviceResponse };
             AddressPM address = (AddressPM)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get Address By External Id Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get Address By External Id Failed! " + serviceResponse.ErrorMessage);

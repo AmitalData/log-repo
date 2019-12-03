@@ -77,7 +77,22 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
                     UserQuery userQuery = new UserQuery(userRepository);
                     IQueryable<User> iQueryable = singleEntityList.AsQueryable();
-                    IQueryable<UserList> iQueryableEntityList = userQuery.GetIQueryableEntityList(iQueryable);
+                    //IQueryable<UserList> iQueryableEntityList = userQuery.GetIQueryableEntityList(iQueryable);
+
+
+                    IQueryable<UserList> iQueryableEntityList = null;
+
+                    string loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser();
+                    UserPM loggedUser = userQuery.GetSingleUserPMByEmail(loggedUserEmail, authToken.Tenant, true);
+                    if (loggedUser != null && !loggedUser.IsCustomerCare && authToken.Tenant == 65)
+                    {
+                        iQueryableEntityList = userQuery.GetDemoTenantUserList(iQueryable, loggedUser.Id, authToken.Tenant);
+                    }
+                    else
+                    {
+                        iQueryableEntityList = userQuery.GetIQueryableEntityList(iQueryable);
+                    }
+
                     entityList = iQueryableEntityList.FirstOrDefault();
 
                 }

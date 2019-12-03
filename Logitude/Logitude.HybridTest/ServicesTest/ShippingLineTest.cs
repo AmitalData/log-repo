@@ -19,7 +19,7 @@ namespace Logitude.HybridTest.ServicesTest
                 EnglishName = "Hybrid ShippingLine changed",
                 LocalName = "Hybrid ShippingLine changed",
                 CarrierTypeId = "SL",
-                Tenant = TestEnvironmentGlobalParameters.Tenant1,
+                Tenant = EnvironmentGlobalParams.MainTenant,
             };
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(shippingLinePM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);

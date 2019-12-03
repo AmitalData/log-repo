@@ -21,7 +21,7 @@ namespace Logitude.HybridTest.ServicesTest
                 CountryId = HybridData.CountryCodeUS,
                 StateId = HybridData.StateIdAK,
                 AddedManually = true,
-                Tenant = TestEnvironmentGlobalParameters.Tenant1,
+                Tenant = EnvironmentGlobalParams.MainTenant,
             };
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(cityPM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
@@ -43,7 +43,7 @@ namespace Logitude.HybridTest.ServicesTest
                 ServiceFilterType = null,
             };
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { HybridData.CityCodeHCity, HybridData.CountryCodeUS, TestEnvironmentGlobalParameters.Tenant1, serviceResponse };
+            object[] serviceParameters = new object[] { HybridData.CityCodeHCity, HybridData.CountryCodeUS, EnvironmentGlobalParams.MainTenant, serviceResponse };
             CountryCityList city = (CountryCityList)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);

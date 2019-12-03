@@ -1706,6 +1706,14 @@
     <Compile Include="Migrations\201911291324079_APPaymentNewFieldMigration.Designer.cs">
       <DependentUpon>201911291324079_APPaymentNewFieldMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912021355146_BIReportLastRunFields.cs" />
+    <Compile Include="Migrations\201912021355146_BIReportLastRunFields.Designer.cs">
+      <DependentUpon>201912021355146_BIReportLastRunFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911251236376_NewField_AllowEditChequePayToName.cs" />
+    <Compile Include="Migrations\201911251236376_NewField_AllowEditChequePayToName.Designer.cs">
+      <DependentUpon>201911251236376_NewField_AllowEditChequePayToName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2923,6 +2931,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911291324079_APPaymentNewFieldMigration.resx">
       <DependentUpon>201911291324079_APPaymentNewFieldMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912021355146_BIReportLastRunFields.resx">
+      <DependentUpon>201912021355146_BIReportLastRunFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911251236376_NewField_AllowEditChequePayToName.resx">
+      <DependentUpon>201911251236376_NewField_AllowEditChequePayToName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

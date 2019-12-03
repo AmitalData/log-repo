@@ -23,7 +23,7 @@ namespace Logitude.HybridTest.ServicesTest
             };
             OpportunityApiFilters filters = new OpportunityApiFilters();
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { "hybrid@fnarsoft.com", "", TestEnvironmentGlobalParameters.Tenant1, 0, 10, filters, serviceResponse };
+            object[] serviceParameters = new object[] { "hybrid@fnarsoft.com", "", EnvironmentGlobalParams.MainTenant, 0, 10, filters, serviceResponse };
             OpportunityList[] opportunities = (OpportunityList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.Result);
@@ -48,7 +48,7 @@ namespace Logitude.HybridTest.ServicesTest
             };
             OpportunityApiFilters filters = new OpportunityApiFilters();
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { HybridData.FirstOpportunityId, TestEnvironmentGlobalParameters.Tenant1, serviceResponse };
+            object[] serviceParameters = new object[] { HybridData.FirstOpportunityId, EnvironmentGlobalParams.MainTenant, serviceResponse };
             CustomerList customer = (CustomerList)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get Customer List By Opportunity Id Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get Customer List By Opportunity Id Failed! " + serviceResponse.Result);
@@ -72,7 +72,7 @@ namespace Logitude.HybridTest.ServicesTest
             };
             OpportunityApiFilters filters = new OpportunityApiFilters();
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { HybridData.FirstOpportunityId, TestEnvironmentGlobalParameters.Tenant1, serviceResponse };
+            object[] serviceParameters = new object[] { HybridData.FirstOpportunityId, EnvironmentGlobalParams.MainTenant, serviceResponse };
             OpportunityList opportunity = (OpportunityList)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get Opportunity List By Id Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get Opportunity List By Id Failed! " + serviceResponse.Result);
