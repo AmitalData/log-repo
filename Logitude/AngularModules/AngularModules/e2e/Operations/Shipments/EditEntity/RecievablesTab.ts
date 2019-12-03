@@ -20,13 +20,13 @@ export class ReceivablesTabComponent {
         this.AddRecievableLines(ShipmentLevelCode, shipmentType);
 
         this.CreatARInvoicewithVoid(true, 'ARInvoice');
-        this.EditAPInvoice(true, 'ARInvoice');
+        this.EditARInvoice(true, 'ARInvoice');
         this.CreatARInvoicewithVoid(false, 'ARInvoice');
-        this.EditAPInvoice(false, 'ARInvoice');
+        this.EditARInvoice(false, 'ARInvoice');
         this.CreatARInvoicewithVoid(true, 'CreditNote');
-        this.EditAPInvoice(true, 'CreditNote');
+        this.EditARInvoice(true, 'CreditNote');
         this.CreatARInvoicewithVoid(false, 'CreditNote');
-        this.EditAPInvoice(false, 'CreditNote');
+        this.EditARInvoice(false, 'CreditNote');
     }
 
     AddRecievableLines(ShipmentLevelCode: string, ShipmentType: string) {
@@ -110,7 +110,7 @@ export class ReceivablesTabComponent {
     //    this.Helper.WaitByIdAndClick('CreateCreditNote');
     //}
 
-    EditAPInvoice(Voided: boolean, type: string) {
+    EditARInvoice(Voided: boolean, type: string) {
         this.Helper.WaitEditComponentBusyIndicator();
         this.Helper.WaitByIdAndFill('ARInvoice_VatTypeId', 'Zero');
         this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'ARInvoice_VatTypeId', 'Zero');
