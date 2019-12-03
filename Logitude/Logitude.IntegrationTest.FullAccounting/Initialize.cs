@@ -18,6 +18,7 @@ namespace Logitude.IntegrationTest.FullAccounting
             {
                
                 var token = await LoginService.GetLoginTokenByUserEmailAndTenant();
+
                 Assert.IsNotNull(token);
 
             }).GetAwaiter().GetResult();
