@@ -103,5 +103,6 @@ export class TenantList {
 		CAAT: string;
 		IsTestTenant: boolean;
 		CheckDigitControlAlgorithmCode: string;
+		HideFCLAllIn: boolean;
 	
 }

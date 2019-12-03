@@ -51,6 +51,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     public AllInMatchText: string;
     IsShowTotalPerContainer: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public HideFCLAllIn: boolean = false;
     constructor(private entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -61,7 +62,8 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
         this.ItemsSource = new ObservableCollection([]);
         this.AllInMatchText = TextCodeTranslator.Translate("Quote.M.UnableToDoAllIn") + "\n" + TextCodeTranslator.Translate("Quote.M.IfMatchesFrieghtCharge");
-        
+        this.HideFCLAllIn = SessionLocator.TenantPM.HideFCLAllIn;
+
        if( FeatureLocator.HasFeaturePermession("Quote", "TOTALPERCONTAINER")) {
             this.IsShowTotalPerContainer = true;
         }
