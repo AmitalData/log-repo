@@ -13,7 +13,7 @@ namespace Logitude.OracleDatabaseMigration.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201912021057043_AddDSupplierInvoiceItemsEntryFieldsChange"; }
+            get { return "201912031323504_AddDSupplierInvoiceItemsEntryFieldsChange"; }
         }
         
         string IMigrationMetadata.Source

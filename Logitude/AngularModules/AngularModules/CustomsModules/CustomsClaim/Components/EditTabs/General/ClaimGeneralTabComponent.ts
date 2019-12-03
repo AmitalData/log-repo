@@ -40,6 +40,7 @@ export class ClaimGeneralTabComponent extends BaseComponent {
 
     public CurrentEditComponentId: string;
     private isControlEnabled: boolean = true;
+    private IsClientPassportEnabled: boolean = false;
 
     public ClaimPMService: ClaimPMService = new ClaimPMService;
     public ClientMessagesService: ClientMessagesService = new ClientMessagesService;
@@ -61,6 +62,10 @@ export class ClaimGeneralTabComponent extends BaseComponent {
                         this.EntityPM = this.entityArgs.EntityPM;
                         this.BuildRelatedEntitiesList();
                         this.BuildAddressesList();
+                        if (AppTool.IsNullOrEmpty(this.ClientId) &&
+                            !AppTool.IsNullOrEmpty(this.EntityPM.PassportTypeCode) || !AppTool.IsNullOrEmpty(this.EntityPM.PassportNumber) || !AppTool.IsNullOrEmpty(this.EntityPM.PassportCountryTypeCode)) {
+                            this.IsClientPassportEnabled = true;
+                        }
                     }
                     this.Listen();
                     this.IsLoaded = true;
@@ -262,6 +267,13 @@ export class ClaimGeneralTabComponent extends BaseComponent {
 
     //#region Address
     ClientIdSelectionChanged() {
+
+        if (!AppTool.IsNullOrEmpty(this.ClientId)) {
+            this.IsClientCodeEnabled = false;
+        }
+        else {
+            this.IsClientCodeEnabled = true;
+        }
 
         if (AppTool.IsNullOrEmpty(this.ContactPhoneAddressCode) && AppTool.IsNullOrEmpty(this.CustomsAddressCode)) {
             this.BuildClienAddressesList();
@@ -551,6 +563,42 @@ export class ClaimGeneralTabComponent extends BaseComponent {
         SessionLocator.SelectedSession.StartBusyIndicator("");
 
         this.EditClaimsRelatedEntityLine(newClaimsRelatedEntityLineComponent,true);
+    }
+
+    EditClient() {
+
+        //if (this.IsClientCodeEnabled == true) return;
+        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+        SessionLocator.SelectedSession.CurrentEditComponent.SaveChanges();
+        SessionLocator.SelectedSession.StopBusyIndicator();
+        var windowArgs: any = {};
+        windowArgs.EntityPM = this.EntityPM;
+        //windowArgs.IsDisplayOnly = this.IsDisplayOnly;
+        var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ImporterDetails");
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 550;
+        logWindow.Height = 350;
+        logWindow.Title = windowTitle;
+        logWindow.ShowCloseButton = true;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => this.SetFieldsDisabled($event));
+        logWindow.Show('./CustomsModules/CustomsClaim/Components/EditTabs/General/PassportDetails/PassportDetailsComponent');
+    }
+
+    SetFieldsDisabled(message: string) {
+        if (message == "ok") {
+            if (AppTool.IsNullOrEmpty(this.ClientId) &&
+                !AppTool.IsNullOrEmpty(this.EntityPM.PassportTypeCode) || !AppTool.IsNullOrEmpty(this.EntityPM.PassportNumber) || !AppTool.IsNullOrEmpty(this.EntityPM.PassportCountryTypeCode)) {
+                this.IsClientPassportEnabled = true;
+            }
+            this.IsClientCodeEnabled = false;
+        }
+        else if (message == "!ok") {
+
+            this.IsClientCodeEnabled = true;
+        }
+           
     }
 
     //#endregion
