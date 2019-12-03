@@ -2252,6 +2252,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
 
+
+            _CCUFILEMPM.NOOFINVOICES = _DirtyDeclarationPM.SupplierInvoices.Count();
+            _CCUFILEMPM.TOTALINVOICELINESNO = GetCountSupplierInvoicesItems();
+            _CCUFILEMPM.PRATMEHESLIST = GetAllPratMehesList(3);
+            _CCUFILEMPM.ALLPRATMEHESLIST = GetAllPratMehesList();
+
+
             CreateCCUTRANSPVAL();
 
             //<--- This is to be done in a full saving mode ONLY (Moved from befor the call to DoSupplierInvoices())
@@ -2261,6 +2268,32 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 _CCUFILEMPM.FEEPLATFORM = _CCUFILEMPMSupplierInvoiceModificationsI01;
             }
             //This is to be done in a full saving mode ONLY  --->
+        }
+
+        private int GetCountSupplierInvoicesItems()
+        {
+            int countInvoiceItems=0;
+            foreach (var invoice in _DirtyDeclarationPM.SupplierInvoices )
+            {
+                countInvoiceItems += invoice.SupplierInvoiceItems.Count();
+            }
+
+            return countInvoiceItems;
+        }
+
+        private string GetAllPratMehesList(int top=0)
+        {
+            List<string> list = new List<string>();
+            foreach (var invoice in _DirtyDeclarationPM.SupplierInvoices)
+            {
+                list.AddRange(invoice.SupplierInvoiceItems.Select(x=>x.ClassificationCode.Substring(0, Math.Min(8, x.ClassificationCode.Length)) + x.ClassificationCode.Substring(Math.Min(11, x.ClassificationCode.Length - 1), 1)));
+            }
+            list = list.Where(x => x != null).OrderBy(x => x).Distinct().ToList();
+            if (top!=0 && top < list.Count())
+            {
+                list =list.Take(top).ToList();
+            }//
+            return string.Join(",", list).TrimEnd(',');
         }
 
         private Unifreight.BL.EntityPMs.SupplierInvoicePM SetSupplierInvoice(Def.EntityPMs.SupplierInvoicePM decSupplierInvoice)
