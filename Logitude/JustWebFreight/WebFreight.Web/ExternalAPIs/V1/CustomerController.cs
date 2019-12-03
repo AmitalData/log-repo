@@ -144,7 +144,13 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 }
                             }
                         }
-                        
+                        if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
+                        {
+                            ComputingPartnerQuery computingPartnerQuery = new ComputingPartnerQuery(authToken.Tenant);
+                            var partner = computingPartnerQuery.GetSinglePMByCodeAndCheckTenantZero(entity.ComputingPartnerCode, authToken.Tenant);
+                            entityPM.CreatedByPartner = (partner != null ? partner.Name : null);
+
+                        }
                         CustomerService service = new CustomerService(MyContext, entityPM);
                         service.Create();
                         service.Submit();
@@ -323,6 +329,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
         public HttpResponseMessage Put(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Customer entity)
         {
+
             var apiExceptionResult = ApiExceptionHandler.HandleException(new Exception("Updates are not supported"));
             APIHelper.AddCommunicationLog("F", entity, apiExceptionResult.Exception, "Customer", null, "Customer API");
             return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);

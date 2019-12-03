@@ -292,6 +292,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string VendorCity { get; set; }
         public string VendorCountry { get; set; }
 
-
+        public string CreatedByPartner { get; set; }
     }
 }
