@@ -46,8 +46,13 @@ namespace Logitude.TariffModule.Data.Repositories
 
         public IQueryable<Tariff> GetSurchargeTariffsByAirline(string[] ids,string typeCode, int tenant)
         {
+            var code = "ASC";
+            if(typeCode == "OLC")
+            {
+                code = "OSC";
+            }
             return from a in context.Tariffs
-                   where a.Tenant == tenant && ids.Contains(a.SellerId) && a.TypeCode== typeCode
+                   where a.Tenant == tenant && ids.Contains(a.SellerId) && a.TypeCode== code
                    select a;
         }
 
