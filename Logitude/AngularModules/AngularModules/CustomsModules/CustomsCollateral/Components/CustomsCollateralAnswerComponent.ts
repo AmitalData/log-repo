@@ -795,8 +795,15 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
 
         this._declarationExtendedListService.PostSendCollateral8212(requestParams).subscribe(res => {
             SessionLocator.SelectedSession.StopBusyIndicator();
-            var myMessageWindow = new MessageWindow();
-            myMessageWindow.Show(res.Result);
+            if (res.HasError == true) {
+                var myMessageWindow = new MessageWindow();
+                myMessageWindow.Show(res.Result);
+            }
+
+            else {
+                this.CurrentSession.CloseCurrentWindow();
+
+            }
         });
  
     }
