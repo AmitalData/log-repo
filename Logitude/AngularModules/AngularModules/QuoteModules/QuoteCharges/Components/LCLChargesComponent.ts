@@ -453,15 +453,21 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
     SetFixedSameCurrency(setType: string) {
         this.IsFixedCurrency = null;
         this.IsSameCostCurrency = null;
+        var allInItems = this.ItemsSource.Collection.filter(d => d.IsAllIN == true);
 
         if (setType == "F") {
+            
+            allInItems.forEach((item: QuoteChargeItem) => {
+                item.IsAllIN = false;
+            });
+
             this.IsFixedCurrency = true;
             this.IsSameCostCurrency = false;
             this.IsSaleCurrencySameAsCost = false;
             this.OnFixedSameChanges();
 
-            this.ItemsSource.Collection.filter(d => d.IsAllIN == true).forEach(item => {
-                item.ApplyAllIn();
+            allInItems.forEach((item: QuoteChargeItem) => {
+                item.IsAllIN = true;
             });
         }
 
@@ -479,13 +485,17 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
             }
 
             else {
+                allInItems.forEach((item: QuoteChargeItem) => {
+                    item.IsAllIN = false;
+                });
+
                 this.IsFixedCurrency = false;
                 this.IsSameCostCurrency = true;
                 this.IsSaleCurrencySameAsCost = true;
                 this.OnFixedSameChanges();
 
-                this.ItemsSource.Collection.filter(d => d.IsAllIN == true).forEach(item => {
-                    item.ApplyAllIn();
+                allInItems.forEach((item: QuoteChargeItem) => {
+                    item.IsAllIN = true;
                 });
             }
         }
@@ -548,6 +558,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         if (this.EntityPM.SaleCurrencyId != value) {
             this.EntityPM.SaleCurrencyId = value;
             this.SetUIProperties_Summary();
+            var allInItems = this.ItemsSource.Collection.filter(d => d.IsAllIN == true);
 
             this.SaleCurrencyCode = this.SelectedCurrencyCode = this.GetCurrencyCode(value);
 
@@ -571,12 +582,17 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
             }
 
             else {
+
+                allInItems.forEach((item: QuoteChargeItem) => {
+                    item.IsAllIN = false;
+                });
+
                 this.ItemsSource.Collection.forEach((item: QuoteChargeItem) => {
                     item.OnQuoteSaleCurrencyChanged();
                 });
 
-                this.ItemsSource.Collection.filter(d => d.IsAllIN == true).forEach(item => {
-                    item.ApplyAllIn();
+                allInItems.forEach((item: QuoteChargeItem) => {
+                    item.IsAllIN = true;
                 });
 
                 this.ComputeTotals();
@@ -596,13 +612,18 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
     set ExchangeRate(newValue: number) {
         if (this.EntityPM.ExchangeRate != newValue) {
             this.EntityPM.ExchangeRate = AppTool.Round(newValue, 5);
+            var allInItems = this.ItemsSource.Collection.filter(d => d.IsAllIN == true);
+
+            allInItems.forEach((item: QuoteChargeItem) => {
+                item.IsAllIN = false;
+            });
 
             this.ItemsSource.Collection.forEach((item: QuoteChargeItem) => {
                 item.OnQuoteSaleCurrencyChanged();
             });
 
-            this.ItemsSource.Collection.filter(d => d.IsAllIN == true).forEach(item => {
-                item.ApplyAllIn();
+            allInItems.forEach((item: QuoteChargeItem) => {
+                item.IsAllIN = true;
             });
 
             this.ComputeTotals();
