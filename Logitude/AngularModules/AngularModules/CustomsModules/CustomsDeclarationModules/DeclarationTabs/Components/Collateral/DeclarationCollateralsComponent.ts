@@ -175,7 +175,7 @@ export class DeclarationCollateralsComponent extends BaseComponent implements On
 
     _stratSearch: boolean = true;
     
-    MenuHeaderchangeevent = new EventEmitter();
+    //MenuHeaderchangeevent = new EventEmitter();
     
     onQueryChangeEvent = new EventEmitter();
 
