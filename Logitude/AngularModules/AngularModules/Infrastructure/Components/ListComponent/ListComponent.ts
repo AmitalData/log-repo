@@ -1489,32 +1489,38 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
             console.log("SuppressOnRowSelected");
             return;
         }
-        //this.CurrentSession.StartBusyIndicator("Loading ...");
-        //var BackGridEvent = $event.BackFromEdit;
+
+        var myObjectTableName = this.ObjectTableName;
+
+        if (this.ObjectTableName ==  "OccasionContact"){
+            myObjectTableName = "Contact";
+        }
+
         if ($event != null) {
             if (!this.isEditControlOpened) {
 
                 var entityList = $event.rowData;
                 var selectedEntityId = $event.rowData.Id;
 
-                switch (this.ObjectTableName) {
+                switch (myObjectTableName) {
                     case 'Customs.GovernmentProcedureType':
                     case "Customs.NotificationDefinition":
                     case "Customs.CustomsHouseType":
                     case "Customs.CustomDocumentType":
                     case "Customs.UIMessage":
                     case "Customs.CourierPendingReason":
-                        //case "Customs.InternationalSite":
-                        selectedEntityId = $event.rowData.Code;
-                        break;
+                        {
+                            selectedEntityId = $event.rowData.Code;
+                            break;
+                        }
+
                     default:
-
-                        break;
+                        {
+                            break;
+                        }
                 }
-
-
-                //if (this.ObjectTableName != "Customs.ProceduralFault" && this.ObjectTableName != "TicketEscalation") {
-                if (this.ObjectTableName != "TicketEscalation") {
+                
+                if (myObjectTableName != "TicketEscalation") {
 
                     this.isEditControlOpened = true;
 
@@ -1522,7 +1528,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     myCodes.push("EAWB");
                     myCodes.push("BUBK");
 
-                    if (FeatureLocator.IsPackageOneOf(myCodes) && (this.ObjectTableName == "Shipment" || this.ObjectTableName == "Master")) {
+                    if (FeatureLocator.IsPackageOneOf(myCodes) && (myObjectTableName == "Shipment" || myObjectTableName == "Master")) {
 
                         var isFullWizard = false;
                         var windowTitle = null;
@@ -1577,9 +1583,9 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
                         var showHeaderButtons: boolean = true;
 
-                        windowTitle = TextCodeTranslator.Translate("General.O.EditEntity").replace("%Entity", TextCodeTranslator.Translate(this.ObjectTableName));
+                        windowTitle = TextCodeTranslator.Translate("General.O.EditEntity").replace("%Entity", TextCodeTranslator.Translate(myObjectTableName));
 
-                        switch (this.ObjectTableName) {
+                        switch (myObjectTableName) {
                             case "ContainerFollowUp": {
                                 showHeaderButtons = false;
                                 break;
@@ -1608,7 +1614,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         });
                     }
 
-                    else if (!AppTool.IsNullOrEmpty(this.SelectedQuery.EditWizardName) || this.ObjectTableName == "AgentSharedManifest" || this.ObjectTableName == "Customs.CourierMaster") {
+                    else if (!AppTool.IsNullOrEmpty(this.SelectedQuery.EditWizardName) || myObjectTableName == "AgentSharedManifest" || myObjectTableName == "Customs.CourierMaster") {
 
                         if (this.SelectedQuery.EditWizardName == "Simplog.ShipmentLib.Views.AWBWizardEditControl") {
                             var isFullWizard = false;
@@ -1650,13 +1656,13 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                             });
                         }
 
-                        else if (this.ObjectTableName == "Customs.CourierMaster") {
+                        else if (myObjectTableName == "Customs.CourierMaster") {
                             var windowArgs: any = {};
                             this._entityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe(response => {
                                 this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationCourierStatus").subscribe(response => {
                                     this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
 
-                                        this.entityPMService.getSingle(this.ObjectTableName, selectedEntityId).then((res: any) => {
+                                        this.entityPMService.getSingle(myObjectTableName, selectedEntityId).then((res: any) => {
                                             res.subscribe((myResponse: any) => {
 
                                                 if (myResponse.HasError) {
@@ -1689,7 +1695,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
                         else if (!AppTool.IsNullOrEmpty(this.SelectedQuery.EditWizardName)) {
 
-                            switch (this.ObjectTableName) {
+                            switch (myObjectTableName) {
                                 case 'TenantManagmentPrivateLabels': {
                                     var logWindow = new LogitudeWindow();
                                     logWindow.Width = 960;
@@ -1746,7 +1752,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                     var windowArgs: any = {};
                                     this._entityResourceService.getEntityResourceByTableName("Customs.Client").subscribe(response => {
 
-                                        this.entityPMService.getSingle(this.ObjectTableName, selectedEntityId).then((res: any) => {
+                                        this.entityPMService.getSingle(myObjectTableName, selectedEntityId).then((res: any) => {
                                             res.subscribe((myResponse: any) => {
 
                                                 if (myResponse.HasError) {
@@ -1780,7 +1786,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                     if (!AppTool.IsNullOrEmpty(selectedEntityId)) {
                                         this._entityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe(response => {
                                             this._entityResourceService.getEntityResourceByTableName("Customs.VendorCommunication").subscribe(response => {
-                                                this.entityPMService.getSingle(this.ObjectTableName, selectedEntityId).then((res: any) => {
+                                                this.entityPMService.getSingle(myObjectTableName, selectedEntityId).then((res: any) => {
                                                     res.subscribe((myResponse: any) => {
 
                                                         if (myResponse.HasError) {
@@ -1840,7 +1846,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                                     this._entityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe(response => {
 
 
-                                                        this.entityPMService.getSingle(this.ObjectTableName, selectedEntityId).then((res: any) => {
+                                                        this.entityPMService.getSingle(myObjectTableName, selectedEntityId).then((res: any) => {
                                                             res.subscribe((myResponse: any) => {
 
                                                                 if (myResponse.HasError) {
@@ -1880,7 +1886,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                     var windowArgs: any = {};
                                     this._entityResourceService.getEntityResourceByTableName("Customs.ProceduralFault").subscribe(response => {
 
-                                        this.entityPMService.getSingle(this.ObjectTableName, selectedEntityId).then((res: any) => {
+                                        this.entityPMService.getSingle(myObjectTableName, selectedEntityId).then((res: any) => {
                                             res.subscribe((myResponse: any) => {
 
                                                 if (myResponse.HasError) {
@@ -1955,7 +1961,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                     var windowArgs: any = {};
                                     this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationCargoSplit").subscribe(response => {
                                         this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-                                            this.entityPMService.getSingle(this.ObjectTableName, selectedEntityId).then((res: any) => {
+                                            this.entityPMService.getSingle(myObjectTableName, selectedEntityId).then((res: any) => {
                                                 res.subscribe((myResponse: any) => {
 
                                                     if (myResponse.HasError) {
@@ -2010,7 +2016,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                         }
                     }
 
-                    else if (this.ObjectTableName == "BIReport") {
+                    else if (myObjectTableName == "BIReport") {
                         SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureBIReport/Components/Workspaces/BIReportPreviewComponent", this.CurrentSession.SessionLocation.viewContainerRef)
                             .then(cmpRef => {
                                 cmpRef.instance.ComponentRef = cmpRef;
@@ -2037,7 +2043,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                 cmpRef.instance.ComponentRef = cmpRef;
                                 cmpRef.instance.Run({
                                     EntityId: selectedEntityId,///$event.rowData.Id
-                                    ObjectTableName: this.ObjectTableName,
+                                    ObjectTableName: myObjectTableName,
                                     BackButtonLabel: label
                                 });
                                 cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
@@ -2301,6 +2307,12 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
 
                     case "Airline":
                     case "ShippingLine":                        
+                        {
+                            isVisible = false;
+                            break;
+                        }
+
+                    case "OccasionContact":
                         {
                             isVisible = false;
                             break;

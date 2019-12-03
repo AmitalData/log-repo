@@ -201,5 +201,8 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string DocumentFilingId { get; set; }
 
         public string ConcurrencyGUID { get; set; }
+
+        public string CreatedByPartner { get; set; }
+
     }
 }

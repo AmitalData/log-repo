@@ -141,9 +141,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
 
 
-            paymentRepository.Update(newPayment);
-            paymentRepository.SubmitChanges();
-
             TraceConnected();
 
             FillFullAccountingPaymentInvoices(_arpaymentPM);
@@ -153,6 +150,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             // PaymentCheque And CashBook
             AddARPaymentChequeAndCashBook(_arpaymentPM, setApproved);
+            newPayment.ValueDate = _arpaymentPM.ValueDate;
+            paymentRepository.Update(newPayment);
+            paymentRepository.SubmitChanges();
 
             GetPaymentForeignFields();
 
@@ -1061,7 +1061,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     foreach (ARPaymentChequeReplicaPM item in theEntityPm.ARPaymentChequeReplicas)
                                     {
                                         arPaymentcheque = new ARPaymentChequePM();
-                                       if(LineNumberCounter == 1)    valueDate = item.ValueDate;
+                                       
+                                        if (LineNumberCounter == 1)
+                                        {
+                                            valueDate = item.ValueDate;
+                                            theEntityPm.ValueDate = valueDate;
+                                        }
+
                                         if(valueDate!= null && valueDate!= item.ValueDate)
                                         {
                                             throw new ApplicationException("value date should be the same for all payment cheques");

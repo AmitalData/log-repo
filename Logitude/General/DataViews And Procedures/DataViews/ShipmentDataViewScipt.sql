@@ -99,7 +99,7 @@ SELECT        dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumb
 						 dbo.Shipments.INTTRABookingError,
 						 dbo.Shipments.INTTRALastBookingResponse,
 						 dbo.INTTRASIStatus.Name AS INTTRASIStatusName,
-
+						 dbo.Shipments.CreatedByPartner AS CreatedByPartner,
 						 dbo.Shipments.INTTRABookingStatusCode,
 						 dbo.INTTRABookingStatuses.Name AS INTTRABookingStatusName,
 
