@@ -106,6 +106,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  IsAutonomy = card.IsAutonomy,
                                                  CalculatedEnglishName = string.IsNullOrEmpty(card.EnglishName) ? card.LocalName : card.EnglishName,
                                                  CalculatedLocalName = string.IsNullOrEmpty(card.LocalName) ? card.EnglishName : card.LocalName,
+                                                 CreatedByPartner = card.CreatedByPartner,
                                              });
 
 
@@ -211,6 +212,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       
                                       IsInternationalPartner = a.IsInternationalPartner,
                                       IsAutonomy = a.IsAutonomy,
+                                      CreatedByPartner = a.CreatedByPartner,
                                   }).FirstOrDefault();
 
 
@@ -300,6 +302,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   StateName = a.StateName,
                                   IsInternationalPartner = a.IsInternationalPartner,
                                   IsAutonomy = a.IsAutonomy,
+                                  CreatedByPartner = a.CreatedByPartner,
                               }).FirstOrDefault();
 
                     if (entity != null)
@@ -454,6 +457,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               StateName = a.StateName,
                                               IsInternationalPartner = a.IsInternationalPartner,
                                               IsAutonomy = a.IsAutonomy,
+                                              CreatedByPartner = a.CreatedByPartner,
                                           });
             return cards;
         }
@@ -520,6 +524,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               StateName = a.StateName,
                                               IsInternationalPartner = a.IsInternationalPartner,
                                               IsAutonomy = a.IsAutonomy,
+                                              CreatedByPartner = a.CreatedByPartner,
                                           });
             return cards;
         }
@@ -613,6 +618,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           StateName = a.StateName,
                                           IsInternationalPartner = a.IsInternationalPartner,
                                           IsAutonomy = a.IsAutonomy,
+                                          CreatedByPartner = a.CreatedByPartner,
                                       }).FirstOrDefault();
 
                             if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
@@ -695,6 +701,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       StateName = a.StateName,
                                       IsInternationalPartner = a.IsInternationalPartner,
                                       IsAutonomy = a.IsAutonomy,
+                                      CreatedByPartner = a.CreatedByPartner,
                                   }).FirstOrDefault();
                     }
                 }
@@ -767,6 +774,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   StateName = a.StateName,
                                   IsInternationalPartner = a.IsInternationalPartner,
                                   IsAutonomy = a.IsAutonomy,
+                                  CreatedByPartner = a.CreatedByPartner,
                               }).FirstOrDefault();
                 }
 
@@ -834,6 +842,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     IsAutonomy = entityPOCO.IsAutonomy,
                     CalculatedEnglishName = string.IsNullOrEmpty(entityPOCO.EnglishName) ? entityPOCO.LocalName : entityPOCO.EnglishName,
                     CalculatedLocalName = string.IsNullOrEmpty(entityPOCO.LocalName) ? entityPOCO.EnglishName : entityPOCO.LocalName,
+                    CreatedByPartner = entityPOCO.CreatedByPartner,
                 };
 
                 if (entityPOCO.Customer != null)
@@ -1038,6 +1047,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               IsAutonomy = card.IsAutonomy,
                                               CalculatedEnglishName = string.IsNullOrEmpty(card.EnglishName) ? card.LocalName : card.EnglishName,
                                               CalculatedLocalName = string.IsNullOrEmpty(card.LocalName) ? card.EnglishName : card.LocalName,
+                                              CreatedByPartner = card.CreatedByPartner,
                                           };
 
             if(myResult.Count() > 0)
@@ -1115,6 +1125,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               IsAutonomy = a.IsAutonomy,
                                               CalculatedEnglishName = string.IsNullOrEmpty(a.EnglishName) ? a.LocalName : a.EnglishName,
                                               CalculatedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
+                                              CreatedByPartner = a.CreatedByPartner,
                                           });
             return cards;
         }
@@ -1907,6 +1918,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        UsoCFDICode = a.UsoCFDICode,
                                        IsInternationalPartner = a.IsInternationalPartner,
                                        IsAutonomy = a.IsAutonomy,
+                                       CreatedByPartner = a.CreatedByPartner,
                                    }).ToList();
             return card.FirstOrDefault();
         }

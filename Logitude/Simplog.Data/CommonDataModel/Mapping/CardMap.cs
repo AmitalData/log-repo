@@ -58,6 +58,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ZipCode).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Phone).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.StateName).HasMaxLength(40).IsUnicode(false);
+            this.Property(t => t.CreatedByPartner).HasMaxLength(25).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("Cards");
@@ -115,6 +116,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.StateName).HasColumnName("StateName");
             this.Property(t => t.IsInternationalPartner).HasColumnName("IsInternationalPartner");
             this.Property(t => t.IsAutonomy).HasColumnName("IsAutonomy");
+            this.Property(t => t.CreatedByPartner).HasColumnName("CreatedByPartner");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
