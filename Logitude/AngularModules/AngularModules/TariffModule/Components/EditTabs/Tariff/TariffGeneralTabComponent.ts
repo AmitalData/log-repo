@@ -637,7 +637,7 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
 
-                    if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC") {
+                    if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
                         this.Validate(true);
                     }
 

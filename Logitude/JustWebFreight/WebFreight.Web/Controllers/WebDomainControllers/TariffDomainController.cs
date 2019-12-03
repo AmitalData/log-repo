@@ -448,14 +448,19 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     if (measurement.Code != "FIXD")
                     {
                         count++;
-                        table.Columns.Add("Min " + chargesType.Code);
+                        string firstColumnName = "Min " + chargesType.Code;
+                        if (tariff.TypeCode == "OFS")
+                        {
+                            firstColumnName = firstColumnName + "(" + measurement.Code + ")";
+                        }
+                        table.Columns.Add(firstColumnName);
                     }
-                    string columnName = chargesType.Code;
+                    string secondColumnName = chargesType.Code;
                     if (tariff.TypeCode == "OFS")
                     {
-                        columnName = columnName + "(" + measurement.Code + ")";
+                        secondColumnName = secondColumnName + "(" + measurement.Code + ")";
                     }
-                    table.Columns.Add(columnName);
+                    table.Columns.Add(secondColumnName);
                 }
             }
 
@@ -470,15 +475,19 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     if (measurement.Code != "FIXD")
                     {
                         count++;
-                        table.Columns.Add("Min " + chargesType.Code);
+                        string firstColumnName = "Min " + chargesType.Code;
+                        if (tariff.TypeCode == "OFS")
+                        {
+                            firstColumnName = firstColumnName + "(" + measurement.Code + ")";
+                        }
+                        table.Columns.Add(firstColumnName);
                     }
-
-                    string columnName = chargesType.Code;
+                    string secondColumnName = chargesType.Code;
                     if (tariff.TypeCode == "OFS")
                     {
-                        columnName = columnName + "(" + measurement.Code + ")";
+                        secondColumnName = secondColumnName + "(" + measurement.Code + ")";
                     }
-                    table.Columns.Add(columnName);
+                    table.Columns.Add(secondColumnName);
                 }
             }
 
@@ -493,15 +502,19 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     if (measurement.Code != "FIXD")
                     {
                         count++;
-                        table.Columns.Add("Min " + chargesType.Code);
+                        string firstColumnName = "Min " + chargesType.Code;
+                        if (tariff.TypeCode == "OFS")
+                        {
+                            firstColumnName = firstColumnName + "(" + measurement.Code + ")";
+                        }
+                        table.Columns.Add(firstColumnName);
                     }
-
-                    string columnName = chargesType.Code;
+                    string secondColumnName = chargesType.Code;
                     if (tariff.TypeCode == "OFS")
                     {
-                        columnName = columnName + "(" + measurement.Code + ")";
+                        secondColumnName = secondColumnName + "(" + measurement.Code + ")";
                     }
-                    table.Columns.Add(columnName);
+                    table.Columns.Add(secondColumnName);
                 }
             }
 
@@ -516,15 +529,19 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     if (measurement.Code != "FIXD")
                     {
                         count++;
-                        table.Columns.Add("Min " + chargesType.Code);
+                        string firstColumnName = "Min " + chargesType.Code;
+                        if (tariff.TypeCode == "OFS")
+                        {
+                            firstColumnName = firstColumnName + "(" + measurement.Code + ")";
+                        }
+                        table.Columns.Add(firstColumnName);
                     }
-
-                    string columnName = chargesType.Code;
+                    string secondColumnName = chargesType.Code;
                     if (tariff.TypeCode == "OFS")
                     {
-                        columnName = columnName + "(" + measurement.Code + ")";
+                        secondColumnName = secondColumnName + "(" + measurement.Code + ")";
                     }
-                    table.Columns.Add(columnName);
+                    table.Columns.Add(secondColumnName);
                 }
             }
 
@@ -539,15 +556,19 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     if (measurement.Code != "FIXD")
                     {
                         count++;
-                        table.Columns.Add("Min " + chargesType.Code);
+                        string firstColumnName = "Min " + chargesType.Code;
+                        if (tariff.TypeCode == "OFS")
+                        {
+                            firstColumnName = firstColumnName + "(" + measurement.Code + ")";
+                        }
+                        table.Columns.Add(firstColumnName);
                     }
-
-                    string columnName = chargesType.Code;
+                    string secondColumnName = chargesType.Code;
                     if (tariff.TypeCode == "OFS")
                     {
-                        columnName = columnName + "(" + measurement.Code + ")";
+                        secondColumnName = secondColumnName + "(" + measurement.Code + ")";
                     }
-                    table.Columns.Add(columnName);
+                    table.Columns.Add(secondColumnName);
                 }
             }
 
@@ -562,15 +583,19 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     if (measurement.Code != "FIXD")
                     {
                         count++;
-                        table.Columns.Add("Min " + chargesType.Code);
+                        string firstColumnName = "Min " + chargesType.Code;
+                        if (tariff.TypeCode == "OFS")
+                        {
+                            firstColumnName = firstColumnName + "(" + measurement.Code + ")";
+                        }
+                        table.Columns.Add(firstColumnName);
                     }
-
-                    string columnName = chargesType.Code;
+                    string secondColumnName = chargesType.Code;
                     if (tariff.TypeCode == "OFS")
                     {
-                        columnName = columnName + "(" + measurement.Code + ")";
+                        secondColumnName = secondColumnName + "(" + measurement.Code + ")";
                     }
-                    table.Columns.Add(columnName);
+                    table.Columns.Add(secondColumnName);
                 }
             }
 
@@ -585,15 +610,20 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     if (measurement.Code != "FIXD")
                     {
                         count++;
-                        table.Columns.Add("Min " + chargesType.Code);
+                        string firstColumnName = "Min " + chargesType.Code;
+                        if (tariff.TypeCode == "OFS")
+                        {
+                            firstColumnName = firstColumnName + "(" + measurement.Code + ")";
+                        }
+                        table.Columns.Add(firstColumnName);
                     }
 
-                    string columnName = chargesType.Code;
+                    string secondColumnName = chargesType.Code;
                     if (tariff.TypeCode == "OFS")
                     {
-                        columnName = columnName + "(" + measurement.Code + ")";
+                        secondColumnName = secondColumnName + "(" + measurement.Code + ")";
                     }
-                    table.Columns.Add(columnName);
+                    table.Columns.Add(secondColumnName);
                 }
             }
 
@@ -608,15 +638,19 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     if (measurement.Code != "FIXD")
                     {
                         count++;
-                        table.Columns.Add("Min " + chargesType.Code);
+                        string firstColumnName = "Min " + chargesType.Code;
+                        if (tariff.TypeCode == "OFS")
+                        {
+                            firstColumnName = firstColumnName + "(" + measurement.Code + ")";
+                        }
+                        table.Columns.Add(firstColumnName);
                     }
-
-                    string columnName = chargesType.Code;
+                    string secondColumnName = chargesType.Code;
                     if (tariff.TypeCode == "OFS")
                     {
-                        columnName = columnName + "(" + measurement.Code + ")";
+                        secondColumnName = secondColumnName + "(" + measurement.Code + ")";
                     }
-                    table.Columns.Add(columnName);
+                    table.Columns.Add(secondColumnName);
                 }
             }
 
@@ -631,15 +665,19 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     if (measurement.Code != "FIXD")
                     {
                         count++;
-                        table.Columns.Add("Min " + chargesType.Code);
+                        string firstColumnName = "Min " + chargesType.Code;
+                        if (tariff.TypeCode == "OFS")
+                        {
+                            firstColumnName = firstColumnName + "(" + measurement.Code + ")";
+                        }
+                        table.Columns.Add(firstColumnName);
                     }
-
-                    string columnName = chargesType.Code;
+                    string secondColumnName = chargesType.Code;
                     if (tariff.TypeCode == "OFS")
                     {
-                        columnName = columnName + "(" + measurement.Code + ")";
+                        secondColumnName = secondColumnName + "(" + measurement.Code + ")";
                     }
-                    table.Columns.Add(columnName);
+                    table.Columns.Add(secondColumnName);
                 }
             }
 
@@ -654,15 +692,19 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     if (measurement.Code != "FIXD")
                     {
                         count++;
-                        table.Columns.Add("Min " + chargesType.Code);
+                        string firstColumnName = "Min " + chargesType.Code;
+                        if (tariff.TypeCode == "OFS")
+                        {
+                            firstColumnName = firstColumnName + "(" + measurement.Code + ")";
+                        }
+                        table.Columns.Add(firstColumnName);
                     }
-
-                    string columnName = chargesType.Code;
+                    string secondColumnName = chargesType.Code;
                     if (tariff.TypeCode == "OFS")
                     {
-                        columnName = columnName + "(" + measurement.Code + ")";
+                        secondColumnName = secondColumnName + "(" + measurement.Code + ")";
                     }
-                    table.Columns.Add(columnName);
+                    table.Columns.Add(secondColumnName);
                 }
             }
 
