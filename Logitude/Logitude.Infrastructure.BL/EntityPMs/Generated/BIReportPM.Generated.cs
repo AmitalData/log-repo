@@ -388,6 +388,75 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
+	  private DateTime lastRunDate ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime LastRunDate  
+	   {
+	    
+	     get
+		{
+		   return lastRunDate;
+		 }
+		 set
+		 {
+		   if(lastRunDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastRunDate",OldValue=lastRunDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChanged(values);
+		   lastRunDate=value;
+		   }
+			
+		 }
+	   }
+	  private string lastRunByUserId ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LastRunByUserId  
+	   {
+	    
+	     get
+		{
+		   return lastRunByUserId;
+		 }
+		 set
+		 {
+		   if(lastRunByUserId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastRunByUserId",OldValue=lastRunByUserId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   lastRunByUserId=value;
+		   }
+			
+		 }
+	   }
+	  private string lastRunByUserName ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LastRunByUserName  
+	   {
+	    
+	     get
+		{
+		   return lastRunByUserName;
+		 }
+		 set
+		 {
+		   if(lastRunByUserName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastRunByUserName",OldValue=lastRunByUserName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   lastRunByUserName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
