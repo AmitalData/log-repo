@@ -1369,6 +1369,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             IsFullAccounting = a.IsFullAccounting,
                             ARInvoiceStockId = a.ARInvoiceStockId,
                             BranchName = a.Branch == null ? null : a.Branch.EnglishName,
+                            CreatedByPartner = a.CreatedByPartner,
                         };
 
             return query;
@@ -1505,6 +1506,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              IsFullAccounting = entity.IsFullAccounting,
                              IsInvoiceNumberFromStock = entity.IsInvoiceNumberFromStock,
                              BranchName = entity.Branch == null ? null : entity.Branch.EnglishName,
+                             CreatedByPartner = entity.CreatedByPartner,
                          };
 
             return result;
@@ -1616,6 +1618,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               ARInvoiceStockId = a.ARInvoiceStockId,
                                               IsInvoiceNumberFromStock = a.IsInvoiceNumberFromStock,
                                               BranchName = a.Branch == null ? null : a.Branch.EnglishName,
+                                              CreatedByPartner = a.CreatedByPartner,
                                           }).ToList();
             return invoices;
         }
@@ -1730,6 +1733,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     IsInvoiceNumberFromStock = entityPOCO.IsInvoiceNumberFromStock,
                     DocumentFilingId = entityPOCO.DocumentFilingId,
                     BranchName = entityPOCO.Branch == null ? null : entityPOCO.Branch.EnglishName,
+                    CreatedByPartner = entityPOCO.CreatedByPartner,
                 };
 
                 entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;
@@ -2052,6 +2056,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              ARInvoiceStockId = entity.ARInvoiceStockId,
                              IsInvoiceNumberFromStock = entity.IsInvoiceNumberFromStock,
                              BranchName = entity.Branch == null ? null : entity.Branch.EnglishName,
+                             CreatedByPartner = entity.CreatedByPartner,
                          };
 
             return result;

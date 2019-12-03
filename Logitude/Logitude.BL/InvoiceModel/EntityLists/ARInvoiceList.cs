@@ -172,5 +172,7 @@ namespace Logitude.BL.InvoiceModel.EntityLists
 
         public string BillToCity { get; set; }
         public string BillToCountry { get; set; }
+        public string CreatedByPartner { get; set; }
+
     }
 }

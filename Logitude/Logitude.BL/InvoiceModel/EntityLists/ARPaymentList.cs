@@ -87,6 +87,7 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public bool IsFullAccounting { get; set; }
         public DateTime? FechaPago { get; set; }
 
+        public string CreatedByPartner { get; set; }
 
     }
 }

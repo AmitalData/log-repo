@@ -524,6 +524,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string ForwarderPartnerId { get; set; }
         public string ARInvoices { get; set; }
         public double? NotInvoicedReceivablesAmount { get; set; }
+        public string CreatedByPartner { get; set; }
 
     }
 }

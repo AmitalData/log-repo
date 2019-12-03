@@ -128,5 +128,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string PrimaryContactName { get; set; }
         public string PrimaryContactEmail { get; set; }
         public string PrimaryContactPhone { get; set; }
+
     }
 }
