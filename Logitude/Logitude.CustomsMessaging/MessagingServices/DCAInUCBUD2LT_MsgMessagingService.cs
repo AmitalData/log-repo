@@ -95,12 +95,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
             var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(tenant);
-            bool simultaneousCheckGeneralLock = true;
-            if (simultaneousCheckGeneralLock)
-            {
+            //bool simultaneousCheckGeneralLock = true;
+            //if (simultaneousCheckGeneralLock)
+            //{
 
-            }
-            else
+            //}
+            //else
             {
                 var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, documentsFilingPM.EntityId, null, null, null, true);
                 if (RequestInProgressList != null && RequestInProgressList.Count > 0)
