@@ -23,6 +23,8 @@ using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers.ExternalAPIHelpers;
 using WebFreight.Web.Security;
 using Logitude.SystemLogs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+
 namespace WebFreight.Web.ExternalAPIs.V1
 {
     public class ARPaymentController : ApiController
@@ -109,6 +111,13 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         ARPaymentService service = new ARPaymentService(MyContext, tenant);
                         entityPM = mappingService.SetARPaymentPMFields(entityPM);
                         entityPM = mappingService.MapAPPaymentChequeFieldsToARPayment(entity, entityPM);
+                        if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
+                        {
+                            ComputingPartnerQuery computingPartnerQuery = new ComputingPartnerQuery(tenant);
+                            var partner = computingPartnerQuery.GetSinglePMByCodeAndCheckTenantZero(entity.ComputingPartnerCode, tenant);
+                            entityPM.CreatedByPartner = (partner != null ? partner.Name : null);
+
+                        }
                         service.Create(entityPM);
                       
                        
@@ -176,7 +185,13 @@ namespace WebFreight.Web.ExternalAPIs.V1
                        ARPaymentPM entityPM = mappingService.ARPaymentDataMappingAndValidatin(entity, tenant);
                         entityPM.IsExternalEntity = true;
                         mappingService.CheckARPaymentNumber(entityPM.PaymentNo, entityPM.Id, entityPM.Tenant);
+                        if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
+                        {
+                            ComputingPartnerQuery computingPartnerQuery = new ComputingPartnerQuery(tenant);
+                            var partner = computingPartnerQuery.GetSinglePMByCodeAndCheckTenantZero(entity.ComputingPartnerCode, tenant);
+                            entityPM.CreatedByPartner = (partner != null ? partner.Name : null);
 
+                        }
                         ARPaymentService service = new ARPaymentService(MyContext, tenant);
                         service.Update(entityPM, true);
 

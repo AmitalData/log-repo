@@ -150,6 +150,8 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool IsExternalEntity { get; set; }
         public string JournalNumber { get; set; }
         public string JournalId { get; set; }
+        public string CreatedByPartner { get; set; }
+
 
         private List<LedgerTransactionPM> invoicesLedgerTransactions;
         public virtual List<LedgerTransactionPM> InvoicesLedgerTransactions

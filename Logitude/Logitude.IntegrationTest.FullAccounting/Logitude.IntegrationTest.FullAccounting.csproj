@@ -55,19 +55,14 @@
   <ItemGroup>
     <Compile Include="ChartOfAccount\ChartOfAccountIntegrationTests.cs" />
     <Compile Include="Initialize.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
-    <Compile Include="PreparationVariables.cs" />
+    <Compile Include="Preparation\PreparationCalls.cs" />
+    <Compile Include="Preparation\PreparationVariables.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
-    <None Include="obj\Debug\Logitude.IntegrationTest.FullAccounting.csproj.CoreCompileInputs.cache" />
-    <None Include="obj\Debug\Logitude.IntegrationTest.FullAccounting.csprojAssemblyReference.cache" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -86,6 +81,10 @@
     <ProjectReference Include="..\Logitude.IntegrationTest.Core\Logitude.IntegrationTest.Core.csproj">
       <Project>{83ee55e3-c13c-4df6-ac3c-c634e9cd8d66}</Project>
       <Name>Logitude.IntegrationTest.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
+      <Project>{9B477A08-8EE2-4457-88FE-17E8A6EC4D00}</Project>
+      <Name>Logitude.Server.Tools</Name>
     </ProjectReference>
     <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
       <Project>{ACC2EA9E-E150-4099-8AA1-66326AB14BE8}</Project>

@@ -11,33 +11,40 @@ namespace Logitude.IntegrationTest.Core
     public class QueryFiltersPreparation
     {
 
-        public static string Geturlparameters( string SearchKey=null, ApiQueryFilters filters = null)
+        public static string GetUrlParameters( string searchKey=null, ApiQueryFilters filters = null)
         {
-            string urlparameters = "/getbyfilters?";
-            var properties= filters!=null?GetProperties(filters):null;
-            ApiQueryFilters Generatedfilters = filters == null ? new ApiQueryFilters():null;
-            if (filters != null)
+            if (filters == null)
             {
-                filters.PageSize = 23;
+                filters = InitializeAPIQueryFilters(searchKey);
             }
-            else if(SearchKey != null)
-            {
-                Generatedfilters.Filter1Name = "SearchFields";
-                Generatedfilters.Filter1Operator = "Contains";
-                Generatedfilters.PageSize = 23;
-                Generatedfilters.Filter1Value = SearchKey;
-                properties = GetProperties(Generatedfilters);
-            }
-            else
-            {
-                return null;
-            }
+           
+            string urlparameters = CreateParametersUrl(filters);
+            return urlparameters;
+        }
 
+        private static PropertyInfo[] GetProperties(object obj)
+        {
+            return obj.GetType().GetProperties();
+        }
+
+        private static ApiQueryFilters InitializeAPIQueryFilters(string searchKey)
+        {
+            ApiQueryFilters filters = new ApiQueryFilters();
+            filters.Filter1Name = "SearchFields";
+            filters.Filter1Operator = "Contains";
+            filters.PageSize = 23;
+            filters.Filter1Value = searchKey;
+            return filters;
+        }
+
+        private static string CreateParametersUrl(ApiQueryFilters filters)
+        {
+            PropertyInfo[] properties = GetProperties(filters);
+            string urlparameters = "/getbyfilters?";
             foreach (var p in properties)
             {
                 var propName = p.Name;
-                var Selectedfilters = filters != null ? filters : Generatedfilters;
-                var propValue = p.GetValue(Selectedfilters, null);
+                var propValue = p.GetValue(filters, null);
                 var ignoreFilter = ((propName.IndexOf("Operator") > 0 && propValue as string == "Equals") || propValue == null);
                 if (urlparameters[urlparameters.Length - 1] != '?' && !ignoreFilter)
                 {
@@ -49,11 +56,6 @@ namespace Logitude.IntegrationTest.Core
                 }
             }
             return urlparameters;
-        }
-
-        private static PropertyInfo[] GetProperties(object obj)
-        {
-            return obj.GetType().GetProperties();
         }
     }
 }
