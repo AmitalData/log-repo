@@ -1,6 +1,6 @@
 declare var System: any;
 declare var window: any;
-import { Component, OnInit, OnDestroy, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { AppTool, ArrayTool } from '../../../../../Infrastructure/Tools';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { FeatureLocator } from '../../../../../Infrastructure/Utilities/FeatureLocator';
@@ -36,6 +36,7 @@ export class DeclarationCollateralsComponent extends BaseComponent implements On
   public CurrentEditComponentId: string;
   public collateralObslist: ObservableCollection;
   public collateralToSendlist: number[]=[];
+  @Output() MenuHeaderchangeevent = new EventEmitter();
 
   private _DeclarationWebService: DeclarationWebService = new DeclarationWebService;
   private _CustomsCollateralPMService: CustomsCollateralPMService = new CustomsCollateralPMService;
@@ -48,30 +49,31 @@ export class DeclarationCollateralsComponent extends BaseComponent implements On
     IsDisplayButtonSend: boolean;
     constructor(private entityArgs: EntityArgs, private EntityResourceService: EntityResourceService, public _customsCollateralAnswerSharedDataService: CustomsCollateralAnswerSharedDataService) {
     super();
-    this.collateralObslist = new ObservableCollection([]);
+       this.collateralObslist = new ObservableCollection([]);
 
-    this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe((response: any) => {
-      this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsAnswer").subscribe((response: any) => {
-        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsCondition").subscribe((response: any) => {
-          this.EntityPM = this.entityArgs.EntityPM;
-          this.LoadDeclarationCollateralsList();
-            this.Listen();
+      this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe((response: any) => {
+          this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsAnswer").subscribe((response: any) => {
+              this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsCondition").subscribe((response: any) => {
+                  this.EntityPM = this.entityArgs.EntityPM;
+                  this.LoadDeclarationCollateralsList();
+                  this.Listen();
 
-            this.BuildColumns();
-            
-            setTimeout(() => {
-                this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
-            }, 10);
+                  this.BuildColumns();
+
+                  setTimeout(() => {
+                      this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+                  }, 10);
 
 
-          this.IsLoaded = true;
-        });
+                  this.IsLoaded = true;
+              });
+          });
       });
-    });
   }
 
   ngOnInit() {
-    this.EntityPM = this.entityArgs.EntityPM;
+      this.EntityPM = this.entityArgs.EntityPM;
+  
   }
 
   ngOnDestroy() {
@@ -173,7 +175,7 @@ export class DeclarationCollateralsComponent extends BaseComponent implements On
 
     _stratSearch: boolean = true;
     
-    MenuHeaderchangeevent = new EventEmitter();
+    //MenuHeaderchangeevent = new EventEmitter();
     
     onQueryChangeEvent = new EventEmitter();
 
@@ -398,11 +400,21 @@ export class DeclarationCollateralsComponent extends BaseComponent implements On
             logWindow.Title = windowTitle;
             logWindow.ShowCloseButton = false;
             logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            debugger;
+            this._customsCollateralAnswerSharedDataService._SelectedItems.Collection = [];
+            this.RefreshList();
+        });
             logWindow.Show('./CustomsModules/CustomsCollateral/Components/CustomsCollateralAnswerComponent');
-
+      
 
        // }
     }
 
+    RefreshList() {
 
+        setTimeout(() => {
+            this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+        }, 10);
+    }
 }

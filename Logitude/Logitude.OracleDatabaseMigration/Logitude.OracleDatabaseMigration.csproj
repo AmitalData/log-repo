@@ -404,6 +404,10 @@
     <Compile Include="Migrations\201911181156591_ChangesHazardousSubstances1.Designer.cs">
       <DependentUpon>201911181156591_ChangesHazardousSubstances1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912031323504_AddDSupplierInvoiceItemsEntryFieldsChange.cs" />
+    <Compile Include="Migrations\201912031323504_AddDSupplierInvoiceItemsEntryFieldsChange.Designer.cs">
+      <DependentUpon>201912031323504_AddDSupplierInvoiceItemsEntryFieldsChange.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -693,6 +697,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911181156591_ChangesHazardousSubstances1.resx">
       <DependentUpon>201911181156591_ChangesHazardousSubstances1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912031323504_AddDSupplierInvoiceItemsEntryFieldsChange.resx">
+      <DependentUpon>201912031323504_AddDSupplierInvoiceItemsEntryFieldsChange.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>

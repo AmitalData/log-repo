@@ -520,6 +520,23 @@ export class CourierWorksheetComponent extends BaseComponent
         this.RefreshList();
         this.DisplayOnlyCheck();
 
+        if (this._ValidationErrors2.length > 0) {
+        this._ValidationErrors2 = []
+            this._CourierMasterService.GetIfAllowToCancelCourierMaster(this.entityPM.Id).subscribe(
+                data => {
+                    if (data.Result != "")
+                        this._ValidationErrors2.push(TextCodeTranslator.Translate("Customs.CourierMaster.O.CantCancelFlight"));
+                    switch (data.Result) {
+                        case "INVALID_INPROGRESS":
+                            this._ValidationErrors2.push(TextCodeTranslator.Translate("Customs.CourierMaster.O.NotValidDecInProccess"))
+                            break;
+                        case "INVALID_PAYED":
+                            this._ValidationErrors2.push(TextCodeTranslator.Translate("Customs.CourierMaster.O.NotValidDecWithPayment"))
+                            break;
+                    }
+                });
+        }
+
     }
 
     RefreshList() {

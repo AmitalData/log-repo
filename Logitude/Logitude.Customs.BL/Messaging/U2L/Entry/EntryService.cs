@@ -191,7 +191,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.Entry
                         var packageTypeCode = declarationPM.Consignments[0].ConsignmentPackages.Where(r => r.PackageMeasureQualifierCode == "1").FirstOrDefault().PackageTypeCode;
                         if (!string.IsNullOrWhiteSpace(packageTypeCode))
                         {
-                            mySupplierInvoice.PackageTypeCode = GetTranslationP2L("IIGC", "CTBPACKTYPE", packageTypeCode);
+                            //mySupplierInvoice.PackageTypeCode = GetTranslationP2L("IIGC", "CTBPACKTYPE", packageTypeCode);
+                            mySupplierInvoice.PackageTypeCode = packageTypeCode;
                         }
                     }
                     if (supplierInvoice.SupplierInvoiceItems != null && supplierInvoice.SupplierInvoiceItems.Count() > 0)
@@ -202,7 +203,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Entry
                             var mySupplierInvoiceItem = new LogitudeSupplierAccount();
 
                             mySupplierInvoiceItem.Document = item.PreferenceDocumentNumber;
-                            mySupplierInvoiceItem.ItemNo = item.ItemCode;
+                            if(item.ItemCode != null && item.ItemCode.Length < 11) mySupplierInvoiceItem.ItemNo = item.ItemCode;
                             mySupplierInvoiceItem.OriginCcountryId = item.OriginCountryCode;
                             mySupplierInvoiceItem.PratMehes = item.ClassificationCode;
                             mySupplierInvoiceItem.RateGroup = item.TradeAgreementCode;

@@ -115,11 +115,11 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.SearchFields).HasColumnName("SearchFields").HasMaxLength(1000).IsUnicode(true);
 
-            this.Property(t => t.MarksAndNumbers).HasColumnName("MarksAndNumbers").HasMaxLength(512).IsUnicode(false);
+            this.Property(t => t.MarksAndNumbers).HasColumnName("MarksAndNumbers").HasMaxLength(30).IsUnicode(false);
 
             this.Property(t => t.PackageQuantity).HasColumnName("PackageQuantity");
 
-            this.Property(t => t.Weight).HasColumnName("Weight");
+            this.Property(t => t.Weight).HasColumnName("Weight").HasPrecision(15, 3);
         }
     }
 }
