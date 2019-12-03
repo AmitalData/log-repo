@@ -1678,7 +1678,6 @@
     <Compile Include="Migrations\201911210908155_AddAutomaticallyCloseDaysToQuoteSettingTable_Maheera.Designer.cs">
       <DependentUpon>201911210908155_AddAutomaticallyCloseDaysToQuoteSettingTable_Maheera.cs</DependentUpon>
     </Compile>
-<<<<<<< HEAD
     <Compile Include="Migrations\201911251002048_Addgussment.cs" />
     <Compile Include="Migrations\201911251002048_Addgussment.Designer.cs">
       <DependentUpon>201911251002048_Addgussment.cs</DependentUpon>
@@ -1706,11 +1705,10 @@
     <Compile Include="Migrations\201911291324079_APPaymentNewFieldMigration.cs" />
     <Compile Include="Migrations\201911291324079_APPaymentNewFieldMigration.Designer.cs">
       <DependentUpon>201911291324079_APPaymentNewFieldMigration.cs</DependentUpon>
-=======
+    </Compile>
     <Compile Include="Migrations\201911251236376_NewField_AllowEditChequePayToName.cs" />
     <Compile Include="Migrations\201911251236376_NewField_AllowEditChequePayToName.Designer.cs">
       <DependentUpon>201911251236376_NewField_AllowEditChequePayToName.cs</DependentUpon>
->>>>>>> origin/2019.R5.Abdullah.58091
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
@@ -2909,7 +2907,6 @@
     <EmbeddedResource Include="Migrations\201911210908155_AddAutomaticallyCloseDaysToQuoteSettingTable_Maheera.resx">
       <DependentUpon>201911210908155_AddAutomaticallyCloseDaysToQuoteSettingTable_Maheera.cs</DependentUpon>
     </EmbeddedResource>
-<<<<<<< HEAD
     <EmbeddedResource Include="Migrations\201911251002048_Addgussment.resx">
       <DependentUpon>201911251002048_Addgussment.cs</DependentUpon>
     </EmbeddedResource>
@@ -2930,10 +2927,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911291324079_APPaymentNewFieldMigration.resx">
       <DependentUpon>201911291324079_APPaymentNewFieldMigration.cs</DependentUpon>
-=======
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911251236376_NewField_AllowEditChequePayToName.resx">
       <DependentUpon>201911251236376_NewField_AllowEditChequePayToName.cs</DependentUpon>
->>>>>>> origin/2019.R5.Abdullah.58091
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
