@@ -217,6 +217,8 @@
     <Compile Include="EntityPMs\Generated\CustomsVendorPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomsVerificationStatusTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DangerousGoodsPackingReqPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DBMigrationLinePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DBMigrationPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DebtNotificationTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DecCargoSplitCargoIdentifierPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DecCargoSplitConPM.Generated.cs" />
