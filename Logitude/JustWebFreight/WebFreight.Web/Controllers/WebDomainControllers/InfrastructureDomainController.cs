@@ -585,6 +585,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
         public HttpResponseMessage GetSendEntityToAirlineTenant(string entityId, string objectTableName, string airlineCode)
         {
             try
@@ -1847,6 +1848,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     entityPM.AGGridOptionsXML = ColumnsXML;
                     entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                     entityPOCO.AGGridOptionsXML = entityPM.AGGridOptionsXML;
+                    entityPOCO.LastRunDate = entityPM.LastRunDate;
+                    entityPOCO.LastRunByUserId = entityPM.LastRunByUserId;
                     repository.Update(entityPOCO);
                     repository.SubmitChanges();
 
