@@ -78,17 +78,19 @@ export class TariffValidator {
             if (this.entityPM.TypeCode == "OFS") {
                 if (this.IdProps.filter(p => this.entityPM[p + ""] == this.entityPM[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this.entityPM[IdProps[index - 1]] != null)[0] != null) {
                     if (this.UOMProps.filter(p => this.entityPM[p + ""] == this.entityPM[UOMProps[index - 1]] && (p + "" != UOMProps[index - 1] + "") && this.entityPM[UOMProps[index - 1]] != null)[0] != null) {
-                        var chargresTypes = this.UOMProps.filter(p => this.entityPM[p + ""] == this.entityPM[UOMProps[index - 1]]);
+                        var chargeTypes = this.IdProps.filter(p => this.entityPM[p + ""] == this.entityPM[IdProps[index - 1]]);
                         var isDuplicatiedUOMT: boolean = false;
-                        var tempCharges = [];
-                        chargresTypes.forEach(item => {
-                            var chargeItem = item.replace("UOM", "Id");
-                            if (tempCharges.includes(this.entityPM[chargeItem + ""])) {
+                        var pair: string = "";
+                        var pairs = [];
+                        chargeTypes.forEach(item => {
+                            var UOM = item.replace("Id", "UOM");
+                            pair = this.entityPM[item] + " " + this.entityPM[UOM];
+                            if (pairs.includes(pair)) {
                                 isDuplicatiedUOMT = true;
                                 return;
                             }
                             else {
-                                tempCharges.push(this.entityPM[chargeItem + ""]);
+                                pairs.push(pair);
                             }
                         });
                         if (isDuplicatiedUOMT) {
