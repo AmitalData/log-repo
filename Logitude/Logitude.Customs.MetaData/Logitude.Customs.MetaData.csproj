@@ -104,8 +104,8 @@
     <None Include="EntityFiles\ApprovedProfession.lxml">
       <SubType>Designer</SubType>
     </None>
-	    <None Include="EntityFiles\DBMigration.lxml" />
-    <None Include="EntityFiles\DBMigrationLine.lxml" />
+<None Include="EntityFiles\DBMigration.lxml" />
+<None Include="EntityFiles\DBMigrationLine.lxml" />
 
     <None Include="EntityFiles\RequestType.lxml">
       <SubType>Designer</SubType>

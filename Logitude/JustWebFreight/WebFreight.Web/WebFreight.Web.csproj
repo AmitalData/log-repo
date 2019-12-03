@@ -1394,6 +1394,8 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomsVendorViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomsVerificationStatusTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DangerousGoodsPackingReqViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DBMigrationLineViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DBMigrationViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DebtNotificationTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DecCargoSplitCargoIdentifierViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DecCargoSplitConsItemViewsController.Generated.cs" />
@@ -1594,6 +1596,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsRequiredFieldController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsSettingController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsVendorController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\DBMigrationController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\DeclarationCargoSplitController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\DeclarationConsAcceptanceController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\DeclarationController.Generated.cs" />
@@ -2642,6 +2645,8 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsDocumentsDefinitionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsInsuranceCompanyUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsPartnerFtpUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DBMigrationLineUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DBMigrationUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DecCargoSplitCargoIdentifierUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DecCargoSplitConsItemUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DecCargoSplitConsPackDetUpdateClass.cs" />

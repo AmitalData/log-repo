@@ -365,6 +365,8 @@
     <Compile Include="EntityDataMappings\CustomsVendorDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsVerificationStatusTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\DangerousGoodsPackingReqDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DBMigrationDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DBMigrationLineDataMapping.cs" />
     <Compile Include="EntityDataMappings\DebtNotificationTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\DecCargoSplitCargoIdentifierDataMapping.cs" />
     <Compile Include="EntityDataMappings\DecCargoSplitConDataMapping.cs" />
@@ -526,6 +528,8 @@
     <Compile Include="EntityDataMappings\Generated\CustomsVendorDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsVerificationStatusTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DangerousGoodsPackingReqDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DBMigrationDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DBMigrationLineDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DebtNotificationTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DecCargoSplitCargoIdentifierDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DecCargoSplitConDataMapping.Generated.cs" />
@@ -860,6 +864,9 @@
     <Compile Include="EntityQueryServices\DeclarationPendingQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\ApprovedProfessionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ContinuousRequestTypeQueryService.Generated.cs" />
+	<Compile Include="EntityQueryServices\Generated\DBMigrationLineQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DBMigrationQueryService.Generated.cs" />
+
     <Compile Include="EntityQueryServices\Generated\DeclarationPendingQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeficitDecisionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\RequestTypeQueryService.Generated.cs" />
@@ -1312,6 +1319,8 @@
     <Compile Include="EntityUpdateServices\Generated\CustomsDocumentsDefinitionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsInsuranceCompanyUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsPartnerFtpUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\DBMigrationLineUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\DBMigrationUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DecCargoSplitCargoIdentifierUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DecCargoSplitConsItemUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DecCargoSplitConsPackDetUpdateService.Generated.cs" />
