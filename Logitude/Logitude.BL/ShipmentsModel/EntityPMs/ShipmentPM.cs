@@ -2381,5 +2381,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string MasterCreatedFromHouseId { get; set; }
         public bool IsDeletingAllPayables { get; set; }
         public double? NotInvoicedReceivablesAmount { get; set; }
+        public string CreatedByPartner { get; set; }
+
     }
 }

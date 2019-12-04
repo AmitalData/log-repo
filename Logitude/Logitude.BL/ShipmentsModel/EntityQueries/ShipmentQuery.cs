@@ -3243,7 +3243,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
 
 
-
+            shipmentPM.CreatedByPartner = shipment.CreatedByPartner;
             shipmentPM.Tenant = shipment.Tenant;
             shipmentPM.Id = shipment.Id;
             shipmentPM.StatusId = shipment.StatusId;
@@ -11489,6 +11489,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                Origin = f.Origin,
                                ARInvoices = f.ARInvoices,
                                NotInvoicedReceivablesAmount = f.NotInvoicedReceivablesAmount,
+                               CreatedByPartner = f.CreatedByPartner,
                            };
             return myResult;
         }
@@ -12586,7 +12587,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          MainCarriageToPortId = m.MainCarriageToPortId,
                                                          From = s.From,
                                                          To = s.To,
-                                                         Origin = s.Origin
+                                                         Origin = s.Origin,
+                                                          CreatedByPartner = s.CreatedByPartner,
                                                      };
 
             return shipmentsList;

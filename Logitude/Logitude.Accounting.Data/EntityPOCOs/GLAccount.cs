@@ -170,6 +170,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public DateTime CreateDate { get; set; }
         [Column("UpdateDate")]
 	    public DateTime UpdateDate { get; set; }
+        [Column("AllowEditChequePayToName")]
+	    public bool AllowEditChequePayToName { get; set; }
     }
 }
 	 

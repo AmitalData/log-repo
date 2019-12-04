@@ -62,6 +62,13 @@ namespace Logitude.Infrastructure.Data.EntityPOCOs
 	    public string BIReportFolderId { get; set; }
 	      
         public virtual BIReportFolder BIReportFolder { get; set; }
+        [Column("LastRunDate")]
+	    public DateTime LastRunDate { get; set; }
+        [ForeignKey("LastRunByUser")]
+        [Column("LastRunByUserId")]
+	    public string LastRunByUserId { get; set; }
+	      
+        public virtual User LastRunByUser { get; set; }
     }
 }
 	 

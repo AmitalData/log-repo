@@ -608,9 +608,9 @@ export class ARInvoicePM {
     public set OperationalDate(newValue: Date) { if (this.operationalDate != newValue) { this.operationalDate = newValue; this.MarkAsDirty("OperationalDate"); } }
        
 	 
-    private dateForVATInterest: Date;
-    public get DateForVATInterest() { return this.dateForVATInterest; }
-    public set DateForVATInterest(newValue: Date) { if (this.dateForVATInterest != newValue) { this.dateForVATInterest = newValue; this.MarkAsDirty("DateForVATInterest"); } }
+    private dateForInterest: Date;
+    public get DateForInterest() { return this.dateForInterest; }
+    public set DateForInterest(newValue: Date) { if (this.dateForInterest != newValue) { this.dateForInterest = newValue; this.MarkAsDirty("DateForInterest"); } }
        
 	 
     private splitJournalByCurrency: boolean;
@@ -1020,6 +1020,11 @@ export class ARInvoicePM {
     private billToCountry: string;
     public get BillToCountry() { return this.billToCountry; }
     public set BillToCountry(newValue: string) { if (this.billToCountry != newValue) { this.billToCountry = newValue; this.MarkAsDirty("BillToCountry"); } }
+       
+	 
+    private createdByPartner: string;
+    public get CreatedByPartner() { return this.createdByPartner; }
+    public set CreatedByPartner(newValue: string) { if (this.createdByPartner != newValue) { this.createdByPartner = newValue; this.MarkAsDirty("CreatedByPartner"); } }
        
 	 
 

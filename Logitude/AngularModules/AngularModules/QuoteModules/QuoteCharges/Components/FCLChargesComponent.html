@@ -760,7 +760,7 @@
                                     </log-column>
 
                                     <!-- All in -->
-                                    <log-column [width]="'60'" *ngIf="IsAdhoc">
+                                    <log-column [width]="'60'" *ngIf="IsAdhoc && !HideFCLAllIn">
                                         <log-header-template template="let item">
                                             <div class="GridHeaderCellTemplate">
                                                 <table>
