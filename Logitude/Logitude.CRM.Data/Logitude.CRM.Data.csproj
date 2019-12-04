@@ -99,6 +99,7 @@
     <None Include="CRMContext.Views.cs" />
     <Compile Include="CustomFilters\ActivityCustomFilter.cs" />
     <Compile Include="CustomFilters\CRMFilterSettingCustomFilters.cs" />
+    <Compile Include="CustomFilters\OccasionContactCustomFilter.cs" />
     <Compile Include="CustomFilters\OpportunityCustomFilter.cs" />
     <Compile Include="CustomFilters\TicketClassificationCustomFilter.cs" />
     <Compile Include="CustomFilters\TicketCustomFilter.cs" />
@@ -217,6 +218,7 @@
     <Compile Include="EntityListQueryServices\Generated\TicketStageListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TicketTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TimeUnitListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\OccasionContactListQueryService.cs" />
     <Compile Include="EntityListQueryServices\OccasionInviteeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\OccasionListQueryService.cs" />
     <Compile Include="EntityListQueryServices\OccasionStatusListQueryService.cs" />
@@ -267,6 +269,7 @@
     <Compile Include="EntityLists\Generated\EmployeeGroupList.Generated.cs" />
     <Compile Include="EntityLists\Generated\EscalationActionTimeIndicatorList.Generated.cs" />
     <Compile Include="EntityLists\Generated\EscalationPreDefinitionList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\OccasionContactList.Generated.cs" />
     <Compile Include="EntityLists\Generated\OccasionInviteeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\OccasionList.Generated.cs" />
     <Compile Include="EntityLists\Generated\OccasionStatusList.Generated.cs" />

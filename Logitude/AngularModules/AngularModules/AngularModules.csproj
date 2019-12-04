@@ -557,6 +557,7 @@
     <TypeScriptCompile Include="CRMModules\CRMTickets\Components\NewEntity\NewTicketComponent.ts" />
     <TypeScriptCompile Include="Controls\Pipes\MinutesToTimePipe.ts" />
     <TypeScriptCompile Include="CRM\Components\Workspaces\OccasionWorkspaceComponent.ts" />
+    <TypeScriptCompile Include="CRM\EntityLists\OccasionContactList.ts" />
     <TypeScriptCompile Include="CRM\EntityLists\OccasionInviteeList.ts" />
     <TypeScriptCompile Include="CRM\EntityLists\OccasionList.ts" />
     <TypeScriptCompile Include="CRM\EntityLists\OccasionStatusList.ts" />
@@ -566,6 +567,7 @@
     <TypeScriptCompile Include="CRM\EntityPMs\OccasionPM.ts" />
     <TypeScriptCompile Include="CRM\EntityPMs\OccasionStatusPM.ts" />
     <TypeScriptCompile Include="CRM\EntityPMs\OccasionTypePM.ts" />
+    <TypeScriptCompile Include="CRM\Services\StandardLists\OccasionContactListService.ts" />
     <TypeScriptCompile Include="CRM\Services\StandardLists\OccasionListService.ts" />
     <TypeScriptCompile Include="CRM\Services\StandardLists\OccasionStatusListService.ts" />
     <TypeScriptCompile Include="CRM\Services\StandardLists\OccasionTypeListService.ts" />

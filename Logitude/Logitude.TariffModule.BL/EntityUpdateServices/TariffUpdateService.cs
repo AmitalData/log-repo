@@ -87,7 +87,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 this.CreateTariffVersion(entityPM);
             }
 
-            if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC")
+            if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC" || entityPM.TypeCode == "OFS")
             {
                 if (entityPM.TariffVersions.Where(d => d.StartDate != null || d.ExpirationDate != null).Any())
                 {
@@ -122,7 +122,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
         List<ChargesType> ChargeTypes;
         private void InsertTariffSurchargeLog(TariffPM tariff)
         {
-            if ((tariff.TypeCode == "ASC" || tariff.TypeCode == "OSC") && !tariff.IsFromUpdateScreen && !tariff.IsFromCopy)
+            if ((tariff.TypeCode == "ASC" || tariff.TypeCode == "OSC" || tariff.TypeCode == "OFS") && !tariff.IsFromUpdateScreen && !tariff.IsFromCopy)
             {
                 TariffSurchargesUpdateUpdateService tariffSurchargeUpdateService = new TariffSurchargesUpdateUpdateService(TariffModuleContext.GetContext(tariff.Tenant), new Dictionary<string, IContext>(), tariff.Tenant);
                 TariffVersionPM version = tariff.TariffVersions.Where(prop => prop.IsDraft == true).FirstOrDefault();
@@ -363,7 +363,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 IsDraft = true,
             };
 
-            if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC")
+            if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC" || entityPM.TypeCode == "OFA")
             {
                 tariffVersionPM.StartDate = null;
                 tariffVersionPM.ExpirationDate = null;
@@ -433,7 +433,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                     Notes = "Version " + iDraftVersion.Version + " approved",
                 });
 
-                if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC")
+                if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC" || entityPM.TypeCode == "OFS")
                 {
                     TariffVersionPM iPreviousVersion = entityPM.ActiveVersions.OrderByDescending(o => o.CreateDate).FirstOrDefault();
                     if (iPreviousVersion != null)

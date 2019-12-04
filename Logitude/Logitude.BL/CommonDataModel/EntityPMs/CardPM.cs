@@ -184,11 +184,16 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool IsInternationalPartner { get; set; }
         public bool IsAutonomy { get; set; }
 
+        public string CustomerStatusCode { get; set; }
+        
+
         [DataMember]
         public string CalculatedLocalName { get; set; }
         [DataMember]
         public string CalculatedEnglishName { get; set; }
         [DataMember]
         public bool IsDisconnectedFromGLAccount { get; set; }
+        public string CreatedByPartner { get; set; }
+
     }
 }

@@ -156,7 +156,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                             apinvoicePM = apinvoiceQuery.APInvoiceDataMappingAndValidatin(apinvoice, tenant);
                             apinvoiceQuery.PaymentTermMapAndValidate(apinvoice, apinvoicePM, tenant);
-
+                            
                             // VendorGLAccountId
                             CardQuery cardQuery = new CardQuery(tenant);
                             CardPM vendor = cardQuery.GetSinglePM(apinvoicePM.VendorId, tenant);
@@ -179,7 +179,15 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             apinvoicePM = apinvoiceQuery.APInvoiceCustomDataMappingAndValidating(apinvoice, tenant, computingPartnerCode);
                             apinvoicePM.CreatedFromAPI = true;
                         }
-                        
+
+                        if (!string.IsNullOrEmpty(apinvoice.ComputingPartnerCode))
+                        {
+                            ComputingPartnerQuery computingPartnerQuery = new ComputingPartnerQuery(tenant);
+                            var partner = computingPartnerQuery.GetSinglePMByCodeAndCheckTenantZero(apinvoice.ComputingPartnerCode, tenant);
+                            apinvoicePM.CreatedByPartner = (partner != null ? partner.Name : null);
+
+                        }
+
                         APInvoiceService apinvoiceService = new APInvoiceService(MyContext, tenant);
                         apinvoiceService.Create(apinvoicePM);
 
