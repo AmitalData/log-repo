@@ -30,8 +30,10 @@ export class AddEditFCLChargeComponent {
     public IsVATVisible: boolean = false;
     public ValidationErrorsList: string[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
+    public HideFCLAllIn: boolean = false;
     constructor() {
         this.ItemsSource = new ObservableCollection([]);
+        this.HideFCLAllIn = SessionLocator.TenantPM.HideFCLAllIn;
     }
 
     SetDataContext(dataContext: FCLQuoteChargeItem) {
