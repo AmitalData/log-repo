@@ -520,12 +520,14 @@ namespace Logitude.Accounting.BL.CoreBL
             var typeservice = TrailReportFactory.CreateNew(trailReportParam);
             List<TrailReportM> res1 = typeservice.Execute();
             typeservice.Dispose();
-            List<string> includedGLAccounts = GetIncludedGLAccounts(res1, tenant);
+            List<string> includedGLAccounts = GetIncludedGLAccounts(res1, tenant);          
+
             IEnumerable< IGrouping<string,TrailReportM>> res = res1.GroupBy(d => d.GLAccountId);
 
           
             var result = res.Where(d => d.Key != null).ToDictionary(x => x.Key, x => x);
             b110Data = b110Data.Where(d => includedGLAccounts.Contains(d.GLAccountId)).ToList();
+
 
             foreach (B110Data item in b110Data)
             {
@@ -4031,7 +4033,6 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
         }
-
         private List<string> GetIncludedGLAccounts(List<TrailReportM> result, int tenant)
         {
             var zeroVlauesList = result.Where(d => d.LocalOpenBalance == 0 && d.LocalDebit == 0 && d.LocalCredit == 0).ToList();
