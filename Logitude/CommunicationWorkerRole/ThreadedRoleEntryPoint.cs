@@ -51,9 +51,21 @@ namespace CommunicationWorkerRole
         //private WorkerEntryPoint[] Workers;
         List<WorkerEntryPoint> workers;
         protected EventWaitHandle EventWaitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
+        string BatchServicesParam = "";
         //public static string DeploymentStage = "Dev";//Dev//Test1//Simplog//logitudetest3//amital//logitudetest2
         //public static string ChampEnv = "TEST";//PROD//TEST
         //
+
+        public ThreadedRoleEntryPoint()
+        {
+
+        }
+
+        public ThreadedRoleEntryPoint(string BatchServices)
+        {
+            BatchServicesParam = BatchServices;
+        }
+
         public override void Run()
         {
             try
@@ -271,34 +283,28 @@ namespace CommunicationWorkerRole
         List<BatchServicesDefinitionPM> BatchServicesDefinitions;
         private void UpdateRunningWR()
         {
-            string SpecialBatchCode = null;
-            var iAppSettings = System.Configuration.ConfigurationManager.AppSettings;
-            if (iAppSettings != null)
+            
+            
+            //BatchServicesDefinitionRepository BatchServicesRepository = new BatchServicesDefinitionRepository();
+            //BatchServicesDefinitionQuery BatchServicesQuery = new BatchServicesDefinitionQuery(BatchServicesRepository);
+            List<BatchServicesDefinitionPM> BatchServicesDefinitionsTemp = GetActiveBatchServiceDef(); //BatchServicesQuery.GetAllActiveBatchServicesDefinitions().ToList();//.Where(b => b.Code == "EmailOut-EmailQueue")
+            if (Environment.MachineName == "LogitudeWR2")
             {
-                if (iAppSettings["BatchCode"] != null)
-                {
-                    SpecialBatchCode = iAppSettings["BatchCode"].ToString();
-                }
-            }
-            BatchServicesDefinitionRepository BatchServicesRepository = new BatchServicesDefinitionRepository();
-            BatchServicesDefinitionQuery BatchServicesQuery = new BatchServicesDefinitionQuery(BatchServicesRepository);
-            List<BatchServicesDefinitionPM> BatchServicesDefinitionsTemp = BatchServicesQuery.GetAllActiveBatchServicesDefinitions().ToList();//.Where(b => b.Code == "EmailOut-EmailQueue")
-            if (!string.IsNullOrEmpty(SpecialBatchCode) && Environment.MachineName == "LogitudeWR2")
-            {
-                var temp = SpecialBatchCode.Split(',');
-                if (temp.Length > 0)
-                {
-                    var BatchCode = temp[0].ToLower();
-                    var IsActivate = temp[1].ToLower();
-                    if (IsActivate == "true")
-                    {
-                        BatchServicesDefinitionsTemp = BatchServicesDefinitionsTemp.Where(a => a.Code.ToLower() == BatchCode).ToList();
-                    }
-                    else
-                    {
-                        BatchServicesDefinitionsTemp = BatchServicesDefinitionsTemp.Where(a => a.Code.ToLower() != BatchCode).ToList();
-                    }
-                }
+                BatchServicesDefinitions = BatchServicesDefinitionsTemp;
+                //var temp = SpecialBatchCode.Split(',');
+                //if (temp.Length > 0)
+                //{
+                //    var BatchCode = temp[0].ToLower();
+                //    var IsActivate = temp[1].ToLower();
+                //    if (IsActivate == "true")
+                //    {
+                //        BatchServicesDefinitionsTemp = BatchServicesDefinitionsTemp.Where(a => a.Code.ToLower() == BatchCode).ToList();
+                //    }
+                //    else
+                //    {
+                //        BatchServicesDefinitionsTemp = BatchServicesDefinitionsTemp.Where(a => a.Code.ToLower() != BatchCode).ToList();
+                //    }
+                //}
             }
             if (BatchServicesDefinitions == null)
             {
@@ -396,18 +402,43 @@ namespace CommunicationWorkerRole
             return true;
         }
 
-        //public List<BatchServicesDefinitionPM> ChangedThreads(List<BatchServicesDefinitionPM> OrigionalList, List<BatchServicesDefinitionPM> NewList)
-        //{ 
-        //    foreach (var item in NewList)
-        //    {
-        //        if (OrigionalList.Where(a => a.ClassName == item.ClassName && a.InActive == item.InActive && a.NumberOfThreads == item.NumberOfThreads).Count() == 0)
-        //        {
-        //            return false;
-        //        }
-        //    }
-
-        //    return true;
-        //}
+        private List<BatchServicesDefinitionPM> GetActiveBatchServiceDef()
+        {
+            string SpecialBatchCode = null;
+            if (!string.IsNullOrEmpty(BatchServicesParam))
+            {
+                SpecialBatchCode = BatchServicesParam;
+            }
+            else
+            {
+                var iAppSettings = System.Configuration.ConfigurationManager.AppSettings;
+                if (iAppSettings != null)
+                {
+                    if (iAppSettings["BatchCode"] != null)
+                    {
+                        SpecialBatchCode = iAppSettings["BatchCode"].ToString();
+                    }
+                }
+            }
+            BatchServicesDefinitionRepository BatchServicesRepository = new BatchServicesDefinitionRepository();
+            BatchServicesDefinitionQuery BatchServicesQuery = new BatchServicesDefinitionQuery(BatchServicesRepository);
+            List<BatchServicesDefinitionPM> BatchServicesDefinitionsTemp = BatchServicesQuery.GetAllActiveBatchServicesDefinitions().ToList();//.Where(b => b.Code == "EmailOut-EmailQueue")
+            var temp = SpecialBatchCode.Split(',');
+            if (temp.Length > 0)
+            {
+                var BatchCode = temp[0].ToLower();
+                var IsActivate = temp[1].ToLower();
+                if (IsActivate == "true")
+                {
+                    BatchServicesDefinitionsTemp = BatchServicesDefinitionsTemp.Where(a => a.Code.ToLower() == BatchCode).ToList();
+                }
+                else
+                {
+                    BatchServicesDefinitionsTemp = BatchServicesDefinitionsTemp.Where(a => a.Code.ToLower() != BatchCode).ToList();
+                }
+            }
+            return BatchServicesDefinitionsTemp;
+        }
 
         public override void OnStop()
         {

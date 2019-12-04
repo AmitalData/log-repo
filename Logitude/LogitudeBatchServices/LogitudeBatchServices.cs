@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace LogitudeBatchServices
 {
-    public partial class LogitudeBatchServices : ServiceBase, IServiceStarter
+    public partial class LogitudeBatchServices : ServiceBase
     {
         public LogitudeBatchServices()
         {
@@ -38,20 +38,43 @@ namespace LogitudeBatchServices
 
         void worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            StartMe(null);
+            var Arg = (string)e.Argument;
+            if (string.IsNullOrEmpty(Arg))
+            {
+                StartLogitudeBatchServices();
+            }
+            else
+            {
+                StartLogitudeBatchServices(Arg);
+            }
+           
         }
 
-        public void StartMe(string arg)
+        public void StartLogitudeBatchServices()
         {
             try
             {
                 EventLog.WriteEntry("worker_DoWork start");
-                CommunicationWorkerRole.ThreadedRoleEntryPoint d = new CommunicationWorkerRole.ThreadedRoleEntryPoint();
-                EventLog.WriteEntry("ThreadedRoleEntryPoint ");
+                CommunicationWorkerRole.ThreadedRoleEntryPoint d = new CommunicationWorkerRole.ThreadedRoleEntryPoint(); 
+                d.OnStart();
+                EventLog.WriteEntry("OnStart Passed ");
+                d.Run(); 
+            }
+            catch (Exception ex)
+            {
+                EventLog.WriteEntry("LogitudeBatchServices Error");
+                EventLog.WriteEntry(ex.Message);
+            }
+        }
+        public void StartLogitudeBatchServices(string arg)
+        {
+            try
+            {
+                EventLog.WriteEntry("worker_DoWork start");
+                CommunicationWorkerRole.ThreadedRoleEntryPoint d = new CommunicationWorkerRole.ThreadedRoleEntryPoint(arg);
                 d.OnStart();
                 EventLog.WriteEntry("OnStart Passed ");
                 d.Run();
-                EventLog.WriteEntry("Run Passed ");
             }
             catch (Exception ex)
             {
@@ -77,11 +100,14 @@ namespace LogitudeBatchServices
             ContainerAccessor.Container.RegisterType<ILoggedContactUtil, LoggedContactUtil>("LoggedContactUtil", new InjectionFactory(c => new LoggedContactUtil()));
         }
 
-        public void Start()
+        public void StartExternally(string arg)
         {
             var worker = new BackgroundWorker();
             worker.DoWork += new DoWorkEventHandler(worker_DoWork);
-            worker.RunWorkerAsync();
+            worker.RunWorkerAsync(argument: arg);
+            //Task.Factory.StartNew(() => {
+            //    StartLogitudeBatchServices(arg);
+            //});
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LogitudeBatchServices
 {
-    static class Program
+    static class MainBatchServices
     {
         /// <summary>
         /// The main entry point for the application.
@@ -23,8 +23,8 @@ namespace LogitudeBatchServices
             {
                 if (args.Count() > 0)
                 {
-                    LogitudeBatchServices service1 = new LogitudeBatchServices(args);
-                    service1.StartMe(args[0]);
+                    LogitudeBatchServices PatchService = new LogitudeBatchServices(args);
+                    PatchService.StartLogitudeBatchServices(args[0]);
                 }
                 else
                 {
