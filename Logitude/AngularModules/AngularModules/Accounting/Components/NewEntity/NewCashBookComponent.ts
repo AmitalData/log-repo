@@ -135,17 +135,9 @@ export class NewCashBookComponent extends BaseComponent implements OnInit {
     OkButtonClicked() {
         this.CheckCurrency();
         if (this.ValidationErrorsList.length == 0) {
-
             var errors: string[] = [];
-
             Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
-
             if (errors.length == 0) {
-
-                //if (AppTool.IsNullOrEmpty(this.BranchId)) {
-                //    this.ValidationErrorsList.push("Branch fields is requierd");
-                //}
-
                 this.SubmitChanges();
             } else {
                 this.ValidationErrorsList = errors;

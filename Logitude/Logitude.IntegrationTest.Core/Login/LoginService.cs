@@ -11,7 +11,7 @@ namespace Logitude.IntegrationTest.Core.Login
 {
     public class LoginService
     {
-        public static async Task<string> GetLoginTokenByUserEmailAndTenant(string email, string password)
+        public static async Task<string> GetLoginTokenByUserEmailAndTenant()
         {
             int tenant = IntegrationTestLoginParameters.Tenant;
             var token = IntegrationTestLoginParameters.Token;
@@ -19,8 +19,8 @@ namespace Logitude.IntegrationTest.Core.Login
             {
                 LoginParameters loginParameters = new LoginParameters()
                 {
-                    Email = email,
-                    Password = password,
+                    Email = IntegrationTestLoginParameters.Email,
+                    Password = IntegrationTestLoginParameters.Password,
                     ByToken = false,
                     CardId = null,
                     CardType = null,

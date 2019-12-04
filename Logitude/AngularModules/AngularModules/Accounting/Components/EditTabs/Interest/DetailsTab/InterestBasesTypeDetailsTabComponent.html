@@ -10,6 +10,11 @@
 </style>
 <div class="TabHolder">
     <table>
+        <tr *ngIf="IsNew && ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+            <td colspan="4">
+                <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+            </td>
+        </tr>
         <tr class="TabTitleRow">
             <td>{{'Accounting.General.O.Details' | TextCodeTranslationPipe}}</td>
         </tr>
@@ -99,6 +104,9 @@
                                             </tr>
                                             <tr><td></td></tr>
                                         </table>
+                                    </td>
+                                    <td style="width:20px;">
+                                        <div></div>
                                     </td>
                                     <td>
                                         <table>
@@ -203,7 +211,7 @@
                 <table>
                     <tr>
                         <td>
-                            <IconButton [style.float]="isRTL ? 'right' : 'left'"  [Name]="'Add'" [IsSmall]="true" [Left]="3" [disabled]="EntityPM.InActive" (click)="AddPeriodClicked()"></IconButton>
+                            <IconButton [style.float]="isRTL ? 'right' : 'left'" [Name]="'Add'" [IsSmall]="true" [Left]="3" [disabled]="EntityPM.InActive" (click)="AddPeriodClicked()"></IconButton>
                         </td>
                     </tr>
                 </table>
@@ -215,43 +223,67 @@
                 <logitude-edit-grid GridWidth="100%" [HeaderHeight]="25" GridHeight="100%" [ItemSource]="InterestBasesPeriodsList">
 
                     <!--InterestBaseStartDate-->
-                    <log-column [width]="'120'" [header]="InterestBaseStartDateHeader">
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'120'" [header]="InterestBaseStartDateHeader">
                         <log-cell-template template="let item" #logcelltemplate>
-                            <div style="float:left;"> {{item.InterestBaseStartDate | DateTimeToDatePipe}} </div>
+                            <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.InterestBaseStartDate | DateTimeToDatePipe}} </div>
                         </log-cell-template>
                     </log-column>
 
                     <!--InterestRate-->
-                    <log-column [width]="'120'" [header]="InterestRateHeader">
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'120'" [header]="InterestRateHeader">
                         <log-cell-template template="let item" #logcelltemplate>
-                            <div style="float:left;"> {{item.InterestRate}} </div>
+                            <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.InterestRate}} </div>
                         </log-cell-template>
                     </log-column>
 
                     <!--UpdatedByUserId-->
-                    <log-column [width]="'120'" [header]="UpdatedByUserIdHeader">
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'120'" [header]="UpdatedByUserIdHeader">
                         <log-cell-template template="let item" #logcelltemplate>
-                            <div style="float:left;"> {{item.UpdatedByUserName}} </div>
+                            <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.UpdatedByUserName}} </div>
                         </log-cell-template>
                     </log-column>
 
                     <!--UpdateDate-->
-                    <log-column [width]="'120'" [header]="UpdateDateHeader">
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'120'" [header]="UpdateDateHeader">
                         <log-cell-template template="let item" #logcelltemplate>
-                            <div style="float:left;"> {{item.UpdateDate | DateTimeToDatePipe}} </div>
+                            <div [style.text-align]="isRTL ? 'right' : 'left'"> {{item.UpdateDate | DateTimeToDatePipe}} </div>
                         </log-cell-template>
                     </log-column>
 
                     <!--NULL-->
-                    <log-column [width]="'50'" [header]="' '" class="CellTools">
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'50'" [header]="' '" class="CellTools">
                         <log-cell-template template="let item" #logcelltemplate>
-                            <div style="margin-top:4px;">
+                            <div [style.text-align]="isRTL ? 'right' : 'left'" style="margin-top:4px;">
                                 <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" [disabled]="EntityPM.InActive" (click)="EditPeriodClicked(item)"></IconButton>
                             </div>
                         </log-cell-template>
                     </log-column>
 
                 </logitude-edit-grid>
+            </td>
+        </tr>
+
+        <tr *ngIf="IsNew" style="height: 32px;">
+            <td colspan="4" style="vertical-align: bottom">
+                <table style="height: 22px;">
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+
+                        <td style="width: 57px;">
+                            <button class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        </td>
+
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 57px;">
+                            <button id="{{'CREATEDEPOSIT' | IdGeneratorPipe}}" class="RedButton" (click)="OkButtonClicked()">{{'Accounting.General.B.OK' | TextCodeTranslationPipe}}</button>
+                        </td>
+                    </tr>
+                </table>
             </td>
         </tr>
     </table>

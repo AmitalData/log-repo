@@ -133,7 +133,8 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool IsInternationalPartner { get; set; }
         public bool IsAutonomy { get; set; }
 
-  
+        public string CreatedByPartner { get; set; }
+
 
 
 

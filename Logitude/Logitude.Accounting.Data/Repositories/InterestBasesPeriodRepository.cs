@@ -22,9 +22,13 @@ namespace Logitude.Accounting.Data.Repositories
 
         public InterestBasesPeriod GetSingleByInterestBaseStartDateAndnterestBaseTypeId(DateTime InterestBaseStartDate , string InterestBaseTypeId ,int Tenant)
         {
-            return (from a in context.InterestBasesPeriods
-                    where a.InterestBaseStartDate == InterestBaseStartDate && a.InterestBaseTypeId == InterestBaseTypeId && a.Tenant ==Tenant
-                    select a).FirstOrDefault();
+
+              InterestBasesPeriod mm = (from a in context.InterestBasesPeriods
+                                        where a.InterestBaseStartDate == InterestBaseStartDate && a.InterestBaseTypeId == InterestBaseTypeId && a.Tenant == Tenant
+                                        select a).FirstOrDefault();
+
+
+            return mm;
         }
     }
 

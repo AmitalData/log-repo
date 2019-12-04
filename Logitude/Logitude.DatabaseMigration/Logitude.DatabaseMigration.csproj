@@ -1678,6 +1678,14 @@
     <Compile Include="Migrations\201911210908155_AddAutomaticallyCloseDaysToQuoteSettingTable_Maheera.Designer.cs">
       <DependentUpon>201911210908155_AddAutomaticallyCloseDaysToQuoteSettingTable_Maheera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911271214588_APInvoice_CreatedByPartner.cs" />
+    <Compile Include="Migrations\201911271214588_APInvoice_CreatedByPartner.Designer.cs">
+      <DependentUpon>201911271214588_APInvoice_CreatedByPartner.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912011427416_CreatedByPartner_Fields.cs" />
+    <Compile Include="Migrations\201912011427416_CreatedByPartner_Fields.Designer.cs">
+      <DependentUpon>201912011427416_CreatedByPartner_Fields.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201911251002048_Addgussment.cs" />
     <Compile Include="Migrations\201911251002048_Addgussment.Designer.cs">
       <DependentUpon>201911251002048_Addgussment.cs</DependentUpon>
@@ -1705,6 +1713,22 @@
     <Compile Include="Migrations\201911291324079_APPaymentNewFieldMigration.cs" />
     <Compile Include="Migrations\201911291324079_APPaymentNewFieldMigration.Designer.cs">
       <DependentUpon>201911291324079_APPaymentNewFieldMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912021355146_BIReportLastRunFields.cs" />
+    <Compile Include="Migrations\201912021355146_BIReportLastRunFields.Designer.cs">
+      <DependentUpon>201912021355146_BIReportLastRunFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911251236376_NewField_AllowEditChequePayToName.cs" />
+    <Compile Include="Migrations\201911251236376_NewField_AllowEditChequePayToName.Designer.cs">
+      <DependentUpon>201911251236376_NewField_AllowEditChequePayToName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912031815485_AddHideFCLAllInField.cs" />
+    <Compile Include="Migrations\201912031815485_AddHideFCLAllInField.Designer.cs">
+      <DependentUpon>201912031815485_AddHideFCLAllInField.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912041018283_Update_DateForVATInterest_Field_In_ARINVOICE.cs" />
+    <Compile Include="Migrations\201912041018283_Update_DateForVATInterest_Field_In_ARINVOICE.Designer.cs">
+      <DependentUpon>201912041018283_Update_DateForVATInterest_Field_In_ARINVOICE.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
@@ -2903,6 +2927,12 @@
     <EmbeddedResource Include="Migrations\201911210908155_AddAutomaticallyCloseDaysToQuoteSettingTable_Maheera.resx">
       <DependentUpon>201911210908155_AddAutomaticallyCloseDaysToQuoteSettingTable_Maheera.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911271214588_APInvoice_CreatedByPartner.resx">
+      <DependentUpon>201911271214588_APInvoice_CreatedByPartner.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912011427416_CreatedByPartner_Fields.resx">
+      <DependentUpon>201912011427416_CreatedByPartner_Fields.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911251002048_Addgussment.resx">
       <DependentUpon>201911251002048_Addgussment.cs</DependentUpon>
     </EmbeddedResource>
@@ -2923,6 +2953,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911291324079_APPaymentNewFieldMigration.resx">
       <DependentUpon>201911291324079_APPaymentNewFieldMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912021355146_BIReportLastRunFields.resx">
+      <DependentUpon>201912021355146_BIReportLastRunFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911251236376_NewField_AllowEditChequePayToName.resx">
+      <DependentUpon>201911251236376_NewField_AllowEditChequePayToName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912031815485_AddHideFCLAllInField.resx">
+      <DependentUpon>201912031815485_AddHideFCLAllInField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912041018283_Update_DateForVATInterest_Field_In_ARINVOICE.resx">
+      <DependentUpon>201912041018283_Update_DateForVATInterest_Field_In_ARINVOICE.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

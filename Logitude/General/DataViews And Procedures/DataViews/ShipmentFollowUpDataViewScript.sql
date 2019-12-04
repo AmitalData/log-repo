@@ -50,7 +50,7 @@ SELECT         dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNum
 						 dbo.Shipments.INTTRABookingError,
 						 dbo.Shipments.INTTRALastBookingResponse,
 						 dbo.INTTRASIStatus.Name AS INTTRASIStatusName,
-
+						 dbo.Shipments.CreatedByPartner AS CreatedByPartner,
 						 dbo.Shipments.FromPortId, dbo.Shipments.MasterShipmentDataId, dbo.Shipments.ShipmentLevelCode, dbo.Shipments.NextETA, dbo.Shipments.NextETD, 
 						 dbo.Shipments.NumberOfInsidePackages, dbo.Shipments.NumberOfInsidePackagesDetails, dbo.Shipments.OperationalDate, dbo.ShipmentMasterDatas.CutoffDate,
                          dbo.Shipments.FinalArrivalDate, dbo.Shipments.EstimatedFinalArrivalDate, dbo.Shipments.ActualFinalArrivalDate, dbo.Shipments.NextLegCode, dbo.Shipments.AccountedReceivablesInProfitCurrency, dbo.Shipments.OpenReceivablesInProfitCurrency, 

@@ -33,7 +33,9 @@ export class NewBIReport extends BaseComponent {
         this.EntityPM.CreateDate = todayDate;
         this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
         this.EntityPM.UpdateDate = todayDate;
+        this.EntityPM.LastRunDate = todayDate;
         this.EntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
+        this.EntityPM.LastRunByUserId = SessionLocator.LoggedUserId;
         this.EntityPM.TypeCode = "EXL";
         this.myService = new BIReportPMService();
         this.SetUIProperties();

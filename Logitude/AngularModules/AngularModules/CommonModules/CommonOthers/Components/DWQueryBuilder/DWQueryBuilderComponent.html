@@ -419,7 +419,7 @@
                                                                                                                                 <span class="LinkBtn" (click)="btnAdd_Click(item)">Add Column</span>
                                                                                                                             </td>
                                                                                                                             <td *ngIf="item " style="width:1%;"></td>
-                                                                                                                            <td class="LinkBtn" style="width:65px;">
+                                                                                                                            <td *ngIf="!item.CannotFilter" class="LinkBtn" style="width:65px;">
                                                                                                                                 <span class="LinkBtn" (click)="btnAddFilter_Click(item)">Add Filter</span>
                                                                                                                             </td>
                                                                                                                             <td *ngIf="item" style="width:4%;"></td>
@@ -467,7 +467,7 @@
                                                                                                                                                         <span class="LinkBtn" (click)="btnAdd_Click(item)">Add Column</span>
                                                                                                                                                     </td>
                                                                                                                                                     <td *ngIf="item &&  !item.HasTree" style="width:1%;"></td>
-                                                                                                                                                    <td class="LinkBtn" style="width:10%;">
+                                                                                                                                                    <td *ngIf="!item.CannotFilter" class="LinkBtn" style="width:10%;">
                                                                                                                                                         <span class="LinkBtn" (click)="btnAddFilter_Click(item)">Add Filter</span>
                                                                                                                                                     </td>
                                                                                                                                                     <td *ngIf="item &&  !item.HasTree" style="width:4%;"></td>

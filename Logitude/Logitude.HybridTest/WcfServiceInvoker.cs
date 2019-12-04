@@ -26,10 +26,10 @@ namespace Logitude.HybridTest
                 var innerChannel = (IClientChannel)serviceClient.GetType().GetProperty("InnerChannel").GetValue(serviceClient, null);
                 using (new OperationContextScope(innerChannel))
                 {
-                    if(!serviceProperties.IsDifferentTenant)
-                        System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token1);
+                    if(serviceProperties.SecondaryToken == null)
+                        System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", EnvironmentGlobalParams.MainToken);
                     else
-                        System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", TestEnvironmentGlobalParameters.Token2);
+                        System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", EnvironmentGlobalParams.SecondaryToken);
                     // Now call the service, get back response
                     var serviceresults = wcfService.Invoke(serviceClient, BindingFlags.InvokeMethod, null, serviceParameters, null);
                     if (serviceresults is Response)
@@ -45,8 +45,9 @@ namespace Logitude.HybridTest
             }
             catch (Exception ex)
             {
-                response.Result = ex.Message;
-                return null;
+                response.HasError = true;
+                response.ErrorMessage = ex.Message;
+                return response;
             }
         }
 
@@ -81,7 +82,7 @@ namespace Logitude.HybridTest
 
         private static WsdlImporter ImportContractsAndEndPoints(InvokedProperties serviceProperties)
         {
-            string uri = TestEnvironmentGlobalParameters.ServerURL + "/WcfApi/" + serviceProperties.ServiceName;
+            string uri = EnvironmentGlobalParams.ServerURL + "/WcfApi/" + serviceProperties.ServiceName;
             if(serviceProperties.ServiceName == "ContactPassword")
                 uri += "Service.svc?wsdl";
             else if(serviceProperties.ServiceName == "Vessel")
@@ -173,6 +174,6 @@ namespace Logitude.HybridTest
         public int ServiceResponseIndex { get; set; }
         public Type ServiceType { get; set; }
         public Type ServiceFilterType { get; set; }
-        public bool IsDifferentTenant { get; set; }
+        public string SecondaryToken { get; set; }
     }
 }

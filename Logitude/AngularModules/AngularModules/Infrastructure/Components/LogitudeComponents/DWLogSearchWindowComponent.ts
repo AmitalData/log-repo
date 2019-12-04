@@ -228,16 +228,15 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
         if (this.LOVAdditionalColumns) {
             AdditionalColumns = this.LOVAdditionalColumns.split(',');
         }
-       
-        this.columns.push({
-            FieldName: 'Field', 
-            DataTypeCode: 'text',
-            Display: this.ObjectFieldName.replace('[', '').replace(']',''),
-            Styles: { width: '120px' },  
-            IsCustomTemplate: true,
-            HtmlListComponentName: 'DWLogSearchWindowFieldsComponent',
-            HtmlListComponentUrl: './Infrastructure/Components/QueryColumnsComponents/DWLogSearchWindowFieldsComponent',
-        });
+            this.columns.push({
+                FieldName: 'Field',
+                DataTypeCode: 'text',
+                Display: this.ObjectFieldName.replace('[', '').replace(']', ''),
+                Styles: { width: '120px' },
+                IsCustomTemplate: true,
+                HtmlListComponentName: 'DWLogSearchWindowFieldsComponent',
+                HtmlListComponentUrl: './Infrastructure/Components/QueryColumnsComponents/DWLogSearchWindowFieldsComponent',
+            });
         if (AdditionalColumns.length > 0) {
             var index = 1;
             AdditionalColumns.forEach((field) => {

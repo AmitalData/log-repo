@@ -4,6 +4,8 @@ using Logitude.HybridTest.LoginServiceReference;
 using Logitude.Server.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+[assembly: Parallelize(Workers = 0, Scope = ExecutionScope.MethodLevel)] //0 means use as many workers as possible
+
 namespace Logitude.HybridTest.WcfCallers
 {
     [TestClass]
@@ -12,8 +14,8 @@ namespace Logitude.HybridTest.WcfCallers
         [AssemblyInitialize]
         public static void PrepareSystemVars(TestContext context)
         {
-            GetAuthenticationToken1();
-            GetAuthenticationToken2();
+            GetAuthenticationMainToken();
+            GetAuthenticationsecondaryToken();
             PrepareShipment.PrepareShipmentVars();
 
             //Other necessary Vars:
@@ -23,9 +25,9 @@ namespace Logitude.HybridTest.WcfCallers
             UpsertUser();
             UpsertCardContact();
         }
-        private static void GetAuthenticationToken1()
+        private static void GetAuthenticationMainToken()
         {
-            var apiCred = new APICredentialsParameters() { PrimaryKey = TestEnvironmentGlobalParameters.APICredential_PrimaryKey1, SecondaryKey = TestEnvironmentGlobalParameters.APICredential_SecondaryKey1, Tenant = TestEnvironmentGlobalParameters.Tenant1 };
+            var apiCred = new APICredentialsParameters() { PrimaryKey = EnvironmentGlobalParams.MainTenant_APICredential_PrimaryKey, SecondaryKey = EnvironmentGlobalParams.MainTenant_APICredential_SecondaryKey, Tenant = EnvironmentGlobalParams.MainTenant };
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "Login",
@@ -37,14 +39,14 @@ namespace Logitude.HybridTest.WcfCallers
             object[] serviceParameters = new object[] { "", apiCred };
             Response loginResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             if (!loginResponse.HasError)
-                TestEnvironmentGlobalParameters.Token1 = loginResponse.Result;
+                EnvironmentGlobalParams.MainToken = loginResponse.Result;
             else
                 Assert.Fail("Login Failed");
             Assert.IsNotNull(loginResponse.Result, "The Token returned is null " + loginResponse.ErrorMessage);
         }
-        private static void GetAuthenticationToken2()
+        private static void GetAuthenticationsecondaryToken()
         {
-            var apiCred = new APICredentialsParameters() { PrimaryKey = TestEnvironmentGlobalParameters.APICredential_PrimaryKey2, SecondaryKey = TestEnvironmentGlobalParameters.APICredential_SecondaryKey2, Tenant = TestEnvironmentGlobalParameters.Tenant2 };
+            var apiCred = new APICredentialsParameters() { PrimaryKey = EnvironmentGlobalParams.SecondaryTenant_APICredential_PrimaryKey, SecondaryKey = EnvironmentGlobalParams.SecondaryTenant_APICredential_SecondaryKey, Tenant = EnvironmentGlobalParams.SecondaryTenant };
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "Login",
@@ -56,7 +58,7 @@ namespace Logitude.HybridTest.WcfCallers
             object[] serviceParameters = new object[] { "", apiCred };
             Response loginResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             if (!loginResponse.HasError)
-                TestEnvironmentGlobalParameters.Token2 = loginResponse.Result;
+                EnvironmentGlobalParams.SecondaryToken = loginResponse.Result;
             else
                 Assert.Fail("Login Failed");
             Assert.IsNotNull(loginResponse.Result, "The Token returned is null " + loginResponse.ErrorMessage);
@@ -68,7 +70,7 @@ namespace Logitude.HybridTest.WcfCallers
                 Code = HybridData.GlobalZoneCodeHZ,
                 EnglishName = "Hybrid GlobalZone",
                 LocalName = "Hybrid GlobalZone",
-                Tenant = TestEnvironmentGlobalParameters.Tenant1,
+                Tenant = EnvironmentGlobalParams.MainTenant,
             };
             AssertResponse(globalZonePM);
         }
@@ -79,7 +81,7 @@ namespace Logitude.HybridTest.WcfCallers
                 Code = HybridData.DepartmentCodeHDEP,
                 EnglishName = "Hybrid Department",
                 LocalName = "Hybrid Department",
-                Tenant = TestEnvironmentGlobalParameters.Tenant1,
+                Tenant = EnvironmentGlobalParams.MainTenant,
             };
             AssertResponse(departmentPM);
         }
@@ -90,7 +92,7 @@ namespace Logitude.HybridTest.WcfCallers
                 Code = HybridData.BranchCodeHBRA,
                 EnglishName = "Hybrid Branch",
                 LocalName = "Hybrid Branch",
-                Tenant = TestEnvironmentGlobalParameters.Tenant1,
+                Tenant = EnvironmentGlobalParams.MainTenant,
             };
             AssertResponse(branchPM);
         }
@@ -104,7 +106,7 @@ namespace Logitude.HybridTest.WcfCallers
                 CityName = "Hybrid City",
                 CountryCode = HybridData.CountryCodeUS,
                 PartnerTypeId = "AG",
-                Tenant = TestEnvironmentGlobalParameters.Tenant1,
+                Tenant = EnvironmentGlobalParams.MainTenant,
             };
             AssertResponse(agentPM);
         }
@@ -117,10 +119,10 @@ namespace Logitude.HybridTest.WcfCallers
                 LocalName = "Hybrid User",
                 Email = "Hybrid@fnarsoft.com",
                 Password = "!H0",
-                BusinessUnitId = TestEnvironmentGlobalParameters.Tenant1.ToString(),
+                BusinessUnitId = EnvironmentGlobalParams.MainTenant.ToString(),
                 BranchId = HybridData.BranchCodeHBRA,
                 DepartmentId = HybridData.DepartmentCodeHDEP,
-                Tenant = TestEnvironmentGlobalParameters.Tenant1,
+                Tenant = EnvironmentGlobalParams.MainTenant,
                 DocumentFilingInbox = "HybridInbox"
             };
             AssertResponse(userPM);
@@ -132,7 +134,7 @@ namespace Logitude.HybridTest.WcfCallers
                 IsAll = true,
                 ContactId = HybridData.ContactCode,
                 CardId = HybridData.AgentCodeHAgent,
-                Tenant = TestEnvironmentGlobalParameters.Tenant1,
+                Tenant = EnvironmentGlobalParams.MainTenant,
             };
             AssertResponse(cardContactPM);
         }

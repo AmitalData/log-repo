@@ -103,7 +103,7 @@ export class ARInvoiceList {
 		ApprovedByUserId: string;
 		ApprovedByUserName: string;
 		OperationalDate: Date;
-		DateForVATInterest: Date;
+		DateForInterest: Date;
 		SplitJournalByCurrency: boolean;
 		IsExternalEntity: boolean;
 		IsGeneralInvoice: boolean;
@@ -135,5 +135,6 @@ export class ARInvoiceList {
 		IsInvoiceNumberFromStock: boolean;
 		BillToCity: string;
 		BillToCountry: string;
+		CreatedByPartner: string;
 	
 }

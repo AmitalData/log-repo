@@ -1,5 +1,6 @@
 ﻿using Logitude.IntegrationTest.Core.Login;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,6 +48,13 @@ namespace Logitude.IntegrationTest.Core
             }
         }
 
+        public static string ParseResponseAndReturnSingleResult(HttpResponseMessage httpResponseMessage)
+        {
+            var stringResult = httpResponseMessage.Content.ReadAsStringAsync().Result;
+            JObject jObject = JObject.Parse(stringResult);
+            string result = (string)jObject.SelectToken("Result")[0].ToString();
+            return result;
+        }
         private static StringContent PrepareStringContent(object content)
         {
             var serializedObject = JsonConvert.SerializeObject(content);
