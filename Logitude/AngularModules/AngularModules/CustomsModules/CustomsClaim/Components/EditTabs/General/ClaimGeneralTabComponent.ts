@@ -45,7 +45,7 @@ export class ClaimGeneralTabComponent extends BaseComponent {
     public ClaimPMService: ClaimPMService = new ClaimPMService;
     public ClientMessagesService: ClientMessagesService = new ClientMessagesService;
     public ClientPMService: ClientPMService = new ClientPMService;
-
+    private IsClientCodeEnabled: boolean = false; 
 
     IsLoaded: boolean = false;
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
