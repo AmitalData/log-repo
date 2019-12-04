@@ -50,7 +50,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 		
 		protected override EntityKeyFields GetKeys(DBMigrationLinePM entityPM)
         {
-            DBMigrationLineKeys entityKeys = new DBMigrationLineKeys() { Id = entityPM.Id, CounterKey = entityPM.CounterKey };
+            DBMigrationLineKeys entityKeys = new DBMigrationLineKeys() { DBMigrationId = entityPM.DBMigrationId, CounterKey = entityPM.CounterKey };
             return entityKeys;
         }
 

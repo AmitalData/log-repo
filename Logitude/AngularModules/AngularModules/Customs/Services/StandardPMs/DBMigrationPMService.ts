@@ -19,6 +19,7 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 
 import {DBMigrationPM} from '../../EntityPMs/DBMigrationPM';
 
+import {DBMigrationLinePM} from '../../EntityPMs/DBMigrationLinePM';
 
 @Injectable()
 
@@ -209,12 +210,22 @@ export class DBMigrationPMService {
                  
             }
 			
+               this.MapDBMigrationLines(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
 		if (mapParent) {
                 entityPM.OldEntityPM = this.clone(entityPM);
-
+			   			   
+            entityPM.OldEntityPM.DBMigrationLines = [];
+            for (var item in entityPM.DBMigrationLines) {
+            var myDBMigrationLinePM = entityPM.DBMigrationLines[item];
+            var newDBMigrationLinePM: DBMigrationLinePM = this.clone(myDBMigrationLinePM);
+						
+							 
+            entityPM.OldEntityPM.DBMigrationLines.push(newDBMigrationLinePM);
+            }
+			   
 		}
         else {
 
@@ -224,6 +235,96 @@ export class DBMigrationPMService {
         return entityPM;
     }
 
+    MapDBMigrationLines(entityPM: DBMigrationPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldDBMigrationLines: DBMigrationLinePM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldDBMigrationLines = entityPM.OldEntityPM.DBMigrationLines;
+        }
+
+        entityPM.DBMigrationLines = new Array<DBMigrationLinePM>();
+        for (var item in jsonPM.DBMigrationLines) {
+            var jItem = jsonPM.DBMigrationLines[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newDBMigrationLinePM: DBMigrationLinePM;
+	  
+            if (mapParent) {
+                newDBMigrationLinePM = new DBMigrationLinePM(entityPM);
+            }
+            else
+            {
+                newDBMigrationLinePM = new DBMigrationLinePM(null);
+            }
+                
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newDBMigrationLinePM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newDBMigrationLinePM.UniqueKey = Guid.newGuid();
+                newDBMigrationLinePM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newDBMigrationLinePM.OldEntityPM = this.clone(newDBMigrationLinePM);
+
+				
+            }
+            else {
+                if (newDBMigrationLinePM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newDBMigrationLinePM.ChangeSetOp = "Update";
+                }
+                else {
+                        newDBMigrationLinePM.ChangeSetOp = "Insert";
+                }
+ 
+                newDBMigrationLinePM.OldEntityPM = null;
+                newDBMigrationLinePM.EntityParentPM = null;
+            }
+			
+			 newDBMigrationLinePM.IsDirty = false;
+            entityPM.DBMigrationLines.push(newDBMigrationLinePM);
+        }
+        if (oldDBMigrationLines) {
+            
+            for (var itemKey in oldDBMigrationLines) {
+                if (entityPM.DBMigrationLines.filter(p=> p.UniqueKey === oldDBMigrationLines[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldDBMigrationLines[itemKey]) {
+                        //oldDBMigrationLines[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.DBMigrationLines.push(oldDBMigrationLines[itemKey]);
+						var oldItemJson = oldDBMigrationLines[itemKey];
+                        var deletedPM: DBMigrationLinePM = new DBMigrationLinePM(null);
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+                      
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.DBMigrationLines.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
 
 	  public clone(jsonPM: any) {
         var entityPM: any;

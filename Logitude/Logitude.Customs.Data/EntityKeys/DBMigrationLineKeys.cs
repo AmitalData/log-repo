@@ -12,7 +12,7 @@ namespace Logitude.Customs.Data.EntityKeys
 {
    public partial class DBMigrationLineKeys : EntityKeyFields
    {
-   	  public string Id  { get; set; }
+   	  public string DBMigrationId  { get; set; }
 	  
 				 
 	    			   
@@ -24,7 +24,7 @@ namespace Logitude.Customs.Data.EntityKeys
 	 
 	  public override string GetFullKey()
       {
-          return Id+'_'+CounterKey;
+          return DBMigrationId+'_'+CounterKey;
       }
 
       public override string GetEntityPMName()

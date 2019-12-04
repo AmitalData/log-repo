@@ -158,7 +158,42 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-   }
+
+	   private List<DBMigrationLinePM> dBMigrationLines;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("MyDBMigrationLines", "Id","DBMigrationId")]
+	   [DataMember]
+	   public virtual List<DBMigrationLinePM> DBMigrationLines  
+	   {
+	        get
+             {
+                 if (dBMigrationLines == null)
+                 {
+                     dBMigrationLines = new List<DBMigrationLinePM>();
+                 }
+                 return dBMigrationLines;
+              }
+             set { dBMigrationLines = value; }
+	    }
+		   
+	   private List<DBMigrationLinePM>  deletedDBMigrationLines;
+	   public virtual List<DBMigrationLinePM> DeletedDBMigrationLines  
+	   {
+	        get
+             {
+                 if ( deletedDBMigrationLines == null)
+                 {
+                      deletedDBMigrationLines = new List<DBMigrationLinePM>();
+                 }
+                 return  deletedDBMigrationLines;
+              }
+             set {  deletedDBMigrationLines = value; }
+	    }
+	     }
    
 }
 	 

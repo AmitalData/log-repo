@@ -28,10 +28,10 @@ namespace Logitude.Customs.Data.Repsitories
 
 		 
 		
-		public  DBMigrationLine GetSingle(string id, int counterkey)
+		public  DBMigrationLine GetSingle(string dbmigrationid, int counterkey)
         {
             return (from a in context.DBMigrationLines
-                    where a.Id == id && a.CounterKey == counterkey 
+                    where a.DBMigrationId == dbmigrationid && a.CounterKey == counterkey 
                     select a).FirstOrDefault();
         }
 
@@ -45,7 +45,7 @@ namespace Logitude.Customs.Data.Repsitories
         {
             DBMigrationLineKeys keys = entityKeys as DBMigrationLineKeys;
             return (from a in context.DBMigrationLines
-                    where a.Id == keys.Id && a.CounterKey == keys.CounterKey
+                    where a.DBMigrationId == keys.DBMigrationId && a.CounterKey == keys.CounterKey
                     select a).FirstOrDefault();
         }
 		         
