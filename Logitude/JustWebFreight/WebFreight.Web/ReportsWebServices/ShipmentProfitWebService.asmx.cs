@@ -26,6 +26,8 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.Server.Tools.Helpers;
 using Logitude.BL.Helpers;
 using Simplog.Data.Helpers;
+using Logitude.BL.InvoiceModel.EntityQueries;
+using Logitude.BL.InvoiceModel.EntityPMs;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -978,6 +980,7 @@ namespace WebFreight.Web.ReportsWebServices
                 provider.PayableInvoices = new List<PayableInvoiceProvider>();
                 provider.ReceivableInvoices = new List<ReceivableInvoiceProvider>();
                 APInvoiceRepository aPInvoiceRepository = new APInvoiceRepository(tenant);
+                APInvoiceQuery aPInvoiceQuery = new APInvoiceQuery(aPInvoiceRepository);
                 ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(tenant);
                 APInvoiceEntityRepository aPInvoiceEntityRepository = new APInvoiceEntityRepository(tenant);
                 ARInvoiceEntityRepository aRInvoiceEntityRepository = new ARInvoiceEntityRepository(tenant);
@@ -988,16 +991,26 @@ namespace WebFreight.Web.ReportsWebServices
 
                 foreach (APInvoiceEntity item in aPInvoiceEntities)
                 {
-                    APInvoice invoice = aPInvoiceRepository.GetSingleAPInvoice(item.APInvoiceId, tenant);
+                    APInvoicePM invoice = aPInvoiceQuery.GetSinglePM(item.APInvoiceId, tenant);
 
                     if (invoice != null)
                     {
                         PayableInvoiceProvider invoiceProvider = new PayableInvoiceProvider()
                         {
-                            InvoiceNumber = invoice.InvoiceNumber,
-                            AmountInLocalCurrency = invoice.AmountInLocalCurrency == null ? 0 : invoice.AmountInLocalCurrency.Value,
-                            AmountInProfitCurrency = invoice.AmountInProfitCurrency == null ? 0 : invoice.AmountInProfitCurrency.Value,
+                            InvoiceNumber = invoice.InvoiceNumber
                         };
+
+                        if (invoice.IsMultipleEntities) {
+                            invoiceProvider.AmountInLocalCurrency = invoice.InvoiceMultipleShipments.Where(p => p.ShipmentId == shipment.Id).Sum(s => s.SubTotalInLocalCurrency) == null ? 0 : invoice.InvoiceMultipleShipments.Where(p => p.ShipmentId == shipment.Id).Sum(s => s.SubTotalInLocalCurrency.Value);
+                            invoiceProvider.AmountInProfitCurrency = invoice.InvoiceMultipleShipments.Where(p => p.ShipmentId == shipment.Id).Sum(s => s.SubTotalInInvoiceCurrency) == null ? 0 : invoice.InvoiceMultipleShipments.Where(p => p.ShipmentId == shipment.Id).Sum(s => s.SubTotalInInvoiceCurrency.Value);
+                         }
+
+                        else
+                        {
+                            invoiceProvider.AmountInLocalCurrency = invoice.AmountInLocalCurrency == null ? 0 : invoice.AmountInLocalCurrency.Value;
+                            invoiceProvider.AmountInProfitCurrency = invoice.AmountInProfitCurrency == null ? 0 : invoice.AmountInProfitCurrency.Value;
+                
+                        }
 
                         Card partnerCard = CardRepository.GetSingleCard(invoice.VendorId, tenant, false);
                         if (partnerCard != null)
