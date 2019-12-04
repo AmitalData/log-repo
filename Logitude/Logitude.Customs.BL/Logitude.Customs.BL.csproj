@@ -870,6 +870,7 @@
     <Compile Include="EntityQueryServices\ClientDrivingLicenseQueryService.cs" />
     <Compile Include="EntityQueryServices\ClientQueryService.cs" />
     <Compile Include="EntityQueryServices\ConsignmentPackageQueryService.cs" />
+    <Compile Include="EntityQueryServices\DBMigrationQueryService.cs" />
     <Compile Include="EntityQueryServices\DeclarationPendingQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\ApprovedProfessionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ConsignmentPackDangerQueryService.Generated.cs" />
