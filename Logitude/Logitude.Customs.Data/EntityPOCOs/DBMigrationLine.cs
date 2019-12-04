@@ -20,8 +20,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 
         [Key]
         [ForeignKey("MyDBMigration")]
-        [Column("Id")]
-	    public string Id { get; set; }
+        [Column("DBMigrationId")]
+	    public string DBMigrationId { get; set; }
 	      
         public virtual DBMigration MyDBMigration { get; set; }
      [Key]

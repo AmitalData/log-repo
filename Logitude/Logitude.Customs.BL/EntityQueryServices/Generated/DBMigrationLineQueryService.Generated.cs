@@ -48,9 +48,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             mapping = new DBMigrationLineDataMapping();
         }
 		 
-		public  DBMigrationLinePM GetSingle(string id, int counterkey,bool getComposition, bool getFromCache)
+		public  DBMigrationLinePM GetSingle(string dbmigrationid, int counterkey,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new DBMigrationLineKeys(){ Id = id, CounterKey = counterkey };
+             EntityKeys = new DBMigrationLineKeys(){ DBMigrationId = dbmigrationid, CounterKey = counterkey };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
@@ -58,7 +58,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
        
 	    protected override EntityKeyFields GetKeys(DBMigrationLine entityPOCO)
         {
-            DBMigrationLineKeys entityKeys = new DBMigrationLineKeys() { Id = entityPOCO.Id, CounterKey = entityPOCO.CounterKey,  };
+            DBMigrationLineKeys entityKeys = new DBMigrationLineKeys() { DBMigrationId = entityPOCO.DBMigrationId, CounterKey = entityPOCO.CounterKey,  };
             return entityKeys;
         }
      

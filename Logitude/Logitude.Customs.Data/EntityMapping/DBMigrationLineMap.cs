@@ -21,9 +21,9 @@ namespace Logitude.Customs.Data.EntityMapping
         { 
 			  this.ToTable("DBMigrationLines", "Customs");
 		
-		    this.HasKey(t => new { t.Id, t.CounterKey });
+		    this.HasKey(t => new { t.DBMigrationId, t.CounterKey });
 	 
-            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.DBMigrationId).HasColumnName("DBMigrationId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.CounterKey).HasColumnName("CounterKey").IsRequired().HasDatabaseGeneratedOption(null);
 

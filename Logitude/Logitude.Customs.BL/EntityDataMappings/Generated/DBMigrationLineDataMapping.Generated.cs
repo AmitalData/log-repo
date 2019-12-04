@@ -22,7 +22,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
           public enum POCOPropertyNames
           { 
 		     None,  
-	         Id, 
+	         DBMigrationId, 
 	         CounterKey, 
 	         SqlScript, 
 	         ApprovedRemarks,
@@ -32,7 +32,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	      public enum PMPropertyNames
           { 
 		     None,  
-	         Id, 
+	         DBMigrationId, 
 	         CounterKey, 
 	         SqlScript, 
 	         ApprovedRemarks,
@@ -58,9 +58,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 		public void POCOToPM(DBMigrationLinePM entityPM, DBMigrationLine entityPOCO)
         {
 			 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DBMigrationId))
             {
-					entityPM.Id = entityPOCO.Id;
+					entityPM.DBMigrationId = entityPOCO.DBMigrationId;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CounterKey))

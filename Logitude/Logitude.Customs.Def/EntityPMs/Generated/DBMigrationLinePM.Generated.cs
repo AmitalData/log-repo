@@ -18,27 +18,27 @@ namespace Logitude.Customs.Def.EntityPMs
    [DataContract]
    public partial class DBMigrationLinePM : EntityPM
    {
-   	  private string id ;
+   	  private string dBMigrationId ;
 	  
        [Key]
 	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string Id  
+       public string DBMigrationId  
 	   {
 	    
 	     get
 		{
-		   return id;
+		   return dBMigrationId;
 		 }
 		 set
 		 {
-		   if(id != value)
+		   if(dBMigrationId != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DBMigrationId",OldValue=dBMigrationId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   id=value;
+		   dBMigrationId=value;
 		   }
 			
 		 }

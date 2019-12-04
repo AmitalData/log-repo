@@ -129,10 +129,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public DBMigrationLineList GetSingle(string id, int counterkey)
+        public DBMigrationLineList GetSingle(string dbmigrationid, int counterkey)
         {
             IQueryable<DBMigrationLine> DBMigrationLineQuery = (from a in context.DBMigrationLines
-                                                       where a.Id == id && a.CounterKey == counterkey
+                                                       where a.DBMigrationId == dbmigrationid && a.CounterKey == counterkey
                                                        select a);
 
              
