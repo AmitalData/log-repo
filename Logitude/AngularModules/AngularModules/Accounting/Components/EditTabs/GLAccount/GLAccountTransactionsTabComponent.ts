@@ -262,7 +262,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     BuildColumns() {
         this.columns = [];
         this.columns.push({
-            FieldName: 'Indicator',
+            FieldName: 'GLAccountIndicator',
             DataTypeCode: 'text',
             Display: '',
             Styles: { width: '20px' },
