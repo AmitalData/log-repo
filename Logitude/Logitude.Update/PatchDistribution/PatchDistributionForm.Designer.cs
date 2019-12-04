@@ -109,6 +109,7 @@
             this.menuStrip1.Size = new System.Drawing.Size(800, 24);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
             // startToolStripMenuItem
             // 
@@ -121,7 +122,7 @@
             // doItToolStripMenuItem
             // 
             this.doItToolStripMenuItem.Name = "doItToolStripMenuItem";
-            this.doItToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.doItToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
             this.doItToolStripMenuItem.Text = "DoIt";
             this.doItToolStripMenuItem.Click += new System.EventHandler(this.doItToolStripMenuItem_Click);
             // 
@@ -134,6 +135,7 @@
             this.Controls.Add(this.menuStrip1);
             this.Name = "PatchDistributionForm";
             this.Text = "PatchDistributionForm";
+            this.Load += new System.EventHandler(this.PatchDistributionForm_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);

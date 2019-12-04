@@ -9,10 +9,10 @@ using Unifreight.Data.AmitalModel.Repsitories;
 
 namespace Logitude.Customs.BL.PatchDistribution.Patches
 {
-    public class P19R03_0000_PatchDist: PatchDistributionBase
+    public class P19R03_0001_PatchDist: PatchDistributionBase
     {
 
-        public P19R03_0000_PatchDist() : base("טבלאות תשתית הפצה ",new DateTime(2019,12,2))
+        public P19R03_0001_PatchDist() : base("טבלאות תשתית הפצה ",new DateTime(2019,12,2))
         {
             
             //this.PatchName = "טבלאות תשתית הפצה ";
@@ -40,8 +40,7 @@ namespace Logitude.Customs.BL.PatchDistribution.Patches
 });
 
 
-                var myPatchDistributionManager = new PatchDistributionManager();
-                myPatchDistributionManager.CreateList();
+                
 
             }
             catch (OracleException eOracleException)

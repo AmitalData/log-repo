@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Logitude.Customs.BL.PatchDistribution.Patches
 {
-    class P19R03_0002_QueueMessagesShrink : PatchDistributionBase
+    class P19R03_0003_QueueMessagesShrink : PatchDistributionBase
     {
-        public P19R03_0002_QueueMessagesShrink()
+        public P19R03_0003_QueueMessagesShrink()
             :base("מחיקת תור ישן",new DateTime(2019, 12, 2))
         {
 

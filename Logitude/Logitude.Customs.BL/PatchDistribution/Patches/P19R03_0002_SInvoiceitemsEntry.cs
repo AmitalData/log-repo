@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Logitude.Customs.BL.PatchDistribution.Patches
 {
-    internal class P19R03_0001_SInvoiceitemsEntry : PatchDistributionBase
+    internal class P19R03_0002_SInvoiceitemsEntry : PatchDistributionBase
     {
-        public P19R03_0001_SInvoiceitemsEntry()
+        public P19R03_0002_SInvoiceitemsEntry()
             : base("פריסה מלאה מהצהרת כנמ", new DateTime(2019, 11, 20))
         {
 

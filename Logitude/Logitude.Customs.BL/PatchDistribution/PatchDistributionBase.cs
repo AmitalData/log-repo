@@ -9,7 +9,10 @@ namespace Logitude.Customs.BL.PatchDistribution
     public abstract class PatchDistributionBase : IUpScript
     {
         public string Branch { get; }
-        public int PatchCounter { get; }
+        public int MajorYear { get; }
+        public int MajorYearRelease { get; }
+        public decimal MajorVersion { get; }
+        public int PatchCounter_Minor { get; }
 
         public string PatchName { get; }
 
@@ -24,8 +27,21 @@ namespace Logitude.Customs.BL.PatchDistribution
             Type type = this.GetType().UnderlyingSystemType;
             String className = type.Name;
             var partsOfClassName = className.Split("_"[0]).ToList();
-            Branch = partsOfClassName[0];
-            PatchCounter = int.Parse(partsOfClassName[1]);
+            Branch = partsOfClassName[0]??"";
+            if (!Branch.StartsWith("P"))
+            {
+                throw new Exception("Class name must start with P");
+            }
+            var release = Branch.Substring(1);
+            var parts=release.Split('R').ToList();
+            if (parts.Count()!=2)
+            {
+                throw new Exception("Class name must start with PYYRXX  YY=MajorYear XX=MajorYearRelease");
+            }
+            MajorYear = int.Parse(parts[0]);
+            MajorYearRelease = int.Parse(parts[1]);
+            MajorVersion = Decimal.Parse($"{MajorYear}.{MajorYearRelease}");
+            PatchCounter_Minor = int.Parse(partsOfClassName[1]);
             PatchName = partsOfClassName[2];
         }
         public abstract List<ScriptDTO> GetUpScripts();

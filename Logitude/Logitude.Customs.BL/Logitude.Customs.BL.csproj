@@ -861,12 +861,12 @@
     <Compile Include="EntityQueryServices\ClientAddressQueryService.cs" />
     <Compile Include="EntityQueryServices\ClientDrivingLicenseQueryService.cs" />
     <Compile Include="EntityQueryServices\ClientQueryService.cs" />
+    <Compile Include="EntityQueryServices\DBMigrationQueryService.cs" />
     <Compile Include="EntityQueryServices\DeclarationPendingQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\ApprovedProfessionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ContinuousRequestTypeQueryService.Generated.cs" />
-	<Compile Include="EntityQueryServices\Generated\DBMigrationLineQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DBMigrationLineQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DBMigrationQueryService.Generated.cs" />
-
     <Compile Include="EntityQueryServices\Generated\DeclarationPendingQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeficitDecisionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\RequestTypeQueryService.Generated.cs" />
@@ -1799,13 +1799,14 @@
     <Compile Include="Messaging\U2L\ImportDeclaration\DeclarationUpsertService.cs" />
     <Compile Include="NotificationBL\NotificationBase.cs" />
     <Compile Include="NotificationBL\NotificationDeclartion.cs" />
+    <Compile Include="PatchDistribution\PatchDistributionMatch.cs" />
     <Compile Include="PatchDistribution\PatchDistributionManager.cs" />
     <Compile Include="PatchDistribution\PatchDistributionBase.cs" />
-    <Compile Include="PatchDistribution\Patches\P19R03_0000_PatchDist.cs" />
-    <Compile Include="PatchDistribution\Patches\P19R03_0001_SInvoiceitemsEntry.cs" />
-    <Compile Include="PatchDistribution\Patches\P19R03_0004_SInvoiceitemsEntryTk2.cs" />
-    <Compile Include="PatchDistribution\Patches\P19R03_0002_QueueMessagesShrink.cs" />
-    <Compile Include="PatchDistribution\Patches\P19R03_0003_DeleteQMessWhenDone.cs" />
+    <Compile Include="PatchDistribution\Patches\P19R03_0001_PatchDist.cs" />
+    <Compile Include="PatchDistribution\Patches\P19R03_0002_SInvoiceitemsEntry.cs" />
+    <Compile Include="PatchDistribution\Patches\P19R03_0005_SInvoiceitemsEntryTk2.cs" />
+    <Compile Include="PatchDistribution\Patches\P19R03_0003_QueueMessagesShrink.cs" />
+    <Compile Include="PatchDistribution\Patches\P19R03_0004_DeleteQMessWhenDone.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EntityUpdateServices\ClientUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ConsignmentUpdateService.cs" />
