@@ -237,7 +237,20 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
                 entityPocos = genericFilter.GetFilteredQuery<User>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
-                IQueryable<UserList> entityLists = userQuery.GetIQueryableEntityList(entityPocos);
+                IQueryable<UserList> entityLists = null;
+
+                string loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser();
+                UserPM loggedUser = userQuery.GetSingleUserPMByEmail(loggedUserEmail, tenant, true);
+                if (loggedUser != null && !loggedUser.IsCustomerCare && tenant == 65)
+                {
+                    entityLists = userQuery.GetDemoTenantUserList(entityPocos, loggedUser.Id, tenant);
+                }
+
+                else
+                {
+                    entityLists = userQuery.GetIQueryableEntityList(entityPocos);
+                }
+
 
                 entityLists = genericFilter.GetFilteredQuery<UserList>(listQueryOperation, entityLists);
 
