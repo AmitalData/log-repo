@@ -147,7 +147,7 @@
     <Compile Include="LogitudeBatchServices.Designer.cs">
       <DependentUpon>LogitudeBatchServices.cs</DependentUpon>
     </Compile>
-    <Compile Include="Program.cs" />
+    <Compile Include="MainBatchServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
