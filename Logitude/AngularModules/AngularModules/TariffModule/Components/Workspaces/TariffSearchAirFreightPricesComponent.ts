@@ -37,6 +37,11 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
     private myChargesTypeListService: ChargesTypeListService;
     private dimenstionShipment: ShipmentPM;
     public IsPickedFromWizard: boolean = false;
+    private TariffType: string;
+    public FreightLabel: string;
+    public OriginDependencyFilterValue: string = "A";
+    public DestinationDependencyFilterValue = "A";
+
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.myDomainService = new TariffDomainService();
@@ -63,7 +68,12 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             }
         });
     }
-
+    SetPortsDependencyFilterValue() {
+        if (this.TariffType == "OLC") {
+            this.OriginDependencyFilterValue = "O";
+            this.DestinationDependencyFilterValue = "O";
+        }
+    }
     private currencyId: string;
     get CurrencyId() { return this.currencyId; }
     set CurrencyId(newValue: string) {
@@ -78,21 +88,56 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
     SetWindowArgs(args: any) {
         if (args != null) {
-            this.IsGeneratePayablesVisible = true;
-            this.ShipmentPM = args['ShipmentPM'];
-            this.FatherComponent = args['FatherComponent'];
-            this.originPortId = args['FromPort'];
-            this.destinationPortId = args['ToPort'];
-            this.date = args['BetweenDate'];
-            this.weight = args['ChargeableWeight'];
-            this.ChargeableWeight = args['ChargeableWeight'];
-            this.weightCode = args['ChargeableWeightUnit'];
-            this.grossWeight = args['GrossWeight'];
-            this.grossWeightCode = args['GrossWeightUnit'];
-            this.volume = args['Volume'];
-            this.volumeUnitCode = args['VolumeUnit'];
+            
+            if (args['ShipmentPM']) {
+                this.ShipmentPM = args['ShipmentPM'];
+                this.IsGeneratePayablesVisible = true;
+            }
+            if (args['FatherComponent']) {
+                this.FatherComponent = args['FatherComponent'];
+            }
+            if (args['FromPort']) {
+                this.originPortId = args['FromPort'];
+            }
+            if (args['ToPort']) {
+                this.destinationPortId = args['ToPort'];
+            }
+            if (args['BetweenDate']) {
+                this.date = args['BetweenDate'];
+            }
+            if (args['ChargeableWeight']) {
+                this.weight = args['ChargeableWeight'];
+                this.ChargeableWeight = args['ChargeableWeight'];
+            }
+            if (args['ChargeableWeightUnit']) {
+                this.weightCode = args['ChargeableWeightUnit'];
+            }
+            if (args['GrossWeight']) {
+                this.grossWeight = args['GrossWeight'];
+            }
+            if (args['GrossWeightUnit']) {
+                this.grossWeightCode = args['GrossWeightUnit'];
+            }
+            if (args['Volume']) {
+                this.volume = args['Volume'];
+            }
+            if (args['VolumeUnit']) {
+                this.volumeUnitCode = args['VolumeUnit'];
+            }
+            if (args['TariffType']) {
+                this.TariffType = args['TariffType'];
+            }
+            this.SetLabels();
             this.SetUIProperties();
             this.SearchButtonClicked();
+            this.SetPortsDependencyFilterValue();
+        }
+    }
+
+    private SetLabels() {
+        this.FreightLabel = "Air Freight";
+        if (this.TariffType == "OLC") {
+            this.FreightLabel = "Ocean Freight";
         }
     }
 
@@ -417,7 +462,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
             }
 
             this.CurrentSession.StartBusyIndicatorLoading();
-            this.myDomainService.GetAvailableAirlineFreightTariffs(this.OriginPortId, this.DestinationPortId, this.Date, this.Weight, this.WeightCode, this.GrossWeight, this.GrossWeightCode, this.Volume, this.VolumeUnitCode, this.CurrencyId).subscribe(res => {
+            this.myDomainService.GetAvailableAirlineFreightTariffs(this.OriginPortId, this.DestinationPortId, this.Date, this.Weight, this.WeightCode, this.GrossWeight, this.GrossWeightCode, this.Volume, this.VolumeUnitCode, this.CurrencyId, this.TariffType).subscribe(res => {
                 if (!res.HasError) {
                     if (res.Result) {
                         this.AvailableTariffs = res.Result;
