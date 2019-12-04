@@ -175,7 +175,7 @@ export class GlAccountLedgerTransactionsListTemplate {
     }
 
     GetIndicatorText() {
-        if (this.rowData["OpenAmount"] != this.CalculateOriginalAmount())
+        if ((this.rowData['LocalAmountDebit'] > 0 && this.rowData['OpenAmount'] != this.CalculateOriginalAmount()) || (this.rowData['LocalAmountCredit'] > 0 && this.rowData['OpenAmount'] != -1 * this.CalculateOriginalAmount()))
             return this.showLocal ? "סכום פתוח חלקית" : "Partial transaction";
         else return this.showLocal ? "סכום פתוח " : "Open transaction";
     }
