@@ -959,6 +959,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 }
                 if (!string.IsNullOrWhiteSpace(countryCode)) this._MySupplierInvoicePM.IssueCountryCode = countryCode;
             }
+            if (!_MyDeclarationPM.IsCourierDeclaration)
+            {
+                this._MySupplierInvoicePM.IssueCountryCode = this._INVOICE.ISSUECOUNTRYCODE;
+            }
             if (this._INVOICE.INCOTERM_ID != null)
             {
                 this._MySupplierInvoicePM.IncotermCode = this._INVOICE.INCOTERM_ID;
