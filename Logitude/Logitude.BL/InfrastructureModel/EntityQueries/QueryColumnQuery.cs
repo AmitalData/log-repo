@@ -63,7 +63,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             foreach (QueryColumnPM column in querycolumns)
             {
                 QueryColumnPM existedColumn = (from a in selectedQueryColumns
-                                               where a.QueryId == column.QueryId && a.ObjectFieldId == column.ObjectFieldId && a.UserId == userid
+                                               where a.QueryId == column.QueryId && a.ObjectFieldCode == column.ObjectFieldCode && a.UserId == userid
                                                select a).FirstOrDefault();
 
                 if (existedColumn != null)
@@ -480,10 +480,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             return query;
         }
 
-        public QueryColumnPM GetQueryColumnsByFieldIdTenant(string FieldId, int Tenant)
+        public QueryColumnPM GetQueryColumnsByFieldCodeTenant(string FieldCode, int Tenant)
         {
             QueryColumnPM query = (from a in repository.context.QueryColumns.Include("Query").Include("Query.ObjectTable").Include("ObjectField").Include("ObjectField.ListTextCode").Include("ObjectField.FullNameTextCode")
-                                              where a.ObjectFieldId == FieldId && a.Tenant == Tenant
+                                              where a.ObjectFieldCode== FieldCode && a.Tenant == Tenant
                                               select new QueryColumnPM()
                                               {
                                                   ColumnWidth = a.ColumnWidth,
