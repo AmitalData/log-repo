@@ -412,6 +412,10 @@
     <Compile Include="Migrations\201912031511537_dbMigLine.Designer.cs">
       <DependentUpon>201912031511537_dbMigLine.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912041514241_dbMigLineTk2.cs" />
+    <Compile Include="Migrations\201912041514241_dbMigLineTk2.Designer.cs">
+      <DependentUpon>201912041514241_dbMigLineTk2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -707,6 +711,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912031511537_dbMigLine.resx">
       <DependentUpon>201912031511537_dbMigLine.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912041514241_dbMigLineTk2.resx">
+      <DependentUpon>201912041514241_dbMigLineTk2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
