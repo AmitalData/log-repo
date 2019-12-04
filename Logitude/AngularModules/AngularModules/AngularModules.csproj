@@ -186,6 +186,7 @@
     <Content Include="CRMModules\CRMTickets\Components\NewEntity\NewTicketComponent.html" />
     <Content Include="CRM\Components\Workspaces\OccasionWorkspaceComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\Documents\PointersFromClaimRelatedEntitiesSelectionComponent.html" />
+    <Content Include="CustomsModules\CustomsClaim\Components\EditTabs\General\PassportDetails\PassportDetailsComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\EditTabs\ImporterDeclaration\ClaimImporterDeclAP3LoisComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\EditTabs\ImporterDeclaration\ClaimImporterDeclATabComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\EditTabs\ImporterDeclaration\ClaimImporterDeclBCTabComponent.html" />
@@ -762,6 +763,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\Documents\ClaimCustomsDocumentsController.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\Documents\PointersFromClaimRelatedEntitiesSelectionComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\General\ClaimGeneralTabComponent.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\General\PassportDetails\PassportDetailsComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\ImporterDeclaration\ClaimImporterDeclAP3LoisComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\ImporterDeclaration\ClaimImporterDeclATabComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\ImporterDeclaration\ClaimImporterDeclBCTabComponent.ts" />

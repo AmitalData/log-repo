@@ -270,13 +270,16 @@ namespace Logitude.Server.Tools.Helpers
 
     }
 
+    
 
     public class AssemblyUtil
     {
+        
+
         public string GetVersion(string ProductInfo)
         {
             var parts = ProductInfo.Split(new char[] { ',' });
-            return parts[0].Split(new char[] { ':' })[0];
+            return parts[0].Split(new char[] { ':' })[1];
 
         }
         public string BurnAt(string ProductInfo)

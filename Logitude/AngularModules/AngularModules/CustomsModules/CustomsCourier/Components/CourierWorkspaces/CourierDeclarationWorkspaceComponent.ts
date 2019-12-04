@@ -58,6 +58,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
     private CurrentSession = SessionLocator.SelectedSession;
 
     @Output() MenuHeaderchangeevent = new EventEmitter();
+    @Output() onQueryChangeEvent = new EventEmitter();
 
     constructor() {
         this.LoadAllScreenData();
@@ -304,8 +305,8 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
             Display: TextCodeTranslator.Translate("Customs.CourierMaster.F.MAWB"),
             Styles: { width: '120px' },
             IsCustomTemplate: true,
-            HtmlListComponentName: 'CourierWorksheetListTemplate',
-            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+            //HtmlListComponentName: 'CourierWorksheetListTemplate',
+            //HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
         });
 
         this.columns.push({
