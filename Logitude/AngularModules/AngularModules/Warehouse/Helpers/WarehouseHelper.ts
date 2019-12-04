@@ -283,7 +283,7 @@ export class WarehouseHelper {
  
             entityPM.FromPortId = entityPM.WarehouseId;
             entityPM.ToPortId = null;
-            entityPM.ToTypeCode = null;
+            entityPM.ToTypeCode = "PORT";
 
             if (this.validator == null) {
                 this.validator = new ClassLevelValidator();

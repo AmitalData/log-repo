@@ -103,6 +103,7 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
                 this.ToPortId = this.ShipmentPM.ToPortId;
             }
         }
+        this.ConnectedTo = this.warehouseReleasePM.ConnectedTo;
         this.IsLCLEntity = AppTool.IsLCLEntity(this.warehouseReleasePM.TransportModeId, this.warehouseReleasePM.ShipmentTypeId);
     }
 
@@ -403,6 +404,7 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
         this.VolumetricWeightLabel = "Volumetric Weight (" + this.warehouseReleasePM.ChargeableWeightUnitCode + ")";
         this.ChargeableWeightUnitCodeLabel = "Chargeable Weight (" + this.warehouseReleasePM.ChargeableWeightUnitCode + ")";
         this.DimensionsUnitLable = " (" + this.warehouseReleasePM.DimensionsUnitCode + ")";
+
         // this.WidthLabel = "Width (" + this.DimensionsUnitCode + ")";
         //this.HeightLabel = "Height (" + this.DimensionsUnitCode + ")";
         // this.LengthLabel = "Length (" + this.DimensionsUnitCode + ")";

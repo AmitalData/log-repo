@@ -253,7 +253,7 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
         private string GetEnglishNameByCardId(List<CardList> cardLists, string cardId)
         {
             string englishName = string.Empty;
-            if (!string.IsNullOrEmpty(englishName))
+            if (!string.IsNullOrEmpty(cardId))
             {
                 CardList cardList = cardLists.Where(d => d.Id == cardId).FirstOrDefault();
                 if (cardList != null) englishName = cardList.EnglishName;
