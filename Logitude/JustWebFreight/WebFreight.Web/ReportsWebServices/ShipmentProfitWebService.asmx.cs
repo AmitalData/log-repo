@@ -997,10 +997,20 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         PayableInvoiceProvider invoiceProvider = new PayableInvoiceProvider()
                         {
-                            InvoiceNumber = invoice.InvoiceNumber,
-                            AmountInLocalCurrency = invoice.InvoiceMultipleShipments.Where(p => p.ShipmentId == shipment.Id).Sum(s => s.SubTotalInLocalCurrency) == null ? 0 : invoice.InvoiceMultipleShipments.Where(p => p.ShipmentId == shipment.Id).Sum(s => s.SubTotalInLocalCurrency.Value),
-                            AmountInProfitCurrency = invoice.InvoiceMultipleShipments.Where(p => p.ShipmentId == shipment.Id).Sum(s => s.SubTotalInInvoiceCurrency) == null ? 0 : invoice.InvoiceMultipleShipments.Where(p => p.ShipmentId == shipment.Id).Sum(s => s.SubTotalInInvoiceCurrency.Value),
+                            InvoiceNumber = invoice.InvoiceNumber
                         };
+
+                        if (invoice.IsMultipleEntities) {
+                            invoiceProvider.AmountInLocalCurrency = invoice.InvoiceMultipleShipments.Where(p => p.ShipmentId == shipment.Id).Sum(s => s.SubTotalInLocalCurrency) == null ? 0 : invoice.InvoiceMultipleShipments.Where(p => p.ShipmentId == shipment.Id).Sum(s => s.SubTotalInLocalCurrency.Value);
+                            invoiceProvider.AmountInProfitCurrency = invoice.InvoiceMultipleShipments.Where(p => p.ShipmentId == shipment.Id).Sum(s => s.SubTotalInInvoiceCurrency) == null ? 0 : invoice.InvoiceMultipleShipments.Where(p => p.ShipmentId == shipment.Id).Sum(s => s.SubTotalInInvoiceCurrency.Value);
+                         }
+
+                        else
+                        {
+                            invoiceProvider.AmountInLocalCurrency = invoice.AmountInLocalCurrency == null ? 0 : invoice.AmountInLocalCurrency.Value;
+                            invoiceProvider.AmountInProfitCurrency = invoice.AmountInProfitCurrency == null ? 0 : invoice.AmountInProfitCurrency.Value;
+                
+                        }
 
                         Card partnerCard = CardRepository.GetSingleCard(invoice.VendorId, tenant, false);
                         if (partnerCard != null)
