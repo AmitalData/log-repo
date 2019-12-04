@@ -2525,6 +2525,9 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     {
                         logWindow.Width = 680;
                         logWindow.Height = 400;
+                        var windowArgs: any = {};
+                        windowArgs.IsNew = true;
+                        logWindow.WindowArgs = windowArgs;
                         break;
                     }
             }
