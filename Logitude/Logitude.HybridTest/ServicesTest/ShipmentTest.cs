@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.HybridTest.WcfCallers;
@@ -23,6 +25,15 @@ namespace Logitude.HybridTest.ServicesTest
         }
 
         [TestMethod]
+        public void Test_DirectAirExportShipmentToken2_UPSERT()
+        {
+            ShipmentPM shipmentPM = ShipmentWcfFactory.GetShipmentPM();
+            Response serviceResponse = EntityWcfCaller.CallEntityUpsert(shipmentPM, EnvironmentGlobalParams.SecondaryToken);
+            Assert.IsTrue(serviceResponse.HasError, "Must Be Not Authorized! " + serviceResponse.ErrorMessage);
+            Assert.IsNull(serviceResponse.Result, "Must Be Not Authorized! " + serviceResponse.ErrorMessage);
+        }
+
+        [TestMethod]
         public void Test_HouseAirExportShipment_UPSERT()
         {
             ShipmentPM shipmentPM = ShipmentWcfFactory.GetShipmentPM();
@@ -31,6 +42,7 @@ namespace Logitude.HybridTest.ServicesTest
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(shipmentPM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
+            HybridData.HouseShipmentId = serviceResponse.Result;
         }
 
         [TestMethod]
@@ -48,7 +60,7 @@ namespace Logitude.HybridTest.ServicesTest
             };
 
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { HybridData.DirectShipmentCode, TestEnvironmentGlobalParameters.Tenant1 };
+            object[] serviceParameters = new object[] { HybridData.DirectShipmentCode, EnvironmentGlobalParams.MainTenant };
             serviceResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Canceled Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Canceled Failed! " + serviceResponse.ErrorMessage);
@@ -57,7 +69,7 @@ namespace Logitude.HybridTest.ServicesTest
         [TestMethod]
         public void Test_Shipment_DELETE()
         {
-            if (HybridData.DirectShipmentId == null)
+            //if (HybridData.DirectShipmentId == null)
                 Test_DirectAirExportShipment_UPSERT();
             InvokedProperties serviceProperties = new InvokedProperties
             {
@@ -69,7 +81,7 @@ namespace Logitude.HybridTest.ServicesTest
             };
 
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { HybridData.DirectShipmentCode, TestEnvironmentGlobalParameters.Tenant1 };
+            object[] serviceParameters = new object[] { HybridData.DirectShipmentCode, EnvironmentGlobalParams.MainTenant };
             serviceResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Deleted Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Deleted Failed! " + serviceResponse.ErrorMessage);
@@ -95,7 +107,7 @@ namespace Logitude.HybridTest.ServicesTest
             };
 
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { filters, TestEnvironmentGlobalParameters.Tenant1, serviceResponse };
+            object[] serviceParameters = new object[] { filters, EnvironmentGlobalParams.MainTenant, serviceResponse };
             ShipmentList[] shipments = (ShipmentList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.Result);
@@ -106,34 +118,65 @@ namespace Logitude.HybridTest.ServicesTest
         public void Test_Shipment_CreateEvent()
         {
             Assert.Inconclusive("Not Implemented !");
+            if (HybridData.HouseShipmentId == null)
+                Test_HouseAirExportShipment_UPSERT();
+            HybridData.customClearedExternalId = Guid.NewGuid().ToString();
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "Shipment",
                 ServiceOperation = "CreateEvent",
-                ServiceResponseIndex = 0,
-                ServiceType = null,
-                ServiceFilterType = null,
             };
 
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { TestEnvironmentGlobalParameters.Tenant1, null, HybridData.DirectShipmentCode, HybridData.UserIdHU, "CREV", DateTime.Now, DateTime.Now, "Hybrid Test Event" };
+            object[] serviceParameters = new object[] { EnvironmentGlobalParams.MainTenant, HybridData.customClearedExternalId, HybridData.HouseShipmentCode, HybridData.UserCodeHU, "CCD", DateTime.Now.AddDays(-2), DateTime.Now.AddDays(-2), "Testing hybrid custom cleared" };
             serviceResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Create Event Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Create Event Failed! " + serviceResponse.Result);
+            Assert.IsNotNull(serviceResponse.Result, "Create Event List Failed! " + serviceResponse.ErrorMessage);
         }
 
         [TestMethod]
         public void Test_Shipment_BuildEventsList()
         {
-            //LoginService.GetLoginTokenByCredentials();
-            Assert.Inconclusive("Not Implemented !");
+            if (HybridData.HouseShipmentId == null)
+                Test_HouseAirExportShipment_UPSERT();
+            HybridData.customClearedExternalId = Guid.NewGuid().ToString();
+            List<TraceEventPM> events = new List<TraceEventPM>()
+                 {
+                     new TraceEventPM() { Tenant = EnvironmentGlobalParams.MainTenant, ExternalId = Guid.NewGuid().ToString(), UserId = HybridData.UserCodeHU, EventTypeCode = "DEP", EventDateTime = DateTime.Now.AddDays(-2), LogDateTime = DateTime.Now.AddDays(-2), Notes = "Testing hybrid departed" },
+                     new TraceEventPM() { Tenant = EnvironmentGlobalParams.MainTenant, ExternalId = Guid.NewGuid().ToString(), UserId = HybridData.UserCodeHU, EventTypeCode = "ARR", EventDateTime = DateTime.Now.AddDays(-2), LogDateTime = DateTime.Now.AddDays(-2), Notes = "Testing hybrid arrived" },
+                     new TraceEventPM() { Tenant = EnvironmentGlobalParams.MainTenant, ExternalId = HybridData.customClearedExternalId, UserId = HybridData.UserCodeHU, EventTypeCode = "CCD", EventDateTime = DateTime.Now.AddDays(-2), LogDateTime = DateTime.Now.AddDays(-2), Notes = "Testing hybrid custom cleared" },
+
+                };
+            InvokedProperties serviceProperties = new InvokedProperties
+            {
+                ServiceName = "Shipment",
+                ServiceOperation = "BuildEventsList",
+                ServiceType = typeof(TraceEventPM),
+            };
+
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { EnvironmentGlobalParams.MainTenant, HybridData.HouseShipmentCode, events.ToArray() };
+            serviceResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+            Assert.IsFalse(serviceResponse.HasError, "Build Events List Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsNotNull(serviceResponse.Result, "Build Events List Failed! " + serviceResponse.ErrorMessage);
         }
 
         [TestMethod]
         public void Test_Shipment_DeleteShipmentEvent()
         {
-           // LoginService.GetLoginTokenByCredentials();
-            Assert.Inconclusive("Not Implemented !");
+            if (HybridData.customClearedExternalId == null)
+                Test_Shipment_BuildEventsList();
+            InvokedProperties serviceProperties = new InvokedProperties
+            {
+                ServiceName = "Shipment",
+                ServiceOperation = "DeleteShipmentEvent",
+            };
+
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { HybridData.HouseShipmentCode, HybridData.customClearedExternalId, EnvironmentGlobalParams.MainTenant };
+            serviceResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+            Assert.IsFalse(serviceResponse.HasError, "Build Events List Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsNotNull(serviceResponse.Result, "Build Events List Failed! " + serviceResponse.ErrorMessage);
         }
 
         [TestMethod]

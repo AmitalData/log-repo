@@ -219,6 +219,8 @@
     <Content Include="2019.R4\10 - 2019\Day 02 [Samar] delete payment date text codes.sql" />
     <Content Include="2019.R4\10 - 2019\Day 02 [Samar] add tariff payables disconnect event to all tenants.sql" />
     <Content Include="2019.R4\10 - 2019\Day 02 [Samar] update tariff line currency from tariff level.sql" />
+    <Content Include="2019.R5\11 - 2019\Day 20 [Abed] insert new communication log status time out.sql" />
+    <Content Include="2019.R5\12 - 2019\Day 04 [Khalid] Add new Codes for Help Center.sql" />
     <Content Include="2019.R4\11 - 2019\Day 24 - [Abdullah] fill cashbooklines search fields.sql" />
     <Content Include="Accounting\2015 - 8\day 10 [alex] unique constraint in JournalActionTypes.sql" />
     <Content Include="2019.R2\06 - 2019\Day 24 [Rabaia] DalayWithReturnStatusToZeroSP.sql" />
@@ -634,6 +636,7 @@
     <Content Include="Main Branch\2019\11 - 2019\Day 26 [Abed] fill objectfieldcode on AdvancedQueryFilters - Copy.sql" />
     <Content Include="Main Branch\2019\11 - 2019\Day 27 [Abed] delete Constrant between advancedQueryFilters and objectField.sql" />
     <Content Include="Main Branch\2019\12 - 2019\Day 01 [Samar] Opportunity Tenant Opened stage.sql" />
+    <Content Include="Main Branch\2019\12 - 2019\Day 04 [Wesam] Add Local Name Filter Dimension For Query Builder.sql" />
     <Content Include="OracleScripts\18R01\1- from_pre  compare to_pe2.txt" />
     <Content Include="OracleScripts\18R01\2-compare aminet_main to aminetpre_main .txt" />
     <Content Include="OracleScripts\18R01\Documents filings search fields.txt" />

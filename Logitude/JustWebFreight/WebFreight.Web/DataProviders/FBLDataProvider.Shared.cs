@@ -233,9 +233,13 @@ namespace WebFreight.Web.DataProviders
         public string TenantCAAT { get; set; }
         public string CarrierCBSA { get; set; }
         public string CarrierCAAT { get; set; }
-      // public string ConfirmationNotes { get; set; }
-        public string CreatedBy { get; set; }
         public string ConfirmationNotes { get; set; }
+        public string CreatedBy { get; set; }
+        public string PickUpInstructions { get; set; }
+        public string DeliveryInstructions { get; set; }
+        public string Broker { get; set; }
+        public string BrokerName { get; set; }
+        public string CustomsAgent { get; set; }
     } 
     
     public class ReceivablesCharges

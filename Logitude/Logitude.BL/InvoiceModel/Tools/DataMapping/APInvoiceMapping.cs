@@ -109,7 +109,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.ApprovedByUserId = entityPM.ApprovedByUserId;
             entity.IsGeneralInvoice = entityPM.IsGeneralInvoice;
             entity.ExternalAccountingEntityId = entityPM.ExternalAccountingEntityId;
-
+            entity.CreatedByPartner = entityPM.CreatedByPartner;
             if (entityPM.SetApproved)
             {
                 if (entity.FirstApproveDate == null)

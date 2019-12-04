@@ -145,7 +145,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.AgentSharedManifestRef = entityPM.AgentSharedManifestRef;
             entityPoco.ManifestLastSharingDate = entityPM.ManifestLastSharingDate;
             entityPoco.CountryForStatisticsId = entityPM.CountryForStatisticsId;
-
+            entityPoco.CreatedByPartner = entityPM.CreatedByPartner;
             if (entityPM.IsExceptionResolved)
             {
                 entityPoco.ExceptionDescription = null;

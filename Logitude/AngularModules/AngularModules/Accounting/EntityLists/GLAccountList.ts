@@ -100,6 +100,7 @@ export class GLAccountList {
 	UpdatedByUserName: string;
 	CreatedByLocalName: string;
 	UpdatedByLocalName: string;
+	AllowEditChequePayToName: boolean;
 	
 }
  

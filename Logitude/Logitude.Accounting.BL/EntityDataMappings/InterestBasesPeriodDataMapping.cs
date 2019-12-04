@@ -35,7 +35,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             entityPOCO.LineNumber = entityPM.LineNumber;
             CustomMappedPOCOProperties.Add(POCOPropertyNames.InterestBaseTypeId);
             entityPOCO.InterestBaseTypeId = entityPM.InterestBaseTypeId;
-            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+            if (entityPM.InterestBaseStartDate != entityPOCO.InterestBaseStartDate)
             {
                 InterestBasesPeriodRepository PeriodRepository = new InterestBasesPeriodRepository(entityPM.Tenant);
                 InterestBasesPeriod Period = PeriodRepository.GetSingleByInterestBaseStartDateAndnterestBaseTypeId(entityPM.InterestBaseStartDate, entityPM.InterestBaseTypeId, entityPM.Tenant);
@@ -44,7 +44,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     throw new Exception(TextCodesTranslator.TranslateText("Accounting.General.O.Abaseperiodwiththesamestartdateexists", entityPM.Tenant, showLocals));
                 }
             }
-        
         }
 
         public void CustomPOCOToPM(InterestBasesPeriodPM entityPM, InterestBasesPeriod entityPOCO)

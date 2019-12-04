@@ -91,7 +91,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.SubTotalInLocalCurrency = entityPM.SubTotalInLocalCurrency;
             entity.CustomerRef = entityPM.CustomerRef;
             entity.OperationalDate = entityPM.OperationalDate;
-            entity.DateForVATInterest = entityPM.DateForVATInterest;
+            entity.DateForInterest = entityPM.DateForInterest;
             entity.SplitJournalByCurrency = entityPM.SplitJournalByCurrency;
             entity.IsExternalEntity = entityPM.IsExternalEntity;
             entity.IsGeneralInvoice = entityPM.IsGeneralInvoice;
@@ -209,6 +209,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
 
             entity.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
             entityPM.ConcurrencyGUID = entity.ConcurrencyGUID;
+            entity.CreatedByPartner = entityPM.CreatedByPartner;
         }
 
         public static void MapInvoiceLine(ARInvoiceLinePM entityPM, ARInvoiceLine entity, bool isNewState)

@@ -80,5 +80,6 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public DateTime? FirstApproveDate { get; set; }
         public string VendorCity { get; set; }
         public string VendorCountry { get; set; }
+        public string CreatedByPartner { get; set; }
     }
 }

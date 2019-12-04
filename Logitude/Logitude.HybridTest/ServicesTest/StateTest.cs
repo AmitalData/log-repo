@@ -17,7 +17,7 @@ namespace Logitude.HybridTest.ServicesTest
                 EnglishName = "Alaska",
                 LocalName = "Alaska",
                 CountryId = HybridData.CountryCodeUS,
-                Tenant = TestEnvironmentGlobalParameters.Tenant1,
+                Tenant = EnvironmentGlobalParams.MainTenant,
             };
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(statePM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);

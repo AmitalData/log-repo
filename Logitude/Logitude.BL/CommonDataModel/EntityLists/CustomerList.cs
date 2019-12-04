@@ -413,7 +413,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
 
         [DataMember]
         public string LeadSourceName { get; set; }
-        
+
+        public string CreatedByPartner { get; set; }
 
     }
 }

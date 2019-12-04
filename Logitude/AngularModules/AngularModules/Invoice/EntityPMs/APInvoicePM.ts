@@ -719,6 +719,11 @@ export class APInvoicePM {
     public set VendorCountry(newValue: string) { if (this.vendorCountry != newValue) { this.vendorCountry = newValue; this.MarkAsDirty("VendorCountry"); } }
        
 	 
+    private createdByPartner: string;
+    public get CreatedByPartner() { return this.createdByPartner; }
+    public set CreatedByPartner(newValue: string) { if (this.createdByPartner != newValue) { this.createdByPartner = newValue; this.MarkAsDirty("CreatedByPartner"); } }
+       
+	 
 
     public OldEntityPM: APInvoicePM;
 		

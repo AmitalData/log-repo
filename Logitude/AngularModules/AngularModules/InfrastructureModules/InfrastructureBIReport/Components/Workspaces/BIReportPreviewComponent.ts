@@ -11,7 +11,7 @@ import { DateTimePipe } from '../../../../Controls/Pipes/DateTimePipe';
 import { NumbersPipe } from '../../../../Infrastructure/Pipes/NumbersPipe';
 import { AgGridNg2 } from 'ag-grid-angular/main';
 import { InfrastructureDomainService, BIReportXMLData, BITabularViewSettings, Column } from '../../../../Infrastructure/Services/InfrastructureDomainService';
-import { AppTool } from '../../../../Infrastructure/Tools';
+import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { EntityPMService } from '../../../../Infrastructure/Services/EntityPMService';
@@ -669,7 +669,11 @@ export class BIReportPreviewComponent extends BaseComponent implements OnInit {
     }
     RunReportButtonClicked() {
         this.IsFilterValueChanged = false;
+        var todayDate: Date = DateTool.GetCurrentDateAsUtc();
+        this.EntityPM.LastRunDate = todayDate;
+        this.EntityPM.LastRunByUserId = SessionLocator.LoggedUserId;
         this.RunReportCommand.emit(this.BIReportXMLData.DWQueryData);//this.DWQueryData);
+        this.UpdateBIReport(false);
     }
     public HasValidationError = false;
     OnRunReportComplete(MyData) {

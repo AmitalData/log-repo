@@ -198,7 +198,13 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         ARInvoiceService service = new ARInvoiceService(MyContext, entity.Tenant);
 
                         ARInvoicePM invoice = mappingService.UpdateCreditInvoice(entityPM, tenant);
+                        if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
+                        {
+                            ComputingPartnerQuery computingPartnerQuery = new ComputingPartnerQuery(tenant);
+                            var partner = computingPartnerQuery.GetSinglePMByCodeAndCheckTenantZero(entity.ComputingPartnerCode, tenant);
+                            entityPM.CreatedByPartner = (partner != null ? partner.Name : null);
 
+                        }
                         service.Create(entityPM);
                         if (invoice != null)
                         {
@@ -258,6 +264,13 @@ namespace WebFreight.Web.ExternalAPIs.V1
                       //  mappingService.UpdateCreditInvoice(entityPM, tenant);
                         entityPM.IsExternalAPI = true;
                         entityPM.IsExternalEntity = true;
+                        if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
+                        {
+                            ComputingPartnerQuery computingPartnerQuery = new ComputingPartnerQuery(tenant);
+                            var partner = computingPartnerQuery.GetSinglePMByCodeAndCheckTenantZero(entity.ComputingPartnerCode, tenant);
+                            entityPM.CreatedByPartner = (partner != null ? partner.Name : null);
+
+                        }
                         ARInvoiceService service = new ARInvoiceService(MyContext, tenant);
                         service.Update(entityPM, true);
 
