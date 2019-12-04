@@ -7,6 +7,7 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
+import {DBMigrationLinePM} from './DBMigrationLinePM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -54,7 +55,41 @@ export class DBMigrationPM {
     public set IsClose(newValue: boolean) { if (this.isClose != newValue) { this.isClose = newValue; this.MarkAsDirty("IsClose"); } }
        
 	 
+     
+	private dBMigrationLines: DBMigrationLinePM[];
+    get  DBMigrationLines() {
+        if (this.dBMigrationLines == null) {
+            this.dBMigrationLines = [];
+        }
 
+        return this.dBMigrationLines;
+    }
+    set  DBMigrationLines(newValue: DBMigrationLinePM[]) {
+        if (this.dBMigrationLines != newValue) {
+            this.dBMigrationLines = newValue;
+        }
+    }
+    public AddDBMigrationLine(item: DBMigrationLinePM) {
+        if (item != null) {
+            var index = this. DBMigrationLines.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. DBMigrationLines.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveDBMigrationLine(item: DBMigrationLinePM) {
+        if (item != null) {
+            var index = this. DBMigrationLines.indexOf(item);
+            if (index > -1) {
+                this. DBMigrationLines.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public DBMigrationLines: Array<DBMigrationLinePM>= [];
+ 
     public OldEntityPM: DBMigrationPM;
 		
     public IsDirty: boolean;

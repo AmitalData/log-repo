@@ -27,9 +27,9 @@ export class DBMigrationLinePM {
 
 	 
     
-    private id: string;
-    public get Id() { return this.id; }
-    public set Id(newValue: string) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
+    private dBMigrationId: string;
+    public get DBMigrationId() { return this.dBMigrationId; }
+    public set DBMigrationId(newValue: string) { if (this.dBMigrationId != newValue) { this.dBMigrationId = newValue; this.MarkAsDirty("DBMigrationId"); } }
        
 	 
     private counterKey: number;

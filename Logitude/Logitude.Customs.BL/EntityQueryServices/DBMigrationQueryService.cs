@@ -25,5 +25,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
             
 
         }
+
+        internal DBMigrationPM GetLastPM()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

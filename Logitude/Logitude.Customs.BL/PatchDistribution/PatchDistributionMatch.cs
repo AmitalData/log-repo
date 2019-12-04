@@ -1,6 +1,7 @@
 ﻿using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Def.EntityPMs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,11 +24,15 @@ namespace Logitude.Customs.BL.PatchDistribution
         {
 
             var myDBMigrationQueryService = new DBMigrationQueryService(0);
-            var lastDBMigration = myDBMigrationQueryService.GetLast() ??
-                new Customs.Data.EntityPOCOs.DBMigration()
+            var lastDBMigration = myDBMigrationQueryService.GetLastPM() ??
+                new DBMigrationPM()
                 {
                     MajorVersion = 19.03m,
                     MinorVersion = 0,
+                     //DBMigrationLines = new List<DBMigrationLinePM>()
+                     //{
+                         
+                     //}
                      
                 };
 
@@ -73,7 +78,7 @@ namespace Logitude.Customs.BL.PatchDistribution
     }
     public class PatchDistributionMatchModel
     {
-        public DBMigration LastDBMigration { get; internal set; }
+        public DBMigrationPM LastDBMigration { get; internal set; }
         public AssemblyDBMigrationModel MyAssemblyDBMigrationModel { get; internal set; }
         public string Message { get; internal set; }
         public bool NotDistributionBranch { get; internal set; }

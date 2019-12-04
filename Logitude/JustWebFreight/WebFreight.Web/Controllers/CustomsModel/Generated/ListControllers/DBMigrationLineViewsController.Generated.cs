@@ -51,7 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(string id, int counterkey)
+        public HttpResponseMessage GetSingle(string dbmigrationid, int counterkey)
         {
 		  try
             {
@@ -61,7 +61,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 DBMigrationLineListQueryService dBMigrationLineQuery = new DBMigrationLineListQueryService(MyContext);
-                DBMigrationLineList dBMigrationLineList = dBMigrationLineQuery.GetSingle(id, counterkey);
+                DBMigrationLineList dBMigrationLineList = dBMigrationLineQuery.GetSingle(dbmigrationid, counterkey);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
                 return Request.CreateResponse(HttpStatusCode.OK,  dBMigrationLineList);
