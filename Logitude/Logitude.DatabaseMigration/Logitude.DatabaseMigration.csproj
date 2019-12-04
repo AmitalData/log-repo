@@ -1686,6 +1686,7 @@
     <Compile Include="Migrations\201912011427416_CreatedByPartner_Fields.Designer.cs">
       <DependentUpon>201912011427416_CreatedByPartner_Fields.cs</DependentUpon>
     </Compile>
+
     <Compile Include="Migrations\201911251002048_Addgussment.cs" />
     <Compile Include="Migrations\201911251002048_Addgussment.Designer.cs">
       <DependentUpon>201911251002048_Addgussment.cs</DependentUpon>
@@ -1738,6 +1739,20 @@
     <Compile Include="Migrations\201912041116037_DeleteDateForVATInterestHelpTextMutaz.Designer.cs">
       <DependentUpon>201912041116037_DeleteDateForVATInterestHelpTextMutaz.cs</DependentUpon>
     </Compile>
+
+    <Compile Include="Migrations\201911271321484_UserLastSettingsTable_Rabaia.cs" />
+    <Compile Include="Migrations\201911271321484_UserLastSettingsTable_Rabaia.Designer.cs">
+      <DependentUpon>201911271321484_UserLastSettingsTable_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911280844228_ShipmentAdditionalCloudDataNewFields_Rabaia.cs" />
+    <Compile Include="Migrations\201911280844228_ShipmentAdditionalCloudDataNewFields_Rabaia.Designer.cs">
+      <DependentUpon>201911280844228_ShipmentAdditionalCloudDataNewFields_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912041012315_AbedChangeFromPortForeignKeyToWarehouseRelease.cs" />
+    <Compile Include="Migrations\201912041012315_AbedChangeFromPortForeignKeyToWarehouseRelease.Designer.cs">
+      <DependentUpon>201912041012315_AbedChangeFromPortForeignKeyToWarehouseRelease.cs</DependentUpon>
+    </Compile>
+
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2941,6 +2956,7 @@
     <EmbeddedResource Include="Migrations\201912011427416_CreatedByPartner_Fields.resx">
       <DependentUpon>201912011427416_CreatedByPartner_Fields.cs</DependentUpon>
     </EmbeddedResource>
+
     <EmbeddedResource Include="Migrations\201911251002048_Addgussment.resx">
       <DependentUpon>201911251002048_Addgussment.cs</DependentUpon>
     </EmbeddedResource>
@@ -2979,6 +2995,16 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912041116037_DeleteDateForVATInterestHelpTextMutaz.resx">
       <DependentUpon>201912041116037_DeleteDateForVATInterestHelpTextMutaz.cs</DependentUpon>
+    </EmbeddedResource>
+
+    <EmbeddedResource Include="Migrations\201911271321484_UserLastSettingsTable_Rabaia.resx">
+      <DependentUpon>201911271321484_UserLastSettingsTable_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911280844228_ShipmentAdditionalCloudDataNewFields_Rabaia.resx">
+      <DependentUpon>201911280844228_ShipmentAdditionalCloudDataNewFields_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912041012315_AbedChangeFromPortForeignKeyToWarehouseRelease.resx">
+      <DependentUpon>201912041012315_AbedChangeFromPortForeignKeyToWarehouseRelease.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
