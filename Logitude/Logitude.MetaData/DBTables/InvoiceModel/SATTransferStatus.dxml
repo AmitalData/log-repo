@@ -9,6 +9,6 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="ARInvoices" ParentColumnName="SATTransferStatusCode" ReferencedTableName="SATTransferStatus" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ARInvoices_dbo.SATTransferStatus_SATTransferStatusCode" />
   <Relation ParentTableName="ARPayments" ParentColumnName="SATTransferStatusCode" ReferencedTableName="SATTransferStatus" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ARPayments_dbo.SATTransferStatus_SATTransferStatusCode" />
+  <Relation ParentTableName="ARInvoices" ParentColumnName="SATTransferStatusCode" ReferencedTableName="SATTransferStatus" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ARInvoices_dbo.SATTransferStatus_SATTransferStatusCode" />
 </Table>

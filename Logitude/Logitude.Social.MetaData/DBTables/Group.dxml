@@ -21,6 +21,6 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="Posts" ParentColumnName="GroupId" ReferencedTableName="Groups" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Posts_dbo.Groups_GroupId" />
   <Relation ParentTableName="GroupMembers" ParentColumnName="GroupId" ReferencedTableName="Groups" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.GroupMembers_dbo.Groups_GroupId" />
+  <Relation ParentTableName="Posts" ParentColumnName="GroupId" ReferencedTableName="Groups" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Posts_dbo.Groups_GroupId" />
 </Table>

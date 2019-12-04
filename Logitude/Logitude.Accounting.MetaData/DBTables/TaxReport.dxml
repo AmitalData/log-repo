@@ -81,6 +81,6 @@
   <Column Name="VatNumber" Type="varchar" Size="30">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="JournalAdditionalDatas" ParentColumnName="TaxReportId" ReferencedTableName="TaxReports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.JournalAdditionalDatas_dbo.TaxReports_TaxReportId" />
   <Relation ParentTableName="TaxReportLines" ParentColumnName="TaxReportId" ReferencedTableName="TaxReports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TaxReportLines_dbo.TaxReports_TaxReportId" />
+  <Relation ParentTableName="JournalAdditionalDatas" ParentColumnName="TaxReportId" ReferencedTableName="TaxReports" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.JournalAdditionalDatas_dbo.TaxReports_TaxReportId" />
 </Table>

@@ -261,8 +261,8 @@
   <Column Name="Year" Type="varchar" Size="100">
     <Constraints Nullable="true" />
   </Column>
+  <Relation ParentTableName="InsideShipmentPackages" ParentColumnName="ShipmentPackageId" ReferencedTableName="ShipmentPackages" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.InsideShipmentPackages_dbo.ShipmentPackages_ShipmentPackageId" />
   <Relation ParentTableName="ShipmentContainerStatuses" ParentColumnName="ContainerId" ReferencedTableName="ShipmentPackages" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentContainerStatuses_dbo.ShipmentPackages_ContainerId" />
   <Relation ParentTableName="ShipmentPackageHarmonize" ParentColumnName="PackageId" ReferencedTableName="ShipmentPackages" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPackageHarmonize_dbo.ShipmentPackages_PackageId" />
   <Relation ParentTableName="ShipmentPackageItems" ParentColumnName="PackageId" ReferencedTableName="ShipmentPackages" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPackageItems_dbo.ShipmentPackages_PackageId" />
-  <Relation ParentTableName="InsideShipmentPackages" ParentColumnName="ShipmentPackageId" ReferencedTableName="ShipmentPackages" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.InsideShipmentPackages_dbo.ShipmentPackages_ShipmentPackageId" />
 </Table>

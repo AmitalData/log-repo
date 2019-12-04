@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="DeclarationCourierStatuses" Schema="Customs" DBType="Main">
+  <Column Name="CourierDeclarationStatusCode" Type="varchar" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CourierManifestStatusCode" Type="varchar" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CourierPaymentStatusCode" Type="varchar" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="CourierPendingReasonCode" Type="varchar" Size="4">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DeclarationId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="DocumentStatusCode" Type="varchar" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="HighLowValue" Type="varchar" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="IsClosedForFollowUp" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="IsCourierMissingClassification" Type="bit">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="PendingRemarks" Type="nvarchar" Size="1024">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="SpecialActionStatus" Type="varchar" Size="1">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TotalInvoiceAmountInUSD" Type="decimal">
+    <Constraints Nullable="true" />
+  </Column>
+</Table>

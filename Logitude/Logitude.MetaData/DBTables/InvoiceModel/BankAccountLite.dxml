@@ -48,6 +48,6 @@
   <Column Name="VatNumber" Type="varchar" Size="20">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="ARInvoices" ParentColumnName="BankAccountLiteId" ReferencedTableName="BankAccountLites" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoices_dbo.BankAccountLites_BankAccountLiteId" />
   <Relation ParentTableName="ARPayments" ParentColumnName="BankAccountLiteId" ReferencedTableName="BankAccountLites" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARPayments_dbo.BankAccountLites_BankAccountLiteId" />
+  <Relation ParentTableName="ARInvoices" ParentColumnName="BankAccountLiteId" ReferencedTableName="BankAccountLites" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoices_dbo.BankAccountLites_BankAccountLiteId" />
 </Table>

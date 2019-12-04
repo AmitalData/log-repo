@@ -84,9 +84,9 @@
   <Column Name="UpdateDate" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
+  <Relation ParentTableName="CustomsCollateralsAnswers" ParentColumnName="PaymentOrderId" ReferencedTableName="PaymentOrders" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.CustomsCollateralsAnswers_Customs.PaymentOrders_PaymentOrderId" />
   <Relation ParentTableName="PaymentOrderConnectionTables" ParentColumnName="PaymentOrderId" ReferencedTableName="PaymentOrders" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.PaymentOrderConnectionTables_Customs.PaymentOrders_PaymentOrderId" />
   <Relation ParentTableName="PaymentOrderLines" ParentColumnName="PaymentOrderId" ReferencedTableName="PaymentOrders" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.PaymentOrderLines_Customs.PaymentOrders_PaymentOrderId" />
   <Relation ParentTableName="PaymentOrderMethods" ParentColumnName="PaymentOrderId" ReferencedTableName="PaymentOrders" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.PaymentOrderMethods_Customs.PaymentOrders_PaymentOrderId" />
   <Relation ParentTableName="PaymentOrderProtestReasons" ParentColumnName="PaymentOrderId" ReferencedTableName="PaymentOrders" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.PaymentOrderProtestReasons_Customs.PaymentOrders_PaymentOrderId" />
-  <Relation ParentTableName="CustomsCollateralsAnswers" ParentColumnName="PaymentOrderId" ReferencedTableName="PaymentOrders" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.CustomsCollateralsAnswers_Customs.PaymentOrders_PaymentOrderId" />
 </Table>

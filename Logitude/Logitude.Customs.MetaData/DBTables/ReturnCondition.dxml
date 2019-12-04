@@ -15,8 +15,8 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="CustomsCollateralsConditions" ParentColumnName="ConditionCode" ReferencedTableName="ReturnConditions" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomsCollateralsConditions_Customs.ReturnConditions_ConditionCode" />
   <Relation ParentTableName="DepositConditions" ParentColumnName="DepositConditionCode" ReferencedTableName="ReturnConditions" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.DepositConditions_Customs.ReturnConditions_DepositConditionCode" />
   <Relation ParentTableName="CollateralsRequestFileConds" ParentColumnName="ConditionCode" ReferencedTableName="ReturnConditions" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CollateralsRequestFileConds_Customs.ReturnConditions_ConditionCode" />
   <Relation ParentTableName="GuaranteeConditions" ParentColumnName="ReturnConditionCode" ReferencedTableName="ReturnConditions" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.GuaranteeConditions_Customs.ReturnConditions_ReturnConditionCode" />
+  <Relation ParentTableName="CustomsCollateralsConditions" ParentColumnName="ConditionCode" ReferencedTableName="ReturnConditions" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomsCollateralsConditions_Customs.ReturnConditions_ConditionCode" />
 </Table>

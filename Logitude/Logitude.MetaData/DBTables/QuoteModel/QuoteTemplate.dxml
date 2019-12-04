@@ -54,14 +54,14 @@
   <Column Name="UpdatedByUserId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="Quotes" ParentColumnName="QuoteTemplateId" ReferencedTableName="QuoteTemplates" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.QuoteTemplates_QuoteTemplateId" />
-  <Relation ParentTableName="ProductTypes" ParentColumnName="QuotationDefaultTemplateId" ReferencedTableName="QuoteTemplates" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ProductTypes_dbo.QuoteTemplates_QuotationDefaultTemplateId" />
-  <Relation ParentTableName="ProductTypes" ParentColumnName="RoutingRQuoteDefaultTemplateId" ReferencedTableName="QuoteTemplates" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ProductTypes_dbo.QuoteTemplates_RoutingRQuoteDefaultTemplateId" />
-  <Relation ParentTableName="QuoteTemplates" ParentColumnName="OriginalQuoteTemplateId" ReferencedTableName="QuoteTemplates" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplates_dbo.QuoteTemplates_OriginalQuoteTemplateId" />
   <Relation ParentTableName="QuoteDocumentVersions" ParentColumnName="QuoteTemplateId" ReferencedTableName="QuoteTemplates" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteDocumentVersions_dbo.QuoteTemplates_QuoteTemplateId" />
   <Relation ParentTableName="QuoteTemplateDetailsFields" ParentColumnName="QuoteTemplateId" ReferencedTableName="QuoteTemplates" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateDetailsFields_dbo.QuoteTemplates_QuoteTemplateId" />
   <Relation ParentTableName="QuoteTemplateExcludedSections" ParentColumnName="QuoteTemplateId" ReferencedTableName="QuoteTemplates" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateExcludedSections_dbo.QuoteTemplates_QuoteTemplateId" />
   <Relation ParentTableName="QuoteTemplateSections" ParentColumnName="QuoteTemplateId" ReferencedTableName="QuoteTemplates" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateSections_dbo.QuoteTemplates_QuoteTemplateId" />
   <Relation ParentTableName="QuoteTemplateHeaderFields" ParentColumnName="QuoteTemplateId" ReferencedTableName="QuoteTemplates" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateHeaderFields_dbo.QuoteTemplates_QuoteTemplateId" />
   <Relation ParentTableName="QuoteTemplateTextCodes" ParentColumnName="QuoteTemplateId" ReferencedTableName="QuoteTemplates" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateTextCodes_dbo.QuoteTemplates_QuoteTemplateId" />
+  <Relation ParentTableName="Quotes" ParentColumnName="QuoteTemplateId" ReferencedTableName="QuoteTemplates" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.QuoteTemplates_QuoteTemplateId" />
+  <Relation ParentTableName="ProductTypes" ParentColumnName="QuotationDefaultTemplateId" ReferencedTableName="QuoteTemplates" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ProductTypes_dbo.QuoteTemplates_QuotationDefaultTemplateId" />
+  <Relation ParentTableName="ProductTypes" ParentColumnName="RoutingRQuoteDefaultTemplateId" ReferencedTableName="QuoteTemplates" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ProductTypes_dbo.QuoteTemplates_RoutingRQuoteDefaultTemplateId" />
+  <Relation ParentTableName="QuoteTemplates" ParentColumnName="OriginalQuoteTemplateId" ReferencedTableName="QuoteTemplates" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplates_dbo.QuoteTemplates_OriginalQuoteTemplateId" />
 </Table>

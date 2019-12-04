@@ -333,7 +333,7 @@
   <Column Name="WaitingForResponse" Type="bit">
     <Constraints Nullable="false" />
   </Column>
+  <Relation ParentTableName="BookingAnswers" ParentColumnName="BookingId" ReferencedTableName="Bookings" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BookingAnswers_dbo.Bookings_BookingId" />
   <Relation ParentTableName="BookingPackages" ParentColumnName="BookingId" ReferencedTableName="Bookings" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BookingPackages_dbo.Bookings_BookingId" />
   <Relation ParentTableName="BookingLastRequests" ParentColumnName="BookingId" ReferencedTableName="Bookings" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BookingLastRequests_dbo.Bookings_BookingId" />
-  <Relation ParentTableName="BookingAnswers" ParentColumnName="BookingId" ReferencedTableName="Bookings" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BookingAnswers_dbo.Bookings_BookingId" />
 </Table>

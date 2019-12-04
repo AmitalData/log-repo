@@ -27,11 +27,11 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="RoleFeatures" ParentColumnName="RoleId" ReferencedTableName="Roles" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.RoleFeatures_dbo.Roles_RoleId" />
-  <Relation ParentTableName="EventTypes" ParentColumnName="AgentRoleId" ReferencedTableName="Roles" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.EventTypes_dbo.Roles_AgentRoleId" />
-  <Relation ParentTableName="EventTypes" ParentColumnName="CustomerRoleId" ReferencedTableName="Roles" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.EventTypes_dbo.Roles_CustomerRoleId" />
-  <Relation ParentTableName="FeatureChanges" ParentColumnName="RoleId" ReferencedTableName="Roles" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FeatureChanges_dbo.Roles_RoleId" />
-  <Relation ParentTableName="ContactTenantRoleSet" ParentColumnName="RoleId" ReferencedTableName="Roles" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ContactTenantRoleSet_dbo.Roles_RoleId" />
   <Relation ParentTableName="DocumentTypes" ParentColumnName="AgentRoleId" ReferencedTableName="Roles" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DocumentTypes_dbo.Roles_AgentRoleId" />
   <Relation ParentTableName="DocumentTypes" ParentColumnName="CustomerRoleId" ReferencedTableName="Roles" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DocumentTypes_dbo.Roles_CustomerRoleId" />
+  <Relation ParentTableName="EventTypes" ParentColumnName="AgentRoleId" ReferencedTableName="Roles" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.EventTypes_dbo.Roles_AgentRoleId" />
+  <Relation ParentTableName="EventTypes" ParentColumnName="CustomerRoleId" ReferencedTableName="Roles" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.EventTypes_dbo.Roles_CustomerRoleId" />
+  <Relation ParentTableName="RoleFeatures" ParentColumnName="RoleId" ReferencedTableName="Roles" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.RoleFeatures_dbo.Roles_RoleId" />
+  <Relation ParentTableName="FeatureChanges" ParentColumnName="RoleId" ReferencedTableName="Roles" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FeatureChanges_dbo.Roles_RoleId" />
+  <Relation ParentTableName="ContactTenantRoleSet" ParentColumnName="RoleId" ReferencedTableName="Roles" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ContactTenantRoleSet_dbo.Roles_RoleId" />
 </Table>

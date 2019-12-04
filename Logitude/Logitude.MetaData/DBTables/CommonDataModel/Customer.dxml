@@ -195,16 +195,16 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="CustomerProductLocations" ParentColumnName="CustomerId" ReferencedTableName="Customers" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomerProductLocations_dbo.Customers_CustomerId" />
-  <Relation ParentTableName="CustomerProducts" ParentColumnName="CustomerId" ReferencedTableName="Customers" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomerProducts_dbo.Customers_CustomerId" />
-  <Relation ParentTableName="CustomerTenantAccessCardsBatches" ParentColumnName="CustomerId" ReferencedTableName="Customers" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomerTenantAccessCardsBatches_dbo.Customers_CustomerId" />
-  <Relation ParentTableName="VendorCommissions" ParentColumnName="CustomerId" ReferencedTableName="Customers" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.VendorCommissions_dbo.Customers_CustomerId" />
-  <Relation ParentTableName="CustomerTenantAccessCards" ParentColumnName="CustomerId" ReferencedTableName="Customers" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomerTenantAccessCards_dbo.Customers_CustomerId" />
-  <Relation ParentTableName="Notifications" ParentColumnName="CustomerId" ReferencedTableName="Customers" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.Notifications_dbo.Customers_CustomerId" />
   <Relation ParentTableName="CustomerAdditionalServices" ParentColumnName="CustomerId" ReferencedTableName="Customers" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomerAdditionalServices_dbo.Customers_CustomerId" />
   <Relation ParentTableName="CustomsCollaterals" ParentColumnName="CustomerId" ReferencedTableName="Customers" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.CustomsCollaterals_dbo.Customers_CustomerId" />
   <Relation ParentTableName="CustomerCompetitorProducts" ParentColumnName="CustomerId" ReferencedTableName="Customers" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomerCompetitorProducts_dbo.Customers_CustomerId" />
   <Relation ParentTableName="CustomerCompetitors" ParentColumnName="CustomerId" ReferencedTableName="Customers" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomerCompetitors_dbo.Customers_CustomerId" />
   <Relation ParentTableName="CustomerProductActualDatas" ParentColumnName="CustomerId" ReferencedTableName="Customers" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomerProductActualDatas_dbo.Customers_CustomerId" />
   <Relation ParentTableName="CustomerProductLocationActualDatas" ParentColumnName="CustomerId" ReferencedTableName="Customers" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomerProductLocationActualDatas_dbo.Customers_CustomerId" />
+  <Relation ParentTableName="CustomerProductLocations" ParentColumnName="CustomerId" ReferencedTableName="Customers" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomerProductLocations_dbo.Customers_CustomerId" />
+  <Relation ParentTableName="CustomerProducts" ParentColumnName="CustomerId" ReferencedTableName="Customers" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomerProducts_dbo.Customers_CustomerId" />
+  <Relation ParentTableName="CustomerTenantAccessCardsBatches" ParentColumnName="CustomerId" ReferencedTableName="Customers" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomerTenantAccessCardsBatches_dbo.Customers_CustomerId" />
+  <Relation ParentTableName="CustomerTenantAccessCards" ParentColumnName="CustomerId" ReferencedTableName="Customers" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomerTenantAccessCards_dbo.Customers_CustomerId" />
+  <Relation ParentTableName="VendorCommissions" ParentColumnName="CustomerId" ReferencedTableName="Customers" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.VendorCommissions_dbo.Customers_CustomerId" />
+  <Relation ParentTableName="Notifications" ParentColumnName="CustomerId" ReferencedTableName="Customers" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.Notifications_dbo.Customers_CustomerId" />
 </Table>

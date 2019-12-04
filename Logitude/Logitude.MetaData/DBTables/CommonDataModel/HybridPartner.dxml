@@ -36,7 +36,7 @@
   <Column Name="SmallLogoId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
+  <Relation ParentTableName="HybridPartnersPermissions" ParentColumnName="AllowedByHybridPartnerId" ReferencedTableName="HybridPartners" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.HybridPartnersPermissions_dbo.HybridPartners_AllowedByHybridPartnerId" />
   <Relation ParentTableName="CustomerTenantAccessRequests" ParentColumnName="ForwarderId" ReferencedTableName="HybridPartners" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomerTenantAccessRequests_dbo.HybridPartners_ForwarderId" />
   <Relation ParentTableName="Shipments" ParentColumnName="ForwarderPartnerId" ReferencedTableName="HybridPartners" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.HybridPartners_ForwarderPartnerId" />
-  <Relation ParentTableName="HybridPartnersPermissions" ParentColumnName="AllowedByHybridPartnerId" ReferencedTableName="HybridPartners" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.HybridPartnersPermissions_dbo.HybridPartners_AllowedByHybridPartnerId" />
 </Table>

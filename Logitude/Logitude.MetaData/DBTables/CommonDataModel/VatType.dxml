@@ -48,6 +48,9 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
+  <Relation ParentTableName="ARInvoiceLines" ParentColumnName="VatTypeId" ReferencedTableName="VatTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoiceLines_dbo.VatTypes_VatTypeId" />
+  <Relation ParentTableName="FullAccountingSettings" ParentColumnName="DefaultVATTypeId" ReferencedTableName="VatTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FullAccountingSettings_dbo.VatTypes_DefaultVATTypeId" />
+  <Relation ParentTableName="QuoteTotalVATs" ParentColumnName="VatTypeId" ReferencedTableName="VatTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTotalVATs_dbo.VatTypes_VatTypeId" />
   <Relation ParentTableName="ARInvoiceTotalVATs" ParentColumnName="VatTypeId" ReferencedTableName="VatTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoiceTotalVATs_dbo.VatTypes_VatTypeId" />
   <Relation ParentTableName="VatTypePercentages" ParentColumnName="VatTypeId" ReferencedTableName="VatTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.VatTypePercentages_dbo.VatTypes_VatTypeId" />
   <Relation ParentTableName="VATTypesGroups" ParentColumnName="GroupVATTypeId" ReferencedTableName="VatTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.VATTypesGroups_dbo.VatTypes_GroupVATTypeId" />
@@ -56,11 +59,8 @@
   <Relation ParentTableName="ChargesTypes" ParentColumnName="VatTypeId" ReferencedTableName="VatTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ChargesTypes_dbo.VatTypes_VatTypeId" />
   <Relation ParentTableName="Cards" ParentColumnName="VatTypeId" ReferencedTableName="VatTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Cards_dbo.VatTypes_VatTypeId" />
   <Relation ParentTableName="ChargeTypeAccountings" ParentColumnName="VatTypeId" ReferencedTableName="VatTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ChargeTypeAccountings_dbo.VatTypes_VatTypeId" />
-  <Relation ParentTableName="ShipmentPayables" ParentColumnName="VatTypeId" ReferencedTableName="VatTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPayables_dbo.VatTypes_VatTypeId" />
   <Relation ParentTableName="APInvoiceTotalVATs" ParentColumnName="VatTypeId" ReferencedTableName="VatTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.APInvoiceTotalVATs_dbo.VatTypes_VatTypeId" />
+  <Relation ParentTableName="ShipmentPayables" ParentColumnName="VatTypeId" ReferencedTableName="VatTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPayables_dbo.VatTypes_VatTypeId" />
   <Relation ParentTableName="ShipmentReceivables" ParentColumnName="VatTypeId" ReferencedTableName="VatTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentReceivables_dbo.VatTypes_VatTypeId" />
   <Relation ParentTableName="QuoteCharges" ParentColumnName="VatTypeId" ReferencedTableName="VatTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteCharges_dbo.VatTypes_VatTypeId" />
-  <Relation ParentTableName="FullAccountingSettings" ParentColumnName="DefaultVATTypeId" ReferencedTableName="VatTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FullAccountingSettings_dbo.VatTypes_DefaultVATTypeId" />
-  <Relation ParentTableName="QuoteTotalVATs" ParentColumnName="VatTypeId" ReferencedTableName="VatTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTotalVATs_dbo.VatTypes_VatTypeId" />
-  <Relation ParentTableName="ARInvoiceLines" ParentColumnName="VatTypeId" ReferencedTableName="VatTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoiceLines_dbo.VatTypes_VatTypeId" />
 </Table>

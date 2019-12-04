@@ -21,8 +21,9 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="CustomsDocuments" ParentColumnName="DocumentTypeCode" ReferencedTableName="CustomDocumentTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomsDocuments_Customs.CustomDocumentTypes_DocumentTypeCode" />
-  <Relation ParentTableName="CustomsDocumentsTickets" ParentColumnName="DocumentTypeCode" ReferencedTableName="CustomDocumentTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomsDocumentsTickets_Customs.CustomDocumentTypes_DocumentTypeCode" />
   <Relation ParentTableName="CustomDocumentTypeMetaData" ParentColumnName="DocumentTypeCode" ReferencedTableName="CustomDocumentTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomDocumentTypeMetaData_Customs.CustomDocumentTypes_DocumentTypeCode" />
   <Relation ParentTableName="DocumentTypeCustomsDatas" ParentColumnName="CustomsDoucumentTypeCode" ReferencedTableName="CustomDocumentTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.DocumentTypeCustomsDatas_Customs.CustomDocumentTypes_CustomsDoucumentTypeCode" />
+  <Relation ParentTableName="CustomsDocuments" ParentColumnName="DocumentTypeCode" ReferencedTableName="CustomDocumentTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomsDocuments_Customs.CustomDocumentTypes_DocumentTypeCode" />
+  <Relation ParentTableName="CustomsDocumentsTickets" ParentColumnName="DocumentTypeCode" ReferencedTableName="CustomDocumentTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomsDocumentsTickets_Customs.CustomDocumentTypes_DocumentTypeCode" />
+  <Relation ParentTableName="CustomsDocumentsDefinitions" ParentColumnName="DocumentTypeCode" ReferencedTableName="CustomDocumentTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomsDocumentsDefinitions_Customs.CustomDocumentTypes_DocumentTypeCode" />
 </Table>

@@ -22,5 +22,6 @@
     <Constraints Nullable="true" />
   </Column>
   <Relation ParentTableName="Declarations" ParentColumnName="ProcedureCurrentCode" ReferencedTableName="GovernmentProcedureTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Declarations_Customs.GovernmentProcedureTypes_ProcedureCurrentCode" />
+  <Relation ParentTableName="CustomsDocumentsDefinitions" ParentColumnName="ProcessTypeCode" ReferencedTableName="GovernmentProcedureTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomsDocumentsDefinitions_Customs.GovernmentProcedureTypes_ProcessTypeCode" />
   <Relation ParentTableName="DecCargoSplitCons" ParentColumnName="ProcedureCurrentCode" ReferencedTableName="GovernmentProcedureTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.DecCargoSplitCons_Customs.GovernmentProcedureTypes_ProcedureCurrentCode" />
 </Table>

@@ -90,10 +90,10 @@
   <Column Name="VendorId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="SupplierInvoiceModifications" ParentColumnName="DeclarationId" ReferencedTableName="SupplierInvoices" ReferencedColumnName="DeclarationId" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceModifications_Customs.SupplierInvoices_DeclarationId_InvoiceCounterKey" />
   <Relation ParentTableName="SupplierInvoiceItems" ParentColumnName="DeclarationId" ReferencedTableName="SupplierInvoices" ReferencedColumnName="DeclarationId" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItems_Customs.SupplierInvoices_DeclarationId_CounterKey" />
   <Relation ParentTableName="SupplierInvoiceFreightAmounts" ParentColumnName="DeclarationId" ReferencedTableName="SupplierInvoices" ReferencedColumnName="DeclarationId" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceFreightAmounts_Customs.SupplierInvoices_DeclarationId_InvoiceCounterKey" />
-  <Relation ParentTableName="SupplierInvoiceModifications" ParentColumnName="InvoiceCounterKey" ReferencedTableName="SupplierInvoices" ReferencedColumnName="InvoiceCounterKey" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceModifications_Customs.SupplierInvoices_DeclarationId_InvoiceCounterKey" />
+  <Relation ParentTableName="SupplierInvoiceModifications" ParentColumnName="DeclarationId" ReferencedTableName="SupplierInvoices" ReferencedColumnName="DeclarationId" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceModifications_Customs.SupplierInvoices_DeclarationId_InvoiceCounterKey" />
   <Relation ParentTableName="SupplierInvoiceItems" ParentColumnName="CounterKey" ReferencedTableName="SupplierInvoices" ReferencedColumnName="InvoiceCounterKey" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceItems_Customs.SupplierInvoices_DeclarationId_CounterKey" />
   <Relation ParentTableName="SupplierInvoiceFreightAmounts" ParentColumnName="InvoiceCounterKey" ReferencedTableName="SupplierInvoices" ReferencedColumnName="InvoiceCounterKey" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceFreightAmounts_Customs.SupplierInvoices_DeclarationId_InvoiceCounterKey" />
+  <Relation ParentTableName="SupplierInvoiceModifications" ParentColumnName="InvoiceCounterKey" ReferencedTableName="SupplierInvoices" ReferencedColumnName="InvoiceCounterKey" ForeignKeyConstraintName="FK_Customs.SupplierInvoiceModifications_Customs.SupplierInvoices_DeclarationId_InvoiceCounterKey" />
 </Table>

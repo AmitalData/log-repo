@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="CustomsPartnerFtps" Schema="Customs" DBType="Main">
+  <Column Name="CommunicationDetails" Type="varchar" Size="2000">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FileExt" Type="varchar" Size="3">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FileName" Type="varchar" Size="256">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="FtpDetailsId" Type="varchar" Size="15">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Id" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="InterfaceName" Type="varchar" Size="32">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="PartnerCode" Type="varchar" Size="32">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="TypeCode" Type="varchar" Size="3">
+    <Constraints Nullable="false" />
+  </Column>
+</Table>

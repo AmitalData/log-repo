@@ -18,7 +18,7 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="Consignments" ParentColumnName="LoadingPortCode" ReferencedTableName="InternationalSites" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Consignments_Customs.InternationalSites_LoadingPortCode" />
   <Relation ParentTableName="CourierMasters" ParentColumnName="GatewayPortCode" ReferencedTableName="InternationalSites" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CourierMasters_Customs.InternationalSites_GatewayPortCode" />
   <Relation ParentTableName="CourierMasters" ParentColumnName="OriginPortCode" ReferencedTableName="InternationalSites" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CourierMasters_Customs.InternationalSites_OriginPortCode" />
+  <Relation ParentTableName="Consignments" ParentColumnName="LoadingPortCode" ReferencedTableName="InternationalSites" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Consignments_Customs.InternationalSites_LoadingPortCode" />
 </Table>

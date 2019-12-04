@@ -15,6 +15,6 @@
   <Column Name="VisibilityDefaultValue" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="ObjectTables" ParentColumnName="MainTipCode" ReferencedTableName="Tips" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ObjectTables_dbo.Tips_MainTipCode" />
   <Relation ParentTableName="TipsVisibilities" ParentColumnName="TipCode" ReferencedTableName="Tips" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.TipsVisibilities_dbo.Tips_TipCode" />
+  <Relation ParentTableName="ObjectTables" ParentColumnName="MainTipCode" ReferencedTableName="Tips" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ObjectTables_dbo.Tips_MainTipCode" />
 </Table>

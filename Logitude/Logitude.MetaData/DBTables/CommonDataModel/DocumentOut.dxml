@@ -33,7 +33,7 @@
   <Column Name="XamlDocumentId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="FollowUps" ParentColumnName="InternalDocumentId" ReferencedTableName="DocumentOuts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FollowUps_dbo.DocumentOuts_InternalDocumentId" />
   <Relation ParentTableName="CommunicationLogs" ParentColumnName="DocumentOutId" ReferencedTableName="DocumentOuts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CommunicationLogs_dbo.DocumentOuts_DocumentOutId" />
   <Relation ParentTableName="DocumentOutCopies" ParentColumnName="DocumentOutId" ReferencedTableName="DocumentOuts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DocumentOutCopies_dbo.DocumentOuts_DocumentOutId" />
+  <Relation ParentTableName="FollowUps" ParentColumnName="InternalDocumentId" ReferencedTableName="DocumentOuts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FollowUps_dbo.DocumentOuts_InternalDocumentId" />
 </Table>

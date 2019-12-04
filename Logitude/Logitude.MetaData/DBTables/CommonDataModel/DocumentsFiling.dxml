@@ -165,12 +165,12 @@
   <Column Name="UpdatedByUserId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
+  <Relation ParentTableName="CommunicationLogs" ParentColumnName="DocumentsFilingId" ReferencedTableName="DocumentsFilings" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CommunicationLogs_dbo.DocumentsFilings_DocumentsFilingId" />
+  <Relation ParentTableName="DocumentOuts" ParentColumnName="Id" ReferencedTableName="DocumentsFilings" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DocumentOuts_dbo.DocumentsFilings_Id" />
+  <Relation ParentTableName="DocumentsFilingMetaDataValues" ParentColumnName="DocumentsFilingId" ReferencedTableName="DocumentsFilings" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DocumentsFilingMetaDataValues_dbo.DocumentsFilings_DocumentsFilingId" />
   <Relation ParentTableName="CustomsDocuments" ParentColumnName="DocumentsFilingId" ReferencedTableName="DocumentsFilings" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.CustomsDocuments_dbo.DocumentsFilings_DocumentsFilingId" />
   <Relation ParentTableName="CustomsDocumentsTickets" ParentColumnName="DocumentsFilingId" ReferencedTableName="DocumentsFilings" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.CustomsDocumentsTickets_dbo.DocumentsFilings_DocumentsFilingId" />
   <Relation ParentTableName="FilingInboxAttachmentLogs" ParentColumnName="DocumentsFilingId" ReferencedTableName="DocumentsFilings" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FilingInboxAttachmentLogs_dbo.DocumentsFilings_DocumentsFilingId" />
   <Relation ParentTableName="FollowUps" ParentColumnName="DocumentsFilingId" ReferencedTableName="DocumentsFilings" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FollowUps_dbo.DocumentsFilings_DocumentsFilingId" />
   <Relation ParentTableName="CorrespondencesAttachments" ParentColumnName="DocumentFilingId" ReferencedTableName="DocumentsFilings" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CorrespondencesAttachments_dbo.DocumentsFilings_DocumentFilingId" />
-  <Relation ParentTableName="CommunicationLogs" ParentColumnName="DocumentsFilingId" ReferencedTableName="DocumentsFilings" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CommunicationLogs_dbo.DocumentsFilings_DocumentsFilingId" />
-  <Relation ParentTableName="DocumentsFilingMetaDataValues" ParentColumnName="DocumentsFilingId" ReferencedTableName="DocumentsFilings" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DocumentsFilingMetaDataValues_dbo.DocumentsFilings_DocumentsFilingId" />
-  <Relation ParentTableName="DocumentOuts" ParentColumnName="Id" ReferencedTableName="DocumentsFilings" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DocumentOuts_dbo.DocumentsFilings_Id" />
 </Table>

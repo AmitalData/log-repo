@@ -486,12 +486,12 @@
   <Column Name="VolumeUnitCode" Type="varchar" Size="3">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="Activities" ParentColumnName="QuoteId" ReferencedTableName="Quotes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Activities_dbo.Quotes_QuoteId" />
-  <Relation ParentTableName="QuoteCharges" ParentColumnName="QuoteId" ReferencedTableName="Quotes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteCharges_dbo.Quotes_QuoteId" />
-  <Relation ParentTableName="FollowUps" ParentColumnName="QuoteId" ReferencedTableName="Quotes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FollowUps_dbo.Quotes_QuoteId" />
   <Relation ParentTableName="QuoteDocumentVersions" ParentColumnName="QuoteId" ReferencedTableName="Quotes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteDocumentVersions_dbo.Quotes_QuoteId" />
   <Relation ParentTableName="QuotePackages" ParentColumnName="QuoteId" ReferencedTableName="Quotes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuotePackages_dbo.Quotes_QuoteId" />
   <Relation ParentTableName="QuotePriceSteps" ParentColumnName="QuoteId" ReferencedTableName="Quotes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuotePriceSteps_dbo.Quotes_QuoteId" />
   <Relation ParentTableName="QuoteTemplateExcludedSections" ParentColumnName="QuoteId" ReferencedTableName="Quotes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTemplateExcludedSections_dbo.Quotes_QuoteId" />
   <Relation ParentTableName="QuoteTotalVATs" ParentColumnName="QuoteId" ReferencedTableName="Quotes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteTotalVATs_dbo.Quotes_QuoteId" />
+  <Relation ParentTableName="Activities" ParentColumnName="QuoteId" ReferencedTableName="Quotes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Activities_dbo.Quotes_QuoteId" />
+  <Relation ParentTableName="QuoteCharges" ParentColumnName="QuoteId" ReferencedTableName="Quotes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteCharges_dbo.Quotes_QuoteId" />
+  <Relation ParentTableName="FollowUps" ParentColumnName="QuoteId" ReferencedTableName="Quotes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FollowUps_dbo.Quotes_QuoteId" />
 </Table>

@@ -195,6 +195,6 @@
   <Column Name="ValueDate" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="ARPaymentCheques" ParentColumnName="PaymentId" ReferencedTableName="ARPayments" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARPaymentCheques_dbo.ARPayments_PaymentId" />
   <Relation ParentTableName="ARInvoicePayments" ParentColumnName="ARPaymentId" ReferencedTableName="ARPayments" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoicePayments_dbo.ARPayments_ARPaymentId" />
+  <Relation ParentTableName="ARPaymentCheques" ParentColumnName="PaymentId" ReferencedTableName="ARPayments" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARPaymentCheques_dbo.ARPayments_PaymentId" />
 </Table>

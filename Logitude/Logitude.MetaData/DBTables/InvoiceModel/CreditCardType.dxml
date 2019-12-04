@@ -21,6 +21,6 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="APPayments" ParentColumnName="CreditCardTypeId" ReferencedTableName="CreditCardTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.APPayments_dbo.CreditCardTypes_CreditCardTypeId" />
   <Relation ParentTableName="ARPayments" ParentColumnName="CreditCardTypeId" ReferencedTableName="CreditCardTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARPayments_dbo.CreditCardTypes_CreditCardTypeId" />
+  <Relation ParentTableName="APPayments" ParentColumnName="CreditCardTypeId" ReferencedTableName="CreditCardTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.APPayments_dbo.CreditCardTypes_CreditCardTypeId" />
 </Table>

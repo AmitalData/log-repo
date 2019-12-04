@@ -21,6 +21,6 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="CounterDefinitions" ParentColumnName="CounterId" ReferencedTableName="Counters" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CounterDefinitions_dbo.Counters_CounterId" />
   <Relation ParentTableName="CounterStats" ParentColumnName="CounterId" ReferencedTableName="Counters" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CounterStats_dbo.Counters_CounterId" />
+  <Relation ParentTableName="CounterDefinitions" ParentColumnName="CounterId" ReferencedTableName="Counters" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CounterDefinitions_dbo.Counters_CounterId" />
 </Table>

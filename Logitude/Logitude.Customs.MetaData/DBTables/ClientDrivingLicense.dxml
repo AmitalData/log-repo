@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Table Name="ClientDrivingLicenses" Schema="Customs" DBType="Main">
+  <Column Name="ClientId" Type="varchar" Size="15">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="DriverLicenseValidityDate" Type="datetime">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DrivingLicenseCountryID" Type="varchar" Size="2">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="DrivingLicenseNumber" Type="varchar" Size="20">
+    <Constraints Nullable="true" />
+  </Column>
+  <Column Name="Line" Type="int">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant" Type="int">
+    <Constraints Nullable="false" />
+  </Column>
+  <Relation ParentTableName="ClientDrivingLicenseTypes" ParentColumnName="ClientId" ReferencedTableName="ClientDrivingLicenses" ReferencedColumnName="ClientId" ForeignKeyConstraintName="FK_Customs.ClientDrivingLicenseTypes_Customs.ClientDrivingLicenses_ClientId_ClientDrivingLicenseLine" />
+  <Relation ParentTableName="ClientDrivingLicenseTypes" ParentColumnName="ClientDrivingLicenseLine" ReferencedTableName="ClientDrivingLicenses" ReferencedColumnName="Line" ForeignKeyConstraintName="FK_Customs.ClientDrivingLicenseTypes_Customs.ClientDrivingLicenses_ClientId_ClientDrivingLicenseLine" />
+</Table>

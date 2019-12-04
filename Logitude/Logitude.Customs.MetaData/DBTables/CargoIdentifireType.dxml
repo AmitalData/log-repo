@@ -15,6 +15,7 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
+  <Relation ParentTableName="CustomsDocumentsDefinitions" ParentColumnName="CargoTypeCode" ReferencedTableName="CargoIdentifireTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomsDocumentsDefinitions_Customs.CargoIdentifireTypes_CargoTypeCode" />
   <Relation ParentTableName="PhysicalChecks" ParentColumnName="CargoIdentifierTypeCode" ReferencedTableName="CargoIdentifireTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.PhysicalChecks_Customs.CargoIdentifireTypes_CargoIdentifierTypeCode" />
   <Relation ParentTableName="Consignments" ParentColumnName="CargoTypeCode" ReferencedTableName="CargoIdentifireTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Consignments_Customs.CargoIdentifireTypes_CargoTypeCode" />
   <Relation ParentTableName="DeclarationCargoSplits" ParentColumnName="CargoTypeCode" ReferencedTableName="CargoIdentifireTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.DeclarationCargoSplits_Customs.CargoIdentifireTypes_CargoTypeCode" />

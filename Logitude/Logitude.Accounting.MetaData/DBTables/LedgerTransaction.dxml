@@ -93,8 +93,8 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
+  <Relation ParentTableName="ReconciliationLines" ParentColumnName="TransactionId" ReferencedTableName="LedgerTransactions" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ReconciliationLines_dbo.LedgerTransactions_TransactionId" />
   <Relation ParentTableName="ExternalReconciliationLines" ParentColumnName="LedgerTransactionId" ReferencedTableName="LedgerTransactions" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ExternalReconciliationLines_dbo.LedgerTransactions_LedgerTransactionId" />
   <Relation ParentTableName="JournalExternalReconciles" ParentColumnName="LedgerTransactionId" ReferencedTableName="LedgerTransactions" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.JournalExternalReconciles_dbo.LedgerTransactions_LedgerTransactionId" />
   <Relation ParentTableName="JournalReconciles" ParentColumnName="LedgerTransactionId" ReferencedTableName="LedgerTransactions" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.JournalReconciles_dbo.LedgerTransactions_LedgerTransactionId" />
-  <Relation ParentTableName="ReconciliationLines" ParentColumnName="TransactionId" ReferencedTableName="LedgerTransactions" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ReconciliationLines_dbo.LedgerTransactions_TransactionId" />
 </Table>

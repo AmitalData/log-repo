@@ -30,11 +30,13 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="ShipmentAWBPrintOnlies" ParentColumnName="MeasurementId" ReferencedTableName="Measurements" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentAWBPrintOnlies_dbo.Measurements_MeasurementId" />
+  <Relation ParentTableName="ARInvoiceLines" ParentColumnName="MeasurementId" ReferencedTableName="Measurements" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoiceLines_dbo.Measurements_MeasurementId" />
   <Relation ParentTableName="ChargesTypes" ParentColumnName="ContainerMeasurementId" ReferencedTableName="Measurements" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ChargesTypes_dbo.Measurements_ContainerMeasurementId" />
+  <Relation ParentTableName="ShipmentAWBPrintOnlies" ParentColumnName="MeasurementId" ReferencedTableName="Measurements" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentAWBPrintOnlies_dbo.Measurements_MeasurementId" />
   <Relation ParentTableName="ChargesTypes" ParentColumnName="MeasurementId" ReferencedTableName="Measurements" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ChargesTypes_dbo.Measurements_MeasurementId" />
   <Relation ParentTableName="Tariffs" ParentColumnName="Surcharge10UOM" ReferencedTableName="Measurements" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tariffs_dbo.Measurements_Surcharge10UOM" />
   <Relation ParentTableName="Tariffs" ParentColumnName="Surcharge1UOM" ReferencedTableName="Measurements" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tariffs_dbo.Measurements_Surcharge1UOM" />
+  <Relation ParentTableName="PackageTypes" ParentColumnName="MeasurementId" ReferencedTableName="Measurements" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.PackageTypes_dbo.Measurements_MeasurementId" />
   <Relation ParentTableName="ShipmentPayables" ParentColumnName="MeasurementId" ReferencedTableName="Measurements" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPayables_dbo.Measurements_MeasurementId" />
   <Relation ParentTableName="Tariffs" ParentColumnName="Surcharge2UOM" ReferencedTableName="Measurements" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tariffs_dbo.Measurements_Surcharge2UOM" />
   <Relation ParentTableName="Tariffs" ParentColumnName="Surcharge3UOM" ReferencedTableName="Measurements" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tariffs_dbo.Measurements_Surcharge3UOM" />
@@ -44,10 +46,8 @@
   <Relation ParentTableName="Tariffs" ParentColumnName="Surcharge7UOM" ReferencedTableName="Measurements" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tariffs_dbo.Measurements_Surcharge7UOM" />
   <Relation ParentTableName="Tariffs" ParentColumnName="Surcharge8UOM" ReferencedTableName="Measurements" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tariffs_dbo.Measurements_Surcharge8UOM" />
   <Relation ParentTableName="Tariffs" ParentColumnName="Surcharge9UOM" ReferencedTableName="Measurements" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tariffs_dbo.Measurements_Surcharge9UOM" />
-  <Relation ParentTableName="PackageTypes" ParentColumnName="MeasurementId" ReferencedTableName="Measurements" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.PackageTypes_dbo.Measurements_MeasurementId" />
   <Relation ParentTableName="ShipmentReceivables" ParentColumnName="MeasurementId" ReferencedTableName="Measurements" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentReceivables_dbo.Measurements_MeasurementId" />
   <Relation ParentTableName="QuoteCharges" ParentColumnName="CostMeasurementId" ReferencedTableName="Measurements" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteCharges_dbo.Measurements_CostMeasurementId" />
   <Relation ParentTableName="QuoteCharges" ParentColumnName="SaleMeasurementId" ReferencedTableName="Measurements" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuoteCharges_dbo.Measurements_SaleMeasurementId" />
   <Relation ParentTableName="TarrifCharges" ParentColumnName="MeasurementId" ReferencedTableName="Measurements" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TarrifCharges_dbo.Measurements_MeasurementId" />
-  <Relation ParentTableName="ARInvoiceLines" ParentColumnName="MeasurementId" ReferencedTableName="Measurements" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoiceLines_dbo.Measurements_MeasurementId" />
 </Table>

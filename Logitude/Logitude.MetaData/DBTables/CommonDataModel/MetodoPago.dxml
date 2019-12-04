@@ -9,8 +9,8 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
+  <Relation ParentTableName="ARPayments" ParentColumnName="MetodoPagoCode" ReferencedTableName="MetodoPagos" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ARPayments_dbo.MetodoPagos_MetodoPagoCode" />
   <Relation ParentTableName="SATInterfaceSettings" ParentColumnName="MetodoPagoCode" ReferencedTableName="MetodoPagos" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.SATInterfaceSettings_dbo.MetodoPagos_MetodoPagoCode" />
   <Relation ParentTableName="Cards" ParentColumnName="MetodoPagoCode" ReferencedTableName="MetodoPagos" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Cards_dbo.MetodoPagos_MetodoPagoCode" />
   <Relation ParentTableName="ARInvoices" ParentColumnName="MetodoPagoCode" ReferencedTableName="MetodoPagos" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ARInvoices_dbo.MetodoPagos_MetodoPagoCode" />
-  <Relation ParentTableName="ARPayments" ParentColumnName="MetodoPagoCode" ReferencedTableName="MetodoPagos" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ARPayments_dbo.MetodoPagos_MetodoPagoCode" />
 </Table>

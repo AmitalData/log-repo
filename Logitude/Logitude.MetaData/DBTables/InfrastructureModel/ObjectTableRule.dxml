@@ -51,6 +51,6 @@
   <Column Name="TriggerTypeCode" Type="varchar" Size="4">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="RuleConditionFields" ParentColumnName="ObjectTableRuleId" ReferencedTableName="ObjectTableRules" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.RuleConditionFields_dbo.ObjectTableRules_ObjectTableRuleId" />
   <Relation ParentTableName="ObjectTableRuleFields" ParentColumnName="ObjectTableRuleId" ReferencedTableName="ObjectTableRules" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ObjectTableRuleFields_dbo.ObjectTableRules_ObjectTableRuleId" />
+  <Relation ParentTableName="RuleConditionFields" ParentColumnName="ObjectTableRuleId" ReferencedTableName="ObjectTableRules" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.RuleConditionFields_dbo.ObjectTableRules_ObjectTableRuleId" />
 </Table>

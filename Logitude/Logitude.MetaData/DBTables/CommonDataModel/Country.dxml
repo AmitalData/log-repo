@@ -45,29 +45,29 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="ShipmentPackages" ParentColumnName="CountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPackages_dbo.Countries_CountryId" />
-  <Relation ParentTableName="CustomerProductLocations" ParentColumnName="CountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomerProductLocations_dbo.Countries_CountryId" />
-  <Relation ParentTableName="ShipmentPickUpDeliveries" ParentColumnName="FromAddressCountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPickUpDeliveries_dbo.Countries_FromAddressCountryId" />
-  <Relation ParentTableName="AWBOCIs" ParentColumnName="CountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.AWBOCIs_dbo.Countries_CountryId" />
-  <Relation ParentTableName="ShipmentPickUpDeliveries" ParentColumnName="ToAddressCountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPickUpDeliveries_dbo.Countries_ToAddressCountryId" />
-  <Relation ParentTableName="Vessels" ParentColumnName="CountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Vessels_dbo.Countries_CountryId" />
-  <Relation ParentTableName="Quotes" ParentColumnName="FromAddressCountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.Countries_FromAddressCountryId" />
-  <Relation ParentTableName="WarehouseEntryPackages" ParentColumnName="CountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseEntryPackages_dbo.Countries_CountryId" />
-  <Relation ParentTableName="Tenants" ParentColumnName="VatFormatCountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tenants_dbo.Countries_VatFormatCountryId" />
-  <Relation ParentTableName="Tenants" ParentColumnName="VatMandatoryCountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tenants_dbo.Countries_VatMandatoryCountryId" />
-  <Relation ParentTableName="WarehouseReleasePackages" ParentColumnName="CountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseReleasePackages_dbo.Countries_CountryId" />
-  <Relation ParentTableName="Tenants" ParentColumnName="VatUniqueCountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tenants_dbo.Countries_VatUniqueCountryId" />
-  <Relation ParentTableName="Cards" ParentColumnName="CountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Cards_dbo.Countries_CountryId" />
-  <Relation ParentTableName="WarehouseReleases" ParentColumnName="ToAddressCountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseReleases_dbo.Countries_ToAddressCountryId" />
-  <Relation ParentTableName="Shipments" ParentColumnName="CountryForStatisticsId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Countries_CountryForStatisticsId" />
-  <Relation ParentTableName="Quotes" ParentColumnName="ToAddressCountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.Countries_ToAddressCountryId" />
-  <Relation ParentTableName="ShipmentPickUpDeliveryPackages" ParentColumnName="CountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPickUpDeliveryPackages_dbo.Countries_CountryId" />
-  <Relation ParentTableName="Ports" ParentColumnName="CountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Ports_dbo.Countries_CountryId" />
-  <Relation ParentTableName="Addresses" ParentColumnName="CountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Addresses_dbo.Countries_CountryId" />
-  <Relation ParentTableName="States" ParentColumnName="CountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.States_dbo.Countries_CountryId" />
   <Relation ParentTableName="TarrifFromToes" ParentColumnName="CountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TarrifFromToes_dbo.Countries_CountryId" />
   <Relation ParentTableName="CountryCities" ParentColumnName="CountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CountryCities_dbo.Countries_CountryId" />
+  <Relation ParentTableName="CustomerProductLocationActualDatas" ParentColumnName="CountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomerProductLocationActualDatas_dbo.Countries_CountryId" />
+  <Relation ParentTableName="CustomerProductLocations" ParentColumnName="CountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomerProductLocations_dbo.Countries_CountryId" />
   <Relation ParentTableName="OpportunityProductLocations" ParentColumnName="CountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OpportunityProductLocations_dbo.Countries_CountryId" />
   <Relation ParentTableName="InsideShipmentPackages" ParentColumnName="CountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.InsideShipmentPackages_dbo.Countries_CountryId" />
-  <Relation ParentTableName="CustomerProductLocationActualDatas" ParentColumnName="CountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.CustomerProductLocationActualDatas_dbo.Countries_CountryId" />
+  <Relation ParentTableName="ShipmentPackages" ParentColumnName="CountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPackages_dbo.Countries_CountryId" />
+  <Relation ParentTableName="AWBOCIs" ParentColumnName="CountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.AWBOCIs_dbo.Countries_CountryId" />
+  <Relation ParentTableName="ShipmentPickUpDeliveries" ParentColumnName="FromAddressCountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPickUpDeliveries_dbo.Countries_FromAddressCountryId" />
+  <Relation ParentTableName="Vessels" ParentColumnName="CountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Vessels_dbo.Countries_CountryId" />
+  <Relation ParentTableName="Quotes" ParentColumnName="FromAddressCountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.Countries_FromAddressCountryId" />
+  <Relation ParentTableName="ShipmentPickUpDeliveries" ParentColumnName="ToAddressCountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPickUpDeliveries_dbo.Countries_ToAddressCountryId" />
+  <Relation ParentTableName="Tenants" ParentColumnName="VatFormatCountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tenants_dbo.Countries_VatFormatCountryId" />
+  <Relation ParentTableName="Tenants" ParentColumnName="VatMandatoryCountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tenants_dbo.Countries_VatMandatoryCountryId" />
+  <Relation ParentTableName="Tenants" ParentColumnName="VatUniqueCountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tenants_dbo.Countries_VatUniqueCountryId" />
+  <Relation ParentTableName="Cards" ParentColumnName="CountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Cards_dbo.Countries_CountryId" />
+  <Relation ParentTableName="WarehouseEntryPackages" ParentColumnName="CountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseEntryPackages_dbo.Countries_CountryId" />
+  <Relation ParentTableName="WarehouseReleasePackages" ParentColumnName="CountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseReleasePackages_dbo.Countries_CountryId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="CountryForStatisticsId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Countries_CountryForStatisticsId" />
+  <Relation ParentTableName="Quotes" ParentColumnName="ToAddressCountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.Countries_ToAddressCountryId" />
+  <Relation ParentTableName="Ports" ParentColumnName="CountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Ports_dbo.Countries_CountryId" />
+  <Relation ParentTableName="Addresses" ParentColumnName="CountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Addresses_dbo.Countries_CountryId" />
+  <Relation ParentTableName="WarehouseReleases" ParentColumnName="ToAddressCountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseReleases_dbo.Countries_ToAddressCountryId" />
+  <Relation ParentTableName="States" ParentColumnName="CountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.States_dbo.Countries_CountryId" />
+  <Relation ParentTableName="ShipmentPickUpDeliveryPackages" ParentColumnName="CountryId" ReferencedTableName="Countries" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPickUpDeliveryPackages_dbo.Countries_CountryId" />
 </Table>

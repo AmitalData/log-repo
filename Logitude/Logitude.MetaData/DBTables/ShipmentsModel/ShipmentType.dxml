@@ -15,6 +15,6 @@
   <Relation ParentTableName="Shipments" ParentColumnName="ShipmentTypeId" ReferencedTableName="ShipmentTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.ShipmentTypes_ShipmentTypeId" />
   <Relation ParentTableName="AgentSharedManifests" ParentColumnName="ShipmentTypeId" ReferencedTableName="ShipmentTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.AgentSharedManifests_dbo.ShipmentTypes_ShipmentTypeId" />
   <Relation ParentTableName="WarehouseEntries" ParentColumnName="ShipmentTypeId" ReferencedTableName="ShipmentTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseEntries_dbo.ShipmentTypes_ShipmentTypeId" />
-  <Relation ParentTableName="WarehouseReleases" ParentColumnName="ShipmentTypeId" ReferencedTableName="ShipmentTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseReleases_dbo.ShipmentTypes_ShipmentTypeId" />
   <Relation ParentTableName="Quotes" ParentColumnName="ShipmentTypeId" ReferencedTableName="ShipmentTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.ShipmentTypes_ShipmentTypeId" />
+  <Relation ParentTableName="WarehouseReleases" ParentColumnName="ShipmentTypeId" ReferencedTableName="ShipmentTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseReleases_dbo.ShipmentTypes_ShipmentTypeId" />
 </Table>

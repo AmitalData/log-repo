@@ -9,9 +9,9 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
+  <Relation ParentTableName="Opportunities" ParentColumnName="LastCompletedActivityTypeCode" ReferencedTableName="ActivityTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Opportunities_dbo.ActivityTypes_LastCompletedActivityTypeCode" />
   <Relation ParentTableName="Opportunities" ParentColumnName="NextActivityTypeCode" ReferencedTableName="ActivityTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Opportunities_dbo.ActivityTypes_NextActivityTypeCode" />
   <Relation ParentTableName="Activities" ParentColumnName="ActivityTypeCode" ReferencedTableName="ActivityTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Activities_dbo.ActivityTypes_ActivityTypeCode" />
   <Relation ParentTableName="Tickets" ParentColumnName="LastCompletedActivityTypeCode" ReferencedTableName="ActivityTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Tickets_dbo.ActivityTypes_LastCompletedActivityTypeCode" />
   <Relation ParentTableName="Tickets" ParentColumnName="NextActivityTypeCode" ReferencedTableName="ActivityTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Tickets_dbo.ActivityTypes_NextActivityTypeCode" />
-  <Relation ParentTableName="Opportunities" ParentColumnName="LastCompletedActivityTypeCode" ReferencedTableName="ActivityTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.Opportunities_dbo.ActivityTypes_LastCompletedActivityTypeCode" />
 </Table>

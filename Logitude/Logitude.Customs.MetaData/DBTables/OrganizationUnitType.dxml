@@ -15,6 +15,6 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="Tapags" ParentColumnName="ProfessionUnitTypeCode" ReferencedTableName="OrganizationUnitTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Tapags_Customs.OrganizationUnitTypes_ProfessionUnitTypeCode" />
   <Relation ParentTableName="CustomsCollaterals" ParentColumnName="OrganizationUnitTypeCode" ReferencedTableName="OrganizationUnitTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomsCollaterals_Customs.OrganizationUnitTypes_OrganizationUnitTypeCode" />
+  <Relation ParentTableName="Tapags" ParentColumnName="ProfessionUnitTypeCode" ReferencedTableName="OrganizationUnitTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Tapags_Customs.OrganizationUnitTypes_ProfessionUnitTypeCode" />
 </Table>

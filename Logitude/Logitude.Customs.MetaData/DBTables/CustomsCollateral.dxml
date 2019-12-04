@@ -66,7 +66,7 @@
   <Column Name="WorkerName" Type="nvarchar" Size="35">
     <Constraints Nullable="true" />
   </Column>
+  <Relation ParentTableName="CustomsCollateralsAnswers" ParentColumnName="CustomsCollateralId" ReferencedTableName="CustomsCollaterals" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.CustomsCollateralsAnswers_Customs.CustomsCollaterals_CustomsCollateralId" />
   <Relation ParentTableName="CustomsCollateralsConditions" ParentColumnName="CustomsCollateralId" ReferencedTableName="CustomsCollaterals" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.CustomsCollateralsConditions_Customs.CustomsCollaterals_CustomsCollateralId" />
   <Relation ParentTableName="DeclarationConstraints" ParentColumnName="CustomsCollateralId" ReferencedTableName="CustomsCollaterals" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.DeclarationConstraints_Customs.CustomsCollaterals_CustomsCollateralId" />
-  <Relation ParentTableName="CustomsCollateralsAnswers" ParentColumnName="CustomsCollateralId" ReferencedTableName="CustomsCollaterals" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.CustomsCollateralsAnswers_Customs.CustomsCollaterals_CustomsCollateralId" />
 </Table>

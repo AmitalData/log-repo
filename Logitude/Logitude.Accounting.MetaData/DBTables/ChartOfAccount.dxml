@@ -27,8 +27,8 @@
   <Column Name="TypeCode" Type="varchar" Size="1">
     <Constraints Nullable="false" />
   </Column>
+  <Relation ParentTableName="Revaluations" ParentColumnName="ChartOfAccountsId" ReferencedTableName="ChartOfAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Revaluations_dbo.ChartOfAccounts_ChartOfAccountsId" />
   <Relation ParentTableName="GLAccounts" ParentColumnName="ChartOfAccountsId" ReferencedTableName="ChartOfAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.GLAccounts_dbo.ChartOfAccounts_ChartOfAccountsId" />
   <Relation ParentTableName="GLAccounts" ParentColumnName="PreviousChartOfAccountsId" ReferencedTableName="ChartOfAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.GLAccounts_dbo.ChartOfAccounts_PreviousChartOfAccountsId" />
   <Relation ParentTableName="ChartOfAccounts" ParentColumnName="ParentId" ReferencedTableName="ChartOfAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ChartOfAccounts_dbo.ChartOfAccounts_ParentId" />
-  <Relation ParentTableName="Revaluations" ParentColumnName="ChartOfAccountsId" ReferencedTableName="ChartOfAccounts" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Revaluations_dbo.ChartOfAccounts_ChartOfAccountsId" />
 </Table>

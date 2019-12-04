@@ -30,7 +30,7 @@
   <Column Name="TransitTimeNotes" Type="nvarchar" Size="250">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="TarrifCharges" ParentColumnName="TarrifHeaderId" ReferencedTableName="TarrifHeaders" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TarrifCharges_dbo.TarrifHeaders_TarrifHeaderId" />
   <Relation ParentTableName="TarrifFromToes" ParentColumnName="TarrifHeaderId" ReferencedTableName="TarrifHeaders" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TarrifFromToes_dbo.TarrifHeaders_TarrifHeaderId" />
   <Relation ParentTableName="TarrifSteps" ParentColumnName="TarrifHeaderId" ReferencedTableName="TarrifHeaders" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TarrifSteps_dbo.TarrifHeaders_TarrifHeaderId" />
+  <Relation ParentTableName="TarrifCharges" ParentColumnName="TarrifHeaderId" ReferencedTableName="TarrifHeaders" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TarrifCharges_dbo.TarrifHeaders_TarrifHeaderId" />
 </Table>

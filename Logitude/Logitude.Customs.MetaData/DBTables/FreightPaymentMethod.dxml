@@ -15,6 +15,6 @@
   <Column Name="SearchFields" Type="nvarchar" Size="-1">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="Declarations" ParentColumnName="WeightValue" ReferencedTableName="FreightPaymentMethods" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Declarations_Customs.FreightPaymentMethods_WeightValue" />
   <Relation ParentTableName="CourierMasters" ParentColumnName="WeightValueCode" ReferencedTableName="FreightPaymentMethods" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CourierMasters_Customs.FreightPaymentMethods_WeightValueCode" />
+  <Relation ParentTableName="Declarations" ParentColumnName="WeightValue" ReferencedTableName="FreightPaymentMethods" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Declarations_Customs.FreightPaymentMethods_WeightValue" />
 </Table>

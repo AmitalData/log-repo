@@ -15,6 +15,6 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="PaymentOrderProtestReasons" ParentColumnName="ProtestTypeCode" ReferencedTableName="PaymentProtestTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.PaymentOrderProtestReasons_Customs.PaymentProtestTypes_ProtestTypeCode" />
   <Relation ParentTableName="DeclarationPaymentProtests" ParentColumnName="ProtestTypeCode" ReferencedTableName="PaymentProtestTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.DeclarationPaymentProtests_Customs.PaymentProtestTypes_ProtestTypeCode" />
+  <Relation ParentTableName="PaymentOrderProtestReasons" ParentColumnName="ProtestTypeCode" ReferencedTableName="PaymentProtestTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.PaymentOrderProtestReasons_Customs.PaymentProtestTypes_ProtestTypeCode" />
 </Table>

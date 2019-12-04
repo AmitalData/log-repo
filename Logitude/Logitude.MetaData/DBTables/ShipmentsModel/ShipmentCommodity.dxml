@@ -42,6 +42,6 @@
   <Column Name="VolumetricWeight" Type="float">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="BookingPackages" ParentColumnName="CommodityId" ReferencedTableName="ShipmentCommodities" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BookingPackages_dbo.ShipmentCommodities_CommodityId" />
   <Relation ParentTableName="ShipmentPackages" ParentColumnName="CommodityId" ReferencedTableName="ShipmentCommodities" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPackages_dbo.ShipmentCommodities_CommodityId" />
+  <Relation ParentTableName="BookingPackages" ParentColumnName="CommodityId" ReferencedTableName="ShipmentCommodities" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.BookingPackages_dbo.ShipmentCommodities_CommodityId" />
 </Table>

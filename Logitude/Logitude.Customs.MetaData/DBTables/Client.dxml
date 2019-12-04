@@ -87,14 +87,15 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
+  <Relation ParentTableName="ClientAddresses" ParentColumnName="ClientId" ReferencedTableName="Clients" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.ClientAddresses_Customs.Clients_ClientId" />
+  <Relation ParentTableName="ClientDrivingLicenses" ParentColumnName="ClientId" ReferencedTableName="Clients" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.ClientDrivingLicenses_Customs.Clients_ClientId" />
+  <Relation ParentTableName="ImporterDespositions" ParentColumnName="ImporterlId" ReferencedTableName="Clients" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.ImporterDespositions_Customs.Clients_ImporterlId" />
   <Relation ParentTableName="Declarations" ParentColumnName="EntitleImporterId" ReferencedTableName="Clients" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.Declarations_Customs.Clients_EntitleImporterId" />
   <Relation ParentTableName="Declarations" ParentColumnName="ImporterId" ReferencedTableName="Clients" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.Declarations_Customs.Clients_ImporterId" />
   <Relation ParentTableName="Declarations" ParentColumnName="TransferImporterId" ReferencedTableName="Clients" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.Declarations_Customs.Clients_TransferImporterId" />
-  <Relation ParentTableName="Vehicles" ParentColumnName="ImporterIdentityId" ReferencedTableName="Clients" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.Vehicles_Customs.Clients_ImporterIdentityId" />
   <Relation ParentTableName="PaymentOrders" ParentColumnName="ImporterId" ReferencedTableName="Clients" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.PaymentOrders_Customs.Clients_ImporterId" />
+  <Relation ParentTableName="Vehicles" ParentColumnName="ImporterIdentityId" ReferencedTableName="Clients" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.Vehicles_Customs.Clients_ImporterIdentityId" />
   <Relation ParentTableName="Tapags" ParentColumnName="ImporterId" ReferencedTableName="Clients" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.Tapags_Customs.Clients_ImporterId" />
   <Relation ParentTableName="CustomsPartnersItems" ParentColumnName="CustomerId" ReferencedTableName="Clients" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.CustomsPartnersItems_Customs.Clients_CustomerId" />
   <Relation ParentTableName="Claims" ParentColumnName="ClientId" ReferencedTableName="Clients" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.Claims_Customs.Clients_ClientId" />
-  <Relation ParentTableName="ClientAddresses" ParentColumnName="ClientId" ReferencedTableName="Clients" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.ClientAddresses_Customs.Clients_ClientId" />
-  <Relation ParentTableName="ImporterDespositions" ParentColumnName="ImporterlId" ReferencedTableName="Clients" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_Customs.ImporterDespositions_Customs.Clients_ImporterlId" />
 </Table>

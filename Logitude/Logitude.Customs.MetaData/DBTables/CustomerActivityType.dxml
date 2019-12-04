@@ -15,10 +15,10 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="PaymentOrderMethods" ParentColumnName="CustomerActivityTypeCode" ReferencedTableName="CustomerActivityTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.PaymentOrderMethods_Customs.CustomerActivityTypes_CustomerActivityTypeCode" />
+  <Relation ParentTableName="CustomBanks" ParentColumnName="PayerTypeCode" ReferencedTableName="CustomerActivityTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomBanks_Customs.CustomerActivityTypes_PayerTypeCode" />
   <Relation ParentTableName="PaymentOrders" ParentColumnName="CustomerActivityTypeCode" ReferencedTableName="CustomerActivityTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.PaymentOrders_Customs.CustomerActivityTypes_CustomerActivityTypeCode" />
+  <Relation ParentTableName="PaymentOrderMethods" ParentColumnName="CustomerActivityTypeCode" ReferencedTableName="CustomerActivityTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.PaymentOrderMethods_Customs.CustomerActivityTypes_CustomerActivityTypeCode" />
   <Relation ParentTableName="Claims" ParentColumnName="BeneficiaryActivityTypeCode" ReferencedTableName="CustomerActivityTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Claims_Customs.CustomerActivityTypes_BeneficiaryActivityTypeCode" />
   <Relation ParentTableName="Claims" ParentColumnName="ClaimSubmiterTypeCode" ReferencedTableName="CustomerActivityTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.Claims_Customs.CustomerActivityTypes_ClaimSubmiterTypeCode" />
   <Relation ParentTableName="DeclarationPaymentMethods" ParentColumnName="PayerActivityTypeCode" ReferencedTableName="CustomerActivityTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.DeclarationPaymentMethods_Customs.CustomerActivityTypes_PayerActivityTypeCode" />
-  <Relation ParentTableName="CustomBanks" ParentColumnName="PayerTypeCode" ReferencedTableName="CustomerActivityTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_Customs.CustomBanks_Customs.CustomerActivityTypes_PayerTypeCode" />
 </Table>

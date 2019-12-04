@@ -57,29 +57,32 @@
   <Column Name="ZipCode" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
+  <Relation ParentTableName="Shipments" ParentColumnName="Notify1AddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Addresses_Notify1AddressId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="Notify2AddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Addresses_Notify2AddressId" />
+  <Relation ParentTableName="ARPayments" ParentColumnName="BillToAddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARPayments_dbo.Addresses_BillToAddressId" />
+  <Relation ParentTableName="Shipments" ParentColumnName="ReleasingAgentAddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Addresses_ReleasingAgentAddressId" />
   <Relation ParentTableName="Bookings" ParentColumnName="ConsigneeAddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Bookings_dbo.Addresses_ConsigneeAddressId" />
   <Relation ParentTableName="Shipments" ParentColumnName="ShipperAddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Addresses_ShipperAddressId" />
   <Relation ParentTableName="Bookings" ParentColumnName="IssuingCarrierAddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Bookings_dbo.Addresses_IssuingCarrierAddressId" />
   <Relation ParentTableName="Shipments" ParentColumnName="ShipperNotExporterAddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Addresses_ShipperNotExporterAddressId" />
   <Relation ParentTableName="Tenants" ParentColumnName="AddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tenants_dbo.Addresses_AddressId" />
-  <Relation ParentTableName="ShipmentPickUpDeliveries" ParentColumnName="FromAddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPickUpDeliveries_dbo.Addresses_FromAddressId" />
   <Relation ParentTableName="Quotes" ParentColumnName="AgentAddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.Addresses_AgentAddressId" />
   <Relation ParentTableName="Shipments" ParentColumnName="WarehouseLegAddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Addresses_WarehouseLegAddressId" />
   <Relation ParentTableName="Bookings" ParentColumnName="ShipperAddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Bookings_dbo.Addresses_ShipperAddressId" />
-  <Relation ParentTableName="ShipmentPickUpDeliveries" ParentColumnName="ToAddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPickUpDeliveries_dbo.Addresses_ToAddressId" />
   <Relation ParentTableName="Quotes" ParentColumnName="ToAddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.Addresses_ToAddressId" />
   <Relation ParentTableName="Tenants" ParentColumnName="LocalAddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tenants_dbo.Addresses_LocalAddressId" />
   <Relation ParentTableName="Shipments" ParentColumnName="AgentAddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Addresses_AgentAddressId" />
   <Relation ParentTableName="Quotes" ParentColumnName="FreelancerAddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.Addresses_FreelancerAddressId" />
+  <Relation ParentTableName="ShipmentPickUpDeliveries" ParentColumnName="FromAddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPickUpDeliveries_dbo.Addresses_FromAddressId" />
   <Relation ParentTableName="Quotes" ParentColumnName="FromPartnerAddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.Addresses_FromPartnerAddressId" />
   <Relation ParentTableName="ShipmentMasterDatas" ParentColumnName="MainCarriageFromAddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentMasterDatas_dbo.Addresses_MainCarriageFromAddressId" />
+  <Relation ParentTableName="ShipmentPickUpDeliveries" ParentColumnName="ToAddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentPickUpDeliveries_dbo.Addresses_ToAddressId" />
   <Relation ParentTableName="Quotes" ParentColumnName="NotifyAddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.Addresses_NotifyAddressId" />
-  <Relation ParentTableName="Competitors" ParentColumnName="AddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Competitors_dbo.Addresses_AddressId" />
   <Relation ParentTableName="ShipmentMasterDatas" ParentColumnName="MainCarriageToAddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ShipmentMasterDatas_dbo.Addresses_MainCarriageToAddressId" />
   <Relation ParentTableName="Quotes" ParentColumnName="FromAddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.Addresses_FromAddressId" />
   <Relation ParentTableName="Shipments" ParentColumnName="ColoaderAddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Addresses_ColoaderAddressId" />
   <Relation ParentTableName="Shipments" ParentColumnName="ConsigneeAddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Addresses_ConsigneeAddressId" />
-  <Relation ParentTableName="WarehouseReleases" ParentColumnName="ToAddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseReleases_dbo.Addresses_ToAddressId" />
+  <Relation ParentTableName="Competitors" ParentColumnName="AddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Competitors_dbo.Addresses_AddressId" />
   <Relation ParentTableName="Shipments" ParentColumnName="ConsigneeNotImporterAddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Addresses_ConsigneeNotImporterAddressId" />
   <Relation ParentTableName="Shipments" ParentColumnName="ConsolidatorAddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Addresses_ConsolidatorAddressId" />
   <Relation ParentTableName="Quotes" ParentColumnName="ToPartnerAddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Quotes_dbo.Addresses_ToPartnerAddressId" />
@@ -88,14 +91,11 @@
   <Relation ParentTableName="Branches" ParentColumnName="AddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Branches_dbo.Addresses_AddressId" />
   <Relation ParentTableName="Shipments" ParentColumnName="CustomClearancePointAddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Addresses_CustomClearancePointAddressId" />
   <Relation ParentTableName="APPayments" ParentColumnName="VendorAddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.APPayments_dbo.Addresses_VendorAddressId" />
+  <Relation ParentTableName="WarehouseReleases" ParentColumnName="ToAddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.WarehouseReleases_dbo.Addresses_ToAddressId" />
   <Relation ParentTableName="Shipments" ParentColumnName="CustomerAddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Addresses_CustomerAddressId" />
   <Relation ParentTableName="ARInvoices" ParentColumnName="BillToAddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARInvoices_dbo.Addresses_BillToAddressId" />
   <Relation ParentTableName="Shipments" ParentColumnName="FreelancerAddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Addresses_FreelancerAddressId" />
   <Relation ParentTableName="Shipments" ParentColumnName="FreightForwarderAddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Addresses_FreightForwarderAddressId" />
   <Relation ParentTableName="Shipments" ParentColumnName="FreightPayerAddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Addresses_FreightPayerAddressId" />
   <Relation ParentTableName="Shipments" ParentColumnName="IssuingCarrierAddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Addresses_IssuingCarrierAddressId" />
-  <Relation ParentTableName="Shipments" ParentColumnName="Notify1AddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Addresses_Notify1AddressId" />
-  <Relation ParentTableName="Shipments" ParentColumnName="Notify2AddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Addresses_Notify2AddressId" />
-  <Relation ParentTableName="ARPayments" ParentColumnName="BillToAddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.ARPayments_dbo.Addresses_BillToAddressId" />
-  <Relation ParentTableName="Shipments" ParentColumnName="ReleasingAgentAddressId" ReferencedTableName="Addresses" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Shipments_dbo.Addresses_ReleasingAgentAddressId" />
 </Table>

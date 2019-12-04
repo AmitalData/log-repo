@@ -135,11 +135,11 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="FollowUps" ParentColumnName="DocumentTypeId" ReferencedTableName="DocumentTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FollowUps_dbo.DocumentTypes_DocumentTypeId" />
-  <Relation ParentTableName="FormCustomFields1" ParentColumnName="DocumentTypeId" ReferencedTableName="DocumentTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FormCustomFields1_dbo.DocumentTypes_DocumentTypeId" />
-  <Relation ParentTableName="DocumentTypeCopies" ParentColumnName="DocumentTypeId" ReferencedTableName="DocumentTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DocumentTypeCopies_dbo.DocumentTypes_DocumentTypeId" />
   <Relation ParentTableName="DocumentsFilings" ParentColumnName="DocumentTypeId" ReferencedTableName="DocumentTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DocumentsFilings_dbo.DocumentTypes_DocumentTypeId" />
+  <Relation ParentTableName="DocumentTypeCopies" ParentColumnName="DocumentTypeId" ReferencedTableName="DocumentTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DocumentTypeCopies_dbo.DocumentTypes_DocumentTypeId" />
   <Relation ParentTableName="DocumentTypeCustomFields1" ParentColumnName="DocumentTypeId" ReferencedTableName="DocumentTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DocumentTypeCustomFields1_dbo.DocumentTypes_DocumentTypeId" />
   <Relation ParentTableName="DocumentTypeMetaDatas" ParentColumnName="DocumentTypeId" ReferencedTableName="DocumentTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DocumentTypeMetaDatas_dbo.DocumentTypes_DocumentTypeId" />
   <Relation ParentTableName="DocumentTypeTemplates" ParentColumnName="DocumentTypeId" ReferencedTableName="DocumentTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.DocumentTypeTemplates_dbo.DocumentTypes_DocumentTypeId" />
+  <Relation ParentTableName="FollowUps" ParentColumnName="DocumentTypeId" ReferencedTableName="DocumentTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FollowUps_dbo.DocumentTypes_DocumentTypeId" />
+  <Relation ParentTableName="FormCustomFields1" ParentColumnName="DocumentTypeId" ReferencedTableName="DocumentTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.FormCustomFields1_dbo.DocumentTypes_DocumentTypeId" />
 </Table>

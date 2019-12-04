@@ -21,7 +21,7 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Relation ParentTableName="Tickets" ParentColumnName="SeverityId" ReferencedTableName="TicketSeverities" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tickets_dbo.TicketSeverities_SeverityId" />
   <Relation ParentTableName="SLALines" ParentColumnName="SeverityId" ReferencedTableName="TicketSeverities" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.SLALines_dbo.TicketSeverities_SeverityId" />
+  <Relation ParentTableName="Tickets" ParentColumnName="SeverityId" ReferencedTableName="TicketSeverities" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.Tickets_dbo.TicketSeverities_SeverityId" />
   <Relation ParentTableName="TicketClassifications" ParentColumnName="DefaultSeverityId" ReferencedTableName="TicketSeverities" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.TicketClassifications_dbo.TicketSeverities_DefaultSeverityId" />
 </Table>

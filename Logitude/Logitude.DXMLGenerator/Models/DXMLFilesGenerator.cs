@@ -496,11 +496,12 @@ namespace Logitude.DXMLGenerator.Models
 
         private void ExportErrorsData()
         {
+            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+            string filePath = Path.Combine(projectDirectory, @"Errors\" + ErrorsFileName);
+            File.WriteAllText(filePath, ErrorsData);
+
             if (!String.IsNullOrEmpty(ErrorsData))
             {
-                string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-                string filePath = Path.Combine(projectDirectory, @"Errors\" + ErrorsFileName);
-                File.WriteAllText(filePath, ErrorsData);
                 Console.WriteLine("\n" + "Errors Are Exported To /Errors/" + ErrorsFileName + "\n");
             }
         }

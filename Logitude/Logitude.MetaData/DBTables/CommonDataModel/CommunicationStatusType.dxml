@@ -9,9 +9,9 @@
   <Column Name="SearchFields" Type="nvarchar" Size="1000">
     <Constraints Nullable="true" />
   </Column>
-  <Relation ParentTableName="CommunicationLogSteps" ParentColumnName="Status" ReferencedTableName="CommunicationStatusTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.CommunicationLogSteps_dbo.CommunicationStatusTypes_Status" />
-  <Relation ParentTableName="CommunicationLogs" ParentColumnName="CommunicationStatusTypeCode" ReferencedTableName="CommunicationStatusTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.CommunicationLogs_dbo.CommunicationStatusTypes_CommunicationStatusTypeCode" />
-  <Relation ParentTableName="ReportExecutionLogs" ParentColumnName="StatusCode" ReferencedTableName="CommunicationStatusTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ReportExecutionLogs_dbo.CommunicationStatusTypes_StatusCode" />
   <Relation ParentTableName="BIReportsExecutionLogs" ParentColumnName="StatusCode" ReferencedTableName="CommunicationStatusTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.BIReportsExecutionLogs_dbo.CommunicationStatusTypes_StatusCode" />
   <Relation ParentTableName="DocumentsExecutionLogs" ParentColumnName="StatusCode" ReferencedTableName="CommunicationStatusTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.DocumentsExecutionLogs_dbo.CommunicationStatusTypes_StatusCode" />
+  <Relation ParentTableName="ReportExecutionLogs" ParentColumnName="StatusCode" ReferencedTableName="CommunicationStatusTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.ReportExecutionLogs_dbo.CommunicationStatusTypes_StatusCode" />
+  <Relation ParentTableName="CommunicationLogSteps" ParentColumnName="Status" ReferencedTableName="CommunicationStatusTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.CommunicationLogSteps_dbo.CommunicationStatusTypes_Status" />
+  <Relation ParentTableName="CommunicationLogs" ParentColumnName="CommunicationStatusTypeCode" ReferencedTableName="CommunicationStatusTypes" ReferencedColumnName="Code" ForeignKeyConstraintName="FK_dbo.CommunicationLogs_dbo.CommunicationStatusTypes_CommunicationStatusTypeCode" />
 </Table>
