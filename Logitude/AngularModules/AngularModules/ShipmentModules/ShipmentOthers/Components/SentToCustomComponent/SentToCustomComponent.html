@@ -464,11 +464,18 @@
                                                         </td>
 
                                                         <td style="width: 57px;">
-                                                            <button class="Button" [disabled]="IsAMANACDisabled" (click)="SendButtonClicked('AMC')">Send</button>
+                                                            <table>
+                                                                <tr>
+                                                                    <td>
+                                                                        <button class="Button" [disabled]="IsAMANACDisabled" (click)="SendButtonClicked('AMC')">Send</button>
+                                                                    </td>
+                                                                    <td *ngIf="IsAMANACDisabled" style="width:14px;">
+                                                                        <HelpIcon [IconSize]="14" [Header]="'Transfer to AMANAC'" [Text]="'In order to transfer to AMANAC, please use the New Transfer under AMANAC tab'"></HelpIcon>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
                                                         </td>
-                                                        <td *ngIf="IsAMANACDisabled" style="width:14px;">
-                                                            <HelpIcon [IconSize]="14" [Header]="'Transfer to AMANAC'" [Text]="'In order to transfer to AMANAC, please use the New Transfer under AMANAC tab'"></HelpIcon>
-                                                        </td>
+                                                        
                                                         <td style="width: 15px;">
                                                             <div></div>
                                                         </td>
