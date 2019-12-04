@@ -81,5 +81,6 @@ export class APInvoiceList {
 		FirstApproveDate: Date;
 		VendorCity: string;
 		VendorCountry: string;
+		CreatedByPartner: string;
 	
 }

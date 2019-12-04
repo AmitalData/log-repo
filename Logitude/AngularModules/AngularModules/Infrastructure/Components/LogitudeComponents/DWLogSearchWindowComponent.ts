@@ -196,18 +196,6 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
 
     BuildAdditionalColumns(columns:string) {
         var result = "";
-        var DefaultColumns = [];
-        if (this.ObjectFieldName) {
-            DefaultColumns = this.ObjectFieldName.split(',');
-        }
-
-        if (DefaultColumns.length == 2) {
-            if (columns == null)
-                columns = DefaultColumns[1];
-            else
-                columns += "," + DefaultColumns[1];
-        }
-
         if (columns) {
             var headerLists: string[]= [];
             var additionalColumns = columns.split(',');
@@ -240,13 +228,6 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
         if (this.LOVAdditionalColumns) {
             AdditionalColumns = this.LOVAdditionalColumns.split(',');
         }
-
-        var DefaultColumns = [];
-        if (this.ObjectFieldName) {
-            DefaultColumns = this.ObjectFieldName.split(',');
-        }
-        //if (DefaultColumns.length < 2)
-            this.ObjectFieldName = DefaultColumns[0];
             this.columns.push({
                 FieldName: 'Field',
                 DataTypeCode: 'text',

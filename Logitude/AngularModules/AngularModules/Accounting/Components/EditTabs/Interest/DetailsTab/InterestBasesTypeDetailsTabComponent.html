@@ -10,6 +10,11 @@
 </style>
 <div class="TabHolder">
     <table>
+        <tr *ngIf="IsNew && ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+            <td colspan="4">
+                <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+            </td>
+        </tr>
         <tr class="TabTitleRow">
             <td>{{'Accounting.General.O.Details' | TextCodeTranslationPipe}}</td>
         </tr>
@@ -101,7 +106,7 @@
                                         </table>
                                     </td>
                                     <td style="width:20px;">
-                                       <div></div>
+                                        <div></div>
                                     </td>
                                     <td>
                                         <table>
@@ -206,7 +211,7 @@
                 <table>
                     <tr>
                         <td>
-                            <IconButton [style.float]="isRTL ? 'right' : 'left'"  [Name]="'Add'" [IsSmall]="true" [Left]="3" [disabled]="EntityPM.InActive" (click)="AddPeriodClicked()"></IconButton>
+                            <IconButton [style.float]="isRTL ? 'right' : 'left'" [Name]="'Add'" [IsSmall]="true" [Left]="3" [disabled]="EntityPM.InActive" (click)="AddPeriodClicked()"></IconButton>
                         </td>
                     </tr>
                 </table>
@@ -255,6 +260,30 @@
                     </log-column>
 
                 </logitude-edit-grid>
+            </td>
+        </tr>
+
+        <tr *ngIf="IsNew" style="height: 32px;">
+            <td colspan="4" style="vertical-align: bottom">
+                <table style="height: 22px;">
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+
+                        <td style="width: 57px;">
+                            <button class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        </td>
+
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 57px;">
+                            <button id="{{'CREATEDEPOSIT' | IdGeneratorPipe}}" class="RedButton" (click)="OkButtonClicked()">{{'Accounting.General.B.OK' | TextCodeTranslationPipe}}</button>
+                        </td>
+                    </tr>
+                </table>
             </td>
         </tr>
     </table>

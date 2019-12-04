@@ -1726,6 +1726,10 @@
     <Compile Include="Migrations\201912031815485_AddHideFCLAllInField.Designer.cs">
       <DependentUpon>201912031815485_AddHideFCLAllInField.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912041018283_Update_DateForVATInterest_Field_In_ARINVOICE.cs" />
+    <Compile Include="Migrations\201912041018283_Update_DateForVATInterest_Field_In_ARINVOICE.Designer.cs">
+      <DependentUpon>201912041018283_Update_DateForVATInterest_Field_In_ARINVOICE.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201911251236376_NewField_AllowEditChequePayToName.cs" />
     <Compile Include="Migrations\201911251236376_NewField_AllowEditChequePayToName.Designer.cs">
       <DependentUpon>201911251236376_NewField_AllowEditChequePayToName.cs</DependentUpon>
@@ -2962,6 +2966,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912031815485_AddHideFCLAllInField.resx">
       <DependentUpon>201912031815485_AddHideFCLAllInField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912041018283_Update_DateForVATInterest_Field_In_ARINVOICE.resx">
+      <DependentUpon>201912041018283_Update_DateForVATInterest_Field_In_ARINVOICE.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911251236376_NewField_AllowEditChequePayToName.resx">
       <DependentUpon>201911251236376_NewField_AllowEditChequePayToName.cs</DependentUpon>

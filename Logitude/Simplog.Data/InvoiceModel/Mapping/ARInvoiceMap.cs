@@ -151,7 +151,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.ApprovedByUserId).HasColumnName("ApprovedByUserId");
             this.Property(t => t.CreditedByARInvoiceId).HasColumnName("CreditedByARInvoiceId");
             this.Property(t => t.OperationalDate).HasColumnName("OperationalDate");
-            this.Property(t => t.DateForVATInterest).HasColumnName("DateForVATInterest");
+            this.Property(t => t.DateForInterest).HasColumnName("DateForInterest");
             this.Property(t => t.SplitJournalByCurrency).HasColumnName("SplitJournalByCurrency");
             this.Property(t => t.IsExternalEntity).HasColumnName("IsExternalEntity");
             this.Property(t => t.IsGeneralInvoice).HasColumnName("IsGeneralInvoice");
