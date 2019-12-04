@@ -69,7 +69,7 @@ namespace Logitude.Customs.BL.PatchDistribution.Patches
 
                     sql =
                         @"CREATE TABLE DBMigrations ( 
-  Id VARCHAR2(15 CHAR) NOT NULL,
+  DBMigrationId VARCHAR2(15 CHAR) NOT NULL,
   ExecuteDate TIMESTAMP(7) NOT NULL,
   MajorVersion NUMBER(5,2) NOT NULL,
   MinorVersion NUMBER(10) NOT NULL,
@@ -102,12 +102,12 @@ namespace Logitude.Customs.BL.PatchDistribution.Patches
             {
                 new ScriptDTO() { 
                     ScriptCounter = ScriptCount++, 
-                    SqlScript = "CREATE INDEX IX_DBMigrationLines_Id ON DBMigrationLines (Id)" 
+                    SqlScript = "CREATE INDEX IX_DBMigrationLines_Id ON DBMigrationLines (DBMigrationId)"
                 },
                 new ScriptDTO() {
                     ScriptCounter = ScriptCount++,
                     SqlScript = @"ALTER TABLE DBMigrationLines
-  ADD CONSTRAINT FK_N1148365077 FOREIGN KEY (Id) REFERENCES DBMigrations (Id)
+  ADD CONSTRAINT FK_N1148365077 FOREIGN KEY (DBMigrationId) REFERENCES DBMigrations (Id)
 "
                 },
             };
