@@ -57,6 +57,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         protected override GenericRequestParams CreateDefaultRequestParamsFromCustomsResponse(DCAInUCBUD2LTWithResponseContentHeader customsResponse)
         {
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+            var objectTableId2 = ObjectTableRepository.GetObjectTableByName("DocumentsFiling");
             var genericRequestParams = new GenericRequestParams()
             {
                 Tenant = customsResponse.tenant,
@@ -69,12 +70,13 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                 LoggingObjectTableId = objectTableId,
                 LoggingEntityId = customsResponse.DeclarationId,
-                
+                LoggingObjectTableId2 = objectTableId2,
+                LoggingEntityId2 = customsResponse.DocumentsFilingId,
 
                 LoggingUserId = customsResponse.LoggingUserId,
                 RequestName = $" UD2LT   קישור מסמך לטיקט" + customsResponse.DocumentsFilingCode + " "
             };
-            
+
             return genericRequestParams;
         }
 
@@ -94,6 +96,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         {
 
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+            var objectTableDocumentsFilingId = ObjectTableRepository.GetObjectTableByName("DocumentsFiling");
             var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(tenant);
             //bool simultaneousCheckGeneralLock = true;
             //if (simultaneousCheckGeneralLock)
@@ -102,7 +105,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
             //}
             //else
             {
-                var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, documentsFilingPM.EntityId, null, null, null, true);
+                var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode,
+                    objectTableId, documentsFilingPM.EntityId,
+                    objectTableDocumentsFilingId, documentsFilingPM.Id, null, true);
                 if (RequestInProgressList != null && RequestInProgressList.Count > 0)
                 {
 
@@ -113,8 +118,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
             }
             LogMessagingUtil.Instance.AppendLine("Build !!!Requestsheet  with Interface Type  = UCBUD2LT  !!!");
 
-            
-            
 
 
             string uniComm = null;
@@ -250,7 +253,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             DateTime stopLogAt = new DateTime(2020, 01, 01);
             DeclarationPM declarationPM;
             Debug.WriteLine("CreateUD2LTService");
-            string logData="";
+            string logData = "";
             try
             {
 
@@ -278,7 +281,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 int tenant = _DocumentsFilingPM.Tenant;
                 if (!IsConnected2Declaration())
                 {
-                    LogitudeSettings.HandleLogMe("!IsConnected2Decalaration()"+ logData, false, "CreateUD2LTService", stopLogAt);
+                    LogitudeSettings.HandleLogMe("!IsConnected2Decalaration()" + logData, false, "CreateUD2LTService", stopLogAt);
                     Debug.WriteLine("!IsConnected2Decalaration()");
                     return;
                 }
@@ -297,7 +300,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 if (/*CourierENV() */ declarationPM.IsCourierDeclaration)
                 {
                     Debug.WriteLine("CourierENV");
-                    
+
                     shouldCreateDCAComm = true;
                 }
                 else
@@ -362,7 +365,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 }
 
 
-                
+
                 Debug.WriteLine("CreateCRS");
 
                 string loggingUserId = AuthenticationUtil.ResolveUserId(tenant);
@@ -371,7 +374,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 string key = ProcessLockTableUtil.Instance.GetKey4UCBUD2LT(_DocumentsFilingPM.Id, _DocumentsFilingPM.Tenant);
                 using (var disposableToken =
                     //ProcessLockTableUtil.Instance.LockItAndGetReleaseToken(key, "5117ResponseService.Update")
-                    ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(_DocumentsFilingPM.Tenant, true, key, "UCBUD2LT.CRS",true)
+                    ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(_DocumentsFilingPM.Tenant, true, key, "UCBUD2LT.CRS", true)
                     )
                 {
                     var myDCAInUCBUD2LT_MsgMessagingService = new DCAInUCBUD2LT_MsgMessagingService();
@@ -410,7 +413,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     return 9999;
 
                 });
-            
+
             return theResult;
         }
 
