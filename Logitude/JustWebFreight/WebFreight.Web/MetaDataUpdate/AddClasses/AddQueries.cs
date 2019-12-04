@@ -81,9 +81,9 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 
         public static QueryColumn AddQueryColumn(QueryColumnDetails queryColumnDetails, QueryColumnRepository queryColumnRepository, Dictionary<string, QueryColumn> tenantQueryColumn)
         {
-            if (tenantQueryColumn.Keys.Contains(queryColumnDetails.QueryId + queryColumnDetails.ObjectFieldId))
+            if (tenantQueryColumn.Keys.Contains(queryColumnDetails.QueryId + queryColumnDetails.ObjectFieldCode))
             {
-                QueryColumn queryColumn = tenantQueryColumn[queryColumnDetails.QueryId + queryColumnDetails.ObjectFieldId];
+                QueryColumn queryColumn = tenantQueryColumn[queryColumnDetails.QueryId + queryColumnDetails.ObjectFieldCode];
                 queryColumn.ColumnWidth = queryColumnDetails.ColumnWidth;
                 queryColumn.IndexOrder = queryColumnDetails.IndexOrder;
                 queryColumn.Tenant = queryColumnDetails.Tenant;
@@ -101,6 +101,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     ColumnWidth = queryColumnDetails.ColumnWidth,
                     Id = IdCounter.GetNumber("QueryColumn",queryColumnDetails.Tenant).ToString(),
                     QueryId = queryColumnDetails.QueryId,
+                    ObjectFieldCode = queryColumnDetails.ObjectFieldCode,
                 };
                 queryColumnRepository.Add(newQureyColumn);
                 return newQureyColumn;

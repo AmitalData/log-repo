@@ -329,9 +329,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query AllTicketTypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TicketTypeTextCode_0.Id, Code = "All Ticket Types",  QueryGroupCode = "TTQG", IndexOrder = 0, Tenant = 0, ObjectTableId = TicketTypeObjectTable.Id, QuerySection = "TicketType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TicketTypeFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AllTicketTypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketTypesQuery.Id, IndexOrder = 0, ObjectFieldId = TicketTypeObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TicketTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTicketTypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketTypesQuery.Id, IndexOrder = 0, ObjectFieldId = TicketTypeObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TicketTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketTypeObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TicketTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllTicketTypesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketTypesQuery.Id, IndexOrder = 1, ObjectFieldId = TicketTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == TicketTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllTicketTypesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketTypesQuery.Id, IndexOrder = 1, ObjectFieldId = TicketTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == TicketTypeObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = TicketTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == TicketTypeObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
