@@ -58,8 +58,11 @@ cd C:\Automation e2e\TeamAyman\Test
 >test.txt echo Errors in : %TotalErrors%
 >>test.txt echo Total Errors :%NumberErrors% 
 
-IF %NumberErrors% NEQ 0 ( 
-  exit 1
+IF %NumberErrors% NEQ 0 (
+   cd C:\Automation e2e\TeamAyman\Test\screenshots
+   "C:\Program Files\WinRAR\rar.exe" -r a "C:\Automation e2e\TeamAyman\Test\screenshots\screenshots.rar"
+   XCOPY  "C:\Automation e2e\TeamAyman\Test\screenshots\screenshots.rar" "C:\Program Files (x86)\Jenkins\workspace\TeamAymanMasterCollectionAfterSwap"  /S /I /Q /Y /F
+   exit 1
 )
 Pause
 
