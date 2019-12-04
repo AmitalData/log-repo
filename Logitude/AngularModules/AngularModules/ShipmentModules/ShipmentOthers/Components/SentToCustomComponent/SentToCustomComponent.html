@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .FieldSet {
         display: block;
@@ -71,10 +71,10 @@
                                                                                 <td style="width: 55px;float:left;" [ngStyle]="{color: LocalCustomsTransmissionsStatusCode | StringToColorPipe:'CustomsTransmissionsStatus'}">
                                                                                     {{LocalCustomsTransmissionsStatusName}}
                                                                                 </td>
-                                                                
+
                                                                                 <td>
-                                                                                    <div style="width:450px;color:Red;float:left" class="TextTrimming"  [title]="LocalCustomsTransmissionsError">
-                                                                                       <span *ngIf="LocalCustomsTransmissionsError != null && LocalCustomsTransmissionsError != ''"> ( </span>{{LocalCustomsTransmissionsError}} <span *ngIf="LocalCustomsTransmissionsError != null && LocalCustomsTransmissionsError != ''"> ) </span>
+                                                                                    <div style="width:450px;color:Red;float:left" class="TextTrimming" [title]="LocalCustomsTransmissionsError">
+                                                                                        <span *ngIf="LocalCustomsTransmissionsError != null && LocalCustomsTransmissionsError != ''"> ( </span>{{LocalCustomsTransmissionsError}} <span *ngIf="LocalCustomsTransmissionsError != null && LocalCustomsTransmissionsError != ''"> ) </span>
                                                                                     </div>
                                                                                 </td>
                                                                             </tr>
@@ -155,9 +155,9 @@
                                                                         <table>
                                                                             <tr>
                                                                                 <td style="width:55px;" [ngStyle]="{color: ArtemusVoyageStatusCode | StringToColorPipe:'CustomsTransmissionsStatus'}">
-                                                                                     {{ArtemusVoyageStatus}}
+                                                                                    {{ArtemusVoyageStatus}}
                                                                                 </td>
-                                                                           
+
                                                                                 <td>
                                                                                     <div style="width:450px;color:Red;float:left" class="MediaFill TextTrimming" [title]="ArtemusVoyageError">
                                                                                         <span *ngIf="ArtemusVoyageError != null && ArtemusVoyageError != '' "> ( </span>{{ArtemusVoyageError}} <span *ngIf="ArtemusVoyageError != null && ArtemusVoyageError != '' "> ) </span>
@@ -243,7 +243,7 @@
                                                                                 <td style="width:55px;" [ngStyle]="{color: ArtemusBOLStatusCode | StringToColorPipe:'CustomsTransmissionsStatus'}">
                                                                                     {{ArtemusBOLStatus}}
                                                                                 </td>
-                                                                           
+
                                                                                 <td>
                                                                                     <div style="width:450px;color:Red;float:left" class="MediaFill TextTrimming" [title]="ArtemusBOLError">
                                                                                         <span *ngIf="ArtemusBOLError != null && ArtemusBOLError != ''"> ( </span>{{ArtemusBOLError}} <span *ngIf="ArtemusBOLError != null && ArtemusBOLError != ''"> ) </span>
@@ -328,7 +328,7 @@
                                                                                 <td style="width:55px;" [ngStyle]="{color: CBPStatusCode | StringToColorPipe:'CustomsTransmissionsStatus'}">
                                                                                     {{CBPStatus}}
                                                                                 </td>
-                                                                          
+
                                                                                 <td>
                                                                                     <div style="width:450px;color:Red;float:left" class="MediaFill TextTrimming" [title]="CBPError">
                                                                                         <span *ngIf="CBPError != null && CBPError != ''"> ( </span>{{CBPError}} <span *ngIf="CBPError != null && CBPError != ''"> ) </span>
@@ -390,6 +390,93 @@
                                         </td>
                                     </tr>
 
+                                    <!-- AMANAC  -->
+                                    <tr *ngIf="IsAMANACVisible" style="height:120px;">
+                                        <td style="width:420px;">
+                                            <fieldset class="FieldSet">
+                                                <legend style="color:#1B90CB; margin-left:5px; font-size:11px;">AMANAC</legend>
+                                                <table style="margin:5px;">
+                                                    <tr>
+                                                        <td>
+                                                            <table>
+                                                                <tr class="StatRow">
+                                                                    <td style="width:10px;">
+                                                                        <div></div>
+                                                                    </td>
+
+                                                                    <td style="width:120px;">
+                                                                        <LogLabel [ObjectFieldName]="'Status'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                    </td>
+
+                                                                    <td style="width: 550px;">
+                                                                        <table>
+                                                                            <tr>
+                                                                                <td style="width: 55px;float:left;" [ngStyle]="{color: LocalCustomsTransmissionsStatusCode | StringToColorPipe:'CustomsTransmissionsStatus'}">
+                                                                                    {{LocalCustomsTransmissionsStatusName}}
+                                                                                </td>
+
+                                                                                <td>
+                                                                                    <div style="width:450px;color:Red;float:left" class="TextTrimming" [title]="LocalCustomsTransmissionsError">
+                                                                                        <span *ngIf="LocalCustomsTransmissionsError != null && LocalCustomsTransmissionsError != ''"> ( </span>{{LocalCustomsTransmissionsError}} <span *ngIf="LocalCustomsTransmissionsError != null && LocalCustomsTransmissionsError != ''"> ) </span>
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr class="StatRow">
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <LogLabel [ObjectFieldName]="'LastSendDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                    </td>
+
+                                                                    <td style="text-align: left;">{{LocalCustomsTransmissionsStatusDate | DateTimePipe: 'SHWH'}}</td>
+
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr class="StatRow">
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <LogLabel [Text]="'By'" [DataContext]="DataContext"></LogLabel>
+                                                                    </td>
+
+                                                                    <td>{{LocalCustomsTransmissionsByUserName}}</td>
+
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+
+                                                        <td style="width: 57px;">
+                                                            <button class="Button" [disabled]="IsAMANACDisabled" (click)="SendButtonClicked('AMC')">Send</button>
+                                                        </td>
+                                                        <td *ngIf="IsAMANACDisabled" style="width:14px;">
+                                                            <HelpIcon [IconSize]="14" [Header]="'Transfer to AMANAC'" [Text]="'In order to transfer to AMANAC, please use the New Transfer under AMANAC tab'"></HelpIcon>
+                                                        </td>
+                                                        <td style="width: 15px;">
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </fieldset>
+                                        </td>
+                                    </tr>
                                     <tr>
                                         <td>
                                             <div></div>

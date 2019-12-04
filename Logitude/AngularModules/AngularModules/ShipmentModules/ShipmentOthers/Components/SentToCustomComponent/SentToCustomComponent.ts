@@ -37,10 +37,13 @@ export class SentToCustomComponent extends BaseComponent {
     public IsAESVisible = false;
     public IsATMSVisible_BOL = false;
     public IsATMSVisible_VOG = false;
+    public IsAMANACVisible = false;
+
 
     public IsABMDisabled = false;
     public IsAESDisabled = false;
     public IsATMSDisabled = false;
+    public IsAMANACDisabled = false;
     private ShipmentCustomsTransmissionList: ShipmentCustomsTransmissionPM[] = [];
 
     public LocalCustomsTransmissionsStatusName: string;
@@ -106,6 +109,7 @@ export class SentToCustomComponent extends BaseComponent {
             }
             this.IsVisible = true;
             this.CheckVisibility();
+            this.CheckIfSendButtonsEnabled();
         });
     }
     LoadShipmentData() {
@@ -154,6 +158,16 @@ export class SentToCustomComponent extends BaseComponent {
         });
     }
 
+    private CheckIfSendButtonsEnabled() {
+        this.CheckAMANACSendButton();
+    }
+    private CheckAMANACSendButton() {
+        this.IsAMANACDisabled = false;
+        if (this.LocalCustomsTransmissionsStatusCode  == "NSEN") {
+            this.IsAMANACDisabled = true;
+        }
+    }
+
     CheckVisibility() {
         if ((ObjectsLocator.CustomsInterfaceSettingPM.LocalCustomsInterfaceCode == null || ObjectsLocator.CustomsInterfaceSettingPM.LocalCustomsInterfaceCode == "NO")
             &&
@@ -167,6 +181,7 @@ export class SentToCustomComponent extends BaseComponent {
             this.CheckArtemusVisibility_VOG();
             this.CheckABMVisibility();
             this.CheckAESVisibility();
+            this.CheckAMANACVisibility();
         }
     }
     CheckABMVisibility() {
@@ -220,6 +235,16 @@ export class SentToCustomComponent extends BaseComponent {
             }
         }
     }
+    CheckAMANACVisibility() {
+        if (ObjectsLocator.CustomsInterfaceSettingPM != null) {
+            if (ObjectsLocator.CustomsInterfaceSettingPM.LocalCustomsInterfaceCode == "AMC") {
+                this.IsAMANACVisible = true;
+            }
+        }
+        else {
+            this.IsAMANACVisible = false;
+        }
+    }
 
     CloseButtonClicked() {        
         this.CurrentSession.CloseCurrentWindow();
@@ -259,6 +284,9 @@ export class SentToCustomComponent extends BaseComponent {
                 {
                     this.SendToAES();
                 }
+            case "AMC": {
+                this.SendToAMANAC();
+            }
         }
     }
     CheckInterfaceByCode(code: string) {
@@ -367,6 +395,9 @@ export class SentToCustomComponent extends BaseComponent {
                 this.CurrentSession.FireEvent("CustomsWizardClosed");
             }
         });
+    }
+    private SendToAMANAC() {
+
     }
 
     SetCellNotesWidth(text: string) {
