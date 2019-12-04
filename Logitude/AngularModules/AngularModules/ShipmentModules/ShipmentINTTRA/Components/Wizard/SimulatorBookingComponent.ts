@@ -104,6 +104,7 @@ export class SimulatorBookingComponent extends BaseComponent {
     }
 
     // Cargo Information
+    get MasterDepartureDate() { return this.EntityPM.MainCarriageATD != null ? this.EntityPM.MainCarriageATD : this.EntityPM.MainCarriageETD; }
     get VolumeUnitCode() { return this.EntityPM.VolumeUnitCode; }
     get GrossWeightUnitCode() { return this.EntityPM.GrossWeightUnitCode; }
     get ChargeableWeightUnitCode() { return this.EntityPM.ChargeableWeightUnitCode; }
@@ -163,6 +164,7 @@ export class SimulatorBookingComponent extends BaseComponent {
 
 
     // Requests
+
     get MainCarriageCarrierCode() { return this.EntityPM.MainCarriageCarrierCode; }
     get MainCarriageVesselName() { return this.EntityPM.MainCarriageVesselName; }
     get MainCarriageCarrierNumber() { return this.EntityPM.MainCarriageCarrierNumber; }
