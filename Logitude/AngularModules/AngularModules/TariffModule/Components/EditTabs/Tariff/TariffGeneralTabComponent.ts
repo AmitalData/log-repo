@@ -8,6 +8,8 @@ import { ChargesTypeList } from '../../../../Common/EntityLists/ChargesTypeList'
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { TariffDomainService } from '../../../../TariffModule/Services/TariffDomainService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { MeasurementListService } from '../../../../Common/Services/StandardLists/MeasurementListService';
+import { MeasurementList } from '../../../../Common/EntityLists/MeasurementList';
 
 
 
@@ -24,8 +26,10 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
     private IdProps: string[] = [];
     private UOMProps: string[] = [];
     public ChargeTypesQueryFilters: ApiQueryFilters;
+    public MeasurmentQueryFilters: ApiQueryFilters;
     public ValidationErrorsList: string[] = [];
     private chargesTypePMService: ChargesTypeListService;
+    private measurementPMService: MeasurementListService;
     public SellerDependancy: string = "AL";
     public TariffCurrencyTextCode: string = "Tariff.F.CurrencyId";
     public IsContainersAreaVisible: boolean = false;
@@ -36,10 +40,11 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
         
         this.BuildQueryFilters();
 
-        if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC") {
+        if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
             this.FillChargesIDsAndUOMS();
             this.VisibileSurchargesArea = true;
             this.TariffCurrencyTextCode = "Tariff.O.DefaultCurrency";
+            this.measurementPMService = new MeasurementListService();
         }
 
         else if (this.EntityPM.TypeCode == "OFC") {
@@ -91,15 +96,19 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
 
     BuildQueryFilters() {
         var EntityType: string = "IsAir";
-        if (this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OFC") {
+        if (this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OFC" || this.EntityPM.TypeCode == "OFS") {
             EntityType = "IsOcean";
             this.SellerDependancy = "SL";
         }
 
         this.ChargeTypesQueryFilters = new ApiQueryFilters();
+        this.MeasurmentQueryFilters = new ApiQueryFilters();
         this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");
         this.ChargeTypesQueryFilters.addAdditionalFilter(EntityType, true, null, null, "Equals", false, false, false, "Boolean");
         this.ChargeTypesQueryFilters.addAdditionalFilter("ChargesGroupCode", "FRT", null, null, "NotEqual", false, false, false, "string");
+        if (this.EntityPM.TypeCode != "OFS") {
+            this.MeasurmentQueryFilters.addAdditionalFilter("IsContainer", false, null, null, "Equals", false, false, false, "Boolean");
+        }
     }
 
     FillChargesIDsAndUOMS() {
@@ -486,6 +495,19 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
                     }
                 }
             }
+            //Disable "By Container Type" UOM
+            if (this.EntityPM.TypeCode == "OFS" && this[UOMProps[index - 1]] != null) {
+                this.measurementPMService.getSingleFromCache(this[UOMProps[index - 1]]).subscribe(res => {
+                    if (!res.HasError) {
+                        var UOMEntity: MeasurementList = res.Result;
+                        if (res) {
+                            if (UOMEntity.Code == "BCNT") {
+                                this.ValidationErrorsList.push("By Container Type measurment dose not enabled");
+                            }
+                        }
+                    }
+                });
+            }
         }
 
         if (!emptyLines) {
@@ -496,7 +518,7 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
     }
 
     ngAfterViewInit() {
-        if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC") {
+        if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
             this.Validate(true);
         }
 
@@ -615,7 +637,7 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
 
-                    if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC") {
+                    if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
                         this.Validate(true);
                     }
 

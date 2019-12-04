@@ -126,7 +126,7 @@ export class TariffTabsContentComponent implements OnDestroy {
 
         var draftVersion: TariffVersionPM = this.EntityPM.TariffVersions.filter(d => d.IsDraft)[0];
         if (draftVersion != null) {
-            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC") {
+            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
                 header = "Version " + draftVersion.Version;
             }
 
@@ -167,7 +167,7 @@ export class TariffTabsContentComponent implements OnDestroy {
     Run(args: any) {
         this.EntityPM = args['EntityPM'];
 
-        if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC") {
+        if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
             this.EditTabTariffType = "SVR";
         }
 
@@ -196,7 +196,7 @@ export class TariffTabsContentComponent implements OnDestroy {
 
         var draftVersion: TariffVersionPM = this.EntityPM.TariffVersions.filter(d => d.IsDraft)[0];
         if (draftVersion != null) {
-            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC") {
+            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
                 header = "Version " + draftVersion.Version;
             }
 
@@ -226,7 +226,7 @@ export class TariffTabsContentComponent implements OnDestroy {
         }
                 
         this.EntityPM.ActiveVersions.sort((a, b) => { return (a.Version === b.Version) ? 0 : (a.Version > b.Version) ? -1 : 1 }).forEach(item => {
-            if (this.EntityPM.TypeCode == "ASC" ||  this.EntityPM.TypeCode == "OSC") {
+            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
                 header = "Version " + item.Version;
             }
 

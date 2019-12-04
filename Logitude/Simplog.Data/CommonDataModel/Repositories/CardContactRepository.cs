@@ -68,7 +68,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public List<CardContact> GetCardContactForContact(string contactId, int tenant)
         {
-            return (from record in context.CardContacts where record.ContactId == contactId select record).ToList();
+            return (from record in context.CardContacts.Include("Card")
+                    where record.ContactId == contactId select record).ToList();
         }
 
         public IQueryable<Contact> GetContactsByCardId(string cardId)
