@@ -161,9 +161,9 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
             this.DirectionId = this.warehouseReleasePM.DirectionId;
             this.ConnectedTo = this.warehouseReleasePM.ConnectedTo;
 
-            this.FromPortId = this.ShipmentPM ? this.ShipmentPM.MainCarriageFromPortId ? this.ShipmentPM.MainCarriageFromPortId : this.ShipmentPM.FromPortId : "";
+            //this.FromPortId = this.ShipmentPM ? this.ShipmentPM.MainCarriageFromPortId ? this.ShipmentPM.MainCarriageFromPortId : this.ShipmentPM.FromPortId : "";
 
-            this.ToPortId = this.ShipmentPM.ShipmentLevelCode == "H" ? this.ShipmentPM.MainCarriageFinalDestinationPortId : this.ShipmentPM.FinalDistenationPortId;
+            //this.ToPortId = this.ShipmentPM.ShipmentLevelCode == "H" ? this.ShipmentPM.MainCarriageFinalDestinationPortId : this.ShipmentPM.FinalDistenationPortId;
 
             this.IsLCLEntity = AppTool.IsLCLEntity(this.warehouseReleasePM.TransportModeId, this.warehouseReleasePM.ShipmentTypeId);
 
@@ -413,19 +413,19 @@ export class NewWarehouseReleaseComponent extends BaseComponent implements OnIni
         }
     }
 
-    get FromPortId() {
-        var fromportid: string = null;
-        if (this.warehouseReleasePM) fromportid = this.warehouseReleasePM.FromPortId;
-        return fromportid;
-    }
-    set FromPortId(value: string) {
-        if (this.warehouseReleasePM != null) {
-            if (value != this.warehouseReleasePM.FromPortId) {
-                this.warehouseReleasePM.FromPortId = value;
-                // this.OnActualReleaseDateDatePickerChange(value);
-            }
-        }
-    }
+    //get FromPortId() {
+    //    var fromportid: string = null;
+    //    if (this.warehouseReleasePM) fromportid = this.warehouseReleasePM.FromPortId;
+    //    return fromportid;
+    //}
+    //set FromPortId(value: string) {
+    //    if (this.warehouseReleasePM != null) {
+    //        if (value != this.warehouseReleasePM.FromPortId) {
+    //            this.warehouseReleasePM.FromPortId = value;
+    //            // this.OnActualReleaseDateDatePickerChange(value);
+    //        }
+    //    }
+    //}
 
 
     get ToPortId() {
