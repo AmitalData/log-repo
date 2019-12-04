@@ -30,6 +30,8 @@ namespace Logitude.BL.DataContracts
         public string ShipmentNumber { get; set; }
         public string DeclarationXmlData { get; set; }
         public string PaymentRequestXML { get; set; }
+        public string TargetEnv { get; set; }
+         
         
 
 
@@ -99,5 +101,6 @@ namespace Logitude.BL.DataContracts
         public string DCdisable { get; set; }
         public string DclickTK { get; set; }
         public string thtk { get; set; }
+        public string TargetEnv { get; set; }
     }
 }
