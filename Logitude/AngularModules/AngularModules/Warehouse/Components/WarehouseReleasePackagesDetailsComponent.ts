@@ -96,8 +96,6 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
 
         this.TransportModeId = this.warehouseReleasePM.TransportModeId;
         this.DirectionId = this.warehouseReleasePM.DirectionId;
-        //  this.CustomerId = this.warehouseReleasePM.CustomerId;
-        //  this.WarehouseId = this.warehouseReleasePM.WarehouseId;
         if (this.ShipmentPM) {
             this.FromPortId = this.ShipmentPM ? this.ShipmentPM.MainCarriageFromPortId ? this.ShipmentPM.MainCarriageFromPortId : this.ShipmentPM.FromPortId : "";
             this.ToPortId = this.ShipmentPM.ShipmentLevelCode == "H" ? this.ShipmentPM.MainCarriageFinalDestinationPortId : this.ShipmentPM.FinalDistenationPortId;
@@ -105,6 +103,7 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
                 this.ToPortId = this.ShipmentPM.ToPortId;
             }
         }
+        this.ConnectedTo = this.warehouseReleasePM.ConnectedTo;
         this.IsLCLEntity = AppTool.IsLCLEntity(this.warehouseReleasePM.TransportModeId, this.warehouseReleasePM.ShipmentTypeId);
     }
 
@@ -224,11 +223,6 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
 
         this.WarehouseId = this.warehouseReleasePM.WarehouseId;
         this.CustomerId = this.warehouseReleasePM.CustomerId;
-        if (this.IsFromFullWarehouseReleaseComponent) {
-            this.FromPortId = this.warehouseReleasePM.FromPortId;
-            this.ToPortId = this.warehouseReleasePM.ToPortId;
-
-        }
         this.IsPackageOpen = false;
         var windowArgs: any = {};
         windowArgs.WarehouseReleasePM = this.warehouseReleasePM;
@@ -410,6 +404,7 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
         this.VolumetricWeightLabel = "Volumetric Weight (" + this.warehouseReleasePM.ChargeableWeightUnitCode + ")";
         this.ChargeableWeightUnitCodeLabel = "Chargeable Weight (" + this.warehouseReleasePM.ChargeableWeightUnitCode + ")";
         this.DimensionsUnitLable = " (" + this.warehouseReleasePM.DimensionsUnitCode + ")";
+
         // this.WidthLabel = "Width (" + this.DimensionsUnitCode + ")";
         //this.HeightLabel = "Height (" + this.DimensionsUnitCode + ")";
         // this.LengthLabel = "Length (" + this.DimensionsUnitCode + ")";

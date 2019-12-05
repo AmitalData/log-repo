@@ -49,7 +49,7 @@ export class VersionHistoryTabComponent implements OnDestroy {
             this.GetAllPackageTypes();
         }
 
-        else if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC") {
+        else if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
             this.IsDownloadExcelTemplateVisible = false;
             this.GetAllChargesTypes();
         }
@@ -373,7 +373,7 @@ export class VersionHistoryTabComponent implements OnDestroy {
             var newVersion: CodeNameClass = new CodeNameClass();
             newVersion.Code_Int = item.Version;
 
-            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC") {
+            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
                 newVersion.Name = "Version " + item.Version;
             }
 
@@ -548,7 +548,7 @@ export class VersionHistoryTabComponent implements OnDestroy {
                 tariffLine.ExpirationDate = this.VersionPM.ExpirationDate;
             }
 
-            else if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC") {
+            else if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
                 tariffLine.Surcharge1Price = item.Surcharge1Price;
                 tariffLine.Surcharge2Price = item.Surcharge2Price;
                 tariffLine.Surcharge3Price = item.Surcharge3Price;

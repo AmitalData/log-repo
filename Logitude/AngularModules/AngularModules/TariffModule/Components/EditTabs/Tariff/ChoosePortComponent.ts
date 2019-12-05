@@ -30,7 +30,8 @@ export class ChoosePortComponent extends BaseComponent {
 
 
     SetOriginDependencyFilterValue() {
-        if (this.UpdateClass.fatherComponent.EntityPM.EntityParentPM.TypeCode == "OLC" || this.UpdateClass.fatherComponent.EntityPM.EntityParentPM.TypeCode == "OSC") {
+        if (this.UpdateClass.fatherComponent.EntityPM.EntityParentPM.TypeCode == "OLC" || this.UpdateClass.fatherComponent.EntityPM.EntityParentPM.TypeCode == "OSC"
+            || this.UpdateClass.fatherComponent.EntityPM.EntityParentPM.TypeCode == "OFS") {
             this.OriginDependencyFilterValue = "O";
         }
     }

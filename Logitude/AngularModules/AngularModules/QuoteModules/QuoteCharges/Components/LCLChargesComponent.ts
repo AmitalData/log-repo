@@ -453,16 +453,28 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
     SetFixedSameCurrency(setType: string) {
         this.IsFixedCurrency = null;
         this.IsSameCostCurrency = null;
+        var allInItems = this.ItemsSource.Collection.filter(d => d.IsAllIN == true);
 
         if (setType == "F") {
+            
+            allInItems.forEach((item: QuoteChargeItem) => {
+                item.IsAllIN = false;
+            });
+
             this.IsFixedCurrency = true;
             this.IsSameCostCurrency = false;
             this.IsSaleCurrencySameAsCost = false;
             this.OnFixedSameChanges();
+
+            allInItems.forEach((item: QuoteChargeItem) => {
+                item.IsAllIN = true;
+            });
         }
 
         else {
-            if (this.EntityPM.QuoteCharges.filter(d => d.IsAllIN).length > 0) {
+            var itemFrieght = this.EntityPM.QuoteCharges.filter(f => f.ChargesGroupCode == "FRT")[0];
+
+            if (this.EntityPM.QuoteCharges.filter(d => d.IsAllIN == true && d.CostCurrencyId != itemFrieght.CostCurrencyId).length > 0) {
                 var messageWindow = new MessageWindow();
                 messageWindow.Show("You can't switch to multi-currency mode till you drop the all-in checks");
                 messageWindow.WindowClosed.subscribe((event: any) => {
@@ -473,10 +485,18 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
             }
 
             else {
+                allInItems.forEach((item: QuoteChargeItem) => {
+                    item.IsAllIN = false;
+                });
+
                 this.IsFixedCurrency = false;
                 this.IsSameCostCurrency = true;
                 this.IsSaleCurrencySameAsCost = true;
                 this.OnFixedSameChanges();
+
+                allInItems.forEach((item: QuoteChargeItem) => {
+                    item.IsAllIN = true;
+                });
             }
         }
     }
@@ -538,6 +558,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         if (this.EntityPM.SaleCurrencyId != value) {
             this.EntityPM.SaleCurrencyId = value;
             this.SetUIProperties_Summary();
+            var allInItems = this.ItemsSource.Collection.filter(d => d.IsAllIN == true);
 
             this.SaleCurrencyCode = this.SelectedCurrencyCode = this.GetCurrencyCode(value);
 
@@ -561,15 +582,17 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
             }
 
             else {
+
+                allInItems.forEach((item: QuoteChargeItem) => {
+                    item.IsAllIN = false;
+                });
+
                 this.ItemsSource.Collection.forEach((item: QuoteChargeItem) => {
                     item.OnQuoteSaleCurrencyChanged();
                 });
 
-                this.ItemsSource.Collection.forEach((item: QuoteChargeItem) => {
-                    if (item.IsAllIN) {
-                        item.EntityPM.IsAllIN = false;
-                        item.IsAllIN = true;
-                    }
+                allInItems.forEach((item: QuoteChargeItem) => {
+                    item.IsAllIN = true;
                 });
 
                 this.ComputeTotals();
@@ -589,16 +612,18 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
     set ExchangeRate(newValue: number) {
         if (this.EntityPM.ExchangeRate != newValue) {
             this.EntityPM.ExchangeRate = AppTool.Round(newValue, 5);
+            var allInItems = this.ItemsSource.Collection.filter(d => d.IsAllIN == true);
+
+            allInItems.forEach((item: QuoteChargeItem) => {
+                item.IsAllIN = false;
+            });
 
             this.ItemsSource.Collection.forEach((item: QuoteChargeItem) => {
                 item.OnQuoteSaleCurrencyChanged();
             });
 
-            this.ItemsSource.Collection.forEach((item: QuoteChargeItem) => {
-                if (item.IsAllIN) {
-                    item.EntityPM.IsAllIN = false;
-                    item.IsAllIN = true;
-                }
+            allInItems.forEach((item: QuoteChargeItem) => {
+                item.IsAllIN = true;
             });
 
             this.ComputeTotals();
@@ -2494,35 +2519,38 @@ export class QuoteChargeItem extends BaseComponent {
         if (this.EntityPM.IsAllIN != newValue) {
             this.EntityPM.IsAllIN = newValue;
             this.SetUIProperties();
+            this.ApplyAllIn();
+        }
+    }
 
-            var allFreightModel: QuoteChargeItem[] = this.fatherComponent.ItemsSource.Collection.filter(d => d.EntityPM.ChargesGroupCode == "FRT");
-            allFreightModel.forEach(item => {
-                item.SetUIProperties();
-            });
+    ApplyAllIn() {
+        var allFreightModel: QuoteChargeItem[] = this.fatherComponent.ItemsSource.Collection.filter(d => d.EntityPM.ChargesGroupCode == "FRT");
+        allFreightModel.forEach(item => {
+            item.SetUIProperties();
+        });
 
-            if (this.SaleTotalAmountLocal > 0) {
-                var freightModel: QuoteChargeItem = allFreightModel[0];
-                if (freightModel != null) {
+        if (this.SaleTotalAmountLocal > 0) {
+            var freightModel: QuoteChargeItem = allFreightModel[0];
+            if (freightModel != null) {
 
-                    if (!AppTool.IsNullOrEmpty(freightModel.SaleTotalAmountLocal)) {
-                        freightModel.SetUIProperties();
+                if (!AppTool.IsNullOrEmpty(freightModel.SaleTotalAmountLocal)) {
+                    freightModel.SetUIProperties();
 
 
-                        var freightTotalAmountLocal = AppTool.IsNullOrEmpty(freightModel.SaleTotalAmountLocal) ? 0 : freightModel.SaleTotalAmountLocal;
+                    var freightTotalAmountLocal = AppTool.IsNullOrEmpty(freightModel.SaleTotalAmountLocal) ? 0 : freightModel.SaleTotalAmountLocal;
 
-                        if (this.IsAllIN) {
-                            freightModel.SaleTotalAmountLocal = freightTotalAmountLocal + this.EntityPM.SaleTotalAmountLocal;
-                        }
+                    if (this.IsAllIN) {
+                        freightModel.SaleTotalAmountLocal = freightTotalAmountLocal + this.EntityPM.SaleTotalAmountLocal;
+                    }
 
-                        else {
-                            freightModel.SaleTotalAmountLocal = freightTotalAmountLocal - this.EntityPM.SaleTotalAmountLocal;
-                        }
+                    else {
+                        freightModel.SaleTotalAmountLocal = freightTotalAmountLocal - this.EntityPM.SaleTotalAmountLocal;
                     }
                 }
             }
         }
     }
- 
+
     OnQuoteSaleCurrencyChanged() {
         if (this.CostCurrencyId == this.fatherComponent.SaleCurrencyId) {
             if (this.CostExchangeRate != this.fatherComponent.ExchangeRate) {
