@@ -7,5 +7,6 @@
         public string ObjectFieldId { get; set; }
         public int IndexOrder { get; set; }
         public double ColumnWidth { get; set; }
+        public string ObjectFieldCode { get; set; }
     }
 }

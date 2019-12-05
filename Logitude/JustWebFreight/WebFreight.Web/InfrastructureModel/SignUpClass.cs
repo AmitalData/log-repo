@@ -2218,7 +2218,8 @@ namespace WebFreight.Web.InfrastructureModel
                     ObjectFieldId = usedObjectField.Id,
                     QueryId = usedQuery.Id,
                     Tenant = theTenant,
-                    ColumnWidth = q.ColumnWidth
+                    ColumnWidth = q.ColumnWidth,
+                    ObjectFieldCode = usedObjectField.FieldCode,
                 };
                 theQueryColumnRepository.Add(newQuery);
             }

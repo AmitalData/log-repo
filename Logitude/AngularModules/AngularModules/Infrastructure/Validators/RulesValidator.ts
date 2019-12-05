@@ -331,8 +331,60 @@ export class RulesValidator {
 
     }
 
+    public ApplyAllEntityStaticRules(entity: any, objectTableName: string) {
+        this.ApplyStaticConditionalSetFieldRules(entity, objectTableName);
+        this.ApplyStaticUnConditionalSetFieldRules(entity, objectTableName);
+    }
+
+    public ApplyStaticConditionalSetFieldRules(entity: any, objectTableName: string): void {
+
+        if (Settings.DisableRuleValidation) {
+            return
+        }
+        var propertyValue: Object = null;
+        var table: ObjectTablePM = this._objectTables.filter(t => t.Name == objectTableName && (t.Tenant == SessionInfo.LoggedUserTenant || t.Tenant == 0))[0];
+        if (table == null || table == undefined) {
+            return;
+        }
+         
+        var advancedConditionalTableSetValueRules: Array<ObjectTableRulePM> = this._conditionalSetFieldValueRules.filter(r => (r.Condition != null) && r.AdvancedCondition == true && r.TriggerTypeCode == "COND" && r.ObjectTableId == table.Id);
+        var conditionalTableSetValueRules: Array<ObjectTableRulePM> = this._conditionalSetFieldValueRules.filter(r => r.AdvancedCondition == false && r.RuleConditionFields.length > 0 && r.TriggerTypeCode == "COND" && r.ObjectTableId == table.Id);
+        for (var k in conditionalTableSetValueRules) {
+            var rule = conditionalTableSetValueRules[k];
+            var ruleFields: Array<ObjectTableRuleFieldPM> = this._objectTableRuleFields.filter(rf => rf.ObjectTableRuleId == rule.Id);
+            
+                var validcondition: boolean = this.ValidateConditionFieldsRule(entity, rule.RuleConditionFields);
+           
+                if (validcondition) {
+                    this.ExecuteSetFieldsRule(rule, entity, objectTableName);
+                }
+
+            
+        };
+        
+    }
+
+    public ApplyStaticUnConditionalSetFieldRules(entity: any, objectTableName: string): void {
 
 
+        if (Settings.DisableRuleValidation) {
+            return
+        }
+        var propertyValue: Object = null;
+        var table: ObjectTablePM = this._objectTables.filter(t => t.Name == objectTableName && (t.Tenant == SessionInfo.LoggedUserTenant || t.Tenant == 0))[0];
+        if (table == null || table == undefined) {
+            return;
+        }
+
+        var tableSetValueRules: Array<ObjectTableRulePM> = this._unConditionalsetFieldValueRules.filter(r => r.ObjectTableId == table.Id);
+
+        for (var k in tableSetValueRules) {
+            var rule = tableSetValueRules[k];
+            this.ExecuteSetFieldsRule(rule, entity, objectTableName);
+        };
+
+    }
+    //=================================================================================================================
     public ApplyConditionalSetFieldRules(propertyName: string, entity: any, objectTableName: string, onPropertyChange: boolean): void {
 
         if (Settings.DisableRuleValidation) {
