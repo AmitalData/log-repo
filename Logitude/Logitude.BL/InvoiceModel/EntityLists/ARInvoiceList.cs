@@ -102,7 +102,7 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string ApprovedByUserId { get; set; }
         public string ApprovedByUserName { get; set; }
         public DateTime? OperationalDate { get; set; }
-        public DateTime? DateForVATInterest { get; set; }
+        public DateTime? DateForInterest { get; set; }
         public bool SplitJournalByCurrency { get; set; }
         public bool IsExternalEntity { get; set; }
         public bool IsGeneralInvoice { get; set; }

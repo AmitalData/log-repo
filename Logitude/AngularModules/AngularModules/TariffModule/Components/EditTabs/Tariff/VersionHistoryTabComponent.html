@@ -168,7 +168,7 @@
                             </div>
 
                             <!-- Air Surcharges Cost-->
-                            <div *ngIf="EntityPM.TypeCode == 'ASC' || EntityPM.TypeCode == 'OSC'" class="MediaFill">
+                            <div *ngIf="EntityPM.TypeCode == 'ASC' || EntityPM.TypeCode == 'OSC'  || EntityPM.TypeCode == 'OFS'" class="MediaFill">
                                 <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="VersionLinesSource">
                                     <!-- OriginPortId -->
                                     <log-column [header]="'TariffLine.F.OriginPortId' | TextCodeTranslationPipe" [width]="'70'">

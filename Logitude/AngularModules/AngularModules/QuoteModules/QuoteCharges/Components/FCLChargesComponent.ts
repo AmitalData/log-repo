@@ -51,6 +51,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     public AllInMatchText: string;
     IsShowTotalPerContainer: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public HideFCLAllIn: boolean = false;
     constructor(private entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -61,7 +62,8 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
         this.ItemsSource = new ObservableCollection([]);
         this.AllInMatchText = TextCodeTranslator.Translate("Quote.M.UnableToDoAllIn") + "\n" + TextCodeTranslator.Translate("Quote.M.IfMatchesFrieghtCharge");
-        
+        this.HideFCLAllIn = SessionLocator.TenantPM.HideFCLAllIn;
+
        if( FeatureLocator.HasFeaturePermession("Quote", "TOTALPERCONTAINER")) {
             this.IsShowTotalPerContainer = true;
         }
@@ -712,16 +714,28 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     SetFixedSameCurrency(setType: string) {
         this.IsFixedCurrency = null;
         this.IsSameCostCurrency = null;
+        var allInItems = this.ItemsSource.Collection.filter(d => d.IsAllIN == true);
 
         if (setType == "F") {
+
+            allInItems.forEach((item: FCLQuoteChargeItem) => {
+                item.IsAllIN = false;
+            });
+
             this.IsFixedCurrency = true;
             this.IsSameCostCurrency = false;
             this.IsSaleCurrencySameAsCost = false;
             this.OnFixedSameChanges();
+
+            allInItems.forEach((item: FCLQuoteChargeItem) => {
+                item.IsAllIN = true;
+            });
         }
 
         else {
-            if (this.EntityPM.QuoteCharges.filter(d => d.IsAllIN).length > 0) {
+            var itemFrieght = this.EntityPM.QuoteCharges.filter(f => f.ChargesGroupCode == "FRT")[0];
+
+            if (this.EntityPM.QuoteCharges.filter(d => d.IsAllIN == true && d.CostCurrencyId != itemFrieght.CostCurrencyId).length > 0) {
                 var messageWindow = new MessageWindow();
                 messageWindow.Show("You can't switch to multi-currency mode till you drop the all-in checks");
                 messageWindow.WindowClosed.subscribe((event: any) => {
@@ -732,10 +746,19 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             }
 
             else {
+
+                allInItems.forEach((item: FCLQuoteChargeItem) => {
+                    item.IsAllIN = false;
+                });
+
                 this.IsFixedCurrency = false;
                 this.IsSameCostCurrency = true;
                 this.IsSaleCurrencySameAsCost = this.IsSameCostCurrency;
                 this.OnFixedSameChanges();
+
+                allInItems.forEach((item: FCLQuoteChargeItem) => {
+                    item.IsAllIN = true;
+                });
             }
         }
     }
@@ -817,6 +840,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
         if (this.EntityPM.SaleCurrencyId != value) {
             this.EntityPM.SaleCurrencyId = value;
             this.SetUIProperties_Summary();
+            var allInItems = this.ItemsSource.Collection.filter(d => d.IsAllIN == true);
 
             this.SaleCurrencyCode = this.SelectedCurrencyCode = this.GetCurrencyCode(value);
 
@@ -839,15 +863,16 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
             }
 
             else {
+                allInItems.forEach((item: FCLQuoteChargeItem) => {
+                    item.IsAllIN = false;
+                });
+
                 this.ItemsSource.Collection.forEach((item: FCLQuoteChargeItem) => {
                     item.OnQuoteSaleCurrencyChanged();
                 });
 
-                this.ItemsSource.Collection.forEach((item: FCLQuoteChargeItem) => {
-                    if (item.IsAllIN) {
-                        item.EntityPM.IsAllIN = false;
-                        item.IsAllIN = true;
-                    }
+                allInItems.forEach((item: FCLQuoteChargeItem) => {
+                    item.IsAllIN = true;
                 });
 
                 this.ComputeTotals();
@@ -867,16 +892,18 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     set ExchangeRate(newValue: number) {
         if (this.EntityPM.ExchangeRate != newValue) {
             this.EntityPM.ExchangeRate = AppTool.Round(newValue, 5);
+            var allInItems = this.ItemsSource.Collection.filter(d => d.IsAllIN == true);
+
+            allInItems.forEach((item: FCLQuoteChargeItem) => {
+                item.IsAllIN = false;
+            });
 
             this.ItemsSource.Collection.forEach((item: FCLQuoteChargeItem) => {
                 item.OnQuoteSaleCurrencyChanged();
             });
 
-            this.ItemsSource.Collection.forEach((item: FCLQuoteChargeItem) => {
-                if (item.IsAllIN) {
-                    item.EntityPM.IsAllIN = false;
-                    item.IsAllIN = true;
-                }
+            allInItems.forEach((item: FCLQuoteChargeItem) => {
+                item.IsAllIN = true;
             });
 
             this.ComputeTotals();
@@ -3984,10 +4011,13 @@ export class FCLQuoteChargeItem extends BaseComponent {
         if (this.EntityPM.IsAllIN != newValue) {
             this.EntityPM.IsAllIN = newValue;
             this.SetUIProperties_AllIn();
-
-            this.UpdateCostSaleDataVisibility();
-            this.UpdateAllInFreight();
+            this.ApplyAllIn();
         }
+    }
+
+    ApplyAllIn() {
+        this.UpdateCostSaleDataVisibility();
+        this.UpdateAllInFreight();
     }
 
     private UpdateAllInFreight() {
