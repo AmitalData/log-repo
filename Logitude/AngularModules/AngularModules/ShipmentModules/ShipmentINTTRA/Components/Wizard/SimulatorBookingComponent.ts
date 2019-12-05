@@ -10,6 +10,8 @@ import { LocationDirective } from '../../../../Infrastructure/Utilities/Location
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
     moduleId: module.id,
@@ -28,13 +30,13 @@ export class SimulatorBookingComponent extends BaseComponent {
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     public IsSendingBookingEnabled = false;
-    public IsUpdatingBookingEnabled = false; 
+    public IsUpdatingBookingEnabled = false;
+    public IsEditMode = false;
 
     constructor(public entityArgs: EntityArgs) {
         super();
         this.Listen();
     }
-
 
     Listen() {
         if (this.CurrentSession.CurrentEditComponent != null) {
@@ -57,11 +59,12 @@ export class SimulatorBookingComponent extends BaseComponent {
                     this.CheckUpdatingBookingEnabled();
                 }
             });
-        } 
+        }
     }
 
     SetWindowArgs(args) {
         this.EntityPM = args['Shipment'];
+        this.IsEditMode = args['IsEditMode'];
         this.entityArgs.EntityPM = this.EntityPM;
         this.entityArgs.EntityPM.IsForINTTRA = true;
         this.entityArgs.ObjectTableName = this.ObjectTableName;
@@ -91,7 +94,7 @@ export class SimulatorBookingComponent extends BaseComponent {
         this.IsSendingBookingEnabled = false;
         if ((this.EntityPM.INTTRABookingStatusCode == "NS" && this.EntityPM.INTTRABookingTransStatusCode == "NST") ||
             (this.EntityPM.INTTRABookingStatusCode == "ER" && this.EntityPM.INTTRABookingTransStatusCode == "BRS") ||
-            (this.EntityPM.INTTRABookingStatusCode == "DC" && this.EntityPM.INTTRABookingTransStatusCode == "BRR") || 
+            (this.EntityPM.INTTRABookingStatusCode == "DC" && this.EntityPM.INTTRABookingTransStatusCode == "BRR") ||
             (this.EntityPM.INTTRABookingStatusCode == "RU" && this.EntityPM.INTTRABookingTransStatusCode == "BCD")) {
             this.IsSendingBookingEnabled = true;
         }
@@ -153,7 +156,7 @@ export class SimulatorBookingComponent extends BaseComponent {
                             SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureCommunications/Components/Communications/CommunicationsTabComponent", myLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     this.CommunicationsPage = cmpRef.instance;
-                                    this.CommunicationsPage.IsTitleHidden = true;                               
+                                    this.CommunicationsPage.IsTitleHidden = true;
                                 });
                         });
                     }
@@ -262,7 +265,7 @@ export class SimulatorBookingComponent extends BaseComponent {
     get Transshipment3VesselVoyage() {
         var value = "";
         if (!AppTool.IsNullOrEmpty(this.Transshipment3VesselName)) {
-            value =  this.Transshipment3VesselName;
+            value = this.Transshipment3VesselName;
         }
         if (!AppTool.IsNullOrEmpty(this.Transshipment3CarrierNumber)) {
             if (!AppTool.IsNullOrEmpty(value)) {
@@ -318,7 +321,7 @@ export class SimulatorBookingComponent extends BaseComponent {
             (this.MainCarriageFromPortCode != this.INTTRABookingResponse_POFPortCode) || (this.MainCarriageToPortCode != this.INTTRABookingResponse_PODPortCode)) {
             this.IsApplyChanges = true;
         }
-       
+
         // Compare the leg 2 
     }
 
@@ -348,7 +351,7 @@ export class SimulatorBookingComponent extends BaseComponent {
 
                     if (myResult.Errors != null && myResult.Errors.length > 0) {
                         this.ValidationErrorsList = myResult.Errors;
-                       
+
                     }
 
                     else {
@@ -368,14 +371,16 @@ export class SimulatorBookingComponent extends BaseComponent {
     EditShipmentClicked() {
         var entityId: string = this.EntityPM.Id;
         if (!AppTool.IsNullOrEmpty(entityId)) {
-            SessionLocator.DynamicLoader.Load("./Infrastructure/Components/EditComponent/EditComponent", this.CurrentSession.SessionLocation.viewContainerRef)
-                .then(cmpRef => {
+            var objectTableName = "Shipment";
+            var logWindow = new LogitudeWindow();
+            logWindow.Title = TextCodeTranslator.TranslateTable("General.B.Edit") + " " + TextCodeTranslator.TranslateTable(objectTableName);
+            logWindow.ShowEditComponent(entityId, objectTableName);
+            logWindow.WindowClosed.subscribe(($event: any) => {
+                if ($event) {
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                }
+            });
 
-                    cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: 'Shipment' });
-
-                });
         }
     }
-
 }

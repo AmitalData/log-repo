@@ -2068,7 +2068,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
     private ShowINTTRABookingWizard(entityList) {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "INTTRA e-booking Wizard";
-        logWindow.WindowArgs = { Shipment: entityList };
+        logWindow.WindowArgs = { Shipment: entityList, IsEditMode: true };
         logWindow.Width = 1020;
         logWindow.Height = 570;
         logWindow.Show('./ShipmentModules/ShipmentINTTRA/Components/Wizard/SimulatorBookingComponent');
