@@ -90,5 +90,6 @@ export class CardList {
 		IsAutonomy: boolean;
 		CalculatedLocalName: string;
 		CalculatedEnglishName: string;
+		CreatedByPartner: string;
 	
 }

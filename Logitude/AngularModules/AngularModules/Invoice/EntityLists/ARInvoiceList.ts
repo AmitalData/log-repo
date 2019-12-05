@@ -133,5 +133,8 @@ export class ARInvoiceList {
 		IsFullAccounting: boolean;
 		ARInvoiceStockId: string;
 		IsInvoiceNumberFromStock: boolean;
+		BillToCity: string;
+		BillToCountry: string;
+		CreatedByPartner: string;
 	
 }

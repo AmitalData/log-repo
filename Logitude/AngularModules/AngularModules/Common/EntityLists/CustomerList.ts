@@ -142,5 +142,6 @@ export class CustomerList {
 		Phone: string;
 		CompetitorFields: string;
 		LeadSourceName: string;
+		CreatedByPartner: string;
 	
 }

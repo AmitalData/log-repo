@@ -79,5 +79,8 @@ export class APInvoiceList {
 		IsExternalEntity: boolean;
 		IsGeneralInvoice: boolean;
 		FirstApproveDate: Date;
+		VendorCity: string;
+		VendorCountry: string;
+		CreatedByPartner: string;
 	
 }

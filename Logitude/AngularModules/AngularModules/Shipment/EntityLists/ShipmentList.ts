@@ -437,5 +437,6 @@ export class ShipmentList {
 		ForwarderPartnerId: string;
 		ARInvoices: string;
 		NotInvoicedReceivablesAmount: number;
+		CreatedByPartner: string;
 	
 }
