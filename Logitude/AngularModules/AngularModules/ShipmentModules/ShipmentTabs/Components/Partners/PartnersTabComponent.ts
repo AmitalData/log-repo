@@ -504,11 +504,21 @@ export class PartnerItem extends BaseComponent {
                 }
 
             case "AGENT":
+                {
+                    myResult = "AG";
+
+                    if (SessionLocator.TenantPM.AllowCustomersInAgentsLOV) {
+                        myResult = "CS,AG";
+                    }
+
+                    break;
+                }
+
             case "ISSAG":
             case "FRTFR":
             case "COLOD":
                 {
-                    myResult = "AG";
+                    myResult = "AG";                    
                     break;
                 }
 
@@ -568,6 +578,15 @@ export class PartnerItem extends BaseComponent {
                     }
 
                     break
+                }
+
+            case "AGENT":
+                {
+                    if (SessionLocator.TenantPM.AllowCustomersInAgentsLOV) {
+                        myResult = true;
+                    }
+
+                    break;
                 }
 
             case "REAGT":

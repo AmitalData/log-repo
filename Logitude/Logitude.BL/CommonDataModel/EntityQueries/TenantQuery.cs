@@ -158,6 +158,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 StockTypeCode = a.LogBoxTenantSetting.StockTypeCode,
                                                 DocumentShareAsDefault = a.LogBoxTenantSetting.DocumentShareAsDefault,
                                                 LogBoxAdminUserId = a.LogBoxTenantSetting.LogBoxAdminUserId,
+                                                AllowCustomersInAgentsLOV = a.AllowCustomersInAgentsLOV,
                                             });
 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -288,6 +289,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                       
                         CustomerTenantShareExportFile = tt.CustomerTenantShareExportFile,
                         AllowAgentInCustomersLOV = tt.AllowAgentInCustomersLOV,
+                        AllowCustomersInAgentsLOV = tt.AllowCustomersInAgentsLOV,
                         IsPotentialTelRequired = tt.IsPotentialTelRequired,
                         IsPotentialFaxRequired = tt.IsPotentialFaxRequired,
                         VatFormatTypeCode = tt.VatFormatTypeCode,
@@ -460,6 +462,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                    
                     CustomerTenantShareExportFile = tt.CustomerTenantShareExportFile,
                     AllowAgentInCustomersLOV = tt.AllowAgentInCustomersLOV,
+                    AllowCustomersInAgentsLOV = tt.AllowCustomersInAgentsLOV,
                     IsPotentialTelRequired = tt.IsPotentialTelRequired,
                     IsPotentialFaxRequired = tt.IsPotentialFaxRequired,
                     VatFormatTypeCode = tt.VatFormatTypeCode,
@@ -617,6 +620,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                          
                                            CustomerTenantShareExportFile = a.CustomerTenantShareExportFile,
                                            AllowAgentInCustomersLOV = a.AllowAgentInCustomersLOV,
+                                           AllowCustomersInAgentsLOV = a.AllowCustomersInAgentsLOV,
                                            IsPotentialTelRequired = a.IsPotentialTelRequired,
                                            IsPotentialFaxRequired = a.IsPotentialFaxRequired,
                                            VatFormatTypeCode = a.VatFormatTypeCode,
@@ -764,6 +768,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     
                                        CustomerTenantShareExportFile = a.CustomerTenantShareExportFile,
                                        AllowAgentInCustomersLOV = a.AllowAgentInCustomersLOV,
+                                       AllowCustomersInAgentsLOV = a.AllowCustomersInAgentsLOV,
                                        IsPotentialTelRequired = a.IsPotentialTelRequired,
                                        IsPotentialFaxRequired = a.IsPotentialFaxRequired,
                                        VatFormatTypeCode = a.VatFormatTypeCode,
@@ -913,6 +918,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             
                                                CustomerTenantShareExportFile = a.CustomerTenantShareExportFile,
                                                AllowAgentInCustomersLOV = a.AllowAgentInCustomersLOV,
+                                               AllowCustomersInAgentsLOV = a.AllowCustomersInAgentsLOV,
                                                IsPotentialTelRequired = a.IsPotentialTelRequired,
                                                IsPotentialFaxRequired = a.IsPotentialFaxRequired,
                                                VatFormatTypeCode = a.VatFormatTypeCode,
@@ -1062,6 +1068,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                          
                                            CustomerTenantShareExportFile = a.CustomerTenantShareExportFile,
                                            AllowAgentInCustomersLOV = a.AllowAgentInCustomersLOV,
+                                           AllowCustomersInAgentsLOV = a.AllowCustomersInAgentsLOV,
                                            IsPotentialTelRequired = a.IsPotentialTelRequired,
                                            IsPotentialFaxRequired = a.IsPotentialFaxRequired,
                                            VatFormatTypeCode = a.VatFormatTypeCode,
@@ -1204,6 +1211,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     
                                        CustomerTenantShareExportFile = a.CustomerTenantShareExportFile,
                                        AllowAgentInCustomersLOV = a.AllowAgentInCustomersLOV,
+                                       AllowCustomersInAgentsLOV = a.AllowCustomersInAgentsLOV,
                                        IsPotentialTelRequired = a.IsPotentialTelRequired,
                                        IsPotentialFaxRequired = a.IsPotentialFaxRequired,
                                        VatFormatTypeCode = a.VatFormatTypeCode,
@@ -1380,6 +1388,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                     CustomerTenantShareExportFile = myPOCO.CustomerTenantShareExportFile,
                     AllowAgentInCustomersLOV = myPOCO.AllowAgentInCustomersLOV,
+                    AllowCustomersInAgentsLOV = myPOCO.AllowCustomersInAgentsLOV,
                     IsPotentialTelRequired = myPOCO.IsPotentialTelRequired,
                     IsPotentialFaxRequired = myPOCO.IsPotentialFaxRequired,
                     VatFormatTypeCode = myPOCO.VatFormatTypeCode,
@@ -1532,6 +1541,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               
                                                 CustomerTenantShareExportFile = a.CustomerTenantShareExportFile,
                                                 AllowAgentInCustomersLOV = a.AllowAgentInCustomersLOV,
+                                                AllowCustomersInAgentsLOV = a.AllowCustomersInAgentsLOV,
                                                 IsWebAccessActivated = a.IsWebAccessActivated,
                                                 IsCorrespondenceRightToLeftEnabled = a.IsCorrespondenceRightToLeftEnabled,
                                                 IsNotesRightToLeftEnabled = a.IsNotesRightToLeftEnabled,

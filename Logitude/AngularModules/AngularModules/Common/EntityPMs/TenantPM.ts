@@ -660,6 +660,11 @@ export class TenantPM {
     public set ApplyVATForAllPartners(newValue: boolean) { if (this.applyVATForAllPartners != newValue) { this.applyVATForAllPartners = newValue; this.MarkAsDirty("ApplyVATForAllPartners"); } }
        
 	 
+    private allowCustomersInAgentsLOV: boolean;
+    public get AllowCustomersInAgentsLOV() { return this.allowCustomersInAgentsLOV; }
+    public set AllowCustomersInAgentsLOV(newValue: boolean) { if (this.allowCustomersInAgentsLOV != newValue) { this.allowCustomersInAgentsLOV = newValue; this.MarkAsDirty("AllowCustomersInAgentsLOV"); } }
+       
+	 
 
     public OldEntityPM: TenantPM;
 		

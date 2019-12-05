@@ -177,5 +177,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
 
         public bool ApplyVATForAllPartners { get; set; }
         public LogBoxTenantSetting LogBoxTenantSetting { get; set; }
+
+        public bool AllowCustomersInAgentsLOV { get; set; }
     }
 }
