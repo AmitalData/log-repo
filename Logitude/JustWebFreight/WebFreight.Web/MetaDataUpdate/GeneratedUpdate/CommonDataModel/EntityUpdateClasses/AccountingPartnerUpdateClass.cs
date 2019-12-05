@@ -129,6 +129,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "AccountingPartner,AccountingPartners,Simplog.FreightLib.NewAccountingPartnerCommand,Id,",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);

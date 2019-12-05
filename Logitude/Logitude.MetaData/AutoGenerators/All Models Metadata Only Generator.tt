@@ -41,7 +41,18 @@ GenerateMetaDataUpdateClass("~/../../../Logitude.Accounting.MetaData/EntityFiles
 
 GenerateAllUpdateClasses("~/../../../Logitude.BookingLib.MetaData/EntityFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/EntityUpdateClasses","BookingModel");
 GenerateMetaDataUpdateClass("~/../../../Logitude.BookingLib.MetaData/EntityFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate","BookingLibUpdateClass");
-//
+
+GenerateAllUpdateClasses("~/../../../Logitude.Social.MetaData/EntityFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/EntityUpdateClasses","SocialModel");
+GenerateMetaDataUpdateClass("~/../../../Logitude.Social.MetaData/EntityFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate","SocialUpdateClass");
+
+GenerateAllUpdateClasses("~/../../../Logitude.TariffModule.MetaData/EntityFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/EntityUpdateClasses","TariffModule");
+GenerateMetaDataUpdateClass("~/../../../Logitude.TariffModule.MetaData/EntityFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate","TariffModuleUpdateClass");
+
+GenerateAllUpdateClasses("~/../../../Logitude.TimeManagement.MetaData/EntityFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/EntityUpdateClasses","TimeManagement");
+GenerateMetaDataUpdateClass("~/../../../Logitude.TimeManagement.MetaData/EntityFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate","TimeManagementUpdateClass");
+
+GenerateAllUpdateClasses("~/../../../Logitude.WarehouseLib.MetaData/EntityFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/EntityUpdateClasses","WarehouseModel");
+GenerateMetaDataUpdateClass("~/../../../Logitude.WarehouseLib.MetaData/EntityFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate","WarehouseLibUpdateClass");
 //GenerateAllUpdateClasses("~/../../../Logitude.Customs.MetaData/EntityFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/EntityUpdateClasses","CustomsModel");
 //GenerateMetaDataUpdateClass("~/../../../Logitude.Customs.MetaData/EntityFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate","CustomsUpdateClass");
 
