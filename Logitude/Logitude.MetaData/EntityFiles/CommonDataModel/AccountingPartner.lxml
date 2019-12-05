@@ -87,6 +87,8 @@
     </ScreenFields>
   </Screen>
   <Tab TabName="&quot;General&quot;" ObjectTableName="&quot;AccountingPartner&quot;" Code="&quot;ACGC&quot;" ControlPath="&quot;Simplog.Infrastructure.GeneralControls.GeneralTabControl&quot;" TextCode="&quot;AccountingPartner.TH.General&quot;" IsPackagable="false" IndexOrder="0" FeatureCode="&quot;GENERAL&quot;" FeatureTextCodeCode="&quot;AccountingPartner.Features.General&quot;" FeatureDefaultText="&quot;General&quot;" IsSpellChecked="false" HasGeneralFeature="false" />
+  <Tab TabName="&quot;Accounting&quot;" ObjectTableName="&quot;AccountingPartner&quot;" Code="&quot;APAC&quot;" ControlPath="&quot;Simplog.FreightLib.Views.PartnersTabs.PartnersAccountingTab.AccountingTabControl&quot;" TextCode="&quot;AccountingPartner.TH.Accounting&quot;" IsPackagable="false" IndexOrder="1" HtmlComponentURL="&quot;./Common/Components/AccountingTab/AccountingTabComponent&quot;" IsSpellChecked="false" HasGeneralFeature="false" />
+
   <EventTypes>
     <EventType Code="&quot;UPAC&quot;" ObjectTableName="&quot;AccountingPartner&quot;" EnglishName="&quot;Updated&quot;" LocalName="&quot;Updated&quot;" IsManualEntry="false" ShortView="false" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
     <EventType Code="&quot;CRAC&quot;" ObjectTableName="&quot;AccountingPartner&quot;" EnglishName="&quot;Created&quot;" LocalName="&quot;Created&quot;" IsManualEntry="false" ShortView="true" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
