@@ -253,10 +253,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 int count = 1;
                 foreach (ARInvoiceLine myline in lines)
                 {
-                    VatType LineVat=VatTypeRepository.GetSingleVatType(myline.VatTypeId, item.Tenant, true);
-                    if (LineVat != null) {
-                        invoiceElement.VATExternalId = LineVat.ReceivablesExternalId;
-                       }
 
 
                     #region
@@ -310,6 +306,14 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                         {
                             lineElement.MeasurementCode = myMeasurement.Code;
                         }
+                    }
+
+
+
+                    VatType LineVat = VatTypeRepository.GetSingleVatType(myline.VatTypeId, item.Tenant, true);
+                    if (LineVat != null)
+                    {
+                        lineElement.VATExternalId = LineVat.ReceivablesExternalId;
                     }
 
                     if (!string.IsNullOrEmpty(myline.PrepaidCollectId))

@@ -197,7 +197,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public CardElement Card { get; set; }
 
         public string VATNumber { get; set; }
-        public string VATExternalId { get; set; }
         public string PaymentTermExternalId { get; set; }
         public string SATPaymentMethodCode { get; set; }
         public string SATPaymentMethodName { get; set; }
@@ -245,6 +244,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public decimal Quantity { get; set; }
         public string MeasurementCode { get; set; }
         public string PrepaidCollect { get; set; }
+        public string VATExternalId { get; set; }
 
         [XmlElement(ElementName = "Advanced")]
         public LineAdvancedElement Advanced { get; set; }
