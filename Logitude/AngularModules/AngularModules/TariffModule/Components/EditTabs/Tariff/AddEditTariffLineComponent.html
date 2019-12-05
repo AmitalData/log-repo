@@ -42,7 +42,7 @@
                                 </div>
                             </td>
 
-                            <td *ngIf="TariffType == 'ASC' || TariffType == 'OSC'">
+                            <td *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'OFS'">
                                 <table>
                                     <tr>
                                         <td style="width:130px;">
@@ -91,7 +91,7 @@
                                 </div>
                             </td>
 
-                            <td *ngIf="TariffType == 'ASC' || TariffType == 'OSC'">
+                            <td *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'OFS'">
                                 <table>
                                     <tr>
                                         <td style="width:130px;">
@@ -111,7 +111,7 @@
                         </tr>
 
                         <!-- Currency -->
-                        <tr class="FormFieldRow" *ngIf="TariffType == 'ASC' || TariffType == 'OSC'">
+                        <tr class="FormFieldRow" *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'OFS'">
                             <td>
                                 <LogLabel [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                             </td>
@@ -133,7 +133,7 @@
                         </tr>
 
                         <!-- StartDate -->
-                        <tr class="FormFieldRow" *ngIf="TariffType == 'ASC' || TariffType == 'OSC'">
+                        <tr class="FormFieldRow" *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'OFS'">
                             <td>
                                 <LogLabel [ObjectFieldName]="'StartDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                             </td>
@@ -299,7 +299,7 @@
                         </tr>
 
                         <!-- Air Surcharges Cost-->
-                        <tr *ngIf="TariffType == 'ASC' || TariffType == 'OSC'" style="height:1px;">
+                        <tr *ngIf="TariffType == 'ASC' || TariffType == 'OSC' || TariffType == 'OFS'" style="height:1px;">
                             <td colspan="3">
                                 <table>
                                     <!-- Surcharge1Price -->

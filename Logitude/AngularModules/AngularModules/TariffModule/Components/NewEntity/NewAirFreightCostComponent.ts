@@ -592,18 +592,19 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
             if (this.EntityPM.TypeCode == "OFS") {
                 if (this.IdProps.filter(p => this[p + ""] == this[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this[IdProps[index - 1]] != null)[0] != null) {
                     if (this.UOMProps.filter(p => this[p + ""] == this[UOMProps[index - 1]] && (p + "" != UOMProps[index - 1] + "") && this[UOMProps[index - 1]] != null)[0] != null) {
-                        var chargresTypes = this.UOMProps.filter(p => this[p + ""] == this[UOMProps[index - 1]]);
+                        var chargeTypes = this.IdProps.filter(p => this[p + ""] == this[IdProps[index - 1]]);
                         var isDuplicatiedUOMT: boolean = false;
-                        var tempCharges = [];
-                        chargresTypes.forEach(item => {
-                            var Chargeitem = item.replace("UOM", "");
-                            Chargeitem += "Id";
-                            if (tempCharges.includes(this[Chargeitem + ""])) {
+                        var pair: string = "";
+                        var pairs = [];
+                        chargeTypes.forEach(item => {
+                            var UOM = item.replace("Id", "UOM");
+                            pair = this[item] + " " + this[UOM];
+                            if (pairs.includes(pair)) {
                                 isDuplicatiedUOMT = true;
                                 return;
                             }
                             else {
-                                tempCharges.push(this[Chargeitem + ""]);
+                                pairs.push(pair);
                             }
                         });
                         if (isDuplicatiedUOMT) {
@@ -694,7 +695,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
                         var UOMEntity: MeasurementList = res.Result;
                         if (res) {
                             if (UOMEntity.Code == "BCNT") {
-                                this.ValidationErrorsList.push("By Container Type measurment dose not enabled");
+                                this.ValidationErrorsList.push("By Container Type measurment isn't enabled");
                             }
                         }
                     }

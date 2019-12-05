@@ -199,23 +199,29 @@ export class OccasionMainTabComponent extends BaseComponent {
         switch (arg) {
             case "AllContacts":
                 {
-                    objectTableName = "Contact";
-                    queryCode = "Contacts";
-                    filterAgrs.addAdditionalFilter("Occasion_ContactsQuery", this.AllContacts_Ids, null, null, "Equals", true, false, false, "string");
+                    objectTableName = "OccasionContact";
+                    queryCode = "OCCASIONCONTACTS";
+
+                    filterAgrs.addAdditionalFilter("OccasionId", this.EntityId, null, null, "Equals", true, false, false, "string");
+                    filterAgrs.addAdditionalFilter("FilterBy", "ALL", null, null, "Equals", true, false, false, "string");
                     break;
                 }
             case "InvitedContacts":
                 {
-                    objectTableName = "Contact";
-                    queryCode = "Contacts";
-                    filterAgrs.addAdditionalFilter("Occasion_ContactsQuery", this.InviteesContacts_Ids, null, null, "Equals", true, false, false, "string");
+                    objectTableName = "OccasionContact";
+                    queryCode = "OCCASIONCONTACTS";
+
+                    filterAgrs.addAdditionalFilter("OccasionId", this.EntityId, null, null, "Equals", true, false, false, "string");
+                    filterAgrs.addAdditionalFilter("FilterBy", "INVT", null, null, "Equals", true, false, false, "string");
                     break;
                 }
             case "ParticipatedContacts":
                 {
-                    filterAgrs.addAdditionalFilter("Occasion_ContactsQuery", this.ParticipatedContacts_Ids, null, null, "Equals", true, false, false, "string");
-                    objectTableName = "Contact";
-                    queryCode = "Contacts";
+                    objectTableName = "OccasionContact";
+                    queryCode = "OCCASIONCONTACTS";
+
+                    filterAgrs.addAdditionalFilter("OccasionId", this.EntityId, null, null, "Equals", true, false, false, "string");
+                    filterAgrs.addAdditionalFilter("FilterBy", "PART", null, null, "Equals", true, false, false, "string");             
                     break;
                 }
             case "AllCustomers":

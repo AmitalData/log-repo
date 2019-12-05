@@ -155,7 +155,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public DateTime? OperationalDate { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public DateTime? DateForVATInterest { get; set; }
+        public DateTime? DateForInterest { get; set; }
         public bool SplitJournalByCurrency { get; set; }
         public bool IsExternalEntity { get; set; }
         public string SATXML { get; set; }
@@ -360,5 +360,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
 
         public string BillToCity { get; set; }
         public string BillToCountry { get; set; }
+        public string CreatedByPartner { get; set; }
+
     }
 }

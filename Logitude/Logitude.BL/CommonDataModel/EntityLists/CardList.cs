@@ -93,6 +93,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public bool IsAutonomy { get; set; }
         public string CalculatedLocalName { get; set; }
         public string CalculatedEnglishName { get; set; }
+        public string CreatedByPartner { get; set; }
 
     }
 }

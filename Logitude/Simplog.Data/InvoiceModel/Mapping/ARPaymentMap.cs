@@ -55,6 +55,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.CadPago).HasMaxLength(200).IsUnicode(false);
             this.Property(t => t.CertPago).IsMaxLength().IsUnicode(false);
             this.Property(t => t.SelloPago).IsMaxLength().IsUnicode(false);
+            this.Property(t => t.CreatedByPartner).HasMaxLength(25).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("ARPayments");
@@ -119,6 +120,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.FirstApproveDate).HasColumnName("FirstApproveDate");
             this.Property(t => t.IsExternalEntity).HasColumnName("IsExternalEntity");
             this.Property(t => t.FechaPago).HasColumnName("FechaPago");
+            this.Property(t => t.CreatedByPartner).HasColumnName("CreatedByPartner");
 
             // Relationships
             this.HasOptional(t => t.ARAccount).WithMany().HasForeignKey(d => d.ARAccountId);

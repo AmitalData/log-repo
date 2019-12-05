@@ -786,5 +786,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string ARInvoices { get; set; }
 
         public double? NotInvoicedReceivablesAmount { get; set; }
+        public string CreatedByPartner { get; set; }
+
     }
 }

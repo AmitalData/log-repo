@@ -51,10 +51,13 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
             return tariffsSummary;
         }
 
-        public List<TariffSearchSummary> GetTariffSearchSummary(string fromport, string toport, DateTime? BetweenDate, double weight, int tenant, string Weightcode, double? GrossWeight, string GrossWeightCode, double? Volume, string VolumeCode, string currencyId)
+        public List<TariffSearchSummary> GetTariffSearchSummary(string fromport, string toport, DateTime? BetweenDate, double weight, int tenant, string Weightcode, double? GrossWeight, string GrossWeightCode, double? Volume, string VolumeCode, string currencyId, string typeCode)
         {
             AirlineRepository airlineRepository = new AirlineRepository(tenant);
             AirlineQuery airlineQuery = new AirlineQuery(airlineRepository);
+            ShippingLineRepository shippingLineRepository = new ShippingLineRepository(tenant);
+            ShippingLineQuery shippingLineQuery = new ShippingLineQuery(shippingLineRepository);
+            
             List<TariffSearchSummary> tariffSearchSummaries = new List<TariffSearchSummary>();
             IQueryable<TariffLine> iQueryable = this.repository.GetAllTariffLines(tenant);
             iQueryable = iQueryable.Where(p => p.OriginPortId == fromport && p.DestinationPortId == toport && System.Data.Entity.DbFunctions.TruncateTime(p.StartDate) <= BetweenDate && (p.ExpirationDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(p.ExpirationDate) >= BetweenDate):true));
@@ -106,7 +109,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
             }
 
 
-            List<Tariff> TariffListTemp = this.repository.GetAllTariff(tariffids.ToArray(), tenant).Where(p => !p.InActive && p.TypeCode == "AFC").ToList();
+            List<Tariff> TariffListTemp = this.repository.GetAllTariff(tariffids.ToArray(), tenant).Where(p => !p.InActive && p.TypeCode == typeCode).ToList();
 
 
             if (TariffListTemp != null && TariffListTemp.Count > 0)
@@ -329,7 +332,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
 
 
 
-            List<Tariff> TariffList = this.repository.GetAllTariff(items.Select(p => p.tariffid).ToArray(), tenant).Where(p => !p.InActive && p.TypeCode == "AFC").ToList();
+            List<Tariff> TariffList = this.repository.GetAllTariff(items.Select(p => p.tariffid).ToArray(), tenant).Where(p => !p.InActive && p.TypeCode == typeCode).ToList();
             List<TariffVersion> TariffVersionList = this.repository.GetAllTariffVersionsByTariffIds(items.Select(p => p.tariffid).ToArray(), tenant).ToList();
             List<int> VersionIds = TariffVersionList.Select(a => a.Version).ToList();
 
@@ -337,7 +340,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
 
             Dictionary<string, string> Currencies = myCommonContext.Currencies.Where(p => p.Tenant == tenant).ToDictionary(p => p.Id, p => p.Code);
             List<TariffVersionAllInCharge> TariffVersionAllInChargesList = this.repository.GetAllTariffAllInOnVersionsByTariffIds(items.Select(p => p.tariffid).ToArray(), TariffVersionList.Select(p => p.Version).ToArray(), tenant).ToList();
-            List<Tariff> SurchargeTariffList = this.repository.GetSurchargeTariffsByAirline(TariffList.Select(p => p.SellerId).ToArray(), tenant).Where(p => !p.InActive).ToList();
+            List<Tariff> SurchargeTariffList = this.repository.GetSurchargeTariffsByAirline(TariffList.Select(p => p.SellerId).ToArray(),typeCode, tenant).Where(p => !p.InActive).ToList();
             List<Measurement> UsedMeasurements = myCommonContext.Measurements.Where(p => p.Tenant == tenant).ToList();
             List<ChargesType> chargesTypes = myCommonContext.ChargesTypes.Where(p => p.Tenant == tenant).ToList();
 
@@ -433,7 +436,26 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                         tariffsSummary.AllIn = string.Join(", ", AllInChargesNames);
                     }
                     Tariff CurrentSurcharge = SurchargeTariffList.Where(p => p.SellerId == result.SellerId).FirstOrDefault();
-                    AirlinePM airline = airlineQuery.GetSinglePM(result.SellerId, tenant);
+
+                    string chargeCode = null;
+                    string sellerName = "";
+                    string documentId = null;
+                    AirlinePM airline = null;
+                    ShippingLinePM shippingLine = null;
+                    if (typeCode == "AFC")
+                    {
+                        airline = airlineQuery.GetSinglePM(result.SellerId, tenant);
+                        sellerName = airline != null && airline.Card != null ? airline.Card.EnglishName : "";
+                        documentId = airline.ImageDetailId;
+                        chargeCode = "AFT";
+                    }
+                    else if (typeCode == "OLC")
+                    {
+                        shippingLine = shippingLineQuery.GetSinglePM(result.SellerId, tenant);
+                        sellerName = shippingLine != null && shippingLine.Card != null ? shippingLine.Card.EnglishName : "";
+                        chargeCode = "OFT";
+                    }
+
                     if (CurrentSurcharge != null)
                     {
                         if (SurchargeTariffLinesFiltered.ContainsKey(CurrentSurcharge.Id))
@@ -537,7 +559,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                                                     SurchargeItem.TariffNumber = CurrentSurcharge.TariffNumber;
                                                     SurchargeItem.VersionId = ChargesfilteredLines.Version + "";
                                                     SurchargeItem.SellerId = CurrentSurcharge.SellerId;
-                                                    SurchargeItem.SellerName= airline.Card != null ? airline.Card.EnglishName : "";
+                                                    SurchargeItem.SellerName= sellerName;
                                                     SurchargeItem.MinPrice = minPriceSurcharge;
                                                     tariffsSummary.Surcharges.Add(SurchargeItem);
                                                 }
@@ -552,13 +574,9 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
 
                             }
                         }
-
-
                     }
 
-
-                  
-                    tariffsSummary.SellerName = airline.Card != null ? airline.Card.EnglishName : "";
+                    tariffsSummary.SellerName = sellerName;
                     tariffsSummary.EffictiveDate = result.ExpirationDate;
                     tariffsSummary.Remarks = result.Notes;
                     var calculatedLocalAmount = item.Price != null ? CalculateLocalAmount((item.Price).Value, currencyId, result.CurrencyId, tenant): 0;
@@ -566,7 +584,9 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                     tariffsSummary.VersionId = item.TariffVersion + "";
                     tariffsSummary.TariffId = item.tariffid;
                     tariffsSummary.TariffNumber = result.TariffNumber;
-                    var airChrageType = chargesTypes.Where(p => p.Code == "AFT").Select(p => p).FirstOrDefault();
+
+                
+                    var airChrageType = chargesTypes.Where(p => p.Code == chargeCode).Select(p => p).FirstOrDefault();
                     tariffsSummary.ChargeTypeId = airChrageType.Id;
                     tariffsSummary.TotalSurcharge = Sum + "";
                     tariffsSummary.WholePrice = (decimal?)Sum + calculatedLocalAmount + "";
@@ -574,7 +594,8 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                     tariffsSummary.UnitOfMesurmentCode = UsedMeasurements.Where(p => p.Id == airChrageType.MeasurementId).Select(p => p.Code).FirstOrDefault();
                     tariffsSummary.SellerId = result.SellerId;
                     tariffsSummary.MinPrice = minprice;
-                    byte[] filedata = DownloadFile(airline.ImageDetailId, "jpg", tenant, "images");
+                 
+                    byte[] filedata = DownloadFile(documentId, "jpg", tenant, "images");
                     string resultImage = "";
                     if (filedata != null)
                     {
@@ -711,7 +732,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
         {
            TariffPM entityPM = this.GetSingle(TariffId, true, false);
             TariffLineRepository iTariffLineRepository = new TariffLineRepository(entityPM.Tenant);
-            if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC")
+            if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC" || entityPM.TypeCode == "OFS")
             {
                 TariffVersionPM iPreviousVersion = entityPM.ActiveVersions.OrderByDescending(o => o.CreateDate).FirstOrDefault();
                 if (iPreviousVersion != null)

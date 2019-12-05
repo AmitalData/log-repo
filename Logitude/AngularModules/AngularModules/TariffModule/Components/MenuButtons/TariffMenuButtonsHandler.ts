@@ -39,7 +39,7 @@ export class TariffMenuButtonsHandler {
                         }
 
                         case "EditPriceSteps": {
-                            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFC") {
+                            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFC" || this.EntityPM.TypeCode == "OFS") {
                                 menuButton.IsHidden = true;
                             }
                             break;

@@ -69,7 +69,6 @@ export class NewFullWarehouseReleaseComponent extends BaseComponent implements O
     IsInlandDomestic: boolean = false;
     public SessionIndex: number;
 
-
     public FromPortText: string;
     public ToPortText: string;
     public CarrierTextCode: string;
@@ -147,6 +146,8 @@ export class NewFullWarehouseReleaseComponent extends BaseComponent implements O
         if (shipment) {
             this.warehouseReleasePM.ShipmentNumber = shipment.ShipmentNumber;
         }
+
+        this.Shipment = shipment;
     }
 
 
@@ -167,8 +168,8 @@ export class NewFullWarehouseReleaseComponent extends BaseComponent implements O
         if (this.warehouseReleasePM.TransportModeId != newValue) {
             this.warehouseReleasePM.TransportModeId = newValue;
             this.IsInlandDomestic = this.TransportModeId == "I" && this.DirectionId == "D" ? true : false;
-            this.FromPortId = null;
-            this.ToPortId = null;
+            //this.FromPortId = null;
+            //this.ToPortId = null;
            
             this.ShipmentTypeId = null;
             this.OnFiltersChanged();
@@ -207,44 +208,47 @@ export class NewFullWarehouseReleaseComponent extends BaseComponent implements O
             this.isTransportModesListEnabled = value;
         }
     }
-    
-    public FromPortList: PortList = null;
-    get FromPortId() { return this.warehouseReleasePM.FromPortId; }
-    set FromPortId(value: string) {
-        if (this.warehouseReleasePM.FromPortId != value) {
-            this.warehouseReleasePM.FromPortId = value;
-            this.SetUIProperties();
-            if (AppTool.IsNullOrEmpty(value)) {
-                this.FromPortList = null;
-            }
-            else {
-                this.myPortListService.getSingle(value).subscribe((myResponse: ServiceResponse) => {
-                    if (!myResponse.HasError) {
-                        this.FromPortList = myResponse.Result;
-                    }
-                });
-            }
-        }
-    }
 
-    public ToPortList: PortList = null;
-    get ToPortId() { return this.warehouseReleasePM.ToPortId; }
-    set ToPortId(value: string) {
-        if (this.warehouseReleasePM.ToPortId != value) {
-            this.warehouseReleasePM.ToPortId = value;
-            this.SetUIProperties();
-            if (AppTool.IsNullOrEmpty(value)) {
-                this.ToPortList = null;
-            }
-            else {
-                this.myPortListService.getSingle(value).subscribe((myResponse: ServiceResponse) => {
-                    if (!myResponse.HasError) {
-                        this.ToPortList = myResponse.Result;
-                    }
-                });
-            }
-        }
-    }
+
+    
+    
+    //public FromPortList: PortList = null;
+    //get FromPortId() { return this.warehouseReleasePM.FromPortId; }
+    //set FromPortId(value: string) {
+    //    if (this.warehouseReleasePM.FromPortId != value) {
+    //        this.warehouseReleasePM.FromPortId = value;
+    //        this.SetUIProperties();
+    //        if (AppTool.IsNullOrEmpty(value)) {
+    //            this.FromPortList = null;
+    //        }
+    //        else {
+    //            this.myPortListService.getSingle(value).subscribe((myResponse: ServiceResponse) => {
+    //                if (!myResponse.HasError) {
+    //                    this.FromPortList = myResponse.Result;
+    //                }
+    //            });
+    //        }
+    //    }
+    //}
+
+    //public ToPortList: PortList = null;
+    //get ToPortId() { return this.warehouseReleasePM.ToPortId; }
+    //set ToPortId(value: string) {
+    //    if (this.warehouseReleasePM.ToPortId != value) {
+    //        this.warehouseReleasePM.ToPortId = value;
+    //        this.SetUIProperties();
+    //        if (AppTool.IsNullOrEmpty(value)) {
+    //            this.ToPortList = null;
+    //        }
+    //        else {
+    //            this.myPortListService.getSingle(value).subscribe((myResponse: ServiceResponse) => {
+    //                if (!myResponse.HasError) {
+    //                    this.ToPortList = myResponse.Result;
+    //                }
+    //            });
+    //        }
+    //    }
+    //}
 
 
 
@@ -283,6 +287,7 @@ export class NewFullWarehouseReleaseComponent extends BaseComponent implements O
     set WarehouseId(newValue: string) {
         if (this.warehouseReleasePM.WarehouseId != newValue) {
             this.warehouseReleasePM.WarehouseId = newValue;
+            this.warehouseReleasePM.FromPortId = newValue;
 
         }
     }
@@ -600,28 +605,28 @@ export class NewFullWarehouseReleaseComponent extends BaseComponent implements O
 
             if (this.warehouseReleasePM.DirectionId == "D") {
 
-                if (!AppTool.IsNullOrEmpty(this.warehouseReleasePM.FromPortId) && !AppTool.IsNullOrEmpty(this.warehouseReleasePM.ToPortId)) {
-                    var fromCountryId = null;
-                    var fromCountryIsEC = null;
-                    var toCountryId = null;
-                    var toCountryIsEC = null;
+                //if (!AppTool.IsNullOrEmpty(this.warehouseReleasePM.FromPortId) && !AppTool.IsNullOrEmpty(this.warehouseReleasePM.ToPortId)) {
+                //    var fromCountryId = null;
+                //    var fromCountryIsEC = null;
+                //    var toCountryId = null;
+                //    var toCountryIsEC = null;
 
-                    if (this.FromPortList != null) {
-                        fromCountryId = this.FromPortList.CountryId;
-                        fromCountryIsEC = this.FromPortList.CountryEC;
-                    }
+                //    if (this.FromPortList != null) {
+                //        fromCountryId = this.FromPortList.CountryId;
+                //        fromCountryIsEC = this.FromPortList.CountryEC;
+                //    }
 
-                    if (this.ToPortList != null) {
-                        toCountryId = this.ToPortList.CountryId;
-                        toCountryIsEC = this.ToPortList.CountryEC;
-                    }
+                //    if (this.ToPortList != null) {
+                //        toCountryId = this.ToPortList.CountryId;
+                //        toCountryIsEC = this.ToPortList.CountryEC;
+                //    }
 
-                    if (fromCountryId != toCountryId) {
-                        if (fromCountryIsEC == false || toCountryIsEC == false) {
-                            this.ValidationErrorsList.push("Both Ports must be in the same country since the direction is Domestic");
-                        }
-                    }
-                }
+                //    if (fromCountryId != toCountryId) {
+                //        if (fromCountryIsEC == false || toCountryIsEC == false) {
+                //            this.ValidationErrorsList.push("Both Ports must be in the same country since the direction is Domestic");
+                //        }
+                //    }
+                //}
             }
         }
     }   
@@ -652,8 +657,8 @@ export class NewFullWarehouseReleaseComponent extends BaseComponent implements O
         // Customer
         this.UIProperties.SetEnabled("CustomerId", this.ObjectTableName, isScreenEnabled);
         
-        this.UIProperties.SetEnabled("FromPortId", this.ObjectTableName, isScreenEnabled);
-        this.UIProperties.SetEnabled("ToPortId", this.ObjectTableName, isScreenEnabled);
+        //this.UIProperties.SetEnabled("FromPortId", this.ObjectTableName, isScreenEnabled);
+        //this.UIProperties.SetEnabled("ToPortId", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("ReleaseBy", this.ObjectTableName, isScreenEnabled);
      
         this.UIProperties.SetEnabled("Notes", this.ObjectTableName, isScreenEnabled);
@@ -665,12 +670,13 @@ export class NewFullWarehouseReleaseComponent extends BaseComponent implements O
         this.UIProperties.SetEnabled("TotalPieces", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("TotalGrossWeight", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("ShipmentId", this.ObjectTableName, isScreenEnabled);
-        this.UIProperties.SetRequired("FromPortId", this.ObjectTableName, isScreenEnabled);
-        this.UIProperties.SetRequired("ToPortId", this.ObjectTableName, isScreenEnabled);
+        //this.UIProperties.SetRequired("FromPortId", this.ObjectTableName, isScreenEnabled);
+        //this.UIProperties.SetRequired("ToPortId", this.ObjectTableName, isScreenEnabled);
         //this.UIProperties.SetRequired("CustomerId", this.ObjectTableName, isScreenEnabled);
         //this.UIProperties.SetRequired("WarehouseId", this.ObjectTableName, isScreenEnabled);
     }
 
+    Shipment: any;
     FillMorePackagesDetails() {
 
         var logeWindow = new LogitudeWindow();
@@ -678,9 +684,7 @@ export class NewFullWarehouseReleaseComponent extends BaseComponent implements O
         logeWindow.Height = 500;
         logeWindow.Title = "Packages Details";
 
-
-
-        logeWindow.WindowArgs = { warehouseReleasePM: this.warehouseReleasePM, ViewModelTrigger: this, ShowPackageSummary: true, IsFromFullWarehouseReleaseComponent:true};
+        logeWindow.WindowArgs = { warehouseReleasePM: this.warehouseReleasePM, ViewModelTrigger: this, ShowPackageSummary: true, IsFromFullWarehouseReleaseComponent: true, ShipmentPM: this.Shipment };
         logeWindow.Show("./Warehouse/Components/WarehouseReleasePackagesDetailsComponent");
 
     }
@@ -717,19 +721,19 @@ export class NewFullWarehouseReleaseComponent extends BaseComponent implements O
 
     SetUIProperties_Port() {
         var isFromRequired: boolean = false;
-        var isToRequired: boolean = false;
+        //var isToRequired: boolean = false;
 
-        if (!this.IsInlandDomestic) {
-            if (AppTool.IsNullOrEmpty(this.FromPortId)) {
-                isFromRequired = true;
-            }
-            if (AppTool.IsNullOrEmpty(this.ToPortId)) {
-                isToRequired = true;
-            }
-        } 
+        //if (!this.IsInlandDomestic) {
+        //    if (AppTool.IsNullOrEmpty(this.FromPortId)) {
+        //        isFromRequired = true;
+        //    }
+        //    if (AppTool.IsNullOrEmpty(this.ToPortId)) {
+        //        isToRequired = true;
+        //    }
+        //} 
 
-        this.UIProperties.SetRequired("FromPortId", this.ObjectTableName, isFromRequired);
-        this.UIProperties.SetRequired("ToPortId", this.ObjectTableName, isToRequired);
+        //this.UIProperties.SetRequired("FromPortId", this.ObjectTableName, isFromRequired);
+        //this.UIProperties.SetRequired("ToPortId", this.ObjectTableName, isToRequired);
 
 
     }
@@ -846,22 +850,22 @@ export class NewFullWarehouseReleaseComponent extends BaseComponent implements O
 
 
 
-        if (this.IsInlandDomestic) {
-            this.warehouseReleasePM.FromPortId = null;
-            this.warehouseReleasePM.ToPortId = null;
-        }
+        //if (this.IsInlandDomestic) {
+        //    this.warehouseReleasePM.FromPortId = null;
+        //    this.warehouseReleasePM.ToPortId = null;
+        //}
   
 
-        if (!this.IsInlandDomestic) {
-            if (AppTool.IsNullOrEmpty(this.warehouseReleasePM.FromPortId)) {
-                this.ValidationErrorsList.push(this.FromPortText + " field is required");
-            }
-            if (AppTool.IsNullOrEmpty(this.warehouseReleasePM.ToPortId)) {
-                this.ValidationErrorsList.push(this.ToPortText + " field is required");
-            }
+        //if (!this.IsInlandDomestic) {
+        //    if (AppTool.IsNullOrEmpty(this.warehouseReleasePM.FromPortId)) {
+        //        this.ValidationErrorsList.push(this.FromPortText + " field is required");
+        //    }
+        //    if (AppTool.IsNullOrEmpty(this.warehouseReleasePM.ToPortId)) {
+        //        this.ValidationErrorsList.push(this.ToPortText + " field is required");
+        //    }
 
            
-        }
+        //}
 
         //this.ValidatePartners();
 

@@ -104,6 +104,21 @@ export class BIReportPM {
     public set UpdatedByUserName(newValue: string) { if (this.updatedByUserName != newValue) { this.updatedByUserName = newValue; this.MarkAsDirty("UpdatedByUserName"); } }
        
 	 
+    private lastRunDate: Date;
+    public get LastRunDate() { return this.lastRunDate; }
+    public set LastRunDate(newValue: Date) { if (this.lastRunDate != newValue) { this.lastRunDate = newValue; this.MarkAsDirty("LastRunDate"); } }
+       
+	 
+    private lastRunByUserId: string;
+    public get LastRunByUserId() { return this.lastRunByUserId; }
+    public set LastRunByUserId(newValue: string) { if (this.lastRunByUserId != newValue) { this.lastRunByUserId = newValue; this.MarkAsDirty("LastRunByUserId"); } }
+       
+	 
+    private lastRunByUserName: string;
+    public get LastRunByUserName() { return this.lastRunByUserName; }
+    public set LastRunByUserName(newValue: string) { if (this.lastRunByUserName != newValue) { this.lastRunByUserName = newValue; this.MarkAsDirty("LastRunByUserName"); } }
+       
+	 
 
     public OldEntityPM: BIReportPM;
 		

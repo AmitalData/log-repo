@@ -376,6 +376,11 @@ namespace WebFreight.Web.WebPages
                     data = manager.DownloadStaticFile(documentName, "how-to");
                     break;
 
+                case "73":
+                    documentName = "shared_logistics_white_label_guide.pdf";
+                    data = manager.DownloadStaticFile(documentName, "how-to");
+                    break;
+
                 case "REL001":
                     documentName = "december_2015_release.pdf";
                     data = manager.DownloadStaticFile(documentName, "how-to");
@@ -473,6 +478,11 @@ namespace WebFreight.Web.WebPages
 
                 case "REL020":
                     documentName = "september_2019_release.pdf";
+                    data = manager.DownloadStaticFile(documentName, "how-to");
+                    break;
+
+                case "REL021":
+                    documentName = "december_2019_release.pdf";
                     data = manager.DownloadStaticFile(documentName, "how-to");
                     break;
 

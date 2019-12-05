@@ -20,7 +20,7 @@ namespace Logitude.HybridTest.ServicesTest
                 ServiceFilterType = null,
             };
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { TestEnvironmentGlobalParameters.Tenant1, serviceResponse };
+            object[] serviceParameters = new object[] { EnvironmentGlobalParams.MainTenant, serviceResponse };
             HybridPartnerList[] customerAdditionalServices = (HybridPartnerList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get Customer Additional Services Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get Mislaka Partners Failed! " + serviceResponse.ErrorMessage);

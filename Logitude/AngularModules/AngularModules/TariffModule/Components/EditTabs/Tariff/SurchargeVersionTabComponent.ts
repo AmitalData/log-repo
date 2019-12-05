@@ -56,7 +56,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
 
     SetOriginDependencyFilterValue() {
-        if (this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OSC") {
+        if (this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
             this.OriginDependencyFilterValue = "O";
             this.DestinationDependencyFilterValue = "O";
         }
@@ -482,7 +482,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             newVersion.ParentVersionNumber = item.ParentVersionNumber;
             newVersion.Id = item.TariffId;
 
-            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode =="OSC") {
+            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
                 newVersion.Name = "Version " + item.Version;
             }
 
@@ -703,7 +703,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         logWindow.Width = 1100;
         logWindow.Height = 600;
         logWindow.WindowArgs = args;
-        logWindow.Title = "Tariff Surchage Update";
+        logWindow.Title = "Tariff Surcharge Update";
 
         logWindow.WindowClosed.subscribe((s: any) => {
             if (s == "ok") {

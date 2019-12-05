@@ -17,7 +17,7 @@ namespace Logitude.HybridTest.ServicesTest
                 Code = HybridData.GlobalZoneCodeHZ,
                 EnglishName = "Hybrid GlobalZone",
                 LocalName = "Hybrid GlobalZone",
-                Tenant = TestEnvironmentGlobalParameters.Tenant1,
+                Tenant = EnvironmentGlobalParams.MainTenant,
             };
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(globalZonePM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);

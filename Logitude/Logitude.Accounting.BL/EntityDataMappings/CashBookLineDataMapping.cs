@@ -24,6 +24,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
         {
             AddPOCOPropertyName(POCOPropertyNames.CashBookId);
             AddPOCOPropertyName(POCOPropertyNames.Tenant);
+            AddPOCOPropertyName(POCOPropertyNames.SearchFields);
+            
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
                 entityPOCO.CashBookId = entityPM.CashBookId;

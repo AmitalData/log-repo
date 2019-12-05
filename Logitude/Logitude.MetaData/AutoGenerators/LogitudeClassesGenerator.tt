@@ -21,13 +21,13 @@ this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
 
 
  
-GenerateAllControllers("../EntityFiles/CommonDataModel","../.../JustWebFreight/WebFreight.Web/Controllers","CommonDataContext","CommonDataModel");
-GenerateAllControllers("../EntityFiles/ShipmentsModel","../.../JustWebFreight/WebFreight.Web/Controllers","ShipmentsContext","ShipmentsModel");
-GenerateAllControllers("../EntityFiles/InfrastructureModel","../.../JustWebFreight/WebFreight.Web/Controllers","WebFreightContext","InfrastructureModel");
+GenerateAllControllers("../EntityFiles/CommonDataModel","../../JustWebFreight/WebFreight.Web/Controllers","CommonDataContext","CommonDataModel");
+GenerateAllControllers("../EntityFiles/ShipmentsModel","../../JustWebFreight/WebFreight.Web/Controllers","ShipmentsContext","ShipmentsModel");
+GenerateAllControllers("../EntityFiles/InfrastructureModel","../../JustWebFreight/WebFreight.Web/Controllers","WebFreightContext","InfrastructureModel");
 
-GenerateAllControllers("../EntityFiles/GlobalModel","../.../JustWebFreight/WebFreight.Web/Controllers","GlobalContext","GlobalModel");
-GenerateAllControllers("../EntityFiles/InvoiceModel","../.../JustWebFreight/WebFreight.Web/Controllers","InvoiceContext","InvoiceModel");
-GenerateAllControllers("../EntityFiles/QuoteModel","../.../JustWebFreight/WebFreight.Web/Controllers","QuotesContext","QuoteModel");
+GenerateAllControllers("../EntityFiles/GlobalModel","../../JustWebFreight/WebFreight.Web/Controllers","GlobalContext","GlobalModel");
+GenerateAllControllers("../EntityFiles/InvoiceModel","../../JustWebFreight/WebFreight.Web/Controllers","InvoiceContext","InvoiceModel");
+GenerateAllControllers("../EntityFiles/QuoteModel","../../JustWebFreight/WebFreight.Web/Controllers","QuotesContext","QuoteModel");
 
 // Generate Commmon TS files---------------------------------------------------------------------------------------------------------------
 GenerateAllPMTS("../EntityFiles/CommonDataModel","../../Logitude.BL/CommonDataModel/EntityPMs","../../AngularModules/AngularModules/Common/EntityPMs");
@@ -73,8 +73,8 @@ GenerateAllServices("../EntityFiles/GlobalModel","../../AngularModules/AngularMo
 GenerateAllListServices("../EntityFiles/GlobalModel","../../AngularModules/AngularModules/Infrastructure/Services/StandardLists","Infrastructure");
 
 //Generate System Logs TS files-----------------------------------------------------------------------------------------------------------
-GenerateAllPMTS("../EntityFiles/SystemLogsModel","../.../JustWebFreight/WebFreight.Web/SystemLogsModel/EntityPMs","../../AngularModules/AngularModules/Infrastructure/EntityPMs");
-GenerateAllListTS("../EntityFiles/SystemLogsModel","../.../JustWebFreight/WebFreight.Web/SystemLogsModel/EntityList","../../AngularModules/AngularModules/Infrastructure/EntityLists");
+GenerateAllPMTS("../EntityFiles/SystemLogsModel","../../JustWebFreight/WebFreight.Web/SystemLogsModel/EntityPMs","../../AngularModules/AngularModules/Infrastructure/EntityPMs");
+GenerateAllListTS("../EntityFiles/SystemLogsModel","../../JustWebFreight/WebFreight.Web/SystemLogsModel/EntityList","../../AngularModules/AngularModules/Infrastructure/EntityLists");
 
 GenerateAllServices("../EntityFiles/SystemLogsModel","../../AngularModules/AngularModules/Infrastructure/Services/StandardPMs","Infrastructure");
 GenerateAllListServices("../EntityFiles/SystemLogsModel","../../AngularModules/AngularModules/Infrastructure/Services/StandardLists","Infrastructure");

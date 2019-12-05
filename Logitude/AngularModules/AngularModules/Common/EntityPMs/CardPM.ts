@@ -439,6 +439,11 @@ export class CardPM {
     public set IsDisconnectedFromGLAccount(newValue: boolean) { if (this.isDisconnectedFromGLAccount != newValue) { this.isDisconnectedFromGLAccount = newValue; this.MarkAsDirty("IsDisconnectedFromGLAccount"); } }
        
 	 
+    private createdByPartner: string;
+    public get CreatedByPartner() { return this.createdByPartner; }
+    public set CreatedByPartner(newValue: string) { if (this.createdByPartner != newValue) { this.createdByPartner = newValue; this.MarkAsDirty("CreatedByPartner"); } }
+       
+	 
 
     public OldEntityPM: CardPM;
 		
