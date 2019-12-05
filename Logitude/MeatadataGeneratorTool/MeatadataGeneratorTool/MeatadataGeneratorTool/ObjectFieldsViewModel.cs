@@ -8,7 +8,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MeatadataGeneratorTool
 {
-
     public class ObjectFieldsViewModel : PropertyChangedImplementation
     {
         public List<string> DataTypesList { get { return new List<string>() { "Boolean", "Constant", "Date", "DateTime", "Decimal", "Double", "Integer", "LookUp", "nText", "PickList", "SigDouble", "Text", "UnsDecimal", "UnsInteger", "List","Emails", "Byte[]" }; } }
@@ -117,6 +116,13 @@ namespace MeatadataGeneratorTool
             set { oldfieldName = value; FirePropertyChanged("OldFieldName");}
         }
 
+        string oldNames;
+        public string OldNames
+        {
+            get { return oldNames; }
+            set { oldNames = value; FirePropertyChanged("OldNames"); }
+        }
+        
         private void SetPMandList(string value)
         {
             PMPropertyPath = value;

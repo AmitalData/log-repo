@@ -30,10 +30,27 @@ namespace MeatadataGeneratorTool
         public string Code { get; set; }
         public string Name { get; set; }
     }
+
+    public class DxmlDatabaseType
+    {
+        public string Code { get; set; }
+        public string Name { get; set; }
+    }
+
+    public class DxmlDatabaseSchema
+    {
+        public string Code { get; set; }
+        public string Name { get; set; }
+    }
+
     public class ObjectTableViewModel : PropertyChangedImplementation
     {
 
         public List<ObjectTableType> ObjectTableTypes { get; set; }
+
+        public List<DxmlDatabaseType> DxmlDatabaseTypes { get; set; }
+
+        public List<DxmlDatabaseSchema> DxmlDatabaseSchemas { get; set; }
 
         public ObservableCollection<ObjectFieldsViewModel> ObsList { get; set; }
 
@@ -379,6 +396,13 @@ namespace MeatadataGeneratorTool
             ToBeDisplayOnLookUpList = new ObservableCollection<ObjectFieldsViewModel>();
             ToBeDisplayOnLookUpLocalList = new ObservableCollection<ObjectFieldsViewModel>();
             ObjectTableTypes = new List<ObjectTableType>() { new ObjectTableType { Code = "MD", Name = "Master Data" }, new ObjectTableType() { Code = "BR", Name = "Business Record" } };
+            DxmlDatabaseTypes = new List<DxmlDatabaseType>() {
+                new DxmlDatabaseType { Code = "Main", Name = "Main Database" },
+                new DxmlDatabaseType { Code = "Global", Name = "Global Database" },
+                new DxmlDatabaseType() { Code = "SystemLogs", Name = "SystemLogs Database" } };
+            DxmlDatabaseSchemas = new List<DxmlDatabaseSchema>() {
+                new DxmlDatabaseSchema { Code = "dbo", Name = "Dbo Schema" },
+                new DxmlDatabaseSchema() { Code = "Customs", Name = "Customs Schema" } };
             this.AdditionalTextCodesList = new ObservableCollection<TextCodesViewModel>();
             this.AdditionalFeaturesList = new ObservableCollection<FeaturesViewModel>();
 			this.AdditionalFeaturesTempList = new ObservableCollection<FeaturesViewModel>();
@@ -1574,6 +1598,20 @@ namespace MeatadataGeneratorTool
             set { objectTableTypeCode = value; FirePropertyChanged("ObjectTableTypeCode"); }
         }
 
+        string dxmlDatabaseTypeCode;
+        public string DxmlDatabaseTypeCode
+        {
+            get { return dxmlDatabaseTypeCode; }
+            set { dxmlDatabaseTypeCode = value; FirePropertyChanged("DxmlDatabaseTypeCode"); }
+        }
+
+        string dxmlDatabaseSchemaCode;
+        public string DxmlDatabaseSchemaCode
+        {
+            get { return dxmlDatabaseSchemaCode; }
+            set { dxmlDatabaseSchemaCode = value; FirePropertyChanged("DxmlDatabaseSchemaCode"); }
+        }
+
         int maxNumberOfCustomFields;
         public int MaxNumberOfCustomFields
         {
@@ -2489,6 +2527,21 @@ namespace MeatadataGeneratorTool
                 ErrorsVisibility = Visibility.Visible;
                 return false;
             }
+
+            if (string.IsNullOrEmpty(DxmlDatabaseTypeCode))
+            {
+                ErrorMessages = "Dxml Database Type is Required";
+                ErrorsVisibility = Visibility.Visible;
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(DxmlDatabaseSchemaCode))
+            {
+                ErrorMessages = "Dxml Database Schema is Required";
+                ErrorsVisibility = Visibility.Visible;
+                return false;
+            }
+
             try
             {
                 ErrorsVisibility = Visibility.Collapsed;
@@ -2615,12 +2668,12 @@ namespace MeatadataGeneratorTool
                     }
                 }
 
-
                 if (ErrorMessages == "")
                 {
                     //UpdateObsList(this);
                     succeeded = true;
                     XmlGeneratorClass.GenerateXmlFileFromTool(this);
+                    XmlGeneratorClass.GenerateDXMLFileFromTool(this);
                     // App.CurrentControl.Close();
                     Environment.Exit(0);
                 }

@@ -205,6 +205,9 @@ namespace MeatadataGeneratorTool.Helpers
             {
                 field.OldFieldName = GetAttributeStringValue(fieldNode.Attributes["FieldName"]);
             }
+
+            field.OldNames = GetAttributeStringValue(fieldNode.Attributes["OldNames"]);
+
             field.ForeignEntity = GetAttributeStringValue(fieldNode.Attributes["ForeignEntity"]);
             field.FullLocalDefaultText = GetAttributeStringValue(fieldNode.Attributes["FullLocalDefaultText"]);
             field.HelpLocalDefaultText = GetAttributeStringValue(fieldNode.Attributes["HelpLocalDefaultText"]);
@@ -906,6 +909,9 @@ namespace MeatadataGeneratorTool.Helpers
                 objectTable.Id = GetAttributeStringValue(entity.Attributes["Id"]);
                 objectTable.ObjectTableName = GetAttributeStringValue(entity.Attributes["ObjectTableName"]);
                 objectTable.DBTableName = GetAttributeStringValue(entity.Attributes["DBTableName"]);
+
+                App.CurrentDBTableName = objectTable.DBTableName;
+
                 if (entity.Attributes["OldDBTableName"] != null)
                 {
                     objectTable.OldDBTableName = GetAttributeStringValue(entity.Attributes["OldDBTableName"]);
@@ -964,6 +970,8 @@ namespace MeatadataGeneratorTool.Helpers
                 objectTable.ObjectTablePlural = GetAttributeStringValue(entity.Attributes["ObjectTablePlural"]);
                 objectTable.ObjectTableSingular = GetAttributeStringValue(entity.Attributes["ObjectTableSingular"]);
                 objectTable.ObjectTableTypeCode = GetAttributeStringValue(entity.Attributes["ObjectTableTypeCode"]);
+                objectTable.DxmlDatabaseTypeCode = GetAttributeStringValue(entity.Attributes["DxmlDatabaseTypeCode"]);
+                objectTable.DxmlDatabaseSchemaCode = GetAttributeStringValue(entity.Attributes["DxmlDatabaseSchemaCode"]);
                 objectTable.ShortTitleControlPath = GetAttributeStringValue(entity.Attributes["ShortTitleControlPath"]);
                 objectTable.SortingByObjectField = GetAttributeStringValue(entity.Attributes["SortingByObjectField"]);
                 objectTable.SortingByDirection = GetAttributeStringValue(entity.Attributes["SortingByDirection"]);

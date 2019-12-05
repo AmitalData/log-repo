@@ -29,6 +29,7 @@ namespace MeatadataGeneratorTool
         public static string DirectOpenPath { get; set; }
         public static ObjectTableControl CurrentControl { get; set; }
         public static MainWindowControl MainControl { get; set; }
+        public static string CurrentDBTableName { get; set; }
 
         protected override void OnStartup(StartupEventArgs e)
         {

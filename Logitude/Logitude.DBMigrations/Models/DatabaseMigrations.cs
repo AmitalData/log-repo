@@ -30,7 +30,7 @@ namespace Logitude.DBMigrations.Models
             return script;
         }
 
-        protected string GetDxmlDataType(string type)
+        protected string GetDxmlDataType(string type)//it takes the column datatype that returned from the database/ensure to include oracle datatypes
         {
             switch (type)
             {

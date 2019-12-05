@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Xml;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+//using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using MeatadataGeneratorTool.QueryModule;
 using MeatadataGeneratorTool.ScreensModule;
 using MeatadataGeneratorTool.TabsModule;
@@ -27,8 +27,6 @@ namespace MeatadataGeneratorTool
 {
     public class XmlGeneratorClass
     {
-
-
         #region GenerateSQL
 
         private static string GeneratedSqlPath = ConfigurationManager.AppSettings["GeneratedSQLPath"];
@@ -917,11 +915,9 @@ namespace MeatadataGeneratorTool
             //MessageBox.Show("Script Generated For Table Rename");
         }
 
-
         #endregion
 
         #region GenerateXmlFileFromTool
-
 
         public static void GenerateXmlFileFromTool(ObjectTableViewModel table)//execute when click ok button
         {
@@ -945,9 +941,19 @@ namespace MeatadataGeneratorTool
             }
             SetAttribute("ObjectTableName", GetStringValue(table.ObjectTableName), entityElement);
             SetAttribute("IsNew", table.IsNew.ToString().ToLower(), entityElement);
-            SetAttribute("DBTableName", GetStringValue(table.DBTableName), entityElement);
-            SetAttribute("OldDBTableName", GetStringValue(table.OldDBTableName), entityElement);
 
+            SetAttribute("DBTableName", GetStringValue(table.DBTableName), entityElement);
+            //SetAttribute("OldDBTableName", GetStringValue(table.OldDBTableName), entityElement);
+
+
+            if (table.DBTableName != App.CurrentDBTableName)
+            {
+                SetAttribute("OldDBTableName", App.CurrentDBTableName, entityElement);
+            }
+            else
+            {
+                SetAttribute("OldDBTableName", GetStringValue(table.OldDBTableName), entityElement);
+            }
 
 
             SetAttribute("ObjectTableSingular", GetStringValue(table.ObjectTableSingular), entityElement);
@@ -1065,6 +1071,10 @@ namespace MeatadataGeneratorTool
                 SetAttribute("SearchFields", GetStringValue(table.SearchFields), entityElement, null);
             }
 
+
+            SetAttribute("DxmlDatabaseTypeCode", table.DxmlDatabaseTypeCode, entityElement);
+            SetAttribute("DxmlDatabaseSchemaCode", table.DxmlDatabaseSchemaCode, entityElement);
+
             #endregion
 
             #region ObjectFields Properties
@@ -1084,7 +1094,29 @@ namespace MeatadataGeneratorTool
                 SetAttribute("FieldName", GetStringValue(f.FieldName), fieldElement, null);
 				SetAttribute("GeneratedComponentPath", GetStringValue(f.GeneratedComponentPath), fieldElement, null);
 
-				SetAttribute("OldFieldName", GetStringValue(f.OldFieldName), fieldElement, null);
+
+
+                if (string.IsNullOrEmpty(f.OldNames))
+                {
+                    SetAttribute("OldNames", (f.FieldName != f.OldFieldName ? f.OldFieldName + "," : null) + f.FieldName, fieldElement, null);
+                }
+                else
+                {
+                    if (!f.OldNames.Split(',').Contains(f.FieldName))
+                    {
+                        SetAttribute("OldNames", f.OldNames + (!f.OldNames.Split(',').Contains(f.OldFieldName) ? f.OldFieldName + "," : null) + "," + f.FieldName, fieldElement, null);
+                    }
+                    else
+                    {
+                        SetAttribute("OldNames", f.OldNames, fieldElement, null);
+                    }
+                }
+
+
+                SetAttribute("OldFieldName", GetStringValue(f.OldFieldName), fieldElement, null);
+                //OldFieldName from xml
+
+
                 SetAttribute("IsNew", f.IsNew.ToString().ToLower(), fieldElement, null);
                 SetAttribute("IsChecked", f.IsChecked.ToString().ToLower(), fieldElement, null);
                 SetAttribute("IsDeleted", f.IsDeleted.ToString().ToLower(), fieldElement, null);
@@ -1832,15 +1864,96 @@ namespace MeatadataGeneratorTool
 
             if (!string.IsNullOrEmpty(App.DirectOpenPath))
             {
-
                 doc.Save(App.DirectOpenPath);
-
             }
             else
             {
                 MessageBox.Show("file path in not valid!");
             }
 
+        }
+
+        #endregion
+
+        #region GenerateDXMLFileFromTool
+
+        public static void GenerateDXMLFileFromTool(ObjectTableViewModel table)
+        {
+            XmlDocument doc = new XmlDocument();
+            XmlElement tableElement = (XmlElement)doc.AppendChild(doc.CreateElement("Table"));
+
+            tableElement.SetAttribute("Name", table.DBTableName);
+
+            if (table.DBTableName != App.CurrentDBTableName)
+            {
+                tableElement.SetAttribute("OldName", App.CurrentDBTableName);
+            }
+
+            tableElement.SetAttribute("Schema", table.DxmlDatabaseSchemaCode);
+            tableElement.SetAttribute("DBType", table.DxmlDatabaseTypeCode);
+
+
+            foreach (ObjectFieldsViewModel field in table.ObsList)
+            {
+                XmlElement columnElement = doc.CreateElement("Column");
+                tableElement.AppendChild(columnElement);
+
+                string fieldName = field.FieldName;
+                string fieldDataType = field.FieldDataType;
+                int fieldMaxLength = field.MaxLength;
+                bool fieldIsMaxLength = field.IsMaxLength;
+                bool fieldIsPrimaryKey = field.IsPrimaryKey;
+                bool fieldIsRequired = field.IsRequired;
+                bool fieldIsNullable = field.IsNullable;
+                bool fieldIsFixedLength = field.IsFixedLength;
+                string fieldOldNames = field.OldNames;
+
+                string dxmlColumnDataType = GetDataTypeForDXMLColumn(fieldDataType, fieldIsFixedLength);
+                bool dxmlColumnNullable = GetNullableForDXMLColumn(fieldIsRequired, fieldIsNullable, fieldIsPrimaryKey, dxmlColumnDataType);
+                int dxmlColumnSize = new string[] { "bit", "datetime", "decimal", "float", "int" }.Contains(dxmlColumnDataType) ? 0 : (fieldIsMaxLength ? -1 : fieldMaxLength);
+                
+
+                columnElement.SetAttribute("Name", fieldName);
+                columnElement.SetAttribute("Type", dxmlColumnDataType);
+
+                if(dxmlColumnSize != 0)
+                {
+                    columnElement.SetAttribute("Size", dxmlColumnSize.ToString());
+                }
+
+                if (!string.IsNullOrEmpty(fieldOldNames) && fieldName != fieldOldNames)
+                {
+                    fieldOldNames = string.Join(",", fieldOldNames.Split(',').Where(x => x != fieldName).ToArray());
+                    columnElement.SetAttribute("OldNames", fieldOldNames);
+                }
+
+                XmlElement constraintsElement = doc.CreateElement("Constraints");
+                columnElement.AppendChild(constraintsElement);
+
+                if (fieldIsPrimaryKey)
+                {
+                    constraintsElement.SetAttribute("PrimaryKey", "true");
+                }
+
+                constraintsElement.SetAttribute("Nullable", dxmlColumnNullable ? "true" : "false");
+            }
+
+            if (!string.IsNullOrEmpty(App.DirectOpenPath))
+            {
+                try
+                {
+                    string dxmlFilePath = App.DirectOpenPath.Replace("EntityFiles", "DBTables").Replace("lxml", "dxml");
+                    doc.Save(dxmlFilePath);
+                }
+                catch (Exception exception)
+                {
+                    MessageBox.Show("Error: " + exception.Message);
+                }
+            }
+            else
+            {
+                MessageBox.Show("DXML File Path Is Not Valid");
+            }
         }
 
         #endregion
@@ -1917,7 +2030,7 @@ namespace MeatadataGeneratorTool
 
         #region SetAttribute
 
-        private static void SetAttribute(string atrrName, string attrValue, XmlElement fieldElement, ObjectField field)
+        private static void SetAttribute(string atrrName, string attrValue, XmlElement fieldElement, object field)
         {
             if (attrValue != null)
             {
@@ -1959,5 +2072,58 @@ namespace MeatadataGeneratorTool
             return new string(chArray);
         }
 
+        private static string GetDataTypeForDXMLColumn(string type, bool isFixedLength)
+        {
+            switch (type)
+            {
+                case "Boolean":
+                    return "bit";
+                case "Constant":
+                case "PickList":
+                case "List":
+                case "Emails":
+                case "Byte[]":
+                case "Text":
+                    return "varchar";
+                case "Date":
+                case "DateTime":
+                    return "datetime";
+                case "Decimal":
+                case "UnsDecimal":
+                    return "decimal";
+                case "Double":
+                case "SigDouble":
+                    return "float";
+                case "Integer":
+                case "UnsInteger":
+                    return "int";
+                case "nText":
+                    return "nvarchar";
+                case "LookUp":
+                    return isFixedLength ? "char" : "varchar";
+                default:
+                    return null;
+            }
+        }
+
+        private static bool GetNullableForDXMLColumn(bool fieldIsRequired, bool fieldIsNullable, bool fieldIsPrimaryKey, string dxmlColumnDataType)
+        {
+            if (fieldIsPrimaryKey)
+            {
+                return false;
+            }
+
+            if (new string[] { "bit", "datetime", "decimal", "float", "int" }.Contains(dxmlColumnDataType))
+            {
+                if (!fieldIsRequired && fieldIsNullable)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+
+            return !fieldIsRequired;
+        }
     }
 }
