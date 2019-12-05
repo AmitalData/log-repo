@@ -44,10 +44,10 @@
                                                 </td>
                                                 <td style="width:70px;"><div></div></td>
                                             </tr>
-
+                                            <tr style="height:3px"><td><div></div></td></tr>
 
                                             <tr class="FormFieldRow">
-                                                <td style="width: 180px;">
+                                                <td style="width: 180px;vertical-align:top">
                                                     <LogLabel [ObjectFieldName]="'CancelationNotes'" [ObjectTableName]="ObjectTableName"
                                                               [DataContext]="DataContext"></LogLabel>
                                                 </td>
@@ -60,6 +60,7 @@
                                                 <td><div></div></td>
 
                                             </tr>
+                                            <tr style="height:5px"><td><div></div></td></tr>
                                             <tr class="FormFieldRow">
                                                 <td style="width: 180px;">
                                                     <LogLabel [ObjectFieldName]="'DontIncludeInDeductionReport'" [ObjectTableName]="ObjectTableName"
@@ -68,7 +69,7 @@
                                                 <td style="width:10px"><div></div></td>
 
                                                 <td style="width: 140px;">
-                                                    <CheckBox [IsChecked]="DontIncludeInDeductionReport" [IsEnabled]="Cancelled"  (Checked)="DontIncludeInDeductionReport = $event"></CheckBox>
+                                                    <CheckBox [IsChecked]="DontIncludeInDeductionReport" [IsEnabled]="Cancelled" (Checked)="DontIncludeInDeductionReport = $event"></CheckBox>
                                                 </td>
                                                 <td><div></div></td>
 
