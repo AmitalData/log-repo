@@ -927,9 +927,11 @@ namespace WebFreight.Web.ReportsWebServices
 
             QueryFilterItem filterItem_Customer = queryOperations.QueryFilterItems.Where(d => d.FieldName == "BillToId").FirstOrDefault();
             QueryFilterItem filterItem_DueDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DueDate").FirstOrDefault();
+            QueryFilterItem filterItem_IncludeDraftInvoices = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeDraftInvoices").FirstOrDefault();
 
             string customerId = null;
             DateTime? dueDate = null;
+            bool IncludeDraftInvoices = false;
 
             if (filterItem_Customer != null)
             {
@@ -947,6 +949,13 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
 
+            if (filterItem_IncludeDraftInvoices != null)
+            {
+                if (filterItem_IncludeDraftInvoices.FieldValue != null)
+                {
+                    IncludeDraftInvoices = (bool)filterItem_IncludeDraftInvoices.FieldValue;
+                }
+            }
             #endregion
 
             #region General Report Data
@@ -1002,9 +1011,9 @@ namespace WebFreight.Web.ReportsWebServices
 
             #region Base Data Filtered
 
-            IQueryable<ARInvoice> iQueryable_ARInvoice = aRInvoiceRepository.GetUnpaidARInvoices(tenant);
+            IQueryable<ARInvoice> iQueryable_ARInvoice = aRInvoiceRepository.GetUnpaidAndDraftARInvoices(tenant);
             IQueryable<APInvoice> iQueryable_APInvoice = aPInvoiceRepository.GetUnpaidAPInvoices(tenant);
-            IQueryable<ARPayment> iQueryable_ARPayment = aRPaymentRepository.GetOpenedARPayments(tenant);
+            IQueryable<ARPayment> iQueryable_ARPayment = aRPaymentRepository.GetOpenedAndDraftARPayments(tenant);
             IQueryable<APPayment> iQueryable_APPayment = aPPaymentRepository.GetOpenedAPPayments(tenant);
 
             iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => !d.IsConstituentInvoice);
@@ -1025,6 +1034,11 @@ namespace WebFreight.Web.ReportsWebServices
                 iQueryable_APPayment = iQueryable_APPayment.Where(d => d.ValueDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.ValueDate) <= System.Data.Entity.DbFunctions.TruncateTime(dueDate));
             }
 
+            if (!IncludeDraftInvoices)
+            {
+                iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.StatusCode != "DR");
+                iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.StatusCode != "DR");
+            }
             #endregion
 
             #region Fill Statement Record Listc
@@ -1040,7 +1054,7 @@ namespace WebFreight.Web.ReportsWebServices
                 item.HouseNumber = d.HouseNumber;
                 item.Date = d.InvoiceDate.Value;
                 item.DueDate = d.DueDate.Value;
-                item.OurRefrence = d.InvoiceNumber;
+                item.OurRefrence = d.StatusCode == "DR" ? d.DraftNumber : d.InvoiceNumber;
                 item.YourRefrence = d.CustomerRef;
                 item.CurrencyId = d.InvoiceCurrencyId;
                 item.Type = d.ARInvoiceTypeCode == "CD" ? "Credit Note" : (d.ARInvoiceTypeCode == "CC" ? "Customs Credit Note" : (d.ARInvoiceTypeCode == "CI" ? "Customs Invoice" : "A\\R Invoice"));
@@ -1602,7 +1616,7 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicesRecored.InvoiceDate = a.InvoiceDate;
                 invoicesRecored.InvoiceType = a.ARInvoiceTypeName;
                 invoicesRecored.DueDate = a.DueDate;
-                invoicesRecored.OurReference = a.InvoiceNumber;
+                invoicesRecored.OurReference = a.StatusCode == "DR" ? a.DraftNumber : a.InvoiceNumber;
                 invoicesRecored.MasterNumber = a.MasterNumber;
                 invoicesRecored.HouseNumber = a.HouseNumber;
                 invoicesRecored.YourRefrence = a.CustomerRef;

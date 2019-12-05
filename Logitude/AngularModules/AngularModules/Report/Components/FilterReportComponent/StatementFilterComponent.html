@@ -1,4 +1,4 @@
-﻿
+
 
 
 <style>
@@ -100,12 +100,12 @@
 
 
                         </div>
-                        </td>
-</tr>
+                    </td>
+                </tr>
             </table>
         </td>
-      
-  
+
+
 
         <td style="width:20px;"><div style="width:20px;"></div></td>
 
@@ -119,14 +119,18 @@
                         <div style="width:120px;">
                             <LogDatePicker [HideColumns]="true" [ObjectFieldName]="'DueDate'" [DataContext]="DataContext"></LogDatePicker>
                         </div>
-                    </td> 
+                    </td>
                 </tr>
             </table>
         </td>
 
-     
+        <td style="width: 20px;">
+            <div style="width: 20px;"></div>
+        </td>
 
-
+        <td style="width: 1px;">
+            <CheckBox [IsChecked]="IncludeDraftInvoices" (Checked)="IncludeDraftInvoices = $event" [Text]="'Include Draft invoices'"></CheckBox>
+        </td>
         <td style="width:50px;"><div style="width:50px;"></div></td>
 
         <td style="width:90px;">
