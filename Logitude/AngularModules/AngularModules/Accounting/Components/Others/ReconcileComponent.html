@@ -622,7 +622,7 @@
                     </log-column>
 
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'20'">
-                        <log-cell-template template="let item" [IgnoreMods]="true" title="{{GetIndicatorText(item)}}">
+                        <log-cell-template template="let item" [IgnoreMods]="true"  title="{{GetIndicatorText(item)}}">
                             <div class="circleDraw" [class.orangeCircle]="(item.LocalAmountDebit >0 && item.OpenAmount != item.OriginalAmount) || (item.LocalAmountCredit>0 && item.OpenAmount != -1*item.OriginalAmount)"></div>
                         </log-cell-template>
                     </log-column>
