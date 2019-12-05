@@ -61,14 +61,43 @@ namespace WebFreight.Web.Helpers
         public string ExportDocument2Pdf(string documentTypeId, string entityId, string entityObjectTableId, string childEntityId, string childObjectTableId, string documentOutId, int tenant, string documentTypeCopyId, string userId=null)
         {
             string result = string.Empty;
-            //if (IsCallBuildDocumentReportWebService(tenant))
-            //{
-            //    result = ExportDocument2PdfViewWebService(documentTypeId, entityId, entityObjectTableId, childEntityId, childObjectTableId, documentOutId, tenant, documentTypeCopyId, userId);
-            //}
-            //else
-            //{
+
+            try
+            {
                 result = ExportDocument2PdfNormalWay(documentTypeId, entityId, entityObjectTableId, childEntityId, childObjectTableId, documentOutId, tenant, documentTypeCopyId, userId);
-            //}
+            }
+            catch (Exception ex)
+            {
+                if (string.IsNullOrEmpty(AuthenticationUtil.AuthenticatedUserEmail))
+                {
+                    string authenticateduser = "";
+
+                    try
+                    {
+                        authenticateduser = Security.SecurityUtility.GetAuthenticatedUser();
+                    }
+
+                    catch
+                    {
+                        authenticateduser = "UnKnown";
+                    }
+
+                    string ip = "";
+                    if (HttpContext.Current != null && HttpContext.Current.Request != null)
+                    {
+                        string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
+                        if (string.IsNullOrEmpty(currentIP))
+                        {
+                            currentIP = HttpContext.Current.Request.UserHostAddress;
+                        }
+                        ip = currentIP;
+                    }
+                    ExceptionHandler.HandleException(new Exception(ex.Message), DateTime.Now, 0, "", authenticateduser, "", ip);
+                }
+                throw new Exception(ex.Message);
+            }
+
+   
 
             return result;
         }
@@ -130,8 +159,7 @@ namespace WebFreight.Web.Helpers
 
         public string ExportDocument2PdfNormalWay(string documentTypeId, string entityId, string entityObjectTableId, string childEntityId, string childObjectTableId, string documentOutId, int tenant, string documentTypeCopyId, string userId = null )
         {
-            try
-            {
+           
                 var currentthreaduser = Thread.CurrentPrincipal;
                 long theT1 = new long();
                 long theT2 = new long();
@@ -203,38 +231,8 @@ namespace WebFreight.Web.Helpers
                 else
                     return null;
 
-            }
-            catch (Exception ex)
-            {
-                if (string.IsNullOrEmpty(AuthenticationUtil.AuthenticatedUserEmail))
-                {
-                    string authenticateduser = "";
-
-                    try
-                    {
-                        authenticateduser = Security.SecurityUtility.GetAuthenticatedUser();
-                    }
-
-                    catch
-                    {
-                        authenticateduser = "UnKnown";
-                    }
-
-                    string ip = "";
-                    if (HttpContext.Current != null && HttpContext.Current.Request != null)
-                    {
-                        string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
-                        if (string.IsNullOrEmpty(currentIP))
-                        {
-                            currentIP = HttpContext.Current.Request.UserHostAddress;
-                        }
-                        ip = currentIP;
-                    }
-                    ExceptionHandler.HandleException(new Exception(ex.Message), DateTime.Now, 0, "", authenticateduser, "", ip);
-                }
-
-                throw new Exception(ex.Message);
-            }
+        
+         
 
         }
        
