@@ -42,7 +42,7 @@
     <tr *ngIf="IsVisible">
         <td>
             <table>
-                <tr style="vertical-align:top;" *ngIf="IsABMVisible || IsATMSVisible_VOG || IsATMSVisible_BOL || IsAESVisible">
+                <tr style="vertical-align:top;" *ngIf="IsABMVisible || IsATMSVisible_VOG || IsATMSVisible_BOL || IsAESVisible || IsAMANACVisible">
                     <td>
                         <div class="MediaFill">
                             <ScrollViewer>
@@ -68,7 +68,7 @@
                                                                     <td style="width: 550px;">
                                                                         <table>
                                                                             <tr>
-                                                                                <td style="width: 55px;float:left;" [ngStyle]="{color: LocalCustomsTransmissionsStatusCode | StringToColorPipe:'CustomsTransmissionsStatus'}">
+                                                                                <td style="width: 55px;" [ngStyle]="{color: LocalCustomsTransmissionsStatusCode | StringToColorPipe:'CustomsTransmissionsStatus'}">
                                                                                     {{LocalCustomsTransmissionsStatusName}}
                                                                                 </td>
 
@@ -411,7 +411,7 @@
                                                                     <td style="width: 550px;">
                                                                         <table>
                                                                             <tr>
-                                                                                <td style="width: 55px;float:left;" [ngStyle]="{color: LocalCustomsTransmissionsStatusCode | StringToColorPipe:'CustomsTransmissionsStatus'}">
+                                                                                <td style="width: 55px;" [ngStyle]="{color: LocalCustomsTransmissionsStatusCode | StringToColorPipe:'CustomsTransmissionsStatus'}">
                                                                                     {{LocalCustomsTransmissionsStatusName}}
                                                                                 </td>
 
@@ -484,6 +484,7 @@
                                             </fieldset>
                                         </td>
                                     </tr>
+
                                     <tr>
                                         <td>
                                             <div></div>
