@@ -365,4 +365,17 @@ export class SimulatorBookingComponent extends BaseComponent {
 
     }
 
+    EditShipmentClicked() {
+        var entityId: string = this.EntityPM.Id;
+        if (!AppTool.IsNullOrEmpty(entityId)) {
+            SessionLocator.DynamicLoader.Load("./Infrastructure/Components/EditComponent/EditComponent", this.CurrentSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: 'Shipment' });
+
+                });
+        }
+    }
+
 }
