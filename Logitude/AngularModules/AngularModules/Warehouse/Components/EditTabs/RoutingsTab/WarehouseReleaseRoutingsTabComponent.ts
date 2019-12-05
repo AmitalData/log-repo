@@ -305,16 +305,16 @@ export class WarehouseReleaseRoutingsTabComponent extends BaseComponent {
         if (this.EntityPM.FromPortId != value) {
             this.EntityPM.FromPortId = value;
             this.SetUIProperties_Ports();
-            if (AppTool.IsNullOrEmpty(value)) {
-                this.FromPortList = null;
-            }
-            else {
-                this.myPortListService.getSingle(value).subscribe((myResponse: ServiceResponse) => {
-                    if (!myResponse.HasError) {
-                        this.FromPortList = myResponse.Result;
-                    }
-                });
-            }
+            //if (AppTool.IsNullOrEmpty(value)) {
+            //    this.FromPortList = null;
+            //}
+            //else {
+            //    this.myPortListService.getSingle(value).subscribe((myResponse: ServiceResponse) => {
+            //        if (!myResponse.HasError) {
+            //            this.FromPortList = myResponse.Result;
+            //        }
+            //    });
+            //}
         }
     }
 

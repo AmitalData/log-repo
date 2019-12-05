@@ -35,7 +35,7 @@ export class AddEditTariffLineComponent  {
     }
 
     SetOriginDependencyFilterValue() {
-        if (this.TariffType == "OLC" || this.TariffType == "OSC" || this.TariffType == "OFC") {
+        if (this.TariffType == "OLC" || this.TariffType == "OSC" || this.TariffType == "OFC" || this.TariffType == "OFS") {
             this.OriginDependencyFilterValue = "O";
             this.DestinationDependencyFilterValue = "O";
         }
@@ -85,7 +85,7 @@ export class AddEditTariffLineComponent  {
             }
         }
 
-        else if (this.TariffType == "ASC" || this.TariffType == "OSC") {
+        else if (this.TariffType == "ASC" || this.TariffType == "OSC" || this.TariffType == "OFS") {
             if (AppTool.IsNullOrEmpty(this.DataContext.DestinationPortId) && !this.DataContext.IsToAllOtherPorts) {
                 errors.push("To port or To All Other Ports is Required");
             }
@@ -140,7 +140,7 @@ export class AddEditTariffLineComponent  {
             this.myCloner.AddField('Step8Price');            
         }
 
-        else if (this.TariffType == "ASC" || this.TariffType == "OSC" || this.TariffType == "OFC") {
+        else if (this.TariffType == "ASC" || this.TariffType == "OSC" || this.TariffType == "OFC" || this.TariffType == "OFS") {
             this.myCloner.AddField('Surcharge1Price');
             this.myCloner.AddField('Surcharge2Price');
             this.myCloner.AddField('Surcharge3Price');

@@ -360,6 +360,7 @@ export class NewViewComponent {
                                     newcolumn.QueryId = querycolumn.QueryId;
                                     newcolumn.QueryObjectTableName = querycolumn.QueryObjectTableName;
                                     newcolumn.ObjectFieldFieldLableTextCodeCode = querycolumn.ObjectFieldFieldLableTextCodeCode;
+                                    newcolumn.ObjectFieldCode = querycolumn.ObjectFieldCode;
                                     this.queryColumnsList.push(newcolumn);
                                     this.addedQueryColumnList.push(newcolumn);
                                 });
@@ -377,7 +378,7 @@ export class NewViewComponent {
 
                     this.unselected = [];
                     this.unselectedObjectFields.forEach((field, key) => {
-                        var xx = this.queryColumnsList.filter(q => q.QueryId == this.QueryId && q.ObjectFieldId == field.Id && field.FieldName != "TimeFrameFilter");
+                        var xx = this.queryColumnsList.filter(q => q.QueryId == this.QueryId && q.ObjectFieldCode == field.FieldCode && field.FieldName != "TimeFrameFilter");
                         if (xx.length == 0) {
                             this.unselected.push(field);
                         }
@@ -597,10 +598,10 @@ export class NewViewComponent {
 
             this.ReorderColumnsList();
             //var upColumn = this.OrderedQueryColumnsList.filter(d => d.ObjectFieldId == item.ObjectFieldId && ((d.Tenant == SessionInfo.LoggedUserTenant && d.UserId == SessionInfo.LoggedUserId) || d.Tenant == 0) && d.QueryId == this.QueryId)[0];
-            var upColumn = this.OrderedQueryColumnsList.filter(d => d.ObjectFieldId == item.ObjectFieldId)[0];
+            var upColumn = this.OrderedQueryColumnsList.filter(d => d.ObjectFieldCode == item.ObjectFieldCode)[0];
 
             if (i > 0) {
-                this.OrderedQueryColumnsList = this.OrderedQueryColumnsList.filter(d => d.ObjectFieldId != upColumn.ObjectFieldId);
+                this.OrderedQueryColumnsList = this.OrderedQueryColumnsList.filter(d => d.ObjectFieldCode != upColumn.ObjectFieldCode);
                 this.OrderedQueryColumnsList.filter(o => o.IndexOrder == i - 1)[0].IndexOrder = i;
                 upColumn.IndexOrder = i - 1;
                 this.OrderedQueryColumnsList.splice(i - 1, 0, upColumn);
@@ -621,10 +622,10 @@ export class NewViewComponent {
             this.ReorderColumnsList();
 
             //var downColumn = this.OrderedQueryColumnsList.filter(d => d.ObjectFieldId == item.ObjectFieldId && ((d.Tenant == SessionInfo.LoggedUserTenant && d.UserId == SessionInfo.LoggedUserId) || d.Tenant == 0) && d.QueryId == this.QueryId)[0];
-            var downColumn = this.OrderedQueryColumnsList.filter(d => d.ObjectFieldId == item.ObjectFieldId)[0];
+            var downColumn = this.OrderedQueryColumnsList.filter(d => d.ObjectFieldCode == item.ObjectFieldCode)[0];
 
             if (i < this.OrderedQueryColumnsList.length - 1) {
-                this.OrderedQueryColumnsList = this.OrderedQueryColumnsList.filter(d => d.ObjectFieldId != downColumn.ObjectFieldId);
+                this.OrderedQueryColumnsList = this.OrderedQueryColumnsList.filter(d => d.ObjectFieldCode != downColumn.ObjectFieldCode);
 
                 this.OrderedQueryColumnsList.filter(o => o.IndexOrder == i + 1)[0].IndexOrder = i;
                 downColumn.IndexOrder = i + 1;
@@ -663,6 +664,7 @@ export class NewViewComponent {
                     newQueryColumn.DisplayInList = true;
                     newQueryColumn.UserId = SessionInfo.LoggedUserId;
                     newQueryColumn.ObjectFieldFieldLableTextCodeCode = field.FullNameTextCodeCode;
+                    newQueryColumn.ObjectFieldCode = field.FieldCode;
 
                     this.OrderedQueryColumnsList.push(new QueryColumnDetails(newQueryColumn));
                     this.addedQueryColumnList.push(newQueryColumn);
@@ -690,6 +692,7 @@ export class NewViewComponent {
                 newQueryColumn.DisplayInList = true;
                 newQueryColumn.UserId = SessionInfo.LoggedUserId;
                 newQueryColumn.ObjectFieldFieldLableTextCodeCode = field.FullNameTextCodeCode;
+                newQueryColumn.ObjectFieldCode = field.FieldCode;
 
                 this.OrderedQueryColumnsList.push(new QueryColumnDetails(newQueryColumn));
                 this.addedQueryColumnList.push(newQueryColumn);
@@ -716,23 +719,23 @@ export class NewViewComponent {
         if (this.SelectedItem) {
             var queryColumn = this.SelectedItem;
 
-            var objectField = window.ObjectFields.filter(a => a.Id == queryColumn.ObjectFieldId)[0];
+            var objectField = window.ObjectFields.filter(a => a.FieldCode == queryColumn.ObjectFieldCode)[0];
 
             this.unSelectedList.push(objectField);
             //-----
-            this.OrderedQueryColumnsList = this.OrderedQueryColumnsList.filter(a => a.ObjectFieldId != queryColumn.ObjectFieldId);
+            this.OrderedQueryColumnsList = this.OrderedQueryColumnsList.filter(a => a.ObjectFieldCode != queryColumn.ObjectFieldCode);
 
 
-            var pm = this.queryColumnsList.filter(a => a.ObjectFieldId == queryColumn.ObjectFieldId && a.QueryId == this.QueryId)[0];
+            var pm = this.queryColumnsList.filter(a => a.ObjectFieldCode == queryColumn.ObjectFieldCode && a.QueryId == this.QueryId)[0];
 
             if (pm != null) {
                 this.removedQueryColumnList.push(pm);
             }
 
-            var queryColumn2 = this.addedQueryColumnList.filter(a => a.ObjectFieldId == queryColumn.ObjectFieldId && a.QueryId == this.QueryId)[0];
+            var queryColumn2 = this.addedQueryColumnList.filter(a => a.ObjectFieldCode == queryColumn.ObjectFieldCode && a.QueryId == this.QueryId)[0];
 
             if (queryColumn2 != null) {
-                this.addedQueryColumnList = this.addedQueryColumnList.filter(a => a.ObjectFieldId != queryColumn2.ObjectFieldId);
+                this.addedQueryColumnList = this.addedQueryColumnList.filter(a => a.ObjectFieldCode != queryColumn2.ObjectFieldCode);
             }
 
             this.OrderedQueryColumnsList.forEach((column, key) => {
@@ -1268,6 +1271,7 @@ export class NewViewComponent {
             newColumn.QueryCode = column.QueryCode;
             newColumn.QueryObjectTableName = column.QueryObjectTableName;
             newColumn.DisplayInList = true;
+            newColumn.ObjectFieldCode = column.ObjectFieldCode;
 
             if (!AppTool.IsNullOrEmpty(this.EntityPM.SharedByUserId)) {
                 newColumn.UserId = this.EntityPM.SharedByUserId;

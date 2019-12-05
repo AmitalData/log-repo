@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .FieldSet {
         display: block;
@@ -64,16 +64,15 @@
                                                                     <td style="width:120px;">
                                                                         <LogLabel [ObjectFieldName]="'Status'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                     </td>
-
                                                                     <td style="width: 550px;">
                                                                         <table>
                                                                             <tr>
-                                                                                <td style="width: 55px;float:left;" [ngStyle]="{color: LocalCustomsTransmissionsStatusCode | StringToColorPipe:'CustomsTransmissionsStatus'}">
+                                                                                <td style="width: 55px;float:left; padding-top: 5px;" [ngStyle]="{color: LocalCustomsTransmissionsStatusCode | StringToColorPipe:'CustomsTransmissionsStatus'}">
                                                                                     {{LocalCustomsTransmissionsStatusName}}
                                                                                 </td>
                                                                 
                                                                                 <td>
-                                                                                    <div style="width:450px;color:Red;float:left" class="TextTrimming"  [title]="LocalCustomsTransmissionsError">
+                                                                                    <div style="width:450px;padding-top: 2px;color:Red;float:left" class="TextTrimming"  [title]="LocalCustomsTransmissionsError">
                                                                                        <span *ngIf="LocalCustomsTransmissionsError != null && LocalCustomsTransmissionsError != ''"> ( </span>{{LocalCustomsTransmissionsError}} <span *ngIf="LocalCustomsTransmissionsError != null && LocalCustomsTransmissionsError != ''"> ) </span>
                                                                                     </div>
                                                                                 </td>

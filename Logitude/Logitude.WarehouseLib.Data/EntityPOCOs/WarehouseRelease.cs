@@ -123,7 +123,7 @@ namespace Logitude.WarehouseLib.Data.EntityPOCOs
         [Column("FromPortId")]
 	    public string FromPortId { get; set; }
 	      
-        public virtual Port FromPort { get; set; }
+        public virtual Warehouse FromPort { get; set; }
         [ForeignKey("ToPort")]
         [Column("ToPortId")]
 	    public string ToPortId { get; set; }

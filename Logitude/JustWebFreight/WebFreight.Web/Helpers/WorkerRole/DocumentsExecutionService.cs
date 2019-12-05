@@ -99,7 +99,7 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
 
         private void HandleDocumentsExecutionException(Exception exception)
         {
-            ExceptionHandler.HandleException(exception.InnerException != null ? exception.InnerException : exception, DateTime.Now, 0, null, "Document execution log queue worker role start", null, null);
+            ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Document execution log queue worker role start", null, null);
             if (queueResponse != null && queueResponse.MessageValues.Keys.Contains("DocumentsExecutionLogId"))
             {
                 if (queueResponse.RetryNumber <= 1)
