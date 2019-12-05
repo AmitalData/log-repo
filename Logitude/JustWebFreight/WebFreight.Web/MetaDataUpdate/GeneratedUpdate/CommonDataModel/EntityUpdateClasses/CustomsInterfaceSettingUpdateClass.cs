@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Customs Interface Setting",
-			      				    Code =  "7e2a",
+			      				    Code =  "eb27",
 			      				    Name =  "CustomsInterfaceSetting",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -1071,6 +1071,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AMCAirStartDate",
+					  						OldFieldName =  "AMCAirStartDate",
 					  						ObjectTableName =  "CustomsInterfaceSetting",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -1090,6 +1091,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "AMCAirStartDate",
 					  						ListPropertyPath =  "AMCAirStartDate",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1106,7 +1108,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AMCAirStartDate",
-					  						DefaultText =  "AMC Air Start Date",
+					  						DefaultText =  "Air Start Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1125,6 +1127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "AMCOceanStartDate",
+					  						OldFieldName =  "AMCOceanStartDate",
 					  						ObjectTableName =  "CustomsInterfaceSetting",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -1144,6 +1147,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "AMCOceanStartDate",
 					  						ListPropertyPath =  "AMCOceanStartDate",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1160,7 +1164,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AMCOceanStartDate",
-					  						DefaultText =  "AMC Ocean Start Date",
+					  						DefaultText =  "Ocean Start Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
