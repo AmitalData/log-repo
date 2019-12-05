@@ -1726,6 +1726,18 @@
     <Compile Include="Migrations\201912031815485_AddHideFCLAllInField.Designer.cs">
       <DependentUpon>201912031815485_AddHideFCLAllInField.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912041018283_Update_DateForVATInterest_Field_In_ARINVOICE.cs" />
+    <Compile Include="Migrations\201912041018283_Update_DateForVATInterest_Field_In_ARINVOICE.Designer.cs">
+      <DependentUpon>201912041018283_Update_DateForVATInterest_Field_In_ARINVOICE.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912041116037_DeleteDateForVATInterestHelpTextMutaz.cs" />
+    <Compile Include="Migrations\201912041116037_DeleteDateForVATInterestHelpTextMutaz.Designer.cs">
+      <DependentUpon>201912041116037_DeleteDateForVATInterestHelpTextMutaz.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912041012315_AbedChangeFromPortForeignKeyToWarehouseRelease.cs" />
+    <Compile Include="Migrations\201912041012315_AbedChangeFromPortForeignKeyToWarehouseRelease.Designer.cs">
+      <DependentUpon>201912041012315_AbedChangeFromPortForeignKeyToWarehouseRelease.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201912041006219_WesamAddObjectFieldCodeToQueryColumnsTable.cs" />
     <Compile Include="Migrations\201912041006219_WesamAddObjectFieldCodeToQueryColumnsTable.Designer.cs">
       <DependentUpon>201912041006219_WesamAddObjectFieldCodeToQueryColumnsTable.cs</DependentUpon>
@@ -2962,6 +2974,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912031815485_AddHideFCLAllInField.resx">
       <DependentUpon>201912031815485_AddHideFCLAllInField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912041018283_Update_DateForVATInterest_Field_In_ARINVOICE.resx">
+      <DependentUpon>201912041018283_Update_DateForVATInterest_Field_In_ARINVOICE.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912041116037_DeleteDateForVATInterestHelpTextMutaz.resx">
+      <DependentUpon>201912041116037_DeleteDateForVATInterestHelpTextMutaz.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912041012315_AbedChangeFromPortForeignKeyToWarehouseRelease.resx">
+      <DependentUpon>201912041012315_AbedChangeFromPortForeignKeyToWarehouseRelease.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912041006219_WesamAddObjectFieldCodeToQueryColumnsTable.resx">
       <DependentUpon>201912041006219_WesamAddObjectFieldCodeToQueryColumnsTable.cs</DependentUpon>
