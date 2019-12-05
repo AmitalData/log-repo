@@ -84,6 +84,7 @@ export class SimulatorBookingComponent extends BaseComponent {
 
         this.CheckSendingBookingEnabled();
         this.CheckUpdatingBookingEnabled();
+        this.CheckApplyChanges();
     }
 
     CheckSendingBookingEnabled() {
@@ -306,6 +307,11 @@ export class SimulatorBookingComponent extends BaseComponent {
                 this.CurrentSession.CurrentEditComponent.SaveChanges();
             }
         });
+    }
+
+    public IsApplyChanges = false;
+    private CheckApplyChanges() {
+        this.IsApplyChanges = true;
     }
 
     CloseButtonClicked() {
