@@ -261,7 +261,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                         filterOperator = "NoDate";
                     }
                 }
-                var field = window.ObjectFields.filter(a => a.Id == filter.ObjectFieldId)[0];
+              var field = window.ObjectFields.filter(a => a.FieldCode == filter.ObjectFieldCode)[0];
                 if (field) {
                     this.CurrentQueryFilters.addAdditionalFilter(filter.ObjectFieldName, value1, value2, null, filterOperator, field.IsCustomFilter, filter.DisplayInList, field.IsCustom, filter.DataTypeCode);
                 }
@@ -986,7 +986,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                 this.QueryColumns = this.QueryColumns.sort((a, b) => { return (a.IndexOrder > b.IndexOrder) ? 1 : (a.IndexOrder < b.IndexOrder) ? -1 : 0 });
 
                 this.QueryColumns.forEach((value, key) => {
-                    this.columnsObjectFields.push(window.ObjectFields.filter(x => x.Id === value.ObjectFieldId)[0]);
+                    this.columnsObjectFields.push(window.ObjectFields.filter(x => x.FieldCode === value.ObjectFieldCode)[0]);
                 });
 
                 for (var i = 0; i < this.QueryColumns.length; i++) {
@@ -1173,7 +1173,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                             filterOperator = "NoDate";
                         }
                     }
-                    var field = window.ObjectFields.filter(a => a.Id == filter.ObjectFieldId)[0];
+                    var field = window.ObjectFields.filter(a => a.FieldCode == filter.ObjectFieldCode)[0];
                     if (field) {
                         if (Args.Filters.AdditionalFilters.filter(a => a.FieldName == filter.ObjectFieldName).length > 0) {
                             Args.Filters.AdditionalFilters = Args.Filters.AdditionalFilters.filter(a => a.FieldName != filter.ObjectFieldName);
@@ -1388,7 +1388,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                             filterOperator = "NoDate";
                         }
                     }
-                    var field = window.ObjectFields.filter(a => a.Id == filter.ObjectFieldId)[0];
+                    var field = window.ObjectFields.filter(a => a.FieldCode == filter.ObjectFieldCode)[0];
                     if (field) {
                         filterAgrs.addAdditionalFilter(filter.ObjectFieldName, value1, value2, null, filterOperator, field.IsCustomFilter, filter.DisplayInList, field.IsCustom, filter.DataTypeCode);
                     }
@@ -2864,7 +2864,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                                 filterOperator = "Between";
                             }
                         }
-                        var field = window.ObjectFields.filter(a => a.Id == filter.ObjectFieldId)[0];
+                        var field = window.ObjectFields.filter(a => a.FieldCode == filter.ObjectFieldCode)[0];
                         this.CurrentQueryFilters.addAdditionalFilter(filter.ObjectFieldName, value1, value2, null, filterOperator, field.IsCustomFilter, filter.DisplayInList, field.IsCustom, filter.DataTypeCode);
                     });
                 }

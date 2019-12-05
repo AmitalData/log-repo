@@ -13,6 +13,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             queryColumn.QueryId = queryColumnPM.QueryId;
             queryColumn.Tenant = queryColumnPM.Tenant;
             queryColumn.UserId = queryColumnPM.UserId;
+            queryColumn.ObjectFieldCode = queryColumnPM.ObjectFieldCode;
         }
     }
 }
