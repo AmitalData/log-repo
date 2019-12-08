@@ -27,7 +27,10 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .HasMaxLength(15)
                 .IsUnicode(false);
 
-          
+            this.Property(t => t.ObjectFieldCode)
+                  .IsRequired()
+                  .HasMaxLength(200)
+                  .IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("ScreenFields");
@@ -36,7 +39,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.ScreenId).HasColumnName("ScreenId");
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.ObjectFieldId).HasColumnName("ObjectFieldId");
-             
+            this.Property(t => t.ObjectFieldCode).HasColumnName("ObjectFieldCode");
+
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
              if (dbms == "oracle")

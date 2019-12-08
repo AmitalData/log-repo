@@ -20,5 +20,7 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public string ObjectTableName { get; set; }
 
         public string ComponentPath { get; set; }
+
+        public string ObjectFieldCode { get; set; }
     }
 }
