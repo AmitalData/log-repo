@@ -39,5 +39,10 @@ export class ScreenFieldPM {
     private objectFieldObjectTableName: string;
     public get ObjectFieldObjectTableName() { return this.objectFieldObjectTableName; }
     public set ObjectFieldObjectTableName(newValue: string) { this.objectFieldObjectTableName = newValue; }
+
+
+    private objectFieldCode: string;
+    public get ObjectFieldCode() { return this.objectFieldCode; }
+    public set ObjectFieldCode(newValue: string) { this.objectFieldCode = newValue; }
      
 }

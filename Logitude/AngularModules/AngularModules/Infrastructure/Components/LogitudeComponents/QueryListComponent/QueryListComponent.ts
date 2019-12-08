@@ -263,7 +263,7 @@ export class QueryListComponent implements OnInit, AfterViewInit {
                             }
                         }
                        
-                        var ObjectField = window.ObjectFields.filter(d => d.Id == filter.ObjectFieldId);
+                        var ObjectField = window.ObjectFields.filter(d => d.FieldCode == filter.ObjectFieldCode);
                         filters.addAdditionalFilter(
                             filter.ObjectFieldName, value1, value2, null, filterOperator, ObjectField.IsCustomFilter, filter.DisplayInList, ObjectField.IsCustom, filter.DataTypeCode);
                     });

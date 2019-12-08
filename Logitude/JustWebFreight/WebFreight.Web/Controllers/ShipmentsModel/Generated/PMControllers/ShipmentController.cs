@@ -652,6 +652,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
             MyPaymentData.DCdisable = dict["DCdisable"];
             MyPaymentData.DclickTK = dict["DclickTK"];
             MyPaymentData.thtk = dict["thtk"];
+            MyPaymentData.TargetEnv = dict["TargetEnv"];
             return MyPaymentData;
             
         }

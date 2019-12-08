@@ -13,5 +13,6 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public double ColumnWidth { get; set; }
         public string ObjectFieldName { get; set; }
         public string UserId { get; set; }
+        public string ObjectFieldCode { get; set; }
     }
 }

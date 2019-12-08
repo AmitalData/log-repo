@@ -258,6 +258,12 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     public get thtk() { return this.AdditionalData.PaymentData.thtk }
     public set thtk(newValue: string) { this.AdditionalData.PaymentData.thtk = newValue; }
 
+    public get TargetEnv() {
+        var Env = "https://direct.tranzila.com/" + this.AdditionalData.PaymentData.TargetEnv + "/";//amitaltest
+        return Env;
+    }
+    public set TargetEnv(newValue: string) { this.AdditionalData.PaymentData.TargetEnv = newValue; }
+
 
 
     ShowPaymentDetailsScreen: boolean = false;
