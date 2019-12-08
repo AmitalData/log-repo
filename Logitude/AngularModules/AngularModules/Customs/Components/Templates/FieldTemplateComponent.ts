@@ -3,7 +3,6 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {CourierMasterService} from '../../Services/Others/CourierMasterService';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
-import { EntityResourceService } from '../../Services/EntityResourceService';
 
 @Component({
     moduleId: module.id,
