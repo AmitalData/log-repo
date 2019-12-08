@@ -30,7 +30,7 @@ namespace Logitude.DBMigrations.Models
             return script;
         }
 
-        protected string GetDxmlDataType(string type)
+        protected string GetDxmlDataType(string type)//handle data types from oracle
         {
             switch (type.ToLower())
             {
@@ -63,7 +63,7 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        protected ColumnDefinition SetConstraintForColumnDefinition(ColumnDefinition column, string constraintType, string constraintName)
+        protected ColumnDefinition SetConstraintForColumnDefinition(ColumnDefinition column, string constraintType, string constraintName)//handle constraintType from oracle
         {
             switch (constraintType)
             {
@@ -416,5 +416,9 @@ namespace Logitude.DBMigrations.Models
         protected abstract string GetAddPrimaryKeyConstraintScript(string primaryKeyConstraintName);
 
         protected abstract bool CheckIfTableHasPrimaryKeys(TableDefinition table);
+
+        protected abstract string GetAlterColumnsScript();
+
+        protected abstract bool CheckIfTableRenamed();
     }
 }

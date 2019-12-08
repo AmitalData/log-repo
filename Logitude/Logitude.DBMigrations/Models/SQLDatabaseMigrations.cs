@@ -186,7 +186,7 @@ namespace Logitude.DBMigrations.Models
             return alterTableScript;
         }
 
-        private string GetAlterColumnsScript()
+        protected override string GetAlterColumnsScript()
         {
             string alterColumnsScript = "";
             foreach (var columnMigration in TableMigrations.ColumnsMigrations)
@@ -196,7 +196,7 @@ namespace Logitude.DBMigrations.Models
             return alterColumnsScript;
         }
 
-        private bool CheckIfTableRenamed()
+        protected override bool CheckIfTableRenamed()
         {
             return TableMigrations.DxmlTableName != TableMigrations.CurrentTableName;
         }
