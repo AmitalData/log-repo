@@ -315,14 +315,15 @@ export class SimulatorBookingComponent extends BaseComponent {
     public IsApplyChanges = false;
     private CheckApplyChanges() {
         this.IsApplyChanges = false;
+        if (this.EntityPM.INTTRABookingStatusCode != "SI") {
+            // Compare the Main leg
+            if ((this.MainCarriageCarrierNumber != this.INTTRABookingResponse_Voyage) || (this.MainCarriageETD != this.INTTRABookingResponse_POLDate) ||
+                (this.MainCarriageFromPortCode != this.INTTRABookingResponse_POFPortCode) || (this.MainCarriageToPortCode != this.INTTRABookingResponse_PODPortCode)) {
+                this.IsApplyChanges = true;
+            }
 
-        // Compare the Main leg
-        if ((this.MainCarriageCarrierNumber != this.INTTRABookingResponse_Voyage) || (this.MainCarriageETD != this.INTTRABookingResponse_POLDate) ||
-            (this.MainCarriageFromPortCode != this.INTTRABookingResponse_POFPortCode) || (this.MainCarriageToPortCode != this.INTTRABookingResponse_PODPortCode)) {
-            this.IsApplyChanges = true;
+            // Compare the leg 2
         }
-
-        // Compare the leg 2 
     }
 
     CloseButtonClicked() {

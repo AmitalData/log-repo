@@ -415,6 +415,18 @@ export class ShipmentList {
 		INTTRALastStatusDate: Date;
 		INTTRABookingError: string;
 		INTTRALastBookingResponse: string;
+		INTTRABookingResponse_Voyage: string;
+		INTTRABookingResponse_POLDate: Date;
+		INTTRABookingResponse_POFPort: string;
+		INTTRABookingResponse_POFPortCode: string;
+		INTTRABookingResponse_POFCCode: string;
+		INTTRABookingResponse_POFCName: string;
+		INTTRABookingResponse_PODDate: Date;
+		INTTRABookingResponse_PODPort: string;
+		INTTRABookingResponse_PODPortCode: string;
+		INTTRABookingResponse_PODCCode: string;
+		INTTRABookingResponse_PODCName: string;
+		INTTRABookingResponse_ShippingLine: string;
 		Notify1Reference: string;
 		Notify2Reference: string;
 		ShipperNotExporterReference: string;
