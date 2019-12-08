@@ -72,7 +72,7 @@ export class ShipmentPMService {
                 if (pm) {
                     entity = this.MapJsonToEntityPM(pm);
                 }
-                ServiceLocator.RulesValidator.ApplyAllEntityStaticRules(entity, "Shipment");
+               // ServiceLocator.RulesValidator.ApplyAllEntityStaticRules(entity, "Shipment");
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
                 pmresponse.Result = entity;
