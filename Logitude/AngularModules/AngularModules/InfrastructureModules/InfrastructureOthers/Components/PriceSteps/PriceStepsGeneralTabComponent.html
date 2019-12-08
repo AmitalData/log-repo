@@ -1,0 +1,52 @@
+
+<div class="TabHolder">
+    <table>
+        <tr class="TabTitleRow">
+            <td colspan="3">
+                <div></div>
+            </td>
+        </tr>
+
+        <!-- Name -->
+        <tr class="FormFieldRow">
+            <td style="width:120px;">
+                <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+            </td>
+
+            <td style="width:230px;">
+                <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+            </td>
+
+            <td>
+                <div></div>
+            </td>
+        </tr>
+
+        <tr class="FormFieldRow">
+            <td>
+                <LogLabel [ObjectFieldName]="'Steps'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+            </td>
+            <td colspan="2">
+                <table>
+                    <tr>
+                        <td style="width:1px; text-align:left;" title="{{PriceStepsText}}">
+                            {{PriceStepsText}}
+                        </td>
+                        <td style="width:5px;">
+                            <div></div>
+                        </td>
+                        <td style="text-align:left;">
+                            <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditPriceSteps(period)"></IconButton>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="3">
+                <div></div>
+            </td>
+        </tr>
+    </table>
+</div>

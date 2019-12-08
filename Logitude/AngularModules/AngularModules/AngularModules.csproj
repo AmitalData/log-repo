@@ -392,6 +392,7 @@
     <Content Include="InfrastructureModules\InfrastructureDocuments\Components\SharedDocument\SharedDocumentComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureDocuments\Components\SharedDocument\SharedDocumentsPermissionsComponent.html" />
     <Content Include="Images\return.png" />
+    <Content Include="InfrastructureModules\InfrastructureOthers\Components\PriceSteps\PriceStepsGeneralTabComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureOthers\Components\WebhookKeys\WebhookTesterComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureOthers\Components\WebhookKeys\WebhookKeysComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\AddEditPrivateLabelsComponent.html" />
@@ -922,6 +923,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBusinessProcess\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBusinessProcess\ModuleInfrastructureBusinessProcess.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureGettingStarted\Components\PaymentGateway\PaymentGatewayComponent.ts" />
+    <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\PriceSteps\PriceStepsGeneralTabComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\WebhookKeys\WebhookTesterComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\WebhookKeys\WebhookKeysComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\CustomControls\RatioBoxComponent.ts" />
@@ -967,6 +969,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityLists\DWSubQueryList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\DWQueryList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\FeatureToggleList.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityLists\PriceStepsList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\SchedulerLogsList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\SchedulerProcedureList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\ToggleList.ts" />
@@ -983,6 +986,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DWQueryPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\FeatureTogglePM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\LBPTeamMemberPM.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityPMs\PriceStepsPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\SchedulerLogsPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\SharedLogisticsSettingPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\SharedUserQueryPM.ts" />
@@ -1012,6 +1016,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\DWObjectTableListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\FeatureToggleListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\ObjectFieldListService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardLists\PriceStepsListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\SchedulerLogsListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\SchedulerProcedureListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\ToggleListService.ts" />
@@ -1023,6 +1028,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DWSubQueryPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DWQueryPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\FeatureTogglePMService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\PriceStepsPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\SchedulerLogsPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\SharedLogisticsSettingPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\WebhookKeysPMService.ts" />
