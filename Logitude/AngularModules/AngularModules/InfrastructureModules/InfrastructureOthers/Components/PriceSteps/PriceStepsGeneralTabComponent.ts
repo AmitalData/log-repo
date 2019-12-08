@@ -8,6 +8,9 @@ import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { TariffDomainService } from '../../../../TariffModule/Services/TariffDomainService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { TariffSettingPM } from '../../../../TariffModule/EntityPMs/TariffSettingPM';
+import { TenantPM } from "../../../../Common/EntityPMs/TenantPM";
+import { Validator } from '../../../../Infrastructure/Validators/Validator';
+import { PriceStepsPMService } from '../../../../Infrastructure/Services/StandardPMs/PriceStepsPMService';
 
 @Component({
     selector: 'PriceStepsGeneralTabComponent',
@@ -19,14 +22,20 @@ export class PriceStepsGeneralTabComponent extends BaseComponent implements OnIn
     public DataContext: PriceStepsGeneralTabComponent = this;
     public ObjectTableName: string = "PriceSteps";
     public EntityPM: PriceStepsPM;
+    public TenantPM: TenantPM;
     public PriceStepsText: string;
+    public ValidationErrorsList: string[];
+    private CurrentSession = SessionLocator.SelectedSession;
+
     constructor(public entityArgs: EntityArgs) {
         super();
-        this.InitializeEntity();
+        this.EntityPM = this.entityArgs.EntityPM;
+        this.TenantPM = SessionLocator.TenantPM;
+        this.Listen();
     }
 
-    InitializeEntity() {
-        this.EntityPM = this.entityArgs.EntityPM;
+    InitializeNewEntity() {
+        this.EntityPM = new PriceStepsPM();
         var todayDate: Date = DateTool.GetCurrentDateTimeAsUtc();
         this.EntityPM.Tenant = SessionLocator.Tenant;
         this.EntityPM.CreateDate = todayDate;
@@ -37,6 +46,17 @@ export class PriceStepsGeneralTabComponent extends BaseComponent implements OnIn
 
     ngOnInit() {
         this.GetTenantTariffSetting();
+        if (this.EntityPM == null) {
+            this.InitializeNewEntity();
+        } else {
+            this.UpdateEntity();
+        }
+    }
+
+    UpdateEntity() {
+        var todayDate: Date = DateTool.GetCurrentDateTimeAsUtc();
+        this.EntityPM.UpdateDate = todayDate;
+        this.EntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
     }
     
     EditPriceSteps() {
@@ -55,6 +75,24 @@ export class PriceStepsGeneralTabComponent extends BaseComponent implements OnIn
             });
         });
     }
+
+    private Listen() {
+        if (this.CurrentSession.CurrentEditComponent != null) {
+            this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                if (isSaveSuccess) {
+                    this.entityArgs.EditComponent.ReloadEntityPM();
+                    //this.SetUIProperties();
+                }
+            });
+            this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                if (isLoadSuccess) {
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                    //this.SetUIProperties();
+                }
+            });
+        }
+    }
+
     get Name() { return this.EntityPM.Name; }
     set Name(value: string) {
         if (this.EntityPM.Name != value) {
@@ -83,6 +121,41 @@ export class PriceStepsGeneralTabComponent extends BaseComponent implements OnIn
                 var entity: TariffSettingPM = myResponse.Result;
                 this.EntityPM.Steps = entity.DefaultPriceSteps;
                 this.PriceStepsText = this.GetPriceSteps(entity.DefaultPriceSteps);
+            }
+        });
+    }
+
+
+    CancelButtonClicked() {
+        this.CurrentSession.CloseCurrentWindow();
+    }
+
+    OkButtonClicked() {
+        var errors: string[] = [];
+        Validator.TryValidateObject(this.EntityPM, this.DataContext.ObjectTableName, errors);
+
+        //if (AppTool.IsNullOrEmpty(this.Description)) {
+        //    errors.push("Description is required");
+        //}
+        this.ValidationErrorsList = errors;
+
+        if (this.ValidationErrorsList.length == 0) {
+            this.SubmitCreatingPriceSteps();
+        }
+    }
+
+    SubmitCreatingPriceSteps() {
+        var service: PriceStepsPMService = new PriceStepsPMService();
+
+        service.insert(this.EntityPM).subscribe((myResult: ServiceResponse) => {
+            if (myResult) {
+                if (!myResult.HasError) {
+                    this.CurrentSession.CloseCurrentWindowEmit("ok");
+                }
+                else {
+                    this.ValidationErrorsList = myResult.ErrorsArray;
+                    this.CurrentSession.StopBusyIndicator();
+                }
             }
         });
     }
