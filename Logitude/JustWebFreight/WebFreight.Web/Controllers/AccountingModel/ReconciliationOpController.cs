@@ -41,6 +41,8 @@ using System.Transactions;
 using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
 using Simplog.Data.Helpers;
+using Logitude.Accounting.BL.CloseTables;
+using Logitude.Accounting.BL.CoreBL.Reconcile;
 
 namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsController.cs
 {
@@ -254,16 +256,6 @@ tenant);
 
                 List<LedgerTransactionList> openTransactions = transactionQuery.GetOpenReconciliationFilterList(queryOperations, callback, gLAccountId, tenant);
 
-                //LedgerTransactionSorterArgs args = new LedgerTransactionSorterArgs()
-                //{
-                //    Tenant = tenant,
-                //    AccountId = gLAccountId,
-                //    QueryOperations = queryOperations,
-                //    Transactions = openTransactions,
-                //};
-                //LedgerTransactionsSorter transactionsSorter = new LedgerTransactionsSorter(args);
-                //openTransactions = transactionsSorter.SortQuery();
-
                 ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
@@ -282,6 +274,8 @@ tenant);
             }
 
         }
+
+      
         [HttpGet]
         public HttpResponseMessage GetReconciliationsByFilter(string gLAccountId, [FromUri] ApiQueryFilters filters)
         {
