@@ -64,6 +64,7 @@ export class ClaimGeneralTabComponent extends BaseComponent {
                         if (AppTool.IsNullOrEmpty(this.ClientId) &&
                             !AppTool.IsNullOrEmpty(this.EntityPM.PassportTypeCode) || !AppTool.IsNullOrEmpty(this.EntityPM.PassportNumber) || !AppTool.IsNullOrEmpty(this.EntityPM.PassportCountryTypeCode)) {
                             this.IsClientPassportEnabled = true;
+                            this.UIProperties.SetEnabled("ClientId", "Customs.Claim", false);
                         }
                     }
                     this.Listen();
@@ -584,9 +585,11 @@ export class ClaimGeneralTabComponent extends BaseComponent {
             if (AppTool.IsNullOrEmpty(this.ClientId) &&
                 !AppTool.IsNullOrEmpty(this.EntityPM.PassportTypeCode) || !AppTool.IsNullOrEmpty(this.EntityPM.PassportNumber) || !AppTool.IsNullOrEmpty(this.EntityPM.PassportCountryTypeCode)) {
                 this.IsClientPassportEnabled = true;
+                this.UIProperties.SetEnabled("ClientId", "Customs.Claim", false);
             }
             else {
                 this.IsClientPassportEnabled = false;
+                this.UIProperties.SetEnabled("ClientId", "Customs.Claim", true);
             }
         }
            

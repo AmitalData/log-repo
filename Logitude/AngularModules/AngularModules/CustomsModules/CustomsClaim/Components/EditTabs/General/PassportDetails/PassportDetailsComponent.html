@@ -46,7 +46,10 @@
                        [IsImporterDetails]="true"
                        [ItemHeight]="36"
                        [HideIcons]="true"
-                       [HasFilters]="true"></SearchBox>
+                       [HasFilters]="true"
+                       (LostFocus)="PassportNumberLostFocus($event)"
+                       (TextChanged)="PassportNumberTextChanged($event)"
+                       (ItemClicked)="PassportNumberClicked($event)"></SearchBox>
         </td>
         <td><div></div></td>
         <td><div></div></td>
