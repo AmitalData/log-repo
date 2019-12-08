@@ -82,14 +82,14 @@ namespace AmitalCustomsWindowsService.Tester.LoadTest
             {
                 //var type = typeof(TWorker);
                 //var typeName = type.Name;
-                var DebugObject = new LoadTestParam()
+                var debugObject = new LoadTestParam()
                 {
                     currentThread = i,
                     iTotalRetrieve = iTotalRetrieve,
                     totalEachThread= totalEachThread
 
                 };
-                var workerOnce = new WorkerOnce<LoadTestWR>(1, _Workers.Count, debugMode: true, DebugObject) { ServiceStarted = true };
+                var workerOnce = new WorkerOnce<LoadTestWR>(1, _Workers.Count, debugMode: true, DebugObject: debugObject) { ServiceStarted = true };
 
                 _Workers.Add(workerOnce);
                 _Threads.Add(null);

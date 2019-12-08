@@ -91,9 +91,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                     AppendLogLine("GetSingleB4Upsert:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
                     if (this._MyDeclarationPM != null)
                     {
-                        CheckMasterToUpdate(MoreParams);
                         if (!declarationUpdateService.CheckIfUpdatingAllowed(this._MyDeclarationPM))
                         {
+                            CheckMasterToUpdate(MoreParams);
                             AppendLogLine("Updating Not Allowed For Declaration " + this._MyDeclarationPM.CustomFileNo + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
                             return;
                         }
@@ -147,7 +147,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             AppendLogLine("GetSingle:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
 
             this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
-
+            CheckMasterToUpdate(MoreParams);
             if (!String.IsNullOrWhiteSpace(_LogitudeCommDecFile.TaxationDateTime))
             {
                 this._MyDeclarationPM.TaxationDateTime = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeCommDecFile.TaxationDateTime, "LogitudeCommDecFile.TaxationDateTime"); // moran 22.1.17 - AMI-58777
