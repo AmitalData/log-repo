@@ -188,20 +188,33 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private static List<DeclarationCourierStatus> GetByMasterIDCourierDeclarationStatusCode(DCAInUCB2750WithResponseContentHeader customResponse, GenericRequestParams requestParams, DeclarationCourierStatusRepository repo)
         {
-            List<DeclarationCourierStatus> listPoco = repo.GetByMasterIDCourierDeclarationStatusCode(requestParams.Tenant, requestParams.AppicationId, "R",
+            List<DeclarationCourierStatus> listPoco = new List<DeclarationCourierStatus>();
+            if (customResponse.CourierDeclarationStatusCode == "X")
+            {
+                listPoco = repo.GetByMasterIDCourierDeclarationStatusCode(requestParams.Tenant, requestParams.AppicationId, "X",
                 customResponse.SelectedBOLValue,
                 customResponse.SelectedStatusValue,
                 customResponse.SelectedTotalInvoiceValue,
                 customResponse.SelectedFastIndividualProcessValue,
                 customResponse.SelectedCustomStatusValue);
-            if (customResponse.CourierDeclarationStatusCode == "RV")
+            }
+            else
             {
-                var listPM2 = repo.GetByMasterIDCourierDeclarationStatusCode(requestParams.Tenant, requestParams.AppicationId, "V", customResponse.SelectedBOLValue,
+                listPoco = repo.GetByMasterIDCourierDeclarationStatusCode(requestParams.Tenant, requestParams.AppicationId, "R",
+                customResponse.SelectedBOLValue,
                 customResponse.SelectedStatusValue,
                 customResponse.SelectedTotalInvoiceValue,
                 customResponse.SelectedFastIndividualProcessValue,
                 customResponse.SelectedCustomStatusValue);
-                listPoco = listPoco.Concat(listPM2).ToList();
+                if (customResponse.CourierDeclarationStatusCode == "RV")
+                {
+                    var listPM2 = repo.GetByMasterIDCourierDeclarationStatusCode(requestParams.Tenant, requestParams.AppicationId, "V", customResponse.SelectedBOLValue,
+                    customResponse.SelectedStatusValue,
+                    customResponse.SelectedTotalInvoiceValue,
+                    customResponse.SelectedFastIndividualProcessValue,
+                    customResponse.SelectedCustomStatusValue);
+                    listPoco = listPoco.Concat(listPM2).ToList();
+                }
             }
 
             return listPoco;

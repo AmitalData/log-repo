@@ -386,6 +386,13 @@ implements OnDestroy
             myMessageWindow.Show(TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));
             return;
         }
+        if (this._InCorrectDECToBatchSend == 0 && courierDeclarationStatusCode == "X") {
+            var myMessageWindow = new MessageWindow();
+            myMessageWindow.Width = 250;
+            myMessageWindow.Height = 150;
+            myMessageWindow.Show(TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));
+            return;
+        }
 
         var currRequestParams = new SendALLCorrectRequestParams();
         currRequestParams.LoggingEnabled = true;
@@ -546,6 +553,7 @@ implements OnDestroy
     _HOLD_Total = 0;
     _CorrectMNFToBatchSend = 0;
     _CorrectDECToBatchSend = 0;
+    _InCorrectDECToBatchSend = 0;
     _PAY_C_Total = 0;
     _PAY_R_Total = 0;
     _PAY_I_Total = 0;
@@ -692,6 +700,10 @@ implements OnDestroy
                         }
                         case "DEC_W": {
                             this._DEC_W_Total = item.Value;
+                            this._InCorrectDECToBatchSend = item.Value;
+                            if (this._ValidationErrors != null && this._ValidationErrors.length > 0) {
+                                this._CorrectDECToBatchSend = 0;
+                            }
                             break;
                         }
                         case "DEC_V": {
