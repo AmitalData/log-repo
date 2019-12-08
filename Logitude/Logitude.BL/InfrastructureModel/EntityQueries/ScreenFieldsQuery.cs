@@ -55,7 +55,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             foreach (ScreenFieldPM field in screenfields)
             {
                 ScreenFieldPM existedField = (from a in selectedScreenFields
-                                              where a.ScreenId == field.ScreenId && a.ObjectFieldCode == field.ObjectFieldCode
+                                              where a.ScreenId == field.ScreenId && a.ObjectFieldId == field.ObjectFieldId
                                               select a).FirstOrDefault();
 
                 if (existedField != null)
