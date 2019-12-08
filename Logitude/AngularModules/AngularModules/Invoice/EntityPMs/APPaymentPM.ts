@@ -428,6 +428,26 @@ export class APPaymentPM {
     public set JournalNumber(newValue: string) { if (this.journalNumber != newValue) { this.journalNumber = newValue; this.MarkAsDirty("JournalNumber"); } }
        
 	 
+    private accountingCancelationDate: Date;
+    public get AccountingCancelationDate() { return this.accountingCancelationDate; }
+    public set AccountingCancelationDate(newValue: Date) { if (this.accountingCancelationDate != newValue) { this.accountingCancelationDate = newValue; this.MarkAsDirty("AccountingCancelationDate"); } }
+       
+	 
+    private dontIncludeInDeductionReport: boolean;
+    public get DontIncludeInDeductionReport() { return this.dontIncludeInDeductionReport; }
+    public set DontIncludeInDeductionReport(newValue: boolean) { if (this.dontIncludeInDeductionReport != newValue) { this.dontIncludeInDeductionReport = newValue; this.MarkAsDirty("DontIncludeInDeductionReport"); } }
+       
+	 
+    private cancelationNotes: string;
+    public get CancelationNotes() { return this.cancelationNotes; }
+    public set CancelationNotes(newValue: string) { if (this.cancelationNotes != newValue) { this.cancelationNotes = newValue; this.MarkAsDirty("CancelationNotes"); } }
+       
+	 
+    private voidedByJournalNumber: string;
+    public get VoidedByJournalNumber() { return this.voidedByJournalNumber; }
+    public set VoidedByJournalNumber(newValue: string) { if (this.voidedByJournalNumber != newValue) { this.voidedByJournalNumber = newValue; this.MarkAsDirty("VoidedByJournalNumber"); } }
+       
+	 
 
     public OldEntityPM: APPaymentPM;
 		

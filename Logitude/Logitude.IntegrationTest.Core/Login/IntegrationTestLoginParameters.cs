@@ -19,6 +19,16 @@ namespace Logitude.IntegrationTest.Core.Login
             get { return System.Configuration.ConfigurationManager.AppSettings.Get("ServerURL"); }
         }
 
+        public static string Email
+        {
+            get { return System.Configuration.ConfigurationManager.AppSettings.Get("Email"); }
+        }
+
+        public static string Password
+        {
+            get { return System.Configuration.ConfigurationManager.AppSettings.Get("Password"); }
+        }
+
         public static string APICredential_PrimaryKey
         {
             get

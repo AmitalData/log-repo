@@ -488,7 +488,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
                 if (string.IsNullOrEmpty(line.ForiegnCurrencyId))
                 {
-                    line.ForiegnCurrencyId = this.aPInvoicePM.InvoiceCurrencyId;
+                   line.ForiegnCurrencyId = this.aPInvoicePM.InvoiceCurrencyId;
                 }
 
                 line.EntityReference = this.aPInvoicePM.MainEntityReference;

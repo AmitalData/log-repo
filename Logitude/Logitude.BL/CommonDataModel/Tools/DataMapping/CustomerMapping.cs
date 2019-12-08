@@ -154,7 +154,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPM.SavedForActivation = false;
             entityPM.SetAsPotential = false;
             entityPM.CodeMyCustomer = entityPM.IsCustomer ? entityCard.Code + " (Customer)" : entityCard.Code;
-
+            entityCard.CreatedByPartner = entityPM.CreatedByPartner;
             BuildSearchFields(entityPM, entityCard, isNewState);
             BuildCompetitorFields(entityPM, entityPOCO);
         }

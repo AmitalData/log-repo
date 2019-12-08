@@ -9,6 +9,10 @@ import { InterestBasesPeriodPM } from '../../../../EntityPMs/InterestBasesPeriod
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ObjectsLocator } from '../../../../../Infrastructure/Locators/ObjectsLocator';
+import { InterestBasesTypePMService } from '../../../../Services/StandardPMs/InterestBasesTypePMService';
+import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
+import { Validator } from '../../../../../Infrastructure/Validators/Validator';
+import { TenantPM } from '../../../../../Common/EntityPMs/TenantPM';
 
 @Component({
     moduleId: module.id,
@@ -21,12 +25,23 @@ export class InterestBasesTypeDetailsTabComponent extends BaseComponent implemen
     public DataContext: InterestBasesTypeDetailsTabComponent = this;
     public InterestBasesPeriodsList: ObservableCollection;
     private CurrentSession = SessionLocator.SelectedSession;
+    public TenantPM: TenantPM;
+    public IsNew: boolean = false;
     public isRTL: boolean = false;
+    public ValidationErrorsList: string[] = [];
+    myService: InterestBasesTypePMService;
     constructor(public entityArgs: EntityArgs) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.EntityPM = entityArgs.EntityPM;
+        this.TenantPM = SessionLocator.TenantPM;
+        if (!this.EntityPM) {
+            this.EntityPM = new InterestBasesTypePM();
+            this.EntityPM.Tenant = this.TenantPM.Id;
+        }
+        this.myService = new InterestBasesTypePMService();
         this.InterestBasesPeriodsList = new ObservableCollection([]);
+        this.EntityPM.OldEntityPM = this.EntityPM;
         this.BuildData();
         this.SetUIProperties();
         this.Listen();
@@ -46,6 +61,9 @@ export class InterestBasesTypeDetailsTabComponent extends BaseComponent implemen
             this.UIProperties.SetEnabled("LocalName", "InterestBasesType", true);
             this.UIProperties.SetEnabled("Description", "InterestBasesType", true);
         }
+    }
+    SetWindowArgs(args) {
+        this.IsNew = args.IsNew;
     }
     //Grid Header Label
     public InterestBaseStartDateHeader = TextCodeTranslator.Translate("InterestBasesPeriod.CH.InterestBaseStartDateListLable");
@@ -178,6 +196,57 @@ export class InterestBasesTypeDetailsTabComponent extends BaseComponent implemen
             this.EntityPM.InActive = newValue;
         }
     }
+    CancelButtonClicked() {
+        this.CurrentSession.CloseCurrentWindow();
+    }
+    OkButtonClicked() {
+            var errors: string[] = [];
+            Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
+            if (errors.length == 0) {
+                this.SubmitChanges();
+            } else {
+                this.ValidationErrorsList = errors;
+            }
+     }
+
+    SubmitChanges() {
+        var InterestBasesPeriods: InterestBasesPeriodPM[] = [];
+        InterestBasesPeriods = this.EntityPM.InterestBasesPeriods;
+        this.EntityPM.InterestBasesPeriods = null;
+
+        this.myService.insert(this.EntityPM).subscribe(myResult => {
+            var mm: ServiceResponse = myResult;
+            if (!mm.HasError) {
+                InterestBasesPeriods.forEach(s => s.InterestBaseTypeId = this.EntityPM.Id);
+                this.EntityPM.InterestBasesPeriods = InterestBasesPeriods;
+                this.myService.update(this.EntityPM).subscribe(myResult => {
+                    var iServiceResponse: ServiceResponse = myResult;
+                    if (!iServiceResponse.HasError) {
+                        var entity = iServiceResponse.Result;
+                        this.CurrentSession.CloseCurrentWindowEmit("ok");
+                        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent',
+                            this.CurrentSession.SessionLocation.viewContainerRef)
+                            .then(cmpRef => {
+                                cmpRef.instance.ComponentRef = cmpRef;
+                                cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: this.ObjectTableName });
+                                cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                                    this.CancelButtonClicked();
+                                });
+                            });
+                    }
+                    else {
+                        this.ValidationErrorsList = iServiceResponse.ErrorsArray;
+                        this.CurrentSession.StopBusyIndicator();
+                    }
+                });
+
+            }
+            else {
+                this.ValidationErrorsList = mm.ErrorsArray;
+                this.CurrentSession.StopBusyIndicator();
+            }
+        });
+    }
 
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
@@ -205,10 +274,18 @@ export class InterestBasesPeriodItem extends BaseComponent {
         }
         return true;
     }
-    CheckInterestBaseStartDateExist(InterestBaseStartDate: Date): boolean {
+    CheckInterestBaseStartDateExist(InterestBaseStartDate: Date, CreateDate:Date): boolean {
         for (let i = 0; i < this.DataContext.fatherComponent.InterestBasesPeriodsList.Length; i++) {
-            if (this.DataContext.fatherComponent.InterestBasesPeriodsList.Collection[i].InterestBaseStartDate.getTime() === InterestBaseStartDate.getTime()) {
-                return false;
+            if (new Date(this.DataContext.fatherComponent.InterestBasesPeriodsList.Collection[i].InterestBaseStartDate).getTime() === new Date(InterestBaseStartDate).getTime()) {
+                var idont; 
+                if (!this.IsNewEntity) {
+                    if (new Date(this.DataContext.fatherComponent.InterestBasesPeriodsList.Collection[i].CreateDate).getTime() != new Date(CreateDate).getTime()) {
+                        return false;
+                    }
+                }
+                else {
+                    return false;
+                }
             }
         }
         return true;
@@ -216,24 +293,25 @@ export class InterestBasesPeriodItem extends BaseComponent {
 
     get InterestBaseStartDate() { return this.EntityPM.InterestBaseStartDate; }
     set InterestBaseStartDate(newValue: Date) {
+        if (newValue && !this.CheckInterestBaseStartDateExist(newValue, this.CreateDate))
+            this.UIProperties.SetValidity("InterestBaseStartDate", "InterestBasesPeriod", false, TextCodeTranslator.Translate("Accounting.General.O.AbaseperiodwiththesamestartdateisalreadyAdded"));
+        else
+            this.UIProperties.SetValidity("InterestBaseStartDate", "InterestBasesPeriod", true, TextCodeTranslator.Translate("Accounting.General.O.AbaseperiodwiththesamestartdateisalreadyAdded"));
+
         if (this.EntityPM.InterestBaseStartDate != newValue) {
             this.EntityPM.InterestBaseStartDate = newValue;
         }
-        if (newValue && !this.CheckInterestBaseStartDateExist(newValue))
-            this.UIProperties.SetValidity("InterestBaseStartDate", "InterestBasesPeriod", false, "Interest Base Start Date Already Added");
-        else
-            this.UIProperties.SetValidity("InterestBaseStartDate", "InterestBasesPeriod", true, "Interest Base Start Date Already Added");
     }
 
     get InterestRate() { return this.EntityPM.InterestRate; }
     set InterestRate(newValue: number) {
+         if (newValue && !this.CheckInterestRateValid(newValue))
+            this.UIProperties.SetValidity("InterestRate", "InterestBasesPeriod", false, TextCodeTranslator.Translate("Accounting.General.O.Theratepercentageshouldbeformattedas00.00"));
+        else
+            this.UIProperties.SetValidity("InterestRate", "InterestBasesPeriod", true, TextCodeTranslator.Translate("Accounting.General.O.Theratepercentageshouldbeformattedas00.00"));
         if (this.EntityPM.InterestRate != newValue) {
             this.EntityPM.InterestRate = newValue;
         }
-        if (newValue && !this.CheckInterestRateValid(newValue))
-            this.UIProperties.SetValidity("InterestRate", "InterestBasesPeriod", false,"Interest rate format must be 2.2");
-        else
-            this.UIProperties.SetValidity("InterestRate", "InterestBasesPeriod", true,"Interest rate format must be 2.2");
     }
 
     get LineNumber() { return this.EntityPM.LineNumber; }
@@ -277,5 +355,16 @@ export class InterestBasesPeriodItem extends BaseComponent {
             this.EntityPM.UpdateDate = newValue;
         }
     }
+
+    get CreateDate() { return this.EntityPM.CreateDate; }
+    set CreateDate(newValue: Date) {
+        if (this.EntityPM.CreateDate != newValue) {
+            this.EntityPM.CreateDate = newValue;
+        }
+    }
+
+    get CloneMe() { return this.EntityPM.CloneMe; }
+    get RejectChanges() { return this.EntityPM.RejectChanges; }
+
 
 }

@@ -156,6 +156,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         IsGeneralInvoice = a.IsGeneralInvoice,
                         ExternalAccountingEntityId = a.ExternalAccountingEntityId,
                         FirstApproveDate = a.FirstApproveDate,
+                        CreatedByPartner = a.CreatedByPartner,
                     });
             
 
@@ -548,6 +549,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                         ExternalAccountingEntityId = a.ExternalAccountingEntityId,
                                         FirstApproveDate = a.FirstApproveDate,
                                         BranchName = a.Branch == null ? null : a.Branch.EnglishName,
+                                        CreatedByPartner = a.CreatedByPartner,
                                     }).FirstOrDefault();
 
 
@@ -632,6 +634,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                         ExternalAccountingEntityId = a.ExternalAccountingEntityId,
                                         FirstApproveDate = a.FirstApproveDate,
                                         BranchName = a.Branch == null ? null : a.Branch.EnglishName,
+                                        CreatedByPartner = a.CreatedByPartner,
                                     }).FirstOrDefault();
 
             if(entityPM != null)
@@ -1023,6 +1026,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              IsGeneralInvoice = a.IsGeneralInvoice,
                              FirstApproveDate = a.FirstApproveDate,
                              BranchName = a.Branch == null ? null : a.Branch.EnglishName,
+                             CreatedByPartner = a.CreatedByPartner,
                          };
 
             return result;
@@ -1096,6 +1100,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             IsGeneralInvoice = a.IsGeneralInvoice,
                             FirstApproveDate = a.FirstApproveDate,
                             BranchName = a.Branch == null ? null : a.Branch.EnglishName,
+                            CreatedByPartner = a.CreatedByPartner,
                         };
 
             return query;
@@ -1207,6 +1212,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              IsGeneralInvoice = a.IsGeneralInvoice,
                              FirstApproveDate = a.FirstApproveDate,
                              BranchName = a.Branch == null ? null : a.Branch.EnglishName,
+                             CreatedByPartner = a.CreatedByPartner,
                          };
 
             return result;
@@ -1290,6 +1296,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                 ExternalAccountingEntityId = a.ExternalAccountingEntityId,
                                                 FirstApproveDate = a.FirstApproveDate,
                                                 BranchName = a.Branch == null ? null : a.Branch.EnglishName,
+                                                CreatedByPartner = a.CreatedByPartner,
                                             }).ToList();
 
 

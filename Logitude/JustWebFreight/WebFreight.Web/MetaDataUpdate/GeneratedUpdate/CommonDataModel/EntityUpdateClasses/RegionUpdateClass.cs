@@ -384,9 +384,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			  Query AllRegionsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = RegionTextCode_0.Id, Code = "All Regions",  QueryGroupCode = "RGQG", IndexOrder = 0, Tenant = 0, ObjectTableId = RegionObjectTable.Id, QuerySection = "Region", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = RegionFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AllRegionsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllRegionsQuery.Id, IndexOrder = 0, ObjectFieldId = RegionObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == RegionObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllRegionsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllRegionsQuery.Id, IndexOrder = 0, ObjectFieldId = RegionObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == RegionObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = RegionObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == RegionObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllRegionsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllRegionsQuery.Id, IndexOrder = 1, ObjectFieldId = RegionObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == RegionObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllRegionsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllRegionsQuery.Id, IndexOrder = 1, ObjectFieldId = RegionObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == RegionObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = RegionObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == RegionObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 

@@ -1340,6 +1340,11 @@ export class CustomerPM {
     public set GLAccountId(newValue: string) { if (this.gLAccountId != newValue) { this.gLAccountId = newValue; this.MarkAsDirty("GLAccountId"); } }
        
 	 
+    private createdByPartner: string;
+    public get CreatedByPartner() { return this.createdByPartner; }
+    public set CreatedByPartner(newValue: string) { if (this.createdByPartner != newValue) { this.createdByPartner = newValue; this.MarkAsDirty("CreatedByPartner"); } }
+       
+	 
 
     public OldEntityPM: CustomerPM;
 		

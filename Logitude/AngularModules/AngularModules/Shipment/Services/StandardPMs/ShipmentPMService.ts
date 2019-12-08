@@ -39,6 +39,7 @@ import { PerformanceLogger } from '../../../Infrastructure/Utilities/Performance
 import {ShipmentAssemblyPM} from '../../EntityPMs/ShipmentAssemblyPM';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { PickUpDeliveryPackageHarmonizePM } from '../../EntityPMs/PickUpDeliveryPackageHarmonizePM';
+import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
 
 @Injectable()
 
@@ -71,6 +72,7 @@ export class ShipmentPMService {
                 if (pm) {
                     entity = this.MapJsonToEntityPM(pm);
                 }
+               // ServiceLocator.RulesValidator.ApplyAllEntityStaticRules(entity, "Shipment");
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
                 pmresponse.Result = entity;
@@ -138,6 +140,7 @@ export class ShipmentPMService {
 
     getSingleBySecurityKeyTenantWithoutToken(SecurityKey: string,Tenant:number) {
 
+        var myCustomURL = "http://13.93.36.4/api/shipment";
         var authHeader = new Headers();
         //authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         //authHeader.append('CallTimKey', ServiceHelper.GetLoggedUserToken());
@@ -145,7 +148,7 @@ export class ShipmentPMService {
         //var key = PerformanceLogger.AddLogTime();
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetSingleBySecurityKeyWithoutToken?key=' + SecurityKey + '&tenant=' + Tenant, {
+            return this._http.get(myCustomURL + '/GetSingleBySecurityKeyWithoutToken?key=' + SecurityKey + '&tenant=' + Tenant, {
                 headers: authHeader
             }).map(response => {
 

@@ -25,5 +25,6 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string UserId { get; set; }
         public int UpdatedByTenant { get; set; }
         public string ObjectFieldFullNameTextCodeCode { get; set; }
+        public string ObjectFieldCode { get; set; }
     }
 }

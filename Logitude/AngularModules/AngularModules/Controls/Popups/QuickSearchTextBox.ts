@@ -371,6 +371,11 @@ export class QuickSearchTextBox implements OnInit {
         });
     }
     private OnDataLoaded(items: any[] = []) {
+
+        if (!items) {
+            items = [];
+        }
+
         var itemsCount = items.length;
         this.IsQuickSearchLoading = false;
         this.IsQuickSearchNoResult = itemsCount == 0 ? true : false;

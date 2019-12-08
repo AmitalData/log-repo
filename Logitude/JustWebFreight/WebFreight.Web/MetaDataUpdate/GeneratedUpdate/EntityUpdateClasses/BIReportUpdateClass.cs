@@ -947,6 +947,175 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "LastRunDate",
+					  						ObjectTableName =  "BIReport",
+					  						FieldsDataType =  "DateTime",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "LastRunDate",
+					  						ListPropertyPath =  "LastRunDate",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "BIReport",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "LastRunDate",
+					  						DefaultText =  "Last Run Date",
+					  						ListFieldLable =  "LastRunDateListLable",
+					  						ListLableDefaultText =  "Last Run Date",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "LastRunByUserId",
+					  						ObjectTableName =  "BIReport",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "User",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  15,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "LastRunByUserId",
+					  						ListPropertyPath =  "LastRunByUserId",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "LastRunByUserId",
+					  						DefaultText =  "Last Run By",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "LastRunByUserName",
+					  						ObjectTableName =  "BIReport",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  60,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  60,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "LastRunByUserName",
+					  						ListPropertyPath =  "LastRunByUserName",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "BIReport",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "LastRunByUserName",
+					  						DefaultText =  "Last Run By",
+					  						ListFieldLable =  "LastRunByUserNameListLable",
+					  						ListLableDefaultText =  "Last Run By",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
@@ -972,17 +1141,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   EditWizardComponentPath = "",
 			   QueryGroupCode = "df7a", IndexOrder = 0, Tenant = 0, ObjectTableId = BIReportObjectTable.Id, QuerySection = "BIReport", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BIReportFeature_0.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Ascending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn ALLBIREPORTSQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLBIREPORTSQuery.Id, IndexOrder = 0, ObjectFieldId = BIReportObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == BIReportObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ALLBIREPORTSQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLBIREPORTSQuery.Id, IndexOrder = 0, ObjectFieldId = BIReportObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == BIReportObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BIReportObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == BIReportObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ALLBIREPORTSQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLBIREPORTSQuery.Id, IndexOrder = 1, ObjectFieldId = BIReportObjectFields.Where(d => d.FieldName == "Description" && d.ObjectTableId == BIReportObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ALLBIREPORTSQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLBIREPORTSQuery.Id, IndexOrder = 1, ObjectFieldId = BIReportObjectFields.Where(d => d.FieldName == "Description" && d.ObjectTableId == BIReportObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BIReportObjectFields.Where(d => d.FieldName == "Description" && d.ObjectTableId == BIReportObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ALLBIREPORTSQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLBIREPORTSQuery.Id, IndexOrder = 2, ObjectFieldId = BIReportObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == BIReportObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ALLBIREPORTSQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLBIREPORTSQuery.Id, IndexOrder = 2, ObjectFieldId = BIReportObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == BIReportObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BIReportObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == BIReportObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ALLBIREPORTSQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLBIREPORTSQuery.Id, IndexOrder = 3, ObjectFieldId = BIReportObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == BIReportObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ALLBIREPORTSQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLBIREPORTSQuery.Id, IndexOrder = 3, ObjectFieldId = BIReportObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == BIReportObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BIReportObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == BIReportObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ALLBIREPORTSQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLBIREPORTSQuery.Id, IndexOrder = 4, ObjectFieldId = BIReportObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == BIReportObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ALLBIREPORTSQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLBIREPORTSQuery.Id, IndexOrder = 4, ObjectFieldId = BIReportObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == BIReportObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BIReportObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == BIReportObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ALLBIREPORTSQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLBIREPORTSQuery.Id, IndexOrder = 5, ObjectFieldId = BIReportObjectFields.Where(d => d.FieldName == "UpdatedByUserName" && d.ObjectTableId == BIReportObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ALLBIREPORTSQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLBIREPORTSQuery.Id, IndexOrder = 5, ObjectFieldId = BIReportObjectFields.Where(d => d.FieldName == "UpdatedByUserName" && d.ObjectTableId == BIReportObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BIReportObjectFields.Where(d => d.FieldName == "UpdatedByUserName" && d.ObjectTableId == BIReportObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ALLBIREPORTSQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLBIREPORTSQuery.Id, IndexOrder = 6, ObjectFieldId = BIReportObjectFields.Where(d => d.FieldName == "LastRunDate" && d.ObjectTableId == BIReportObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BIReportObjectFields.Where(d => d.FieldName == "LastRunDate" && d.ObjectTableId == BIReportObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ALLBIREPORTSQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLBIREPORTSQuery.Id, IndexOrder = 7, ObjectFieldId = BIReportObjectFields.Where(d => d.FieldName == "LastRunByUserName" && d.ObjectTableId == BIReportObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BIReportObjectFields.Where(d => d.FieldName == "LastRunByUserName" && d.ObjectTableId == BIReportObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 

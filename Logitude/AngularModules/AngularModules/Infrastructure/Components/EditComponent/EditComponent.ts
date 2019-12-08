@@ -1,3 +1,4 @@
+import { CashBookExtendedPMService } from './../../../Accounting/Services/ExtendedPMs/CashBookExtendedPMService';
 import { ReconciliationExtendedPMService } from './../../../Accounting/Services/ExtendedPMs/ReconciliationExtendedPMService';
 import { Settings } from './../../Settings';
 declare var window: any;
@@ -170,7 +171,26 @@ export class EditComponent implements OnDestroy {
             var service = new ReconciliationExtendedPMService();
             service.GetSingleWithoutLines(this.EntityId).subscribe((response: ServiceResponse) =>
             {
-                console.log("[GetSingleWithoutLines] ", response);
+                console.log("[ReconciliationExtendedPMService.GetSingleWithoutLines] ", response);
+
+                if (!response.HasError) {
+                    var reconciliation = response.Result;
+                    this.SetEntityPMAfterLoadIt(reconciliation);
+
+                }
+                else {
+                    this.ValidationErrorsList = response.ErrorsArray;
+                    this.StopBusyIndicator();
+                }
+            });
+
+
+        }
+        else if (this.ObjectTableName == "CashBook") {
+            let service = new CashBookExtendedPMService();
+            service.GetSingleWithoutLines(this.EntityId).subscribe((response: ServiceResponse) =>
+            {
+                console.log("[CashBookExtendedPMService.GetSingleWithoutLines] ", response);
 
                 if (!response.HasError) {
                     var reconciliation = response.Result;
@@ -327,7 +347,7 @@ export class EditComponent implements OnDestroy {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 3) {
+        if (this.Retries < 20) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
@@ -461,7 +481,7 @@ export class EditComponent implements OnDestroy {
 
         }
         else if (this.ObjectTableName == "Tariff") {
-            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC") {
+            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
                 myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === this.ObjectTableId && d.Code == "Tariff.SurchagesHeaderScreen")[0];
                 myObjectFields = window.ObjectFields.filter(d => d.ObjectTableId === this.ObjectTableId);
                 this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
@@ -1341,7 +1361,37 @@ export class EditComponent implements OnDestroy {
 
             if (this.ObjectTableName == "Reconciliation")
             {
-                var service = new ReconciliationExtendedPMService();
+                let service = new ReconciliationExtendedPMService();
+                service.GetSingleWithoutLines(this.EntityId).subscribe((response: ServiceResponse) =>
+                {
+                    console.log("[GetSingleWithoutLines] ", response);
+
+                    if (!response.HasError) {
+                        var reconciliation = response.Result;
+
+                        this.EntityPM = reconciliation;
+                        this.entityArgs.EntityPM = this.EntityPM;
+
+                        this.EditComponentController.OnReloadEntityPM().then((isLock) =>
+                        {
+                            this.StopBusyIndicator();
+                            this.UpdateComponentMembers();
+                            this.LoadCompleted.emit(true);
+                        });
+
+                    }
+                    else {
+                        this.StopBusyIndicator();
+                        this.ValidationErrorsList = response.ErrorsArray;
+                        this.LoadCompleted.emit(false);
+                    }
+                });
+
+
+            }
+            else if (this.ObjectTableName == "CashBook")
+            {
+                let service = new CashBookExtendedPMService();
                 service.GetSingleWithoutLines(this.EntityId).subscribe((response: ServiceResponse) =>
                 {
                     console.log("[GetSingleWithoutLines] ", response);

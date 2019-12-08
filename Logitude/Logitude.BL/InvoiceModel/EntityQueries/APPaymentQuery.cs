@@ -20,6 +20,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Def.EntityPMs;
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {
@@ -106,7 +107,11 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        VendorBankAddress = a.VendorBankAddress,
                                        VendorBankName = a.VendorBankName,
                                        VendorIBANNumber = a.VendorIBANNumber,
-                                       VendorSwift = a.VendorSwift
+                                       VendorSwift = a.VendorSwift,
+                                       AccountingCancelationDate = a.AccountingCancelationDate,
+                                       CancelationNotes=a.CancelationNotes,
+                                       DontIncludeInDeductionReport = a.DontIncludeInDeductionReport,
+
 
                                    }).FirstOrDefault();
 
@@ -118,17 +123,30 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
             Currency currency = CurrencyRepository.GetSingleCurrency(payment.PaymentCurrencyId, payment.Tenant, true);
             payment.PaymentCurrencyCode = currency != null ? currency.Code : null;
-
+            if(payment.StatusCode == "VD")
+            {
+                JournalPM voidedByJournal = GetApprovedJournalByAccountingEntityId(payment);
+                if(voidedByJournal != null)
+                {
+                    payment.VoidedByJournalNumber = voidedByJournal.JournalNumber;
+                }
+            }
             APPaymentPM securedPM = new APPaymentPM();
             SecuredMapping.GetMappedPM(payment, securedPM, "APPayment", tenant);
 
             if (IsFullAccountingActivated(tenant))
                 MapJournalFields(securedPM);
-
+           
             return BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);
         }
 
+        private JournalPM GetApprovedJournalByAccountingEntityId(APPaymentPM aPPaymentPM)
+        {
+            IJournalQueryServiceExt journalQuery = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride("", 1)) as IJournalQueryServiceExt;
+            return journalQuery.GetApprovedJournalByAccountingEntityId(aPPaymentPM.Id, "5", aPPaymentPM.Tenant);
 
+
+        }
         private void MapJournalFields(APPaymentPM entityPM)
         {
             Journal journal = GetJournalOfAPPayment(entityPM);

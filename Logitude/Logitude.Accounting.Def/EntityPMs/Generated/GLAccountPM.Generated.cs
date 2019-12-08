@@ -2355,6 +2355,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool allowEditChequePayToName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool AllowEditChequePayToName  
+	   {
+	    
+	     get
+		{
+		   return allowEditChequePayToName;
+		 }
+		 set
+		 {
+		   if(allowEditChequePayToName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AllowEditChequePayToName",OldValue=allowEditChequePayToName,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   allowEditChequePayToName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

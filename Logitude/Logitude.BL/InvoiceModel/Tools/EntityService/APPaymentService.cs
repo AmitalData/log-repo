@@ -303,14 +303,25 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 AccountingEntityCode = "5",
                 AccountingEntityId = aPPaymentPM.Id,
                 AccountingEntityReference = aPPaymentPM.PaymentNo,
+                AccountingDate = aPPaymentPM.AccountingCancelationDate,
+                LineNotes = aPPaymentPM.CancelationNotes,
             });
+           JournalPM voidedByJournal = GetApprovedJournalByAccountingEntityId(aPPaymentPM);
 
+            entityPM.VoidedByJournalNumber = voidedByJournal != null?  voidedByJournal.JournalNumber: null;
         }
 
         private JournalPM GetJournalByAccountingEntityId(APPaymentPM aPPaymentPM)
         {
             IJournalQueryServiceExt journalQuery = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride("", 1)) as IJournalQueryServiceExt;
             return journalQuery.GetJournalByAccountingEntityIdAndCode(aPPaymentPM.Id, "5" , aPPaymentPM.Tenant);
+
+
+        }
+        private JournalPM GetApprovedJournalByAccountingEntityId(APPaymentPM aPPaymentPM)
+        {
+            IJournalQueryServiceExt journalQuery = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride("", 1)) as IJournalQueryServiceExt;
+            return journalQuery.GetApprovedJournalByAccountingEntityId(aPPaymentPM.Id, "5", aPPaymentPM.Tenant);
 
 
         }
@@ -401,7 +412,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             //Full Accounting 
             AddAPPaymentJournalAndJournalLines(theEntityPm, setApproved);
             VoidAPPaymentInFullAccounting(theEntityPm, setVoided);
-
+            theEntityPm.VoidedByJournalNumber = entityPM.VoidedByJournalNumber;
             paymentRepository.Update(payment);
             paymentRepository.SubmitChanges();
             this.TraceConnected();

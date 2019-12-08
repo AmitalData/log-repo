@@ -147,11 +147,10 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
 
                 foreach (WarehouseRelease warehouseRelease in warehouseReleases)
                 {
-
                     if (!string.IsNullOrEmpty(warehouseRelease.WarehouseId) && !cardIds.Contains(warehouseRelease.WarehouseId)) cardIds.Add(warehouseRelease.WarehouseId);
                     if (!string.IsNullOrEmpty(warehouseRelease.CustomerId) && !cardIds.Contains(warehouseRelease.CustomerId)) cardIds.Add(warehouseRelease.CustomerId);
-                    if (!string.IsNullOrEmpty(warehouseRelease.FromPortId) && !cardIds.Contains(warehouseRelease.FromPortId)) portIds.Add(warehouseRelease.FromPortId);
-                    if (!string.IsNullOrEmpty(warehouseRelease.ToPortId) && !cardIds.Contains(warehouseRelease.ToPortId)) portIds.Add(warehouseRelease.ToPortId);
+                    if (!string.IsNullOrEmpty(warehouseRelease.FromPortId) && !cardIds.Contains(warehouseRelease.FromPortId)) cardIds.Add(warehouseRelease.FromPortId); //  From Port Is Warehouse Cards
+                    if (!string.IsNullOrEmpty(warehouseRelease.ToPortId) && !portIds.Contains(warehouseRelease.ToPortId)) portIds.Add(warehouseRelease.ToPortId);
                 }
 
                 List<CardList> cardLists = new List<CardList>();
@@ -207,7 +206,7 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
 
                         }
 
-                        warehouseReleaseList.Routing = ComputeFieldRouting(portLists, warehouseRelease);
+                        warehouseReleaseList.Routing = ComputeFieldRouting(portLists, cardLists, warehouseRelease);
 
                         #endregion
 
@@ -221,9 +220,9 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
             return warehouseReleaseLists;
         }
 
-        private string ComputeFieldRouting(List<PortList> portLists, WarehouseRelease warehouseRelease)
+        private string ComputeFieldRouting(List<PortList> portLists, List<CardList> cardLists , WarehouseRelease warehouseRelease)
         {
-            string routing = (GetPortCodeFromPortId(portLists, warehouseRelease.FromPortId) + " > ");
+            string routing = (GetEnglishNameByCardId(cardLists, warehouseRelease.FromPortId) + " > ");
             if (warehouseRelease.ToTypeCode == "PORT" && !string.IsNullOrEmpty(warehouseRelease.ToPortId))
             {
                 routing += GetPortCodeFromPortId(portLists, warehouseRelease.ToPortId);
@@ -250,6 +249,19 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
             }
             return portCode;
         }
+
+        private string GetEnglishNameByCardId(List<CardList> cardLists, string cardId)
+        {
+            string englishName = string.Empty;
+            if (!string.IsNullOrEmpty(cardId))
+            {
+                CardList cardList = cardLists.Where(d => d.Id == cardId).FirstOrDefault();
+                if (cardList != null) englishName = cardList.EnglishName;
+            }
+            return englishName;
+        }
+
+
 
         public List<WarehouseReleaseList> GetWarehouseReleasesByEntryId(string entityId, int tenant)
         {

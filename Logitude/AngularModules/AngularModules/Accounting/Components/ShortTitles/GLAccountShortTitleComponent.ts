@@ -75,22 +75,20 @@ export class GLAccountShortTitleComponent {
         this.GetConnectedCards(accountId).then((connectedCards: CardList[]) => {
             var firstConnectedCard = connectedCards[0];
 
-            this.GetPartnerType(firstConnectedCard.PartnerTypeId).then((partnerType: PartnerTypeList) =>
-            {
-                this.OpenCard(firstConnectedCard.Id, partnerType);
-            });
+            var partnerTypeObjectTableName = this.GetPartnerTypeObjectTableName(firstConnectedCard.PartnerTypeId);
+            this.OpenCard(firstConnectedCard.Id, partnerTypeObjectTableName);
 
         });
     }
 
-    private OpenCard(connectedCardId: string, partnerType: PartnerTypeList)
+    private OpenCard(connectedCardId: string, partnerTypeName: string)
     {
         if (!AppTool.IsNullOrEmpty(connectedCardId)) {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef =>
                 {
                     cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({ EntityId: connectedCardId, ObjectTableName: partnerType.Name, SelectedTabCode: this.SelectedTabCode });
+                    cmpRef.instance.Run({ EntityId: connectedCardId, ObjectTableName: partnerTypeName, SelectedTabCode: this.SelectedTabCode });
                     cmpRef.instance.BackCompleted.subscribe(bk =>
                     {
                     });
@@ -152,5 +150,29 @@ export class GLAccountShortTitleComponent {
             }
             });
 
+    }
+
+    GetPartnerTypeObjectTableName(partnerTypeId: string){
+        var objectTableName;
+        switch (partnerTypeId) {
+            case 'AG': { objectTableName = 'Agent'; break; }
+            case 'AL': { objectTableName = 'Airline'; break; }
+            case 'CG': { objectTableName = 'CustomAgent'; break; }
+            case 'CH': { objectTableName = 'CustomsShipper'; break; }
+            case 'CS': { objectTableName = 'Customer'; break; }
+            case 'PO': { objectTableName = 'Customer'; break; }
+            case 'PT': { objectTableName = 'Participant'; break; }
+            case 'SG': { objectTableName = 'ShippingAgent'; break; }
+            case 'SL': { objectTableName = 'ShippingLine'; break; }
+            case 'TR': { objectTableName = 'Trucker'; break; }
+            case 'VD': { objectTableName = 'Vendor'; break; }
+            case 'WH': { objectTableName = 'Warehouse'; break; }
+
+            case 'CC': { objectTableName = 'Custom Clearance'; break; } // not found
+            case 'CO': { objectTableName = 'Coloader'; break; } // not found
+            case 'FL': { objectTableName = 'Freelancer'; break; } // not found
+            case 'OT': { objectTableName = 'Others'; break; } // not found
+        }
+        return objectTableName;
     }
 }
