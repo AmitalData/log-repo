@@ -124,7 +124,7 @@
                                                             <button class="Button" [disabled]="IsABMDisabled" (click)="SendButtonClicked('ABM')">Send</button>
                                                         </td>
 
-                                                        <td style="width: 15px;">
+                                                        <td style="width: 30px;">
                                                             <div></div>
                                                         </td>
                                                     </tr>
@@ -210,7 +210,7 @@
                                                             <button class="Button" [disabled]="IsATMSDisabled" (click)="SendButtonClicked('ASV')">Send</button>
                                                         </td>
 
-                                                        <td style="width: 15px;">
+                                                        <td style="width: 30px;">
                                                             <div></div>
                                                         </td>
                                                     </tr>
@@ -233,7 +233,7 @@
                                                                         <div></div>
                                                                     </td>
 
-                                                                    <td style="width:120px;">
+                                                                    <td style="width:120px; min-width:120px;">
                                                                         <LogLabel [ObjectFieldName]="'Status'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                     </td>
 
@@ -295,7 +295,7 @@
                                                             <button class="Button" [disabled]="IsATMSDisabled" (click)="SendButtonClicked('BOL')">Send</button>
                                                         </td>
 
-                                                        <td style="width: 15px;">
+                                                        <td style="width: 30px;">
                                                             <div></div>
                                                         </td>
                                                     </tr>
@@ -381,7 +381,7 @@
                                                             <button class="Button" [disabled]="IsAESDisabled" (click)="SendButtonClicked('CBP')">Send</button>
                                                         </td>
 
-                                                        <td style="width: 15px;">
+                                                        <td style="width: 30px;">
                                                             <div></div>
                                                         </td>
                                                     </tr>
@@ -404,7 +404,7 @@
                                                                         <div></div>
                                                                     </td>
 
-                                                                    <td style="width:120px;">
+                                                                    <td style="width:120px; min-width:120px;">
                                                                         <LogLabel [ObjectFieldName]="'Status'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                     </td>
 
@@ -464,20 +464,12 @@
                                                         </td>
 
                                                         <td style="width: 57px;">
-                                                            <table>
-                                                                <tr>
-                                                                    <td>
-                                                                        <button class="Button" [disabled]="IsAMANACDisabled" (click)="SendButtonClicked('AMC')">Send</button>
-                                                                    </td>
-                                                                    <td *ngIf="IsAMANACDisabled" style="width:14px;">
-                                                                        <HelpIcon [IconSize]="14" [Header]="'Transfer to AMANAC'" [Text]="'In order to transfer to AMANAC, please use the New Transfer under AMANAC tab'"></HelpIcon>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
+                                                            <button *ngIf="!IsRetransferAMANACVisible" class="Button" [disabled]="IsAMANACDisabled" (click)="SendButtonClicked('AMC')">Send</button>
+                                                            <button *ngIf="IsRetransferAMANACVisible" class="Button" (click)="RetransferAMANACClicked()">Re-transfer</button>
                                                         </td>
-                                                        
-                                                        <td style="width: 15px;">
-                                                            <div></div>
+
+                                                        <td style="width: 30px;">
+                                                            <HelpIcon *ngIf="IsAMANACDisabled" style="float:left;" [IconSize]="14" [Header]="'Transfer to AMANAC'" [Text]="'In order to transfer to AMANAC, please use the New Transfer under AMANAC tab'"></HelpIcon>
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -495,6 +487,7 @@
                         </div>
                     </td>
                 </tr>
+
                 <tr *ngIf="!IsABMVisible && !IsATMSVisible_VOG && !IsATMSVisible_BOL && !IsAESVisible">
                     <td style="font-size:14px;">
                         No Customs Interface selected, you can enable from

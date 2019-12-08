@@ -1,4 +1,4 @@
-import {Component, Output, EventEmitter} from '@angular/core';
+import {Component, Output, EventEmitter, OnDestroy} from '@angular/core';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {AppTool} from '../../../../Infrastructure/Tools';
@@ -23,7 +23,7 @@ import {ShipmentPMService} from '../../../../Shipment/Services/StandardPMs/Shipm
     templateUrl: './SentToCustomComponent.html',
 })
 
-export class SentToCustomComponent extends BaseComponent {
+export class SentToCustomComponent extends BaseComponent implements OnDestroy {
     public EntityPM: ShipmentPM;
     public ValidationErrorsList: string[] = [];
     public DataContext: SentToCustomComponent = this;
@@ -109,7 +109,7 @@ export class SentToCustomComponent extends BaseComponent {
             }
             this.IsVisible = true;
             this.CheckVisibility();
-            this.CheckIfSendButtonsEnabled();
+            this.CheckSendButtons();
         });
     }
     LoadShipmentData() {
@@ -158,14 +158,56 @@ export class SentToCustomComponent extends BaseComponent {
         });
     }
 
-    private CheckIfSendButtonsEnabled() {
-        this.CheckAMANACSendButton();
+    public IsRetransferAMANACVisible: boolean = false;
+    private CheckSendButtons() {
+        this.CheckAMANACButtons();
     }
-    private CheckAMANACSendButton() {
+    private CheckAMANACButtons() {
         this.IsAMANACDisabled = false;
-        if (this.LocalCustomsTransmissionsStatusCode  == "NSEN") {
+
+        if (this.LocalCustomsTransmissionsStatusCode == "NSEN") {
             this.IsAMANACDisabled = true;
+            this.IsRetransferAMANACVisible = false;
         }
+        else {
+            this.IsRetransferAMANACVisible = true;
+        }
+    }
+
+    RetransferAMANACClicked() {
+        this.EntityPM.LocalCustomsTransmissionsStatusCode = "NSEN";
+        this.EntityPM.LocalCustomsTransmissionsStatusName = this.notSent;
+        this.EntityPM.LocalCustomsTransmissionsStatusDate = null;
+        this.EntityPM.LocalCustomsSentByUserId = null;
+        this.EntityPM.LocalCustomsSentByUserName = null;
+        this.EntityPM.LocalCustomsTransmissionsStatusError = null;
+
+        if (this.CurrentSession.CurrentEditComponent != null) {
+            if (!this.SaveCompletedEvent) {
+                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.LoadShipmentData();
+                        this.CheckAMANACButtons();
+                    }
+
+                    else {
+                        this.ValidationErrorsList = this.CurrentSession.CurrentEditComponent.ValidationErrorsList;
+                    }
+                    
+                    AppTool.KillEventEmitter(this.SaveCompletedEvent);
+                    this.SaveCompletedEvent = null;
+                });
+            }
+
+            this.CurrentSession.CurrentEditComponent.SaveChanges();
+        }
+    }
+
+    private SaveCompletedEvent: any = null;
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(this.SaveCompletedEvent);
+        this.SaveCompletedEvent = null;
     }
 
     CheckVisibility() {
