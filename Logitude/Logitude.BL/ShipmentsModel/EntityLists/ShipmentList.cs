@@ -499,6 +499,18 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
 
         public string INTTRABookingError { get; set; }
         public string INTTRALastBookingResponse { get; set; }
+        public string INTTRABookingResponse_Voyage { get; set; }
+        public DateTime INTTRABookingResponse_POLDate { get; set; }
+        public string INTTRABookingResponse_POFPort { get; set; }
+        public string INTTRABookingResponse_POFPortCode { get; set; }
+        public string INTTRABookingResponse_POFCCode { get; set; }
+        public string INTTRABookingResponse_POFCName { get; set; }
+        public DateTime INTTRABookingResponse_PODDate { get; set; }
+        public string INTTRABookingResponse_PODPort { get; set; }
+        public string INTTRABookingResponse_PODPortCode { get; set; }
+        public string INTTRABookingResponse_PODCCode { get; set; }
+        public string INTTRABookingResponse_PODCName { get; set; }
+        public string INTTRABookingResponse_ShippingLine { get; set; }
 
         public string Notify1Reference { get; set; }
         public string Notify2Reference { get; set; }

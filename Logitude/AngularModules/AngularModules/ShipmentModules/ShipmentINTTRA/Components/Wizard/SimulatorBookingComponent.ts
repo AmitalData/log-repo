@@ -372,15 +372,16 @@ export class SimulatorBookingComponent extends BaseComponent {
         var entityId: string = this.EntityPM.Id;
         if (!AppTool.IsNullOrEmpty(entityId)) {
             var objectTableName = "Shipment";
-            var logWindow = new LogitudeWindow();
-            logWindow.Title = TextCodeTranslator.TranslateTable("General.B.Edit") + " " + TextCodeTranslator.TranslateTable(objectTableName);
-            logWindow.ShowEditComponent(entityId, objectTableName);
-            logWindow.WindowClosed.subscribe(($event: any) => {
-                if ($event) {
-                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                }
-            });
-
+            var editWindow = new LogitudeWindow();
+            editWindow.Title = TextCodeTranslator.TranslateTable("General.B.Edit") + " " + TextCodeTranslator.TranslateTable(objectTableName);
+            editWindow.ShowEditComponent(entityId, objectTableName);
+            editWindow.IsEditComponent = true;
+            editWindow.IsFillScreen = true;
+            editWindow.ComponentLoaded.subscribe(s => {
+                editWindow.WindowClosed.subscribe(d => {
+                    this.EntityPM = s.EntityPM;
+                });
+            });      
         }
     }
 }
