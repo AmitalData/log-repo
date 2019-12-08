@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "22f066b8-b0d9-4a06-83e4-6befed2d2a9d",
-		"name": "WarmServer",
+		"name": "PrepareShipmentVars",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -14,20 +14,24 @@
 						"id": "21840826-a7e8-4f7e-a3a9-3d47779c7d11",
 						"exec": [
 							"    var expectedHttpStatus = 200;",
-							"    var maxNumberOfTries = 5;",
+							"    var maxNumberOfTries = 10;",
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries =  60000;",
+							"    ",
+							"    ",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
 							"         ",
 							"        setTimeout(function() {}, sleepBetweenTries);",
+							"        ",
 							"        postman.setNextRequest(\"AuthSuccessfull\"); ",
 							"    }",
 							"       else {",
 							"     pm.globals.set(\"Retries\",1); ",
+							"     ",
 							"",
 							"pm.test(\"AuthSuccessfullOnTenant\", function () {",
 							"    //pm.response.to.have.status(200);",
@@ -130,7 +134,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -279,7 +283,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -393,7 +397,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -509,7 +513,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -621,7 +625,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -735,7 +739,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -849,7 +853,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -921,7 +925,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -1035,7 +1039,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -1158,7 +1162,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -1280,7 +1284,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -1392,7 +1396,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -1496,7 +1500,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -1623,7 +1627,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -1748,7 +1752,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -1846,7 +1850,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -1974,7 +1978,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -2099,7 +2103,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -2198,7 +2202,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -2332,7 +2336,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -2456,7 +2460,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -2560,7 +2564,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -2676,7 +2680,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -2788,7 +2792,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -2892,7 +2896,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -3008,7 +3012,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -3120,7 +3124,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -3224,7 +3228,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -3339,7 +3343,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -3451,7 +3455,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -3555,7 +3559,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -3671,7 +3675,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -3783,7 +3787,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -3887,7 +3891,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -4012,7 +4016,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -4133,7 +4137,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -4249,7 +4253,7 @@
 							"    var numberOfRetries = 5;\r",
 							"    var retries = \"{{RetriesNumber}}\";\r",
 							"    var Retries = pm.globals.get(\"Retries\");\r",
-							"    var sleepBetweenTries = 5000;\r",
+							"    var sleepBetweenTries = 60000;\r",
 							"    \r",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {\r",
 							"         pm.globals.set(\"Retries\", ++Retries);\r",
@@ -4340,7 +4344,7 @@
 							"    var numberOfRetries = 5;\r",
 							"    var retries = \"{{RetriesNumber}}\";\r",
 							"    var Retries = pm.globals.get(\"Retries\");\r",
-							"    var sleepBetweenTries = 5000;\r",
+							"    var sleepBetweenTries = 60000;\r",
 							"    \r",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {\r",
 							"         pm.globals.set(\"Retries\", ++Retries);\r",
@@ -4459,7 +4463,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -4552,7 +4556,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -4666,7 +4670,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -4757,7 +4761,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -4870,7 +4874,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -4961,7 +4965,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -5075,7 +5079,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -5167,7 +5171,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -5281,7 +5285,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -5373,7 +5377,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -5487,7 +5491,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -5599,7 +5603,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -5699,7 +5703,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -5813,7 +5817,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -5925,7 +5929,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -6025,7 +6029,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -6139,7 +6143,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -6251,7 +6255,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -6351,7 +6355,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -6465,7 +6469,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -6577,7 +6581,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -6677,7 +6681,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -6791,7 +6795,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -6883,7 +6887,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -6997,7 +7001,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -7089,7 +7093,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -7228,7 +7232,7 @@
 							"    var numberOfRetries = 5;\r",
 							"    var retries = \"{{RetriesNumber}}\";\r",
 							"    var Retries = pm.globals.get(\"Retries\");\r",
-							"    var sleepBetweenTries = 5000;\r",
+							"    var sleepBetweenTries = 60000;\r",
 							"    \r",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {\r",
 							"         pm.globals.set(\"Retries\", ++Retries);\r",
@@ -7329,7 +7333,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -7392,7 +7396,7 @@
 							"    var numberOfRetries = 5;\r",
 							"    var retries = \"{{RetriesNumber}}\";\r",
 							"    var Retries = pm.globals.get(\"Retries\");\r",
-							"    var sleepBetweenTries = 5000;\r",
+							"    var sleepBetweenTries = 60000;\r",
 							"    \r",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {\r",
 							"         pm.globals.set(\"Retries\", ++Retries);\r",
@@ -7493,7 +7497,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -7556,7 +7560,7 @@
 							"    var numberOfRetries = 5;\r",
 							"    var retries = \"{{RetriesNumber}}\";\r",
 							"    var Retries = pm.globals.get(\"Retries\");\r",
-							"    var sleepBetweenTries = 5000;\r",
+							"    var sleepBetweenTries = 60000;\r",
 							"    \r",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {\r",
 							"         pm.globals.set(\"Retries\", ++Retries);\r",
@@ -7645,7 +7649,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -7708,7 +7712,7 @@
 							"    var numberOfRetries = 5;\r",
 							"    var retries = \"{{RetriesNumber}}\";\r",
 							"    var Retries = pm.globals.get(\"Retries\");\r",
-							"    var sleepBetweenTries = 5000;\r",
+							"    var sleepBetweenTries = 60000;\r",
 							"    \r",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {\r",
 							"         pm.globals.set(\"Retries\", ++Retries);\r",
@@ -7766,7 +7770,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{LogitudeURL}}/api/vesselviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=VesselIdPT&PageSize=23",
+					"raw": "{{LogitudeURL}}/api/vesselviews/getbyfilters?Filter1Name=Code&Filter1Operator=Contains&Filter1Value=VPT&PageSize=23",
 					"host": [
 						"{{LogitudeURL}}"
 					],
@@ -7778,7 +7782,7 @@
 					"query": [
 						{
 							"key": "Filter1Name",
-							"value": "SearchFields"
+							"value": "Code"
 						},
 						{
 							"key": "Filter1Operator",
@@ -7786,7 +7790,7 @@
 						},
 						{
 							"key": "Filter1Value",
-							"value": "VesselIdPT"
+							"value": "VPT"
 						},
 						{
 							"key": "PageSize",
@@ -7810,7 +7814,7 @@
 							"    var numberOfRetries = 5;\r",
 							"    var retries = \"{{RetriesNumber}}\";\r",
 							"    var Retries = pm.globals.get(\"Retries\");\r",
-							"    var sleepBetweenTries = 5000;\r",
+							"    var sleepBetweenTries = 60000;\r",
 							"    \r",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {\r",
 							"         pm.globals.set(\"Retries\", ++Retries);\r",
@@ -7862,7 +7866,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"$id\": \"1\",\n  \"Tenant\": {{Tenant}},\n  \"IsSecured\": false,\n  \"Code\": null,\n  \"EnglishName\": \"VesselIdPT \",\n  \"LocalName\": \"VesselIdPT\",\n  \"Notes\": null,\n  \"ComputedLocalName\": null,\n  \"AddedManually\": true,\n  \"InActive\": false,\n  \"SearchFields\": null,\n  \"IsHybrid\": false,\n  \"IMOCode\": \"IMOCode PT\",\n  \"CountryId\": null\n}"
+					"raw": "{\n  \"$id\": \"1\",\n  \"Tenant\": {{Tenant}},\n  \"IsSecured\": false,\n  \"Code\": \"VPT\",\n  \"EnglishName\": \"VesselIdPT \",\n  \"LocalName\": \"VesselIdPT\",\n  \"Notes\": null,\n  \"ComputedLocalName\": null,\n  \"AddedManually\": true,\n  \"InActive\": false,\n  \"SearchFields\": null,\n  \"IsHybrid\": false,\n  \"IMOCode\": \"IMOCode PT\",\n  \"CountryId\": null\n}"
 				},
 				"url": {
 					"raw": "{{LogitudeURL}}/api/vessels",
@@ -7890,7 +7894,7 @@
 							"    var numberOfRetries = 5;\r",
 							"    var retries = \"{{RetriesNumber}}\";\r",
 							"    var Retries = pm.globals.get(\"Retries\");\r",
-							"    var sleepBetweenTries = 5000;\r",
+							"    var sleepBetweenTries = 60000;\r",
 							"    \r",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {\r",
 							"         pm.globals.set(\"Retries\", ++Retries);\r",
@@ -7992,7 +7996,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -8055,7 +8059,7 @@
 							"    var numberOfRetries = 5;\r",
 							"    var retries = \"{{RetriesNumber}}\";\r",
 							"    var Retries = pm.globals.get(\"Retries\");\r",
-							"    var sleepBetweenTries = 5000;\r",
+							"    var sleepBetweenTries = 60000;\r",
 							"    \r",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {\r",
 							"         pm.globals.set(\"Retries\", ++Retries);\r",
@@ -8157,7 +8161,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -8220,7 +8224,7 @@
 							"    var numberOfRetries = 5;\r",
 							"    var retries = \"{{RetriesNumber}}\";\r",
 							"    var Retries = pm.globals.get(\"Retries\");\r",
-							"    var sleepBetweenTries = 5000;\r",
+							"    var sleepBetweenTries = 60000;\r",
 							"    \r",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {\r",
 							"         pm.globals.set(\"Retries\", ++Retries);\r",
@@ -8322,7 +8326,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -8385,7 +8389,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -8499,7 +8503,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -8582,7 +8586,7 @@
 							"    var numberOfRetries = 5;\r",
 							"    var retries = \"{{RetriesNumber}}\";\r",
 							"    var Retries = pm.globals.get(\"Retries\");\r",
-							"    var sleepBetweenTries = 5000;\r",
+							"    var sleepBetweenTries = 60000;\r",
 							"    \r",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {\r",
 							"         pm.globals.set(\"Retries\", ++Retries);\r",
@@ -8684,7 +8688,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -8763,7 +8767,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -8871,7 +8875,7 @@
 							"    var numberOfRetries = 5;",
 							"    var retries = \"{{RetriesNumber}}\";",
 							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
+							"    var sleepBetweenTries = 60000;",
 							"    ",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
 							"         pm.globals.set(\"Retries\", ++Retries);",
@@ -8979,7 +8983,7 @@
 							"    var numberOfRetries = 5;\r",
 							"    var retries = \"{{RetriesNumber}}\";\r",
 							"    var Retries = pm.globals.get(\"Retries\");\r",
-							"    var sleepBetweenTries = 5000;\r",
+							"    var sleepBetweenTries = 60000;\r",
 							"    \r",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {\r",
 							"         pm.globals.set(\"Retries\", ++Retries);\r",
@@ -9086,7 +9090,7 @@
 							"    var numberOfRetries = 5;\r",
 							"    var retries = \"{{RetriesNumber}}\";\r",
 							"    var Retries = pm.globals.get(\"Retries\");\r",
-							"    var sleepBetweenTries = 5000;\r",
+							"    var sleepBetweenTries = 60000;\r",
 							"    \r",
 							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {\r",
 							"         pm.globals.set(\"Retries\", ++Retries);\r",
@@ -9180,772 +9184,6 @@
 							"key": null,
 							"value": null
 						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "CreateShipperIdTestShipperExport1",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
-						"exec": [
-							"    var expectedHttpStatus = 200;",
-							"    var maxNumberOfTries = 5;",
-							"    var numberOfRetries = 5;",
-							"    var retries = \"{{RetriesNumber}}\";",
-							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
-							"    ",
-							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
-							"         pm.globals.set(\"Retries\", ++Retries);",
-							"         ",
-							"        setTimeout(function() {}, sleepBetweenTries);",
-							"        postman.setNextRequest(\"CreateShipperIdTestShipperExport1\"); ",
-							"    }",
-							"        else {",
-							"     pm.globals.set(\"Retries\",1); ",
-							"     ",
-							"     pm.test(\"CreateShipperIdTestShipperExport1\", function () {",
-							"  // pm.response.to.have.status(200);",
-							"  ",
-							"    var idvalue = (pm.response.json().Customer.Id);",
-							" ",
-							"    var idexist = idvalue !== null;",
-							"    pm.expect(idexist);",
-							"    pm.environment.set(\"ShipperIdTest\",idvalue);",
-							"",
-							"  });",
-							"",
-							"    ",
-							"    }",
-							"",
-							"     ",
-							"    "
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "prerequest",
-					"script": {
-						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
-						"exec": [
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Token",
-						"type": "text",
-						"value": "{{Token}}"
-					},
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"$id\": \"1\",\n  \"Tenant\": \"{{Tenant}}\",\n  \"PartnerTypeId\": \"CS\",\n  \"IsAddressDirty\": false,\n  \"IsContactDirty\": false,\n  \"IsPartnerDirty\": false,\n  \"Address\": {\n    \"$id\": \"2\",\n    \"Tenant\": \"{{Tenant}}\",\n    \"Description\": \"Main Address\",\n    \"City\": \"London\",\n    \"StateId\": null,\n    \"ZipCode\": \"+207\",\n    \"FaxNumber\": \"24564110\",\n    \"PhoneNumber\": \"0598137715\",\n    \"ATTN\": null,\n    \"AddressTypeId\": \"M\",\n    \"Address1\": \"14 Tottenham Court Road\",\n    \"Address2\": \"A400\",\n    \"Name\": \"TestShipperExport1Address\",\n    \"CountryId\": \"1-396\",\n    \"CarrierId\": null,\n    \"CountryName\": \"United Kingdom\",\n    \"CountryEnglishName\": \"United Kingdom\",\n    \"StateEnglishName\": null,\n    \"StateCode\": null,\n    \"ExternalId\": null,\n    \"InActive\": false,\n    \"IsLocalLanguage\": false,\n    \"IsHybrid\": false,\n    \"VatNumber\": \"2154787\",\n    \"SalesmanUserId\": null,\n    \"Signature\": null,\n    \"CityCode\": null,\n    \"CardCode\": \"new\",\n    \"ContactEmail\": \"ahmadb@fnarsoft.com\",\n    \"ContactName\": \"Ahmad\",\n    \"ContactPosition\": \"QA\",\n    \"ContactBusinessPhone\": \"+207598137715\",\n    \"ContactMobile\": \"+207598137715\",\n    \"ContactFax\": \"325236351\",\n    \"IsCreatedWithPartner\": true,\n    \"CardEnglishName\": null,\n    \"HasStates\": false,\n    \"IsStateRequired\": false,\n    \"BranchId\": null\n  },\n  \"Contact\": {\n    \"$id\": \"3\",\n    \"Tenant\": \"{{Tenant}}\",\n    \"InActive\": false,\n    \"FacebookId\": null,\n    \"EnglishName\": \"Ahmad\",\n    \"ImageDetailId\": null,\n    \"LocalName\": \"Ahmad\",\n    \"ComputedLocalName\": null,\n    \"Email\": \"ahmadb@fnarsoft.com\",\n    \"HasPassword\": false,\n    \"Password\": null,\n    \"BusinessPhone\": \"236437347\",\n    \"Mobile\": \"754745747\",\n    \"Fax\": \"325236\",\n    \"Birthday\": null,\n    \"Anniversary\": null,\n    \"Notes\": null,\n    \"SearchFields\": \"Ahmad,Ahmad,ahmadb@fnarsoft.com,236437347,754745747,325236,Ahmad Comp.,asdasdasd,Ihab 2,new consignee r2,new potentilal,Test 2 Agent,Test Agent\",\n    \"CardId\": \"1-143765\",\n    \"IsUser\": false,\n    \"SignupRole\": false,\n    \"Signature\": null,\n    \"SignatureHtml\": null,\n    \"DisplayGettingStarted\": false,\n    \"ExternalId\": null,\n    \"IsHybrid\": false,\n    \"DontShowLocal\": false,\n    \"MustChangePassword\": false,\n    \"IsLocked\": false,\n    \"NumberOfRetries\": 0,\n    \"DisconectFromCard\": false,\n    \"FieldsChanged\": false,\n    \"SetAsPrimaryForCard\": true,\n    \"BirthdayReminder\": false,\n    \"AnniversaryReminder\": false,\n    \"DoneDate\": null,\n    \"BirthDayOfYear\": null,\n    \"ContactDoneMethodCode\": null,\n    \"ContactDoneMethodName\": null,\n    \"Position\": \"QA\",\n    \"IsAirExport\": false,\n    \"IsAirImport\": false,\n    \"IsOceanExport\": false,\n    \"IsOceanImport\": false,\n    \"IsInlandExport\": false,\n    \"IsInlandImport\": false,\n    \"IsAll\": false,\n    \"HasCardContact\": false,\n    \"IsCustomsImport\": false,\n    \"IsInlandDomestic\": false,\n    \"IndexColor\": null,\n    \"IsChangeSignatur\": false,\n    \"CustomerId\": null,\n    \"IsCreatedWithPartner\": true,\n    \"CompanyName\": \"Ahmad Comp.,asdasdasd,Ihab 2,new consignee r2,new potentilal,Test 2 Agent,Test Agent\",\n    \"CreateDate\": null\n  },\n  \"Agent\": null,\n  \"Customer\": {\n    \"$id\": \"4\",\n    \"Tenant\": \"{{Tenant}}\",\n    \"IsSecured\": false,\n    \"BankName\": null,\n    \"CompetitorFields\": \"\",\n    \"BankAddress\": null,\n    \"Swift\": null,\n    \"AccountNumber\": null,\n    \"IBANNumber\": null,\n    \"StartWorkingDate\": null,\n    \"Notes\": \"TestShipperExport1\",\n    \"SupportNotes\": null,\n    \"EnglishName\": \"TstShipExport1\",\n    \"LocalName\": \"TstShipExport1\",\n    \"AccountManagerUserId\": null,\n    \"SalesmanUserId\": null,\n    \"SalesmanUserEnglishName\": null,\n    \"SalesmanBusinessUnitId\": null,\n    \"Website\": null,\n    \"InActive\": false,\n    \"BillToId\": null,\n    \"BillToName\": null,\n    \"VatNumber\": \"TestShipper1Unique\",\n    \"ReceivablesAccountingCard\": null,\n    \"PayablesAccountingCard\": null,\n    \"InvoiceCurrencyId\": null,\n    \"PaymentTermId\": null,\n    \"RankId\": \"1-4\",\n    \"VatTypeId\": null,\n    \"ComputedLocalName\": null,\n    \"FieldsChanged\": false,\n    \"PartnerTypeId\": \"CS\",\n    \"CreatedByUserId\": \"1-40924\",\n    \"UpdatedByUserId\": null,\n    \"CardPMId\": null,\n    \"ExistedContactId\": \"1-40924\",\n    \"StartWorkingManuallySet\": false,\n    \"CityName\": \"London\",\n    \"CountryId\": \"1-396\",\n    \"CountryName\": \"United Kingdom\",\n    \"ATTN\": null,\n    \"AccountManagerUserEnglishName\": null,\n    \"RankName\": null,\n    \"RankCode\": null,\n    \"PhoneNumber\": null,\n    \"FaxNumber\": null,\n    \"CityWithCountry\": null,\n    \"ImageDetailId\": null,\n    \"Field1\": {\n      \"$id\": \"5\",\n      \"Value\": null,\n      \"FieldName\": \"Field1\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field2\": {\n      \"$id\": \"6\",\n      \"Value\": null,\n      \"FieldName\": \"Field2\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field3\": {\n      \"$id\": \"7\",\n      \"Value\": null,\n      \"FieldName\": \"Field3\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field4\": {\n      \"$id\": \"8\",\n      \"Value\": null,\n      \"FieldName\": \"Field4\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field5\": {\n      \"$id\": \"9\",\n      \"Value\": null,\n      \"FieldName\": \"Field5\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field6\": {\n      \"$id\": \"10\",\n      \"Value\": null,\n      \"FieldName\": \"Field6\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field7\": {\n      \"$id\": \"11\",\n      \"Value\": null,\n      \"FieldName\": \"Field7\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field8\": null,\n    \"Field9\": null,\n    \"Field10\": null,\n    \"SharedLogisticsInvitationStatusName\": null,\n    \"IsActiveForMobile\": false,\n    \"LastLoginDate\": null,\n    \"InvitationDate\": null,\n    \"IsHybrid\": false,\n    \"FreelancerId\": null,\n    \"ForwarderId\": null,\n    \"CustomsAgentId\": null,\n    \"MediatorId\": null,\n    \"FreelancerName\": null,\n    \"ForwarderName\": null,\n    \"CustomsAgentName\": null,\n    \"MediatorName\": null,\n    \"GoogleAddressString\": null,\n    \"IsExternal\": false,\n    \"IsCustomer\": false,\n    \"CustomerStatusCode\": \"ACT\",\n    \"BeforeDeactiveStatusCode\": null,\n    \"ActivationDate\": null,\n    \"InactiveDate\": null,\n    \"ActivationRequestDate\": null,\n    \"ActivatedByUserId\": null,\n    \"SetAsInactiveByUserId\": null,\n    \"ActivationRequestedByUserId\": null,\n    \"SetReActivated\": false,\n    \"SetInActive\": false,\n    \"SetReady\": false,\n    \"SetActivated\": false,\n    \"EventNote\": null,\n    \"Address1_Potential\": null,\n    \"Address2_Potential\": null,\n    \"City_Potential\": null,\n    \"CountryId_Potential\": null,\n    \"ZipCode_Potential\": null,\n    \"StateId_Potential\": null,\n    \"PhoneNumber_Potential\": null,\n    \"FaxNumber_Potential\": null,\n    \"ATTN_Potential\": null,\n    \"IsLocalLanguage\": false,\n    \"CodeMyCustomer\": \"new\",\n    \"PrimaryContactName\": null,\n    \"PrimaryContactEmail\": null,\n    \"PrimaryContactPhone\": null,\n    \"CustomerStatusName\": null,\n    \"PrimaryContactId\": \"1-40924\",\n    \"ReadyForActivationDate\": null,\n    \"IsFirstContactToAdd\": false,\n    \"SavedForActivation\": false,\n    \"QueueMessageLockToken\": \"00000000-0000-0000-0000-000000000000\",\n    \"QuestionnaireAnsewrsHtmlString\": null,\n    \"SetAsPotential\": false,\n    \"UpdatedByUserCode\": null,\n    \"IRSPlace\": null,\n    \"IRSNumber\": null,\n    \"RequestedAirlines\": null,\n    \"RegisteredAirlines\": null,\n    \"PendingAirlines\": null,\n    \"IsCustomerAllowed\": false,\n    \"Card\": null,\n    \"Addresses\": [\n      {\n        \"$ref\": \"2\"\n      }\n    ],\n    \"Contacts\": [\n      {\n        \"$ref\": \"3\"\n      }\n    ],\n    \"SharedLogisticContacts\": [],\n    \"IndustryId\": null,\n    \"LeadSourceId\": null,\n    \"CollectorId\": null,\n    \"ClassifierId\": null,\n    \"IndustryName\": null,\n    \"LeadSourceName\": null,\n    \"CollectorName\": null,\n    \"ClassifierName\": null,\n    \"CreditLimit\": null,\n    \"LeadDescription\": null,\n    \"RegionId\": null,\n    \"RegionName\": null,\n    \"CustomerSizeId\": null,\n    \"LastCallDate\": null,\n    \"LastMeetingDate\": null,\n    \"LastOpportunityDate\": null,\n    \"FirstInvoiceDate\": null,\n    \"FirstShipmentDate\": null,\n    \"LastShipmentDate\": null,\n    \"LastQuoteDate\": null,\n    \"LastInteractionDate\": null,\n    \"EnableConsolidationInvoices\": false,\n    \"ActivityWatch\": false,\n    \"KnownConsignor\": null,\n    \"KCExpirationDate\": null,\n    \"LogBoxActivated\": false,\n    \"CustomerProducts\": [],\n    \"CustomerCompetitors\": [],\n    \"CustomerAdditionalServices\": [],\n    \"SalesNotes\": [],\n    \"CustomerSalesmanByProducts\": [],\n    \"CustomerAccountManagerByProducts\": [],\n    \"CustomerCustomsAgentByProducts\": [],\n    \"CustomerForwarderByProducts\": [],\n    \"CustomerMediatorByProducts\": [],\n    \"CardExternalCodeByCurrencies\": [],\n    \"IsLogBox\": false,\n    \"IsPrivateLabelCustomer\": false,\n    \"IsCreditLimitEnabled\": false,\n    \"CreditLimitAmount\": null,\n    \"CreditLimitOpenBalance\": null,\n    \"CreditLimitWarningPercentage\": null,\n    \"ExternalAccountingBusinessArea\": null,\n    \"PaymentMethodCode\": null,\n    \"BlockNewInvoiceCreation\": false,\n    \"BlockNewShipmentCreation\": false,\n    \"ExternalId2\": null,\n    \"SATForeignRFC\": null,\n    \"MetodoPagoCode\": null,\n    \"UsoCFDICode\": null,\n    \"CustomerTenant\": 0\n  },\n  \"CustomAgent\": null,\n  \"ShippingAgent\": null,\n  \"Vendor\": null,\n  \"Warehouse\": null,\n  \"Airline\": null,\n  \"ShippingLine\": null,\n  \"Trucker\": null\n}"
-				},
-				"url": {
-					"raw": "{{LogitudeURL}}/api/PartnersDomain",
-					"host": [
-						"{{LogitudeURL}}"
-					],
-					"path": [
-						"api",
-						"PartnersDomain"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "CreateShipmentDirectExportAir",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "f94bde9c-65be-4204-bb3b-90d346fc4200",
-						"exec": [
-							"    var expectedHttpStatus = 200;",
-							"    var maxNumberOfTries = 5;",
-							"    var numberOfRetries = 5;",
-							"    var retries = \"{{RetriesNumber}}\";",
-							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
-							"    ",
-							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
-							"         pm.globals.set(\"Retries\", ++Retries);",
-							"         ",
-							"        setTimeout(function() {}, sleepBetweenTries);",
-							"        postman.setNextRequest(\"CreateShipmentDirectExportAir\"); ",
-							"    }",
-							"    else {",
-							"     pm.globals.set(\"Retries\",1); ",
-							"     ",
-							"     pm.test(\"CreateShipmentDirectExportAir\", function () {",
-							"  // pm.response.to.have.status(200);",
-							"   ",
-							"    var idvalue = (pm.response.json().Id);",
-							"    var idexist = idvalue !== null;",
-							"    pm.expect(idexist);",
-							"    ",
-							"    var idvalue2 = (pm.response.json().ShipmentNumber);",
-							"    var idexist2 = idvalue2 !== null;",
-							"    pm.expect(idexist2);",
-							"    ",
-							"     var idvalue3 = (pm.response.json().DirectionId);",
-							"    var idexist3 = idvalue3 !== null;",
-							"    pm.expect(idexist3);",
-							"    ",
-							"    var idvalue4 = (pm.response.json().TransportModeId);",
-							"    var idexist4 = idvalue4 !== null;",
-							"    pm.expect(idexist4);",
-							"    ",
-							"    var idvalue5 = (pm.response.json().ConcurrencyGUID);",
-							"    var idexist5 = idvalue5 !== null;",
-							"    pm.expect(idexist5);",
-							"    ",
-							"    var idvalue6 = (pm.response.json().ShipmentTypeId);",
-							"    var idexist6 = idvalue6 !== null;",
-							"    ",
-							"     var idvalue7 = (pm.response.json().House);",
-							"    var idexist7 = idvalue7 !== null;",
-							"    pm.expect(idexist7);",
-							"    ",
-							"    ",
-							"    ",
-							"    pm.environment.set(\"DirectShipmentAirExportId\",idvalue);",
-							"    pm.environment.set(\"ShipmentNumber\",idvalue2);",
-							"    pm.environment.set(\"DirectionId\",idvalue3);",
-							"    pm.environment.set(\"TransportModeId\",idvalue4);",
-							"    pm.environment.set(\"ConcurrencyGUID\",idvalue5);",
-							"    pm.environment.set(\"ShipmentTypeId\",idvalue6);",
-							"    pm.environment.set(\"HouseNumber\",idvalue7);",
-							"",
-							"  ",
-							"    ",
-							"    var jsonData = pm.response.json();",
-							"    var expected = jsonData.ShipmentNumber;",
-							"    tests[\"Shipment number: \" + expected] = responseBody.has(expected);",
-							"    ",
-							"    ",
-							"});",
-							"",
-							"    ",
-							"    }",
-							"",
-							"     ",
-							"",
-							"",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					},
-					{
-						"key": "Token",
-						"value": "{{Token}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"$id\": \"1\",\n  \"IsHybrid\": false,\n  \"CASSCode\": \"2343\",\n  \"ChargeableWeight\": 5,\n  \"GrossWeight\": 5,\n  \"PackagesQuantity\": 1,\n  \"NumberOfPackages\": 1,\n  \"OrderVolumetricWeight\": 5,\n  \"OrderChargeableWeight\": 5,\n  \"GrossWeightPerTon\": 0.005,\n  \"OpenReceivablesInLocalCurrency\": 0,\n  \"AccountedReceivablesInLocalCurrency\": 0,\n  \"ProfitInLocalCurrency\": 0,\n  \"EstimateProfitInLocalCurrency\": null,\n  \"OpenReceivablesInProfitCurrency\": 0,\n  \"AccountedReceivablesInProfitCurrency\": 0,\n  \"ProfitInProfitCurrency\": 0,\n  \"EstimateProfitInProfitCurrency\": null,\n  \"OpenPayablesInLocalCurrency\": 0,\n  \"AccountedPayablesInLocalCurrency\": 0,\n  \"OpenPayablesInProfitCurrency\": 0,\n  \"AccountedPayablesInProfitCurrency\": 0,\n  \"IsFSRSent\": false,\n  \"IsFlightDateActual\": false,\n  \"ConnectedShipments\": 0,\n  \"Tenant\": \"{{Tenant}}\",\n  \"DirectionId\": \"E\",\n  \"TransportModeId\": \"A\",\n  \"MAWBTakenFromStack\": false,\n  \"MAWBReturnedToStack\": false,\n  \"BranchId\": \"{{BranchId}}\",\n  \"CreatedByUserId\": \"{{LoggedUserId}}\",\n  \"DepartmentId\": \"{{DepId}}\",\n  \"IsOperationalClosed\": false,\n  \"IsSecured\": false,\n  \"Master\": null,\n  \"ShipmentTypeViewField\": \"Direct\",\n  \"LongMaster\": null,\n  \"FreightPrepaidCollectId\": \"C\",\n  \"OtherPrepaidCollectId\": \"C\",\n  \"GrossWeightUnitCode\": \"{{GrossWeightUnitCode}}\",\n  \"ChargeableWeightUnitCode\": \"{{ChargeableWeightUnitCode}}\",\n  \"DimensionsUnitCode\": \"{{DimensionsUnitCode}}\",\n  \"RateClassCode\": \"Q\",\n  \"Ratio\": 6,\n  \"DimFactor\": 6000000,\n  \"MAWBOBLDate\": null,\n  \"GrossWeightEdited\": false,\n  \"ChargeableWeightEdited\": false,\n  \"VolumeUnitCode\": \"{{VolumeUnitCode}}\",\n  \"StatusDate\": \"2019-09-02T15:10:36.6416456Z\",\n  \"StatusLocation\": null,\n  \"StatusWeight\": 0,\n  \"ShipmentType\": \"Direct\",\n  \"LastUpdate\": \"0001-01-01T00:00:00\",\n  \"NewMessage\": false,\n  \"FollowUpNotes\": null,\n  \"IsAnyConversation\": false,\n  \"NumberOfShipments\": 0,\n  \"IsDangerous\": false,\n  \"LTCWEdited\": false,\n  \"ShipmentPickUpIndex\": 0,\n  \"ShipmentDeliveryIndex\": 0,\n  \"ShipmentContainerReturnIndex\": 0,\n  \"ShipmentPayableStatusCode\": \"NOPA\",\n  \"ShipmentReceivableStatusCode\": \"NORE\",\n  \"IsCancelled\": false,\n  \"CancelledDate\": null,\n  \"IsAccountingClosed\": false,\n  \"AccessDate\": \"0001-01-01T00:00:00\",\n  \"UpdatedByUserId\": \"{{LoggedUserId}}\",\n  \"LastUpdateDate\": \"2019-09-02T15:10:36.5322552Z\",\n  \"ProfitCurrencyId\": \"{{CurrencyId}}\",\n  \"ProfitExchangeRate\": 3,\n  \"NextLegCode\": \"MAL1\",\n  \"NextLegName\": null,\n  \"NextETD\": null,\n  \"NextETA\": null,\n  \"ShipmentLevelCode\": \"D\",\n  \"ShipmentCustomerTypeCode\": \"SHI\",\n  \"ConsigneeAddressOneTime\": false,\n  \"ShipperAddressOneTime\": false,\n  \"CustomerId\": \"{{ShipperIdTest}}\",\n  \"IssuingCarrierAgentId\": \"{{TenantAgentId}}\",\n  \"AgentId\": \"{{AgentIdTestExport1}}\",\n  \"ShipperId\": \"{{ShipperIdTest}}\",\n  \"ConsigneeId\": \"{{ConsigneeIdTestConsigneeExport1}}\",\n  \"NoFreightFile\": false,\n  \"IsExceptionResolved\": false,\n  \"IsRefreshFollowUp\": false,\n  \"FromPortId\": \"{{PortIdLHR}}\",\n  \"ToPortId\": \"{{PortIdAirJFK}}\",\n  \"MainCarriageFromPortId\": \"{{PortIdLHR}}\",\n  \"MainCarriageToPortId\": \"{{PortIdAirJFK}}\",\n  \"OriginMainCarriageFromPortId\": \"{{PortIdLHR}}\",\n  \"MainCarriageIsFromStack\": false,\n  \"AWBCurrencyId\": \"{{CurrencyId}}\",\n  \"OrderGrossWeightEdited\": false,\n  \"OrderChargeableWeightEdited\": false,\n  \"BookingNumberOfPackages\": null,\n  \"OrderIsDangerouseGoods\": false,\n  \"AWBPrint\": false,\n  \"FWBStatusCode\": \"NSEN\",\n  \"FWBStatusName\": null,\n  \"FHLStatusCode\": \"NSEN\",\n  \"FHLStatusName\": null,\n  \"ValueOfGoodsCurrencyId\": \"{{FreightCurrencyId}}\",\n  \"AWBDeclaredValueForCarriage\": \"NVD\",\n  \"AWBDeclaredValueForCustoms\": \"NCV\",\n  \"AWBAccountingInformation\": null,\n  \"AWBInsurrenceValue\": \"XXX\",\n  \"AWBHandlingInformation\": null,\n  \"SCI\": null,\n  \"AWBComments\": null,\n  \"AWBPrintingComments\": null,\n  \"AWBSignature\": \"Alex Test\",\n  \"AWBPlace\": \"London United Kingdom\",\n  \"AWBChargesCodeCode\": \"CC\",\n  \"TenantZeroAirlineChampFWB\": false,\n  \"TenantZeroAirlineChampFHL\": false,\n  \"TenantZeroAirlineChampFSU\": false,\n  \"TenantZeroAirlineChampFSRFSA\": false,\n  \"TenantZeroAirlineChampFVRFVA\": false,\n  \"CarrierIsChampRegistered\": false,\n  \"TenantZeroAirlineChampNeedsRegistration\": false,\n  \"TenantZeroAirlineGLSHKFWB\": false,\n  \"TenantZeroAirlineGLSHKFHL\": false,\n  \"TenantZeroAirlineGLSHKFSU\": false,\n  \"TenantZeroAirlineGLSHKFSRFSA\": false,\n  \"TenantZeroAirlineGLSHKFVRFVA\": false,\n  \"CarrierIsGLSHKRegistered\": false,\n  \"TenantZeroAirlineGLSHKNeedsRegistration\": false,\n  \"CarrierIsCheckDigit\": false,\n  \"CarrierIsLimitedLength\": false,\n  \"LocalCustomsTransmissionsStatusCode\": \"NSEN\",\n  \"LocalCustomsTransmissionsStatusName\": null,\n  \"LocalCustomsTransmissionsStatusError\": null,\n  \"LocalCustomsTransmissionsStatusDate\": null,\n  \"LocalCustomsSentByUserId\": null,\n  \"OperationalClosedByUserId\": null,\n  \"LocalCustomsSentByUserName\": null,\n  \"IncludesCustoms\": false,\n  \"IsUpdateByAutomation\": false,\n  \"DeclarationNumber\": null,\n  \"DeclarationDate\": null,\n  \"CustomsClearanceDate\": null,\n  \"MasterShipmentNumber\": null,\n  \"TEU\": null,\n  \"DontCreateConvertEvent\": false,\n  \"ConvertFromHouseToDirect\": false,\n  \"ConvertFromDirectToHouse\": false,\n  \"IsRefreshShipmentFollowUps\": false,\n  \"LastStatusLogDate\": \"2019-09-02T15:10:36.6416456Z\",\n  \"HasException\": false,\n  \"IsManifestSentToAgent\": false,\n  \"IsCreatedFromAgentSharedManifest\": false,\n  \"IsMultipleCommodities\": false,\n  \"OperationalDate\": \"2019-09-02T15:10:36.423\",\n  \"FBLIsFromStock\": false,\n  \"FBLReturnedToStock\": false,\n  \"FBLTakenFromStock\": false,\n  \"FBLReturnedToStockWithCancel\": false,\n  \"OnCarriageAdditionalTransportModeCode\": \"BYTR\",\n  \"FollowUps\": [],\n  \"ShipmentReceivables\": [\n    {\n      \"Tenant\": \"{{Tenant}}\",\n      \"ChargesTypeId\": \"{{ChargeTypeIdAFT}}\",\n      \"ShipmentReceivableLineStatusCode\": \"OAMT\",\n      \"ShipmentReceivableLineStatusName\": null,\n      \"MeasurementId\": \"{{MeasurementIdGRWT}}\",\n      \"MeasurementCode\": \"GRWT\",\n      \"MeasurementShortName\": \"Gr Weight\",\n      \"CurrencyId\": \"{{CurrencyId}}\",\n      \"Quantity\": 5,\n      \"UnitPrice\": 50,\n      \"TotalAmount\": 250,\n      \"TotalAmountLocal\": 925,\n      \"AWBPrint\": false,\n      \"Notes\": \"TEST\",\n      \"Rate\": 3.7,\n      \"PayableLocal\": 0,\n      \"PrepaidCollectId\": \"P\",\n      \"DueTypeCode\": \"CA\",\n      \"DueTypeName\": \"Carrier\",\n      \"ARInvoiceLineId\": null,\n      \"ViewOrder\": 0,\n      \"IsFromQuote\": false,\n      \"IsFixedPrice\": false,\n      \"IsExchangeRateFixed\": false,\n      \"AmountInProfitCurrency\": 181.37,\n      \"ProfitCurrencyExchangeRate\": 5.1,\n      \"ARInvoiceId\": null,\n      \"IATACodeId\": \"{{ChargeTypeIATACodeId}}\",\n      \"QuoteChargeId\": null,\n      \"IsChargeBySteps\": false,\n      \"VatTypeId\": \"{{ChargeTypeVatTypeId}}\",\n      \"UOMPercentage\": null,\n      \"IsBackToBack\": false,\n      \"IsExpense\": false,\n      \"ShipmentReceivableParentId\": null,\n      \"ChildShipmentReceivables\": [],\n      \"ChangeSetOp\": 1,\n      \"ChildChangeOp\": 0,\n      \"ChildShipmentReceivablesChangeSet\": []\n    }\n  ],\n  \"ShipmentPayables\": [\n    {\n      \"Tenant\": \"{{Tenant}}\",\n      \"ChargesTypeId\": \"{{ChargeTypeIdAFT}}\",\n      \"ShipmentPayableLineStatusCode\": \"OAMT\",\n      \"ShipmentPayableLineStatusName\": null,\n      \"MeasurementId\": \"{{MeasurementIdGRWT}}\",\n      \"CurrencyId\": \"{{CurrencyId}}\",\n      \"Quantity\": 1,\n      \"UnitPrice\": 60,\n      \"ExpectedAmount\": 60,\n      \"ExpectedAmountLocal\": 222,\n      \"AWBPrint\": false,\n      \"Rate\": 3.7,\n      \"Notes\": null,\n      \"ValueDate\": \"0001-01-01T00:00:00\",\n      \"PrepaidCollectId\": \"P\",\n      \"DueTypeCode\": \"CA\",\n      \"DueTypeName\": \"Carrier\",\n      \"ExpectedAmountInProfitCurrency\": 43.53,\n      \"ProfitCurrencyExchangeRate\": 5.1,\n      \"ShipmentPayableParentId\": null,\n      \"IsEditedByUser\": false,\n      \"AccountedAmount\": 0,\n      \"AccountedAmountInLocalCurrency\": 0,\n      \"AccountedAmountInProfitCurrency\": 0,\n      \"OpenAmount\": 60,\n      \"OpenAmountInLocalCurrency\": 222,\n      \"OpenAmountInProfitCurrency\": 43.53,\n      \"ShipmentPayableAmountTypeCode\": \"ACCU\",\n      \"ShipmentPayableAmountTypeName\": \"Accrual\",\n      \"CorrectionAmount\": 0,\n      \"IATACodeId\": \"{{ChargeTypeIATACodeId}}\",\n      \"IsFromQuote\": false,\n      \"IsChargeBySteps\": false,\n      \"VatTypeId\": \"{{ChargeTypeVatTypeId}}\",\n      \"ViewOrder\": 0,\n      \"ChildShipmentPayables\": [],\n      \"ChangeSetOp\": 1,\n      \"ChildChangeOp\": 0,\n      \"ChildShipmentPayablesChangeSet\": [],\n      \"IsBackToBack\": false\n    }\n  ],\n  \"ShipmentPackages\": [\n    {\n      \"height\": 100,\n      \"length\": 110,\n      \"quantity\": 10,\n      \"weight\": 50,\n      \"width\": 50\n    }\n  ],\n  \"ShipmentOrderPackages\": [\n    {\n      \"grossWeight\": 10,\n      \"height\": 3,\n      \"length\": 5,\n      \"quantity\": 8,\n      \"width\": 7\n    }\n  ],\n  \"ShipmentPickUps\": [\n    {\n      \"Tenant\": \"{{Tenant}}\",\n      \"PickUpDeliveryTypeCode\": \"PICK\",\n      \"FullResponsibility\": true,\n      \"PickUpDeliveryFromTypeCode\": \"PART\",\n      \"PickUpDeliveryToTypeCode\": \"PORT\",\n      \"FromPortId\": \"{{PortIdLHR}}\",\n      \"ToPortId\": \"{{PortIdLHR}}\",\n      \"FromPartnerCardId\": \"{{ShipperIdTestShipExport1}}\",\n      \"CarrierId\": \"{{TruckerIdTLON}}\",\n      \"CarrierNumber\": \"86423971\",\n      \"CarrierWebSite\": null,\n      \"Driver\": \"James\",\n      \"TruckNumber\": \"TN654321\",\n      \"TrailerNumber\": \"741852\",\n      \"Notes\": \"TEST Pickup\",\n      \"ShipmentPickUpDeliveryPackages\": [\n        {\n          \"Tenant\": \"{{Tenant}}\",\n          \"PackageTypeId\": \"1-75\",\n          \"PackageTypeName\": \"20 Ft. Flat Rack\",\n          \"PackageTypeTEU\": 1,\n          \"Quantity\": 50,\n          \"Volume\": 100,\n          \"Weight\": 110,\n          \"Description\": \"ShSeal1\",\n          \"Harmonize\": \"235312\",\n          \"ShipperSeal\": \"ShSeal1\",\n          \"Width\": 100,\n          \"Height\": 120,\n          \"Length\": 110,\n          \"ChangeSetOp\": 1,\n          \"IsMultiHarmonize\": false,\n          \"PickUpDeliveryPackageHarmonizes\": [],\n          \"PickUpDeliveryPackageHarmonizesChangeSet\": []\n        }\n      ],\n      \"ChangeSetOp\": 1,\n      \"ShipmentPickUpPackagesChangeSet\": [\n        {\n          \"$ref\": \"49\"\n        }\n      ]\n    }\n  ],\n  \"ShipmentDeliveries\": [\n    {\n      \"Tenant\": \"{{Tenant}}\",\n      \"PickUpDeliveryTypeCode\": \"DELV\",\n      \"FullResponsibility\": true,\n      \"PickUpDeliveryFromTypeCode\": \"PORT\",\n      \"PickUpDeliveryToTypeCode\": \"PART\",\n      \"FromPortId\": \"{{PortIdAirJFK}}\",\n      \"ToPortId\": \"{{PortIdAirJFK}}\",\n      \"ToPartnerCardId\": \"{{ConsigneeIdTestConsigneeExport1}}\",\n      \"CarrierId\": \"{{TruckerIdTNYC}}\",\n      \"CarrierNumber\": \"963147\",\n      \"Driver\": \"Michael\",\n      \"TruckNumber\": \"M123456\",\n      \"TrailerNumber\": \"852963\",\n      \"Notes\": \"Test Delivery\",\n      \"IsCancelled\": false,\n      \"ShipmentPickUpDeliveryPackages\": [],\n      \"ChangeSetOp\": 1,\n      \"ShipmentDeliveryPackagesChangeSet\": [],\n      \"SplitIndex\": 0,\n      \"IsFromSplit\": false\n    }\n  ],\n  \"ShipmentARInvoices\": [],\n  \"ShipmentAPInvoices\": [],\n  \"ShipmentConsoleShipments\": [],\n  \"ShipmentAWBPrintOnlies\": [],\n  \"ShipmentCarrierStatuses\": [],\n  \"AWBOCIPMs\": [],\n  \"ShipmentCommodities\": [\n    {\n      \"$id\": \"34\",\n      \"Id\": \"1-847695\",\n      \"Tenant\": 951,\n      \"ShipmentId\": \"1-1947084\",\n      \"ChargeRate\": null,\n      \"ChargeAmount\": null,\n      \"Volume\": null,\n      \"VolumetricWeight\": null,\n      \"GrossWeight\": null,\n      \"ChargeableWeight\": null,\n      \"NumberOfPackages\": null,\n      \"RateClassCode\": \"Q\",\n      \"CommodityNumber\": null,\n      \"DescriptionOfGoods\": null,\n      \"IsFirstLine\": true,\n      \"CommodityPackages\": [],\n      \"ChangeSetOp\": 0\n    }\n  ],\n  \"ShipmentAssemblies\": [],\n  \"MissingDocuments\": [],\n  \"ReceivedDocuments\": [],\n  \"RequiredDocuments\": [],\n  \"MainCarriageFromPartnerId\": null,\n  \"MainCarriageFromAddressId\": null,\n  \"MainCarriageToPartnerId\": null,\n  \"MainCarriageToAddressId\": null,\n  \"ToCountryId\": \"{{CountryIdUS}}\",\n  \"FromCountryId\": \"{{CountryIdGB}}\",\n  \"Driver\": null,\n  \"TruckNumber\": null,\n  \"TrailerNumber\": null,\n  \"AsAgreedFreight\": false,\n  \"AsAgreedOtherCharges\": false,\n  \"ARInvoiceIssued\": false,\n  \"CreditNoteIssued\": false,\n  \"AccountNumber\": null,\n  \"CargonautFHLStatusCode\": \"NSEN\",\n  \"CargonautFHLStatusName\": null,\n  \"CargonautFHLStatusDate\": null,\n  \"CargonautFWBStatusCode\": \"NSEN\",\n  \"CargonautFWBStatusName\": null,\n  \"CargonautFWBStatusDate\": null,\n  \"MarkFollowUpsAsDone\": false,\n  \"CalculateProfit\": true,\n  \"CalculateStatus\": true,\n  \"ComputedStatusId\": null,\n  \"ComputedStatusDate\": null,\n  \"ComputedStatusName\": null,\n  \"CustomFilePocoId\": null,\n  \"ManifestLastSharingDate\": null,\n  \"CalculatePayables\": true,\n  \"CalculateReceivables\": true,\n  \"IsAddingStackEvents\": false,\n  \"IsRemovingStackEvents\": false,\n  \"IsSendFSRCreatingShipment\": false,\n  \"CopyFromShipmentId\": null,\n  \"IsCopyFromShipment\": false,\n  \"IsBuildFromQuote\": false,\n  \"IsBuildFromBooking\": false,\n  \"ShipperMainAddressId\": \"1-162399\",\n  \"HasPreCarriage\": false,\n  \"HasOnCarriage\": false,\n  \"IncludePickUp\": false,\n  \"CustomConnectToShipment\": false,\n  \"IncludeDelivery\": false,\n  \"NewConcurrencyGUID\": \"07e7ccc5-7fa3-4703-8cef-da92a5108b42\",\n  \"ConnectedShipmentsPayablesCount\": 0,\n  \"ConnectedShipmentsReceivablesCount\": 0,\n  \"NumberOfInsidePackages\": 0,\n  \"NumberOfInsidePackagesDetails\": \"\",\n  \"AccountManagerUserId\": \"{{LoggedUserId}}\",\n  \"AccountManagerUserName\": null,\n  \"ManifestReason\": null,\n  \"ManifestStatusCode\": \"NSEN\",\n  \"IsKnownCargo\": false,\n  \"AWBPrintingSecurityStatusEdited\": false,\n  \"AWBPrintingRANumberEdited\": false,\n  \"AdditionalHandlingInfoEdited\": false,\n  \"ViaColoader\": false,\n  \"IssuingCarrierReference1\": null,\n  \"IsMissingDocument\": false,\n  \"MAWBReturnedToStackWithCancel\": false,\n  \"MAWBStackAirlineId\": null,\n  \"DontAddToImportersQueue\": false,\n  \"DontAddToForwarderQueue\": false,\n  \"ConvertToCustomFile\": false,\n  \"IsImporterShipment\": false,\n  \"IsUpdatedByChampAnalyzer\": false,\n  \"IsUpdatedByGLSHKAnalyzer\": false,\n  \"IsUpdatedByINTTRAAnalyzer\": false,\n  \"IsCreatedFromCustomerOverview\": false,\n  \"DeclarationXMLData\": null,\n  \"IsImporterApprovalRequired\": false,\n  \"SendUpdatesToAgentEnabled\": false,\n  \"UpdateSendUpdatesToAgentEnabledField\": false,\n  \"DocsSentToAgent\": false,\n  \"VersionApproved\": null,\n  \"ApprovedBy\": null,\n  \"ApproveDateTime\": null,\n  \"IsNewARInvoiceBlocked\": false,\n  \"ShipmentAddtionalDataXML\": null,\n  \"OriginShipmentId\": null,\n  \"ProrateReceivables\": false,\n  \"ReleasesPackagesAddedOnTheShipment\": false,\n  \"IsAssembly\": false,\n  \"UpdatedByPartner\": \"Lana88\",\n  \"SplitFromShipmentNo\": null,\n  \"INTTRASIStatusCode\": \"NSEN\",\n  \"SIHasAttachList\": false,\n  \"INTTRAIsFreighted\": false,\n  \"INTTRABookingTransStatusCode\": \"NST\",\n  \"INTTRABookingStatusCode\": \"NS\",\n  \"SplitOnCarriage\": false,\n  \"INTTRALastStatusDate\": null,\n  \"IsPaymentRequired\": false,\n  \"IsSharedLogisticsMoneyTabEnabled\": false,\n  \"IsSharedLogisticsMainCarrierVisible\": false,\n  \"IsSharedLogisticsPickDelvCarrierVisible\": false,\n  \"IsSharedLogisticsAgentVisible\": false,\n  \"IsSharedLogisticsShipperVisible\": false,\n  \"IsSharedLogisticsConsigneeVisible\": false,\n  \"ShipmentContanisDangerousGoods\": false,\n  \"BasicFreightId\": \"C\",\n  \"DestinationPortChargesId\": \"C\",\n  \"DestinationHaulageChargesId\": \"C\",\n  \"AdditionalChargesId\": \"C\",\n  \"FreightPayerId\": null,\n  \"FreightPayerAddressId\": null,\n  \"HasContainerException\": false,\n  \"IsMissingDocuments\": false,\n  \"LastDocumentDateTime\": null,\n  \"MissingDocumentsCount\": 0,\n  \"MissingDocumentsNames\": null,\n  \"IsRequestedDocuments\": false,\n  \"RequestedDocumentsCount\": 0,\n  \"NumberOfHouses\": 0,\n  \"IsDigitalSignRequired\": false,\n  \"IsDepositionRequired\": false,\n  \"ImporterDepositionRequestDetails\": null,\n  \"IsShipmentComputedFieldChange\": false,\n  \"PackagesTypesNames\": null,\n  \"PackagesTypesPrintAs\": null,\n  \"ContainersNumbers\": null,\n  \"ARInvoices\": null,\n  \"ConvertShipmentToLCL\": false,\n  \"ConvertShipmentToFCL\": false,\n  \"ShipmentDirectionConverted\": false,\n  \"FromCountryIsEC\": true,\n  \"ToCountryIsEC\": true,\n  \"PackagesDeleted\": false,\n  \"MasterCreatedFromHouseId\": null,\n  \"IsDeletingAllPayables\": false\n}"
-				},
-				"url": {
-					"raw": "{{LogitudeURL}}/api/shipment",
-					"host": [
-						"{{LogitudeURL}}"
-					],
-					"path": [
-						"api",
-						"shipment"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GetShipmentDirectExportAir",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "c8c5af5e-60b2-4473-a454-05f334718180",
-						"exec": [
-							"    var expectedHttpStatus = 200;",
-							"    var maxNumberOfTries = 5;",
-							"    var numberOfRetries = 5;",
-							"    var retries = \"{{RetriesNumber}}\";",
-							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
-							"    ",
-							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
-							"         pm.globals.set(\"Retries\", ++Retries);",
-							"         ",
-							"        setTimeout(function() {}, sleepBetweenTries);",
-							"        postman.setNextRequest(\"GetShipmentDirectExportAir\"); ",
-							"    }",
-							"        else {",
-							"     pm.globals.set(\"Retries\",1); ",
-							"     ",
-							"     pm.test(\"GetShipmentDirectExportAir\", function () {",
-							"    // pm.response.to.have.status(200);",
-							"     ",
-							"      var idvalue1 = (pm.response.json().Result[0].Id);",
-							"      var idvalue2 = pm.environment.get(\"DirectShipmentAirExportId\");",
-							"      var idvalue3 = pm.environment.get(\"ShipmentNumber\");",
-							"    // pm.expect(idvalue2pm.response.json().Id).to.eql(pm.globals.get(\"Tenant\"));",
-							"    ",
-							"    //pm.environment.set(\"AddressId\",idvalue3);",
-							"    ",
-							"     if (idvalue1 == idvalue2)  {",
-							"        tests[\"GetShipmentDirectExportAir successfully : \" + idvalue3] = responseBody.has(idvalue3);",
-							"   ",
-							"    } ",
-							"",
-							"",
-							"});",
-							"",
-							"    ",
-							"    }",
-							"",
-							"",
-							"",
-							"",
-							"     ",
-							"    "
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					},
-					{
-						"key": "Token",
-						"value": "{{Token}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "{{LogitudeURL}}/api/shipmentviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&GetCount=true&PageIndex=0&PageSize=23&Filter1Value={{ShipmentNumber}}",
-					"host": [
-						"{{LogitudeURL}}"
-					],
-					"path": [
-						"api",
-						"shipmentviews",
-						"getbyfilters"
-					],
-					"query": [
-						{
-							"key": "ForceCacheRefresh",
-							"value": "false"
-						},
-						{
-							"key": "GetAll",
-							"value": "false"
-						},
-						{
-							"key": "Filter1Name",
-							"value": "SearchFields"
-						},
-						{
-							"key": "Filter1Operator",
-							"value": "Contains"
-						},
-						{
-							"key": "GetCount",
-							"value": "true"
-						},
-						{
-							"key": "PageIndex",
-							"value": "0"
-						},
-						{
-							"key": "PageSize",
-							"value": "23"
-						},
-						{
-							"key": null,
-							"value": null
-						},
-						{
-							"key": null,
-							"value": null
-						},
-						{
-							"key": "Filter1Value",
-							"value": "{{ShipmentNumber}}"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "UpdateShipmentDirectExportAir",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "f97821b6-669f-47bf-9f04-186c8e63cea2",
-						"exec": [
-							"    var expectedHttpStatus = 200;",
-							"    var maxNumberOfTries = 5;",
-							"    var numberOfRetries = 5;",
-							"    var retries = \"{{RetriesNumber}}\";",
-							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
-							"    ",
-							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
-							"         pm.globals.set(\"Retries\", ++Retries);",
-							"         ",
-							"        setTimeout(function() {}, sleepBetweenTries);",
-							"        postman.setNextRequest(\"UpdateShipmentDirectExportAir\"); ",
-							"    }",
-							"        else {",
-							"     pm.globals.set(\"Retries\",1);",
-							"     ",
-							"     pm.test(\"UpdateShipmentDirectExportAir\", function () {",
-							"  // pm.response.to.have.status(200);",
-							"   ",
-							"    var idvalue1 = (pm.response.json().Notes);",
-							"    var id1exist = idvalue1 !== null;",
-							"    var idvalue2 = \"Update Shipment Successfully\";",
-							"    var id2exist = idvalue1 !== null;",
-							"    ",
-							"    pm.expect(id1exist);",
-							"    pm.expect(id2exist);",
-							"    ",
-							"  if (idvalue1 === idvalue2)",
-							"   // pm.environment.set(\"ShipmentNotes\",idvalue1);",
-							"    tests[\"Shipment Notes: \" + idvalue1] = responseBody.has(idvalue1);",
-							"",
-							"  ",
-							"    ",
-							"    ",
-							"});",
-							"",
-							"    ",
-							"    }",
-							"",
-							"     ",
-							"",
-							"",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					},
-					{
-						"key": "Token",
-						"type": "text",
-						"value": "{{Token}}"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"$id\": \"1\",\n  \"Id\": \"{{DirectShipmentAirExportId}}\",\n  \"ConcurrencyGUID\": \"{{ConcurrencyGUID}}\",\n  \"IsHybrid\": false,\n  \"CASSCode\": \"2343\",\n  \"ChargeableWeight\": 5,\n  \"GrossWeight\": 5,\n  \"PackagesQuantity\": 1,\n  \"NumberOfPackages\": 1,\n  \"OrderVolumetricWeight\": 5,\n  \"OrderChargeableWeight\": 5,\n  \"GrossWeightPerTon\": 0.005,\n  \"OpenReceivablesInLocalCurrency\": 0,\n  \"AccountedReceivablesInLocalCurrency\": 0,\n  \"ProfitInLocalCurrency\": 0,\n  \"EstimateProfitInLocalCurrency\": null,\n  \"OpenReceivablesInProfitCurrency\": 0,\n  \"AccountedReceivablesInProfitCurrency\": 0,\n  \"ProfitInProfitCurrency\": 0,\n  \"EstimateProfitInProfitCurrency\": null,\n  \"OpenPayablesInLocalCurrency\": 0,\n  \"AccountedPayablesInLocalCurrency\": 0,\n  \"OpenPayablesInProfitCurrency\": 0,\n  \"AccountedPayablesInProfitCurrency\": 0,\n  \"IsFSRSent\": false,\n  \"IsFlightDateActual\": false,\n  \"ConnectedShipments\": 0,\n  \"Tenant\": \"{{Tenant}}\",\n  \"DirectionId\": \"E\",\n  \"TransportModeId\": \"A\",\n  \"MAWBTakenFromStack\": false,\n  \"MAWBReturnedToStack\": false,\n  \"House\": \"{{HouseNumber}}\",\n  \"BranchId\": \"{{BranchId}}\",\n  \"CreatedByUserId\": \"{{LoggedUserId}}\",\n  \"DepartmentId\": \"{{DepId}}\",\n  \"IsOperationalClosed\": false,\n  \"IsSecured\": false,\n  \"Master\": null,\n  \"Notes\": \"Shipment Updated Successfully\",\n  \"ShipmentTypeViewField\": \"Direct\",\n  \"LongMaster\": null,\n  \"FreightPrepaidCollectId\": \"C\",\n  \"OtherPrepaidCollectId\": \"C\",\n  \"GrossWeightUnitCode\": \"{{GrossWeightUnitCode}}\",\n  \"ChargeableWeightUnitCode\": \"{{ChargeableWeightUnitCode}}\",\n  \"DimensionsUnitCode\": \"{{DimensionsUnitCode}}\",\n  \"RateClassCode\": \"Q\",\n  \"Ratio\": 6,\n  \"DimFactor\": 6000000,\n  \"MAWBOBLDate\": null,\n  \"GrossWeightEdited\": false,\n  \"ChargeableWeightEdited\": false,\n  \"VolumeUnitCode\": \"{{VolumeUnitCode}}\",\n  \"StatusDate\": \"2019-09-02T15:10:36.6416456Z\",\n  \"StatusLocation\": null,\n  \"StatusWeight\": 0,\n  \"ShipmentType\": \"Direct\",\n  \"LastUpdate\": \"0001-01-01T00:00:00\",\n  \"NewMessage\": false,\n  \"FollowUpNotes\": null,\n  \"IsAnyConversation\": false,\n  \"NumberOfShipments\": 0,\n  \"IsDangerous\": false,\n  \"LTCWEdited\": false,\n  \"ShipmentPickUpIndex\": 0,\n  \"ShipmentDeliveryIndex\": 0,\n  \"ShipmentContainerReturnIndex\": 0,\n  \"ShipmentPayableStatusCode\": \"NOPA\",\n  \"ShipmentReceivableStatusCode\": \"NORE\",\n  \"IsCancelled\": false,\n  \"CancelledDate\": null,\n  \"IsAccountingClosed\": false,\n  \"AccessDate\": \"0001-01-01T00:00:00\",\n  \"UpdatedByUserId\": \"{{LoggedUserId}}\",\n  \"LastUpdateDate\": \"2019-09-02T15:10:36.5322552Z\",\n  \"ProfitCurrencyId\": \"{{CurrencyId}}\",\n  \"ProfitExchangeRate\": 3,\n  \"NextLegCode\": \"MAL1\",\n  \"NextLegName\": null,\n  \"NextETD\": null,\n  \"NextETA\": null,\n  \"ShipmentLevelCode\": \"D\",\n  \"ShipmentCustomerTypeCode\": \"SHI\",\n  \"ConsigneeAddressOneTime\": false,\n  \"ShipperAddressOneTime\": false,\n  \"CustomerId\": \"{{ShipperIdTest}}\",\n  \"IssuingCarrierAgentId\": \"{{TenantAgentId}}\",\n  \"AgentId\": \"{{AgentIdTestExport1}}\",\n  \"ShipperId\": \"{{ShipperIdTest}}\",\n  \"ConsigneeId\": \"{{ConsigneeIdTestConsigneeExport1}}\",\n  \"NoFreightFile\": false,\n  \"IsExceptionResolved\": false,\n  \"IsRefreshFollowUp\": false,\n  \"FromPortId\": \"{{PortIdLHR}}\",\n  \"ToPortId\": \"{{PortIdAirJFK}}\",\n  \"MainCarriageFromPortId\": \"{{PortIdLHR}}\",\n  \"MainCarriageToPortId\": \"{{PortIdAirJFK}}\",\n  \"OriginMainCarriageFromPortId\": \"{{PortIdLHR}}\",\n  \"MainCarriageIsFromStack\": false,\n  \"AWBCurrencyId\": \"{{CurrencyId}}\",\n  \"OrderGrossWeightEdited\": false,\n  \"OrderChargeableWeightEdited\": false,\n  \"BookingNumberOfPackages\": null,\n  \"OrderIsDangerouseGoods\": false,\n  \"AWBPrint\": false,\n  \"FWBStatusCode\": \"NSEN\",\n  \"FWBStatusName\": null,\n  \"FHLStatusCode\": \"NSEN\",\n  \"FHLStatusName\": null,\n  \"ValueOfGoodsCurrencyId\": \"{{FreightCurrencyId}}\",\n  \"AWBDeclaredValueForCarriage\": \"NVD\",\n  \"AWBDeclaredValueForCustoms\": \"NCV\",\n  \"AWBAccountingInformation\": null,\n  \"AWBInsurrenceValue\": \"XXX\",\n  \"AWBHandlingInformation\": null,\n  \"SCI\": null,\n  \"AWBComments\": null,\n  \"AWBPrintingComments\": null,\n  \"AWBSignature\": \"Alex Test\",\n  \"AWBPlace\": \"London United Kingdom\",\n  \"AWBChargesCodeCode\": \"CC\",\n  \"TenantZeroAirlineChampFWB\": false,\n  \"TenantZeroAirlineChampFHL\": false,\n  \"TenantZeroAirlineChampFSU\": false,\n  \"TenantZeroAirlineChampFSRFSA\": false,\n  \"TenantZeroAirlineChampFVRFVA\": false,\n  \"CarrierIsChampRegistered\": false,\n  \"TenantZeroAirlineChampNeedsRegistration\": false,\n  \"TenantZeroAirlineGLSHKFWB\": false,\n  \"TenantZeroAirlineGLSHKFHL\": false,\n  \"TenantZeroAirlineGLSHKFSU\": false,\n  \"TenantZeroAirlineGLSHKFSRFSA\": false,\n  \"TenantZeroAirlineGLSHKFVRFVA\": false,\n  \"CarrierIsGLSHKRegistered\": false,\n  \"TenantZeroAirlineGLSHKNeedsRegistration\": false,\n  \"CarrierIsCheckDigit\": false,\n  \"CarrierIsLimitedLength\": false,\n  \"LocalCustomsTransmissionsStatusCode\": \"NSEN\",\n  \"LocalCustomsTransmissionsStatusName\": null,\n  \"LocalCustomsTransmissionsStatusError\": null,\n  \"LocalCustomsTransmissionsStatusDate\": null,\n  \"LocalCustomsSentByUserId\": null,\n  \"OperationalClosedByUserId\": null,\n  \"LocalCustomsSentByUserName\": null,\n  \"IncludesCustoms\": false,\n  \"IsUpdateByAutomation\": false,\n  \"DeclarationNumber\": null,\n  \"DeclarationDate\": null,\n  \"CustomsClearanceDate\": null,\n  \"MasterShipmentNumber\": null,\n  \"TEU\": null,\n  \"DontCreateConvertEvent\": false,\n  \"ConvertFromHouseToDirect\": false,\n  \"ConvertFromDirectToHouse\": false,\n  \"IsRefreshShipmentFollowUps\": false,\n  \"LastStatusLogDate\": \"2019-09-02T15:10:36.6416456Z\",\n  \"HasException\": false,\n  \"IsManifestSentToAgent\": false,\n  \"IsCreatedFromAgentSharedManifest\": false,\n  \"IsMultipleCommodities\": false,\n  \"OperationalDate\": \"2019-09-02T15:10:36.423\",\n  \"FBLIsFromStock\": false,\n  \"FBLReturnedToStock\": false,\n  \"FBLTakenFromStock\": false,\n  \"FBLReturnedToStockWithCancel\": false,\n  \"OnCarriageAdditionalTransportModeCode\": \"BYTR\",\n  \"FollowUps\": [],\n  \"ShipmentReceivables\": [\n    {\n      \"Tenant\": \"{{Tenant}}\",\n      \"ChargesTypeId\": \"{{ChargeTypeIdAFT}}\",\n      \"ShipmentReceivableLineStatusCode\": \"OAMT\",\n      \"ShipmentReceivableLineStatusName\": null,\n      \"MeasurementId\": \"{{MeasurementIdGRWT}}\",\n      \"MeasurementCode\": \"GRWT\",\n      \"MeasurementShortName\": \"Gr Weight\",\n      \"CurrencyId\": \"{{CurrencyId}}\",\n      \"Quantity\": 5,\n      \"UnitPrice\": 50,\n      \"TotalAmount\": 250,\n      \"TotalAmountLocal\": 925,\n      \"AWBPrint\": false,\n      \"Notes\": \"TEST\",\n      \"Rate\": 3.7,\n      \"PayableLocal\": 0,\n      \"PrepaidCollectId\": \"P\",\n      \"DueTypeCode\": \"CA\",\n      \"DueTypeName\": \"Carrier\",\n      \"ARInvoiceLineId\": null,\n      \"ViewOrder\": 0,\n      \"IsFromQuote\": false,\n      \"IsFixedPrice\": false,\n      \"IsExchangeRateFixed\": false,\n      \"AmountInProfitCurrency\": 181.37,\n      \"ProfitCurrencyExchangeRate\": 5.1,\n      \"ARInvoiceId\": null,\n      \"IATACodeId\": \"{{ChargeTypeIATACodeId}}\",\n      \"QuoteChargeId\": null,\n      \"IsChargeBySteps\": false,\n      \"VatTypeId\": \"{{ChargeTypeVatTypeId}}\",\n      \"UOMPercentage\": null,\n      \"IsBackToBack\": false,\n      \"IsExpense\": false,\n      \"ShipmentReceivableParentId\": null,\n      \"ChildShipmentReceivables\": [],\n      \"ChangeSetOp\": 1,\n      \"ChildChangeOp\": 0,\n      \"ChildShipmentReceivablesChangeSet\": []\n    }\n  ],\n  \"ShipmentPayables\": [\n    {\n      \"Tenant\": \"{{Tenant}}\",\n      \"ChargesTypeId\": \"{{ChargeTypeIdAFT}}\",\n      \"ShipmentPayableLineStatusCode\": \"OAMT\",\n      \"ShipmentPayableLineStatusName\": null,\n      \"MeasurementId\": \"{{MeasurementIdGRWT}}\",\n      \"CurrencyId\": \"{{CurrencyId}}\",\n      \"Quantity\": 1,\n      \"UnitPrice\": 60,\n      \"ExpectedAmount\": 60,\n      \"ExpectedAmountLocal\": 222,\n      \"AWBPrint\": false,\n      \"Rate\": 3.7,\n      \"Notes\": null,\n      \"ValueDate\": \"0001-01-01T00:00:00\",\n      \"PrepaidCollectId\": \"P\",\n      \"DueTypeCode\": \"CA\",\n      \"DueTypeName\": \"Carrier\",\n      \"ExpectedAmountInProfitCurrency\": 43.53,\n      \"ProfitCurrencyExchangeRate\": 5.1,\n      \"ShipmentPayableParentId\": null,\n      \"IsEditedByUser\": false,\n      \"AccountedAmount\": 0,\n      \"AccountedAmountInLocalCurrency\": 0,\n      \"AccountedAmountInProfitCurrency\": 0,\n      \"OpenAmount\": 60,\n      \"OpenAmountInLocalCurrency\": 222,\n      \"OpenAmountInProfitCurrency\": 43.53,\n      \"ShipmentPayableAmountTypeCode\": \"ACCU\",\n      \"ShipmentPayableAmountTypeName\": \"Accrual\",\n      \"CorrectionAmount\": 0,\n      \"IATACodeId\": \"{{ChargeTypeIATACodeId}}\",\n      \"IsFromQuote\": false,\n      \"IsChargeBySteps\": false,\n      \"VatTypeId\": \"{{ChargeTypeVatTypeId}}\",\n      \"ViewOrder\": 0,\n      \"ChildShipmentPayables\": [],\n      \"ChangeSetOp\": 1,\n      \"ChildChangeOp\": 0,\n      \"ChildShipmentPayablesChangeSet\": [],\n      \"IsBackToBack\": false\n    }\n  ],\n  \"ShipmentPackages\": [\n    {\n      \"height\": 100,\n      \"length\": 110,\n      \"quantity\": 10,\n      \"weight\": 50,\n      \"width\": 50\n    }\n  ],\n  \"ShipmentOrderPackages\": [\n    {\n      \"grossWeight\": 10,\n      \"height\": 3,\n      \"length\": 5,\n      \"quantity\": 8,\n      \"width\": 7\n    }\n  ],\n  \"ShipmentPickUps\": [\n    {\n      \"Tenant\": \"{{Tenant}}\",\n      \"PickUpDeliveryTypeCode\": \"PICK\",\n      \"FullResponsibility\": true,\n      \"PickUpDeliveryFromTypeCode\": \"PART\",\n      \"PickUpDeliveryToTypeCode\": \"PORT\",\n      \"FromPortId\": \"{{PortIdLHR}}\",\n      \"ToPortId\": \"{{PortIdLHR}}\",\n      \"FromPartnerCardId\": \"{{ShipperIdTestShipExport1}}\",\n      \"CarrierId\": \"{{TruckerIdTLON}}\",\n      \"CarrierNumber\": \"86423971\",\n      \"CarrierWebSite\": null,\n      \"Driver\": \"James\",\n      \"TruckNumber\": \"TN654321\",\n      \"TrailerNumber\": \"741852\",\n      \"Notes\": \"TEST Pickup\",\n      \"ShipmentPickUpDeliveryPackages\": [\n        {\n          \"Tenant\": \"{{Tenant}}\",\n          \"PackageTypeId\": \"1-75\",\n          \"PackageTypeName\": \"20 Ft. Flat Rack\",\n          \"PackageTypeTEU\": 1,\n          \"ShipmentPickUpDeliveryId\": \"1-46488\",\n          \"Quantity\": 50,\n          \"Volume\": 100,\n          \"Weight\": 110,\n          \"Description\": \"ShSeal1\",\n          \"Harmonize\": \"235312\",\n          \"ShipperSeal\": \"ShSeal1\",\n          \"Width\": 100,\n          \"Height\": 120,\n          \"Length\": 110,\n          \"ChangeSetOp\": 1,\n          \"IsMultiHarmonize\": false,\n          \"PickUpDeliveryPackageHarmonizes\": [],\n          \"PickUpDeliveryPackageHarmonizesChangeSet\": []\n        }\n      ],\n      \"ChangeSetOp\": 1,\n      \"ShipmentPickUpPackagesChangeSet\": [\n        {\n          \"$ref\": \"49\"\n        }\n      ]\n    }\n  ],\n  \"ShipmentDeliveries\": [\n    {\n      \"Tenant\": \"{{Tenant}}\",\n      \"PickUpDeliveryTypeCode\": \"DELV\",\n      \"FullResponsibility\": true,\n      \"PickUpDeliveryFromTypeCode\": \"PORT\",\n      \"PickUpDeliveryToTypeCode\": \"PART\",\n      \"FromPortId\": \"{{PortIdJFK}}\",\n      \"ToPortId\": \"{{PortIdJFK}}\",\n      \"ToPartnerCardId\": \"{{ConsigneeIdTestConsigneeExport1}}\",\n      \"CarrierId\": \"{{TruckerIdTNYC}}\",\n      \"CarrierNumber\": \"963147\",\n      \"Driver\": \"Michael\",\n      \"TruckNumber\": \"M123456\",\n      \"TrailerNumber\": \"852963\",\n      \"Notes\": \"Test Delivery\",\n      \"IsCancelled\": false,\n      \"ShipmentPickUpDeliveryPackages\": [],\n      \"ChangeSetOp\": 1,\n      \"ShipmentDeliveryPackagesChangeSet\": [],\n      \"SplitIndex\": 0,\n      \"IsFromSplit\": false\n    }\n  ],\n  \"ShipmentARInvoices\": [],\n  \"ShipmentAPInvoices\": [],\n  \"ShipmentConsoleShipments\": [],\n  \"ShipmentAWBPrintOnlies\": [],\n  \"ShipmentCarrierStatuses\": [],\n  \"AWBOCIPMs\": [],\n  \"ShipmentCommodities\": [\n    {\n      \"$id\": \"34\",\n      \"Id\": \"1-847695\",\n      \"Tenant\": 951,\n      \"ShipmentId\": \"1-1947084\",\n      \"ChargeRate\": null,\n      \"ChargeAmount\": null,\n      \"Volume\": null,\n      \"VolumetricWeight\": null,\n      \"GrossWeight\": null,\n      \"ChargeableWeight\": null,\n      \"NumberOfPackages\": null,\n      \"RateClassCode\": \"Q\",\n      \"CommodityNumber\": null,\n      \"DescriptionOfGoods\": null,\n      \"IsFirstLine\": true,\n      \"CommodityPackages\": [],\n      \"ChangeSetOp\": 0\n    }\n  ],\n  \"ShipmentAssemblies\": [],\n  \"MissingDocuments\": [],\n  \"ReceivedDocuments\": [],\n  \"RequiredDocuments\": [],\n  \"MainCarriageFromPartnerId\": null,\n  \"MainCarriageFromAddressId\": null,\n  \"MainCarriageToPartnerId\": null,\n  \"MainCarriageToAddressId\": null,\n  \"ToCountryId\": \"{{CountryIdUS}}\",\n  \"FromCountryId\": \"{{CountryIdGB}}\",\n  \"Driver\": null,\n  \"TruckNumber\": null,\n  \"TrailerNumber\": null,\n  \"AsAgreedFreight\": false,\n  \"AsAgreedOtherCharges\": false,\n  \"ARInvoiceIssued\": false,\n  \"CreditNoteIssued\": false,\n  \"AccountNumber\": null,\n  \"CargonautFHLStatusCode\": \"NSEN\",\n  \"CargonautFHLStatusName\": null,\n  \"CargonautFHLStatusDate\": null,\n  \"CargonautFWBStatusCode\": \"NSEN\",\n  \"CargonautFWBStatusName\": null,\n  \"CargonautFWBStatusDate\": null,\n  \"MarkFollowUpsAsDone\": false,\n  \"CalculateProfit\": true,\n  \"CalculateStatus\": true,\n  \"ComputedStatusId\": null,\n  \"ComputedStatusDate\": null,\n  \"ComputedStatusName\": null,\n  \"CustomFilePocoId\": null,\n  \"ManifestLastSharingDate\": null,\n  \"CalculatePayables\": true,\n  \"CalculateReceivables\": true,\n  \"IsAddingStackEvents\": false,\n  \"IsRemovingStackEvents\": false,\n  \"IsSendFSRCreatingShipment\": false,\n  \"CopyFromShipmentId\": null,\n  \"IsCopyFromShipment\": false,\n  \"IsBuildFromQuote\": false,\n  \"IsBuildFromBooking\": false,\n  \"ShipperMainAddressId\": \"1-162399\",\n  \"HasPreCarriage\": false,\n  \"HasOnCarriage\": false,\n  \"IncludePickUp\": false,\n  \"CustomConnectToShipment\": false,\n  \"IncludeDelivery\": false,\n  \"NewConcurrencyGUID\": \"07e7ccc5-7fa3-4703-8cef-da92a5108b42\",\n  \"ConnectedShipmentsPayablesCount\": 0,\n  \"ConnectedShipmentsReceivablesCount\": 0,\n  \"NumberOfInsidePackages\": 0,\n  \"NumberOfInsidePackagesDetails\": \"\",\n  \"AccountManagerUserId\": \"{{LoggedUserId}}\",\n  \"AccountManagerUserName\": null,\n  \"ManifestReason\": null,\n  \"ManifestStatusCode\": \"NSEN\",\n  \"IsKnownCargo\": false,\n  \"AWBPrintingSecurityStatusEdited\": false,\n  \"AWBPrintingRANumberEdited\": false,\n  \"AdditionalHandlingInfoEdited\": false,\n  \"ViaColoader\": false,\n  \"IssuingCarrierReference1\": null,\n  \"IsMissingDocument\": false,\n  \"MAWBReturnedToStackWithCancel\": false,\n  \"MAWBStackAirlineId\": null,\n  \"DontAddToImportersQueue\": false,\n  \"DontAddToForwarderQueue\": false,\n  \"ConvertToCustomFile\": false,\n  \"IsImporterShipment\": false,\n  \"IsUpdatedByChampAnalyzer\": false,\n  \"IsUpdatedByGLSHKAnalyzer\": false,\n  \"IsUpdatedByINTTRAAnalyzer\": false,\n  \"IsCreatedFromCustomerOverview\": false,\n  \"DeclarationXMLData\": null,\n  \"IsImporterApprovalRequired\": false,\n  \"SendUpdatesToAgentEnabled\": false,\n  \"UpdateSendUpdatesToAgentEnabledField\": false,\n  \"DocsSentToAgent\": false,\n  \"VersionApproved\": null,\n  \"ApprovedBy\": null,\n  \"ApproveDateTime\": null,\n  \"IsNewARInvoiceBlocked\": false,\n  \"ShipmentAddtionalDataXML\": null,\n  \"OriginShipmentId\": null,\n  \"ProrateReceivables\": false,\n  \"ReleasesPackagesAddedOnTheShipment\": false,\n  \"IsAssembly\": false,\n  \"UpdatedByPartner\": \"Lana88\",\n  \"SplitFromShipmentNo\": null,\n  \"INTTRASIStatusCode\": \"NSEN\",\n  \"SIHasAttachList\": false,\n  \"INTTRAIsFreighted\": false,\n  \"INTTRABookingTransStatusCode\": \"NST\",\n  \"INTTRABookingStatusCode\": \"NS\",\n  \"SplitOnCarriage\": false,\n  \"INTTRALastStatusDate\": null,\n  \"IsPaymentRequired\": false,\n  \"IsSharedLogisticsMoneyTabEnabled\": false,\n  \"IsSharedLogisticsMainCarrierVisible\": false,\n  \"IsSharedLogisticsPickDelvCarrierVisible\": false,\n  \"IsSharedLogisticsAgentVisible\": false,\n  \"IsSharedLogisticsShipperVisible\": false,\n  \"IsSharedLogisticsConsigneeVisible\": false,\n  \"ShipmentContanisDangerousGoods\": false,\n  \"BasicFreightId\": \"C\",\n  \"DestinationPortChargesId\": \"C\",\n  \"DestinationHaulageChargesId\": \"C\",\n  \"AdditionalChargesId\": \"C\",\n  \"FreightPayerId\": null,\n  \"FreightPayerAddressId\": null,\n  \"HasContainerException\": false,\n  \"IsMissingDocuments\": false,\n  \"LastDocumentDateTime\": null,\n  \"MissingDocumentsCount\": 0,\n  \"MissingDocumentsNames\": null,\n  \"IsRequestedDocuments\": false,\n  \"RequestedDocumentsCount\": 0,\n  \"NumberOfHouses\": 0,\n  \"IsDigitalSignRequired\": false,\n  \"IsDepositionRequired\": false,\n  \"ImporterDepositionRequestDetails\": null,\n  \"IsShipmentComputedFieldChange\": false,\n  \"PackagesTypesNames\": null,\n  \"PackagesTypesPrintAs\": null,\n  \"ContainersNumbers\": null,\n  \"ARInvoices\": null,\n  \"ConvertShipmentToLCL\": false,\n  \"ConvertShipmentToFCL\": false,\n  \"ShipmentDirectionConverted\": false,\n  \"FromCountryIsEC\": true,\n  \"ToCountryIsEC\": true,\n  \"PackagesDeleted\": false,\n  \"MasterCreatedFromHouseId\": null,\n  \"IsDeletingAllPayables\": false\n}"
-				},
-				"url": {
-					"raw": "{{LogitudeURL}}/api/shipment",
-					"host": [
-						"{{LogitudeURL}}"
-					],
-					"path": [
-						"api",
-						"shipment"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "CreateShipperIdTestShipperExport1",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
-						"exec": [
-							"    var expectedHttpStatus = 200;",
-							"    var maxNumberOfTries = 5;",
-							"    var numberOfRetries = 5;",
-							"    var retries = \"{{RetriesNumber}}\";",
-							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries = 5000;",
-							"    ",
-							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
-							"         pm.globals.set(\"Retries\", ++Retries);",
-							"         ",
-							"        setTimeout(function() {}, sleepBetweenTries);",
-							"        postman.setNextRequest(\"CreateShipperIdTestShipperExport1\"); ",
-							"    }",
-							"        else {",
-							"     pm.globals.set(\"Retries\",1); ",
-							"     ",
-							"     pm.test(\"CreateShipperIdTestShipperExport1\", function () {",
-							"  // pm.response.to.have.status(200);",
-							"  ",
-							"    var idvalue = (pm.response.json().Customer.Id);",
-							" ",
-							"    var idexist = idvalue !== null;",
-							"    pm.expect(idexist);",
-							"    pm.environment.set(\"ShipperIdTest\",idvalue);",
-							"",
-							"  });",
-							"",
-							"    ",
-							"    }",
-							"",
-							"     ",
-							"    "
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "prerequest",
-					"script": {
-						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
-						"exec": [
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Token",
-						"type": "text",
-						"value": "{{Token}}"
-					},
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"$id\": \"1\",\n  \"Tenant\": \"{{Tenant}}\",\n  \"PartnerTypeId\": \"CS\",\n  \"IsAddressDirty\": false,\n  \"IsContactDirty\": false,\n  \"IsPartnerDirty\": false,\n  \"Address\": {\n    \"$id\": \"2\",\n    \"Tenant\": \"{{Tenant}}\",\n    \"Description\": \"Main Address\",\n    \"City\": \"London\",\n    \"StateId\": null,\n    \"ZipCode\": \"+207\",\n    \"FaxNumber\": \"24564110\",\n    \"PhoneNumber\": \"0598137715\",\n    \"ATTN\": null,\n    \"AddressTypeId\": \"M\",\n    \"Address1\": \"14 Tottenham Court Road\",\n    \"Address2\": \"A400\",\n    \"Name\": \"TestShipperExport1Address\",\n    \"CountryId\": \"1-396\",\n    \"CarrierId\": null,\n    \"CountryName\": \"United Kingdom\",\n    \"CountryEnglishName\": \"United Kingdom\",\n    \"StateEnglishName\": null,\n    \"StateCode\": null,\n    \"ExternalId\": null,\n    \"InActive\": false,\n    \"IsLocalLanguage\": false,\n    \"IsHybrid\": false,\n    \"VatNumber\": \"2154787\",\n    \"SalesmanUserId\": null,\n    \"Signature\": null,\n    \"CityCode\": null,\n    \"CardCode\": \"new\",\n    \"ContactEmail\": \"ahmadb@fnarsoft.com\",\n    \"ContactName\": \"Ahmad\",\n    \"ContactPosition\": \"QA\",\n    \"ContactBusinessPhone\": \"+207598137715\",\n    \"ContactMobile\": \"+207598137715\",\n    \"ContactFax\": \"325236351\",\n    \"IsCreatedWithPartner\": true,\n    \"CardEnglishName\": null,\n    \"HasStates\": false,\n    \"IsStateRequired\": false,\n    \"BranchId\": null\n  },\n  \"Contact\": {\n    \"$id\": \"3\",\n    \"Tenant\": \"{{Tenant}}\",\n    \"InActive\": false,\n    \"FacebookId\": null,\n    \"EnglishName\": \"Ahmad\",\n    \"ImageDetailId\": null,\n    \"LocalName\": \"Ahmad\",\n    \"ComputedLocalName\": null,\n    \"Email\": \"ahmadb@fnarsoft.com\",\n    \"HasPassword\": false,\n    \"Password\": null,\n    \"BusinessPhone\": \"236437347\",\n    \"Mobile\": \"754745747\",\n    \"Fax\": \"325236\",\n    \"Birthday\": null,\n    \"Anniversary\": null,\n    \"Notes\": null,\n    \"SearchFields\": \"Ahmad,Ahmad,ahmadb@fnarsoft.com,236437347,754745747,325236,Ahmad Comp.,asdasdasd,Ihab 2,new consignee r2,new potentilal,Test 2 Agent,Test Agent\",\n    \"CardId\": \"1-143765\",\n    \"IsUser\": false,\n    \"SignupRole\": false,\n    \"Signature\": null,\n    \"SignatureHtml\": null,\n    \"DisplayGettingStarted\": false,\n    \"ExternalId\": null,\n    \"IsHybrid\": false,\n    \"DontShowLocal\": false,\n    \"MustChangePassword\": false,\n    \"IsLocked\": false,\n    \"NumberOfRetries\": 0,\n    \"DisconectFromCard\": false,\n    \"FieldsChanged\": false,\n    \"SetAsPrimaryForCard\": true,\n    \"BirthdayReminder\": false,\n    \"AnniversaryReminder\": false,\n    \"DoneDate\": null,\n    \"BirthDayOfYear\": null,\n    \"ContactDoneMethodCode\": null,\n    \"ContactDoneMethodName\": null,\n    \"Position\": \"QA\",\n    \"IsAirExport\": false,\n    \"IsAirImport\": false,\n    \"IsOceanExport\": false,\n    \"IsOceanImport\": false,\n    \"IsInlandExport\": false,\n    \"IsInlandImport\": false,\n    \"IsAll\": false,\n    \"HasCardContact\": false,\n    \"IsCustomsImport\": false,\n    \"IsInlandDomestic\": false,\n    \"IndexColor\": null,\n    \"IsChangeSignatur\": false,\n    \"CustomerId\": null,\n    \"IsCreatedWithPartner\": true,\n    \"CompanyName\": \"Ahmad Comp.,asdasdasd,Ihab 2,new consignee r2,new potentilal,Test 2 Agent,Test Agent\",\n    \"CreateDate\": null\n  },\n  \"Agent\": null,\n  \"Customer\": {\n    \"$id\": \"4\",\n    \"Tenant\": \"{{Tenant}}\",\n    \"IsSecured\": false,\n    \"BankName\": null,\n    \"CompetitorFields\": \"\",\n    \"BankAddress\": null,\n    \"Swift\": null,\n    \"AccountNumber\": null,\n    \"IBANNumber\": null,\n    \"StartWorkingDate\": null,\n    \"Notes\": \"TestShipperExport1\",\n    \"SupportNotes\": null,\n    \"EnglishName\": \"TstShipExport1\",\n    \"LocalName\": \"TstShipExport1\",\n    \"AccountManagerUserId\": null,\n    \"SalesmanUserId\": null,\n    \"SalesmanUserEnglishName\": null,\n    \"SalesmanBusinessUnitId\": null,\n    \"Website\": null,\n    \"InActive\": false,\n    \"BillToId\": null,\n    \"BillToName\": null,\n    \"VatNumber\": \"TestShipper1Unique\",\n    \"ReceivablesAccountingCard\": null,\n    \"PayablesAccountingCard\": null,\n    \"InvoiceCurrencyId\": null,\n    \"PaymentTermId\": null,\n    \"RankId\": \"1-4\",\n    \"VatTypeId\": null,\n    \"ComputedLocalName\": null,\n    \"FieldsChanged\": false,\n    \"PartnerTypeId\": \"CS\",\n    \"CreatedByUserId\": \"1-40924\",\n    \"UpdatedByUserId\": null,\n    \"CardPMId\": null,\n    \"ExistedContactId\": \"1-40924\",\n    \"StartWorkingManuallySet\": false,\n    \"CityName\": \"London\",\n    \"CountryId\": \"1-396\",\n    \"CountryName\": \"United Kingdom\",\n    \"ATTN\": null,\n    \"AccountManagerUserEnglishName\": null,\n    \"RankName\": null,\n    \"RankCode\": null,\n    \"PhoneNumber\": null,\n    \"FaxNumber\": null,\n    \"CityWithCountry\": null,\n    \"ImageDetailId\": null,\n    \"Field1\": {\n      \"$id\": \"5\",\n      \"Value\": null,\n      \"FieldName\": \"Field1\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field2\": {\n      \"$id\": \"6\",\n      \"Value\": null,\n      \"FieldName\": \"Field2\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field3\": {\n      \"$id\": \"7\",\n      \"Value\": null,\n      \"FieldName\": \"Field3\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field4\": {\n      \"$id\": \"8\",\n      \"Value\": null,\n      \"FieldName\": \"Field4\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field5\": {\n      \"$id\": \"9\",\n      \"Value\": null,\n      \"FieldName\": \"Field5\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field6\": {\n      \"$id\": \"10\",\n      \"Value\": null,\n      \"FieldName\": \"Field6\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field7\": {\n      \"$id\": \"11\",\n      \"Value\": null,\n      \"FieldName\": \"Field7\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field8\": null,\n    \"Field9\": null,\n    \"Field10\": null,\n    \"SharedLogisticsInvitationStatusName\": null,\n    \"IsActiveForMobile\": false,\n    \"LastLoginDate\": null,\n    \"InvitationDate\": null,\n    \"IsHybrid\": false,\n    \"FreelancerId\": null,\n    \"ForwarderId\": null,\n    \"CustomsAgentId\": null,\n    \"MediatorId\": null,\n    \"FreelancerName\": null,\n    \"ForwarderName\": null,\n    \"CustomsAgentName\": null,\n    \"MediatorName\": null,\n    \"GoogleAddressString\": null,\n    \"IsExternal\": false,\n    \"IsCustomer\": false,\n    \"CustomerStatusCode\": \"ACT\",\n    \"BeforeDeactiveStatusCode\": null,\n    \"ActivationDate\": null,\n    \"InactiveDate\": null,\n    \"ActivationRequestDate\": null,\n    \"ActivatedByUserId\": null,\n    \"SetAsInactiveByUserId\": null,\n    \"ActivationRequestedByUserId\": null,\n    \"SetReActivated\": false,\n    \"SetInActive\": false,\n    \"SetReady\": false,\n    \"SetActivated\": false,\n    \"EventNote\": null,\n    \"Address1_Potential\": null,\n    \"Address2_Potential\": null,\n    \"City_Potential\": null,\n    \"CountryId_Potential\": null,\n    \"ZipCode_Potential\": null,\n    \"StateId_Potential\": null,\n    \"PhoneNumber_Potential\": null,\n    \"FaxNumber_Potential\": null,\n    \"ATTN_Potential\": null,\n    \"IsLocalLanguage\": false,\n    \"CodeMyCustomer\": \"new\",\n    \"PrimaryContactName\": null,\n    \"PrimaryContactEmail\": null,\n    \"PrimaryContactPhone\": null,\n    \"CustomerStatusName\": null,\n    \"PrimaryContactId\": \"1-40924\",\n    \"ReadyForActivationDate\": null,\n    \"IsFirstContactToAdd\": false,\n    \"SavedForActivation\": false,\n    \"QueueMessageLockToken\": \"00000000-0000-0000-0000-000000000000\",\n    \"QuestionnaireAnsewrsHtmlString\": null,\n    \"SetAsPotential\": false,\n    \"UpdatedByUserCode\": null,\n    \"IRSPlace\": null,\n    \"IRSNumber\": null,\n    \"RequestedAirlines\": null,\n    \"RegisteredAirlines\": null,\n    \"PendingAirlines\": null,\n    \"IsCustomerAllowed\": false,\n    \"Card\": null,\n    \"Addresses\": [\n      {\n        \"$ref\": \"2\"\n      }\n    ],\n    \"Contacts\": [\n      {\n        \"$ref\": \"3\"\n      }\n    ],\n    \"SharedLogisticContacts\": [],\n    \"IndustryId\": null,\n    \"LeadSourceId\": null,\n    \"CollectorId\": null,\n    \"ClassifierId\": null,\n    \"IndustryName\": null,\n    \"LeadSourceName\": null,\n    \"CollectorName\": null,\n    \"ClassifierName\": null,\n    \"CreditLimit\": null,\n    \"LeadDescription\": null,\n    \"RegionId\": null,\n    \"RegionName\": null,\n    \"CustomerSizeId\": null,\n    \"LastCallDate\": null,\n    \"LastMeetingDate\": null,\n    \"LastOpportunityDate\": null,\n    \"FirstInvoiceDate\": null,\n    \"FirstShipmentDate\": null,\n    \"LastShipmentDate\": null,\n    \"LastQuoteDate\": null,\n    \"LastInteractionDate\": null,\n    \"EnableConsolidationInvoices\": false,\n    \"ActivityWatch\": false,\n    \"KnownConsignor\": null,\n    \"KCExpirationDate\": null,\n    \"LogBoxActivated\": false,\n    \"CustomerProducts\": [],\n    \"CustomerCompetitors\": [],\n    \"CustomerAdditionalServices\": [],\n    \"SalesNotes\": [],\n    \"CustomerSalesmanByProducts\": [],\n    \"CustomerAccountManagerByProducts\": [],\n    \"CustomerCustomsAgentByProducts\": [],\n    \"CustomerForwarderByProducts\": [],\n    \"CustomerMediatorByProducts\": [],\n    \"CardExternalCodeByCurrencies\": [],\n    \"IsLogBox\": false,\n    \"IsPrivateLabelCustomer\": false,\n    \"IsCreditLimitEnabled\": false,\n    \"CreditLimitAmount\": null,\n    \"CreditLimitOpenBalance\": null,\n    \"CreditLimitWarningPercentage\": null,\n    \"ExternalAccountingBusinessArea\": null,\n    \"PaymentMethodCode\": null,\n    \"BlockNewInvoiceCreation\": false,\n    \"BlockNewShipmentCreation\": false,\n    \"ExternalId2\": null,\n    \"SATForeignRFC\": null,\n    \"MetodoPagoCode\": null,\n    \"UsoCFDICode\": null,\n    \"CustomerTenant\": 0\n  },\n  \"CustomAgent\": null,\n  \"ShippingAgent\": null,\n  \"Vendor\": null,\n  \"Warehouse\": null,\n  \"Airline\": null,\n  \"ShippingLine\": null,\n  \"Trucker\": null\n}"
-				},
-				"url": {
-					"raw": "{{LogitudeURL}}/api/PartnersDomain",
-					"host": [
-						"{{LogitudeURL}}"
-					],
-					"path": [
-						"api",
-						"PartnersDomain"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "CreateExportAirQuotes",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "bb0981e9-319e-4577-b76d-69cf8d06bd00",
-						"exec": [
-							"    var expectedHttpStatus = 200;\r",
-							"    var maxNumberOfTries = 5;\r",
-							"    var numberOfRetries = 5;\r",
-							"    var retries = \"{{RetriesNumber}}\";\r",
-							"    var Retries = pm.globals.get(\"Retries\");\r",
-							"    var sleepBetweenTries = 5000;\r",
-							"    \r",
-							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {\r",
-							"         pm.globals.set(\"Retries\", ++Retries);\r",
-							"         \r",
-							"        setTimeout(function() {}, sleepBetweenTries);\r",
-							"        postman.setNextRequest(\"CreateExportAirQuotes\"); \r",
-							"    }\r",
-							"        else {\r",
-							"     pm.globals.set(\"Retries\",1); \r",
-							"     \r",
-							"     pm.test(\"CreateExportAirQuotes\", function () {\r",
-							"    //pm.response.to.have.status(200);\r",
-							"    \r",
-							"    var idvalue = (pm.response.json().Id);\r",
-							"    var idexist = idvalue !== null;\r",
-							"    pm.expect(idexist);\r",
-							"\r",
-							"    var idvalue2 = (pm.response.json().QuoteNumber);\r",
-							"    var idexist2 = idvalue2 !== null;\r",
-							"    pm.expect(idexist2);\r",
-							"    \r",
-							"    var idvalue3 = (pm.response.json().ConcurrencyGUID);\r",
-							"    var idexist3 = idvalue3 !== null;\r",
-							"    pm.expect(idexist3);\r",
-							"    \r",
-							"    pm.environment.set(\"ExportAirQuoteId\", idvalue);\r",
-							"    pm.environment.set(\"ExportAirQuoteNumber\", idvalue2);\r",
-							"    pm.environment.set(\"ConcurrencyGUID\", idvalue3);\r",
-							"    // pm.environment.set(\"MeasurementOfChargeTypeIdAFT\", idvalue);\r",
-							"    // if (idexist) {\r",
-							"    //     postman.setNextRequest(\"CreateVesselIdPT\");\r",
-							"    // }\r",
-							"});\r",
-							"\r",
-							"    \r",
-							"    }\r",
-							"\r",
-							"\r",
-							"\r",
-							"\r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					},
-					{
-						"key": "Token",
-						"value": "{{Token}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"$id\": \"1\",\r\n  \"Tenant\": \"{{Tenant}}\",\r\n  \"IsSecured\": false,\r\n   \"ConcurrencyGUID\": \"{{ConcurrencyGUID}}\",\r\n  \"LastVersionNumber\": 0,\r\n  \"DirectionId\": \"E\",\r\n  \"TransportModeId\": \"A\",\r\n  \"IsCustomerSet\": false,\r\n  \"IsSubjectEdited\": false,\r\n  \"QuoteCustomerTypeCode\": \"SHI\",\r\n  \"CustomerId\": \"{{ShipperIdTest}}\",\r\n  \r\n  \"CustomerReference1\": \"CustomerRef 1\",\r\n  \"CustomerReference2\": null,\r\n  \"CustomerNote\": \"TestShipperExport1\",\r\n  \"ShipperId\": \"{{ShipperIdTest}}\",\r\n \r\n  \"ShipperReference1\": \"CustomerRef 1\",\r\n  \"ShipperReference2\": null,\r\n  \"ShipperMainAddressId\": \"{{ShipperAddressIdTestShipperExport1}}\",\r\n  \"BusinessUnitId\": \"1102\",\r\n  \"StageId\":\"{{DraftQuoteStage}}\",\r\n  \"StageDueDate\": \"2019-07-30T00:00:00Z\",\r\n  \"FromPortId\": \"{{PortIdLHR}}\",\r\n  \"ToPortId\": \"{{PortIdLHR}}\",\r\n  \"IncotermId\": null,\r\n  \"SalesmanUserId\": \"{{CreatedByUserId}}\",\r\n  \"SalesmanName\": null,\r\n  \"CreatedByUserId\": \"{{CreatedByUserId}}\",\r\n  \"UpdatedByUserId\": \"{{CreatedByUserId}}\",\r\n  \"Notes\": \"Created from API\",\r\n  \"DescriptionOfGoods\": null,\r\n  \"ChargeableWeight\": 0,\r\n  \"ChargeableWeightInKG\": 0,\r\n  \"GrossWeight\": null,\r\n  \"GrossWeightInKG\": null,\r\n  \"GrossWeightPerTon\": null,\r\n  \"VolumeInCBM\": null,\r\n  \"LastModified\": \"AAAAAAYIzF4=\",\r\n  \"IsClosed\": false,\r\n  \"IsFixedPrice\": false,\r\n  \"TotalReceivablesAmount\": null,\r\n  \"GrossWeightUnitCode\": \"KG\",\r\n  \"ChargeableWeightUnitCode\": \"KG\",\r\n  \"DimensionsUnitCode\": \"Cm\",\r\n  \"VolumetricWeight\": 0,\r\n  \"Volume\": null,\r\n  \"NumberOfPackages\": null,\r\n  \"NumberOfContainers\": null,\r\n  \"Ratio\": 6,\r\n  \"DimFactor\": 6000,\r\n  \"VolumeUnitCode\": \"CBM\",\r\n  \"IsDangerous\": false,\r\n    \"ExpirationDays\": 30,\r\n  \"ExpirationDate\": \"2019-10-02T00:00:00Z\",\r\n  \"StartDate\": \"2019-09-02T00:00:00Z\",\r\n  \"IsFreightBySteps\": false,\r\n  \"TotalPerContainer\": false,\r\n  \"DepartmentId\": \"{{DepId}}\",\r\n  \"BranchId\": \"{{BranchId}}\",\r\n \r\n  \"QuoteTypeCode\": \"A\",\r\n  \"QuoteTypeName\": null,\r\n  \"IsByKG\": false,\r\n  \"IsByContainer\": false,\r\n  \"MainCarriageCarrierId\": null,\r\n  \"IsCancelled\": false,\r\n  \"ActionType\": null,\r\n  \"EventNote\": null,\r\n  \"SaleCurrencyId\": \"{{CurrencyIdEUR}}\",\r\n  \"ExchangeRate\": 1.07,\r\n  \"IncludePickUp\": false,\r\n  \"IncludeDelivery\": false,\r\n \r\n  \"RatingCode\": \"N\",\r\n  \"IsAutomaticallyClosed\": false,\r\n  \"AutomaticallyCloseDate\": null,\r\n  \"AutomaticallyCloseDays\": null,\r\n\r\n  \"ProductCode\": \"AE\",\r\n  \"LastStageDate\": \"2019-07-23T09:48:38.7302025Z\",\r\n  \"TEU\": null,\r\n  \"IsChargesByVAT\": false,\r\n  \"IsCopy\": false,\r\n  \"ToCountryId\": \"{{CountryIdForPortLHR}}\",\r\n  \"FromCountryId\": \"{{CountryIdForPortJFK}}\",\r\n  \"IsPotentialShipper\": false,\r\n  \"IsPotentialConsignee\": false,\r\n  \"ConvertToFCL\": false,\r\n  \"ConvertToLCL\": false,\r\n  \"IsQuoteDataExternal\": false,\r\n  \"IsQuoteDocumentExternal\": false,\r\n  \"TransitTime\": null,\r\n  \"DepartureFrequency\": null,\r\n  \"ETD\": null,\r\n  \"ETA\": null,\r\n  \"MoveTypeId\": null,\r\n  \"ValueOfGoods\": null,\r\n \r\n  \"EstimateProfit\": null,\r\n  \"EstimateProfitEdited\": false,\r\n  \"CostTotalAmountInLocalCurrency\": null,\r\n  \"SaleTotalAmountInLocalCurrency\": null,\r\n  \"CostTotalAmountInSaleCurrency\": null,\r\n  \"SaleTotalAmountInSaleCurrency\": null,\r\n  \"EstimateProfitInSaleCurrency\": null,\r\n  \"IsHybrid\": false,\r\n  \"TotalSaleIncludingVATAmountInSaleCurrency\": null,\r\n  \"TotalSaleIncludingVATAmountInLocalCurrency\": null,\r\n  \"IsSaleCurrencySameAsCost\": false,\r\n  \"DontExportQuotationsToIntegratedSystem\": false,\r\n  \"QuotationSections\": null,\r\n  \"SameOrFixed\": null,\r\n  \"GrossWeightEdited\": false,\r\n  \"ChargeableWeightEdited\": false,\r\n  \"NumberOfFollowUps\": null,\r\n  \"FollowUps\": [],\r\n  \"QuoteDocumentVersions\": [],\r\n  \"QuoteCostCharges\": [],\r\n  \"QuoteSaleCharges\": [],\r\n  \"MarkFollowUpsAsDone\": false,\r\n  \"QuotePackages\": [],\r\n  \"SalesTotalAmounts\": null,\r\n  \"QuoteSalesTotals\": [],\r\n  \"TotalVATPerQuote\": [],\r\n  \"TotalVATs\": []\r\n}"
-				},
-				"url": {
-					"raw": "{{LogitudeURL}}/api/quotes",
-					"host": [
-						"{{LogitudeURL}}"
-					],
-					"path": [
-						"api",
-						"quotes"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GetQuoteIdExportAir",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "18ac3e7e-7dbc-4622-8873-0694f3690f56",
-						"exec": [
-							"    var expectedHttpStatus = 200;\r",
-							"    var maxNumberOfTries = 5;\r",
-							"    var numberOfRetries = 5;\r",
-							"    var retries = \"{{RetriesNumber}}\";\r",
-							"    var Retries = pm.globals.get(\"Retries\");\r",
-							"    var sleepBetweenTries = 5000;\r",
-							"    \r",
-							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {\r",
-							"         pm.globals.set(\"Retries\", ++Retries);\r",
-							"         \r",
-							"        setTimeout(function() {}, sleepBetweenTries);\r",
-							"        postman.setNextRequest(\"GetQuoteIdExportAir\"); \r",
-							"    }\r",
-							"        else {\r",
-							"     pm.globals.set(\"Retries\",1); \r",
-							"     \r",
-							"     pm.test(\"CreateExportAirQuotes\", function () {\r",
-							"   // pm.response.to.have.status(200);\r",
-							"    \r",
-							"    var idvalue = (pm.response.json().Id);\r",
-							"    var idexist = idvalue !== null;\r",
-							"    pm.expect(idexist);\r",
-							"\r",
-							"    var idvalue2 = (pm.response.json().QuoteNumber);\r",
-							"    var idexist2 = idvalue2 !== null;\r",
-							"    pm.expect(idexist2);\r",
-							"    \r",
-							"    var idvalue3 = (pm.response.json().ConcurrencyGUID);\r",
-							"    var idexist3 = idvalue3 !== null;\r",
-							"    pm.expect(idexist3);\r",
-							"    \r",
-							"    pm.environment.set(\"ExportAirQuoteId\", idvalue);\r",
-							"    pm.environment.set(\"ExportAirQuoteNumber\", idvalue2);\r",
-							"    pm.environment.set(\"ConcurrencyGUID\", idvalue3);\r",
-							"    // pm.environment.set(\"MeasurementOfChargeTypeIdAFT\", idvalue);\r",
-							"    // if (idexist) {\r",
-							"    //     postman.setNextRequest(\"CreateVesselIdPT\");\r",
-							"    // }\r",
-							"});\r",
-							"\r",
-							"    \r",
-							"    }\r",
-							"\r",
-							"\r",
-							"\r",
-							"\r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "token",
-						"value": "{{Token}}",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "{{LogitudeURL}}/api/quotes/getsingle?id={{ExportAirQuoteId}}",
-					"host": [
-						"{{LogitudeURL}}"
-					],
-					"path": [
-						"api",
-						"quotes",
-						"getsingle"
-					],
-					"query": [
-						{
-							"key": "id",
-							"value": "{{ExportAirQuoteId}}"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "UpdateExportAirQuote",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "3429b1e2-cec5-46a4-8c26-2026b8a6a265",
-						"exec": [
-							"    var expectedHttpStatus = 200;\r",
-							"    var maxNumberOfTries = 5;\r",
-							"    var numberOfRetries = 5;\r",
-							"    var retries = \"{{RetriesNumber}}\";\r",
-							"    var Retries = pm.globals.get(\"Retries\");\r",
-							"    var sleepBetweenTries = 5000;\r",
-							"    \r",
-							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {\r",
-							"         pm.globals.set(\"Retries\", ++Retries);\r",
-							"         \r",
-							"        setTimeout(function() {}, sleepBetweenTries);\r",
-							"        postman.setNextRequest(\"UpdateExportAirQuote\"); \r",
-							"    }\r",
-							"        else {\r",
-							"     pm.globals.set(\"Retries\",1); \r",
-							"     \r",
-							"     pm.test(\"UpdateExportAirQuote\", function () {\r",
-							"   // pm.response.to.have.status(200);\r",
-							" \r",
-							"});\r",
-							"\r",
-							"    \r",
-							"    }\r",
-							"\r",
-							"\r",
-							"\r",
-							"\r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					},
-					{
-						"key": "token",
-						"value": "{{Token}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"$id\": \"1\",\r\n  \"Id\": \"{{ExportAirQuoteId}}\",\r\n  \"Tenant\": \"{{Tenant}}\",\r\n  \"IsSecured\": true,\r\n  \"ConcurrencyGUID\": \"{{ConcurrencyGUID}}\",\r\n  \r\n  \"QuoteTemplateId\": null,\r\n  \"LastVersionNumber\": 0,\r\n  \"QuoteLevel\": null,\r\n  \"QuoteNumber\": \"{{ExportAirQuoteNumber}}\",\r\n  \"DirectionId\": \"E\",\r\n  \"TransportModeId\": \"A\",\r\n  \"IsCustomerSet\": false,\r\n  \"IsSubjectEdited\": false,\r\n  \"QuoteCustomerTypeCode\": \"SHI\",\r\n  \"CustomerId\": \"{{ShipperIdTest}}\",\r\n \"ShipperId\": \"{{ShipperIdTest}}\",\r\n  \"ShipperName\": \"{{CustomerName}}\",\r\n  \r\n  \"CustomerRankName\": \"Silver\",\r\n  \"BusinessUnitId\": \"1102\",\r\n  \"FromPortId\": \"{{PortIdLHR}}\",\r\n  \"ToPortId\": \"{{PortIdLHR}}\",\r\n  \"IncotermId\": null,\r\n  \"SalesmanUserId\": \"{{CreatedByUserId}}\",\r\n  \"SalesmanName\": \"Protractor \",\r\n  \"CreatedByUserId\": \"{{CreatedByUserId}}\",\r\n\r\n  \"Notes\": \" Quote Updated\",\r\n  \"DescriptionOfGoods\": null,\r\n  \"ChargeableWeight\": 100,\r\n  \"ChargeableWeightInKG\": 100,\r\n  \"GrossWeight\": 100,\r\n  \"GrossWeightInKG\": 100,\r\n  \"GrossWeightPerTon\": 0.1,\r\n  \"VolumeInCBM\": 0.6,\r\n\r\n  \"LastModified\": \"AAAAAAYI1L0=\",\r\n  \"IsClosed\": false,\r\n  \"IsFixedPrice\": false,\r\n  \"TotalReceivablesAmount\": 0,\r\n  \"GrossWeightUnitCode\": \"KG\",\r\n  \"ChargeableWeightUnitCode\": \"KG\",\r\n  \"DimensionsUnitCode\": \"Cm\",\r\n  \"VolumetricWeight\": 0,\r\n  \"Volume\": null,\r\n  \"NumberOfPackages\": null,\r\n  \"NumberOfContainers\": null,\r\n  \"Ratio\": 6,\r\n  \"DimFactor\": 6000,\r\n  \"VolumeUnitCode\": \"CBM\",\r\n  \"IsDangerous\": false,\r\n  \"ExpirationDays\": 30,\r\n  \"ExpirationDate\": \"2019-08-22T00:00:00\",\r\n  \"IsFreightBySteps\": false,\r\n  \"TotalPerContainer\": false,\r\n  \"FromPort\": \"JFK\",\r\n  \"FromPortName\": \"John F. Kennedy Apt/New York\",\r\n  \"FromPortCountry\": \"United States\",\r\n  \"ToPort\": \"LHR\",\r\n  \"ToPortName\": \"Heathrow Apt/London\",\r\n  \"ToPortCountry\": \"United Kingdom\",\r\n  \"TotalContainers\": \"\",\r\n  \"DepartmentId\": \"{{DepId}}\",\r\n  \"BranchId\": \"{{BranchId}}\",\r\n\r\n  \"QuoteTypeCode\": \"A\",\r\n  \"QuoteTypeName\": \"Spot Rate\",\r\n  \"IsByKG\": false,\r\n  \"IsByContainer\": false,\r\n  \"MainCarriageCarrierId\": null,\r\n  \"IsCancelled\": false,\r\n  \"ActionType\": null,\r\n  \"EventNote\": null,\r\n  \"SaleCurrencyId\": \"{{CurrencyIdEUR}}\",\r\n  \"ExchangeRate\": 1.07,\r\n \r\n  \r\n  \"IncludePickUp\": false,\r\n  \"IncludeDelivery\": false,\r\n \r\n  \"StageId\": \"1-7348\",\r\n  \"StageName\": \"Created\",\r\n  \"StageMaxDays\": 0,\r\n  \"StageDueDate\": \"2019-07-23T00:00:00\",\r\n  \"RatingCode\": \"N\",\r\n  \"RatingName\": \"Neutral\",\r\n  \r\n  \"IsAutomaticallyClosed\": false,\r\n  \"UpdatedByUserId\": \"{{CreatedByUserId}}\",\r\n  \"ProductCode\": \"AE\",\r\n  \"LastStageDate\": \"2019-07-23T13:23:45.787\",\r\n  \"TEU\": null,\r\n  \"IsChargesByVAT\": false,\r\n  \"IsCopy\": false,\r\n\r\n  \"FromCountryIsEC\": false,\r\n  \"ToCountryIsEC\": true,\r\n\r\n  \"IsPotentialShipper\": false,\r\n  \"IsPotentialConsignee\": false,\r\n  \r\n  \"ConvertToFCL\": false,\r\n  \"ConvertToLCL\": false,\r\n  \"IsQuoteDataExternal\": false,\r\n  \"IsQuoteDocumentExternal\": false,\r\n  \"TransitTime\": null,\r\n  \"DepartureFrequency\": null,\r\n  \"ETD\": null,\r\n  \"ETA\": null,\r\n  \"ETDLabel\": \"ETD Port of Loading\",\r\n  \"ETALabel\": \"ETA Port of Destination\",\r\n  \r\n  \r\n  \"MoveTypeId\": null,\r\n  \"ValueOfGoods\": null,\r\n  \r\n  \"EstimateProfit\": null,\r\n  \"EstimateProfitEdited\": false,\r\n  \"CostTotalAmountInLocalCurrency\": 0,\r\n  \"SaleTotalAmountInLocalCurrency\": 0,\r\n  \"CostTotalAmountInSaleCurrency\": 0,\r\n  \"SaleTotalAmountInSaleCurrency\": 0,\r\n  \"EstimateProfitInSaleCurrency\": 0,\r\n  \"IsHybrid\": false,\r\n  \"TotalSaleIncludingVATAmountInSaleCurrency\": 0,\r\n  \"TotalSaleIncludingVATAmountInLocalCurrency\": 0,\r\n  \"IsSaleCurrencySameAsCost\": false,\r\n  \r\n  \"DontExportQuotationsToIntegratedSystem\": false,\r\n  \"QuotationSections\": null,\r\n  \"SameOrFixed\": \"Fixed\",\r\n  \"GrossWeightEdited\": false,\r\n  \"ChargeableWeightEdited\": false,\r\n  \"NumberOfFollowUps\": null,\r\n  \"QuoteCharges\": [\r\n    {\r\n      \"$id\": \"12\",\r\n      \"Id\": \"1-156737\",\r\n      \"Tenant\": 1102,\r\n      \"QuoteId\": \"{{ExportAirQuoteId}}\",\r\n      \"CostMaxAmount\": null,\r\n      \"CostMinAmount\": null,\r\n      \"SaleMinAmount\": null,\r\n      \"SaleMaxAmount\": null,\r\n      \"IsChargeBySteps\": false,\r\n      \"IsAllIN\": false,\r\n      \"ViewOrder\": 10,\r\n      \"QuoteTypeCode\": \"A\",\r\n      \"Notes\": null,\r\n      \"UpdatedByUserId\": \"1-82813\",\r\n      \"UpdateDate\": \"2019-07-23T13:23:49.257\",\r\n      \"ValueDate\": \"2019-07-23T13:23:49.257\",\r\n      \"ChargesTypeId\": \"1-47302\",\r\n      \"ChargesTypeCode\": \"AFT\",\r\n      \"ChargesTypeName\": \"Air Freight\",\r\n      \"ChargesTypeDescription\": null,\r\n      \"ChargesTypeLocalName\": \"Air Freight\",\r\n      \"ChargesGroupCode\": \"FRT\",\r\n      \"VendorId\": null,\r\n      \"VendorName\": \"\",\r\n      \"CostMeasurementId\": \"{{MeasurementOfChargeTypeIdAFT}}\",\r\n      \"SaleMeasurementId\": \"{{MeasurementOfChargeTypeIdAFT}}\",\r\n      \"CostCurrencyId\": \"1-4896\",\r\n      \"CostCurrencyCode\": \"EUR\",\r\n      \"CostExchangeRate\": 1.07,\r\n      \"CostIsFixedRate\": false,\r\n      \"CostQuantity\": 10,\r\n      \"CostUnitPrice\": 10,\r\n\r\n\r\n      \"CostTotalAmountLocal\": null,\r\n      \"SaleCurrencyId\": \"{{CurrencyIdEUR}}\",\r\n      \r\n      \"SaleExchangeRate\": 1.07,\r\n      \"SaleIsFixedRate\": false,\r\n      \"SaleQuantity\": 0,\r\n      \"SaleUnitPrice\": null,\r\n      \"SaleTotalAmount\": null,\r\n      \"SaleTotalAmountLocal\": null,\r\n      \"MarkUpTypeCode\": \"F\",\r\n      \"MarkUpValue\": 0,\r\n      \"VatIsMultiPercentage\": false,\r\n      \"IsBackToBack\": false,\r\n      \"MarkUpText\": null,\r\n      \"ChangeSetOp\": 0,\r\n      \"QuoteChargePriceSteps\": [],\r\n      \"QuoteChargePriceStepsChangeSet\": []\r\n    }\r\n  ],\r\n  \"FollowUps\": [],\r\n  \"QuoteDocumentVersions\": [],\r\n  \"QuoteCostCharges\": [],\r\n  \"QuoteSaleCharges\": [],\r\n  \"MarkFollowUpsAsDone\": false,\r\n   \"QuotePackages\": [\r\n    {\r\n      \"Tenant\": \"{{Tenant}}\",\r\n      \"PackageTypeId\": null,\r\n      \"QuoteId\": \"{{ExportAirQuoteId}}\",\r\n      \"Quantity\": 10,\r\n      \"GrossWeight\": 100,\r\n      \"Volume\": 0.6,\r\n      \"Height\": null,\r\n      \"Width\": null,\r\n      \"Length\": null,\r\n      \"VolumetricWeight\": 100,\r\n      \"PackageTypeName\": null,\r\n      \"Dimensions\": null,\r\n      \"Quote\": null,\r\n      \"ChangeSetOp\": 1\r\n    }\r\n  ],\r\n  \r\n  \"SalesTotalAmounts\": \"0.00 EUR\",\r\n  \"QuoteSalesTotals\": [\r\n    {\r\n      \"$id\": \"13\",\r\n      \"CurrencyCode\": \"EUR\",\r\n      \"Amount\": 0\r\n    }\r\n  ],\r\n  \"TotalVATPerQuote\": [],\r\n  \"TotalVATs\": []\r\n}"
-				},
-				"url": {
-					"raw": "{{LogitudeURL}}/api/quotes",
-					"host": [
-						"{{LogitudeURL}}"
-					],
-					"path": [
-						"api",
-						"quotes"
 					]
 				}
 			},

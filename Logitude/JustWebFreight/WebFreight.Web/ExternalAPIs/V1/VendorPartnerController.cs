@@ -3,6 +3,7 @@ using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.Helpers;
 using Logitude.Server.Tools.Helpers;
@@ -105,7 +106,13 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 throw new ApplicationException("Main address city is required");
                             }
                         }
+                        if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
+                        {
+                            ComputingPartnerQuery computingPartnerQuery = new ComputingPartnerQuery(authToken.Tenant);
+                            var partner = computingPartnerQuery.GetSinglePMByCodeAndCheckTenantZero(entity.ComputingPartnerCode, authToken.Tenant);
+                            entityPM.CreatedByPartner = (partner != null ? partner.Name : null);
 
+                        }
                         VendorService service = new VendorService(MyContext, tenant);
                         service.Create(entityPM);
 

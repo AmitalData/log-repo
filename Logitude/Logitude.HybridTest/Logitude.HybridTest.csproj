@@ -55,60 +55,66 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommonServices\AutoSignUpTest.cs" />
-    <Compile Include="CommonServices\DocumentsMetaDataTypeTest.cs" />
-    <Compile Include="CommonServices\DepositionRequestTest.cs" />
-    <Compile Include="CommonServices\OpportunityTest.cs" />
-    <Compile Include="CommonServices\OpportunityDWTest.cs" />
-    <Compile Include="CommonServices\CustomBankCardTest.cs" />
-    <Compile Include="CommonServices\HybridPartnerTest.cs" />
-    <Compile Include="CommonServices\CustomerAdditionalServiceDWTest.cs" />
-    <Compile Include="CommonServices\ShipmentFollowerstTest.cs" />
-    <Compile Include="CommonServices\CustomerCompetitorDWTest.cs" />
-    <Compile Include="CommonServices\TenantManagementDWTest.cs" />
-    <Compile Include="CommonServices\ChargeTypeTest.cs" />
-    <Compile Include="CommonServices\ContactPasswordTest.cs" />
-    <Compile Include="CommonServices\EventTypeTest.cs" />
-    <Compile Include="CommonServices\CardContactTest.cs" />
-    <Compile Include="CommonServices\DocumentTypeTest.cs" />
-    <Compile Include="CommonServices\AddressTest.cs" />
-    <Compile Include="CommonServices\RoleTest.cs" />
-    <Compile Include="CommonServices\IncotermTest.cs" />
-    <Compile Include="CommonServices\ActivityTest.cs" />
-    <Compile Include="CommonServices\UserTest.cs" />
-    <Compile Include="CommonServices\SpecialServicesTypeTest.cs" />
-    <Compile Include="CommonServices\StateTest.cs" />
-    <Compile Include="CommonServices\EntityStatusTest.cs" />
-    <Compile Include="CommonServices\VesselTest.cs" />
-    <Compile Include="CommonServices\ContactTest.cs" />
-    <Compile Include="CommonServices\PackageTypeTest.cs" />
-    <Compile Include="CommonServices\CurrencyTest.cs" />
-    <Compile Include="CommonServices\PortTest.cs" />
-    <Compile Include="CommonServices\QuoteTest.cs" />
-    <Compile Include="CommonServices\ShipmentTest.cs" />
-    <Compile Include="CommonServices\ShippingAgentTest.cs" />
-    <Compile Include="CommonServices\TruckerTest.cs" />
-    <Compile Include="CommonServices\VendorTest.cs" />
-    <Compile Include="CommonServices\ShippingLineTest.cs" />
-    <Compile Include="CommonServices\AccountingPartnerTest.cs" />
-    <Compile Include="CommonServices\CustomerTest.cs" />
-    <Compile Include="CommonServices\CustomAgentTest.cs" />
-    <Compile Include="CommonServices\AgentTest.cs" />
-    <Compile Include="CommonServices\CityTest.cs" />
-    <Compile Include="CommonServices\CountryTest.cs" />
-    <Compile Include="CommonServices\GlobalZoneTest.cs" />
-    <Compile Include="CommonServices\AirlineTest.cs" />
-    <Compile Include="CommonServices\BranchTest.cs" />
-    <Compile Include="CommonServices\DepartmentTest.cs" />
+    <Compile Include="ServicesTest\AutoSignUpTest.cs" />
+    <Compile Include="ServicesTest\DocumentsMetaDataTypeTest.cs" />
+    <Compile Include="ServicesTest\DepositionRequestTest.cs" />
+    <Compile Include="ServicesTest\OpportunityTest.cs" />
+    <Compile Include="ServicesTest\OpportunityDWTest.cs" />
+    <Compile Include="ServicesTest\CustomBankCardTest.cs" />
+    <Compile Include="ServicesTest\HybridPartnerTest.cs" />
+    <Compile Include="ServicesTest\CustomerAdditionalServiceDWTest.cs" />
+    <Compile Include="ServicesTest\ShipmentFollowerstTest.cs" />
+    <Compile Include="ServicesTest\CustomerCompetitorDWTest.cs" />
+    <Compile Include="ServicesTest\TenantManagementDWTest.cs" />
+    <Compile Include="ServicesTest\ChargeTypeTest.cs" />
+    <Compile Include="ServicesTest\ContactPasswordTest.cs" />
+    <Compile Include="ServicesTest\EventTypeTest.cs" />
+    <Compile Include="ServicesTest\CardContactTest.cs" />
+    <Compile Include="ServicesTest\DocumentTypeTest.cs" />
+    <Compile Include="ServicesTest\AddressTest.cs" />
+    <Compile Include="ServicesTest\RoleTest.cs" />
+    <Compile Include="ServicesTest\IncotermTest.cs" />
+    <Compile Include="ServicesTest\ActivityTest.cs" />
+    <Compile Include="ServicesTest\UserTest.cs" />
+    <Compile Include="ServicesTest\SpecialServicesTypeTest.cs" />
+    <Compile Include="ServicesTest\StateTest.cs" />
+    <Compile Include="ServicesTest\EntityStatusTest.cs" />
+    <Compile Include="ServicesTest\VesselTest.cs" />
+    <Compile Include="ServicesTest\ContactTest.cs" />
+    <Compile Include="ServicesTest\PackageTypeTest.cs" />
+    <Compile Include="ServicesTest\CurrencyTest.cs" />
+    <Compile Include="ServicesTest\PortTest.cs" />
+    <Compile Include="ServicesTest\QuoteTest.cs" />
+    <Compile Include="ServicesTest\ShipmentTest.cs" />
+    <Compile Include="ServicesTest\ShippingAgentTest.cs" />
+    <Compile Include="ServicesTest\TruckerTest.cs" />
+    <Compile Include="ServicesTest\VendorTest.cs" />
+    <Compile Include="ServicesTest\ShippingLineTest.cs" />
+    <Compile Include="ServicesTest\AccountingPartnerTest.cs" />
+    <Compile Include="ServicesTest\CustomerTest.cs" />
+    <Compile Include="ServicesTest\CustomAgentTest.cs" />
+    <Compile Include="ServicesTest\AgentTest.cs" />
+    <Compile Include="ServicesTest\CityTest.cs" />
+    <Compile Include="ServicesTest\CountryTest.cs" />
+    <Compile Include="ServicesTest\GlobalZoneTest.cs" />
+    <Compile Include="ServicesTest\AirlineTest.cs" />
+    <Compile Include="ServicesTest\BranchTest.cs" />
+    <Compile Include="ServicesTest\DepartmentTest.cs" />
     <Compile Include="Connected Services\AutoSignUpServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Connected Services\ContactServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\CustomerServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -149,11 +155,20 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="HybridData.cs" />
-    <Compile Include="LoginTest.cs" />
+    <Compile Include="ServicesTest\LoginTest.cs" />
+    <Compile Include="PrepareSystemVars\PreparePackageTypes.cs" />
+    <Compile Include="PrepareSystemVars\PrepareTruckers.cs" />
+    <Compile Include="PrepareSystemVars\PrepareShippingLines.cs" />
+    <Compile Include="PrepareSystemVars\PrepareAirlines.cs" />
+    <Compile Include="PrepareSystemVars\PrepareCountries.cs" />
+    <Compile Include="PrepareSystemVars\PrepareCustomers.cs" />
+    <Compile Include="PrepareSystemVars\PreparePorts.cs" />
+    <Compile Include="PrepareSystemVars\PrepareShipment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestEnvironmentGlobalParameters .cs" />
+    <Compile Include="EnvironmentGlobalParams.cs" />
     <Compile Include="EntityWcfCaller.cs" />
-    <Compile Include="CommonServices\HybridTestInitializer.cs" />
+    <Compile Include="PrepareSystemVars\PrepareSystem.cs" />
+    <Compile Include="WcfFactory\CustomerWcfFactory.cs" />
     <Compile Include="WcfFactory\QuoteWcfFactory.cs" />
     <Compile Include="WcfFactory\ShipmentWcfFactory.cs" />
     <Compile Include="WcfServiceInvoker.cs" />
@@ -213,6 +228,55 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\ContactServiceReference\Logitude.HybridTest.ContactServiceReference.GetContactPMByEmailResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CustomerServiceReference\CustomerWcfService.wsdl" />
+    <None Include="Connected Services\CustomerServiceReference\CustomerWcfService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CustomerServiceReference\CustomerWcfService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CustomerServiceReference\CustomerWcfService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CustomerServiceReference\CustomerWcfService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CustomerServiceReference\CustomerWcfService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CustomerServiceReference\CustomerWcfService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CustomerServiceReference\CustomerWcfService6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CustomerServiceReference\CustomerWcfService7.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CustomerServiceReference\CustomerWcfService8.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CustomerServiceReference\Logitude.HybridTest.CustomerServiceReference.GetCustomerAddressesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CustomerServiceReference\Logitude.HybridTest.CustomerServiceReference.GetCustomerContactsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CustomerServiceReference\Logitude.HybridTest.CustomerServiceReference.GetCustomerListByEmailResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CustomerServiceReference\Logitude.HybridTest.CustomerServiceReference.GetCustomerListByIdResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CustomerServiceReference\Logitude.HybridTest.CustomerServiceReference.GetCustomerListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CustomerServiceReference\Logitude.HybridTest.CustomerServiceReference.GetCustomerPMResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\CustomerServiceReference\Logitude.HybridTest.CustomerServiceReference.GetReadyForActivationCustomerResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\LoginServiceReference\LoginWcfService.wsdl" />
@@ -422,7 +486,9 @@
     <None Include="Properties\DataSources\Logitude.BL.CommonDataModel.EntityLists.CustomerList.datasource" />
     <None Include="Properties\DataSources\Logitude.BL.CommonDataModel.EntityLists.PackageTypeList.datasource" />
     <None Include="Properties\DataSources\Logitude.BL.CommonDataModel.EntityLists.PortList.datasource" />
+    <None Include="Properties\DataSources\Logitude.BL.CommonDataModel.EntityPMs.AddressPM.datasource" />
     <None Include="Properties\DataSources\Logitude.BL.CommonDataModel.EntityPMs.ContactPM.datasource" />
+    <None Include="Properties\DataSources\Logitude.BL.CommonDataModel.EntityPMs.CustomerPM.datasource" />
     <None Include="Properties\DataSources\Logitude.BL.CommonDataModel.EntityPMs.UserPM.datasource" />
     <None Include="Properties\DataSources\Logitude.BL.QuoteModel.EntityLists.QuoteList.datasource" />
     <None Include="Properties\DataSources\Logitude.BL.ShipmentsModel.EntityLists.ShipmentList.datasource" />
@@ -444,6 +510,7 @@
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\AutoSignUpServiceReference\" />
     <WCFMetadataStorage Include="Connected Services\ContactServiceReference\" />
+    <WCFMetadataStorage Include="Connected Services\CustomerServiceReference\" />
     <WCFMetadataStorage Include="Connected Services\LoginServiceReference\" />
     <WCFMetadataStorage Include="Connected Services\OpportunityServiceReference\" />
     <WCFMetadataStorage Include="Connected Services\PackageTypeServiceReference\" />
@@ -583,6 +650,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\PackageTypeServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\CustomerServiceReference\CustomerWcfService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\CustomerServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\CustomerServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\CustomerServiceReference\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

@@ -135,7 +135,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         {
 
             var journalLineRepository = new JournalLineRepository(this.MainContext as IAccountingContext);
-            var have = (from j in repository.GetQueryablePending2ApproveOrdered(tenant)
+            var have = (from j in repository.
+                        //GetQueryablePending2ApproveOrdered(tenant)
+                        GetQueryablePending2Approve_LedgerNotCreated(tenant)
                         join jl in journalLineRepository.GetQueryContainsAccId(GLAccountIDList, tenant)
                         on j.Id equals jl.JournalId
                         select jl).Any();
@@ -272,7 +274,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             Journal poco = repository.GetByAccountingEntityId(entityId, accountingEntityCode, tenant);
             return base.GetEntityPM(poco);
         }
-
+        
+        public JournalPM GetApprovedJournalByAccountingEntityId(string entityId, string accountingEntityCode, int tenant)
+        {
+            Journal poco = repository.GetApprovedJournalByAccountingEntityId(entityId, accountingEntityCode, tenant);
+            return base.GetEntityPM(poco);
+        }
         public bool CheckIfExternalNoAndSystemExist(string externalNo, string externalSystem, out string journalNumber, int tenant)
         {
             if (String.IsNullOrWhiteSpace(externalNo) || String.IsNullOrWhiteSpace(externalSystem))

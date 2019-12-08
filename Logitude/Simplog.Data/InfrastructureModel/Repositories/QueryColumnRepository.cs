@@ -41,10 +41,10 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                     select a).FirstOrDefault();
         }
 
-        public QueryColumn GetSingleQueryColumnByFieldId(string FieldId, int tenant)
+        public QueryColumn GetSingleQueryColumnByFieldCode(string FieldCode, int tenant)
         {
             return (from a in context.QueryColumns
-                    where a.ObjectFieldId == FieldId && a.Tenant == tenant
+                    where a.ObjectFieldCode == FieldCode && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
      

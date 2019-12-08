@@ -80,7 +80,6 @@
     <Content Include="Accounting\Components\Maintenance\NewTaxWithholdingAssessingOfficeComponent.html" />
     <Content Include="Accounting\Components\NewEntity\AddEditRecoExPageComponent.html" />
     <Content Include="Accounting\Components\NewEntity\LoadRecoExPageComponent.html" />
-    <Content Include="Accounting\Components\NewEntity\NewInterestBasesTypeComponent.html" />
     <Content Include="Accounting\Components\NewEntity\NewBankDepositComponent.html" />
     <Content Include="Accounting\Components\NewEntity\NewCashBookComponent.html" />
     <Content Include="Accounting\Components\NewEntity\NewBankCodeComponent.html" />
@@ -420,7 +419,6 @@
     <TypeScriptCompile Include="Accounting\Components\MenuButtons\OpenFormatReportMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Accounting\Components\MenuButtons\TaxDeductionReportMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Accounting\Components\NewEntity\LoadRecoExPageComponent.ts" />
-    <TypeScriptCompile Include="Accounting\Components\NewEntity\NewInterestBasesTypeComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\NewEntity\NewIntegrityCheckComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\NewEntity\NewOpenFormatReportComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\AccountingNoteComponent.ts" />
@@ -571,6 +569,7 @@
     <TypeScriptCompile Include="CRMModules\CRMTickets\Components\NewEntity\NewTicketComponent.ts" />
     <TypeScriptCompile Include="Controls\Pipes\MinutesToTimePipe.ts" />
     <TypeScriptCompile Include="CRM\Components\Workspaces\OccasionWorkspaceComponent.ts" />
+    <TypeScriptCompile Include="CRM\EntityLists\OccasionContactList.ts" />
     <TypeScriptCompile Include="CRM\EntityLists\OccasionInviteeList.ts" />
     <TypeScriptCompile Include="CRM\EntityLists\OccasionList.ts" />
     <TypeScriptCompile Include="CRM\EntityLists\OccasionStatusList.ts" />
@@ -580,6 +579,7 @@
     <TypeScriptCompile Include="CRM\EntityPMs\OccasionPM.ts" />
     <TypeScriptCompile Include="CRM\EntityPMs\OccasionStatusPM.ts" />
     <TypeScriptCompile Include="CRM\EntityPMs\OccasionTypePM.ts" />
+    <TypeScriptCompile Include="CRM\Services\StandardLists\OccasionContactListService.ts" />
     <TypeScriptCompile Include="CRM\Services\StandardLists\OccasionListService.ts" />
     <TypeScriptCompile Include="CRM\Services\StandardLists\OccasionStatusListService.ts" />
     <TypeScriptCompile Include="CRM\Services\StandardLists\OccasionTypeListService.ts" />
@@ -1038,6 +1038,7 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\SharedLogisticsSettingPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\WebhookKeysPMService.ts" />
     <TypeScriptCompile Include="InvoiceModules\APInvoice\ModuleAPInvoice.ts" />
+    <TypeScriptCompile Include="InvoiceModules\APPayment\Components\EditTabs\APPaymentCancelationDetailsComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\Components\EditTabs\APPaymentGeneralTabComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\Components\EditTabs\EditPaymentChequeComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\ModuleAPPayment.ts" />
@@ -1059,8 +1060,10 @@
     <Content Include="Infrastructure\Components\QueryColumnsComponents\DWLogSearchAddFieldsComponent.html" />
     <Content Include="Infrastructure\Components\QueryColumnsComponents\DWLogSearchWindowFieldsComponent.html" />
     <Content Include="InvoiceModules\APPayment\Components\EditTabs\APEditMultiCurrency.html" />
+    <Content Include="InvoiceModules\APPayment\Components\EditTabs\APPaymentCancelationDetailsComponent.html" />
     <Content Include="InvoiceModules\APPayment\Components\EditTabs\APPaymentGeneralTabComponent.html" />
     <Content Include="InvoiceModules\APPayment\Components\EditTabs\EditPaymentChequeComponent.html" />
+    <Content Include="InvoiceModules\APPayment\Components\Other\CancelAPPaymentComponent.html" />
     <Content Include="InvoiceModules\ARInvoice\Components\EditTabs\AddEditARGeneralInvoiceLineComponent.html" />
     <Content Include="InvoiceModules\ARInvoice\Components\EditTabs\AddEditARInvoiceLineComponent.html" />
     <Content Include="InvoiceModules\ARInvoice\Components\EditTabs\ARInvoiceDetailsTabConsolidation.html" />
@@ -1947,6 +1950,7 @@
     <TypeScriptCompile Include="Infrastructure\Helpers\SharedDocumentHelper.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\TenantManagmentPrivateLabelsPMService.ts" />
     <TypeScriptCompile Include="InvoiceModules\APInvoice\ModuleDeclarations.ts" />
+    <TypeScriptCompile Include="InvoiceModules\APPayment\Components\Other\CancelAPPaymentComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARInvoice\Components\EditTabs\AddEditARGeneralInvoiceLineComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARInvoice\Components\EditTabs\AddEditARInvoiceLineComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\ARInvoice\Components\EditTabs\ARInvoiceDetailsTabComponent.ts" />

@@ -90,12 +90,16 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
             }
         });
     }
-    CheckAirfreightCost() {
+
+    CheckPrice(type: string) {
         this._entityResourceService.getEntityResourceByTableName("TariffLine").subscribe((res1: any) => {
             var logWindow = new LogitudeWindow();
             logWindow.IsFillScreenHeight = true;
             logWindow.Width = 1200;
             logWindow.Title = "Price Check";
+            var windowArgs: any = {};
+            windowArgs.TariffType = type;
+            logWindow.WindowArgs = windowArgs;
             logWindow.Show("./TariffModule/Components/Workspaces/TariffSearchAirFreightPricesComponent");
         });      
     }
@@ -313,7 +317,7 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 3) {
+        if (this.Retries < 20) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }

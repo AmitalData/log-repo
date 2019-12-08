@@ -265,6 +265,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public string GLAccountId { get; set; }
+        public string CreatedByPartner { get; set; }
 
     }
 }

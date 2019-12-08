@@ -152,13 +152,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
 
-            if (isLocalHost)
-            {
-                this.RunBatchService(args, iBatchTaskExecution.Id);
-            }
+            //if (isLocalHost)
+            //{
+            //    this.RunBatchService(args, iBatchTaskExecution.Id);
+            //}
 
-            else
-            {
+            //else
+            //{
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
                 queueservice.Send(new Dictionary<string, string>()
@@ -166,7 +166,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         { "BatchTaskExecutionId", iBatchTaskExecution.Id },
                         { "Tenant", tenant.ToString() }
                     });
-            }
+            //}
         }
 
         public void RunBatchService(ConsolidationServiceArgs serviceArgs, string batchTaskExecutionId)

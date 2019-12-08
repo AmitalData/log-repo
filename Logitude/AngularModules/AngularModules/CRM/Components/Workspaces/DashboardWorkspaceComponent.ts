@@ -50,7 +50,7 @@ export class DashboardWorkspaceComponent extends BaseComponent{
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 3) {
+        if (this.Retries < 20) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }

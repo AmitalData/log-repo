@@ -1068,6 +1068,7 @@
     <Compile Include="Controllers\AccountingModel\ReconcileExternalPageController.cs" />
     <Compile Include="Controllers\AccountingModel\ExternalReconciliationController.cs" />
     <Compile Include="Controllers\AccountingModel\ReconciliationAfterConversionController.cs" />
+    <Compile Include="Controllers\AccountingModel\CashBookOpController.cs" />
     <Compile Include="Controllers\AccountingModel\ReconciliationStageBController.cs" />
     <Compile Include="Controllers\AccountingModel\RevaluationOpController.cs" />
     <Compile Include="Controllers\AccountingModel\TaxDeductionReportFileController.cs" />
@@ -1091,6 +1092,7 @@
     <Compile Include="Controllers\CommonDataModel\Extended\ReportsTemplateExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\ReportsTemplatesVersionExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\TenantAdditionalDataViewsExtendedController.cs" />
+    <Compile Include="Controllers\CommonDataModel\Extended\UserLastSettingsExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\WarehouseExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\AccountingPartnerViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\AgentSharedDocumentViewsController.Generated.cs" />
@@ -1246,10 +1248,12 @@
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\TenantAdditionalDataController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\TenantLoginPolicyController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\TwoFactorAuthenticationDeviceController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\UserLastSettingsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\PortViewsController.cs" />
     <Compile Include="Controllers\CommonDataModel\Services\ExcelExportFeaturesController.cs" />
     <Compile Include="Controllers\CommonDataModel\Services\ExcelExportController.cs" />
     <Compile Include="Controllers\CRMModel\Extended\TicketExtendedController.cs" />
+    <Compile Include="Controllers\CRMModel\Generated\ListControllers\OccasionContactViewsController.Generated.cs" />
     <Compile Include="Controllers\CRMModel\Generated\ListControllers\OccasionStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\CRMModel\Generated\ListControllers\OccasionTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CRMModel\Generated\ListControllers\OccasionViewsController.Generated.cs" />
@@ -2695,6 +2699,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\MamanStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ManifestCargoStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\MAWBTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OccasionContactUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OccasionInviteeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OccasionStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OccasionTypeUpdateClass.cs" />

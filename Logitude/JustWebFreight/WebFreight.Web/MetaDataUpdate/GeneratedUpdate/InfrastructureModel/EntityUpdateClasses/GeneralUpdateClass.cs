@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "e6f4",
+			      				    Code =  "a21b",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -2132,6 +2132,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  		   TextCode GeneralTextCode_AccountingGeneralOInterestBases = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.InterestBases", DefaultText = "Interest Bases",LocalDefaultText = @"בסיסי ריבית", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_AccountingGeneralONewInterestBaseType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.NewInterestBaseType", DefaultText = "New Interest Base Type",LocalDefaultText = @"בסיס ריבית חדש", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_AccountingGeneralOAbaseperiodwiththesamestartdateexists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Abaseperiodwiththesamestartdateexists", DefaultText = "A base period with the same start date exists  ",LocalDefaultText = @"קיימת תקופה עם תאריך התחלה זהה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_AccountingGeneralOAbasetypewiththesamecodeexists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Abasetypewiththesamecodeexists", DefaultText = "A base type with the same code exists",LocalDefaultText = @"קיים בסיס עם קוד זהה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_AccountingGeneralOTheratepercentageshouldbeformattedas0000 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Theratepercentageshouldbeformattedas00.00", DefaultText = "The rate percentage should be formatted as 00.00",LocalDefaultText = @"האחוז צריך להיות מוגדר בפורמט 00.00", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_AccountingGeneralOAbaseperiodwiththesamestartdateisalreadyAdded = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.AbaseperiodwiththesamestartdateisalreadyAdded", DefaultText = "A base period with the same start date is already Added",LocalDefaultText = @"כבר קיימת תקופה עם תאריך התחלה זהה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_AccountingGeneralORecordwassettoInactive = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.RecordwassettoInactive", DefaultText = "Record was set to Inactive",LocalDefaultText = @"הרשומה הוגדרה כלא פעילה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

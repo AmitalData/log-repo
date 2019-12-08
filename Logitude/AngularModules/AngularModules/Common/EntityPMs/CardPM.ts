@@ -419,6 +419,11 @@ export class CardPM {
     public set IsAutonomy(newValue: boolean) { if (this.isAutonomy != newValue) { this.isAutonomy = newValue; this.MarkAsDirty("IsAutonomy"); } }
        
 	 
+    private customerStatusCode: string;
+    public get CustomerStatusCode() { return this.customerStatusCode; }
+    public set CustomerStatusCode(newValue: string) { if (this.customerStatusCode != newValue) { this.customerStatusCode = newValue; this.MarkAsDirty("CustomerStatusCode"); } }
+       
+	 
     private calculatedLocalName: string;
     public get CalculatedLocalName() { return this.calculatedLocalName; }
     public set CalculatedLocalName(newValue: string) { if (this.calculatedLocalName != newValue) { this.calculatedLocalName = newValue; this.MarkAsDirty("CalculatedLocalName"); } }
@@ -432,6 +437,11 @@ export class CardPM {
     private isDisconnectedFromGLAccount: boolean;
     public get IsDisconnectedFromGLAccount() { return this.isDisconnectedFromGLAccount; }
     public set IsDisconnectedFromGLAccount(newValue: boolean) { if (this.isDisconnectedFromGLAccount != newValue) { this.isDisconnectedFromGLAccount = newValue; this.MarkAsDirty("IsDisconnectedFromGLAccount"); } }
+       
+	 
+    private createdByPartner: string;
+    public get CreatedByPartner() { return this.createdByPartner; }
+    public set CreatedByPartner(newValue: string) { if (this.createdByPartner != newValue) { this.createdByPartner = newValue; this.MarkAsDirty("CreatedByPartner"); } }
        
 	 
 

@@ -11,7 +11,7 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 
-namespace Logitude.CRM.Data.EntityPOCOs
+namespace Simplog.Data.CommonDataModel.EntityPOCOs
 {
    
     public class UserLastSettings

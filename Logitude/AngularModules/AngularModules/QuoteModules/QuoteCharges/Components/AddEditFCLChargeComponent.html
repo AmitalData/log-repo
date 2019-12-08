@@ -811,7 +811,7 @@
                                 </log-column>
 
                                 <!-- All in -->
-                                <log-column [width]="'60'" *ngIf="DataContext.IsAdhoc">
+                                <log-column [width]="'60'" *ngIf="DataContext.IsAdhoc && !HideFCLAllIn">
                                     <log-header-template template="let item">
                                         <div class="GridHeaderCellTemplate">
                                             <table>

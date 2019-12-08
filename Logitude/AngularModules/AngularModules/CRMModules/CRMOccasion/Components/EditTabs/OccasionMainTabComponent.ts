@@ -4,7 +4,6 @@ import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs'
 import { OccasionPM } from '../../../../CRM/EntityPMs/OccasionPM';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { ListComponentArgs } from '../../../../Infrastructure/Args';
-import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { OccasionInviteePM } from '../../../../CRM/EntityPMs/OccasionInviteePM'; 
@@ -12,6 +11,11 @@ import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { AppTool } from '../../../../Infrastructure/Tools';
 import { CRMDomainService } from '../../../../CRM/Services/CRMDomainService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { ContactItemClass } from '../../../../CommonModules/CommonPartners/Components/EditTabs/ContactsTabComponent';
+import { ContactPMService } from '../../../../Common/Services/StandardPMs/ContactPMService';
+import { CachedDataManager } from '../../../../Infrastructure/Utilities/CachedDataManager';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService'
+import { ContactPM } from '../../../../Common/EntityPMs/ContactPM';
 
 
 @Component({
@@ -31,6 +35,7 @@ export class OccasionMainTabComponent extends BaseComponent {
     public OccasionLinesList: OccasionLineClass[] = [];
 
     constructor(public entityArgs: EntityArgs) {
+
         super();
         this.EntityPM = this.entityArgs.EntityPM;
         if (this.EntityPM) {
@@ -39,7 +44,9 @@ export class OccasionMainTabComponent extends BaseComponent {
         this.SetUIProperties_EntityClosed();
         this.LoadOccasionLinesData();
         this.Listen();
-       
+
+        this._entityResourceService.getEntityResourceByTableName("Contact", 0).subscribe(response => {
+        });
     }
 
     private Listen() {
@@ -192,23 +199,29 @@ export class OccasionMainTabComponent extends BaseComponent {
         switch (arg) {
             case "AllContacts":
                 {
-                    objectTableName = "Contact";
-                    queryCode = "Contacts";
-                    filterAgrs.addAdditionalFilter("Occasion_ContactsQuery", this.AllContacts_Ids, null, null, "Equals", true, false, false, "string");
+                    objectTableName = "OccasionContact";
+                    queryCode = "OCCASIONCONTACTS";
+
+                    filterAgrs.addAdditionalFilter("OccasionId", this.EntityId, null, null, "Equals", true, false, false, "string");
+                    filterAgrs.addAdditionalFilter("FilterBy", "ALL", null, null, "Equals", true, false, false, "string");
                     break;
                 }
             case "InvitedContacts":
                 {
-                    objectTableName = "Contact";
-                    queryCode = "Contacts";
-                    filterAgrs.addAdditionalFilter("Occasion_ContactsQuery", this.InviteesContacts_Ids, null, null, "Equals", true, false, false, "string");
+                    objectTableName = "OccasionContact";
+                    queryCode = "OCCASIONCONTACTS";
+
+                    filterAgrs.addAdditionalFilter("OccasionId", this.EntityId, null, null, "Equals", true, false, false, "string");
+                    filterAgrs.addAdditionalFilter("FilterBy", "INVT", null, null, "Equals", true, false, false, "string");
                     break;
                 }
             case "ParticipatedContacts":
                 {
-                    filterAgrs.addAdditionalFilter("Occasion_ContactsQuery", this.ParticipatedContacts_Ids, null, null, "Equals", true, false, false, "string");
-                    objectTableName = "Contact";
-                    queryCode = "Contacts";
+                    objectTableName = "OccasionContact";
+                    queryCode = "OCCASIONCONTACTS";
+
+                    filterAgrs.addAdditionalFilter("OccasionId", this.EntityId, null, null, "Equals", true, false, false, "string");
+                    filterAgrs.addAdditionalFilter("FilterBy", "PART", null, null, "Equals", true, false, false, "string");             
                     break;
                 }
             case "AllCustomers":
@@ -415,6 +428,15 @@ export class OccasionLineClass extends BaseComponent {
         }
     }
 
+    get ContactId() {
+        return this.EntityPM.ContactId;
+    }
+    set ContactId(value: string) {
+        if (this.EntityPM.ContactId != value) {
+            this.EntityPM.ContactId = value;
+        }
+    }
+
     get ContactName() {
         return this.EntityPM.ContactName;
     }
@@ -494,6 +516,43 @@ export class OccasionLineClass extends BaseComponent {
     set Invited(value: boolean) {
         if (this.EntityPM.Invited != value) {
             this.EntityPM.Invited = value;
+        }
+    }
+
+    public EditContactClicked(contactId: string) {
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 960;
+        logWindow.Height = 570;
+        logWindow.Title = "Update Contact";
+        var myService: ContactPMService = new ContactPMService();
+        myService.get(contactId).subscribe((myResult: ServiceResponse) => {
+            if (!myResult.HasError) {
+                var contactPM = myResult.Result;
+                var itemComponent = new ContactItemClass(contactPM, null, false);
+                logWindow.DataContext = itemComponent;
+                var args: any = {};
+                logWindow.WindowArgs = args;
+                logWindow.Show('./CommonModules/CommonPartners/Components/AddEdit/AddEditContactComponent');
+                logWindow.WindowClosed.subscribe(($event: any) => this.OnEditContactWindowClosed($event));
+            }
+        });
+    }
+    OnEditContactWindowClosed(arg: any) {
+        if (arg != 'cancel') {
+            // Refresh user table
+            CachedDataManager.RefreshTableData("User", true);
+            this.ContactId = arg;
+            var myService: ContactPMService = new ContactPMService();
+            myService.get(this.ContactId).subscribe((myResult: ServiceResponse) => {
+                if (!myResult.HasError) {
+                    var contactPM: ContactPM = myResult.Result;
+                    this.ContactName = contactPM.EnglishName;
+                    this.ContactEmail = contactPM.Email;
+                    this.ContactPosition = contactPM.Position;
+                    this.ContactMobile = contactPM.Mobile;
+                    this.ContactTel = contactPM.BusinessPhone;
+                }
+            });
         }
     }
 

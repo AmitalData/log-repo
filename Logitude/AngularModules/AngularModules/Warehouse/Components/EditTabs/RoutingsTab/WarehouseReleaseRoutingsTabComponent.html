@@ -19,13 +19,22 @@
                                         </td>
 
                                         <td>
-                                            <LogLov [ObjectFieldName]="'FromPortId'"
+                                            <!--<LogLov [ObjectFieldName]="'FromPortId'"
                                                     [SelectedValue]="FromPortId"
                                                     [ObjectTableName]="ObjectTableName"
                                                     [DataContext]="DataContext"
                                                     [LookUpTableName]="'Port'"
                                                     [DependencyFilter1Value]="TransportModeId">
+                                            </LogLov>-->
+
+                                            <LogLov [ObjectFieldName]="'FromPortId'"
+                                                    [SelectedValue]="FromPortId"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"
+                                                    [LookUpTableName]="'Warehouse'">
                                             </LogLov>
+
+
                                         </td>
                                     </tr>
                                     <tr><td colspan="2"></td></tr>

@@ -253,7 +253,7 @@ export class LogTextBoxV2Component implements OnInit, AfterViewInit, OnDestroy {
             clearTimeout(this.timerTokenComponent);
         }
 
-        if (this.Retries < 3) {
+        if (this.Retries < 20) {
             this.timerTokenComponent = setTimeout(() => this.RunComponent(), 1);
         }
     }
