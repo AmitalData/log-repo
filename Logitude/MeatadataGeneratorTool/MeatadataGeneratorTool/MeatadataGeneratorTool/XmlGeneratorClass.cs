@@ -1884,7 +1884,7 @@ namespace MeatadataGeneratorTool
 
             tableElement.SetAttribute("Name", table.DBTableName);
 
-            if (table.DBTableName != App.CurrentDBTableName)
+            if (table.DBTableName != App.CurrentDBTableName && !string.IsNullOrEmpty(App.CurrentDBTableName))
             {
                 tableElement.SetAttribute("OldName", App.CurrentDBTableName);
             }
@@ -1893,7 +1893,7 @@ namespace MeatadataGeneratorTool
             tableElement.SetAttribute("DBType", table.DxmlDatabaseTypeCode);
 
 
-            foreach (ObjectFieldsViewModel field in table.ObsList)
+            foreach (ObjectFieldsViewModel field in table.ObsList.Where(f => f.IsDBField))
             {
                 XmlElement columnElement = doc.CreateElement("Column");
                 tableElement.AppendChild(columnElement);
