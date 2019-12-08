@@ -15,26 +15,26 @@ export class EditGLAccount {
 
 
 
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.ListBoxItem', 0);
+        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.ListBoxItem', 0, 'CardGLAccount_Search', DisplayNumber);
         this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndClick('GLAccount.TH.General');
         this.Helper.WaitByIdAndFill('GLAccount_LocalName', 'Updated Local Name')
-       // this.Helper.WaitBusyIndicator();
-        this.Helper.ItemsVisibility('GLAccount-Save');
-      this.Helper.ItemsPresent('GLAccount-Save');
-        this.Helper.WaitByIdAndClick('GLAccount-Save');
         this.Helper.WaitBusyIndicator();
-
-
-
-
-
+        this.Helper.ItemsVisibility('GLAccount-Save');
+        this.Helper.ItemsPresent('GLAccount-Save');
+        this.Helper.WaitByIdAndClick('GLAccount-Save');
+        this.WaitBusyIndicatorToShowandHide();
+        //this.Helper.WaitBusyIndicator();
 
 
         // browser.sleep(5000);
 
 
 
+    }
+    WaitBusyIndicatorToShowandHide() {
+        this.Helper.WaitShowEditComponentBusyIndicator();
+        this.Helper.WaitEditComponentBusyIndicator();
     }
 }
 
