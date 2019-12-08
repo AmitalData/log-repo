@@ -32,7 +32,7 @@ namespace Logitude.DBMigrations.Models
 
         protected string GetDxmlDataType(string type)
         {
-            switch (type)
+            switch (type.ToLower())
             {
                 case "int":
                     return "int";

@@ -14,7 +14,7 @@ namespace Logitude.DBMigrations.Helpers
             {
                 string DXMLFilesPath = Path.Combine(root);
                 string[] DXMLFiles = Directory.GetFiles(DXMLFilesPath, "*.dxml", SearchOption.AllDirectories);
-                if(DXMLFiles.Length > 0)
+                if (DXMLFiles.Length > 0)
                 {
                     return DXMLFiles;
                 }
@@ -32,7 +32,7 @@ namespace Logitude.DBMigrations.Helpers
         public static GeneratedScript GenerateScriptFromDXMLFiles(string[] DXMLFiles)
         {
             GeneratedScript generatedScript = new GeneratedScript();
-            
+
             foreach (var dxmlFile in DXMLFiles)
             {
                 string dxmlFileName = Path.GetFileName(dxmlFile);
@@ -41,8 +41,7 @@ namespace Logitude.DBMigrations.Helpers
                 string xmlString = File.ReadAllText(dxmlFile);
                 TableDefinition dxmlTable = xmlString.ParseXML<TableDefinition>();
 
-                string connectonString = GetConnectionString(dxmlTable.DBType);
-                DatabaseMigrations databaseMigrations = new SQLDatabaseMigrations(dxmlTable, connectonString);
+                DatabaseMigrations databaseMigrations = CreateDatabaseMigrations(dxmlTable);
 
                 string script = databaseMigrations.GetScript();
 
@@ -69,7 +68,7 @@ namespace Logitude.DBMigrations.Helpers
             string systemLogsScriptFilePath = Path.Combine(projectDirectory, @"GeneratedScript\SystemLogsScript.sql");
             File.WriteAllText(systemLogsScriptFilePath, generatedScript.SystemLogsScript);
         }
-        
+
         public static void ExecuteScript(GeneratedScript generatedScript)
         {
             if (!String.IsNullOrEmpty(generatedScript.GlobalScript))
@@ -113,7 +112,7 @@ namespace Logitude.DBMigrations.Helpers
         {
             string[] arguments = Array.ConvertAll(args, a => a.ToLower());
             int indexOfRootArgument = Array.IndexOf(arguments, "-root") + 1;
-            if(indexOfRootArgument < args.Length && indexOfRootArgument >= 0)
+            if (indexOfRootArgument < args.Length && indexOfRootArgument >= 0)
             {
                 string root = args[indexOfRootArgument];
                 return root;
@@ -128,15 +127,15 @@ namespace Logitude.DBMigrations.Helpers
         {
             string connectionString;
 
-            if(dbType == "Global")
+            if (dbType == "Global")
             {
                 connectionString = ConfigurationManager.AppSettings["GlobalConnectionString"];
             }
-            else if(dbType == "Main")
+            else if (dbType == "Main")
             {
                 connectionString = ConfigurationManager.AppSettings["MainConnectionString"];
             }
-            else if(dbType == "SystemLogs")
+            else if (dbType == "SystemLogs")
             {
                 connectionString = ConfigurationManager.AppSettings["SystemLogsConnectionString"];
             }
@@ -177,8 +176,37 @@ namespace Logitude.DBMigrations.Helpers
             }
         }
 
+        private static DatabaseMigrations CreateDatabaseMigrations(TableDefinition dxmlTable)
+        {
+            string connectonString = GetConnectionString(dxmlTable.DBType);
+            string databseType = ConfigurationManager.AppSettings["DatabseType"];
+
+            if (databseType.ToLower() == "oracle")
+            {
+                DatabaseMigrations oracleDatabaseMigrations = new OracleDatabaseMigrations(dxmlTable, connectonString);
+                return oracleDatabaseMigrations;
+            }
+
+            DatabaseMigrations sqlDatabaseMigrations = new SQLDatabaseMigrations(dxmlTable, connectonString);
+            return sqlDatabaseMigrations;
+        }
+
         private static string ExecuteScript(string script, string dbType)
         {
+            string databseType = ConfigurationManager.AppSettings["DatabseType"];
+
+            if (databseType.ToLower() == "oracle")
+            {
+                try
+                {
+                    return null;
+                }
+                catch (Exception exception)
+                {
+                    return exception.Message;
+                }
+            }
+
             try
             {
                 string connectionString = GetConnectionString(dbType);
