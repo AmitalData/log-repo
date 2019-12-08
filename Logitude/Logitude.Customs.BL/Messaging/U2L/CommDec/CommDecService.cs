@@ -434,7 +434,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 var unifreightListsParams = UnifreightListsUtil.Deserialize(MoreParams);
                 AppendLogLine("MoreParams after Deserialize: " + unifreightListsParams);
                 courier_id = UnifreightListsUtil.GetValue(ref unifreightListsParams, "COURIER_ID");
-                AppendLogLine("courier id: " + courier_id);
+                AppendLogLine("courier id param: " + courier_id);
             }
 
             //Get CourierMaster
@@ -442,10 +442,21 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             if (!String.IsNullOrWhiteSpace(courier_id))
             {
                 _CourierMasterPM = myCourierMasterQueryService.GetSingle(courier_id, true, false);
+                
+                if (_CourierMasterPM != null)
+                {
+                    AppendLogLine("CourierMasterPM found for id: " + courier_id);
+                }
+                else
+                {
+                    AppendLogLine("CourierMasterPM not found for id: " + courier_id);
+                }
             }
             else
             {
+                AppendLogLine("CarrierPrefix: " + _LogitudeCommDecFile.CarrierPrefix);
                 var airlineId = TranslateAirline(_LogitudeCommDecFile.CarrierPrefix);
+                AppendLogLine("airlineId: " + airlineId);
                 if (String.IsNullOrWhiteSpace(airlineId))
                 {
                     MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
@@ -453,6 +464,15 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                     AppendLogLine(MyGenericResponseObj.Message);
                 }
                 _CourierMasterPM = myCourierMasterQueryService.GetSingleByAirlineAWBs(airlineId, _LogitudeCommDecFile.HAWB, _LogitudeCommDecFile.MAWB, ResolvedTenant());
+                if (_CourierMasterPM != null)
+                {
+                    AppendLogLine("CourierMasterPM found for airlineId: " + airlineId + " HAWB: " + _LogitudeCommDecFile.HAWB + " MAWB: " + _LogitudeCommDecFile.MAWB);
+                }
+                else
+                {
+                    AppendLogLine("CourierMasterPM not found for airlineId: " + airlineId + " HAWB: " + _LogitudeCommDecFile.HAWB + " MAWB: " + _LogitudeCommDecFile.MAWB);
+                }
+                    
             }
             if (_CourierMasterPM != null)
             {
@@ -461,13 +481,30 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 _CourierDeclarationPM = myCourierDeclarationQueryService.GetSingle(_MyDeclarationPM.Id, _CourierMasterPM.Id, false, true);
                 if (_CourierDeclarationPM == null)
                 {
+                    AppendLogLine("CourierDeclarationPM not found for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id);
                     if (!this._MyDeclarationPM.HatraDate.HasValue)
                     {
                         CourierDeclarationPM _CourierDeclarationPMPMDiferentMaster = myCourierDeclarationQueryService.GetCourierDeclarationByDeclarationId(_MyDeclarationPM.Id, ResolvedTenant());
                         if (_CourierDeclarationPMPMDiferentMaster != null)
                         {
+                            AppendLogLine("try to delete CourierDeclaration with Diferent Master (id: " + _CourierDeclarationPMPMDiferentMaster.CourierMasterId + "  found for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id);
                             _CourierDeclarationPMPMDiferentMaster.ChangeSetOp = ChangeSetOperation.Delete;
-                            myCourierDeclarationUpdateService.Update(_CourierDeclarationPMPMDiferentMaster, true);
+                            try
+                            {
+                                myCourierDeclarationUpdateService.Update(_CourierDeclarationPMPMDiferentMaster, true);
+                            }
+                            catch (DbEntityValidationException ex)
+                            {
+                                var FormatedException = ExceptionFormatUtil.GetFormated(ex);
+                                AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
+                                return;
+                            }
+                            catch (Exception e)
+                            {
+                                AppendLogLine("ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
+                                return;
+                            }
+                            
                             string prevVal = null;
                             string currvVal = null;
                             DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_context);
@@ -489,7 +526,22 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                                 {
                                     DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
                                     currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                                    declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+                                    AppendLogLine("try to update declarationCourierStatus for DeclarationPM.Id: " + _MyDeclarationPM.Id );
+                                    try
+                                    {
+                                        declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+                                    }
+                                    catch (DbEntityValidationException ex)
+                                    {
+                                        var FormatedException = ExceptionFormatUtil.GetFormated(ex);
+                                        AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
+                                        return;
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        AppendLogLine("ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
+                                        return;
+                                    }
                                 }
                             }
                             this.UpsertActionConst = String.Concat(UpsertActionConst, "+CourierMasterChange");
@@ -514,7 +566,23 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                     _CourierDeclarationPM.SequenceNumeric = sequenceNumericMax + 1;
                 }
                 _CourierDeclarationPM.Tenant = ResolvedTenant();
-                myCourierDeclarationUpdateService.Update(_CourierDeclarationPM, true);
+                
+                AppendLogLine("try to update CourierDeclaration for DeclarationPM.Id: " + _MyDeclarationPM.Id + " CourierMasterPM.Id: " + _CourierMasterPM.Id);
+                try
+                {
+                    myCourierDeclarationUpdateService.Update(_CourierDeclarationPM, true);
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    var FormatedException = ExceptionFormatUtil.GetFormated(ex);
+                    AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
+                    return;
+                }
+                catch (Exception e)
+                {
+                    AppendLogLine("ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
+                    return;
+                }
             }
         }
 
