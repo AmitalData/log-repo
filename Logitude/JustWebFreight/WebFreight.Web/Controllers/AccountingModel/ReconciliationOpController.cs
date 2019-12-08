@@ -41,6 +41,8 @@ using System.Transactions;
 using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
 using Simplog.Data.Helpers;
+using Logitude.Accounting.BL.CloseTables;
+using Logitude.Accounting.BL.CoreBL.Reconcile;
 
 namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsController.cs
 {
@@ -252,9 +254,17 @@ tenant);
 
                 GenericCallBack callback = transactionQuery.GetReconciliationFilterCallBack(queryOperations, gLAccountId, tenant, true);
 
-                List<LedgerTransactionList> openReconciliation = transactionQuery.GetOpenReconciliationFilterList(queryOperations, callback, gLAccountId, tenant);
+                List<LedgerTransactionList> openTransactions = transactionQuery.GetOpenReconciliationFilterList(queryOperations, callback, gLAccountId, tenant);
 
-                openReconciliation = openReconciliation.OrderByDescending(d => d.DocumentDate).ToList();
+                LedgerTransactionSorterArgs args = new LedgerTransactionSorterArgs()
+                {
+                    Tenant = tenant,
+                    AccountId = gLAccountId,
+                    QueryOperations = queryOperations,
+                    Transactions = openTransactions,
+                };
+                LedgerTransactionsSorter transactionsSorter = new LedgerTransactionsSorter(args);
+                openTransactions = transactionsSorter.SortQuery();
 
                 ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
@@ -263,7 +273,7 @@ tenant);
                     response.Count = count;
                 }
 
-                response.Result = openReconciliation;
+                response.Result = openTransactions;
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 
                 return reponseMessage;
@@ -274,6 +284,8 @@ tenant);
             }
 
         }
+
+      
         [HttpGet]
         public HttpResponseMessage GetReconciliationsByFilter(string gLAccountId, [FromUri] ApiQueryFilters filters)
         {
