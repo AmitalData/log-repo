@@ -103,10 +103,6 @@ namespace CommunicationWorkerRole
                 queueService.Complete();
 
             }
-            else
-            {
-                Thread.Sleep(new TimeSpan(0, 0, 0, 0, 250));
-            }
         }
 
 

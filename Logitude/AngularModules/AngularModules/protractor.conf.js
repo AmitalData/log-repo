@@ -164,6 +164,12 @@ exports.config = {
             browser.params.Login.Password = "Sg0592463934!";
         }
 
+        else if (browser.params.Env == "test_1209") {
+            browser.params.Link = "https://test.logitudeworld.com/staging";
+            browser.params.Login.Email = "sg1209@test.com";
+            browser.params.Login.Password = "!Sg13579";
+        }
+
         else if (browser.params.Env == "Pre_Racing") {
             browser.params.Link = "https://pre.logitudeworld.com/";
             browser.params.Login.Email = "lana3@test.com";

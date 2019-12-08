@@ -1730,6 +1730,22 @@
     <Compile Include="Migrations\201912041018283_Update_DateForVATInterest_Field_In_ARINVOICE.Designer.cs">
       <DependentUpon>201912041018283_Update_DateForVATInterest_Field_In_ARINVOICE.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912041116037_DeleteDateForVATInterestHelpTextMutaz.cs" />
+    <Compile Include="Migrations\201912041116037_DeleteDateForVATInterestHelpTextMutaz.Designer.cs">
+      <DependentUpon>201912041116037_DeleteDateForVATInterestHelpTextMutaz.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912041012315_AbedChangeFromPortForeignKeyToWarehouseRelease.cs" />
+    <Compile Include="Migrations\201912041012315_AbedChangeFromPortForeignKeyToWarehouseRelease.Designer.cs">
+      <DependentUpon>201912041012315_AbedChangeFromPortForeignKeyToWarehouseRelease.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912041006219_WesamAddObjectFieldCodeToQueryColumnsTable.cs" />
+    <Compile Include="Migrations\201912041006219_WesamAddObjectFieldCodeToQueryColumnsTable.Designer.cs">
+      <DependentUpon>201912041006219_WesamAddObjectFieldCodeToQueryColumnsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912080719298_WesamAddObjectFieldCodeToScreenFieldsTable.cs" />
+    <Compile Include="Migrations\201912080719298_WesamAddObjectFieldCodeToScreenFieldsTable.Designer.cs">
+      <DependentUpon>201912080719298_WesamAddObjectFieldCodeToScreenFieldsTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2965,6 +2981,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912041018283_Update_DateForVATInterest_Field_In_ARINVOICE.resx">
       <DependentUpon>201912041018283_Update_DateForVATInterest_Field_In_ARINVOICE.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912041116037_DeleteDateForVATInterestHelpTextMutaz.resx">
+      <DependentUpon>201912041116037_DeleteDateForVATInterestHelpTextMutaz.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912041012315_AbedChangeFromPortForeignKeyToWarehouseRelease.resx">
+      <DependentUpon>201912041012315_AbedChangeFromPortForeignKeyToWarehouseRelease.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912041006219_WesamAddObjectFieldCodeToQueryColumnsTable.resx">
+      <DependentUpon>201912041006219_WesamAddObjectFieldCodeToQueryColumnsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912080719298_WesamAddObjectFieldCodeToScreenFieldsTable.resx">
+      <DependentUpon>201912080719298_WesamAddObjectFieldCodeToScreenFieldsTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -507,7 +507,7 @@
    
 </table>
 
-<form name='form' action='https://direct.tranzila.com/amitaltest/' method='post' style="width:0px;height:0px;">
+<form name='form' [attr.action]="TargetEnv" method='post' style="width:0px;height:0px;">
     <input type='hidden' name='sum' [attr.value]="sum">
     <input type='hidden' name='currency' [attr.value]="currency">
     <input type='hidden' name='op' [attr.value]="op">

@@ -56,13 +56,14 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DisplayInList = a.ObjectField.DisplayInList,
                                                     UserId = a.UserId,
                                                     ObjectFieldFieldLableTextCodeCode = a.ObjectField.FullNameTextCode.Code,
+                                                    ObjectFieldCode = a.ObjectFieldCode,
                                                 }).ToList();
 
             List<QueryColumnPM> selectedQueryColumns = new List<QueryColumnPM>();
             foreach (QueryColumnPM column in querycolumns)
             {
                 QueryColumnPM existedColumn = (from a in selectedQueryColumns
-                                               where a.QueryId == column.QueryId && a.ObjectFieldId == column.ObjectFieldId && a.UserId == userid
+                                               where a.QueryId == column.QueryId && a.ObjectFieldCode == column.ObjectFieldCode && a.UserId == userid
                                                select a).FirstOrDefault();
 
                 if (existedColumn != null)
@@ -107,6 +108,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DisplayInList = a.ObjectField.DisplayInList,
                                                     UserId = a.UserId,
                                                     ObjectFieldFieldLableTextCodeCode = a.ObjectField.FullNameTextCode.Code,
+                                                    ObjectFieldCode = a.ObjectFieldCode,
                                                 };
 
             //string str = TranslateTextsClass.Translate(ObjectFieldListLabelTextCodeCode, tenant);
@@ -138,6 +140,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DisplayInList = a.ObjectField.DisplayInList,
                                                     UserId = a.UserId,
                                                     ObjectFieldFieldLableTextCodeCode = a.ObjectField.FullNameTextCode.Code,
+                                                    ObjectFieldCode = a.ObjectFieldCode,
                                                 };
             return queries;
         }
@@ -169,6 +172,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                               DisplayInList = a.ObjectField.DisplayInList,
                               ObjectFieldFieldLableTextCodeCode = a.ObjectField.FullNameTextCode.Code,
                               UserId = a.UserId,
+                              ObjectFieldCode = a.ObjectFieldCode,
                           };
 
                 if (queries.Count() == 0)
@@ -194,6 +198,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   ObjectFieldFieldLableTextCodeDefaultText = a.ObjectField.FullNameTextCode.DefaultText,
                                   DisplayInList = a.ObjectField.DisplayInList,
                                   ObjectFieldFieldLableTextCodeCode = a.ObjectField.FullNameTextCode.Code,
+                                  ObjectFieldCode = a.ObjectFieldCode,
                               };
                 }
             }
@@ -220,6 +225,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                               ObjectFieldFieldLableTextCodeDefaultText = a.ObjectField.FullNameTextCode.DefaultText,
                               DisplayInList = a.ObjectField.DisplayInList,
                               ObjectFieldFieldLableTextCodeCode = a.ObjectField.FullNameTextCode.Code,
+                              ObjectFieldCode = a.ObjectFieldCode,
                           };
             }
 
@@ -259,6 +265,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   ObjectFieldDataTypeCode = a.ObjectField.DataTypeCode,
                                   UserId = a.UserId,
                                   ObjectFieldFullNameTextCodeCode = a.ObjectField.FullNameTextCode.Code,
+                                  ObjectFieldCode = a.ObjectFieldCode,
                               };
                 }
 
@@ -286,6 +293,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   ObjectFieldDataTypeCode = a.ObjectField.DataTypeCode,
                                   UserId = a.UserId,
                                   ObjectFieldFullNameTextCodeCode = a.ObjectField.FullNameTextCode.Code,
+                                  ObjectFieldCode = a.ObjectFieldCode,
                               };
                 }
             }
@@ -324,6 +332,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   ObjectFieldDataTypeCode = a.ObjectField.DataTypeCode,
                                   UserId = a.UserId,
                                   ObjectFieldFullNameTextCodeCode = a.ObjectField.FullNameTextCode.Code,
+                                  ObjectFieldCode = a.ObjectFieldCode,
                               };
                 }
 
@@ -351,6 +360,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   ObjectFieldDataTypeCode = a.ObjectField.DataTypeCode,
                                   UserId = a.UserId,
                                   ObjectFieldFullNameTextCodeCode = a.ObjectField.FullNameTextCode.Code,
+                                  ObjectFieldCode = a.ObjectFieldCode,
                               };
                 }                  
             }
@@ -398,7 +408,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                           DisplayInList = a.ObjectField.DisplayInList,
                           ObjectFieldDataTypeCode = a.ObjectField.DataTypeCode,
                           UserId = a.UserId,
-                          ObjectFieldFullNameTextCodeCode = a.ObjectField.FullNameTextCode.Code, 
+                          ObjectFieldFullNameTextCodeCode = a.ObjectField.FullNameTextCode.Code,
+                          ObjectFieldCode = a.ObjectFieldCode,
                       };
 
 
@@ -433,6 +444,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                           ObjectFieldDataTypeCode = a.ObjectField.DataTypeCode,
                           UserId = a.UserId,
                           ObjectFieldFullNameTextCodeCode = a.ObjectField.FullNameTextCode.Code,
+                          ObjectFieldCode = a.ObjectFieldCode,
                       };
 
 
@@ -463,14 +475,15 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   DisplayInList = a.ObjectField.DisplayInList,
                                                   UserId = a.UserId,
                                                   ObjectFieldFieldLableTextCodeCode = a.ObjectField.FullNameTextCode.Code,
+                                                  ObjectFieldCode = a.ObjectFieldCode,
                                               };
             return query;
         }
 
-        public QueryColumnPM GetQueryColumnsByFieldIdTenant(string FieldId, int Tenant)
+        public QueryColumnPM GetQueryColumnsByFieldCodeTenant(string FieldCode, int Tenant)
         {
             QueryColumnPM query = (from a in repository.context.QueryColumns.Include("Query").Include("Query.ObjectTable").Include("ObjectField").Include("ObjectField.ListTextCode").Include("ObjectField.FullNameTextCode")
-                                              where a.ObjectFieldId == FieldId && a.Tenant == Tenant
+                                              where a.ObjectFieldCode== FieldCode && a.Tenant == Tenant
                                               select new QueryColumnPM()
                                               {
                                                   ColumnWidth = a.ColumnWidth,
@@ -491,6 +504,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   DisplayInList = a.ObjectField.DisplayInList,
                                                   UserId = a.UserId,
                                                   ObjectFieldFieldLableTextCodeCode = a.ObjectField.FullNameTextCode.Code,
+                                                  ObjectFieldCode = a.ObjectFieldCode,
                                               }).FirstOrDefault();
             return query;
         }

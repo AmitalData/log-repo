@@ -95,5 +95,7 @@ export class QueryColumnPM {
     public get ObjectFieldFullNameTextCodeCode() { return this.objectFieldFullNameTextCodeCode; }
     public set ObjectFieldFullNameTextCodeCode(newValue: string) { this.objectFieldFullNameTextCodeCode = newValue; }
 
-   
+    private objectFieldCode: string;
+    public get ObjectFieldCode() { return this.objectFieldCode; }
+    public set ObjectFieldCode(newValue: string) { this.objectFieldCode = newValue; }
 }

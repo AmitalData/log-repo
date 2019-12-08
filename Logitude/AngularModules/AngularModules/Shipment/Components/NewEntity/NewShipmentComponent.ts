@@ -615,10 +615,25 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, OnDes
         }
 
         else {
-            this.EntityPM.VolumeUnitCode = myVolumeUnitCode;
-            this.EntityPM.DimensionsUnitCode = myDimensionsUnitCode;
-            this.EntityPM.GrossWeightUnitCode = myGrossWeightUnitCode;
-            this.EntityPM.ChargeableWeightUnitCode = myChargeableWeightUnitCode;
+            if (AppTool.IsNullOrEmpty(this.EntityPM.DimensionsUnitCode)) {
+                this.EntityPM.DimensionsUnitCode = myDimensionsUnitCode;
+            }
+
+            if (AppTool.IsNullOrEmpty(this.EntityPM.VolumeUnitCode)) {
+                this.EntityPM.VolumeUnitCode = myVolumeUnitCode;
+            }
+
+            if (AppTool.IsNullOrEmpty(this.EntityPM.GrossWeightUnitCode)) {
+                this.EntityPM.GrossWeightUnitCode = myGrossWeightUnitCode;
+            }
+
+            if (AppTool.IsNullOrEmpty(this.EntityPM.ChargeableWeightUnitCode)) {
+                this.EntityPM.ChargeableWeightUnitCode = myChargeableWeightUnitCode;
+            }
+            //this.EntityPM.VolumeUnitCode = myVolumeUnitCode;
+            //this.EntityPM.DimensionsUnitCode = myDimensionsUnitCode;
+            //this.EntityPM.GrossWeightUnitCode = myGrossWeightUnitCode;
+            //this.EntityPM.ChargeableWeightUnitCode = myChargeableWeightUnitCode;
             this.EntityPM.Ratio = AppTool.GetRatio(this.DirectionId, this.TransportModeId, this.ShipmentTypeId, this.TenantPM.CountryCode);
             this.EntityPM.DimFactor = AppTool.GetDimFactorFromRatio(this.EntityPM.Ratio, this.EntityPM.DimensionsUnitCode, this.EntityPM.ChargeableWeightUnitCode);
             this.ComputeOrderVolumetricWeight();
@@ -2665,7 +2680,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, OnDes
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 3) {
+        if (this.Retries < 20) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
