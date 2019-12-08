@@ -43,7 +43,14 @@ namespace WebFreight.Web.CustomWebServices.Testers
                 //s.CreateCRS(1, "1-7", "1-69", "bbb" , "1-3");
                 //ExportExcel();
                 //ExportExcel8330();
-                ExportExcel8326();
+                //ExportExcel8326();
+                var o = new CourierMasterWSheetExport();
+                var result = o.GetRepo("1-655", 1);
+                string ShowType = "attachment";
+                string documentName = Guid.NewGuid().ToString() + ".xls";
+                HttpContext.Current.Response.AppendHeader("Content-Disposition", ShowType + "; filename=\"" + HttpUtility.UrlPathEncode(documentName) + "\"");
+                HttpContext.Current.Response.BinaryWrite(result);
+
             }
             catch (Exception eee)
             {
