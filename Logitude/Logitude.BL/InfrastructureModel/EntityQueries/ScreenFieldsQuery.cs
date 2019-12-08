@@ -47,7 +47,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     Tenant = a.Tenant,
                                                     ScreenCode = a.Screen.Code,
                                                     ObjectFieldObjectTableName = a.ObjectField.ObjectTable.Name,
-                                                    
+                                                    ObjectFieldCode = a.ObjectFieldCode,
                                                 }).ToList();
 
 
@@ -90,7 +90,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                          Tenant = a.Tenant,
                                                          ScreenCode = a.Screen.Code,
                                                          ObjectFieldObjectTableName = a.ObjectField.ObjectTable.Name,
-                                                          
+                                                         ObjectFieldCode = a.ObjectFieldCode,
                                                      };
             return screenfields;
         }
