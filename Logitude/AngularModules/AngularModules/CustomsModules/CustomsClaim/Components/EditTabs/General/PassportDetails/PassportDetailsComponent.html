@@ -34,8 +34,19 @@
         </td>
 
         <td>
-            <LogTextBox [ObjectFieldName]="'PassportNumber'" [ObjectTableName]="ObjectTableName"
-                        [HideColumns]="true" [DataContext]="DataContext" [Text]="PassportNumber"></LogTextBox>
+            <!--<LogTextBox [ObjectFieldName]="'PassportNumber'" [ObjectTableName]="ObjectTableName"
+                        [HideColumns]="true" [DataContext]="DataContext" [Text]="PassportNumber"></LogTextBox>-->
+            <SearchBox [ObjectTableName]="'Client'"
+                       [IsQuickSearch]="true"
+                       [DropDownWidth]="143"
+                       [DisplayMember]="'PassportNumber'"
+                       [DisplayText]="PassportNumber"
+                       [Watermark]="''"
+                       [UseTimer]="false"
+                       [IsImporterDetails]="true"
+                       [ItemHeight]="36"
+                       [HideIcons]="true"
+                       [HasFilters]="true"></SearchBox>
         </td>
         <td><div></div></td>
         <td><div></div></td>
