@@ -4,6 +4,7 @@ using Logitude.Server.Tools.Utils;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
@@ -50,40 +51,45 @@ namespace AmitalCustomsWindowsService.Tester.LoadTest
 
             Program.ThreadStartStaticIsMustB4UsingTheDB();
 
+            LoadTestWR.Async = !String.IsNullOrEmpty(ConfigurationManager.AppSettings["LoadTestWService.Async"]);
 
-
-            var s = new CommunicationLogStepRepository();
-            var q = s.Get104921();
-            var t = q.ToListAsync();
-            t.Wait();
-            LoadTestWR.CommunicationLogList104921 = t.Result;
-            LoadTestWR.Async = true;
-
-            LoadWorkerFromDB();
-            //if (forceStartAgain)
-            //{
-            //    StopThreads();
-            //}
-
-            //AllThreadsAreAlive();
-
-
-            
-
-        }
-        private void LoadWorkerFromDB()
-        {
 
 
             _Workers = new List<IWorkerBaseWorkOnce>();
             _Threads = new List<Thread>(_Workers.Count);
+            string sThreadCount = ConfigurationManager.AppSettings["LoadTestWService.ThreadCount"];
+            int iThreadCount = int.Parse(sThreadCount);
 
-            for (int i = 0; i < 10; i++)
+
+            string sTotalRetrieve = ConfigurationManager.AppSettings["LoadTestWService.TotalRetrieve"];
+            int iTotalRetrieve = int.Parse(sTotalRetrieve);
+
+
+            var s = new CommunicationLogStepRepository();
+            var q = s.Get104921();
+            if (iTotalRetrieve<50*1000)
+            {
+                q = q.Take(iTotalRetrieve + 1000);
+            }
+            var t = q.ToListAsync();
+            t.Wait();
+            LoadTestWR.CommunicationLogList104921 = t.Result;
+
+            
+            var sw = Stopwatch.StartNew();
+            int totalEachThread = iTotalRetrieve / iThreadCount;
+            for (int i = 0; i < iThreadCount; i++)
             {
                 //var type = typeof(TWorker);
                 //var typeName = type.Name;
+                var DebugObject = new LoadTestParam()
+                {
+                    currentThread = i,
+                    iTotalRetrieve = iTotalRetrieve,
+                    totalEachThread= totalEachThread
 
-                var workerOnce = new WorkerOnce<LoadTestWR>(1, _Workers.Count,debugMode:true) { ServiceStarted = true };
+                };
+                var workerOnce = new WorkerOnce<LoadTestWR>(1, _Workers.Count, debugMode: true, DebugObject) { ServiceStarted = true };
 
                 _Workers.Add(workerOnce);
                 _Threads.Add(null);
@@ -100,7 +106,7 @@ namespace AmitalCustomsWindowsService.Tester.LoadTest
             {
                 _Threads[iWorker].Join();
             }
-
+            Logger.LogMe($"Async:{LoadTestWR.Async} TotalRetrieve:{sTotalRetrieve} ThreadCount{sThreadCount} took:{sw.Elapsed} ", false, "TOT." + (LoadTestWR.Async ? "Async" : "Sync"));
 
         }
         private void StopThread(int iWorker)
@@ -125,6 +131,13 @@ namespace AmitalCustomsWindowsService.Tester.LoadTest
             Logger.LogMe(GetThreadName(iWorker), false, "StartThread");
         }
     }
+    public class LoadTestParam
+    {
+        internal int currentThread;
+        internal int iTotalRetrieve;
+        internal int totalEachThread;
+    }
+
     public class LoadTestWR
     : CustomsWorkerEntryPoint
     {
@@ -149,13 +162,15 @@ namespace AmitalCustomsWindowsService.Tester.LoadTest
             //throw new NotImplementedException();
             Debug.WriteLine("LoadTestWR");
 
+            var myLoadTestParam =this.DebugObject as LoadTestParam;
 
-            int myStart = _Random.Next(0, CommunicationLogList104921.Count());
-            if (myStart + _ThreadHandeleCount > CommunicationLogList104921.Count())
-            {
-                myStart = myStart - _ThreadHandeleCount;
-            }
-            var myHandleList = CommunicationLogList104921.Skip(myStart).Take(_ThreadHandeleCount);
+            //int myStart = _Random.Next(0, CommunicationLogList104921.Count());
+            //if (myStart + _ThreadHandeleCount > CommunicationLogList104921.Count())
+            //{
+            //    myStart = myStart - _ThreadHandeleCount;
+            //}
+            
+            var myHandleList = CommunicationLogList104921.Skip(myLoadTestParam.currentThread * myLoadTestParam.totalEachThread ).Take(myLoadTestParam.totalEachThread);
             var sw = Stopwatch.StartNew();
             var s = new CommunicationLogStepRepository();
             foreach (string CommunicationLogId in myHandleList)
@@ -174,7 +189,7 @@ namespace AmitalCustomsWindowsService.Tester.LoadTest
                     var res = q.ToList();
                 }
             }
-            Logger.LogMe($"Async:{Async} _ThreadHandeleCount:{_ThreadHandeleCount} took:{sw.Elapsed} ", false);
+            Logger.LogMe($"Async:{Async} _ThreadHandeleCount:{myLoadTestParam.currentThread} countDone{myLoadTestParam.totalEachThread} took:{sw.Elapsed}  UserInteractive:{Environment.UserInteractive} ", false);
 
         }
         public override void StartMe()

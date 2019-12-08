@@ -96,7 +96,11 @@ namespace AmitalCustomsWindowsService
 
         private static ServiceBase GetMyService()
         {
-            return new LoadTestWService();
+            if (!String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["LoadTestWService"]))
+            {
+                return new LoadTestWService();
+            }
+            
             return new AmitalCustomTolerantWindowsService();
 
             //<add key="TolerantWindowsService" value="1" />
