@@ -341,11 +341,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 if (_AmitalCustomsFile.Mode == "CANCEL") // moran 25.12.13 - task 2431
                 {
                     this._MyDeclarationPM.IsCancelled = true;
+                    this._MyDeclarationPM.DeclarationNumber = null;
                 }
                 else if (_AmitalCustomsFile.Mode == "DELETE")
                 {
                     this._MyDeclarationPM.IsCancelled = true;
                     this._MyDeclarationPM.CustomFileNo = null;
+                    this._MyDeclarationPM.DeclarationNumber = null;
                 }
                 else if (_AmitalCustomsFile.Mode == "UNCANCEL")
                 {
