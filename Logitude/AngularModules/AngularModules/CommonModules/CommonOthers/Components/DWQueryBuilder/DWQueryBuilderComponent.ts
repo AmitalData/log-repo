@@ -550,6 +550,12 @@ export class DWQueryBuilderComponent extends BaseComponent {
             return;
         }
         var view = new DWObjectFieldsDetails(item.BaseDWObjectField, this);
+        if (item.HasTree) {
+            var defaultItem: any = window.DWObjectFields.filter(d => d.DWObjectTableCode == (view.DWObjectTableCode) && d.Code == '[Code]')[0];
+            if (defaultItem) {
+                view.Code = defaultItem.Code;
+            }
+        }
         if (view.DWObjectTableCode.indexOf("DIM_") != -1) {
             //view.ParentDataTypeCode = "LookUp";
             if (view.Code == '[Full Date]') {
@@ -1194,6 +1200,12 @@ export class DWQueryBuilderComponent extends BaseComponent {
 
         BaseFilter.FilterItems.forEach((field) => {
             var view = new DWObjectFieldsDetails(field, this);
+            if (view.HasTree) {
+                var defaultItem: any = window.DWObjectFields.filter(d => d.DWObjectTableCode == (view.DWObjectTableCode) && d.Code == '[Code]')[0];
+                if (defaultItem) {
+                    view.Code = defaultItem.Code;
+                }
+            }
             if (field.FilterItems.length == 0) {
                 if (field.DWObjectTableCode && field.DWObjectTableCode.indexOf("DIM_") != -1) {
 
