@@ -315,7 +315,7 @@ export class SimulatorBookingComponent extends BaseComponent {
     public IsApplyChanges = false;
     private CheckApplyChanges() {
         this.IsApplyChanges = false;
-        if (this.EntityPM.INTTRABookingStatusCode != "SI") {
+        if (this.EntityPM.INTTRABookingStatusCode != "SI" && this.INTTRABookingResponse_POFPortCode != null && this.INTTRABookingResponse_PODPortCode != null) {
             // Compare the Main leg
             if ((this.MainCarriageCarrierNumber != this.INTTRABookingResponse_Voyage) || (this.MainCarriageETD != this.INTTRABookingResponse_POLDate) ||
                 (this.MainCarriageFromPortCode != this.INTTRABookingResponse_POFPortCode) || (this.MainCarriageToPortCode != this.INTTRABookingResponse_PODPortCode)) {
