@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace Logitude.IntegrationTest.Core.Login
 {
     public class LoginService
     {
-        public static async Task<string> GetLoginTokenByUserEmailAndTenant()
+        public static async Task GetLoginTokenByUserEmailAndTenant()
         {
             int tenant = IntegrationTestLoginParameters.Tenant;
             var token = IntegrationTestLoginParameters.Token;
@@ -34,9 +35,9 @@ namespace Logitude.IntegrationTest.Core.Login
                 HttpResponseMessage httpResponseMessage = await RestClientService.PostAsync(loginParameters, "Authentication");
                 var stringResult = httpResponseMessage.Content.ReadAsStringAsync().Result;
                 UserData userData = JsonConvert.DeserializeObject<UserData>(stringResult);
+                Assert.IsNotNull(userData.Token);
                 IntegrationTestLoginParameters.Token = token = userData.Token;
             }
-            return token;
         }
 
     }
