@@ -168,6 +168,12 @@
     <Compile Include="BL\ServiceState.cs" />
     <Compile Include="BL\WorkerOnce.cs" />
     <Compile Include="IServiceStartMe.cs" />
+    <Compile Include="LoadTestWService.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="LoadTestWService.Designer.cs">
+      <DependentUpon>LoadTestWService.cs</DependentUpon>
+    </Compile>
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -196,6 +202,7 @@
     <Compile Include="Tester\CustomMessage\Send380Form.Designer.cs">
       <DependentUpon>Send380Form.cs</DependentUpon>
     </Compile>
+    <Compile Include="Tester\LoadTest\LoadTestWorkerService.cs" />
     <Compile Include="Tester\MyTraceListener.cs" />
     <Compile Include="Tester\ReqSheet\FormRepushQ.cs">
       <SubType>Form</SubType>
