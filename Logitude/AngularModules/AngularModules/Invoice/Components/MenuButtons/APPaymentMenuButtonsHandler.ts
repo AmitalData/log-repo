@@ -617,8 +617,8 @@ export class APPaymentMenuButtonsHandler {
         windowArgs.PaymentPM = this.EntityPM;
         // windowArgs = this.SetPaymentChequeWindowArgs(windowArgs);
         logWindow.WindowArgs = windowArgs;
-        logWindow.Width = 420;
-        logWindow.Height = 250;
+        logWindow.Width = 480;
+        logWindow.Height = 280;
         logWindow.Title = windowTitle;
         //  logWindow.ShowCloseButton = true;
 
