@@ -45,7 +45,6 @@ export class ClaimGeneralTabComponent extends BaseComponent {
     public ClaimPMService: ClaimPMService = new ClaimPMService;
     public ClientMessagesService: ClientMessagesService = new ClientMessagesService;
     public ClientPMService: ClientPMService = new ClientPMService;
-    private IsClientCodeEnabled: boolean = false; 
 
     IsLoaded: boolean = false;
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
@@ -267,13 +266,6 @@ export class ClaimGeneralTabComponent extends BaseComponent {
 
     //#region Address
     ClientIdSelectionChanged() {
-
-        if (!AppTool.IsNullOrEmpty(this.ClientId)) {
-            this.IsClientCodeEnabled = false;
-        }
-        else {
-            this.IsClientCodeEnabled = true;
-        }
 
         if (AppTool.IsNullOrEmpty(this.ContactPhoneAddressCode) && AppTool.IsNullOrEmpty(this.CustomsAddressCode)) {
             this.BuildClienAddressesList();
@@ -567,7 +559,8 @@ export class ClaimGeneralTabComponent extends BaseComponent {
 
     EditClient() {
 
-        //if (this.IsClientCodeEnabled == true) return;
+        if (!AppTool.IsNullOrEmpty(this.ClientId)) return;
+
         SessionLocator.SelectedSession.StartBusyIndicatorLoading();
         SessionLocator.SelectedSession.CurrentEditComponent.SaveChanges();
         SessionLocator.SelectedSession.StopBusyIndicator();
@@ -592,11 +585,9 @@ export class ClaimGeneralTabComponent extends BaseComponent {
                 !AppTool.IsNullOrEmpty(this.EntityPM.PassportTypeCode) || !AppTool.IsNullOrEmpty(this.EntityPM.PassportNumber) || !AppTool.IsNullOrEmpty(this.EntityPM.PassportCountryTypeCode)) {
                 this.IsClientPassportEnabled = true;
             }
-            this.IsClientCodeEnabled = false;
-        }
-        else if (message == "!ok") {
-
-            this.IsClientCodeEnabled = true;
+            else {
+                this.IsClientPassportEnabled = false;
+            }
         }
            
     }

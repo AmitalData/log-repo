@@ -96,7 +96,7 @@ export class PassportDetailsComponent extends BaseComponent {
     OkButtonClicked() {
 
         SessionLocator.SelectedSession.CurrentEditComponent.SaveChanges();
-
+        SessionLocator.SelectedSession.CloseCurrentWindowEmit("ok");
         //if (this.doDisable) {
         //    SessionLocator.SelectedSession.CloseCurrentWindowEmit("ok");
         //}
