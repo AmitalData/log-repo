@@ -166,7 +166,7 @@ exports.config = {
 
         else if (browser.params.Env == "test_1209") {
             browser.params.Link = "https://test.logitudeworld.com/staging";
-            browser.params.Login.Email = "sumaya@automation.com";
+            browser.params.Login.Email = "sg1209@test.com";
             browser.params.Login.Password = "!Sg13579";
         }
 
