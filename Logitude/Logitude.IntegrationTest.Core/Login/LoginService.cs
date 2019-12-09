@@ -14,8 +14,6 @@ namespace Logitude.IntegrationTest.Core.Login
     {
         public static async Task GetLoginTokenByUserEmailAndTenant()
         {
-            int tenant = IntegrationTestLoginParameters.Tenant;
-            var token = IntegrationTestLoginParameters.Token;
             if (string.IsNullOrEmpty(IntegrationTestLoginParameters.Token))
             {
                 LoginParameters loginParameters = new LoginParameters()
@@ -36,7 +34,7 @@ namespace Logitude.IntegrationTest.Core.Login
                 var stringResult = httpResponseMessage.Content.ReadAsStringAsync().Result;
                 UserData userData = JsonConvert.DeserializeObject<UserData>(stringResult);
                 Assert.IsNotNull(userData.Token);
-                IntegrationTestLoginParameters.Token = token = userData.Token;
+                IntegrationTestLoginParameters.Token = userData.Token;
             }
         }
 

@@ -55,7 +55,7 @@
   <ItemGroup>
     <Compile Include="Tests\ChartOfAccountIntegrationTests.cs" />
     <Compile Include="Initialize.cs" />
-    <Compile Include="Preparation\PreparationCalls.cs" />
+    <Compile Include="FullAccountingPreparationCalls.cs" />
     <Compile Include="FullAccountingVariables.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

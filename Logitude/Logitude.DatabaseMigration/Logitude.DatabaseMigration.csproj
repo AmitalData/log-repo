@@ -1747,10 +1747,7 @@
     <Compile Include="Migrations\201912080719298_WesamAddObjectFieldCodeToScreenFieldsTable.Designer.cs">
       <DependentUpon>201912080719298_WesamAddObjectFieldCodeToScreenFieldsTable.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201912031815485_AddHideFCLAllInField.cs" />
-    <Compile Include="Migrations\201912031815485_AddHideFCLAllInField.Designer.cs">
-      <DependentUpon>201912031815485_AddHideFCLAllInField.cs</DependentUpon>
-    </Compile>
+   
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2999,9 +2996,7 @@
     <EmbeddedResource Include="Migrations\201912080719298_WesamAddObjectFieldCodeToScreenFieldsTable.resx">
       <DependentUpon>201912080719298_WesamAddObjectFieldCodeToScreenFieldsTable.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912031815485_AddHideFCLAllInField.resx">
-      <DependentUpon>201912031815485_AddHideFCLAllInField.cs</DependentUpon>
-    </EmbeddedResource>
+    
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">

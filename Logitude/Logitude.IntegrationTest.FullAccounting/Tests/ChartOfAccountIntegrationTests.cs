@@ -2,7 +2,7 @@
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.IntegrationTest.Core;
 using Logitude.IntegrationTest.Core.Login;
-using Logitude.IntegrationTest.FullAccounting.Preparation;
+using Logitude.IntegrationTest.FullAccounting;
 using Logitude.Server.Tools.Counters;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
@@ -27,7 +27,7 @@ namespace Logitude.IntegrationTest.FullAccounting.Tests
             string urlparameters = QueryFiltersPreparation.GetUrlParameters(FullAccountingVariables.ChartOfAccountCode);
             Task.Run(async () =>
             {
-                ChartOfAccountList chartOfAccount = await PreparationCalls.GetSingleChartOfAccountByCode();
+                ChartOfAccountList chartOfAccount = await FullAccountingPreparationCalls.GetSingleChartOfAccountByCode();
                 Assert.AreEqual(FullAccountingVariables.ChartOfAccountCode, chartOfAccount.Code);
             }).GetAwaiter().GetResult();
         }
@@ -48,7 +48,7 @@ namespace Logitude.IntegrationTest.FullAccounting.Tests
         {
             Task.Run(async () =>
             {
-                ChartOfAccountPM entityPM = await PreparationCalls.GetSingleChartOfAccount();
+                ChartOfAccountPM entityPM = await FullAccountingPreparationCalls.GetSingleChartOfAccount();
                 entityPM.LocalName ="GE:"+RandomString(5);
                 entityPM.EnglishName = "GE:" + RandomString(5);
                 HttpResponseMessage response = await RestClientService.PutAsync(entityPM, "ChartOfAccounts");
