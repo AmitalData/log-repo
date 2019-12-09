@@ -9955,7 +9955,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                     && (myShipment.ShipmentLevelCode == "H" || myShipment.ShipmentLevelCode == "D")
                                                     && myShipment.DirectionId == "E"
                                                     && myShipment.TransportModeId == "O"
-                                                    && myShipment.INTTRABookingTransStatusCode != "NST"
+                                                    && myShipment.INTTRABookingTransStatusCode != "NST" && myShipment.INTTRABookingStatusCode != "SI"
                                                     && myMasterData.Tenant == tenant
                                                     && myMasterData.MainCarriageATD == null
                                                     select myShipment).Take(1001).Count();

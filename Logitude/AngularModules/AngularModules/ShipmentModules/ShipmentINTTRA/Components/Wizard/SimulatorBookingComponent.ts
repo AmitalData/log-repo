@@ -44,8 +44,7 @@ export class SimulatorBookingComponent extends BaseComponent {
                 if (isSaveSuccess) {
                     this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                    this.CheckSendingBookingEnabled();
-                    this.CheckUpdatingBookingEnabled();
+                    this.RefresDataScreen();
                 }
                 else {
                     this.ValidationErrorsList = this.CurrentSession.CurrentEditComponent.ValidationErrorsList;
@@ -55,8 +54,7 @@ export class SimulatorBookingComponent extends BaseComponent {
             this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                    this.CheckSendingBookingEnabled();
-                    this.CheckUpdatingBookingEnabled();
+                    this.RefresDataScreen();
                 }
             });
         }
@@ -84,7 +82,11 @@ export class SimulatorBookingComponent extends BaseComponent {
                 }
             }
         });
+        this.RefresDataScreen();
+      
+    }
 
+    RefresDataScreen() {
         this.CheckSendingBookingEnabled();
         this.CheckUpdatingBookingEnabled();
         this.CheckApplyChanges();
@@ -309,13 +311,15 @@ export class SimulatorBookingComponent extends BaseComponent {
                 this.EntityPM.INTTRABookingStatusCode = "RU";
                 this.CurrentSession.CurrentEditComponent.SaveChanges();
             }
+
+            this.RefresDataScreen();
         });
     }
 
     public IsApplyChanges = false;
     private CheckApplyChanges() {
         this.IsApplyChanges = false;
-        if (this.EntityPM.INTTRABookingStatusCode != "SI" && this.INTTRABookingResponse_POFPortCode != null && this.INTTRABookingResponse_PODPortCode != null) {
+        if (this.EntityPM.INTTRABookingStatusCode == "WC" && this.INTTRABookingResponse_POFPortCode != null && this.INTTRABookingResponse_PODPortCode != null) {
             // Compare the Main leg
             if ((this.MainCarriageCarrierNumber != this.INTTRABookingResponse_Voyage) || (this.MainCarriageETD != this.INTTRABookingResponse_POLDate) ||
                 (this.MainCarriageFromPortCode != this.INTTRABookingResponse_POFPortCode) || (this.MainCarriageToPortCode != this.INTTRABookingResponse_PODPortCode)) {
