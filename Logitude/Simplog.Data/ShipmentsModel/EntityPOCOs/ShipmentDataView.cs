@@ -724,19 +724,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? INTTRALastStatusDate { get; set; }
         public DateTime? ContainerLastStatusDate { get; set; }
 
-        //public string INTTRABookingResponse_Voyage { get; set; }
-        //public DateTime INTTRABookingResponse_POLDate { get; set; }
-        //public string INTTRABookingResponse_POFPort { get; set; }
-        //public string INTTRABookingResponse_POFPortCode { get; set; }
-        //public string INTTRABookingResponse_POFCCode { get; set; }
-        //public string INTTRABookingResponse_POFCName { get; set; }
-        //public DateTime INTTRABookingResponse_PODDate { get; set; }
-        //public string INTTRABookingResponse_PODPort { get; set; }
-        //public string INTTRABookingResponse_PODPortCode { get; set; }
-        //public string INTTRABookingResponse_PODCCode { get; set; }
-        //public string INTTRABookingResponse_PODCName { get; set; }
-        //public string INTTRABookingResponse_ShippingLine { get; set; }
-
         public string ForwarderPartnerId { get; set; }
 
         public string From { get; set; }

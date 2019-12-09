@@ -1617,7 +1617,7 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
                     else if (!AppTool.IsNullOrEmpty(this.SelectedQuery.EditWizardName) || myObjectTableName == "AgentSharedManifest" || myObjectTableName == "Customs.CourierMaster") {
 
                         if (this.SelectedQuery.EditWizardName == "SimulatorBookingComponent") {
-                            this.ShowINTTRABookingWizard(entityList);
+                            this.ShowINTTRABookingWizard(selectedEntityId, $event);
                         }
                         if (this.SelectedQuery.EditWizardName == "Simplog.ShipmentLib.Views.AWBWizardEditControl") {
                             var isFullWizard = false;
@@ -2065,13 +2065,18 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         }
     }
 
-    private ShowINTTRABookingWizard(entityList) {
+    private ShowINTTRABookingWizard(selectedEntityId: string, $event) {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "INTTRA e-booking Wizard";
-        logWindow.WindowArgs = { Shipment: entityList, IsEditMode: true };
         logWindow.Width = 1020;
         logWindow.Height = 570;
-        logWindow.Show('./ShipmentModules/ShipmentINTTRA/Components/Wizard/SimulatorBookingComponent');
+        logWindow.WindowArgs = selectedEntityId;
+        logWindow.Show('./ShipmentModules/ShipmentINTTRA/Components/Wizard/SimulatorBookingLoadComponent');
+
+        logWindow.WindowClosed.subscribe(($event1: any) => {
+            this.isEditControlOpened = false;
+            this.OnBackFromEdit(selectedEntityId, $event)
+        });
     }
 
     public MyScrollTop: number = 0;
