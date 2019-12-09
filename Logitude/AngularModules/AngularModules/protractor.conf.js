@@ -182,6 +182,11 @@ exports.config = {
             browser.params.Login.Password = "!P123p456";
         }
 
+        else if (browser.params.Env == "test_live1") {
+            browser.params.Link = "https://test.logitudeworld.com/test";
+            browser.params.Login.Email = "protractor2@test.com";
+            browser.params.Login.Password = "!P123p456";
+        }
         //------------------------------------- Reporter --------------------------------
         if (browser.params.Team == "ayman") {
             jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
