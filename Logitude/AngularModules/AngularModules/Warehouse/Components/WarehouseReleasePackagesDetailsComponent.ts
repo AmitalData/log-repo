@@ -241,7 +241,7 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
         if (this.IsFromFullWarehouseReleaseComponent) {
             windowArgs.IsFromFullWarehouseReleaseComponent = this.IsFromFullWarehouseReleaseComponent;
         }
-        logWindow.Width = 1150;
+        logWindow.Width = 1250;
         logWindow.Height = 550;
         logWindow.Title = "Choose Packages";
         logWindow.WindowArgs = windowArgs;
