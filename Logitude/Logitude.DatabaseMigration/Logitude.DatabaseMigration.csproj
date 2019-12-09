@@ -1747,7 +1747,18 @@
     <Compile Include="Migrations\201912080719298_WesamAddObjectFieldCodeToScreenFieldsTable.Designer.cs">
       <DependentUpon>201912080719298_WesamAddObjectFieldCodeToScreenFieldsTable.cs</DependentUpon>
     </Compile>
+
+    <Compile Include="Migrations\201912080935232_AbedAddToFromTypeCodeFieldToWarehouseEntry.cs" />
+    <Compile Include="Migrations\201912080935232_AbedAddToFromTypeCodeFieldToWarehouseEntry.Designer.cs">
+      <DependentUpon>201912080935232_AbedAddToFromTypeCodeFieldToWarehouseEntry.cs</DependentUpon>
+    </Compile>
+
    
+   
+    <Compile Include="Migrations\201912091013371_Unique_OriginalJournalId.cs" />
+    <Compile Include="Migrations\201912091013371_Unique_OriginalJournalId.Designer.cs">
+      <DependentUpon>201912091013371_Unique_OriginalJournalId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2969,6 +2980,7 @@
     <EmbeddedResource Include="Migrations\201911280844228_ShipmentAdditionalCloudDataNewFields_Rabaia.resx">
       <DependentUpon>201911280844228_ShipmentAdditionalCloudDataNewFields_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
+
     <EmbeddedResource Include="Migrations\201911291324079_APPaymentNewFieldMigration.resx">
       <DependentUpon>201911291324079_APPaymentNewFieldMigration.cs</DependentUpon>
     </EmbeddedResource>
