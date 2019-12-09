@@ -3,8 +3,8 @@
   <xs:complexType name="DeclarationApprovalRequestPM">
     <xs:sequence>
       <xs:element minOccurs="0" name="DeclarationXmlData" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ForwarderShipmentNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Remarks" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="ShipmentNumber" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Tenant" type="xs:int" />
     </xs:sequence>
   </xs:complexType>

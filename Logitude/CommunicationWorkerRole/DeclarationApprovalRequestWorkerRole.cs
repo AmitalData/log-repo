@@ -199,6 +199,7 @@ namespace CommunicationWorkerRole
                                         //var ResponseData = result.Content.ReadAsStringAsync().Result;
                                         var Donemsg = "Declaration Approval Request Sent To Importer Successfully, Start Sending VDK to Unif. " + DateTime.Now;
                                         APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, "VDK", null, "");
+                                        queue.Complete();
                                     }
                                     else //if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
                                     {
