@@ -1738,6 +1738,10 @@
     <Compile Include="Migrations\201912041012315_AbedChangeFromPortForeignKeyToWarehouseRelease.Designer.cs">
       <DependentUpon>201912041012315_AbedChangeFromPortForeignKeyToWarehouseRelease.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912091013371_Unique_OriginalJournalId.cs" />
+    <Compile Include="Migrations\201912091013371_Unique_OriginalJournalId.Designer.cs">
+      <DependentUpon>201912091013371_Unique_OriginalJournalId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2979,6 +2983,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912041012315_AbedChangeFromPortForeignKeyToWarehouseRelease.resx">
       <DependentUpon>201912041012315_AbedChangeFromPortForeignKeyToWarehouseRelease.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912091013371_Unique_OriginalJournalId.resx">
+      <DependentUpon>201912091013371_Unique_OriginalJournalId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
