@@ -394,6 +394,26 @@ export class WarehouseEntryPM {
     public set Ratio(newValue: number) { if (this.ratio != newValue) { this.ratio = newValue; this.MarkAsDirty("Ratio"); } }
        
 	 
+    private toTypeCode: string;
+    public get ToTypeCode() { return this.toTypeCode; }
+    public set ToTypeCode(newValue: string) { if (this.toTypeCode != newValue) { this.toTypeCode = newValue; this.MarkAsDirty("ToTypeCode"); } }
+       
+	 
+    private fromTypeCode: string;
+    public get FromTypeCode() { return this.fromTypeCode; }
+    public set FromTypeCode(newValue: string) { if (this.fromTypeCode != newValue) { this.fromTypeCode = newValue; this.MarkAsDirty("FromTypeCode"); } }
+       
+	 
+    private fromCountryId: string;
+    public get FromCountryId() { return this.fromCountryId; }
+    public set FromCountryId(newValue: string) { if (this.fromCountryId != newValue) { this.fromCountryId = newValue; this.MarkAsDirty("FromCountryId"); } }
+       
+	 
+    private toCountryId: string;
+    public get ToCountryId() { return this.toCountryId; }
+    public set ToCountryId(newValue: string) { if (this.toCountryId != newValue) { this.toCountryId = newValue; this.MarkAsDirty("ToCountryId"); } }
+       
+	 
 
     public OldEntityPM: WarehouseEntryPM;
 		
