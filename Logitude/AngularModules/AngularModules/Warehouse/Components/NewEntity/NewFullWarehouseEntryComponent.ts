@@ -498,7 +498,29 @@ export class NewFullWarehouseEntryComponent extends BaseComponent implements OnI
 
         }
     }
-    
+
+
+
+
+
+
+    get ToCountryId() { return this.warehouseEntryPM.ToCountryId; }
+    set ToCountryId(newValue: string) {
+        if (this.warehouseEntryPM.ToCountryId != newValue) {
+            this.warehouseEntryPM.ToCountryId = newValue;
+        }
+    }
+
+
+    get FromCountryId() { return this.warehouseEntryPM.FromCountryId; }
+    set FromCountryId(newValue: string) {
+        if (this.warehouseEntryPM.FromCountryId != newValue) {
+            this.warehouseEntryPM.FromCountryId = newValue;
+        }
+    }
+
+
+
 
     public FromPortList: PortList = null;
     get FromPortId() { return this.warehouseEntryPM.FromPortId; }
@@ -586,7 +608,34 @@ export class NewFullWarehouseEntryComponent extends BaseComponent implements OnI
         }
     }
 
-   
+    get FromTypeCode() { return this.warehouseEntryPM.FromTypeCode; }
+    set FromTypeCode(newValue: string) {
+        if (this.warehouseEntryPM.FromTypeCode != newValue) {
+            this.warehouseEntryPM.FromTypeCode = newValue;
+            this.FromPortId = null;
+            this.FromCountryId = null;
+
+        }
+    }
+
+    get ToTypeCode() { return this.warehouseEntryPM.ToTypeCode; }
+    set ToTypeCode(newValue: string) {
+        if (this.warehouseEntryPM.ToTypeCode != newValue) {
+            this.warehouseEntryPM.ToTypeCode = newValue;
+            this.ToPortId = null;
+            this.ToCountryId = null;
+        }
+    }
+
+
+    
+
+
+
+
+
+
+
     get ActualEntryDate() { return this.warehouseEntryPM.ActualEntryDate; }
     set ActualEntryDate(newValue: Date) {
         if (this.warehouseEntryPM.ActualEntryDate != newValue) {
@@ -841,6 +890,8 @@ export class NewFullWarehouseEntryComponent extends BaseComponent implements OnI
 
        
         if (this.warehouseEntryPM) {
+            this.FromTypeCode = 'PORT';
+            this.ToTypeCode = 'PORT';
 
             var myCommonDomain = new CommonDomainService();
             myCommonDomain.GetDeafaultMyWarehouse().subscribe((myResponse: ServiceResponse) => {
@@ -973,9 +1024,12 @@ export class NewFullWarehouseEntryComponent extends BaseComponent implements OnI
         this.UIProperties.SetEnabled("TotalPieces", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("TotalGrossWeight", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("TotalVolume", this.ObjectTableName, isScreenEnabled);
-        this.UIProperties.SetRequired("FromPortId", this.ObjectTableName, isScreenEnabled);
-        this.UIProperties.SetRequired("ToPortId", this.ObjectTableName, isScreenEnabled);
+        this.UIProperties.SetEnabled("FromPortId", this.ObjectTableName, isScreenEnabled);
+        this.UIProperties.SetEnabled("ToPortId", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("Manufacturer", this.ObjectTableName, isScreenEnabled);
+        this.UIProperties.SetEnabled("ToCountryId", this.ObjectTableName, isScreenEnabled);
+        this.UIProperties.SetEnabled("FromCountryId", this.ObjectTableName, isScreenEnabled);
+
     }
 
     FillMorePackagesDetails() {
@@ -1028,8 +1082,8 @@ export class NewFullWarehouseEntryComponent extends BaseComponent implements OnI
             }
         } 
 
-        this.UIProperties.SetRequired("FromPortId", this.ObjectTableName, isFromRequired);
-        this.UIProperties.SetRequired("ToPortId", this.ObjectTableName, isToRequired);
+        //this.UIProperties.SetRequired("FromPortId", this.ObjectTableName, isFromRequired);
+        //this.UIProperties.SetRequired("ToPortId", this.ObjectTableName, isToRequired);
 
 
     }
@@ -1290,12 +1344,12 @@ export class NewFullWarehouseEntryComponent extends BaseComponent implements OnI
         }
 
         if (!this.IsInlandDomestic) {
-            if (AppTool.IsNullOrEmpty(this.warehouseEntryPM.FromPortId)) {
-                this.ValidationErrorsList.push(this.FromPortText + " field is required");
-            }
-            if (AppTool.IsNullOrEmpty(this.warehouseEntryPM.ToPortId)) {
-                this.ValidationErrorsList.push(this.ToPortText + " field is required");
-            }
+            //if (AppTool.IsNullOrEmpty(this.warehouseEntryPM.FromPortId)) {
+            //    this.ValidationErrorsList.push(this.FromPortText + " field is required");
+            //}
+            //if (AppTool.IsNullOrEmpty(this.warehouseEntryPM.ToPortId)) {
+            //    this.ValidationErrorsList.push(this.ToPortText + " field is required");
+            //}
 
             if (this.IsShipperMyCustomer) {
                 this.warehouseEntryPM.ShipperReference1 = this.CustomerRef1;
