@@ -11,15 +11,17 @@ import {ObservableCollection} from '../../../../Infrastructure/Utilities/Observa
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import { CourierMasterValidator } from '../../../../Customs/Validators/CourierMasterValidator';
 import { CustomsRequestsSheetPM } from '../../../../Customs/EntityPMs/CustomsRequestsSheetPM';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
     moduleId: module.id,
     templateUrl: './CMConnectedDeclarationTabComponent.html',
+    providers: [CourierMasterService]
 })
 
 
 export class CMConnectedDeclarationTabComponent extends BaseComponent {
-    CourierMasterService: CourierMasterService = new CourierMasterService();
+  
     ObjectTableName: string = "Customs.CourierMaster";
     DataContext: any = this;
     entityPM: CourierMasterPM;
@@ -39,7 +41,10 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
     public DisplayOnlyMessage: string = "";
 
     private EntityResourceService: EntityResourceService;
-    constructor(public entityArgs: EntityArgs) {
+    status: string;
+    IsSelected: boolean;
+    IsSelectedNot: boolean;
+    constructor(public entityArgs: EntityArgs, private CourierMasterService: CourierMasterService) {
         super();
         this.EntityResourceService = new EntityResourceService();
         this.entityPM = entityArgs.EntityPM;
@@ -47,13 +52,16 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
         this.notConnectedListIds = new ObservableCollection([]);
         this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe(response => {
-             
-                this.IsVisibile = true;
-                this.BuildColumns();
-                this.BuildColumns1();
-                this.LoadConnectedItems();
-                this.DisplayOnlyCheck();
-                this.Listen();
+                this.EntityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe(response => {
+
+                    this.IsVisibile = true;
+                    this.OnAllBtnClicked();
+                    this.BuildColumns();
+                    this.BuildColumns1();
+                    this.LoadConnectedItems();
+                    this.DisplayOnlyCheck();
+                    this.Listen();
+                });
             });
         });
     }
@@ -81,11 +89,19 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
         }
     }
 
+
+    private _TotalDisconnected: number = 0;
+    get TotalDisconnected() { return this.DataSource1 != null ? this.DataSource1.rowCount : 0; }
+    set TotalDisconnected(value: number) {
+        if (this._TotalDisconnected != value) {
+            this._TotalDisconnected = value;
+        }
+    }
     private Listen() {
         if (SessionLocator.SelectedSession.CurrentEditComponent != null) {
-
             this.CurrentEditComponentId = SessionLocator.SelectedSession.CurrentEditComponent.ComponentId;
             SessionLocator.SelectedSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+
                 if (isSaveSuccess) {
                     this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
                     this.LoadConnectedDeclarationGrid();
@@ -109,6 +125,43 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
                 }
             });
         }
+    }
+
+    OnAllBtnClicked() {
+         this.IsSelected = true;
+        this.CourierMasterService.connectedSelectAll = true;//    this.entityPM.ConnectedDeclarations = "ALL,";
+        this.entityPM.NotConnectedDeclarations = "";
+
+        this.LoadConnectedItems();
+ 
+    }
+
+
+    OnAllBtnClickedNot() {
+         this.IsSelectedNot = true;
+        this.CourierMasterService.disconnectedSelectAll = true;
+        this.entityPM.ConnectedDeclarations = "ALL"; 
+        this.LoadNotConnectedDeclarationGrid();
+
+    }
+
+    OnNoneBtnClickedNot() {
+        this.IsSelectedNot = false;
+        this.CourierMasterService.disconnectedSelectAll = false;
+        this.entityPM.ConnectedDeclarations = ""; 
+
+        this.LoadNotConnectedDeclarationGrid();
+
+    }
+
+
+    OnNoneBtnClicked() {
+         this.IsSelected = false;
+        this.CourierMasterService.connectedSelectAll = false;
+        this.entityPM.NotConnectedDeclarations = "ALL"; 
+        this.LoadConnectedItems();
+
+
     }
     public columns: any[] = null;
     BuildColumns() {
@@ -233,9 +286,9 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
         });
        
     }
+    test: any;
 
-
-    DataSource = {
+     DataSource = {
 
         pageSize: 10,
         rowCount: null,
@@ -244,7 +297,7 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
         getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
 
             var tempo = this.getRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
-            return tempo;
+             return tempo;
         },
 
     };
@@ -339,7 +392,8 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
     }
 
     onCheckBoxChecked($event) {
- 
+
+        this.IsSelected = false;
         if (!this.entityPM.NotConnectedDeclarations) {
             this.entityPM.NotConnectedDeclarations = "";
         }
