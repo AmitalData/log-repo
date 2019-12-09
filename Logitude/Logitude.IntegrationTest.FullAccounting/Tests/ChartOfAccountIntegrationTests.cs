@@ -38,6 +38,7 @@ namespace Logitude.IntegrationTest.FullAccounting.Tests
             {
                 HttpResponseMessage response = await RestClientService.GetAsync("ChartOfAccounts/GetSingle?id="+ FullAccountingVariables.ChartOfAccountId);
                 var stringResult = response.Content.ReadAsStringAsync().Result;
+                
                 ChartOfAccountPM chartOfAccount = JsonConvert.DeserializeObject<ChartOfAccountPM>(stringResult);
                 Assert.AreEqual(FullAccountingVariables.ChartOfAccountCode, chartOfAccount.Code);
             }).GetAwaiter().GetResult();
