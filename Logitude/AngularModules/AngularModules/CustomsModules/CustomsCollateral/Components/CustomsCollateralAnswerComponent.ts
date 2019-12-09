@@ -1,4 +1,4 @@
-SetClosedCollateralScreesnimport {Component} from '@angular/core';
+import { Component } from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { CustomsCollateralsAnswerPM } from '../../../Customs/EntityPMs/CustomsCollateralsAnswerPM';
 import { CustomsCollateralPM } from '../../../Customs/EntityPMs/CustomsCollateralPM';
@@ -15,7 +15,6 @@ import { DeclarationPMService } from '../../../Customs/Services/StandardPMs/Decl
 import { DeclarationPM } from '../../../Customs/EntityPMs/DeclarationPM';
 import { CardListService } from '../../../Common/Services/StandardLists/CardListService'
 import { CardList } from '../../../Common/EntityLists/CardList';
-
 
 declare var window: any;
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
