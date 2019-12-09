@@ -165,6 +165,15 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   CourierPendingReasonList = a.CourierPendingReasonList,
 
 
+                                                                  AirlineId =cm.CustomsAirline.AirlinePrefix,
+                                                                  MAWB = cm.MAWB,
+                                                                  MasterGrossMassMeasure = cm.GrossMassMeasure,
+                                                                  MasterPackageQuantity = cm.PackageQuantity,
+                                                                  MasterCreateDateTime = cm.CreateDateTime,
+                                                                  MasterGatewayPortCode = cm.GatewayPortCode,
+                                                                  MasterEstimatedArrivalDate = cm.EstimatedArrivalDate,
+                                                                  MasterStorageSiteCode = cm.StorageSiteCode,
+                                                                  MasterHAWB = cm.HAWB,
                                                               });
 
 

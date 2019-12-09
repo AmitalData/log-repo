@@ -94,6 +94,8 @@ namespace WebFreight.Web.Helpers
                     }
                 }
             }
+            sheet.Range[1, 1, 1, dataTable.Columns.Count + 1].CellStyle.ColorIndex = ExcelKnownColors.Grey_25_percent;
+            sheet.Range[1, 1, 1, dataTable.Columns.Count + 1].CellStyle.Font.Bold = true;
             ///workbook.Version = ExcelVersion.Excel2007;
             workbook.SaveAs(memory, ExcelSaveType.SaveAsXLS);
             return memory.ToArray();
