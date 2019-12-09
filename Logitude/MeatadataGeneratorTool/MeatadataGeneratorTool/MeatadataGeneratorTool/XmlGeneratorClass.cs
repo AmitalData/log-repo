@@ -1907,6 +1907,8 @@ namespace MeatadataGeneratorTool
                 bool fieldIsNullable = field.IsNullable;
                 bool fieldIsFixedLength = field.IsFixedLength;
                 string fieldOldNames = field.OldNames;
+                int? fieldNumberOfDigits = field.NumberOfDigits;
+                int? fieldDigitsAfterPoint = field.DigitsAfterPoint;
 
                 string dxmlColumnDataType = GetDataTypeForDXMLColumn(fieldDataType, fieldIsFixedLength);
                 bool dxmlColumnNullable = GetNullableForDXMLColumn(fieldIsRequired, fieldIsNullable, fieldIsPrimaryKey, dxmlColumnDataType);
@@ -1919,6 +1921,16 @@ namespace MeatadataGeneratorTool
                 if(dxmlColumnSize != 0)
                 {
                     columnElement.SetAttribute("Size", dxmlColumnSize.ToString());
+                }
+
+                if(dxmlColumnDataType  == "decimal" && fieldNumberOfDigits != null)
+                {
+                    columnElement.SetAttribute("Precision", fieldNumberOfDigits.ToString());
+                }
+
+                if (dxmlColumnDataType == "decimal" && fieldDigitsAfterPoint != null)
+                {
+                    columnElement.SetAttribute("Scale", fieldDigitsAfterPoint.ToString());
                 }
 
                 if (!string.IsNullOrEmpty(fieldOldNames) && fieldName != fieldOldNames)
