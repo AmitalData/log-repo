@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
-import { DateTool } from '../../../../Infrastructure/Tools';
+import { DateTool, AppTool } from '../../../../Infrastructure/Tools';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { PriceStepsPM } from '../../../../Infrastructure/EntityPMs/PriceStepsPM';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
@@ -26,6 +26,7 @@ export class PriceStepsGeneralTabComponent extends BaseComponent implements OnIn
     public PriceStepsText: string;
     public ValidationErrorsList: string[];
     private CurrentSession = SessionLocator.SelectedSession;
+    private isNewEntity: boolean = false;
 
     constructor(public entityArgs: EntityArgs) {
         super();
@@ -34,6 +35,14 @@ export class PriceStepsGeneralTabComponent extends BaseComponent implements OnIn
         this.Listen();
     }
 
+    ngOnInit() {
+        if (this.EntityPM == null) {
+            this.InitializeNewEntity();
+        } else {
+            this.GetPriceSteps(this.Steps);
+        }
+    }
+    
     InitializeNewEntity() {
         this.EntityPM = new PriceStepsPM();
         var todayDate: Date = DateTool.GetCurrentDateTimeAsUtc();
@@ -42,21 +51,8 @@ export class PriceStepsGeneralTabComponent extends BaseComponent implements OnIn
         this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
         this.EntityPM.UpdateDate = todayDate;
         this.EntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
-    }
-
-    ngOnInit() {
-        this.GetTenantTariffSetting();
-        if (this.EntityPM == null) {
-            this.InitializeNewEntity();
-        } else {
-            this.UpdateEntity();
-        }
-    }
-
-    UpdateEntity() {
-        var todayDate: Date = DateTool.GetCurrentDateTimeAsUtc();
-        this.EntityPM.UpdateDate = todayDate;
-        this.EntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
+        this.EntityPM.Steps = "";
+        this.isNewEntity = true;
     }
     
     EditPriceSteps() {
@@ -66,11 +62,10 @@ export class PriceStepsGeneralTabComponent extends BaseComponent implements OnIn
         logWindow.Show("./TariffModule/Components/NewEntity/TariffPriceStepsComponent");
         logWindow.ComponentLoaded.subscribe(s => {
             logWindow.WindowClosed.subscribe(d => {
-                if (d != "cancel") {
+                if (d && d != "cancel") {
                     var steps = s.DefaultPriceSteps;
-                    this.EntityPM.Steps = steps;
                     this.Steps = steps;
-                    this.PriceStepsText = this.GetPriceSteps(this.Steps);
+                    this.GetPriceSteps(this.Steps);
                 }
             });
         });
@@ -81,13 +76,11 @@ export class PriceStepsGeneralTabComponent extends BaseComponent implements OnIn
             this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.entityArgs.EditComponent.ReloadEntityPM();
-                    //this.SetUIProperties();
                 }
             });
             this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                    //this.SetUIProperties();
                 }
             });
         }
@@ -104,41 +97,39 @@ export class PriceStepsGeneralTabComponent extends BaseComponent implements OnIn
     set Steps(value: string) {
         if (this.EntityPM.Steps != value) {
             this.EntityPM.Steps = value;
+            this.UIProperties.SetRequired("Steps", this.ObjectTableName, AppTool.IsNullOrEmpty(value));
+        }
+    }
+
+    get Inactive() { return this.EntityPM.Inactive; }
+    set Inactive(value: boolean) {
+        if (this.EntityPM.Inactive != value) {
+            this.EntityPM.Inactive = value;
         }
     }
 
     GetPriceSteps(steps: string) {
         if (steps) {
             var stpesWithSpaces = steps.split(',').join(', ');
-            return stpesWithSpaces;
+            this.PriceStepsText = stpesWithSpaces;
         }
     }
 
-    GetTenantTariffSetting() {
-        var tariffDomainService = new TariffDomainService();
-        tariffDomainService.GetTenantTariffSetting().subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                var entity: TariffSettingPM = myResponse.Result;
-                this.EntityPM.Steps = entity.DefaultPriceSteps;
-                this.PriceStepsText = this.GetPriceSteps(entity.DefaultPriceSteps);
-            }
-        });
+    InactiveChecked(checked: boolean) {
+        if (checked) {
+            this.Inactive = true;
+        }
+        else {
+            this.Inactive = false;
+        }
     }
-
 
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
-        var errors: string[] = [];
-        Validator.TryValidateObject(this.EntityPM, this.DataContext.ObjectTableName, errors);
-
-        //if (AppTool.IsNullOrEmpty(this.Description)) {
-        //    errors.push("Description is required");
-        //}
-        this.ValidationErrorsList = errors;
-
+        Validator.TryValidateObject(this.EntityPM, this.DataContext.ObjectTableName, this.ValidationErrorsList);
         if (this.ValidationErrorsList.length == 0) {
             this.SubmitCreatingPriceSteps();
         }
@@ -147,13 +138,13 @@ export class PriceStepsGeneralTabComponent extends BaseComponent implements OnIn
     SubmitCreatingPriceSteps() {
         var service: PriceStepsPMService = new PriceStepsPMService();
 
-        service.insert(this.EntityPM).subscribe((myResult: ServiceResponse) => {
-            if (myResult) {
-                if (!myResult.HasError) {
+        service.insert(this.EntityPM).subscribe((result: ServiceResponse) => {
+            if (result) {
+                if (!result.HasError) {
                     this.CurrentSession.CloseCurrentWindowEmit("ok");
                 }
                 else {
-                    this.ValidationErrorsList = myResult.ErrorsArray;
+                    this.ValidationErrorsList = result.ErrorsArray;
                     this.CurrentSession.StopBusyIndicator();
                 }
             }
