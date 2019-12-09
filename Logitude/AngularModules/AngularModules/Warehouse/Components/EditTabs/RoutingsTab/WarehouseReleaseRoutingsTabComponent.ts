@@ -62,7 +62,7 @@ export class WarehouseReleaseRoutingsTabComponent extends BaseComponent {
         this.UIProperties.SetEnabled("ToAddress", this.ObjectTableName, false);
 
     }
-
+    s
 
 
 
@@ -276,7 +276,7 @@ export class WarehouseReleaseRoutingsTabComponent extends BaseComponent {
     SetUIProperties_To() {
         switch (this.ToTypeCode) {
             case "PART": {
-                this.UIProperties.SetRequired("ToPartnerCardId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.ToPartnerCardId) ? true : false);
+                //this.UIProperties.SetRequired("ToPartnerCardId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.ToPartnerCardId) ? true : false);
 
                 var isAddressIdEnabled = false;
                     if (!AppTool.IsNullOrEmpty(this.ToPartnerCardId)) {
@@ -284,16 +284,16 @@ export class WarehouseReleaseRoutingsTabComponent extends BaseComponent {
                     }
                 
 
-                this.UIProperties.SetEnabled("ToAddressId", this.ObjectTableName, isAddressIdEnabled);
+               // this.UIProperties.SetEnabled("ToAddressId", this.ObjectTableName, isAddressIdEnabled);
             }
 
             case "PORT": {
-                this.UIProperties.SetRequired("ToPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.ToPortId) ? true : false);
+              //  this.UIProperties.SetRequired("ToPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.ToPortId) ? true : false);
             }
 
             case "CASL": {
-                this.UIProperties.SetRequired("ToAddressCity", this.ObjectTableName, AppTool.IsNullOrEmpty(this.ToAddressCity) && AppTool.IsNullOrEmpty(this.ToAddressZipCode) ? true : false);
-                this.UIProperties.SetRequired("ToAddressCountryId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.ToAddressCountryId) ? true : false);
+               // this.UIProperties.SetRequired("ToAddressCity", this.ObjectTableName, AppTool.IsNullOrEmpty(this.ToAddressCity) && AppTool.IsNullOrEmpty(this.ToAddressZipCode) ? true : false);
+               // this.UIProperties.SetRequired("ToAddressCountryId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.ToAddressCountryId) ? true : false);
             }
         }
     }
@@ -371,8 +371,8 @@ export class WarehouseReleaseRoutingsTabComponent extends BaseComponent {
         var isConsigneeIdRequired: boolean = false;
         var isCustomerIdRequired: boolean = false;
 
-        this.UIProperties.SetRequired("FromPortId", this.ObjectTableName, isFromRequired);
-        this.UIProperties.SetRequired("ToPortId", this.ObjectTableName, isToRequired);
+       // this.UIProperties.SetRequired("FromPortId", this.ObjectTableName, isFromRequired);
+      //  this.UIProperties.SetRequired("ToPortId", this.ObjectTableName, isToRequired);
     }
 
 
