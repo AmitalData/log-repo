@@ -416,8 +416,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 result = string.IsNullOrEmpty(result) ? client.FullName : result + "," + client.FullName;
             }
 
-            if (isNewEntity)
-            {
+         //   if (isNewEntity)
+        //    {
                 foreach (ConsignmentPM item in entityPM.Consignments)
                 {
                     if (!string.IsNullOrEmpty(item.ManifestNumber))
@@ -435,31 +435,31 @@ namespace Logitude.Customs.BL.EntityDataMappings
                         result = string.IsNullOrEmpty(result) ? item.ThirdCargoID : result + "," + item.ThirdCargoID;
                     }
                 }
-            }
+         //   }
 
-            else
-            {
-                ConsignmentRepository consignmentRepository = new ConsignmentRepository(entityPM.Tenant);
-                DeclarationKeys entityKeys = new DeclarationKeys() { Id = entityPM.Id };
-                List<Consignment> consignments = consignmentRepository.GetMulti(entityKeys);
-                foreach (Consignment item in consignments)
-                {
-                    if (!string.IsNullOrEmpty(item.ManifestNumber))
-                    {
-                        result = string.IsNullOrEmpty(result) ? item.ManifestNumber : result + "," + item.ManifestNumber;
-                    }
+        //    else
+            //{
+            //    ConsignmentRepository consignmentRepository = new ConsignmentRepository(entityPM.Tenant);
+            //    DeclarationKeys entityKeys = new DeclarationKeys() { Id = entityPM.Id };
+            //    List<Consignment> consignments = consignmentRepository.GetMulti(entityKeys);
+            //    foreach (Consignment item in consignments)
+            //    {
+            //        if (!string.IsNullOrEmpty(item.ManifestNumber))
+            //        {
+            //            result = string.IsNullOrEmpty(result) ? item.ManifestNumber : result + "," + item.ManifestNumber;
+            //        }
 
-                    if (!string.IsNullOrEmpty(item.SecondCargoID))
-                    {
-                        result = string.IsNullOrEmpty(result) ? item.SecondCargoID : result + "," + item.SecondCargoID;
-                    }
+            //        if (!string.IsNullOrEmpty(item.SecondCargoID))
+            //        {
+            //            result = string.IsNullOrEmpty(result) ? item.SecondCargoID : result + "," + item.SecondCargoID;
+            //        }
 
-                    if (!string.IsNullOrEmpty(item.ThirdCargoID))
-                    {
-                        result = string.IsNullOrEmpty(result) ? item.ThirdCargoID : result + "," + item.ThirdCargoID;
-                    }
-                }
-            }
+            //        if (!string.IsNullOrEmpty(item.ThirdCargoID))
+            //        {
+            //            result = string.IsNullOrEmpty(result) ? item.ThirdCargoID : result + "," + item.ThirdCargoID;
+            //        }
+            //    }
+           // }
 
             entityPM.SearchFields = result.ToLower();
             poco.SearchFields = entityPM.SearchFields;
