@@ -306,6 +306,10 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new DangerousGoodsPackingReqMap());
 	
+            modelBuilder.Configurations.Add(new DBMigrationMap());
+	
+            modelBuilder.Configurations.Add(new DBMigrationLineMap());
+	
             modelBuilder.Configurations.Add(new DebtNotificationTypeMap());
 	
             modelBuilder.Configurations.Add(new DecCargoSplitCargoIdentifierMap());
@@ -690,6 +694,8 @@ namespace Logitude.Customs.Data
 			modelBuilder.Entity<CustomsCollateralsAnswer>().Property(x => x.RequestFileAmount).HasPrecision(18, 2);
 				
 			modelBuilder.Entity<CustomsExchangeRate>().Property(x => x.ExchangeRate).HasPrecision(15, 10);
+				
+			modelBuilder.Entity<DBMigration>().Property(x => x.MajorVersion).HasPrecision(5, 2);
 				
 			modelBuilder.Entity<Declaration>().Property(x => x.LoadingFactor).HasPrecision(18, 10);
 				
@@ -1812,6 +1818,18 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<DangerousGoodsPackingReq> DangerousGoodsPackingReqs 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<DBMigration> DBMigrations 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<DBMigrationLine> DBMigrationLines 
 	 {
 	      get; set;
 	 
