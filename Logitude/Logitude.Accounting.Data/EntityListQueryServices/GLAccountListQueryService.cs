@@ -124,7 +124,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                         UpdatedByLocalName =    a.UpdatedByUser != null ? a.UpdatedByUser.Contact.LocalName : null,
                                                         UpdatedByUserName =     a.UpdatedByUser != null ? a.UpdatedByUser.Contact.EnglishName : null,
                                                         ExcludeFromDeductionReport = a.ExcludeFromDeductionReport,
-
+                                                        AllowEditChequePayToName = a.AllowEditChequePayToName,
                                                });
             return query;
         }

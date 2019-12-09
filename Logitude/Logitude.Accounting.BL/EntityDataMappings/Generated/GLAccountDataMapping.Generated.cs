@@ -68,7 +68,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CreatedByUserId, 
 	         UpdatedByUserId, 
 	         CreateDate, 
-	         UpdateDate,
+	         UpdateDate, 
+	         AllowEditChequePayToName,
 	      }
 
 
@@ -174,7 +175,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         UpdatedByUserName, 
 	         UpdatedByLocalName, 
 	         CardCode, 
-	         PartnerTypeId,
+	         PartnerTypeId, 
+	         AllowEditChequePayToName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -411,6 +413,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdateDate))
             {
 				entityPOCO.UpdateDate = entityPM.UpdateDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AllowEditChequePayToName))
+            {
+				entityPOCO.AllowEditChequePayToName = entityPM.AllowEditChequePayToName;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -654,6 +661,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.UpdateDate = entityPOCO.UpdateDate;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AllowEditChequePayToName))
+            {
+					entityPM.AllowEditChequePayToName = entityPOCO.AllowEditChequePayToName;
+            }
+
 		}
 
 		public void PMToOldPM(GLAccountPM entityPM, GLAccountPM oldEntityPM)
@@ -888,6 +900,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdateDate))
             {
                 oldEntityPM.UpdateDate = entityPM.UpdateDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AllowEditChequePayToName))
+            {
+                oldEntityPM.AllowEditChequePayToName = entityPM.AllowEditChequePayToName;
             }
 			
 		}
