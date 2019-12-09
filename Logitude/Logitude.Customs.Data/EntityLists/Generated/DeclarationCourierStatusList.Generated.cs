@@ -122,6 +122,24 @@ namespace Logitude.Customs.Data.EntityLists
        public string StorageSiteStatusName  { get; set; }
        [DataMember]
        public string CourierPendingReasonList  { get; set; }
+       [DataMember]
+       public string AirlineId  { get; set; }
+       [DataMember]
+       public string MAWB  { get; set; }
+       [DataMember]
+       public decimal? MasterGrossMassMeasure  { get; set; }
+       [DataMember]
+       public int? MasterPackageQuantity  { get; set; }
+       [DataMember]
+       public DateTime? MasterCreateDateTime  { get; set; }
+       [DataMember]
+       public string MasterGatewayPortCode  { get; set; }
+       [DataMember]
+       public DateTime? MasterEstimatedArrivalDate  { get; set; }
+       [DataMember]
+       public string MasterStorageSiteCode  { get; set; }
+       [DataMember]
+       public string MasterHAWB  { get; set; }
    }
 
 }

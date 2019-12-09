@@ -62,6 +62,15 @@ export class DeclarationCourierStatusList {
 	StorageSiteErrorText: string;
 	StorageSiteStatusName: string;
 	CourierPendingReasonList: string;
+	AirlineId: string;
+	MAWB: string;
+	MasterGrossMassMeasure: number;
+	MasterPackageQuantity: number;
+	MasterCreateDateTime: Date;
+	MasterGatewayPortCode: string;
+	MasterEstimatedArrivalDate: Date;
+	MasterStorageSiteCode: string;
+	MasterHAWB: string;
 	
 }
  

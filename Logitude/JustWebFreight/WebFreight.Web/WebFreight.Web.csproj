@@ -1987,6 +1987,7 @@
     <Compile Include="CustomModel\DomainServices\Generated\PendingByKeywordDomainService.Generated.cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\BlockListInWarehouseDetailExport.cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\BlockListInWarehouseDetailProvider.cs" />
+    <Compile Include="CustomWebServices\BL\XLSExport\CourierMasterWSheetExport.cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\ExchangeRateExport.cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\GuaranteeExport.cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\GuaranteeRequestProvider.cs" />
@@ -2371,6 +2372,7 @@
     <Compile Include="Helpers\DepositionRequestHelper.cs" />
     <Compile Include="Helpers\DocumentHelper.cs" />
     <Compile Include="Helpers\EntityChangeAutomationHelper.cs" />
+    <Compile Include="Helpers\ExportToExcelHelper.DataTable.cs" />
     <Compile Include="Helpers\ExternalAPIHelpers\ApiExceptionHandler.cs" />
     <Compile Include="Helpers\ExternalAPIHelpers\APIHelper.cs" />
     <Compile Include="Helpers\FirstChanceExceptionEventArgsLogger.cs" />

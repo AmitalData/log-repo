@@ -33,6 +33,7 @@ import { CourierPendingReasonList } from '../../../../Customs/EntityLists/Courie
 import { element } from 'protractor';
 import { CourierMasterPMService } from '../../../../Customs/Services/StandardPMs/CourierMasterPMService';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
+import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 
 @Component({
     moduleId: module.id,
@@ -1842,6 +1843,20 @@ export class CourierWorksheetComponent extends BaseComponent
         } else {
             this.UpdateIsReadyForInvoice();
         }
+    }
+    Export2Excel() {
+        //this._IsDisableToggle = !this._IsDisableToggle;
+        
+        
+        
+
+        //communicationLogStepListService.GetExportExcelByRequestId("8305", this.MyLastCustomsRequestSheetId, SessionLocator.Tenant);
+                            //http://localhost:9996/api/CourierMaster/GetExportCourierMaster2Excel?CourierMasterId=1-3333&tenant=1
+        var url = ServiceHelper.GetLogitudeURL() + 'api/CourierMaster/GetExportCourierMaster2Excel?' + 'CourierMasterId=' + this.entityPM.Id + '&tenant=' + this.entityPM.Tenant.toString();
+
+
+        window.open(url);
+
     }
     UpdateIsReadyForInvoice() {
         SessionLocator.SelectedSession.StartBusyIndicatorSaving();
