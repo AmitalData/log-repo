@@ -1710,6 +1710,7 @@
     <Compile Include="Migrations\201911280844228_ShipmentAdditionalCloudDataNewFields_Rabaia.Designer.cs">
       <DependentUpon>201911280844228_ShipmentAdditionalCloudDataNewFields_Rabaia.cs</DependentUpon>
     </Compile>
+
     <Compile Include="Migrations\201911291324079_APPaymentNewFieldMigration.cs" />
     <Compile Include="Migrations\201911291324079_APPaymentNewFieldMigration.Designer.cs">
       <DependentUpon>201911291324079_APPaymentNewFieldMigration.cs</DependentUpon>
@@ -1746,6 +1747,7 @@
     <Compile Include="Migrations\201912080719298_WesamAddObjectFieldCodeToScreenFieldsTable.Designer.cs">
       <DependentUpon>201912080719298_WesamAddObjectFieldCodeToScreenFieldsTable.cs</DependentUpon>
     </Compile>
+   
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2994,6 +2996,7 @@
     <EmbeddedResource Include="Migrations\201912080719298_WesamAddObjectFieldCodeToScreenFieldsTable.resx">
       <DependentUpon>201912080719298_WesamAddObjectFieldCodeToScreenFieldsTable.cs</DependentUpon>
     </EmbeddedResource>
+    
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">

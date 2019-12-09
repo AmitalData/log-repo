@@ -1,4 +1,5 @@
 ﻿using Logitude.IntegrationTest.Core.Login;
+using Logitude.IntegrationTest.FullAccounting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -16,10 +17,8 @@ namespace Logitude.IntegrationTest.FullAccounting
         {
             Task.Run(async () =>
             {
-               
-                var token = await LoginService.GetLoginTokenByUserEmailAndTenant();
-
-                Assert.IsNotNull(token);
+                await LoginService.GetLoginTokenByUserEmailAndTenant();
+                await FullAccountingPreparationCalls.PrepareVariables();
 
             }).GetAwaiter().GetResult();
         }

@@ -52,7 +52,7 @@ namespace Logitude.IntegrationTest.Core
         {
             var stringResult = httpResponseMessage.Content.ReadAsStringAsync().Result;
             JObject jObject = JObject.Parse(stringResult);
-            string result = (string)jObject.SelectToken("Result")[0].ToString();
+            string result = jObject.SelectToken("Result").Count() > 0 ? (string)jObject.SelectToken("Result")[0].ToString():null;
             return result;
         }
         private static StringContent PrepareStringContent(object content)
