@@ -382,6 +382,11 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                     {
                         if (!string.IsNullOrEmpty(chargesType.ContainerMeasurementId))
                         {
+                            if(!chargesType.IsPayable)
+                            {
+                                throw new ApplicationException(chargesType.Code + " should be marked as Payable");
+                            }
+
                             Simplog.Data.CommonDataModel.EntityPOCOs.Measurement measurement = measurementRepository.GetSingleMeasurement(chargesType.ContainerMeasurementId, tenant);
                             if (measurement != null)
                             {
