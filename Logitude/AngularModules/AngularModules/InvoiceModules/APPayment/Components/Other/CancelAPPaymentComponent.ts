@@ -71,7 +71,7 @@ export class CancelAPPaymentComponent extends BaseComponent {
 
             }
             if (this.EntityPM.AccountingCancelationDate != null && cancelationDateParts < paymentDateParts) {
-                this.UIProperties.SetValidity("AccountingCancelationDate", this.ObjectTableName, false, "Cancellation date ");
+                this.UIProperties.SetValidity("AccountingCancelationDate", this.ObjectTableName, false, TextCodeTranslator.Translate("APPAyment.O.CancellationDateValidation"));
             }
             if (value != null) {
                 this.SetDontIncludeInDeductionReport();
@@ -165,7 +165,7 @@ export class CancelAPPaymentComponent extends BaseComponent {
         }
         var datetocompare = DateTool.GetDateParts(this.AccountingCancelationDate).DateTicks;
         var dateFromcompare = DateTool.GetDateParts(this.PaymentDate).DateTicks;
-        if (datetocompare > dateFromcompare) {
+        if (datetocompare < dateFromcompare) {
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("APPAyment.O.CancellationDateValidation"));
         }
        if(this.closedMonth){

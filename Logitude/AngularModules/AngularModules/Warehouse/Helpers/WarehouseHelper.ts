@@ -113,7 +113,7 @@ export class WarehouseHelper {
 
         windowArgs.ShipmentPM = entityPM;
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 960;
+        logWindow.Width = 1010;
         logWindow.Height = 620;
         logWindow.Title = "New Cross Dock Entry";
         logWindow.WindowArgs = windowArgs;
