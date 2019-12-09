@@ -29,7 +29,7 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
     public IsCustomerAccount: boolean = false;
     public ChartOfAccountTypeFilterItems: ApiQueryFilters;
     public ParentsFilterItems: ApiQueryFilters;
-  IsVendor: boolean = false;
+    public IsVendor: boolean = false;
     private _GLAccountExtendedListService = new GLAccountExtendedListService();
     private gLAccountExtendedPMService = new GLAccountExtendedPMService();
 
@@ -50,14 +50,19 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
         this.ChartOfAccountTypeFilterItems = new ApiQueryFilters();
         this.GetConnectedCards(this.EntityPM.Id).then((connectedCards: CardList[]) => {
             var firstConnectedCard = connectedCards[0];
-
-            if (firstConnectedCard && firstConnectedCard.PartnerTypeId == "AC") {
+           
+                if (firstConnectedCard && firstConnectedCard.PartnerTypeId == "AC") {
                 this.ChartOfAccountTypeFilterItems.addAdditionalFilter("CodeFilter", "5,6", null, null, "Exclude", false, false, false, "string", false, true);
             }
             else {
                 this.ChartOfAccountTypeFilterItems.addAdditionalFilter("Code", "3,4", null, null, "Exclude", false, false, false, "string", false, true);
             }
         });
+    
+        
+      
+        
+          
         //this.ChartOfAccountTypeFilterItems.addAdditionalFilter("Code", "4", null, null, "NotEqual", false, false, false, "string", false, true);
         //#endregion
 
@@ -117,14 +122,15 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
         this.Listen();
     }
 
- 
+  GetConnectedCards(accountId: string)
+    {
 
-    GetConnectedCards(accountId: string) {
-
-        return new Promise(resolve => {
+        return new Promise(resolve =>
+        {
             this.CurrentSession.StartBusyIndicatorLoading();
             this.gLAccountExtendedPMService.GetConnectedCardsForGLAccount(accountId)
-                .subscribe((myResponse: ServiceResponse) => {
+                .subscribe((myResponse: ServiceResponse) =>
+                {
                     this.CurrentSession.StopBusyIndicator();
                     var connectedCards = myResponse.Result;
                     if (connectedCards)
@@ -132,6 +138,7 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
                 });
         });
     }
+
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
     private TabSelectedEvent: any = null;
@@ -400,6 +407,13 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
             }
 
         }
+    }
+
+    get AllowEditChequePayToName() { return this.EntityPM.AllowEditChequePayToName; }
+    set AllowEditChequePayToName(value: boolean) {
+        if (this.EntityPM.AllowEditChequePayToName != value) {
+            this.EntityPM.AllowEditChequePayToName = value;
+                    }
     }
     //#endregion
 

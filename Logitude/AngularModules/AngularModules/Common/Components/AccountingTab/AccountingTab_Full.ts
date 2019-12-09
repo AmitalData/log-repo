@@ -153,10 +153,10 @@ export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnIn
             args.AccountType = "2";
             args.ChartOfAccountType = "3";
         }
-    
-        else if(this.CardList.PartnerTypeId == "AC") {
-           args.AccountType = null;
-           args.ChartOfAccountType = null;
+        else if (this.CardList.PartnerTypeId == "AC") {
+            args.AccountType = null;
+            args.ChartOfAccountType = null;
+           
         }
         else {
             args.AccountType = "3";
@@ -166,9 +166,11 @@ export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnIn
         args.CardId = this.CardList.Id;
         args.DisplayNo = this.CardList.Code;
         args.LocalName = this.CardList.LocalName;
+
         args.EnglishName = this.CardList.EnglishName;
         args.PartnerType = "AC";
         logWindow.WindowArgs = args;
+
         logWindow.Show('./Accounting/Components/NewEntity/NewGLAccountComponent');
 
         logWindow.WindowClosed.subscribe(s => {

@@ -25,8 +25,7 @@
 <div>
     <div *ngIf="fieldName == 'Indicator' && rowData['OpenAmount'] != 0" [attr.title]="GetIndicatorText()" class="circleWrapper CenterCenter">
         <div class="circleDraw"
-       [class.orangeCircle]="(rowData['LocalAmountDebit'] >0 && rowData['OpenAmount'] != CalculateOriginalAmount()) || (rowData['LocalAmountCredit'] >0 && rowData['OpenAmount'] != -1*CalculateOriginalAmount())"></div>
-
+             [class.orangeCircle]="(rowData['LocalAmountDebit'] >0 && rowData['OpenAmount'] != CalculateOriginalAmount()) || (rowData['LocalAmountCredit'] >0 && rowData['OpenAmount'] != -1*CalculateOriginalAmount())"></div>
     </div>
 
 
@@ -34,6 +33,7 @@
         <div class="circleDraw"
              [class.orangeCircle]="(rowData['LocalAmountDebit'] != 0 && rowData['OpenAmount'] != CalculateOriginalAmount()) || (rowData['LocalAmountCredit'] != 0 && rowData['OpenAmount'] != -1*CalculateOriginalAmount())"></div>
     </div>
+
     <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'CreateDate'">{{ rowData[fieldName] | DateTimePipe:'SD' }}</div>
 
     <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'AccountingDate'">{{ rowData[fieldName] | DateTimePipe:'SD' }}</div>
@@ -73,7 +73,7 @@
         {{ rowData[fieldName] | NumbersPipe:'N2' }}
     </div>
 
-    <div class="TextTrimming" *ngIf="fieldName == 'Notes'" style="text-align: right;">{{ rowData[fieldName] }}</div>
+    <div class="TextTrimming" [attr.title]="rowData[fieldName]" *ngIf="fieldName == 'Notes'" text-start>{{ rowData[fieldName] }}</div>
 
 
     <!-- ForeignAmountCredit -->
@@ -114,6 +114,7 @@
 
     <div *ngIf="fieldName == 'OriginalAmount'">
         <div class="TextTrimming" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;" [class.red]='rowData["OpenAmount"]<0'>
+
             {{ CalculateOriginalAmount() | NumbersPipe:'N2'  }} <!--{{ CalculatOriginalCurruncy() }}-->
         </div>
     </div>
