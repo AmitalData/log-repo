@@ -1710,6 +1710,7 @@
     <Compile Include="Migrations\201911280844228_ShipmentAdditionalCloudDataNewFields_Rabaia.Designer.cs">
       <DependentUpon>201911280844228_ShipmentAdditionalCloudDataNewFields_Rabaia.cs</DependentUpon>
     </Compile>
+
     <Compile Include="Migrations\201911291324079_APPaymentNewFieldMigration.cs" />
     <Compile Include="Migrations\201911291324079_APPaymentNewFieldMigration.Designer.cs">
       <DependentUpon>201911291324079_APPaymentNewFieldMigration.cs</DependentUpon>
@@ -1745,6 +1746,10 @@
     <Compile Include="Migrations\201912080719298_WesamAddObjectFieldCodeToScreenFieldsTable.cs" />
     <Compile Include="Migrations\201912080719298_WesamAddObjectFieldCodeToScreenFieldsTable.Designer.cs">
       <DependentUpon>201912080719298_WesamAddObjectFieldCodeToScreenFieldsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912031815485_AddHideFCLAllInField.cs" />
+    <Compile Include="Migrations\201912031815485_AddHideFCLAllInField.Designer.cs">
+      <DependentUpon>201912031815485_AddHideFCLAllInField.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
@@ -2993,6 +2998,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912080719298_WesamAddObjectFieldCodeToScreenFieldsTable.resx">
       <DependentUpon>201912080719298_WesamAddObjectFieldCodeToScreenFieldsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912031815485_AddHideFCLAllInField.resx">
+      <DependentUpon>201912031815485_AddHideFCLAllInField.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
