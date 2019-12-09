@@ -6,7 +6,7 @@
   <Column Name="CounterKey" Type="int">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="SeizureAmount" Type="decimal">
+  <Column Name="SeizureAmount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="SeizureFactorCode" Type="varchar" Size="2">

@@ -27,16 +27,16 @@
   <Column Name="DueDate" Type="datetime">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="ExchangeRate" Type="decimal">
+  <Column Name="ExchangeRate" Type="decimal" Precision="16" Scale="5">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="ExternalOpenAmount" Type="decimal">
+  <Column Name="ExternalOpenAmount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="ExternalReconcileNumber" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="ForeignAmount" Type="decimal">
+  <Column Name="ForeignAmount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="IsExternalReconcile" Type="bit">
@@ -48,7 +48,7 @@
   <Column Name="Line" Type="int">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="LocalAmount" Type="decimal">
+  <Column Name="LocalAmount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="Notes" Type="nvarchar" Size="1000">

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="ReconcileExternalPageLines" Schema="dbo" DBType="Main">
-  <Column Name="CreditAmount" Type="decimal">
+  <Column Name="CreditAmount" Type="decimal" Precision="15" Scale="2">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="DebitAmount" Type="decimal">
+  <Column Name="DebitAmount" Type="decimal" Precision="15" Scale="2">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="Id" Type="varchar" Size="15">

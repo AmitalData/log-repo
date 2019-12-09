@@ -9,7 +9,7 @@
   <Column Name="InvoiceNumber" Type="int">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="RefundQuntity" Type="decimal">
+  <Column Name="RefundQuntity" Type="decimal" Precision="16" Scale="6">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="RefundQuntityLineNo" Type="int">

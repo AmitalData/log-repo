@@ -75,7 +75,7 @@
   <Column Name="UpdatedByUserId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Volume" Type="decimal">
+  <Column Name="Volume" Type="decimal" Precision="16" Scale="3">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="VolumetricWeight" Type="float">
@@ -84,7 +84,7 @@
   <Column Name="WarehouseEntryId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Weight" Type="decimal">
+  <Column Name="Weight" Type="decimal" Precision="16" Scale="3">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="Width" Type="float">

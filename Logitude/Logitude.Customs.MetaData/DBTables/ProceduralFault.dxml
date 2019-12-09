@@ -51,7 +51,7 @@
   <Column Name="ProceduralFaultStatusCode" Type="varchar" Size="2">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="RansomViolationSum" Type="decimal">
+  <Column Name="RansomViolationSum" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="RansomViolationTypeCode" Type="varchar" Size="2">

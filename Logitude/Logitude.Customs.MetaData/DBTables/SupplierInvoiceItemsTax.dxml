@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="SupplierInvoiceItemsTaxes" Schema="Customs" DBType="Main">
-  <Column Name="AlternateDefinedPerUnitMeasure" Type="decimal">
+  <Column Name="AlternateDefinedPerUnitMeasure" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="AlternateDefinedPerUnitQuant" Type="decimal">
+  <Column Name="AlternateDefinedPerUnitQuant" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="AlternateMeasurementUnitCode" Type="varchar" Size="3">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="AlternateRate" Type="decimal">
+  <Column Name="AlternateRate" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="DeclarationId" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="DeferedTaxAmount" Type="decimal">
+  <Column Name="DeferedTaxAmount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="DefinedPerUnitMeasure" Type="decimal">
+  <Column Name="DefinedPerUnitMeasure" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="DefinedPerUnitQuantity" Type="decimal">
+  <Column Name="DefinedPerUnitQuantity" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="InvoiceCounterKey" Type="int">
@@ -33,13 +33,13 @@
   <Column Name="MeasurementUnitCode" Type="varchar" Size="3">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="TaxAmount" Type="decimal">
+  <Column Name="TaxAmount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="TaxBaseAmount" Type="decimal">
+  <Column Name="TaxBaseAmount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="TaxRate" Type="decimal">
+  <Column Name="TaxRate" Type="decimal" Precision="17" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="TaxTypeCode" Type="varchar" Size="3">
@@ -48,7 +48,7 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="TotalBtlCoverageNIS" Type="decimal">
+  <Column Name="TotalBtlCoverageNIS" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="TradeAgreementTypeCode" Type="varchar" Size="8">

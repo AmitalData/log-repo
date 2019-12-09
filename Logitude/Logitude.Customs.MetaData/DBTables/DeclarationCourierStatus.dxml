@@ -36,7 +36,7 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="TotalInvoiceAmountInUSD" Type="decimal">
+  <Column Name="TotalInvoiceAmountInUSD" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
 </Table>

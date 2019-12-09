@@ -240,7 +240,7 @@
   <Column Name="Ventilation" Type="float">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="VGM" Type="decimal">
+  <Column Name="VGM" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="Volume" Type="float">

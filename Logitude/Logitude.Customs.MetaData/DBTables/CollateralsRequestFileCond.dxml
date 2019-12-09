@@ -9,7 +9,7 @@
   <Column Name="LineNumber" Type="int">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="RequestedAmount" Type="decimal">
+  <Column Name="RequestedAmount" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="Tenant" Type="int">

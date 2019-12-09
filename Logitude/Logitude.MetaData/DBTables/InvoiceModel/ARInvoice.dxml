@@ -279,13 +279,13 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="TotalAmountForTaxReport" Type="decimal">
+  <Column Name="TotalAmountForTaxReport" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="TotalVAT" Type="decimal">
+  <Column Name="TotalVAT" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="TotaVatableAmountForTaxReport" Type="decimal">
+  <Column Name="TotaVatableAmountForTaxReport" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="TransferError" Type="nvarchar" Size="250">

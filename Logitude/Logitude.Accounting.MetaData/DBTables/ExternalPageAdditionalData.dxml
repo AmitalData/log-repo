@@ -3,7 +3,7 @@
   <Column Name="EntityId" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="LastPageCloseBalance" Type="decimal">
+  <Column Name="LastPageCloseBalance" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="LastPageEndDate" Type="datetime">

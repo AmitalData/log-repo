@@ -24,7 +24,7 @@
   <Column Name="LineNumber" Type="int">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="Quantity" Type="decimal">
+  <Column Name="Quantity" Type="decimal" Precision="14" Scale="3">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="QuantityTypeCode" Type="varchar" Size="3">

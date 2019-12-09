@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="DeclarationPaymentProtests" Schema="Customs" DBType="Main">
-  <Column Name="AmountInDispute" Type="decimal">
+  <Column Name="AmountInDispute" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="CustomsAgentExplanation" Type="nvarchar" Size="255">
@@ -12,7 +12,7 @@
   <Column Name="GoodsItemClassification" Type="varchar" Size="13">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="GoodsItemLineNumber" Type="decimal">
+  <Column Name="GoodsItemLineNumber" Type="decimal" Precision="16" Scale="5">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="InvoiceCounterKey" Type="int">

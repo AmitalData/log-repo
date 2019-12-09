@@ -27,7 +27,7 @@
   <Column Name="DefaultExternalDiffGLAccountId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="DefaultTaxWithholdPercentage" Type="decimal">
+  <Column Name="DefaultTaxWithholdPercentage" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="DefaultVATTypeId" Type="varchar" Size="15">

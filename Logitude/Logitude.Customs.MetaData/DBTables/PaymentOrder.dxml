@@ -48,7 +48,7 @@
   <Column Name="PaymentNumber" Type="varchar" Size="9">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="PaymentOrderLeftAmount" Type="decimal">
+  <Column Name="PaymentOrderLeftAmount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="PaymentOrderSelectedLabel" Type="varchar" Size="100">
@@ -78,7 +78,7 @@
   <Column Name="ThirdEntityID" Type="varchar" Size="35">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="TotalSumToPay" Type="decimal">
+  <Column Name="TotalSumToPay" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="UpdateDate" Type="datetime">

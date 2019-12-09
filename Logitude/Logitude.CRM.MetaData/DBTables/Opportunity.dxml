@@ -150,7 +150,7 @@
   <Column Name="UpdatedByUserId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="ValueField" Type="decimal">
+  <Column Name="ValueField" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Relation ParentTableName="OpportunityAdditionalServices" ParentColumnName="OpportunityId" ReferencedTableName="Opportunities" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.OpportunityAdditionalServices_dbo.Opportunities_OpportunityId" />

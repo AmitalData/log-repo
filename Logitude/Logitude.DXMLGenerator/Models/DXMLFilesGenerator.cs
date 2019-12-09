@@ -131,7 +131,7 @@ namespace Logitude.DXMLGenerator.Models
         {
             string queryString = @"SELECT Q1.*, Q2.ConstraintType, Q2.ConstraintName " +
                                   "FROM ( " +
-                                  "SELECT COL.COLUMN_NAME AS ColumnName, IS_NULLABLE AS Nullable, DATA_TYPE AS DataType, CHARACTER_MAXIMUM_LENGTH AS Size " +
+                                  "SELECT COL.COLUMN_NAME AS ColumnName, COL.IS_NULLABLE AS Nullable, COL.DATA_TYPE AS DataType, COL.CHARACTER_MAXIMUM_LENGTH AS Size, COL.NUMERIC_PRECISION AS Precision, COL.NUMERIC_SCALE AS Scale " +
                                   "FROM INFORMATION_SCHEMA.COLUMNS AS COL " +
                                   "WHERE COL.TABLE_NAME = @tableName " +
                                   ") AS Q1 " +
@@ -163,8 +163,10 @@ namespace Logitude.DXMLGenerator.Models
                         ColumnDefinition column = new ColumnDefinition
                         {
                             Name = reader["ColumnName"].ToString(),
-                            Type = GetDxmlDataType(reader["DataType"].ToString()),
+                            Type = GetColumnDefinitionDataType(reader["DataType"].ToString()),
                             Size = !String.IsNullOrEmpty(reader["Size"].ToString()) ? Convert.ToInt32(reader["Size"].ToString()) : 0,
+                            Precision = !String.IsNullOrEmpty(reader["Precision"].ToString()) ? Convert.ToInt32(reader["Precision"].ToString()) : 0,
+                            Scale = !String.IsNullOrEmpty(reader["Scale"].ToString()) ? Convert.ToInt32(reader["Scale"].ToString()) : 0,
                             Constraints = new ConstraintsDefinition
                             {
                                 Nullable = (reader["Nullable"].ToString() == "YES")
@@ -309,9 +311,9 @@ namespace Logitude.DXMLGenerator.Models
             }
         }
 
-        private string GetDxmlDataType(string type)
+        private string GetColumnDefinitionDataType(string type)
         {
-            switch (type)
+            switch (type.ToLower())
             {
                 case "int":
                     return "int";

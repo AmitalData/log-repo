@@ -135,16 +135,16 @@
   <Column Name="ToPortId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="TotalGrossWeight" Type="decimal">
+  <Column Name="TotalGrossWeight" Type="decimal" Precision="18" Scale="3">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="TotalPieces" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="TotalVolume" Type="decimal">
+  <Column Name="TotalVolume" Type="decimal" Precision="18" Scale="3">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="TotalVolumetricWeight" Type="decimal">
+  <Column Name="TotalVolumetricWeight" Type="decimal" Precision="18" Scale="3">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="TransportModeId" Type="char" Size="1">

@@ -15,10 +15,10 @@
   <Column Name="CurrencyId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="ExchangeRate" Type="decimal">
+  <Column Name="ExchangeRate" Type="decimal" Precision="5" Scale="3">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="ForeignAmount" Type="decimal">
+  <Column Name="ForeignAmount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="Id" Type="varchar" Size="15">
@@ -27,7 +27,7 @@
   <Column Name="LineNumber" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="LocalAmount" Type="decimal">
+  <Column Name="LocalAmount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="PaymentId" Type="varchar" Size="15">

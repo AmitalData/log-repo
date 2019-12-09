@@ -63,7 +63,7 @@
   <Column Name="IsPalestinianCity" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="LocalApartment" Type="decimal">
+  <Column Name="LocalApartment" Type="decimal" Precision="4" Scale="0">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="LocalCityCode" Type="varchar" Size="4">

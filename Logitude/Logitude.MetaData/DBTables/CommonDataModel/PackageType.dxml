@@ -57,7 +57,7 @@
   <Column Name="TEU" Type="float">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Volume" Type="decimal">
+  <Column Name="Volume" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="false" />
   </Column>
   <Relation ParentTableName="QuotePackages" ParentColumnName="PackageTypeId" ReferencedTableName="PackageTypes" ReferencedColumnName="Id" ForeignKeyConstraintName="FK_dbo.QuotePackages_dbo.PackageTypes_PackageTypeId" />

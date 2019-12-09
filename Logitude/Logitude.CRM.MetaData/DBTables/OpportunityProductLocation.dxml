@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="OpportunityProductLocations" Schema="dbo" DBType="Main">
-  <Column Name="ChargeableWeight" Type="decimal">
+  <Column Name="ChargeableWeight" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="CountryId" Type="varchar" Size="15">
@@ -18,13 +18,13 @@
   <Column Name="OpportunityProductTypeCode" Type="varchar" Size="2">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="Revenue" Type="decimal">
+  <Column Name="Revenue" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="TEU" Type="decimal">
+  <Column Name="TEU" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
 </Table>

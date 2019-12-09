@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="VendorCommissions" Schema="Customs" DBType="Main">
-  <Column Name="CommisionPercentage" Type="decimal">
+  <Column Name="CommisionPercentage" Type="decimal" Precision="7" Scale="4">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="CustomerId" Type="varchar" Size="15">

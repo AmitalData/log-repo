@@ -12,7 +12,7 @@
   <Column Name="InterestBaseTypeId" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="InterestRate" Type="decimal">
+  <Column Name="InterestRate" Type="decimal" Precision="4" Scale="2">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="LineNumber" Type="int">

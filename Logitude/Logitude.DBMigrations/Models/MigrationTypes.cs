@@ -17,5 +17,6 @@ namespace Logitude.DBMigrations.Models
         public const int DROPPRIMARYKEY = 6;
         public const int SETNULLABLE = 7;
         public const int UNSETNULLABLE = 8;
+        public const int ALTERPRECISIONANDSCALE = 9;
     }
 }

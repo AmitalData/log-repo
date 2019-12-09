@@ -24,7 +24,7 @@
   <Column Name="FuelTypeCode" Type="varchar" Size="2">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="GreenIndex" Type="decimal">
+  <Column Name="GreenIndex" Type="decimal" Precision="9" Scale="3">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="GreenIndexGroup" Type="int">
@@ -135,19 +135,19 @@
   <Column Name="VehicleManufacturerCode" Type="varchar" Size="5">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="VehicleMaxPowerKW" Type="decimal">
+  <Column Name="VehicleMaxPowerKW" Type="decimal" Precision="7" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="VehiclePoolTypeCode" Type="varchar" Size="2">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="VehiclePowerKW" Type="decimal">
+  <Column Name="VehiclePowerKW" Type="decimal" Precision="12" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="VehiclePriceListTypeCode" Type="varchar" Size="2">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="VehicleSafetyAccessoryPoints" Type="decimal">
+  <Column Name="VehicleSafetyAccessoryPoints" Type="decimal" Precision="4" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="VehicleTecnologyTypeCode" Type="varchar" Size="2">

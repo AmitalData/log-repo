@@ -30,9 +30,11 @@ namespace Logitude.DBMigrations.Models
             return script;
         }
 
-        protected string GetDxmlDataType(string type)//handle data types from oracle
+        protected string GetColumnDefinitionDataType(string type)//handle data types from oracle
         {
-            switch (type.ToLower())
+            string formattedDataType = FormatDataTypeString(type).ToLower();
+
+            switch (formattedDataType)
             {
                 case "int":
                     return "int";
@@ -61,6 +63,13 @@ namespace Logitude.DBMigrations.Models
                 default:
                     return null;
             }
+        }
+
+        protected string FormatDataTypeString(string type)
+        {
+            Regex regex = new Regex(@"\((.*?)\)");
+            string formattedDataType = regex.Replace(type, String.Empty);
+            return formattedDataType;
         }
 
         protected ColumnDefinition SetConstraintForColumnDefinition(ColumnDefinition column, string constraintType, string constraintName)//handle constraintType from oracle
@@ -187,6 +196,8 @@ namespace Logitude.DBMigrations.Models
                 Name = currentTableColumn.Name,
                 Type = currentTableColumn.Type,
                 Size = currentTableColumn.Size,
+                Precision = currentTableColumn.Precision,
+                Scale = currentTableColumn.Scale,
                 Constraints = currentTableColumn.Constraints
             };
             ColumnMigrationDefinition newColumn = dxmlTableColumn == null ? null : new ColumnMigrationDefinition
@@ -194,6 +205,8 @@ namespace Logitude.DBMigrations.Models
                 Name = dxmlTableColumn.Name,
                 Type = dxmlTableColumn.Type,
                 Size = dxmlTableColumn.Size,
+                Precision = dxmlTableColumn.Precision,
+                Scale = dxmlTableColumn.Scale,
                 Constraints = dxmlTableColumn.Constraints
             };
             ColumnMigration columnMigration = new ColumnMigration
@@ -269,6 +282,8 @@ namespace Logitude.DBMigrations.Models
 
         protected void BuildAlterMigration(ColumnDefinition currentTableColumn, ColumnDefinition dxmlTableColumn)
         {
+            BuildAlterPrecisionAndScaleMigration(currentTableColumn, dxmlTableColumn);
+
             BuildAlterTypeMigration(currentTableColumn, dxmlTableColumn);
 
             BuildAlterSizeMigration(currentTableColumn, dxmlTableColumn);
@@ -280,6 +295,27 @@ namespace Logitude.DBMigrations.Models
             BuildRenameMigration(currentTableColumn, dxmlTableColumn);
 
             CheckAlterPrimaryKeyMigration(currentTableColumn, dxmlTableColumn);
+        }
+
+        protected void BuildAlterPrecisionAndScaleMigration(ColumnDefinition currentTableColumn, ColumnDefinition dxmlTableColumn)
+        {
+            if (currentTableColumn.Type == "decimal" && dxmlTableColumn.Type == "decimal" && (currentTableColumn.Precision != dxmlTableColumn.Precision || currentTableColumn.Scale != dxmlTableColumn.Scale))
+            {
+                if (currentTableColumn.Constraints.PrimaryKey)
+                {
+                    ColumnMigration dropPrimaryKeyMigration = GetColumnMigration(MigrationTypes.DROPPRIMARYKEY, currentTableColumn, dxmlTableColumn);
+                    ColumnMigrations.Add(dropPrimaryKeyMigration);
+                }
+
+                ColumnMigration alterPrecisionAndScaleMigration = GetColumnMigration(MigrationTypes.ALTERPRECISIONANDSCALE, currentTableColumn, dxmlTableColumn);
+                ColumnMigrations.Add(alterPrecisionAndScaleMigration);
+
+                if (currentTableColumn.Constraints.PrimaryKey)
+                {
+                    ColumnMigration addPrimaryKeyMigration = GetColumnMigration(MigrationTypes.ADDPRIMARYKEY, currentTableColumn, dxmlTableColumn);
+                    ColumnMigrations.Add(addPrimaryKeyMigration);
+                }
+            }
         }
 
         protected void BuildAlterTypeMigration(ColumnDefinition currentTableColumn, ColumnDefinition dxmlTableColumn)
@@ -381,7 +417,7 @@ namespace Logitude.DBMigrations.Models
 
         protected abstract string GetAlterColumnScript(ColumnMigration columnMigration);
 
-        protected abstract string GetDataTypeScript(string type, int size);
+        protected abstract string GetDataTypeScript(string type, int size, int precision, int scale);
 
         protected abstract string GetRenameTableScript();
 
@@ -402,6 +438,8 @@ namespace Logitude.DBMigrations.Models
         protected abstract string GetSetNullableScript(ColumnMigration columnMigration);
 
         protected abstract string GetUnsetNullableScript(ColumnMigration columnMigration);
+
+        protected abstract string GetAlterPrecisionAndScaleScript(ColumnMigration columnMigration);
 
         protected abstract TableDefinition GetCurrentTableDefinitionFromDB();
 

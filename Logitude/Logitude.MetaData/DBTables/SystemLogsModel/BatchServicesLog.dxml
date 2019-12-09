@@ -3,7 +3,7 @@
   <Column Name="BatchServiceCode" Type="varchar" Size="40">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="CPU" Type="decimal">
+  <Column Name="CPU" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="CreateDate" Type="datetime">

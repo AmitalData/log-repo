@@ -3,7 +3,7 @@
   <Column Name="Description" Type="varchar" Size="100">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="GoodsValue" Type="decimal">
+  <Column Name="GoodsValue" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="LineNumber" Type="int">

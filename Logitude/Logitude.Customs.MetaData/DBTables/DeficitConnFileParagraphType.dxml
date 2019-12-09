@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="DeficitConnFileParagraphTypes" Schema="Customs" DBType="Main">
-  <Column Name="Amount" Type="decimal">
+  <Column Name="Amount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="DeclarationId" Type="varchar" Size="15">

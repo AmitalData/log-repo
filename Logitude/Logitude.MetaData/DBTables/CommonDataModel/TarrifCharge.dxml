@@ -9,13 +9,13 @@
   <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="MaxPrice" Type="decimal">
+  <Column Name="MaxPrice" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="MeasurementId" Type="varchar" Size="15">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="MinPrice" Type="decimal">
+  <Column Name="MinPrice" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="TarrifHeaderId" Type="varchar" Size="15">
@@ -24,7 +24,7 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="UnitPrice" Type="decimal">
+  <Column Name="UnitPrice" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
 </Table>

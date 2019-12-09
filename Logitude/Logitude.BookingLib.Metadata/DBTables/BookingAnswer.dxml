@@ -45,7 +45,7 @@
   <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="Weight" Type="decimal">
+  <Column Name="Weight" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="WeightUnitCode" Type="varchar" Size="3">

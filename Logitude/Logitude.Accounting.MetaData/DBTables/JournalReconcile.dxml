@@ -15,7 +15,7 @@
   <Column Name="Line" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="ReconciliationAmount" Type="decimal">
+  <Column Name="ReconciliationAmount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="Tenant" Type="int">

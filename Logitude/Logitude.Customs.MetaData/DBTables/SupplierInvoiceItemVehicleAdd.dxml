@@ -3,13 +3,13 @@
   <Column Name="ChassisNumber" Type="varchar" Size="18">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="ChassisPurchaseTax" Type="decimal">
+  <Column Name="ChassisPurchaseTax" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="ChassisTax" Type="decimal">
+  <Column Name="ChassisTax" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="ChassisVat" Type="decimal">
+  <Column Name="ChassisVat" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="DeclarationId" Type="varchar" Size="15">
@@ -39,7 +39,7 @@
   <Column Name="VehicleModel" Type="varchar" Size="25">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="VehicleValue" Type="decimal">
+  <Column Name="VehicleValue" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="WindowNumber" Type="varchar" Size="13">

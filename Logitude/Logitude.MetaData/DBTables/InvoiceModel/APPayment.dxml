@@ -105,7 +105,7 @@
   <Column Name="StatusCode" Type="varchar" Size="2">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="TaxDeductionLocalAmount" Type="decimal">
+  <Column Name="TaxDeductionLocalAmount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="TaxDeductionPercentage" Type="int">

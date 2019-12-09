@@ -63,6 +63,16 @@ namespace Logitude.LXMLFixer.Models
                                     mistakesData += dxmlColumn.Name + "," + lxmlColumn.Name + ",Type," + dxmlColumn.Type + "," + lxmlColumn.Type + "\n";
                                     appendTableMistakesData = true;
                                 }
+                                if (dxmlColumn.Type == "decimal" && lxmlColumn.Type == "decimal" && dxmlColumn.Precision != lxmlColumn.Precision)
+                                {
+                                    mistakesData += dxmlColumn.Name + "," + lxmlColumn.Name + ",Precision," + dxmlColumn.Precision + "," + lxmlColumn.Precision + "\n";
+                                    appendTableMistakesData = true;
+                                }
+                                if (dxmlColumn.Type == "decimal" && lxmlColumn.Type == "decimal" && dxmlColumn.Scale != lxmlColumn.Scale)
+                                {
+                                    mistakesData += dxmlColumn.Name + "," + lxmlColumn.Name + ",Scale," + dxmlColumn.Scale + "," + lxmlColumn.Scale + "\n";
+                                    appendTableMistakesData = true;
+                                }
                                 if (dxmlColumn.Size != lxmlColumn.Size)
                                 {
                                     mistakesData += dxmlColumn.Name + "," + lxmlColumn.Name + ",Size," + dxmlColumn.Size + "," + lxmlColumn.Size + "\n";
@@ -195,6 +205,8 @@ namespace Logitude.LXMLFixer.Models
                     bool isRequired = field.Attribute("IsRequired") == null ? false : field.Attribute("IsRequired").Value == "true";
                     bool isNullable = field.Attribute("IsNullable") == null ? false : field.Attribute("IsNullable").Value == "true";
                     bool isFixedLength = field.Attribute("IsFixedLength") == null ? false : field.Attribute("IsFixedLength").Value == "true";
+                    int numberOfDigits = field.Attribute("NumberOfDigits") == null ? 0 : Convert.ToInt32(field.Attribute("NumberOfDigits").Value);
+                    int digitsAfterPoint = field.Attribute("DigitsAfterPoint") == null ? 0 : Convert.ToInt32(field.Attribute("DigitsAfterPoint").Value);
 
                     string columnDefinitionDataType = GetDataTypeForColumnDefinition(dataType, isFixedLength);
                     bool columnDefinitionNullableConstraint = GetNullableForConstraintsDefinition(isRequired, isNullable, isPrimaryKey, columnDefinitionDataType);
@@ -204,6 +216,8 @@ namespace Logitude.LXMLFixer.Models
                         Name = name,
                         Type = columnDefinitionDataType,
                         Size = size,
+                        Precision = numberOfDigits,
+                        Scale = digitsAfterPoint,
                         Constraints = new ConstraintsDefinition
                         {
                             PrimaryKey = isPrimaryKey,

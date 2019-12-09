@@ -61,7 +61,7 @@ namespace Logitude.DBMigrations.Models
         {
             string queryString = @"SELECT Q1.*, Q2.ConstraintType, Q2.ConstraintName " +
                                   "FROM ( " +
-                                  "SELECT COL.COLUMN_NAME AS ColumnName, IS_NULLABLE AS Nullable, DATA_TYPE AS DataType, CHARACTER_MAXIMUM_LENGTH AS Size " +
+                                  "SELECT COL.COLUMN_NAME AS ColumnName, COL.IS_NULLABLE AS Nullable, COL.DATA_TYPE AS DataType, COL.CHARACTER_MAXIMUM_LENGTH AS Size, COL.NUMERIC_PRECISION AS Precision, COL.NUMERIC_SCALE AS Scale " +
                                   "FROM INFORMATION_SCHEMA.COLUMNS AS COL " +
                                   "WHERE COL.TABLE_NAME = @tableName " +
                                   ") AS Q1 " +
@@ -93,8 +93,10 @@ namespace Logitude.DBMigrations.Models
                         ColumnDefinition column = new ColumnDefinition
                         {
                             Name = reader["ColumnName"].ToString(),
-                            Type = GetDxmlDataType(reader["DataType"].ToString()),
-                            Size = !String.IsNullOrEmpty(reader["Size"].ToString()) ? (reader["Size"].ToString() == "-1" ? -1 : Convert.ToInt32(reader["Size"].ToString())) : 0,
+                            Type = GetColumnDefinitionDataType(reader["DataType"].ToString()),
+                            Size = String.IsNullOrEmpty(reader["Size"].ToString()) ? 0 : Convert.ToInt32(reader["Size"].ToString()),
+                            Precision = String.IsNullOrEmpty(reader["Precision"].ToString()) ? 0 : Convert.ToInt32(reader["Precision"].ToString()),
+                            Scale = String.IsNullOrEmpty(reader["Scale"].ToString()) ? 0 : Convert.ToInt32(reader["Scale"].ToString()),
                             Constraints = new ConstraintsDefinition
                             {
                                 Nullable = (reader["Nullable"].ToString() == "YES")
@@ -162,7 +164,7 @@ namespace Logitude.DBMigrations.Models
         protected override string GetCreateColumnScript(ColumnDefinition columnDefinition)
         {
             string columnScript = "[" + columnDefinition.Name + "]" + " ";
-            columnScript += GetDataTypeScript(columnDefinition.Type, columnDefinition.Size);
+            columnScript += GetDataTypeScript(columnDefinition.Type, columnDefinition.Size, columnDefinition.Precision, columnDefinition.Scale);
             columnScript += columnDefinition.Constraints.Nullable ? " NULL" : " NOT NULL";
             columnScript += ",";
             return columnScript;
@@ -233,19 +235,22 @@ namespace Logitude.DBMigrations.Models
                 case MigrationTypes.UNSETNULLABLE:
                     alterColumnScript = GetUnsetNullableScript(columnMigration);
                     return alterColumnScript;
+                case MigrationTypes.ALTERPRECISIONANDSCALE:
+                    alterColumnScript = GetAlterPrecisionAndScaleScript(columnMigration);
+                    return alterColumnScript;
                 default:
                     return alterColumnScript;
             }
         }
 
-        protected override string GetDataTypeScript(string type, int size)
+        protected override string GetDataTypeScript(string type, int size, int precision, int scale)
         {
             switch (type)
             {
                 case "int":
                     return "INT";
                 case "decimal":
-                    return "DECIMAL";
+                    return "DECIMAL(" + precision + ", " + scale + ")";
                 case "timestamp":
                     return "TIMESTAMP";
                 case "varbinary":
@@ -288,7 +293,7 @@ namespace Logitude.DBMigrations.Models
             string addScript = "-- Add New Column With Name " + columnMigration.NewColumn.Name + "\n";
             addScript += "ALTER TABLE " + "[" + TableMigrations.DxmlTableName + "]" + " ";
             addScript += "ADD " + "[" + columnMigration.NewColumn.Name + "]" + " ";
-            addScript += GetDataTypeScript(columnMigration.NewColumn.Type, columnMigration.NewColumn.Size);
+            addScript += GetDataTypeScript(columnMigration.NewColumn.Type, columnMigration.NewColumn.Size, columnMigration.NewColumn.Precision, columnMigration.NewColumn.Scale);
             addScript += columnMigration.NewColumn.Constraints.Nullable ? " NULL" : " NOT NULL";
             return addScript + "\n\n";
         }
@@ -312,7 +317,7 @@ namespace Logitude.DBMigrations.Models
             string alterTypeScript = "-- Change Type From " + columnMigration.CurrentColumn.Type + " To " + columnMigration.NewColumn.Type + " For Column " + columnMigration.CurrentColumn.Name + "\n";
             alterTypeScript += "ALTER TABLE " + "[" + TableMigrations.DxmlTableName + "]" + " ";
             alterTypeScript += "ALTER COLUMN " + "[" + columnMigration.CurrentColumn.Name + "]" + " ";
-            alterTypeScript += GetDataTypeScript(columnMigration.NewColumn.Type, columnMigration.CurrentColumn.Size == 0 ? 10 : columnMigration.CurrentColumn.Size);
+            alterTypeScript += GetDataTypeScript(columnMigration.NewColumn.Type, (columnMigration.CurrentColumn.Size == 0 ? 1 : columnMigration.CurrentColumn.Size), columnMigration.NewColumn.Precision, columnMigration.NewColumn.Scale);
             if (!columnMigration.CurrentColumn.Constraints.Nullable)
             {
                 alterTypeScript += " NOT NULL";
@@ -326,7 +331,7 @@ namespace Logitude.DBMigrations.Models
             string alterSizeScript = "-- Change Size From " + columnMigration.CurrentColumn.Size + " To " + columnMigration.NewColumn.Size + " For Column " + columnMigration.CurrentColumn.Name + "\n";
             alterSizeScript += "ALTER TABLE " + "[" + TableMigrations.DxmlTableName + "]" + " ";
             alterSizeScript += "ALTER COLUMN " + "[" + columnMigration.CurrentColumn.Name + "]" + " ";
-            alterSizeScript += GetDataTypeScript((IsAlterTypeInMigrationsList ? columnMigration.NewColumn.Type : columnMigration.CurrentColumn.Type), columnMigration.NewColumn.Size);
+            alterSizeScript += GetDataTypeScript((IsAlterTypeInMigrationsList ? columnMigration.NewColumn.Type : columnMigration.CurrentColumn.Type), columnMigration.NewColumn.Size, 0, 0);
             if (!columnMigration.CurrentColumn.Constraints.Nullable)
             {
                 alterSizeScript += " NOT NULL";
@@ -353,8 +358,9 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetSetNullableScript(ColumnMigration columnMigration)
         {
-            bool IsAlterTypeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERTYPE).Any();
-            bool IsAlterSizeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERSIZE).Any();
+            bool isAlterTypeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERTYPE).Any();
+            bool isAlterSizeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERSIZE).Any();
+            bool isAlterPrecisionAndScaleInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERPRECISIONANDSCALE).Any();
             string setNullableScript = "-- Set Nullable For Column " + columnMigration.CurrentColumn.Name + "\n";
             if (columnMigration.CurrentColumn.Constraints.PrimaryKey)
             {
@@ -362,21 +368,35 @@ namespace Logitude.DBMigrations.Models
             }
             setNullableScript += "ALTER TABLE " + "[" + TableMigrations.DxmlTableName + "]" + " ";
             setNullableScript += "ALTER COLUMN " + "[" + columnMigration.CurrentColumn.Name + "]" + " ";
-            setNullableScript += GetDataTypeScript((IsAlterTypeInMigrationsList ? columnMigration.NewColumn.Type : columnMigration.CurrentColumn.Type), (IsAlterSizeInMigrationsList ? columnMigration.NewColumn.Size : columnMigration.CurrentColumn.Size));
+            setNullableScript += GetDataTypeScript((isAlterTypeInMigrationsList ? columnMigration.NewColumn.Type : columnMigration.CurrentColumn.Type), (isAlterSizeInMigrationsList ? columnMigration.NewColumn.Size : columnMigration.CurrentColumn.Size), (isAlterPrecisionAndScaleInMigrationsList ? columnMigration.NewColumn.Precision : columnMigration.CurrentColumn.Precision), (isAlterPrecisionAndScaleInMigrationsList ? columnMigration.NewColumn.Scale : columnMigration.CurrentColumn.Scale));
             setNullableScript += " NULL";
             return setNullableScript + "\n\n";
         }
 
         protected override string GetUnsetNullableScript(ColumnMigration columnMigration)
         {
-            bool IsAlterTypeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERTYPE).Any();
-            bool IsAlterSizeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERSIZE).Any();
+            bool isAlterTypeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERTYPE).Any();
+            bool isAlterSizeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERSIZE).Any();
+            bool isAlterPrecisionAndScaleInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERPRECISIONANDSCALE).Any();
             string unsetNullableScript = "-- Unset Nullable For Column " + columnMigration.CurrentColumn.Name + "\n";
             unsetNullableScript += "ALTER TABLE " + "[" + TableMigrations.DxmlTableName + "]" + " ";
             unsetNullableScript += "ALTER COLUMN " + "[" + columnMigration.CurrentColumn.Name + "]" + " ";
-            unsetNullableScript += GetDataTypeScript((IsAlterTypeInMigrationsList ? columnMigration.NewColumn.Type : columnMigration.CurrentColumn.Type), (IsAlterSizeInMigrationsList ? columnMigration.NewColumn.Size : columnMigration.CurrentColumn.Size));
+            unsetNullableScript += GetDataTypeScript((isAlterTypeInMigrationsList ? columnMigration.NewColumn.Type : columnMigration.CurrentColumn.Type), (isAlterSizeInMigrationsList ? columnMigration.NewColumn.Size : columnMigration.CurrentColumn.Size), (isAlterPrecisionAndScaleInMigrationsList ? columnMigration.NewColumn.Precision : columnMigration.CurrentColumn.Precision), (isAlterPrecisionAndScaleInMigrationsList ? columnMigration.NewColumn.Scale : columnMigration.CurrentColumn.Scale));
             unsetNullableScript += " NOT NULL";
             return unsetNullableScript + "\n\n";
+        }
+
+        protected override string GetAlterPrecisionAndScaleScript(ColumnMigration columnMigration)
+        {
+            string alterTypeScript = "-- Change Precision And Scale From " + "(" + columnMigration.CurrentColumn.Precision + ", " + columnMigration.CurrentColumn.Scale + ")" + " To " + "(" + columnMigration.NewColumn.Precision + ", " + columnMigration.NewColumn.Scale + ")" + " For Column " + columnMigration.CurrentColumn.Name + "\n";
+            alterTypeScript += "ALTER TABLE " + "[" + TableMigrations.DxmlTableName + "]" + " ";
+            alterTypeScript += "ALTER COLUMN " + "[" + columnMigration.CurrentColumn.Name + "]" + " ";
+            alterTypeScript += GetDataTypeScript(columnMigration.CurrentColumn.Type, columnMigration.CurrentColumn.Size, columnMigration.NewColumn.Precision, columnMigration.NewColumn.Scale);
+            if (!columnMigration.CurrentColumn.Constraints.Nullable)
+            {
+                alterTypeScript += " NOT NULL";
+            }
+            return alterTypeScript + "\n\n";
         }
 
         protected override string GetPrimaryKeyConstraintScript()

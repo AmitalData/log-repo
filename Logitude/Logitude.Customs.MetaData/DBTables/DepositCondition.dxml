@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Table Name="DepositConditions" Schema="Customs" DBType="Main">
-  <Column Name="DepositAmount" Type="decimal">
+  <Column Name="DepositAmount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="DepositConditionCode" Type="varchar" Size="2">

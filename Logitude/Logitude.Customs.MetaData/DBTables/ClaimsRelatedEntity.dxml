@@ -3,7 +3,7 @@
   <Column Name="AbandonmentDestructionReferenc" Type="varchar" Size="22">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="ClaimAmount" Type="decimal">
+  <Column Name="ClaimAmount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="ClaimEntityNumber" Type="varchar" Size="35">
@@ -42,10 +42,10 @@
   <Column Name="DecisionNote" Type="nvarchar" Size="256">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="DeclarationVersion" Type="decimal">
+  <Column Name="DeclarationVersion" Type="decimal" Precision="5" Scale="3">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="DepositingAmount" Type="decimal">
+  <Column Name="DepositingAmount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="EilatVatRefoundDecision" Type="nvarchar" Size="256">
@@ -66,7 +66,7 @@
   <Column Name="ProceedingNumber" Type="varchar" Size="22">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="RefundAmount" Type="decimal">
+  <Column Name="RefundAmount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="SeconderyClaimEntityCode" Type="varchar" Size="5">

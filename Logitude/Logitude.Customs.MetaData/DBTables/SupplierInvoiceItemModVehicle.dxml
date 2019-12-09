@@ -6,7 +6,7 @@
   <Column Name="DeclarationId" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="DeductAmount" Type="decimal">
+  <Column Name="DeductAmount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="InvoiceCounterKey" Type="int">

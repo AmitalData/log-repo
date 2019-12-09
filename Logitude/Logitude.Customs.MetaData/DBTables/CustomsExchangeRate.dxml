@@ -3,7 +3,7 @@
   <Column Name="CurrencyTypeCode" Type="varchar" Size="3">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="ExchangeRate" Type="decimal">
+  <Column Name="ExchangeRate" Type="decimal" Precision="12" Scale="10">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="Id" Type="varchar" Size="15">

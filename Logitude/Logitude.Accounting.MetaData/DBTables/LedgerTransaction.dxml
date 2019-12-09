@@ -6,7 +6,7 @@
   <Column Name="AccountingDate" Type="datetime">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="AmountToReconcile" Type="decimal">
+  <Column Name="AmountToReconcile" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="ControlAccountId" Type="varchar" Size="15">
@@ -24,13 +24,13 @@
   <Column Name="DueDate" Type="datetime">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="ExchangeRate" Type="decimal">
+  <Column Name="ExchangeRate" Type="decimal" Precision="16" Scale="5">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="ForeignAmountCredit" Type="decimal">
+  <Column Name="ForeignAmountCredit" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="ForeignAmountDebit" Type="decimal">
+  <Column Name="ForeignAmountDebit" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="Id" Type="varchar" Size="15">
@@ -54,10 +54,10 @@
   <Column Name="JournalLineNumber" Type="int">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="LocalAmountCredit" Type="decimal">
+  <Column Name="LocalAmountCredit" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="LocalAmountDebit" Type="decimal">
+  <Column Name="LocalAmountDebit" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="Mark" Type="bit">
@@ -66,7 +66,7 @@
   <Column Name="Notes" Type="nvarchar" Size="150">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="OpenAmount" Type="decimal">
+  <Column Name="OpenAmount" Type="decimal" Precision="16" Scale="2">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="OpenAmountCurrencyId" Type="varchar" Size="15">

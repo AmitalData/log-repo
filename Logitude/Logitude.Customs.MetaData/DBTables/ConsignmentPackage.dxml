@@ -6,7 +6,7 @@
   <Column Name="DeclarationId" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="GrossMassMeasure" Type="decimal">
+  <Column Name="GrossMassMeasure" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="GrossMassMeasureTypeCode" Type="varchar" Size="3">

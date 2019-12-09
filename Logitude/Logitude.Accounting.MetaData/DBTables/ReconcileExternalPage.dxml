@@ -3,7 +3,7 @@
   <Column Name="ApprovedByUserId" Type="varchar" Size="15">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="CloseBalance" Type="decimal">
+  <Column Name="CloseBalance" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="CreateDate" Type="datetime">
@@ -36,7 +36,7 @@
   <Column Name="SearchFields" Type="nvarchar" Size="4000">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="StartBalance" Type="decimal">
+  <Column Name="StartBalance" Type="decimal" Precision="18" Scale="2">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="StatusCode" Type="varchar" Size="15">
