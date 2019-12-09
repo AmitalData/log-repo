@@ -104,16 +104,19 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         }
         private static void ValidateConcurrencyGUID(ShipmentPM entityPM, Shipment entityPoco)
         {
-            if (!entityPM.ConcurrencyGUID.Equals(entityPoco.ConcurrencyGUID) && !entityPM.NewConcurrencyGUID.Equals(entityPoco.ConcurrencyGUID))
+            if (!entityPM.IsUpdatedByChampAnalyzer)
             {
-                string msg = TranslateTextsClass.Translate("General.M.CantUpdateRecord", entityPM.Tenant);
-
-                if (entityPoco.UpdatedByPartner != null)
+                if (!entityPM.ConcurrencyGUID.Equals(entityPoco.ConcurrencyGUID) && !entityPM.NewConcurrencyGUID.Equals(entityPoco.ConcurrencyGUID))
                 {
-                    msg = msg.Replace("another user", entityPoco.UpdatedByPartner);
-                }
+                    string msg = TranslateTextsClass.Translate("General.M.CantUpdateRecord", entityPM.Tenant);
 
-                throw new OptimisticConcurrencyException(msg);
+                    if (entityPoco.UpdatedByPartner != null)
+                    {
+                        msg = msg.Replace("another user", entityPoco.UpdatedByPartner);
+                    }
+
+                    throw new OptimisticConcurrencyException(msg);
+                }
             }
         }
         private static void ValidateDomesticShipment(ShipmentPM entityPM)
