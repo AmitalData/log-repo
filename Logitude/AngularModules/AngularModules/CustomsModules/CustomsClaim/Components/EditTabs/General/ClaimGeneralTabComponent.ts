@@ -158,6 +158,12 @@ export class ClaimGeneralTabComponent extends BaseComponent {
                     this.GetSingleClientOp_Completed(myResponse, false);
                 });
         }
+        else if (!AppTool.IsNullOrEmpty(this.EntityPM.PassportNumber)) {
+            this.ClientMessagesService.GetSingleClientPMByPassportNumberOrCountry(this.EntityPM.PassportNumber, this.EntityPM.PassportCountryTypeCode)
+                .subscribe((myResponse: ServiceResponse) => {
+                    this.GetSingleClientOp_Completed(myResponse, false);
+                });
+        }
         else {
             var clientPM: ClientPM = new ClientPM();
             var clientAddressPM: ClientAddressPM = new ClientAddressPM(clientPM);
@@ -346,7 +352,7 @@ export class ClaimGeneralTabComponent extends BaseComponent {
         this.CurrentSearchAddressMode = "";
 
         if ((item.AddressMode == "AddressCode" && AppTool.IsNullOrEmpty(item.ClientPM.Id)
-            || (item.AddressMode == "CustomsAddressCode" || item.AddressMode == "ContactPhoneAddressCode") && AppTool.IsNullOrEmpty(item.ClientPM.Id))) {
+            || (item.AddressMode == "CustomsAddressCode" || item.AddressMode == "ContactPhoneAddressCode") && AppTool.IsNullOrEmpty(item.ClientPM.Id) && AppTool.IsNullOrEmpty(this.EntityPM.PassportNumber))) {
 
             var text: string = "ראשית חובה לבחור לקוח";
             if (item.AddressMode == "AddressCode") {

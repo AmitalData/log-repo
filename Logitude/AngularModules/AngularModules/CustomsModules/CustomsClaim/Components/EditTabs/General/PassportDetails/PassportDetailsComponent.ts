@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { BaseComponent } from '../../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../../../../Infrastructure/Utilities/SessionLocator';
 import { AppTool, FormatTool } from '../../../../../../Infrastructure/Tools';
-import { TextCodeTranslator } from '../../../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { ClientList } from '../../../../../../Customs/EntityLists/ClientList';
 import { ClaimPM } from '../../../../../../Customs/EntityPMs/ClaimPM';
 
 
@@ -94,8 +94,8 @@ export class PassportDetailsComponent extends BaseComponent {
         this.PassportNumber = item;
     }
 
-    PassportNumberClicked(item: any) {
-        this.PassportNumber = item;
+    PassportNumberClicked(client: ClientList) {
+        this.PassportNumber = client != null ? client.PassportNumber : null;
     }
 
     SetScreenFieldsEditability() {
