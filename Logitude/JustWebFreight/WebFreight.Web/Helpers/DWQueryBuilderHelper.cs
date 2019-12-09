@@ -220,7 +220,11 @@ namespace WebFreight.Web.Helpers
                                 {
                                     sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() { ParameterName = parameterName, Value = parameterValue, DataType = filter.DataTypeCode, Operation = filter.Operation.Code });
                                 }
-                                WhereStmt += fieldName + OperationSimpol + " " + AndOr + " ";//" = " + "'" + filter.TextValue + "' and ";
+                                if (WhereStmt.Length >= 4 && (WhereStmt.Substring(WhereStmt.Length - 4).Contains("And") || WhereStmt.Substring(WhereStmt.Length - 4).Contains("Or")))
+                                {
+                                    WhereStmt = WhereStmt.Substring(0, WhereStmt.Length - 4);
+                                }
+                                WhereStmt += AndOr + " " + fieldName + OperationSimpol;// + " " +;//" = " + "'" + filter.TextValue + "' and ";
 
                          
                             }
@@ -232,8 +236,11 @@ namespace WebFreight.Web.Helpers
                             string dataWarehouseDateFieldSqlString = dataWarehouseHelper.ResolveWarehoueDateField(((!string.IsNullOrEmpty(filter.ParentDimTabelName) ? PDim : OTBL) + "." + filter.Code), filter.OperationCode, filter.TextValue.ToString(), Tenant);
                             SqlCommandDefinition sqlCommandDefinitionDateFilter = GetDateFieldValueFilterAsSqlCommandDefinition(dataWarehouseDateFieldSqlString, sqlCommandDefinition.Parameters.Count());
                             sqlCommandDefinition.Parameters = sqlCommandDefinition.Parameters.Concat(sqlCommandDefinitionDateFilter.Parameters).ToList();
-
-                            WhereStmt += sqlCommandDefinitionDateFilter.SQLString + " " + AndOr + " ";
+                            if (WhereStmt.Length >= 4 && (WhereStmt.Substring(WhereStmt.Length - 4).Contains("And") || WhereStmt.Substring(WhereStmt.Length - 4).Contains("Or")))
+                            {
+                                WhereStmt = WhereStmt.Substring(0, WhereStmt.Length - 4);
+                            }
+                            WhereStmt += AndOr + " " + sqlCommandDefinitionDateFilter.SQLString;// + " " + AndOr + " ";
                          
                         }
 
