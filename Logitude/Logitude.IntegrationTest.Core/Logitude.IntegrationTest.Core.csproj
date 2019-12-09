@@ -46,6 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CorePreparationCalls.cs" />
+    <Compile Include="CorePreparationVariables.cs" />
+    <Compile Include="IntegrationTestException.cs" />
     <Compile Include="Login\IntegrationTestLoginParameters.cs" />
     <Compile Include="Login\LoginService.cs" />
     <Compile Include="Login\UserData.cs" />
@@ -57,6 +60,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
+      <Project>{a663e7ef-b858-4bb6-bc33-e473f51b8e56}</Project>
+      <Name>Logitude.BL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
       <Project>{ACC2EA9E-E150-4099-8AA1-66326AB14BE8}</Project>
       <Name>Simplog.Server.Infrastructure</Name>
