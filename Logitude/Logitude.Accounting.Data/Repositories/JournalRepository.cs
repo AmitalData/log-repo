@@ -193,11 +193,27 @@ namespace Logitude.Accounting.Data.Repositories
                      select a);
             return q;
         }
+        public IQueryable<Journal> GetQueryablePending2Approve_LedgerNotCreated(int tenant)
+        {
+            var q = (from a in context.Journals
+                     where a.Tenant == tenant
+                     where a.IsLedgerCreated== false//index 
+                     where (a.StatusCode == "2" || a.StatusCode == "3")
+                     //3 voided 
+                     //2	Approved	מאושר	2,Approved,מאושר	0
+                     //to be continue ... a new field have to create !!!
+                     //where IsNull( a.Transaction)
+                     
+                     select a);
+            return q;
+        }
+
         public IQueryable<Journal> GetQueryablePending2ApproveOrdered(int tenant)
         {
             var q = (from a in context.Journals
                      where a.Tenant == tenant
-                     where a.QueueId == null
+                     //where a.QueueId == null
+                     where !a.IsLedgerCreated//index 
                      where (a.StatusCode == "2" || a.StatusCode == "3")
                      //3 voided 
                      //2	Approved	מאושר	2,Approved,מאושר	0
