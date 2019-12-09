@@ -94,7 +94,7 @@ namespace Logitude.DBMigrations.Models
                         {
                             Name = reader["ColumnName"].ToString(),
                             Type = GetColumnDefinitionDataType(reader["DataType"].ToString()),
-                            Size = String.IsNullOrEmpty(reader["Size"].ToString()) ? 0 : Convert.ToInt32(reader["Size"].ToString()),
+                            Size = GetColumnDefinitionSize(reader["Size"].ToString()),
                             Precision = String.IsNullOrEmpty(reader["Precision"].ToString()) ? 0 : Convert.ToInt32(reader["Precision"].ToString()),
                             Scale = String.IsNullOrEmpty(reader["Scale"].ToString()) ? 0 : Convert.ToInt32(reader["Scale"].ToString()),
                             Constraints = new ConstraintsDefinition

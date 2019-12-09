@@ -4,6 +4,9 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 
+using Oracle.DataAccess.Client;
+using Oracle.DataAccess.Types;
+
 namespace Logitude.DBMigrations.Models
 {
     public class OracleDatabaseMigrations : DatabaseMigrations
@@ -18,15 +21,15 @@ namespace Logitude.DBMigrations.Models
         
         protected override TableDefinition GetCurrentTableDefinitionFromDB()
         {
-            string queryString = @"SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = @name OR TABLE_NAME = @oldName";
+            string queryString = @"SELECT TABLE_NAME FROM USER_TABLES WHERE TABLE_NAME = :name OR TABLE_NAME = :oldName";//correct query
 
             TableDefinition currentTable = null;
 
-            SqlDataReader reader = null;
-            SqlConnection connection = new SqlConnection(ConnectionString);
-            SqlCommand command = new SqlCommand(queryString, connection);
-            command.Parameters.AddWithValue("@name", DXMLTable.Name);
-            command.Parameters.AddWithValue("@oldName", DXMLTable.OldName ?? DXMLTable.Name);
+            OracleDataReader reader = null;
+            OracleConnection connection = new OracleConnection(ConnectionString);
+            OracleCommand command = new OracleCommand(queryString, connection);
+            command.Parameters.Add(new OracleParameter("name", DXMLTable.Name));
+            command.Parameters.Add(new OracleParameter("oldName", DXMLTable.OldName ?? DXMLTable.Name));
 
             try
             {
@@ -94,7 +97,7 @@ namespace Logitude.DBMigrations.Models
                         {
                             Name = reader["ColumnName"].ToString(),
                             Type = GetColumnDefinitionDataType(reader["DataType"].ToString()),
-                            Size = String.IsNullOrEmpty(reader["Size"].ToString()) ? 0 : Convert.ToInt32(reader["Size"].ToString()),
+                            Size = GetColumnDefinitionSize(reader["Size"].ToString()),
                             Precision = String.IsNullOrEmpty(reader["Precision"].ToString()) ? 0 : Convert.ToInt32(reader["Precision"].ToString()),
                             Scale = String.IsNullOrEmpty(reader["Scale"].ToString()) ? 0 : Convert.ToInt32(reader["Scale"].ToString()),
                             Constraints = new ConstraintsDefinition

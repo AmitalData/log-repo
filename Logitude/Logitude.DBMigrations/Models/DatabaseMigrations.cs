@@ -30,10 +30,9 @@ namespace Logitude.DBMigrations.Models
             return script;
         }
 
-        protected string GetColumnDefinitionDataType(string type)//handle data types from oracle
+        protected string GetColumnDefinitionDataType(string dataType)
         {
-            string formattedDataType = FormatDataTypeString(type).ToLower();
-
+            string formattedDataType = FormatDataTypeString(dataType).ToLower();
             switch (formattedDataType)
             {
                 case "int":
@@ -65,17 +64,91 @@ namespace Logitude.DBMigrations.Models
             }
         }
 
-        protected string FormatDataTypeString(string type)
+        protected string GetColumnDefinitionDataType(string dataType, string precision, string scale)
+        {
+            string formattedDataType = FormatDataTypeString(dataType).ToLower();
+            switch (formattedDataType)
+            {
+                case "date":
+                case "timestamp":
+                    return "datetime";
+                case "interval day to second":
+                    return "time";
+                case "blob":
+                    return "varbinary";
+                case "clob":
+                case "varchar2":
+                    return "varchar";
+                case "nclob":
+                case "nvarchar2":
+                    return "nvarchar";
+                case "raw":
+                    return "timestamp";
+                case "char":
+                    return "char";
+                case "number":
+                    if(String.IsNullOrEmpty(precision) && String.IsNullOrEmpty(scale))
+                    {
+                        return "float";
+                    }
+                    else if(Convert.ToInt32(precision) == 1 && Convert.ToInt32(scale) == 0)
+                    {
+                        return "bit";
+                    }
+                    else if(Convert.ToInt32(precision) == 10 && Convert.ToInt32(scale) == 0)
+                    {
+                        return "int";
+                    }
+                    else if(Convert.ToInt32(precision) == 18 && Convert.ToInt32(scale) == 0)
+                    {
+                        return "bigint";
+                    }
+                    else
+                    {
+                        return "decimal";
+                    }
+                default:
+                    return null;
+            }
+        }
+
+        protected int GetColumnDefinitionSize(string size)
+        {
+            if (String.IsNullOrEmpty(size))
+            {
+                return 0;
+            }
+            else
+            {
+                return Convert.ToInt32(size);
+            }
+        }
+
+        protected int GetColumnDefinitionSize(string dataType, string size)
+        {
+            string formattedDataType = FormatDataTypeString(dataType).ToLower();
+            if (new string[] { "blob", "nclob", "clob" }.Contains(formattedDataType))
+            {
+                return -1;
+            }
+            else
+            {
+                return Convert.ToInt32(size);
+            }
+        }
+
+        protected string FormatDataTypeString(string dataType)
         {
             Regex regex = new Regex(@"\((.*?)\)");
-            string formattedDataType = regex.Replace(type, String.Empty);
+            string formattedDataType = regex.Replace(dataType, String.Empty);
             return formattedDataType;
         }
 
-        protected ColumnDefinition SetConstraintForColumnDefinition(ColumnDefinition column, string constraintType, string constraintName)//handle constraintType from oracle
+        protected ColumnDefinition SetConstraintForColumnDefinition(ColumnDefinition column, string constraintType, string constraintName)
         {
             switch (constraintType)
             {
+                case "P":
                 case "PRIMARY KEY":
                     column.Constraints.PrimaryKey = true;
                     column.Constraints.PrimaryKeyConstraintName = constraintName;
