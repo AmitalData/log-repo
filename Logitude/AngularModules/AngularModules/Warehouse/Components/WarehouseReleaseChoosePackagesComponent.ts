@@ -7,7 +7,7 @@ import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {EntityResourceService} from '../../Infrastructure/Services/EntityResourceService';
 import {WarehouseEntryPackagePM} from '../../Warehouse/EntityPMs/WarehouseEntryPackagePM';
 import {WarehouseReleasePackagePM} from '../../Warehouse/EntityPMs/WarehouseReleasePackagePM';
-import {NewWarehouseReleaseComponent} from '../../Warehouse/Components/NewWarehouseReleaseComponent';
+import {WarehouseReleasePackagesDetailsComponent} from '../../Warehouse/Components/WarehouseReleasePackagesDetailsComponent';
 import {WarehouseReleasePM} from '../../Warehouse/EntityPMs/WarehouseReleasePM';
 import {AppTool, DateTool} from '../../Infrastructure/Tools';
 import {EventTypeArgs} from '../../Infrastructure/DataContracts/EventTypeArgs';
@@ -30,7 +30,7 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
     AllWarehouseEntryPackagesLists: any[] = [];
     warehouseReleasePM: WarehouseReleasePM;
     SelectedWarehouseEntryPackage: WarehouseEntryPackagePM;
-    ViewModelTrigger: NewWarehouseReleaseComponent;
+    ViewModelTrigger: WarehouseReleasePackagesDetailsComponent;
     DataContext: any = this;
     IsNewEntity: boolean = false;
     ObjectTableId: string;
@@ -99,7 +99,8 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
         this.VolumeLabel = this.ViewModelTrigger.VolumeLabel;
         this.GrossWeightLabel = this.ViewModelTrigger.GrossWeightLabel;
         this.DimensionsLabel = this.ViewModelTrigger.DimensionsLabel;
-        this.VolumetricWeightLabel = this.ViewModelTrigger.ChargeableWeightLabel;
+        this.VolumetricWeightLabel = this.ViewModelTrigger.VolumetricWeightLabel;
+        
     }
     IsShowMessageNoResult: boolean = false;
     FilterWarehouseEntryPackageList() {
