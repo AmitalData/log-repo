@@ -618,6 +618,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                     iQueryable = System.Data.Entity.QueryableExtensions.Take(iQueryable, () => 10);
 
                                     List<ShipmentList> myResult = (from x in iQueryable.Include("Direction").Include("TransportMode").Include("CustomerCard")
+                                                                   join sm in iContext.ShipmentMasterDatas
+                                                                   on x.MasterShipmentDataId equals sm.Id into shipmentJoin
+                                                                   from m in shipmentJoin.DefaultIfEmpty()
                                                                    select new ShipmentList()
                                                                    {
                                                                        Id = x.Id,
@@ -629,6 +632,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                                                        DirectionName = x.Direction == null ? null : x.Direction.Name,
                                                                        TransportModeName = x.TransportMode == null ? null : x.TransportMode.Name,
                                                                        CustomerName = x.CustomerCard == null ? null : x.CustomerCard.EnglishName,
+                                                                       Master = m.Master,
+                                                                       LongMaster = x.TransportModeId == "A" ? (!string.IsNullOrEmpty(m.AirlinePrefix) && !string.IsNullOrEmpty(m.Master) ? m.AirlinePrefix + "-" + m.Master : "") : m.Master,
+                                                                       House = x.House,
                                                                    }).ToList();
 
                                     return Request.CreateResponse(HttpStatusCode.OK, myResult);
