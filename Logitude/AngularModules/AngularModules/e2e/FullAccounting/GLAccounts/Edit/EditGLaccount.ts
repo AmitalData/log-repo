@@ -18,6 +18,7 @@ export class EditGLAccount {
         this.Helper.WaitByCssAndClick_FromTagInsideList('.ListBoxItem', 0);
         this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndClick('GLAccount.TH.General');
+        this.WaitBusyIndicatorToShowandHide();
         this.Helper.WaitByIdAndFill('GLAccount_LocalName', 'Updated Local Name')
         this.Helper.WaitBusyIndicator();
         this.Helper.ItemsVisibility('GLAccount-Save');

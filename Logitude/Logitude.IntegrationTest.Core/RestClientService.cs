@@ -48,12 +48,32 @@ namespace Logitude.IntegrationTest.Core
             }
         }
 
-        public static string ParseResponseAndReturnSingleResult(HttpResponseMessage httpResponseMessage)
+        public static T ParseResponse<T> (HttpResponseMessage response)
         {
-            var stringResult = httpResponseMessage.Content.ReadAsStringAsync().Result;
-            JObject jObject = JObject.Parse(stringResult);
-            string result = jObject.SelectToken("Result").Count() > 0 ? (string)jObject.SelectToken("Result")[0].ToString():null;
-            return result;
+            T TEntity;
+            var stringResult = response.Content.ReadAsStringAsync().Result;
+            if (string.IsNullOrEmpty(stringResult) || stringResult=="null")
+                return default(T);
+            IntegrationTestException ex = JsonConvert.DeserializeObject<IntegrationTestException>(stringResult);
+            if (string.IsNullOrEmpty(ex.ErrorMessage))
+            {
+                JObject jObject = JObject.Parse(stringResult);
+                JToken token = jObject["Result"];
+                if (token!=null)
+                {
+                    string result = (string)jObject.SelectToken("Result")[0].ToString();
+                    TEntity = JsonConvert.DeserializeObject<T>(result);
+                }
+                else
+                {
+                     TEntity = JsonConvert.DeserializeObject<T>(stringResult);
+                }
+
+                return TEntity;
+            }
+            else {
+                throw new Exception(ex.ErrorMessage);
+            }
         }
         private static StringContent PrepareStringContent(object content)
         {

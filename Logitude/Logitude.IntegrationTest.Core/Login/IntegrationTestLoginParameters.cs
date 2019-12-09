@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -45,5 +46,7 @@ namespace Logitude.IntegrationTest.Core.Login
 
             }
         }
+
+        public static TenantPM TenantPM { get; set; }
     }
 }

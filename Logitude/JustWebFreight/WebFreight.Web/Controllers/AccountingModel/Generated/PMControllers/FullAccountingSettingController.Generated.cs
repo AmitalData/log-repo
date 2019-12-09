@@ -55,7 +55,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         {
 		  try
             {
-                throw new Exception("hahahahahahahahahah");
                 string logKey = PerformanceLogger.LogCurrentTime();
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
