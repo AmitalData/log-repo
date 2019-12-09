@@ -44,7 +44,7 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
     status: string;
     IsSelected: boolean;
     IsSelectedNot: boolean;
-    constructor(public entityArgs: EntityArgs, private CourierMasterService: CourierMasterService) {
+    constructor(public entityArgs: EntityArgs, public CourierMasterService: CourierMasterService) {
         super();
         this.EntityResourceService = new EntityResourceService();
         this.entityPM = entityArgs.EntityPM;
