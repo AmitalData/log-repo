@@ -460,78 +460,220 @@
                                                     <table class="FixedTable">
                                                         <tr>
                                                             <td style="width: 360px">
-                                                                <table>
-                                                                    <tr class="FormFieldRow">
-                                                                        <td [style.width.px]="LabelColumnWidth">
-                                                                            <LogLabel [ObjectFieldName]="'FromPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="FromPortText"></LogLabel>
-                                                                        </td>
-                                                                        <td [style.width.px]="ControlColumnWidth">
-                                                                            <LogLov [ObjectFieldName]="'FromPortId'"
-                                                                                    [SelectedValue]="FromPortId"
-                                                                                    [ObjectTableName]="ObjectTableName"
-                                                                                    [DataContext]="DataContext"
-                                                                                    [LookUpTableName]="'Port'"
-                                                                                    [DependencyFilter1Value]="TransportModeId">
-                                                                            </LogLov>
-                                                                        </td>
-                                                                        <td></td>
-                                                                    </tr>
+                                                               <table>
+                                                                   <tr  class="FormFieldRow" style="height: 25px;">
+                                                                       <td>
+                                                                           <table>
+                                                                               <tr>
+                                                                                   <td [style.width.px]="LabelColumnWidth"><LogLabel [Text]="'Origin'"  [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel></td>
+                                                                                   <td style="width:70px">
+                                                                                       <RadioButton [IsEnabled]="IsScreenEnabled" [Name]="'FromRadio'" [IsChecked]="FromTypeCode == 'PORT'" (Checked)="FromTypeCode = 'PORT'" [Text]="'Port'"></RadioButton>
+                                                                                   </td>
+                                                                                   <td style="width:12px"></td>
+                                                                                   <td>
+                                                                                       <RadioButton [IsEnabled]="IsScreenEnabled" [Name]="'FromRadio'" [IsChecked]="FromTypeCode == 'CASL'" (Checked)="FromTypeCode = 'CASL'" [Text]="'Country'"></RadioButton>
+                                                                                   </td>
+                                                                                   <td></td>
+                                                                               </tr>
+                                                                           </table>
+                                                                       </td>
+                                                                   </tr>
 
-                                                                    <tr class="FormFieldRow">
-                                                                        <td [style.width.px]="LabelColumnWidth">
-                                                                            <LogLabel [ObjectFieldName]="'ToPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="ToPortText"></LogLabel>
-                                                                        </td>
-                                                                        <td [style.width.px]="ControlColumnWidth">
-                                                                            <LogLov [ObjectFieldName]="'ToPortId'"
-                                                                                    [SelectedValue]="ToPortId"
-                                                                                    [ObjectTableName]="ObjectTableName"
-                                                                                    [DataContext]="DataContext"
-                                                                                    [LookUpTableName]="'Port'"
-                                                                                    [DependencyFilter1Value]="TransportModeId">
-                                                                            </LogLov>
-                                                                        </td>
-                                                                        <td></td>
-                                                                    </tr>
+                                                                   <tr class="FormFieldRow">
+                                                                       <td>
 
 
-                                                                </table>
+                                                                           <!-- PORT -->
+                                                                           <table *ngIf="FromTypeCode == 'PORT'">
+                                                                               <tr class="FormFieldRow">
+                                                                                   <td [style.width.px]="LabelColumnWidth">
+                                                                                       <LogLabel [Text]="'From Port'" [ObjectFieldName]="'FromPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                   </td>
+
+                                                                                   <td [style.width.px]="ControlColumnWidth">
+                                                                                       <LogLov [ObjectFieldName]="'FromPortId'"
+                                                                                               [SelectedValue]="FromPortId"
+                                                                                               [ObjectTableName]="ObjectTableName"
+                                                                                               [DataContext]="DataContext"
+                                                                                               [LookUpTableName]="'Port'"
+                                                                                               [DependencyFilter1Value]="TransportModeId">
+                                                                                       </LogLov>
+                                                                                   </td>
+                                                                                   <td></td>
+                                                                               </tr>
+
+                                                                               <tr>
+                                                                                   <td colspan="3">
+                                                                                       <div></div>
+                                                                                   </td>
+                                                                               </tr>
+                                                                           </table>
+
+                                                                           <!-- CASL -->
+                                                                           <table *ngIf="FromTypeCode == 'CASL'">
+
+                                                                               <tr class="FormFieldRow">
+                                                                                   <td [style.width.px]="LabelColumnWidth">
+                                                                                       <LogLabel [Text]="'From Country'" [ObjectFieldName]="'FromCountryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                   </td>
+
+                                                                                   <td [style.width.px]="ControlColumnWidth">
+                                                                                       <LogLov [ObjectFieldName]="'FromCountryId'"
+                                                                                               [SelectedValue]="FromCountryId"
+                                                                                               [ObjectTableName]="ObjectTableName"
+                                                                                               [DataContext]="DataContext"
+                                                                                               [LookUpTableName]="'Country'">
+                                                                                       </LogLov>
+                                                                                   </td>
+                                                                                   <td></td>
+                                                                               </tr>
+
+                                                                               <tr>
+                                                                                   <td colspan="3">
+                                                                                       <div></div>
+                                                                                   </td>
+                                                                               </tr>
+                                                                           </table>
+                                                                       </td>
+                                                                   </tr>
+
+
+                                                                   <!--<tr class="FormFieldRow">
+                                                                       <td>
+                                                                           <table>
+                                                                               <tr>
+                                                                                   <td [style.width.px]="LabelColumnWidth">
+                                                                                       <LogLabel [ObjectFieldName]="'TruckerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                   </td>
+                                                                                   <td [style.width.px]="ControlColumnWidth">
+                                                                                       <LogLov [ObjectFieldName]="'TruckerId'"
+                                                                                               [SelectedValue]="TruckerId"
+                                                                                               [ObjectTableName]="ObjectTableName"
+                                                                                               [DataContext]="DataContext"
+                                                                                               [LookUpTableName]="'Carrier'"
+                                                                                               [DependencyFilter1Value]="CarrierDependencyProperty1">
+                                                                                       </LogLov>
+
+                                                                                     
+                                                                                   </td>
+                                                                                   <td></td>
+                                                                               </tr>
+                                                                           </table>
+                                                                       </td>
+                                                            
+                                                                   </tr>-->
+                                                                   <tr><td></td></tr>
+
+                                                               </table>
                                                             </td>
 
                                                             <td>
                                                                 <div></div>
                                                             </td>
 
-                                                            <td style="width: 330px;">
+
+
+                                                            <td style="width: 330px">
                                                                 <table>
-                                                                    <tr class="FormFieldRow">
-                                                                        <td [style.width.px]="LabelColumnWidth">
-                                                                            <LogLabel [ObjectFieldName]="'TruckerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                        </td>
-                                                                        <td [style.width.px]="ControlColumnWidth">
-                                                                            <LogLov [ObjectFieldName]="'TruckerId'"
-                                                                                    [SelectedValue]="TruckerId"
-                                                                                    [ObjectTableName]="ObjectTableName"
-                                                                                    [DataContext]="DataContext"
-                                                                                    [LookUpTableName]="'Carrier'"
-                                                                                    [DependencyFilter1Value]="CarrierDependencyProperty1">
-                                                                            </LogLov>
-
-
-                                                                        </td>
-                                                                    </tr>
-
-                                                                    <tr class="FormFieldRow">
-                                                                        <td [style.width.px]="LabelColumnWidth">
-                                                                            <LogLabel [ObjectFieldName]="'TruckerReference'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                        </td>
-                                                                        <td [style.width.px]="ControlColumnWidth">
-                                                                            <LogTextBox [ObjectFieldName]="'TruckerReference'" [Text]="TruckerReference" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                    <tr class="FormFieldRow" style="height: 25px;">
+                                                                        <td>
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td [style.width.px]="LabelColumnWidth"><LogLabel [Text]="'Origin'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel></td>                                                                                    <td style="width:70px">
+                                                                                        <RadioButton [IsEnabled]="IsScreenEnabled" [Name]="'ToRadio'" [IsChecked]="ToTypeCode == 'PORT'" (Checked)="ToTypeCode = 'PORT'" [Text]="'Port'"></RadioButton>
+                                                                                    </td>
+                                                                                    <td style="width:12px"></td>
+                                                                                    <td>
+                                                                                        <RadioButton [IsEnabled]="IsScreenEnabled" [Name]="'ToRadio'" [IsChecked]="ToTypeCode == 'CASL'" (Checked)="ToTypeCode = 'CASL'" [Text]="'Country'"></RadioButton>
+                                                                                    </td>
+                                                                                    <td></td>
+                                                                                </tr>
+                                                                            </table>
                                                                         </td>
                                                                     </tr>
 
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+
+
+                                                                            <!-- PORT -->
+                                                                            <table *ngIf="ToTypeCode == 'PORT'">
+                                                                                <tr class="FormFieldRow">
+                                                                                    <td [style.width.px]="LabelColumnWidth">
+                                                                                        <LogLabel [Text]="'To Port'" [ObjectFieldName]="'ToPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                    </td>
+
+                                                                                    <td [style.width.px]="ControlColumnWidth">
+                                                                                        <LogLov [ObjectFieldName]="'ToPortId'"
+                                                                                                [SelectedValue]="ToPortId"
+                                                                                                [ObjectTableName]="ObjectTableName"
+                                                                                                [DataContext]="DataContext"
+                                                                                                [LookUpTableName]="'Port'"
+                                                                                                [DependencyFilter1Value]="TransportModeId">
+                                                                                        </LogLov>
+                                                                                    </td>
+                                                                                    <td></td>
+                                                                                </tr>
+
+                                                                                <tr>
+                                                                                    <td colspan="3">
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+
+                                                                            <!-- CASL -->
+                                                                            <table *ngIf="ToTypeCode == 'CASL'">
+
+                                                                                <tr class="FormFieldRow">
+                                                                                    <td [style.width.px]="LabelColumnWidth">
+                                                                                        <LogLabel [Text]="'To Country'" [ObjectFieldName]="'ToCountryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                    </td>
+
+                                                                                    <td [style.width.px]="ControlColumnWidth">
+                                                                                        <LogLov [ObjectFieldName]="'ToCountryId'"
+                                                                                                [SelectedValue]="ToCountryId"
+                                                                                                [ObjectTableName]="ObjectTableName"
+                                                                                                [DataContext]="DataContext"
+                                                                                                [LookUpTableName]="'Country'">
+                                                                                        </LogLov>
+                                                                                    </td>
+                                                                                    <td></td>
+                                                                                </tr>
+
+                                                                                <tr>
+                                                                                    <td colspan="3">
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+
+
+
+                                                                    <!--<tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td [style.width.px]="LabelColumnWidth">
+                                                                                        <LogLabel [ObjectFieldName]="'TruckerReference'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                    </td>
+                                                                                    <td [style.width.px]="ControlColumnWidth">
+                                                                                        <LogTextBox [ObjectFieldName]="'TruckerReference'" [Text]="TruckerReference" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                                    </td>
+                                                                                    <td></td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+
+                                                                    </tr>-->
+                                                                    <tr><td></td></tr>
 
                                                                 </table>
                                                             </td>
+
+
                                                         </tr>
                                                     </table>
 

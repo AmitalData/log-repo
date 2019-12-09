@@ -33,6 +33,7 @@ export class WarehouseEntryRoutingsTabComponent extends BaseComponent {
     ConsigneePartnerTypeId: string;
     public FromPortText = ""; 
     public ToPortText = "";
+
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
@@ -156,6 +157,40 @@ export class WarehouseEntryRoutingsTabComponent extends BaseComponent {
         }
     }
 
+    get FromTypeCode() { return this.EntityPM.FromTypeCode; }
+    set FromTypeCode(newValue: string) {
+        if (this.EntityPM.FromTypeCode != newValue) {
+            this.EntityPM.FromTypeCode = newValue;
+            this.FromPortId = null;
+            this.FromCountryId = null;
+
+        }
+    }
+
+    get ToTypeCode() { return this.EntityPM.ToTypeCode; }
+    set ToTypeCode(newValue: string) {
+        if (this.EntityPM.ToTypeCode != newValue) {
+            this.EntityPM.ToTypeCode = newValue;
+            this.ToPortId = null;
+            this.ToCountryId = null;
+        }
+    }
+
+    get FromCountryId() { return this.EntityPM.FromCountryId; }
+    set FromCountryId(newValue: string) {
+        if (this.EntityPM.FromCountryId != newValue) {
+            this.EntityPM.FromCountryId = newValue;
+        }
+    }
+
+    get ToCountryId() { return this.EntityPM.ToCountryId; }
+    set ToCountryId(newValue: string) {
+        if (this.EntityPM.ToCountryId != newValue) {
+            this.EntityPM.ToCountryId = newValue;
+        }
+    }
+
+
     get FromPartnerId() {
 
         return !AppTool.IsNullOrEmpty(this.EntityPM.FromPartnerId) ? this.EntityPM.FromPartnerId : this.EntityPM.ShipperId;
@@ -262,8 +297,8 @@ export class WarehouseEntryRoutingsTabComponent extends BaseComponent {
 
         }
 
-        this.UIProperties.SetRequired("FromPortId", this.ObjectTableName, isFromRequired);
-        this.UIProperties.SetRequired("ToPortId", this.ObjectTableName, isToRequired);
+        //this.UIProperties.SetRequired("FromPortId", this.ObjectTableName, isFromRequired);
+        //this.UIProperties.SetRequired("ToPortId", this.ObjectTableName, isToRequired);
     }
     
     public ToAddressList: AddressList;

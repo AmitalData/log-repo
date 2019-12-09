@@ -1747,6 +1747,13 @@
     <Compile Include="Migrations\201912080719298_WesamAddObjectFieldCodeToScreenFieldsTable.Designer.cs">
       <DependentUpon>201912080719298_WesamAddObjectFieldCodeToScreenFieldsTable.cs</DependentUpon>
     </Compile>
+
+    <Compile Include="Migrations\201912080935232_AbedAddToFromTypeCodeFieldToWarehouseEntry.cs" />
+    <Compile Include="Migrations\201912080935232_AbedAddToFromTypeCodeFieldToWarehouseEntry.Designer.cs">
+      <DependentUpon>201912080935232_AbedAddToFromTypeCodeFieldToWarehouseEntry.cs</DependentUpon>
+    </Compile>
+
+   
    
     <Compile Include="Migrations\201912091013371_Unique_OriginalJournalId.cs" />
     <Compile Include="Migrations\201912091013371_Unique_OriginalJournalId.Designer.cs">
@@ -2973,6 +2980,7 @@
     <EmbeddedResource Include="Migrations\201911280844228_ShipmentAdditionalCloudDataNewFields_Rabaia.resx">
       <DependentUpon>201911280844228_ShipmentAdditionalCloudDataNewFields_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
+
     <EmbeddedResource Include="Migrations\201911291324079_APPaymentNewFieldMigration.resx">
       <DependentUpon>201911291324079_APPaymentNewFieldMigration.cs</DependentUpon>
     </EmbeddedResource>
@@ -2994,6 +3002,13 @@
     <EmbeddedResource Include="Migrations\201912041012315_AbedChangeFromPortForeignKeyToWarehouseRelease.resx">
       <DependentUpon>201912041012315_AbedChangeFromPortForeignKeyToWarehouseRelease.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912041006219_WesamAddObjectFieldCodeToQueryColumnsTable.resx">
+      <DependentUpon>201912041006219_WesamAddObjectFieldCodeToQueryColumnsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912080719298_WesamAddObjectFieldCodeToScreenFieldsTable.resx">
+      <DependentUpon>201912080719298_WesamAddObjectFieldCodeToScreenFieldsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">
