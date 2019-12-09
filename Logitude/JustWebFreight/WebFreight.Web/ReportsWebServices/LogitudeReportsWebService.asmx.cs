@@ -1013,7 +1013,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             IQueryable<ARInvoice> iQueryable_ARInvoice = aRInvoiceRepository.GetUnpaidAndDraftARInvoices(tenant);
             IQueryable<APInvoice> iQueryable_APInvoice = aPInvoiceRepository.GetUnpaidAPInvoices(tenant);
-            IQueryable<ARPayment> iQueryable_ARPayment = aRPaymentRepository.GetOpenedAndDraftARPayments(tenant);
+            IQueryable<ARPayment> iQueryable_ARPayment = aRPaymentRepository.GetOpenedARPayments(tenant);
             IQueryable<APPayment> iQueryable_APPayment = aPPaymentRepository.GetOpenedAPPayments(tenant);
 
             iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => !d.IsConstituentInvoice);
@@ -1037,7 +1037,6 @@ namespace WebFreight.Web.ReportsWebServices
             if (!IncludeDraftInvoices)
             {
                 iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.StatusCode != "DR");
-                iQueryable_ARPayment = iQueryable_ARPayment.Where(d => d.StatusCode != "DR");
             }
             #endregion
 

@@ -165,12 +165,5 @@ namespace Simplog.Data.InvoiceModel.Repositories
         {
             throw new System.NotImplementedException();
         }
-        public IQueryable<ARPayment> GetOpenedAndDraftARPayments(int tenant)
-        {
-            return (from d in context.ARPayments.Include("AccountingPaymentMethod")
-                    where d.Tenant == tenant && d.StatusCode != "VD" && d.StatusCode != "LL" && d.IsClosed == false
-                    select d);
-        }
-        
     }
 }
