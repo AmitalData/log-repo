@@ -327,6 +327,7 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
             this.fromPortId = newValue;
             this.ViewModelTrigger.FromPortId = newValue;
             this.FilterWarehouseEntryPackageList();
+            this.LoadWarehouseEntryPackageListsByCustomerId();
         }
     }
 
@@ -338,6 +339,7 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
             this.toPortId = newValue;
             this.ViewModelTrigger.ToPortId = newValue;
             this.FilterWarehouseEntryPackageList();
+            this.LoadWarehouseEntryPackageListsByCustomerId();
         }
     }
 
