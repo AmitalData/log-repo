@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+SetClosedCollateralScreesnimport {Component} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { CustomsCollateralsAnswerPM } from '../../../Customs/EntityPMs/CustomsCollateralsAnswerPM';
 import { CustomsCollateralPM } from '../../../Customs/EntityPMs/CustomsCollateralPM';
@@ -55,9 +55,10 @@ export class CustomsCollateralAnswerComponent extends BaseComponent {
         );
 
         this.firstTime = true;
+
         this.SetClosedCollateralScreesn(this.collateralPM.IsClosed);
         this.BuildAccountingCustomFilesList();
-      
+
         if (this.EntityPM.IsClosed) {
             this.IsClosed = true;
             this.DisplayOnlyMessageVisibility = true;
@@ -406,7 +407,7 @@ export class CustomsCollateralAnswerComponent extends BaseComponent {
                                     result.forEach((item) => {
                                         this.GuaranteeDefaultList.push(item);
                                     });
-
+                                    if (this.IsGuaranteeDefaultList)this.SetClosedCollateralScreesn(this.collateralPM.IsClosed);
                                 }
                             }
                         });
