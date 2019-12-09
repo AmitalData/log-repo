@@ -59,31 +59,6 @@ export class InterestPageComponent implements AfterViewInit {
         logWindow.Show('./Accounting/Components/EditTabs/Interest/DetailsTab/InterestBasesTypeDetailsTabComponent');
     }
 
-    //RunNewInterestBasesTypeWizard() {
-    //    if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "NEW", true)) {
-    //        return;
-    //    }
-    //    this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
-    //        this.RunNewGenaricEntity();
-    //        ServiceLocator.SendTotangoUserActivity(this.ObjectTableName, "New" + this.ObjectTableName);
-    //    });
-    //}
-    //private RunNewGenaricEntity() {
-    //    var componentPath = "./Infrastructure/GenericComponents/NewEntityComponent";
-    //    this.entityPMService.getNewEntity(this.ObjectTableName).then(response => {
-    //        var args = new EntityArgs();
-    //        args.EntityPM = response;
-    //        args.ObjectTableName = this.ObjectTableName;
-    //        var logWindow = new LogitudeWindow();
-    //        logWindow.Width = 960;
-    //        logWindow.Height = 570;
-    //        var windowTitle = TextCodeTranslator.Translate("Accounting.General.O.NewInterestBaseType");
-    //        logWindow.WindowArgs = args;
-    //        logWindow.Title = windowTitle;
-    //        logWindow.Show(componentPath);
-    //    });
-    //}
- 
         ViewAccountingQuery(myQueryCode: string) {
         if (myQueryCode != null) {
 

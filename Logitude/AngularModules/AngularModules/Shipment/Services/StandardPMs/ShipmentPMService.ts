@@ -39,6 +39,7 @@ import { PerformanceLogger } from '../../../Infrastructure/Utilities/Performance
 import {ShipmentAssemblyPM} from '../../EntityPMs/ShipmentAssemblyPM';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { PickUpDeliveryPackageHarmonizePM } from '../../EntityPMs/PickUpDeliveryPackageHarmonizePM';
+import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
 
 @Injectable()
 
@@ -71,6 +72,7 @@ export class ShipmentPMService {
                 if (pm) {
                     entity = this.MapJsonToEntityPM(pm);
                 }
+               // ServiceLocator.RulesValidator.ApplyAllEntityStaticRules(entity, "Shipment");
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
                 pmresponse.Result = entity;

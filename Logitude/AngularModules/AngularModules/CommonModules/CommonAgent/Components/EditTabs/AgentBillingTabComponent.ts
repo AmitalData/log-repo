@@ -84,7 +84,7 @@ export class AgentBillingTabComponent extends BaseComponent implements OnInit, O
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 3) {
+        if (this.Retries < 20) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }

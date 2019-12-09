@@ -53,10 +53,10 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChartOfAccount\ChartOfAccountIntegrationTests.cs" />
+    <Compile Include="Tests\ChartOfAccountIntegrationTests.cs" />
     <Compile Include="Initialize.cs" />
-    <Compile Include="Preparation\PreparationCalls.cs" />
-    <Compile Include="Preparation\PreparationVariables.cs" />
+    <Compile Include="FullAccountingPreparationCalls.cs" />
+    <Compile Include="FullAccountingVariables.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -77,6 +77,10 @@
     <ProjectReference Include="..\Logitude.Accounting.Def\Logitude.Accounting.Def.csproj">
       <Project>{91564685-7ee1-466d-afcd-183a1bf62259}</Project>
       <Name>Logitude.Accounting.Def</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
+      <Project>{A663E7EF-B858-4BB6-BC33-E473F51B8E56}</Project>
+      <Name>Logitude.BL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Logitude.IntegrationTest.Core\Logitude.IntegrationTest.Core.csproj">
       <Project>{83ee55e3-c13c-4df6-ac3c-c634e9cd8d66}</Project>
