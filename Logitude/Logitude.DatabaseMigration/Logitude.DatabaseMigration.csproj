@@ -1650,6 +1650,26 @@
     <Compile Include="Migrations\201911210908155_AddAutomaticallyCloseDaysToQuoteSettingTable_Maheera.Designer.cs">
       <DependentUpon>201911210908155_AddAutomaticallyCloseDaysToQuoteSettingTable_Maheera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911271214588_APInvoice_CreatedByPartner.cs" />
+    <Compile Include="Migrations\201911271214588_APInvoice_CreatedByPartner.Designer.cs">
+      <DependentUpon>201911271214588_APInvoice_CreatedByPartner.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912011427416_CreatedByPartner_Fields.cs" />
+    <Compile Include="Migrations\201912011427416_CreatedByPartner_Fields.Designer.cs">
+      <DependentUpon>201912011427416_CreatedByPartner_Fields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911271321484_UserLastSettingsTable_Rabaia.cs" />
+    <Compile Include="Migrations\201911271321484_UserLastSettingsTable_Rabaia.Designer.cs">
+      <DependentUpon>201911271321484_UserLastSettingsTable_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911280844228_ShipmentAdditionalCloudDataNewFields_Rabaia.cs" />
+    <Compile Include="Migrations\201911280844228_ShipmentAdditionalCloudDataNewFields_Rabaia.Designer.cs">
+      <DependentUpon>201911280844228_ShipmentAdditionalCloudDataNewFields_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912031815485_AddHideFCLAllInField.cs" />
+    <Compile Include="Migrations\201912031815485_AddHideFCLAllInField.Designer.cs">
+      <DependentUpon>201912031815485_AddHideFCLAllInField.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201911251236376_NewField_AllowEditChequePayToName.cs" />
     <Compile Include="Migrations\201911251236376_NewField_AllowEditChequePayToName.Designer.cs">
       <DependentUpon>201911251236376_NewField_AllowEditChequePayToName.cs</DependentUpon>
@@ -2829,6 +2849,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911210908155_AddAutomaticallyCloseDaysToQuoteSettingTable_Maheera.resx">
       <DependentUpon>201911210908155_AddAutomaticallyCloseDaysToQuoteSettingTable_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911271214588_APInvoice_CreatedByPartner.resx">
+      <DependentUpon>201911271214588_APInvoice_CreatedByPartner.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912011427416_CreatedByPartner_Fields.resx">
+      <DependentUpon>201912011427416_CreatedByPartner_Fields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911271321484_UserLastSettingsTable_Rabaia.resx">
+      <DependentUpon>201911271321484_UserLastSettingsTable_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911280844228_ShipmentAdditionalCloudDataNewFields_Rabaia.resx">
+      <DependentUpon>201911280844228_ShipmentAdditionalCloudDataNewFields_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912031815485_AddHideFCLAllInField.resx">
+      <DependentUpon>201912031815485_AddHideFCLAllInField.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911251236376_NewField_AllowEditChequePayToName.resx">
       <DependentUpon>201911251236376_NewField_AllowEditChequePayToName.cs</DependentUpon>
