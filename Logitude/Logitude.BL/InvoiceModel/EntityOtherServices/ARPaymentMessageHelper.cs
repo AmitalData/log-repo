@@ -372,7 +372,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public string InvoiceType { get; set; }
         public string InvoiceNumber { get; set; }
         public double PaidAmount { get; set; }
-        public string VATExternalId { get; set; }
     }
     #endregion
 }

@@ -277,7 +277,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                     VatType LineVat = VatTypeRepository.GetSingleVatType(myline.VatTypeId, item.Tenant, true);
                     if (LineVat != null)
                     {
-                        lineElement.VATExternalId = LineVat.ReceivablesExternalId;
+                        lineElement.VATExternalId = LineVat.PayablesExternalId;
                     }
 
                     if (tenant == 303 || tenant == 814)

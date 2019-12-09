@@ -212,7 +212,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                         //InvoiceType = lineType,
                         InvoiceNumber = myline.InvoiceNumber,
                         PaidAmount = linePaidAmount,
-                    };
+                    };             
 
                     paymentElement.Invoices.Add(invoiceElement);
                 }
@@ -326,7 +326,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public string BankBranch { get; set; }
         public string BankAccount { get; set; }
         public int Tenant { get; set; }
-        public string VATExternalId { get; set; }
 
         [XmlElement(ElementName = "Vendor")]
         public APPaymnetCardElement Card { get; set; }
@@ -355,6 +354,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public string InvoiceType { get; set; }
         public string InvoiceNumber { get; set; }
         public double PaidAmount { get; set; }
+
     }
     #endregion
 }
