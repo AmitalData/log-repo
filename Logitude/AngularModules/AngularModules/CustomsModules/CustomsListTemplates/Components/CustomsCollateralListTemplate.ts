@@ -49,7 +49,7 @@ export class CustomsCollateralListTemplate {
 
 
         this.fieldName = fieldName;
-        this.isDisable = (this._CustomsCollateralRecord.IsAnswer) || this._CustomsCollateralRecord.IsClosed || (this._CustomsCollateralRecord.CollateralRequestStatusCode != '1' && this._CustomsCollateralRecord.CollateralRequestStatusCode != null);
+        this.isDisable = (this._CustomsCollateralRecord.IsAnswer) || this._CustomsCollateralRecord.IsClosed;//|| (this._CustomsCollateralRecord.CollateralRequestStatusCode != '1' && this._CustomsCollateralRecord.CollateralRequestStatusCode != null);
         //|| (this._CustomsCollateralRecord.CollateralRequestStatusCode != '1' && this._CustomsCollateralRecord.CollateralRequestStatusCode != '' && this._CustomsCollateralRecord.CollateralRequestStatusCode != null
     }
 
