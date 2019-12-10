@@ -283,9 +283,9 @@ export class ScreenLayoutComponent extends BaseComponent {
                 if (sItem.ObjectFieldPMs) {
                     var temp = sItem.ObjectFieldPMs.filter(a => a.Id == id);
                     if (temp.length > 0) {
-                        var SField = sItem.ScreenFieldPMs.filter(a => a.ObjectFieldCode == myitem.FieldCode)[0];
+                        var SField = sItem.ScreenFieldPMs.filter(a => a.ObjectFieldId == id)[0];
                         sItem.ObjectFieldPMs = sItem.ObjectFieldPMs.filter(a => a.Id != id);
-                        sItem.ScreenFieldPMs = sItem.ScreenFieldPMs.filter(a => a.ObjectFieldCode != myitem.FieldCode);
+                        sItem.ScreenFieldPMs = sItem.ScreenFieldPMs.filter(a => a.ObjectFieldId != id);
                         SField.Column = item.ColumnIndex;
                         SField.Row = Rows.ScreenFieldPMs ? Rows.ScreenFieldPMs.length : 0;
                         if (Rows.ScreenFieldPMs == null) {
