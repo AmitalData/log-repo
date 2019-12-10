@@ -19,41 +19,16 @@ export class ReconcileExternalPageExtendedListService {
     }
 
 
-    getExternalReoncilioationsByFilter(bankAccountId: string, filters: ApiQueryFilters) {
+    getExternalReoncilioationsByFilter(objectTableId: string, entityId: string, filters: ApiQueryFilters)
+    {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
         var url = this._apiUrl + "/getExternalReoncilioationsByFilter";
 
-        var urlparameters = '?bankAccountId=' + bankAccountId;
+        var urlparameters = '?objectTableId=' + objectTableId + '&entityId=' + entityId;
 
-        // Parse Filters into URI
-        var mykeys = Object.keys(filters);
-        var addtionalFiltersValues = null;
-        var callTime = new Date();
-        for (var i in mykeys) {
-            var propName = mykeys[i];
-            var propValue = filters[propName];
-
-            var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
-
-            if (urlparameters != "?") {
-                urlparameters = urlparameters.concat('&');
-            }
-            if (!ignoreFilter) {
-                propValue = encodeURIComponent(propValue);
-                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
-            }
-
-            if (propName == "AdditionalFilters" && propValue.length > 0)
-                addtionalFiltersValues = JSON.stringify(propValue);
-
-
-        }
-        if (addtionalFiltersValues) {
-            urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
-        }
-        // End Parse
+        urlparameters = this.ParseFiltersIntoURI(filters, urlparameters);
 
 
         var callUrl = url.concat(urlparameters);
@@ -70,6 +45,31 @@ export class ReconcileExternalPageExtendedListService {
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
         });
+    }
+
+    private ParseFiltersIntoURI(filters: ApiQueryFilters, urlparameters: string)
+    {
+        var mykeys = Object.keys(filters);
+        var addtionalFiltersValues = null;
+        var callTime = new Date();
+        for (var i in mykeys) {
+            var propName = mykeys[i];
+            var propValue = filters[propName];
+            var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
+            if (urlparameters != "?") {
+                urlparameters = urlparameters.concat('&');
+            }
+            if (!ignoreFilter) {
+                propValue = encodeURIComponent(propValue);
+                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+            }
+            if (propName == "AdditionalFilters" && propValue.length > 0)
+                addtionalFiltersValues = JSON.stringify(propValue);
+        }
+        if (addtionalFiltersValues) {
+            urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
+        }
+        return urlparameters;
     }
 
     getBankPageLinesByIds(Ids: string[]) {

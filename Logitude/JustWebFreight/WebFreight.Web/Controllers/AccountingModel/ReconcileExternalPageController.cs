@@ -144,7 +144,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
 
         [HttpGet]
-        public HttpResponseMessage getExternalReoncilioationsByFilter(string bankAccountId, [FromUri] ApiQueryFilters filters)
+        public HttpResponseMessage getExternalReoncilioationsByFilter(string objectTableId, string entityId, [FromUri] ApiQueryFilters filters)
         {
             try
             {
@@ -230,9 +230,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 var accountingContext = AccountingContext.GetContext(tenant);
                 var qs = new ReconcileExternalPageListQueryService(accountingContext);
 
-                var callback = qs.GetOpenReconciliationFilterCallBack(queryOperations, bankAccountId, tenant);
+                var callback = qs.GetOpenReconciliationFilterCallBack(queryOperations, objectTableId, entityId, tenant);
 
-                var openReconciliation = qs.getExternalReoncilioationsByFilter(queryOperations, bankAccountId, tenant);
+                var openReconciliation = qs.getExternalReoncilioationsByFilter(queryOperations, objectTableId, entityId, tenant);
 
 
                 ServiceResponse response = new ServiceResponse();
