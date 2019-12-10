@@ -31,7 +31,7 @@ namespace Logitude.Accounting.Data.Repositories
         {
             return GetQRelatedCurrenciesAccountByCustomerGLAccountActive(tenant, GLAccountId).ToList();
         }
-        //test
+        //test1
         public IQueryable<GLAccountCurrency> GetQRelatedCurrenciesAccountByCustomerGLAccountActive(int tenant, string GLAccountId)
         {
             return (from accCurr in context.GLAccountCurrencies
