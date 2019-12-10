@@ -1,0 +1,11 @@
+﻿<BatchManagerConfig>
+  <Processes>
+    <Process Name="All" AllServices="true" Ignore="FTP,FTP1" MaxWorkingTimeInMinutes="1"/>
+    <!--<Process Name="FTPProcess" AllServices="false" MaxMemoryMB="2048" MaxWorkingTimeInMinutes="30">
+      <Services>
+        <Service Code="FTP" MaxWorkingTimeInMinutes="30" />
+        <Service Code="FTP1" />
+      </Services>
+    </Process>-->
+  </Processes>
+</BatchManagerConfig>

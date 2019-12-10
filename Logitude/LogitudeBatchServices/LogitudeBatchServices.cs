@@ -17,6 +17,10 @@ namespace LogitudeBatchServices
 {
     public partial class LogitudeBatchServices : ServiceBase
     {
+        int MaxMemoryMB = 0;
+        int MaxWorkingTimeInMinutes = 0;
+        private System.Timers.Timer BatchServiceTimer;
+        private DateTime ProcessStartTime;
         public LogitudeBatchServices()
         {
             InitializeComponent();
@@ -33,7 +37,7 @@ namespace LogitudeBatchServices
             var worker = new BackgroundWorker();
             worker.DoWork += new DoWorkEventHandler(worker_DoWork);
             worker.RunWorkerAsync();
-           
+
         }
 
         void worker_DoWork(object sender, DoWorkEventArgs e)
@@ -47,7 +51,7 @@ namespace LogitudeBatchServices
             {
                 StartLogitudeBatchServices(Arg);
             }
-           
+
         }
 
         public void StartLogitudeBatchServices()
@@ -55,10 +59,10 @@ namespace LogitudeBatchServices
             try
             {
                 EventLog.WriteEntry("worker_DoWork start");
-                CommunicationWorkerRole.ThreadedRoleEntryPoint d = new CommunicationWorkerRole.ThreadedRoleEntryPoint(); 
+                CommunicationWorkerRole.ThreadedRoleEntryPoint d = new CommunicationWorkerRole.ThreadedRoleEntryPoint();
                 d.OnStart();
                 EventLog.WriteEntry("OnStart Passed ");
-                d.Run(); 
+                d.Run();
             }
             catch (Exception ex)
             {
@@ -70,8 +74,24 @@ namespace LogitudeBatchServices
         {
             try
             {
+                ProcessStartTime = DateTime.Now;
+                if (BatchServiceTimer == null)
+                {
+                    this.BatchServiceTimer = new System.Timers.Timer();
+
+                    TimeSpan t = new TimeSpan(0, 0, 30);
+                    BatchServiceTimer.Interval = (int)t.TotalMilliseconds;
+                    BatchServiceTimer.Stop();
+                    BatchServiceTimer.Elapsed += BatchServiceTimer_Elapsed;
+                }
+                var args = arg.Split(' ').ToList();
+
+                var IgnoredServices = args.Where(a => a.Contains("-Ignore")).FirstOrDefault();
+                var IncludedServices = args.Where(a => a.Contains("-Include")).FirstOrDefault();
+                MaxMemoryMB = int.Parse(args.Where(a => a.Contains("-MMMB")).FirstOrDefault());
+                MaxWorkingTimeInMinutes = int.Parse(args.Where(a => a.Contains("-MPWTIM")).FirstOrDefault());
                 EventLog.WriteEntry("worker_DoWork start");
-                CommunicationWorkerRole.ThreadedRoleEntryPoint d = new CommunicationWorkerRole.ThreadedRoleEntryPoint(arg);
+                CommunicationWorkerRole.ThreadedRoleEntryPoint d = new CommunicationWorkerRole.ThreadedRoleEntryPoint(IncludedServices, IgnoredServices);
                 d.OnStart();
                 EventLog.WriteEntry("OnStart Passed ");
                 d.Run();
@@ -82,6 +102,51 @@ namespace LogitudeBatchServices
                 EventLog.WriteEntry(ex.Message);
             }
         }
+
+        private void BatchServiceTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            Process CurrentProcess = Process.GetCurrentProcess();
+            if (!CurrentProcess.HasExited)
+            {
+                if (CheckIsMaxMemoryExceeded(CurrentProcess))
+                {
+                    RestartProcess(CurrentProcess);
+                }
+
+                if (CheckIsMaxWorkingTimeInMinutesExceeded(CurrentProcess))
+                {
+                    RestartProcess(CurrentProcess);
+                }
+            }
+        }
+
+        private bool CheckIsMaxWorkingTimeInMinutesExceeded(Process currentProcess)
+        {
+            int RunningPeriod = (DateTime.Now - ProcessStartTime).Minutes;
+            if (MaxWorkingTimeInMinutes > 0 && RunningPeriod > MaxWorkingTimeInMinutes)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool CheckIsMaxMemoryExceeded(Process currentProcess)
+        {
+            var ProcessMemoInMB = currentProcess.WorkingSet64 / 1000000;
+            if (MaxMemoryMB > 0 && ProcessMemoInMB >= MaxMemoryMB)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private void RestartProcess(Process currentProcess)
+        {
+            EventLog.WriteEntry("Process WIth PID : " + currentProcess.Id + " Restarted");
+            currentProcess.WaitForExit((int)new TimeSpan(0, 1, 0).TotalMilliseconds);
+            currentProcess.Kill();
+        }
+
         protected override void OnStop()
         {
             //Dispose();
