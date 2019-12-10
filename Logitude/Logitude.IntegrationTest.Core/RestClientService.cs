@@ -12,7 +12,7 @@ namespace Logitude.IntegrationTest.Core
 {
     public class RestClientService
     {
-        private static string mainUrl = IntegrationTestLoginParameters.ServerURL + "api/";
+        private static string mainUrl = IntegrationTestLoginParameters.ServerURL + "/api/";
         public static async Task<HttpResponseMessage> GetAsync(string urlControllerAndMethod)
         {
             using (var client = new HttpClient())
