@@ -104,7 +104,7 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
                             for (var r = 0; r < myScreen.NumberOfRows; r++) {
                                 var myScreenField = myScreenFields.filter((f: any) => f.Column == c && f.Row == r)[0];
                                 if (myScreenField != null) {
-                                    var myObjectField = myObjectFields.filter((f: any) => f.Id == myScreenField.ObjectFieldId)[0];
+                                    var myObjectField = myObjectFields.filter((f: any) => f.FieldCode == myScreenField.ObjectFieldCode)[0];
                                     if (myObjectField != null) {
 
                                         if (this.ObjectTableName == "CommunicationLog") {

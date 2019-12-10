@@ -347,7 +347,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen AdditionalServiceHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AdditionalService.HeaderScreen", Name = "Header Screen", ObjectTableId = AdditionalServiceObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField AdditionalServiceAdditionalServiceHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = AdditionalServiceObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = AdditionalServiceHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AdditionalServiceAdditionalServiceHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = AdditionalServiceObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = AdditionalServiceHeaderScreenScreen0.Id, ObjectFieldCode = AdditionalServiceObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    AdditionalServiceObjectTable.HeaderScreenId = AdditionalServiceHeaderScreenScreen0.Id;
 	   		  
@@ -355,9 +355,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen AdditionalServiceGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AdditionalService.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = AdditionalServiceObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 2, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField AdditionalServiceAdditionalServiceGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = AdditionalServiceObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = AdditionalServiceGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AdditionalServiceAdditionalServiceGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = AdditionalServiceObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = AdditionalServiceGeneralTabScreenScreen1.Id, ObjectFieldCode = AdditionalServiceObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField AdditionalServiceAdditionalServiceGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = AdditionalServiceObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = AdditionalServiceGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField AdditionalServiceAdditionalServiceGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = AdditionalServiceObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = AdditionalServiceGeneralTabScreenScreen1.Id, ObjectFieldCode = AdditionalServiceObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }

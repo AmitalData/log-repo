@@ -512,7 +512,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     foreach (var item in args.ScreenFields)
                     {
-                        var temp = MyTenantFields.Where(a => a.ObjectFieldId == item.ObjectFieldId && a.ScreenId == item.ScreenId).FirstOrDefault();
+                        var temp = MyTenantFields.Where(a => a.ObjectFieldCode == item.ObjectFieldCode && a.ScreenId == item.ScreenId).FirstOrDefault();
                         if (temp != null)
                         {
                             item.Id = temp.Id;
