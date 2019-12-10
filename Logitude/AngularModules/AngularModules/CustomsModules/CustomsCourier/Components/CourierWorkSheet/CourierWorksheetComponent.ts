@@ -199,11 +199,26 @@ export class CourierWorksheetComponent extends BaseComponent
 
     SetWindowArgs(windowArgs) {
         this.entityPM = windowArgs.CurrentEntity;
-        if (windowArgs.TabMode == "Pending902") {
-            this._SelectedTabFilter = this._TabFilterList[6];
-            this.PendingFilter = "902";
-            this.TabFilterClick(this._TabFilterList[6]);
+
+        if (windowArgs.TabMode != null) {
+            switch (windowArgs.TabMode) {
+                case "Pending902":
+                    {
+                        this._SelectedTabFilter = this._TabFilterList[6];
+                        this.PendingFilter = "902";
+                        this.TabFilterClick(this._TabFilterList[6]);
+                        break;
+                    }
+                case "OpenDeclarations":
+                    {
+                        this._SelectedTabFilter = this._TabFilterList[0];
+                        this._SelectedStatusValue = 'O';
+                        this.SelectedStatusValueClick('O');
+                        break;
+                    }
+            }
         }
+
         this.CheckRequiredFields();
     }
 

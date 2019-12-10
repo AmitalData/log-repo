@@ -417,7 +417,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
     ViewInitCompleted($event) {
     }
 
-    ShowCourierWorkSheetForPending902(event) {
+    ShowCourierWorkSheetForPending902(event , type: string) {
 
         //var selected = event.rowData;
         var windowArgs: any = {};
@@ -428,7 +428,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
                         }
                         else {
                             windowArgs.CurrentEntity = myResponse.Result;
-                            windowArgs.TabMode = "Pending902";
+                            windowArgs.TabMode = type;
                             var logWindow = new LogitudeWindow();
                             logWindow.Width = 1500;
                             logWindow.Height = 1000;
