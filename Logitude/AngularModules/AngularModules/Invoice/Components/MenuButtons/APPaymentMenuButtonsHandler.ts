@@ -1,3 +1,4 @@
+import { GLAccountPMService } from './../../../Accounting/Services/StandardPMs/GLAccountPMService';
 declare var window: any;
 import {APPaymentPM} from '../../EntityPMs/APPaymentPM';
 import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
@@ -17,6 +18,8 @@ import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { FullAccountingSettingPM } from '../../../Accounting/EntityPMs/FullAccountingSettingPM';
 import { FullAccountingSettingPMService } from '../../../Accounting/Services/StandardPMs/FullAccountingSettingPMService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { GLAccountPM } from '../../../Accounting/EntityPMs/GLAccountPM';
+import { reject } from 'q';
 
 export class APPaymentMenuButtonsHandler {
     public EntityPM: APPaymentPM;
@@ -34,6 +37,8 @@ export class APPaymentMenuButtonsHandler {
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
         this.Listen();
+
+
     }
 
     private ResetAllFlags() {
@@ -306,7 +311,7 @@ export class APPaymentMenuButtonsHandler {
             }
         }
     }
-    
+
     CompleteApprove() {
         if (this.EntityPM.PaymentMethodCode == "FS" && (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG")) {
             var messageWindow = new MessageWindow();
@@ -318,7 +323,7 @@ export class APPaymentMenuButtonsHandler {
 
         else {
             this.ApprovingLogic();
-        }               
+        }
     }
 
     private ApprovingLogic() {
@@ -332,7 +337,7 @@ export class APPaymentMenuButtonsHandler {
 
         if (isValid) {
             this.entityArgs.EditComponent.ValidationErrorsList = [];
-            this.GetFullAccountingSettings();
+            this.GetFullAccountingSettingsAndApprove();
 
         }
 
@@ -364,8 +369,8 @@ export class APPaymentMenuButtonsHandler {
     }
     OpenEditPaymentChequeScreen() {
         this.CurrentSession.StartBusyIndicatorLoading();
-   
-       
+
+
         var windowTitle = TextCodeTranslator.Translate("PaymentCheque");
         var logWindow = new LogitudeWindow();
         var windowArgs: any = {};
@@ -382,9 +387,11 @@ export class APPaymentMenuButtonsHandler {
 
     }
 
-    public GetFullAccountingSettings() {
+    public GetFullAccountingSettingsAndApprove()
+    {
         this.CurrentSession.StartBusyIndicatorLoading();
-        this.fullAccountingSettingPMService.get(SessionLocator.TenantPM.Id.toString()).subscribe(myResult => {
+        this.fullAccountingSettingPMService.get(SessionLocator.TenantPM.Id.toString()).subscribe(myResult =>
+        {
             var myResponse: ServiceResponse = myResult;
             this.CurrentSession.StopBusyIndicator();
 
@@ -392,23 +399,36 @@ export class APPaymentMenuButtonsHandler {
 
                 var res = myResponse.Result;
                 var fullAccountingSetting: FullAccountingSettingPM = res;
-                if (fullAccountingSetting != null) {
-                    if (fullAccountingSetting.IsPaymentChequesActivated && this.EntityPM.ExcludeFromDeductionReport && this.EntityPM.PaymentMethodCode == "CH") {
-                        this.OpenEditPaymentChequeScreen();
-                    }
-                    else {
-                        this.ContinueSaving(null);
-                    }
-                }
-                else {
-                    this.ContinueSaving(null);
-                }
+
+                this.Approve(fullAccountingSetting);
+
             }
 
         });
 
     }
-    
+
+    private Approve(fullAccountingSetting: FullAccountingSettingPM)
+    {
+        this.GetGLAccount(this.EntityPM.VendorGLAccountId).then((glaccount:GLAccountPM)=> {
+
+
+            if (fullAccountingSetting != null && glaccount != null) {
+                if (fullAccountingSetting.IsPaymentChequesActivated && glaccount.AllowEditChequePayToName && this.EntityPM.PaymentMethodCode == "CH") {
+                    this.OpenEditPaymentChequeScreen();
+                }
+                else {
+                    this.ContinueSaving(null);
+                }
+            }
+            else {
+                this.ContinueSaving(null);
+            }
+
+        });
+
+    }
+
     SetPaymentChequeWindowArgs(windowArgs: any) {
         windowArgs.PayToGLAccountId = this.EntityPM.VendorGLAccountId;
         windowArgs.BankAccountId = this.EntityPM.BankAccountId;
@@ -417,9 +437,11 @@ export class APPaymentMenuButtonsHandler {
         windowArgs.ForeignAmount = this.EntityPM.AmountInPaymentCurrency;
         windowArgs.ValueDate = this.EntityPM.ValueDate;
         windowArgs.APPayment = this.EntityPM;
+
+
         return windowArgs;
     }
-     
+
     ContinueSaving(event: string) {
 
 
@@ -439,7 +461,7 @@ export class APPaymentMenuButtonsHandler {
             }
 
             this.entityArgs.EditComponent.SaveChanges();
-         
+
 
         }
     }
@@ -541,12 +563,40 @@ export class APPaymentMenuButtonsHandler {
                 var messageWindow = new MessageWindow();
                 messageWindow.Show("Please notice that QBO are not supporting void transmission for the APpayment, you can void it manually from QBO");
                 messageWindow.WindowClosed.subscribe(p => {
-                    this.VoidingAPPayment();           
+                    this.VoidingAPPayment();
                 });
-            }                                    
+            }
             else {
-                this.VoidingAPPayment();                  
+                this.VoidingAPPayment();
              }
         }
     }
+
+    PayToGLAccount: GLAccountPM;
+    GetGLAccount(id: string)
+    {
+        return new Promise(resolve =>
+        {
+
+            var service = new GLAccountPMService();
+            service.get(id).subscribe(response =>
+            {
+                console.log("[GLAccountPMService.Get", response);
+
+                var result: ServiceResponse = response;
+                if (!result.HasError) {
+                    this.PayToGLAccount = result.Result;
+                    resolve(this.PayToGLAccount);
+                }
+                else {
+                    console.error(result.ErrorsArray);
+                    reject();
+                }
+            });
+
+
+        });
+    }
+
+
 }

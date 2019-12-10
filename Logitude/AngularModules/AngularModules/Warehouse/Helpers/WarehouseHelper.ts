@@ -113,7 +113,7 @@ export class WarehouseHelper {
 
         windowArgs.ShipmentPM = entityPM;
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 960;
+        logWindow.Width = 1010;
         logWindow.Height = 620;
         logWindow.Title = "New Cross Dock Entry";
         logWindow.WindowArgs = windowArgs;
@@ -280,7 +280,11 @@ export class WarehouseHelper {
 
         if (entityPM != null && viewModel != null) {
             viewModel.ValidationErrorsList = [];
+ 
+            entityPM.FromPortId = entityPM.WarehouseId;
+            entityPM.ToPortId = null;
             entityPM.ToTypeCode = "PORT";
+
             if (this.validator == null) {
                 this.validator = new ClassLevelValidator();
             }
@@ -292,10 +296,10 @@ export class WarehouseHelper {
                 });
             }
 
-
             entityPM.WarehouseReleasePackages = entityPM.WarehouseReleasePackages.filter(d => d.Quantity > 0);
 
-     
+
+
             if (entityPM.WarehouseReleasePackages.length == 0) {
 
                 viewModel.ValidationErrorsList.push("You should at least choose one package");

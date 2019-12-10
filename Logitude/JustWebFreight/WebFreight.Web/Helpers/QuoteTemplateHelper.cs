@@ -482,7 +482,7 @@ namespace WebFreight.Web.Helpers
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("CHARGEABLEWEIGHT", "Chargeable Weight", "Chargeable Weight", "QuoteDetails"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("GROSSWEIGHT", "Gross Weight", "Gross Weight", "QuoteDetails"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("VOLUME", "Volume", "Volume", "QuoteDetails"));
-            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("VOLUMETRICWEIGHT", "Volumetric Weight", "Volumetric Weight", "QuoteDetails"));
+            //quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("VOLUMETRICWEIGHT", "Volumetric Weight", "Volumetric Weight", "QuoteDetails"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("NUMBEROFPACKAGES", "Number Of Packages", "Number Of Packages", "QuoteDetails"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("NUMBEROFCONTAINERS", "Number Of Containers", "Number Of Containers", "QuoteDetails"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("TRANSITTIME", "Transit Time", "Transit Time", "QuoteDetails"));

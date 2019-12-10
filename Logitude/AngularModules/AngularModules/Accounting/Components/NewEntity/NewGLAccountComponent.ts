@@ -61,7 +61,11 @@ export class NewGLAccountComponent extends BaseComponent {
         if (!this.IsFromArgs) {
             this.ChartOfAccountTypeFilterItems.addAdditionalFilter("CodeFilter", "3,4", null, null, "Exclude", false, false, false, "string", false, true);
             //this.ChartOfAccountTypeFilterItems.addAdditionalFilter("Code", "3,4", null, null, "Exclude", false, false, false, "string", false, true);
-        } else {
+        }
+        else if (this.IsFromArgs && this.partnerType == "AC") {
+            this.ChartOfAccountTypeFilterItems.addAdditionalFilter("CodeFilter", "5,6", null, null, "Exclude", false, false, false, "string", false, true);
+        }
+        else {
             this.UIProperties.SetEnabled("ChartOfAccountsTypeCode", this.ObjectTableName, false);
             // customer
             this.UIProperties.SetEnabled("RevenueExpenseType", this.ObjectTableName, false);
@@ -75,41 +79,42 @@ export class NewGLAccountComponent extends BaseComponent {
         //this.ParentsFilterItems.addAdditionalFilter("Id", this.EntityPM.Id, null, null, "Exclude", false, false, false, "string");
         //#endregion
     }
-
+    partnerType: string;
     SetWindowArgs(args: NewGLAccountArgs) {
         if (args != null) {
             this.IsFromArgs = true;
+            this.partnerType = args.PartnerType;
             if (args.AccountType == "2") { // customer
                 this.ChartOfAccountsTypeCode = args.ChartOfAccountType;
-                this.DisplayNumber = args.DisplayNo;
-                this.LocalName = args.LocalName;
-                this.EnglishName = args.EnglishName;
+
                 if (!AppTool.IsNullOrEmpty(this.LocalName)) {
                     this.UIProperties.SetEnabled("LocalName", this.ObjectTableName, false);
                 }
                 this.UIProperties.SetEnabled("EnglishName", this.ObjectTableName, false);
                 this.AccountTypeCode = args.AccountType;
-                this.EntityPM.NewGLAccountCardId = args.CardId;
-                this.EntityPM.RevenueExpenseType = args.RevenueExpenseType;
-                this.InitLOVFilters();
+
             }
             else if (args.AccountType == "3") { // vendor
                 this.ChartOfAccountsTypeCode = args.ChartOfAccountType;
-                this.DisplayNumber = args.DisplayNo;
-                this.LocalName = args.LocalName;
-                this.EnglishName = args.EnglishName;
+
                 this.AccountTypeCode = args.AccountType;
                 if (!AppTool.IsNullOrEmpty(this.LocalName)) {
                     this.UIProperties.SetEnabled("LocalName", this.ObjectTableName, false);
                 }
                 this.UIProperties.SetEnabled("EnglishName", this.ObjectTableName, false);
-                this.EntityPM.NewGLAccountCardId = args.CardId;
-                this.EntityPM.RevenueExpenseType = args.RevenueExpenseType;
-                this.InitLOVFilters();
+
             }
+
         }
-        this.UIProperties.SetEnabled("EnglishName",this.ObjectTableName,false);
+        this.DisplayNumber = args.DisplayNo;
+        this.LocalName = args.LocalName;
+        this.EnglishName = args.EnglishName;
+        this.EntityPM.NewGLAccountCardId = args.CardId;
+        this.EntityPM.RevenueExpenseType = args.RevenueExpenseType;
+        this.InitLOVFilters();
+        this.UIProperties.SetEnabled("EnglishName", this.ObjectTableName, false);
     }
+
 
     //#region Properties
     get IsMultiCurrency() { return this.EntityPM.IsMultiCurrency == null ? false : this.EntityPM.IsMultiCurrency; }
