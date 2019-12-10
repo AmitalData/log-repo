@@ -1,4 +1,4 @@
-﻿
+
 <style>
     .SummaryValue {
         font-size: 14px;
@@ -85,114 +85,115 @@
 
                         <tr>
                             <td>
+                                <div class="MediaFill">
+                                    <div class="SimpleGridView">
+                                        <div class="SimpleGridViewHeader">
+                                            <table>
+                                                <tr>
+                                                    <td style="width: 25px; min-width: 25px; max-width: 25px;">
+                                                        <div></div>
+                                                    </td>
+                                                    <td style="width: 40px;">{{'Shipment.S.AWB.Type' | TextCodeTranslationPipe}}</td>
+                                                    <td style="width: 90px;">{{'ShipmentAWBPrintOnly.F.IATACodeId' | TextCodeTranslationPipe}}</td>
+                                                    <td>Name</td>
+                                                    <td style="width: 50px;">UOM</td>
+                                                    <td style="width: 100px;">{{'ShipmentAWBPrintOnly.F.Quantity' | TextCodeTranslationPipe}}</td>
+                                                    <td style="width: 100px;">{{'ShipmentAWBPrintOnly.F.UnitPrice' | TextCodeTranslationPipe}}</td>
+                                                    <td style="width: 100px;">{{'ShipmentAWBPrintOnly.F.Amount' | TextCodeTranslationPipe}}</td>
+                                                    <td style="width: 100px;">{{'ShipmentAWBPrintOnly.F.PrepaidCollectId.Short' | TextCodeTranslationPipe}}</td>
+                                                    <td style="width: 100px;">{{'ShipmentAWBPrintOnly.F.DueTypeCode.Short' | TextCodeTranslationPipe}}</td>
+                                                    <td class="LastChild" style="width: 50px;">
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="SimpleGridViewBody">
+                                            <table>
+                                                <tr class="SimpleGridViewRow RowHover RowSelected" *ngFor="let item of ItemsSource" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
 
-                                <div class="SimpleGridView">
-                                    <div class="SimpleGridViewHeader">
-                                        <table>
-                                            <tr>
-                                                <td style="width: 25px; min-width: 25px; max-width: 25px;">
-                                                    <div></div>
-                                                </td>
-                                                <td style="width: 40px;">{{'Shipment.S.AWB.Type' | TextCodeTranslationPipe}}</td>
-                                                <td style="width: 90px;">{{'ShipmentAWBPrintOnly.F.IATACodeId' | TextCodeTranslationPipe}}</td>
-                                                <td>Name</td>
-                                                <td style="width: 50px;">UOM</td>
-                                                <td style="width: 100px;">{{'ShipmentAWBPrintOnly.F.Quantity' | TextCodeTranslationPipe}}</td>
-                                                <td style="width: 100px;">{{'ShipmentAWBPrintOnly.F.UnitPrice' | TextCodeTranslationPipe}}</td>
-                                                <td style="width: 100px;">{{'ShipmentAWBPrintOnly.F.Amount' | TextCodeTranslationPipe}}</td>
-                                                <td style="width: 100px;">{{'ShipmentAWBPrintOnly.F.PrepaidCollectId.Short' | TextCodeTranslationPipe}}</td>
-                                                <td style="width: 100px;">{{'ShipmentAWBPrintOnly.F.DueTypeCode.Short' | TextCodeTranslationPipe}}</td>
-                                                <td class="LastChild" style="width: 50px;">
-                                                    <div></div>
-                                                </td>
-                                            </tr>
-                                        </table>
+                                                    <!-- AWBPrint -->
+                                                    <td class="GridViewCell" style="width: 25px; position: relative">
+                                                        <div>
+                                                            <img src="./Images/Info.png" class="CenterCenter" [attr.title]="item.NotMatchedToolTip" *ngIf="item.IsAWBPrintIconVisible" />
+                                                            <CheckBox [IsChecked]="item.AWBPrint" (Checked)="item.AWBPrint = $event" *ngIf="item.IsAWBPrintCheckBoxVisible" [IsEnabled]="item.IsAWBPrintCheckBoxEnabled"></CheckBox>
+                                                        </div>
+                                                    </td>
+
+                                                    <!-- Type Image -->
+                                                    <td class="CellDisabled" style="width: 40px; position: relative">
+                                                        <img [attr.src]="item.TypeImageSource" class="CenterCenter" style="width: 16px; height: 16px;" />
+                                                    </td>
+
+                                                    <!-- IATACodeId -->
+                                                    <td class="CellStretched" style="width: 90px;">
+                                                        <LogLov [ObjectFieldName]="'IATACodeId'"
+                                                                [SelectedValue]="item.IATACodeId"
+                                                                [ObjectTableName]="item.ObjectTableName"
+                                                                [DataContext]="item.DataContext"
+                                                                [LookUpTableName]="'IATACode'"
+                                                                [DependencyFilter1Value]="TenantZeroAirlineId"
+                                                                [HideColumns]="true">
+                                                        </LogLov>
+                                                    </td>
+
+                                                    <td class="CellDisabled">
+                                                        <div style="width: 160px;">{{item.Name}}</div>
+                                                    </td>
+
+                                                    <td class="CellDisabled" style="width: 50px;">
+                                                        {{item.MeasurementCode}}
+                                                    </td>
+
+                                                    <td class="CellStretched" style="width: 100px;">
+                                                        <LogTextBox [ObjectFieldName]="'Quantity'" [Text]="item.Quantity" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
+                                                    </td>
+
+                                                    <td class="CellStretched" style="width: 100px;">
+                                                        <LogTextBox [ObjectFieldName]="'UnitPrice'" [Text]="item.UnitPrice" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
+                                                    </td>
+
+                                                    <td class="CellDisabled" style="width: 100px; text-align: right;">
+                                                        <div [ngStyle]="{color: item.AmountColor}">{{item.Amount | NumbersPipe:'N2'}} {{item.CurrencyCode}}</div>
+                                                    </td>
+
+                                                    <td class="CellStretched" style="width: 100px;">
+                                                        <LogLov [ObjectFieldName]="'PrepaidCollectId'"
+                                                                [SelectedValue]="item.PrepaidCollectId"
+                                                                [ObjectTableName]="item.ObjectTableName"
+                                                                [DataContext]="item.DataContext"
+                                                                [LookUpTableName]="'PrepaidCollect'"
+                                                                [DependencyFilter1Value]="true"
+                                                                [HideColumns]="true">
+                                                        </LogLov>
+                                                    </td>
+
+                                                    <td class="CellStretched" style="width: 100px;">
+                                                        <LogLov [ObjectFieldName]="'DueTypeCode'"
+                                                                [SelectedValue]="item.DueTypeCode"
+                                                                [ObjectTableName]="item.ObjectTableName"
+                                                                [DataContext]="item.DataContext"
+                                                                [LookUpTableName]="'DueType'"
+                                                                [HideColumns]="true">
+                                                        </LogLov>
+                                                    </td>
+
+                                                    <td class="CellTools" style="width: 50px;">
+                                                        <span class="CellSeparator"></span>
+                                                        <IconButton [ExternalId]="item.Name" [Name]="'Edit'" [IsSmall]="true" (click)="Edit(item)" [Left]="3"></IconButton>
+                                                        <IconButton [ExternalId]="item.Name" [Name]="'Delete'" [IsSmall]="true" (click)="Delete(item)" [Left]="3" [IsEnabled]="item.IsEditingItemEnabled"></IconButton>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td colspan="5">
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
                                     </div>
-                                    <div class="SimpleGridViewBody">
-                                        <table>
-                                            <tr class="SimpleGridViewRow RowHover RowSelected" *ngFor="let item of ItemsSource" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
-
-                                                <!-- AWBPrint -->
-                                                <td class="GridViewCell" style="width: 25px; position: relative">
-                                                    <div>
-                                                        <img src="./Images/Info.png" class="CenterCenter" [attr.title]="item.NotMatchedToolTip" *ngIf="item.IsAWBPrintIconVisible" />
-                                                        <CheckBox [IsChecked]="item.AWBPrint" (Checked)="item.AWBPrint = $event" *ngIf="item.IsAWBPrintCheckBoxVisible" [IsEnabled]="item.IsAWBPrintCheckBoxEnabled"></CheckBox>
-                                                    </div>
-                                                </td>
-
-                                                <!-- Type Image -->
-                                                <td class="CellDisabled" style="width: 40px; position: relative">
-                                                    <img [attr.src]="item.TypeImageSource" class="CenterCenter" style="width: 16px; height: 16px;" />
-                                                </td>
-
-                                                <!-- IATACodeId -->
-                                                <td class="CellStretched" style="width: 90px;">
-                                                    <LogLov [ObjectFieldName]="'IATACodeId'"
-                                                            [SelectedValue]="item.IATACodeId"
-                                                            [ObjectTableName]="item.ObjectTableName"
-                                                            [DataContext]="item.DataContext"
-                                                            [LookUpTableName]="'IATACode'"
-                                                            [DependencyFilter1Value]="TenantZeroAirlineId"
-                                                            [HideColumns]="true">
-                                                    </LogLov>
-                                                </td>
-
-                                                <td class="CellDisabled">
-                                                    <div style="width: 160px;">{{item.Name}}</div>
-                                                </td>
-
-                                                <td class="CellDisabled" style="width: 50px;">
-                                                    {{item.MeasurementCode}}
-                                                </td>
-
-                                                <td class="CellStretched" style="width: 100px;">
-                                                    <LogTextBox [ObjectFieldName]="'Quantity'" [Text]="item.Quantity" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
-                                                </td>
-
-                                                <td class="CellStretched" style="width: 100px;">
-                                                    <LogTextBox [ObjectFieldName]="'UnitPrice'" [Text]="item.UnitPrice" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
-                                                </td>
-
-                                                <td class="CellDisabled" style="width: 100px; text-align: right;">
-                                                    <div [ngStyle]="{color: item.AmountColor}">{{item.Amount | NumbersPipe:'N2'}} {{item.CurrencyCode}}</div>
-                                                </td>
-
-                                                <td class="CellStretched" style="width: 100px;">
-                                                    <LogLov [ObjectFieldName]="'PrepaidCollectId'"
-                                                            [SelectedValue]="item.PrepaidCollectId"
-                                                            [ObjectTableName]="item.ObjectTableName"
-                                                            [DataContext]="item.DataContext"
-                                                            [LookUpTableName]="'PrepaidCollect'"
-                                                            [DependencyFilter1Value]="true"
-                                                            [HideColumns]="true">
-                                                    </LogLov>
-                                                </td>
-
-                                                <td class="CellStretched" style="width: 100px;">
-                                                    <LogLov [ObjectFieldName]="'DueTypeCode'"
-                                                            [SelectedValue]="item.DueTypeCode"
-                                                            [ObjectTableName]="item.ObjectTableName"
-                                                            [DataContext]="item.DataContext"
-                                                            [LookUpTableName]="'DueType'"
-                                                            [HideColumns]="true">
-                                                    </LogLov>
-                                                </td>
-
-                                                <td class="CellTools" style="width: 50px;">
-                                                    <span class="CellSeparator"></span>
-                                                    <IconButton [ExternalId]="item.Name"  [Name]="'Edit'" [IsSmall]="true" (click)="Edit(item)" [Left]="3"></IconButton>
-                                                    <IconButton [ExternalId]="item.Name"  [Name]="'Delete'" [IsSmall]="true" (click)="Delete(item)" [Left]="3" [IsEnabled]="item.IsEditingItemEnabled"></IconButton>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td colspan="5">
-                                                    <div></div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
+                                </div>                                
 
                                 <div class="CenterCenter" style="width: 350px; height: 30px;" *ngIf="IsGeneratingVisible">
                                     <div id="{{'GenerateAutoDisplayCharge' | IdGeneratorPipe}}" class="hyperlink" style="text-align:center" [class.HyperlinkDisabled]="!IsEditingEnabled" (click)="GenerateClicked()">Generate auto display charges</div>
