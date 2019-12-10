@@ -353,17 +353,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen TMBudgetGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TMBudget.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = TMBudgetObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField TMBudgetGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TMBudgetObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = TMBudgetGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TMBudgetGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TMBudgetObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = TMBudgetGeneralTabScreenScreen0.Id, ObjectFieldCode = TMBudgetObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TMBudgetGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = TMBudgetObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().Id, ScreenId = TMBudgetGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TMBudgetGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = TMBudgetObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().Id, ScreenId = TMBudgetGeneralTabScreenScreen0.Id, ObjectFieldCode = TMBudgetObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
 	         Screen TMBudgetTMBudgetHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TMBudget.HeaderScreen", Name = "TMBudgetHeaderScreen", ObjectTableId = TMBudgetObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField TMBudgetTMBudgetHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TMBudgetObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = TMBudgetTMBudgetHeaderScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TMBudgetTMBudgetHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = TMBudgetObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = TMBudgetTMBudgetHeaderScreenScreen1.Id, ObjectFieldCode = TMBudgetObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField TMBudgetTMBudgetHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = TMBudgetObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().Id, ScreenId = TMBudgetTMBudgetHeaderScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField TMBudgetTMBudgetHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = TMBudgetObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().Id, ScreenId = TMBudgetTMBudgetHeaderScreenScreen1.Id, ObjectFieldCode = TMBudgetObjectFields.Where(d => d.FieldName == "Inactive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    TMBudgetObjectTable.HeaderScreenId = TMBudgetTMBudgetHeaderScreenScreen1.Id;
 	   		  

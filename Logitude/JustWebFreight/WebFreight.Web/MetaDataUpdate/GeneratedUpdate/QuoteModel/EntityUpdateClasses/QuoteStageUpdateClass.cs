@@ -713,9 +713,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 
 	         Screen QuoteStageHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "QuoteStage.HeaderScreen", Name = "Header Screen", ObjectTableId = QuoteStageObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField QuoteStageQuoteStageHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = QuoteStageObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = QuoteStageHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteStageQuoteStageHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = QuoteStageObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = QuoteStageHeaderScreenScreen0.Id, ObjectFieldCode = QuoteStageObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField QuoteStageQuoteStageHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = QuoteStageObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = QuoteStageHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField QuoteStageQuoteStageHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = QuoteStageObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = QuoteStageHeaderScreenScreen0.Id, ObjectFieldCode = QuoteStageObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    QuoteStageObjectTable.HeaderScreenId = QuoteStageHeaderScreenScreen0.Id;
 	   		  
