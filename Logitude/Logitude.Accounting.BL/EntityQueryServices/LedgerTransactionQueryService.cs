@@ -516,6 +516,18 @@ namespace Logitude.Accounting.BL.EntityQueryServices
            
         }
 
+        public List<string> GetTransactionsCurrencies(string accountId, int tenant)
+        {
+            var ctx = AccountingContext.GetContext(tenant);
+            List<string> transactionsCurrencies = (from lt in ctx.LedgerTransactions
+                                                   where lt.AccountId == accountId && lt.Tenant == tenant
+                                                   group lt by lt.CurrencyId into cr
+                                                   select cr.Key).ToList();
+
+            return transactionsCurrencies;
+
+        }
+
         public List<LedgerTransactionPM> UpdateTransactionsExternalReconciled(List<string> idsList, int tenant)
         {
             List<LedgerTransaction> ledgerTransactionPOCOs = null;
