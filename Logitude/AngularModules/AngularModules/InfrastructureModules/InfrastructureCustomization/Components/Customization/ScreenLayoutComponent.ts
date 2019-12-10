@@ -246,6 +246,7 @@ export class ScreenLayoutComponent extends BaseComponent {
     onMyDrop(event: DragEvent, item: ScreenRowDetails, row: number) {
        
         var id = event.dataTransfer.getData("Id");
+        var fieldCode = event.dataTransfer.getData("FieldCode");
         var myitem: ObjectFieldPM = this.banckStackFields.filter(d => d.Id == id)[0];
        
         if (myitem) {
@@ -283,9 +284,9 @@ export class ScreenLayoutComponent extends BaseComponent {
                 if (sItem.ObjectFieldPMs) {
                     var temp = sItem.ObjectFieldPMs.filter(a => a.Id == id);
                     if (temp.length > 0) {
-                        var SField = sItem.ScreenFieldPMs.filter(a => a.ObjectFieldId == id)[0];
+                        var SField = sItem.ScreenFieldPMs.filter(a => a.ObjectFieldCode == fieldCode)[0];
                         sItem.ObjectFieldPMs = sItem.ObjectFieldPMs.filter(a => a.Id != id);
-                        sItem.ScreenFieldPMs = sItem.ScreenFieldPMs.filter(a => a.ObjectFieldId != id);
+                        sItem.ScreenFieldPMs = sItem.ScreenFieldPMs.filter(a => a.ObjectFieldCode != fieldCode);
                         SField.Column = item.ColumnIndex;
                         SField.Row = Rows.ScreenFieldPMs ? Rows.ScreenFieldPMs.length : 0;
                         if (Rows.ScreenFieldPMs == null) {
@@ -311,12 +312,14 @@ export class ScreenLayoutComponent extends BaseComponent {
     OnObjectFieldDragStart(event, item) {
         if (item) {
             event.dataTransfer.setData("Id", item.Id);
+            event.dataTransfer.setData("FieldCode", item.FieldCode);
         }
     }
 
     OnScreenFieldDragStart(event, item1) {
         if (item1) {
             event.dataTransfer.setData("Id", item1.Id);
+            event.dataTransfer.setData("FieldCode", item1.FieldCode);
         }
     }
 
