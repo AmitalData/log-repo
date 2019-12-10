@@ -18,13 +18,13 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
 {
 
     /// <summary>
-    /// There are no comments for Unifreight.Data.AmitalModel.CFIMSVFILE in the schema.
+    /// There are no comments for Unifreight.Data.AmitalModel.CFIMSVFLINE in the schema.
     /// </summary>
     [System.Runtime.Serialization.DataContractAttribute(IsReference = true)]
-    public partial class CFIMSVFILE : INotifyPropertyChanged
+    public partial class CFIMSVFLINE : INotifyPropertyChanged
     {
 
-        public CFIMSVFILE()
+        public CFIMSVFLINE()
         {
         }
 
@@ -53,47 +53,113 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
 
 
         /// <summary>
-        /// There are no comments for REMARK in the schema.
+        /// There are no comments for COMID in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual string REMARK
+        public virtual string COMID
         {
             get
             {
-                return _REMARK;
+                return _COMID;
             }
             set
             {
-                if (_REMARK != value)
+                if (_COMID != value)
                 {
-                    _REMARK = value;
-                    OnPropertyChanged("REMARK");
+                    _COMID = value;
+                    OnPropertyChanged("COMID");
                 }
             }
         }
-        private string _REMARK;
+        private string _COMID;
 
 
         /// <summary>
-        /// There are no comments for AQOPERATION in the schema.
+        /// There are no comments for LINENUM in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual int? AQOPERATION
+        public virtual int LINENUM
         {
             get
             {
-                return _AQOPERATION;
+                return _LINENUM;
             }
             set
             {
-                if (_AQOPERATION != value)
+                if (_LINENUM != value)
                 {
-                    _AQOPERATION = value;
-                    OnPropertyChanged("AQOPERATION");
+                    _LINENUM = value;
+                    OnPropertyChanged("LINENUM");
                 }
             }
         }
-        private int? _AQOPERATION;
+        private int _LINENUM;
+
+
+        /// <summary>
+        /// There are no comments for ITEMNAME in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual string ITEMNAME
+        {
+            get
+            {
+                return _ITEMNAME;
+            }
+            set
+            {
+                if (_ITEMNAME != value)
+                {
+                    _ITEMNAME = value;
+                    OnPropertyChanged("ITEMNAME");
+                }
+            }
+        }
+        private string _ITEMNAME;
+
+
+        /// <summary>
+        /// There are no comments for ITEMVALUE in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual double? ITEMVALUE
+        {
+            get
+            {
+                return _ITEMVALUE;
+            }
+            set
+            {
+                if (_ITEMVALUE != value)
+                {
+                    _ITEMVALUE = value;
+                    OnPropertyChanged("ITEMVALUE");
+                }
+            }
+        }
+        private double? _ITEMVALUE;
+
+
+        /// <summary>
+        /// There are no comments for ITEMTYPE in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual string ITEMTYPE
+        {
+            get
+            {
+                return _ITEMTYPE;
+            }
+            set
+            {
+                if (_ITEMTYPE != value)
+                {
+                    _ITEMTYPE = value;
+                    OnPropertyChanged("ITEMTYPE");
+                }
+            }
+        }
+        private string _ITEMTYPE;
 
 
         #endregion

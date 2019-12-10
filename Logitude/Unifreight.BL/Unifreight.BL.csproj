@@ -114,10 +114,12 @@
     <Compile Include="EntityDataMappings\CCUCARSCDataMapping.cs" />
     <Compile Include="EntityDataMappings\CFIMSVDOCDataMapping.cs" />
     <Compile Include="EntityDataMappings\CFIMSVFILEDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CFIMSVFLINEDataMapping.cs" />
     <Compile Include="EntityDataMappings\CFIMSVLINEDataMapping.cs" />
     <Compile Include="EntityDataMappings\CFIMSVPAGEDataMapping.cs" />
     <Compile Include="EntityDataMappings\CFIMSVREMDataMapping.cs" />
     <Compile Include="EntityDataMappings\YTBTABLEDataMapping.cs" />
+    <Compile Include="EntityPMs\UGenerated\CFIMSVFLINEPM.cs" />
     <Compile Include="EntityPMs\UGenerated\CFIMSVREMPM.cs" />
     <Compile Include="EntityDataMappings\CFIPACKDataMapping.cs" />
     <Compile Include="EntityDataMappings\CTBAPPROVDataMapping.cs" />
@@ -288,6 +290,7 @@
     <Compile Include="EntityQueryServices\CFIGOODDESCQueryService.cs" />
     <Compile Include="EntityQueryServices\CCUCARSCQueryService.cs" />
     <Compile Include="EntityQueryServices\CFIMSVFILEQueryService.cs" />
+    <Compile Include="EntityQueryServices\CFIMSVFLINEQueryService.cs" />
     <Compile Include="EntityQueryServices\CFIMSVLINEQueryService.cs" />
     <Compile Include="EntityQueryServices\CFIMSVPAGEQueryService.cs" />
     <Compile Include="EntityQueryServices\CFIMSVREMQueryService.cs" />
@@ -354,6 +357,7 @@
     <Compile Include="EntityUpdateServices\CCUTRANSPVALUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CCUCARSCUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CFIMSVFILEUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\CFIMSVFLINEUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CFIMSVLINEUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CFIMSVPAGEUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CFIMSVREMUpdateService.cs" />

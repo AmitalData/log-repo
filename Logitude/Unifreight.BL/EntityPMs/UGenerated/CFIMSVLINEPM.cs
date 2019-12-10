@@ -57,5 +57,15 @@ namespace Unifreight.BL.EntityPMs
 
         public string STATTYPE { get; set; }
 
+        public string ORIGINID { get; set; }
+
+        public decimal? ITEMPRICE { get; set; }
+
+        public double? OCRQUANTITY { get; set; }
+
+        public string OCRQUANTITYTYPE { get; set; }
+
+        public int? LINECOUNTER { get; set; }
+
     }
 }
