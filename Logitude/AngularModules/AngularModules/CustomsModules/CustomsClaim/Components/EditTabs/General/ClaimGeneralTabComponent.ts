@@ -64,6 +64,7 @@ export class ClaimGeneralTabComponent extends BaseComponent {
                         if (AppTool.IsNullOrEmpty(this.ClientId) &&
                             !AppTool.IsNullOrEmpty(this.EntityPM.PassportTypeCode) || !AppTool.IsNullOrEmpty(this.EntityPM.PassportNumber) || !AppTool.IsNullOrEmpty(this.EntityPM.PassportCountryTypeCode)) {
                             this.IsClientPassportEnabled = true;
+                            this.UIProperties.SetEnabled("ClientId", "Customs.Claim", false);
                         }
                     }
                     this.Listen();
@@ -153,6 +154,12 @@ export class ClaimGeneralTabComponent extends BaseComponent {
 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.ClientId)) {
             this.ClientPMService.get(this.EntityPM.ClientId)
+                .subscribe((myResponse: ServiceResponse) => {
+                    this.GetSingleClientOp_Completed(myResponse, false);
+                });
+        }
+        else if (!AppTool.IsNullOrEmpty(this.EntityPM.PassportNumber)) {
+            this.ClientMessagesService.GetSingleClientPMByPassportNumberOrCountry(this.EntityPM.PassportNumber, this.EntityPM.PassportCountryTypeCode)
                 .subscribe((myResponse: ServiceResponse) => {
                     this.GetSingleClientOp_Completed(myResponse, false);
                 });
@@ -345,7 +352,7 @@ export class ClaimGeneralTabComponent extends BaseComponent {
         this.CurrentSearchAddressMode = "";
 
         if ((item.AddressMode == "AddressCode" && AppTool.IsNullOrEmpty(item.ClientPM.Id)
-            || (item.AddressMode == "CustomsAddressCode" || item.AddressMode == "ContactPhoneAddressCode") && AppTool.IsNullOrEmpty(item.ClientPM.Id))) {
+            || (item.AddressMode == "CustomsAddressCode" || item.AddressMode == "ContactPhoneAddressCode") && AppTool.IsNullOrEmpty(item.ClientPM.Id) && AppTool.IsNullOrEmpty(this.EntityPM.PassportNumber))) {
 
             var text: string = "ראשית חובה לבחור לקוח";
             if (item.AddressMode == "AddressCode") {
@@ -584,9 +591,11 @@ export class ClaimGeneralTabComponent extends BaseComponent {
             if (AppTool.IsNullOrEmpty(this.ClientId) &&
                 !AppTool.IsNullOrEmpty(this.EntityPM.PassportTypeCode) || !AppTool.IsNullOrEmpty(this.EntityPM.PassportNumber) || !AppTool.IsNullOrEmpty(this.EntityPM.PassportCountryTypeCode)) {
                 this.IsClientPassportEnabled = true;
+                this.UIProperties.SetEnabled("ClientId", "Customs.Claim", false);
             }
             else {
                 this.IsClientPassportEnabled = false;
+                this.UIProperties.SetEnabled("ClientId", "Customs.Claim", true);
             }
         }
            

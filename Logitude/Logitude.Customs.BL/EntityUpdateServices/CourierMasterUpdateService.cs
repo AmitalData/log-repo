@@ -32,6 +32,7 @@ using Simplog.Global.Data.GlobalModel.Repositories;
 using System.Data.Common;
 using Simplog.Data.InfrastructureModel;
 using Logitude.Customs.BL.EntityDataMappings;
+using Simplog.Server.Infrastructure.DataContracts;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -67,17 +68,31 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             CourierDeclarationQueryService courierDeclarationQuery = new CourierDeclarationQueryService(entityPM.Tenant);
             CourierDeclarationUpdateService courierDeclarationUpdateService = new CourierDeclarationUpdateService(context, new Dictionary<string, IContext>(), entityPOCO.Tenant);
             DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), entityPOCO.Tenant);
+                DeclarationRepository declarationRepository1 = new DeclarationRepository(context);
 
             if (entityPM.ConnectedDeclarations != null && entityPM.ConnectedDeclarations.Length > 0 )
             {
-
-                //entityPM.ConnectedDeclarations = entityPM.ConnectedDeclarations.Substring(1, entityPM.ConnectedDeclarations.Length - 1);
-                entityPM.ConnectedDeclarations = entityPM.ConnectedDeclarations.Substring(0, entityPM.ConnectedDeclarations.Length - 1);
-                string[] items = entityPM.ConnectedDeclarations.Split(',');
                 CourierDeclarationQueryService service = new CourierDeclarationQueryService(entityPM.Tenant);
                 int? maxSequenceNunmeric = 0;
                  maxSequenceNunmeric = service.GetCourierMasterMaxSequenceNumeric(entityPM.Id, entityPM.Tenant);
                 if (maxSequenceNunmeric == null) maxSequenceNunmeric = 0;
+
+                if (entityPM.ConnectedDeclarations == "ALL") {
+                    
+                    var decsC = declarationRepository1.GetNotConnectedDeclarations(entityPM.Tenant);
+                    foreach (var dec in decsC)
+                    {
+                        ++maxSequenceNunmeric;
+                        CourierDeclarationPM courierDeclaration = new CourierDeclarationPM() { DeclarationId = dec.Id, CourierMasterId = entityPOCO.Id, Tenant = entityPOCO.Tenant, ChangeSetOp = ChangeSetOperation.Insert, SequenceNumeric = maxSequenceNunmeric };
+                        courierDeclarationUpdateService.Update(courierDeclaration, false);
+
+                    }
+                }
+                else
+                {   
+                 //entityPM.ConnectedDeclarations = entityPM.ConnectedDeclarations.Substring(1, entityPM.ConnectedDeclarations.Length - 1);
+                entityPM.ConnectedDeclarations = entityPM.ConnectedDeclarations.Substring(0, entityPM.ConnectedDeclarations.Length - 1);
+                string[] items = entityPM.ConnectedDeclarations.Split(',');
                 foreach (string item in items)
                 {
                     ++maxSequenceNunmeric;
@@ -85,23 +100,39 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     courierDeclarationUpdateService.Update(courierDeclaration, false);
 
                 }
+ }
             }
 
             if (entityPM.NotConnectedDeclarations != null && entityPM.NotConnectedDeclarations.Length > 0)
             {
                 //entityPM.NotConnectedDeclarations = entityPM.NotConnectedDeclarations.Substring(1, entityPM.NotConnectedDeclarations.Length - 1);
-                entityPM.NotConnectedDeclarations = entityPM.NotConnectedDeclarations.Substring(0, entityPM.NotConnectedDeclarations.Length - 1);
-                string[] NotConnecteditems = entityPM.NotConnectedDeclarations.Split(',');
 
-                if (NotConnecteditems != null && NotConnecteditems.Length > 0)
+                
+                    if (entityPM.NotConnectedDeclarations == "ALL")
+                    {
+                        var decsCN = declarationRepository1.GetCourierConnectedDeclaratins(entityPOCO.Id , entityPM.Tenant);
+                        foreach (var item in decsCN)
+                        {
+                            CourierDeclarationPM courierDeclaration = new CourierDeclarationPM();
+                            CourierDeclarationQueryService courierDeclarationDelQuery = new CourierDeclarationQueryService(entityPM.Tenant);
+                            courierDeclaration = courierDeclarationDelQuery.GetSingle(item.Id, entityPOCO.Id, false, true);
+                            courierDeclaration.ChangeSetOp = ChangeSetOperation.Delete;
+                            courierDeclarationUpdateService.Update(courierDeclaration, true);
+                        }
+                    }
+                    else
+                    {                 entityPM.NotConnectedDeclarations = entityPM.NotConnectedDeclarations.Substring(0, entityPM.NotConnectedDeclarations.Length - 1);
+                string[] NotConnecteditems = entityPM.NotConnectedDeclarations.Split(',');
+if (NotConnecteditems != null && NotConnecteditems.Length > 0)
                 {
-                    foreach (string item in NotConnecteditems)
+                        foreach (string item in NotConnecteditems)
                     {
                         CourierDeclarationPM courierDeclaration = new CourierDeclarationPM();
                         CourierDeclarationQueryService courierDeclarationDelQuery = new CourierDeclarationQueryService(entityPM.Tenant);
                         courierDeclaration = courierDeclarationDelQuery.GetSingle(item, entityPOCO.Id, false, true);
                         courierDeclaration.ChangeSetOp = ChangeSetOperation.Delete;
                         courierDeclarationUpdateService.Update(courierDeclaration, true);
+                    }
                     }
                 }
             }

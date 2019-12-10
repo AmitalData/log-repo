@@ -1,4 +1,4 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
@@ -157,6 +157,28 @@ export class ClientMessagesService {
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
 
+
+        });
+    }
+
+    GetSingleClientPMByPassportNumberOrCountry(passportNumber: string, passportCountryCode: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        //code = encodeURIComponent(code);
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetSingleClientPMByPassportNumberOrCountry?' + 'passportNumber=' + passportNumber + "&passportCountryCode=" + passportCountryCode,
+                { headers: authHeader }).map(response => {
+                    var pm = response.json();
+                    var entity: ClientPM;
+                    if (pm) {
+                        entity = this.MapJsonToEntityPM(pm);
+                    }
+
+                    var serviceResponse: ServiceResponse;
+                    serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = entity;
+                    return serviceResponse;
+                }).catch(ServiceHelper.HandleServiceError);
 
         });
     }

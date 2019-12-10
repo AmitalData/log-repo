@@ -30,6 +30,7 @@ export class CustomsCollateralListTemplate {
     public _CustomsCollateralRecord: CustomsCollateralList;
     public fieldName: any;
     public isAnswer: boolean;
+    public isDisable: boolean;
     //@Output() selectItem: EventEmitter<any> = new EventEmitter();
     TableUpdateButtonIsEnabled: boolean = false;
     UpdateButtonVisibility: boolean = false;
@@ -38,7 +39,6 @@ export class CustomsCollateralListTemplate {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef, private _customsCollateralAnswerSharedDataService: CustomsCollateralAnswerSharedDataService ) {
         //        this.TenantCurrencySign = SessionLocator.TenantPM.CurrencySign;
-
 
     }
 
@@ -49,7 +49,8 @@ export class CustomsCollateralListTemplate {
 
 
         this.fieldName = fieldName;
-
+        this.isDisable = (this._CustomsCollateralRecord.IsAnswer) || this._CustomsCollateralRecord.IsClosed || (this._CustomsCollateralRecord.CollateralRequestStatusCode != '1' && this._CustomsCollateralRecord.CollateralRequestStatusCode != null);
+        //|| (this._CustomsCollateralRecord.CollateralRequestStatusCode != '1' && this._CustomsCollateralRecord.CollateralRequestStatusCode != '' && this._CustomsCollateralRecord.CollateralRequestStatusCode != null
     }
 
 

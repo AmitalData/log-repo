@@ -22,6 +22,8 @@ namespace AmitalCustomsWindowsService
             InitializeComponent();
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             _LoadTestWorkerService = new LoadTestWorkerService();
+            ///teset - 
+            ///tk2 delete changes
         }
         void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
