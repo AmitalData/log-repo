@@ -3,6 +3,7 @@ using System;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.IO;
+using Oracle.DataAccess.Client;
 
 namespace Logitude.DBMigrations.Helpers
 {
@@ -178,8 +179,8 @@ namespace Logitude.DBMigrations.Helpers
 
         private static DatabaseMigrations CreateDatabaseMigrations(TableDefinition dxmlTable)
         {
-            string connectonString = GetConnectionString(dxmlTable.DBType);
             string databseType = ConfigurationManager.AppSettings["DatabseType"];
+            string connectonString = GetConnectionString(dxmlTable.DBType);
 
             if (databseType.ToLower() == "oracle")
             {
@@ -190,15 +191,20 @@ namespace Logitude.DBMigrations.Helpers
             DatabaseMigrations sqlDatabaseMigrations = new SQLDatabaseMigrations(dxmlTable, connectonString);
             return sqlDatabaseMigrations;
         }
-
+        
         private static string ExecuteScript(string script, string dbType)
         {
             string databseType = ConfigurationManager.AppSettings["DatabseType"];
+            string connectionString = GetConnectionString(dbType);
 
             if (databseType.ToLower() == "oracle")
             {
                 try
                 {
+                    OracleConnection oracleConnection = new OracleConnection(connectionString);
+                    OracleCommand oracleCommand = new OracleCommand(script, oracleConnection);
+                    oracleConnection.Open();
+                    oracleCommand.ExecuteNonQuery();
                     return null;
                 }
                 catch (Exception exception)
@@ -209,12 +215,11 @@ namespace Logitude.DBMigrations.Helpers
 
             try
             {
-                string connectionString = GetConnectionString(dbType);
-                SqlConnection SqlConnection = new SqlConnection(connectionString);
-                SqlCommand SqlCommand = SqlConnection.CreateCommand();
-                SqlCommand.CommandText = script;
-                SqlConnection.Open();
-                SqlCommand.ExecuteNonQuery();
+                SqlConnection sqlConnection = new SqlConnection(connectionString);
+                SqlCommand sqlCommand = sqlConnection.CreateCommand();
+                sqlCommand.CommandText = script;
+                sqlConnection.Open();
+                sqlCommand.ExecuteNonQuery();
                 return null;
             }
             catch (Exception exception)

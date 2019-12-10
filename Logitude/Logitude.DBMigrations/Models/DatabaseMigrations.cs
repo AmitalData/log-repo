@@ -489,6 +489,10 @@ namespace Logitude.DBMigrations.Models
 
 
         // abstract methods
+        protected abstract TableDefinition GetCurrentTableDefinitionFromDB();
+
+        protected abstract TableDefinition GetCurrentTableDefinitionFromDB(string tableName);
+
         protected abstract string GetCreateTableScript();
 
         protected abstract string GetCreateColumnScript(ColumnDefinition columnDefinition);
@@ -521,9 +525,7 @@ namespace Logitude.DBMigrations.Models
 
         protected abstract string GetAlterPrecisionAndScaleScript(ColumnMigration columnMigration);
 
-        protected abstract TableDefinition GetCurrentTableDefinitionFromDB();
-
-        protected abstract TableDefinition GetCurrentTableDefinitionFromDB(string tableName);
+        protected abstract string GetAlterColumnsScript();
 
         protected abstract string GetPrimaryKeyConstraintScript();
 
@@ -534,8 +536,6 @@ namespace Logitude.DBMigrations.Models
         protected abstract string GetAddPrimaryKeyConstraintScript(string primaryKeyConstraintName);
 
         protected abstract bool CheckIfTableHasPrimaryKeys(TableDefinition table);
-
-        protected abstract string GetAlterColumnsScript();
 
         protected abstract bool CheckIfTableRenamed();
     }

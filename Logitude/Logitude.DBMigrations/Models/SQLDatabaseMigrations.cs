@@ -99,7 +99,7 @@ namespace Logitude.DBMigrations.Models
                             Scale = String.IsNullOrEmpty(reader["Scale"].ToString()) ? 0 : Convert.ToInt32(reader["Scale"].ToString()),
                             Constraints = new ConstraintsDefinition
                             {
-                                Nullable = (reader["Nullable"].ToString() == "YES")
+                                Nullable = (reader["Nullable"].ToString().ToLower() == "yes")
                             }
                         };
 
@@ -390,15 +390,15 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetAlterPrecisionAndScaleScript(ColumnMigration columnMigration)
         {
-            string alterTypeScript = "-- Change Precision And Scale From " + "(" + columnMigration.CurrentColumn.Precision + ", " + columnMigration.CurrentColumn.Scale + ")" + " To " + "(" + columnMigration.NewColumn.Precision + ", " + columnMigration.NewColumn.Scale + ")" + " For Column " + columnMigration.CurrentColumn.Name + "\n";
-            alterTypeScript += "ALTER TABLE " + "[" + TableMigrations.DxmlTableName + "]" + " ";
-            alterTypeScript += "ALTER COLUMN " + "[" + columnMigration.CurrentColumn.Name + "]" + " ";
-            alterTypeScript += GetDataTypeScript(columnMigration.CurrentColumn.Type, columnMigration.CurrentColumn.Size, columnMigration.NewColumn.Precision, columnMigration.NewColumn.Scale);
+            string alterPrecisionAndScaleScript = "-- Change Precision And Scale From " + "(" + columnMigration.CurrentColumn.Precision + ", " + columnMigration.CurrentColumn.Scale + ")" + " To " + "(" + columnMigration.NewColumn.Precision + ", " + columnMigration.NewColumn.Scale + ")" + " For Column " + columnMigration.CurrentColumn.Name + "\n";
+            alterPrecisionAndScaleScript += "ALTER TABLE " + "[" + TableMigrations.DxmlTableName + "]" + " ";
+            alterPrecisionAndScaleScript += "ALTER COLUMN " + "[" + columnMigration.CurrentColumn.Name + "]" + " ";
+            alterPrecisionAndScaleScript += GetDataTypeScript(columnMigration.CurrentColumn.Type, columnMigration.CurrentColumn.Size, columnMigration.NewColumn.Precision, columnMigration.NewColumn.Scale);
             if (!columnMigration.CurrentColumn.Constraints.Nullable)
             {
-                alterTypeScript += " NOT NULL";
+                alterPrecisionAndScaleScript += " NOT NULL";
             }
-            return alterTypeScript + "\n\n";
+            return alterPrecisionAndScaleScript + "\n\n";
         }
 
         protected override string GetPrimaryKeyConstraintScript()
