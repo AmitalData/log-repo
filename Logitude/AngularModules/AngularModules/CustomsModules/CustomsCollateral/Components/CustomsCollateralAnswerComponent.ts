@@ -424,7 +424,7 @@ export class CustomsCollateralAnswerComponent extends BaseComponent implements O
                                     result.forEach((item) => {
                                         this.GuaranteeDefaultList.push(item);
                                     });
-
+                                    if (this.IsGuaranteeDefaultList) this.SetClosedCollateralScreesn(this.collateralPM.IsClosed);
                                 }
                             }
                         });
