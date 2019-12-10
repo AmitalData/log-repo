@@ -1,3 +1,5 @@
+import { ExternalPageAdditionalDataPM } from './../../../EntityPMs/ExternalPageAdditionalDataPM';
+import { ExternalPageAdditionalDataPMService } from './../../../Services/StandardPMs/ExternalPageAdditionalDataPMService';
 import { LedgerTransactionExtendedListService } from './../../../Services/ExtendedLists/LedgerTransactionExtendedListService';
 import { ServiceResponse } from './../../../../Infrastructure/DataContracts/ServiceResponse';
 declare var window: any;
@@ -18,6 +20,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import {BankAccountPMService} from '../../../Services/StandardPMs/BankAccountPMService';
+import { reject } from 'q';
 
 @Component({
     moduleId: module.id,
@@ -81,6 +84,9 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
 
         if (!this.ObjectTable)
             console.log("[ERROR] no object table found! ");
+
+        this.GetAdditionalData(this.ObjectTable.Id, this.EntityPM.Id)
+
 
         this.SetTitles();
 
@@ -275,6 +281,9 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
 
         this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
+
+        this.GetAdditionalData(this.ObjectTable.Id, this.EntityPM.Id)
+
     }
 
     BuildColumns() {
@@ -423,97 +432,106 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
         this.ReloadData();
     }
     AddButtonClicked() {
-        this.OpenWindow();
+        this.OpenExternalPageWindow();
     }
     //#endregion
 
-    onRowSelected(item) {
+    onRowSelected(item)
+    {
         if (!this.preventSelect) {
             if (!AppTool.IsNullOrEmpty(item)) {
                 var entity = item.rowData;
                 var entityId = entity.Id;
 
-                this.OpenWindow(entity);
+                this.OpenExternalPageWindow(entity);
             }
 
         }
         this.preventSelect = false;
     }
+
     IsRestoreButtonVisibile: boolean = false;
     message: string = null;
     RestoreToolTipMessage: string = null;
-    OpenWindow(entity: any = null) {
+    OpenExternalPageWindow(externalPage: any = null) {
+
+        if (externalPage)
+            this.OpenEditExternalPageWindow(externalPage);
+        else
+            this.OpenNewExternalPageWindow();
+    }
+
+    private OpenEditExternalPageWindow(externalPage: any)
+    {
         this.CurrentSession.StartBusyIndicatorLoading();
-
-        if (entity)
+        var externalPagePM;
+        this._ReconcileExternalPagePMService.get(externalPage.Id).subscribe((myResult) =>
         {
-            var entityPM;
-            this._ReconcileExternalPagePMService.get(entity.Id).subscribe((myResult) => {
-                entityPM = myResult.Result;
-
-                this._ReconcileExternalPageExtendedPMService.CheckLastApprovedBankPageAndReconciledLine(entity.Id, this.ObjectTableName).subscribe((myResult) => {
-                    if (!myResult.HasError) {
-                        if (myResult.Result == null) {
-                            this.EnableReconcileEditButton = true;
-                            this.message = null;
-                        }
-                        else {
-                            this.EnableReconcileEditButton = false;
-                            this.message = myResult.Result;
-                        }
-                        if (entityPM.StatusCode == "3") {
-                            this.CheckRestorePossibility(entity.Id, entityPM);
-
-                        }
-                        else {
-                            this.IsRestoreButtonVisibile = false;
-                            this.RestoreToolTipMessage = null;
-                            this.ShowWindow(entityPM);
-                            this.CurrentSession.StopBusyIndicator();
-
-                        }
+            externalPagePM = myResult.Result;
+            this._ReconcileExternalPageExtendedPMService.CheckLastApprovedBankPageAndReconciledLine(externalPage.Id, this.ObjectTableName).subscribe((myResult) =>
+            {
+                if (!myResult.HasError) {
+                    if (myResult.Result == null) {
+                        this.EnableReconcileEditButton = true;
+                        this.message = null;
+                    }
+                    else {
+                        this.EnableReconcileEditButton = false;
+                        this.message = myResult.Result;
                     }
 
-                });
+                    if (externalPagePM.StatusCode == "3") {
+                        this.CheckRestorePossibility(externalPage.Id, externalPagePM);
+                    }
+                    else {
+                        this.CurrentSession.StopBusyIndicator();
 
-
-
-
-            });
-        }
-        else
-        {
-            this.EnableReconcileEditButton = false;
-            this._ReconcileExternalPageExtendedPMService.GetDraftPage(this.EntityPM.Id, this.ObjectTableName).subscribe((myResult) =>
-            {
-                var draftPage = myResult.Result;
-                if (!AppTool.IsNullOrEmpty(draftPage))
-                {
-                this.CurrentSession.StopBusyIndicator();
-
-                    var msg = new MessageWindow();
-                    //msg.Title = "Error";
-                    msg.Width = 360;
-                    msg.RTL = this.isRTL;
-                    //msg.ShowErrorIcon = true;
-                    msg.Show(TextCodeTranslator.Translate("ReconcileExternalPage.O.CantNewBankPageDraft") + " (" + draftPage.PageNo + ") ");
-                }
-                else {
-                    this.ShowWindow(entity);
-                    this.CurrentSession.StopBusyIndicator();
-
+                        this.IsRestoreButtonVisibile = false;
+                        this.RestoreToolTipMessage = null;
+                        this.ShowExternalPageWindow(externalPagePM);
+                    }
                 }
             });
-        }
+        });
     }
+
+    private OpenNewExternalPageWindow()
+    {
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.EnableReconcileEditButton = false;
+        this._ReconcileExternalPageExtendedPMService.GetDraftPage(this.EntityPM.Id, this.ObjectTableName).subscribe((myResult) =>
+        {
+            this.CurrentSession.StopBusyIndicator();
+            var draftPage = myResult.Result;
+            if (!AppTool.IsNullOrEmpty(draftPage)) {
+                this.ShowCannotCreateNewPageMessage(draftPage);
+            }
+            else {
+                this.ShowExternalPageWindow();
+            }
+        });
+    }
+
+    private ShowCannotCreateNewPageMessage(draftPage: any)
+    {
+        var msg = new MessageWindow();
+        //msg.Title = "Error";
+        msg.Width = 360;
+        msg.RTL = this.isRTL;
+        //msg.ShowErrorIcon = true;
+        msg.Show(TextCodeTranslator.Translate("ReconcileExternalPage.O.CantNewBankPageDraft") + " (" + draftPage.PageNo + ") ");
+    }
+
     CheckRestorePossibility(id: string, entityPM: any) {
 
         this._ReconcileExternalPageExtendedPMService.CheckRestorePossibility(id).subscribe((response) => {
+            this.CurrentSession.StopBusyIndicator();
+
             if (!response.HasError) {
                 this.SetRestoreButtonVisibility(response.Result)
 
 
-                this.ShowWindow(entityPM);
+                this.ShowExternalPageWindow(entityPM);
             }
 
         });
@@ -535,42 +553,10 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
     }
     IsRestoreButtonEnabled: boolean;
     EnableReconcileEditButton: boolean = false;
-    ShowWindow(externalPage: any = null) {
 
-        // if (this.ObjectTableName == 'BankAccount') {
-
-        //     // get bank account, then open window
-        //     this.CurrentSession.StartBusyIndicatorLoading();
-        //     this._BankAccountPMService.get(this.EntityPM.Id).subscribe((myResult) =>
-        //     {
-        //         this.CurrentSession.StopBusyIndicator();
-        //         var bankAccount = myResult.Result;
-
-
-        //         if (!AppTool.IsNullOrEmpty(bankAccount)) {
-
-
-        //             this.showNewExternalPage(externalPage, bankAccount);
-
-
-        //         }
-        //         else {
-        //             console.error("ERROR!! no bank account found!!!!");
-        //         }
-        //     });
-
-        // } else {
-        //     this.showNewExternalPage(externalPage, this.EntityPM);
-
-        // }
-
-        this.showNewExternalPage(externalPage, this.EntityPM);
-
-
-    }
-
-    private showNewExternalPage(externalPage: any, entity: any)
+    private ShowExternalPageWindow(externalPage: any = null)
     {
+        var entity = this.EntityPM;
         var windowArgs: any = {};
         var windowTitle = externalPage ? (TextCodeTranslator.Translate("ReconcileExternalPage.F.PageNo") + " " + externalPage.PageNo) : TextCodeTranslator.Translate("Accounting.General.O.NewPage");
 
@@ -587,6 +573,7 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
 
         }
 
+        windowArgs.AdditionalDataPM = this.additionalDataPM;
         windowArgs.externalPage = externalPage;
         windowArgs.PageObjectTableName = this.ObjectTableName;
         windowArgs.EntityPM = entity;
@@ -607,6 +594,28 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
         logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(() => this.ReloadData());
         logWindow.Show('./Accounting/Components/NewEntity/AddEditRecoExPageComponent');
+    }
+
+    additionalDataPM: ExternalPageAdditionalDataPM;
+    _ExternalPageAdditionalDataPMService: ExternalPageAdditionalDataPMService = new ExternalPageAdditionalDataPMService();
+    GetAdditionalData(objectTableId: string, entityId: string)
+    {
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this._ExternalPageAdditionalDataPMService.get(objectTableId, entityId)
+            .subscribe(response =>
+            {
+                console.log("[GetAdditionalData]", response);
+                this.CurrentSession.StopBusyIndicator();
+
+                if (!response.HasError) {
+                    this.additionalDataPM = response.Result
+
+                }
+                else {
+                    console.error(response.ErrorsArray.toString());
+
+                }
+            });
     }
 
     ExternalAdjustButtonClicked()

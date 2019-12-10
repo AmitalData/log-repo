@@ -205,25 +205,15 @@ export class QuoteMenuButtonsHandler {
                     }
 
                     if (button.EventCode == "ConvertQuotetoLCL") {
-                        if (this.EntityPM.IsClosed || this.EntityPM.IsCancelled) {
-                            if (this.EntityPM.TransportModeId == "O") {
-                                if (this.EntityPM.ShipmentTypeId == "FCLD") {
+                        if (buttonEnabled) {
+                            if (this.EntityPM.TransportModeId == "O" && this.EntityPM.ShipmentTypeId == "FCLD") {
+                                if (this.EntityPM.IsCancelled || this.EntityPM.IsClosed) {
                                     button.IsDisabled = true;
                                 }
-                                else {
-                                    button.IsHidden = true;
-                                }
-                            }
-                        }
 
-                        else {
-                            if (this.EntityPM.TransportModeId == "O") {
-                                if (this.EntityPM.ShipmentTypeId == "FCLD") {
+                                else {
                                     button.IsHidden = false;
                                     button.IsDisabled = false;
-                                }
-                                else {
-                                    button.IsHidden = true;
                                 }
                             }
 
@@ -231,35 +221,33 @@ export class QuoteMenuButtonsHandler {
                                 button.IsHidden = true;
                             }
                         }
+
+                        else {
+                            button.IsHidden = true;
+                        }                        
                     }
 
                     if (button.EventCode == "ConvertQuotetoFCL") {
-                        if (this.EntityPM.IsClosed || this.EntityPM.IsCancelled) {
-                            if (this.EntityPM.TransportModeId == "O") {
-                                if (this.EntityPM.ShipmentTypeId == "LCLD") {
+                        if (buttonEnabled) {
+                            if (this.EntityPM.TransportModeId == "O" && this.EntityPM.ShipmentTypeId == "LCLD") {
+                                if (this.EntityPM.IsCancelled || this.EntityPM.IsClosed) {
                                     button.IsDisabled = true;
                                 }
-                                else {
-                                    button.IsHidden = true;
-                                }
-                            }
-                        }
 
-                        else {
-                            if (this.EntityPM.TransportModeId == "O") {
-                                if (this.EntityPM.ShipmentTypeId == "LCLD") {
+                                else {
                                     button.IsHidden = false;
                                     button.IsDisabled = false;
-                                }
-                                else {
-                                    button.IsHidden = true;
                                 }
                             }
 
                             else {
-                                button.IsHidden = true
+                                button.IsHidden = true;
                             }
                         }
+
+                        else {
+                            button.IsHidden = true;
+                        }  
                     } 
                 }
 

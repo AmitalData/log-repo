@@ -14,6 +14,7 @@ import {QuotePriceStepsPM} from '../../../Quote/EntityPMs/QuotePriceStepsPM';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {QuotePM} from '../../../Quote/EntityPMs/QuotePM';
 import {VatTypesValidator} from '../../../Infrastructure/Validators/VatTypesValidator';
+import { QuoteValidator } from '../../../Quote/Validators/QuoteValidator';
 
 @Component({
     moduleId: module.id,
@@ -36,6 +37,7 @@ export class AddEditLCLChargeComponent {
     public IsVATVisible: boolean = false;
     public ValidationErrorsList: string[] = [];
     private CurrentSession = SessionLocator.SelectedSession;    
+    private IsHyprid: boolean;
     constructor() {
         this.ItemsSource = new ObservableCollection([]);
         this.StepsItemsSource = new ObservableCollection([]);
@@ -52,7 +54,7 @@ export class AddEditLCLChargeComponent {
                 });
             }
         });
-
+        this.IsHyprid = SessionLocator.TenantPM.IsHybrid;
     }
 
     SetDataContext(dataContext: QuoteChargeItem) {
@@ -179,6 +181,10 @@ export class AddEditLCLChargeComponent {
 
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
+        if (this.IsHyprid) {
+            var quoteValidator: QuoteValidator = new QuoteValidator();
+            quoteValidator.CheckDuplicateInCharges(this.QuotePM, this.EntityPM, errors);
+        }
        
         this.StepsItemsSource.Collection.forEach(priceStep => {
             Validator.TryValidateObject(priceStep, this.QuotePriceObjectTableName, errors);

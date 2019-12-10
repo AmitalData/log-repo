@@ -275,6 +275,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 shipment.LocalCustomsTransmissionsStatusCode = "SENT";
                 shipment.LocalCustomsTransmissionsStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                shipment.LocalCustomsSentByUserId = loggedContactId;
                 shipment.LocalCustomsTransmissionsStatusError = null;
                 shipmentRepository.Update(shipment);
             }
