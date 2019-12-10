@@ -51,7 +51,11 @@
     <Compile Include="BatchManagerService.Designer.cs">
       <DependentUpon>BatchManagerService.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\XMLParser.cs" />
     <Compile Include="MainManager.cs" />
+    <Compile Include="Models\BatchManagerConfigurations.cs" />
+    <Compile Include="Models\BatchProcess.cs" />
+    <Compile Include="Models\BatchService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +74,11 @@
     <EmbeddedResource Include="BatchManagerService.resx">
       <DependentUpon>BatchManagerService.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="BatchManagerConfig.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace LogitudeBatchServices
 {
-    static class MainBatchServices
+    public static class MainBatchServices
     {
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             if (Environment.UserInteractive)
             {
