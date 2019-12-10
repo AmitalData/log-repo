@@ -1,4 +1,5 @@
 ﻿using Logitude.Infrastructure.BL.EntityPMs;
+using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
@@ -24,6 +25,33 @@ namespace Logitude.Infrastructure.BL.EntityUpdateServices
         protected override void OnUpdating(PriceStepsPM entityPM)
         {
            
+        }
+        protected override void Trace(PriceStepsPM entityPM, PriceSteps entityPOCO, string changesXml)
+        {
+            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
+            {
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = entityPM.Tenant,
+                    EventTypeCode = "UPEV",
+                    UserId = entityPM.UpdatedByUserId,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = "PriceSteps"
+                });
+            }
+
+            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
+            {
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = entityPM.Tenant,
+                    EventTypeCode = "CREV",
+                    UserId = entityPM.CreatedByUserId,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = "PriceSteps"
+                });
+            }
+
         }
     }
 }

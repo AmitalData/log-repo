@@ -129,6 +129,7 @@ export class PriceStepsGeneralTabComponent extends BaseComponent implements OnIn
     }
 
     OkButtonClicked() {
+        this.ValidationErrorsList = [];
         Validator.TryValidateObject(this.EntityPM, this.DataContext.ObjectTableName, this.ValidationErrorsList);
         if (this.ValidationErrorsList.length == 0) {
             this.SubmitCreatingPriceSteps();
