@@ -165,17 +165,7 @@ namespace Logitude.HybridTest.ServicesTest
             };
             Shipment_BuildEventsList(shipmentPM.ShipmentNumber, events);
 
-            InvokedProperties serviceProperties = new InvokedProperties
-            {
-                ServiceName = "Shipment",
-                ServiceOperation = "DeleteShipmentEvent",
-            };
-
-            Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { shipmentPM.ShipmentNumber, departedExternalId, EnvironmentGlobalParams.MainTenant };
-            serviceResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Build Events List Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNotNull(serviceResponse.Result, "Build Events List Failed! " + serviceResponse.ErrorMessage);
+            Shipment_DeleteShipmentEvent(shipmentPM.ShipmentNumber, departedExternalId);
         }
         [TestMethod]
         public void Test_Shipment_ChangeStatusByEvents()
@@ -183,9 +173,20 @@ namespace Logitude.HybridTest.ServicesTest
             ShipmentPM shipmentPM = ShipmentWcfFactory.GetShipmentPM();
             //shipmentPM.ShipmentNumber = CodeCounter.GetNumber();
             Response upsertResponse = EntityWcfCaller.CallEntityUpsert(shipmentPM);
-            //Shipment_BuildEventsList();
-            Assert.AreEqual(shipmentPM.StatusName, "Build Events List Failed! ");
-
+            string customClearedExternalId = Guid.NewGuid().ToString();
+            List<TraceEventPM> events = new List<TraceEventPM>()
+            {
+                new TraceEventPM() { Tenant = EnvironmentGlobalParams.MainTenant, ExternalId = null, UserId = HybridData.UserCodeHU, EventTypeCode = "DEP", EventDateTime = DateTime.Now.AddDays(-2), LogDateTime = DateTime.Now.AddDays(-2), Notes = "Testing hybrid departed" },
+                new TraceEventPM() { Tenant = EnvironmentGlobalParams.MainTenant, ExternalId = null, UserId = HybridData.UserCodeHU, EventTypeCode = "ARR", EventDateTime = DateTime.Now.AddDays(-2), LogDateTime = DateTime.Now.AddDays(-2), Notes = "Testing hybrid arrived" },
+                new TraceEventPM() { Tenant = EnvironmentGlobalParams.MainTenant, ExternalId = customClearedExternalId, UserId = HybridData.UserCodeHU, EventTypeCode = "CCD", EventDateTime = DateTime.Now.AddDays(-2), LogDateTime = DateTime.Now.AddDays(-2), Notes = "Testing hybrid custom cleared" },
+            };
+            Shipment_BuildEventsList(shipmentPM.ShipmentNumber, events);
+            RestAPIService restAPIService = new RestAPIService();
+            ShipmentPM shipment = restAPIService.GetEntityPMById<ShipmentPM>("Shipment", upsertResponse.Result);
+            Assert.AreEqual(shipment.StatusName, "Cleared", "Status Must Be Cleared!");
+            Shipment_DeleteShipmentEvent(shipmentPM.ShipmentNumber, customClearedExternalId);
+            shipment = restAPIService.GetEntityPMById<ShipmentPM>("Shipment", upsertResponse.Result);
+            Assert.AreEqual(shipment.StatusName, "Arrived", "Status Must Be Arrived!");
         }
         
         private static void Shipment_BuildEventsList(string shipmentNumber, List<TraceEventPM> events)
@@ -203,5 +204,21 @@ namespace Logitude.HybridTest.ServicesTest
             Assert.IsFalse(serviceResponse.HasError, "Build Events List Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Build Events List Failed! " + serviceResponse.ErrorMessage);
         }
+
+        private static void Shipment_DeleteShipmentEvent(string shipmentNumber, string externalId)
+        {
+            InvokedProperties serviceProperties = new InvokedProperties
+            {
+                ServiceName = "Shipment",
+                ServiceOperation = "DeleteShipmentEvent",
+            };
+
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { shipmentNumber, externalId, EnvironmentGlobalParams.MainTenant };
+            serviceResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+            Assert.IsFalse(serviceResponse.HasError, "Build Events List Failed! " + serviceResponse.ErrorMessage);
+            Assert.IsNotNull(serviceResponse.Result, "Build Events List Failed! " + serviceResponse.ErrorMessage);
+        }
+
     }
 }
