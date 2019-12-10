@@ -13,7 +13,7 @@ namespace Logitude.HybridTest.ServicesTest
     [TestClass]
     public class ShipmentTest
     {
-        
+
         [TestMethod]
         public void Test_DirectAirExportShipment_UPSERT()
         {
@@ -48,8 +48,9 @@ namespace Logitude.HybridTest.ServicesTest
         [TestMethod]
         public void Test_Shipment_CANCEL()
         {
-            if (HybridData.DirectShipmentId == null)
-                Test_DirectAirExportShipment_UPSERT();
+            ShipmentPM shipmentPM = ShipmentWcfFactory.GetShipmentPM();
+            //shipmentPM.ShipmentNumber = CodeCounter.GetNumber();
+            Response upsertResponse = EntityWcfCaller.CallEntityUpsert(shipmentPM);
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "Shipment",
@@ -60,7 +61,7 @@ namespace Logitude.HybridTest.ServicesTest
             };
 
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { HybridData.DirectShipmentCode, EnvironmentGlobalParams.MainTenant };
+            object[] serviceParameters = new object[] { shipmentPM.ShipmentNumber, EnvironmentGlobalParams.MainTenant };
             serviceResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Canceled Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Canceled Failed! " + serviceResponse.ErrorMessage);
@@ -69,8 +70,9 @@ namespace Logitude.HybridTest.ServicesTest
         [TestMethod]
         public void Test_Shipment_DELETE()
         {
-            //if (HybridData.DirectShipmentId == null)
-                Test_DirectAirExportShipment_UPSERT();
+            ShipmentPM shipmentPM = ShipmentWcfFactory.GetShipmentPM();
+            //shipmentPM.ShipmentNumber = CodeCounter.GetNumber();
+            Response upsertResponse = EntityWcfCaller.CallEntityUpsert(shipmentPM);
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "Shipment",
@@ -81,7 +83,7 @@ namespace Logitude.HybridTest.ServicesTest
             };
 
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { HybridData.DirectShipmentCode, EnvironmentGlobalParams.MainTenant };
+            object[] serviceParameters = new object[] { shipmentPM.ShipmentNumber, EnvironmentGlobalParams.MainTenant };
             serviceResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Deleted Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Deleted Failed! " + serviceResponse.ErrorMessage);
@@ -90,7 +92,7 @@ namespace Logitude.HybridTest.ServicesTest
         [TestMethod]
         public void Test_Shipment_GetShipmentList()
         {
-            Assert.Inconclusive("Search Field Problem!");
+            //Assert.Inconclusive("Search Field Problem!");
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "Shipment",
@@ -102,7 +104,7 @@ namespace Logitude.HybridTest.ServicesTest
             ShipmentServiceReference.ShipmentApiFilters filters = new ShipmentServiceReference.ShipmentApiFilters
             {
                 Take = 10,
-                SearchFields = "Hybrid DShipment,OPOP,Created,HFP,Hybrid From Port,HC,Hybrid Country,HFP,Hybrid From Port,HC,Hybrid Country,HTP,Hybrid To Port,HC,Hybrid Country,HTP,Hybrid To Port,HC,Hybrid Country,Hybrid Agent",
+                SearchFields = "Hybrid",
                 //ShipmentLevel = "H",
             };
 
@@ -117,10 +119,10 @@ namespace Logitude.HybridTest.ServicesTest
         [TestMethod]
         public void Test_Shipment_CreateEvent()
         {
-            Assert.Inconclusive("Not Implemented !");
-            if (HybridData.HouseShipmentId == null)
-                Test_HouseAirExportShipment_UPSERT();
-            HybridData.customClearedExternalId = Guid.NewGuid().ToString();
+            Assert.Inconclusive("Problem! status id");
+            ShipmentPM shipmentPM = ShipmentWcfFactory.GetShipmentPM();
+            //shipmentPM.ShipmentNumber = CodeCounter.GetNumber();
+            Response upsertResponse = EntityWcfCaller.CallEntityUpsert(shipmentPM);
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "Shipment",
@@ -128,7 +130,7 @@ namespace Logitude.HybridTest.ServicesTest
             };
 
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { EnvironmentGlobalParams.MainTenant, HybridData.customClearedExternalId, HybridData.HouseShipmentCode, HybridData.UserCodeHU, "CCD", DateTime.Now.AddDays(-2), DateTime.Now.AddDays(-2), "Testing hybrid custom cleared" };
+            object[] serviceParameters = new object[] { EnvironmentGlobalParams.MainTenant, null, shipmentPM.ShipmentNumber, HybridData.UserCodeHU, "CCD", DateTime.Now.AddDays(-2), DateTime.Now.AddDays(-2), "Testing hybrid custom cleared" };
             serviceResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Create Event Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Create Event List Failed! " + serviceResponse.ErrorMessage);
@@ -137,16 +139,58 @@ namespace Logitude.HybridTest.ServicesTest
         [TestMethod]
         public void Test_Shipment_BuildEventsList()
         {
-            if (HybridData.HouseShipmentId == null)
-                Test_HouseAirExportShipment_UPSERT();
-            HybridData.customClearedExternalId = Guid.NewGuid().ToString();
+            ShipmentPM shipmentPM = ShipmentWcfFactory.GetShipmentPM();
+            //shipmentPM.ShipmentNumber = CodeCounter.GetNumber();
+            Response upsertResponse = EntityWcfCaller.CallEntityUpsert(shipmentPM);
             List<TraceEventPM> events = new List<TraceEventPM>()
-                 {
-                     new TraceEventPM() { Tenant = EnvironmentGlobalParams.MainTenant, ExternalId = Guid.NewGuid().ToString(), UserId = HybridData.UserCodeHU, EventTypeCode = "DEP", EventDateTime = DateTime.Now.AddDays(-2), LogDateTime = DateTime.Now.AddDays(-2), Notes = "Testing hybrid departed" },
-                     new TraceEventPM() { Tenant = EnvironmentGlobalParams.MainTenant, ExternalId = Guid.NewGuid().ToString(), UserId = HybridData.UserCodeHU, EventTypeCode = "ARR", EventDateTime = DateTime.Now.AddDays(-2), LogDateTime = DateTime.Now.AddDays(-2), Notes = "Testing hybrid arrived" },
-                     new TraceEventPM() { Tenant = EnvironmentGlobalParams.MainTenant, ExternalId = HybridData.customClearedExternalId, UserId = HybridData.UserCodeHU, EventTypeCode = "CCD", EventDateTime = DateTime.Now.AddDays(-2), LogDateTime = DateTime.Now.AddDays(-2), Notes = "Testing hybrid custom cleared" },
+            {
+                new TraceEventPM() { Tenant = EnvironmentGlobalParams.MainTenant, ExternalId = null, UserId = HybridData.UserCodeHU, EventTypeCode = "DEP", EventDateTime = DateTime.Now.AddDays(-2), LogDateTime = DateTime.Now.AddDays(-2), Notes = "Testing hybrid departed" },
+                new TraceEventPM() { Tenant = EnvironmentGlobalParams.MainTenant, ExternalId = null, UserId = HybridData.UserCodeHU, EventTypeCode = "ARR", EventDateTime = DateTime.Now.AddDays(-2), LogDateTime = DateTime.Now.AddDays(-2), Notes = "Testing hybrid arrived" },
+                new TraceEventPM() { Tenant = EnvironmentGlobalParams.MainTenant, ExternalId = null, UserId = HybridData.UserCodeHU, EventTypeCode = "CCD", EventDateTime = DateTime.Now.AddDays(-2), LogDateTime = DateTime.Now.AddDays(-2), Notes = "Testing hybrid custom cleared" },
 
-                };
+            };
+            Shipment_BuildEventsList(shipmentPM.ShipmentNumber, events);
+        }
+
+        [TestMethod]
+        public void Test_Shipment_DeleteShipmentEvent()
+        {
+            ShipmentPM shipmentPM = ShipmentWcfFactory.GetShipmentPM();
+            //shipmentPM.ShipmentNumber = CodeCounter.GetNumber();
+            Response upsertResponse = EntityWcfCaller.CallEntityUpsert(shipmentPM);
+            string departedExternalId = Guid.NewGuid().ToString();
+            List<TraceEventPM> events = new List<TraceEventPM>()
+            {
+                new TraceEventPM() { Tenant = EnvironmentGlobalParams.MainTenant, ExternalId = departedExternalId, UserId = HybridData.UserCodeHU, EventTypeCode = "DEP", EventDateTime = DateTime.Now.AddDays(-2), LogDateTime = DateTime.Now.AddDays(-2), Notes = "Testing hybrid departed" },
+            };
+            Shipment_BuildEventsList(shipmentPM.ShipmentNumber, events);
+
+            Shipment_DeleteShipmentEvent(shipmentPM.ShipmentNumber, departedExternalId);
+        }
+        [TestMethod]
+        public void Test_Shipment_ChangeStatusByEvents()
+        {
+            ShipmentPM shipmentPM = ShipmentWcfFactory.GetShipmentPM();
+            //shipmentPM.ShipmentNumber = CodeCounter.GetNumber();
+            Response upsertResponse = EntityWcfCaller.CallEntityUpsert(shipmentPM);
+            string customClearedExternalId = Guid.NewGuid().ToString();
+            List<TraceEventPM> events = new List<TraceEventPM>()
+            {
+                new TraceEventPM() { Tenant = EnvironmentGlobalParams.MainTenant, ExternalId = null, UserId = HybridData.UserCodeHU, EventTypeCode = "DEP", EventDateTime = DateTime.Now.AddDays(-2), LogDateTime = DateTime.Now.AddDays(-2), Notes = "Testing hybrid departed" },
+                new TraceEventPM() { Tenant = EnvironmentGlobalParams.MainTenant, ExternalId = null, UserId = HybridData.UserCodeHU, EventTypeCode = "ARR", EventDateTime = DateTime.Now.AddDays(-2), LogDateTime = DateTime.Now.AddDays(-2), Notes = "Testing hybrid arrived" },
+                new TraceEventPM() { Tenant = EnvironmentGlobalParams.MainTenant, ExternalId = customClearedExternalId, UserId = HybridData.UserCodeHU, EventTypeCode = "CCD", EventDateTime = DateTime.Now.AddDays(-2), LogDateTime = DateTime.Now.AddDays(-2), Notes = "Testing hybrid custom cleared" },
+            };
+            Shipment_BuildEventsList(shipmentPM.ShipmentNumber, events);
+            RestAPIService restAPIService = new RestAPIService();
+            ShipmentPM shipment = restAPIService.GetEntityPMById<ShipmentPM>("Shipment", upsertResponse.Result);
+            Assert.AreEqual(shipment.StatusName, "Cleared", "Status Must Be Cleared!");
+            Shipment_DeleteShipmentEvent(shipmentPM.ShipmentNumber, customClearedExternalId);
+            shipment = restAPIService.GetEntityPMById<ShipmentPM>("Shipment", upsertResponse.Result);
+            Assert.AreEqual(shipment.StatusName, "Arrived", "Status Must Be Arrived!");
+        }
+        
+        private static void Shipment_BuildEventsList(string shipmentNumber, List<TraceEventPM> events)
+        {
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "Shipment",
@@ -155,17 +199,14 @@ namespace Logitude.HybridTest.ServicesTest
             };
 
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { EnvironmentGlobalParams.MainTenant, HybridData.HouseShipmentCode, events.ToArray() };
+            object[] serviceParameters = new object[] { EnvironmentGlobalParams.MainTenant, shipmentNumber, events.ToArray() };
             serviceResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Build Events List Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Build Events List Failed! " + serviceResponse.ErrorMessage);
         }
 
-        [TestMethod]
-        public void Test_Shipment_DeleteShipmentEvent()
+        private static void Shipment_DeleteShipmentEvent(string shipmentNumber, string externalId)
         {
-            if (HybridData.customClearedExternalId == null)
-                Test_Shipment_BuildEventsList();
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "Shipment",
@@ -173,17 +214,11 @@ namespace Logitude.HybridTest.ServicesTest
             };
 
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { HybridData.HouseShipmentCode, HybridData.customClearedExternalId, EnvironmentGlobalParams.MainTenant };
+            object[] serviceParameters = new object[] { shipmentNumber, externalId, EnvironmentGlobalParams.MainTenant };
             serviceResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Build Events List Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Build Events List Failed! " + serviceResponse.ErrorMessage);
         }
 
-        [TestMethod]
-        public void Test_Shipment_DeleteShipmentTraceEvent()
-        {
-            //LoginService.GetLoginTokenByCredentials();
-            Assert.Inconclusive("Not Implemented !");
-        }
     }
 }
