@@ -259,12 +259,14 @@ namespace Logitude.DBMigrations.Models
                     return "VARCHAR(" + (size == -1 ? "MAX" : size.ToString()) + ")";
                 case "datetime":
                     return "DATETIME";
+                case "date":
+                    return "DATE";
                 case "time":
                     return "TIME";
                 case "float":
                     return "FLOAT";
                 case "char":
-                    return "CHAR(" + (size == -1 ? "MAX" : size.ToString()) + ")";
+                    return "CHAR(" + (size == -1 ? "8000" : size.ToString()) + ")";
                 case "bigint":
                     return "BIGINT";
                 case "nvarchar":

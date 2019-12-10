@@ -21,7 +21,8 @@ namespace Logitude.DBMigrations.Models
         
         protected override TableDefinition GetCurrentTableDefinitionFromDB()
         {
-            string queryString = @"SELECT TABLE_NAME FROM USER_TABLES WHERE TABLE_NAME = :name OR TABLE_NAME = :oldName";//correct query
+            //tested query
+            string queryString = "SELECT TABLE_NAME FROM USER_TABLES WHERE TABLE_NAME = :name OR TABLE_NAME = :oldName";
 
             TableDefinition currentTable = null;
 
@@ -62,25 +63,26 @@ namespace Logitude.DBMigrations.Models
 
         protected override TableDefinition GetCurrentTableDefinitionFromDB(string tableName)
         {
-            string queryString = @"SELECT Q1.*, Q2.ConstraintType, Q2.ConstraintName " +
-                                  "FROM ( " +
-                                  "SELECT COL.COLUMN_NAME AS ColumnName, COL.IS_NULLABLE AS Nullable, COL.DATA_TYPE AS DataType, COL.CHARACTER_MAXIMUM_LENGTH AS Size, COL.NUMERIC_PRECISION AS Precision, COL.NUMERIC_SCALE AS Scale " +
-                                  "FROM INFORMATION_SCHEMA.COLUMNS AS COL " +
-                                  "WHERE COL.TABLE_NAME = @tableName " +
-                                  ") AS Q1 " +
-                                  "LEFT JOIN ( " +
-                                  "SELECT CON.COLUMN_NAME AS ColumnName, TCON.CONSTRAINT_TYPE AS ConstraintType, TCON.CONSTRAINT_NAME AS ConstraintName " +
-                                  "FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS AS TCON " +
-                                  "INNER JOIN INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE AS CON ON TCON.CONSTRAINT_NAME = CON.CONSTRAINT_NAME " +
-                                  "WHERE TCON.TABLE_NAME = @tableName " +
-                                  ") AS Q2 ON Q2.ColumnName = Q1.ColumnName";
+            //tested query
+            string queryString = "SELECT \"Q1\".*, \"Q2\".\"ConstraintType\", \"Q2\".\"ConstraintName\" " +
+                                 "FROM( " +
+                                 "SELECT COL.COLUMN_NAME AS \"ColumnName\", COL.NULLABLE AS \"Nullable\", COL.DATA_TYPE AS \"DataType\", COL.CHAR_LENGTH AS \"Size\", COL.DATA_PRECISION AS \"Precision\", COL.DATA_SCALE AS \"Scale\" " +
+                                 "FROM USER_TAB_COLUMNS COL " +
+                                 "WHERE COL.TABLE_NAME = :tableName " +
+                                 ") \"Q1\" " +
+                                 "LEFT JOIN( " +
+                                 "SELECT CON.COLUMN_NAME AS \"ColumnName\", TCON.CONSTRAINT_TYPE AS \"ConstraintType\", TCON.CONSTRAINT_NAME AS \"ConstraintName\" " +
+                                 "FROM USER_CONSTRAINTS TCON " +
+                                 "INNER JOIN USER_CONS_COLUMNS CON ON TCON.CONSTRAINT_NAME = CON.CONSTRAINT_NAME " +
+                                 "WHERE TCON.TABLE_NAME = :tableName " +
+                                 ") \"Q2\" ON \"Q2\".\"ColumnName\" = \"Q1\".\"ColumnName\"";
 
             TableDefinition currentTable = null;
 
-            SqlDataReader reader = null;
-            SqlConnection connection = new SqlConnection(ConnectionString);
-            SqlCommand command = new SqlCommand(queryString, connection);
-            command.Parameters.AddWithValue("@tableName", tableName);
+            OracleDataReader reader = null;
+            OracleConnection connection = new OracleConnection(ConnectionString);
+            OracleCommand command = new OracleCommand(queryString, connection);
+            command.Parameters.Add(new OracleParameter("tableName", tableName));
 
             try
             {
@@ -96,13 +98,13 @@ namespace Logitude.DBMigrations.Models
                         ColumnDefinition column = new ColumnDefinition
                         {
                             Name = reader["ColumnName"].ToString(),
-                            Type = GetColumnDefinitionDataType(reader["DataType"].ToString()),
-                            Size = GetColumnDefinitionSize(reader["Size"].ToString()),
+                            Type = GetColumnDefinitionDataType(reader["DataType"].ToString(), reader["Precision"].ToString(), reader["Scale"].ToString()),
+                            Size = GetColumnDefinitionSize(reader["DataType"].ToString(), reader["Size"].ToString()),
                             Precision = String.IsNullOrEmpty(reader["Precision"].ToString()) ? 0 : Convert.ToInt32(reader["Precision"].ToString()),
                             Scale = String.IsNullOrEmpty(reader["Scale"].ToString()) ? 0 : Convert.ToInt32(reader["Scale"].ToString()),
                             Constraints = new ConstraintsDefinition
                             {
-                                Nullable = (reader["Nullable"].ToString() == "YES")
+                                Nullable = (reader["Nullable"].ToString() == "Y")
                             }
                         };
 
@@ -149,7 +151,7 @@ namespace Logitude.DBMigrations.Models
         protected override string GetCreateTableScript()
         {
             string createTableScript = "-- Create New Table With Name " + DXMLTable.Name + "\n";
-            createTableScript += "CREATE TABLE [" + DXMLTable.Schema + "].[" + DXMLTable.Name + "](" + "\n";
+            createTableScript += "CREATE TABLE \"" + DXMLTable.Name + "\"(" + "\n";
             foreach (var column in DXMLTable.Columns)
             {
                 createTableScript += GetCreateColumnScript(column) + "\n";
@@ -157,7 +159,7 @@ namespace Logitude.DBMigrations.Models
 
             if (DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Any())
             {
-                string primaryKeyColumns = string.Join(",", DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Select(c => "[" + c.Name + "]").ToArray());
+                string primaryKeyColumns = string.Join(",", DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Select(c => "\"" + c.Name + "\"").ToArray());
                 createTableScript += "PRIMARY KEY(" + primaryKeyColumns + ")" + "\n";
             }
             createTableScript += ");" + "\n\n";
@@ -166,10 +168,20 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetCreateColumnScript(ColumnDefinition columnDefinition)
         {
-            string columnScript = "[" + columnDefinition.Name + "]" + " ";
+            string columnScript = "\"" + columnDefinition.Name + "\"" + " ";
             columnScript += GetDataTypeScript(columnDefinition.Type, columnDefinition.Size, columnDefinition.Precision, columnDefinition.Scale);
             columnScript += columnDefinition.Constraints.Nullable ? " NULL" : " NOT NULL";
-            columnScript += ",";
+            if (DXMLTable.Columns.Last().Name != columnDefinition.Name)
+            {
+                columnScript += ",";
+            }
+            else
+            {
+                if(DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Any())
+                {
+                    columnScript += ",";
+                }
+            }
             return columnScript;
         }
 
@@ -250,30 +262,32 @@ namespace Logitude.DBMigrations.Models
         {
             switch (type)
             {
-                case "int":
-                    return "INT";
-                case "decimal":
-                    return "DECIMAL(" + precision + ", " + scale + ")";
-                case "timestamp":
-                    return "TIMESTAMP";
-                case "varbinary":
-                    return "VARBINARY(" + (size == -1 ? "MAX" : size.ToString()) + ")";
-                case "varchar":
-                    return "VARCHAR(" + (size == -1 ? "MAX" : size.ToString()) + ")";
+                case "date":
+                    return "DATE";
                 case "datetime":
-                    return "DATETIME";
+                    return "TIMESTAMP(7)";
                 case "time":
-                    return "TIME";
-                case "float":
-                    return "FLOAT";
-                case "char":
-                    return "CHAR(" + (size == -1 ? "MAX" : size.ToString()) + ")";
-                case "bigint":
-                    return "BIGINT";
+                    return "INTERVAL DAY(2) TO SECOND(6)";
+                case "varbinary":
+                    return "BLOB";
+                case "varchar":
+                    return size == -1 ? "CLOB" : "VARCHAR2(" + size + " CHAR)";
                 case "nvarchar":
-                    return "NVARCHAR(" + (size == -1 ? "MAX" : size.ToString()) + ")";
+                    return size == -1 ? "NCLOB" : "NVARCHAR2(" + size + ")";
+                case "timestamp":
+                    return "RAW(8)";
+                case "char":
+                    return "CHAR(" + (size == -1 ? "2000 CHAR" : size.ToString() + " CHAR") + ")";
+                case "float":
+                    return "NUMBER";
                 case "bit":
-                    return "BIT";
+                    return "NUMBER(1, 0)";
+                case "int":
+                    return "NUMBER(10, 0)";
+                case "bigint":
+                    return "NUMBER(18, 0)";
+                case "decimal":
+                    return "NUMBER(" + precision + ", " + scale + ")";
                 default:
                     return null;
             }
@@ -281,6 +295,9 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetRenameTableScript()
         {
+            //SQL Error: ORA-00955: name is already used by an existing object
+            //Cannot rename any two tables that have a relationship
+
             string renameTableScript = "";
             if (CheckIfTableRenamed())
             {

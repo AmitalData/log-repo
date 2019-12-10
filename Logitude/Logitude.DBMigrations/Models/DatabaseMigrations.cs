@@ -47,6 +47,8 @@ namespace Logitude.DBMigrations.Models
                     return "varchar";
                 case "datetime":
                     return "datetime";
+                case "date":
+                    return "date";
                 case "time":
                     return "time";
                 case "float":
@@ -70,6 +72,7 @@ namespace Logitude.DBMigrations.Models
             switch (formattedDataType)
             {
                 case "date":
+                    return "date";
                 case "timestamp":
                     return "datetime";
                 case "interval day to second":
@@ -133,6 +136,10 @@ namespace Logitude.DBMigrations.Models
             }
             else
             {
+                if(formattedDataType == "char" && size == "2000")
+                {
+                    return -1;
+                }
                 return Convert.ToInt32(size);
             }
         }
