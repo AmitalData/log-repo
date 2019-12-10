@@ -60,6 +60,7 @@ import { AccountingIntegrityCheckPM } from '../../../Accounting/EntityPMs/Accoun
 })
 
 export class ListComponent implements OnInit, AfterViewInit {
+    public IsDemoTenant: boolean = false;
     public ComponentIndex: number = null;
     private myQueryColumnsPMService: QueryColumnsPMService;
     @Output() BackCompleted = new EventEmitter();
@@ -601,7 +602,9 @@ export class ListComponent implements OnInit, AfterViewInit {
     NewButtonId: string;
 
     ngOnInit() {
-
+        if (SessionLocator.Tenant == 65 && !SessionLocator.LoggedUserPM.IsCustomerCare && this.ObjectTableName == "Contact") {
+            this.IsDemoTenant = true;
+        }
         this.NewButtonId = "NewButton_" + this.ObjectTableName;
 
         if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "NEW", false)) {
@@ -834,33 +837,32 @@ else{ this.View = TextCodeTranslator.Translate("General.O.View");}
         this.CurrentSession.AddListComponent(this);
 
         this.listArgs = args;
-        if (!AppTool.IsNullOrEmpty(this.listArgs.DisplayTitle)) {
-            this.Title = this.listArgs.DisplayTitle;
+        if (!this.IsDemoTenant) {
+            if (!AppTool.IsNullOrEmpty(this.listArgs.DisplayTitle)) {
+                this.Title = this.listArgs.DisplayTitle;
+            }
+            this.QueryCode = args.QueryCode;
+            this.ObjectTableName = args.ObjectTableName;
+            this.SetAddButtonTitle();
+            this.MethodName = args.MethodName;
+            this.BackBtnTitle = args.BackButtonTitle;
+            this.ShowViews = args.ShowViews;
+            this.ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
+            this.SeachBoxIsDisabled = this.ObjectTable.DisableSearchBox;
+
+            this.SearchTextValue = new FormControl();
+            this.NewButtonLable = args.NewButtonLabel;
+            this.SearchTextValue.valueChanges
+                .debounceTime(500)
+                .distinctUntilChanged()
+                .subscribe((search: string): any => {
+                    this.searchFields = (search === "") ? this.searchFields = "" : this.searchFields = search;
+                    this.SearchFieldchangeevent.emit(this.searchFields);
+                });
+
+            this.GetQueries();
+            this.RunComponent();
         }
-        this.QueryCode = args.QueryCode;
-        this.ObjectTableName = args.ObjectTableName;
-        this.SetAddButtonTitle();
-        this.MethodName = args.MethodName;
-        this.BackBtnTitle = args.BackButtonTitle;
-        this.ShowViews = args.ShowViews;
-        this.ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
-        this.SeachBoxIsDisabled = this.ObjectTable.DisableSearchBox;
-
-        this.SearchTextValue = new FormControl();
-        this.NewButtonLable = args.NewButtonLabel;
-        this.SearchTextValue.valueChanges
-            .debounceTime(500)
-            .distinctUntilChanged()
-            .subscribe((search: string): any => {
-                this.searchFields = (search === "") ? this.searchFields = "" : this.searchFields = search;
-                this.SearchFieldchangeevent.emit(this.searchFields);
-            });
-
-        //this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
-        this.GetQueries();
-        this.RunComponent();
-
-        //});NewEntityButtonLabel
     }
 
     ViewInitCompleted(event) {
