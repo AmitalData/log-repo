@@ -492,6 +492,10 @@ export class PartnerItem extends BaseComponent {
 
                     if (this.EntityPM.ShipmentLevelCode == "C") {
                         myResult = "AG";
+
+                        if (SessionLocator.TenantPM.AllowCustomersInAgentsLOV) {
+                            myResult = "CS,AG";
+                        }                        
                     }
 
                     else {
@@ -571,12 +575,18 @@ export class PartnerItem extends BaseComponent {
             case "CONSI":
             case "CSTMR":
                 {
-                    if (this.EntityPM.ShipmentLevelCode != "C") {
-                        if (SessionLocator.TenantPM.AllowAgentInCustomersLOV) {
+                    if (this.EntityPM.ShipmentLevelCode == "C") {
+                        if (SessionLocator.TenantPM.AllowCustomersInAgentsLOV) {
                             myResult = true;
                         }
                     }
 
+                    else {
+                        if (SessionLocator.TenantPM.AllowAgentInCustomersLOV) {
+                            myResult = true;
+                        }
+                    }
+                    
                     break
                 }
 
