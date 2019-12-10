@@ -10,6 +10,7 @@ import {ObservableCollection} from '../../../Infrastructure/Utilities/Observable
 import {QuoteChargePM} from '../../../Quote/EntityPMs/QuoteChargePM';
 import {QuotePM} from '../../../Quote/EntityPMs/QuotePM';
 import {VatTypesValidator} from '../../../Infrastructure/Validators/VatTypesValidator';
+import { QuoteValidator } from '../../../Quote/Validators/QuoteValidator';
 
 @Component({
     moduleId: module.id,
@@ -31,9 +32,11 @@ export class AddEditFCLChargeComponent {
     public ValidationErrorsList: string[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
     public HideFCLAllIn: boolean = false;
+    private IsHyprid: boolean;
     constructor() {
         this.ItemsSource = new ObservableCollection([]);
         this.HideFCLAllIn = SessionLocator.TenantPM.HideFCLAllIn;
+        this.IsHyprid = SessionLocator.TenantPM.IsHybrid;
     }
 
     SetDataContext(dataContext: FCLQuoteChargeItem) {
@@ -92,6 +95,11 @@ export class AddEditFCLChargeComponent {
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+
+        if (this.IsHyprid) {
+            var quoteValidator: QuoteValidator = new QuoteValidator();
+            quoteValidator.CheckDuplicateInCharges(this.QuotePM, this.EntityPM, errors);
+        }
 
         if (this.EntityPM.ChargesGroupCode == "FRT") {
             if (this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d != this.EntityPM).length > 0) {
