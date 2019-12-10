@@ -525,14 +525,14 @@ export class CourierWorksheetComponent extends BaseComponent
         this._ValidationErrors2 = []
             this._CourierMasterService.GetIfAllowToCancelCourierMaster(this.entityPM.Id).subscribe(
                 data => {
-                    if (data.Result != "")
-                        this._ValidationErrors2.push(TextCodeTranslator.Translate("Customs.CourierMaster.O.CantCancelFlight"));
+                    //if (data.Result != "")
+                    //    this._ValidationErrors2.push();
                     switch (data.Result) {
                         case "INVALID_INPROGRESS":
-                            this._ValidationErrors2.push(TextCodeTranslator.Translate("Customs.CourierMaster.O.NotValidDecInProccess"))
+                            this._ValidationErrors2.push(TextCodeTranslator.Translate("Customs.CourierMaster.O.CantCancelFlight") +' ' + TextCodeTranslator.Translate("Customs.CourierMaster.O.NotValidDecInProccess") )
                             break;
                         case "INVALID_PAYED":
-                            this._ValidationErrors2.push(TextCodeTranslator.Translate("Customs.CourierMaster.O.NotValidDecWithPayment"))
+                            this._ValidationErrors2.push(TextCodeTranslator.Translate("Customs.CourierMaster.O.CantCancelFlight") + ' ' + TextCodeTranslator.Translate("Customs.CourierMaster.O.NotValidDecWithPayment"))
                             break;
                     }
                 });
@@ -1960,14 +1960,14 @@ export class CourierWorksheetComponent extends BaseComponent
         this._ValidationErrors2=[]
         this._CourierMasterService.GetIfAllowToCancelCourierMaster(this.entityPM.Id).subscribe(
             data => {
-                if (data.Result != "")
-                    this._ValidationErrors2.push(TextCodeTranslator.Translate("Customs.CourierMaster.O.CantCancelFlight"));
+                //if (data.Result != "")
+                //    this._ValidationErrors2.push(TextCodeTranslator.Translate("Customs.CourierMaster.O.CantCancelFlight"));
                 switch (data.Result) {
                     case "INVALID_INPROGRESS":
-                        this._ValidationErrors2.push(TextCodeTranslator.Translate("Customs.CourierMaster.O.NotValidDecInProccess"))
+                        this._ValidationErrors2.push(TextCodeTranslator.Translate("Customs.CourierMaster.O.CantCancelFlight") + ' ' + TextCodeTranslator.Translate("Customs.CourierMaster.O.NotValidDecInProccess"))
                         break;
                     case "INVALID_PAYED":
-                        this._ValidationErrors2.push(TextCodeTranslator.Translate("Customs.CourierMaster.O.NotValidDecWithPayment"))
+                        this._ValidationErrors2.push(TextCodeTranslator.Translate("Customs.CourierMaster.O.CantCancelFlight") + ' ' + TextCodeTranslator.Translate("Customs.CourierMaster.O.NotValidDecWithPayment"))
                         break;
                     case "":
                         {
