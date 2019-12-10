@@ -407,9 +407,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen IndustryHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Industry.HeaderScreen", Name = "Header Screen", ObjectTableId = IndustryObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField IndustryIndustryHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = IndustryObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = IndustryHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField IndustryIndustryHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = IndustryObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = IndustryHeaderScreenScreen0.Id, ObjectFieldCode = IndustryObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField IndustryIndustryHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = IndustryObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = IndustryHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField IndustryIndustryHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = IndustryObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = IndustryHeaderScreenScreen0.Id, ObjectFieldCode = IndustryObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    IndustryObjectTable.HeaderScreenId = IndustryHeaderScreenScreen0.Id;
 	   		  
@@ -417,11 +417,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen IndustryGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Industry.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = IndustryObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField IndustryIndustryGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = IndustryObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = IndustryGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField IndustryIndustryGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = IndustryObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = IndustryGeneralTabScreenScreen1.Id, ObjectFieldCode = IndustryObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField IndustryIndustryGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = IndustryObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = IndustryGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField IndustryIndustryGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = IndustryObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = IndustryGeneralTabScreenScreen1.Id, ObjectFieldCode = IndustryObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField IndustryIndustryGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = IndustryObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = IndustryGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField IndustryIndustryGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = IndustryObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = IndustryGeneralTabScreenScreen1.Id, ObjectFieldCode = IndustryObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
