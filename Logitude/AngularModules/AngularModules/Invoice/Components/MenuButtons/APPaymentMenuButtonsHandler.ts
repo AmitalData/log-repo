@@ -410,23 +410,28 @@ export class APPaymentMenuButtonsHandler {
 
     private Approve(fullAccountingSetting: FullAccountingSettingPM)
     {
-        this.GetGLAccount(this.EntityPM.VendorGLAccountId).then((glaccount:GLAccountPM)=> {
+        if (fullAccountingSetting.AccountingActivated) {
+            this.GetGLAccount(this.EntityPM.VendorGLAccountId).then((glaccount: GLAccountPM) => {
 
 
-            if (fullAccountingSetting != null && glaccount != null) {
-                if (fullAccountingSetting.IsPaymentChequesActivated && glaccount.AllowEditChequePayToName && this.EntityPM.PaymentMethodCode == "CH") {
-                    this.OpenEditPaymentChequeScreen();
+                if (fullAccountingSetting != null && glaccount != null) {
+                    if (fullAccountingSetting.IsPaymentChequesActivated && glaccount.AllowEditChequePayToName && this.EntityPM.PaymentMethodCode == "CH") {
+                        this.OpenEditPaymentChequeScreen();
+                    }
+                    else {
+                        this.ContinueSaving(null);
+                    }
                 }
                 else {
                     this.ContinueSaving(null);
                 }
-            }
-            else {
-                this.ContinueSaving(null);
-            }
 
-        });
 
+            });
+        }
+        else {
+            this.ContinueSaving(null);
+        }
     }
 
     SetPaymentChequeWindowArgs(windowArgs: any) {
