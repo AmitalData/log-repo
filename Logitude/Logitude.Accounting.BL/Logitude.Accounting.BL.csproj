@@ -223,6 +223,7 @@
     <Compile Include="CoreBL\Dashboard\ChartOfAccountBalanceM.cs" />
     <Compile Include="CoreBL\Dashboard\ChartOfAccountDashboard.cs" />
     <Compile Include="CoreBL\Reconcile\ICreateAutoReconcileWhileStreamingService.cs" />
+    <Compile Include="CoreBL\Reconcile\LedgerTransactionsSorter.cs" />
     <Compile Include="CoreBL\Reports\BalanceGroupByCollectorService.cs" />
     <Compile Include="CoreBL\RevaluationService.cs" />
     <Compile Include="CoreBL\ReverseEngineer\DueLocalBalanceService.cs" />

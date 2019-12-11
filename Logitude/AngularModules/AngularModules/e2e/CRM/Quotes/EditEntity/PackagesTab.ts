@@ -35,13 +35,13 @@ export class PackagesTabComponent {
     }
   }
   else{
-    if(ShipmentType=='FTL' || ShipmentType=='FCL'){
+  /*  if(ShipmentType=='FTL' || ShipmentType=='FCL'){
       this.Helper.WaitByIdAndFill('Quote_PackageType2Id','20fr');
       this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0,'Quote_PackageType2Id','20fr');
     }else{
     this.Helper.WaitByIdAndFill('Quote_GrossWeight','1000');
     this.Helper.WaitByIdAndFill('Quote_Volume','100');
-    }
+    }*/
     
   }
     

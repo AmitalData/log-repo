@@ -197,7 +197,7 @@ namespace Logitude.Accounting.Data.Repositories
         {
             var q = (from a in context.Journals
                      where a.Tenant == tenant
-                     where !a.IsLedgerCreated //index 
+                     where a.IsLedgerCreated== false//index 
                      where (a.StatusCode == "2" || a.StatusCode == "3")
                      //3 voided 
                      //2	Approved	מאושר	2,Approved,מאושר	0
