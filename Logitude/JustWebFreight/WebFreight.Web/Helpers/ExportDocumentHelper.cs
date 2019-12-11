@@ -1189,6 +1189,23 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         break;
                     }
 
+                case "CRR":
+                    {
+
+                        theT1 = System.DateTime.Now.Ticks;
+                        CrossDockReleaseDataProviderHelper crossDockReleaseDataProviderHelper = new CrossDockReleaseDataProviderHelper();
+                        byte[] byteArray = crossDockReleaseDataProviderHelper.LoadCrossDockReleaseDataProvider_GroupByEntry(entityId, tenant);
+
+                        MemoryStream memorystream = new MemoryStream(byteArray);
+                        XmlSerializer serializer = new XmlSerializer(typeof(CrossDockReleaseDataProvider));
+                        CrossDockReleaseDataProvider crossDockReleaseDataProvider = (CrossDockReleaseDataProvider)serializer.Deserialize(memorystream);
+
+                        theT2 = System.DateTime.Now.Ticks;
+                        StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "CrossDockRelease", Name = "CrossDockReleaseDataProvider", BusinessObjectValue = crossDockReleaseDataProvider };
+                        report = LoadandRender(defaulttemplate, currentBusinessObject, tenant);
+                        break;
+                    }
+
                 case "INVS":
                     {
 
