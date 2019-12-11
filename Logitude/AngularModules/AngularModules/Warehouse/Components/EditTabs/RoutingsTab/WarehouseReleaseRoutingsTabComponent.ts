@@ -59,6 +59,7 @@ export class WarehouseReleaseRoutingsTabComponent extends BaseComponent {
         if (this.EntityPM.FromPortId) {
             this.UIProperties.SetEnabled("FromPortId", this.ObjectTableName, false);
         }
+        else this.UIProperties.SetEnabled("FromPortId", this.ObjectTableName, true);
         this.UIProperties.SetEnabled("ToAddress", this.ObjectTableName, false);
 
     }
