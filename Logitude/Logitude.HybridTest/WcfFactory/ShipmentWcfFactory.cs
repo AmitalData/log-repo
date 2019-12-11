@@ -1,4 +1,6 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +31,31 @@ namespace Logitude.HybridTest.WcfFactory
             OtherPrepaidCollectId = "P",//P:Prepaid, C:Collect, B:Both
             ShipmentLevelCode = "D",//D:Direct, H: House, C:Consol, A:Customs
         };
-        public static ShipmentPM GetShipmentPM() { return shipmentPM; }
+
+        public static ShipmentPM GetShipmentPM()
+        {
+            //shipmentPM.ShipmentNumber = GetShipmentNumber();
+            return shipmentPM;
+        }
+
+        private static string GetShipmentNumber()
+        {
+            if (shipmentPM.ShipmentLevelCode == "C")
+            {
+                return TableCounter.GetNumber(EnvironmentGlobalParams.MainTenant, "MAST", shipmentPM.DirectionId, shipmentPM.TransportModeId);
+            }
+            else
+            {
+                if (shipmentPM.DirectionId.ToUpper() == "C")
+                {
+                    return TableCounter.GetNumber(EnvironmentGlobalParams.MainTenant, "SHIP", "I", shipmentPM.TransportModeId);
+                }
+
+                else
+                {
+                    return TableCounter.GetNumber(EnvironmentGlobalParams.MainTenant, "SHIP", shipmentPM.DirectionId, shipmentPM.TransportModeId);
+                }
+            }
+        }
     }
 }

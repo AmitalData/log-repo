@@ -6,6 +6,7 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.HybridTest.WcfCallers;
 using Logitude.HybridTest.WcfFactory;
 using Logitude.Server.Tools;
+using Logitude.Server.Tools.Counters;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Logitude.HybridTest.ServicesTest
@@ -13,7 +14,6 @@ namespace Logitude.HybridTest.ServicesTest
     [TestClass]
     public class ShipmentTest
     {
-
         [TestMethod]
         public void Test_DirectAirExportShipment_UPSERT()
         {
@@ -21,7 +21,6 @@ namespace Logitude.HybridTest.ServicesTest
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(shipmentPM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
-            HybridData.DirectShipmentId = serviceResponse.Result;
         }
 
         [TestMethod]
@@ -37,19 +36,17 @@ namespace Logitude.HybridTest.ServicesTest
         public void Test_HouseAirExportShipment_UPSERT()
         {
             ShipmentPM shipmentPM = ShipmentWcfFactory.GetShipmentPM();
-            shipmentPM.ShipmentNumber = HybridData.HouseShipmentCode;
+            /**/shipmentPM.ShipmentNumber = HybridData.HouseShipmentCode;
             shipmentPM.ShipmentLevelCode = "H";
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(shipmentPM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
-            HybridData.HouseShipmentId = serviceResponse.Result;
         }
 
         [TestMethod]
         public void Test_Shipment_CANCEL()
         {
             ShipmentPM shipmentPM = ShipmentWcfFactory.GetShipmentPM();
-            //shipmentPM.ShipmentNumber = CodeCounter.GetNumber();
             Response upsertResponse = EntityWcfCaller.CallEntityUpsert(shipmentPM);
             InvokedProperties serviceProperties = new InvokedProperties
             {
@@ -71,7 +68,6 @@ namespace Logitude.HybridTest.ServicesTest
         public void Test_Shipment_DELETE()
         {
             ShipmentPM shipmentPM = ShipmentWcfFactory.GetShipmentPM();
-            //shipmentPM.ShipmentNumber = CodeCounter.GetNumber();
             Response upsertResponse = EntityWcfCaller.CallEntityUpsert(shipmentPM);
             InvokedProperties serviceProperties = new InvokedProperties
             {
@@ -92,7 +88,7 @@ namespace Logitude.HybridTest.ServicesTest
         [TestMethod]
         public void Test_Shipment_GetShipmentList()
         {
-            //Assert.Inconclusive("Search Field Problem!");
+            Assert.Inconclusive("Search Field Problem!");
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "Shipment",
@@ -105,7 +101,6 @@ namespace Logitude.HybridTest.ServicesTest
             {
                 Take = 10,
                 SearchFields = "Hybrid",
-                //ShipmentLevel = "H",
             };
 
             Response serviceResponse = new Response();
@@ -121,7 +116,6 @@ namespace Logitude.HybridTest.ServicesTest
         {
             Assert.Inconclusive("Problem! status id");
             ShipmentPM shipmentPM = ShipmentWcfFactory.GetShipmentPM();
-            //shipmentPM.ShipmentNumber = CodeCounter.GetNumber();
             Response upsertResponse = EntityWcfCaller.CallEntityUpsert(shipmentPM);
             InvokedProperties serviceProperties = new InvokedProperties
             {
@@ -140,14 +134,12 @@ namespace Logitude.HybridTest.ServicesTest
         public void Test_Shipment_BuildEventsList()
         {
             ShipmentPM shipmentPM = ShipmentWcfFactory.GetShipmentPM();
-            //shipmentPM.ShipmentNumber = CodeCounter.GetNumber();
             Response upsertResponse = EntityWcfCaller.CallEntityUpsert(shipmentPM);
             List<TraceEventPM> events = new List<TraceEventPM>()
             {
                 new TraceEventPM() { Tenant = EnvironmentGlobalParams.MainTenant, ExternalId = null, UserId = HybridData.UserCodeHU, EventTypeCode = "DEP", EventDateTime = DateTime.Now.AddDays(-2), LogDateTime = DateTime.Now.AddDays(-2), Notes = "Testing hybrid departed" },
                 new TraceEventPM() { Tenant = EnvironmentGlobalParams.MainTenant, ExternalId = null, UserId = HybridData.UserCodeHU, EventTypeCode = "ARR", EventDateTime = DateTime.Now.AddDays(-2), LogDateTime = DateTime.Now.AddDays(-2), Notes = "Testing hybrid arrived" },
                 new TraceEventPM() { Tenant = EnvironmentGlobalParams.MainTenant, ExternalId = null, UserId = HybridData.UserCodeHU, EventTypeCode = "CCD", EventDateTime = DateTime.Now.AddDays(-2), LogDateTime = DateTime.Now.AddDays(-2), Notes = "Testing hybrid custom cleared" },
-
             };
             Shipment_BuildEventsList(shipmentPM.ShipmentNumber, events);
         }
@@ -156,7 +148,6 @@ namespace Logitude.HybridTest.ServicesTest
         public void Test_Shipment_DeleteShipmentEvent()
         {
             ShipmentPM shipmentPM = ShipmentWcfFactory.GetShipmentPM();
-            //shipmentPM.ShipmentNumber = CodeCounter.GetNumber();
             Response upsertResponse = EntityWcfCaller.CallEntityUpsert(shipmentPM);
             string departedExternalId = Guid.NewGuid().ToString();
             List<TraceEventPM> events = new List<TraceEventPM>()
@@ -167,11 +158,11 @@ namespace Logitude.HybridTest.ServicesTest
 
             Shipment_DeleteShipmentEvent(shipmentPM.ShipmentNumber, departedExternalId);
         }
+
         [TestMethod]
         public void Test_Shipment_ChangeStatusByEvents()
         {
             ShipmentPM shipmentPM = ShipmentWcfFactory.GetShipmentPM();
-            //shipmentPM.ShipmentNumber = CodeCounter.GetNumber();
             Response upsertResponse = EntityWcfCaller.CallEntityUpsert(shipmentPM);
             string customClearedExternalId = Guid.NewGuid().ToString();
             List<TraceEventPM> events = new List<TraceEventPM>()
@@ -180,15 +171,82 @@ namespace Logitude.HybridTest.ServicesTest
                 new TraceEventPM() { Tenant = EnvironmentGlobalParams.MainTenant, ExternalId = null, UserId = HybridData.UserCodeHU, EventTypeCode = "ARR", EventDateTime = DateTime.Now.AddDays(-2), LogDateTime = DateTime.Now.AddDays(-2), Notes = "Testing hybrid arrived" },
                 new TraceEventPM() { Tenant = EnvironmentGlobalParams.MainTenant, ExternalId = customClearedExternalId, UserId = HybridData.UserCodeHU, EventTypeCode = "CCD", EventDateTime = DateTime.Now.AddDays(-2), LogDateTime = DateTime.Now.AddDays(-2), Notes = "Testing hybrid custom cleared" },
             };
+
             Shipment_BuildEventsList(shipmentPM.ShipmentNumber, events);
+
             RestAPIService restAPIService = new RestAPIService();
             ShipmentPM shipment = restAPIService.GetEntityPMById<ShipmentPM>("Shipment", upsertResponse.Result);
             Assert.AreEqual(shipment.StatusName, "Cleared", "Status Must Be Cleared!");
+
             Shipment_DeleteShipmentEvent(shipmentPM.ShipmentNumber, customClearedExternalId);
             shipment = restAPIService.GetEntityPMById<ShipmentPM>("Shipment", upsertResponse.Result);
             Assert.AreEqual(shipment.StatusName, "Arrived", "Status Must Be Arrived!");
         }
-        
+
+        [TestMethod]
+        public void Test_Shipment_Packages()
+        {
+            ShipmentPM shipmentPM = ShipmentWcfFactory.GetShipmentPM();
+            ShipmentPackagePM shipmentPackage = new ShipmentPackagePM()
+            {
+                PackageTypeCode = "20BU",
+                NumberOfInsidePackages = 1,
+                Quantity = 1,
+                Length = 10,
+                Width = 10,
+                Height = 10,
+            };
+
+            shipmentPM.ShipmentPackages.Add(shipmentPackage);
+
+            Response upsertResponse = EntityWcfCaller.CallEntityUpsert(shipmentPM);
+            RestAPIService restAPIService = new RestAPIService();
+            ShipmentPM shipment = restAPIService.GetEntityPMById<ShipmentPM>("Shipment", upsertResponse.Result);
+            Assert.AreEqual(shipment.ShipmentPackages.Count, 1, "Add Shipment Package Failed!");
+
+            shipmentPM.ShipmentPackages.Remove(shipmentPackage);
+            upsertResponse = EntityWcfCaller.CallEntityUpsert(shipmentPM);
+            shipment = restAPIService.GetEntityPMById<ShipmentPM>("Shipment", upsertResponse.Result);
+            Assert.AreEqual(shipment.ShipmentPackages.Count, 0, "Remove Shipment Package Failed!");
+        }
+
+        [TestMethod]
+        public void Test_Shipment_ConvertFromDirectToHouse()
+        {
+            ShipmentPM shipmentPM = ShipmentWcfFactory.GetShipmentPM();
+            Response upsertResponse = EntityWcfCaller.CallEntityUpsert(shipmentPM);
+            shipmentPM.ConvertFromDirectToHouse = true;
+            upsertResponse = EntityWcfCaller.CallEntityUpsert(shipmentPM);
+            RestAPIService restAPIService = new RestAPIService();
+            ShipmentPM shipment = restAPIService.GetEntityPMById<ShipmentPM>("Shipment", upsertResponse.Result);
+            Assert.AreEqual(shipment.ShipmentLevelCode, "H", "Convert From Direct To House Failed!");
+            //ShipmentPM MasterShipmentPM = ShipmentWcfFactory.GetShipmentPM();
+            //MasterShipmentPM.ShipmentNumber = "Master Shipment";
+            //MasterShipmentPM.ShipmentLevelCode = "C";
+            //upsertResponse = EntityWcfCaller.CallEntityUpsert(MasterShipmentPM);
+            //shipmentPM.Master = MasterShipmentPM.ShipmentNumber;
+            //upsertResponse = EntityWcfCaller.CallEntityUpsert(shipmentPM);
+        }
+
+        [TestMethod]
+        public void Test_Shipment_ConvertFromHouseToDirect()
+        {
+            ShipmentPM shipmentPM = ShipmentWcfFactory.GetShipmentPM();
+            shipmentPM.ShipmentNumber = HybridData.HouseShipmentCode;
+            Response upsertResponse = EntityWcfCaller.CallEntityUpsert(shipmentPM);
+            shipmentPM.ConvertFromHouseToDirect = true;
+            upsertResponse = EntityWcfCaller.CallEntityUpsert(shipmentPM);
+            RestAPIService restAPIService = new RestAPIService();
+            ShipmentPM shipment = restAPIService.GetEntityPMById<ShipmentPM>("Shipment", upsertResponse.Result);
+            Assert.AreEqual(shipment.ShipmentLevelCode, "D", "Convert From House To Direct Failed!");
+            //ShipmentPM MasterShipmentPM = ShipmentWcfFactory.GetShipmentPM();
+            //MasterShipmentPM.ShipmentNumber = "Master Shipment";
+            //MasterShipmentPM.ShipmentLevelCode = "C";
+            //upsertResponse = EntityWcfCaller.CallEntityUpsert(MasterShipmentPM);
+            //shipmentPM.Master = MasterShipmentPM.ShipmentNumber;
+            //upsertResponse = EntityWcfCaller.CallEntityUpsert(shipmentPM);
+        }
+
         private static void Shipment_BuildEventsList(string shipmentNumber, List<TraceEventPM> events)
         {
             InvokedProperties serviceProperties = new InvokedProperties

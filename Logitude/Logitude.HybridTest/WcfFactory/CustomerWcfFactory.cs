@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.QuoteModel.EntityPMs;
+using Logitude.Server.Tools.Counters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace Logitude.HybridTest.WcfFactory
     {
         readonly private static CustomerPM customerPM = new CustomerPM()
         {
+            //Code = IdCounter.GetNumber("Customer", EnvironmentGlobalParams.MainTenant),
             Code = HybridData.CustomerCodeHCustomer,
             EnglishName = "TestShipperExport1",
             LocalName = "TestShipperExport1",
