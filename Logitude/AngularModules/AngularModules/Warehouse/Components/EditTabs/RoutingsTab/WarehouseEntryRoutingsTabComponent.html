@@ -32,11 +32,11 @@
                                                                 <tr>
 
                                                                     <td style="width:108px">
-                                                                        <RadioButton [Name]="'FromRadio'" [IsChecked]="FromTypeCode == 'PORT'" (Checked)="FromTypeCode = 'PORT'" [Text]="'Port'"></RadioButton>
+                                                                        <RadioButton [IsEnabled]="IsEnableEdit" [Name]="'FromRadio'" [IsChecked]="FromTypeCode == 'PORT'" (Checked)="FromTypeCode = 'PORT'" [Text]="'Port'"></RadioButton>
                                                                     </td>
 
                                                                     <td>
-                                                                        <RadioButton [Name]="'FromRadio'" [IsChecked]="FromTypeCode == 'CASL'" (Checked)="FromTypeCode = 'CASL'" [Text]="'Country'"></RadioButton>
+                                                                        <RadioButton [IsEnabled]="IsEnableEdit" [Name]="'FromRadio'" [IsChecked]="FromTypeCode == 'CASL'" (Checked)="FromTypeCode = 'CASL'" [Text]="'Country'"></RadioButton>
                                                                     </td>
                                                                 </tr>
                                                             </table>
@@ -122,11 +122,11 @@
                                                                 <tr>
 
                                                                     <td style="width:90px">
-                                                                        <RadioButton [Name]="'ToRadio'" [IsChecked]="ToTypeCode == 'PORT'" (Checked)="ToTypeCode = 'PORT'" [Text]="'Port'"></RadioButton>
+                                                                        <RadioButton [IsEnabled]="IsEnableEdit" [Name]="'ToRadio'" [IsChecked]="ToTypeCode == 'PORT'" (Checked)="ToTypeCode = 'PORT'" [Text]="'Port'"></RadioButton>
                                                                     </td>
 
                                                                     <td>
-                                                                        <RadioButton [Name]="'ToRadio'" [IsChecked]="ToTypeCode == 'CASL'" (Checked)="ToTypeCode = 'CASL'" [Text]="'Country'"></RadioButton>
+                                                                        <RadioButton [IsEnabled]="IsEnableEdit" [Name]="'ToRadio'" [IsChecked]="ToTypeCode == 'CASL'" (Checked)="ToTypeCode = 'CASL'" [Text]="'Country'"></RadioButton>
                                                                     </td>
                                                                 </tr>
                                                             </table>
