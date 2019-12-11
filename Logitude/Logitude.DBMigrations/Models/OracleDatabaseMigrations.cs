@@ -20,15 +20,22 @@ namespace Logitude.DBMigrations.Models
         protected override TableDefinition GetCurrentTableDefinitionFromDB()
         {
             //tested query
-            string queryString = "SELECT TABLE_NAME FROM USER_TABLES WHERE TABLE_NAME = :name OR TABLE_NAME = :oldName";
+            string queryString = "SELECT TABLE_NAME FROM USER_TABLES WHERE TABLE_NAME = :name OR TABLE_NAME = :oldName OR TABLE_NAME = :oldShortName OR TABLE_NAME = :shortName";
 
             TableDefinition currentTable = null;
 
             OracleDataReader reader = null;
             OracleConnection connection = new OracleConnection(ConnectionString);
             OracleCommand command = new OracleCommand(queryString, connection);
+
+            string oldName = DXMLTable.OldName == null ? DXMLTable.Name : (DXMLTable.OldName.Contains(",") ? DXMLTable.OldName.Split(',')[0] : DXMLTable.OldName);
+            string oldShortName = DXMLTable.OldName == null ? DXMLTable.Name : (DXMLTable.OldName.Contains(",") ? DXMLTable.OldName.Split(',')[1] : DXMLTable.OldName);
+            string shortName = DXMLTable.ShortName ?? DXMLTable.Name;
+
             command.Parameters.Add(new OracleParameter("name", DXMLTable.Name));
-            command.Parameters.Add(new OracleParameter("oldName", DXMLTable.OldName ?? DXMLTable.Name));
+            command.Parameters.Add(new OracleParameter("oldName", oldName));
+            command.Parameters.Add(new OracleParameter("oldShortName", oldShortName));
+            command.Parameters.Add(new OracleParameter("shortName", shortName));
 
             try
             {
@@ -148,8 +155,8 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetCreateTableScript()
         {
-            string createTableScript = "-- Create New Table With Name " + DXMLTable.Name + "\n";
-            createTableScript += "CREATE TABLE \"" + DXMLTable.Name + "\"(" + "\n";
+            string createTableScript = "-- Create New Table With Name " + FormatNameLength(DXMLTable.Name, DXMLTable.ShortName) + "\n";
+            createTableScript += "CREATE TABLE \"" + FormatNameLength(DXMLTable.Name, DXMLTable.ShortName) + "\"(" + "\n";
             foreach (var column in DXMLTable.Columns)
             {
                 createTableScript += GetCreateColumnScript(column) + "\n";
@@ -157,7 +164,7 @@ namespace Logitude.DBMigrations.Models
 
             if (DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Any())
             {
-                string primaryKeyColumns = string.Join(",", DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Select(c => "\"" + c.Name + "\"").ToArray());
+                string primaryKeyColumns = string.Join(",", DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Select(c => "\"" + FormatNameLength(c.Name, c.ShortName) + "\"").ToArray());
                 createTableScript += "PRIMARY KEY(" + primaryKeyColumns + ")" + "\n";
             }
             createTableScript += ");" + "\n\n";
@@ -166,7 +173,7 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetCreateColumnScript(ColumnDefinition columnDefinition)
         {
-            string columnScript = "\"" + columnDefinition.Name + "\"" + " ";
+            string columnScript = "\"" + FormatNameLength(columnDefinition.Name, columnDefinition.ShortName) + "\"" + " ";
             columnScript += GetDataTypeScript(columnDefinition.Type, columnDefinition.Size, columnDefinition.Precision, columnDefinition.Scale);
             columnScript += columnDefinition.Constraints.Nullable ? " NULL" : " NOT NULL";
             if (DXMLTable.Columns.Last().Name != columnDefinition.Name)
@@ -213,7 +220,7 @@ namespace Logitude.DBMigrations.Models
 
         protected override bool CheckIfTableRenamed()
         {
-            return TableMigrations.DxmlTableName != TableMigrations.CurrentTableName;
+            return TableMigrations.CurrentTableName != FormatNameLength(TableMigrations.DxmlTableName, TableMigrations.DxmlTableShortName);
         }
 
         protected override string GetAlterColumnScript(ColumnMigration columnMigration)
@@ -299,55 +306,55 @@ namespace Logitude.DBMigrations.Models
             string renameTableScript = "";
             if (CheckIfTableRenamed())
             {
-                renameTableScript += "-- Rename Table From " + TableMigrations.CurrentTableName + " To " + TableMigrations.DxmlTableName + "\n";
-                renameTableScript += "RENAME \"" + TableMigrations.CurrentTableName + "\" TO \"" + TableMigrations.DxmlTableName + "\"";
-                renameTableScript += "\n\n";
+                renameTableScript += "-- Rename Table From " + TableMigrations.CurrentTableName + " To " + FormatNameLength(TableMigrations.DxmlTableName, TableMigrations.DxmlTableShortName) + "\n";
+                renameTableScript += "RENAME \"" + TableMigrations.CurrentTableName + "\" TO \"" + FormatNameLength(TableMigrations.DxmlTableName, TableMigrations.DxmlTableShortName) + "\"";
+                renameTableScript += ";\n\n";
             }
             return renameTableScript;
         }
 
         protected override string GetAddColumnScript(ColumnMigration columnMigration)
         {
-            string addScript = "-- Add New Column With Name " + columnMigration.NewColumn.Name + "\n";
-            addScript += "ALTER TABLE " + "\"" + TableMigrations.DxmlTableName + "\"" + " ";
-            addScript += "ADD " + "\"" + columnMigration.NewColumn.Name + "\"" + " ";
+            string addScript = "-- Add New Column With Name " + FormatNameLength(columnMigration.NewColumn.Name, columnMigration.NewColumn.ShortName) + "\n";
+            addScript += "ALTER TABLE " + "\"" + FormatNameLength(TableMigrations.DxmlTableName, TableMigrations.DxmlTableShortName) + "\"" + " ";
+            addScript += "ADD " + "\"" + FormatNameLength(columnMigration.NewColumn.Name, columnMigration.NewColumn.ShortName) + "\"" + " ";
             addScript += GetDataTypeScript(columnMigration.NewColumn.Type, columnMigration.NewColumn.Size, columnMigration.NewColumn.Precision, columnMigration.NewColumn.Scale);
             addScript += columnMigration.NewColumn.Constraints.Nullable ? " NULL" : " NOT NULL";
-            return addScript + "\n\n";
+            return addScript + ";\n\n";
         }
 
         protected override string GetRenameColumnScript(ColumnMigration columnMigration)
         {
-            string renameScript = "-- Rename Column From " + columnMigration.CurrentColumn.Name + " To " + columnMigration.NewColumn.Name + "\n";
-            renameScript += "ALTER TABLE \"" + TableMigrations.DxmlTableName + "\" RENAME COLUMN \"" + columnMigration.CurrentColumn.Name + "\" TO \"" + columnMigration.NewColumn.Name + "\"";
-            return renameScript + "\n\n";
+            string renameScript = "-- Rename Column From " + columnMigration.CurrentColumn.Name + " To " + FormatNameLength(columnMigration.NewColumn.Name, columnMigration.NewColumn.ShortName) + "\n";
+            renameScript += "ALTER TABLE \"" + FormatNameLength(TableMigrations.DxmlTableName, TableMigrations.DxmlTableShortName) + "\" RENAME COLUMN \"" + columnMigration.CurrentColumn.Name + "\" TO \"" + FormatNameLength(columnMigration.NewColumn.Name, columnMigration.NewColumn.ShortName) + "\"";
+            return renameScript + ";\n\n";
         }
 
         protected override string GetDropColumnScript(ColumnMigration columnMigration)
         {
             string dropScript = "-- Drop Column " + columnMigration.CurrentColumn.Name + "\n";
-            dropScript += "ALTER TABLE \"" + TableMigrations.DxmlTableName + "\" RENAME COLUMN \"" + columnMigration.CurrentColumn.Name + "\" TO \"" + "Drop_" + columnMigration.NewColumn.Name + "\"";
+            dropScript += "ALTER TABLE \"" + FormatNameLength(TableMigrations.DxmlTableName, TableMigrations.DxmlTableShortName) + "\" RENAME COLUMN \"" + columnMigration.CurrentColumn.Name + "\" TO \"" + FormatNameLength("Drop_" + columnMigration.CurrentColumn.Name, null) + "\"";
 
-            return dropScript + "\n\n";
+            return dropScript + ";\n\n";
         }
 
         protected override string GetAlterTypeScript(ColumnMigration columnMigration)
         {
             string alterTypeScript = "-- Change Type From " + columnMigration.CurrentColumn.Type + " To " + columnMigration.NewColumn.Type + " For Column " + columnMigration.CurrentColumn.Name + "\n";
-            alterTypeScript += "ALTER TABLE " + "\"" + TableMigrations.DxmlTableName + "\"" + " ";
+            alterTypeScript += "ALTER TABLE " + "\"" + FormatNameLength(TableMigrations.DxmlTableName, TableMigrations.DxmlTableShortName) + "\"" + " ";
             alterTypeScript += "MODIFY " + "\"" + columnMigration.CurrentColumn.Name + "\"" + " ";
             alterTypeScript += GetDataTypeScript(columnMigration.NewColumn.Type, (columnMigration.CurrentColumn.Size == 0 ? 1 : columnMigration.CurrentColumn.Size), columnMigration.NewColumn.Precision, columnMigration.NewColumn.Scale);
-            return alterTypeScript + "\n\n";
+            return alterTypeScript + ";\n\n";
         }
 
         protected override string GetAlterSizeScript(ColumnMigration columnMigration)
         {
             bool IsAlterTypeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERTYPE).Any();
             string alterSizeScript = "-- Change Size From " + columnMigration.CurrentColumn.Size + " To " + columnMigration.NewColumn.Size + " For Column " + columnMigration.CurrentColumn.Name + "\n";
-            alterSizeScript += "ALTER TABLE " + "\"" + TableMigrations.DxmlTableName + "\"" + " ";
+            alterSizeScript += "ALTER TABLE " + "\"" + FormatNameLength(TableMigrations.DxmlTableName, TableMigrations.DxmlTableShortName) + "\"" + " ";
             alterSizeScript += "MODIFY " + "\"" + columnMigration.CurrentColumn.Name + "\"" + " ";
             alterSizeScript += GetDataTypeScript((IsAlterTypeInMigrationsList ? columnMigration.NewColumn.Type : columnMigration.CurrentColumn.Type), columnMigration.NewColumn.Size, 0, 0);
-            return alterSizeScript + "\n\n";
+            return alterSizeScript + ";\n\n";
         }
 
         protected override string GetAddPrimaryKeyScript(ColumnMigration columnMigration)
@@ -355,16 +362,16 @@ namespace Logitude.DBMigrations.Models
             string primaryKeyColumns = string.Join(",", CurrentTable.Columns.Where(c => c.Constraints.PrimaryKey).Select(c => "\"" + c.Name + "\"").ToArray());
             string primaryKeyConstraintName = columnMigration.CurrentColumn.Constraints.PrimaryKeyConstraintName;
             string addPrimaryKeyScript = "-- Add The Primary Key Constraint\n";
-            addPrimaryKeyScript += "ALTER TABLE \"" + TableMigrations.DxmlTableName + "\" ADD CONSTRAINT \"" + primaryKeyConstraintName + "\" PRIMARY KEY (" + primaryKeyColumns + ")";
-            return addPrimaryKeyScript + "\n\n";
+            addPrimaryKeyScript += "ALTER TABLE \"" + FormatNameLength(TableMigrations.DxmlTableName, TableMigrations.DxmlTableShortName) + "\" ADD CONSTRAINT \"" + primaryKeyConstraintName + "\" PRIMARY KEY (" + primaryKeyColumns + ")";
+            return addPrimaryKeyScript + ";\n\n";
         }
 
         protected override string GetDropPrimaryKeyScript(ColumnMigration columnMigration)
         {
             string dropPrimaryKeyScript = "-- Drop The Primary Key Constraint\n";
             string primaryKeyConstraintName = columnMigration.CurrentColumn.Constraints.PrimaryKeyConstraintName;
-            dropPrimaryKeyScript += "ALTER TABLE \"" + TableMigrations.DxmlTableName + "\" DROP CONSTRAINT \"" + primaryKeyConstraintName + "\"";
-            return dropPrimaryKeyScript + "\n\n";
+            dropPrimaryKeyScript += "ALTER TABLE \"" + FormatNameLength(TableMigrations.DxmlTableName, TableMigrations.DxmlTableShortName) + "\" DROP CONSTRAINT \"" + primaryKeyConstraintName + "\"";
+            return dropPrimaryKeyScript + ";\n\n";
         }
 
         protected override string GetSetNullableScript(ColumnMigration columnMigration)
@@ -377,11 +384,11 @@ namespace Logitude.DBMigrations.Models
             {
                 setNullableScript += GetPrimaryKeyConstraintScript() + "\n";
             }
-            setNullableScript += "ALTER TABLE " + "\"" + TableMigrations.DxmlTableName + "\"" + " ";
+            setNullableScript += "ALTER TABLE " + "\"" + FormatNameLength(TableMigrations.DxmlTableName, TableMigrations.DxmlTableShortName) + "\"" + " ";
             setNullableScript += "MODIFY " + "\"" + columnMigration.CurrentColumn.Name + "\"" + " ";
             setNullableScript += GetDataTypeScript((isAlterTypeInMigrationsList ? columnMigration.NewColumn.Type : columnMigration.CurrentColumn.Type), (isAlterSizeInMigrationsList ? columnMigration.NewColumn.Size : columnMigration.CurrentColumn.Size), (isAlterPrecisionAndScaleInMigrationsList ? columnMigration.NewColumn.Precision : columnMigration.CurrentColumn.Precision), (isAlterPrecisionAndScaleInMigrationsList ? columnMigration.NewColumn.Scale : columnMigration.CurrentColumn.Scale));
             setNullableScript += " NULL";
-            return setNullableScript + "\n\n";
+            return setNullableScript + ";\n\n";
         }
 
         protected override string GetUnsetNullableScript(ColumnMigration columnMigration)
@@ -390,20 +397,20 @@ namespace Logitude.DBMigrations.Models
             bool isAlterSizeInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERSIZE).Any();
             bool isAlterPrecisionAndScaleInMigrationsList = TableMigrations.ColumnsMigrations.Where(m => m.MigrationType == MigrationTypes.ALTERPRECISIONANDSCALE).Any();
             string unsetNullableScript = "-- Unset Nullable For Column " + columnMigration.CurrentColumn.Name + "\n";
-            unsetNullableScript += "ALTER TABLE " + "\"" + TableMigrations.DxmlTableName + "\"" + " ";
+            unsetNullableScript += "ALTER TABLE " + "\"" + FormatNameLength(TableMigrations.DxmlTableName, TableMigrations.DxmlTableShortName) + "\"" + " ";
             unsetNullableScript += "MODIFY " + "\"" + columnMigration.CurrentColumn.Name + "\"" + " ";
             unsetNullableScript += GetDataTypeScript((isAlterTypeInMigrationsList ? columnMigration.NewColumn.Type : columnMigration.CurrentColumn.Type), (isAlterSizeInMigrationsList ? columnMigration.NewColumn.Size : columnMigration.CurrentColumn.Size), (isAlterPrecisionAndScaleInMigrationsList ? columnMigration.NewColumn.Precision : columnMigration.CurrentColumn.Precision), (isAlterPrecisionAndScaleInMigrationsList ? columnMigration.NewColumn.Scale : columnMigration.CurrentColumn.Scale));
             unsetNullableScript += " NOT NULL";
-            return unsetNullableScript + "\n\n";
+            return unsetNullableScript + ";\n\n";
         }
 
         protected override string GetAlterPrecisionAndScaleScript(ColumnMigration columnMigration)
         {
             string alterPrecisionAndScaleScript = "-- Change Precision And Scale From " + "(" + columnMigration.CurrentColumn.Precision + ", " + columnMigration.CurrentColumn.Scale + ")" + " To " + "(" + columnMigration.NewColumn.Precision + ", " + columnMigration.NewColumn.Scale + ")" + " For Column " + columnMigration.CurrentColumn.Name + "\n";
-            alterPrecisionAndScaleScript += "ALTER TABLE " + "\"" + TableMigrations.DxmlTableName + "\"" + " ";
+            alterPrecisionAndScaleScript += "ALTER TABLE " + "\"" + FormatNameLength(TableMigrations.DxmlTableName, TableMigrations.DxmlTableShortName) + "\"" + " ";
             alterPrecisionAndScaleScript += "MODIFY " + "\"" + columnMigration.CurrentColumn.Name + "\"" + " ";
             alterPrecisionAndScaleScript += GetDataTypeScript(columnMigration.CurrentColumn.Type, columnMigration.CurrentColumn.Size, columnMigration.NewColumn.Precision, columnMigration.NewColumn.Scale);
-            return alterPrecisionAndScaleScript + "\n\n";
+            return alterPrecisionAndScaleScript + ";\n\n";
         }
 
         protected override string GetPrimaryKeyConstraintScript()
@@ -437,14 +444,14 @@ namespace Logitude.DBMigrations.Models
 
         protected override string GetDropPrimaryKeyConstraintScript(string primaryKeyConstraintName)
         {
-            string dropPrimaryKeyConstraintScript = "ALTER TABLE \"" + TableMigrations.DxmlTableName + "\" DROP CONSTRAINT \"" + primaryKeyConstraintName + "\"" + "\n";
+            string dropPrimaryKeyConstraintScript = "ALTER TABLE \"" + FormatNameLength(TableMigrations.DxmlTableName, TableMigrations.DxmlTableShortName) + "\" DROP CONSTRAINT \"" + primaryKeyConstraintName + "\"" + ";\n";
             return dropPrimaryKeyConstraintScript;
         }
 
         protected override string GetAddPrimaryKeyConstraintScript(string primaryKeyConstraintName)
         {
-            string primaryKeyColumns = string.Join(",", DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Select(c => "\"" + c.Name + "\"").ToArray());
-            string primaryKeyConstraintScript = "ALTER TABLE \"" + TableMigrations.DxmlTableName + "\" ADD CONSTRAINT \"" + primaryKeyConstraintName + "\" PRIMARY KEY (" + primaryKeyColumns + ")";
+            string primaryKeyColumns = string.Join(",", DXMLTable.Columns.Where(c => c.Constraints.PrimaryKey).Select(c => "\"" + FormatNameLength(c.Name, c.ShortName) + "\"").ToArray());
+            string primaryKeyConstraintScript = "ALTER TABLE \"" + FormatNameLength(TableMigrations.DxmlTableName, TableMigrations.DxmlTableShortName) + "\" ADD CONSTRAINT \"" + primaryKeyConstraintName + "\" PRIMARY KEY (" + primaryKeyColumns + ");";
             return primaryKeyConstraintScript;
         }
 

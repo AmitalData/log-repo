@@ -8,10 +8,11 @@ namespace Logitude.DBMigrations
     {
         static void Main(string[] args)
         {
-            if (AppHelper.IsArgumentProvided(args, "-root"))
+            if (AppHelper.IsArgumentProvided(args, "-root"))// || true)
             {
                 string root = AppHelper.GetRoot(args);
                 //root = @"C:\Users\AbedMalakh\source\repos\log-repo\Logitude";
+                //root = @"D:\TestDXML";
 
                 if (!String.IsNullOrEmpty(root))
                 {

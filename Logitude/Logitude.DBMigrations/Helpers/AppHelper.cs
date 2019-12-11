@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.IO;
 using Oracle.DataAccess.Client;
+using System.Linq;
 
 namespace Logitude.DBMigrations.Helpers
 {
@@ -68,6 +69,8 @@ namespace Logitude.DBMigrations.Helpers
 
             string systemLogsScriptFilePath = Path.Combine(projectDirectory, @"GeneratedScript\SystemLogsScript.sql");
             File.WriteAllText(systemLogsScriptFilePath, generatedScript.SystemLogsScript);
+
+            Console.WriteLine("The Generated Scripts Saved Successfully");
         }
 
         public static void ExecuteScript(GeneratedScript generatedScript)
@@ -80,6 +83,10 @@ namespace Logitude.DBMigrations.Helpers
                 {
                     Console.WriteLine(result);
                 }
+                else
+                {
+                    Console.WriteLine("Scripts Executed Successfully On Global Database");
+                }
             }
 
             if (!String.IsNullOrEmpty(generatedScript.MainScript))
@@ -90,6 +97,10 @@ namespace Logitude.DBMigrations.Helpers
                 {
                     Console.WriteLine(result);
                 }
+                else
+                {
+                    Console.WriteLine("Scripts Executed Successfully On Main Database");
+                }
             }
 
             if (!String.IsNullOrEmpty(generatedScript.SystemLogsScript))
@@ -99,6 +110,10 @@ namespace Logitude.DBMigrations.Helpers
                 if (!String.IsNullOrEmpty(result))
                 {
                     Console.WriteLine(result);
+                }
+                else
+                {
+                    Console.WriteLine("Scripts Executed Successfully On SystemLogs Database");
                 }
             }
         }
@@ -199,32 +214,48 @@ namespace Logitude.DBMigrations.Helpers
 
             if (databseType.ToLower() == "oracle")
             {
+                OracleConnection oracleConnection = new OracleConnection(connectionString);
+
                 try
                 {
-                    OracleConnection oracleConnection = new OracleConnection(connectionString);
-                    OracleCommand oracleCommand = new OracleCommand(script, oracleConnection);
-                    oracleConnection.Open();
-                    oracleCommand.ExecuteNonQuery();
+                    string[] commands = script.Split(';');
+                    commands = commands.Take(commands.Count() - 1).ToArray();
+                    
+                    foreach (var command in commands)
+                    {
+                        OracleCommand oracleCommand = new OracleCommand();
+                        oracleCommand.Connection = oracleConnection;
+                        oracleCommand.CommandText = command;
+                        oracleConnection.Open();
+                        oracleCommand.ExecuteNonQuery();
+                        oracleConnection.Close();
+                    }
                     return null;
                 }
                 catch (Exception exception)
                 {
-                    return exception.Message;
+                    oracleConnection.Close();
+                    return "Error: " + exception.Message;
                 }
             }
-
-            try
+            else
             {
                 SqlConnection sqlConnection = new SqlConnection(connectionString);
-                SqlCommand sqlCommand = sqlConnection.CreateCommand();
-                sqlCommand.CommandText = script;
-                sqlConnection.Open();
-                sqlCommand.ExecuteNonQuery();
-                return null;
-            }
-            catch (Exception exception)
-            {
-                return exception.Message;
+
+                try
+                {
+                    SqlCommand sqlCommand = sqlConnection.CreateCommand();
+                    sqlCommand.CommandText = script;
+                    sqlConnection.Open();
+                    sqlCommand.ExecuteNonQuery();
+                    sqlConnection.Close();
+                    return null;
+                }
+                catch (Exception exception)
+                {
+                    sqlConnection.Close();
+                    return "Error: " + exception.Message;
+                }
             }
         }
     }
