@@ -134,6 +134,14 @@ namespace Logitude.WarehouseLib.Data.EntityMapping
             this.Property(t => t.ConnectedTo).HasColumnName("ConnectedTo").HasMaxLength(100).IsUnicode(false);
 
             this.Property(t => t.Ratio).HasColumnName("Ratio");
+
+            this.Property(t => t.ToTypeCode).HasColumnName("ToTypeCode").HasMaxLength(4).IsUnicode(false);
+
+            this.Property(t => t.FromTypeCode).HasColumnName("FromTypeCode").HasMaxLength(4).IsUnicode(false);
+
+            this.Property(t => t.FromCountryId).HasColumnName("FromCountryId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.ToCountryId).HasColumnName("ToCountryId").HasMaxLength(15).IsUnicode(false);
         }
     }
 }
