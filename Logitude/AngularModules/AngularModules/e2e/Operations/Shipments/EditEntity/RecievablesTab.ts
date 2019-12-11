@@ -122,12 +122,13 @@ export class ReceivablesTabComponent {
     
     EditAPInvoice(Voided :boolean,type :string){
         this.Helper.WaitEditComponentBusyIndicator();
-        this.Helper.WaitByIdAndFill('ARInvoice_VatTypeId', 'Zero');
+       /* this.Helper.WaitByIdAndFill('ARInvoice_VatTypeId', 'Zero');
         this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'ARInvoice_VatTypeId', 'Zero');
         this.Helper.WaitEditComponentBusyIndicator();
         this.Helper.WaitByIdAndClick('VATApplyToAll');
-        this.Helper.WaitEditComponentBusyIndicator();
-        this.Helper.WaitByIdAndFill('ARInvoice_VatNumber','TestVatNumber');
+        this.Helper.WaitEditComponentBusyIndicator();*/
+        this.Helper.WaitByIdAndFill('textboxdiv_ARInvoice_PrintNotes', 'Filled by Protractor');
+        this.Helper.WaitByIdAndFill('ARInvoice_VatNumber', 'TestVatNumber');
         this.Helper.WaitByIdAndClick('ARInvoice.B.SaveAsDraft');
         this.WaitBusyIndicatorToShowandHide();
         this.Helper.WaitByIdAndClick('ARInvoice.B.Approve');
