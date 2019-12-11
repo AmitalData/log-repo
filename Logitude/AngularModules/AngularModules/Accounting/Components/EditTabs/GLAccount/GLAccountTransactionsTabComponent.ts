@@ -107,6 +107,8 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                 })
             );
         }
+
+        this.GetTransactionsCurrencies();
     }
 
     ngOnInit() {
@@ -582,14 +584,13 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
             if (!this.currencyFilterValues) {
                 // Create filter string that maintain values of current curreincies in the list
-                transactions.forEach((item) => {
-                    if (item.rowData) {
-                        this.currencyFilterValues += (item.rowData.CurrencyId + ",");
-                    }
-                });
+                // transactions.forEach((item) => {
+                //     if (item.rowData) {
+                //         this.currencyFilterValues += (item.rowData.CurrencyId + ",");
+                //     }
+                // });
 
-                this.CurrencyFilters = new ApiQueryFilters(true);
-                this.CurrencyFilters.addAdditionalFilter("Id", this.currencyFilterValues, null, null, "InListExact", false, false, false, "string", false, true);
+
             }
 
             console.log(this.currencyFilterValues);
@@ -599,6 +600,22 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
     }
 
+    GetTransactionsCurrencies(){
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this._LedgerTransactionExtendedListService.GetTransactionsCurrencies(this.EntityPM.Id).subscribe((serviceResponse: ServiceResponse) =>
+        {
+            if (serviceResponse.Result) {
+                var result = serviceResponse.Result;
+                console.log("[GetTransactionsCurrencies]", result);
+                var currenciesIds: string[] = result.Result;
+
+                this.CurrencyFilters = new ApiQueryFilters();
+                this.CurrencyFilters.addAdditionalFilter("Id", currenciesIds.join(','), null, null, "InListExact", false, false, false, "string", false, true);
+
+                this.CurrentSession.StopBusyIndicator();
+            }
+        });
+    }
 
     reconciliationCount: number = 0;
     GetNonReconciledTransactionsCount() {
