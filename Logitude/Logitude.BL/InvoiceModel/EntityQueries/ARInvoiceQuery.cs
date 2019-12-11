@@ -69,7 +69,17 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
             return entityPOCO;
         }
+        public bool CheckARInvoiceByExternalAccountingEnityId(string externalEntityId, int tenant)
+        {
 
+          return
+                (from a in repository.context.ARInvoices
+                 where a.ExternalAccountingEntityId == externalEntityId && a.Tenant == tenant
+                 select a).Any();
+
+
+         
+        }
         public ARInvoicePM GetSingleInvoiceByInvoiceNumber(string invoiceNumber, int tenant)
         {
             ARInvoicePM entityPM = null;

@@ -45,9 +45,9 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 
         public static ScreenField AddScreenField(ScreenFieldDetails screenFieldDetails, ScreenFieldsRepository screenFieldsRepository, Dictionary<string, ScreenField> tenantScreenFields)
         {
-            if (tenantScreenFields.Keys.Contains(screenFieldDetails.ScreenId + screenFieldDetails.ObjectFieldId))
+            if (tenantScreenFields.Keys.Contains(screenFieldDetails.ScreenId + screenFieldDetails.ObjectFieldCode))
             {
-                ScreenField screenfield = tenantScreenFields[screenFieldDetails.ScreenId + screenFieldDetails.ObjectFieldId];
+                ScreenField screenfield = tenantScreenFields[screenFieldDetails.ScreenId + screenFieldDetails.ObjectFieldCode];
                 screenfield.Column = screenFieldDetails.Column;
                 screenfield.Row = screenFieldDetails.Row;
                 
@@ -64,7 +64,8 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     ObjectFieldId = screenFieldDetails.ObjectFieldId,
                     ScreenId = screenFieldDetails.ScreenId,
                     Tenant = screenFieldDetails.Tenant,
-                   
+                    ObjectFieldCode = screenFieldDetails.ObjectFieldCode,
+
                 };
                 screenFieldsRepository.Add(newscreenfield);
                 return newscreenfield;

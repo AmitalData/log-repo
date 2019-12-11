@@ -1163,19 +1163,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen BranchGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Branch.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = BranchObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField BranchBranchGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = BranchObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = BranchGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BranchBranchGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = BranchObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = BranchGeneralTabScreenScreen0.Id, ObjectFieldCode = BranchObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BranchBranchGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = BranchObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = BranchGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BranchBranchGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = BranchObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = BranchGeneralTabScreenScreen0.Id, ObjectFieldCode = BranchObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BranchBranchGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = BranchObjectFields.Where(d => d.FieldName == "CounterCode").FirstOrDefault().Id, ScreenId = BranchGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BranchBranchGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = BranchObjectFields.Where(d => d.FieldName == "CounterCode").FirstOrDefault().Id, ScreenId = BranchGeneralTabScreenScreen0.Id, ObjectFieldCode = BranchObjectFields.Where(d => d.FieldName == "CounterCode").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BranchBranchGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = BranchObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = BranchGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BranchBranchGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = BranchObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = BranchGeneralTabScreenScreen0.Id, ObjectFieldCode = BranchObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
 	         Screen BranchHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Branch.HeaderScreen", Name = "Header Screen", ObjectTableId = BranchObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField BranchBranchHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = BranchObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = BranchHeaderScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BranchBranchHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = BranchObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = BranchHeaderScreenScreen1.Id, ObjectFieldCode = BranchObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    BranchObjectTable.HeaderScreenId = BranchHeaderScreenScreen1.Id;
 	   		  
