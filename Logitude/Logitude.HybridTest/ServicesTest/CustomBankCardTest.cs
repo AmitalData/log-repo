@@ -20,20 +20,20 @@ namespace Logitude.HybridTest.ServicesTest
         public void Test_CustomBankCard_DELETE()
         {
             Assert.Inconclusive("Not Implemented !");
-            InvokedProperties serviceProperties = new InvokedProperties
-            {
-                ServiceName = "CustomBankCard",
-                ServiceOperation = "Delete",
-                ServiceResponseIndex = 0,
-                ServiceType = null,
-                ServiceFilterType = null,
-            };
+            //InvokedProperties serviceProperties = new InvokedProperties
+            //{
+            //    ServiceName = "CustomBankCard",
+            //    ServiceOperation = "Delete",
+            //    ServiceResponseIndex = 0,
+            //    ServiceType = null,
+            //    ServiceFilterType = null,
+            //};
 
-            Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { "?", "?", EnvironmentGlobalParams.MainTenant };
-            WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Delete Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNotNull(serviceResponse.Result, "Delete Failed! " + serviceResponse.ErrorMessage);
+            //Response serviceResponse = new Response();
+            //object[] serviceParameters = new object[] { "?", "?", EnvironmentGlobalParams.MainTenant };
+            //WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+            //Assert.IsFalse(serviceResponse.HasError, "Delete Failed! " + serviceResponse.ErrorMessage);
+            //Assert.IsNotNull(serviceResponse.Result, "Delete Failed! " + serviceResponse.ErrorMessage);
         }
     }
 }

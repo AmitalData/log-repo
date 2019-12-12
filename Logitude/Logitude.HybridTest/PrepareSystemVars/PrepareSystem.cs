@@ -15,15 +15,15 @@ namespace Logitude.HybridTest.WcfCallers
         public static void PrepareSystemVars(TestContext context)
         {
             GetAuthenticationMainToken();
-            GetAuthenticationsecondaryToken();
-            PrepareShipment.PrepareShipmentVars();
+            //GetAuthenticationsecondaryToken();
+            //PrepareShipment.PrepareShipmentVars();
 
-            //Other necessary Vars:
-            UpsertGlobalZone();
-            UpsertDepartment();
-            UpsertBranch();
-            UpsertUser();
-            UpsertCardContact();
+            ////Other necessary Vars:
+            //UpsertGlobalZone();
+            //UpsertDepartment();
+            //UpsertBranch();
+            //UpsertUser();
+            //UpsertCardContact();
         }
         private static void GetAuthenticationMainToken()
         {
@@ -37,12 +37,12 @@ namespace Logitude.HybridTest.WcfCallers
 
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { "", apiCred };
-            Response loginResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            if (!loginResponse.HasError)
-                EnvironmentGlobalParams.MainToken = loginResponse.Result;
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+            if (!serviceOutcome.Response.HasError)
+                EnvironmentGlobalParams.MainToken = serviceOutcome.Response.Result;
             else
                 Assert.Fail("Login Failed");
-            Assert.IsNotNull(loginResponse.Result, "The Token returned is null " + loginResponse.ErrorMessage);
+            Assert.IsNotNull(serviceOutcome.Response.Result, "The Token returned is null " + serviceOutcome.Response.ErrorMessage);
         }
         private static void GetAuthenticationsecondaryToken()
         {
@@ -56,12 +56,12 @@ namespace Logitude.HybridTest.WcfCallers
 
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { "", apiCred };
-            Response loginResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            if (!loginResponse.HasError)
-                EnvironmentGlobalParams.SecondaryToken = loginResponse.Result;
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+            if (!serviceOutcome.Response.HasError)
+                EnvironmentGlobalParams.SecondaryToken = serviceOutcome.Response.Result;
             else
                 Assert.Fail("Login Failed");
-            Assert.IsNotNull(loginResponse.Result, "The Token returned is null " + loginResponse.ErrorMessage);
+            Assert.IsNotNull(serviceOutcome.Response.Result, "The Token returned is null " + serviceOutcome.Response.ErrorMessage);
         }
         private static void UpsertGlobalZone()
         {

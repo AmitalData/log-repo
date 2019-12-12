@@ -21,15 +21,12 @@ namespace Logitude.HybridTest.ServicesTest
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(quotePM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
-            HybridData.QuoteId = serviceResponse.Result;
         }
 
         [TestMethod]
         public void Test_Quote_GetQuoteList()
         {
             Assert.Inconclusive("Search Field Problem!");
-            if (HybridData.QuoteId == null)
-                Test_Quote_UPSERT();
             InvokedProperties serviceProperties = new InvokedProperties
             {
                 ServiceName = "Quote",
@@ -46,9 +43,10 @@ namespace Logitude.HybridTest.ServicesTest
 
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { filters, EnvironmentGlobalParams.MainTenant, serviceResponse };
-            QuoteList[] quotes = (QuoteList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.Result);
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+            QuoteList[] quotes = (QuoteList[])serviceOutcome.Result;
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Get List Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNull(serviceOutcome.Response.Result, "Get List Failed! " + serviceOutcome.Response.Result);
             Assert.AreEqual(quotes[0].FromPortId, HybridData.PortIdLON, "Get Hybrid Quote Item From Quotes Failed!");
         }
 
@@ -71,9 +69,9 @@ namespace Logitude.HybridTest.ServicesTest
 
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { EnvironmentGlobalParams.MainTenant, null, quotePM.QuoteNumber, HybridData.UserCodeHU, "QTCP", DateTime.Now, DateTime.Now, "Testing hybrid accepted" };
-            serviceResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Create Event Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Create Event List Failed! " + serviceResponse.ErrorMessage);
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Create Event Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNull(serviceOutcome.Response.Result, "Create Event List Failed! " + serviceOutcome.Response.ErrorMessage);
         }
 
         [TestMethod]
@@ -107,12 +105,11 @@ namespace Logitude.HybridTest.ServicesTest
                 ServiceName = "Quote",
                 ServiceOperation = "DeleteQuoteEvent",
             };
-
-            Response serviceResponse = new Response();
+            
             object[] serviceParameters = new object[] { quotePM.QuoteNumber, acceptedExternalId, EnvironmentGlobalParams.MainTenant };
-            serviceResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Delete Event Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNotNull(serviceResponse.Result, "Delete Event Failed! " + serviceResponse.ErrorMessage);
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Delete Event Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNotNull(serviceOutcome.Response.Result, "Delete Event Failed! " + serviceOutcome.Response.ErrorMessage);
         }
 
         [TestMethod]
@@ -149,12 +146,11 @@ namespace Logitude.HybridTest.ServicesTest
                 ServiceOperation = "BuildEventsList",
                 ServiceType = typeof(TraceEventPM),
             };
-
-            Response serviceResponse = new Response();
+            
             object[] serviceParameters = new object[] { EnvironmentGlobalParams.MainTenant, quoteNumber, events.ToArray() };
-            serviceResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Build Events List Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Build Events List Failed! " + serviceResponse.ErrorMessage);
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Build Events List Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNull(serviceOutcome.Response.Result, "Build Events List Failed! " + serviceOutcome.Response.ErrorMessage);
         }
     }
 }

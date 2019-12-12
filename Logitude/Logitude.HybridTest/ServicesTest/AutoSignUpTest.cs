@@ -13,23 +13,23 @@ namespace Logitude.HybridTest.ServicesTest
         {
             Assert.Inconclusive("FILL ?!");
             
-            InvokedProperties serviceProperties = new InvokedProperties
-            {
-                ServiceName = "AutoSignUp",
-                ServiceOperation = "Insert",
-                ServiceResponseIndex = 0,
-                ServiceType = typeof(AutoSignUpData),
-                ServiceFilterType = null,
-            };
-            AutoSignUpData entityPM = new AutoSignUpData()
-            {
-                //Fill
-            };
-            Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { entityPM, false };
-            serviceResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Insert Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Insert Failed! " + serviceResponse.Result);
+            //InvokedProperties serviceProperties = new InvokedProperties
+            //{
+            //    ServiceName = "AutoSignUp",
+            //    ServiceOperation = "Insert",
+            //    ServiceResponseIndex = 0,
+            //    ServiceType = typeof(AutoSignUpData),
+            //    ServiceFilterType = null,
+            //};
+            //AutoSignUpData entityPM = new AutoSignUpData()
+            //{
+            //    //Fill
+            //};
+            //Response serviceResponse = new Response();
+            //object[] serviceParameters = new object[] { entityPM, false };
+            //serviceResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+            //Assert.IsFalse(serviceResponse.HasError, "Insert Failed! " + serviceResponse.ErrorMessage);
+            //Assert.IsNull(serviceResponse.Result, "Insert Failed! " + serviceResponse.Result);
         }
     }
 }

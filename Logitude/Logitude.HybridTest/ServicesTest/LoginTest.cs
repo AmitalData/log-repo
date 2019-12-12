@@ -20,12 +20,12 @@ namespace Logitude.HybridTest.ServicesTest
 
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { "", apiCred };
-            Response loginResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            if (!loginResponse.HasError)
-                EnvironmentGlobalParams.MainToken = loginResponse.Result;
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+            if (!serviceOutcome.Response.HasError)
+                EnvironmentGlobalParams.MainToken = serviceOutcome.Response.Result;
             else
                 Assert.Fail("Login Failed");
-            Assert.IsNotNull(loginResponse.Result, "The Token returned is null " + loginResponse.ErrorMessage);
+            Assert.IsNotNull(serviceOutcome.Response.Result, "The Token returned is null " + serviceOutcome.Response.ErrorMessage);
         }
 
         [TestMethod]
@@ -41,9 +41,9 @@ namespace Logitude.HybridTest.ServicesTest
 
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { "", apiCred };
-            Response loginResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsTrue(loginResponse.HasError, loginResponse.ErrorMessage);
-            Assert.IsNull(loginResponse.Result, "The Token returned is null " + loginResponse.ErrorMessage);
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+            Assert.IsTrue(serviceOutcome.Response.HasError, serviceOutcome.Response.ErrorMessage);
+            Assert.IsNull(serviceOutcome.Response.Result, "The Token returned is null " + serviceOutcome.Response.ErrorMessage);
         }
 
         [TestMethod]
@@ -55,11 +55,11 @@ namespace Logitude.HybridTest.ServicesTest
                 ServiceOperation = "Login",
             };
 
-            Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { "Hybrid@fnarsoft.com", "!H0" };
-            Response loginResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Login Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNotNull(serviceResponse.Result, "Login Failed! " + serviceResponse.ErrorMessage);
+            //Response serviceResponse = new Response();
+            //object[] serviceParameters = new object[] { "Hybrid@fnarsoft.com", "!H0" };
+            //Response loginResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+            //Assert.IsFalse(serviceResponse.HasError, "Login Failed! " + serviceResponse.ErrorMessage);
+            //Assert.IsNotNull(serviceResponse.Result, "Login Failed! " + serviceResponse.ErrorMessage);
         }
 
         [TestMethod]
@@ -71,11 +71,11 @@ namespace Logitude.HybridTest.ServicesTest
                 ServiceOperation = "Login",
             };
 
-            Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { "Hybrid@fnarsoft.com", "WrongPass" };
-            Response loginResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsTrue(serviceResponse.HasError, "Login Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Login Failed! " + serviceResponse.ErrorMessage);
+            //Response serviceResponse = new Response();
+            //object[] serviceParameters = new object[] { "Hybrid@fnarsoft.com", "WrongPass" };
+            //Response loginResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
+            //Assert.IsTrue(serviceResponse.HasError, "Login Failed! " + serviceResponse.ErrorMessage);
+            //Assert.IsNull(serviceResponse.Result, "Login Failed! " + serviceResponse.ErrorMessage);
         }
 
         [TestMethod]
