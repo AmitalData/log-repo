@@ -360,6 +360,252 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         private string _GSTRING3;
 
 
+        /// <summary>
+        /// There are no comments for INVOICEDATE in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual global::System.DateTime? INVOICEDATE
+        {
+            get
+            {
+                return _INVOICEDATE;
+            }
+            set
+            {
+                if (_INVOICEDATE != value)
+                {
+                    _INVOICEDATE = value;
+                    OnPropertyChanged("INVOICEDATE");
+                }
+            }
+        }
+        private global::System.DateTime? _INVOICEDATE;
+
+
+        /// <summary>
+        /// There are no comments for INVOICEAMOUNT in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual decimal? INVOICEAMOUNT
+        {
+            get
+            {
+                return _INVOICEAMOUNT;
+            }
+            set
+            {
+                if (_INVOICEAMOUNT != value)
+                {
+                    _INVOICEAMOUNT = value;
+                    OnPropertyChanged("INVOICEAMOUNT");
+                }
+            }
+        }
+        private decimal? _INVOICEAMOUNT;
+
+
+        /// <summary>
+        /// There are no comments for CURRENCYID in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual string CURRENCYID
+        {
+            get
+            {
+                return _CURRENCYID;
+            }
+            set
+            {
+                if (_CURRENCYID != value)
+                {
+                    _CURRENCYID = value;
+                    OnPropertyChanged("CURRENCYID");
+                }
+            }
+        }
+        private string _CURRENCYID;
+
+
+        /// <summary>
+        /// There are no comments for CUSTOMSSUPPLIERID in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual string CUSTOMSSUPPLIERID
+        {
+            get
+            {
+                return _CUSTOMSSUPPLIERID;
+            }
+            set
+            {
+                if (_CUSTOMSSUPPLIERID != value)
+                {
+                    _CUSTOMSSUPPLIERID = value;
+                    OnPropertyChanged("CUSTOMSSUPPLIERID");
+                }
+            }
+        }
+        private string _CUSTOMSSUPPLIERID;
+
+
+        /// <summary>
+        /// There are no comments for INCOTERMS in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual string INCOTERMS
+        {
+            get
+            {
+                return _INCOTERMS;
+            }
+            set
+            {
+                if (_INCOTERMS != value)
+                {
+                    _INCOTERMS = value;
+                    OnPropertyChanged("INCOTERMS");
+                }
+            }
+        }
+        private string _INCOTERMS;
+
+
+        /// <summary>
+        /// There are no comments for TAX in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual decimal? TAX
+        {
+            get
+            {
+                return _TAX;
+            }
+            set
+            {
+                if (_TAX != value)
+                {
+                    _TAX = value;
+                    OnPropertyChanged("TAX");
+                }
+            }
+        }
+        private decimal? _TAX;
+
+
+        /// <summary>
+        /// There are no comments for DISCOUNT in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual decimal? DISCOUNT
+        {
+            get
+            {
+                return _DISCOUNT;
+            }
+            set
+            {
+                if (_DISCOUNT != value)
+                {
+                    _DISCOUNT = value;
+                    OnPropertyChanged("DISCOUNT");
+                }
+            }
+        }
+        private decimal? _DISCOUNT;
+
+
+        /// <summary>
+        /// There are no comments for ORIGINID in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual string ORIGINID
+        {
+            get
+            {
+                return _ORIGINID;
+            }
+            set
+            {
+                if (_ORIGINID != value)
+                {
+                    _ORIGINID = value;
+                    OnPropertyChanged("ORIGINID");
+                }
+            }
+        }
+        private string _ORIGINID;
+
+
+        /// <summary>
+        /// There are no comments for MORE in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual string MORE
+        {
+            get
+            {
+                return _MORE;
+            }
+            set
+            {
+                if (_MORE != value)
+                {
+                    _MORE = value;
+                    OnPropertyChanged("MORE");
+                }
+            }
+        }
+        private string _MORE;
+
+
+        /// <summary>
+        /// There are no comments for ADDITIONAL in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual decimal? ADDITIONAL
+        {
+            get
+            {
+                return _ADDITIONAL;
+            }
+            set
+            {
+                if (_ADDITIONAL != value)
+                {
+                    _ADDITIONAL = value;
+                    OnPropertyChanged("ADDITIONAL");
+                }
+            }
+        }
+        private decimal? _ADDITIONAL;
+
+
+        /// <summary>
+        /// There are no comments for INVOICENO in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual string INVOICENO
+        {
+            get
+            {
+                return _INVOICENO;
+            }
+            set
+            {
+                if (_INVOICENO != value)
+                {
+                    _INVOICENO = value;
+                    OnPropertyChanged("INVOICENO");
+                }
+            }
+        }
+        private string _INVOICENO;
+
+
+        #endregion
+
+        #region Extensibility Method Definitions
+        partial void OnCreated();
         #endregion
 
         #region INotifyPropertyChanged Members
