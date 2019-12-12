@@ -39,7 +39,9 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         Tenant, 
 	         DefaultWarningPercentage, 
 	         AirDefaultStepsId, 
-	         LCLDefaultStepsId,
+	         LCLDefaultStepsId, 
+	         AirDefaultSteps, 
+	         LCLDefaultSteps,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

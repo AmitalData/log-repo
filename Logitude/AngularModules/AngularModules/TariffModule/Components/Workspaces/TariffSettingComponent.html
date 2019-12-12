@@ -98,16 +98,13 @@
                                         [ObjectTableName]="ObjectTableName"
                                         [SelectedValue]="AirDefaultStepsId"
                                         [DataContext]="DataContext"
-                                        [DisplayMemberPath]="'Name'"
                                         [LookUpTableName]="'PriceSteps'" [HideColumns]="true">
                                 </LogLov>
                             </td>
 
-                            <td  style="width:50px;float: left;vertical-align:central;">
-                                <div class="MediaFill" style="float: left;vertical-align:central;">
-                                    <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditPriceStepsClicked('Air')"></IconButton>
-                                    <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddPriceStepsClicked('Air')"></IconButton>
-                                </div>
+                            <td style="width:50px;">
+                                <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="5" (click)="EditPriceStepsClicked('Air')"></IconButton>
+                                <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddPriceStepsClicked('Air')"></IconButton>
                             </td>
                             <td>
                                 <div></div>
@@ -124,16 +121,13 @@
                                         [ObjectTableName]="ObjectTableName"
                                         [SelectedValue]="LCLDefaultStepsId"
                                         [DataContext]="DataContext"
-                                        [DisplayMemberPath]="'Name'"
-                                        [LookUpTableName]="'PriceSteps'"  [HideColumns]="true">
+                                        [LookUpTableName]="'PriceSteps'" [HideColumns]="true">
                                 </LogLov>
                             </td>
 
-                            <td style="float: left;vertical-align:central;">
-                                <div class="MediaFill" style="float: left;vertical-align:central;">
-                                    <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditPriceStepsClicked('LCL')"></IconButton>
-                                    <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddPriceStepsClicked('LCL')"></IconButton>
-                                </div>
+                            <td>
+                                <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="5" (click)="EditPriceStepsClicked('LCL')"></IconButton>
+                                <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddPriceStepsClicked('LCL')"></IconButton>
                             </td>
                             <td>
                                 <div></div>
@@ -146,7 +140,7 @@
                             </td>
 
                             <td>
-                                <LogTextBox [InputType]="'UnsInteger'" [ObjectFieldName]="'DefaultWarningPercentage'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="DefaultWarningPercentage"></LogTextBox>
+                                <LogTextBox [HideColumns]="true" [InputType]="'UnsInteger'" [ObjectFieldName]="'DefaultWarningPercentage'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="DefaultWarningPercentage"></LogTextBox>
                             </td>
                             <td colspan="2">
                                 <div></div>

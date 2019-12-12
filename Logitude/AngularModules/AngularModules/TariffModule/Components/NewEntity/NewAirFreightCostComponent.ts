@@ -829,8 +829,15 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit{
         myDomainService.GetTenantTariffSetting().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 var entity: TariffSettingPM = myResponse.Result;
-                this.PriceSteps = entity.DefaultPriceSteps;
-                this.PriceStepsText = this.GetPriceSteps(entity.DefaultPriceSteps);
+                if (entity!= null && (this.EntityPM.TypeCode == "AFC" || this.EntityPM.TypeCode == "OLC")) {
+                    if (this.EntityPM.TypeCode == "AFC") {
+                        this.PriceSteps = entity.AirDefaultSteps;
+                    }
+                    else {
+                        this.PriceSteps = entity.LCLDefaultSteps;
+                    }
+                    this.PriceStepsText = this.GetPriceSteps(this.PriceSteps);
+                }
             }
         });
     }

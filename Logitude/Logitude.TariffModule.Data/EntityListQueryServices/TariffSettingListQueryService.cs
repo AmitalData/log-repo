@@ -28,6 +28,8 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
                                                        Id = a.Id,
                                                        DefaultWarningPercentage = a.DefaultWarningPercentage,
                                                        Tenant = a.Tenant,
+                                                       AirDefaultStepsId = a.AirDefaultStepsId,
+                                                       LCLDefaultStepsId = a.LCLDefaultStepsId,
                                                    });
             return query;
         }

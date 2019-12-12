@@ -158,6 +158,52 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private string airDefaultSteps ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AirDefaultSteps  
+	   {
+	    
+	     get
+		{
+		   return airDefaultSteps;
+		 }
+		 set
+		 {
+		   if(airDefaultSteps != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AirDefaultSteps",OldValue=airDefaultSteps,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   airDefaultSteps=value;
+		   }
+			
+		 }
+	   }
+	  private string lCLDefaultSteps ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LCLDefaultSteps  
+	   {
+	    
+	     get
+		{
+		   return lCLDefaultSteps;
+		 }
+		 set
+		 {
+		   if(lCLDefaultSteps != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LCLDefaultSteps",OldValue=lCLDefaultSteps,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   lCLDefaultSteps=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

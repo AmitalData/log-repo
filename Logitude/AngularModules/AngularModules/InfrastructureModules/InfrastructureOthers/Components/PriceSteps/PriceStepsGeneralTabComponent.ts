@@ -42,7 +42,25 @@ export class PriceStepsGeneralTabComponent extends BaseComponent implements OnIn
             this.GetPriceSteps(this.Steps);
         }
     }
-    
+
+    SetWindowArgs(args) {
+        var entityId = args;
+        this.GetSinglePriceSteps(entityId);
+    }
+
+    GetSinglePriceSteps(entityId: string) {
+        var service: PriceStepsPMService = new PriceStepsPMService();
+        service.get(entityId).subscribe((result: ServiceResponse) => {
+            if (result) {
+                if (!result.HasError) {
+                    this.EntityPM = result.Result;
+                    this.GetPriceSteps(this.Steps);
+                    this.SetUIProperties_Steps();
+                }
+            }
+        });
+    }
+
     InitializeNewEntity() {
         this.EntityPM = new PriceStepsPM();
         var todayDate: Date = DateTool.GetCurrentDateTimeAsUtc();
@@ -97,10 +115,13 @@ export class PriceStepsGeneralTabComponent extends BaseComponent implements OnIn
     set Steps(value: string) {
         if (this.EntityPM.Steps != value) {
             this.EntityPM.Steps = value;
-            this.UIProperties.SetRequired("Steps", this.ObjectTableName, AppTool.IsNullOrEmpty(value));
+            this.SetUIProperties_Steps();
         }
     }
 
+    SetUIProperties_Steps() {
+        this.UIProperties.SetRequired("Steps", this.ObjectTableName, AppTool.IsNullOrEmpty(this.Steps));
+    }
     get Inactive() { return this.EntityPM.Inactive; }
     set Inactive(value: boolean) {
         if (this.EntityPM.Inactive != value) {

@@ -209,35 +209,34 @@ export class TariffSettingComponent extends BaseComponent {
 
     EditPriceStepsClicked(type: string) {
         var logWindow = new LogitudeWindow();
-        logWindow.Title = "Price Steps";
+        logWindow.Title = "Edit Price Steps";
         if (type == "LCL") {
-           // logWindow.WindowArgs = this.Steps;
+            logWindow.WindowArgs = this.LCLDefaultStepsId;
         }
         else if (type == "Air") {
-
             logWindow.WindowArgs = this.AirDefaultStepsId;
         }
-        logWindow.Show("./TariffModule/Components/NewEntity/TariffPriceStepsComponent");
-        logWindow.ComponentLoaded.subscribe(s => {
-            logWindow.WindowClosed.subscribe(d => {
-                if (d && d != "cancel") {
-                    var steps = s.DefaultPriceSteps;
-                    //this.Steps = steps;
-                }
-            });
-        });
+        this.ShowPriceStepsWindow(logWindow, type);
     }
 
     AddPriceStepsClicked(type: string) {
         var logWindow = new LogitudeWindow();
-        logWindow.Title = "Price Steps";
-        //logWindow.WindowArgs = this.Steps;
-        logWindow.Show("./TariffModule/Components/NewEntity/TariffPriceStepsComponent");
+        logWindow.Title = "New Price Steps";
+        logWindow.WindowArgs = null;
+        this.ShowPriceStepsWindow(logWindow, type);
+    }
+
+    ShowPriceStepsWindow(logWindow: LogitudeWindow, type: string) {
+        logWindow.Show("./InfrastructureModules/InfrastructureOthers/Components/PriceSteps/PriceStepsGeneralTabComponent");
         logWindow.ComponentLoaded.subscribe(s => {
             logWindow.WindowClosed.subscribe(d => {
                 if (d && d != "cancel") {
-                    var steps = s.DefaultPriceSteps;
-                  //  this.Steps = steps; 
+                    if (type == "LCL") {
+                        this.LCLDefaultStepsId = s.EntityPM.Id;
+                    }
+                    else if (type == "Air") {
+                        this.AirDefaultStepsId = s.EntityPM.Id;
+                    }
                 }
             });
         });
