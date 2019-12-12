@@ -1754,6 +1754,10 @@
     <Compile Include="Migrations\201912120721175_Add_Fields_For_GLAccounts_Table.Designer.cs">
       <DependentUpon>201912120721175_Add_Fields_For_GLAccounts_Table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912110756225_UniqueOriginalJournalIdtk2.cs" />
+    <Compile Include="Migrations\201912110756225_UniqueOriginalJournalIdtk2.Designer.cs">
+      <DependentUpon>201912110756225_UniqueOriginalJournalIdtk2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -3007,6 +3011,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912120721175_Add_Fields_For_GLAccounts_Table.resx">
       <DependentUpon>201912120721175_Add_Fields_For_GLAccounts_Table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912110756225_UniqueOriginalJournalIdtk2.resx">
+      <DependentUpon>201912110756225_UniqueOriginalJournalIdtk2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

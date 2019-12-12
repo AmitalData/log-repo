@@ -16,16 +16,17 @@ export class EditGLAccount {
 
 
         this.Helper.WaitByCssAndClick_FromTagInsideList('.ListBoxItem', 0);
-        this.Helper.WaitBusyIndicator();
+        this.Helper.WaitEditComponentBusyIndicator();
         this.Helper.WaitByIdAndClick('GLAccount.TH.General');
-        this.WaitBusyIndicatorToShowandHide();
+        this.Helper.WaitEditComponentBusyIndicator();
         this.Helper.WaitByIdAndFill('GLAccount_LocalName', 'Updated Local Name')
-        this.Helper.WaitBusyIndicator();
+        //this.WaitBusyIndicatorToShowandHide();
         this.Helper.ItemsVisibility('GLAccount-Save');
         this.Helper.ItemsPresent('GLAccount-Save');
         this.Helper.WaitByIdAndClick('GLAccount-Save');
-        this.WaitBusyIndicatorToShowandHide();
-        //this.Helper.WaitBusyIndicator();
+        //  this.WaitBusyIndicatorToShowandHide();
+        //   this.Helper.WaitEditComponentBusyIndicator();
+        this.Helper.WaitBusyIndicator();
 
 
         // browser.sleep(5000);

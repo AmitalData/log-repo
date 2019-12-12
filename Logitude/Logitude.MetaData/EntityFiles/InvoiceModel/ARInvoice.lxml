@@ -416,7 +416,7 @@
       <QueryFilter QueryCode="&quot;OpenInvoices&quot;" PredefinedValue="&quot;true&quot;" ObjectFieldName="&quot;OpenInvoices&quot;" IsPredefined="true" IndexOrder="0" />
     </QueryFilters>
   </Query>
-  <Screen Name="&quot;Header Screen&quot;" ObjectTableName="&quot;ARInvoice&quot;" IsReadOnly="true" IsHeaderScreen="true" Code="&quot;ARInvoice.FullAccHeaderScreen&quot;" NumberOfColumns="5" NumberOfRows="1">
+  <Screen Name="&quot;Header Screen&quot;" ObjectTableName="&quot;ARInvoice&quot;" NumberOfColumns="5" NumberOfRows="1" IsReadOnly="true" IsHeaderScreen="true" Code="&quot;ARInvoice.FullAccHeaderScreen&quot;">
     <ScreenFields>
       <ScreenField Column="0" Row="0" ObjectFieldName="&quot;MainEntityReference&quot;" ScreenName="Header Screen" />
       <ScreenField Column="1" Row="0" ObjectFieldName="&quot;DueDate&quot;" ScreenName="Header Screen" />
@@ -425,7 +425,7 @@
       <ScreenField Column="4" Row="0" ObjectFieldName="&quot;JournalNumber&quot;" ScreenName="Header Screen" />
     </ScreenFields>
   </Screen>
-  <Screen Name="&quot;Header Screen&quot;" ObjectTableName="&quot;ARInvoice&quot;" IsReadOnly="true" IsHeaderScreen="true" Code="&quot;ARInvoice.HeaderScreen&quot;" NumberOfColumns="5" NumberOfRows="1">
+  <Screen Name="&quot;Header Screen&quot;" ObjectTableName="&quot;ARInvoice&quot;" NumberOfColumns="5" NumberOfRows="1" IsReadOnly="true" IsHeaderScreen="true" Code="&quot;ARInvoice.HeaderScreen&quot;">
     <ScreenFields>
       <ScreenField Column="0" Row="0" ObjectFieldName="&quot;MainEntityReference&quot;" ScreenName="Header Screen" />
       <ScreenField Column="1" Row="0" ObjectFieldName="&quot;DueDate&quot;" ScreenName="Header Screen" />
@@ -434,7 +434,7 @@
       <ScreenField Column="4" Row="0" ObjectFieldName="&quot;TransferStatusName&quot;" ScreenName="Header Screen" />
     </ScreenFields>
   </Screen>
-  <Screen Name="&quot;General Tab Screen&quot;" ObjectTableName="&quot;ARInvoice&quot;" IsReadOnly="false" IsHeaderScreen="false" Code="&quot;ARInvoice.GeneralTabScreen&quot;" NumberOfColumns="1" NumberOfRows="10">
+  <Screen Name="&quot;General Tab Screen&quot;" ObjectTableName="&quot;ARInvoice&quot;" NumberOfColumns="1" NumberOfRows="10" IsReadOnly="false" IsHeaderScreen="false" Code="&quot;ARInvoice.GeneralTabScreen&quot;">
     <ScreenFields>
       <ScreenField Column="0" Row="0" ObjectFieldName="&quot;UpdatedByUserId&quot;" ScreenName="General Tab Screen" />
       <ScreenField Column="0" Row="1" ObjectFieldName="&quot;UpdateDate&quot;" ScreenName="General Tab Screen" />
@@ -485,13 +485,13 @@
     <MenuButton EventCode="&quot;SaveAndApprove&quot;" DefaultText="&quot;Approve&quot;" MenuButtonType="&quot;button&quot;" Style="&quot;ApproveButtonStyle&quot;" IndexOrder="11" LocalDefaultText="&quot;אישור&quot;" FeatureCode="&quot;SAVEANDAPPROVE&quot;" IsPackagable="false" TextCodeCode="&quot;ARInvoice.B.Approve&quot;" FeatureTextCodeCode="&quot;ARInvoice.Features.SaveAndApprove&quot;" FeatureDefaultText="&quot;Save And Approve&quot;" />
     <MenuButton EventCode="&quot;PrintInvoice&quot;" DefaultText="&quot;Print&quot;" MenuButtonType="&quot;button&quot;" IndexOrder="12" LocalDefaultText="&quot;הדפסה&quot;" FeatureCode="&quot;PRINT&quot;" IsPackagable="false" TextCodeCode="&quot;ARInvoice.B.Print&quot;" FeatureTextCodeCode="&quot;ARInvoice.Features.Print&quot;" FeatureDefaultText="&quot;Print&quot;" />
     <MenuButton EventCode="&quot;CheckSATStatus&quot;" DefaultText="&quot;Check SAT Status&quot;" MenuButtonType="&quot;button&quot;" IndexOrder="13" FeatureCode="&quot;CHECKSATSTATUS&quot;" IsPackagable="false" TextCodeCode="&quot;ARInvoice.B.CheckSATStatus&quot;" FeatureTextCodeCode="&quot;ARInvoice.Features.CheckSATStatus&quot;" FeatureDefaultText="&quot;Check SAT Status&quot;" />
-    <MenuButton EventCode="&quot;Actions&quot;" DefaultText="&quot;More&quot;" MenuButtonType="&quot;dropdownbutton&quot;" IndexOrder="100" LocalDefaultText="&quot;נוספים&quot;" IsPackagable="false" TextCodeCode="&quot;ARInvoice.B.Actions&quot;">
+    <MenuButton EventCode="&quot;Actions&quot;" DefaultText="&quot;More&quot;" MenuButtonType="&quot;dropdownbutton&quot;" IndexOrder="100" LocalDefaultText="&quot;נוספים&quot;" TextCodeCode="&quot;ARInvoice.B.Actions&quot;">
       <MenuItem EventCode="&quot;CancelDraft&quot;" DefaultText="&quot;Cancel Draft&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="2" FeatureCode="&quot;CancelDraft&quot;" IsPackagable="false" TextCodeCode="&quot;ARInvoice.B.CancelDraft&quot;" FeatureTextCodeCode="&quot;ARInvoice.Features.CancelDraft&quot;" FeatureDefaultText="&quot;Cancel Draft&quot;" />
       <MenuItem EventCode="&quot;AutoCredit&quot;" DefaultText="&quot;Auto Credit&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="3" LocalDefaultText="&quot;ביטול&quot;" FeatureCode="&quot;AUTOCREDIT&quot;" IsPackagable="false" TextCodeCode="&quot;ARInvoice.B.AutoCredit&quot;" FeatureTextCodeCode="&quot;ARInvoice.Features.AutoCredit&quot;" FeatureDefaultText="&quot;Auto Credit&quot;" />
-      <MenuItem EventCode="&quot;InvoiceOperationsSeparator&quot;" DefaultText="&quot;&quot;" MenuButtonType="&quot;separator&quot;" IndexOrder="5" IsPackagable="false" TextCodeCode="&quot;ARInvoice.B.InvoiceOperationsSeparator&quot;" />
+      <MenuItem EventCode="&quot;InvoiceOperationsSeparator&quot;" DefaultText="&quot;&quot;" MenuButtonType="&quot;separator&quot;" IndexOrder="5" TextCodeCode="&quot;ARInvoice.B.InvoiceOperationsSeparator&quot;" />
       <MenuItem EventCode="&quot;SetAsSent&quot;" DefaultText="&quot;Set as Sent&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="6" FeatureCode="&quot;SETASSENT&quot;" IsPackagable="false" TextCodeCode="&quot;ARInvoice.B.SetAsSent&quot;" FeatureTextCodeCode="&quot;ARInvoice.Features.SetAsSent&quot;" FeatureDefaultText="&quot;Set As Sent&quot;" />
       <MenuItem EventCode="&quot;ReTransfer&quot;" DefaultText="&quot;Enable accounting re-transfer&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="7" FeatureCode="&quot;EnableReTransfer&quot;" IsPackagable="false" TextCodeCode="&quot;ARInvoice.B.ReTransfer&quot;" FeatureTextCodeCode="&quot;ARInvoice.Features.EnableReTransfer&quot;" FeatureDefaultText="&quot;Enable accounting re-transfer&quot;" />
-      <MenuItem EventCode="&quot;VoidARInvoiceOperationsSeparator&quot;" DefaultText="&quot;&quot;" MenuButtonType="&quot;separator&quot;" IndexOrder="8" IsPackagable="false" TextCodeCode="&quot;ARInvoice.B.VoidARInvoiceOperationsSeparator&quot;" />
+      <MenuItem EventCode="&quot;VoidARInvoiceOperationsSeparator&quot;" DefaultText="&quot;&quot;" MenuButtonType="&quot;separator&quot;" IndexOrder="8" TextCodeCode="&quot;ARInvoice.B.VoidARInvoiceOperationsSeparator&quot;" />
       <MenuItem EventCode="&quot;VoidARInvoice&quot;" DefaultText="&quot;Void&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="9" FeatureCode="&quot;VOID&quot;" IsPackagable="false" TextCodeCode="&quot;ARInvoice.B.Void&quot;" FeatureTextCodeCode="&quot;ARInvoice.Features.Void&quot;" FeatureDefaultText="&quot;Void&quot;" />
       <MenuItem EventCode="&quot;SendToQBO&quot;" DefaultText="&quot;Send to QBO&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="14" FeatureCode="&quot;SendToQBO&quot;" IsPackagable="false" TextCodeCode="&quot;ARInvoice.B.SendToQBO&quot;" FeatureTextCodeCode="&quot;ARInvoice.Features.SendToQBO&quot;" FeatureDefaultText="&quot;Send to QBO&quot;" />
     </MenuButton>
@@ -531,6 +531,7 @@
       <DCField DCFieldName="&quot;Tenant&quot;" DCVersion="&quot;ApiV1&quot;" FieldName="&quot;Tenant&quot;" IsKey="false" IsManualMapping="false" IsMulti="false" FieldsDataType="&quot;Integer&quot;" IsNullable="false" IsSpecialField="false" IsCustomType="false" IsAttribute="false" IgnoreCustomTypeCheck="false" IsCloseField="false" IsCompositKey="false" />
       <DCField DCFieldName="&quot;IsMultiCurrency&quot;" DCVersion="&quot;ApiV1&quot;" FieldName="&quot;IsMultiCurrency&quot;" IsKey="false" IsManualMapping="false" IsMulti="false" FieldsDataType="&quot;Boolean&quot;" IsNullable="false" IsSpecialField="false" IsCustomType="false" IsAttribute="false" IgnoreCustomTypeCheck="false" IsCloseField="false" IsCompositKey="false" />
       <DCField DCFieldName="&quot;CreditARInvoice&quot;" DCVersion="&quot;ApiV1&quot;" FieldName="&quot;CreditARInvoice&quot;" IsKey="false" IsManualMapping="true" IsMulti="false" FieldsDataType="&quot;Text&quot;" IsNullable="false" IsSpecialField="false" IsCustomType="false" IsAttribute="false" IgnoreCustomTypeCheck="false" IsCloseField="false" IsCompositKey="false" />
+      <DCField DCFieldName="&quot;ExternalAccountingEntityId&quot;" FieldName="&quot;ExternalAccountingEntityId&quot;" IsKey="false" IsManualMapping="false" IsMulti="false" FieldsDataType="&quot;Text&quot;" IsNullable="false" IsSpecialField="false" IsCustomType="false" IsAttribute="false" IgnoreCustomTypeCheck="false" IsCloseField="false" IsCompositKey="false" />
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes>

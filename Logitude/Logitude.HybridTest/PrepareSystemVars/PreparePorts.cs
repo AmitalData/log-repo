@@ -95,9 +95,20 @@ namespace Logitude.HybridTest.WcfCallers
         }
         private static void CopyPortFromTenant0ToTestTenant(PortList portPM)
         {
-            portPM.Tenant = EnvironmentGlobalParams.MainTenant;
-            portPM.AddedManually = true;
-            AssertResponse(portPM);
+            PortPM newPortPM = new PortPM()
+            {
+                Code = portPM.Code,
+                EnglishName = portPM.EnglishName,
+                LocalName = portPM.EnglishName,
+                CountryCode = portPM.CountryCode,
+                CountryId = portPM.CountryCode,
+                AddedManually = portPM.AddedManually,
+                IsAir = portPM.IsAir,
+                IsOcean = portPM.IsOcean,
+                IsInland = portPM.IsInland,
+                Tenant = EnvironmentGlobalParams.MainTenant,
+            };
+            AssertResponse(newPortPM);
         }
         private static void AssertResponse<T>(T entityPM)
         {

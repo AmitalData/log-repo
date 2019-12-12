@@ -183,6 +183,9 @@
     <None Include="EntityFiles\TimeUnit.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="MetadataFiles\OccasionContact.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

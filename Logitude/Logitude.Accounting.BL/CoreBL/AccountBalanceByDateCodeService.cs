@@ -245,7 +245,9 @@ namespace Logitude.Accounting.BL.CoreBL
         private bool AnyAccountingQueued()
         {
             var myJournalQueryService = new JournalQueryService(_AccountingContext);
-            var have = myJournalQueryService.GetAnyPendingApprovedDev(_ListOfAccountId, _Tenant);
+            var have = myJournalQueryService
+                //.GetAnyPendingApprovedDev(_ListOfAccountId, _Tenant);
+                .GetAnyPendingApproved(_ListOfAccountId, _Tenant);
             if (_sw.Elapsed > TimeSpan.FromSeconds(1))
             {
                 Debug.WriteLine("AnyAccountingQueued():Please make index  ");

@@ -378,6 +378,30 @@ export class LedgerTransactionExtendedListService {
         });
     }
 
+    GetTransactionsCurrencies(AccountId:string) {
+
+        var urlparameters = '/GetTransactionsCurrencies?AccountId=' + AccountId;
+
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        var callUrl = this._apiUrl.concat(urlparameters);//
+
+
+        return Observable.defer(() => {
+            return this._http.get(callUrl, {
+                headers: authHeader
+            }).map(response => {
+
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse.Result = response.json();
+
+                //console.log("serviceResponse: ", serviceResponse);
+
+                //serviceResponse.Result = _mappedListsArray;
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
 
 
     MapJsonToEntityList(jsonList: any) {
