@@ -1,0 +1,17 @@
+<Table Name="Test" Schema="dbo" DBType="Main">
+  <Column Name="Iddd" Type="varchar" ShortName="d" Size="15" OldNames="Id,Idd">
+    <Constraints PrimaryKey="true" Nullable="false" />
+  </Column>
+  <Column Name="Tenant2" Type="int" ShortName="Tenant" OldNames="T">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="CreateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="UpdateDate" Type="datetime">
+    <Constraints Nullable="false" />
+  </Column>
+  <Column Name="SearchFields" Type="nvarchar" Size="-1">
+    <Constraints Nullable="true" />
+  </Column>
+</Table>

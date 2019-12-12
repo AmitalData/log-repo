@@ -1091,42 +1091,60 @@ namespace MeatadataGeneratorTool
                 {
                     SetAttribute("Id", GetStringValue(f.Id), fieldElement, null);
                 }
+
                 SetAttribute("FieldName", GetStringValue(f.FieldName), fieldElement, null);
-				SetAttribute("GeneratedComponentPath", GetStringValue(f.GeneratedComponentPath), fieldElement, null);
+
+                if (!string.IsNullOrEmpty(f.ShortName))
+                {
+                    SetAttribute("ShortName", f.ShortName, fieldElement, null);
+                }
+                
+
+                SetAttribute("GeneratedComponentPath", GetStringValue(f.GeneratedComponentPath), fieldElement, null);
 
 
+                string oldNames = null;
 
                 if (string.IsNullOrEmpty(f.OldNames))
                 {
-                    SetAttribute("OldNames", f.FieldName, fieldElement, null);
+                    string shortName = string.IsNullOrEmpty(f.ShortName) ? null : "," + f.ShortName;
+                    oldNames = f.FieldName + shortName;
                 }
                 else
                 {
+                    oldNames = f.OldNames;
+
                     if (f.OldNames.Contains(","))
                     {
                         if (!f.OldNames.Split(',').Contains(f.FieldName))
                         {
-                            SetAttribute("OldNames", f.OldNames + "," + f.FieldName, fieldElement, null);
+                            oldNames = oldNames + "," + f.FieldName;
                         }
-                        else
+
+                        if (!string.IsNullOrEmpty(f.ShortName))
                         {
-                            SetAttribute("OldNames", f.OldNames, fieldElement, null);
+                            if (!f.OldNames.Split(',').Contains(f.ShortName))
+                            {
+                                oldNames = oldNames + "," + f.ShortName;
+                            }
                         }
                     }
                     else
                     {
+                        string shortName = string.IsNullOrEmpty(f.ShortName) ? null : "," + f.ShortName;
+
                         if (f.OldNames != f.FieldName)
                         {
-                            SetAttribute("OldNames", f.OldNames + "," + f.FieldName, fieldElement, null);
+                            oldNames = oldNames + "," + f.FieldName + shortName;
                         }
                         else
                         {
-                            SetAttribute("OldNames", f.OldNames, fieldElement, null);
+                            oldNames = oldNames + shortName;
                         }
                     }
                 }
 
-                SetAttribute("ShortName", f.ShortName, fieldElement, null);
+                SetAttribute("OldNames", oldNames, fieldElement, null);
 
                 //SetAttribute("OldFieldName", GetStringValue(f.OldFieldName), fieldElement, null);
                 SetAttribute("IsNew", f.IsNew.ToString().ToLower(), fieldElement, null);
@@ -1958,6 +1976,10 @@ namespace MeatadataGeneratorTool
                     if (fieldOldNames.Contains(","))
                     {
                         var oldNamesExceptName = fieldOldNames.Split(',').Where(x => x != fieldName);
+                        if (!string.IsNullOrEmpty(fieldShortName))
+                        {
+                            oldNamesExceptName = oldNamesExceptName.Where(x => x != fieldShortName);
+                        }
                         oldNames = oldNamesExceptName.Count() == 1 ? oldNamesExceptName.First() : string.Join(",", oldNamesExceptName.ToArray());
                     }
                     else
