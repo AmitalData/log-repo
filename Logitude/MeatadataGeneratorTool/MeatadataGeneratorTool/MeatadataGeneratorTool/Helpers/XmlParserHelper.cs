@@ -206,7 +206,19 @@ namespace MeatadataGeneratorTool.Helpers
                 field.OldFieldName = GetAttributeStringValue(fieldNode.Attributes["FieldName"]);
             }
 
-            field.OldNames = GetAttributeStringValue(fieldNode.Attributes["OldNames"]);
+
+            if(fieldNode.Attributes["OldNames"] != null)
+            {
+                field.OldNames = GetAttributeStringValue(fieldNode.Attributes["OldNames"]);
+            }
+            else
+            {
+                field.OldNames = GetAttributeStringValue(fieldNode.Attributes["FieldName"]);
+            }
+
+
+            field.ShortName = GetAttributeStringValue(fieldNode.Attributes["ShortName"]);
+
 
             field.ForeignEntity = GetAttributeStringValue(fieldNode.Attributes["ForeignEntity"]);
             field.FullLocalDefaultText = GetAttributeStringValue(fieldNode.Attributes["FullLocalDefaultText"]);

@@ -122,7 +122,14 @@ namespace MeatadataGeneratorTool
             get { return oldNames; }
             set { oldNames = value; FirePropertyChanged("OldNames"); }
         }
-        
+
+        string shortName;
+        public string ShortName
+        {
+            get { return shortName; }
+            set { shortName = value; FirePropertyChanged("ShortName"); }
+        }
+
         private void SetPMandList(string value)
         {
             PMPropertyPath = value;

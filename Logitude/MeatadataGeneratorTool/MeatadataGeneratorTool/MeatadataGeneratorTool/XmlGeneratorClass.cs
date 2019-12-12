@@ -1098,25 +1098,37 @@ namespace MeatadataGeneratorTool
 
                 if (string.IsNullOrEmpty(f.OldNames))
                 {
-                    SetAttribute("OldNames", (f.FieldName != f.OldFieldName ? f.OldFieldName + "," : null) + f.FieldName, fieldElement, null);
+                    SetAttribute("OldNames", f.FieldName, fieldElement, null);
                 }
                 else
                 {
-                    if (!f.OldNames.Split(',').Contains(f.FieldName))
+                    if (f.OldNames.Contains(","))
                     {
-                        SetAttribute("OldNames", f.OldNames + (!f.OldNames.Split(',').Contains(f.OldFieldName) ? f.OldFieldName + "," : null) + "," + f.FieldName, fieldElement, null);
+                        if (!f.OldNames.Split(',').Contains(f.FieldName))
+                        {
+                            SetAttribute("OldNames", f.OldNames + "," + f.FieldName, fieldElement, null);
+                        }
+                        else
+                        {
+                            SetAttribute("OldNames", f.OldNames, fieldElement, null);
+                        }
                     }
                     else
                     {
-                        SetAttribute("OldNames", f.OldNames, fieldElement, null);
+                        if (f.OldNames != f.FieldName)
+                        {
+                            SetAttribute("OldNames", f.OldNames + "," + f.FieldName, fieldElement, null);
+                        }
+                        else
+                        {
+                            SetAttribute("OldNames", f.OldNames, fieldElement, null);
+                        }
                     }
                 }
 
+                SetAttribute("ShortName", f.ShortName, fieldElement, null);
 
-                SetAttribute("OldFieldName", GetStringValue(f.OldFieldName), fieldElement, null);
-                //OldFieldName from xml
-
-
+                //SetAttribute("OldFieldName", GetStringValue(f.OldFieldName), fieldElement, null);
                 SetAttribute("IsNew", f.IsNew.ToString().ToLower(), fieldElement, null);
                 SetAttribute("IsChecked", f.IsChecked.ToString().ToLower(), fieldElement, null);
                 SetAttribute("IsDeleted", f.IsDeleted.ToString().ToLower(), fieldElement, null);
@@ -1899,6 +1911,7 @@ namespace MeatadataGeneratorTool
                 tableElement.AppendChild(columnElement);
 
                 string fieldName = field.FieldName;
+                string fieldShortName = field.ShortName;
                 string fieldDataType = field.FieldDataType;
                 int fieldMaxLength = field.MaxLength;
                 bool fieldIsMaxLength = field.IsMaxLength;
@@ -1918,12 +1931,17 @@ namespace MeatadataGeneratorTool
                 columnElement.SetAttribute("Name", fieldName);
                 columnElement.SetAttribute("Type", dxmlColumnDataType);
 
+                if (!string.IsNullOrEmpty(fieldShortName))
+                {
+                    columnElement.SetAttribute("ShortName", fieldShortName);
+                }
+
                 if(dxmlColumnSize != 0)
                 {
                     columnElement.SetAttribute("Size", dxmlColumnSize.ToString());
                 }
 
-                if(dxmlColumnDataType  == "decimal" && fieldNumberOfDigits != null)
+                if(dxmlColumnDataType == "decimal" && fieldNumberOfDigits != null)
                 {
                     columnElement.SetAttribute("Precision", fieldNumberOfDigits.ToString());
                 }
@@ -1933,11 +1951,26 @@ namespace MeatadataGeneratorTool
                     columnElement.SetAttribute("Scale", fieldDigitsAfterPoint.ToString());
                 }
 
-                if (!string.IsNullOrEmpty(fieldOldNames) && fieldName != fieldOldNames)
+                string oldNames = null;
+
+                if (!String.IsNullOrEmpty(fieldOldNames))
                 {
-                    fieldOldNames = string.Join(",", fieldOldNames.Split(',').Where(x => x != fieldName).ToArray());
-                    columnElement.SetAttribute("OldNames", fieldOldNames);
+                    if (fieldOldNames.Contains(","))
+                    {
+                        var oldNamesExceptName = fieldOldNames.Split(',').Where(x => x != fieldName);
+                        oldNames = oldNamesExceptName.Count() == 1 ? oldNamesExceptName.First() : string.Join(",", oldNamesExceptName.ToArray());
+                    }
+                    else
+                    {
+                        oldNames = fieldName == fieldOldNames ? null : fieldOldNames;
+                    }
                 }
+
+                if (!String.IsNullOrEmpty(oldNames))
+                {
+                    columnElement.SetAttribute("OldNames", oldNames);
+                }
+
 
                 XmlElement constraintsElement = doc.CreateElement("Constraints");
                 columnElement.AppendChild(constraintsElement);
