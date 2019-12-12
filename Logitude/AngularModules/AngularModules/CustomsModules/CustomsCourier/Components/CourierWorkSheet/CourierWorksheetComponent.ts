@@ -216,6 +216,13 @@ export class CourierWorksheetComponent extends BaseComponent
                         this.SelectedStatusValueClick('O');
                         break;
                     }
+                case "SuspendedDeclarations":
+                    {
+                        this._SelectedTabFilter = this._TabFilterList[0];
+                        this._SelectedCustomStatusValue = 'S';
+                        this.SelectedCustomStatusValueClick('S');
+                        break;
+                    }
             }
         }
 

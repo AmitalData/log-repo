@@ -61,7 +61,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
     @Output() onQueryChangeEvent = new EventEmitter();
 
     constructor() {
-        this.LoadAllScreenData();
+        //this.LoadAllScreenData();
         this.CurrentSession.StartBusyIndicatorLoading();
         this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
             this._entityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe((response: any) => { 
@@ -76,14 +76,10 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
     }
     ngAfterViewInit() {
+        
         this.LoadAllScreenData();
     }
     public IsQueryVisible_MyViewsGroup: boolean = true;
-
-    InitComponent() {
-        this.LoadAllScreenData();
-        this.SetQueriesVisibility();
-    }
 
     RefreshButtonClicked() {
         this.LoadAllScreenData();
@@ -300,20 +296,20 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
         this.columns = [];
 
         this.columns.push({
-            FieldName: 'MAWBP',
+            FieldName: 'PrefixMAWB',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.CourierMaster.F.MAWB"),
-            Styles: { width: '120px' },
+            Styles: { width: '150px' },
             IsCustomTemplate: true,
-            //HtmlListComponentName: 'CourierWorksheetListTemplate',
-            //HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+            ServerSideSortable: false,
         });
+
 
         this.columns.push({
             FieldName: 'EstimatedArrivalDate',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.CourierMaster.F.EstimatedArrivalDate"),
-            Styles: { width: '100px' },
+            Styles: { width: '150px' },
             IsCustomTemplate: true,
             ServerSideSortable: false,
         });
@@ -322,7 +318,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
             FieldName: 'CalcClosedForFollowUp',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.CourierMaster.F.CalcClosedForFollowUp"),
-            Styles: { width: '70px' },
+            Styles: { width: '150px' },
             IsCustomTemplate: true,
             //HtmlListComponentName: 'CourierWorksheetListTemplate',
             //HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -333,7 +329,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
             FieldName: 'CalcMissingImporterId',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.CourierMaster.F.CalcMissingImporterId"),
-            Styles: { width: '160px' },
+            Styles: { width: '150px' },
             IsCustomTemplate: true,
             ServerSideSortable: false,
         });
@@ -342,7 +338,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
             FieldName: 'CalcMissingClassification',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.CourierMaster.F.CalcMissingClassification"),
-            Styles: { width: '160px' },
+            Styles: { width: '150px' },
             IsCustomTemplate: true,
             ServerSideSortable: false,
         });
@@ -351,7 +347,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
             FieldName: 'CalcPendingCustoms',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.CourierMaster.F.CalcPendingCustoms"),
-            Styles: { width: '160px' },
+            Styles: { width: '150px' },
             IsCustomTemplate: true,
             ServerSideSortable: false,
         });
@@ -404,6 +400,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
             filters = new ApiQueryFilters();
         }
         filters.addAdditionalFilter("IsOpen", true, null, null, "Equals", false, false, false, "boolean");
+        filters.addAdditionalFilter("IsCancelled", false, null, null, "Equals", false, false, false, "boolean");
         filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
 
         if (AppTool.IsNullOrEmpty(filters.SortBy)) {
@@ -417,7 +414,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
     ViewInitCompleted($event) {
     }
 
-    ShowCourierWorkSheetForPending902(event , type: string) {
+    ShowCourierWorkSheet(event , type: string) {
 
         //var selected = event.rowData;
         var windowArgs: any = {};

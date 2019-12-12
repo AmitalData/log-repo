@@ -106,6 +106,8 @@ namespace Logitude.Customs.Data.EntityLists
        public int CalcPendingCustoms  { get; set; }
        [DataMember]
        public int CalcPending900  { get; set; }
+       [DataMember]
+       public string PrefixMAWB  { get; set; }
    }
 
 }

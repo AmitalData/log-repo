@@ -1147,6 +1147,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string prefixMAWB ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PrefixMAWB  
+	   {
+	    
+	     get
+		{
+		   return prefixMAWB;
+		 }
+		 set
+		 {
+		   if(prefixMAWB != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PrefixMAWB",OldValue=prefixMAWB,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   prefixMAWB=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

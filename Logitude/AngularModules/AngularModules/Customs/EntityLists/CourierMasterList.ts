@@ -54,6 +54,7 @@ export class CourierMasterList {
 	CalcMissingImporterId: number;
 	CalcPendingCustoms: number;
 	CalcPending900: number;
+	PrefixMAWB: string;
 	
 }
  

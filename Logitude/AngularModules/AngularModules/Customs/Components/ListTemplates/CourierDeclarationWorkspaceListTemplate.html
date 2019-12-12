@@ -1,0 +1,10 @@
+<div>
+    <div class="TextTrimming" *ngIf="fieldName == 'MAWBP'">
+        <span>{{entityPM.AirlinePrefix}}-{{entityPM.MAWB}}</span>
+    </div>
+
+    <div class="TextTrimming" *ngIf="fieldName == 'EstimatedArrivalDate'">
+        <span>{{Entity.EstimatedArrivalDate | DateTimePipe:'DT'}}</span>
+    </div>
+
+</div>

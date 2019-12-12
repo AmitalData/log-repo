@@ -103,7 +103,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CalcMissingClassification, 
 	         CalcMissingImporterId, 
 	         CalcPendingCustoms, 
-	         CalcPending900,
+	         CalcPending900, 
+	         PrefixMAWB,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

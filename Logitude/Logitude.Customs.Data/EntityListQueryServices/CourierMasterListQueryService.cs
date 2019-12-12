@@ -47,11 +47,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                     IsClosedForFollowUp0 = g.Count(r => r.myDeclarationCourierStatuses.IsClosedForFollowUp == false),
                     P900 = g.Count(
                         r => r.myDeclarationCourierStatuses.CourierPendingReasonList != null && r.myDeclarationCourierStatuses.CourierPendingReasonList.Contains("900")),
-                    //IsCourierMissingClassification = g.Count(r => r.myDeclarationCourierStatuses.IsCourierMissingClassification == true),
-                    //IsMissingImporterId = g.Count(
-                    //    r => (r.myDeclarationCourierStatuses.CourierPendingReasonList != null && r.myDeclarationCourierStatuses.CourierPendingReasonList.Contains("902"))
-                    //    && r.myDeclarationCourierStatuses.IsClosedForFollowUp == false),
-                    //IsPendingCustoms = g.Count(r => r.myDeclarations.CourierCustomStatusCode == "2" && r.myDeclarationCourierStatuses.IsClosedForFollowUp == false),
+                    IsCourierMissingClassification = g.Count(r => r.myDeclarationCourierStatuses.IsCourierMissingClassification == true),
+                    IsMissingImporterId = g.Count(
+                        r => (r.myDeclarationCourierStatuses.CourierPendingReasonList != null && r.myDeclarationCourierStatuses.CourierPendingReasonList.Contains("902"))
+                        && r.myDeclarationCourierStatuses.IsClosedForFollowUp == false),
+                    IsPendingCustoms = g.Count(r => r.myDeclarations.CourierCustomStatusCode == "2" && r.myDeclarationCourierStatuses.IsClosedForFollowUp == false),
                 }
                 );
 
@@ -83,6 +83,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        IsOpen = a.IsOpen,
                                                        IsCancelled = a.IsCancelled,
                                                        EstimatedArrivalDate = a.EstimatedArrivalDate,
+                                                       //EstimatedArrivalDateOnly = a.EstimatedArrivalDate != null ? a.EstimatedArrivalDate.Value.Date : a.EstimatedArrivalDate,
                                                        GatewayPortName = a.GatewayPort != null ? a.GatewayPort.LocalName : null,
                                                        OriginPortName = a.OriginPort != null ? a.OriginPort.LocalName : null,
                                                        CreateDateTime = a.CreateDateTime,
@@ -110,11 +111,12 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        //CustomsFileNo = qJoin != null ? (qJoin.FirstOrDefault().myDeclarations != null ? qJoin.FirstOrDefault().myDeclarations.CustomFileNo : null ) : null,
                                                        //CourierHAWB = qJoin != null ? (qJoin.FirstOrDefault().myDeclarations != null ? qJoin.FirstOrDefault().myDeclarations.CourierHAWB : null) : null,
 
-                                                       //CalcClosedForFollowUp = myJoin != null ? myJoin.IsClosedForFollowUp0 : 0,
-                                                       //CalcMissingClassification = myJoin != null ? myJoin.IsCourierMissingClassification : 0,
-                                                       //CalcMissingImporterId = myJoin != null ? myJoin.IsMissingImporterId : 0,
-                                                       //CalcPending900 = myJoin != null ? myJoin.P900 : 0,
-                                                       //CalcPendingCustoms = myJoin != null ? myJoin.IsPendingCustoms : 0,
+                                                       CalcClosedForFollowUp = myJoin != null ? myJoin.IsClosedForFollowUp0 : 0,
+                                                       CalcMissingClassification = myJoin != null ? myJoin.IsCourierMissingClassification : 0,
+                                                       CalcMissingImporterId = myJoin != null ? myJoin.IsMissingImporterId : 0,
+                                                       CalcPending900 = myJoin != null ? myJoin.P900 : 0,
+                                                       CalcPendingCustoms = myJoin != null ? myJoin.IsPendingCustoms : 0,
+                                                       PrefixMAWB = a.CustomsAirline != null ? a.CustomsAirline.AirlinePrefix + "-" + a.MAWB : null,
                                                    });
             return query;
 		}
