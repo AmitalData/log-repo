@@ -30,11 +30,12 @@ namespace Logitude.IntegrationTest.Core.Login
                     ClientType = "Web",
                 };
 
-                HttpResponseMessage httpResponseMessage = await RestClientService.PostAsync(loginParameters, "Authentication");
-                var stringResult = httpResponseMessage.Content.ReadAsStringAsync().Result;
-                UserData userData = JsonConvert.DeserializeObject<UserData>(stringResult);
+                HttpResponseMessage response = await RestClientService.PostAsync(loginParameters, "Authentication");
+                UserData userData = RestClientService.ParseResponse<UserData>(response);
                 Assert.IsNotNull(userData.Token);
                 IntegrationTestLoginParameters.Token = userData.Token;
+                IntegrationTestLoginParameters.LoginUserId = userData.Id;
+                IntegrationTestLoginParameters.LoginUserName = userData.UserName;
             }
         }
 

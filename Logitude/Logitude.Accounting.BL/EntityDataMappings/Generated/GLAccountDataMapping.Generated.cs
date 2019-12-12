@@ -69,7 +69,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         UpdatedByUserId, 
 	         CreateDate, 
 	         UpdateDate, 
-	         AllowEditChequePayToName,
+	         AllowEditChequePayToName, 
+	         ActiveForInterest, 
+	         InterestCalculationStartDate, 
+	         ActiveForInterestCreditInvoice, 
+	         MinimumInterestInvoiceBilling,
 	      }
 
 
@@ -176,7 +180,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         UpdatedByLocalName, 
 	         CardCode, 
 	         PartnerTypeId, 
-	         AllowEditChequePayToName,
+	         AllowEditChequePayToName, 
+	         ActiveForInterest, 
+	         InterestCalculationStartDate, 
+	         ActiveForInterestCreditInvoice, 
+	         MinimumInterestInvoiceBilling,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -418,6 +426,26 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AllowEditChequePayToName))
             {
 				entityPOCO.AllowEditChequePayToName = entityPM.AllowEditChequePayToName;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ActiveForInterest))
+            {
+				entityPOCO.ActiveForInterest = entityPM.ActiveForInterest;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InterestCalculationStartDate))
+            {
+				entityPOCO.InterestCalculationStartDate = entityPM.InterestCalculationStartDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ActiveForInterestCreditInvoice))
+            {
+				entityPOCO.ActiveForInterestCreditInvoice = entityPM.ActiveForInterestCreditInvoice;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MinimumInterestInvoiceBilling))
+            {
+				entityPOCO.MinimumInterestInvoiceBilling = entityPM.MinimumInterestInvoiceBilling;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -666,6 +694,26 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.AllowEditChequePayToName = entityPOCO.AllowEditChequePayToName;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ActiveForInterest))
+            {
+					entityPM.ActiveForInterest = entityPOCO.ActiveForInterest;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InterestCalculationStartDate))
+            {
+					entityPM.InterestCalculationStartDate = entityPOCO.InterestCalculationStartDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ActiveForInterestCreditInvoice))
+            {
+					entityPM.ActiveForInterestCreditInvoice = entityPOCO.ActiveForInterestCreditInvoice;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MinimumInterestInvoiceBilling))
+            {
+					entityPM.MinimumInterestInvoiceBilling = entityPOCO.MinimumInterestInvoiceBilling;
+            }
+
 		}
 
 		public void PMToOldPM(GLAccountPM entityPM, GLAccountPM oldEntityPM)
@@ -905,6 +953,26 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AllowEditChequePayToName))
             {
                 oldEntityPM.AllowEditChequePayToName = entityPM.AllowEditChequePayToName;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ActiveForInterest))
+            {
+                oldEntityPM.ActiveForInterest = entityPM.ActiveForInterest;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InterestCalculationStartDate))
+            {
+                oldEntityPM.InterestCalculationStartDate = entityPM.InterestCalculationStartDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ActiveForInterestCreditInvoice))
+            {
+                oldEntityPM.ActiveForInterestCreditInvoice = entityPM.ActiveForInterestCreditInvoice;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MinimumInterestInvoiceBilling))
+            {
+                oldEntityPM.MinimumInterestInvoiceBilling = entityPM.MinimumInterestInvoiceBilling;
             }
 			
 		}

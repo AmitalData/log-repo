@@ -182,6 +182,7 @@ export const Components =
         InterestBasesTypeDetailsTabComponent,
         ManageExternalReconciliationTabComponent,
         ExternalPagesTabComponent,
+        GLAccountInterestComponent,
         //Templates
         GlAccountLedgerTransactionsListTemplate,
         ReconcileExternalPageListTemplate,
@@ -300,7 +301,7 @@ export class ModuleDeclarations {
             case "BankPageEventsComponent": { myResult = BankPageEventsComponent; break; }
             case "InterestBasesTypeDetailsTabComponent": { myResult = InterestBasesTypeDetailsTabComponent; break;}
             case "ExternalPagesTabComponent": { myResult = ExternalPagesTabComponent; break; }
-
+            case "GLAccountInterestComponent": { myResult = GLAccountInterestComponent; break; }
              //Templates
             case "GlAccountLedgerTransactionsListTemplate": { myResult = GlAccountLedgerTransactionsListTemplate; break; }
             case "ReconcileExternalPageListTemplate": { myResult = ReconcileExternalPageListTemplate; break; }

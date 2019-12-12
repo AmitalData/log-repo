@@ -21,49 +21,33 @@ namespace Logitude.IntegrationTest.FullAccounting
     {
         public static async Task PrepareVariables()
         {
-            await SetChartOfAccountId();
-            await GetFullAccountingSettings();
+            //await GetFullAccountingSettingsTenant();
             await GetAccounntingPeriods();
             await OpenCurrentMonth();
-            await GetAccountingCurriency();
+            await GetAccountingCurriencyTenant();
             await GetCountryAX();
             await GetVatTypeExempt();
             await GetPaymentTermCash();
             await GetPaymnetMethodCash();
             await GetBranchMainOffice();
             await GetChargeTypesAirFreight();
-            await GetCustomerTestGlCustomer();
-            await GetVendorTestGlVendor();
-            await GetGlAccountCustomer();
-            await GetGlAccountVendor();
-            await GetAddressCustomer();
-            await GetAddressVendor();
-            await GetChartOfAccountBank();
-            await CreateGlAccountBank();
+            await GetCustomerTestGlCustomer12PMCS();
+            await GetVendorTestGlVendor1s5PMV2();
+            await GetChartOfAccountVendor1PMCF();
+            await GetGlAccountCustomer54l4CSPM();
+            await GetGlAccountVendor458GLPM();
+            await GetAddressCustomer12PMCS();
+            await GetAddressVendor1s5PMV2();
+            await GetChartOfAccountBankBK771();
+            await CreateGlAccountBank1414BKPM();
             await CreateBankCodeBK14();
             await CreateBranchCashBookBK14();
         }
-        public static async Task<ChartOfAccountList> GetSingleChartOfAccountByCode()
-        {
-            string urlparameters = QueryFiltersPreparation.GetUrlParameters(FullAccountingVariables.ChartOfAccountCode);
-            HttpResponseMessage response = await RestClientService.GetAsync("chartofaccountviews" + urlparameters);
-            ChartOfAccountList chartOfAccountList = RestClientService.ParseResponse<ChartOfAccountList>(response);
-            //Assert.IsNotNull(chartOfAccountList);
-            return chartOfAccountList;
-        }
-        public static async Task<ChartOfAccountPM> GetSingleChartOfAccount()
-        {
-            HttpResponseMessage response = await RestClientService.GetAsync("ChartOfAccounts/GetSingle?id=" + FullAccountingVariables.ChartOfAccountId);
-            var stringResult = response.Content.ReadAsStringAsync().Result;
-            ChartOfAccountPM chartOfAccountPM = JsonConvert.DeserializeObject<ChartOfAccountPM>(stringResult);
-            //Assert.IsNotNull(chartOfAccountPM);
-            return chartOfAccountPM;
-        }
-        private static async Task GetFullAccountingSettings()
+
+        private static async Task GetFullAccountingSettingsTenant()
         {
             HttpResponseMessage response = await RestClientService.GetAsync("FullAccountingSettings/GetSingle?id=" + IntegrationTestLoginParameters.Tenant);
             FullAccountingSettingPM fullAccountingSettingPM = RestClientService.ParseResponse<FullAccountingSettingPM>(response);
-            //Assert.IsNotNull(fullAccountingSettingPM);
             FullAccountingVariables.VendorControlAccountTenantId = fullAccountingSettingPM.VendorControlAccountId;
             FullAccountingVariables.AccountingActivatedTenant = fullAccountingSettingPM.AccountingActivated;
         }
@@ -71,21 +55,12 @@ namespace Logitude.IntegrationTest.FullAccounting
         {
             HttpResponseMessage response = await RestClientService.GetAsync("AccountingPeriodViews/GetByFilters?GetAll=true");
             AccountingPeriodList accountingPeriodList = RestClientService.ParseResponse<AccountingPeriodList>(response);
-            //Assert.IsNotNull(accountingPeriodList);
             FullAccountingVariables.AcocuntingPeriodsId = accountingPeriodList.Id;
             FullAccountingVariables.AcocuntingPeriodsTenant = accountingPeriodList.Tenant;
             FullAccountingVariables.AcocuntingPeriodsYear = accountingPeriodList.Year;
             FullAccountingVariables.AcocuntingPeriodsPeriodTypeCode = accountingPeriodList.PeriodTypeCode;
             FullAccountingVariables.AcocuntingPeriodsPeriodTypeName = accountingPeriodList.PeriodTypeName;
             FullAccountingVariables.AcocuntingPeriodsClosedMonth = accountingPeriodList.ClosedMonth;
-        }
-        public static async Task<AccountingPeriodPM> GetSingleAccountingPeriods()
-        {
-            HttpResponseMessage response = await RestClientService.GetAsync("AccountingPeriods/GetSingle?id=" + FullAccountingVariables.AcocuntingPeriodsId);
-            var stringResult = response.Content.ReadAsStringAsync().Result;
-            AccountingPeriodPM accountingPeriodPM = JsonConvert.DeserializeObject<AccountingPeriodPM>(stringResult);
-            //Assert.IsNotNull(accountingPeriodPM);
-            return accountingPeriodPM;
         }
         private static async Task OpenCurrentMonth()
         {
@@ -95,27 +70,33 @@ namespace Logitude.IntegrationTest.FullAccounting
             HttpResponseMessage response = await RestClientService.PutAsync(accountingPeriodPM, "AccountingPeriods");
             var stringResult = response.Content.ReadAsStringAsync().Result;
             AccountingPeriodPM PutAccountingPeriodPM = JsonConvert.DeserializeObject<AccountingPeriodPM>(stringResult);
-            //Assert.IsNotNull(PutAccountingPeriodPM);
         }
-        private static async Task  SetChartOfAccountId()
+        public static async Task<AccountingPeriodPM> GetSingleAccountingPeriods()
         {
-            ChartOfAccountList chartOfAccountList = await GetSingleChartOfAccountByCode();
-            FullAccountingVariables.ChartOfAccountId = chartOfAccountList.Id;
-            //Assert.IsNotNull(chartOfAccountList);
-        }
-        private static async Task GetAccountingCurriency()
-        {
-            HttpResponseMessage response = await RestClientService.GetAsync("Tenants/GetSingle?id=" + IntegrationTestLoginParameters.Tenant);
+            HttpResponseMessage response = await RestClientService.GetAsync("AccountingPeriods/GetSingle?id=" + FullAccountingVariables.AcocuntingPeriodsId);
             var stringResult = response.Content.ReadAsStringAsync().Result;
-            TenantPM tenantPM = JsonConvert.DeserializeObject<TenantPM>(stringResult);
-            //Assert.IsNotNull(tenantPM);
+            AccountingPeriodPM accountingPeriodPM = JsonConvert.DeserializeObject<AccountingPeriodPM>(stringResult);
+            return accountingPeriodPM;
+        }
+        private static async Task GetAccountingCurriencyTenant()
+        {
+            TenantPM tenantPM=null;
+            if (IntegrationTestLoginParameters.TenantPM == null)
+            {
+                HttpResponseMessage response = await RestClientService.GetAsync("Tenants/GetSingle?id=" + IntegrationTestLoginParameters.Tenant);
+                var stringResult = response.Content.ReadAsStringAsync().Result;
+                tenantPM = JsonConvert.DeserializeObject<TenantPM>(stringResult);
+            }
+            else
+            {
+                tenantPM = IntegrationTestLoginParameters.TenantPM;
+            }
             FullAccountingVariables.AccountingCurrencyTenantId = tenantPM.CurrencyId;
          }
         private static async Task GetCountryAX()
         {
             HttpResponseMessage response = await RestClientService.GetAsync("CountryViews/getbyfilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=AX&PageSize=22");
              CountryList countryList = RestClientService.ParseResponse<CountryList>(response);
-            //Assert.IsNotNull(countryList);
             FullAccountingVariables.CountryAXId = countryList.Id;
         }
         private static async Task GetVatTypeExempt()
@@ -135,7 +116,6 @@ namespace Logitude.IntegrationTest.FullAccounting
             HttpResponseMessage response = await RestClientService.PostAsync(vatTypeExemptPM,"VatType");
             var stringResult = response.Content.ReadAsStringAsync().Result;
             VatTypePM vatTypePM = JsonConvert.DeserializeObject<VatTypePM>(stringResult);
-            //Assert.IsNotNull(vatTypePM);
             FullAccountingVariables.VatEXEMPTId = vatTypePM.Id;
         }
         private static VatTypePM GetNewVatTypeExemptPM()
@@ -173,7 +153,6 @@ namespace Logitude.IntegrationTest.FullAccounting
             HttpResponseMessage response = await RestClientService.PostAsync(paymentTermCashPM, "PaymentTerm");
             var stringResult = response.Content.ReadAsStringAsync().Result;
             PaymentTermPM paymentTermPM = JsonConvert.DeserializeObject<PaymentTermPM>(stringResult);
-            //Assert.IsNotNull(paymentTermPM);
             FullAccountingVariables.PaymentTermCashId = paymentTermPM.Id;
         }
         private static PaymentTermPM GetNewPaymentTermCashPM()
@@ -208,7 +187,6 @@ namespace Logitude.IntegrationTest.FullAccounting
             HttpResponseMessage response = await RestClientService.PostAsync(accountingPaymentMethodCashPM, "AccountingPaymentMethods");
             var stringResult = response.Content.ReadAsStringAsync().Result;
             AccountingPaymentMethodPM accountingPaymentMethodPM = JsonConvert.DeserializeObject<AccountingPaymentMethodPM>(stringResult);
-            //Assert.IsNotNull(accountingPaymentMethodPM);
             FullAccountingVariables.PaymentMethodCashId = accountingPaymentMethodPM.Id;
         }
         private static AccountingPaymentMethodPM GetAccountingPaymentMethodPM()
@@ -231,7 +209,7 @@ namespace Logitude.IntegrationTest.FullAccounting
                 await CreateBranchMainOffice();
             else
             {
-                FullAccountingVariables.PaymentMethodCashId = branchList.Id;
+                FullAccountingVariables.BranchMainOfficeId = branchList.Id;
             }
         }
         private static async Task CreateBranchMainOffice()
@@ -240,7 +218,6 @@ namespace Logitude.IntegrationTest.FullAccounting
             HttpResponseMessage response = await RestClientService.PostAsync(branchMainOfficePM, "Branches");
             var stringResult = response.Content.ReadAsStringAsync().Result;
             BranchPM branchPM = JsonConvert.DeserializeObject<BranchPM>(stringResult);
-            //Assert.IsNotNull(branchPM);
             FullAccountingVariables.BranchMainOfficeId = branchPM.Id;
         }
         private static BranchPM GetNewBranchMainOffice()
@@ -269,8 +246,7 @@ namespace Logitude.IntegrationTest.FullAccounting
             HttpResponseMessage response = await RestClientService.PostAsync(chargesTypeAirFreightPM, "ChargesTypes");
             var stringResult = response.Content.ReadAsStringAsync().Result;
             ChargesTypePM chargesTypePM = JsonConvert.DeserializeObject<ChargesTypePM>(stringResult);
-            //Assert.IsNotNull(chargesTypePM);
-            FullAccountingVariables.BranchMainOfficeId = chargesTypePM.Id;
+            FullAccountingVariables.ChargeTypesAirFreightId = chargesTypePM.Id;
         }
         private static ChargesTypePM GetNewChargeTypesAirFreight()
         {
@@ -292,27 +268,26 @@ namespace Logitude.IntegrationTest.FullAccounting
             chargesTypePM.ViewOrder = 100;
             return chargesTypePM;
         }
-        private static async Task GetCustomerTestGlCustomer()
+        private static async Task GetCustomerTestGlCustomer12PMCS()
         {
             HttpResponseMessage response = await RestClientService.GetAsync("CustomerViews/getbyfilters?GetAll=true&Filter1Name=SearchFields&Filter1Operator=Contains&GetCount=true&PageSize=22&Filter1Value=12PMCS");
             CustomerList customerTestGlCustomerList = RestClientService.ParseResponse<CustomerList>(response);
             if (customerTestGlCustomerList == null)
-                await CreateCustomerTestGlCustomer();
+                await CreateCustomerTestGlCustomer12PMCS();
             else
             {
                 FullAccountingVariables.CustomerTestGlCust12PMCSId = customerTestGlCustomerList.Id;
             }
         }
-        private static async Task CreateCustomerTestGlCustomer()
+        private static async Task CreateCustomerTestGlCustomer12PMCS()
         {
-            CustomerPM CustomerTestGlCustomerPM = GetNewCustomerTestGlCustomer();
+            CustomerPM CustomerTestGlCustomerPM = GetNewCustomerTestGlCustomer12PMCS();
             HttpResponseMessage response = await RestClientService.PostAsync(CustomerTestGlCustomerPM, "Customers");
             var stringResult = response.Content.ReadAsStringAsync().Result;
             CustomerPM customerPM = JsonConvert.DeserializeObject<CustomerPM>(stringResult);
-            //Assert.IsNotNull(customerPM);
             FullAccountingVariables.CustomerTestGlCust12PMCSId = customerPM.Id;
         }
-        private static CustomerPM GetNewCustomerTestGlCustomer()
+        private static CustomerPM GetNewCustomerTestGlCustomer12PMCS()
         {
             CustomerPM customerPM = new CustomerPM();
             customerPM.Tenant = IntegrationTestLoginParameters.Tenant;
@@ -329,27 +304,26 @@ namespace Logitude.IntegrationTest.FullAccounting
             customerPM.CustomerStatusCode = "ACT";
             return customerPM;
         }
-        private static async Task GetVendorTestGlVendor()
+        private static async Task GetVendorTestGlVendor1s5PMV2()
         {
             HttpResponseMessage response = await RestClientService.GetAsync("VendorViews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&GetCount=true&PageSize=22&Filter1Value=1s5PMV2");
             VendorList VendorTestGlVendorList = RestClientService.ParseResponse<VendorList>(response);
             if (VendorTestGlVendorList == null)
-                await CreateVendorTestGlVend();
+                await CreateVendorTestGlVend1s5PMV2();
             else
             {
                 FullAccountingVariables.VendorTestGlVendor1s5PMV2Id = VendorTestGlVendorList.Id;
             }
         }
-        private static async Task CreateVendorTestGlVend()
+        private static async Task CreateVendorTestGlVend1s5PMV2()
         {
-            VendorPM VendorTestGlVendPM = GetNewVendorTestGlVen();
+            VendorPM VendorTestGlVendPM = GetNewVendorTestGlVen1s5PMV2();
             HttpResponseMessage response = await RestClientService.PostAsync(VendorTestGlVendPM, "Vendors");
             var stringResult = response.Content.ReadAsStringAsync().Result;
             VendorPM vendorPM = JsonConvert.DeserializeObject<VendorPM>(stringResult);
-            //Assert.IsNotNull(vendorPM);
             FullAccountingVariables.VendorTestGlVendor1s5PMV2Id = vendorPM.Id;
         }
-        private static VendorPM GetNewVendorTestGlVen()
+        private static VendorPM GetNewVendorTestGlVen1s5PMV2()
         {
             VendorPM vendorPM = new VendorPM();
             vendorPM.Tenant = IntegrationTestLoginParameters.Tenant;
@@ -364,40 +338,39 @@ namespace Logitude.IntegrationTest.FullAccounting
             vendorPM.CountryName = "palestine";
             return vendorPM;
         }
-        private static async Task GetGlAccountCustomer()
+        private static async Task GetGlAccountCustomer54l4CSPM()
         {
             HttpResponseMessage response = await RestClientService.GetAsync("GLAccountViews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=54l4CSPM&PageSize=23");
             GLAccountList GlAccountCustomerList = RestClientService.ParseResponse<GLAccountList>(response);
             if (GlAccountCustomerList != null)
                 FullAccountingVariables.GLAccountCustomer54l4CSPMId = GlAccountCustomerList.Id;
             else
-                await GetChartOfAccountCustomer();
+                await GetChartOfAccountCustomer15CFCPM();
         }
-        private static async Task GetChartOfAccountCustomer()
+        private static async Task GetChartOfAccountCustomer15CFCPM()
         {
             HttpResponseMessage response = await RestClientService.GetAsync("ChartOfAccountViews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=15CFC&PageSize=23");
             ChartOfAccountList chartOfAccountList = RestClientService.ParseResponse<ChartOfAccountList>(response);
             if (chartOfAccountList == null)
-                await CreateChartOfAccountCustomer();
+                await CreateChartOfAccountCustomer15CFC();
             else
             {
                 FullAccountingVariables.ChartOfAccountCustomer15CFCId = chartOfAccountList.Id;
                 FullAccountingVariables.ChartOfAccountCustomer15CFCCode = chartOfAccountList.Code;
-                await CreateGlAccountCustomer();
+                await CreateGlAccountCustomer54l4CSPM();
             }
         }
-        private static async Task CreateChartOfAccountCustomer()
+        private static async Task CreateChartOfAccountCustomer15CFC()
         {
-            ChartOfAccountPM ChartOfAccountCustomerPM = GetNewChartOfAccountCustomer();
+            ChartOfAccountPM ChartOfAccountCustomerPM = GetNewChartOfAccountCustomer15CFC();
             HttpResponseMessage response = await RestClientService.PostAsync(ChartOfAccountCustomerPM, "ChartOfAccounts");
             var stringResult = response.Content.ReadAsStringAsync().Result;
             ChartOfAccountPM chartOfAccountPM = JsonConvert.DeserializeObject<ChartOfAccountPM>(stringResult);
-            //Assert.IsNotNull(chartOfAccountPM);
             FullAccountingVariables.ChartOfAccountCustomer15CFCId = chartOfAccountPM.Id;
             FullAccountingVariables.ChartOfAccountCustomer15CFCCode = chartOfAccountPM.Code;
-            await CreateGlAccountCustomer();
+            await CreateGlAccountCustomer54l4CSPM();
         }
-        private static ChartOfAccountPM GetNewChartOfAccountCustomer()
+        private static ChartOfAccountPM GetNewChartOfAccountCustomer15CFC()
         {
             ChartOfAccountPM chartOfAccountPM = new ChartOfAccountPM();
             chartOfAccountPM.Tenant = IntegrationTestLoginParameters.Tenant;
@@ -409,16 +382,15 @@ namespace Logitude.IntegrationTest.FullAccounting
             chartOfAccountPM.Inactive = true;
             return chartOfAccountPM;
         }
-        private static async Task CreateGlAccountCustomer()
+        private static async Task CreateGlAccountCustomer54l4CSPM()
         {
-            GLAccountPM GlAccountCustomerPM = GetNewGlAccountCustomerPM();
+            GLAccountPM GlAccountCustomerPM = GetNewGlAccountCustomer54l4CSPM();
             HttpResponseMessage response = await RestClientService.PostAsync(GlAccountCustomerPM, "GLAccounts");
             var stringResult = response.Content.ReadAsStringAsync().Result;
             GLAccountPM gLAccountPM = JsonConvert.DeserializeObject<GLAccountPM>(stringResult);
-            //Assert.IsNotNull(gLAccountPM);
             FullAccountingVariables.GLAccountCustomer54l4CSPMId = gLAccountPM.Id;
         }
-        private static GLAccountPM GetNewGlAccountCustomerPM()
+        private static GLAccountPM GetNewGlAccountCustomer54l4CSPM()
         {
             GLAccountPM gLAccountPM = new GLAccountPM();
             gLAccountPM.Tenant = IntegrationTestLoginParameters.Tenant;
@@ -435,40 +407,37 @@ namespace Logitude.IntegrationTest.FullAccounting
             gLAccountPM.NewGLAccountCardId = FullAccountingVariables.CustomerTestGlCust12PMCSId;
             return gLAccountPM;
         }
-        private static async Task GetGlAccountVendor()
+        private static async Task GetGlAccountVendor458GLPM()
         {
             HttpResponseMessage response = await RestClientService.GetAsync("GLAccountViews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=458GLPM&PageSize=23");
             GLAccountList GlAccountVendorList = RestClientService.ParseResponse<GLAccountList>(response);
             if (GlAccountVendorList != null)
                 FullAccountingVariables.GLAccountVendor458GLPMId = GlAccountVendorList.Id;
             else
-                await GetChartOfAccountVendor();
+                await CreateGlAccountVendor458GLPML();
         }
-        private static async Task GetChartOfAccountVendor()
+        private static async Task GetChartOfAccountVendor1PMCF()
         {
             HttpResponseMessage response = await RestClientService.GetAsync("ChartOfAccountViews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=1PMCF&PageSize=23");
             ChartOfAccountList chartOfAccountList = RestClientService.ParseResponse<ChartOfAccountList>(response);
             if (chartOfAccountList == null)
-                await CreateChartOfAccountVendor();
+                await CreateChartOfAccountVendor1PMCF();
             else
             {
                 FullAccountingVariables.ChartOfAccountVendor1PMCFId = chartOfAccountList.Id;
                 FullAccountingVariables.ChartOfAccountVendor1PMCFCode = chartOfAccountList.Code;
-                await CreateGlAccountVendor();
             }
         }
-        private static async Task CreateChartOfAccountVendor()
+        private static async Task CreateChartOfAccountVendor1PMCF()
         {
-            ChartOfAccountPM ChartOfAccountVendorPM = GetNewChartOfAccountVendor();
+            ChartOfAccountPM ChartOfAccountVendorPM = GetNewChartOfAccountVendor1PMCF();
             HttpResponseMessage response = await RestClientService.PostAsync(ChartOfAccountVendorPM, "ChartOfAccounts");
             var stringResult = response.Content.ReadAsStringAsync().Result;
             ChartOfAccountPM chartOfAccountPM = JsonConvert.DeserializeObject<ChartOfAccountPM>(stringResult);
-            //Assert.IsNotNull(chartOfAccountPM);
             FullAccountingVariables.ChartOfAccountVendor1PMCFId = chartOfAccountPM.Id;
             FullAccountingVariables.ChartOfAccountVendor1PMCFCode = chartOfAccountPM.Code;
-            await CreateGlAccountVendor();
         }
-        private static ChartOfAccountPM GetNewChartOfAccountVendor()
+        private static ChartOfAccountPM GetNewChartOfAccountVendor1PMCF()
         {
             ChartOfAccountPM chartOfAccountPM = new ChartOfAccountPM();
             chartOfAccountPM.Tenant = IntegrationTestLoginParameters.Tenant;
@@ -480,16 +449,15 @@ namespace Logitude.IntegrationTest.FullAccounting
             chartOfAccountPM.Inactive = true;
             return chartOfAccountPM;
         }
-        private static async Task CreateGlAccountVendor()
+        private static async Task CreateGlAccountVendor458GLPML()
         {
-            GLAccountPM GlAccountVendorPM = GetNewGlAccountVendorPM();
+            GLAccountPM GlAccountVendorPM = GetNewGlAccountVendorPM458GLPML();
             HttpResponseMessage response = await RestClientService.PostAsync(GlAccountVendorPM, "GLAccounts");
             var stringResult = response.Content.ReadAsStringAsync().Result;
             GLAccountPM gLAccountPM = JsonConvert.DeserializeObject<GLAccountPM>(stringResult);
-            //Assert.IsNotNull(gLAccountPM);
             FullAccountingVariables.GLAccountVendor458GLPMId = gLAccountPM.Id;
         }
-        private static GLAccountPM GetNewGlAccountVendorPM()
+        private static GLAccountPM GetNewGlAccountVendorPM458GLPML()
         {
             GLAccountPM gLAccountPM = new GLAccountPM();
             gLAccountPM.Tenant = IntegrationTestLoginParameters.Tenant;
@@ -506,45 +474,42 @@ namespace Logitude.IntegrationTest.FullAccounting
             gLAccountPM.NewGLAccountCardId = FullAccountingVariables.VendorTestGlVendor1s5PMV2Id;
             return gLAccountPM;
         }
-        public static async Task  GetAddressCustomer()
+        public static async Task GetAddressCustomer12PMCS()
         {
             HttpResponseMessage response = await RestClientService.GetAsync("CardViews/GetSingle?id=" + FullAccountingVariables.CustomerTestGlCust12PMCSId);
             var stringResult = response.Content.ReadAsStringAsync().Result;
             CardList cardList = JsonConvert.DeserializeObject<CardList>(stringResult);
-            //Assert.IsNotNull(cardList);
-            FullAccountingVariables.AddressCustomer12PMCSIdId = cardList.MainAddressId;
+            FullAccountingVariables.AddressCustomer12PMCS = cardList.MainAddressId;
 
         }
-        public static async Task GetAddressVendor()
+        public static async Task GetAddressVendor1s5PMV2()
         {
             HttpResponseMessage response = await RestClientService.GetAsync("CardViews/GetSingle?id=" + FullAccountingVariables.VendorTestGlVendor1s5PMV2Id);
             var stringResult = response.Content.ReadAsStringAsync().Result;
             CardList cardList = JsonConvert.DeserializeObject<CardList>(stringResult);
-            //Assert.IsNotNull(cardList);
             FullAccountingVariables.AddressVendor1s5PMV2Id = cardList.MainAddressId;
 
         }
-        private static async Task GetChartOfAccountBank()
+        private static async Task GetChartOfAccountBankBK771()
         {
             HttpResponseMessage response = await RestClientService.GetAsync("ChartOfAccountViews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=BK771&PageSize=23");
             ChartOfAccountList chartOfAccountList = RestClientService.ParseResponse<ChartOfAccountList>(response);
             if (chartOfAccountList == null)
-                await CreateChartOfAccountBank();
+                await CreateChartOfAccountBankBK771();
             else
             {
                 FullAccountingVariables.ChartOfAccountBankBK771Id = chartOfAccountList.Id;
             }
         }
-        private static async Task CreateChartOfAccountBank()
+        private static async Task CreateChartOfAccountBankBK771()
         {
-            ChartOfAccountPM ChartOfAccountBankPM = GetNewChartOfAccountBank();
+            ChartOfAccountPM ChartOfAccountBankPM = GetNewChartOfAccountBankBK771();
             HttpResponseMessage response = await RestClientService.PostAsync(ChartOfAccountBankPM, "ChartOfAccounts");
             var stringResult = response.Content.ReadAsStringAsync().Result;
             ChartOfAccountPM chartOfAccountPM = JsonConvert.DeserializeObject<ChartOfAccountPM>(stringResult);
-            //Assert.IsNotNull(chartOfAccountPM);
             FullAccountingVariables.ChartOfAccountBankBK771Id = chartOfAccountPM.Id;
         }
-        private static ChartOfAccountPM GetNewChartOfAccountBank()
+        private static ChartOfAccountPM GetNewChartOfAccountBankBK771()
         {
             ChartOfAccountPM chartOfAccountPM = new ChartOfAccountPM();
             chartOfAccountPM.Tenant = IntegrationTestLoginParameters.Tenant;
@@ -556,16 +521,15 @@ namespace Logitude.IntegrationTest.FullAccounting
             chartOfAccountPM.Inactive = true;
             return chartOfAccountPM;
         }
-        private static async Task CreateGlAccountBank()
+        private static async Task CreateGlAccountBank1414BKPM()
         {
-            GLAccountPM GlAccountBankPM = GetNewGlAccountBankPM();
+            GLAccountPM GlAccountBankPM = GetNewGlAccountBankPM1414BKPM();
             HttpResponseMessage response = await RestClientService.PostAsync(GlAccountBankPM, "GLAccounts");
             var stringResult = response.Content.ReadAsStringAsync().Result;
             GLAccountPM gLAccountPM = JsonConvert.DeserializeObject<GLAccountPM>(stringResult);
-            //Assert.IsNotNull(gLAccountPM);
             FullAccountingVariables.GLAccountBank1414BKPMId = gLAccountPM.Id;
         }
-        private static GLAccountPM GetNewGlAccountBankPM()
+        private static GLAccountPM GetNewGlAccountBankPM1414BKPM()
         {
             GLAccountPM gLAccountPM = new GLAccountPM();
             gLAccountPM.Tenant = IntegrationTestLoginParameters.Tenant;
@@ -588,7 +552,6 @@ namespace Logitude.IntegrationTest.FullAccounting
             HttpResponseMessage response = await RestClientService.PostAsync(BankCodeBK14PM, "BankCodes");
             var stringResult = response.Content.ReadAsStringAsync().Result;
             BankCodePM bankCodePM = JsonConvert.DeserializeObject<BankCodePM>(stringResult);
-            //Assert.IsNotNull(bankCodePM);
             FullAccountingVariables.BankCodeBK14Id = bankCodePM.Id;
             FullAccountingVariables.BankCodeBK14Code = bankCodePM.Code;
 
@@ -609,7 +572,6 @@ namespace Logitude.IntegrationTest.FullAccounting
             HttpResponseMessage response = await RestClientService.PostAsync(BranchBK14PM, "Branches");
             var stringResult = response.Content.ReadAsStringAsync().Result;
             BranchPM branchPM = JsonConvert.DeserializeObject<BranchPM>(stringResult);
-            //Assert.IsNotNull(branchPM);
             FullAccountingVariables.BranchCashBookBK14Id = branchPM.Id;
  
         }

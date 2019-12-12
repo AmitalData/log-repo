@@ -172,6 +172,14 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public DateTime UpdateDate { get; set; }
         [Column("AllowEditChequePayToName")]
 	    public bool AllowEditChequePayToName { get; set; }
+        [Column("ActiveForInterest")]
+	    public bool ActiveForInterest { get; set; }
+        [Column("InterestCalculationStartDate")]
+	    public DateTime InterestCalculationStartDate { get; set; }
+        [Column("ActiveForInterestCreditInvoice")]
+	    public bool ActiveForInterestCreditInvoice { get; set; }
+        [Column("MinimumInterestInvoiceBilling")]
+	    public decimal MinimumInterestInvoiceBilling { get; set; }
     }
 }
 	 

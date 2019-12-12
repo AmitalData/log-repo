@@ -53,6 +53,9 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Tests\ARInvoiceIntegrationTests.cs" />
+    <Compile Include="Tests\JournalIntegrationTests.cs" />
+    <Compile Include="Tests\GlAcountIntegrationTests.cs" />
     <Compile Include="Tests\ChartOfAccountIntegrationTests.cs" />
     <Compile Include="Initialize.cs" />
     <Compile Include="FullAccountingPreparationCalls.cs" />

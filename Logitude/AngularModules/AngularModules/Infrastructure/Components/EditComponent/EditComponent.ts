@@ -740,6 +740,12 @@ export class EditComponent implements OnDestroy {
                                     myTabsSorted.push(tab);
                                 break;
                             }
+                        case "GAIT":
+                            {
+                                if (this.EntityPM.AccountTypeCode == "2")  // 2- Customer GLAccount
+                                    myTabsSorted.push(tab);
+                                break;
+                            }
                         default:
                             {
                                 myTabsSorted.push(tab);

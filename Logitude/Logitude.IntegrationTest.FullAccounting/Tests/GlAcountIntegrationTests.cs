@@ -19,26 +19,27 @@ using System.Threading.Tasks;
 namespace Logitude.IntegrationTest.FullAccounting.Tests
 {
     [TestClass]
-    public class ChartOfAccountIntegrationTests
+    public class GlAcountIntegrationTests
     {
         [TestMethod]
-        public void ChartOfAccount_Vendor1PMCFId_Put()
+        public void GlACcount_Vendor458GLPM_Update()
         {
             Task.Run(async () =>
             {
-                ChartOfAccountPM entityPM = await ChartOfAccount_Vendor1PMCFId_GetSingle();
+                GLAccountPM entityPM = await GlACcount_Vendor458GLPM_GetSingle();
                 entityPM.LocalName = "GE:" + RestClientService.GetRandomString(5);
                 entityPM.EnglishName = "GE:" + RestClientService.GetRandomString(5);
-                HttpResponseMessage response = await RestClientService.PutAsync(entityPM, "ChartOfAccounts");
-                ChartOfAccountPM chartOfAccountVendor1PMCFId = RestClientService.ParseResponse<ChartOfAccountPM>(response);
-                Assert.AreEqual(entityPM.Code, chartOfAccountVendor1PMCFId.Code);
+                HttpResponseMessage response = await RestClientService.PutAsync(entityPM, "GLAccounts");
+                GLAccountPM GLAccountVendor458GLPM = RestClientService.ParseResponse<GLAccountPM>(response);
+                Assert.AreEqual(GLAccountVendor458GLPM.Id, entityPM.Id);
             }).GetAwaiter().GetResult();
         }
-        private async Task<ChartOfAccountPM> ChartOfAccount_Vendor1PMCFId_GetSingle()
+        private async Task<GLAccountPM> GlACcount_Vendor458GLPM_GetSingle()
         {
-            HttpResponseMessage response = await RestClientService.GetAsync("ChartOfAccounts/GetSingle?id="+ FullAccountingVariables.ChartOfAccountVendor1PMCFId);
-            ChartOfAccountPM chartOfAccountVendor1PMCFId = RestClientService.ParseResponse<ChartOfAccountPM>(response);
-            return chartOfAccountVendor1PMCFId;
+            HttpResponseMessage response = await RestClientService.GetAsync("GLAccounts/GetSingle?id=" + FullAccountingVariables.GLAccountVendor458GLPMId);
+            GLAccountPM GLAccountVendor458GLPM = RestClientService.ParseResponse<GLAccountPM>(response);
+            return GLAccountVendor458GLPM;
         }
+
     }
 }

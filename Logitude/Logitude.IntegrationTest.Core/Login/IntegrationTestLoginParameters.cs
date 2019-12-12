@@ -46,6 +46,9 @@ namespace Logitude.IntegrationTest.Core.Login
 
             }
         }
+        public static string LoginUserId { get; set; }
+
+        public static string LoginUserName { get; set; }
 
         public static TenantPM TenantPM { get; set; }
     }
