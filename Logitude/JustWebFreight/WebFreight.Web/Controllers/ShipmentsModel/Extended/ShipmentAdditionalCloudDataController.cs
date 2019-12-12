@@ -70,31 +70,41 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                     //        // do what ever with the data
                     //    }
                     //}
-                    var MyMemoryStream = new MemoryStream(Convert.FromBase64String(data.DeclarationXmlData));
-                    var MyZipInputStream = new BZip2InputStream(MyMemoryStream);
-                    StringBuilder MyUncompressMessage = new StringBuilder();
-                    StringBuilder MyEncodedUncompressMessage = new StringBuilder();
                     int MySize = 1024;
                     byte[] BytesUncompressed = new byte[MySize];
-                    Encoding wind1252 = Encoding.GetEncoding(1255);
-                    Encoding utf8 = Encoding.UTF8;
-                    byte[] utf8Bytes = new byte[MySize];
-                    //byte[] MyBytesUncompressed = new byte[MyMemoryStream.Length];
-                    while (true)
+                    StringBuilder MyEncodedUncompressMessage = new StringBuilder();
+                    try
                     {
-                        MySize = MyZipInputStream.Read(BytesUncompressed, 0, MySize);
-                        //MyBytesUncompressed = (MyBytesUncompressed.Concat(BytesUncompressed)).ToArray();
-                        if (MySize > 0)
+                        var MyMemoryStream = new MemoryStream(Convert.FromBase64String(data.DeclarationXmlData));
+                        var MyZipInputStream = new BZip2InputStream(MyMemoryStream);
+                        StringBuilder MyUncompressMessage = new StringBuilder();
+                        
+                        
+                        Encoding wind1252 = Encoding.GetEncoding(1255);
+                        Encoding utf8 = Encoding.UTF8;
+                        byte[] utf8Bytes = new byte[MySize];
+                        //byte[] MyBytesUncompressed = new byte[MyMemoryStream.Length];
+                        while (true)
                         {
+                            MySize = MyZipInputStream.Read(BytesUncompressed, 0, MySize);
+                            //MyBytesUncompressed = (MyBytesUncompressed.Concat(BytesUncompressed)).ToArray();
+                            if (MySize > 0)
+                            {
 
-                            utf8Bytes = Encoding.Convert(wind1252, utf8, BytesUncompressed, 0, MySize);
-                            MyEncodedUncompressMessage.Append(Encoding.UTF8.GetString(utf8Bytes));
-                            MyUncompressMessage.Append(Encoding.UTF8.GetString(BytesUncompressed, 0, MySize));
+                                utf8Bytes = Encoding.Convert(wind1252, utf8, BytesUncompressed, 0, MySize);
+                                MyEncodedUncompressMessage.Append(Encoding.UTF8.GetString(utf8Bytes));
+                                MyUncompressMessage.Append(Encoding.UTF8.GetString(BytesUncompressed, 0, MySize));
+                            }
+
+                            else
+                                break;
                         }
-
-                        else
-                            break;
                     }
+                    catch (Exception)
+                    {
+                        MyEncodedUncompressMessage.Append(Encoding.UTF8.GetString(Convert.FromBase64String(data.DeclarationXmlData)));
+                    }
+                   
 
                     //Encoding wind1252 = Encoding.GetEncoding(1255);
                     //Encoding utf8 = Encoding.UTF8;
@@ -386,31 +396,65 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                     ShipmentAdditionalCloudData data = Repository.GetSingleShipmentAdditionalCloudData(entity.Id, authToken.Tenant);
                     Shipment Ship = SHRepository.GetSingleShipment(entity.Id, authToken.Tenant);
                     Ship.StatusId = status.Id;
-                    var MyMemoryStream = new MemoryStream(Convert.FromBase64String(data.DeclarationXmlData));
-                    var MyZipInputStream = new BZip2InputStream(MyMemoryStream);
-                    StringBuilder MyUncompressMessage = new StringBuilder();
-                    StringBuilder MyEncodedUncompressMessage = new StringBuilder();
                     int MySize = 1024;
                     byte[] BytesUncompressed = new byte[MySize];
-                    Encoding wind1252 = Encoding.GetEncoding(1255);
-                    Encoding utf8 = Encoding.UTF8;
-                    byte[] utf8Bytes = new byte[MySize];
-                    //byte[] MyBytesUncompressed = new byte[MyMemoryStream.Length];
-                    while (true)
+                    StringBuilder MyEncodedUncompressMessage = new StringBuilder();
+                    try
                     {
-                        MySize = MyZipInputStream.Read(BytesUncompressed, 0, MySize);
-                        //MyBytesUncompressed = (MyBytesUncompressed.Concat(BytesUncompressed)).ToArray();
-                        if (MySize > 0)
+                        var MyMemoryStream = new MemoryStream(Convert.FromBase64String(data.DeclarationXmlData));
+                        var MyZipInputStream = new BZip2InputStream(MyMemoryStream);
+                        StringBuilder MyUncompressMessage = new StringBuilder();
+
+
+                        Encoding wind1252 = Encoding.GetEncoding(1255);
+                        Encoding utf8 = Encoding.UTF8;
+                        byte[] utf8Bytes = new byte[MySize];
+                        //byte[] MyBytesUncompressed = new byte[MyMemoryStream.Length];
+                        while (true)
                         {
+                            MySize = MyZipInputStream.Read(BytesUncompressed, 0, MySize);
+                            //MyBytesUncompressed = (MyBytesUncompressed.Concat(BytesUncompressed)).ToArray();
+                            if (MySize > 0)
+                            {
 
-                            utf8Bytes = Encoding.Convert(wind1252, utf8, BytesUncompressed, 0, MySize);
-                            MyEncodedUncompressMessage.Append(Encoding.UTF8.GetString(utf8Bytes));
-                            MyUncompressMessage.Append(Encoding.UTF8.GetString(BytesUncompressed, 0, MySize));
+                                utf8Bytes = Encoding.Convert(wind1252, utf8, BytesUncompressed, 0, MySize);
+                                MyEncodedUncompressMessage.Append(Encoding.UTF8.GetString(utf8Bytes));
+                                MyUncompressMessage.Append(Encoding.UTF8.GetString(BytesUncompressed, 0, MySize));
+                            }
+
+                            else
+                                break;
                         }
-
-                        else
-                            break;
                     }
+                    catch (Exception)
+                    {
+                        MyEncodedUncompressMessage.Append(Encoding.UTF8.GetString(Convert.FromBase64String(data.DeclarationXmlData)));
+                    }
+                    //var MyMemoryStream = new MemoryStream(Convert.FromBase64String(data.DeclarationXmlData));
+                    //var MyZipInputStream = new BZip2InputStream(MyMemoryStream);
+                    //StringBuilder MyUncompressMessage = new StringBuilder();
+                    //StringBuilder MyEncodedUncompressMessage = new StringBuilder();
+                    //int MySize = 1024;
+                    //byte[] BytesUncompressed = new byte[MySize];
+                    //Encoding wind1252 = Encoding.GetEncoding(1255);
+                    //Encoding utf8 = Encoding.UTF8;
+                    //byte[] utf8Bytes = new byte[MySize];
+                    ////byte[] MyBytesUncompressed = new byte[MyMemoryStream.Length];
+                    //while (true)
+                    //{
+                    //    MySize = MyZipInputStream.Read(BytesUncompressed, 0, MySize);
+                    //    //MyBytesUncompressed = (MyBytesUncompressed.Concat(BytesUncompressed)).ToArray();
+                    //    if (MySize > 0)
+                    //    {
+
+                    //        utf8Bytes = Encoding.Convert(wind1252, utf8, BytesUncompressed, 0, MySize);
+                    //        MyEncodedUncompressMessage.Append(Encoding.UTF8.GetString(utf8Bytes));
+                    //        MyUncompressMessage.Append(Encoding.UTF8.GetString(BytesUncompressed, 0, MySize));
+                    //    }
+
+                    //    else
+                    //        break;
+                    //}
 
                     //Encoding wind1252 = Encoding.GetEncoding(1255);
                     //Encoding utf8 = Encoding.UTF8;
@@ -526,31 +570,65 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                     //        // do what ever with the data
                     //    }
                     //}
-                    var MyMemoryStream = new MemoryStream(Convert.FromBase64String(data.DeclarationXmlData));
-                    var MyZipInputStream = new BZip2InputStream(MyMemoryStream);
-                    StringBuilder MyUncompressMessage = new StringBuilder();
-                    StringBuilder MyEncodedUncompressMessage = new StringBuilder();
                     int MySize = 1024;
                     byte[] BytesUncompressed = new byte[MySize];
-                    Encoding wind1252 = Encoding.GetEncoding(1255);
-                    Encoding utf8 = Encoding.UTF8;
-                    byte[] utf8Bytes = new byte[MySize];
-                    //byte[] MyBytesUncompressed = new byte[MyMemoryStream.Length];
-                    while (true)
+                    StringBuilder MyEncodedUncompressMessage = new StringBuilder();
+                    try
                     {
-                        MySize = MyZipInputStream.Read(BytesUncompressed, 0, MySize);
-                        //MyBytesUncompressed = (MyBytesUncompressed.Concat(BytesUncompressed)).ToArray();
-                        if (MySize > 0)
+                        var MyMemoryStream = new MemoryStream(Convert.FromBase64String(data.DeclarationXmlData));
+                        var MyZipInputStream = new BZip2InputStream(MyMemoryStream);
+                        StringBuilder MyUncompressMessage = new StringBuilder();
+
+
+                        Encoding wind1252 = Encoding.GetEncoding(1255);
+                        Encoding utf8 = Encoding.UTF8;
+                        byte[] utf8Bytes = new byte[MySize];
+                        //byte[] MyBytesUncompressed = new byte[MyMemoryStream.Length];
+                        while (true)
                         {
+                            MySize = MyZipInputStream.Read(BytesUncompressed, 0, MySize);
+                            //MyBytesUncompressed = (MyBytesUncompressed.Concat(BytesUncompressed)).ToArray();
+                            if (MySize > 0)
+                            {
 
-                            utf8Bytes = Encoding.Convert(wind1252, utf8, BytesUncompressed, 0, MySize);
-                            MyEncodedUncompressMessage.Append(Encoding.UTF8.GetString(utf8Bytes));
-                            MyUncompressMessage.Append(Encoding.UTF8.GetString(BytesUncompressed, 0, MySize));
+                                utf8Bytes = Encoding.Convert(wind1252, utf8, BytesUncompressed, 0, MySize);
+                                MyEncodedUncompressMessage.Append(Encoding.UTF8.GetString(utf8Bytes));
+                                MyUncompressMessage.Append(Encoding.UTF8.GetString(BytesUncompressed, 0, MySize));
+                            }
+
+                            else
+                                break;
                         }
-
-                        else
-                            break;
                     }
+                    catch (Exception)
+                    {
+                        MyEncodedUncompressMessage.Append(Encoding.UTF8.GetString(Convert.FromBase64String(data.DeclarationXmlData)));
+                    }
+                    //var MyMemoryStream = new MemoryStream(Convert.FromBase64String(data.DeclarationXmlData));
+                    //var MyZipInputStream = new BZip2InputStream(MyMemoryStream);
+                    //StringBuilder MyUncompressMessage = new StringBuilder();
+                    //StringBuilder MyEncodedUncompressMessage = new StringBuilder();
+                    //int MySize = 1024;
+                    //byte[] BytesUncompressed = new byte[MySize];
+                    //Encoding wind1252 = Encoding.GetEncoding(1255);
+                    //Encoding utf8 = Encoding.UTF8;
+                    //byte[] utf8Bytes = new byte[MySize];
+                    ////byte[] MyBytesUncompressed = new byte[MyMemoryStream.Length];
+                    //while (true)
+                    //{
+                    //    MySize = MyZipInputStream.Read(BytesUncompressed, 0, MySize);
+                    //    //MyBytesUncompressed = (MyBytesUncompressed.Concat(BytesUncompressed)).ToArray();
+                    //    if (MySize > 0)
+                    //    {
+
+                    //        utf8Bytes = Encoding.Convert(wind1252, utf8, BytesUncompressed, 0, MySize);
+                    //        MyEncodedUncompressMessage.Append(Encoding.UTF8.GetString(utf8Bytes));
+                    //        MyUncompressMessage.Append(Encoding.UTF8.GetString(BytesUncompressed, 0, MySize));
+                    //    }
+
+                    //    else
+                    //        break;
+                    //}
 
                     //Encoding wind1252 = Encoding.GetEncoding(1255);
                     //Encoding utf8 = Encoding.UTF8;
