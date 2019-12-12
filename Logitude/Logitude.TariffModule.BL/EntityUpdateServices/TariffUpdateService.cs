@@ -1,4 +1,6 @@
 ﻿using Logitude.BL.Helpers;
+using Logitude.Infrastructure.Data;
+using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.TariffModule.BL.EntityPMs;
@@ -33,13 +35,25 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 entityPM.TariffNumber = CodeCounter.GetNumber("Tariff", entityPM.Tenant).ToString();
                 entityPM.CreateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
                 entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
-                if (entityPM.PriceSteps == null)
+                if (entityPM.PriceSteps == null && (entityPM.TypeCode == "AFC" || entityPM.TypeCode == "OLC"))
                 {
                     ITariffModuleContext iContext = TariffModuleContext.GetContext(entityPM.Tenant);
+                    IInfrastructureContext iInfrastructureContext = InfrastructureContext.GetContext(entityPM.Tenant);
                     TariffSetting iTariffSetting = (from d in iContext.TariffSettings where d.Tenant == entityPM.Tenant select d).FirstOrDefault();
+                    
+
                     if (iTariffSetting != null)
                     {
-                        entityPM.PriceSteps = iTariffSetting.DefaultPriceSteps;
+                        if(entityPM.TypeCode== "AFC")
+                        {
+                            PriceSteps iPriceSteps = (from d in iInfrastructureContext.PricesSteps where d.Tenant == entityPM.Tenant && d.Id == iTariffSetting.AirDefaultStepsId select d).FirstOrDefault();
+                            entityPM.PriceSteps = iPriceSteps!= null? iPriceSteps.Steps: null;
+                        }
+                        else if(entityPM.TypeCode == "OLC")
+                        {
+                            PriceSteps iPriceSteps = (from d in iInfrastructureContext.PricesSteps where d.Tenant == entityPM.Tenant && d.Id == iTariffSetting.LCLDefaultStepsId select d).FirstOrDefault();
+                            entityPM.PriceSteps = iPriceSteps != null ? iPriceSteps.Steps : null;
+                        }
                     }
                 }
 

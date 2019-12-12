@@ -99,12 +99,12 @@
                                         [SelectedValue]="AirDefaultStepsId"
                                         [DataContext]="DataContext"
                                         [DisplayMemberPath]="'Name'"
-                                        [LookUpTableName]="'PriceSteps'">
+                                        [LookUpTableName]="'PriceSteps'" [HideColumns]="true">
                                 </LogLov>
                             </td>
 
-                            <td  style="width:60px;float: right;">
-                                <div style="width:60px;float: right;">
+                            <td  style="width:50px;float: left;vertical-align:central;">
+                                <div class="MediaFill" style="float: left;vertical-align:central;">
                                     <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditPriceStepsClicked('Air')"></IconButton>
                                     <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddPriceStepsClicked('Air')"></IconButton>
                                 </div>
@@ -115,22 +115,22 @@
                         </tr>
 
                         <tr class="FormFieldRow">
-                            <td style="width:120px;">
+                            <td>
                                 <LogLabel [ObjectFieldName]="'LCLDefaultStepsId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                             </td>
 
-                            <td style="width:220px;">
+                            <td>
                                 <LogLov [ObjectFieldName]="'LCLDefaultStepsId'"
                                         [ObjectTableName]="ObjectTableName"
                                         [SelectedValue]="LCLDefaultStepsId"
                                         [DataContext]="DataContext"
                                         [DisplayMemberPath]="'Name'"
-                                        [LookUpTableName]="'PriceSteps'">
+                                        [LookUpTableName]="'PriceSteps'"  [HideColumns]="true">
                                 </LogLov>
                             </td>
 
-                            <td style="width:60px;float: right;">
-                                <div style="width:60px;float: right;">
+                            <td style="float: left;vertical-align:central;">
+                                <div class="MediaFill" style="float: left;vertical-align:central;">
                                     <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditPriceStepsClicked('LCL')"></IconButton>
                                     <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddPriceStepsClicked('LCL')"></IconButton>
                                 </div>
