@@ -108,6 +108,7 @@ import { EditTaxReportLineComponent } from './Components/EditTabs/TaxReport/Edit
 import { NewIntegrityCheckComponent } from './Components/NewEntity/NewIntegrityCheckComponent';
 import { CashBookLineListTemplate } from './Components/ListTemplates/CashBookLineListTemplate';
 import { InterestBasesTypeShortTitleComponent } from './Components/ShortTiTles/InterestBasesTypeShortTitleComponent';
+import { GLAccountInterestComponent } from './Components/EditTabs/GLAccount/GLAccountInterestComponent';
 
 
 export const Components =
