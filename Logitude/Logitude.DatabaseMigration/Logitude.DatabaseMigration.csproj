@@ -1750,13 +1750,13 @@
     <Compile Include="Migrations\201912080935232_AbedAddToFromTypeCodeFieldToWarehouseEntry.Designer.cs">
       <DependentUpon>201912080935232_AbedAddToFromTypeCodeFieldToWarehouseEntry.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201912041012315_AbedChangeFromPortForeignKeyToWarehouseRelease.cs" />
-    <Compile Include="Migrations\201912041012315_AbedChangeFromPortForeignKeyToWarehouseRelease.Designer.cs">
-      <DependentUpon>201912041012315_AbedChangeFromPortForeignKeyToWarehouseRelease.cs</DependentUpon>
+    <Compile Include="Migrations\201912120721175_Add_Fields_For_GLAccounts_Table.cs" />
+    <Compile Include="Migrations\201912120721175_Add_Fields_For_GLAccounts_Table.Designer.cs">
+      <DependentUpon>201912120721175_Add_Fields_For_GLAccounts_Table.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201911171621078_NewTable_ExternalPageAdditionalData.cs" />
-    <Compile Include="Migrations\201911171621078_NewTable_ExternalPageAdditionalData.Designer.cs">
-      <DependentUpon>201911171621078_NewTable_ExternalPageAdditionalData.cs</DependentUpon>
+    <Compile Include="Migrations\201912110756225_UniqueOriginalJournalIdtk2.cs" />
+    <Compile Include="Migrations\201912110756225_UniqueOriginalJournalIdtk2.Designer.cs">
+      <DependentUpon>201912110756225_UniqueOriginalJournalIdtk2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
@@ -3009,11 +3009,11 @@
     <EmbeddedResource Include="Migrations\201912080935232_AbedAddToFromTypeCodeFieldToWarehouseEntry.resx">
       <DependentUpon>201912080935232_AbedAddToFromTypeCodeFieldToWarehouseEntry.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912041012315_AbedChangeFromPortForeignKeyToWarehouseRelease.resx">
-      <DependentUpon>201912041012315_AbedChangeFromPortForeignKeyToWarehouseRelease.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201912120721175_Add_Fields_For_GLAccounts_Table.resx">
+      <DependentUpon>201912120721175_Add_Fields_For_GLAccounts_Table.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201911171621078_NewTable_ExternalPageAdditionalData.resx">
-      <DependentUpon>201911171621078_NewTable_ExternalPageAdditionalData.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201912110756225_UniqueOriginalJournalIdtk2.resx">
+      <DependentUpon>201912110756225_UniqueOriginalJournalIdtk2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

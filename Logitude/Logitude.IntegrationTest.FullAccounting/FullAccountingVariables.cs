@@ -8,8 +8,7 @@ namespace Logitude.IntegrationTest.FullAccounting
 {
     public class FullAccountingVariables
     {
-        public static string ChartOfAccountCode { get { return "1PMCF"; } }
-        public static string ChartOfAccountId { get; set; }
+
         public static bool AccountingActivatedTenant { get; set; }
         public static string VendorControlAccountTenantId { get; set; }
         public static string AcocuntingPeriodsId { get; set; }
@@ -33,14 +32,14 @@ namespace Logitude.IntegrationTest.FullAccounting
         public static string ChartOfAccountCustomer15CFCId { get; set; }
         public static string ChartOfAccountCustomer15CFCCode { get; set; }
         public static string GLAccountVendor458GLPMId { get; set; }
-        public static string AddressCustomer12PMCSIdId { get; set; }
+        public static string AddressCustomer12PMCS { get; set; }
         public static string AddressVendor1s5PMV2Id { get; set; }
         public static string ChartOfAccountBankBK771Id { get; set; }
         public static string GLAccountBank1414BKPMId { get; set; }
         public static string BankCodeBK14Id { get; set; }
         public static string BankCodeBK14Code { get; set; }
         public static string BranchCashBookBK14Id { get; set; }
-
+        public static string InvoiceNumber12PMCSId { get; set; }
 
     }
 }

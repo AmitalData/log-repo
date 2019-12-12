@@ -321,6 +321,7 @@ export class QueryColumnsEditComponent {
 
                     newQueryColumn.QueryId = this.QueryId,
                         newQueryColumn.ObjectFieldCode = field.FieldCode,
+                        newQueryColumn.ObjectFieldId = field.Id,
                         //ObjectField = field,
                         newQueryColumn.ObjectFieldName = field.FieldName,
                         newQueryColumn.ObjectFieldFieldLableTextCodeDefaultText = field.FullNameTextCodeDefaultText,
@@ -352,6 +353,7 @@ export class QueryColumnsEditComponent {
 
                 newQueryColumn.QueryId = this.QueryId,
                     newQueryColumn.ObjectFieldCode = field.FieldCode,
+                    newQueryColumn.ObjectFieldId = field.Id,
                     //  ObjectField = field,
                     newQueryColumn.ObjectFieldName = field.FieldName,
                     newQueryColumn.ObjectFieldFieldLableTextCodeDefaultText = field.FullNameTextCodeDefaultText,
@@ -398,7 +400,7 @@ export class QueryColumnsEditComponent {
         if (this.SelectedItem) {
             var queryColumn = this.SelectedItem;
 
-            var objectField = window.ObjectFields.filter(a => a.Id == queryColumn.ObjectFieldCode)[0];
+            var objectField = window.ObjectFields.filter(a => a.FieldCode == queryColumn.ObjectFieldCode)[0];
 
             this.unSelectedList.push(objectField);
             //-----
@@ -484,7 +486,7 @@ export class QueryColumnsEditComponent {
                 temp = this.queryColumnsList.filter(a => a.QueryId == this.QueryId && a.ObjectFieldCode == queryColumn.ObjectFieldCode && a.Tenant == 0);
             }
             if (temp.length == 0) {
-                temp = this.addedQueryColumnList.filter(a => a.ObjectFieldCode == queryColumn.ObjectFieldcode);
+                temp = this.addedQueryColumnList.filter(a => a.ObjectFieldCode == queryColumn.ObjectFieldCode);
             }
                 var qc = temp[0];
                 if (qc) {

@@ -83,7 +83,7 @@ export class ReceivablesTabComponent {
 
         this.Helper.WaitByIdAndFill('ShipmentReceivable_Quantity', quantity);
         this.Helper.WaitByIdAndFill('ShipmentReceivable_UnitPrice', unitPrice);
-
+        this.Helper.WaitByIdAndFill('ShipmentReceivable_Rate', '3');
         this.Helper.WaitByIdAndClick('Ok-AddReceivableBtn');
     }
 
@@ -112,17 +112,17 @@ export class ReceivablesTabComponent {
 
     EditARInvoice(Voided: boolean, type: string) {
         this.Helper.WaitEditComponentBusyIndicator();
-        this.Helper.WaitByIdAndFill('ARInvoice_VatTypeId', 'Zero');
+       /* this.Helper.WaitByIdAndFill('ARInvoice_VatTypeId', 'Zero');
         this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'ARInvoice_VatTypeId', 'Zero');
         this.Helper.WaitEditComponentBusyIndicator();
-        this.Helper.WaitByIdAndClick('VATApplyToAll');
-        this.Helper.WaitEditComponentBusyIndicator();
+        this.Helper.WaitByIdAndClick('VATApplyToAll');*/
+        //this.Helper.WaitEditComponentBusyIndicator();
+        //this.Helper.WaitByIdAndFill('textboxdiv_ARInvoice_PrintNotes', 'Filled by Protractor');
         this.Helper.WaitByIdAndFill('ARInvoice_VatNumber', 'TestVatNumber');
         this.Helper.WaitByIdAndClick('ARInvoice.B.SaveAsDraft');
         this.WaitBusyIndicatorToShowandHide();
         this.Helper.WaitByIdAndClick('ARInvoice.B.Approve');
         this.WaitBusyIndicatorToShowandHide();
-        this.Helper.WaitBusyIndicator();
         if (Voided == true) {
             if (type == 'ARInvoice')
                 this.Helper.WaitByIdAndClick('MenuButtons_3');

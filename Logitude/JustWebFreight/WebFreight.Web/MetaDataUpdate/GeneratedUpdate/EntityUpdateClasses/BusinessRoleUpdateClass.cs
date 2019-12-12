@@ -679,7 +679,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen BusinessRoleBusinessRoleHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BusinessRole.HeaderScreen", Name = "BusinessRoleHeaderScreen", ObjectTableId = BusinessRoleObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField BusinessRoleBusinessRoleHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = BusinessRoleObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = BusinessRoleBusinessRoleHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BusinessRoleBusinessRoleHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = BusinessRoleObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = BusinessRoleBusinessRoleHeaderScreenScreen0.Id, ObjectFieldCode = BusinessRoleObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    BusinessRoleObjectTable.HeaderScreenId = BusinessRoleBusinessRoleHeaderScreenScreen0.Id;
 	   		  
@@ -687,13 +687,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen BusinessRoleGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BusinessRole.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = BusinessRoleObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField BusinessRoleBusinessRoleGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = BusinessRoleObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = BusinessRoleGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BusinessRoleBusinessRoleGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = BusinessRoleObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = BusinessRoleGeneralTabScreenScreen1.Id, ObjectFieldCode = BusinessRoleObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BusinessRoleBusinessRoleGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = BusinessRoleObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = BusinessRoleGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BusinessRoleBusinessRoleGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = BusinessRoleObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = BusinessRoleGeneralTabScreenScreen1.Id, ObjectFieldCode = BusinessRoleObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BusinessRoleBusinessRoleGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = BusinessRoleObjectFields.Where(d => d.FieldName == "Description").FirstOrDefault().Id, ScreenId = BusinessRoleGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BusinessRoleBusinessRoleGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = BusinessRoleObjectFields.Where(d => d.FieldName == "Description").FirstOrDefault().Id, ScreenId = BusinessRoleGeneralTabScreenScreen1.Id, ObjectFieldCode = BusinessRoleObjectFields.Where(d => d.FieldName == "Description").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BusinessRoleBusinessRoleGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = BusinessRoleObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = BusinessRoleGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BusinessRoleBusinessRoleGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = BusinessRoleObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = BusinessRoleGeneralTabScreenScreen1.Id, ObjectFieldCode = BusinessRoleObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }

@@ -619,7 +619,7 @@ export class EditComponent implements OnDestroy {
 
                         var myScreenField = myScreenFields.filter(f => f.Column == c && f.Row == r)[0];
                         if (myScreenField != null) {
-                            var myObjectField = ObjectFields.filter(d => d.Id === myScreenField.ObjectFieldId)[0];
+                            var myObjectField = ObjectFields.filter(d => d.FieldCode === myScreenField.ObjectFieldCode)[0];
                             if (myObjectField != null) {
 
                                 myRow.Label = TextCodeTranslator.Translate(myObjectField.FullNameTextCodeCode);
@@ -735,6 +735,12 @@ export class EditComponent implements OnDestroy {
                                 break;
                             }
                         case "GAOV":
+                            {
+                                if (this.EntityPM.AccountTypeCode == "2")  // 2- Customer GLAccount
+                                    myTabsSorted.push(tab);
+                                break;
+                            }
+                        case "GAIT":
                             {
                                 if (this.EntityPM.AccountTypeCode == "2")  // 2- Customer GLAccount
                                     myTabsSorted.push(tab);

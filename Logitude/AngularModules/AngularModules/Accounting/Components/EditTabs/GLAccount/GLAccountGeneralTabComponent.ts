@@ -127,11 +127,11 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
 
         return new Promise(resolve =>
         {
-            this.CurrentSession.StartBusyIndicatorLoading();
+            this.entityArgs.EditComponent.StartBusyIndicatorLoading();
             this.gLAccountExtendedPMService.GetConnectedCardsForGLAccount(accountId)
                 .subscribe((myResponse: ServiceResponse) =>
                 {
-                    this.CurrentSession.StopBusyIndicator();
+                    this.entityArgs.EditComponent.StopBusyIndicator();
                     var connectedCards = myResponse.Result;
                     if (connectedCards)
                         resolve(connectedCards);
