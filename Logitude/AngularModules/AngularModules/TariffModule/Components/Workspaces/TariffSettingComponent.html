@@ -1,3 +1,4 @@
+
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -5,17 +6,17 @@
         </td>
     </tr>
 
-    <tr style="height: 1px;" *ngIf="IsResourcesReady">
+    <!--<tr style="height: 1px;" *ngIf="IsResourcesReady">
         <td class="ColorBlue" style="font-size: 13px; text-align: right;">{{DefaultPriceSteps}}</td>
-    </tr>
+    </tr>-->
 
     <tr style="height: 5px;">
-       <td>
-           <div></div>
-       </td>
+        <td>
+            <div></div>
+        </td>
     </tr>
 
-    <tr>
+    <!--<tr>
         <td>
             <div class="MediaFill" *ngIf="IsResourcesReady">
                 <div class="SimpleGridView">
@@ -44,6 +45,8 @@
                                     <IconButton [ExternalId]="'Package_'+i" [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="item.DeleteClicked()" [IsEnabled]="item.Step != null"></IconButton>
                                 </td>
                             </tr>
+
+
                             <tr style="height:10px;">
                                 <td colspan="2">
                                     <div></div>
@@ -75,6 +78,88 @@
                         </table>
                     </div>
                 </div>
+            </div>
+        </td>
+    </tr>-->
+
+    <tr>
+        <td>
+            <div class="MediaFill">
+                <ScrollViewer>
+                    <table class="FixedTable">
+
+                        <tr class="FormFieldRow">
+                            <td style="width:130px;">
+                                <LogLabel [ObjectFieldName]="'AirDefaultStepsId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                            </td>
+
+                            <td style="width:220px;">
+                                <LogLov [ObjectFieldName]="'AirDefaultStepsId'"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [SelectedValue]="AirDefaultStepsId"
+                                        [DataContext]="DataContext"
+                                        [DisplayMemberPath]="'Name'"
+                                        [LookUpTableName]="'PriceSteps'">
+                                </LogLov>
+                            </td>
+
+                            <td  style="width:60px;float: right;">
+                                <div style="width:60px;float: right;">
+                                    <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditPriceStepsClicked('Air')"></IconButton>
+                                    <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddPriceStepsClicked('Air')"></IconButton>
+                                </div>
+                            </td>
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
+
+                        <tr class="FormFieldRow">
+                            <td style="width:120px;">
+                                <LogLabel [ObjectFieldName]="'LCLDefaultStepsId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                            </td>
+
+                            <td style="width:220px;">
+                                <LogLov [ObjectFieldName]="'LCLDefaultStepsId'"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [SelectedValue]="LCLDefaultStepsId"
+                                        [DataContext]="DataContext"
+                                        [DisplayMemberPath]="'Name'"
+                                        [LookUpTableName]="'PriceSteps'">
+                                </LogLov>
+                            </td>
+
+                            <td style="width:60px;float: right;">
+                                <div style="width:60px;float: right;">
+                                    <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditPriceStepsClicked('LCL')"></IconButton>
+                                    <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddPriceStepsClicked('LCL')"></IconButton>
+                                </div>
+                            </td>
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
+
+                        <tr class="FormFieldRow">
+                            <td>
+                                <LogLabel [NoObjectField]="true" [DataContext]="DataContext" [Text]="'Warning Percentage'"></LogLabel>
+                            </td>
+
+                            <td>
+                                <LogTextBox [InputType]="'UnsInteger'" [ObjectFieldName]="'DefaultWarningPercentage'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="DefaultWarningPercentage"></LogTextBox>
+                            </td>
+                            <td colspan="2">
+                                <div></div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="4">
+                                <div></div>
+                            </td>
+                        </tr>
+                    </table>
+                </ScrollViewer>
             </div>
         </td>
     </tr>

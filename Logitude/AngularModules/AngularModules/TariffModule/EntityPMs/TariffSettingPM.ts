@@ -44,6 +44,16 @@ export class TariffSettingPM {
     public set DefaultWarningPercentage(newValue: number) { if (this.defaultWarningPercentage != newValue) { this.defaultWarningPercentage = newValue; this.MarkAsDirty("DefaultWarningPercentage"); } }
        
 	 
+    private airDefaultStepsId: string;
+    public get AirDefaultStepsId() { return this.airDefaultStepsId; }
+    public set AirDefaultStepsId(newValue: string) { if (this.airDefaultStepsId != newValue) { this.airDefaultStepsId = newValue; this.MarkAsDirty("AirDefaultStepsId"); } }
+       
+	 
+    private lCLDefaultStepsId: string;
+    public get LCLDefaultStepsId() { return this.lCLDefaultStepsId; }
+    public set LCLDefaultStepsId(newValue: string) { if (this.lCLDefaultStepsId != newValue) { this.lCLDefaultStepsId = newValue; this.MarkAsDirty("LCLDefaultStepsId"); } }
+       
+	 
 
     public OldEntityPM: TariffSettingPM;
 		

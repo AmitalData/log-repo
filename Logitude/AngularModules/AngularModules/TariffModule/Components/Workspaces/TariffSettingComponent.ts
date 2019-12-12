@@ -8,6 +8,7 @@ import { EntityResourceService } from '../../../Infrastructure/Services/EntityRe
 import { TariffDomainService } from '../../../TariffModule/Services/TariffDomainService';
 import { TariffSettingPMService } from '../../../TariffModule/Services/StandardPMs/TariffSettingPMService';
 import { Validator } from '../../../Infrastructure/Validators/Validator';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 
 @Component({
     moduleId: module.id,
@@ -60,6 +61,28 @@ export class TariffSettingComponent extends BaseComponent {
     set DefaultWarningPercentage(value: number) {
         if (this.EntityPM.DefaultWarningPercentage != value) {
             this.EntityPM.DefaultWarningPercentage = value;
+        }
+    }
+
+    get LCLDefaultStepsId() {
+        if (this.EntityPM != null) {
+            return this.EntityPM.LCLDefaultStepsId;
+        }
+    }
+    set LCLDefaultStepsId(value: string) {
+        if (this.EntityPM.LCLDefaultStepsId != value) {
+            this.EntityPM.LCLDefaultStepsId = value;
+        }
+    }
+
+    get AirDefaultStepsId() {
+        if (this.EntityPM != null) {
+            return this.EntityPM.AirDefaultStepsId;
+        }
+    }
+    set AirDefaultStepsId(value: string) {
+        if (this.EntityPM.AirDefaultStepsId != value) {
+            this.EntityPM.AirDefaultStepsId = value;
         }
     }
 
@@ -182,6 +205,42 @@ export class TariffSettingComponent extends BaseComponent {
                 }
             }
         }
+    }
+
+    EditPriceStepsClicked(type: string) {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Price Steps";
+        if (type == "LCL") {
+           // logWindow.WindowArgs = this.Steps;
+        }
+        else if (type == "Air") {
+
+            logWindow.WindowArgs = this.AirDefaultStepsId;
+        }
+        logWindow.Show("./TariffModule/Components/NewEntity/TariffPriceStepsComponent");
+        logWindow.ComponentLoaded.subscribe(s => {
+            logWindow.WindowClosed.subscribe(d => {
+                if (d && d != "cancel") {
+                    var steps = s.DefaultPriceSteps;
+                    //this.Steps = steps;
+                }
+            });
+        });
+    }
+
+    AddPriceStepsClicked(type: string) {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Price Steps";
+        //logWindow.WindowArgs = this.Steps;
+        logWindow.Show("./TariffModule/Components/NewEntity/TariffPriceStepsComponent");
+        logWindow.ComponentLoaded.subscribe(s => {
+            logWindow.WindowClosed.subscribe(d => {
+                if (d && d != "cancel") {
+                    var steps = s.DefaultPriceSteps;
+                  //  this.Steps = steps; 
+                }
+            });
+        });
     }
 }
 
