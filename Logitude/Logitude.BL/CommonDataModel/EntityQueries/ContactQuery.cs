@@ -33,7 +33,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         {
             repository = contactRepository;
         }
+        public ContactPM GetSinglePMFromCache(string id, int tenant)
+        {
+            string key = $"GetSinglePMFromCache({id},{tenant})";
+            return CacheManager.GetOrInsertNewObject<ContactPM>(key, () =>
+            {
+                return GetSinglePM(id, tenant);
+            });
 
+        }
         public ContactPM GetSinglePM(string id, int tenant)
         {
             if (!string.IsNullOrEmpty(id))

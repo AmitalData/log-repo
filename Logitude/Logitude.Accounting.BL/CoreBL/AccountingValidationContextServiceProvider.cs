@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Logitude.Accounting.BL.Validators;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.BL.CoreBL.ExternalReconcile;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -161,7 +162,7 @@ namespace Logitude.Accounting.BL.CoreBL
         public GLAccountPM GetGLAccount(string GLAccountId, int tenant)
         {
             var a = new GLAccountQueryService(_AccountingContext);
-            return a.GetSinglePM(GLAccountId, tenant);
+            return a.GetSingle(GLAccountId, false, true);
         }
 
 
@@ -174,8 +175,14 @@ namespace Logitude.Accounting.BL.CoreBL
 
         public List<string> GetGLAccountCurrencyList(string CustomerGLAccountId, int tenant)
         {
-            var a = new GLAccountCurrencyQueryService(_AccountingContext);
-            return a.GetRelatedCurrenciesAccount(tenant, CustomerGLAccountId).Select ( r=>r.CurrencyId).ToList();
+            string key = $"GetGLAccountCurrencyList({CustomerGLAccountId},{tenant})";
+            return CacheManager.GetOrInsertNewObject<List<string>>(key, () =>
+            {
+                var a = new GLAccountCurrencyQueryService(_AccountingContext);
+                return a.GetRelatedCurrenciesAccountCurrencyId(tenant, CustomerGLAccountId).ToList();
+            });
+            
+            
         }
 
 

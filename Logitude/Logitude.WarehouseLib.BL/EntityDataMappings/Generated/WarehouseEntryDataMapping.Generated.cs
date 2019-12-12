@@ -77,7 +77,11 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         TotalVolumetricWeight, 
 	         LastStatusUpdateDate, 
 	         ConnectedTo, 
-	         Ratio,
+	         Ratio, 
+	         ToTypeCode, 
+	         FromTypeCode, 
+	         FromCountryId, 
+	         ToCountryId,
 	      }
 
 
@@ -150,7 +154,11 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         MasterHouse, 
 	         EntryReferencesAndDate, 
 	         ConnectedTo, 
-	         Ratio,
+	         Ratio, 
+	         ToTypeCode, 
+	         FromTypeCode, 
+	         FromCountryId, 
+	         ToCountryId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -432,6 +440,26 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Ratio))
             {
 				entityPOCO.Ratio = entityPM.Ratio;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToTypeCode))
+            {
+				entityPOCO.ToTypeCode = entityPM.ToTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromTypeCode))
+            {
+				entityPOCO.FromTypeCode = entityPM.FromTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromCountryId))
+            {
+				entityPOCO.FromCountryId = entityPM.FromCountryId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToCountryId))
+            {
+				entityPOCO.ToCountryId = entityPM.ToCountryId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -720,6 +748,26 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 					entityPM.Ratio = entityPOCO.Ratio;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ToTypeCode))
+            {
+					entityPM.ToTypeCode = entityPOCO.ToTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FromTypeCode))
+            {
+					entityPM.FromTypeCode = entityPOCO.FromTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FromCountryId))
+            {
+					entityPM.FromCountryId = entityPOCO.FromCountryId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ToCountryId))
+            {
+					entityPM.ToCountryId = entityPOCO.ToCountryId;
+            }
+
 		}
 
 		public void PMToOldPM(WarehouseEntryPM entityPM, WarehouseEntryPM oldEntityPM)
@@ -999,6 +1047,26 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Ratio))
             {
                 oldEntityPM.Ratio = entityPM.Ratio;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToTypeCode))
+            {
+                oldEntityPM.ToTypeCode = entityPM.ToTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromTypeCode))
+            {
+                oldEntityPM.FromTypeCode = entityPM.FromTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromCountryId))
+            {
+                oldEntityPM.FromCountryId = entityPM.FromCountryId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToCountryId))
+            {
+                oldEntityPM.ToCountryId = entityPM.ToCountryId;
             }
 			
 		}
