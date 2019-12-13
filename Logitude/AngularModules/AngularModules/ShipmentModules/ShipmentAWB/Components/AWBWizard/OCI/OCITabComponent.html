@@ -1,4 +1,4 @@
-﻿
+
 <table>
     <tr>
         <td>
@@ -23,70 +23,72 @@
 
                         <tr>
                             <td>
-                                <div class="SimpleGridView">
-                                    <div class="SimpleGridViewHeader">
-                                        <table>
-                                            <tr>
-                                                <td style="width: 250px;">{{'AWBOCI.CH.CountryId' | TextCodeTranslationPipe}}</td>
-                                                <td style="width: 150px;">{{'AWBOCI.CH.AWBInformationCode' | TextCodeTranslationPipe}}</td>
-                                                <td style="width: 150px;">{{'AWBOCI.CH.AWBCustomsInformationCode' | TextCodeTranslationPipe}}</td>
-                                                <td style="width: 250px;">{{'AWBOCI.CH.SupplementaryCustomsInfo' | TextCodeTranslationPipe}}</td>
-                                                <td class="LastChild">
-                                                    <div></div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
+                                <div class="MediaFill">
+                                    <div class="SimpleGridView">
+                                        <div class="SimpleGridViewHeader">
+                                            <table>
+                                                <tr>
+                                                    <td style="width: 250px;">{{'AWBOCI.CH.CountryId' | TextCodeTranslationPipe}}</td>
+                                                    <td style="width: 150px;">{{'AWBOCI.CH.AWBInformationCode' | TextCodeTranslationPipe}}</td>
+                                                    <td style="width: 150px;">{{'AWBOCI.CH.AWBCustomsInformationCode' | TextCodeTranslationPipe}}</td>
+                                                    <td style="width: 250px;">{{'AWBOCI.CH.SupplementaryCustomsInfo' | TextCodeTranslationPipe}}</td>
+                                                    <td class="LastChild">
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
 
-                                    <div class="SimpleGridViewBody">
-                                        <table>
-                                            <tr class="SimpleGridViewRow" *ngFor="let item of ItemsSource">
-                                                <td class="CellStretched" style="width: 250px;">
-                                                    <LogLov [ObjectFieldName]="'CountryId'"
-                                                            [SelectedValue]="item.CountryId"
-                                                            [ObjectTableName]="item.ObjectTableName"
-                                                            [DataContext]="item.DataContext"
-                                                            [LookUpTableName]="'Country'">
-                                                    </LogLov>
-                                                </td>
+                                        <div class="SimpleGridViewBody">
+                                            <table>
+                                                <tr class="SimpleGridViewRow" *ngFor="let item of ItemsSource">
+                                                    <td class="CellStretched" style="width: 250px;">
+                                                        <LogLov [ObjectFieldName]="'CountryId'"
+                                                                [SelectedValue]="item.CountryId"
+                                                                [ObjectTableName]="item.ObjectTableName"
+                                                                [DataContext]="item.DataContext"
+                                                                [LookUpTableName]="'Country'">
+                                                        </LogLov>
+                                                    </td>
 
-                                                <td class="CellStretched" style="width: 150px;">
-                                                    <LogLov [ObjectFieldName]="'AWBInformationCode'"
-                                                            [SelectedValue]="item.AWBInformationCode"
-                                                            [ObjectTableName]="item.ObjectTableName"
-                                                            [DataContext]="item.DataContext"
-                                                            [LookUpTableName]="'AWBInformation'"
-                                                            [HideColumns]="true">
-                                                    </LogLov>
-                                                </td>
+                                                    <td class="CellStretched" style="width: 150px;">
+                                                        <LogLov [ObjectFieldName]="'AWBInformationCode'"
+                                                                [SelectedValue]="item.AWBInformationCode"
+                                                                [ObjectTableName]="item.ObjectTableName"
+                                                                [DataContext]="item.DataContext"
+                                                                [LookUpTableName]="'AWBInformation'"
+                                                                [HideColumns]="true">
+                                                        </LogLov>
+                                                    </td>
 
-                                                <td class="CellStretched" style="width: 150px;">
-                                                    <LogLov [ObjectFieldName]="'AWBCustomsInformationCode'"
-                                                            [SelectedValue]="item.AWBCustomsInformationCode"
-                                                            [ObjectTableName]="item.ObjectTableName"
-                                                            [DataContext]="item.DataContext"
-                                                            [LookUpTableName]="'AWBCustomsInformation'"
-                                                            [HideColumns]="true">
-                                                    </LogLov>
-                                                </td>
+                                                    <td class="CellStretched" style="width: 150px;">
+                                                        <LogLov [ObjectFieldName]="'AWBCustomsInformationCode'"
+                                                                [SelectedValue]="item.AWBCustomsInformationCode"
+                                                                [ObjectTableName]="item.ObjectTableName"
+                                                                [DataContext]="item.DataContext"
+                                                                [LookUpTableName]="'AWBCustomsInformation'"
+                                                                [HideColumns]="true">
+                                                        </LogLov>
+                                                    </td>
 
-                                                <td class="CellStretched" style="width: 250px;">
-                                                    <LogTextBox [ObjectFieldName]="'SupplementaryCustomsInfo'" [Text]="item.SupplementaryCustomsInfo" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
-                                                </td>
+                                                    <td class="CellStretched" style="width: 250px;">
+                                                        <LogTextBox [ObjectFieldName]="'SupplementaryCustomsInfo'" [Text]="item.SupplementaryCustomsInfo" [ObjectTableName]="item.ObjectTableName" [DataContext]="item.DataContext" [HideColumns]="true"></LogTextBox>
+                                                    </td>
 
-                                                <td class="CellTools">
-                                                    <span class="CellSeparator"></span>
-                                                    <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="Edit(item)"></IconButton>
-                                                    <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="Delete(item)" [IsEnabled]="IsEditingEnabled"></IconButton>
-                                                </td>
-                                            </tr>
+                                                    <td class="CellTools">
+                                                        <span class="CellSeparator"></span>
+                                                        <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="Edit(item)"></IconButton>
+                                                        <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="Delete(item)" [IsEnabled]="IsEditingEnabled"></IconButton>
+                                                    </td>
+                                                </tr>
 
-                                            <tr>
-                                                <td colspan="5">
-                                                    <div></div>
-                                                </td>
-                                            </tr>
-                                        </table>
+                                                <tr>
+                                                    <td colspan="5">
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </td>
