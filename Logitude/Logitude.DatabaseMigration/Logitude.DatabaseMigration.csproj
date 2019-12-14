@@ -1758,6 +1758,18 @@
     <Compile Include="Migrations\201912110756225_UniqueOriginalJournalIdtk2.Designer.cs">
       <DependentUpon>201912110756225_UniqueOriginalJournalIdtk2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912121012562_IntrestTransactionMigration.cs" />
+    <Compile Include="Migrations\201912121012562_IntrestTransactionMigration.Designer.cs">
+      <DependentUpon>201912121012562_IntrestTransactionMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912121230221_IntrestEntityTypeMigration.cs" />
+    <Compile Include="Migrations\201912121230221_IntrestEntityTypeMigration.Designer.cs">
+      <DependentUpon>201912121230221_IntrestEntityTypeMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912131928012_ItrestTransactionTableConstraintMigration.cs" />
+    <Compile Include="Migrations\201912131928012_ItrestTransactionTableConstraintMigration.Designer.cs">
+      <DependentUpon>201912131928012_ItrestTransactionTableConstraintMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -3014,6 +3026,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912110756225_UniqueOriginalJournalIdtk2.resx">
       <DependentUpon>201912110756225_UniqueOriginalJournalIdtk2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912121012562_IntrestTransactionMigration.resx">
+      <DependentUpon>201912121012562_IntrestTransactionMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912121230221_IntrestEntityTypeMigration.resx">
+      <DependentUpon>201912121230221_IntrestEntityTypeMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912131928012_ItrestTransactionTableConstraintMigration.resx">
+      <DependentUpon>201912131928012_ItrestTransactionTableConstraintMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
