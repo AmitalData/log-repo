@@ -2255,6 +2255,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         sumOfVATsAmounts += record.InvoiceCurrencyVATAmount;
                         sumOfVATsAmounts_Local += record.LocalVATAmount;
                         sumOfVATsAmounts_Profit += record.ProfitCurrencyVATAmount;
+                        CreateInterestTransactionLine(null, record);
                     }
 
                     Amount = MethodHelper.Round(subTotal + sumOfVATsAmounts, 2);
@@ -2772,6 +2773,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     this.UpdateReceivable(item);
                     this.isUpdateTotalVats = true;
                     myLineNumber += 1;
+                    CreateInterestTransactionLine(item, null);
                 }
             }
 
@@ -2822,6 +2824,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                         default: { break; }
                     }
+                    
                 }
             }
         }
@@ -2839,7 +2842,58 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 invoiceLineRepository.SubmitChanges();
             }
+            CreateInterestTransactionLine(item, null);
         }
+        int InvoiceLineNumber;
+
+        private void  CreateInterestTransactionLine(ARInvoiceLinePM invoiceLine, ARInvoiceTotalVAT invoiceTotalVat)
+        {
+            InvoiceLineNumber = invoiceLine.LineNumber;
+            if (invoiceLine != null) {
+
+                CreateInterestTransactionLineForInvoiceLine(invoiceLine);
+               
+
+            }
+
+            //if (invoiceTotalVat != null) {
+
+           // CreateInterestTransactionLineForVatLine(invoiceLine);
+
+            //    InterestTransactionPM InterestTransactionVatLine = new InterestTransactionPM()
+            //    {
+
+            //        InterestEntityTypeCode = "ARInvoice",
+            //        EntityId = invoiceTotalVat.ARInvoiceId,
+            //        OriginalEntityLineNumber = ++InvoiceLineNumber,
+            //        LocalAmount = (decimal)invoiceTotalVat.LocalVatableAmount,
+            //        ForeignAmount = (decimal?)invoiceTotalVat.ProfitVatableAmount,
+            //        InterestValueDate = (DateTime)invoiceLine.DateForInterest,
+            //        Tenant = invoiceLine.Tenant,
+
+            //    };
+            //}
+        }
+        private void CreateInterestTransactionLineForInvoiceLine(ARInvoiceLinePM invoiceLine)
+        {
+            DateTime? dateForInterest = invoiceLine.DateForInterest == null ? DateTime.Now : invoiceLine.DateForInterest;
+
+            InterestTransactionPM interestTransaction = new InterestTransactionPM()
+            {
+                InterestEntityTypeCode = "1",
+                EntityId = invoiceLine.ARInvoiceId,
+                OriginalEntityLineNumber = invoiceLine.LineNumber,
+                LocalAmount = (decimal)invoiceLine.LocalCurrencyAmount,
+                ForeignAmount = (decimal?)invoiceLine.ForiegnCurrencyAmount,
+                InterestValueDate = (DateTime)dateForInterest,//(DateTime)invoiceLine.DateForInterest == null? DateTime.Now : (DateTime)invoiceLine.DateForInterest ,
+                Tenant = invoiceLine.Tenant,
+                ChangeSetOp = ChangeSetOperation.Insert,
+            };
+            IInterestTransactionUpdateServiceExt interestTransactionUpdateService = ContainerAccessor.Container.Resolve(typeof(IInterestTransactionUpdateServiceExt), "InterestTransactionUpdateServiceExt", new ParameterOverride("", 1)) as IInterestTransactionUpdateServiceExt;
+            interestTransactionUpdateService.Create(interestTransaction);
+            
+        }
+
         private void UpdateInvoiceLine(ARInvoiceLinePM item)
         {
             ARInvoiceLine invoiceLine = invoiceLineRepository.GetSingleInvoiceLine(item.Id);

@@ -17,18 +17,17 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 
-import {ReconciliationPM} from '../../EntityPMs/ReconciliationPM';
+import {InterestTransactionPM} from '../../EntityPMs/InterestTransactionPM';
 
-import {ReconciliationLinePM} from '../../EntityPMs/ReconciliationLinePM';
 
 @Injectable()
 
-export class ReconciliationPMService {
+export class InterestTransactionPMService {
  private _http: Http;
  private _apiUrl: string;
  constructor() {
         this._http = ServiceHelper.Http;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/reconciliations';      
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/interesttransactions';      
     }
 
  get(id: string) {
@@ -45,7 +44,7 @@ export class ReconciliationPMService {
 
                    
 					
-                    var entity: ReconciliationPM;
+                    var entity: InterestTransactionPM;
 					if(pm)
 					{
                       entity = this.MapJsonToEntityPM(pm);
@@ -56,7 +55,7 @@ export class ReconciliationPMService {
                 serviceResponse.Result = entity;
               
 			    var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Reconciliation", "GetSinglePM", 'id=' + id);
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "InterestTransaction", "GetSinglePM", 'id=' + id);
 				 
                 return serviceResponse;
 
@@ -64,7 +63,7 @@ export class ReconciliationPMService {
             });                    
     }
 
-	 insert(entityPM: ReconciliationPM) {
+	 insert(entityPM: InterestTransactionPM) {
  
         var callTime = new Date();        
         return Observable.defer(() => {
@@ -77,13 +76,13 @@ export class ReconciliationPMService {
                  
                 validator = new ClassLevelValidator();
                  
-                var errorsArray = validator.Validate("Reconciliation", entityPM);
+                var errorsArray = validator.Validate("InterestTransaction", entityPM);
                  
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
 				 if (errorsArray.length == 0) {
-                    var mappedEntity: ReconciliationPM;
+                    var mappedEntity: InterestTransactionPM;
                     mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 				
 				    return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
@@ -92,14 +91,14 @@ export class ReconciliationPMService {
                             var pm = response.json();
 							if(pm)
 							{
-                               var mappedResult:  ReconciliationPM;
+                               var mappedResult:  InterestTransactionPM;
                                mappedResult = this.MapJsonToEntityPM(pm,true,entityPM);
 							   serviceResponse.Result = mappedResult;
 							}
 							
 
                             var servertime = response.headers.get('ServerExecutionTime');
-                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Reconciliation", "SaveChanges", "");                    
+                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "InterestTransaction", "SaveChanges", "");                    
 												 
                             
                             return serviceResponse;
@@ -119,7 +118,7 @@ export class ReconciliationPMService {
             );
     }
 
-    update(entityPM: ReconciliationPM) {
+    update(entityPM: InterestTransactionPM) {
 
             var callTime = new Date();         
             return Observable.defer(() => {
@@ -132,13 +131,13 @@ export class ReconciliationPMService {
                  
                 validator = new ClassLevelValidator();
                
-                var errorsArray = validator.Validate("Reconciliation", entityPM);
+                var errorsArray = validator.Validate("InterestTransaction", entityPM);
                  
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
 				 if (errorsArray.length == 0) {
-                    var mappedEntity: ReconciliationPM;
+                    var mappedEntity: InterestTransactionPM;
                     mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 				
 				    return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),
@@ -148,13 +147,13 @@ export class ReconciliationPMService {
                             var pm = response.json();
 							if(pm)
 							{
-                               var mappedResult:  ReconciliationPM;
+                               var mappedResult:  InterestTransactionPM;
                                mappedResult = this.MapJsonToEntityPM(pm,true,entityPM);
 							   serviceResponse.Result = mappedResult;
 							 }
 							 
                             var servertime = response.headers.get('ServerExecutionTime');
-                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Reconciliation", "SaveChanges", "");                    
+                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "InterestTransaction", "SaveChanges", "");                    
 					                           
                             return serviceResponse;
 
@@ -176,12 +175,12 @@ export class ReconciliationPMService {
 
    
 
-	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ReconciliationPM = null) {
+	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: InterestTransactionPM = null) {
 
          
         if (!entityPM) {
             
-            entityPM = new ReconciliationPM();
+            entityPM = new InterestTransactionPM();
         }
 
 		var customFields: Array<string> = [];
@@ -210,22 +209,12 @@ export class ReconciliationPMService {
                  
             }
 			
-               this.MapReconciliationLines(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
 		if (mapParent) {
                 entityPM.OldEntityPM = this.clone(entityPM);
-			   			   
-            entityPM.OldEntityPM.ReconciliationLines = [];
-            for (var item in entityPM.ReconciliationLines) {
-            var myReconciliationLinePM = entityPM.ReconciliationLines[item];
-            var newReconciliationLinePM: ReconciliationLinePM = this.clone(myReconciliationLinePM);
-						
-							 
-            entityPM.OldEntityPM.ReconciliationLines.push(newReconciliationLinePM);
-            }
-			   
+
 		}
         else {
 
@@ -235,96 +224,6 @@ export class ReconciliationPMService {
         return entityPM;
     }
 
-    MapReconciliationLines(entityPM: ReconciliationPM, jsonPM: any, mapParent: boolean = true) {
-
-        var oldReconciliationLines: ReconciliationLinePM[] = [];
-        if (entityPM.OldEntityPM && !mapParent) {
-            oldReconciliationLines = entityPM.OldEntityPM.ReconciliationLines;
-        }
-
-        entityPM.ReconciliationLines = new Array<ReconciliationLinePM>();
-        for (var item in jsonPM.ReconciliationLines) {
-            var jItem = jsonPM.ReconciliationLines[item];
-            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
-                continue;
-            }
-            var newReconciliationLinePM: ReconciliationLinePM;
-	  
-            if (mapParent) {
-                newReconciliationLinePM = new ReconciliationLinePM(entityPM);
-            }
-            else
-            {
-                newReconciliationLinePM = new ReconciliationLinePM(null);
-            }
-                
-            var pmKeysArray = Object.keys(jItem);
-            for (var pmKey in pmKeysArray) {
-                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
-                    continue;
-                }
-                var pmProperty = pmKeysArray[pmKey];
-                newReconciliationLinePM[pmProperty] = jItem[pmProperty];
-            }
-           
-			 
-            if (mapParent) {
-                newReconciliationLinePM.UniqueKey = Guid.newGuid();
-                newReconciliationLinePM.ChangeSetOp = "None";
-                jItem.ChangeSetOp = "None";
-                newReconciliationLinePM.OldEntityPM = this.clone(newReconciliationLinePM);
-
-				
-            }
-            else {
-                if (newReconciliationLinePM.UniqueKey) {
-
-                    if (jItem.IsDirty)
-                        newReconciliationLinePM.ChangeSetOp = "Update";
-                }
-                else {
-                        newReconciliationLinePM.ChangeSetOp = "Insert";
-                }
- 
-                newReconciliationLinePM.OldEntityPM = null;
-                newReconciliationLinePM.EntityParentPM = null;
-            }
-			
-			 newReconciliationLinePM.IsDirty = false;
-            entityPM.ReconciliationLines.push(newReconciliationLinePM);
-        }
-        if (oldReconciliationLines) {
-            
-            for (var itemKey in oldReconciliationLines) {
-                if (entityPM.ReconciliationLines.filter(p=> p.UniqueKey === oldReconciliationLines[itemKey].UniqueKey).length === 0) {
-				
-                    if (oldReconciliationLines[itemKey]) {
-                        //oldReconciliationLines[itemKey].ChangeSetOp = "Delete";
-                        //entityPM.ReconciliationLines.push(oldReconciliationLines[itemKey]);
-						var oldItemJson = oldReconciliationLines[itemKey];
-                        var deletedPM: ReconciliationLinePM = new ReconciliationLinePM(null);
-                        var pmKeys = Object.keys(oldItemJson);
-                        for (var key in pmKeys) {
-
-                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
-                                continue;
-                            }
-
-                            var property = pmKeys[key];
-                            deletedPM[property] = oldItemJson[property];
-                        }
-
-                      
-                        deletedPM.IsDirty = false;
-                        deletedPM.ChangeSetOp = "Delete";
-                        
-                        deletedPM.OldEntityPM = null;
-                        entityPM.ReconciliationLines.push(deletedPM);
-                    }
-                }
-            }
-        }
-    }
 
 	  public clone(jsonPM: any) {
         var entityPM: any;
@@ -345,8 +244,8 @@ export class ReconciliationPMService {
     }
 
 	  public GetNewEntityPM() {		 
-		    var entityPM: ReconciliationPM;
-			entityPM = new ReconciliationPM();
+		    var entityPM: InterestTransactionPM;
+			entityPM = new InterestTransactionPM();
 			entityPM.Tenant = InfraSettings.TenantPM.Id;
 			return entityPM;
     }

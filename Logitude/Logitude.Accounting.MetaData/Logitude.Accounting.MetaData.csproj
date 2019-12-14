@@ -83,6 +83,8 @@
     <None Include="EntityFiles\ExternalPageAdditionalData.lxml" />
     <None Include="EntityFiles\InterestBasesPeriod.lxml" />
     <None Include="EntityFiles\InterestBasesType.lxml" />
+    <None Include="EntityFiles\InterestEntityType.lxml" />
+    <None Include="EntityFiles\InterestTransaction.lxml" />
     <None Include="EntityFiles\JournalAdditionalData.lxml" />
     <None Include="EntityFiles\JournalExternalReconcile.lxml">
       <SubType>Designer</SubType>
