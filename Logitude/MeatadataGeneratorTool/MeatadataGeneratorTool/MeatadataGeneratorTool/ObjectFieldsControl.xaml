@@ -132,21 +132,34 @@
                                        Text="General Settings" />
                         </Border>
 
-                        <TextBlock Grid.Row="1"
-                                   Grid.Column="0"
+                        <Grid Grid.Row="1"
+                              Grid.Column="0"
+                              VerticalAlignment="Center">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="30" />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0"
                                    VerticalAlignment="Center"
                                    FontWeight="Bold"
                                    Text="Field Name:" />
-                        <TextBlock Grid.Row="2"
-                                   Grid.Column="0"
+                            <TextBlock Grid.Row="1"
                                    VerticalAlignment="Center"
                                    FontWeight="Bold"
                                    Text="PM Property Path:" />
-                        <TextBlock Grid.Row="3"
-                                   Grid.Column="0"
+                            <TextBlock Grid.Row="2"
                                    VerticalAlignment="Center"
                                    FontWeight="Bold"
                                    Text="List Property Path:" />
+                            <TextBlock Grid.Row="3"
+                                   VerticalAlignment="Center"
+                                   Text="Field Short Name:" />
+                        </Grid>
+
+
                         <TextBlock Grid.Row="4"
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
@@ -281,9 +294,17 @@
                                    VerticalAlignment="Center"
                                    Text="Is PM Field:" />
 
+                        <Grid Grid.Row="1"
+                              Grid.Column="1"
+                              VerticalAlignment="Center">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="30" />
+                            </Grid.RowDefinitions>
 
-                        <TextBox Grid.Row="1"
-                                 Grid.Column="1"
+                            <TextBox Grid.Row="0"
                                  Height="22"
                                  Margin="2"
                                  VerticalAlignment="Center"
@@ -295,22 +316,30 @@
                                                 ValidatesOnNotifyDataErrors=True,
                                                 ValidatesOnExceptions=True}"
                                  TextChanged="TextBox_TextChanged" />
-                        <TextBox Grid.Row="2"
-                                 Grid.Column="1"
+                            <TextBox Grid.Row="1"
                                  Height="22"
                                  Margin="2"
                                  VerticalAlignment="Center"
                                  Text="{Binding PMPropertyPath,
                                                 Mode=TwoWay}"
                                  TextChanged="TextBox_TextChanged" />
-                        <TextBox Grid.Row="3"
-                                 Grid.Column="1"
+                            <TextBox Grid.Row="2"
                                  Height="22"
                                  Margin="2"
                                  VerticalAlignment="Center"
                                  Text="{Binding ListPropertyPath,
                                                 Mode=TwoWay}"
                                  TextChanged="TextBox_TextChanged" />
+                            <TextBox Grid.Row="3"
+                                 Height="22"
+                                 Margin="2"
+                                 VerticalAlignment="Center"
+                                 Text="{Binding ShortName,
+                                                Mode=TwoWay}"
+                                 TextChanged="TextBox_TextChanged" />
+                        </Grid>
+
+
                         <ComboBox Grid.Row="4"
                                   Grid.Column="1"
                                   Height="22"

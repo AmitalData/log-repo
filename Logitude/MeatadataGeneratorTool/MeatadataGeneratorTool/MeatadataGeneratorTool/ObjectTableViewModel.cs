@@ -1312,6 +1312,13 @@ namespace MeatadataGeneratorTool
             set { dBTableName = value; IsDirty = true; FirePropertyChanged("DBTableName"); }
         }
 
+        string dBTableShortName;
+        public string DBTableShortName
+        {
+            get { return dBTableShortName; }
+            set { dBTableShortName = value; IsDirty = true; FirePropertyChanged("DBTableShortName"); }
+        }
+        
         string olddBTableName;
         public string OldDBTableName
         {
@@ -2682,7 +2689,6 @@ namespace MeatadataGeneratorTool
                     ErrorsVisibility = Visibility.Visible;
                 }
             }
-
             catch (Exception ex)
             {
                 string error = ex.Message + "\n" + ex.StackTrace != null ? ex.StackTrace : "";

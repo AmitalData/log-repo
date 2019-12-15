@@ -77,32 +77,8 @@
   <Column Name="Location" Type="nvarchar" Size="255">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="ActivityTypeName" Type="varchar" Size="20">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="SearchFields" Type="nvarchar" Size="-1">
     <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ActivityStatusName" Type="varchar" Size="20">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="OwnerName" Type="varchar" Size="60">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="PriorityName" Type="varchar" Size="20">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="MyOpenActivities" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="AllOpenActivities" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="MyClosedActivities" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="AllClosedActivities" Type="bit">
-    <Constraints Nullable="false" />
   </Column>
   <Column Name="IsLeftVoiceMail" Type="bit">
     <Constraints Nullable="false" />
@@ -111,9 +87,6 @@
     <Constraints Nullable="true" />
   </Column>
   <Column Name="NeedSynchronization" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IsMarkedCompleted" Type="bit">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="IsOpen" Type="bit">
@@ -161,31 +134,13 @@
   <Column Name="CompleteDate" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="OpportunitySubject" Type="nvarchar" Size="250">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ActivityInvitees" Type="varchar">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="BusinessUnitId" Type="varchar" Size="50">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="BusinessUnitName" Type="varchar" Size="40">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="SenderEmail" Type="varchar" Size="70">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="CommunicationLogId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ActivityEmailRecipients" Type="varchar">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ActivityNotes" Type="varchar">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="CustomerName" Type="varchar" Size="70">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="SenderContactId" Type="varchar" Size="15">
@@ -197,19 +152,7 @@
   <Column Name="ConcurrencyGUID" Type="varchar" Size="40">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="MeetingsSummary" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="CancelledActivities" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="CreatedByUserName" Type="varchar" Size="60">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="QuoteId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="QuoteNumber" Type="varchar" Size="20">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="TicketId" Type="varchar" Size="15">
@@ -224,18 +167,6 @@
   <Column Name="SendReceiveDate" Type="datetime">
     <Constraints Nullable="true" />
   </Column>
-  <Column Name="ConnectedtoCustomer" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="ConnectedtoOpportunity" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="ConnectedtoTicket" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="ConnectedtoQuote" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
   <Column Name="ActivityWith" Type="varchar" Size="500">
     <Constraints Nullable="true" />
   </Column>
@@ -245,51 +176,6 @@
   <Column Name="MeetingSummaryRightToLeft" Type="bit">
     <Constraints Nullable="false" />
   </Column>
-  <Column Name="UpcomingDate" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="SortByDate" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="SenderContactName" Type="nvarchar" Size="70">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="OriginalActivitySubject" Type="nvarchar" Size="60">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="IsHybrid" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="ActivityDocumentDatas" Type="varchar">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="IsCustomerBlockedBusinessUnit" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="IsCopy" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="LastModified" Type="varchar">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="DontSetNeedSynchronization" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="ActivityTypePathCode" Type="nvarchar" Size="60">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ObjectTableName" Type="nvarchar" Size="60">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="PostToFollowers" Type="bit">
-    <Constraints Nullable="false" />
-  </Column>
-  <Column Name="UpdatedByUserName" Type="varchar" Size="60">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="RecipientsEmails" Type="varchar" Size="1000">
-    <Constraints Nullable="true" />
-  </Column>
   <Column Name="From" Type="varchar" Size="500">
     <Constraints Nullable="true" />
   </Column>
@@ -297,12 +183,6 @@
     <Constraints Nullable="true" />
   </Column>
   <Column Name="Cc" Type="varchar" Size="4000">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="ArchiveDate" Type="datetime">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="CallWithName" Type="varchar" Size="70">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="DueDateOffset" Type="int">
@@ -315,12 +195,6 @@
     <Constraints Nullable="true" />
   </Column>
   <Column Name="TeamId" Type="varchar" Size="15">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="BusinessProcessQueueName" Type="varchar" Size="40">
-    <Constraints Nullable="true" />
-  </Column>
-  <Column Name="TeamName" Type="varchar" Size="40">
     <Constraints Nullable="true" />
   </Column>
   <Column Name="ShipmentId" Type="varchar" Size="15">

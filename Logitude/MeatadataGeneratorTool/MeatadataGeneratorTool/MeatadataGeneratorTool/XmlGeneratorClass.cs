@@ -943,18 +943,68 @@ namespace MeatadataGeneratorTool
             SetAttribute("IsNew", table.IsNew.ToString().ToLower(), entityElement);
 
             SetAttribute("DBTableName", GetStringValue(table.DBTableName), entityElement);
-            //SetAttribute("OldDBTableName", GetStringValue(table.OldDBTableName), entityElement);
 
-
-            if (table.DBTableName != App.CurrentDBTableName)
+            if (!string.IsNullOrEmpty(table.DBTableShortName))
             {
-                SetAttribute("OldDBTableName", App.CurrentDBTableName, entityElement);
+                SetAttribute("DBTableShortName", GetStringValue(table.DBTableShortName), entityElement);
+            }
+            
+
+            string oldDBTableName = null;
+
+            if (!string.IsNullOrEmpty(App.CurrentDBTableName))
+            {
+                if (table.DBTableName != App.CurrentDBTableName)
+                {
+                    oldDBTableName = App.CurrentDBTableName;
+                }
+                else
+                {
+                    if (table.OldDBTableName.Contains(","))
+                    {
+                        oldDBTableName = table.OldDBTableName.Split(',')[0];
+                    }
+                    else
+                    {
+                        oldDBTableName = table.OldDBTableName;
+                    }
+                }
             }
             else
             {
-                SetAttribute("OldDBTableName", GetStringValue(table.OldDBTableName), entityElement);
+                oldDBTableName = table.DBTableName;
+            }
+            
+
+            if (string.IsNullOrEmpty(App.CurrentDBTableShortName) && !string.IsNullOrEmpty(table.DBTableShortName))
+            {
+                oldDBTableName = oldDBTableName + "," + table.DBTableShortName;
             }
 
+            if (!string.IsNullOrEmpty(App.CurrentDBTableShortName) && !string.IsNullOrEmpty(table.DBTableShortName))
+            {
+                if (table.DBTableShortName != App.CurrentDBTableShortName)
+                {
+                    oldDBTableName = oldDBTableName + "," + App.CurrentDBTableShortName;
+                }
+                else
+                {
+                    oldDBTableName = oldDBTableName + "," + table.DBTableShortName;
+                }
+            }
+
+            if (string.IsNullOrEmpty(table.DBTableShortName) && !string.IsNullOrEmpty(App.CurrentDBTableShortName))
+            {
+                oldDBTableName = oldDBTableName + "," + App.CurrentDBTableShortName;
+            }
+
+            if (string.IsNullOrEmpty(table.DBTableShortName) && string.IsNullOrEmpty(App.CurrentDBTableShortName) && table.OldDBTableName.Contains(","))
+            {
+                oldDBTableName = oldDBTableName + "," + table.OldDBTableName.Split(',')[1];
+            }
+
+
+            SetAttribute("OldDBTableName", oldDBTableName, entityElement);
 
             SetAttribute("ObjectTableSingular", GetStringValue(table.ObjectTableSingular), entityElement);
             SetAttribute("ObjectTablePlural", GetStringValue(table.ObjectTablePlural), entityElement);
@@ -976,9 +1026,6 @@ namespace MeatadataGeneratorTool
             {
                 RemoveAttribute("DescriptionLocalDefaultText", entityElement);
             }
-
-           
-             
           
 
             SetAttribute("HasCustomFilter", table.HasCustomFilter.ToString().ToLower(), entityElement);
@@ -1914,10 +1961,135 @@ namespace MeatadataGeneratorTool
 
             tableElement.SetAttribute("Name", table.DBTableName);
 
-            if (table.DBTableName != App.CurrentDBTableName && !string.IsNullOrEmpty(App.CurrentDBTableName))
+            if (!string.IsNullOrEmpty(table.DBTableShortName))
             {
-                tableElement.SetAttribute("OldName", App.CurrentDBTableName);
+                tableElement.SetAttribute("ShortName", table.DBTableShortName);
             }
+
+
+            string oldName = null;
+
+            if (!string.IsNullOrEmpty(App.CurrentDBTableName))
+            {
+                if (table.DBTableName != App.CurrentDBTableName)
+                {
+                    oldName = App.CurrentDBTableName;
+                }
+                else
+                {
+                    if (table.OldDBTableName.Contains(","))
+                    {
+                        oldName = table.OldDBTableName.Split(',')[0];
+                    }
+                    else
+                    {
+                        oldName = table.OldDBTableName;
+                    }
+                }
+            }
+            else
+            {
+                oldName = table.DBTableName;
+            }
+
+
+            if (string.IsNullOrEmpty(App.CurrentDBTableShortName) && !string.IsNullOrEmpty(table.DBTableShortName))
+            {
+                oldName = oldName + "," + table.DBTableShortName;
+            }
+
+            if (!string.IsNullOrEmpty(App.CurrentDBTableShortName) && !string.IsNullOrEmpty(table.DBTableShortName))
+            {
+                if (table.DBTableShortName != App.CurrentDBTableShortName)
+                {
+                    oldName = oldName + "," + App.CurrentDBTableShortName;
+                }
+                else
+                {
+                    oldName = oldName + "," + table.DBTableShortName;
+                }
+            }
+
+            if (string.IsNullOrEmpty(table.DBTableShortName) && !string.IsNullOrEmpty(App.CurrentDBTableShortName))
+            {
+                oldName = oldName + "," + App.CurrentDBTableShortName;
+            }
+
+            if (string.IsNullOrEmpty(table.DBTableShortName) && string.IsNullOrEmpty(App.CurrentDBTableShortName) && table.OldDBTableName.Contains(","))
+            {
+                oldName = oldName + "," + table.OldDBTableName.Split(',')[1];
+            }
+
+            string oldNameAttr = null;
+
+            if (oldName.Contains(","))
+            {
+                if (table.DBTableName != oldName.Split(',')[0])
+                {
+                    oldNameAttr = oldName.Split(',')[0];
+                }
+                if(table.DBTableName != oldName.Split(',')[0] && table.DBTableShortName != oldName.Split(',')[1])
+                {
+                    oldNameAttr = oldNameAttr + ",";
+                }
+                if(table.DBTableShortName != oldName.Split(',')[1])
+                {
+                    oldNameAttr = oldNameAttr + oldName.Split(',')[1];
+                }
+            }
+            else
+            {
+                if (table.DBTableName != oldName)
+                {
+                    oldNameAttr = oldName;
+                }
+            }
+
+            if(oldNameAttr != null)
+            {
+                tableElement.SetAttribute("OldName", oldNameAttr);
+            }
+            
+
+            //if (!string.IsNullOrEmpty(table.OldDBTableName))
+            //{
+            //    string oldName = null;
+            //    if (table.OldDBTableName.Contains(","))
+            //    {
+            //        string dbTableOldName = null;
+            //        string dbTableOldShortName = null;
+            //        string comma = null;
+
+            //        if(App.CurrentDBTableName != table.OldDBTableName.Split(',')[0])
+            //        {
+            //            dbTableOldName = App.CurrentDBTableName;
+            //        }
+
+            //        if (App.CurrentDBTableShortName != table.OldDBTableName.Split(',')[1])
+            //        {
+            //            dbTableOldShortName = string.IsNullOrEmpty(App.CurrentDBTableShortName) ? table.OldDBTableName.Split(',')[1] : App.CurrentDBTableShortName;
+            //        }
+
+            //        if (dbTableOldName != null && dbTableOldShortName != null)
+            //        {
+            //            comma = ",";
+            //        }
+
+            //        oldName = dbTableOldName + comma + dbTableOldShortName;
+            //    }
+            //    else
+            //    {
+            //        if (table.DBTableName != table.OldDBTableName)
+            //        {
+            //            oldName = table.OldDBTableName;
+            //        }
+            //    }
+
+            //    if(oldName != null)
+            //    {
+            //        tableElement.SetAttribute("OldName", oldName);
+            //    }
+            //}
 
             tableElement.SetAttribute("Schema", table.DxmlDatabaseSchemaCode);
             tableElement.SetAttribute("DBType", table.DxmlDatabaseTypeCode);

@@ -1,8 +1,8 @@
-<Table Name="Test" Schema="dbo" DBType="Main">
-  <Column Name="Iddd" Type="varchar" ShortName="d" Size="15" OldNames="Id,Idd">
+<Table Name="Test" ShortName="T" Schema="dbo" DBType="Main">
+  <Column Name="Id" Type="varchar" Size="15">
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
-  <Column Name="Tenant2" Type="int" ShortName="Tenant" OldNames="T">
+  <Column Name="Tenant" Type="int">
     <Constraints Nullable="false" />
   </Column>
   <Column Name="CreateDate" Type="datetime">
