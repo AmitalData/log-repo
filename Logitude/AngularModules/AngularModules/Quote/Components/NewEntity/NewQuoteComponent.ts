@@ -25,6 +25,7 @@ import {QuotePMInitService} from '../../EntityPMInitServices/QuotePMInitService'
 import {QuoteSettingPM} from '../../EntityPMs/QuoteSettingPM';
 import {QuoteDomainService} from '../../Services/QuoteDomainService';
 import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 
 @Component({
     moduleId: module.id,
@@ -45,6 +46,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
     public QuoteSetting: QuoteSettingPM = null;
     public ValidationErrorsList: string[];
     public IsAddAgentVisible: boolean = false;
+    private isConfirmCloseClicked: boolean = false;
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
@@ -2343,6 +2345,28 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
     }
 
     CancelButtonClicked() {
+        if (this.EntityPM.IsDirty) {
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Width = 450;
+            confirmWindow.Height = 190;
+            confirmWindow.ShowCancelButton = false;
+            confirmWindow.Title = TextCodeTranslator.Translate("General.O.UnSavedChanges");
+            confirmWindow.Show("You are about to cancel Quote and all data will be lost - Are you sure ?");
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    this.CloseWizardWindow();
+                }
+                else if (confirmWindow.No) {
+                    this.isConfirmCloseClicked = true;
+                }
+            });
+        }
+
+        else {
+            this.CloseWizardWindow();
+        }
+    }
+    private CloseWizardWindow() {
         this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
