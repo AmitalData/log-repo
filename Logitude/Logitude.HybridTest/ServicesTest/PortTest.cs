@@ -48,15 +48,17 @@ namespace Logitude.HybridTest.ServicesTest
                 SearchFields = HybridData.PortCodeLON
             };
 
-            //Response serviceResponse = new Response();
-            //object[] serviceParameters = new object[] { filters, EnvironmentGlobalParams.MainTenant, serviceResponse };
-            //PortList[] ports = (PortList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            //Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
-            //Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.Result);
-            //Assert.AreEqual(ports[0].Id, HybridData.PortIdLON, "Get Hybrid From Port From Ports Failed!");
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { filters, EnvironmentGlobalParams.MainTenant, serviceResponse };
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+
+            PortList[] ports = (PortList[])serviceOutcome.Result;
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Get List Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNull(serviceOutcome.Response.Result, "Get List Failed! " + serviceOutcome.Response.Result);
+            Assert.AreEqual(ports[0].Id, HybridData.PortIdLON, "Get Hybrid From Port From Ports Failed!");
         }
         [TestMethod]
-        public void Test_PORT_GetPortId() //This mehtod get the port from port 0
+        public void Test_PORT_GetPortId() //This mehtod get the port from tenant 0
         {
             InvokedProperties serviceProperties = new InvokedProperties
             {
@@ -72,11 +74,13 @@ namespace Logitude.HybridTest.ServicesTest
                 CountryCode = "IL",
             };
 
-            //Response serviceResponse = new Response();
-            //object[] serviceParameters = new object[] { filters, EnvironmentGlobalParams.MainTenant, serviceResponse };
-            //string port = (string)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            //Assert.IsFalse(serviceResponse.HasError, "Get Failed! " + serviceResponse.ErrorMessage);
-            //Assert.IsNotNull(serviceResponse.Result, "Get Failed! " + serviceResponse.ErrorMessage);
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { filters, EnvironmentGlobalParams.MainTenant, serviceResponse };
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+
+            string port = (string)serviceOutcome.Result;
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Get Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNotNull(serviceOutcome.Response.Result, "Get Failed! " + serviceOutcome.Response.ErrorMessage);
         }
     }
 }

@@ -12,8 +12,6 @@ namespace Logitude.HybridTest.ServicesTest
         public void Test_CustomBankCard_UPSERT()
         {
             Assert.Inconclusive("Not Implemented !");
-            //Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
-            //Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
         }
 
         [TestMethod]

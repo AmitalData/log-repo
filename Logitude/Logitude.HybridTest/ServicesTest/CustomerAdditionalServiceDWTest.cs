@@ -20,13 +20,15 @@ namespace Logitude.HybridTest.ServicesTest
                 ServiceFilterType = null,
             };
 
-            //Response serviceResponse = new Response();
-            //object[] serviceParameters = new object[] { EnvironmentGlobalParams.MainTenant, serviceResponse };
-            //CustomerAdditionalServiceDW[] customerAdditionalServices = (CustomerAdditionalServiceDW[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            //Assert.IsFalse(serviceResponse.HasError, "Get Customer Additional Services Failed! " + serviceResponse.ErrorMessage);
-            //Assert.IsNull(serviceResponse.Result, "Get Customer Additional Services Failed! " + serviceResponse.ErrorMessage);
-            //if(customerAdditionalServices.Length == 0)
-            //    Assert.Inconclusive("There Isn't Customer Additional Services!");
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { EnvironmentGlobalParams.MainTenant, serviceResponse };
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+
+            CustomerAdditionalServiceDW[] customerAdditionalServices = (CustomerAdditionalServiceDW[])serviceOutcome.Result;
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Get Customer Additional Services Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNull(serviceOutcome.Response.Result, "Get Customer Additional Services Failed! " + serviceOutcome.Response.ErrorMessage);
+            if (customerAdditionalServices.Length == 0)
+                Assert.Inconclusive("There Isn't Customer Additional Services!");
         }
     }
 }

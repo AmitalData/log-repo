@@ -13,7 +13,6 @@ namespace Logitude.HybridTest.WcfFactory
     {
         readonly private static CustomerPM customerPM = new CustomerPM()
         {
-            //Code = IdCounter.GetNumber("Customer", EnvironmentGlobalParams.MainTenant),
             Code = HybridData.CustomerCodeHCustomer,
             EnglishName = "TestShipperExport1",
             LocalName = "TestShipperExport1",
@@ -24,6 +23,17 @@ namespace Logitude.HybridTest.WcfFactory
         };
 
         public static CustomerPM GetCustomerPM() {
+            PreapareAddress();
+            return customerPM;
+        }
+        public static CustomerPM GetCustomerPMWithNewCode()
+        {
+            customerPM.Code = CodeCounter.GetNumber("Customer", EnvironmentGlobalParams.MainTenant).ToString();
+            PreapareAddress();
+            return customerPM;
+        }
+        private static void PreapareAddress()
+        {
             customerPM.Addresses.Add(new AddressPM
             {
                 Description = "Main Address",
@@ -38,7 +48,6 @@ namespace Logitude.HybridTest.WcfFactory
                 CountryCode = HybridData.CountryCodeUS,
                 Tenant = EnvironmentGlobalParams.MainTenant,
             });
-            return customerPM;
         }
     }
 }

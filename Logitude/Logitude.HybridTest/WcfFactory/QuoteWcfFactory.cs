@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.QuoteModel.EntityPMs;
+using Logitude.Server.Tools.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +33,11 @@ namespace Logitude.HybridTest.WcfFactory
         };
         public static QuotePM GetQuotePM()
         {
-            //quotePM.QuoteNumber = TableCounter.GetNumber(EnvironmentGlobalParams.MainTenant, "QUOT", quotePM.DirectionId, quotePM.TransportModeId);
+            return quotePM;
+        }
+        public static QuotePM GetQuotePMWithNewNumber()
+        {
+            quotePM.QuoteNumber = TableCounter.GetNumber(EnvironmentGlobalParams.MainTenant, "QUOT", quotePM.DirectionId, quotePM.TransportModeId);
             return quotePM;
         }
     }

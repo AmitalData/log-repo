@@ -14,18 +14,18 @@ namespace Logitude.HybridTest.WcfCallers
         [AssemblyInitialize]
         public static void PrepareSystemVars(TestContext context)
         {
-            GetAuthenticationMainToken();
-            //GetAuthenticationsecondaryToken();
-            //PrepareShipment.PrepareShipmentVars();
+            GetAuthenticationMainTenantToken();
+            GetAuthenticationSecondaryTenantToken();
+            PrepareShipment.PrepareShipmentVars();
 
-            ////Other necessary Vars:
-            //UpsertGlobalZone();
-            //UpsertDepartment();
-            //UpsertBranch();
-            //UpsertUser();
-            //UpsertCardContact();
+            //Other necessary Vars:
+            UpsertGlobalZone();
+            UpsertDepartment();
+            UpsertBranch();
+            UpsertUser();
+            UpsertCardContact();
         }
-        private static void GetAuthenticationMainToken()
+        private static void GetAuthenticationMainTenantToken()
         {
             var apiCred = new APICredentialsParameters() { PrimaryKey = EnvironmentGlobalParams.MainTenant_APICredential_PrimaryKey, SecondaryKey = EnvironmentGlobalParams.MainTenant_APICredential_SecondaryKey, Tenant = EnvironmentGlobalParams.MainTenant };
             InvokedProperties serviceProperties = new InvokedProperties
@@ -39,12 +39,12 @@ namespace Logitude.HybridTest.WcfCallers
             object[] serviceParameters = new object[] { "", apiCred };
             ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
             if (!serviceOutcome.Response.HasError)
-                EnvironmentGlobalParams.MainToken = serviceOutcome.Response.Result;
+                EnvironmentGlobalParams.MainTenantToken = serviceOutcome.Response.Result;
             else
                 Assert.Fail("Login Failed");
             Assert.IsNotNull(serviceOutcome.Response.Result, "The Token returned is null " + serviceOutcome.Response.ErrorMessage);
         }
-        private static void GetAuthenticationsecondaryToken()
+        private static void GetAuthenticationSecondaryTenantToken()
         {
             var apiCred = new APICredentialsParameters() { PrimaryKey = EnvironmentGlobalParams.SecondaryTenant_APICredential_PrimaryKey, SecondaryKey = EnvironmentGlobalParams.SecondaryTenant_APICredential_SecondaryKey, Tenant = EnvironmentGlobalParams.SecondaryTenant };
             InvokedProperties serviceProperties = new InvokedProperties
@@ -58,7 +58,7 @@ namespace Logitude.HybridTest.WcfCallers
             object[] serviceParameters = new object[] { "", apiCred };
             ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
             if (!serviceOutcome.Response.HasError)
-                EnvironmentGlobalParams.SecondaryToken = serviceOutcome.Response.Result;
+                EnvironmentGlobalParams.SecondaryTenantToken = serviceOutcome.Response.Result;
             else
                 Assert.Fail("Login Failed");
             Assert.IsNotNull(serviceOutcome.Response.Result, "The Token returned is null " + serviceOutcome.Response.ErrorMessage);
@@ -95,20 +95,6 @@ namespace Logitude.HybridTest.WcfCallers
                 Tenant = EnvironmentGlobalParams.MainTenant,
             };
             AssertResponse(branchPM);
-        }
-        private static void UpsertAgent()
-        {
-            AgentPM agentPM = new AgentPM()
-            {
-                Code = HybridData.AgentCodeHAgent,
-                EnglishName = "Hybrid Agent",
-                LocalName = "Hybrid Agent",
-                CityName = "Hybrid City",
-                CountryCode = HybridData.CountryCodeUS,
-                PartnerTypeId = "AG",
-                Tenant = EnvironmentGlobalParams.MainTenant,
-            };
-            AssertResponse(agentPM);
         }
         private static void UpsertUser()
         {

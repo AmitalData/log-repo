@@ -12,17 +12,16 @@ namespace Logitude.HybridTest.WcfCallers
     {
         public static void PrepareCustomersVars()
         {
-            UpsertShipperIdHCustomerExport1();
+            UpsertShipperCodeHCustomerExport1();
             UpsertCardContactHCustomerExport1();
-            UpsertShipperIdTestShipperImport1();
-            UpsertConsigneeIdTestConsigneeExport1();
-            UpsertConsigneeIdTestConsigneeImport1();
+            UpsertShipperCodeTestShipperImport1();
+            UpsertConsigneeCodeTestConsigneeExport1();
+            UpsertConsigneeCodeTestConsigneeImport1();
         }
-        private static void UpsertShipperIdHCustomerExport1()
+        private static void UpsertShipperCodeHCustomerExport1()
         {
             CustomerPM customerPM = CustomerWcfFactory.GetCustomerPM();
             Response serviceResponse = AssertResponse(customerPM);
-            HybridData.CustomerIdHCustomer = serviceResponse.Result;
         }
         private static void UpsertCardContactHCustomerExport1()
         {
@@ -35,7 +34,7 @@ namespace Logitude.HybridTest.WcfCallers
             };
             AssertResponse(cardContactPM);
         }
-        private static void UpsertShipperIdTestShipperImport1()
+        private static void UpsertShipperCodeTestShipperImport1()
         {
             CustomerPM customerPM = CustomerWcfFactory.GetCustomerPM();
             customerPM.Code = HybridData.CustomerCodeTestShipperImport1;
@@ -50,9 +49,8 @@ namespace Logitude.HybridTest.WcfCallers
             customerPM.Addresses[0].CountryCode = HybridData.CountryCodeUS;
             customerPM.Addresses[0].Address1 = "18 West 48th Street";
             Response serviceResponse = AssertResponse(customerPM);
-            HybridData.CustomerIdTestShipperImport1 = serviceResponse.Result;
         }
-        private static void UpsertConsigneeIdTestConsigneeExport1()
+        private static void UpsertConsigneeCodeTestConsigneeExport1()
         {
             CustomerPM customerPM = CustomerWcfFactory.GetCustomerPM();
             customerPM.Code = HybridData.CustomerCodeTestConsigneeExport1;
@@ -61,9 +59,8 @@ namespace Logitude.HybridTest.WcfCallers
             customerPM.Notes = "TestConsigneeExport1";
             customerPM.VatNumber = "TestConsigneeExport1";
             Response serviceResponse = AssertResponse(customerPM);
-            HybridData.CustomerIdTestConsigneeExport1 = serviceResponse.Result;
         }
-        private static void UpsertConsigneeIdTestConsigneeImport1()
+        private static void UpsertConsigneeCodeTestConsigneeImport1()
         {
             CustomerPM customerPM = CustomerWcfFactory.GetCustomerPM();
             customerPM.Code = HybridData.CustomerCodeTestConsigneeImport1;
@@ -78,7 +75,6 @@ namespace Logitude.HybridTest.WcfCallers
             customerPM.Addresses[0].CountryCode = HybridData.CountryCodeUS;
             customerPM.Addresses[0].Address1 = "18 West 48th Street";
             Response serviceResponse = AssertResponse(customerPM);
-            HybridData.CustomerIdTestConsigneeImport1 = serviceResponse.Result;
         }
         private static Response AssertResponse<T>(T entityPM)
         {

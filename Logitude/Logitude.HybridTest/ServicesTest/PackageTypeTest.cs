@@ -53,12 +53,14 @@ namespace Logitude.HybridTest.ServicesTest
                 SearchFields = HybridData.PackageTypeCodePC1,
             };
 
-            //Response serviceResponse = new Response();
-            //object[] serviceParameters = new object[] { filters, EnvironmentGlobalParams.MainTenant, serviceResponse };
-            //PackageTypeList[] packageTypes = (PackageTypeList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            //Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
-            //Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.Result);
-            //Assert.AreEqual(packageTypes[0].Id, HybridData.PackageTypeIdPC1, "Get Hybrid Package Type Item Failed!");
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { filters, EnvironmentGlobalParams.MainTenant, serviceResponse };
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+
+            PackageTypeList[] packageTypes = (PackageTypeList[])serviceOutcome.Result;
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Get List Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNull(serviceOutcome.Response.Result, "Get List Failed! " + serviceOutcome.Response.Result);
+            Assert.AreEqual(packageTypes[0].Code, HybridData.PackageTypeCodePC1, "Get Hybrid Package Type Item Failed!");
         }
     }
 }

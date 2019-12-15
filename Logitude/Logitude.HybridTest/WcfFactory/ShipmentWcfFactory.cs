@@ -34,28 +34,12 @@ namespace Logitude.HybridTest.WcfFactory
 
         public static ShipmentPM GetShipmentPM()
         {
-            //shipmentPM.ShipmentNumber = GetShipmentNumber();
             return shipmentPM;
         }
-
-        private static string GetShipmentNumber()
+        public static ShipmentPM GetShipmentPMWithNewNumber()
         {
-            if (shipmentPM.ShipmentLevelCode == "C")
-            {
-                return TableCounter.GetNumber(EnvironmentGlobalParams.MainTenant, "MAST", shipmentPM.DirectionId, shipmentPM.TransportModeId);
-            }
-            else
-            {
-                if (shipmentPM.DirectionId.ToUpper() == "C")
-                {
-                    return TableCounter.GetNumber(EnvironmentGlobalParams.MainTenant, "SHIP", "I", shipmentPM.TransportModeId);
-                }
-
-                else
-                {
-                    return TableCounter.GetNumber(EnvironmentGlobalParams.MainTenant, "SHIP", shipmentPM.DirectionId, shipmentPM.TransportModeId);
-                }
-            }
+            shipmentPM.ShipmentNumber = TableCounter.GetNumber(EnvironmentGlobalParams.MainTenant, "SHIP", shipmentPM.DirectionId, shipmentPM.TransportModeId);
+            return shipmentPM;
         }
     }
 }

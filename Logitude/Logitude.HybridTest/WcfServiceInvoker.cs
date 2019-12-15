@@ -177,9 +177,9 @@ namespace Logitude.HybridTest
         private static void SetHeader(InvokedProperties serviceProperties)
         {
             if (serviceProperties.SecondaryToken == null)
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", EnvironmentGlobalParams.MainToken);
+                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", EnvironmentGlobalParams.MainTenantToken);
             else
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", EnvironmentGlobalParams.SecondaryToken);
+                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", EnvironmentGlobalParams.SecondaryTenantToken);
         }
 
     }

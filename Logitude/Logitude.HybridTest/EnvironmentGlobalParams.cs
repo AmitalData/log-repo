@@ -8,8 +8,8 @@ namespace Logitude.HybridTest
 {
     public class EnvironmentGlobalParams
     {
-        public static string MainToken { get; set; }
-        public static string SecondaryToken { get; set; }
+        public static string MainTenantToken { get; set; }
+        public static string SecondaryTenantToken { get; set; }
         public static int MainTenant
         {
             get { return int.Parse(System.Configuration.ConfigurationManager.AppSettings.Get("MainTenant")); }

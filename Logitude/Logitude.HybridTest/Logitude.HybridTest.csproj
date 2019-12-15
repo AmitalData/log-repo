@@ -184,6 +184,7 @@
     </None>
     <None Include="Config\test.appSettings.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\AutoSignUpServiceReference\AutoSignUpWcfService.wsdl" />
     <None Include="Connected Services\AutoSignUpServiceReference\AutoSignUpWcfService.xsd">
