@@ -1,5 +1,12 @@
-﻿using System;
+﻿using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.Data;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Server.Tools.Counters;
+using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -9,7 +16,7 @@ namespace Logitude.Customs.BL.PatchDistribution
 {
     public class PatchDistributionManager
     {
-        public List<PatchDistributionBase> GetValidPatchDistributionList()
+        public List<PatchDistributionBase> Check_PatchDistributionListAreValid()
         {
             var patchDistributionClassS =
                 Assembly.GetAssembly(typeof(PatchDistributionBase))
@@ -35,15 +42,17 @@ namespace Logitude.Customs.BL.PatchDistribution
             return listOfDistributions;
 
         }
-        public List<PatchDistributionBase> GetPatchDistributionToDo(decimal MajorVersion, int currentDbMinorVersion)
+        public List<PatchDistributionBase> GetPatchDistribution_Waiting2Exec(decimal MajorVersion, int currentClosedDbMinorVersion)
         {
-            List<PatchDistributionBase> listOfDistributions = GetValidPatchDistributionList();
+            List<PatchDistributionBase> listOfDistributions = Check_PatchDistributionListAreValid();
             var listOfDistributionScripts =
                 listOfDistributions
-                .Where(r => r.MajorVersion == MajorVersion)
-                .Where(r => r.PatchCounter_Minor > currentDbMinorVersion)
+                .Where(r => r.MajorVersionYYPRR == MajorVersion)
+                .Where(r => r.PatchCounter_Minor > currentClosedDbMinorVersion)
+                .OrderBy(r => r.PatchCounter_Minor)
                 //.SelectMany(r => r.GetUpScripts().OrderBy(r1 => r1.ScriptCounter))
                 //.Select(r => r.ToString())
+
                 .ToList();
 
 
@@ -52,10 +61,96 @@ namespace Logitude.Customs.BL.PatchDistribution
 
         }
 
+        public void Exec(decimal MajorVersion, int currentDbMinorVersion)
+        {
+
+            GetPatchDistribution_Waiting2Exec(MajorVersion, currentDbMinorVersion)
+                    .ForEach(myPatchDistribution =>
+                {
+                    var scripts = myPatchDistribution.GetUpScripts().OrderBy(r => r.ScriptCounter).ToList();
+                    scripts.ForEach(script =>
+                    {
+                        ExecDBMigrationLine(myPatchDistribution, script, scripts.Last() == script);
+                    });
+                });
+        }
+
+        private static void ExecDBMigrationLine(PatchDistributionBase myPatchDistribution, ScriptDTO script, bool isLast)
+        {
+            var customContext = CustomContext.GetContext(0);
+            var qsDBMigration = new DBMigrationQueryService(customContext);
+            var repoDBMigration = new DBMigrationRepository(customContext);
+            var repoDBMigrationLine = new DBMigrationLineRepository(customContext);
+
+            using (var scope = TransactionFactory.GetNewTransaction())
+            {
+
+
+                var myDBMigration = repoDBMigration.GetAll()
+.Where(dbMigration => dbMigration.MajorVersion == myPatchDistribution.MajorVersionYYPRR)
+.Where(dbMigration => dbMigration.MinorVersion == myPatchDistribution.PatchCounter_Minor)
+.FirstOrDefault();
+                if (myDBMigration == null)
+                {
+                    var rem = (myPatchDistribution.PatchDetails ?? "NotSet");
+                    myDBMigration = new Customs.Data.EntityPOCOs.DBMigration()
+                    {
+
+                        Id = (new IdCounterWrapper()).GetNumber("Customs.DBMigration", 0),
+                        MajorVersion = myPatchDistribution.MajorVersionYYPRR,
+                        MinorVersion = myPatchDistribution.PatchCounter_Minor,
+                        ExecuteDate = DateTime.Now,
+                        Remarks = rem.Substring(0, Math.Min(256, rem.Length)),
+                        IsClose = isLast
+
+                    };
+                    repoDBMigration.Add(myDBMigration);
+                }
+                else
+                {
+                    myDBMigration.IsClose = isLast;
+                    repoDBMigration.Update(myDBMigration);
+                }
+
+
+                try
+                {
+                    repoDBMigrationLine.Add(new Customs.Data.EntityPOCOs.DBMigrationLine()
+                    {
+                        DBMigrationId = myDBMigration.Id,
+                        CounterKey = script.ScriptCounter,
+                        SqlScript = script.SqlScript.Substring(0, Math.Min(1024, script.SqlScript.Length)),
+                    });
+                    customContext.SaveChanges();
+
+                    var sqlDDL_NoNeedCommit = script.SqlScript;
+                    
+                    (customContext as DbContextBase).ExecuteReaderSingleResult<int>(sqlDDL_NoNeedCommit,
+    (dr) =>
+    {
+
+        Debug.WriteLine($"ExecuteReaderSingleResult: {dr.GetString(0)}");
+        return 0;
+    });
+
+                   
+                    customContext.SaveChanges();
+                    scope.Complete();
+                    Debug.WriteLine("DBMigrationLine:{myDBMigration.Id}.{CounterKey }");
+                }
+                catch (Exception eee)
+                {
+                    Debug.WriteLine(eee.ToString());
+                    throw new Exception(eee.ToString());
+                }
+
+            }
+        }
+
         private void Validate(List<PatchDistributionBase> listOfDistributions)
         {
             var myPatchs = listOfDistributions
-                .GroupBy(r => r.MajorVersion)
+                .GroupBy(r => r.MajorVersionYYPRR)
                 .Select(g => g.ToList())
                .ToList();
             myPatchs.ForEach(g =>
