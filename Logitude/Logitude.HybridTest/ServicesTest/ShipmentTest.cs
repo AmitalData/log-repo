@@ -24,7 +24,7 @@ namespace Logitude.HybridTest.ServicesTest
         }
 
         [TestMethod]
-        public void Test_DirectAirExportShipmentWithDifferentToken_UPSERT()
+        public void Test_DirectShipmentWithDifferentToken_UPSERT()
         {
             ShipmentPM shipmentPM = ShipmentWcfFactory.GetShipmentPM();
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(shipmentPM, EnvironmentGlobalParams.SecondaryTenantToken);
@@ -215,37 +215,101 @@ namespace Logitude.HybridTest.ServicesTest
         public void Test_Shipment_ConvertFromDirectToHouse()
         {
             ShipmentPM shipmentPM = ShipmentWcfFactory.GetShipmentPMWithNewNumber();
-            //shipmentPM.ShipmentNumber = "MBRC2019_SHIP_900007";
             Response upsertResponse = EntityWcfCaller.CallEntityUpsert(shipmentPM);
-            shipmentPM.ConvertFromDirectToHouse = true;
-            //upsertResponse = EntityWcfCaller.CallEntityUpsert(shipmentPM);
+            shipmentPM.ShipmentLevelCode = "H";
+            upsertResponse = EntityWcfCaller.CallEntityUpsert(shipmentPM);
+
             RestAPIService restAPIService = new RestAPIService();
             ShipmentPM shipment = restAPIService.GetEntityPMById<ShipmentPM>("Shipment", upsertResponse.Result);
             Assert.AreEqual(shipment.ShipmentLevelCode, "H", "Convert From Direct To House Failed!");
-            ShipmentPM MasterShipmentPM = ShipmentWcfFactory.GetShipmentPMWithNewNumber();
-            //MasterShipmentPM.ShipmentNumber = "AAAAAAAAAA10000";
-            MasterShipmentPM.ShipmentLevelCode = "C";
-            upsertResponse = EntityWcfCaller.CallEntityUpsert(MasterShipmentPM);
-            shipmentPM.MasterShipmentDataId = upsertResponse.Result;
-            upsertResponse = EntityWcfCaller.CallEntityUpsert(shipmentPM);
+
+
+            //ShipmentPM MasterShipmentPM = ShipmentWcfFactory.GetShipmentPMWithNewNumber();
+            ////MasterShipmentPM.ShipmentNumber = "AAAAAAAAAA10000";
+            //MasterShipmentPM.ShipmentLevelCode = "C";
+            //upsertResponse = EntityWcfCaller.CallEntityUpsert(MasterShipmentPM);
+            //shipmentPM.MasterShipmentDataId = upsertResponse.Result;
+            //upsertResponse = EntityWcfCaller.CallEntityUpsert(shipmentPM);
         }
 
         [TestMethod]
         public void Test_Shipment_ConvertFromHouseToDirect()
         {
             ShipmentPM shipmentPM = ShipmentWcfFactory.GetShipmentPMWithNewNumber();
-            shipmentPM.ShipmentNumber = HybridData.HouseShipmentCode;
+            shipmentPM.ShipmentLevelCode = "H";
             Response upsertResponse = EntityWcfCaller.CallEntityUpsert(shipmentPM);
-            shipmentPM.ConvertFromHouseToDirect = true;
+            shipmentPM.ShipmentLevelCode = "D";
             upsertResponse = EntityWcfCaller.CallEntityUpsert(shipmentPM);
+
             RestAPIService restAPIService = new RestAPIService();
             ShipmentPM shipment = restAPIService.GetEntityPMById<ShipmentPM>("Shipment", upsertResponse.Result);
             Assert.AreEqual(shipment.ShipmentLevelCode, "D", "Convert From House To Direct Failed!");
-            ShipmentPM MasterShipmentPM = ShipmentWcfFactory.GetShipmentPMWithNewNumber();
-            MasterShipmentPM.ShipmentLevelCode = "C";
-            upsertResponse = EntityWcfCaller.CallEntityUpsert(MasterShipmentPM);
-            shipmentPM.Master = MasterShipmentPM.ShipmentNumber;
-            upsertResponse = EntityWcfCaller.CallEntityUpsert(shipmentPM);
+
+
+            //ShipmentPM MasterShipmentPM = ShipmentWcfFactory.GetShipmentPMWithNewNumber();
+            //MasterShipmentPM.ShipmentLevelCode = "C";
+            //upsertResponse = EntityWcfCaller.CallEntityUpsert(MasterShipmentPM);
+            //shipmentPM.Master = MasterShipmentPM.ShipmentNumber;
+            //upsertResponse = EntityWcfCaller.CallEntityUpsert(shipmentPM);
+        }
+
+        [TestMethod]
+        public void Test_Shipment_HasExceptionTrue()
+        {
+            ShipmentPM shipmentPM = ShipmentWcfFactory.GetShipmentPMWithNewNumber();
+            Response upsertResponse = EntityWcfCaller.CallEntityUpsert(shipmentPM);
+            List<TraceEventPM> events = new List<TraceEventPM>()
+            {
+                new TraceEventPM() { Tenant = EnvironmentGlobalParams.MainTenant, ExternalId = null, UserId = HybridData.UserCodeHU, EventTypeCode = "EXCE", EventDateTime = DateTime.Now.AddDays(-2), LogDateTime = DateTime.Now.AddDays(-2), Notes = "Testing hybrid Exception" },
+            };
+
+            Shipment_BuildEventsList(shipmentPM.ShipmentNumber, events);
+
+            RestAPIService restAPIService = new RestAPIService();
+            ShipmentPM shipment = restAPIService.GetEntityPMById<ShipmentPM>("Shipment", upsertResponse.Result);
+            Assert.AreEqual(shipment.HasException, true, "Exception Must Be True!");
+        }
+
+        [TestMethod]
+        public void Test_Shipment_CustomFileId()
+        {
+            ShipmentPM customShipmentPM = ShipmentWcfFactory.GetShipmentPM();
+            customShipmentPM.ShipmentNumber = "HCustom File";
+            customShipmentPM.ShipmentLevelCode = "A";
+            Response customUpsertResponse = EntityWcfCaller.CallEntityUpsert(customShipmentPM);
+
+            RestAPIService restAPIService = new RestAPIService();
+            ShipmentPM shipment = restAPIService.GetEntityPMById<ShipmentPM>("Shipment", customUpsertResponse.Result);
+            Assert.AreEqual(shipment.NoFreightFile, true, "Must be Not Connected Custom Shipments!");
+
+            ShipmentPM firstShipmentPM = ShipmentWcfFactory.GetShipmentPMWithNewNumber();
+            firstShipmentPM.CustomFileNumber = "HCustom File";
+            Response firstUpsertResponse = EntityWcfCaller.CallEntityUpsert(firstShipmentPM);
+            ShipmentPM secondShipmentPM = ShipmentWcfFactory.GetShipmentPMWithNewNumber();
+            secondShipmentPM.CustomFileNumber = "HCustom File";
+            Response secondUpsertResponse = EntityWcfCaller.CallEntityUpsert(secondShipmentPM);
+
+            shipment = restAPIService.GetEntityPMById<ShipmentPM>("Shipment", customUpsertResponse.Result);
+            Assert.AreEqual(shipment.NoFreightFile, false, "Must be Connected Custom Shipments!");
+
+            shipment = restAPIService.GetEntityPMById<ShipmentPM>("Shipment", firstUpsertResponse.Result);
+            Assert.AreEqual(shipment.CustomFileId, customUpsertResponse.Result, "Custom File Id Failed!");
+
+            shipment = restAPIService.GetEntityPMById<ShipmentPM>("Shipment", secondUpsertResponse.Result);
+            Assert.AreEqual(shipment.CustomFileId, customUpsertResponse.Result, "Custom File Id Failed!");
+
+            List<TraceEventPM> events = new List<TraceEventPM>()
+            {
+                new TraceEventPM() { Tenant = EnvironmentGlobalParams.MainTenant, ExternalId = null, UserId = HybridData.UserCodeHU, EventTypeCode = "EXCE", EventDateTime = DateTime.Now.AddDays(-2), LogDateTime = DateTime.Now.AddDays(-2), Notes = "Testing hybrid Exception" },
+            };
+
+            Shipment_BuildEventsList(customShipmentPM.ShipmentNumber, events);
+
+            shipment = restAPIService.GetEntityPMById<ShipmentPM>("Shipment", firstUpsertResponse.Result);
+            Assert.AreEqual(shipment.HasException, true, "Exception Must Be True!");
+
+            shipment = restAPIService.GetEntityPMById<ShipmentPM>("Shipment", secondUpsertResponse.Result);
+            Assert.AreEqual(shipment.HasException, true, "Exception Must Be True!");
         }
 
         private static void Shipment_BuildEventsList(string shipmentNumber, List<TraceEventPM> events)

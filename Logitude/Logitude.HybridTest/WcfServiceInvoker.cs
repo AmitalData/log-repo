@@ -32,7 +32,7 @@ namespace Logitude.HybridTest
                     serviceOutcome.Result = wcfService.Invoke(serviceClient, BindingFlags.InvokeMethod, null, serviceParameters, null);
                     if (serviceOutcome.Result is Response)
                         serviceOutcome.Response = (Response)serviceOutcome.Result;
-                    else
+                    else if(serviceProperties.ServiceResponseIndex > 0)
                         serviceOutcome.Response = (Response)serviceParameters[serviceProperties.ServiceResponseIndex];
                     return serviceOutcome;
                 }

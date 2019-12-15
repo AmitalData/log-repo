@@ -72,6 +72,7 @@
     <Compile Include="ServicesTest\CustomBankCardTest.cs" />
     <Compile Include="ServicesTest\HybridPartnerTest.cs" />
     <Compile Include="ServicesTest\CustomerAdditionalServiceDWTest.cs" />
+    <Compile Include="ServicesTest\CommTaskTest.cs" />
     <Compile Include="ServicesTest\ShipmentFollowerstTest.cs" />
     <Compile Include="ServicesTest\CustomerCompetitorDWTest.cs" />
     <Compile Include="ServicesTest\TenantManagementDWTest.cs" />

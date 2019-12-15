@@ -16,14 +16,14 @@ namespace Logitude.HybridTest.WcfCallers
         {
             GetAuthenticationMainTenantToken();
             GetAuthenticationSecondaryTenantToken();
-            PrepareShipment.PrepareShipmentVars();
+            //PrepareShipment.PrepareShipmentVars();
 
-            //Other necessary Vars:
-            UpsertGlobalZone();
-            UpsertDepartment();
-            UpsertBranch();
-            UpsertUser();
-            UpsertCardContact();
+            ////Other necessary Vars:
+            //UpsertGlobalZone();
+            //UpsertDepartment();
+            //UpsertBranch();
+            //UpsertUser();
+            //UpsertCardContact();
         }
         private static void GetAuthenticationMainTenantToken()
         {
