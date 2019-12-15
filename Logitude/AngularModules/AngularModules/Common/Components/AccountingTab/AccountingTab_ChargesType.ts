@@ -41,8 +41,8 @@ export class AccountingTab_ChargesType extends BaseComponent implements OnDestro
         }
         this.ReceivableCreditGLAccountFilterItems = new ApiQueryFilters();
         this.PayableDebitGLAcountFilterItems = new ApiQueryFilters();
-        this.ReceivableCreditGLAccountFilterItems.addAdditionalFilter("RevenueExpenseType", "1", null, null, "Equals", false, false, false, "string", false, true);
-        this.PayableDebitGLAcountFilterItems.addAdditionalFilter("RevenueExpenseType", "2", null, null, "Equals", false, false, false, "string", false, true);
+        this.ReceivableCreditGLAccountFilterItems.addAdditionalFilter("ReceivableCreditFilter", "1", null, null, "Equals", true, false, false, "string", false, true);
+        this.PayableDebitGLAcountFilterItems.addAdditionalFilter("PayableDebitFilter", "2", null, null, "Equals", true, false, false, "string", false, true);
 
         this.Listen();
     }
