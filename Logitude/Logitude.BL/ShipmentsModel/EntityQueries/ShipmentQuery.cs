@@ -9955,7 +9955,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                     && (myShipment.ShipmentLevelCode == "H" || myShipment.ShipmentLevelCode == "D")
                                                     && myShipment.DirectionId == "E"
                                                     && myShipment.TransportModeId == "O"
-                                                    && myShipment.INTTRABookingTransStatusCode != "NST"
+                                                    && myShipment.INTTRABookingTransStatusCode != "NST" && myShipment.INTTRABookingStatusCode != "SI"
                                                     && myMasterData.Tenant == tenant
                                                     && myMasterData.MainCarriageATD == null
                                                     select myShipment).Take(1001).Count();
@@ -11323,7 +11323,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                CarrierNumber = f.CarrierNumber,
                                AgentId = f.AgentId,
                                AgentComputed = f.AgentComputed,
-                              // ComputedShipmentNumber = f.ComputedShipmentNumber,
+                               // ComputedShipmentNumber = f.ComputedShipmentNumber,
                                ARInvoiceIssued = f.ARInvoiceIssued,
                                CreditNoteIssued = f.CreditNoteIssued,
                                CustomFileNumber = f.CustomFileNumber,
@@ -11470,7 +11470,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                INTTRABookingTransStatusName = f.INTTRABookingTransStatusName,
                                INTTRABookingTransStatusCode = f.INTTRABookingTransStatusCode,
                                INTTRABookingError = f.INTTRABookingError,
-                               INTTRALastBookingResponse =f.INTTRALastBookingResponse,
+                               INTTRALastBookingResponse = f.INTTRALastBookingResponse,
                                LastFinalDestination = f.LastFinalDestination,
                                FirstPickupETA = f.FirstPickupETA,
                                FirstPickupETD = f.FirstPickupETD,
