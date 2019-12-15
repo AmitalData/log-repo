@@ -494,5 +494,17 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
 
 
         }
+
+        public HttpResponseMessage GetDocumentsFilingsByCode(string Code)
+        {
+            Authentication();
+
+
+            DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(tenant);
+            DocumentsFilingPM myResult = documentsFilingQuery.GetSinglePMByCode(Code, tenant);
+
+            return Request.CreateResponse(HttpStatusCode.OK, myResult);
+        }
+
     }
 }

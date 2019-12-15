@@ -528,6 +528,11 @@ export class ARPaymentPM {
     public set JournalId(newValue: string) { if (this.journalId != newValue) { this.journalId = newValue; this.MarkAsDirty("JournalId"); } }
        
 	 
+    private createdByPartner: string;
+    public get CreatedByPartner() { return this.createdByPartner; }
+    public set CreatedByPartner(newValue: string) { if (this.createdByPartner != newValue) { this.createdByPartner = newValue; this.MarkAsDirty("CreatedByPartner"); } }
+       
+	 
      
 	private invoicesLedgerTransactions: LedgerTransactionPM[];
     get  InvoicesLedgerTransactions() {

@@ -72,7 +72,8 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.TotalVAT).HasPrecision(16, 2);
             this.Property(t => t.ConcurrencyGUID).IsRequired().HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.ARInvoiceStockId).HasMaxLength(15).IsUnicode(false);
-
+            this.Property(t => t.CreatedByPartner).HasMaxLength(25).IsUnicode(false);
+           
             // Table & Column Mappings
             this.ToTable("ARInvoices");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -150,7 +151,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.ApprovedByUserId).HasColumnName("ApprovedByUserId");
             this.Property(t => t.CreditedByARInvoiceId).HasColumnName("CreditedByARInvoiceId");
             this.Property(t => t.OperationalDate).HasColumnName("OperationalDate");
-            this.Property(t => t.DateForVATInterest).HasColumnName("DateForVATInterest");
+            this.Property(t => t.DateForInterest).HasColumnName("DateForInterest");
             this.Property(t => t.SplitJournalByCurrency).HasColumnName("SplitJournalByCurrency");
             this.Property(t => t.IsExternalEntity).HasColumnName("IsExternalEntity");
             this.Property(t => t.IsGeneralInvoice).HasColumnName("IsGeneralInvoice");
@@ -176,8 +177,9 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.ConcurrencyGUID).HasColumnName("ConcurrencyGUID");
             this.Property(t => t.ARInvoiceStockId).HasColumnName("ARInvoiceStockId");
             this.Property(t => t.IsInvoiceNumberFromStock).HasColumnName("IsInvoiceNumberFromStock");
+            this.Property(t => t.CreatedByPartner).HasColumnName("CreatedByPartner");
 
-             
+
 
             // Relationships
             this.HasOptional(t => t.BillToAddress).WithMany().HasForeignKey(d => d.BillToAddressId);

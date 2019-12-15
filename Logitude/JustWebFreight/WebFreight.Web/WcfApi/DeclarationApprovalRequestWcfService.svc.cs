@@ -85,6 +85,7 @@ namespace WebFreight.Web.WcfApi
             ShipmentPM shipmentPM = shipmentQuery.GetSingleShipmentPMByNumber(declarationApprovalRequestPM.ForwarderShipmentNumber, tenant);
             if (shipmentPM!=null)
             {
+                shipmentPM.IsHybrid = true;
                 shipmentPM.IsShipmentAdditionalCloudDataChange = true;
                 shipmentPM.DeclarationXMLData = declarationApprovalRequestPM.DeclarationXmlData;
                 shipmentPM.IsImporterApprovalRequired = true;

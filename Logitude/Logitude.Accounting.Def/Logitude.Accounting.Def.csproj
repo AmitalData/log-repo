@@ -107,6 +107,8 @@
     <Compile Include="EntityPMs\Generated\IntegrityCheckStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\InterestBasesPeriodPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\InterestBasesTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\InterestEntityTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\InterestTransactionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\JournalActionTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\JournalAdditionalDataPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\JournalExternalReconcilePM.Generated.cs" />
@@ -169,6 +171,7 @@
     <Compile Include="EntityUpdateServicesExt\IARPaymentChequeUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServicesExt\IBankCodeUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServicesExt\ICashBookLineUpdateServiceExt.cs" />
+    <Compile Include="EntityUpdateServicesExt\IInterestTransactionUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServicesExt\IReconciliationServiceExt.cs" />
     <Compile Include="EntityUpdateServicesExt\ICashBookUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServicesExt\IGLAccountUpdateServiceExt.cs" />

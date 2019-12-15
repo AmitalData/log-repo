@@ -24,7 +24,7 @@ namespace Logitude.HybridTest.WcfCallers
                 EnglishName = "Hybrid ShippingLine",
                 LocalName = "Hybrid ShippingLine",
                 CarrierTypeId = "SL",
-                Tenant = TestEnvironmentGlobalParameters.Tenant1,
+                Tenant = EnvironmentGlobalParams.MainTenant,
             };
             Response serviceResponse = AssertResponse(shippingLinePM);
             HybridData.ShippingLineIdHSL = serviceResponse.Result;
@@ -38,7 +38,7 @@ namespace Logitude.HybridTest.WcfCallers
                 EnglishName = "Hybrid 2 ShippingLine",
                 LocalName = "Hybrid 2 ShippingLine",
                 CarrierTypeId = "SL",
-                Tenant = TestEnvironmentGlobalParameters.Tenant1,
+                Tenant = EnvironmentGlobalParams.MainTenant,
             };
             Response serviceResponse = AssertResponse(shippingLinePM);
             HybridData.ShippingLineIdHSL = serviceResponse.Result;

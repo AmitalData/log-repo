@@ -165,8 +165,5 @@ namespace Simplog.Data.InvoiceModel.Repositories
         {
             throw new System.NotImplementedException();
         }
-
-      
-
     }
 }

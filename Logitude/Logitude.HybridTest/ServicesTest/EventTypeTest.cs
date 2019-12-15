@@ -18,7 +18,7 @@ namespace Logitude.HybridTest.ServicesTest
                 EnglishName = "Hybrid EventType",
                 LocalName = "Hybrid EventType",
                 ObjectTableName = "Shipment",
-                Tenant = TestEnvironmentGlobalParameters.Tenant1,
+                Tenant = EnvironmentGlobalParams.MainTenant,
             };
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(eventTypePM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);

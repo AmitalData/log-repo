@@ -69,7 +69,17 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
             return entityPOCO;
         }
+        public bool CheckARInvoiceByExternalAccountingEnityId(string externalEntityId, int tenant)
+        {
 
+          return
+                (from a in repository.context.ARInvoices
+                 where a.ExternalAccountingEntityId == externalEntityId && a.Tenant == tenant
+                 select a).Any();
+
+
+         
+        }
         public ARInvoicePM GetSingleInvoiceByInvoiceNumber(string invoiceNumber, int tenant)
         {
             ARInvoicePM entityPM = null;
@@ -1343,7 +1353,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             ApprovedByUserId = a.ApprovedByUserId,
                             ApprovedByUserName = a.ApprovedByUser == null ? null : (a.ApprovedByUser.Contact == null ? null : a.ApprovedByUser.Contact.EnglishName),
                             OperationalDate = a.OperationalDate,
-                            DateForVATInterest = a.DateForVATInterest,
+                            DateForInterest = a.DateForInterest,
                             SplitJournalByCurrency = a.SplitJournalByCurrency,
                             IsExternalEntity = a.IsExternalEntity,
                             IsGeneralInvoice = a.IsGeneralInvoice,
@@ -1369,6 +1379,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             IsFullAccounting = a.IsFullAccounting,
                             ARInvoiceStockId = a.ARInvoiceStockId,
                             BranchName = a.Branch == null ? null : a.Branch.EnglishName,
+                            CreatedByPartner = a.CreatedByPartner,
                         };
 
             return query;
@@ -1477,7 +1488,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              ApprovedByUserId = entity.ApprovedByUserId,
                              ApprovedByUserName = entity.ApprovedByUser == null ? null : (entity.ApprovedByUser.Contact == null ? null : entity.ApprovedByUser.Contact.EnglishName),
                              OperationalDate = entity.OperationalDate,
-                             DateForVATInterest = entity.DateForVATInterest,
+                             DateForInterest = entity.DateForInterest,
                              SplitJournalByCurrency = entity.SplitJournalByCurrency,
                              IsExternalEntity = entity.IsExternalEntity,
                              IsGeneralInvoice = entity.IsGeneralInvoice,
@@ -1505,6 +1516,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              IsFullAccounting = entity.IsFullAccounting,
                              IsInvoiceNumberFromStock = entity.IsInvoiceNumberFromStock,
                              BranchName = entity.Branch == null ? null : entity.Branch.EnglishName,
+                             CreatedByPartner = entity.CreatedByPartner,
                          };
 
             return result;
@@ -1590,7 +1602,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               ApprovedByUserId = a.ApprovedByUserId,
                                               ApprovedByUserName = a.ApprovedByUser == null ? null : (a.ApprovedByUser.Contact == null ? null : a.ApprovedByUser.Contact.EnglishName),
                                               OperationalDate = a.OperationalDate,
-                                              DateForVATInterest = a.DateForVATInterest,
+                                              DateForInterest = a.DateForInterest,
                                               SplitJournalByCurrency = a.SplitJournalByCurrency,
                                               IsExternalEntity = a.IsExternalEntity,
                                               IsGeneralInvoice = a.IsGeneralInvoice,
@@ -1616,6 +1628,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               ARInvoiceStockId = a.ARInvoiceStockId,
                                               IsInvoiceNumberFromStock = a.IsInvoiceNumberFromStock,
                                               BranchName = a.Branch == null ? null : a.Branch.EnglishName,
+                                              CreatedByPartner = a.CreatedByPartner,
                                           }).ToList();
             return invoices;
         }
@@ -1701,7 +1714,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     ApprovedByUserId = entityPOCO.ApprovedByUserId,
                     ApprovedByUserName = entityPOCO.ApprovedByUser == null ? null : (entityPOCO.ApprovedByUser.Contact == null ? null : entityPOCO.ApprovedByUser.Contact.EnglishName),
                     OperationalDate = entityPOCO.OperationalDate,
-                    DateForVATInterest = entityPOCO.DateForVATInterest,
+                    DateForInterest = entityPOCO.DateForInterest,
                     SplitJournalByCurrency = entityPOCO.SplitJournalByCurrency,
                     IsExternalEntity = entityPOCO.IsExternalEntity,
                     IsGeneralInvoice = entityPOCO.IsGeneralInvoice,
@@ -1730,6 +1743,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     IsInvoiceNumberFromStock = entityPOCO.IsInvoiceNumberFromStock,
                     DocumentFilingId = entityPOCO.DocumentFilingId,
                     BranchName = entityPOCO.Branch == null ? null : entityPOCO.Branch.EnglishName,
+                    CreatedByPartner = entityPOCO.CreatedByPartner,
                 };
 
                 entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;
@@ -2026,7 +2040,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              ApprovedByUserId = entity.ApprovedByUserId,
                              ApprovedByUserName = entity.ApprovedByUser == null ? null : (entity.ApprovedByUser.Contact == null ? null : entity.ApprovedByUser.Contact.EnglishName),
                              OperationalDate = entity.OperationalDate,
-                             DateForVATInterest = entity.DateForVATInterest,
+                             DateForInterest = entity.DateForInterest,
                              SplitJournalByCurrency = entity.SplitJournalByCurrency,
                              IsExternalEntity = entity.IsExternalEntity,
                              IsGeneralInvoice = entity.IsGeneralInvoice,
@@ -2052,6 +2066,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              ARInvoiceStockId = entity.ARInvoiceStockId,
                              IsInvoiceNumberFromStock = entity.IsInvoiceNumberFromStock,
                              BranchName = entity.Branch == null ? null : entity.Branch.EnglishName,
+                             CreatedByPartner = entity.CreatedByPartner,
                          };
 
             return result;

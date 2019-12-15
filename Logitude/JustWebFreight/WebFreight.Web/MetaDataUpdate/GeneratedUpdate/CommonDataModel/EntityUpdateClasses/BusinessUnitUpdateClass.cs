@@ -443,9 +443,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			  Query AllBusinessUnitsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BusinessUnitTextCode_0.Id, Code = "All Business Units",  QueryGroupCode = "BUQG", IndexOrder = 0, Tenant = 0, ObjectTableId = BusinessUnitObjectTable.Id, QuerySection = "BusinessUnit", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BusinessUnitFeature_0.Id, DefaultSortName = "Name", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AllBusinessUnitsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBusinessUnitsQuery.Id, IndexOrder = 1, ObjectFieldId = BusinessUnitObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == BusinessUnitObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBusinessUnitsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBusinessUnitsQuery.Id, IndexOrder = 1, ObjectFieldId = BusinessUnitObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == BusinessUnitObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BusinessUnitObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == BusinessUnitObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllBusinessUnitsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBusinessUnitsQuery.Id, IndexOrder = 2, ObjectFieldId = BusinessUnitObjectFields.Where(d => d.FieldName == "ParentName" && d.ObjectTableId == BusinessUnitObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllBusinessUnitsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBusinessUnitsQuery.Id, IndexOrder = 2, ObjectFieldId = BusinessUnitObjectFields.Where(d => d.FieldName == "ParentName" && d.ObjectTableId == BusinessUnitObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = BusinessUnitObjectFields.Where(d => d.FieldName == "ParentName" && d.ObjectTableId == BusinessUnitObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -459,9 +459,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen BusinessUnitHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BusinessUnit.HeaderScreen", Name = "Header Screen", ObjectTableId = BusinessUnitObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField BusinessUnitBusinessUnitHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = BusinessUnitObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = BusinessUnitHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BusinessUnitBusinessUnitHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = BusinessUnitObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = BusinessUnitHeaderScreenScreen0.Id, ObjectFieldCode = BusinessUnitObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField BusinessUnitBusinessUnitHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = BusinessUnitObjectFields.Where(d => d.FieldName == "ParentName").FirstOrDefault().Id, ScreenId = BusinessUnitHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField BusinessUnitBusinessUnitHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = BusinessUnitObjectFields.Where(d => d.FieldName == "ParentName").FirstOrDefault().Id, ScreenId = BusinessUnitHeaderScreenScreen0.Id, ObjectFieldCode = BusinessUnitObjectFields.Where(d => d.FieldName == "ParentName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    BusinessUnitObjectTable.HeaderScreenId = BusinessUnitHeaderScreenScreen0.Id;
 	   		  

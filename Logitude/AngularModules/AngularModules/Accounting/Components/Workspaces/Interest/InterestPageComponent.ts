@@ -45,41 +45,20 @@ export class InterestPageComponent implements AfterViewInit {
         this.LoadAllScreenData();
 
     }
-    //RunNewInterestBasesTypeWizard() {
-    //    var windowTitle = TextCodeTranslator.Translate("Accounting.General.O.NewInterestBases");
-    //    var logWindow = new LogitudeWindow();
-    //    logWindow.Width = 720;
-    //    logWindow.Height = 400;
-    //    logWindow.Title = windowTitle;
-    //    logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
-    //    logWindow.Show('./Accounting/Components/NewEntity/NewInterestBasesTypeComponent');
-    //}
 
     RunNewInterestBasesTypeWizard() {
-        if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "NEW", true)) {
-            return;
-        }
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
-            this.RunNewGenaricEntity();
-            ServiceLocator.SendTotangoUserActivity(this.ObjectTableName, "New" + this.ObjectTableName);
-        });
+        var windowArgs: any = {};
+        windowArgs.IsNew = true;
+        var windowTitle = TextCodeTranslator.Translate("Accounting.General.O.NewInterestBases");
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 720;
+        logWindow.Height = 400;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Title = windowTitle;
+        logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
+        logWindow.Show('./Accounting/Components/EditTabs/Interest/DetailsTab/InterestBasesTypeDetailsTabComponent');
     }
-    private RunNewGenaricEntity() {
-        var componentPath = "./Infrastructure/GenericComponents/NewEntityComponent";
-        this.entityPMService.getNewEntity(this.ObjectTableName).then(response => {
-            var args = new EntityArgs();
-            args.EntityPM = response;
-            args.ObjectTableName = this.ObjectTableName;
-            var logWindow = new LogitudeWindow();
-            logWindow.Width = 960;
-            logWindow.Height = 570;
-            var windowTitle = TextCodeTranslator.Translate("Accounting.General.O.NewInterestBaseType");
-            logWindow.WindowArgs = args;
-            logWindow.Title = windowTitle;
-            logWindow.Show(componentPath);
-        });
-    }
- 
+
         ViewAccountingQuery(myQueryCode: string) {
         if (myQueryCode != null) {
 

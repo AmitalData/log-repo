@@ -2085,7 +2085,7 @@ namespace WebFreight.Web.InfrastructureModel
             foreach (ScreenFieldPM field in fieldsList)
             {
 
-                ObjectFieldPM zeroObjectField = tenantZeroObjectFields.Where(d => d.Id == field.ObjectFieldId).FirstOrDefault();
+                ObjectFieldPM zeroObjectField = tenantZeroObjectFields.Where(d => d.FieldCode == field.ObjectFieldCode).FirstOrDefault();
 
                 ObjectTable currentObjectTable = currentTenantObjectTables.Where(d => d.Name == field.ObjectFieldObjectTableName).FirstOrDefault();
                 ObjectField currentObjectField = currentTenantObjectFields.Where(d => d.FieldName == zeroObjectField.FieldName && d.ObjectTableId == currentObjectTable.Id).FirstOrDefault();
@@ -2099,7 +2099,8 @@ namespace WebFreight.Web.InfrastructureModel
                     ScreenId = currentScreen.Id,
                     Tenant = theTenant,
                     Row = field.Row,
-                    Column = field.Column
+                    Column = field.Column,
+                    ObjectFieldCode = currentObjectField.FieldCode
                 };
                 theScreenFieldsRepository.Add(newField);
             }
@@ -2218,7 +2219,8 @@ namespace WebFreight.Web.InfrastructureModel
                     ObjectFieldId = usedObjectField.Id,
                     QueryId = usedQuery.Id,
                     Tenant = theTenant,
-                    ColumnWidth = q.ColumnWidth
+                    ColumnWidth = q.ColumnWidth,
+                    ObjectFieldCode = usedObjectField.FieldCode,
                 };
                 theQueryColumnRepository.Add(newQuery);
             }

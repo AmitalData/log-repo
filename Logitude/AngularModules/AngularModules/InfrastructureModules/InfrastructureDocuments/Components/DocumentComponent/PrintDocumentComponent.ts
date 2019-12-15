@@ -1099,7 +1099,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
             exportDocumentArgs.LoggedContactId = SessionLocator.LoggedUserId;
             exportDocumentArgs.Tenant = SessionLocator.Tenant;
             exportDocumentArgs.DocumentTypeName = this.DataContext.DocumentTypePM.Name;
-            exportDocumentArgs.DocumentTypeTemplateId = this.CurrentDocumentTypeTemplateList != null ? this.CurrentDocumentTypeTemplateList.Id : "";
+            exportDocumentArgs.DocumentTypeTemplateId = this.CurrentDocumentOut.DocumentTemplateId;
             exportDocumentArgs.DocumentTypeCopyIdsList = documentTypeCopyLists.map(function (a) { return a.Id; });
             this._exportDocumentService.BuildDocumentViaWorkerRole(exportDocumentArgs).subscribe((myResponse: ServiceResponse) => {
                 var result: any = myResponse.Result;

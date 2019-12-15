@@ -12,7 +12,8 @@
 
         // public string FieldName { get; set; }
         public string ObjectFieldId { get; set; }
+        public string ObjectFieldCode { get; set; }
 
-      
+
     }
 }

@@ -367,8 +367,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                     ExternalProjectNumber = item.ExternalProjectNumber,
                     TotalMinutes = item.FullDuration,
                     TotalWIWorkedDays_Employee = this.GetTimeFormatFromMinutes(item.FullDuration),
-                    OwnerName = this.iDataProvider.OwnerName,
                     EmployeeName = this.iDataProvider.EmployeeName,
+                    OwnerName = item.OwnerId == "" ? null : this.iDataProvider.OwnerName,
                     CustomerName = this.iDataProvider.CustomerName,
                     CategoryName = this.iDataProvider.CategoryName,                     
                 };

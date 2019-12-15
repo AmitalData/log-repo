@@ -21,7 +21,7 @@ namespace Logitude.HybridTest.ServicesTest
                 DocumentTypeCategoryCode = "O",
                 IsDocIn = true,
                 IsDocOut = true,
-                Tenant = TestEnvironmentGlobalParameters.Tenant1,
+                Tenant = EnvironmentGlobalParams.MainTenant,
             };
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(documentTypePM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
@@ -44,7 +44,7 @@ namespace Logitude.HybridTest.ServicesTest
             };
 
             Response serviceResponse = new Response();
-            object[] serviceParameters = new object[] { HybridData.DocumentTypeCodeHDT, TestEnvironmentGlobalParameters.Tenant1, serviceResponse };
+            object[] serviceParameters = new object[] { HybridData.DocumentTypeCodeHDT, EnvironmentGlobalParams.MainTenant, serviceResponse };
             DocumentTypePM documentType = (DocumentTypePM)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
             Assert.IsFalse(serviceResponse.HasError, "Get Document Type By Code Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNull(serviceResponse.Result, "Get Document Type By Code Failed! " + serviceResponse.Result);
@@ -72,7 +72,7 @@ namespace Logitude.HybridTest.ServicesTest
             bool DocumentTypeExist = false;
             do
             {
-                serviceParameters = new object[] { "Shipment", TestEnvironmentGlobalParameters.Tenant1, 0 + skip, 10, serviceResponse };
+                serviceParameters = new object[] { "Shipment", EnvironmentGlobalParams.MainTenant, 0 + skip, 10, serviceResponse };
                 documentTypes = (DocumentTypeList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
                 foreach (DocumentTypeList documentType in documentTypes)
                 {

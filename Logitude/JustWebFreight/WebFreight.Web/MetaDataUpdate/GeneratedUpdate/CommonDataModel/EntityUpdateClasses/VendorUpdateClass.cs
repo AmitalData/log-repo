@@ -130,6 +130,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
+			      				    PrimaryKeyIsTenant =  false,
 			      				    SearchFields =  "Vendor,Vendors,Simplog.FreightLib.NewVendorCommand,Id,",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
@@ -2413,6 +2414,66 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CreatedByPartner",
+					  						OldFieldName =  "CreatedByPartner",
+					  						ObjectTableName =  "Vendor",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  25,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  25,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CreatedByPartner",
+					  						ListPropertyPath =  "CreatedByPartner",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Vendor",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CreatedByPartner",
+					  						DefaultText =  "Created By Partner",
+					  						ListFieldLable =  "CreatedByPartnerListLable",
+					  						ListLableDefaultText =  "Created By Partner",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
@@ -2436,21 +2497,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			  Query VendorsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = VendorTextCode_0.Id, Code = "Vendors",  QueryGroupCode = "VNDR", IndexOrder = 0, Tenant = 0, ObjectTableId = VendorObjectTable.Id, QuerySection = "Vendor", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = VendorFeature_0.Id, DefaultSortName = "Code", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn VendorsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorsQuery.Id, IndexOrder = 0, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == VendorObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VendorsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorsQuery.Id, IndexOrder = 0, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == VendorObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VendorObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == VendorObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn VendorsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorsQuery.Id, IndexOrder = 1, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == VendorObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VendorsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorsQuery.Id, IndexOrder = 1, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == VendorObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VendorObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == VendorObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn VendorsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorsQuery.Id, IndexOrder = 2, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == VendorObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VendorsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorsQuery.Id, IndexOrder = 2, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == VendorObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VendorObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == VendorObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn VendorsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorsQuery.Id, IndexOrder = 3, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == VendorObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VendorsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorsQuery.Id, IndexOrder = 3, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == VendorObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VendorObjectFields.Where(d => d.FieldName == "VatNumber" && d.ObjectTableId == VendorObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn VendorsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorsQuery.Id, IndexOrder = 4, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard" && d.ObjectTableId == VendorObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VendorsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorsQuery.Id, IndexOrder = 4, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard" && d.ObjectTableId == VendorObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VendorObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard" && d.ObjectTableId == VendorObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn VendorsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorsQuery.Id, IndexOrder = 5, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "PaymentTermEnglishName" && d.ObjectTableId == VendorObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VendorsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorsQuery.Id, IndexOrder = 5, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "PaymentTermEnglishName" && d.ObjectTableId == VendorObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VendorObjectFields.Where(d => d.FieldName == "PaymentTermEnglishName" && d.ObjectTableId == VendorObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn VendorsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorsQuery.Id, IndexOrder = 6, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == VendorObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VendorsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorsQuery.Id, IndexOrder = 6, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == VendorObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VendorObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == VendorObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn VendorsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorsQuery.Id, IndexOrder = 7, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == VendorObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn VendorsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorsQuery.Id, IndexOrder = 7, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == VendorObjectTable.Id).FirstOrDefault().Id, ObjectFieldCode = VendorObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == VendorObjectTable.Id).FirstOrDefault().FieldCode, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
@@ -2464,9 +2525,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen VendorHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.Vendor.HeaderScreen", Name = "Header Screen", ObjectTableId = VendorObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField VendorCustomsVendorHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = VendorHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField VendorCustomsVendorHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = VendorHeaderScreenScreen0.Id, ObjectFieldCode = VendorObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField VendorCustomsVendorHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = VendorHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField VendorCustomsVendorHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = VendorHeaderScreenScreen0.Id, ObjectFieldCode = VendorObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    VendorObjectTable.HeaderScreenId = VendorHeaderScreenScreen0.Id;
 	   		  
@@ -2474,57 +2535,57 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen VendorGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.Vendor.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = VendorObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 6, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField VendorCustomsVendorGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = VendorGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField VendorCustomsVendorGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = VendorGeneralTabScreenScreen1.Id, ObjectFieldCode = VendorObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField VendorCustomsVendorGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = VendorGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField VendorCustomsVendorGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = VendorGeneralTabScreenScreen1.Id, ObjectFieldCode = VendorObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField VendorCustomsVendorGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = VendorGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField VendorCustomsVendorGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = VendorGeneralTabScreenScreen1.Id, ObjectFieldCode = VendorObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField VendorCustomsVendorGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "Website").FirstOrDefault().Id, ScreenId = VendorGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField VendorCustomsVendorGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "Website").FirstOrDefault().Id, ScreenId = VendorGeneralTabScreenScreen1.Id, ObjectFieldCode = VendorObjectFields.Where(d => d.FieldName == "Website").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField VendorCustomsVendorGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = VendorGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField VendorCustomsVendorGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = VendorGeneralTabScreenScreen1.Id, ObjectFieldCode = VendorObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField VendorCustomsVendorGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "Notes").FirstOrDefault().Id, ScreenId = VendorGeneralTabScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField VendorCustomsVendorGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "Notes").FirstOrDefault().Id, ScreenId = VendorGeneralTabScreenScreen1.Id, ObjectFieldCode = VendorObjectFields.Where(d => d.FieldName == "Notes").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
 	         Screen VendorBillingTabScreenScreen2 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Vendor.BillingTabScreen", Name = "Billing Tab Screen", ObjectTableId = VendorObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 5, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField VendorVendorBillingTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "VatNumber").FirstOrDefault().Id, ScreenId = VendorBillingTabScreenScreen2.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField VendorVendorBillingTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "VatNumber").FirstOrDefault().Id, ScreenId = VendorBillingTabScreenScreen2.Id, ObjectFieldCode = VendorObjectFields.Where(d => d.FieldName == "VatNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField VendorVendorBillingTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "PaymentTermId").FirstOrDefault().Id, ScreenId = VendorBillingTabScreenScreen2.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField VendorVendorBillingTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "PaymentTermId").FirstOrDefault().Id, ScreenId = VendorBillingTabScreenScreen2.Id, ObjectFieldCode = VendorObjectFields.Where(d => d.FieldName == "PaymentTermId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField VendorVendorBillingTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "InvoiceCurrencyId").FirstOrDefault().Id, ScreenId = VendorBillingTabScreenScreen2.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField VendorVendorBillingTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "InvoiceCurrencyId").FirstOrDefault().Id, ScreenId = VendorBillingTabScreenScreen2.Id, ObjectFieldCode = VendorObjectFields.Where(d => d.FieldName == "InvoiceCurrencyId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField VendorVendorBillingTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "VatTypeId").FirstOrDefault().Id, ScreenId = VendorBillingTabScreenScreen2.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField VendorVendorBillingTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "VatTypeId").FirstOrDefault().Id, ScreenId = VendorBillingTabScreenScreen2.Id, ObjectFieldCode = VendorObjectFields.Where(d => d.FieldName == "VatTypeId").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField VendorVendorBillingTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "EnableConsolidationInvoices").FirstOrDefault().Id, ScreenId = VendorBillingTabScreenScreen2.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField VendorVendorBillingTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "EnableConsolidationInvoices").FirstOrDefault().Id, ScreenId = VendorBillingTabScreenScreen2.Id, ObjectFieldCode = VendorObjectFields.Where(d => d.FieldName == "EnableConsolidationInvoices").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField VendorVendorBillingTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "BankName").FirstOrDefault().Id, ScreenId = VendorBillingTabScreenScreen2.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField VendorVendorBillingTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "BankName").FirstOrDefault().Id, ScreenId = VendorBillingTabScreenScreen2.Id, ObjectFieldCode = VendorObjectFields.Where(d => d.FieldName == "BankName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField VendorVendorBillingTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "BankAddress").FirstOrDefault().Id, ScreenId = VendorBillingTabScreenScreen2.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField VendorVendorBillingTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "BankAddress").FirstOrDefault().Id, ScreenId = VendorBillingTabScreenScreen2.Id, ObjectFieldCode = VendorObjectFields.Where(d => d.FieldName == "BankAddress").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField VendorVendorBillingTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "Swift").FirstOrDefault().Id, ScreenId = VendorBillingTabScreenScreen2.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField VendorVendorBillingTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "Swift").FirstOrDefault().Id, ScreenId = VendorBillingTabScreenScreen2.Id, ObjectFieldCode = VendorObjectFields.Where(d => d.FieldName == "Swift").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField VendorVendorBillingTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "AccountNumber").FirstOrDefault().Id, ScreenId = VendorBillingTabScreenScreen2.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField VendorVendorBillingTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "AccountNumber").FirstOrDefault().Id, ScreenId = VendorBillingTabScreenScreen2.Id, ObjectFieldCode = VendorObjectFields.Where(d => d.FieldName == "AccountNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField VendorVendorBillingTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "IBANNumber").FirstOrDefault().Id, ScreenId = VendorBillingTabScreenScreen2.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField VendorVendorBillingTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "IBANNumber").FirstOrDefault().Id, ScreenId = VendorBillingTabScreenScreen2.Id, ObjectFieldCode = VendorObjectFields.Where(d => d.FieldName == "IBANNumber").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
 	         Screen VendorAccountingTabScreenScreen3 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Vendor.AccountingTabScreen", Name = "Accounting Tab Screen", ObjectTableId = VendorObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField VendorVendorAccountingTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard").FirstOrDefault().Id, ScreenId = VendorAccountingTabScreenScreen3.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField VendorVendorAccountingTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard").FirstOrDefault().Id, ScreenId = VendorAccountingTabScreenScreen3.Id, ObjectFieldCode = VendorObjectFields.Where(d => d.FieldName == "ReceivablesAccountingCard").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField VendorVendorAccountingTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "PayablesAccountingCard").FirstOrDefault().Id, ScreenId = VendorAccountingTabScreenScreen3.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField VendorVendorAccountingTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "PayablesAccountingCard").FirstOrDefault().Id, ScreenId = VendorAccountingTabScreenScreen3.Id, ObjectFieldCode = VendorObjectFields.Where(d => d.FieldName == "PayablesAccountingCard").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
 	         Screen VendorHeaderScreenScreen4 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Vendor.HeaderScreen", Name = "Header Screen", ObjectTableId = VendorObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField VendorVendorHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = VendorHeaderScreenScreen4.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField VendorVendorHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = VendorHeaderScreenScreen4.Id, ObjectFieldCode = VendorObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField VendorVendorHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = VendorHeaderScreenScreen4.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField VendorVendorHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = VendorHeaderScreenScreen4.Id, ObjectFieldCode = VendorObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    VendorObjectTable.HeaderScreenId = VendorHeaderScreenScreen4.Id;
 	   		  
@@ -2532,17 +2593,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 	         Screen VendorGeneralTabScreenScreen5 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Vendor.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = VendorObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 6, IsReadOnly = false }, screensRepository, tenantScreens);
       
-            ScreenField VendorVendorGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = VendorGeneralTabScreenScreen5.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField VendorVendorGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().Id, ScreenId = VendorGeneralTabScreenScreen5.Id, ObjectFieldCode = VendorObjectFields.Where(d => d.FieldName == "Code").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField VendorVendorGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = VendorGeneralTabScreenScreen5.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField VendorVendorGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().Id, ScreenId = VendorGeneralTabScreenScreen5.Id, ObjectFieldCode = VendorObjectFields.Where(d => d.FieldName == "EnglishName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField VendorVendorGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = VendorGeneralTabScreenScreen5.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField VendorVendorGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = VendorGeneralTabScreenScreen5.Id, ObjectFieldCode = VendorObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField VendorVendorGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "Website").FirstOrDefault().Id, ScreenId = VendorGeneralTabScreenScreen5.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField VendorVendorGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "Website").FirstOrDefault().Id, ScreenId = VendorGeneralTabScreenScreen5.Id, ObjectFieldCode = VendorObjectFields.Where(d => d.FieldName == "Website").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField VendorVendorGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = VendorGeneralTabScreenScreen5.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField VendorVendorGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().Id, ScreenId = VendorGeneralTabScreenScreen5.Id, ObjectFieldCode = VendorObjectFields.Where(d => d.FieldName == "InActive").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField VendorVendorGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "Notes").FirstOrDefault().Id, ScreenId = VendorGeneralTabScreenScreen5.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField VendorVendorGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = VendorObjectFields.Where(d => d.FieldName == "Notes").FirstOrDefault().Id, ScreenId = VendorGeneralTabScreenScreen5.Id, ObjectFieldCode = VendorObjectFields.Where(d => d.FieldName == "Notes").FirstOrDefault().FieldCode, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -2675,7 +2736,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    {  
 		   FeatureRepository featureRepository = new FeatureRepository(0); 
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
-		   ObjectTable VendorObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Vendor" && d.Tenant == 0).FirstOrDefault(); 			   Feature VendorFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Disconnect", ObjectTableId = VendorObjectTable.Id, Tenant = 0, NameTextCodeCode = "Vendor.Features.DisconnectGLAccount", NameTextCodeDefaultText = "Disconnect GLAccount", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+		   ObjectTable VendorObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Vendor" && d.Tenant == 0).FirstOrDefault(); 			   Feature VendorFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Disconnect", ObjectTableId = VendorObjectTable.Id, Tenant = 0, NameTextCodeCode = "Vendor.Features.DisconnectGLAccount", NameTextCodeDefaultText = "Disconnect GLAccount", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
               
 
 		   TextCodeRepository.SubmitChanges();

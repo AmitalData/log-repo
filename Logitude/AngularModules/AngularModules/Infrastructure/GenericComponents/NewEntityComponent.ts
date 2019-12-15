@@ -79,7 +79,7 @@ export class NewEntityComponent {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 3) {
+        if (this.Retries < 20) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
@@ -97,13 +97,7 @@ export class NewEntityComponent {
         this.SaveEntityChanges();
     }
     private SaveEntityChanges() {
-        //if (this.EntityPM.IsDirty) {
 
-        var InterestBasesPeriods: InterestBasesPeriodPM[] = [];
-        if (this.ObjectTableName == "InterestBasesType") {
-            InterestBasesPeriods = this.EntityPM.InterestBasesPeriods;
-            this.EntityPM.InterestBasesPeriods = null;
-        }
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
             this.entityPMService.insert(this.ObjectTableName, this.EntityPM).then((res: any) => {
                 res.subscribe(response => {
@@ -117,22 +111,6 @@ export class NewEntityComponent {
 
                         if (this.ObjectTable.CacheOnClient === true) {
                             CachedDataManager.RefreshTableData(this.ObjectTableName, true);
-                        }
-
-                        if (this.ObjectTableName == 'InterestBasesType') {
-                            InterestBasesPeriods.forEach(s => s.InterestBaseTypeId = this.EntityPM.Id);
-                            this.EntityPM.InterestBasesPeriods = InterestBasesPeriods;
-                            var myService: InterestBasesTypePMService = new InterestBasesTypePMService();
-                             myService.update(this.EntityPM).subscribe(myResult => {
-                                var iServiceResponse: ServiceResponse = myResult;
-                                if (!iServiceResponse.HasError) {
-                                    this.CurrentSession.CloseCurrentWindowEmit("ok");
-                                }
-                                else {
-                                    this.ValidationErrorsList = iServiceResponse.ErrorsArray;
-                                    this.CurrentSession.StopBusyIndicator();
-                                }
-                            });
                         }
 
                         if (this.ObjectTableName == 'VatType') {

@@ -186,9 +186,16 @@
       <Name>Simplog.Server.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="bin\Debug\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Fakes\Logitude.Accounting.BL.fakes" />
+    <None Include="Fakes\Logitude.Accounting.Data.fakes" />
+    <None Include="Fakes\Logitude.Accounting.Def.fakes" />
+    <None Include="Fakes\Logitude.Server.Tools.fakes" />
+    <None Include="Fakes\Simplog.Data.Global.fakes" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

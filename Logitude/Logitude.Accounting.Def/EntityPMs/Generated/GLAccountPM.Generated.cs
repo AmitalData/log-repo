@@ -2355,6 +2355,121 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool allowEditChequePayToName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool AllowEditChequePayToName  
+	   {
+	    
+	     get
+		{
+		   return allowEditChequePayToName;
+		 }
+		 set
+		 {
+		   if(allowEditChequePayToName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AllowEditChequePayToName",OldValue=allowEditChequePayToName,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   allowEditChequePayToName=value;
+		   }
+			
+		 }
+	   }
+	  private bool activeForInterest ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool ActiveForInterest  
+	   {
+	    
+	     get
+		{
+		   return activeForInterest;
+		 }
+		 set
+		 {
+		   if(activeForInterest != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ActiveForInterest",OldValue=activeForInterest,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   activeForInterest=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime interestCalculationStartDate ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime InterestCalculationStartDate  
+	   {
+	    
+	     get
+		{
+		   return interestCalculationStartDate;
+		 }
+		 set
+		 {
+		   if(interestCalculationStartDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InterestCalculationStartDate",OldValue=interestCalculationStartDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChanged(values);
+		   interestCalculationStartDate=value;
+		   }
+			
+		 }
+	   }
+	  private bool activeForInterestCreditInvoice ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool ActiveForInterestCreditInvoice  
+	   {
+	    
+	     get
+		{
+		   return activeForInterestCreditInvoice;
+		 }
+		 set
+		 {
+		   if(activeForInterestCreditInvoice != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ActiveForInterestCreditInvoice",OldValue=activeForInterestCreditInvoice,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   activeForInterestCreditInvoice=value;
+		   }
+			
+		 }
+	   }
+	  private decimal minimumInterestInvoiceBilling ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal MinimumInterestInvoiceBilling  
+	   {
+	    
+	     get
+		{
+		   return minimumInterestInvoiceBilling;
+		 }
+		 set
+		 {
+		   if(minimumInterestInvoiceBilling != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MinimumInterestInvoiceBilling",OldValue=minimumInterestInvoiceBilling,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChanged(values);
+		   minimumInterestInvoiceBilling=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

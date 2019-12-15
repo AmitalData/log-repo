@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.InvoiceModel.APIDataContract.ApiV1;
 using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.EntityQueries;
@@ -311,7 +312,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 }
                 temp.Tenant = MyEntity.Tenant;
                 temp.IsDraft = MyEntity.IsDraft;
-             
+                temp.ExternalAccountingEntityId = MyEntity.ExternalAccountingEntityId;
             
                 return temp;
             }
@@ -357,9 +358,22 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 throw ex;
             }
         }
+        public void ValidateAccountingExternalEntityId(ARInvoice invoice)
+        {
+            if (invoice.ExternalAccountingEntityId != null)
+            {
+                ARInvoiceQuery invoiceQuery = new ARInvoiceQuery(invoice.Tenant);
+                bool exist=  invoiceQuery.CheckARInvoiceByExternalAccountingEnityId(invoice.ExternalAccountingEntityId, invoice.Tenant);
+                if (exist)
+                {
+
+                    throw new Exception("ARInvoice with the same ExternalEntityId already exist");
+                }
+            }
+        }
 
 
-     
+
 
     }
 }

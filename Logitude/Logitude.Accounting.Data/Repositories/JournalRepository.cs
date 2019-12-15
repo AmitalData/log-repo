@@ -197,7 +197,7 @@ namespace Logitude.Accounting.Data.Repositories
         {
             var q = (from a in context.Journals
                      where a.Tenant == tenant
-                     where !a.IsLedgerCreated //index 
+                     where a.IsLedgerCreated== false//index 
                      where (a.StatusCode == "2" || a.StatusCode == "3")
                      //3 voided 
                      //2	Approved	מאושר	2,Approved,מאושר	0
@@ -338,6 +338,16 @@ namespace Logitude.Accounting.Data.Repositories
                           where a.Tenant == tenant
                           && a.AccountingEntityId == entityId
                           && a.AccountingEntityCode == accountingEntityCode
+                          select a).FirstOrDefault();
+
+            return entity;
+        }
+        public Journal GetApprovedJournalByAccountingEntityId(string entityId, string accountingEntityCode, int tenant)
+        {
+            var entity = (from a in context.Journals
+                          where a.Tenant == tenant
+                          && a.AccountingEntityId == entityId
+                          && a.AccountingEntityCode == accountingEntityCode &&a.StatusCode =="2"
                           select a).FirstOrDefault();
 
             return entity;

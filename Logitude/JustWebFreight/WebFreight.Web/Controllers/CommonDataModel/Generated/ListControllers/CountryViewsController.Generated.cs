@@ -121,6 +121,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
         {
             try
             {
+                //throw new Exception("nononononononon");
                 string logKey = PerformanceLogger.LogCurrentTime();
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);

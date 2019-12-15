@@ -91,7 +91,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         ARInvoiceQueryService mappingService = new ARInvoiceQueryService(entity.Tenant);
                         ARInvoicePM entityPM = mappingService.ARInvoiceDataMappingAndValidatin(entity, entity.Tenant);
                         mappingService.SetInvoiceLinesEntityId(entityPM, entity.Tenant);
-                    
+                        mappingService.ValidateAccountingExternalEntityId(entity);
                         entityPM.IsExternalEntity = true;
                         entityPM.IsExternalAPI = true;
                         entityPM.Tenant = entity.Tenant;
@@ -198,7 +198,13 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         ARInvoiceService service = new ARInvoiceService(MyContext, entity.Tenant);
 
                         ARInvoicePM invoice = mappingService.UpdateCreditInvoice(entityPM, tenant);
+                        if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
+                        {
+                            ComputingPartnerQuery computingPartnerQuery = new ComputingPartnerQuery(tenant);
+                            var partner = computingPartnerQuery.GetSinglePMByCodeAndCheckTenantZero(entity.ComputingPartnerCode, tenant);
+                            entityPM.CreatedByPartner = (partner != null ? partner.Name : null);
 
+                        }
                         service.Create(entityPM);
                         if (invoice != null)
                         {
@@ -258,6 +264,13 @@ namespace WebFreight.Web.ExternalAPIs.V1
                       //  mappingService.UpdateCreditInvoice(entityPM, tenant);
                         entityPM.IsExternalAPI = true;
                         entityPM.IsExternalEntity = true;
+                        if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
+                        {
+                            ComputingPartnerQuery computingPartnerQuery = new ComputingPartnerQuery(tenant);
+                            var partner = computingPartnerQuery.GetSinglePMByCodeAndCheckTenantZero(entity.ComputingPartnerCode, tenant);
+                            entityPM.CreatedByPartner = (partner != null ? partner.Name : null);
+
+                        }
                         ARInvoiceService service = new ARInvoiceService(MyContext, tenant);
                         service.Update(entityPM, true);
 

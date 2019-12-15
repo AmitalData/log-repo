@@ -193,5 +193,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string CalculatedEnglishName { get; set; }
         [DataMember]
         public bool IsDisconnectedFromGLAccount { get; set; }
+        public string CreatedByPartner { get; set; }
+
     }
 }

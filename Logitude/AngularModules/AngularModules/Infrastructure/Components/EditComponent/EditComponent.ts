@@ -347,7 +347,7 @@ export class EditComponent implements OnDestroy {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 3) {
+        if (this.Retries < 20) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
@@ -481,7 +481,7 @@ export class EditComponent implements OnDestroy {
 
         }
         else if (this.ObjectTableName == "Tariff") {
-            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC") {
+            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
                 myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === this.ObjectTableId && d.Code == "Tariff.SurchagesHeaderScreen")[0];
                 myObjectFields = window.ObjectFields.filter(d => d.ObjectTableId === this.ObjectTableId);
                 this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
@@ -619,7 +619,7 @@ export class EditComponent implements OnDestroy {
 
                         var myScreenField = myScreenFields.filter(f => f.Column == c && f.Row == r)[0];
                         if (myScreenField != null) {
-                            var myObjectField = ObjectFields.filter(d => d.Id === myScreenField.ObjectFieldId)[0];
+                            var myObjectField = ObjectFields.filter(d => d.FieldCode === myScreenField.ObjectFieldCode)[0];
                             if (myObjectField != null) {
 
                                 myRow.Label = TextCodeTranslator.Translate(myObjectField.FullNameTextCodeCode);
@@ -735,6 +735,12 @@ export class EditComponent implements OnDestroy {
                                 break;
                             }
                         case "GAOV":
+                            {
+                                if (this.EntityPM.AccountTypeCode == "2")  // 2- Customer GLAccount
+                                    myTabsSorted.push(tab);
+                                break;
+                            }
+                        case "GAIT":
                             {
                                 if (this.EntityPM.AccountTypeCode == "2")  // 2- Customer GLAccount
                                     myTabsSorted.push(tab);

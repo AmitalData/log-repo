@@ -1,3 +1,4 @@
+import { GLAccountPMService } from './../../../Accounting/Services/StandardPMs/GLAccountPMService';
 declare var window: any;
 import {APPaymentPM} from '../../EntityPMs/APPaymentPM';
 import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
@@ -17,6 +18,8 @@ import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { FullAccountingSettingPM } from '../../../Accounting/EntityPMs/FullAccountingSettingPM';
 import { FullAccountingSettingPMService } from '../../../Accounting/Services/StandardPMs/FullAccountingSettingPMService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { GLAccountPM } from '../../../Accounting/EntityPMs/GLAccountPM';
+import { reject } from 'q';
 
 export class APPaymentMenuButtonsHandler {
     public EntityPM: APPaymentPM;
@@ -34,6 +37,8 @@ export class APPaymentMenuButtonsHandler {
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
         this.Listen();
+
+
     }
 
     private ResetAllFlags() {
@@ -332,7 +337,7 @@ export class APPaymentMenuButtonsHandler {
 
         if (isValid) {
             this.entityArgs.EditComponent.ValidationErrorsList = [];
-            this.GetFullAccountingSettings();
+            this.GetFullAccountingSettingsAndApprove();
 
         }
 
@@ -382,9 +387,10 @@ export class APPaymentMenuButtonsHandler {
 
     }
 
-    public GetFullAccountingSettings() {
+    public GetFullAccountingSettingsAndApprove() {
         this.CurrentSession.StartBusyIndicatorLoading();
-        this.fullAccountingSettingPMService.get(SessionLocator.TenantPM.Id.toString()).subscribe(myResult => {
+        this.fullAccountingSettingPMService.get(SessionLocator.TenantPM.Id.toString()).subscribe(myResult =>
+        {
             var myResponse: ServiceResponse = myResult;
             this.CurrentSession.StopBusyIndicator();
 
@@ -392,8 +398,23 @@ export class APPaymentMenuButtonsHandler {
 
                 var res = myResponse.Result;
                 var fullAccountingSetting: FullAccountingSettingPM = res;
-                if (fullAccountingSetting != null) {
-                    if (fullAccountingSetting.IsPaymentChequesActivated && this.EntityPM.ExcludeFromDeductionReport && this.EntityPM.PaymentMethodCode == "CH") {
+
+                this.Approve(fullAccountingSetting);
+
+            }
+
+        });
+
+    }
+
+    private Approve(fullAccountingSetting: FullAccountingSettingPM)
+    {
+        if (fullAccountingSetting.AccountingActivated) {
+            this.GetGLAccount(this.EntityPM.VendorGLAccountId).then((glaccount: GLAccountPM) => {
+
+
+                if (fullAccountingSetting != null && glaccount != null) {
+                    if (fullAccountingSetting.IsPaymentChequesActivated && glaccount.AllowEditChequePayToName && this.EntityPM.PaymentMethodCode == "CH") {
                         this.OpenEditPaymentChequeScreen();
                     }
                     else {
@@ -403,10 +424,13 @@ export class APPaymentMenuButtonsHandler {
                 else {
                     this.ContinueSaving(null);
                 }
-            }
 
-        });
 
+            });
+        }
+        else {
+            this.ContinueSaving(null);
+        }
     }
 
     SetPaymentChequeWindowArgs(windowArgs: any) {
@@ -417,6 +441,8 @@ export class APPaymentMenuButtonsHandler {
         windowArgs.ForeignAmount = this.EntityPM.AmountInPaymentCurrency;
         windowArgs.ValueDate = this.EntityPM.ValueDate;
         windowArgs.APPayment = this.EntityPM;
+
+
         return windowArgs;
     }
 
@@ -488,7 +514,7 @@ export class APPaymentMenuButtonsHandler {
 
     }
 
-    VoidingAPPayment(event:any) {
+    VoidingAPPayment(event: any) {
         if (event == null || event == "Ok") {
             var messageWindow: MessageWindow;
             if (this.EntityPM.PaymentInvoices.length > 0) {
@@ -519,6 +545,7 @@ export class APPaymentMenuButtonsHandler {
             }
         }
     }
+
 
     // [Void]
     VoidMethod() {
@@ -557,26 +584,56 @@ export class APPaymentMenuButtonsHandler {
             else { this.VoidingAPPayment(null); }
         }
     }
-  
+
+
+    PayToGLAccount: GLAccountPM;
+    GetGLAccount(id: string)
+    {
+        return new Promise(resolve =>
+        {
+
+            var service = new GLAccountPMService();
+            service.get(id).subscribe(response =>
+            {
+                console.log("[GLAccountPMService.Get", response);
+
+                var result: ServiceResponse = response;
+                if (!result.HasError) {
+                    this.PayToGLAccount = result.Result;
+                    resolve(this.PayToGLAccount);
+                }
+                else {
+                    console.error(result.ErrorsArray);
+                    reject();
+                }
+            });
+
+
+        });
+    }
+
+
     OpenCancelAPPaymentScreen() {
         this.CurrentSession.StartBusyIndicatorLoading();
 
 
-        var windowTitle = "Cancel Payment";
+        var windowTitle = TextCodeTranslator.Translate("APPayment.O.CancelAPPayment");
         var logWindow = new LogitudeWindow();
         var windowArgs: any = {};
         windowArgs.PaymentDate = this.EntityPM.RegisterDate;
-       // windowArgs = this.SetPaymentChequeWindowArgs(windowArgs);
+        windowArgs.PaymentPM = this.EntityPM;
+        // windowArgs = this.SetPaymentChequeWindowArgs(windowArgs);
         logWindow.WindowArgs = windowArgs;
-        logWindow.Width = 420;
-        logWindow.Height = 250;
+        logWindow.Width = 480;
+        logWindow.Height = 280;
         logWindow.Title = windowTitle;
-        logWindow.ShowCloseButton = true;
-   
+        //  logWindow.ShowCloseButton = true;
+
         logWindow.WindowClosed.subscribe(($event: any) => this.VoidingAPPayment($event));
         logWindow.Show('./InvoiceModules/APPayment/Components/Other/CancelAPPaymentComponent');
         this.CurrentSession.StopBusyIndicator();
 
     }
+
 
 }

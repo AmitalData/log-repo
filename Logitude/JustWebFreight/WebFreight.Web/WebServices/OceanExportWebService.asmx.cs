@@ -37,7 +37,11 @@ namespace WebFreight.Web.WebServices
     public class OceanExportWebService : System.Web.Services.WebService
     {
         private int tenant;
+        FBLDataProvider myDataProvider;
         private WebServiceHelper myServicHelper;
+        private IShipmentsContext shipmentsContext;
+        private ICommonDataContext commonContext;
+        private AddressRepository addressRepository;
 
         [WebMethod]
         public byte[] GetFBLData(string shipmentId, int tenant, string documentTypeCopyId)
@@ -60,17 +64,17 @@ namespace WebFreight.Web.WebServices
 
         private FBLDataProvider GetFBLDataProvider(string shipmentId, int tenant, string documentTypeCopyId)
         {
-            FBLDataProvider myDataProvider = new FBLDataProvider();
+            myDataProvider = new FBLDataProvider();
 
-            IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
+            shipmentsContext = ShipmentsContext.GetContext(tenant);
             IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
-            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+            commonContext = CommonDataContext.GetContext(tenant);
 
             ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
             ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
 
             PortRepository portRepository = new PortRepository(commonContext);
-            AddressRepository addressRepository = new AddressRepository(commonContext);
+            addressRepository = new AddressRepository(commonContext);
             ContactRepository contactRepository = new ContactRepository(commonContext);
 
             ShipmentPM shipment = shipmentQuery.GetSinglePM(shipmentId, tenant);
@@ -1445,6 +1449,7 @@ namespace WebFreight.Web.WebServices
                                 break;
                             }
                     }
+                    myDataProvider.DeliveryInstructions = myLastDelivery.Notes != null ? myLastDelivery.Notes : "";
                 }
                 #endregion
 
@@ -1989,7 +1994,17 @@ namespace WebFreight.Web.WebServices
 
                 CustomFieldResolver customFieldResolver = new CustomFieldResolver();
                 customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipment, myDataProvider);
+                ShipmentPickUpDelivery lastPickUp = GetLastPickUp(shipment.Id);
+                if (lastPickUp != null)
+                {
+                    myDataProvider.PickUpInstructions = lastPickUp.Notes != null ? lastPickUp.Notes : "";
+                }
             }
+
+            #region Custom Agent Import|Custom Agent Export
+            this.GetAllBrokerVariables(shipment.CustomAgentImportId, shipment.CustomAgentImportAddressId);
+            this.GetCustomAgentVariable(shipment.CustomAgentImportId, shipment.CustomAgentExportId);
+            #endregion
 
             //------------------------------------------------
             try
@@ -2064,6 +2079,85 @@ namespace WebFreight.Web.WebServices
             return myDataProvider;
         }
 
+        private void GetCustomAgentVariable(string customAgentImportId, string customAgentExportId)
+        {
+            Card customAgentImporter = GetCustomAgent(customAgentImportId);
+            Card customAgentExporter = GetCustomAgent(customAgentExportId);
+            if (customAgentImporter != null)
+            {
+                myDataProvider.CustomsAgent = customAgentImporter.EnglishName != null ? customAgentImporter.EnglishName : "";
+            }
+            if (customAgentExporter != null)
+            {
+                myDataProvider.CustomsAgent = customAgentExporter.EnglishName != null ? customAgentExporter.EnglishName : "";
+            }
+        }
+
+        private void GetAllBrokerVariables(string customAgentImportId, string customAgentImportAddressId)
+        {
+            Card customAgentImporter = GetCustomAgent(customAgentImportId);
+            Address customAgentImportAddress;
+            if (customAgentImporter != null)
+            {
+                customAgentImportAddress = GetCustomAgentImporterAddress(customAgentImportAddressId);
+                myDataProvider.BrokerName = customAgentImporter.EnglishName != null ? customAgentImporter.EnglishName : "";
+                myDataProvider.Broker = BuildBrokerValue(customAgentImporter, customAgentImportAddress);
+            }
+        }
+
+        private string BuildBrokerValue(Card customAgentImporter, Address customAgentImportAddress)
+        {
+            string broker = "";
+            if (customAgentImporter != null)
+            {
+                broker = customAgentImporter.EnglishName != null ? customAgentImporter.EnglishName : "";
+            }
+            if (customAgentImportAddress != null)
+            {
+                if (customAgentImportAddress.IsLocalLanguage)
+                {
+                    if (customAgentImporter != null && !string.IsNullOrEmpty(customAgentImporter.LocalName))
+                    {
+                        broker = customAgentImporter.LocalName;
+                    }
+                }
+                broker = broker + Environment.NewLine + DataProviders.General.GetAddress(customAgentImportAddress);
+                if (customAgentImportAddress.PhoneNumber != null || customAgentImportAddress.FaxNumber != null)
+                {
+                    broker = broker + Environment.NewLine
+                        + (customAgentImportAddress.PhoneNumber != null ? "Tel: " + customAgentImportAddress.PhoneNumber + " " : "")
+                        + (customAgentImportAddress.FaxNumber != null ? "Fax: " + customAgentImportAddress.FaxNumber + " " : "");
+                }
+            }
+            return broker;
+        }
+
+        private Address GetCustomAgentImporterAddress(string customAgentImportAddressId)
+        {
+            if (!string.IsNullOrEmpty(customAgentImportAddressId))
+            {
+                return addressRepository.GetSingleAddress(customAgentImportAddressId, tenant);
+            }
+            return null;
+        }
+
+        private Card GetCustomAgent(string customAgentId)
+        {
+            if (!string.IsNullOrEmpty(customAgentId))
+            {
+                return (from a in commonContext.Cards
+                        where a.Id == customAgentId
+                        select a).FirstOrDefault();
+            }
+            return null;
+        }
+
+        private ShipmentPickUpDelivery GetLastPickUp(string shipmentId)
+        {
+            return (from pickUp in shipmentsContext.ShipmentPickUpDeliveries
+                    where pickUp.ShipmentId == shipmentId && pickUp.PickUpDeliveryTypeCode == "PICK"
+                    select pickUp).OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
+        }
         private void GetInsidePackagesData(IShipmentsContext context, ShipmentPackage package, ShipmentPM shipment, PackageLine line)
         {
             List<InsideShipmentPackage> insidePackages = context.InsideShipmentPackages.Include("PackageType").Where(d => d.ShipmentPackageId == package.Id && d.Tenant == package.Tenant).ToList();

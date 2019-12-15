@@ -29,21 +29,24 @@
                                 <td style="width:70px;"><div></div></td>
                             </tr>
 
-
+                            <tr style="height:4px"><td><div></div></td></tr>
                             <tr class="FormFieldRow">
-                                <td style="width: 180px;">
+                                <td style="width: 180px;vertical-align:top">
                                     <LogLabel [ObjectFieldName]="'CancelationNotes'" [ObjectTableName]="ObjectTableName"
                                               [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td><div></div></td>
 
-                                <td style="width: 140px;" colspan="2">
+                                <td style="width: 140px;vertical-align:top" colspan="2">
                                     <LogTextBox [ObjectFieldName]="'CancelationNotes'" [InputType]="'ntext'" [DataContext]="DataContext"
-                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true" [IsMultiline]="true"></LogTextBox>
                                 </td>
                                 <td><div></div></td>
 
                             </tr>
+
+                            <tr style="height:5px"><td><div></div></td></tr>
+
                             <tr class="FormFieldRow">
                                 <td style="width: 180px;">
                                     <LogLabel [ObjectFieldName]="'DontIncludeInDeductionReport'" [ObjectTableName]="ObjectTableName"
@@ -51,10 +54,10 @@
                                 </td>
                                 <td><div></div></td>
 
-                                <td style="width: 140px;" >
+                                <td style="width: 140px;">
                                     <CheckBox [IsChecked]="DontIncludeInDeductionReport" (Checked)="DontIncludeInDeductionReport = $event"></CheckBox>
-</td>
-<td><div></div></td>
+                                </td>
+                                <td><div></div></td>
 
                             </tr>
 

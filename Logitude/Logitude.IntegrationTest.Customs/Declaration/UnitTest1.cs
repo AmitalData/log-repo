@@ -19,10 +19,8 @@ namespace Logitude.IntegrationTest.Customs.Declaration
         {
             Task.Run(async () =>
             {
-                string email = "angular@fnarsoft.com";
-                string pass = "1";
-                var token = await LoginService.GetLoginTokenByUserEmailAndTenant(email, pass);
-                Assert.IsNotNull(token);
+                
+                await LoginService.GetLoginTokenByUserEmailAndTenant();
 
             }).GetAwaiter().GetResult();
         }

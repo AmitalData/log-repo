@@ -37,7 +37,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.ApprovedByUserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.VendorGLAccountId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ExternalAccountingEntityId).HasMaxLength(15).IsUnicode(false);
-
+            this.Property(t => t.CreatedByPartner).HasMaxLength(25).IsUnicode(false);
             
             // Table & Column Mappings
             this.ToTable("APInvoices");
@@ -96,7 +96,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.IsGeneralInvoice).HasColumnName("IsGeneralInvoice");
             this.Property(t => t.ExternalAccountingEntityId).HasColumnName("ExternalAccountingEntityId");
             this.Property(t => t.FirstApproveDate).HasColumnName("FirstApproveDate");
-
+            this.Property(t => t.CreatedByPartner).HasColumnName("CreatedByPartner");
             // Relationships
             this.HasRequired(t => t.Status).WithMany().HasForeignKey(d => d.StatusCode);
             this.HasRequired(t => t.Branch).WithMany().HasForeignKey(d => d.BranchId);

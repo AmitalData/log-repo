@@ -29,7 +29,7 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
     public IsCustomerAccount: boolean = false;
     public ChartOfAccountTypeFilterItems: ApiQueryFilters;
     public ParentsFilterItems: ApiQueryFilters;
-  IsVendor: boolean = false;
+    public IsVendor: boolean = false;
     private _GLAccountExtendedListService = new GLAccountExtendedListService();
     private gLAccountExtendedPMService = new GLAccountExtendedPMService();
 
@@ -127,11 +127,11 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
 
         return new Promise(resolve =>
         {
-            this.CurrentSession.StartBusyIndicatorLoading();
+            this.entityArgs.EditComponent.StartBusyIndicatorLoading();
             this.gLAccountExtendedPMService.GetConnectedCardsForGLAccount(accountId)
                 .subscribe((myResponse: ServiceResponse) =>
                 {
-                    this.CurrentSession.StopBusyIndicator();
+                    this.entityArgs.EditComponent.StopBusyIndicator();
                     var connectedCards = myResponse.Result;
                     if (connectedCards)
                         resolve(connectedCards);
@@ -407,6 +407,13 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
             }
 
         }
+    }
+
+    get AllowEditChequePayToName() { return this.EntityPM.AllowEditChequePayToName; }
+    set AllowEditChequePayToName(value: boolean) {
+        if (this.EntityPM.AllowEditChequePayToName != value) {
+            this.EntityPM.AllowEditChequePayToName = value;
+                    }
     }
     //#endregion
 

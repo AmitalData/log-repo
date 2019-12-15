@@ -157,7 +157,8 @@ using Simplog.Data.InvoiceModel;
 				   
 				   temp.Tenant = MyEntityPM.Tenant;
 				   temp.IsMultiCurrency = MyEntityPM.IsMultiCurrency;
-				   temp.CreditARInvoice = MyEntityPM.CreditARInvoice;					
+				   temp.CreditARInvoice = MyEntityPM.CreditARInvoice;
+				   temp.ExternalAccountingEntityId = MyEntityPM.ExternalAccountingEntityId;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -332,7 +333,8 @@ using Simplog.Data.InvoiceModel;
 					
 					temp.Tenant = MyEntity.Tenant;
 					temp.IsMultiCurrency = MyEntity.IsMultiCurrency;
-					temp.CreditARInvoice = MyEntity.CreditARInvoice;					   
+					temp.CreditARInvoice = MyEntity.CreditARInvoice;
+					temp.ExternalAccountingEntityId = MyEntity.ExternalAccountingEntityId;					   
 					   return temp;
 		    }
             catch (Exception ex)

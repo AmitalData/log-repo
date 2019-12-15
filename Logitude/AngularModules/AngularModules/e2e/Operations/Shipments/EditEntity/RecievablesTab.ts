@@ -20,21 +20,21 @@ export class ReceivablesTabComponent {
         this.AddRecievableLines(ShipmentLevelCode, shipmentType);
 
         this.CreatARInvoicewithVoid(true, 'ARInvoice');
-        this.EditAPInvoice(true, 'ARInvoice');
+        this.EditARInvoice(true, 'ARInvoice');
         this.CreatARInvoicewithVoid(false, 'ARInvoice');
-        this.EditAPInvoice(false, 'ARInvoice');
+        this.EditARInvoice(false, 'ARInvoice');
         this.CreatARInvoicewithVoid(true, 'CreditNote');
-        this.EditAPInvoice(true, 'CreditNote');
+        this.EditARInvoice(true, 'CreditNote');
         this.CreatARInvoicewithVoid(false, 'CreditNote');
-        this.EditAPInvoice(false, 'CreditNote');
+        this.EditARInvoice(false, 'CreditNote');
     }
 
     AddRecievableLines(ShipmentLevelCode: string, ShipmentType: string) {
         if (ShipmentLevelCode == 'D' || ShipmentLevelCode == 'H') {
 
             if (ShipmentType == '') {
-                this.amount1 = this.AddReceivables('Air Frei', '10', '10', 'USD','D');
-                this.amount2 = this.AddReceivables('Order', '10', '-20', 'USD','D');
+                this.amount1 = this.AddReceivables('Air Frei', '10', '10', 'USD', 'D');
+                this.amount2 = this.AddReceivables('Order', '10', '-20', 'USD', 'D');
             } else if (ShipmentType == 'FCL' || ShipmentType == 'LCL') {
                 this.amount1 = this.AddReceivables('ocean', '10', '10', 'USD', 'D');
                 this.amount2 = this.AddReceivables('Order', '10', '-20', 'USD', 'D');
@@ -50,23 +50,23 @@ export class ReceivablesTabComponent {
                 console.log('Inside ShipmentLevelCode if statement');
                 this.amount1 = this.AddReceivables('Air Frei', '10', '10', 'USD', 'M');
                 this.amount2 = this.AddReceivables('Order', '10', '-20', 'USD', 'M');
-                
+
             } else if (ShipmentType == 'FCL' || ShipmentType == 'LCL') {
                 this.amount1 = this.AddReceivables('ocean', '10', '10', 'USD', 'M');
                 this.amount2 = this.AddReceivables('Order', '10', '-20', 'USD', 'M');
-                
+
             } else {
                 this.amount1 = this.AddReceivables('Inland', '10', '10', 'USD', 'M');
                 this.amount2 = this.AddReceivables('Order', '10', '-20', 'USD', 'M');
-                
+
             }
-          
+
         }
         this.Helper.WaitByIdAndClick('Shipment-Save');
         this.WaitBusyIndicatorToShowandHide();
     }
     AddReceivables(ChargeType: string, quantity: any, unitPrice: any, currency: any, ShipmentLevelCode: string) {
-     
+
         this.Helper.WaitEditComponentBusyIndicator();
         if (ShipmentLevelCode == 'M') {
             this.Helper.WaitByIdAndClick('Add_1');
@@ -83,7 +83,7 @@ export class ReceivablesTabComponent {
 
         this.Helper.WaitByIdAndFill('ShipmentReceivable_Quantity', quantity);
         this.Helper.WaitByIdAndFill('ShipmentReceivable_UnitPrice', unitPrice);
-
+        this.Helper.WaitByIdAndFill('ShipmentReceivable_Rate', '3');
         this.Helper.WaitByIdAndClick('Ok-AddReceivableBtn');
     }
 
@@ -110,19 +110,19 @@ export class ReceivablesTabComponent {
     //    this.Helper.WaitByIdAndClick('CreateCreditNote');
     //}
 
-    EditAPInvoice(Voided: boolean, type: string) {
+    EditARInvoice(Voided: boolean, type: string) {
         this.Helper.WaitEditComponentBusyIndicator();
-        this.Helper.WaitByIdAndFill('ARInvoice_VatTypeId', 'Zero');
+       /* this.Helper.WaitByIdAndFill('ARInvoice_VatTypeId', 'Zero');
         this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'ARInvoice_VatTypeId', 'Zero');
         this.Helper.WaitEditComponentBusyIndicator();
-        this.Helper.WaitByIdAndClick('VATApplyToAll');
-        this.Helper.WaitEditComponentBusyIndicator();
+        this.Helper.WaitByIdAndClick('VATApplyToAll');*/
+        //this.Helper.WaitEditComponentBusyIndicator();
+        //this.Helper.WaitByIdAndFill('textboxdiv_ARInvoice_PrintNotes', 'Filled by Protractor');
         this.Helper.WaitByIdAndFill('ARInvoice_VatNumber', 'TestVatNumber');
         this.Helper.WaitByIdAndClick('ARInvoice.B.SaveAsDraft');
         this.WaitBusyIndicatorToShowandHide();
         this.Helper.WaitByIdAndClick('ARInvoice.B.Approve');
         this.WaitBusyIndicatorToShowandHide();
-        this.Helper.WaitBusyIndicator();
         if (Voided == true) {
             if (type == 'ARInvoice')
                 this.Helper.WaitByIdAndClick('MenuButtons_3');

@@ -1,5 +1,6 @@
 ﻿using Logitude.IntegrationTest.Core.Login;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace Logitude.IntegrationTest.Core
 {
     public class RestClientService
     {
-        private static string mainUrl = IntegrationTestLoginParameters.ServerURL + "api/";
+        private static string mainUrl = IntegrationTestLoginParameters.ServerURL + "/api/";
         public static async Task<HttpResponseMessage> GetAsync(string urlControllerAndMethod)
         {
             using (var client = new HttpClient())
@@ -47,6 +48,36 @@ namespace Logitude.IntegrationTest.Core
             }
         }
 
+        public static T ParseResponse<T> (HttpResponseMessage response)
+        {
+            T TEntity;
+            var stringResult = response.Content.ReadAsStringAsync().Result;
+            if (string.IsNullOrEmpty(stringResult) || stringResult=="null")
+                return default(T);
+            IntegrationTestException ex = JsonConvert.DeserializeObject<IntegrationTestException>(stringResult);
+            if (string.IsNullOrEmpty(ex.ErrorMessage))
+            {
+                JObject jObject = JObject.Parse(stringResult);
+                JToken token = jObject["Result"];
+                if (token!=null)
+                {
+                    stringResult = (string)jObject.SelectToken("Result").ToString();
+                    string result =  !string.IsNullOrEmpty(stringResult) && stringResult != "[]" ? (string)jObject.SelectToken("Result")[0].ToString() :null;
+                    if(string.IsNullOrEmpty(result))
+                        return default(T);
+                    TEntity = JsonConvert.DeserializeObject<T>(result);
+                }
+                else
+                {
+                     TEntity = JsonConvert.DeserializeObject<T>(stringResult);
+                }
+
+                return TEntity;
+            }
+            else {
+                throw new Exception(ex.ErrorMessage);
+            }
+        }
         private static StringContent PrepareStringContent(object content)
         {
             var serializedObject = JsonConvert.SerializeObject(content);
@@ -59,5 +90,24 @@ namespace Logitude.IntegrationTest.Core
             string url = mainUrl + urlControllerAndMethod;
             return url;
         }
+
+        public static string GetRandomString(int length)
+        {
+            Random random = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+            .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+        public static string GetUniqueIdByDate()
+        {
+            long ticks = DateTime.Now.Ticks;
+            byte[] bytes = BitConverter.GetBytes(ticks);
+            string id = Convert.ToBase64String(bytes)
+                                    .Replace('+', '_')
+                                    .Replace('/', '-')
+                                    .TrimEnd('=');
+            return id;
+        }
+    
     }
 }

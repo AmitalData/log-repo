@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,16 +12,14 @@ namespace Logitude.IntegrationTest.Core.Login
 {
     public class LoginService
     {
-        public static async Task<string> GetLoginTokenByUserEmailAndTenant(string email, string password)
+        public static async Task GetLoginTokenByUserEmailAndTenant()
         {
-            int tenant = IntegrationTestLoginParameters.Tenant;
-            var token = IntegrationTestLoginParameters.Token;
             if (string.IsNullOrEmpty(IntegrationTestLoginParameters.Token))
             {
                 LoginParameters loginParameters = new LoginParameters()
                 {
-                    Email = email,
-                    Password = password,
+                    Email = IntegrationTestLoginParameters.Email,
+                    Password = IntegrationTestLoginParameters.Password,
                     ByToken = false,
                     CardId = null,
                     CardType = null,
@@ -31,12 +30,13 @@ namespace Logitude.IntegrationTest.Core.Login
                     ClientType = "Web",
                 };
 
-                HttpResponseMessage httpResponseMessage = await RestClientService.PostAsync(loginParameters, "Authentication");
-                var stringResult = httpResponseMessage.Content.ReadAsStringAsync().Result;
-                UserData userData = JsonConvert.DeserializeObject<UserData>(stringResult);
-                IntegrationTestLoginParameters.Token = token = userData.Token;
+                HttpResponseMessage response = await RestClientService.PostAsync(loginParameters, "Authentication");
+                UserData userData = RestClientService.ParseResponse<UserData>(response);
+                Assert.IsNotNull(userData.Token);
+                IntegrationTestLoginParameters.Token = userData.Token;
+                IntegrationTestLoginParameters.LoginUserId = userData.Id;
+                IntegrationTestLoginParameters.LoginUserName = userData.UserName;
             }
-            return token;
         }
 
     }
