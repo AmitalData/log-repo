@@ -555,6 +555,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 		   Feature GeneralFeature_Menu_Occasions = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Menu.Occasions", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.Menu.Occasions", NameTextCodeDefaultText = @"Occasions" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
+		   Feature GeneralFeature_AllowCustomersInAgentsLOV = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AllowCustomersInAgentsLOV", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.AllowCustomersInAgentsLOV", NameTextCodeDefaultText = @"Allow Shippers/Consignees in Agents LOV" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
    
 	    
 		}

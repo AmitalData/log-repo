@@ -826,8 +826,16 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
 
             case "AGT":
                 {
-                    this.CustomerDependencyProperty1 = "AG";
-                    this.CustomerDependencyProperty1IsList = false;
+                    if (SessionLocator.TenantPM.AllowCustomersInAgentsLOV) {
+                        this.CustomerDependencyProperty1 = "CS,AG";
+                        this.CustomerDependencyProperty1IsList = true;
+                    }
+
+                    else {
+                        this.CustomerDependencyProperty1 = "AG";
+                        this.CustomerDependencyProperty1IsList = false;
+                    }
+
                     break;
                 }            
 
