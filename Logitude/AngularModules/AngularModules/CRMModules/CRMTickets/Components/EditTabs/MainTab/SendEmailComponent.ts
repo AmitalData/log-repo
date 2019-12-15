@@ -378,7 +378,7 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
             //this.CCs = "";
             var CcEmails = [];
             this.CCs.split(';').forEach(item => {
-                CcEmails.push(item);
+                CcEmails.push(item.toLocaleLowerCase());
             });
             CcEmails.forEach(item => {
                 if (!this.CheckIsValidEmails(item)) {
@@ -389,7 +389,7 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
         if (this.InternalUsers != null) {
             var InternalUsersEmails = [];
             this.InternalUsers.split(';').forEach(item => {
-                InternalUsersEmails.push(item);
+                InternalUsersEmails.push(item.toLocaleLowerCase());
             });
             InternalUsersEmails.forEach(item => {
                 if (!this.CheckIsValidEmails(item)) {
@@ -397,6 +397,8 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
                 }
             });
         }
+
+        this.DuplicateEmailValidation(CcEmails, InternalUsersEmails, errors);
 
         this.EntityPM.Description = this.CorrespondenceLine;
         this.EntityPM.HTMLFullBody = this.CorrespondenceLine;
@@ -504,6 +506,25 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
             });
         }
     }
+
+    DuplicateEmailValidation(ccEmails, internalUsersEmails, errors) {
+        if (ccEmails != null && internalUsersEmails != null) {
+            var duplicate_emails = ccEmails.filter(x => internalUsersEmails.includes(x));
+            if (duplicate_emails != null && duplicate_emails.length > 0) {
+                var duplicateEmailsError = "";
+                duplicate_emails.forEach(item => {
+                    duplicateEmailsError += item + ", ";
+                });
+
+                errors.push(duplicateEmailsError.replace(/, \s*$/, "") + " emails are duplicate.");
+            }
+        }
+
+        if ((ccEmails != null && ccEmails.indexOf(this.ContactEmail.toLocaleLowerCase()) > -1) || (internalUsersEmails != null && internalUsersEmails.indexOf(this.ContactEmail.toLocaleLowerCase()) > -1)) {
+            errors.push(this.ContactEmail + " contact email is duplicate.");
+        }
+    }
+
     ClosuerWindow() {
         var windowTitle = "Ticket Closure";
         var logWindow = new LogitudeWindow();
