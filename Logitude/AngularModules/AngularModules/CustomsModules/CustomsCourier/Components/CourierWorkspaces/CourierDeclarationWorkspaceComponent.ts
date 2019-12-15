@@ -298,7 +298,8 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
             Display: TextCodeTranslator.Translate("Customs.CourierMaster.F.MAWB"),
             Styles: { width: '150px' },
             IsCustomTemplate: true,
-            ServerSideSortable: false,
+            HtmlListComponentName: 'CourierDeclarationWorkspaceListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierDeclarationWorkspaceListTemplate',
         });
 
         this.columns.push({
