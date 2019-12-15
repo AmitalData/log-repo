@@ -11,7 +11,7 @@ namespace Logitude.Customs.BL.PatchDistribution
         public string Branch { get; }
         public int MajorYear { get; }
         public int MajorYearRelease { get; }
-        public decimal MajorVersion { get; }
+        public decimal MajorVersionYYPRR { get; }
         public int PatchCounter_Minor { get; }
 
         public string PatchName { get; }
@@ -40,7 +40,7 @@ namespace Logitude.Customs.BL.PatchDistribution
             }
             MajorYear = int.Parse(parts[0]);
             MajorYearRelease = int.Parse(parts[1]);
-            MajorVersion = Decimal.Parse($"{MajorYear}.{MajorYearRelease}");
+            MajorVersionYYPRR = Decimal.Parse($"{parts[0]}.{parts[1]}");
             PatchCounter_Minor = int.Parse(partsOfClassName[1]);
             PatchName = partsOfClassName[2];
         }
