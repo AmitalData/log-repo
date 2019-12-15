@@ -33,7 +33,7 @@ import { DocumentTypeMetaDataExtendedService } from '../../../../Common/Services
 import { ServiceLocator } from '../../../../Infrastructure/Locators/ServiceLocator';
 import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
 import { TenantPMService } from '../../../../Common/Services/StandardPMs/TenantPMService';
-import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
+import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager'; 
 
 
 @Component({
@@ -51,8 +51,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
 
     public _DocumentTypeMetaDataExtendedService: DocumentTypeMetaDataExtendedService;
     public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService;
-    public _ShipmentAdditionalCloudDataService: ShipmentAdditionalCloudDataService;
-    DocumentsFilingExtendedPMService: DocumentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
+    public _ShipmentAdditionalCloudDataService: ShipmentAdditionalCloudDataService; 
 
     public _ShipmentPMService: ShipmentPMService;
     RefreshTimer: any;
@@ -126,7 +125,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                     }
                 }
                 else {
-                    this.FinalMessage = "קובץ זה אינו נדרש לתשלום";
+                    this.FinalMessage = "קובץ זה םינו נדרש לתשלום";
                     this.ShowFinalMessage = true;
                 }
 
@@ -151,7 +150,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                 this.RefreshTimer = setInterval(() => this.ReloadPage(), 1200000);//1200000
             }
             else {
-                this.FinalMessage = "התיק לא קיים בסביבה הזו";
+                this.FinalMessage = "התיק לם קיים בסביבה הזו";
                 this.ShowFinalMessage = true;
             }
         });
@@ -182,14 +181,14 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                         }
                     }
                     else {
-                        this.FinalMessage = "קובץ זה אינו נדרש לתשלום";
+                        this.FinalMessage = "קובץ זה םינו נדרש לתשלום";
                         this.ShowFinalMessage = true;
                     }
 
                     this.RefreshTimer = setInterval(() => this.ReloadPage(), 1200000);//1200000
                 }
                 else {
-                    this.FinalMessage = "התיק לא קיים בסביבה הזו";
+                    this.FinalMessage = "התיק לם קיים בסביבה הזו";
                     this.ShowFinalMessage = true;
                 }
             });
@@ -202,7 +201,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     public get TotalAmount() { return this.totalAmount }
     public set TotalAmount(newValue: number) { this.totalAmount = newValue; }
     public ValidationWarningsList: string = null;
-    public FinalMessage: string = "גרסה זו אושרה";
+    public FinalMessage: string = "גרסה זו םושרה";
 
     private ecommerceSupportEmail: string = "";
     public get EcommerceSupportEmail() { return this.ecommerceSupportEmail }
@@ -297,7 +296,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     }
 
     ViewAggreement() {
-        this.DocumentsFilingExtendedPMService.getDocumentsFilingsByCode(this.TermsOfUseDocumentId).subscribe(myResult => {
+        this._documentsFilingExtendedPMService.getDocumentsFilingsByCode(this.TermsOfUseDocumentId).subscribe(myResult => {
              
             if (myResult.Result) { 
                 var securityId = myResult.Result.SecurityId;
