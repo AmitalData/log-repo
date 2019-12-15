@@ -34,7 +34,6 @@ import { ServiceLocator } from '../../../../Infrastructure/Locators/ServiceLocat
 import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
 import { TenantPMService } from '../../../../Common/Services/StandardPMs/TenantPMService';
 import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
-import { DocumentsFilingExtendedPMService } from '../../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
 
 
 @Component({
