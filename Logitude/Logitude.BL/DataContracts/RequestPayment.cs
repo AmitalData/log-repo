@@ -18,7 +18,8 @@ namespace Logitude.BL.DataContracts
         public string Quantity { get; set; }
         public string Weight { get; set; }
         public string TotalChargesInNIS { get; set; }
-       
+        public string TermsOfUseDocumentId { get; set; }
+
 
 
         public List<ServiceType> ServiceTypes { get; set; }
