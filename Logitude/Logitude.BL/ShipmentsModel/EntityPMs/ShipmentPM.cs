@@ -2382,6 +2382,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsDeletingAllPayables { get; set; }
         public double? NotInvoicedReceivablesAmount { get; set; }
         public string CreatedByPartner { get; set; }
-
+        public DateTime? FirstARInvoiceApprovalDate { get; set; }
     }
 }
