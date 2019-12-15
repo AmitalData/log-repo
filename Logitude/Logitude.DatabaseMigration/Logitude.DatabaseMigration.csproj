@@ -3013,7 +3013,6 @@
     <EmbeddedResource Include="Migrations\201911251236376_NewField_AllowEditChequePayToName.resx">
       <DependentUpon>201911251236376_NewField_AllowEditChequePayToName.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201912031815485_AddHideFCLAllInField.resx">
 
     <EmbeddedResource Include="Migrations\201912031815485_AddHideFCLAllInField.resx">
       <DependentUpon>201912031815485_AddHideFCLAllInField.cs</DependentUpon>
