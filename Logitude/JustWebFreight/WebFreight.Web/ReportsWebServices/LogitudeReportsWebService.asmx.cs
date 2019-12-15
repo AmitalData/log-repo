@@ -2204,23 +2204,26 @@ namespace WebFreight.Web.ReportsWebServices
                 dataProvider.InvoicesReportList_NotSorted.Add(invoicesRecored);
             }
 
-           foreach(ARInvoice a in ARInvoiceIQueryable)
-           {
-                Profact.TimbraCFDI.Comprobante comprobante = LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.Comprobante>(a.SATXML);
-                List<System.Xml.XmlElement> myLXmlComplementos = comprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
-                dataProvider.SATList = new List<SAT>();
-                var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
-                if (timbreFiscalDigitalElement != null)
+            foreach (ARInvoice a in ARInvoiceIQueryable)
+            {
+                if (a.SATXML != null)
                 {
-                    Profact.TimbraCFDI.TimbreFiscalDigital digitalTi = LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.TimbreFiscalDigital>(timbreFiscalDigitalElement.OuterXml);
-                    dataProvider.SATList.Add(new SAT()
+                    Profact.TimbraCFDI.Comprobante comprobante = LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.Comprobante>(a.SATXML);
+                    List<System.Xml.XmlElement> myLXmlComplementos = comprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
+                    dataProvider.SATList = new List<SAT>();
+                    var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
+                    if (timbreFiscalDigitalElement != null)
                     {
-                        UUID = digitalTi.UUID
-                    });
+                        Profact.TimbraCFDI.TimbreFiscalDigital digitalTi = LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.TimbreFiscalDigital>(timbreFiscalDigitalElement.OuterXml);
+                        dataProvider.SATList.Add(new SAT()
+                        {
+                            UUID = digitalTi.UUID
+                        });
+                    }
                 }
-                
-           }
-                dataProvider.InvoiceTotalsList = (from b in dataProvider.InvoicesReportList
+
+            }
+            dataProvider.InvoiceTotalsList = (from b in dataProvider.InvoicesReportList
                                               group b by new { b.Currency } into g
                                               select new WebFreight.Web.DataProviders.InvoiceDataProvider.InvoiceTotals()
                                               {
