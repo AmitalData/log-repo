@@ -1,14 +1,40 @@
 <div>
-    <div class="TextTrimming" *ngIf="fieldName == 'MAWBP'">
+    <div class="TextTrimming" *ngIf="fieldName == 'PrefixMAWB'">
         <span>{{_CourierMasterList.AirlinePrefix}}-{{_CourierMasterList.MAWB}}</span>
     </div>
 
-    <div class="TextTrimming" *ngIf="fieldName == 'EstimatedArrivalDate'">
+    <div class="TextTrimming" *ngIf="fieldName == 'EstimatedArrivalDate'" style="text-align:center;">
         <span>{{_CourierMasterList.EstimatedArrivalDate | DateTimePipe:'DT'}}</span>
     </div>
 
-    <!--<div class="TextTrimming" *ngIf="fieldName == 'CourierHawb'" style="text-align:right;">
-        <span style="font-weight: bold">{{_CourierWorksheet.CourierHawb}}</span>
-    </div>-->
+    <div class="TextTrimming" *ngIf="fieldName == 'CalcClosedForFollowUp'" style="text-align:center;">
+        <div (click)="ShowCourierWorkSheet($event, _CourierMasterList['Id'],'OpenDeclarations')">
+            <span style="font-weight: bold">{{_CourierMasterList.CalcClosedForFollowUp}}</span>
+        </div>
+    </div>
+
+    <div class="TextTrimming" *ngIf="fieldName == 'CalcMissingImporterId'" style="text-align:center;">
+        <div (click)="ShowCourierWorkSheet($event, _CourierMasterList['Id'],'Pending902')">
+            <span style="font-weight: bold">{{_CourierMasterList.CalcMissingImporterId}}</span>
+        </div>
+    </div>
+
+    <div class="TextTrimming" *ngIf="fieldName == 'CalcMissingClassification'" style="text-align:center;">
+        <div (click)="ShowCourierWorkSheet($event, _CourierMasterList['Id'],'MissingClassification')">
+            <span style="font-weight: bold">{{_CourierMasterList.CalcMissingClassification}}</span>
+        </div>
+    </div>
+
+    <div class="TextTrimming" *ngIf="fieldName == 'CalcPendingCustoms'" style="text-align:center;">
+        <div (click)="ShowCourierWorkSheet($event, _CourierMasterList['Id'],'Pending902')">
+            <span style="font-weight: bold">{{_CourierMasterList.CalcPendingCustoms}}</span>
+        </div>
+    </div>
+
+    <div class="TextTrimming" *ngIf="fieldName == 'CalcSuspendedDeclarations'" style="text-align:center;">
+        <div (click)="ShowCourierWorkSheet($event, _CourierMasterList['Id'],'SuspendedDeclarations')">
+            <span style="font-weight: bold">{{_CourierMasterList.CalcSuspendedDeclarations}}</span>
+        </div>
+    </div>
 
 </div>
