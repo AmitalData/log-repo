@@ -3185,7 +3185,12 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 }
 
                 else {
-                    mySalePrice = +value;
+                    if (value.indexOf(',') > -1) {
+                        mySalePrice = +(value.replace(/,/g, '.'));
+                    }
+                    else {
+                        mySalePrice = +value;
+                    }
 
                     if (!AppTool.IsNullOrEmpty(myCostPrice)) {
                         myMarkUpValue = mySalePrice - myCostPrice;
