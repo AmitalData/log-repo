@@ -590,8 +590,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             ARInvoicePayment newObject = new ARInvoicePayment();
             ARPaymentMapping.MapEntityInvoicePyament(item, newObject, true);
             invoicePaymentRepository.Add(newObject);
-
-            CreateInterestTransactionLine(item);
+            //if (tenantPOCO != null && tenantPOCO.AccountingActivated)
+            //{
+            ////    CreateInterestTransactionLine(item);
+            //}
         }
         int lineNumber = 0;
         private void CreateInterestTransactionLine(ARPaymentInvoicePM paymentInvoice)
@@ -606,7 +608,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 LocalAmount = (decimal)paymentInvoice.LocalAmount ,
                 ForeignAmount = (decimal?)paymentInvoice.ForeignAmount,
                 InterestValueDate = (DateTime)dateForInterest,
-                Tenant = paymentInvoice.Tenant,
+                Tenant = entityPM.Tenant,
                 ChangeSetOp = ChangeSetOperation.Insert,
             };
             IInterestTransactionUpdateServiceExt interestTransactionUpdateService = ContainerAccessor.Container.Resolve(typeof(IInterestTransactionUpdateServiceExt), "InterestTransactionUpdateServiceExt", new ParameterOverride("", 1)) as IInterestTransactionUpdateServiceExt;
@@ -2006,7 +2008,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         ARInvoiceId = invTrans.SourceId,
                         LocalAmount = (double)invTrans.AmountToReconcile,
                         ForeignAmount = (double)(invTrans.AmountToReconcile / invTrans.ExchangeRate),
-                        ForeignCurrencyId = invTrans.CurrencyId
+                        ForeignCurrencyId = invTrans.CurrencyId,
+                        ARPaymentId = entityPM.Id,
                     };
                 }
                 else
@@ -2016,12 +2019,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         ARInvoiceId = invTrans.SourceId,
                         LocalAmount = Convert.ToDouble(invTrans.AmountToReconcile * invTrans.ExchangeRate),
                         ForeignAmount = (double)invTrans.AmountToReconcile,
-                        ForeignCurrencyId = invTrans.CurrencyId
+                        ForeignCurrencyId = invTrans.CurrencyId,
+                        ARPaymentId = entityPM.Id,
                     };
                 }
 
                 paymentPM.PaymentInvoices.Add(payInvPM);
+                if (tenantPOCO != null && tenantPOCO.AccountingActivated)
+                {
+                    CreateInterestTransactionLine(payInvPM);
+                }
             }
+
+           
         }
 
         private void ValidateFullAccounting(ARPaymentPM _payment)

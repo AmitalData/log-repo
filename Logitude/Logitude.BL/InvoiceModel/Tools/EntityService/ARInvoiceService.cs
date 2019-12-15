@@ -2255,7 +2255,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         sumOfVATsAmounts += record.InvoiceCurrencyVATAmount;
                         sumOfVATsAmounts_Local += record.LocalVATAmount;
                         sumOfVATsAmounts_Profit += record.ProfitCurrencyVATAmount;
-                        CreateInterestTransactionLine(null, record);
+                        //if (IsFullAccountingActivated(entityPM.Tenant))
+                        //{
+                        //    CreateInterestTransactionLine(null, record);
+                        //}
                     }
 
                     Amount = MethodHelper.Round(subTotal + sumOfVATsAmounts, 2);
@@ -2773,7 +2776,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     this.UpdateReceivable(item);
                     this.isUpdateTotalVats = true;
                     myLineNumber += 1;
-                    CreateInterestTransactionLine(item, null);
+                    //if (IsFullAccountingActivated(entityPM.Tenant))
+                    //{
+                    //    CreateInterestTransactionLine(item, null);
+                    //}
                 }
             }
 
@@ -2842,7 +2848,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 invoiceLineRepository.SubmitChanges();
             }
-            CreateInterestTransactionLine(item, null);
+            if (IsFullAccountingActivated(entityPM.Tenant))
+            {
+                CreateInterestTransactionLine(item, null);
+            }
         }
         int InvoiceLineNumber;
 
