@@ -1666,7 +1666,10 @@
     <Compile Include="Migrations\201911280844228_ShipmentAdditionalCloudDataNewFields_Rabaia.Designer.cs">
       <DependentUpon>201911280844228_ShipmentAdditionalCloudDataNewFields_Rabaia.cs</DependentUpon>
     </Compile>
-
+    <Compile Include="Migrations\201912040838041_AddAllowCustomersInAgentsLOV_Samar.cs" />
+    <Compile Include="Migrations\201912040838041_AddAllowCustomersInAgentsLOV_Samar.Designer.cs">
+      <DependentUpon>201912040838041_AddAllowCustomersInAgentsLOV_Samar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201912031815485_AddHideFCLAllInField.cs" />
     <Compile Include="Migrations\201912031815485_AddHideFCLAllInField.Designer.cs">
       <DependentUpon>201912031815485_AddHideFCLAllInField.cs</DependentUpon>
@@ -2880,7 +2883,6 @@
     <EmbeddedResource Include="Migrations\201911280844228_ShipmentAdditionalCloudDataNewFields_Rabaia.resx">
       <DependentUpon>201911280844228_ShipmentAdditionalCloudDataNewFields_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\201912031815485_AddHideFCLAllInField.resx">
       <DependentUpon>201912031815485_AddHideFCLAllInField.cs</DependentUpon>
     </EmbeddedResource>
@@ -2899,6 +2901,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911280911184_Journals_IsLedgerCreated.resx">
       <DependentUpon>201911280911184_Journals_IsLedgerCreated.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912040838041_AddAllowCustomersInAgentsLOV_Samar.resx">
+      <DependentUpon>201912040838041_AddAllowCustomersInAgentsLOV_Samar.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -959,5 +959,6 @@
     <Feature Code="&quot;General.Features.VATSettings&quot;" FeatureTypeCode="&quot;OTH&quot;" FeatureTextCodeCode="&quot;General.Features.General.Features.VATSettings&quot;" FeatureDefaultText="&quot;VAT Settings&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
     <Feature Code="&quot;General.Features.TenantAdditionalData&quot;" FeatureTypeCode="&quot;MENU&quot;" FeatureTextCodeCode="&quot;General.Features.General.Features.TenantAdditionalData&quot;" FeatureDefaultText="&quot;Payment Gateway Definition&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
     <Feature Code="&quot;Menu.Occasions&quot;" FeatureTypeCode="&quot;MENU&quot;" FeatureTextCodeCode="&quot;General.Features.Menu.Occasions&quot;" FeatureDefaultText="&quot;Occasions&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
+    <Feature Code="&quot;AllowCustomersInAgentsLOV&quot;" FeatureTypeCode="&quot;OTH&quot;" FeatureTextCodeCode="&quot;General.Features.AllowCustomersInAgentsLOV&quot;" FeatureDefaultText="&quot;Allow Shippers/Consignees in Agents LOV&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>
