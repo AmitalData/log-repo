@@ -313,6 +313,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     physicalCheck.IsComprehensiveCheck = (bool)NoticeToClient.IsComprehensiveCheck;
                 }
+                physicalCheck.CheckTypeCode = NoticeToClient.CheckType.ToString();
                 physicalCheck.VehicleChassisNumber = NoticeToClient.VehicleChassisNumber;
 
                 //<--- Yuval Chalup 19.11.2015 TASK-17450 - CHANGE FROM:
