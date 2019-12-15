@@ -556,6 +556,120 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         private string _STATTYPE;
 
 
+        /// <summary>
+        /// There are no comments for ORIGINID in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual string ORIGINID
+        {
+            get
+            {
+                return _ORIGINID;
+            }
+            set
+            {
+                if (_ORIGINID != value)
+                {
+                    _ORIGINID = value;
+                    OnPropertyChanged("ORIGINID");
+                }
+            }
+        }
+        private string _ORIGINID;
+
+
+        /// <summary>
+        /// There are no comments for ITEMPRICE in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual decimal? ITEMPRICE
+        {
+            get
+            {
+                return _ITEMPRICE;
+            }
+            set
+            {
+                if (_ITEMPRICE != value)
+                {
+                    _ITEMPRICE = value;
+                    OnPropertyChanged("ITEMPRICE");
+                }
+            }
+        }
+        private decimal? _ITEMPRICE;
+
+
+        /// <summary>
+        /// There are no comments for OCRQUANTITY in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual double? OCRQUANTITY
+        {
+            get
+            {
+                return _OCRQUANTITY;
+            }
+            set
+            {
+                if (_OCRQUANTITY != value)
+                {
+                    _OCRQUANTITY = value;
+                    OnPropertyChanged("OCRQUANTITY");
+                }
+            }
+        }
+        private double? _OCRQUANTITY;
+
+
+        /// <summary>
+        /// There are no comments for OCRQUANTITYTYPE in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual string OCRQUANTITYTYPE
+        {
+            get
+            {
+                return _OCRQUANTITYTYPE;
+            }
+            set
+            {
+                if (_OCRQUANTITYTYPE != value)
+                {
+                    _OCRQUANTITYTYPE = value;
+                    OnPropertyChanged("OCRQUANTITYTYPE");
+                }
+            }
+        }
+        private string _OCRQUANTITYTYPE;
+
+
+        /// <summary>
+        /// There are no comments for LINECOUNTER in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual int? LINECOUNTER
+        {
+            get
+            {
+                return _LINECOUNTER;
+            }
+            set
+            {
+                if (_LINECOUNTER != value)
+                {
+                    _LINECOUNTER = value;
+                    OnPropertyChanged("LINECOUNTER");
+                }
+            }
+        }
+        private int? _LINECOUNTER;
+
+
+        #endregion
+
+        #region Extensibility Method Definitions
+        partial void OnCreated();
         #endregion
 
         #region INotifyPropertyChanged Members

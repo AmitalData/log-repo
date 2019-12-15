@@ -31,7 +31,20 @@ namespace Unifreight.BL.EntityDataMappings
             entityPOCO.GSTRING1 = entityPM.GSTRING1;
             entityPOCO.GSTRING2 = entityPM.GSTRING2;
             entityPOCO.GSTRING3 = entityPM.GSTRING3;
-        }
+
+
+            entityPOCO.INVOICEDATE = entityPM.INVOICEDATE;
+            entityPOCO.INVOICEAMOUNT = entityPM.INVOICEAMOUNT;
+            entityPOCO.CURRENCYID = entityPM.CURRENCYID;
+            entityPOCO.CUSTOMSSUPPLIERID = entityPM.CUSTOMSSUPPLIERID;
+            entityPOCO.INCOTERMS = entityPM.INCOTERMS;
+            entityPOCO.TAX = entityPM.TAX;
+            entityPOCO.DISCOUNT = entityPM.DISCOUNT;
+            entityPOCO.ORIGINID = entityPM.ORIGINID;
+            entityPOCO.MORE = entityPM.MORE;
+            entityPOCO.ADDITIONAL = entityPM.ADDITIONAL;
+            entityPOCO.INVOICENO = entityPM.INVOICENO;
+    }
 
         public void POCOToPM(CFIMSVDOCPM entityPM, CFIMSVDOC entityPOCO)
         {
@@ -49,6 +62,17 @@ namespace Unifreight.BL.EntityDataMappings
             entityPM.GSTRING1 = entityPOCO.GSTRING1;
             entityPM.GSTRING2 = entityPOCO.GSTRING2;
             entityPM.GSTRING3 = entityPOCO.GSTRING3;
+            entityPM.INVOICEDATE = entityPOCO.INVOICEDATE;
+            entityPM.INVOICEAMOUNT = entityPOCO.INVOICEAMOUNT;
+            entityPM.CURRENCYID = entityPOCO.CURRENCYID;
+            entityPM.CUSTOMSSUPPLIERID = entityPOCO.CUSTOMSSUPPLIERID;
+            entityPM.INCOTERMS = entityPOCO.INCOTERMS;
+            entityPM.TAX = entityPOCO.TAX;
+            entityPM.DISCOUNT = entityPOCO.DISCOUNT;
+            entityPM.ORIGINID = entityPOCO.ORIGINID;
+            entityPM.MORE = entityPOCO.MORE;
+            entityPM.ADDITIONAL = entityPOCO.ADDITIONAL;
+            entityPM.INVOICENO = entityPOCO.INVOICENO;
         }
 
         public void CustomPMToPOCO(CFIMSVDOCPM entityPM, CFIMSVDOC entityPOCO)

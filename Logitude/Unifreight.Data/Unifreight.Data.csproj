@@ -111,6 +111,7 @@
     <Compile Include="AmitalModel\EntityKeys\CCUCARSCKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CFIMSVDOCKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CFIMSVFILEKeys.cs" />
+    <Compile Include="AmitalModel\EntityKeys\CFIMSVFLINEKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CFIMSVLINEKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CFIMSVPAGEKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CFIMSVREMKeys.cs" />
@@ -181,6 +182,7 @@
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CFIGOODDESC.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CFIMSVDOC.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CFIMSVFILE.cs" />
+    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CFIMSVFLINE.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CFIMSVPAGE.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CFIMSVREM.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CFIPACK.cs" />
@@ -261,6 +263,7 @@
     <Compile Include="AmitalModel\Repsitories\CCUCARSCRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CFIMSVDOCRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CFIMSVFILERepository.cs" />
+    <Compile Include="AmitalModel\Repsitories\CFIMSVFLINERepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CFIMSVLINERepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CFIMSVPAGERepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CFIMSVREMRepository.cs" />
@@ -318,6 +321,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Logitude.Customs.Data\Logitude.Customs.Data.csproj">
+      <Project>{643F92C9-7CF1-4429-B79E-1E354B758ABF}</Project>
+      <Name>Logitude.Customs.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Simplog.Global.Data\Simplog.Global.Data.csproj">
       <Project>{6d7ffad2-35b6-4133-8700-cf73e58d0c85}</Project>
       <Name>Simplog.Global.Data</Name>

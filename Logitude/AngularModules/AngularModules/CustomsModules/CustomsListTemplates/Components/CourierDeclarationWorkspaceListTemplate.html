@@ -1,0 +1,14 @@
+<div>
+    <div class="TextTrimming" *ngIf="fieldName == 'MAWBP'">
+        <span>{{_CourierMasterList.AirlinePrefix}}-{{_CourierMasterList.MAWB}}</span>
+    </div>
+
+    <div class="TextTrimming" *ngIf="fieldName == 'EstimatedArrivalDate'">
+        <span>{{_CourierMasterList.EstimatedArrivalDate | DateTimePipe:'DT'}}</span>
+    </div>
+
+    <!--<div class="TextTrimming" *ngIf="fieldName == 'CourierHawb'" style="text-align:right;">
+        <span style="font-weight: bold">{{_CourierWorksheet.CourierHawb}}</span>
+    </div>-->
+
+</div>

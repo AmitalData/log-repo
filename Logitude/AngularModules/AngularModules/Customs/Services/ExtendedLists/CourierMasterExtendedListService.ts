@@ -11,8 +11,8 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import { CourierMasterList } from '../../EntityLists/CourierMasterList';
 //import { CourierMasterFiltersDataCount } from '../../DataContract/CourierMasterFiltersDataCount';
 import { CourierMasterPM } from '../../EntityPMs/CourierMasterPM';
-import { NotificationList } from '../../EntityLists/NotificationList';
-import { NotificationFiltersDataCount } from '../../DataContract/NotificationFiltersDataCount';
+import { CourierMasterList } from '../../EntityLists/CourierMasterList';
+//import { NotificationFiltersDataCount } from '../../DataContract/NotificationFiltersDataCount';
 
 export class CourierMasterExtendedListService{
 
@@ -64,12 +64,12 @@ export class CourierMasterExtendedListService{
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = response.json();
-                var _mappedListsArray: Array<NotificationList> = [];
+                var _mappedListsArray: Array<CourierMasterList> = [];
                 if (serviceResponse.Result) {
                     for (var key in serviceResponse.Result) {
 
-                        var entity: NotificationList;
-                        //entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
+                        var entity: CourierMasterList;
+                        entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
                         _mappedListsArray.push(entity);
 
                     }

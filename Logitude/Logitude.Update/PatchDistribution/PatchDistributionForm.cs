@@ -1,9 +1,12 @@
 ﻿using Devart.Data.Oracle;
+using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.PatchDistribution;
 using Logitude.Customs.BL.PatchDistribution.Patches;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.Repsitories;
+using Logitude.Server.Tools.Counters;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,11 +19,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace Logitude.Update.PatchDistribution
 {
     public partial class PatchDistributionForm : Form
     {
-        public bool StartEnabled { get; private set; }
+        private List<PatchDistributionBase> _PatchDistributionList;
+        private PatchDistributionManager _PatchDistributionManager;
+        private PatchDistributionMatchModel _PatchDistributionMatchModel;
+
+        public bool StartEnabled { get => this.doItToolStripMenuItem.Enabled; set => this.doItToolStripMenuItem.Enabled = value; }
 
         public PatchDistributionForm()
         {
@@ -28,15 +36,14 @@ namespace Logitude.Update.PatchDistribution
             //DbContextBaseUtil.ToLog = checkBox1.Checked = true;
             TraceListener debugListener = new MyTraceListener(this.textBoxLogger);
             Debug.Listeners.Add(debugListener);
-
-
+            StartEnabled = false;
         }
 
 
 
         private void doItToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            _PatchDistributionManager.Exec(_PatchDistributionMatchModel.LastClosed_DBMigration.MajorVersion, _PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion);
         }
 
 
@@ -55,47 +62,75 @@ namespace Logitude.Update.PatchDistribution
         private void PatchDistributionForm_Load(object sender, EventArgs e)
         {
             var myP19R03_0000_PatchDist = new P19R03_0001_PatchDist();
-            myP19R03_0000_PatchDist.CreateSeedDbMigrateTable();
+            myP19R03_0000_PatchDist.Enshure_SeedDbMigrateTable();
 
-            var myPatchDistributionManager = new PatchDistributionManager();
-            myPatchDistributionManager.GetValidPatchDistributionList();
+            _PatchDistributionManager = new PatchDistributionManager();
+            _PatchDistributionManager.Check_PatchDistributionListAreValid();
 
 
 
             var assemblyUtil = new Logitude.Server.Tools.Helpers.AssemblyUtil();
             var prodInfo = assemblyUtil.GetProductInfo(typeof(JustWebFreight.WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses.MyEntityUpdateClass).Assembly);
-
             var assemblyVersion = assemblyUtil.GetVersion(prodInfo);
+            Debug.WriteLine($"assemblyVersion ={assemblyVersion}");
+
 
             var patchDistributionMatch = new PatchDistributionMatch();
-            var patchDistributionMatchModel =patchDistributionMatch.GetPatchDistributionMatchModel(assemblyVersion);
-            Debug.WriteLine(patchDistributionMatchModel.Message);
-            switch (patchDistributionMatchModel.MajorVersionMatch)
+            _PatchDistributionMatchModel =patchDistributionMatch.GetPatchDistributionMatchModel(assemblyVersion);
+            Debug.WriteLine(_PatchDistributionMatchModel.Message);
+            Debug.WriteLine($"DB MajorVersion={_PatchDistributionMatchModel.LastClosed_DBMigration.MajorVersion}");
+            Debug.WriteLine($"DB MinorVersion={_PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion}");
+
+
+            if (_PatchDistributionMatchModel.NotDistributionBranch)
             {
-                case PatchDistributionMatch.MajorVersionMatchEnum.NotDistributionBranch:
-                    break;
-                case PatchDistributionMatch.MajorVersionMatchEnum.OldSource:
-                    break;
+                if (MessageBox.Show($"{_PatchDistributionMatchModel.Message}  to continue (should be D not {prodInfo}) ?", "", MessageBoxButtons.YesNo) == DialogResult.No)
+                {
+                    return;
+                }
+            }
+
+
+            switch (_PatchDistributionMatchModel.MajorVersionMatch)
+            {
                 case PatchDistributionMatch.MajorVersionMatchEnum.OldDB:
-                    break;
-                case PatchDistributionMatch.MajorVersionMatchEnum.OK:
-                    if (patchDistributionMatchModel.NotDistributionBranch)
+                    var patchDistributionList_RealyOldDB = _PatchDistributionManager.GetPatchDistribution_Waiting2Exec(_PatchDistributionMatchModel.LastClosed_DBMigration.MajorVersion, _PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion);
+
+                    if (patchDistributionList_RealyOldDB.Count == 0)
                     {
-                        if (MessageBox.Show("NotDistributionBranch to continue ?","", MessageBoxButtons.YesNo) == DialogResult.No)
-                        {
-                            return;
-                        }
+                        MessageBox.Show("Nothing TODO the MajorVersion is old - exec Main major script " + _PatchDistributionMatchModel.Message);
+                        return;
                     }
-                    myPatchDistributionManager.GetPatchDistributionToDo(patchDistributionMatchModel.LastDBMigration.MajorVersion, patchDistributionMatchModel.LastDBMigration.MinorVersion);
+                    if (MessageBox.Show($"{_PatchDistributionMatchModel.Message}  to continue Execute minor script Of Old  MajorVersion ?", "", MessageBoxButtons.YesNo) == DialogResult.No)
+                    {
+                        return;
+                    }
                     StartEnabled = true;
                     break;
+                case PatchDistributionMatch.MajorVersionMatchEnum.OK_DBAndAssemblyREqual:
+
+                    var patchDistributionList = _PatchDistributionManager.GetPatchDistribution_Waiting2Exec(_PatchDistributionMatchModel.LastClosed_DBMigration.MajorVersion, _PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion);
+                    if (patchDistributionList.Count == 0)
+                    {
+                        MessageBox.Show("Nothing TODO- OK_DB And Assembly R Equal  MajorVersion+MinorVersion ");
+                        return;
+                    }
+                    Debug.WriteLine("Menu >> Start >  Doit !!!");
+                    _PatchDistributionList = patchDistributionList;
+
+                    StartEnabled = true;
+                    break;
+                case PatchDistributionMatch.MajorVersionMatchEnum.NotDistributionBranch:
+                case PatchDistributionMatch.MajorVersionMatchEnum.OldSource:
                 default:
+                    MessageBox.Show(_PatchDistributionMatchModel.Message ?? " Nothing i can do ");
                     break;
             }
 
 
 
             
+
 
         }
 
