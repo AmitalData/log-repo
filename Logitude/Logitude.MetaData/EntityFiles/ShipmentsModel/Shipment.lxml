@@ -1372,7 +1372,7 @@
             <QueryFilter QueryCode="&quot;ContainerStatusLast7Days&quot;" PredefinedValue="&quot;True&quot;" ObjectFieldName="&quot;ContainerStatusLast7Days&quot;" IsPredefined="true" IndexOrder="0" />
         </QueryFilters>
     </Query>
-    <Query Code="&quot;EBookingInProgress&quot;" TextCode="&quot;E-Booking - In Progress&quot;" LocalTextCode="&quot;E-Booking - In Progress&quot;" QueryGroupCode="&quot;SHIP&quot;" IndexOrder="18" ObjectTableName="&quot;Shipment&quot;" QuerySection="&quot;Shipment&quot;" SystemLevel="true" IsAddNewEntity="true" IsPackagable="true" DefaultSortName="&quot;ShipmentNumber&quot;" DefaultSortDirection="&quot;Desending&quot;" IsSpellChecked="false">
+  <Query Code="&quot;EBookingInProgress&quot;" TextCode="&quot;E-Booking - In Progress&quot;" LocalTextCode="&quot;E-Booking - In Progress&quot;" QueryGroupCode="&quot;SHIP&quot;" IndexOrder="18" ObjectTableName="&quot;Shipment&quot;" QuerySection="&quot;Shipment&quot;" SystemLevel="true" IsAddNewEntity="true" IsPackagable="true" DefaultSortName="&quot;ShipmentNumber&quot;" DefaultSortDirection="&quot;Desending&quot;" EditWizardName="&quot;SimulatorBookingComponent&quot;" IsSpellChecked="false">
         <QueryColumns>
             <QueryColumn QueryCode="&quot;EBookingInProgress&quot;" IndexOrder="0" ObjectFieldName="&quot;INTTRABookingTransStatusName&quot;" ColumnWidth="120" />
             <QueryColumn QueryCode="&quot;EBookingInProgress&quot;" IndexOrder="1" ObjectFieldName="&quot;INTTRABookingStatusName&quot;" ColumnWidth="120" />
