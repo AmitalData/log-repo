@@ -155,7 +155,7 @@ export class ShipmentPMService {
         //        }
         //    }
         //});
-        if (location.href.indexOf('localhost') > -1) {
+        if (location.href.indexOf('localhost') > -1 || location.href.indexOf('test') > -1) {
             myCustomURL = this._apiUrl;
         }
         var authHeader = new Headers();
