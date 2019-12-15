@@ -223,7 +223,6 @@ namespace Logitude.HybridTest.ServicesTest
             ShipmentPM shipment = restAPIService.GetEntityPMById<ShipmentPM>("Shipment", upsertResponse.Result);
             Assert.AreEqual(shipment.ShipmentLevelCode, "H", "Convert From Direct To House Failed!");
 
-
             //ShipmentPM MasterShipmentPM = ShipmentWcfFactory.GetShipmentPMWithNewNumber();
             ////MasterShipmentPM.ShipmentNumber = "AAAAAAAAAA10000";
             //MasterShipmentPM.ShipmentLevelCode = "C";
@@ -244,6 +243,7 @@ namespace Logitude.HybridTest.ServicesTest
             RestAPIService restAPIService = new RestAPIService();
             ShipmentPM shipment = restAPIService.GetEntityPMById<ShipmentPM>("Shipment", upsertResponse.Result);
             Assert.AreEqual(shipment.ShipmentLevelCode, "D", "Convert From House To Direct Failed!");
+            Assert.AreEqual(shipment.ConvertFromHouseToDirect, true, "Convert From House To Direct Failed!");
 
 
             //ShipmentPM MasterShipmentPM = ShipmentWcfFactory.GetShipmentPMWithNewNumber();
@@ -273,8 +273,7 @@ namespace Logitude.HybridTest.ServicesTest
         [TestMethod]
         public void Test_Shipment_CustomFileId()
         {
-            ShipmentPM customShipmentPM = ShipmentWcfFactory.GetShipmentPM();
-            customShipmentPM.ShipmentNumber = "HCustom File";
+            ShipmentPM customShipmentPM = ShipmentWcfFactory.GetShipmentPMWithNewNumber();
             customShipmentPM.ShipmentLevelCode = "A";
             Response customUpsertResponse = EntityWcfCaller.CallEntityUpsert(customShipmentPM);
 
@@ -283,14 +282,11 @@ namespace Logitude.HybridTest.ServicesTest
             Assert.AreEqual(shipment.NoFreightFile, true, "Must be Not Connected Custom Shipments!");
 
             ShipmentPM firstShipmentPM = ShipmentWcfFactory.GetShipmentPMWithNewNumber();
-            firstShipmentPM.CustomFileNumber = "HCustom File";
+            firstShipmentPM.CustomFileNumber = customShipmentPM.ShipmentNumber;
             Response firstUpsertResponse = EntityWcfCaller.CallEntityUpsert(firstShipmentPM);
             ShipmentPM secondShipmentPM = ShipmentWcfFactory.GetShipmentPMWithNewNumber();
-            secondShipmentPM.CustomFileNumber = "HCustom File";
+            secondShipmentPM.CustomFileNumber = customShipmentPM.ShipmentNumber;
             Response secondUpsertResponse = EntityWcfCaller.CallEntityUpsert(secondShipmentPM);
-
-            shipment = restAPIService.GetEntityPMById<ShipmentPM>("Shipment", customUpsertResponse.Result);
-            Assert.AreEqual(shipment.NoFreightFile, false, "Must be Connected Custom Shipments!");
 
             shipment = restAPIService.GetEntityPMById<ShipmentPM>("Shipment", firstUpsertResponse.Result);
             Assert.AreEqual(shipment.CustomFileId, customUpsertResponse.Result, "Custom File Id Failed!");

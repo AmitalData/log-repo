@@ -22,6 +22,7 @@ namespace Logitude.HybridTest.WcfCallers
         {
             CustomerPM customerPM = CustomerWcfFactory.GetCustomerPM();
             Response serviceResponse = AssertResponse(customerPM);
+            HybridData.CustomerIdHCustomer = serviceResponse.Result;
         }
         private static void UpsertCardContactHCustomerExport1()
         {

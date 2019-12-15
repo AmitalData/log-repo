@@ -44,7 +44,7 @@ namespace Logitude.HybridTest.ServicesTest
             CustomerPM customer = (CustomerPM)serviceOutcome.Result;
             Assert.IsFalse(serviceOutcome.Response.HasError, "Get Customer PM Failed! " + serviceOutcome.Response.ErrorMessage);
             Assert.IsNull(serviceOutcome.Response.Result, "Get Customer PM Failed! " + serviceOutcome.Response.Result);
-            Assert.AreEqual(customer.Id, HybridData.CustomerIdHCustomer, "Get Customer PM Failed!");
+            Assert.AreEqual(customer.Code, HybridData.CustomerCodeHCustomer, "Get Customer PM Failed!");
         }
 
         [TestMethod]
@@ -178,7 +178,7 @@ namespace Logitude.HybridTest.ServicesTest
                 ByCode = true,
                 SearchCode = HybridData.CustomerCodeHCustomer
             };
-
+            
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { HybridData.CustomerIdHCustomer, EnvironmentGlobalParams.MainTenant, serviceResponse };
             ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
