@@ -86,6 +86,7 @@
     <Compile Include="EntityKeys\BankPageEntryTypeKeys.cs" />
     <Compile Include="EntityKeys\ExternalPageAdditionalDataKeys.cs" />
     <Compile Include="EntityKeys\GLAccountCounterKeys.cs" />
+    <Compile Include="EntityKeys\GLAccountInterestPeriodKeys.cs" />
     <Compile Include="EntityKeys\IntegrityCheckStatusKeys.cs" />
     <Compile Include="EntityKeys\InterestBasesPeriodKeys.cs" />
     <Compile Include="EntityKeys\InterestBasesTypeKeys.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="EntityListQueryServices\Generated\BankPageEntryTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ExternalPageAdditionalDataListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\GLAccountCounterListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\GLAccountInterestPeriodListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\IntegrityCheckStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\InterestBasesPeriodListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\InterestBasesTypeListQueryService.Generated.cs" />
@@ -133,6 +135,7 @@
     <Compile Include="EntityListQueryServices\Generated\TaxReportStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\VatReportStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\GLAccountCounterListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\GLAccountInterestPeriodListQueryService.cs" />
     <Compile Include="EntityListQueryServices\IntegrityCheckStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\InterestBasesPeriodListQueryService.cs" />
     <Compile Include="EntityListQueryServices\InterestBasesTypeListQueryService.cs" />
@@ -156,6 +159,7 @@
     <Compile Include="EntityLists\Generated\BankPageEntryTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ExternalPageAdditionalDataList.Generated.cs" />
     <Compile Include="EntityLists\Generated\GLAccountCounterList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\GLAccountInterestPeriodList.Generated.cs" />
     <Compile Include="EntityLists\Generated\IntegrityCheckStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\InterestBasesPeriodList.Generated.cs" />
     <Compile Include="EntityLists\Generated\InterestBasesTypeList.Generated.cs" />
@@ -179,6 +183,7 @@
     <Compile Include="EntityMapping\BankPageEntryTypeMap.cs" />
     <Compile Include="EntityMapping\ExternalPageAdditionalDataMap.cs" />
     <Compile Include="EntityMapping\GLAccountCounterMap.cs" />
+    <Compile Include="EntityMapping\GLAccountInterestPeriodMap.cs" />
     <Compile Include="EntityMapping\IntegrityCheckStatusMap.cs" />
     <Compile Include="EntityMapping\InterestBasesPeriodMap.cs" />
     <Compile Include="EntityMapping\InterestBasesTypeMap.cs" />
@@ -203,6 +208,7 @@
     <Compile Include="EntityPOCOs\BankPageEntryType.cs" />
     <Compile Include="EntityPOCOs\ExternalPageAdditionalData.cs" />
     <Compile Include="EntityPOCOs\GLAccountCounter.cs" />
+    <Compile Include="EntityPOCOs\GLAccountInterestPeriod.cs" />
     <Compile Include="EntityPOCOs\IntegrityCheckStatus.cs" />
     <Compile Include="EntityPOCOs\InterestBasesPeriod.cs" />
     <Compile Include="EntityPOCOs\InterestBasesType.cs" />
@@ -233,6 +239,7 @@
     <Compile Include="EntityListQueryServices\Generated\GLAccountWithholdingTaxListQueryService.Generated.cs" />
     <Compile Include="Repositories\Generated\ExternalPageAdditionalDataRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\GLAccountCounterRepository.Generated.cs" />
+    <Compile Include="Repositories\Generated\GLAccountInterestPeriodRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\IntegrityCheckStatusRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\InterestBasesPeriodRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\InterestBasesTypeRepository.Generated.cs" />
@@ -252,6 +259,7 @@
     <Compile Include="Repositories\Generated\TaxReportStatusRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\VatReportStatusRepository.Generated.cs" />
     <Compile Include="Repositories\GLAccountCounterRepository.cs" />
+    <Compile Include="Repositories\GLAccountInterestPeriodRepository.cs" />
     <Compile Include="Repositories\IntegrityCheckStatusRepository.cs" />
     <Compile Include="Repositories\InterestBasesPeriodRepository.cs" />
     <Compile Include="Repositories\InterestBasesTypeRepository.cs" />

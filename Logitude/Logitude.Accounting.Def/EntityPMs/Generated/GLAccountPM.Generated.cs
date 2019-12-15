@@ -2401,12 +2401,12 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private DateTime interestCalculationStartDate ;
+	  private DateTime? interestCalculationStartDate ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public DateTime InterestCalculationStartDate  
+       public DateTime? InterestCalculationStartDate  
 	   {
 	    
 	     get
@@ -2417,7 +2417,7 @@ namespace Logitude.Accounting.Def.EntityPMs
 		 {
 		   if(interestCalculationStartDate != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InterestCalculationStartDate",OldValue=interestCalculationStartDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InterestCalculationStartDate",OldValue=interestCalculationStartDate,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   interestCalculationStartDate=value;
 		   }
@@ -2470,7 +2470,42 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-   }
+
+	   private List<GLAccountInterestPeriodPM> gLAccountInterestPeriods;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("GLAccountInterestPeriodGLAccount", "Id","GLAccountId")]
+	   [DataMember]
+	   public virtual List<GLAccountInterestPeriodPM> GLAccountInterestPeriods  
+	   {
+	        get
+             {
+                 if (gLAccountInterestPeriods == null)
+                 {
+                     gLAccountInterestPeriods = new List<GLAccountInterestPeriodPM>();
+                 }
+                 return gLAccountInterestPeriods;
+              }
+             set { gLAccountInterestPeriods = value; }
+	    }
+		   
+	   private List<GLAccountInterestPeriodPM>  deletedGLAccountInterestPeriods;
+	   public virtual List<GLAccountInterestPeriodPM> DeletedGLAccountInterestPeriods  
+	   {
+	        get
+             {
+                 if ( deletedGLAccountInterestPeriods == null)
+                 {
+                      deletedGLAccountInterestPeriods = new List<GLAccountInterestPeriodPM>();
+                 }
+                 return  deletedGLAccountInterestPeriods;
+              }
+             set {  deletedGLAccountInterestPeriods = value; }
+	    }
+	     }
    
 }
 	 

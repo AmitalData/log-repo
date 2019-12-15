@@ -1758,6 +1758,10 @@
     <Compile Include="Migrations\201912110756225_UniqueOriginalJournalIdtk2.Designer.cs">
       <DependentUpon>201912110756225_UniqueOriginalJournalIdtk2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912151003091_Alter_Field_InterestCalculationStartDate_Nullable.cs" />
+    <Compile Include="Migrations\201912151003091_Alter_Field_InterestCalculationStartDate_Nullable.Designer.cs">
+      <DependentUpon>201912151003091_Alter_Field_InterestCalculationStartDate_Nullable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -3014,6 +3018,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912110756225_UniqueOriginalJournalIdtk2.resx">
       <DependentUpon>201912110756225_UniqueOriginalJournalIdtk2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912151003091_Alter_Field_InterestCalculationStartDate_Nullable.resx">
+      <DependentUpon>201912151003091_Alter_Field_InterestCalculationStartDate_Nullable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

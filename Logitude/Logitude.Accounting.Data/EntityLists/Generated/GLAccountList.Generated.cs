@@ -203,7 +203,7 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public bool ActiveForInterest  { get; set; }
        [DataMember]
-       public DateTime InterestCalculationStartDate  { get; set; }
+       public DateTime? InterestCalculationStartDate  { get; set; }
        [DataMember]
        public bool ActiveForInterestCreditInvoice  { get; set; }
        [DataMember]
