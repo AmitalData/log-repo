@@ -252,7 +252,7 @@ tenant);
 
                 GenericCallBack callback = transactionQuery.GetReconciliationFilterCallBack(queryOperations, gLAccountId, tenant, true);
 
-                List<LedgerTransactionList> openReconciliation = transactionQuery.GetOpenReconciliationFilterList(queryOperations, callback, gLAccountId, tenant);
+                List<LedgerTransactionList> openTransactions = transactionQuery.GetOpenReconciliationFilterList(queryOperations, callback, gLAccountId, tenant);
 
                 //LedgerTransactionSorterArgs args = new LedgerTransactionSorterArgs()
                 //{
@@ -271,7 +271,7 @@ tenant);
                     response.Count = count;
                 }
 
-                response.Result = openReconciliation;
+                response.Result = openTransactions;
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 
                 return reponseMessage;
