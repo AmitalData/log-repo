@@ -33,8 +33,7 @@ import { DocumentTypeMetaDataExtendedService } from '../../../../Common/Services
 import { ServiceLocator } from '../../../../Infrastructure/Locators/ServiceLocator';
 import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
 import { TenantPMService } from '../../../../Common/Services/StandardPMs/TenantPMService';
-import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
-import { DocumentsFilingExtendedPMService } from '../../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
+import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager'; 
 
 
 @Component({
@@ -52,8 +51,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
 
     public _DocumentTypeMetaDataExtendedService: DocumentTypeMetaDataExtendedService;
     public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService;
-    public _ShipmentAdditionalCloudDataService: ShipmentAdditionalCloudDataService;
-    DocumentsFilingExtendedPMService: DocumentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
+    public _ShipmentAdditionalCloudDataService: ShipmentAdditionalCloudDataService; 
 
     public _ShipmentPMService: ShipmentPMService;
     RefreshTimer: any;
@@ -298,7 +296,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     }
 
     ViewAggreement() {
-        this.DocumentsFilingExtendedPMService.getDocumentsFilingsByCode(this.TermsOfUseDocumentId).subscribe(myResult => {
+        this._documentsFilingExtendedPMService.getDocumentsFilingsByCode(this.TermsOfUseDocumentId).subscribe(myResult => {
              
             if (myResult.Result) { 
                 var securityId = myResult.Result.SecurityId;
