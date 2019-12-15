@@ -304,14 +304,14 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
             ServerSideSortable: false,
         });
 
-
         this.columns.push({
             FieldName: 'EstimatedArrivalDate',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.CourierMaster.F.EstimatedArrivalDate"),
-            Styles: { width: '150px' },
+            Styles: { width: '120px' },
             IsCustomTemplate: true,
-            ServerSideSortable: false,
+            HtmlListComponentName: 'CourierDeclarationWorkspaceListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierDeclarationWorkspaceListTemplate',
         });
 
         this.columns.push({
