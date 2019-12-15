@@ -2208,6 +2208,7 @@ namespace WebFreight.Web.ReportsWebServices
            {
                 Profact.TimbraCFDI.Comprobante comprobante = LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.Comprobante>(a.SATXML);
                 List<System.Xml.XmlElement> myLXmlComplementos = comprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
+                dataProvider.SATList = new List<SAT>();
                 var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
                 if (timbreFiscalDigitalElement != null)
                 {
