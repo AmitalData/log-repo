@@ -921,8 +921,6 @@ namespace MeatadataGeneratorTool
 
         public static void GenerateXmlFileFromTool(ObjectTableViewModel table)//execute when click ok button
         {
-
-
             XmlDocument doc = new XmlDocument();
             XmlDeclaration xmlDeclaration = doc.CreateXmlDeclaration("1.0", "UTF-8", null);
             doc.AppendChild(xmlDeclaration);
@@ -948,63 +946,50 @@ namespace MeatadataGeneratorTool
             {
                 SetAttribute("DBTableShortName", GetStringValue(table.DBTableShortName), entityElement);
             }
+
             
+            string dbTableOldNames = null;
 
-            string oldDBTableName = null;
-
-            if (!string.IsNullOrEmpty(App.CurrentDBTableName))
+            if (string.IsNullOrEmpty(table.DBTableOldNames))
             {
-                if (table.DBTableName != App.CurrentDBTableName)
-                {
-                    oldDBTableName = App.CurrentDBTableName;
-                }
-                else
-                {
-                    if (table.OldDBTableName.Contains(","))
-                    {
-                        oldDBTableName = table.OldDBTableName.Split(',')[0];
-                    }
-                    else
-                    {
-                        oldDBTableName = table.OldDBTableName;
-                    }
-                }
+                string shortName = string.IsNullOrEmpty(table.DBTableShortName) ? null : "," + table.DBTableShortName;
+                dbTableOldNames = table.DBTableName + shortName;
             }
             else
             {
-                oldDBTableName = table.DBTableName;
-            }
-            
+                dbTableOldNames = table.DBTableOldNames;
 
-            if (string.IsNullOrEmpty(App.CurrentDBTableShortName) && !string.IsNullOrEmpty(table.DBTableShortName))
-            {
-                oldDBTableName = oldDBTableName + "," + table.DBTableShortName;
-            }
-
-            if (!string.IsNullOrEmpty(App.CurrentDBTableShortName) && !string.IsNullOrEmpty(table.DBTableShortName))
-            {
-                if (table.DBTableShortName != App.CurrentDBTableShortName)
+                if (table.DBTableOldNames.Contains(","))
                 {
-                    oldDBTableName = oldDBTableName + "," + App.CurrentDBTableShortName;
+                    if (!table.DBTableOldNames.Split(',').Contains(table.DBTableName))
+                    {
+                        dbTableOldNames = dbTableOldNames + "," + table.DBTableName;
+                    }
+
+                    if (!string.IsNullOrEmpty(table.DBTableShortName))
+                    {
+                        if (!table.DBTableOldNames.Split(',').Contains(table.DBTableShortName))
+                        {
+                            dbTableOldNames = dbTableOldNames + "," + table.DBTableShortName;
+                        }
+                    }
                 }
                 else
                 {
-                    oldDBTableName = oldDBTableName + "," + table.DBTableShortName;
+                    string shortName = string.IsNullOrEmpty(table.DBTableShortName) ? null : "," + table.DBTableShortName;
+
+                    if (table.DBTableOldNames != table.DBTableName)
+                    {
+                        dbTableOldNames = dbTableOldNames + "," + table.DBTableName + shortName;
+                    }
+                    else
+                    {
+                        dbTableOldNames = dbTableOldNames + shortName;
+                    }
                 }
             }
 
-            if (string.IsNullOrEmpty(table.DBTableShortName) && !string.IsNullOrEmpty(App.CurrentDBTableShortName))
-            {
-                oldDBTableName = oldDBTableName + "," + App.CurrentDBTableShortName;
-            }
-
-            if (string.IsNullOrEmpty(table.DBTableShortName) && string.IsNullOrEmpty(App.CurrentDBTableShortName) && table.OldDBTableName.Contains(","))
-            {
-                oldDBTableName = oldDBTableName + "," + table.OldDBTableName.Split(',')[1];
-            }
-
-
-            SetAttribute("OldDBTableName", oldDBTableName, entityElement);
+            SetAttribute("DBTableOldNames", dbTableOldNames.Contains(",") ? string.Join(",", dbTableOldNames.Split(',').Distinct().ToArray()) : dbTableOldNames, entityElement);
 
             SetAttribute("ObjectTableSingular", GetStringValue(table.ObjectTableSingular), entityElement);
             SetAttribute("ObjectTablePlural", GetStringValue(table.ObjectTablePlural), entityElement);
@@ -1191,7 +1176,7 @@ namespace MeatadataGeneratorTool
                     }
                 }
 
-                SetAttribute("OldNames", oldNames, fieldElement, null);
+                SetAttribute("OldNames", oldNames.Contains(",") ? string.Join(",", oldNames.Split(',').Distinct().ToArray()) : oldNames, fieldElement, null);
 
                 //SetAttribute("OldFieldName", GetStringValue(f.OldFieldName), fieldElement, null);
                 SetAttribute("IsNew", f.IsNew.ToString().ToLower(), fieldElement, null);
@@ -1967,129 +1952,30 @@ namespace MeatadataGeneratorTool
             }
 
 
-            string oldName = null;
+            string dbTableOldNames = null;
 
-            if (!string.IsNullOrEmpty(App.CurrentDBTableName))
+            if (!String.IsNullOrEmpty(table.DBTableOldNames))
             {
-                if (table.DBTableName != App.CurrentDBTableName)
+                if (table.DBTableOldNames.Contains(","))
                 {
-                    oldName = App.CurrentDBTableName;
+                    var oldNamesExceptName = table.DBTableOldNames.Split(',').Where(x => x != table.DBTableName);
+                    if (!string.IsNullOrEmpty(table.DBTableShortName))
+                    {
+                        oldNamesExceptName = oldNamesExceptName.Where(x => x != table.DBTableShortName).Distinct();
+                    }
+                    dbTableOldNames = oldNamesExceptName.Count() == 1 ? oldNamesExceptName.First() : string.Join(",", oldNamesExceptName.ToArray());
                 }
                 else
                 {
-                    if (table.OldDBTableName.Contains(","))
-                    {
-                        oldName = table.OldDBTableName.Split(',')[0];
-                    }
-                    else
-                    {
-                        oldName = table.OldDBTableName;
-                    }
-                }
-            }
-            else
-            {
-                oldName = table.DBTableName;
-            }
-
-
-            if (string.IsNullOrEmpty(App.CurrentDBTableShortName) && !string.IsNullOrEmpty(table.DBTableShortName))
-            {
-                oldName = oldName + "," + table.DBTableShortName;
-            }
-
-            if (!string.IsNullOrEmpty(App.CurrentDBTableShortName) && !string.IsNullOrEmpty(table.DBTableShortName))
-            {
-                if (table.DBTableShortName != App.CurrentDBTableShortName)
-                {
-                    oldName = oldName + "," + App.CurrentDBTableShortName;
-                }
-                else
-                {
-                    oldName = oldName + "," + table.DBTableShortName;
+                    dbTableOldNames = table.DBTableName == table.DBTableOldNames ? null : table.DBTableOldNames;
                 }
             }
 
-            if (string.IsNullOrEmpty(table.DBTableShortName) && !string.IsNullOrEmpty(App.CurrentDBTableShortName))
+            if (!String.IsNullOrEmpty(dbTableOldNames))
             {
-                oldName = oldName + "," + App.CurrentDBTableShortName;
+                tableElement.SetAttribute("OldNames", dbTableOldNames);
             }
 
-            if (string.IsNullOrEmpty(table.DBTableShortName) && string.IsNullOrEmpty(App.CurrentDBTableShortName) && table.OldDBTableName.Contains(","))
-            {
-                oldName = oldName + "," + table.OldDBTableName.Split(',')[1];
-            }
-
-            string oldNameAttr = null;
-
-            if (oldName.Contains(","))
-            {
-                if (table.DBTableName != oldName.Split(',')[0])
-                {
-                    oldNameAttr = oldName.Split(',')[0];
-                }
-                if(table.DBTableName != oldName.Split(',')[0] && table.DBTableShortName != oldName.Split(',')[1])
-                {
-                    oldNameAttr = oldNameAttr + ",";
-                }
-                if(table.DBTableShortName != oldName.Split(',')[1])
-                {
-                    oldNameAttr = oldNameAttr + oldName.Split(',')[1];
-                }
-            }
-            else
-            {
-                if (table.DBTableName != oldName)
-                {
-                    oldNameAttr = oldName;
-                }
-            }
-
-            if(oldNameAttr != null)
-            {
-                tableElement.SetAttribute("OldName", oldNameAttr);
-            }
-            
-
-            //if (!string.IsNullOrEmpty(table.OldDBTableName))
-            //{
-            //    string oldName = null;
-            //    if (table.OldDBTableName.Contains(","))
-            //    {
-            //        string dbTableOldName = null;
-            //        string dbTableOldShortName = null;
-            //        string comma = null;
-
-            //        if(App.CurrentDBTableName != table.OldDBTableName.Split(',')[0])
-            //        {
-            //            dbTableOldName = App.CurrentDBTableName;
-            //        }
-
-            //        if (App.CurrentDBTableShortName != table.OldDBTableName.Split(',')[1])
-            //        {
-            //            dbTableOldShortName = string.IsNullOrEmpty(App.CurrentDBTableShortName) ? table.OldDBTableName.Split(',')[1] : App.CurrentDBTableShortName;
-            //        }
-
-            //        if (dbTableOldName != null && dbTableOldShortName != null)
-            //        {
-            //            comma = ",";
-            //        }
-
-            //        oldName = dbTableOldName + comma + dbTableOldShortName;
-            //    }
-            //    else
-            //    {
-            //        if (table.DBTableName != table.OldDBTableName)
-            //        {
-            //            oldName = table.OldDBTableName;
-            //        }
-            //    }
-
-            //    if(oldName != null)
-            //    {
-            //        tableElement.SetAttribute("OldName", oldName);
-            //    }
-            //}
 
             tableElement.SetAttribute("Schema", table.DxmlDatabaseSchemaCode);
             tableElement.SetAttribute("DBType", table.DxmlDatabaseTypeCode);
@@ -2148,9 +2034,10 @@ namespace MeatadataGeneratorTool
                     if (fieldOldNames.Contains(","))
                     {
                         var oldNamesExceptName = fieldOldNames.Split(',').Where(x => x != fieldName);
+                        
                         if (!string.IsNullOrEmpty(fieldShortName))
                         {
-                            oldNamesExceptName = oldNamesExceptName.Where(x => x != fieldShortName);
+                            oldNamesExceptName = oldNamesExceptName.Where(x => x != fieldShortName).Distinct();
                         }
                         oldNames = oldNamesExceptName.Count() == 1 ? oldNamesExceptName.First() : string.Join(",", oldNamesExceptName.ToArray());
                     }

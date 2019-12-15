@@ -169,7 +169,6 @@
     </None>
     <None Include="EntityFiles\SLALine.lxml" />
     <None Include="EntityFiles\Stage.lxml" />
-    <None Include="EntityFiles\Test.lxml" />
     <None Include="EntityFiles\Ticket.lxml" />
     <None Include="EntityFiles\TicketClassification.lxml" />
     <None Include="EntityFiles\Correspondence.lxml">

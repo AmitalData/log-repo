@@ -1312,6 +1312,13 @@ namespace MeatadataGeneratorTool
             set { dBTableName = value; IsDirty = true; FirePropertyChanged("DBTableName"); }
         }
 
+        string dBTableOldNames;
+        public string DBTableOldNames
+        {
+            get { return dBTableOldNames; }
+            set { dBTableOldNames = value; FirePropertyChanged("DBTableOldNames"); }
+        }
+
         string dBTableShortName;
         public string DBTableShortName
         {

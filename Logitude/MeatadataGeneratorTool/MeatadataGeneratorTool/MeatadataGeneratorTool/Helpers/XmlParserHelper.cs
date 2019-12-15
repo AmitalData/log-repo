@@ -926,8 +926,14 @@ namespace MeatadataGeneratorTool.Helpers
 
                 objectTable.DBTableShortName = GetAttributeStringValue(entity.Attributes["DBTableShortName"]);
 
-                App.CurrentDBTableName = objectTable.DBTableName;
-                App.CurrentDBTableShortName = objectTable.DBTableShortName;
+                if (entity.Attributes["DBTableOldNames"] != null)
+                {
+                    objectTable.DBTableOldNames = GetAttributeStringValue(entity.Attributes["DBTableOldNames"]);
+                }
+                else
+                {
+                    objectTable.DBTableOldNames = GetAttributeStringValue(entity.Attributes["DBTableName"]);
+                }
 
                 objectTable.DependencyFilter1 = GetAttributeStringValue(entity.Attributes["DependencyFilter1"]);
                 objectTable.DependencyFilter2 = GetAttributeStringValue(entity.Attributes["DependencyFilter2"]);
