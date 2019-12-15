@@ -384,7 +384,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
                 DF_NG_2754_MSG10004_ImportFixedDeclarationResponseService dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService = new DF_NG_2754_MSG10004_ImportFixedDeclarationResponseService();
 
-                dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(test.Declaration, requestParams.Tenant);
+                dF_NG_2754_MSG10004_ImportFixedDeclarationResponseService.MapResponseToDeclaration(test.Declaration, requestParams.Tenant, true);
 
                 XmlSerializer xsSubmit = new XmlSerializer(typeof(UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration));
                // var subReq = new UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration();
