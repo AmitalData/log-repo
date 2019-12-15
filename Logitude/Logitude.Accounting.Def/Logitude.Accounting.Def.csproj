@@ -98,6 +98,7 @@
     <Compile Include="EntityPMs\Generated\FullAccountingSettingPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\GLAccountCounterPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\GLAccountCurrencyPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\GLAccountInterestPeriodPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\GLAccountMoreDataPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\GLAccountPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\GLAccountTotalByMonthPM.Generated.cs" />

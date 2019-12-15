@@ -344,6 +344,7 @@
     <Compile Include="EntityDataMappings\Generated\GLAccountCounterDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\GLAccountCurrencyDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\GLAccountDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\GLAccountInterestPeriodDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\GLAccountMoreDataDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\GLAccountTotalByMonthDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\GLAccountTotalDateTypeDataMapping.Generated.cs" />
@@ -394,6 +395,7 @@
     <Compile Include="EntityDataMappings\GLAccountCounterDataMapping.cs" />
     <Compile Include="EntityDataMappings\GLAccountCurrencyDataMapping.cs" />
     <Compile Include="EntityDataMappings\GLAccountDataMapping.cs" />
+    <Compile Include="EntityDataMappings\GLAccountInterestPeriodDataMapping.cs" />
     <Compile Include="EntityDataMappings\GLAccountMoreDataDataMapping.cs" />
     <Compile Include="EntityDataMappings\GLAccountTotalByMonthDataMapping.cs" />
     <Compile Include="EntityDataMappings\GLAccountTotalDateTypeDataMapping.cs" />
@@ -477,6 +479,7 @@
     <Compile Include="EntityQueryServices\Generated\ExternalReconciliationLineQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ExternalReconciliationQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\GLAccountCounterQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\GLAccountInterestPeriodQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\GLAccountMoreDataQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\GLAccountTotalDateTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\GLAccountWithholdingTaxQueryService.Generated.cs" />
@@ -561,6 +564,7 @@
     <Compile Include="EntityUpdateServices\Generated\ExternalReconciliationLineUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ExternalReconciliationUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\GLAccountCounterUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\GLAccountInterestPeriodUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\GLAccountMoreDataUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\GLAccountTotalDateTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\GLAccountWithholdingTaxUpdateService.Generated.cs" />
