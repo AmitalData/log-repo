@@ -31,8 +31,6 @@ BEGIN
 
 	set @FirstApprovalDate = null
 
-	-- Get the First Approval Date 
-	-- for the Shipment from its own invoices
 	BEGIN
 		DECLARE ARInvoiceEntitiesCursor CURSOR READ_ONLY
 		FOR
