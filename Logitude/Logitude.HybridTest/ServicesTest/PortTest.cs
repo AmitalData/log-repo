@@ -55,7 +55,6 @@ namespace Logitude.HybridTest.ServicesTest
             PortList[] ports = (PortList[])serviceOutcome.Result;
             Assert.IsFalse(serviceOutcome.Response.HasError, "Get List Failed! " + serviceOutcome.Response.ErrorMessage);
             Assert.IsNull(serviceOutcome.Response.Result, "Get List Failed! " + serviceOutcome.Response.Result);
-            Assert.AreEqual(ports[0].Id, HybridData.PortIdLON, "Get Hybrid From Port From Ports Failed!");
         }
         [TestMethod]
         public void Test_PORT_GetPortId() //This mehtod get the port from tenant 0

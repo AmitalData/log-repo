@@ -46,7 +46,7 @@ namespace Logitude.HybridTest.ServicesTest
             CountryCityList city = (CountryCityList)serviceOutcome.Result;
             Assert.IsFalse(serviceOutcome.Response.HasError, "Get List Failed! " + serviceOutcome.Response.ErrorMessage);
             Assert.IsNull(serviceOutcome.Response.Result, "Get List Failed! " + serviceOutcome.Response.ErrorMessage);
-            Assert.AreEqual(city.Id, HybridData.CityIdHCity, "Get Hybrid City Failed!");
+            Assert.AreEqual(city.Code, HybridData.CityCodeHCity, "Get Hybrid City Failed!");
         }
     }
 }
