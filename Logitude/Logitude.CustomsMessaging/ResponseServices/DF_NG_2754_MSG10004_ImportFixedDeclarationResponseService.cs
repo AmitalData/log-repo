@@ -211,8 +211,21 @@ namespace Logitude.CustomsMessaging.ResponseServices
             declarationUpdateService.Update(declarationPM, true);
 
 
+            CustomsDocumentsTicketQueryService customsDocumentsTicketQuery = new CustomsDocumentsTicketQueryService(tenant);
+            List<CustomsDocumentsTicketPM> customsDocumentsTicketPMs=  customsDocumentsTicketQuery.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationPM.Id, "", "", "", tenant, "");
+            CustomsDocumentsTicketUpdateService customsDocumentsTicketUpdateService = new CustomsDocumentsTicketUpdateService(context, new Dictionary<string, IContext>(), declarationPM.Tenant);
 
-        }
+            foreach (var customsDocumentsTicketPM in customsDocumentsTicketPMs)
+            {
+                customsDocumentsTicketPM.ChangeSetOp = ChangeSetOperation.Insert;
+                foreach (var CustomsDocumentPointer in customsDocumentsTicketPM.CustomsDocumentPointers)
+                {
+                    CustomsDocumentPointer.ChangeSetOp = ChangeSetOperation.Insert;
+                    CustomsDocumentPointer.ParentEntityId = declarationId;
+                }
+                customsDocumentsTicketUpdateService.Update(customsDocumentsTicketPM, true);
+            }
+         }
 
         private void SetImporters(ref DeclarationPM declarationPM, Declaration declaration)
         {
