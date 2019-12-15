@@ -8,7 +8,7 @@ import {CachedDataManager} from '../../../Infrastructure/Utilities/CachedDataMan
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
-import { CourierMasterList } from '../../EntityLists/CourierMasterList';
+
 //import { CourierMasterFiltersDataCount } from '../../DataContract/CourierMasterFiltersDataCount';
 import { CourierMasterPM } from '../../EntityPMs/CourierMasterPM';
 import { CourierMasterList } from '../../EntityLists/CourierMasterList';
