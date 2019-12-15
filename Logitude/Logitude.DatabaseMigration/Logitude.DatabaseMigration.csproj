@@ -1723,8 +1723,7 @@
     <Compile Include="Migrations\201911251236376_NewField_AllowEditChequePayToName.Designer.cs">
       <DependentUpon>201911251236376_NewField_AllowEditChequePayToName.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201912031815485_AddHideFCLAllInField.cs" />
-
+ 
     <Compile Include="Migrations\201912040838041_AddAllowCustomersInAgentsLOV_Samar.cs" />
     <Compile Include="Migrations\201912040838041_AddAllowCustomersInAgentsLOV_Samar.Designer.cs">
       <DependentUpon>201912040838041_AddAllowCustomersInAgentsLOV_Samar.cs</DependentUpon>
