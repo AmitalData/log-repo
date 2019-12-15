@@ -21,15 +21,17 @@ namespace Logitude.Customs.Data.Repsitories
 			throw new NotImplementedException();
         }
 
-        public DBMigration GetLast()
+        public DBMigration GetLastClosed()
         {
              return this.GetAll()
+                .Where(r=>r.IsClose==true)
                 .OrderByDescending(r => r.MajorVersion)
                 .ThenByDescending(r=>r.MinorVersion)
                 .FirstOrDefault();
         }
 
-   }
+    
+    }
 
 }
    

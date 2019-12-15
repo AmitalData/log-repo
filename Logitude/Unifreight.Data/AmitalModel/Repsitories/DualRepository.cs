@@ -1,4 +1,5 @@
 ﻿using Devart.Data.Oracle;
+using Logitude.Customs.Data;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -85,7 +86,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
 
         public OpenReaderSingleResult(int tenant)
         {
-            _CurrentContext = GlobalContext.GetContext() as DbContextBase;
+            _CurrentContext = CustomContext.GetContext(tenant) as DbContextBase;
         }
 
         public OpenReaderSingleResult(DbContext context)
