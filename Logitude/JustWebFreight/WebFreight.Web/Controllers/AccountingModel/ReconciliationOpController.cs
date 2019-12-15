@@ -254,7 +254,15 @@ tenant);
 
                 List<LedgerTransactionList> openReconciliation = transactionQuery.GetOpenReconciliationFilterList(queryOperations, callback, gLAccountId, tenant);
 
-                openReconciliation = openReconciliation.OrderByDescending(d => d.DocumentDate).ToList();
+                //LedgerTransactionSorterArgs args = new LedgerTransactionSorterArgs()
+                //{
+                //    Tenant = tenant,
+                //    AccountId = gLAccountId,
+                //    QueryOperations = queryOperations,
+                //    Transactions = openTransactions,
+                //};
+                //LedgerTransactionsSorter transactionsSorter = new LedgerTransactionsSorter(args);
+                //openTransactions = transactionsSorter.SortQuery();
 
                 ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
