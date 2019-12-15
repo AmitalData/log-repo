@@ -225,6 +225,7 @@
     <Content Include="2019.R5\12 - 2019\Day 05 [Samar] Add new AWB spaecial handling code.sql" />
     <Content Include="2019.R5\12 - 2019\Day 05 [Abed] Remove Volumetric Weight from Quotes Details Settings.sql" />
     <Content Include="2019.R5\12 - 2019\Day 08 [Abed] FillFromToTypeFieldOnWarehouseEntry.sql" />
+    <Content Include="2019.R5\12 - 2019\Day 05 [Samar] updated dependency for Master agent field.sql" />
     <Content Include="2019.R5\12 - 2019\Day 15 [Samar] drop customer competitor from query columns.sql" />
     <Content Include="Accounting\2015 - 8\day 10 [alex] unique constraint in JournalActionTypes.sql" />
     <Content Include="2019.R2\06 - 2019\Day 24 [Rabaia] DalayWithReturnStatusToZeroSP.sql" />
