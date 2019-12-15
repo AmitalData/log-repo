@@ -89,6 +89,8 @@
     <Compile Include="EntityKeys\IntegrityCheckStatusKeys.cs" />
     <Compile Include="EntityKeys\InterestBasesPeriodKeys.cs" />
     <Compile Include="EntityKeys\InterestBasesTypeKeys.cs" />
+    <Compile Include="EntityKeys\InterestEntityTypeKeys.cs" />
+    <Compile Include="EntityKeys\InterestTransactionKeys.cs" />
     <Compile Include="EntityKeys\JournalAdditionalDataKeys.cs" />
     <Compile Include="EntityKeys\JournalExternalReconcileKeys.cs" />
     <Compile Include="EntityKeys\JournalMoreDataKeys.cs" />
@@ -118,6 +120,8 @@
     <Compile Include="EntityListQueryServices\Generated\IntegrityCheckStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\InterestBasesPeriodListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\InterestBasesTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\InterestEntityTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\InterestTransactionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\JournalAdditionalDataListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\JournalMoreDataListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\OpenFormatReportListQueryService.Generated.cs" />
@@ -136,6 +140,8 @@
     <Compile Include="EntityListQueryServices\IntegrityCheckStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\InterestBasesPeriodListQueryService.cs" />
     <Compile Include="EntityListQueryServices\InterestBasesTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\InterestEntityTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\InterestTransactionListQueryService.cs" />
     <Compile Include="EntityListQueryServices\JournalAdditionalDataListQueryService.cs" />
     <Compile Include="EntityListQueryServices\JournalMoreDataListQueryService.cs" />
     <Compile Include="EntityListQueryServices\OpenFormatReportListQueryService.cs" />
@@ -159,6 +165,8 @@
     <Compile Include="EntityLists\Generated\IntegrityCheckStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\InterestBasesPeriodList.Generated.cs" />
     <Compile Include="EntityLists\Generated\InterestBasesTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\InterestEntityTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\InterestTransactionList.Generated.cs" />
     <Compile Include="EntityLists\Generated\JournalAdditionalDataList.Generated.cs" />
     <Compile Include="EntityLists\Generated\JournalMoreDataList.Generated.cs" />
     <Compile Include="EntityLists\Generated\OpenFormatReportList.Generated.cs" />
@@ -182,6 +190,8 @@
     <Compile Include="EntityMapping\IntegrityCheckStatusMap.cs" />
     <Compile Include="EntityMapping\InterestBasesPeriodMap.cs" />
     <Compile Include="EntityMapping\InterestBasesTypeMap.cs" />
+    <Compile Include="EntityMapping\InterestEntityTypeMap.cs" />
+    <Compile Include="EntityMapping\InterestTransactionMap.cs" />
     <Compile Include="EntityMapping\JournalAdditionalDataMap.cs" />
     <Compile Include="EntityMapping\JournalExternalReconcileMap.cs" />
     <Compile Include="EntityMapping\JournalMoreDataMap.cs" />
@@ -206,6 +216,8 @@
     <Compile Include="EntityPOCOs\IntegrityCheckStatus.cs" />
     <Compile Include="EntityPOCOs\InterestBasesPeriod.cs" />
     <Compile Include="EntityPOCOs\InterestBasesType.cs" />
+    <Compile Include="EntityPOCOs\InterestEntityType.cs" />
+    <Compile Include="EntityPOCOs\InterestTransaction.cs" />
     <Compile Include="EntityPOCOs\JournalAdditionalData.cs" />
     <Compile Include="EntityPOCOs\JournalExternalReconcile.cs" />
     <Compile Include="EntityPOCOs\JournalMoreData.cs" />
@@ -236,6 +248,8 @@
     <Compile Include="Repositories\Generated\IntegrityCheckStatusRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\InterestBasesPeriodRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\InterestBasesTypeRepository.Generated.cs" />
+    <Compile Include="Repositories\Generated\InterestEntityTypeRepository.Generated.cs" />
+    <Compile Include="Repositories\Generated\InterestTransactionRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\JournalAdditionalDataRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\JournalExternalReconcileRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\JournalMoreDataRepository.Generated.cs" />
@@ -255,6 +269,8 @@
     <Compile Include="Repositories\IntegrityCheckStatusRepository.cs" />
     <Compile Include="Repositories\InterestBasesPeriodRepository.cs" />
     <Compile Include="Repositories\InterestBasesTypeRepository.cs" />
+    <Compile Include="Repositories\InterestEntityTypeRepository.cs" />
+    <Compile Include="Repositories\InterestTransactionRepository.cs" />
     <Compile Include="Repositories\JournalAdditionalDataRepository.cs" />
     <Compile Include="Repositories\JournalExternalReconcileRepository.cs" />
     <Compile Include="Repositories\JournalMoreDataRepository.cs" />

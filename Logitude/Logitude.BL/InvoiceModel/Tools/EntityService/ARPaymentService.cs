@@ -590,8 +590,31 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             ARInvoicePayment newObject = new ARInvoicePayment();
             ARPaymentMapping.MapEntityInvoicePyament(item, newObject, true);
             invoicePaymentRepository.Add(newObject);
-        }
 
+            CreateInterestTransactionLine(item);
+        }
+        int lineNumber = 0;
+        private void CreateInterestTransactionLine(ARPaymentInvoicePM paymentInvoice)
+        {
+            DateTime? dateForInterest = entityPM.ValueDate  == null ? DateTime.Now : entityPM.ValueDate;
+            
+            InterestTransactionPM interestTransaction = new InterestTransactionPM()
+            {
+                InterestEntityTypeCode = "2",
+                EntityId = paymentInvoice.ARPaymentId,
+                OriginalEntityLineNumber = ++lineNumber,
+                LocalAmount = (decimal)paymentInvoice.LocalAmount ,
+                ForeignAmount = (decimal?)paymentInvoice.ForeignAmount,
+                InterestValueDate = (DateTime)dateForInterest,
+                Tenant = paymentInvoice.Tenant,
+                ChangeSetOp = ChangeSetOperation.Insert,
+            };
+            IInterestTransactionUpdateServiceExt interestTransactionUpdateService = ContainerAccessor.Container.Resolve(typeof(IInterestTransactionUpdateServiceExt), "InterestTransactionUpdateServiceExt", new ParameterOverride("", 1)) as IInterestTransactionUpdateServiceExt;
+            interestTransactionUpdateService.Create(interestTransaction);
+
+
+
+        }
         private void UpdatePaymentInvoice(ARPaymentInvoicePM item)
         {
             ARInvoicePayment invoicePayment = invoicePaymentRepository.GetSingleARInvoicePayment(item.Id, entityPM.Tenant);

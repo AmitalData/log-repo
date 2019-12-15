@@ -3410,7 +3410,9 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<GLAccountCounter> GLAccountCounters { get; set; }
         public IDbSet<InterestBasesType> InterestBasesTypes { get; set; }
         public IDbSet<InterestBasesPeriod> InterestBasesPeriods {get; set;}
-
+        public IDbSet<InterestTransaction> InterestTransactions { get; set; }
+        public IDbSet<InterestEntityType> InterestEntityTypes { get; set; }
+        
         #endregion
 
         #region Warehouse Context
@@ -4371,8 +4373,9 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new GLAccountCounterMap());
             modelBuilder.Configurations.Add(new InterestBasesTypeMap());
             modelBuilder.Configurations.Add(new InterestBasesPeriodMap());
-
-
+            modelBuilder.Configurations.Add(new InterestTransactionMap());
+            modelBuilder.Configurations.Add(new InterestEntityTypeMap());
+            
             #endregion
 
             #region WareHouse

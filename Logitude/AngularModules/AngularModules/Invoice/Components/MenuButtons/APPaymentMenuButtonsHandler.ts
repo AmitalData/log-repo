@@ -389,7 +389,8 @@ export class APPaymentMenuButtonsHandler {
 
     public GetFullAccountingSettingsAndApprove() {
         this.CurrentSession.StartBusyIndicatorLoading();
-        this.fullAccountingSettingPMService.get(SessionLocator.TenantPM.Id.toString()).subscribe(myResult => {
+        this.fullAccountingSettingPMService.get(SessionLocator.TenantPM.Id.toString()).subscribe(myResult =>
+        {
             var myResponse: ServiceResponse = myResult;
             this.CurrentSession.StopBusyIndicator();
 
@@ -406,24 +407,30 @@ export class APPaymentMenuButtonsHandler {
 
     }
 
-    private Approve(fullAccountingSetting: FullAccountingSettingPM) {
-        this.GetGLAccount(this.EntityPM.VendorGLAccountId).then((glaccount: GLAccountPM) => {
+    private Approve(fullAccountingSetting: FullAccountingSettingPM)
+    {
+        if (fullAccountingSetting.AccountingActivated) {
+            this.GetGLAccount(this.EntityPM.VendorGLAccountId).then((glaccount: GLAccountPM) => {
 
 
-            if (fullAccountingSetting != null && glaccount != null) {
-                if (fullAccountingSetting.IsPaymentChequesActivated && glaccount.AllowEditChequePayToName && this.EntityPM.PaymentMethodCode == "CH") {
-                    this.OpenEditPaymentChequeScreen();
+                if (fullAccountingSetting != null && glaccount != null) {
+                    if (fullAccountingSetting.IsPaymentChequesActivated && glaccount.AllowEditChequePayToName && this.EntityPM.PaymentMethodCode == "CH") {
+                        this.OpenEditPaymentChequeScreen();
+                    }
+                    else {
+                        this.ContinueSaving(null);
+                    }
                 }
                 else {
                     this.ContinueSaving(null);
                 }
-            }
-            else {
-                this.ContinueSaving(null);
-            }
 
-        });
 
+            });
+        }
+        else {
+            this.ContinueSaving(null);
+        }
     }
 
     SetPaymentChequeWindowArgs(windowArgs: any) {

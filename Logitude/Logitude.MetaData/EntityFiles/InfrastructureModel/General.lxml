@@ -760,7 +760,7 @@
     <TextCode Code="&quot;General.MH.Depositions&quot;" DefaultText="&quot;Depositions&quot;" TextCodeTypeCode="&quot;MH&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;General.O.Yes&quot;" DefaultText="&quot;Yes&quot;" LocalDefaultText="&quot;כן&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;General.O.No&quot;" DefaultText="&quot;No&quot;" LocalDefaultText="&quot;לא&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;General.O.ShowNewRelease&quot;" DefaultText="&quot;New Version is online , for more details&quot;" LocalDefaultText="&quot;גרסה חדשה עלתה לאוויר - לפירוט השינויים&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;General.O.ShowNewRelease&quot;" DefaultText="&quot;New Version is online, for more details&quot;" LocalDefaultText="&quot;גרסה חדשה עלתה לאוויר - לפירוט השינויים&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;General.B.PressHere&quot;" DefaultText="&quot;Press Here&quot;" LocalDefaultText="&quot;לחץ כאן&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;General.MH.TariffModule&quot;" DefaultText="&quot;Tariffs&quot;" LocalDefaultText="&quot;Tariffs&quot;" TextCodeTypeCode="&quot;MH&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;General.MC.Others.CreateTenant&quot;" DefaultText="&quot;Create Tenant&quot;" LocalDefaultText="&quot;Create Tenant&quot;" TextCodeTypeCode="&quot;MC&quot;" IsSpellChecked="false" />

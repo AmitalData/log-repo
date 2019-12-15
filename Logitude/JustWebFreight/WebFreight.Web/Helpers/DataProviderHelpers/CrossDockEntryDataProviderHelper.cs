@@ -168,7 +168,26 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                         dataProvider.ShipmentNumber = shipmentDataView.ShipmentNumber;
                     }
                 }
+                if (!string.IsNullOrEmpty(warehouseEntryPM.ToPortId))
+                {
+                    PortRepository portRepository = new PortRepository(tenant);
+                    Port destinationPort = portRepository.GetSinglePort(warehouseEntryPM.ToPortId, tenant);
+                    if (destinationPort != null)
+                    {
+                        dataProvider.DestinationCountryName = destinationPort.Country == null ? "" : destinationPort.Country.EnglishName;
+                    }
+                }
 
+                if (!string.IsNullOrEmpty(warehouseEntryPM.TruckerId))
+                {
+                    Card truckerCard = CardRepository.GetSingleCard(warehouseEntryPM.TruckerId, tenant, true);
+                    if (truckerCard != null)
+                    {
+                        dataProvider.Trucker = truckerCard == null ? "" : truckerCard.EnglishName;
+                    }
+                }
+
+                dataProvider.BarCode = warehouseEntryPM.EntryReference;
 
             }
             return dataProvider;
@@ -193,6 +212,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                 item.Seal = package.Seal;
                 item.VolumetricWeight = package.VolumetricWeight;
                 item.VolumetricWeightUnit = warehouseEntryPM.ChargeableWeightUnitCode;
+                item.InStock = package.Instock;
 
                 #region Car Details
                 item.Make = package.Make;
