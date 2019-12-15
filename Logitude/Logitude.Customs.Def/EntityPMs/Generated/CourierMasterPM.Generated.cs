@@ -1147,25 +1147,25 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string prefixMAWB ;
+	  private int calcSuspendedDeclarations ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string PrefixMAWB  
+       public int CalcSuspendedDeclarations  
 	   {
 	    
 	     get
 		{
-		   return prefixMAWB;
+		   return calcSuspendedDeclarations;
 		 }
 		 set
 		 {
-		   if(prefixMAWB != value)
+		   if(calcSuspendedDeclarations != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PrefixMAWB",OldValue=prefixMAWB,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CalcSuspendedDeclarations",OldValue=calcSuspendedDeclarations,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
-		   prefixMAWB=value;
+		   calcSuspendedDeclarations=value;
 		   }
 			
 		 }

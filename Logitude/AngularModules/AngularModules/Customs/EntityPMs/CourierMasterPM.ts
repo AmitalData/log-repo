@@ -269,9 +269,9 @@ export class CourierMasterPM {
     public set CalcPending900(newValue: number) { if (this.calcPending900 != newValue) { this.calcPending900 = newValue; this.MarkAsDirty("CalcPending900"); } }
        
 	 
-    private prefixMAWB: string;
-    public get PrefixMAWB() { return this.prefixMAWB; }
-    public set PrefixMAWB(newValue: string) { if (this.prefixMAWB != newValue) { this.prefixMAWB = newValue; this.MarkAsDirty("PrefixMAWB"); } }
+    private calcSuspendedDeclarations: number;
+    public get CalcSuspendedDeclarations() { return this.calcSuspendedDeclarations; }
+    public set CalcSuspendedDeclarations(newValue: number) { if (this.calcSuspendedDeclarations != newValue) { this.calcSuspendedDeclarations = newValue; this.MarkAsDirty("CalcSuspendedDeclarations"); } }
        
 	 
 
