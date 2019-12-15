@@ -103,6 +103,6 @@ export class TenantList {
 		CAAT: string;
 		IsTestTenant: boolean;
 		CheckDigitControlAlgorithmCode: string;
-		AllowCustomersInAgentsLOV: boolean;
-	
-}
+		HideFCLAllIn: boolean;
+		AllowCustomersInAgentsLOV: boolean;	
+}

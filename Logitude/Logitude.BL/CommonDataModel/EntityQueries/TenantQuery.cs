@@ -42,7 +42,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             {
                                                 Id = a.Id,
                                                 AddressId = a.AddressId,
-                                              
+
                                                 LocalAddressId = a.LocalAddressId,
                                                 CompanyAddress = a.Address != null ? a.Address.Name : null,
                                                 Company = a.Company,
@@ -118,11 +118,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 IsMobileActivated = a.IsMobileActivated,
                                                 RegulatedAgentNumber = a.RegulatedAgentNumber,
                                                 RegulatedAgentRegimeActivated = a.RegulatedAgentRegimeActivated,
-                                               
+
                                                 CustomerId = a.CustomerId,
                                                 CustomerName = a.CustomerCard != null ? a.CustomerCard.EnglishName : null,
                                                 IsCustomerTenantShare = a.IsCustomerTenantShare,
-                                               
+
                                                 CustomerTenantShareExportFile = a.CustomerTenantShareExportFile,
                                                 AllowAgentInCustomersLOV = a.AllowAgentInCustomersLOV,
                                                 IsPotentialTelRequired = a.IsPotentialTelRequired,
@@ -132,7 +132,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 IsNumeric = a.IsNumeric,
                                                 VatSize = a.VatSize,
                                                 IsWebAccessActivated = a.IsWebAccessActivated,
-                                            
+
                                                 IsCorrespondenceRightToLeftEnabled = a.IsCorrespondenceRightToLeftEnabled,
                                                 IsNotesRightToLeftEnabled = a.IsNotesRightToLeftEnabled,
                                                 IsInternalTicketByDefault = a.IsInternalTicketByDefault,
@@ -140,12 +140,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 SCACCode = a.SCACCode,
                                                 ExportQuotationsToIntegratedSystem = a.ExportQuotationsToIntegratedSystem,
                                                 FMCNumber = a.FMCNumber,
-                                              
+
                                                 //DropBoxAccessToken = a.DropBoxAccessToken
                                                 TenantVATManagement = a.TenantVATManagement,
                                                 TemperatureUnitCode = a.TemperatureUnitCode,
                                                 DefaultSLAId = a.DefaultSLAId,
-                                              
+
                                                 NumberFormatCode = a.NumberFormatCode,
                                                 CAAT = a.CAAT,
                                                 CBSA = a.CBSA,
@@ -158,6 +158,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 StockTypeCode = a.LogBoxTenantSetting.StockTypeCode,
                                                 DocumentShareAsDefault = a.LogBoxTenantSetting.DocumentShareAsDefault,
                                                 LogBoxAdminUserId = a.LogBoxTenantSetting.LogBoxAdminUserId,
+                                                HideFCLAllIn = a.HideFCLAllIn,
                                                 AllowCustomersInAgentsLOV = a.AllowCustomersInAgentsLOV,
                                             });
 
@@ -326,6 +327,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         StockTypeCode = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.StockTypeCode : null,
                         DocumentShareAsDefault = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.DocumentShareAsDefault : false,
                         LogBoxAdminUserId = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.LogBoxAdminUserId : null,
+                        HideFCLAllIn = tt.HideFCLAllIn,
                     };
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -499,6 +501,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     StockTypeCode = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.StockTypeCode : null,
                     DocumentShareAsDefault = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.DocumentShareAsDefault : false,
                     LogBoxAdminUserId = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.LogBoxAdminUserId : null,
+                    HideFCLAllIn = tt.HideFCLAllIn,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -649,7 +652,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            IsTestTenant = a.IsTestTenant,
                                            CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
                                            ApplyVATForAllPartners = a.ApplyVATForAllPartners,
-                                          
+                                           HideFCLAllIn = a.HideFCLAllIn,
                                        }).FirstOrDefault();
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -797,7 +800,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        IsTestTenant = a.IsTestTenant,
                                        CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
                                        ApplyVATForAllPartners = a.ApplyVATForAllPartners,
-                                  
+                                       HideFCLAllIn = a.HideFCLAllIn,
                                    }).FirstOrDefault();
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -949,6 +952,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                IsTestTenant = a.IsTestTenant,
                                                CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
                                                ApplyVATForAllPartners = a.ApplyVATForAllPartners,
+                                               HideFCLAllIn = a.HideFCLAllIn,
                                            }).FirstOrDefault();
 
                         using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1100,6 +1104,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            IsTestTenant = a.IsTestTenant,
                                            CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
                                            ApplyVATForAllPartners = a.ApplyVATForAllPartners,
+                                           HideFCLAllIn = a.HideFCLAllIn,
+
                                        }).FirstOrDefault();
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1242,6 +1248,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        IsTestTenant = a.IsTestTenant,
                                        CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
                                        ApplyVATForAllPartners = a.ApplyVATForAllPartners,
+                                       HideFCLAllIn = a.HideFCLAllIn,
+
                                    }).FirstOrDefault();
                 if (tenant != null)
                 {
@@ -1425,6 +1433,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     StockTypeCode = myPOCO.LogBoxTenantSetting != null ? myPOCO.LogBoxTenantSetting.StockTypeCode : null,
                     DocumentShareAsDefault = myPOCO.LogBoxTenantSetting.DocumentShareAsDefault,
                     LogBoxAdminUserId = myPOCO.LogBoxTenantSetting != null ? myPOCO.LogBoxTenantSetting.LogBoxAdminUserId : null,
+                    HideFCLAllIn = myPOCO.HideFCLAllIn,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1558,6 +1567,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 CBSA = a.CBSA,
                                                 IsTestTenant = a.IsTestTenant,
                                                 CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
+                                                HideFCLAllIn = a.HideFCLAllIn,
                                             };
             return result;
         }

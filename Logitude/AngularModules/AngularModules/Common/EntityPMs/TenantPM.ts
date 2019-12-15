@@ -660,9 +660,14 @@ export class TenantPM {
     public set ApplyVATForAllPartners(newValue: boolean) { if (this.applyVATForAllPartners != newValue) { this.applyVATForAllPartners = newValue; this.MarkAsDirty("ApplyVATForAllPartners"); } }
        
 	 
+    private hideFCLAllIn: boolean;
+    public get HideFCLAllIn() { return this.hideFCLAllIn; }
+    public set HideFCLAllIn(newValue: boolean) { if (this.hideFCLAllIn != newValue) { this.hideFCLAllIn = newValue; this.MarkAsDirty("HideFCLAllIn"); } }
+
     private allowCustomersInAgentsLOV: boolean;
     public get AllowCustomersInAgentsLOV() { return this.allowCustomersInAgentsLOV; }
     public set AllowCustomersInAgentsLOV(newValue: boolean) { if (this.allowCustomersInAgentsLOV != newValue) { this.allowCustomersInAgentsLOV = newValue; this.MarkAsDirty("AllowCustomersInAgentsLOV"); } }
+
        
 	 
 
@@ -688,4 +693,4 @@ export class TenantPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
