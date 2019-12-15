@@ -239,6 +239,7 @@
     <Compile Include="EntityPOCOs\TaxReportLineType.cs" />
     <Compile Include="EntityPOCOs\TaxReportStatus.cs" />
     <Compile Include="EntityPOCOs\VatReportStatus.cs" />
+    <Compile Include="Utilities\LedgerTransactionsSorter.cs" />
     <Compile Include="Repositories\AccountingIntegrityCheckRepository.cs" />
     <Compile Include="Repositories\AccountingNoteRepository.cs" />
     <Compile Include="Repositories\AutomaticExternalReconcileMethodRepository.cs" />
