@@ -590,8 +590,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             ARInvoicePayment newObject = new ARInvoicePayment();
             ARPaymentMapping.MapEntityInvoicePyament(item, newObject, true);
             invoicePaymentRepository.Add(newObject);
-
-            CreateInterestTransactionLine(item);
+            if (tenantPOCO != null && tenantPOCO.AccountingActivated)
+            {
+                CreateInterestTransactionLine(item);
+            }
         }
         int lineNumber = 0;
         private void CreateInterestTransactionLine(ARPaymentInvoicePM paymentInvoice)
