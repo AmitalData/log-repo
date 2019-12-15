@@ -254,17 +254,19 @@ tenant);
 
                 GenericCallBack callback = transactionQuery.GetReconciliationFilterCallBack(queryOperations, gLAccountId, tenant, true);
 
-                List<LedgerTransactionList> openTransactions = transactionQuery.GetOpenReconciliationFilterList(queryOperations, callback, gLAccountId, tenant);
 
-                LedgerTransactionSorterArgs args = new LedgerTransactionSorterArgs()
-                {
-                    Tenant = tenant,
-                    AccountId = gLAccountId,
-                    QueryOperations = queryOperations,
-                    Transactions = openTransactions,
-                };
-                LedgerTransactionsSorter transactionsSorter = new LedgerTransactionsSorter(args);
-                openTransactions = transactionsSorter.SortQuery();
+
+                List<LedgerTransactionList> openReconciliation = transactionQuery.GetOpenReconciliationFilterList(queryOperations, callback, gLAccountId, tenant);
+
+                //LedgerTransactionSorterArgs args = new LedgerTransactionSorterArgs()
+                //{
+                //    Tenant = tenant,
+                //    AccountId = gLAccountId,
+                //    QueryOperations = queryOperations,
+                //    Transactions = openTransactions,
+                //};
+                //LedgerTransactionsSorter transactionsSorter = new LedgerTransactionsSorter(args);
+                //openTransactions = transactionsSorter.SortQuery();
 
                 ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
