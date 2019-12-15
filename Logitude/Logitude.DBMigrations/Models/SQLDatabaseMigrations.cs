@@ -18,15 +18,17 @@ namespace Logitude.DBMigrations.Models
 
         protected override TableDefinition GetCurrentTableDefinitionFromDB()
         {
-            string queryString = @"SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = @name OR TABLE_NAME = @oldName";
+            string dxmlTableOldNames = DXMLTable.OldNames;
+            string name = "'" + DXMLTable.Name + "'";
+            string oldNames = String.IsNullOrEmpty(dxmlTableOldNames) ? null : "," + (dxmlTableOldNames.Contains(",") ? string.Join(",", dxmlTableOldNames.Split(',').Select(n => "'" + n + "'").ToArray()) : "'" + dxmlTableOldNames + "'");
+            
+            string queryString = @"SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME IN (" + name + oldNames + ")";
 
             TableDefinition currentTable = null;
 
             SqlDataReader reader = null;
             SqlConnection connection = new SqlConnection(ConnectionString);
             SqlCommand command = new SqlCommand(queryString, connection);
-            command.Parameters.AddWithValue("@name", DXMLTable.Name);
-            command.Parameters.AddWithValue("@oldName", DXMLTable.OldName ?? DXMLTable.Name);
 
             try
             {

@@ -19,23 +19,19 @@ namespace Logitude.DBMigrations.Models
         
         protected override TableDefinition GetCurrentTableDefinitionFromDB()
         {
+            string dxmlTableOldNames = DXMLTable.OldNames;
+            string name = "'" + DXMLTable.Name + "'";
+            string shortName = String.IsNullOrEmpty(DXMLTable.ShortName) ? null : "," + "'" + DXMLTable.ShortName + "'";
+            string oldNames = String.IsNullOrEmpty(dxmlTableOldNames) ? null : "," + (dxmlTableOldNames.Contains(",") ? string.Join(",", dxmlTableOldNames.Split(',').Select(n => "'" + n + "'").ToArray()) : "'" + dxmlTableOldNames + "'");
+
             //tested query
-            string queryString = "SELECT TABLE_NAME FROM USER_TABLES WHERE TABLE_NAME = :name OR TABLE_NAME = :oldName OR TABLE_NAME = :oldShortName OR TABLE_NAME = :shortName";
+            string queryString = "SELECT TABLE_NAME FROM USER_TABLES WHERE TABLE_NAME IN (" + name + shortName + oldNames + ")";
 
             TableDefinition currentTable = null;
 
             OracleDataReader reader = null;
             OracleConnection connection = new OracleConnection(ConnectionString);
             OracleCommand command = new OracleCommand(queryString, connection);
-
-            string oldName = DXMLTable.OldName == null ? DXMLTable.Name : (DXMLTable.OldName.Contains(",") ? DXMLTable.OldName.Split(',')[0] : DXMLTable.OldName);
-            string oldShortName = DXMLTable.OldName == null ? DXMLTable.Name : (DXMLTable.OldName.Contains(",") ? DXMLTable.OldName.Split(',')[1] : DXMLTable.OldName);
-            string shortName = DXMLTable.ShortName ?? DXMLTable.Name;
-
-            command.Parameters.Add(new OracleParameter("name", DXMLTable.Name));
-            command.Parameters.Add(new OracleParameter("oldName", oldName));
-            command.Parameters.Add(new OracleParameter("oldShortName", oldShortName));
-            command.Parameters.Add(new OracleParameter("shortName", shortName));
 
             try
             {

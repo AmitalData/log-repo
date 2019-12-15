@@ -235,7 +235,7 @@ namespace Logitude.DBMigrations.Models
                 isColumnInCurrentTable = CurrentTable.Columns.Where(c => c.Name == dxmlColumnName).Any();
             }
 
-            if (!isColumnInCurrentTable && dxmlColumnShortName != null)
+            if (!isColumnInCurrentTable && dxmlColumnShortName != null && dxmlColumnName.Length > 30)
             {
                 isColumnInCurrentTable = CurrentTable.Columns.Where(c => c.Name == dxmlColumnShortName).Any();
             }
@@ -266,7 +266,7 @@ namespace Logitude.DBMigrations.Models
                 isColumnInCurrentTable = true;
             }
 
-            if (!isColumnInCurrentTable && dxmlColumnShortName != null && CurrentTable.Columns.Where(c => c.Name == dxmlColumnShortName).Any())
+            if (!isColumnInCurrentTable && dxmlColumnShortName != null && dxmlColumnName.Length > 30 && CurrentTable.Columns.Where(c => c.Name == dxmlColumnShortName).Any())
             {
                 columnName = dxmlColumnShortName;
             }
@@ -525,7 +525,7 @@ namespace Logitude.DBMigrations.Models
 
 
 
-        // abstract methods
+        //abstract methods
         protected abstract TableDefinition GetCurrentTableDefinitionFromDB();
 
         protected abstract TableDefinition GetCurrentTableDefinitionFromDB(string tableName);
