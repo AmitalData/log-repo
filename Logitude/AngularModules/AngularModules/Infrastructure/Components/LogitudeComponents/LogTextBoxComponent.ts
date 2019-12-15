@@ -1100,10 +1100,10 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                                 }
 
                                 if (keyChar == this.decimalSeparator) {
-                                    return key;
+                                    isOk = true;
                                 }
                                 if (keyChar == this.thousandsSeparator) {
-                                    return null;
+                                    isOk = false;
                                 }
 
                                 //////////////////////////////////////
@@ -1140,6 +1140,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                     else {
                         return null;
                     }
+
                 }
                 case 'integertext':
                     {
