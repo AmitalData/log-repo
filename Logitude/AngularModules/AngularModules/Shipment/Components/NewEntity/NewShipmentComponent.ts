@@ -1173,6 +1173,20 @@ export class NewShipmentComponent extends BaseComponent implements OnInit, OnDes
                 }
 
             case "AGT":
+                {
+                    if (SessionLocator.TenantPM.AllowCustomersInAgentsLOV) {
+                        this.CustomerDependencyProperty1 = "AG,CS";
+                        this.CustomerDependencyProperty1IsList = true;
+                    }
+
+                    else {
+                        this.CustomerDependencyProperty1 = "AG";
+                        this.CustomerDependencyProperty1IsList = false;
+                    }
+
+                    break;
+                }
+
             case "IGT":
             case "FOR":
             case "COL":

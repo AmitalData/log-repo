@@ -79,7 +79,7 @@ namespace DeclarationApprovalRequestTester
             string DeclarationXmlData = txtDeclarationXmlData.Text;
             DeclarationApprovalRequestServiceReference.DeclarationApprovalRequestPM DeclarationApprovalRequestPM = new DeclarationApprovalRequestServiceReference.DeclarationApprovalRequestPM();
             DeclarationApprovalRequestPM.Tenant = Tenant;
-            DeclarationApprovalRequestPM.ShipmentNumber = ShipmentNumber;
+            DeclarationApprovalRequestPM.ForwarderShipmentNumber = ShipmentNumber;
             DeclarationApprovalRequestPM.DeclarationXmlData = DeclarationXmlData;
 
             DeclarationApprovalRequestServiceReference.DeclarationApprovalRequestWcfServiceClient MyDeclarationApprovalClient = new DeclarationApprovalRequestServiceReference.DeclarationApprovalRequestWcfServiceClient();

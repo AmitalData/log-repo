@@ -42,10 +42,11 @@
     </QueryColumns>
     <QueryFilters />
   </Query>
-  <Screen Name="&quot;TaxReportHeaderScreen&quot;" ObjectTableName="&quot;TaxReport&quot;" NumberOfColumns="1" NumberOfRows="2" IsReadOnly="true" IsHeaderScreen="true">
+  <Screen Name="&quot;TaxReportHeaderScreen&quot;" ObjectTableName="&quot;TaxReport&quot;" NumberOfColumns="2" NumberOfRows="2" IsReadOnly="true" IsHeaderScreen="true">
     <ScreenFields>
       <ScreenField Column="0" Row="0" ObjectFieldName="&quot;TaxReportNumber&quot;" ScreenName="TaxReportHeaderScreen" />
       <ScreenField Column="0" Row="1" ObjectFieldName="&quot;TaxReportMonth&quot;" ScreenName="TaxReportHeaderScreen" />
+      <ScreenField Column="1" Row="0" ObjectFieldName="&quot;StatusEnglishName&quot;" ScreenName="TaxReportHeaderScreen" />
     </ScreenFields>
   </Screen>
   <Tab TabName="&quot;Details&quot;" TabLocalName="&quot;פרטים&quot;" ObjectTableName="&quot;TaxReport&quot;" Code="&quot;TRDT&quot;" ControlPath="&quot;./Accounting/Components/EditTabs/TaxReport/TaxReportDetailsTabComponent&quot;" TextCode="&quot;TaxReport.TH.Details&quot;" IsPackagable="true" IndexOrder="0" HtmlComponentURL="&quot;./Accounting/Components/EditTabs/TaxReport/TaxReportDetailsTabComponent&quot;" HtmlComponentName="&quot;TaxReportDetailsTabComponent&quot;" IsSpellChecked="false" HasGeneralFeature="false" />

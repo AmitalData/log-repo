@@ -33,7 +33,9 @@ import { DocumentTypeMetaDataExtendedService } from '../../../../Common/Services
 import { ServiceLocator } from '../../../../Infrastructure/Locators/ServiceLocator';
 import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
 import { TenantPMService } from '../../../../Common/Services/StandardPMs/TenantPMService';
-import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
+import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager'; 
+
+
 @Component({
     moduleId: module.id,
     templateUrl: './ECommercePaymentRequestMobileComponent.html'
@@ -49,7 +51,8 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
 
     public _DocumentTypeMetaDataExtendedService: DocumentTypeMetaDataExtendedService;
     public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService;
-    public _ShipmentAdditionalCloudDataService: ShipmentAdditionalCloudDataService;
+    public _ShipmentAdditionalCloudDataService: ShipmentAdditionalCloudDataService; 
+
     public _ShipmentPMService: ShipmentPMService;
     RefreshTimer: any;
     _ImageLibraryService: ImageLibraryService;
@@ -122,7 +125,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                     }
                 }
                 else {
-                    this.FinalMessage = "קובץ זה אינו נדרש לתשלום";
+                    this.FinalMessage = "קובץ זה םינו נדרש לתשלום";
                     this.ShowFinalMessage = true;
                 }
 
@@ -147,7 +150,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                 this.RefreshTimer = setInterval(() => this.ReloadPage(), 1200000);//1200000
             }
             else {
-                this.FinalMessage = "התיק לא קיים בסביבה הזו";
+                this.FinalMessage = "התיק לם קיים בסביבה הזו";
                 this.ShowFinalMessage = true;
             }
         });
@@ -178,14 +181,14 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                         }
                     }
                     else {
-                        this.FinalMessage = "קובץ זה אינו נדרש לתשלום";
+                        this.FinalMessage = "קובץ זה םינו נדרש לתשלום";
                         this.ShowFinalMessage = true;
                     }
 
                     this.RefreshTimer = setInterval(() => this.ReloadPage(), 1200000);//1200000
                 }
                 else {
-                    this.FinalMessage = "התיק לא קיים בסביבה הזו";
+                    this.FinalMessage = "התיק לם קיים בסביבה הזו";
                     this.ShowFinalMessage = true;
                 }
             });
@@ -198,7 +201,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     public get TotalAmount() { return this.totalAmount }
     public set TotalAmount(newValue: number) { this.totalAmount = newValue; }
     public ValidationWarningsList: string = null;
-    public FinalMessage: string = "גרסה זו אושרה";
+    public FinalMessage: string = "גרסה זו םושרה";
 
     private ecommerceSupportEmail: string = "";
     public get EcommerceSupportEmail() { return this.ecommerceSupportEmail }
@@ -264,6 +267,9 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     }
     public set TargetEnv(newValue: string) { this.AdditionalData.PaymentData.TargetEnv = newValue; }
 
+    public get TermsOfUseDocumentId() { return this.AdditionalData.RequestPaymentData.TermsOfUseDocumentId }
+    public set TermsOfUseDocumentId(newValue: string) { this.AdditionalData.RequestPaymentData.TermsOfUseDocumentId = newValue; }
+
 
 
     ShowPaymentDetailsScreen: boolean = false;
@@ -283,6 +289,21 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     OnPayClick() {
         //alert("Yes");
         document.forms["form"].submit();
+    }
+    IsAgreed: boolean = false;
+    IsAggreeChicked(isAgreed) {
+        this.IsAgreed = isAgreed;
+    }
+
+    ViewAggreement() {
+        this._documentsFilingExtendedPMService.getDocumentsFilingsByCode(this.TermsOfUseDocumentId).subscribe(myResult => {
+             
+            if (myResult.Result) { 
+                var securityId = myResult.Result.SecurityId;
+                DownloadManager.DownloadPage(null, securityId);
+            }
+        });
+      
     }
 
 
