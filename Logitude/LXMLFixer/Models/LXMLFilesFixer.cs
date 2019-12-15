@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LXMLFixer.Models;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
@@ -117,6 +118,182 @@ namespace Logitude.LXMLFixer.Models
 
                 ExportMistakesData();
                 ExportDXMLFilesThatNotFound();
+            }
+            else
+            {
+                Console.BackgroundColor = ConsoleColor.Red;
+                Console.WriteLine("Cannot Find Any LXML Files");
+                Console.ResetColor();
+            }
+        }
+
+        public void FixLXMLFilesMistakes()
+        {
+            string[] lxmlFiles = GetLXMLFiles();
+
+            if (lxmlFiles != null)
+            {
+                foreach (var lxmlFile in lxmlFiles)
+                {
+                    string lxmlFileName = Path.GetFileName(lxmlFile);
+
+                    Console.WriteLine("Fix Mistakes For " + lxmlFileName + " ...");
+
+                    string entityName = lxmlFileName.Split('.')[0];
+
+                    TableDefinition lxmlTableDefinition = GetTableDefinitionForLXMLFile(lxmlFile);
+                    TableDefinition dxmlTableDefinition = GetTableDefinitionForDXMLFile(entityName);
+
+                    LXMLFileFixer lxmlFileFixer = new LXMLFileFixer();
+                    List<LXMLAttribute> attributes = new List<LXMLAttribute>();
+
+                    if (dxmlTableDefinition != null && lxmlTableDefinition != null)
+                    {
+                        if (dxmlTableDefinition.Name != lxmlTableDefinition.Name)
+                        {
+                            //LXMLAttribute attribute = new LXMLAttribute
+                            //{
+                            //    ElementName = "entity",
+                            //    AttributeName = "DBTableName",
+                            //    AttributeValue = GetStringValue(dxmlTableDefinition.Schema.ToLower() == "customs" ? "Customs." + dxmlTableDefinition.Name : dxmlTableDefinition.Name),
+                            //    AttributeFilter = null
+                            //};
+
+                            //attributes.Add(attribute);
+                        }
+
+                        foreach (var dxmlColumn in dxmlTableDefinition.Columns)
+                        {
+                            ColumnDefinition lxmlColumn = lxmlTableDefinition.Columns.Where(c => c.Name == dxmlColumn.Name).FirstOrDefault();
+
+                            if (dxmlColumn.Type != lxmlColumn.Type)
+                            {
+                                //LXMLAttribute attribute = new LXMLAttribute
+                                //{
+                                //    ElementName = "field",
+                                //    AttributeName = "FieldsDataType",
+                                //    AttributeValue = GetStringValue(""),
+                                //    AttributeFilter = new LXMLAttributeFilter
+                                //    {
+                                //        Name = "FieldName",
+                                //        Value = GetStringValue(dxmlColumn.Name)
+                                //    }
+                                //};
+
+                                //attributes.Add(attribute);
+                            }
+
+                            if (dxmlColumn.Type == "decimal" && lxmlColumn.Type == "decimal" && dxmlColumn.Precision != lxmlColumn.Precision)
+                            {
+                                LXMLAttribute attribute = new LXMLAttribute
+                                {
+                                    ElementName = "field",
+                                    AttributeName = "NumberOfDigits",
+                                    AttributeValue = dxmlColumn.Precision.ToString(),
+                                    AttributeFilter = new LXMLAttributeFilter
+                                    {
+                                        Name = "FieldName",
+                                        Value = GetStringValue(dxmlColumn.Name)
+                                    }
+                                };
+
+                                attributes.Add(attribute);
+                            }
+
+                            if (dxmlColumn.Type == "decimal" && lxmlColumn.Type == "decimal" && dxmlColumn.Scale != lxmlColumn.Scale)
+                            {
+                                LXMLAttribute attribute = new LXMLAttribute
+                                {
+                                    ElementName = "field",
+                                    AttributeName = "DigitsAfterPoint",
+                                    AttributeValue = dxmlColumn.Scale.ToString(),
+                                    AttributeFilter = new LXMLAttributeFilter
+                                    {
+                                        Name = "FieldName",
+                                        Value = GetStringValue(dxmlColumn.Name)
+                                    }
+                                };
+
+                                attributes.Add(attribute);
+                            }
+
+                            if (dxmlColumn.Size != lxmlColumn.Size)
+                            {
+                                if(dxmlColumn.Size == -1 || lxmlColumn.Size == -1)
+                                {
+                                    LXMLAttribute attribute = new LXMLAttribute
+                                    {
+                                        ElementName = "field",
+                                        AttributeName = "IsMaxLength",
+                                        AttributeValue = dxmlColumn.Size == -1 ? "true" : "false",
+                                        AttributeFilter = new LXMLAttributeFilter
+                                        {
+                                            Name = "FieldName",
+                                            Value = GetStringValue(dxmlColumn.Name)
+                                        }
+                                    };
+
+                                    attributes.Add(attribute);
+                                }
+                                else
+                                {
+                                    LXMLAttribute attribute = new LXMLAttribute
+                                    {
+                                        ElementName = "field",
+                                        AttributeName = "MaxLength",
+                                        AttributeValue = dxmlColumn.Size.ToString(),
+                                        AttributeFilter = new LXMLAttributeFilter
+                                        {
+                                            Name = "FieldName",
+                                            Value = GetStringValue(dxmlColumn.Name)
+                                        }
+                                    };
+
+                                    attributes.Add(attribute);
+                                }
+                            }
+
+                            if (dxmlColumn.Constraints.PrimaryKey != lxmlColumn.Constraints.PrimaryKey)
+                            {
+                                LXMLAttribute attribute = new LXMLAttribute
+                                {
+                                    ElementName = "field",
+                                    AttributeName = "IsPrimaryKey",
+                                    AttributeValue = dxmlColumn.Constraints.PrimaryKey ? "true" : "false",
+                                    AttributeFilter = new LXMLAttributeFilter
+                                    {
+                                        Name = "FieldName",
+                                        Value = GetStringValue(dxmlColumn.Name)
+                                    }
+                                };
+
+                                attributes.Add(attribute);
+                            }
+
+                            if (dxmlColumn.Constraints.Nullable != lxmlColumn.Constraints.Nullable)
+                            {
+
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (dxmlTableDefinition == null)
+                        {
+                            Console.BackgroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Cannot Get DXML Table Definition For " + entityName + " Entity");
+                            Console.ResetColor();
+                            DXMLFilesThatNotFound += entityName + ".dxml" + "\n";
+                        }
+                        if (lxmlTableDefinition == null)
+                        {
+                            Console.BackgroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Cannot Get LXML Table Definition For " + entityName + " Entity");
+                            Console.ResetColor();
+                        }
+                    }
+
+                }
             }
             else
             {
@@ -296,6 +473,40 @@ namespace Logitude.LXMLFixer.Models
             }
 
             return !isRequired;
+        }
+
+        private void FixLXMLElementAttribute(LXMLFileFixer lxmlFileFixer)
+        {
+            XDocument doc = XDocument.Load(lxmlFileFixer.FilePath);
+
+            foreach(var attr in lxmlFileFixer.Attributes)
+            {
+                XElement element;
+                if (attr.AttributeFilter == null)
+                {
+                    element = doc.Descendants(attr.ElementName).Single();
+                }
+                else
+                {
+                    element = doc.Descendants(attr.ElementName)
+                              .Where(x => x.Attribute(attr.AttributeFilter.Name).Value == attr.AttributeFilter.Value).Single();
+                }
+                element.SetAttributeValue(attr.AttributeName, attr.AttributeValue);
+            }
+
+            doc.Save(lxmlFileFixer.FilePath);
+        }
+
+        private string GetStringValue(object value)
+        {
+            if(value != null)
+            {
+                return "\"" + value.ToString().Replace("\"", "\u0022") + "\"";
+            }
+            else
+            {
+                return null;
+            }
         }
 
     }

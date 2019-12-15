@@ -14,6 +14,15 @@ namespace Logitude.LXMLFixer.Models
         [XmlAttribute()]
         public string Name { get; set; }
 
+        [XmlAttribute()]
+        public string ShortName { get; set; }
+
+        [XmlAttribute()]
+        public string Schema { get; set; }
+
+        [XmlAttribute()]
+        public string DBType { get; set; }
+
         [XmlElement("Column")]
         public List<ColumnDefinition> Columns { get; set; }
 

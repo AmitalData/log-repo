@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Models\ColumnDefinition.cs" />
     <Compile Include="Models\ConstraintsDefinition.cs" />
+    <Compile Include="Models\ElementAttributeFixer.cs" />
     <Compile Include="Models\LXMLFilesFixer.cs" />
     <Compile Include="Models\RelationDefinition.cs" />
     <Compile Include="Models\TableDefinition.cs" />
