@@ -1710,6 +1710,7 @@
     <Compile Include="Migrations\201911280844228_ShipmentAdditionalCloudDataNewFields_Rabaia.Designer.cs">
       <DependentUpon>201911280844228_ShipmentAdditionalCloudDataNewFields_Rabaia.cs</DependentUpon>
     </Compile>
+
     <Compile Include="Migrations\201911291324079_APPaymentNewFieldMigration.cs" />
     <Compile Include="Migrations\201911291324079_APPaymentNewFieldMigration.Designer.cs">
       <DependentUpon>201911291324079_APPaymentNewFieldMigration.cs</DependentUpon>
@@ -1722,6 +1723,12 @@
     <Compile Include="Migrations\201911251236376_NewField_AllowEditChequePayToName.Designer.cs">
       <DependentUpon>201911251236376_NewField_AllowEditChequePayToName.cs</DependentUpon>
     </Compile>
+ 
+    <Compile Include="Migrations\201912040838041_AddAllowCustomersInAgentsLOV_Samar.cs" />
+    <Compile Include="Migrations\201912040838041_AddAllowCustomersInAgentsLOV_Samar.Designer.cs">
+      <DependentUpon>201912040838041_AddAllowCustomersInAgentsLOV_Samar.cs</DependentUpon>
+    </Compile>
+
     <Compile Include="Migrations\201912031815485_AddHideFCLAllInField.cs" />
     <Compile Include="Migrations\201912031815485_AddHideFCLAllInField.Designer.cs">
       <DependentUpon>201912031815485_AddHideFCLAllInField.cs</DependentUpon>
@@ -1769,6 +1776,10 @@
     <Compile Include="Migrations\201912131928012_ItrestTransactionTableConstraintMigration.cs" />
     <Compile Include="Migrations\201912131928012_ItrestTransactionTableConstraintMigration.Designer.cs">
       <DependentUpon>201912131928012_ItrestTransactionTableConstraintMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912151003091_Alter_Field_InterestCalculationStartDate_Nullable.cs" />
+    <Compile Include="Migrations\201912151003091_Alter_Field_InterestCalculationStartDate_Nullable.Designer.cs">
+      <DependentUpon>201912151003091_Alter_Field_InterestCalculationStartDate_Nullable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
@@ -2991,6 +3002,7 @@
     <EmbeddedResource Include="Migrations\201911280844228_ShipmentAdditionalCloudDataNewFields_Rabaia.resx">
       <DependentUpon>201911280844228_ShipmentAdditionalCloudDataNewFields_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
+
     <EmbeddedResource Include="Migrations\201911291324079_APPaymentNewFieldMigration.resx">
       <DependentUpon>201911291324079_APPaymentNewFieldMigration.cs</DependentUpon>
     </EmbeddedResource>
@@ -3000,6 +3012,7 @@
     <EmbeddedResource Include="Migrations\201911251236376_NewField_AllowEditChequePayToName.resx">
       <DependentUpon>201911251236376_NewField_AllowEditChequePayToName.cs</DependentUpon>
     </EmbeddedResource>
+
     <EmbeddedResource Include="Migrations\201912031815485_AddHideFCLAllInField.resx">
       <DependentUpon>201912031815485_AddHideFCLAllInField.cs</DependentUpon>
     </EmbeddedResource>
@@ -3027,6 +3040,9 @@
     <EmbeddedResource Include="Migrations\201912110756225_UniqueOriginalJournalIdtk2.resx">
       <DependentUpon>201912110756225_UniqueOriginalJournalIdtk2.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912151003091_Alter_Field_InterestCalculationStartDate_Nullable.resx">
+      <DependentUpon>201912151003091_Alter_Field_InterestCalculationStartDate_Nullable.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912121012562_IntrestTransactionMigration.resx">
       <DependentUpon>201912121012562_IntrestTransactionMigration.cs</DependentUpon>
     </EmbeddedResource>
@@ -3035,6 +3051,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912131928012_ItrestTransactionTableConstraintMigration.resx">
       <DependentUpon>201912131928012_ItrestTransactionTableConstraintMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912040838041_AddAllowCustomersInAgentsLOV_Samar.resx">
+      <DependentUpon>201912040838041_AddAllowCustomersInAgentsLOV_Samar.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

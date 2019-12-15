@@ -132,6 +132,8 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new GLAccountCurrencyMap());
 	
+            modelBuilder.Configurations.Add(new GLAccountInterestPeriodMap());
+	
             modelBuilder.Configurations.Add(new GLAccountMoreDataMap());
 	
             modelBuilder.Configurations.Add(new GLAccountTotalByMonthMap());
@@ -246,6 +248,12 @@ namespace Logitude.Accounting.Data
 			modelBuilder.Entity<FullAccountingSetting>().Property(x => x.DefaultTaxWithholdPercentage).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<GLAccount>().Property(x => x.MinimumInterestInvoiceBilling).HasPrecision(5, 0);
+				
+			modelBuilder.Entity<GLAccountInterestPeriod>().Property(x => x.StandardAddInterestPercent).HasPrecision(4, 2);
+				
+			modelBuilder.Entity<GLAccountInterestPeriod>().Property(x => x.ExceptionalAddInterestPercent).HasPrecision(4, 2);
+				
+			modelBuilder.Entity<GLAccountInterestPeriod>().Property(x => x.CreditAddInterestPercent).HasPrecision(4, 2);
 				
 			modelBuilder.Entity<GLAccountMoreData>().Property(x => x.BalanceInLocalCurrency).HasPrecision(16, 2);
 				
@@ -791,6 +799,12 @@ namespace Logitude.Accounting.Data
 	 }
 	
 	 public IDbSet<GLAccountCurrency> GLAccountCurrencies 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<GLAccountInterestPeriod> GLAccountInterestPeriods 
 	 {
 	      get; set;
 	 

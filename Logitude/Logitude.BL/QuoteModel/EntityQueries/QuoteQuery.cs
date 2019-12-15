@@ -1277,6 +1277,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 GrossWeightEdited = entityPOCO.GrossWeightEdited,
                 ChargeableWeightEdited = entityPOCO.ChargeableWeightEdited,
                 QuoteHTMLDocumentId = entityPOCO.QuoteHTMLDocumentId,
+                QuoteVersion = entityPOCO.LastVersionNumber > 0 ? entityPOCO.QuoteNumber + "-" + entityPOCO.LastVersionNumber:"",
             };
 
             int tenant = entityPOCO.Tenant;

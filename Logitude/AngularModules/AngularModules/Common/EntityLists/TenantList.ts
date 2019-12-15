@@ -104,5 +104,5 @@ export class TenantList {
 		IsTestTenant: boolean;
 		CheckDigitControlAlgorithmCode: string;
 		HideFCLAllIn: boolean;
-	
-}
+		AllowCustomersInAgentsLOV: boolean;	
+}
