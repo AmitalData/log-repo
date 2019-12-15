@@ -133,6 +133,30 @@ export class DocumentsFilingExtendedPMService {
 
     }
 
+    getDocumentsFilingsByCode(Code: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return this._http.get(this._apiUrl + "/GetDocumentsFilingsByCode" + '?Code=' + Code, { headers: authHeader }).map(response => {
+
+
+            var result = response.json();
+
+            var entity: DocumentsFilingPM;
+
+
+
+            entity = this.MapJsonToEntityPM(result);
+
+
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+            pmresponse.Result = entity;
+            return pmresponse;
+        }).catch(ServiceHelper.HandleServiceError);
+
+
+    }
+
 
     getAllDocumentsFilingsByEntityIdAndObjectTable(entityId: string, objectTableId: string, directionCode: string, tenant: number) {
         var authHeader = new Headers();

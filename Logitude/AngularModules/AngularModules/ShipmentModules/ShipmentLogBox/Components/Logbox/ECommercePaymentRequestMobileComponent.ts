@@ -34,6 +34,9 @@ import { ServiceLocator } from '../../../../Infrastructure/Locators/ServiceLocat
 import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
 import { TenantPMService } from '../../../../Common/Services/StandardPMs/TenantPMService';
 import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
+import { DocumentsFilingExtendedPMService } from '../../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
+
+
 @Component({
     moduleId: module.id,
     templateUrl: './ECommercePaymentRequestMobileComponent.html'
@@ -50,6 +53,8 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     public _DocumentTypeMetaDataExtendedService: DocumentTypeMetaDataExtendedService;
     public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService;
     public _ShipmentAdditionalCloudDataService: ShipmentAdditionalCloudDataService;
+    DocumentsFilingExtendedPMService: DocumentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
+
     public _ShipmentPMService: ShipmentPMService;
     RefreshTimer: any;
     _ImageLibraryService: ImageLibraryService;
@@ -264,6 +269,9 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     }
     public set TargetEnv(newValue: string) { this.AdditionalData.PaymentData.TargetEnv = newValue; }
 
+    public get TermsOfUseDocumentId() { return this.AdditionalData.RequestPaymentData.TermsOfUseDocumentId }
+    public set TermsOfUseDocumentId(newValue: string) { this.AdditionalData.RequestPaymentData.TermsOfUseDocumentId = newValue; }
+
 
 
     ShowPaymentDetailsScreen: boolean = false;
@@ -283,6 +291,21 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     OnPayClick() {
         //alert("Yes");
         document.forms["form"].submit();
+    }
+    IsAgreed: boolean = false;
+    IsAggreeChicked(isAgreed) {
+        this.IsAgreed = isAgreed;
+    }
+
+    ViewAggreement() {
+        this.DocumentsFilingExtendedPMService.getDocumentsFilingsByCode(this.TermsOfUseDocumentId).subscribe(myResult => {
+             
+            if (myResult.Result) { 
+                var securityId = myResult.Result.SecurityId;
+                DownloadManager.DownloadPage(null, securityId);
+            }
+        });
+      
     }
 
 
