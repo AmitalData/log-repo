@@ -70,6 +70,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.CBSA).HasMaxLength(5).IsUnicode(false);
             this.Property(t => t.CAAT).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.CheckDigitControlAlgorithmCode).HasMaxLength(4).IsRequired().IsUnicode(false);
+            this.Property(t => t.AllowCustomersInAgentsLOV).IsRequired();
 
             this.ToTable("Tenants");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -154,6 +155,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
 
             //#endif
 
+            this.Property(t => t.AllowCustomersInAgentsLOV).HasColumnName("AllowCustomersInAgentsLOV");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.IsDataBackupBuilt).HasColumnName("IsDataBackupBuilt");
             this.Property(t => t.ChargeableWeightUnitCode).HasColumnName("ChargeableWeightUnitCode");

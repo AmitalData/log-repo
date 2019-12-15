@@ -175,7 +175,7 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         [Column("ActiveForInterest")]
 	    public bool ActiveForInterest { get; set; }
         [Column("InterestCalculationStartDate")]
-	    public DateTime InterestCalculationStartDate { get; set; }
+	    public DateTime? InterestCalculationStartDate { get; set; }
         [Column("ActiveForInterestCreditInvoice")]
 	    public bool ActiveForInterestCreditInvoice { get; set; }
         [Column("MinimumInterestInvoiceBilling")]

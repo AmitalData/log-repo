@@ -382,5 +382,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public bool HideFCLAllIn { get; set; }
+        
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public bool AllowCustomersInAgentsLOV { get; set; }
     }
 }

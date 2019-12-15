@@ -1164,9 +1164,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 {
                     if (entityPM.ShipmentLevelCode == "C")
                     {
-                        if (myCard.PartnerTypeId != "AG")
+                        if (tenantPM.AllowCustomersInAgentsLOV)
                         {
-                            throw new ApplicationException("Shipper partner type should be agent");
+                            if (myCard.PartnerTypeId != "CS" && myCard.PartnerTypeId != "AG")
+                            {
+                                throw new ApplicationException("Shipper partner type should be agent or customer");
+                            }
+                        }
+
+                        else
+                        {
+                            if (myCard.PartnerTypeId != "AG")
+                            {
+                                throw new ApplicationException("Shipper partner type should be agent");
+                            }
                         }
                     }
 
@@ -1198,9 +1209,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 {
                     if (entityPM.ShipmentLevelCode == "C")
                     {
-                        if (myCard.PartnerTypeId != "AG")
+                        if (tenantPM.AllowCustomersInAgentsLOV)
                         {
-                            throw new ApplicationException("Consignee partner type should be agent");
+                            if (myCard.PartnerTypeId != "CS" && myCard.PartnerTypeId != "AG")
+                            {
+                                throw new ApplicationException("Consignee partner type should be agent or customer");
+                            }
+                        }
+
+                        else
+                        {
+                            if (myCard.PartnerTypeId != "AG")
+                            {
+                                throw new ApplicationException("Consignee partner type should be agent");
+                            }
                         }
                     }
 
@@ -1230,9 +1252,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 myCard = cardRepository.GetSingleCard(entityPM.AgentId, entityPM.Tenant);
                 if (myCard != null)
                 {
-                    if (myCard.PartnerTypeId != "AG")
+                    if (tenantPM.AllowCustomersInAgentsLOV)
                     {
-                        throw new ApplicationException("Agent partner type should be agent");
+                        if (myCard.PartnerTypeId != "CS" && myCard.PartnerTypeId != "AG")
+                        {
+                            throw new ApplicationException("Agent partner type should be agent or customer");
+                        }
+                    }
+
+                    else
+                    {
+                        if (myCard.PartnerTypeId != "AG")
+                        {
+                            throw new ApplicationException("Agent partner type should be agent");
+                        }
                     }
                 }
             }

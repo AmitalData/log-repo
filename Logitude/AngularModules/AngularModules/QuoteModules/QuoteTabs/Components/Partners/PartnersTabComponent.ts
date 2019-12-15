@@ -391,6 +391,10 @@ export class PartnerItem extends BaseComponent {
             case "AGENT":
                 {
                     myResult = "AG";
+
+                    if (SessionLocator.TenantPM.AllowCustomersInAgentsLOV) {
+                        myResult = "CS,AG";
+                    } 
                     break;
                 }
                 
@@ -420,7 +424,15 @@ export class PartnerItem extends BaseComponent {
                     myResult = true;
                     break
                 }
-                      
+
+            case "AGENT":
+                {
+                    if (SessionLocator.TenantPM.AllowCustomersInAgentsLOV) {
+                        myResult = true;
+                    }
+                    break;
+                }
+
             default: {
                 myResult = false;
                 break;
