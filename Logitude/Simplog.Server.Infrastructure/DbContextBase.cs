@@ -48,7 +48,8 @@ namespace Simplog.Server.Infrastructure
                     (this as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
                 }
             }
-            
+
+
             ///this.Database.CommandTimeout = 240;
             InitLog();
         }
@@ -218,7 +219,7 @@ namespace Simplog.Server.Infrastructure
             {
                 return;
             }
-            
+
 
             if (DbContextBaseUtil.ToLog == null)
             {
@@ -453,7 +454,7 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
 
             private void LogMe(string mess)
             {
-                if(_StringBuilder == null)
+                if (_StringBuilder == null)
                     _StringBuilder = new StringBuilder();
                 if (mess == Environment.NewLine)
                 {
@@ -488,6 +489,53 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
                 LogMe(ExplainLog);
             }
         }
+
+
+        public Nullable<returnType> ExecuteReaderSingleResult<returnType>(string sqlReturn1Row, Func<DbDataReader, Nullable<returnType>> GetReturnTypeFromReader)
+        where returnType : struct
+        {
+            Debug.WriteLine(sqlReturn1Row);
+            using (var command = this.Database.Connection.CreateCommand())
+            {
+
+
+                if (this.Database.Connection.State != System.Data.ConnectionState.Open)
+                {
+                    this.Database.Connection.Open();
+                }
+                command.CommandText = sqlReturn1Row;
+
+
+                using (var dataReader = command.ExecuteReader(CommandBehavior.SingleResult))
+                {
+
+                    if (dataReader.FieldCount < 1)
+                    {
+                        return null;
+                    }
+
+                    if (!dataReader.Read())
+                    {
+                        return null;
+                    }
+                    if (dataReader.IsDBNull(0))
+                    {
+                        return null;
+                    }
+
+
+
+                    var ReturnValue = GetReturnTypeFromReader(dataReader);
+
+                    return ReturnValue;
+                }
+            }
+
+        }
+
+
+
+
     }
 
     public static class LogitudeExceptionExtU
