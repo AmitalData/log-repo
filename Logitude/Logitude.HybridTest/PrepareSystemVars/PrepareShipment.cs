@@ -12,23 +12,23 @@ namespace Logitude.HybridTest.WcfCallers
     {
         public static void PrepareShipmentVars()
         {
-            GetCurrencyIdEUR();
-            GetIncotermIdCIF();
-            GetChargeTypeIdAFT();
+            GetCurrencyCodeEUR();
+            GetIncotermCodeCIF();
+            GetChargeTypeCodeAFT();
             PreparePorts.PreparePortsVars();
             PrepareCountries.PrepareCountriesVars();
-            UpsertStateIdAK();
+            UpsertStateCodeAK();
             UpsertAgentTest();
             UpsertContactTest();
             PrepareCustomers.PrepareCustomersVars();
             PrepareAirlines.PrepareAirlinesVars();
             PrepareShippingLines.PrepareShippingLinesVars();
             PrepareTruckers.PrepareTruckersVars();
-            UpsertVesselIdHV();
+            UpsertVesselCodeHV();
             PreparePackageTypes.PreparePackageTypesVars();
-            UpsertVendorIdHVEN();
+            UpsertVendorCodeHVEN();
         }
-        private static void GetCurrencyIdEUR()
+        private static void GetCurrencyCodeEUR()
         {
             InvokedProperties serviceProperties = new InvokedProperties
             {
@@ -45,26 +45,35 @@ namespace Logitude.HybridTest.WcfCallers
             };
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { filters, EnvironmentGlobalParams.MainTenant, serviceResponse };
-            CurrencyList[] currencies = (CurrencyList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+
+            CurrencyList[] currencies = (CurrencyList[])serviceOutcome.Result;
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Get List Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNull(serviceOutcome.Response.Result, "Get List Failed! " + serviceOutcome.Response.ErrorMessage);
             if (currencies.Length == 0)
             {
                 serviceParameters = new object[] { filters, 0, serviceResponse };
-                currencies = (CurrencyList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-                Assert.IsFalse(serviceResponse.HasError, "Get List Failed! " + serviceResponse.ErrorMessage);
-                Assert.IsNull(serviceResponse.Result, "Get List Failed! " + serviceResponse.ErrorMessage);
+                serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+                currencies = (CurrencyList[])serviceOutcome.Result;
+                Assert.IsFalse(serviceOutcome.Response.HasError, "Get List Failed! " + serviceOutcome.Response.ErrorMessage);
+                Assert.IsNull(serviceOutcome.Response.Result, "Get List Failed! " + serviceOutcome.Response.ErrorMessage);
                 CopyCurrencyFromTenant0ToTestTenant(currencies[0]);
             }
-            HybridData.CurrencyIdEUR = currencies[0].Id;
         }
         private static void CopyCurrencyFromTenant0ToTestTenant(CurrencyList currencyPM)
         {
-            currencyPM.Tenant = EnvironmentGlobalParams.MainTenant;
-            currencyPM.AddedManually = true;
+            CurrencyPM newCurrencyPM = new CurrencyPM()
+            {
+                Code = currencyPM.Code,
+                EnglishName = currencyPM.EnglishName,
+                LocalName = currencyPM.LocalName,
+                AddedManually = true,
+                Tenant = EnvironmentGlobalParams.MainTenant,
+            };
+
             AssertResponse(currencyPM);
         }
-        private static void GetIncotermIdCIF()
+        private static void GetIncotermCodeCIF()
         {
             InvokedProperties serviceProperties = new InvokedProperties
             {
@@ -75,15 +84,15 @@ namespace Logitude.HybridTest.WcfCallers
             };
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { serviceResponse };
-            IncotermList[] incoterms = (IncotermList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Get Incoterms Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get Incoterms Failed! " + serviceResponse.Result);
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+
+            IncotermList[] incoterms = (IncotermList[])serviceOutcome.Result;
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Get Incoterms Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNull(serviceOutcome.Response.Result, "Get Incoterms Failed! " + serviceOutcome.Response.Result);
             if (incoterms.Length == 0)
                 Assert.Inconclusive("There Isn't Any Incoterm!");
             IncotermList CIFIncoterm = IncotermExist(incoterms, HybridData.IncotermCodeCIF);
-            if (CIFIncoterm != null)
-                HybridData.IncotermIdCIF = CIFIncoterm.Id;
-            else
+            if (CIFIncoterm == null)
                 Assert.Fail("Prepare IncotermIdCIF Failed!");
         }
         private static void GetIncotermLDE()
@@ -97,16 +106,20 @@ namespace Logitude.HybridTest.WcfCallers
             };
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { serviceResponse };
-            IncotermList[] incoterms = (IncotermList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Get Incoterms Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get Incoterms Failed! " + serviceResponse.Result);
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+
+            IncotermList[] incoterms = (IncotermList[])serviceOutcome.Result;
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Get Incoterms Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNull(serviceOutcome.Response.Result, "Get Incoterms Failed! " + serviceOutcome.Response.Result);
             IncotermList LDEIncoterm = IncotermExist(incoterms, HybridData.IncotermCodeLDE);
-            if (LDEIncoterm != null)
-                HybridData.IncotermIdLDE = LDEIncoterm.Id;
-            else
-                HybridData.IncotermIdLDE = CreateIncotermIdLDE();
+            if (LDEIncoterm == null)
+            {
+                serviceResponse = CreateIncotermCodeLDE();
+                Assert.IsFalse(serviceResponse.HasError, "Create Incoterm Failed! " + serviceResponse.ErrorMessage);
+                Assert.IsNull(serviceResponse.Result, "Create Incoterm Failed! " + serviceResponse.Result);
+            }
         }
-        private static string CreateIncotermIdLDE()
+        private static Response CreateIncotermCodeLDE()
         {
             IncotermPM incotermPM = new IncotermPM()
             {
@@ -117,7 +130,7 @@ namespace Logitude.HybridTest.WcfCallers
                 Tenant = EnvironmentGlobalParams.MainTenant
             };
             Response serviceResponse = AssertResponse(incotermPM);
-            return serviceResponse.Result;
+            return serviceResponse;
         }
         private static IncotermList IncotermExist(IncotermList[] incoterms, string code)
         {
@@ -128,7 +141,7 @@ namespace Logitude.HybridTest.WcfCallers
             }
             return null;
         }
-        private static void GetChargeTypeIdAFT()
+        private static void GetChargeTypeCodeAFT()
         {
             InvokedProperties serviceProperties = new InvokedProperties
             {
@@ -140,20 +153,16 @@ namespace Logitude.HybridTest.WcfCallers
             };
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { EnvironmentGlobalParams.MainTenant, 0, 10, serviceResponse };
-            ChargesTypeList[] chargesTypes = (ChargesTypeList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Get Charge Types Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get Charge Types Failed! " + serviceResponse.ErrorMessage);
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+
+            ChargesTypeList[] chargesTypes = (ChargesTypeList[])serviceOutcome.Result;
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Get Charge Types Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNull(serviceOutcome.Response.Result, "Get Charge Types Failed! " + serviceOutcome.Response.ErrorMessage);
             if (chargesTypes.Length == 0)
                 Assert.Inconclusive("There Isn't Charge Types!");
 
             ChargesTypeList AFTChargeType = ChargeTypeExist(chargesTypes);
-            if (AFTChargeType != null)
-            {
-                HybridData.ChargeTypeIdAFT = AFTChargeType.Id;
-                HybridData.ChargeTypeIATACodeId = AFTChargeType.IATACodeId;
-                HybridData.ChargeTypeVatTypeId = AFTChargeType.VatTypeId;
-            }
-            else
+            if (AFTChargeType == null)
                 Assert.Fail("Prepare ChargeTypeIdAFT Failed!");
         }
         private static ChargesTypeList ChargeTypeExist(ChargesTypeList[] chargesTypes)
@@ -165,7 +174,7 @@ namespace Logitude.HybridTest.WcfCallers
             }
             return null;
         }
-        private static void UpsertStateIdAK()
+        private static void UpsertStateCodeAK()
         {
             StatePM statePM = new StatePM()
             {
@@ -176,7 +185,6 @@ namespace Logitude.HybridTest.WcfCallers
                 Tenant = EnvironmentGlobalParams.MainTenant,
             };
             Response serviceResponse = AssertResponse(statePM);
-            HybridData.StateIdAK = serviceResponse.Result;
         }
         private static void UpsertAgentTest()
         {
@@ -190,7 +198,8 @@ namespace Logitude.HybridTest.WcfCallers
                 PartnerTypeId = "AG",
                 Tenant = EnvironmentGlobalParams.MainTenant,
             };
-            agentPM.Addresses.Add(new AddressPM {
+            agentPM.Addresses.Add(new AddressPM
+            {
                 Tenant = EnvironmentGlobalParams.MainTenant,
                 Description = "Main Address",
                 City = "Washnton",
@@ -207,7 +216,6 @@ namespace Logitude.HybridTest.WcfCallers
 
             });
             Response serviceResponse = AssertResponse(agentPM);
-            HybridData.StateIdAK = serviceResponse.Result;
         }
         private static void UpsertContactTest()
         {
@@ -221,9 +229,8 @@ namespace Logitude.HybridTest.WcfCallers
                 Tenant = EnvironmentGlobalParams.MainTenant,
             };
             Response serviceResponse = AssertResponse(contactPM);
-            HybridData.StateIdAK = serviceResponse.Result;
         }
-        private static void UpsertVesselIdHV()
+        private static void UpsertVesselCodeHV()
         {
             VesselPM vesselPM = new VesselPM()
             {
@@ -235,9 +242,8 @@ namespace Logitude.HybridTest.WcfCallers
                 Tenant = EnvironmentGlobalParams.MainTenant,
             };
             Response serviceResponse = AssertResponse(vesselPM);
-            HybridData.VesselIdHV = serviceResponse.Result;
         }
-        private static void UpsertVendorIdHVEN()
+        private static void UpsertVendorCodeHVEN()
         {
             VendorPM vendorPM = new VendorPM()
             {
@@ -258,7 +264,6 @@ namespace Logitude.HybridTest.WcfCallers
                 CardCode = "new",
             });
             Response serviceResponse = AssertResponse(vendorPM);
-            HybridData.VendorIdHVEN = serviceResponse.Result;
         }
         private static Response AssertResponse<T>(T entityPM)
         {

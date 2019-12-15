@@ -15,7 +15,7 @@ namespace Logitude.HybridTest
     {
         public T GetEntityPMById<T>(string tableName, string id)
         {
-            IntegrationTestLoginParameters.Token = EnvironmentGlobalParams.MainToken;
+            IntegrationTestLoginParameters.Token = EnvironmentGlobalParams.MainTenantToken;
             T entityPM = default(T);
             Task.Run(async () =>
             {

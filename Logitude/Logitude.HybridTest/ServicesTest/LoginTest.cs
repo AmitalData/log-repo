@@ -20,12 +20,12 @@ namespace Logitude.HybridTest.ServicesTest
 
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { "", apiCred };
-            Response loginResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            if (!loginResponse.HasError)
-                EnvironmentGlobalParams.MainToken = loginResponse.Result;
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+            if (!serviceOutcome.Response.HasError)
+                EnvironmentGlobalParams.MainTenantToken = serviceOutcome.Response.Result;
             else
                 Assert.Fail("Login Failed");
-            Assert.IsNotNull(loginResponse.Result, "The Token returned is null " + loginResponse.ErrorMessage);
+            Assert.IsNotNull(serviceOutcome.Response.Result, "The Token returned is null " + serviceOutcome.Response.ErrorMessage);
         }
 
         [TestMethod]
@@ -41,9 +41,9 @@ namespace Logitude.HybridTest.ServicesTest
 
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { "", apiCred };
-            Response loginResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsTrue(loginResponse.HasError, loginResponse.ErrorMessage);
-            Assert.IsNull(loginResponse.Result, "The Token returned is null " + loginResponse.ErrorMessage);
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+            Assert.IsTrue(serviceOutcome.Response.HasError, serviceOutcome.Response.ErrorMessage);
+            Assert.IsNull(serviceOutcome.Response.Result, "The Token returned is null " + serviceOutcome.Response.ErrorMessage);
         }
 
         [TestMethod]
@@ -57,9 +57,9 @@ namespace Logitude.HybridTest.ServicesTest
 
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { "Hybrid@fnarsoft.com", "!H0" };
-            Response loginResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Login Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNotNull(serviceResponse.Result, "Login Failed! " + serviceResponse.ErrorMessage);
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Login Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNotNull(serviceOutcome.Response.Result, "Login Failed! " + serviceOutcome.Response.ErrorMessage);
         }
 
         [TestMethod]
@@ -73,27 +73,29 @@ namespace Logitude.HybridTest.ServicesTest
 
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { "Hybrid@fnarsoft.com", "WrongPass" };
-            Response loginResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsTrue(serviceResponse.HasError, "Login Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Login Failed! " + serviceResponse.ErrorMessage);
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+            Assert.IsTrue(serviceOutcome.Response.HasError, "Login Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNull(serviceOutcome.Response.Result, "Login Failed! " + serviceOutcome.Response.ErrorMessage);
         }
 
         [TestMethod]
         public void Test_Login_GetUserTenants()
         {
-            //InvokedProperties serviceProperties = new InvokedProperties
-            //{
-            //    ServiceName = "Login",
-            //    ServiceOperation = "GetUserTenants",
-            //    ServiceResponseIndex = 1,
-            //    ServiceType = typeof(TenantInfo),
-            //};
+            InvokedProperties serviceProperties = new InvokedProperties
+            {
+                ServiceName = "Login",
+                ServiceOperation = "GetUserTenants",
+                ServiceResponseIndex = 1,
+                ServiceType = typeof(TenantInfo),
+            };
 
-            //Response serviceResponse = new Response();
-            //object[] serviceParameters = new object[] { "Hybrid@fnarsoft.com", serviceResponse };
-            //TenantInfo[] userTenants = (TenantInfo[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            //Assert.IsTrue(serviceResponse.HasError, "User Must Be Not Authorized! " + serviceResponse.ErrorMessage);
-            //Assert.IsNull(serviceResponse.Result, "User Must Be Not Authorized! " + serviceResponse.ErrorMessage);
+            Response serviceResponse = new Response();
+            object[] serviceParameters = new object[] { "Hybrid@fnarsoft.com", serviceResponse };
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+
+            TenantInfo[] userTenants = (TenantInfo[])serviceOutcome.Result;
+            Assert.IsTrue(serviceOutcome.Response.HasError, "User Must Be Not Authorized! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNull(serviceOutcome.Response.Result, "User Must Be Not Authorized! " + serviceOutcome.Response.ErrorMessage);
         }
     }
 }

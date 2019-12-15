@@ -39,9 +39,11 @@ namespace Logitude.HybridTest.ServicesTest
 
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { filters, EnvironmentGlobalParams.MainTenant, serviceResponse };
-            CustomerPM customer = (CustomerPM)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Get Customer PM Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get Customer PM Failed! " + serviceResponse.Result);
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+
+            CustomerPM customer = (CustomerPM)serviceOutcome.Result;
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Get Customer PM Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNull(serviceOutcome.Response.Result, "Get Customer PM Failed! " + serviceOutcome.Response.Result);
             Assert.AreEqual(customer.Id, HybridData.CustomerIdHCustomer, "Get Customer PM Failed!");
         }
 
@@ -64,13 +66,15 @@ namespace Logitude.HybridTest.ServicesTest
 
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { filters, EnvironmentGlobalParams.MainTenant, serviceResponse };
-            AddressPM[] addresses = (AddressPM[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Get Customer Addresses Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get Customer Addresses Failed! " + serviceResponse.Result);
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+
+            AddressPM[] addresses = (AddressPM[])serviceOutcome.Result;
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Get Customer Addresses Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNull(serviceOutcome.Response.Result, "Get Customer Addresses Failed! " + serviceOutcome.Response.Result);
             if (addresses.Length == 0)
                 Assert.Inconclusive("There isn't any address for this customer");
             else
-                Assert.AreEqual(addresses[0].AddressTypeId,"M", "Get Customer Addresses Failed! " + serviceResponse.ErrorMessage);
+                Assert.AreEqual(addresses[0].AddressTypeId, "M", "Get Customer Addresses Failed! " + serviceOutcome.Response.ErrorMessage);
         }
 
         [TestMethod]
@@ -92,9 +96,11 @@ namespace Logitude.HybridTest.ServicesTest
 
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { filters, EnvironmentGlobalParams.MainTenant, serviceResponse };
-            ContactPM[] contacts = (ContactPM[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Get Customer Contacts Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get Customer Contacts Failed! " + serviceResponse.Result);
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+
+            ContactPM[] contacts = (ContactPM[])serviceOutcome.Result;
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Get Customer Contacts Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNull(serviceOutcome.Response.Result, "Get Customer Contacts Failed! " + serviceOutcome.Response.Result);
             if (contacts.Length == 0)
                 Assert.Inconclusive("There isn't any contact for this customer");
         }
@@ -118,13 +124,15 @@ namespace Logitude.HybridTest.ServicesTest
 
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { HybridData.CustomerCodeHCustomer, "hybriduser@logitudeworld.com", true, EnvironmentGlobalParams.MainTenant, 0, 10, serviceResponse };
-            CustomerList[] customers = (CustomerList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Get Customer List Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get Customer List Failed! " + serviceResponse.Result);
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+
+            CustomerList[] customers = (CustomerList[])serviceOutcome.Result;
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Get Customer List Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNull(serviceOutcome.Response.Result, "Get Customer List Failed! " + serviceOutcome.Response.Result);
             if (customers.Length == 0)
                 Assert.Inconclusive("There isn't any customer with this search field!");
             else
-                Assert.AreEqual(customers[0].Id, HybridData.CustomerIdHCustomer, "Get Custome Failed! " + serviceResponse.ErrorMessage);
+                Assert.AreEqual(customers[0].Id, HybridData.CustomerIdHCustomer, "Get Custome Failed! " + serviceOutcome.Response.ErrorMessage);
         }
 
         [TestMethod]
@@ -146,10 +154,12 @@ namespace Logitude.HybridTest.ServicesTest
 
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { "HybridContact@logitudeworld.com", EnvironmentGlobalParams.MainTenant, serviceResponse };
-            CustomerList[] customers = (CustomerList[])WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Get Customer List Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get Customer List Failed! " + serviceResponse.Result);
-            Assert.AreEqual(customers[0].EnglishName, "TestShipperExport1", "Get Customer Failed! " + serviceResponse.ErrorMessage);
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+
+            CustomerList[] customers = (CustomerList[])serviceOutcome.Result;
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Get Customer List Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNull(serviceOutcome.Response.Result, "Get Customer List Failed! " + serviceOutcome.Response.Result);
+            Assert.AreEqual(customers[0].EnglishName, "TestShipperExport1", "Get Customer Failed! " + serviceOutcome.Response.ErrorMessage);
         }
 
         [TestMethod]
@@ -171,10 +181,12 @@ namespace Logitude.HybridTest.ServicesTest
 
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { HybridData.CustomerIdHCustomer, EnvironmentGlobalParams.MainTenant, serviceResponse };
-            CustomerList customer = (CustomerList)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Get Customer List By Id Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get Customer List By Id Failed! " + serviceResponse.Result);
-            Assert.AreEqual(customer.Id, HybridData.CustomerIdHCustomer, "Get Customer By Id Failed! " + serviceResponse.ErrorMessage);
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+
+            CustomerList customer = (CustomerList)serviceOutcome.Result;
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Get Customer List By Id Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNull(serviceOutcome.Response.Result, "Get Customer List By Id Failed! " + serviceOutcome.Response.Result);
+            Assert.AreEqual(customer.Id, HybridData.CustomerIdHCustomer, "Get Customer By Id Failed! " + serviceOutcome.Response.ErrorMessage);
         }
 
         [TestMethod]

@@ -22,7 +22,6 @@ namespace Logitude.HybridTest.ServicesTest
             Response serviceResponse = EntityWcfCaller.CallEntityUpsert(cardContactPM);
             Assert.IsFalse(serviceResponse.HasError, "Upsert Failed! " + serviceResponse.ErrorMessage);
             Assert.IsNotNull(serviceResponse.Result, "Upsert Failed! " + serviceResponse.ErrorMessage);
-            HybridData.ContactId = serviceResponse.Result;
         }
 
         [TestMethod]
@@ -38,9 +37,9 @@ namespace Logitude.HybridTest.ServicesTest
             };
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { HybridData.ContactCode, HybridData.AgentCodeHAgent, EnvironmentGlobalParams.MainTenant, false };
-            serviceResponse = (Response)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Delete Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Delete Failed! " + serviceResponse.Result);
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Delete Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNull(serviceOutcome.Response.Result, "Delete Failed! " + serviceOutcome.Response.Result);
         }
 
         [TestMethod]
@@ -57,9 +56,10 @@ namespace Logitude.HybridTest.ServicesTest
             };
             Response serviceResponse = new Response();
             object[] serviceParameters = new object[] { HybridData.ContactCode, HybridData.AgentCodeHAgent, EnvironmentGlobalParams.MainTenant, serviceResponse };
-            CardContactPM cardContact = (CardContactPM)WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters, ref serviceResponse);
-            Assert.IsFalse(serviceResponse.HasError, "Get Card Contact PM Failed! " + serviceResponse.ErrorMessage);
-            Assert.IsNull(serviceResponse.Result, "Get Card Contact PM Failed! " + serviceResponse.Result);
+            ServiceOutcome serviceOutcome = WcfServiceInvoker.InvokeServiceMethod(serviceProperties, serviceParameters);
+            CardContactPM cardContact = (CardContactPM)serviceOutcome.Result;
+            Assert.IsFalse(serviceOutcome.Response.HasError, "Get Card Contact PM Failed! " + serviceOutcome.Response.ErrorMessage);
+            Assert.IsNull(serviceOutcome.Response.Result, "Get Card Contact PM Failed! " + serviceOutcome.Response.Result);
         }
     }
 }
